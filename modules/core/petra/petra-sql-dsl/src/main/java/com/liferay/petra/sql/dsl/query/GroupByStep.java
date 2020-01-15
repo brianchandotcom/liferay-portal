@@ -14,15 +14,15 @@
 
 package com.liferay.petra.sql.dsl.query;
 
-import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.expressions.Expression;
+import com.liferay.petra.sql.dsl.query.impl.GroupBy;
 
 /**
  * @author Preston Crary
  */
-public interface GroupByStep extends ASTNode {
+public interface GroupByStep extends OrderByStep {
 
-	public default GroupBy groupBy(Expression<?>... expressions) {
+	public default OrderByStep groupBy(Expression<?>... expressions) {
 		return new GroupBy(this, expressions);
 	}
 

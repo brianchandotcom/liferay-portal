@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions;
+package com.liferay.petra.sql.dsl.expressions.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.Expression;
 
 import java.util.Objects;
 import java.util.function.Consumer;

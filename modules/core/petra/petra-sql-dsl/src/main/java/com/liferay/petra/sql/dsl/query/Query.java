@@ -16,7 +16,8 @@ package com.liferay.petra.sql.dsl.query;
 
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
-import com.liferay.petra.sql.dsl.set.Union;
+import com.liferay.petra.sql.dsl.query.impl.QueryTable;
+import com.liferay.petra.sql.dsl.query.impl.Union;
 
 /**
  * @author Preston Crary
@@ -27,11 +28,11 @@ public interface Query extends ASTNode {
 		return new QueryTable(name, this);
 	}
 
-	public default Union union(Query query) {
+	public default Query union(Query query) {
 		return new Union(this, false, query);
 	}
 
-	public default Union unionAll(Query query) {
+	public default Query unionAll(Query query) {
 		return new Union(this, true, query);
 	}
 

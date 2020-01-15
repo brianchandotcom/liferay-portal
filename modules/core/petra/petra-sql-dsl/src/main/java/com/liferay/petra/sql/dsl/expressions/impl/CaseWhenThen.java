@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query;
+package com.liferay.petra.sql.dsl.expressions.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.Expression;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
+import com.liferay.petra.sql.dsl.expressions.WhenThenStep;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -24,28 +26,35 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class Where
-	extends BaseASTNode implements GroupByStep, LimitStep, OrderByStep, Query {
+public class CaseWhenThen<T> extends BaseASTNode implements WhenThenStep<T> {
 
-	public Where(WhereStep whereStep, Predicate predicate) {
-		super(whereStep);
-
+	public CaseWhenThen(Predicate predicate, Expression<T> thenExpression) {
 		_predicate = Objects.requireNonNull(predicate);
+		_thenExpression = Objects.requireNonNull(thenExpression);
 	}
 
 	public Predicate getPredicate() {
 		return _predicate;
 	}
 
+	public Expression<T> getThenExpression() {
+		return _thenExpression;
+	}
+
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("where ");
+		consumer.accept("case when ");
 
 		_predicate.toSQL(consumer, astNodeListener);
+
+		consumer.accept(" then ");
+
+		_thenExpression.toSQL(consumer, astNodeListener);
 	}
 
 	private final Predicate _predicate;
+	private final Expression<T> _thenExpression;
 
 }

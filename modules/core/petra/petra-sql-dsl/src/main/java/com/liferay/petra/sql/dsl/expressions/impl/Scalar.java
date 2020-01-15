@@ -12,32 +12,35 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl;
+package com.liferay.petra.sql.dsl.expressions.impl;
 
+import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
 import com.liferay.petra.sql.dsl.expressions.Expression;
-import com.liferay.petra.sql.dsl.query.AggregateExpression;
-import com.liferay.petra.sql.dsl.query.Select;
+import com.liferay.petra.string.StringPool;
+
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class SelectUtil {
+public class Scalar<T> extends BaseASTNode implements Expression<T> {
 
-	public static Select count() {
-		return new Select(false, AggregateExpression.COUNT_STAR_COUNT_VALUE);
+	public Scalar(T value) {
+		_value = value;
 	}
 
-	public static Select countDistinct(Expression<?> expression) {
-		return new Select(
-			false, new AggregateExpression<>(true, expression, "count"));
+	public T getValue() {
+		return _value;
 	}
 
-	public static Select select(Expression<?>... expressions) {
-		return new Select(false, expressions);
+	@Override
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		consumer.accept(StringPool.QUESTION);
 	}
 
-	public static Select selectDistinct(Expression<?>... expressions) {
-		return new Select(true, expressions);
-	}
+	private final T _value;
 
 }

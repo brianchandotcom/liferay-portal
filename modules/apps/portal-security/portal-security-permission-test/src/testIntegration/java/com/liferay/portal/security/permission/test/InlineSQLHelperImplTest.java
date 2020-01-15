@@ -15,10 +15,10 @@
 package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.sql.dsl.SelectUtil;
-import com.liferay.petra.sql.dsl.query.From;
+import com.liferay.petra.sql.dsl.QueryUtil;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.query.Query;
-import com.liferay.petra.sql.dsl.query.Where;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Company;
@@ -290,13 +290,13 @@ public class InlineSQLHelperImplTest {
 
 		_setPermissionChecker();
 
-		From from = SelectUtil.select(
+		JoinStep joinStep = QueryUtil.select(
 		).from(
 			Layout.TABLE
 		);
 
 		Query query = _inlineSQLHelper.replacePermissionCheck(
-			from, Layout.class, Layout.TABLE.plid, _groupIds);
+			joinStep, Layout.class, Layout.TABLE.plid, _groupIds);
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -309,7 +309,7 @@ public class InlineSQLHelperImplTest {
 				"= ?)) or Layout.groupId in (?)"),
 			query.toString());
 
-		Where where = from.innerJoinON(
+		GroupByStep groupByStep = joinStep.innerJoinON(
 			PortletPreferences.TABLE,
 			PortletPreferences.TABLE.plid.eq(Layout.TABLE.plid)
 		).where(
@@ -317,7 +317,7 @@ public class InlineSQLHelperImplTest {
 		);
 
 		query = _inlineSQLHelper.replacePermissionCheck(
-			where, Layout.class, Layout.TABLE.plid, _groupIds);
+			groupByStep, Layout.class, Layout.TABLE.plid, _groupIds);
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -333,7 +333,7 @@ public class InlineSQLHelperImplTest {
 			query.toString());
 
 		query = _inlineSQLHelper.replacePermissionCheck(
-			where, Layout.class, Layout.TABLE.plid);
+			groupByStep, Layout.class, Layout.TABLE.plid);
 
 		Assert.assertEquals(
 			StringBundler.concat(

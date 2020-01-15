@@ -12,39 +12,41 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query;
+package com.liferay.petra.sql.dsl.query.impl;
 
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class Limit extends BaseASTNode implements Query {
+public class From extends BaseASTNode implements JoinStep {
 
-	public Limit(LimitStep limitStep, int start, int end) {
-		super(limitStep);
+	public From(FromStep fromStep, Table<?> table) {
+		super(fromStep);
 
-		_start = start;
-		_end = end;
+		_table = Objects.requireNonNull(table);
 	}
 
-	public int getEnd() {
-		return _end;
-	}
-
-	public int getStart() {
-		return _start;
+	public Table<?> getTable() {
+		return _table;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		consumer.accept("from ");
+
+		_table.toSQL(consumer, astNodeListener);
 	}
 
-	private final int _end;
-	private final int _start;
+	private final Table<?> _table;
 
 }

@@ -14,15 +14,15 @@
 
 package com.liferay.petra.sql.dsl.query;
 
-import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
+import com.liferay.petra.sql.dsl.query.impl.Where;
 
 /**
  * @author Preston Crary
  */
-public interface WhereStep extends ASTNode {
+public interface WhereStep extends GroupByStep {
 
-	public default Where where(Predicate predicate) {
+	public default GroupByStep where(Predicate predicate) {
 		return new Where(this, predicate);
 	}
 

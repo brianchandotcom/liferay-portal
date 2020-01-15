@@ -14,14 +14,14 @@
 
 package com.liferay.petra.sql.dsl.query;
 
-import com.liferay.petra.sql.dsl.ast.ASTNode;
+import com.liferay.petra.sql.dsl.query.impl.Limit;
 
 /**
  * @author Preston Crary
  */
-public interface LimitStep extends ASTNode {
+public interface LimitStep extends Query {
 
-	public default Limit limit(int start, int end) {
+	public default Query limit(int start, int end) {
 		return new Limit(this, start, end);
 	}
 

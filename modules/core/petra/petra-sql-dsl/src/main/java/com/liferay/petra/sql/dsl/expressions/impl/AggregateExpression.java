@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query;
+package com.liferay.petra.sql.dsl.expressions.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
-import com.liferay.petra.sql.dsl.expressions.Alias;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
 import com.liferay.petra.sql.dsl.expressions.Expression;
 
 import java.util.Objects;
@@ -28,7 +27,7 @@ import java.util.function.Consumer;
 public class AggregateExpression<T>
 	extends BaseASTNode implements Expression<T> {
 
-	public static final Alias<Long> COUNT_STAR_COUNT_VALUE = new Alias<>(
+	public static final Expression<Long> COUNT_STAR_COUNT_VALUE = new Alias<>(
 		new AggregateExpression<>(false, null, "count"), "COUNT_VALUE");
 
 	public AggregateExpression(

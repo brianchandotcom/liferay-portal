@@ -15,14 +15,14 @@
 package com.liferay.petra.sql.dsl.query;
 
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.sql.dsl.ast.ASTNode;
+import com.liferay.petra.sql.dsl.query.impl.From;
 
 /**
  * @author Preston Crary
  */
-public interface FromStep extends ASTNode {
+public interface FromStep extends Query {
 
-	public default From from(Table<?> table) {
+	public default JoinStep from(Table<?> table) {
 		return new From(this, table);
 	}
 

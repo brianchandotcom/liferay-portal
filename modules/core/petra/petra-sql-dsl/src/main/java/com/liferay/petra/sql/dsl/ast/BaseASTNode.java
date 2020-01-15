@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.base;
-
-import com.liferay.petra.sql.dsl.ast.ASTNode;
-import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
+package com.liferay.petra.sql.dsl.ast;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -59,6 +56,7 @@ public abstract class BaseASTNode implements ASTNode, Cloneable {
 		return toSQL(null);
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T extends BaseASTNode> T withNewChild(ASTNode astNode) {
 		try {
 			BaseASTNode baseASTNode = (BaseASTNode)clone();

@@ -18,15 +18,15 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.sql.dsl.Column;
-import com.liferay.petra.sql.dsl.SelectUtil;
+import com.liferay.petra.sql.dsl.QueryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
 import com.liferay.petra.sql.dsl.expressions.Expression;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
 import com.liferay.petra.sql.dsl.query.Query;
-import com.liferay.petra.sql.dsl.query.Where;
 import com.liferay.petra.sql.dsl.query.WhereStep;
+import com.liferay.petra.sql.dsl.query.impl.Where;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -512,7 +512,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				roleIdsOrOwnerIdsPredicate.withParentheses());
 		}
 
-		return SelectUtil.selectDistinct(
+		return QueryUtil.selectDistinct(
 			ResourcePermission.TABLE.primKeyId
 		).from(
 			ResourcePermission.TABLE
@@ -637,7 +637,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		Predicate permissionPredicate = _getPermissionPredicate(
 			classPKColumn, groupIds, resourcePermissionQuery);
 
-		BaseASTNode child = null;
+		ASTNode child = null;
 
 		if (where == null) {
 			child = whereStep.where(permissionPredicate);

@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query;
+package com.liferay.petra.sql.dsl.query.impl;
 
-import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
-import com.liferay.petra.sql.dsl.joins.JoinStep;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.Expression;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -25,29 +24,36 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class From
-	extends BaseASTNode
-	implements GroupByStep, JoinStep, LimitStep, OrderByStep, Query, WhereStep {
+public class OrderByExpression extends BaseASTNode {
 
-	public From(FromStep fromStep, Table<?> table) {
-		super(fromStep);
-
-		_table = Objects.requireNonNull(table);
+	public OrderByExpression(Expression<?> expression, boolean ascending) {
+		_expression = Objects.requireNonNull(expression);
+		_ascending = ascending;
 	}
 
-	public Table<?> getTable() {
-		return _table;
+	public Expression<?> getExpression() {
+		return _expression;
+	}
+
+	public boolean isAscending() {
+		return _ascending;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("from ");
+		_expression.toSQL(consumer, astNodeListener);
 
-		_table.toSQL(consumer, astNodeListener);
+		if (_ascending) {
+			consumer.accept(" asc");
+		}
+		else {
+			consumer.accept(" desc");
+		}
 	}
 
-	private final Table<?> _table;
+	private final boolean _ascending;
+	private final Expression<?> _expression;
 
 }

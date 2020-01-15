@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query;
+package com.liferay.petra.sql.dsl.expressions.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.ElseEndStep;
 import com.liferay.petra.sql.dsl.expressions.Expression;
 
 import java.util.Objects;
@@ -24,36 +25,29 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class OrderByExpression extends BaseASTNode {
+public class ElseEnd<T> extends BaseASTNode implements Expression<T> {
 
-	public OrderByExpression(Expression<?> expression, boolean ascending) {
-		_expression = Objects.requireNonNull(expression);
-		_ascending = ascending;
+	public ElseEnd(ElseEndStep<T> elseEndStep, Expression<T> elseExpression) {
+		super(elseEndStep);
+
+		_elseExpression = Objects.requireNonNull(elseExpression);
 	}
 
-	public Expression<?> getExpression() {
-		return _expression;
-	}
-
-	public boolean isAscending() {
-		return _ascending;
+	public Expression<T> getElseExpression() {
+		return _elseExpression;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		_expression.toSQL(consumer, astNodeListener);
+		consumer.accept("else ");
 
-		if (_ascending) {
-			consumer.accept(" asc");
-		}
-		else {
-			consumer.accept(" desc");
-		}
+		_elseExpression.toSQL(consumer, astNodeListener);
+
+		consumer.accept(" end");
 	}
 
-	private final boolean _ascending;
-	private final Expression<?> _expression;
+	private final Expression<T> _elseExpression;
 
 }

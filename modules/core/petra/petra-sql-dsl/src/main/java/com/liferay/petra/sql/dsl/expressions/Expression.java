@@ -16,9 +16,13 @@ package com.liferay.petra.sql.dsl.expressions;
 
 import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.operands.Operand;
-import com.liferay.petra.sql.dsl.query.OrderByExpression;
+import com.liferay.petra.sql.dsl.expressions.impl.Alias;
+import com.liferay.petra.sql.dsl.expressions.impl.NullExpression;
+import com.liferay.petra.sql.dsl.expressions.impl.Operand;
+import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
+import com.liferay.petra.sql.dsl.expressions.impl.ScalarList;
 import com.liferay.petra.sql.dsl.query.Query;
+import com.liferay.petra.sql.dsl.query.impl.OrderByExpression;
 
 import java.util.function.Consumer;
 

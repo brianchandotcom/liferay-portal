@@ -12,48 +12,29 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions;
+package com.liferay.petra.sql.dsl.expressions.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.Expression;
 
 import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class ScalarList<T> extends BaseASTNode implements Expression<T> {
+public class NullExpression extends BaseASTNode implements Expression<Void> {
 
-	public ScalarList(T[] values) {
-		if (values.length == 0) {
-			throw new IllegalArgumentException();
-		}
-
-		_values = values;
-	}
-
-	public T[] getValues() {
-		return _values;
-	}
+	public static final NullExpression INSTANCE = new NullExpression();
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("(");
-
-		for (int i = 0; i < _values.length; i++) {
-			consumer.accept(StringPool.QUESTION);
-
-			if (i < (_values.length - 1)) {
-				consumer.accept(", ");
-			}
-		}
-
-		consumer.accept(")");
+		consumer.accept("NULL");
 	}
 
-	private final T[] _values;
+	private NullExpression() {
+	}
 
 }

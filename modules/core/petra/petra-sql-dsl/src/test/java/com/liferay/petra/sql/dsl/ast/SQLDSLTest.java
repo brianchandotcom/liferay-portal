@@ -16,36 +16,38 @@ package com.liferay.petra.sql.dsl.ast;
 
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.FunctionUtil;
-import com.liferay.petra.sql.dsl.SelectUtil;
+import com.liferay.petra.sql.dsl.QueryUtil;
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
-import com.liferay.petra.sql.dsl.expressions.Alias;
-import com.liferay.petra.sql.dsl.expressions.CaseWhenThen;
-import com.liferay.petra.sql.dsl.expressions.ElseEnd;
 import com.liferay.petra.sql.dsl.expressions.Expression;
-import com.liferay.petra.sql.dsl.expressions.NullExpression;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
-import com.liferay.petra.sql.dsl.expressions.Scalar;
-import com.liferay.petra.sql.dsl.expressions.ScalarList;
-import com.liferay.petra.sql.dsl.expressions.WhenThen;
-import com.liferay.petra.sql.dsl.functions.Function;
-import com.liferay.petra.sql.dsl.functions.FunctionType;
-import com.liferay.petra.sql.dsl.joins.Join;
-import com.liferay.petra.sql.dsl.joins.JoinType;
-import com.liferay.petra.sql.dsl.operands.Operand;
-import com.liferay.petra.sql.dsl.query.AggregateExpression;
-import com.liferay.petra.sql.dsl.query.From;
-import com.liferay.petra.sql.dsl.query.GroupBy;
-import com.liferay.petra.sql.dsl.query.Limit;
-import com.liferay.petra.sql.dsl.query.OrderBy;
-import com.liferay.petra.sql.dsl.query.OrderByExpression;
+import com.liferay.petra.sql.dsl.expressions.WhenThenStep;
+import com.liferay.petra.sql.dsl.expressions.impl.AggregateExpression;
+import com.liferay.petra.sql.dsl.expressions.impl.Alias;
+import com.liferay.petra.sql.dsl.expressions.impl.CaseWhenThen;
+import com.liferay.petra.sql.dsl.expressions.impl.ElseEnd;
+import com.liferay.petra.sql.dsl.expressions.impl.Function;
+import com.liferay.petra.sql.dsl.expressions.impl.FunctionType;
+import com.liferay.petra.sql.dsl.expressions.impl.NullExpression;
+import com.liferay.petra.sql.dsl.expressions.impl.Operand;
+import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
+import com.liferay.petra.sql.dsl.expressions.impl.ScalarList;
+import com.liferay.petra.sql.dsl.expressions.impl.WhenThen;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.query.OrderByInfo;
 import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.petra.sql.dsl.query.Query;
-import com.liferay.petra.sql.dsl.query.QueryTable;
-import com.liferay.petra.sql.dsl.query.Select;
-import com.liferay.petra.sql.dsl.query.Where;
-import com.liferay.petra.sql.dsl.set.Union;
+import com.liferay.petra.sql.dsl.query.impl.From;
+import com.liferay.petra.sql.dsl.query.impl.GroupBy;
+import com.liferay.petra.sql.dsl.query.impl.Join;
+import com.liferay.petra.sql.dsl.query.impl.JoinType;
+import com.liferay.petra.sql.dsl.query.impl.Limit;
+import com.liferay.petra.sql.dsl.query.impl.OrderBy;
+import com.liferay.petra.sql.dsl.query.impl.OrderByExpression;
+import com.liferay.petra.sql.dsl.query.impl.QueryTable;
+import com.liferay.petra.sql.dsl.query.impl.Select;
+import com.liferay.petra.sql.dsl.query.impl.Union;
+import com.liferay.petra.sql.dsl.query.impl.Where;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
@@ -93,10 +95,10 @@ public class SQLDSLTest {
 				assertClasses.add(OrderByExpression.class);
 				assertClasses.add(Predicate.class);
 				assertClasses.add(QueryTable.class);
+				assertClasses.add(QueryUtil.class);
 				assertClasses.add(Scalar.class);
 				assertClasses.add(ScalarList.class);
 				assertClasses.add(Select.class);
-				assertClasses.add(SelectUtil.class);
 				assertClasses.add(Table.class);
 				assertClasses.add(Union.class);
 				assertClasses.add(WhenThen.class);
@@ -131,14 +133,17 @@ public class SQLDSLTest {
 
 	@Test
 	public void testBaseASTNode() {
-		Select select = SelectUtil.select();
+		FromStep fromStep = QueryUtil.select();
 
-		From from = select.from(MainExampleTable.TABLE);
+		From from = new From(fromStep, MainExampleTable.TABLE);
 
-		Assert.assertSame(select, from.getChild());
+		Assert.assertSame(fromStep, from.getChild());
 
-		OrderBy orderBy = from.orderBy(
-			MainExampleTable.TABLE.mainExampleId.ascending());
+		OrderBy orderBy = new OrderBy(
+			from,
+			new OrderByExpression[] {
+				MainExampleTable.TABLE.mainExampleId.ascending()
+			});
 
 		Assert.assertSame(from, orderBy.getChild());
 
@@ -146,12 +151,12 @@ public class SQLDSLTest {
 			"select * from MainExample order by MainExample.mainExampleId asc",
 			orderBy.toString());
 
-		Join join = from.innerJoinON(
+		JoinStep joinStep = from.innerJoinON(
 			ReferenceExampleTable.TABLE,
 			ReferenceExampleTable.TABLE.mainExampleId.eq(
 				MainExampleTable.TABLE.mainExampleId));
 
-		OrderBy orderBy2 = orderBy.withNewChild(join);
+		OrderBy orderBy2 = orderBy.withNewChild(joinStep);
 
 		Assert.assertNotSame(orderBy, orderBy2);
 
@@ -186,7 +191,7 @@ public class SQLDSLTest {
 			"number"
 		);
 
-		Query query = SelectUtil.select(
+		Query query = QueryUtil.select(
 			numberAlias
 		).from(
 			MainExampleTable.TABLE
@@ -217,7 +222,7 @@ public class SQLDSLTest {
 
 		Scalar<String> scalar = new Scalar<>("one");
 
-		CaseWhenThen<String> caseWhenThen = FunctionUtil.casesWhenThen(
+		CaseWhenThen<String> caseWhenThen = new CaseWhenThen<>(
 			predicate, scalar);
 
 		Assert.assertSame(predicate, caseWhenThen.getPredicate());
@@ -250,7 +255,7 @@ public class SQLDSLTest {
 	@Test
 	public void testConstructors() {
 		new FunctionUtil();
-		new SelectUtil();
+		new QueryUtil();
 	}
 
 	@Test
@@ -258,11 +263,11 @@ public class SQLDSLTest {
 		ReferenceExampleTable referenceExampleTable =
 			ReferenceExampleTable.TABLE.as("referenceExample");
 
-		Query query = SelectUtil.select(
+		Query query = QueryUtil.select(
 		).from(
 			MainExampleTable.TABLE
 		).leftJoinOn(
-			SelectUtil.select(
+			QueryUtil.select(
 				ReferenceExampleTable.TABLE.mainExampleId,
 				ReferenceExampleTable.TABLE.name
 			).from(
@@ -299,14 +304,15 @@ public class SQLDSLTest {
 
 	@Test
 	public void testElseEnd() {
-		CaseWhenThen<String> caseWhenThen = FunctionUtil.casesWhenThen(
+		WhenThenStep<String> whenThenStep = FunctionUtil.casesWhenThen(
 			MainExampleTable.TABLE.mainExampleId.eq(
 				ReferenceExampleTable.TABLE.mainExampleId),
 			"equals");
 
 		String scalarValue = "not equals";
 
-		ElseEnd<String> elseEnd = caseWhenThen.elseEnd(scalarValue);
+		ElseEnd<String> elseEnd = new ElseEnd<>(
+			whenThenStep, new Scalar<>(scalarValue));
 
 		Scalar<String> scalar = (Scalar<String>)elseEnd.getElseExpression();
 
@@ -315,10 +321,7 @@ public class SQLDSLTest {
 
 	@Test
 	public void testFrom() {
-		From from = SelectUtil.count(
-		).from(
-			MainExampleTable.TABLE
-		);
+		From from = new From(QueryUtil.count(), MainExampleTable.TABLE);
 
 		Assert.assertSame(MainExampleTable.TABLE, from.getTable());
 	}
@@ -393,13 +396,13 @@ public class SQLDSLTest {
 
 	@Test
 	public void testGroupBy() {
-		From from = SelectUtil.select(
-			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE.name
-		).from(
-			MainExampleTable.TABLE
-		);
+		From from = new From(
+			QueryUtil.select(
+				MainExampleTable.TABLE.mainExampleId,
+				MainExampleTable.TABLE.name),
+			MainExampleTable.TABLE);
 
-		GroupBy groupBy = from.groupBy(MainExampleTable.TABLE.name);
+		GroupBy groupBy = new GroupBy(from, MainExampleTable.TABLE.name);
 
 		Expression<?>[] expressions = groupBy.getExpressions();
 
@@ -428,13 +431,13 @@ public class SQLDSLTest {
 		Predicate onPredicate = ReferenceExampleTable.TABLE.mainExampleId.eq(
 			MainExampleTable.TABLE.mainExampleId);
 
-		Join join = SelectUtil.countDistinct(
-			MainExampleTable.TABLE.name
-		).from(
-			MainExampleTable.TABLE
-		).innerJoinON(
-			ReferenceExampleTable.TABLE, onPredicate
-		);
+		Join join = new Join(
+			QueryUtil.countDistinct(
+				MainExampleTable.TABLE.name
+			).from(
+				MainExampleTable.TABLE
+			),
+			JoinType.INNER, ReferenceExampleTable.TABLE, onPredicate);
 
 		Assert.assertSame(ReferenceExampleTable.TABLE, join.getTable());
 		Assert.assertSame(JoinType.INNER, join.getJoinType());
@@ -443,7 +446,7 @@ public class SQLDSLTest {
 
 	@Test
 	public void testJoinCount() {
-		Query query = SelectUtil.countDistinct(
+		Query query = QueryUtil.countDistinct(
 			MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
@@ -466,7 +469,7 @@ public class SQLDSLTest {
 
 	@Test
 	public void testLeftJoin() {
-		Query query = SelectUtil.select(
+		Query query = QueryUtil.select(
 			MainExampleTable.TABLE.mainExampleId
 		).from(
 			MainExampleTable.TABLE
@@ -493,14 +496,14 @@ public class SQLDSLTest {
 
 	@Test
 	public void testOrderBy() {
-		From from = SelectUtil.select(
+		JoinStep joinStep = QueryUtil.select(
 			MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
 		);
 
 		try {
-			from.orderBy();
+			joinStep.orderBy();
 		}
 		catch (Exception e) {
 			Assert.assertEquals(IllegalArgumentException.class, e.getClass());
@@ -511,7 +514,7 @@ public class SQLDSLTest {
 
 		OrderByExpression[] orderByExpressions = {orderByExpression};
 
-		OrderBy orderBy = from.orderBy(orderByExpressions);
+		OrderBy orderBy = new OrderBy(joinStep, orderByExpressions);
 
 		Assert.assertSame(orderByExpressions, orderBy.getOrderByExpressions());
 
@@ -523,7 +526,7 @@ public class SQLDSLTest {
 
 	@Test
 	public void testOrderByComparatorAdaptor() {
-		OrderByStep orderByStep = SelectUtil.select(
+		OrderByStep orderByStep = QueryUtil.select(
 			MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
@@ -584,7 +587,7 @@ public class SQLDSLTest {
 
 		Assert.assertSame(rightPredicate, rightPredicate.withParentheses());
 
-		Query query = SelectUtil.count(
+		Query query = QueryUtil.count(
 		).from(
 			MainExampleTable.TABLE
 		).where(
@@ -636,7 +639,7 @@ public class SQLDSLTest {
 
 	@Test
 	public void testSelect1() {
-		Query query = SelectUtil.select(new Scalar<>(1));
+		Query query = QueryUtil.select(new Scalar<>(1));
 
 		Assert.assertEquals("select ?", query.toString());
 	}
@@ -645,20 +648,20 @@ public class SQLDSLTest {
 	public void testSelectDistinctWhereInWithAlias() {
 		MainExampleTable mainTable = MainExampleTable.TABLE.as("mainTable");
 
-		From from = SelectUtil.selectDistinct(
+		JoinStep joinStep = QueryUtil.selectDistinct(
 			mainTable.name
 		).from(
 			mainTable
 		);
 
-		Query query = from.where(mainTable.flag.in(new Integer[] {1, 2}));
+		Query query = joinStep.where(mainTable.flag.in(new Integer[] {1, 2}));
 
 		Assert.assertEquals(
 			"select distinct mainTable.name from MainExample mainTable where " +
 				"mainTable.flag in (?, ?)",
 			query.toString());
 
-		query = from.where(
+		query = joinStep.where(
 			mainTable.mainExampleId.in(new Long[] {1L, 2L, null})
 		).orderBy(
 			mainTable.name.ascending()
@@ -680,7 +683,7 @@ public class SQLDSLTest {
 
 		String[] strings = {"1", "2", "3"};
 
-		query = from.where(
+		query = joinStep.where(
 			FunctionUtil.castText(
 				mainTable.mainExampleId
 			).in(
@@ -708,7 +711,7 @@ public class SQLDSLTest {
 		MainExampleTable tempMainExample = MainExampleTable.TABLE.as(
 			"tempMainExample");
 
-		Query query = SelectUtil.select(
+		Query query = QueryUtil.select(
 			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
@@ -731,7 +734,7 @@ public class SQLDSLTest {
 
 	@Test
 	public void testSimpleCount() {
-		Query query = SelectUtil.count(
+		Query query = QueryUtil.count(
 		).from(
 			MainExampleTable.TABLE
 		);
@@ -742,13 +745,13 @@ public class SQLDSLTest {
 
 	@Test
 	public void testSimpleSelect() {
-		Select select = SelectUtil.select();
+		FromStep fromStep = QueryUtil.select();
 
-		Assert.assertEquals("select *", select.toString());
+		Assert.assertEquals("select *", fromStep.toString());
 
-		From from = select.from(MainExampleTable.TABLE);
+		JoinStep joinStep = fromStep.from(MainExampleTable.TABLE);
 
-		Assert.assertEquals("select * from MainExample", from.toString());
+		Assert.assertEquals("select * from MainExample", joinStep.toString());
 
 		Predicate predicate = MainExampleTable.TABLE.name.eq("test");
 
@@ -760,7 +763,7 @@ public class SQLDSLTest {
 			"MainExample.name = ? and MainExample.mainExampleId > ?",
 			predicate.toString());
 
-		Where where = from.where(predicate);
+		Where where = new Where(joinStep, predicate);
 
 		Assert.assertSame(predicate, where.getPredicate());
 
@@ -775,7 +778,8 @@ public class SQLDSLTest {
 		Assert.assertEquals(
 			"MainExample.mainExampleId desc", orderByExpression.toString());
 
-		OrderBy orderBy = where.orderBy(orderByExpression);
+		OrderBy orderBy = new OrderBy(
+			where, new OrderByExpression[] {orderByExpression});
 
 		DefaultASTNodeListener defaultASTNodeListener =
 			new DefaultASTNodeListener();
@@ -799,7 +803,7 @@ public class SQLDSLTest {
 		Assert.assertEquals(-1, defaultASTNodeListener.getStart());
 		Assert.assertEquals(-1, defaultASTNodeListener.getEnd());
 
-		Limit limit = orderBy.limit(-1, -1);
+		Limit limit = new Limit(orderBy, -1, -1);
 
 		defaultASTNodeListener = new DefaultASTNodeListener();
 
@@ -813,7 +817,7 @@ public class SQLDSLTest {
 		Assert.assertEquals(-1, defaultASTNodeListener.getStart());
 		Assert.assertEquals(-1, defaultASTNodeListener.getEnd());
 
-		limit = orderBy.limit(10, 30);
+		limit = new Limit(orderBy, 10, 30);
 
 		defaultASTNodeListener = new DefaultASTNodeListener();
 
@@ -830,12 +834,12 @@ public class SQLDSLTest {
 
 	@Test
 	public void testSubqueryCount() {
-		Query query = SelectUtil.count(
+		Query query = QueryUtil.count(
 		).from(
 			MainExampleTable.TABLE
 		).where(
 			MainExampleTable.TABLE.mainExampleId.in(
-				SelectUtil.select(
+				QueryUtil.select(
 					ReferenceExampleTable.TABLE.mainExampleId
 				).from(
 					ReferenceExampleTable.TABLE
@@ -918,19 +922,19 @@ public class SQLDSLTest {
 
 	@Test
 	public void testUnionSelect() {
-		Query query1 = SelectUtil.select(
+		Query query1 = QueryUtil.select(
 			MainExampleTable.TABLE.name.as("name")
 		).from(
 			MainExampleTable.TABLE
 		);
 
-		Query query2 = SelectUtil.select(
+		Query query2 = QueryUtil.select(
 			ReferenceExampleTable.TABLE.name.as("name")
 		).from(
 			ReferenceExampleTable.TABLE
 		);
 
-		Union union = query1.union(query2);
+		Union union = new Union(query1, false, query2);
 
 		Assert.assertFalse(union.isAll());
 
@@ -943,8 +947,9 @@ public class SQLDSLTest {
 				"ReferenceExample.name name from ReferenceExample",
 			union.toString());
 
-		union = query1.unionAll(
-			SelectUtil.select(
+		union = new Union(
+			query1, true,
+			QueryUtil.select(
 				ReferenceExampleTable.TABLE.name.as("name")
 			).from(
 				ReferenceExampleTable.TABLE
@@ -958,7 +963,7 @@ public class SQLDSLTest {
 
 		Assert.assertEquals(sql, union.toString());
 
-		union = union.union(union);
+		union = new Union(union, false, union);
 
 		Assert.assertEquals(
 			StringBundler.concat(sql, " union ", sql), union.toString());
@@ -970,11 +975,10 @@ public class SQLDSLTest {
 
 		Scalar<String> scalar = new Scalar<>("two");
 
-		WhenThen<String> whenThen = FunctionUtil.casesWhenThen(
-			MainExampleTable.TABLE.mainExampleId.eq(1L), "one"
-		).whenThen(
-			predicate, scalar
-		);
+		WhenThen<String> whenThen = new WhenThen<>(
+			FunctionUtil.casesWhenThen(
+				MainExampleTable.TABLE.mainExampleId.eq(1L), "one"),
+			predicate, scalar);
 
 		Assert.assertSame(predicate, whenThen.getPredicate());
 

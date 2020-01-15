@@ -58,7 +58,7 @@ const Languages = ({
 		);
 	};
 
-	const LanguagesList = ({defaultLocaleId, locales, showActions}) => {
+	const LanguagesList = ({defaultLocaleId, locales, showActions = false}) => {
 		return (
 			<ClayTable borderless headVerticalAlignment="middle">
 				<ClayTable.Head>
@@ -69,7 +69,7 @@ const Languages = ({
 
 						{showActions && (
 							<ClayTable.Cell align="center">
-								<ClayButton displayType="secondary">
+								<ClayButton displayType="secondary" small>
 									{Liferay.Language.get('add')}
 								</ClayButton>
 							</ClayTable.Cell>
@@ -119,7 +119,6 @@ const Languages = ({
 				<LanguagesList
 					defaultLocaleId={defaultLocaleId}
 					locales={availableLocales}
-					showActions={false}
 				/>
 			)}
 
@@ -127,7 +126,7 @@ const Languages = ({
 				<LanguagesList
 					defaultLocaleId={siteDefaultLocaleId}
 					locales={siteAvailableLocales}
-					showActions={true}
+					showActions
 				/>
 			)}
 		</div>

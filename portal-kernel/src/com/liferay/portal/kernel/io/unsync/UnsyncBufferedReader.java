@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.io.unsync;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import java.io.IOException;
 import java.io.Reader;

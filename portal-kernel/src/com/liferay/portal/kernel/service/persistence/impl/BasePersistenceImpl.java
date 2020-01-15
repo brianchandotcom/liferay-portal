@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -49,7 +50,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -241,35 +241,34 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			return map;
 		}
 
-		com.liferay.petra.string.StringBundler query =
-			new com.liferay.petra.string.StringBundler(
-				2 * uncachedPrimaryKeys.size() + 4);
+		StringBundler sb = new StringBundler(
+			2 * uncachedPrimaryKeys.size() + 4);
 
-		query.append(getSelectSQL());
-		query.append(" WHERE ");
-		query.append(getPKDBName());
-		query.append(" IN (");
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
 
 		if (_modelPKType == ModelPKType.STRING) {
 			for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
-				query.append("?");
+				sb.append("?");
 
-				query.append(",");
+				sb.append(",");
 			}
 		}
 		else {
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				query.append((long)primaryKey);
+				sb.append((long)primaryKey);
 
-				query.append(",");
+				sb.append(",");
 			}
 		}
 
-		query.setIndex(query.index() - 1);
+		sb.setIndex(sb.index() - 1);
 
-		query.append(")");
+		sb.append(")");
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
 		Session session = null;
 
@@ -578,14 +577,14 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	protected void appendOrderByComparator(
-		com.liferay.petra.string.StringBundler sb, String entityAlias,
+		StringBundler sb, String entityAlias,
 		OrderByComparator<T> orderByComparator) {
 
 		appendOrderByComparator(sb, entityAlias, orderByComparator, false);
 	}
 
 	protected void appendOrderByComparator(
-		com.liferay.petra.string.StringBundler sb, String entityAlias,
+		StringBundler sb, String entityAlias,
 		OrderByComparator<T> orderByComparator, boolean sqlQuery) {
 
 		sb.append(ORDER_BY_CLAUSE);

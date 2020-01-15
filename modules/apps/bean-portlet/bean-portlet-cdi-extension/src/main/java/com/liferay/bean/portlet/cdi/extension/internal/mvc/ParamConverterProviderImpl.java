@@ -62,34 +62,23 @@ public class ParamConverterProviderImpl implements ParamConverterProvider {
 					if (rawType.equals(Integer.class) ||
 						rawType.equals(Integer.TYPE)) {
 
-						return _getNumber(
-							value,
-							(Function<Number, Integer>)
-								number -> number.intValue());
+						return _getNumber(value, number -> number.intValue());
 					}
 					else if (rawType.equals(Long.class) ||
 							 rawType.equals(Long.TYPE)) {
 
-						return _getNumber(
-							value,
-							(Function<Number, Long>)
-								number -> number.longValue());
+						return _getNumber(value, number -> number.longValue());
 					}
 					else if (rawType.equals(Double.class) ||
 							 rawType.equals(Double.TYPE)) {
 
 						return _getNumber(
-							value,
-							(Function<Number, Double>)
-								number -> number.doubleValue());
+							value, number -> number.doubleValue());
 					}
 					else if (rawType.equals(Float.class) ||
 							 rawType.equals(Float.TYPE)) {
 
-						return _getNumber(
-							value,
-							(Function<Number, Float>)
-								number -> number.floatValue());
+						return _getNumber(value, number -> number.floatValue());
 					}
 					else if (rawType.equals(Boolean.class) ||
 							 rawType.equals(Boolean.TYPE)) {

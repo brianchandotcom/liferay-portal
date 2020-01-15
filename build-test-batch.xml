@@ -664,8 +664,12 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<then>
 							<mkdir dir="${env.WORKSPACE}/test-results/cucumber/build/reports" />
 
-							<copy todir="${env.WORKSPACE}/test-results/cucumber/build/reports">
-								<fileset dir="${analytics.cloud.faro.dir}/osb-faro-functional-test/build/reports" />
+							<copy
+								todir="${env.WORKSPACE}/test-results/cucumber/build/reports"
+							>
+								<fileset
+									dir="${analytics.cloud.faro.dir}/osb-faro-functional-test/build/reports"
+								/>
 							</copy>
 						</then>
 					</if>
@@ -675,8 +679,12 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<then>
 							<mkdir dir="${env.WORKSPACE}/test-results/cucumber/screenshots" />
 
-							<copy todir="${env.WORKSPACE}/test-results/cucumber/screenshots">
-								<fileset dir="${analytics.cloud.faro.dir}/osb-faro-functional-test/test-results/functional/screenshots" />
+							<copy
+								todir="${env.WORKSPACE}/test-results/cucumber/screenshots"
+							>
+								<fileset
+									dir="${analytics.cloud.faro.dir}/osb-faro-functional-test/test-results/functional/screenshots"
+								/>
 							</copy>
 						</then>
 					</if>

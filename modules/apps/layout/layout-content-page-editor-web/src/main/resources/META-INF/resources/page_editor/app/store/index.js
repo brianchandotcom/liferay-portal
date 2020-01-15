@@ -14,6 +14,8 @@
 
 import React from 'react';
 
+import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
+
 const INITIAL_STATE = {
 	/**
 	 * A collection of dynamically loaded reducers that may be loaded from
@@ -22,6 +24,11 @@ const INITIAL_STATE = {
 	 * TODO: potentially allow us to specify a ranking here to determine order
 	 */
 	draft: true,
+	network: {
+		error: null,
+		lastFetch: null,
+		status: SERVICE_NETWORK_STATUS_TYPES.Idle
+	},
 	reducers: {},
 	sidebarOpen: true,
 	singleSegmentsExperienceMode: false

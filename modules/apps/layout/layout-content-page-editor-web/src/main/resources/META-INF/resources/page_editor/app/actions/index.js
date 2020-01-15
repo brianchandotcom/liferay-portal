@@ -25,5 +25,6 @@ export {default as updateEditableValues} from './updateEditableValues';
 export {default as updateFragmentEntryLinkContent} from './updateFragmentEntryLinkContent';
 export {default as updateLanguageId} from './updateLanguageId';
 export {default as updateLayoutData} from './updateLayoutData';
+export {default as updateNetwork} from './updateNetwork';
 
 export * as TYPES from './types';

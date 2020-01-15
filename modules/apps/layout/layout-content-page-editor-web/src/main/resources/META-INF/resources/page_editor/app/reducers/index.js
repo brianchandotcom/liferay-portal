@@ -19,6 +19,7 @@ import fragmentEntryLinksReducer from './fragmentEntryLinksReducer';
 import languageReducer from './languageReducer';
 import layoutDataReducer from './layoutDataReducer';
 import mappingReducer from './mappingReducer';
+import networkReducer from './networkReducer';
 import resolvedCommentsReducer from './resolvedCommentsReducer';
 import sidebarReducer from './sidebarReducer';
 
@@ -48,6 +49,7 @@ export function reducer(state, action) {
 			languageId: languageReducer,
 			layoutData: layoutDataReducer,
 			mappedInfoItems: mappingReducer,
+			network: networkReducer,
 			showResolvedComments: resolvedCommentsReducer
 		}),
 		...Object.values(state.reducers)

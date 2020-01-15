@@ -14,10 +14,10 @@
 
 package com.liferay.portal.lpkg.deployer.test.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

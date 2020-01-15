@@ -21,6 +21,7 @@ import com.liferay.dispatch.exception.DispatchTriggerStartDateException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.base.DispatchTriggerLocalServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -251,8 +251,7 @@ public class DispatchTriggerLocalServiceImpl
 		throw new DuplicateDispatchTriggerException(
 			StringBundler.concat(
 				"Dispatch trigger name \"", name,
-				"\" already exists for company ID ",
-				String.valueOf(companyId)));
+				"\" already exists for company ID ", companyId));
 	}
 
 	private void _addSchedulerJob(

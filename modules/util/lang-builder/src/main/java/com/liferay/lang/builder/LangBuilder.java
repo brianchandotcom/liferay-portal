@@ -600,7 +600,9 @@ public class LangBuilder {
 		throws IOException {
 
 		if (checkExistence && !propertiesFile.exists()) {
-			return null;
+			_write(propertiesFile, StringPool.BLANK);
+
+			return StringPool.BLANK;
 		}
 
 		boolean useSingleCategory = true;

@@ -272,8 +272,6 @@ class SidebarPageStructurePanel extends Component {
 			} else {
 				this._expandedNodes.splice(nodeKeyIndex, 1);
 			}
-
-			this._expandedNodes = this._expandedNodes;
 		}
 
 		if (elementId && elementType) {

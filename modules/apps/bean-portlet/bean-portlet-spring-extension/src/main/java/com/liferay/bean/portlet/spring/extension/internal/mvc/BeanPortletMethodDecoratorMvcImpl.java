@@ -80,9 +80,7 @@ public class BeanPortletMethodDecoratorMvcImpl
 		Object target = _applicationContext.getBean(beanType);
 
 		try {
-			BeanInfo beanInfo = null;
-
-			beanInfo = Introspector.getBeanInfo(target.getClass());
+			BeanInfo beanInfo = Introspector.getBeanInfo(target.getClass());
 
 			PropertyDescriptor[] propertyDescriptors =
 				beanInfo.getPropertyDescriptors();

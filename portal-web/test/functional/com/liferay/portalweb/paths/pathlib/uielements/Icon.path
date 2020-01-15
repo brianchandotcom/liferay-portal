@@ -64,11 +64,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CUSTOM_META_TAG_DELETE</td>
-	<td>//div[contains(@class,'field-wrapper')][${key_tagNum}]//*[*[name()='svg'][contains(@class,'icon-hr')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEACTIVATE</td>
 	<td>//button[@data-title='Deactivate' or @title='Deactivate']</td>
 	<td></td>
@@ -76,6 +71,11 @@
 <tr>
 	<td>DELETE</td>
 	<td>//*[*[name()='svg'][contains(@class,'icon-trash')]] | //button[@data-title='Delete' or @title='Delete'] | //*[*[name()='svg'][contains(@class,'times-circle')]] | //a[@data-title='Deactivate' or @title='Deactivate'] | //a[@data-title='Remove' or @title='Remove']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_CUSTOM_META_TAG</td>
+	<td>//div[contains(@class,'field-wrapper')][${key_tagNum}]//*[*[name()='svg'][contains(@class,'icon-hr')]]</td>
 	<td></td>
 </tr>
 <tr>

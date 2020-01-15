@@ -81,7 +81,7 @@ definition {
 	macro removeTag {
 		Click(
 			key_tagNum = "${tagNum}",
-			locator1 = "Icon#CUSTOM_META_TAG_DELETE");
+			locator1 = "Icon#DELETE_CUSTOM_META_TAG");
 
 		Button.click(button = "Save");
 	}

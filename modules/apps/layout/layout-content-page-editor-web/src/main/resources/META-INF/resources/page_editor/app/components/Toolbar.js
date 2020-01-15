@@ -24,6 +24,7 @@ import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
+import NetworkStatusBar from './NetworkStatusBar';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
 
@@ -153,6 +154,7 @@ function ToolbarBody() {
 			</ul>
 
 			<ul className="navbar-nav">
+				<NetworkStatusBar {...store.network} />
 				<li className="nav-item">
 					<form action={discardDraftURL} method="POST">
 						<input

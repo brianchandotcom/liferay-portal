@@ -18,8 +18,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.layout.taglib.internal.util.RenderFragmentLayoutTagUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -152,7 +152,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
-			if (RenderFragmentLayoutTagUtil.isReactEditor(dataJSONObject)) {
+			if (LayoutDataConverter.isReactEditor(dataJSONObject)) {
 				_dataJSONObject = dataJSONObject;
 
 				return _dataJSONObject;

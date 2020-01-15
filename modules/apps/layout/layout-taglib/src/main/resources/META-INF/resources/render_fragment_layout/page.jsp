@@ -35,7 +35,7 @@ JSONObject dataJSONObject = (JSONObject)request.getAttribute("liferay-layout:ren
 			<%= renderFragmentLayoutDisplayContext.getPortletPaths() %>
 
 			<c:choose>
-				<c:when test="<%= RenderFragmentLayoutTagUtil.isReactEditor(dataJSONObject) %>">
+				<c:when test="<%= LayoutDataConverter.isReactEditor(dataJSONObject) %>">
 
 					<%
 					JSONObject rootItemsJSONObject = dataJSONObject.getJSONObject("rootItems");

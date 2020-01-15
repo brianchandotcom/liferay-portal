@@ -35,11 +35,11 @@ public class DescendingPriorityComparator<T> implements Comparator<Object> {
 	public int compare(Object object1, Object object2) {
 		Class<?> class1 = object1.getClass();
 
-		Priority priority1 = (Priority)class1.getAnnotation(Priority.class);
+		Priority priority1 = class1.getAnnotation(Priority.class);
 
 		Class<?> class2 = object2.getClass();
 
-		Priority priority2 = (Priority)class2.getAnnotation(Priority.class);
+		Priority priority2 = class2.getAnnotation(Priority.class);
 
 		if ((priority1 == null) && (priority2 == null)) {
 			return 0;

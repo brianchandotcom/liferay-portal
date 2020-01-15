@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter;
 
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -44,7 +45,11 @@ import org.apache.cxf.phase.PhaseInterceptorChain;
 @Provider
 public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
-	public ContextContainerRequestFilter(Language language, Portal portal) {
+	public ContextContainerRequestFilter(
+		ImportTaskResource importTaskResource, Language language,
+		Portal portal) {
+
+		_importTaskResource = importTaskResource;
 		_language = language;
 		_portal = portal;
 	}
@@ -120,9 +125,15 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 				field.set(instance, _portal.getUser(httpServletRequest));
 			}
+			else if (fieldClass.isAssignableFrom(ImportTaskResource.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _importTaskResource);
+			}
 		}
 	}
 
+	private final ImportTaskResource _importTaskResource;
 	private final Language _language;
 	private final Portal _portal;
 

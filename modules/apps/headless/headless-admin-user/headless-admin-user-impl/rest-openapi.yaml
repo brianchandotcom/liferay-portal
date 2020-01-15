@@ -981,6 +981,41 @@ paths:
                     description:
                         "Organizations successfully created"
             tags: ["Organization"]
+    "/organizations/batch":
+        delete:
+            operationId: deleteOrganizationBatch
+            parameters:
+                - in: query
+                  name: callbackURL
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                    application/x-ndjson:
+                        schema:
+                            type: object
+                    application/xml:
+                        schema:
+                            type: object
+                    text/csv:
+                        schema:
+                            type: object
+                required: true
+            responses:
+                202:
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                        application/xml:
+                            schema:
+                                type: object
+                    description:
+                        ""
+            tags: ["Organization"]
     "/organizations/{organizationId}":
         delete:
             # @review

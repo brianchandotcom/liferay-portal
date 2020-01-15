@@ -20,7 +20,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -256,9 +254,6 @@ public class AddPortletReactMVCActionCommand
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
-	private FragmentEntryLinkService _fragmentEntryLinkService;
-
-	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Reference
@@ -275,9 +270,6 @@ public class AddPortletReactMVCActionCommand
 
 	@Reference
 	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private PortletPreferencesFactory _portletPreferencesFactory;
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

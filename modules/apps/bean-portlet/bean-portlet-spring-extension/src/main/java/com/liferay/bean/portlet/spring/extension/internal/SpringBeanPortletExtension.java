@@ -555,7 +555,7 @@ public class SpringBeanPortletExtension {
 			BeanPortletRegistrar.class, SpringBeanPortletExtension.class,
 			"_beanPortletRegistrar", true);
 
-	private Set<Class<?>> _annotatedClasses = new HashSet<>();
+	private final Set<Class<?>> _annotatedClasses = new HashSet<>();
 	private final ApplicationContext _applicationContext;
 	private BeanFactory _configurableBeanFactory;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =

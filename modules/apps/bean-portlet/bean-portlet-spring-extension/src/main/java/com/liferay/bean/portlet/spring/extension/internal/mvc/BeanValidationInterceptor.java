@@ -139,6 +139,6 @@ public class BeanValidationInterceptor extends BeanPortletMethodInterceptor {
 	private final MutableBindingResult _mutableBindingResult;
 	private final MvcContext _mvcContext;
 	private final Object _target;
-	private Validator _validator;
+	private final Validator _validator;
 
 }

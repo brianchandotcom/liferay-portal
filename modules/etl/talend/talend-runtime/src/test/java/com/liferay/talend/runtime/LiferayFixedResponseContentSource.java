@@ -16,6 +16,7 @@ package com.liferay.talend.runtime;
 
 import com.liferay.talend.BaseTestCase;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,13 +32,13 @@ public class LiferayFixedResponseContentSource extends LiferaySource {
 	}
 
 	@Override
-	public JsonObject doGetRequest(String resourceURL) {
+	public Optional<JsonObject> doGetRequest(String resourceURL) {
 		if (_jsonObject != null) {
-			return _jsonObject;
+			return Optional.of(_jsonObject);
 		}
 
-		return _baseTestCase.readObject(
-			_getResponseContentFileName(resourceURL));
+		return Optional.of(
+			_baseTestCase.readObject(_getResponseContentFileName(resourceURL)));
 	}
 
 	public void setBaseTestCase(BaseTestCase baseTestCase) {

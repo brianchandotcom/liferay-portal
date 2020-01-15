@@ -35,7 +35,7 @@ public class ResourceBundleServiceListener implements ServiceListener {
 
 	@Override
 	public void serviceChanged(ServiceEvent serviceEvent) {
-		CacheResourceBundleLoader.notifyResourceBundleModification();
+		CacheResourceBundleLoader.clearCache();
 	}
 
 	@Activate

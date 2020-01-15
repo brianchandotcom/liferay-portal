@@ -14,45 +14,46 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public class CacheResourceBundleLoader implements ResourceBundleLoader {
 
-	public static void notifyResourceBundleModification() {
-		_modifiedCount.incrementAndGet();
+	public static void clearCache() {
+		for (CacheResourceBundleLoader cacheResourceBundleLoader :
+				_cacheResourceBundleLoaders) {
+
+			Map<Locale, ResourceBundle> resourceBundles =
+				cacheResourceBundleLoader._resourceBundles;
+
+			resourceBundles.clear();
+		}
 	}
 
 	public CacheResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
 
 		_resourceBundleLoader = resourceBundleLoader;
+
+		_cacheResourceBundleLoaders.add(this);
 	}
 
 	@Override
 	public ResourceBundle loadResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = null;
-
-		long modifiedCount = _modifiedCount.get();
-
-		ResourceBundleCacheEntry resourceBundleCacheEntry =
-			_resourceBundleCache.get(locale);
-
-		if ((resourceBundleCacheEntry != null) &&
-			(resourceBundleCacheEntry.getModifiedCount() >= modifiedCount)) {
-
-			resourceBundle = resourceBundleCacheEntry.getResourceBundle();
-		}
+		ResourceBundle resourceBundle = _resourceBundles.get(locale);
 
 		if (resourceBundle == _nullResourceBundle) {
 			return null;
@@ -70,15 +71,11 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 			}
 
 			if (resourceBundle == null) {
-				resourceBundleCacheEntry = new ResourceBundleCacheEntry(
-					_nullResourceBundle, modifiedCount);
+				_resourceBundles.put(locale, _nullResourceBundle);
 			}
 			else {
-				resourceBundleCacheEntry = new ResourceBundleCacheEntry(
-					resourceBundle, modifiedCount);
+				_resourceBundles.put(locale, resourceBundle);
 			}
-
-			_resourceBundleCache.put(locale, resourceBundleCacheEntry);
 		}
 
 		return resourceBundle;
@@ -87,7 +84,10 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CacheResourceBundleLoader.class);
 
-	private static final AtomicLong _modifiedCount = new AtomicLong(0);
+	private static final Set<CacheResourceBundleLoader>
+		_cacheResourceBundleLoaders = Collections.newSetFromMap(
+			new ConcurrentReferenceKeyHashMap<>(
+				FinalizeManager.WEAK_REFERENCE_FACTORY));
 
 	private static final ResourceBundle _nullResourceBundle =
 		new ResourceBundle() {
@@ -104,30 +104,8 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 
 		};
 
-	private final Map<Locale, ResourceBundleCacheEntry> _resourceBundleCache =
-		new ConcurrentHashMap<>();
 	private final ResourceBundleLoader _resourceBundleLoader;
-
-	private class ResourceBundleCacheEntry {
-
-		public ResourceBundleCacheEntry(
-			ResourceBundle resourceBundle, long modifiedCount) {
-
-			_resourceBundle = resourceBundle;
-			_modifiedCount = modifiedCount;
-		}
-
-		public long getModifiedCount() {
-			return _modifiedCount;
-		}
-
-		public ResourceBundle getResourceBundle() {
-			return _resourceBundle;
-		}
-
-		private final long _modifiedCount;
-		private final ResourceBundle _resourceBundle;
-
-	}
+	private final Map<Locale, ResourceBundle> _resourceBundles =
+		new ConcurrentHashMap<>();
 
 }

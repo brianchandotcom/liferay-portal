@@ -1917,7 +1917,7 @@ definition {
 			pageName = "App Builder Page",
 			portletName = "Test App B");
 
-		AppBuilderAdmin.validateWidgetApp(appName = "There are no entries yet.");
+		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
 
 		ProductMenu.gotoPortlet(
 			category = "App Builder",
@@ -2013,7 +2013,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "App Builder Page");
 
-		AppBuilderAdmin.validateWidgetApp(appName = "There are no entries yet.");
+		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
 
 		ProductMenu.gotoPortlet(
 			category = "App Builder",

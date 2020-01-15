@@ -15,6 +15,7 @@
 package com.liferay.portal.lpkg.deployer.internal;
 
 import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
@@ -75,11 +76,12 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 			file, _bundleContext, properties);
 
 		if (lpkgFiles != null) {
-			LPKGBatchInstallThreadLocal.setBatchInstallInProcess(true);
+			try (SafeClosable safeCloseable =
+					LPKGBatchInstallThreadLocal.setBatchInstallInProcess(
+						true)) {
 
-			_batchInstall(lpkgFiles);
-
-			LPKGBatchInstallThreadLocal.setBatchInstallInProcess(false);
+				_batchInstall(lpkgFiles);
+			}
 
 			return;
 		}

@@ -15,6 +15,7 @@
 package com.liferay.portal.lpkg.deployer.internal;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeClosable;
 
 /**
  * @author Matthew Tambara
@@ -25,12 +26,15 @@ public class LPKGBatchInstallThreadLocal {
 		return _batchInstallInProcess.get();
 	}
 
-	public static void setBatchInstallInProcess(boolean batchInstallInProcess) {
-		_batchInstallInProcess.set(batchInstallInProcess);
+	public static SafeClosable setBatchInstallInProcess(
+		boolean batchInstallInProcess) {
+
+		return _batchInstallInProcess.setWithSafeClosable(
+			batchInstallInProcess);
 	}
 
-	private static final ThreadLocal<Boolean> _batchInstallInProcess =
-		new CentralizedThreadLocal<>(
+	private static final CentralizedThreadLocal<Boolean>
+		_batchInstallInProcess = new CentralizedThreadLocal<>(
 			LPKGBatchInstallThreadLocal.class + "._batchInstallInProcess",
 			() -> Boolean.FALSE);
 

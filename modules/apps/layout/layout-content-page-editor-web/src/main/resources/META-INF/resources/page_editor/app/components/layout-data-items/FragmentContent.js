@@ -16,18 +16,18 @@ import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import React, {useContext, useEffect, useState, useRef} from 'react';
 
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
-import {ConfigContext} from '../config/index';
-import Processors from '../processors/index';
-import {DispatchContext} from '../reducers/index';
-import selectEditableValueConfig from '../selectors/selectEditableValueConfig';
-import selectEditableValueContent from '../selectors/selectEditableValueContent';
-import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
-import {StoreContext} from '../store/index';
-import updateEditableValues from '../thunks/updateEditableValues';
-import {useSelectItem} from './Controls';
-import UnsafeHTML from './UnsafeHTML';
-import {showFloatingToolbar} from './showFloatingToolbar';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
+import {ConfigContext} from '../../config/index';
+import Processors from '../../processors/index';
+import {DispatchContext} from '../../reducers/index';
+import selectEditableValueConfig from '../../selectors/selectEditableValueConfig';
+import selectEditableValueContent from '../../selectors/selectEditableValueContent';
+import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
+import {StoreContext} from '../../store/index';
+import updateEditableValues from '../../thunks/updateEditableValues';
+import {useSelectItem} from '../Controls';
+import UnsafeHTML from '../UnsafeHTML';
+import {showFloatingToolbar} from '../showFloatingToolbar';
 
 const resolveEditableValue = (state, config, fragmentEntryLinkId, editableId) =>
 	new Promise(resolve => {

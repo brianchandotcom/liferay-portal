@@ -83,10 +83,6 @@ public class ParamConverterProviderImpl implements ParamConverterProvider {
 					else if (rawType.equals(Boolean.class) ||
 							 rawType.equals(Boolean.TYPE)) {
 
-						if (value == null) {
-							return rawType.cast(Boolean.FALSE);
-						}
-
 						value = value.trim();
 						value = StringUtil.toLowerCase(value);
 

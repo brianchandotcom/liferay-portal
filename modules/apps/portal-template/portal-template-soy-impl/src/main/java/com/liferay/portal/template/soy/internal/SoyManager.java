@@ -207,16 +207,13 @@ public class SoyManager extends BaseTemplateManager {
 			String languageId = GetterUtil.getString(
 				serviceReference.getProperty("language.id"));
 
-			Locale locale;
-
-			if (Validator.isNotNull(languageId)) {
-				locale = LocaleUtil.fromLanguageId(languageId, true);
+			if (Validator.isNull(languageId)) {
+				_soyTofuCacheHandler.removeIfAny(new Locale(StringPool.BLANK));
 			}
 			else {
-				locale = new Locale(StringPool.BLANK);
+				_soyTofuCacheHandler.removeIfAny(
+					LocaleUtil.fromLanguageId(languageId, true));
 			}
-
-			_soyTofuCacheHandler.removeIfAny(locale);
 		}
 
 	}

@@ -20,7 +20,7 @@
 		<#local assetTagIds = dataFactory.getAssetTagIds(assetEntryModel)>
 
 		<#list assetTagIds as assetTagId>
-			insert into AssetEntries_AssetTags values (${assetEntryModel.companyId}, ${assetEntryModel.entryId}, ${assetTagId});
+			insert into AssetEntries_AssetTags values (${assetEntryModel.companyId}, ${assetEntryModel.entryId}, ${assetTagId}, 0, null);
 		</#list>
 	</#if>
 </#macro>

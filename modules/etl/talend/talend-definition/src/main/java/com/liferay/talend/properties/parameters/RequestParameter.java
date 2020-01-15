@@ -32,6 +32,10 @@ public class RequestParameter {
 	}
 
 	public String getName() {
+		if (_name.endsWith("*")) {
+			return _name.substring(0, _name.length() - 1);
+		}
+
 		return _name;
 	}
 

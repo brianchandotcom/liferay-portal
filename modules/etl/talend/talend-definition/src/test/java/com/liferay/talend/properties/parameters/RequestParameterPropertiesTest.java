@@ -125,10 +125,6 @@ public class RequestParameterPropertiesTest {
 		for (OASParameter oasParameter : _testOASParameters) {
 			String oasParameterName = oasParameter.getName();
 
-			if (oasParameter.isRequired()) {
-				oasParameterName = oasParameterName + "*";
-			}
-
 			if (Objects.equals(requestParameter.getName(), oasParameterName)) {
 				Assert.assertEquals(
 					oasParameter.isLocationPath(),

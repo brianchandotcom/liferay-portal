@@ -138,7 +138,7 @@ public class RequestParameterProperties extends ComponentPropertiesImpl {
 		parameterNameColumn.setTaggedValue(_ADD_QUOTES, true);
 		parameterNameColumn.setValue(new ArrayList<>());
 
-		parameterValueColumn.setTaggedValue(_ADD_QUOTES, true);
+		parameterValueColumn.setTaggedValue(_ADD_QUOTES, false);
 		parameterValueColumn.setValue(new ArrayList<>());
 	}
 

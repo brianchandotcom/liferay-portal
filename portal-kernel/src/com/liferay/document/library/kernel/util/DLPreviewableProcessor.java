@@ -17,6 +17,7 @@ package com.liferay.document.library.kernel.util;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -761,8 +761,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			for (File file : files) {
 				_log.debug(
 					StringBundler.concat(
-						"Preview page for ", tempFileId, " ",
-						String.valueOf(file)));
+						"Preview page for ", tempFileId, " ", file));
 			}
 		}
 

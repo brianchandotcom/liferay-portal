@@ -75,18 +75,17 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 		List<File> lpkgFiles = ContainerLPKGUtil.deploy(
 			file, _bundleContext, properties);
 
-		if (lpkgFiles != null) {
-			try (SafeClosable safeCloseable =
-					LPKGBatchInstallThreadLocal.setBatchInstallInProcess(
-						true)) {
-
-				_batchInstall(lpkgFiles);
-			}
+		if (lpkgFiles == null) {
+			_install(file, properties);
 
 			return;
 		}
 
-		_install(file, properties);
+		try (SafeClosable safeCloseable =
+				LPKGBatchInstallThreadLocal.setBatchInstallInProcess(true)) {
+
+			_batchInstall(lpkgFiles);
+		}
 	}
 
 	@Override
@@ -138,24 +137,24 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 		for (Map.Entry<Bundle, List<Bundle>> entry : lpkgBundles.entrySet()) {
 			List<Bundle> bundles = entry.getValue();
 
-			for (Bundle bundle : entry.getValue()) {
+			for (Bundle bundle : bundles) {
 				Dictionary<String, String> headers = bundle.getHeaders(
 					StringPool.BLANK);
 
 				String header = headers.get("Web-ContextPath");
 
 				try {
-					if (header != null) {
+					if (header == null) {
 						BundleStartLevelUtil.setStartLevelAndStart(
 							bundle,
-							PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL,
+							PropsValues.
+								MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
 							_bundleContext);
 					}
 					else {
 						BundleStartLevelUtil.setStartLevelAndStart(
 							bundle,
-							PropsValues.
-								MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
+							PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL,
 							_bundleContext);
 					}
 				}

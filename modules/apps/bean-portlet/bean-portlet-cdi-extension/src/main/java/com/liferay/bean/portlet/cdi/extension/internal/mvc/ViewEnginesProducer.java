@@ -53,7 +53,7 @@ public class ViewEnginesProducer {
 	private static class ViewEnginePriorityComparator
 		extends DescendingPriorityComparator<ViewEngine> {
 
-		public ViewEnginePriorityComparator() {
+		private ViewEnginePriorityComparator() {
 
 			// The Javadoc for javax.mvc.engine.ViewEngine states "View engines
 			// can be decorated with javax.annotation.Priority to indicate their

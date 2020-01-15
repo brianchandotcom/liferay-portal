@@ -60,7 +60,7 @@ public class ParamConverterProvidersProducer {
 	private static class ParamConverterProviderPriorityComparator
 		extends DescendingPriorityComparator<ParamConverterProvider> {
 
-		public ParamConverterProviderPriorityComparator() {
+		private ParamConverterProviderPriorityComparator() {
 			super(0);
 		}
 

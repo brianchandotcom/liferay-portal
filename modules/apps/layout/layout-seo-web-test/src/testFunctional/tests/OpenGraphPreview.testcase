@@ -377,6 +377,7 @@ definition {
 	@description = "This test covers LPS-106118. It ensures that the special images can be uploaded and previewed."
 	@priority = "4"
 	test ViewSpecialImages {
+		property test.name.skip.portal.instance = "OpenGraphPreview#ViewSpecialImages";
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

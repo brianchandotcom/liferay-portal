@@ -166,6 +166,7 @@ definition {
 	@description = "This makes sure that it will apply the OG image of the page when images are set at both the site level and the page level."
 	@priority = "5"
 	test ClearImageAtSiteLevel {
+		property test.name.skip.portal.instance = "OpenGraphImages#ClearImageAtSiteLevel";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");

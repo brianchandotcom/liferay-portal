@@ -455,6 +455,11 @@ public class InvokerFilterHelper {
 				serviceReference.getProperty("before-filter"));
 			String servletContextName = GetterUtil.getString(
 				serviceReference.getProperty("servlet-context-name"));
+
+			if (Validator.isNull(servletContextName)) {
+				servletContextName = PortalUtil.getServletContextName();
+			}
+
 			String servletFilterName = GetterUtil.getString(
 				serviceReference.getProperty("servlet-filter-name"));
 
@@ -484,10 +489,6 @@ public class InvokerFilterHelper {
 
 			ServletContext servletContext = ServletContextPool.get(
 				servletContextName);
-
-			if (servletContext == null) {
-				servletContext = ServletContextPool.get(PortalUtil.getServletContextName());
-			}
 
 			FilterConfig filterConfig = new InvokerFilterConfig(
 				servletContext, servletFilterName, initParameterMap);

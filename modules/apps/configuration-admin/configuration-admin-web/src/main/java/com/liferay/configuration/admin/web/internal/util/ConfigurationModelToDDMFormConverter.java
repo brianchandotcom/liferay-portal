@@ -135,12 +135,18 @@ public class ConfigurationModelToDDMFormConverter {
 	protected DDMFormFieldOptions getDDMFieldOptions(
 		AttributeDefinition attributeDefinition) {
 
+		String pid = _configurationModel.getID();
+
+		if (_configurationModel.isFactory()) {
+			pid = _configurationModel.getFactoryPid();
+		}
+
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
 		ConfigurationFieldOptionsProvider configurationFieldOptionsProvider =
 			ConfigurationFieldOptionsProviderUtil.
 				getConfigurationFieldOptionsProvider(
-					_configurationModel.getID(), attributeDefinition.getID());
+					pid, attributeDefinition.getID());
 
 		if (configurationFieldOptionsProvider != null) {
 			for (ConfigurationFieldOptionsProvider.Option option :

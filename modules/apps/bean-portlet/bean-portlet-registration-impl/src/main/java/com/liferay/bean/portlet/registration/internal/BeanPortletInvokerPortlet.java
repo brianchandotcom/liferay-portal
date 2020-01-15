@@ -241,9 +241,6 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 
 				throw new PortletException(cause);
 			}
-			catch (Exception e) {
-				throw new PortletException(e);
-			}
 		}
 	}
 

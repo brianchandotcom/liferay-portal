@@ -31,9 +31,9 @@ public interface LayoutConverterConfiguration {
 
 	@Meta.AD(
 		deflt = "1_column,2_columns_i,2_columns_ii,2_columns_iii,3_columns,1_2_columns_i,1_2_columns_ii,1_2_1_columns_i,1_2_1_columns_ii,1_3_1_columns,1_3_2_columns,2_1_2_columns,2_2_columns,3_2_3_columns",
-		description = "layout-converter-configuration-default-layout-template-ids-description",
-		name = "default-layout-template-ids", required = false
+		description = "layout-converter-configuration-verified-layout-template-ids-description",
+		name = "verified-layout-template-ids", required = false
 	)
-	public String[] defaultLayoutTemplateIds();
+	public String[] verifiedLayoutTemplateIds();
 
 }

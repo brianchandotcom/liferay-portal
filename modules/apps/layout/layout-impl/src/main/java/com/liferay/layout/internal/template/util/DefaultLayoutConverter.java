@@ -174,7 +174,7 @@ public class DefaultLayoutConverter implements LayoutConverter {
 
 		if (_isLayoutTemplateParseable(layout) &&
 			!ArrayUtil.contains(
-				_layoutConverterConfiguration.defaultLayoutTemplateIds(),
+				_layoutConverterConfiguration.verifiedLayoutTemplateIds(),
 				typeSettingsProperties.getProperty(
 					LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID))) {
 

@@ -124,6 +124,7 @@ const TooltipProvider = () => {
 						'data-restore-title',
 						titleTag.innerHTML
 					);
+
 					titleTag.remove();
 				}
 			}
@@ -137,6 +138,7 @@ const TooltipProvider = () => {
 			if (title) {
 				if (element.tagName === 'svg') {
 					const titleTag = document.createElement('title');
+
 					titleTag.innerHTML = title;
 
 					element.appendChild(titleTag);
@@ -166,6 +168,7 @@ const TooltipProvider = () => {
 				SELECTOR_TRIGGER,
 				() => {
 					dispatch({type: 'hide'});
+
 					restoreTitle(state.target);
 				}
 			);

@@ -780,7 +780,9 @@ public class JournalDisplayContext {
 			orderColumns = ArrayUtil.append(orderColumns, "relevance");
 		}
 
-		if (!_journalWebConfiguration.journalArticleForceAutogenerateId()) {
+		if (!_journalWebConfiguration.journalArticleForceAutogenerateId() ||
+			_journalWebConfiguration.journalArticleShowId()) {
+
 			orderColumns = ArrayUtil.append(orderColumns, "id");
 		}
 

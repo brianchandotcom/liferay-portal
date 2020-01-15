@@ -382,7 +382,13 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	}
 
 	public boolean showArticleId() {
-		return !_journalWebConfiguration.journalArticleForceAutogenerateId();
+		if (!_journalWebConfiguration.journalArticleForceAutogenerateId() ||
+			_journalWebConfiguration.journalArticleShowId()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected SearchContext buildSearchContext(

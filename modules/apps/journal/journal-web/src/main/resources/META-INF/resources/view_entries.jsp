@@ -150,7 +150,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
-						<c:if test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() %>">
+						<c:if test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() || journalWebConfiguration.journalArticleShowId() %>">
 							<liferay-ui:search-container-column-text
 								name="id"
 								value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
@@ -311,7 +311,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
-						<c:if test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() %>">
+						<c:if test="<%= !journalWebConfiguration.journalArticleForceAutogenerateId() || journalWebConfiguration.journalArticleShowId() %>">
 							<liferay-ui:search-container-column-text
 								name="id"
 								value="<%= HtmlUtil.escape(String.valueOf(curFolder.getFolderId())) %>"

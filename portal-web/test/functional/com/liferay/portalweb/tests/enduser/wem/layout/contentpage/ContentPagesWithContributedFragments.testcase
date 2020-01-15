@@ -104,6 +104,8 @@ definition {
 	@description = "This case ensures that a user can map a blogs content field to a fragment via the content display."
 	@priority = "5"
 	test MapBlogContentViaContentDisplay {
+		property testray.component.names = "Content Pages,Item Selector";
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
 
 		Blogs.addEntry(

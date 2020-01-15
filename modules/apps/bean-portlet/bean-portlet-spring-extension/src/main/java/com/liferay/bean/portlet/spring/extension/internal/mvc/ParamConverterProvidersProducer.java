@@ -49,13 +49,8 @@ public class ParamConverterProvidersProducer
 		Map<String, ParamConverterProvider> paramConverterProviders =
 			_applicationContext.getBeansOfType(ParamConverterProvider.class);
 
-		_paramConverterProviders = new ArrayList<>();
-
-		for (Map.Entry<String, ParamConverterProvider> entry :
-				paramConverterProviders.entrySet()) {
-
-			_paramConverterProviders.add(entry.getValue());
-		}
+		_paramConverterProviders = new ArrayList<>(
+			paramConverterProviders.values());
 
 		Collections.sort(
 			_paramConverterProviders,

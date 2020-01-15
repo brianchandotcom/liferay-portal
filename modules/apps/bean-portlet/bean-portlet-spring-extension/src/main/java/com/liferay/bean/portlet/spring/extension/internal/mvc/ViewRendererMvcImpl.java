@@ -98,14 +98,11 @@ public class ViewRendererMvcImpl
 				);
 			}
 
-			List<ViewEngine> viewEngines = new ArrayList<>();
-
 			Map<String, ViewEngine> beansOfType =
 				_applicationContext.getBeansOfType(ViewEngine.class);
 
-			for (Map.Entry<String, ViewEngine> entry : beansOfType.entrySet()) {
-				viewEngines.add(entry.getValue());
-			}
+			List<ViewEngine> viewEngines = new ArrayList<>(
+				beansOfType.values());
 
 			Collections.sort(viewEngines, new ViewEnginePriorityComparator());
 

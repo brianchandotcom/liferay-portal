@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;

@@ -59,7 +59,7 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{className}/{contentType}/{version}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{className}/{contentType}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Operation(description = "Submits a request for exporting items to a file.")
@@ -68,12 +68,11 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
 			@Parameter(in = ParameterIn.PATH, name = "contentType"),
-			@Parameter(in = ParameterIn.PATH, name = "version"),
 			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
 			@Parameter(in = ParameterIn.QUERY, name = "fieldNames")
 		}
 	)
-	@Path("/export-task/{className}/{contentType}/{version}")
+	@Path("/export-task/{className}/{contentType}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ExportTask")})
 	public ExportTask postExportTask(
@@ -81,8 +80,6 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 				className,
 			@NotNull @Parameter(hidden = true) @PathParam("contentType") String
 				contentType,
-			@NotNull @Parameter(hidden = true) @PathParam("version") String
-				version,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			@Parameter(hidden = true) @QueryParam("fieldNames") String

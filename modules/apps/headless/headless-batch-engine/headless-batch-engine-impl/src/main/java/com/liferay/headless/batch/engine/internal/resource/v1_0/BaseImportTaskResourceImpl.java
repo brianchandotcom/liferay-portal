@@ -62,7 +62,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}/{version}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes(
@@ -76,18 +76,15 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
-			@Parameter(in = ParameterIn.PATH, name = "version"),
 			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
 		}
 	)
-	@Path("/import-task/{className}/{version}")
+	@Path("/import-task/{className}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ImportTask")})
 	public ImportTask deleteImportTask(
 			@NotNull @Parameter(hidden = true) @PathParam("className") String
 				className,
-			@NotNull @Parameter(hidden = true) @PathParam("version") String
-				version,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			Object object)
@@ -99,7 +96,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}/{version}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes("multipart/form-data")
@@ -108,18 +105,15 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
-			@Parameter(in = ParameterIn.PATH, name = "version"),
 			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
 		}
 	)
-	@Path("/import-task/{className}/{version}")
+	@Path("/import-task/{className}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ImportTask")})
 	public ImportTask deleteImportTask(
 			@NotNull @Parameter(hidden = true) @PathParam("className") String
 				className,
-			@NotNull @Parameter(hidden = true) @PathParam("version") String
-				version,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			MultipartBody multipartBody)
@@ -131,7 +125,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}/{version}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes(
@@ -147,19 +141,16 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
-			@Parameter(in = ParameterIn.PATH, name = "version"),
 			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
 			@Parameter(in = ParameterIn.QUERY, name = "fieldNameMapping")
 		}
 	)
-	@Path("/import-task/{className}/{version}")
+	@Path("/import-task/{className}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ImportTask")})
 	public ImportTask postImportTask(
 			@NotNull @Parameter(hidden = true) @PathParam("className") String
 				className,
-			@NotNull @Parameter(hidden = true) @PathParam("version") String
-				version,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			@Parameter(hidden = true) @QueryParam("fieldNameMapping") String
@@ -173,7 +164,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}/{version}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes("multipart/form-data")
@@ -184,19 +175,16 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
-			@Parameter(in = ParameterIn.PATH, name = "version"),
 			@Parameter(in = ParameterIn.QUERY, name = "callbackURL"),
 			@Parameter(in = ParameterIn.QUERY, name = "fieldNameMapping")
 		}
 	)
-	@Path("/import-task/{className}/{version}")
+	@Path("/import-task/{className}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ImportTask")})
 	public ImportTask postImportTask(
 			@NotNull @Parameter(hidden = true) @PathParam("className") String
 				className,
-			@NotNull @Parameter(hidden = true) @PathParam("version") String
-				version,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			@Parameter(hidden = true) @QueryParam("fieldNameMapping") String
@@ -210,7 +198,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}/{version}'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes(
@@ -224,18 +212,15 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
-			@Parameter(in = ParameterIn.PATH, name = "version"),
 			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
 		}
 	)
-	@Path("/import-task/{className}/{version}")
+	@Path("/import-task/{className}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ImportTask")})
 	public ImportTask putImportTask(
 			@NotNull @Parameter(hidden = true) @PathParam("className") String
 				className,
-			@NotNull @Parameter(hidden = true) @PathParam("version") String
-				version,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			Object object)
@@ -247,7 +232,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}/{version}'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-batch-engine/v1.0/import-task/{className}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes("multipart/form-data")
@@ -256,18 +241,15 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "className"),
-			@Parameter(in = ParameterIn.PATH, name = "version"),
 			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
 		}
 	)
-	@Path("/import-task/{className}/{version}")
+	@Path("/import-task/{className}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ImportTask")})
 	public ImportTask putImportTask(
 			@NotNull @Parameter(hidden = true) @PathParam("className") String
 				className,
-			@NotNull @Parameter(hidden = true) @PathParam("version") String
-				version,
 			@Parameter(hidden = true) @QueryParam("callbackURL") String
 				callbackURL,
 			MultipartBody multipartBody)

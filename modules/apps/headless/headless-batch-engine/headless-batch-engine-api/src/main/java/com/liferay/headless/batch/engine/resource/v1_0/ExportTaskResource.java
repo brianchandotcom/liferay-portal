@@ -40,8 +40,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ExportTaskResource {
 
 	public ExportTask postExportTask(
-			String className, String contentType, String version,
-			String callbackURL, String fieldNames)
+			String className, String contentType, String callbackURL,
+			String fieldNames)
 		throws Exception;
 
 	public Response getExportTaskContent(Long exportTaskId) throws Exception;

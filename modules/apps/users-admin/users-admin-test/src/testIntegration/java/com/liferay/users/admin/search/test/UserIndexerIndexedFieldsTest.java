@@ -48,13 +48,12 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.lang.StringUtils;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -354,13 +353,15 @@ public class UserIndexerIndexedFieldsTest {
 	}
 
 	private String _getValues(String[] stringArray) {
-		String values = StringUtils.join(stringArray, ", ");
-
-		if (stringArray.length > 1) {
-			values = '[' + values + ']';
+		if (stringArray == null) {
+			return null;
 		}
 
-		return values;
+		if (stringArray.length == 1) {
+			return stringArray[0];
+		}
+
+		return String.valueOf(Arrays.asList(stringArray));
 	}
 
 	@DeleteAfterTestRun

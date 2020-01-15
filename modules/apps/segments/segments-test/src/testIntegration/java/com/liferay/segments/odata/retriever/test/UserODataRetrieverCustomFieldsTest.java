@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.odata.normalizer.Normalizer;
 import com.liferay.portal.test.rule.Inject;
@@ -426,7 +426,7 @@ public class UserODataRetrieverCustomFieldsTest {
 	}
 
 	private String _encodeName(ExpandoColumn expandoColumn) {
-		return com.liferay.petra.string.StringBundler.concat(
+		return StringBundler.concat(
 			StringPool.UNDERLINE, expandoColumn.getColumnId(),
 			StringPool.UNDERLINE,
 			Normalizer.normalizeIdentifier(expandoColumn.getName()));

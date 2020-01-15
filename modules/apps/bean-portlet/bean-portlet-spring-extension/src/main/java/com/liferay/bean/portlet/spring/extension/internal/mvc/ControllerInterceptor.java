@@ -243,7 +243,7 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 
 	private static class ActionRedirectURL extends RenderURLWrapper {
 
-		public ActionRedirectURL(ActionResponse actionResponse) {
+		private ActionRedirectURL(ActionResponse actionResponse) {
 			super(actionResponse.createRedirectURL(MimeResponse.Copy.ALL));
 
 			MutableRenderParameters mutableRenderParameters =
@@ -257,7 +257,7 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 
 	private static class ResourceRedirectURL extends ResourceURLWrapper {
 
-		public ResourceRedirectURL(ResourceResponse resourceResponse) {
+		private ResourceRedirectURL(ResourceResponse resourceResponse) {
 			super(resourceResponse.createResourceURL());
 
 			MutableResourceParameters mutableResourceParameters =

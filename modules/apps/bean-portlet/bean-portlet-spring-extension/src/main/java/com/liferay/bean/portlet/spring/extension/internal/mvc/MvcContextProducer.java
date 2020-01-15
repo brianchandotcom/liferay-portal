@@ -84,7 +84,7 @@ public class MvcContextProducer implements ApplicationContextAware {
 	private static class LocaleResolverPriorityComparator
 		extends DescendingPriorityComparator<LocaleResolver> {
 
-		public LocaleResolverPriorityComparator() {
+		private LocaleResolverPriorityComparator() {
 
 			// The Javadoc for javax.mvc.locale.LocaleResolver states "If no
 			// priority is explicitly defined, the priority is assumed to be

@@ -36,9 +36,12 @@ const ContainerWithControls = React.forwardRef(
 			>
 				{() => (
 					<Container
-						className={classNames('page-editor__container', {
-							empty: !item.children.length
-						})}
+						className={classNames(
+							'container-fluid page-editor__container',
+							{
+								empty: !item.children.length
+							}
+						)}
 						item={item}
 						ref={ref}
 					>
@@ -50,9 +53,7 @@ const ContainerWithControls = React.forwardRef(
 							itemRef={ref}
 						/>
 
-						<div className="page-editor__container-outline">
-							{children}
-						</div>
+						{children}
 					</Container>
 				)}
 			</Topper>

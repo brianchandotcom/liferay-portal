@@ -20,12 +20,14 @@
 		width: calc(100% - 24px);
 	}
 	&__container,
-	&__container-outline,
+	&__container > .container,
+	&__container > .container-fluid,
 	&__fragment {
 		box-shadow: inset 0 0 0 1px rgba(11, 95, 255, 0.2);
 	}
 
-	&__container.empty &__container-outline,
+	&__container.empty > .container,
+	&__container.empty > .container-fluid,
 	&__row.empty {
 		min-height: 10em;
 	}

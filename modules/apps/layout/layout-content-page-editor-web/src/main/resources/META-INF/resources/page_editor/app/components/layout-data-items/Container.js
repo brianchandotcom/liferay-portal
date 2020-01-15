@@ -40,8 +40,6 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 				`pb-${paddingBottom} pt-${paddingTop}`,
 				{
 					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
-					container: type === 'fixed',
-					'container-fluid': type === 'fluid',
 					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
 				}
 			)}
@@ -57,7 +55,14 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 					: {}
 			}
 		>
-			{children}
+			<div
+				className={classNames('px-0', {
+					container: type === 'fixed',
+					'container-fluid': type === 'fluid'
+				})}
+			>
+				{children}
+			</div>
 		</div>
 	);
 });

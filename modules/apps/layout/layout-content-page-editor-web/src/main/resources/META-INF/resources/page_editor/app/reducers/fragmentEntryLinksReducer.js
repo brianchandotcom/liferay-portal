@@ -138,6 +138,16 @@ export default function fragmentEntryLinksReducer(state, action) {
 				}
 			};
 
+		case TYPES.UPDATE_LAYOUT_DATA: {
+			const nextState = {...state};
+
+			action.deletedFragmentEntryLinkIds.forEach(fragmentEntryLinkId => {
+				delete nextState[fragmentEntryLinkId];
+			});
+
+			return nextState;
+		}
+
 		case TYPES.UPDATE_FRAGMENT_ENTRY_LINK_CONTENT:
 			return {
 				...state,

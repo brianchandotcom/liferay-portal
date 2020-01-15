@@ -23,8 +23,10 @@ export default function deleteItem({config, itemId, store}) {
 			config,
 			itemId,
 			segmentsExperienceId
-		}).then(({layoutData}) => {
-			dispatch(updateLayoutData(layoutData));
+		}).then(({deletedFragmentEntryLinkIds, layoutData}) => {
+			dispatch(
+				updateLayoutData({deletedFragmentEntryLinkIds, layoutData})
+			);
 		});
 	};
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.headless.batch.engine.internal.resource.v1_0.util;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.Serializable;
 
 import java.util.HashMap;
@@ -28,6 +30,14 @@ import javax.ws.rs.core.UriInfo;
  * @author Ivica Cardic
  */
 public class ParametersUtil {
+
+	public static String getVersion(String className) {
+		className = className.substring(className.indexOf('v'));
+
+		className = className.substring(0, className.indexOf('.'));
+
+		return StringUtil.replace(className, '_', '.');
+	}
 
 	public static Map<String, Serializable> toParameters(
 		UriInfo contextUriInfo, Set<String> ignoredParameters) {

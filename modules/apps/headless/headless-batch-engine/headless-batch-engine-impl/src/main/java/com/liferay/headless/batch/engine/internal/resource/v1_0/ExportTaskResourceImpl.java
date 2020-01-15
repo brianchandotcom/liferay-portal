@@ -91,8 +91,8 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 
 	@Override
 	public ExportTask postExportTask(
-			String className, String contentType, String version,
-			String callbackURL, String fieldNames)
+			String className, String contentType, String callbackURL,
+			String fieldNames)
 		throws Exception {
 
 		Class<?> clazz = _itemClassRegistry.getItemClass(className);
@@ -113,7 +113,7 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				_toList(fieldNames),
 				ParametersUtil.toParameters(contextUriInfo, _ignoredParameters),
-				version);
+				ParametersUtil.getVersion(className));
 
 		executorService.submit(
 			() -> _batchEngineExportTaskExecutor.execute(

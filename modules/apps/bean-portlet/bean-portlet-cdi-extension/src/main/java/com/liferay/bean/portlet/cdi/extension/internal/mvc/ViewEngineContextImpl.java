@@ -73,7 +73,7 @@ public class ViewEngineContextImpl implements ViewEngineContext {
 				String type = contentType;
 				String subtype = null;
 
-				int pos = contentType.indexOf("/");
+				int pos = contentType.indexOf('/');
 
 				if (pos > 0) {
 					type = contentType.substring(0, pos);

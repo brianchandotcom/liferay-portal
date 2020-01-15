@@ -7,6 +7,7 @@ dependencies {
 	testIntegrationCompile project(":apps:calendar:calendar-api")
 	testIntegrationCompile project(":apps:calendar:calendar-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
+	testIntegrationCompile project(":apps:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:portal:portal-upgrade-api")
 	testIntegrationCompile project(":apps:ratings:ratings-test-util")

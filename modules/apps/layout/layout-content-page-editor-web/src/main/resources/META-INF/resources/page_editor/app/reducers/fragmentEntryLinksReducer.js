@@ -14,17 +14,18 @@
 
 import {TYPES} from '../actions/index';
 
-export default function fragmentEntryLinksReducer(state, action) {
+export default function fragmentEntryLinksReducer(fragmentEntryLinks, action) {
 	switch (action.type) {
 		case TYPES.ADD_FRAGMENT_ENTRY_LINK:
 			return {
-				...state,
+				...fragmentEntryLinks,
 				[action.fragmentEntryLink.fragmentEntryLinkId]:
 					action.fragmentEntryLink
 			};
 
 		case TYPES.ADD_FRAGMENT_ENTRY_LINK_COMMENT: {
-			const fragmentEntryLink = state[action.fragmentEntryLinkId];
+			const fragmentEntryLink =
+				fragmentEntryLinks[action.fragmentEntryLinkId];
 
 			const {comments = []} = fragmentEntryLink;
 
@@ -47,7 +48,7 @@ export default function fragmentEntryLinksReducer(state, action) {
 			}
 
 			return {
-				...state,
+				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
 					...fragmentEntryLink,
 					comments: nextComments
@@ -56,7 +57,8 @@ export default function fragmentEntryLinksReducer(state, action) {
 		}
 
 		case TYPES.DELETE_FRAGMENT_ENTRY_LINK_COMMENT: {
-			const fragmentEntryLink = state[action.fragmentEntryLinkId];
+			const fragmentEntryLink =
+				fragmentEntryLinks[action.fragmentEntryLinkId];
 
 			const {comments = []} = fragmentEntryLink;
 
@@ -82,7 +84,7 @@ export default function fragmentEntryLinksReducer(state, action) {
 			}
 
 			return {
-				...state,
+				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
 					...fragmentEntryLink,
 					comments: nextComments
@@ -91,7 +93,8 @@ export default function fragmentEntryLinksReducer(state, action) {
 		}
 
 		case TYPES.EDIT_FRAGMENT_ENTRY_LINK_COMMENT: {
-			const fragmentEntryLink = state[action.fragmentEntryLinkId];
+			const fragmentEntryLink =
+				fragmentEntryLinks[action.fragmentEntryLinkId];
 
 			const {comments = []} = fragmentEntryLink;
 
@@ -121,7 +124,7 @@ export default function fragmentEntryLinksReducer(state, action) {
 			}
 
 			return {
-				...state,
+				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
 					...fragmentEntryLink,
 					comments: nextComments
@@ -131,35 +134,33 @@ export default function fragmentEntryLinksReducer(state, action) {
 
 		case TYPES.UPDATE_EDITABLE_VALUES:
 			return {
-				...state,
+				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
-					...state[action.fragmentEntryLinkId],
+					...fragmentEntryLinks[action.fragmentEntryLinkId],
 					editableValues: action.editableValues
 				}
 			};
 
 		case TYPES.UPDATE_LAYOUT_DATA: {
-			const nextState = {...state};
+			const nextFragmentEntryLinks = {...fragmentEntryLinks};
 
 			action.deletedFragmentEntryLinkIds.forEach(fragmentEntryLinkId => {
-				delete nextState[fragmentEntryLinkId];
+				delete nextFragmentEntryLinks[fragmentEntryLinkId];
 			});
 
-			return nextState;
+			return nextFragmentEntryLinks;
 		}
 
 		case TYPES.UPDATE_FRAGMENT_ENTRY_LINK_CONTENT:
 			return {
-				...state,
+				...fragmentEntryLinks,
 				[action.fragmentEntryLinkId]: {
-					...state[action.fragmentEntryLinkId],
+					...fragmentEntryLinks[action.fragmentEntryLinkId],
 					content: action.content
 				}
 			};
 
 		default:
-			break;
+			return fragmentEntryLinks;
 	}
-
-	return state;
 }

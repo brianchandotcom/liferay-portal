@@ -181,9 +181,10 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), 0, 0, classNameId,
-					classPK, StringPool.BLANK, html, StringPool.BLANK,
-					StringPool.BLANK, editableValueJSONObject.toString(),
-					StringPool.BLANK, 0, null, serviceContext);
+					classPK, StringPool.BLANK, StringPool.BLANK,
+					StringPool.BLANK, StringPool.BLANK,
+					editableValueJSONObject.toString(), StringPool.BLANK, 0,
+					null, serviceContext);
 
 			DefaultFragmentRendererContext defaultFragmentRendererContext =
 				new DefaultFragmentRendererContext(fragmentEntryLink);

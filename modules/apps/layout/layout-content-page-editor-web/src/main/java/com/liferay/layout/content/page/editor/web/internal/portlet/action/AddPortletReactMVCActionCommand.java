@@ -199,7 +199,7 @@ public class AddPortletReactMVCActionCommand
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-				0, classNameId, classPK, StringPool.BLANK, html,
+				0, classNameId, classPK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK,
 				editableValueJSONObject.toString(), StringPool.BLANK, 0, null,
 				serviceContext);

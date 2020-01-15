@@ -111,7 +111,7 @@ definition {
 			deployStatus = "Undeployed",
 			locator1 = "AppBuilder#DEPLOY_APP_STATUS",
 			value1 = "Undeployed");
-		
+
 		Click(
 			key_itemName = "${itemName}",
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");

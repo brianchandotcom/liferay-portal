@@ -200,7 +200,7 @@ public class ViewRendererMvcImpl implements ViewRenderer {
 			bean, _viewEnginesTypeLiteral.getType(), creationalContext);
 
 		if (reference instanceof List) {
-			List list = (List)reference;
+			List<?> list = (List)reference;
 
 			for (Object o : list) {
 				if (o instanceof ViewEngine) {
@@ -224,7 +224,7 @@ public class ViewRendererMvcImpl implements ViewRenderer {
 
 	};
 
-	private static final TypeLiteral _viewEnginesTypeLiteral =
+	private static final TypeLiteral<?> _viewEnginesTypeLiteral =
 		new TypeLiteral<List<ViewEngine>>() {
 		};
 

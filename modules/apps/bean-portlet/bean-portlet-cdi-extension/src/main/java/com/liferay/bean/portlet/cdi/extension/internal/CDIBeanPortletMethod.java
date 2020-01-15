@@ -47,7 +47,7 @@ public class CDIBeanPortletMethod extends BaseBeanPortletMethod {
 	public Object invoke(Object... args) throws ReflectiveOperationException {
 		Bean<?> bean = _beanManager.resolve(_beanManager.getBeans(_beanType));
 
-		CreationalContext creationalContext =
+		CreationalContext<?> creationalContext =
 			_beanManager.createCreationalContext(bean);
 
 		Object beanInstance = _beanManager.getReference(

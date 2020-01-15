@@ -139,7 +139,7 @@ public class SpringScopedBeanManager {
 				Object value = _portletRequest.getAttribute(name);
 
 				if ((value != null) && (value instanceof ScopedBean)) {
-					ScopedBean scopedBean = (ScopedBean)value;
+					ScopedBean<?> scopedBean = (ScopedBean)value;
 
 					scopedBean.destroy();
 				}

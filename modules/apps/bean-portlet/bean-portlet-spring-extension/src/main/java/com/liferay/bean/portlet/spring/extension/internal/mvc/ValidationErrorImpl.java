@@ -26,7 +26,7 @@ public class ValidationErrorImpl
 
 	public ValidationErrorImpl(
 		String paramName, String message,
-		ConstraintViolation constraintViolation) {
+		ConstraintViolation<?> constraintViolation) {
 
 		super(paramName, message);
 
@@ -38,6 +38,6 @@ public class ValidationErrorImpl
 		return _constraintViolation;
 	}
 
-	private final ConstraintViolation _constraintViolation;
+	private final ConstraintViolation<?> _constraintViolation;
 
 }

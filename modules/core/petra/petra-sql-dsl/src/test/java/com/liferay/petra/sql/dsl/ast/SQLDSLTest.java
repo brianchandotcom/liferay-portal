@@ -29,6 +29,7 @@ import com.liferay.petra.sql.dsl.expressions.impl.Function;
 import com.liferay.petra.sql.dsl.expressions.impl.FunctionType;
 import com.liferay.petra.sql.dsl.expressions.impl.NullExpression;
 import com.liferay.petra.sql.dsl.expressions.impl.Operand;
+import com.liferay.petra.sql.dsl.expressions.impl.PredicateImpl;
 import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
 import com.liferay.petra.sql.dsl.expressions.impl.ScalarList;
 import com.liferay.petra.sql.dsl.expressions.impl.WhenThen;
@@ -93,7 +94,7 @@ public class SQLDSLTest {
 				assertClasses.add(Operand.class);
 				assertClasses.add(OrderBy.class);
 				assertClasses.add(OrderByExpression.class);
-				assertClasses.add(Predicate.class);
+				assertClasses.add(PredicateImpl.class);
 				assertClasses.add(QueryTable.class);
 				assertClasses.add(QueryUtil.class);
 				assertClasses.add(Scalar.class);
@@ -575,15 +576,14 @@ public class SQLDSLTest {
 			MainExampleTable.TABLE.name.eq((String)null)
 		).withParentheses();
 
-		Predicate predicate = leftPredicate.and(rightPredicate);
+		PredicateImpl predicateImpl = new PredicateImpl(
+			leftPredicate, Operand.AND, rightPredicate);
 
-		Assert.assertSame(leftPredicate, predicate.getLeftExpression());
-		Assert.assertSame(Operand.AND, predicate.getOperand());
-		Assert.assertSame(rightPredicate, predicate.getRightExpression());
+		Assert.assertSame(leftPredicate, predicateImpl.getLeftExpression());
+		Assert.assertSame(Operand.AND, predicateImpl.getOperand());
+		Assert.assertSame(rightPredicate, predicateImpl.getRightExpression());
 
-		Assert.assertFalse(predicate.isWrapParentheses());
-
-		Assert.assertTrue(rightPredicate.isWrapParentheses());
+		Assert.assertFalse(predicateImpl.isWrapParentheses());
 
 		Assert.assertSame(rightPredicate, rightPredicate.withParentheses());
 
@@ -591,7 +591,7 @@ public class SQLDSLTest {
 		).from(
 			MainExampleTable.TABLE
 		).where(
-			predicate
+			predicateImpl
 		);
 
 		DefaultASTNodeListener defaultASTNodeListener =

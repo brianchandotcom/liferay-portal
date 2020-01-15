@@ -31,6 +31,8 @@ import java.util.UUID;
  */
 public class LayoutDataConverter {
 
+	public static final int LATEST_VERSION = 1;
+
 	public static String convert(String data) {
 		if (Validator.isNull(data)) {
 			return StringPool.BLANK;
@@ -47,7 +49,7 @@ public class LayoutDataConverter {
 
 		int version = inputDataJSONObject.getInt("version");
 
-		if (version == _LATEST_VERSION) {
+		if (version == LATEST_VERSION) {
 			return data;
 		}
 
@@ -212,10 +214,20 @@ public class LayoutDataConverter {
 		).put(
 			"rootItems", JSONUtil.put("main", mainUUID.toString())
 		).put(
-			"version", _LATEST_VERSION
+			"version", LATEST_VERSION
 		);
 
 		return outputDataJSONObject.toJSONString();
+	}
+
+	public static boolean isReactEditor(JSONObject dataJSONObject) {
+		int version = dataJSONObject.getInt("version");
+
+		if (version == LATEST_VERSION) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static JSONObject _getItemJSONObject(
@@ -234,7 +246,5 @@ public class LayoutDataConverter {
 			"type", type
 		);
 	}
-
-	private static final int _LATEST_VERSION = 1;
 
 }

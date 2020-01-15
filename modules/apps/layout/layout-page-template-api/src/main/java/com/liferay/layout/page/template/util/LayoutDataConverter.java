@@ -47,9 +47,7 @@ public class LayoutDataConverter {
 			throw new RuntimeException(jsone);
 		}
 
-		int version = inputDataJSONObject.getInt("version");
-
-		if (version == LATEST_VERSION) {
+		if (isLatestVersion(inputDataJSONObject)) {
 			return data;
 		}
 

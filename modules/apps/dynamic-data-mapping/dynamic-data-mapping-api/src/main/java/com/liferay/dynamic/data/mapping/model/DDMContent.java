@@ -38,6 +38,8 @@ public interface DDMContent extends DDMContentModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMContentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMContentTable TABLE = DDMContentTable.INSTANCE;
+
 	public static final Accessor<DDMContent, Long> CONTENT_ID_ACCESSOR =
 		new Accessor<DDMContent, Long>() {
 

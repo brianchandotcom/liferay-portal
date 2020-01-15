@@ -38,6 +38,9 @@ public interface UserNotificationEvent
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserNotificationEventImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final UserNotificationEventTable TABLE =
+		UserNotificationEventTable.INSTANCE;
+
 	public static final Accessor<UserNotificationEvent, Long>
 		USER_NOTIFICATION_EVENT_ID_ACCESSOR =
 			new Accessor<UserNotificationEvent, Long>() {

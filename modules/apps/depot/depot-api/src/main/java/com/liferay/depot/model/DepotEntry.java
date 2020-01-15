@@ -36,6 +36,8 @@ public interface DepotEntry extends DepotEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.depot.model.impl.DepotEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DepotEntryTable TABLE = DepotEntryTable.INSTANCE;
+
 	public static final Accessor<DepotEntry, Long> DEPOT_ENTRY_ID_ACCESSOR =
 		new Accessor<DepotEntry, Long>() {
 

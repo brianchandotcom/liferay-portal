@@ -38,6 +38,9 @@ public interface BookmarksFolder
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.bookmarks.model.impl.BookmarksFolderImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final BookmarksFolderTable TABLE =
+		BookmarksFolderTable.INSTANCE;
+
 	public static final Accessor<BookmarksFolder, Long> FOLDER_ID_ACCESSOR =
 		new Accessor<BookmarksFolder, Long>() {
 

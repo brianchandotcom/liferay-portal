@@ -36,6 +36,8 @@ public interface Lock extends LockModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.lock.model.impl.LockImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LockTable TABLE = LockTable.INSTANCE;
+
 	public static final Accessor<Lock, Long> LOCK_ID_ACCESSOR =
 		new Accessor<Lock, Long>() {
 

@@ -39,6 +39,9 @@ public interface DDMStructureLayout
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMStructureLayoutTable TABLE =
+		DDMStructureLayoutTable.INSTANCE;
+
 	public static final Accessor<DDMStructureLayout, Long>
 		STRUCTURE_LAYOUT_ID_ACCESSOR =
 			new Accessor<DDMStructureLayout, Long>() {

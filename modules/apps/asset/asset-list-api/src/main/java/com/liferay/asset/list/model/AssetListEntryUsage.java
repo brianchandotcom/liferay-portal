@@ -39,6 +39,9 @@ public interface AssetListEntryUsage
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.list.model.impl.AssetListEntryUsageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AssetListEntryUsageTable TABLE =
+		AssetListEntryUsageTable.INSTANCE;
+
 	public static final Accessor<AssetListEntryUsage, Long>
 		ASSET_LIST_ENTRY_USAGE_ID_ACCESSOR =
 			new Accessor<AssetListEntryUsage, Long>() {

@@ -39,6 +39,9 @@ public interface KaleoTaskFormInstance
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormInstanceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoTaskFormInstanceTable TABLE =
+		KaleoTaskFormInstanceTable.INSTANCE;
+
 	public static final Accessor<KaleoTaskFormInstance, Long>
 		KALEO_TASK_FORM_INSTANCE_ID_ACCESSOR =
 			new Accessor<KaleoTaskFormInstance, Long>() {

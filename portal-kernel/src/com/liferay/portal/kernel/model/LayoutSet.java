@@ -35,6 +35,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutSetImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutSetTable TABLE = LayoutSetTable.INSTANCE;
+
 	public static final Accessor<LayoutSet, Long> LAYOUT_SET_ID_ACCESSOR =
 		new Accessor<LayoutSet, Long>() {
 

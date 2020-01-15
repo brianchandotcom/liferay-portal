@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 /**
@@ -46,8 +47,8 @@ public class PortletPreferencesTable extends Table<PortletPreferencesTable> {
 		"plid", Long.class, Types.BIGINT);
 	public final Column<PortletPreferencesTable, String> portletId =
 		createColumn("portletId", String.class, Types.VARCHAR);
-	public final Column<PortletPreferencesTable, String> preferences =
-		createColumn("preferences", String.class, Types.CLOB);
+	public final Column<PortletPreferencesTable, Clob> preferences =
+		createColumn("preferences", Clob.class, Types.CLOB);
 
 	private PortletPreferencesTable() {
 		super("PortletPreferences", PortletPreferencesTable::new);

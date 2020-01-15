@@ -36,6 +36,8 @@ public interface BlogsEntry extends BlogsEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.blogs.model.impl.BlogsEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final BlogsEntryTable TABLE = BlogsEntryTable.INSTANCE;
+
 	public static final Accessor<BlogsEntry, Long> ENTRY_ID_ACCESSOR =
 		new Accessor<BlogsEntry, Long>() {
 

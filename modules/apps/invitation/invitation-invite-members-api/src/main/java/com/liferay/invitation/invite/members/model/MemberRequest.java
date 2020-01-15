@@ -38,6 +38,8 @@ public interface MemberRequest extends MemberRequestModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.invitation.invite.members.model.impl.MemberRequestImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MemberRequestTable TABLE = MemberRequestTable.INSTANCE;
+
 	public static final Accessor<MemberRequest, Long>
 		MEMBER_REQUEST_ID_ACCESSOR = new Accessor<MemberRequest, Long>() {
 

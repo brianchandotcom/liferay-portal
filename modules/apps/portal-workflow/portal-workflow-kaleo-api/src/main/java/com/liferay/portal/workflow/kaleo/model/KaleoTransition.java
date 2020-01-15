@@ -38,6 +38,9 @@ public interface KaleoTransition extends KaleoTransitionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTransitionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoTransitionTable TABLE =
+		KaleoTransitionTable.INSTANCE;
+
 	public static final Accessor<KaleoTransition, Long>
 		KALEO_TRANSITION_ID_ACCESSOR = new Accessor<KaleoTransition, Long>() {
 

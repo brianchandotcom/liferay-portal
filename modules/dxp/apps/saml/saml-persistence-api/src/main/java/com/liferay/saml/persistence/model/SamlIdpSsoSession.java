@@ -39,6 +39,9 @@ public interface SamlIdpSsoSession
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SamlIdpSsoSessionTable TABLE =
+		SamlIdpSsoSessionTable.INSTANCE;
+
 	public static final Accessor<SamlIdpSsoSession, Long>
 		SAML_IDP_SSO_SESSION_ID_ACCESSOR =
 			new Accessor<SamlIdpSsoSession, Long>() {

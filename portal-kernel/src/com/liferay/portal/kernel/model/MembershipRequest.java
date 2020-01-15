@@ -36,6 +36,9 @@ public interface MembershipRequest
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.MembershipRequestImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MembershipRequestTable TABLE =
+		MembershipRequestTable.INSTANCE;
+
 	public static final Accessor<MembershipRequest, Long>
 		MEMBERSHIP_REQUEST_ID_ACCESSOR =
 			new Accessor<MembershipRequest, Long>() {

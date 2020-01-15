@@ -35,6 +35,8 @@ public interface Counter extends CounterModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.counter.model.impl.CounterImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CounterTable TABLE = CounterTable.INSTANCE;
+
 	public static final Accessor<Counter, String> NAME_ACCESSOR =
 		new Accessor<Counter, String>() {
 

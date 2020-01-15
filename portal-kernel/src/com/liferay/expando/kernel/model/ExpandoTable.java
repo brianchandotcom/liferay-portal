@@ -38,6 +38,8 @@ public interface ExpandoTable extends ExpandoTableModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.expando.model.impl.ExpandoTableImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ExpandoTableTable TABLE = ExpandoTableTable.INSTANCE;
+
 	public static final Accessor<ExpandoTable, Long> TABLE_ID_ACCESSOR =
 		new Accessor<ExpandoTable, Long>() {
 

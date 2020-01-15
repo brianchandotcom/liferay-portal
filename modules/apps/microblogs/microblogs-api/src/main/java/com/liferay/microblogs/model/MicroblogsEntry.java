@@ -38,6 +38,9 @@ public interface MicroblogsEntry extends MicroblogsEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.microblogs.model.impl.MicroblogsEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MicroblogsEntryTable TABLE =
+		MicroblogsEntryTable.INSTANCE;
+
 	public static final Accessor<MicroblogsEntry, Long>
 		MICROBLOGS_ENTRY_ID_ACCESSOR = new Accessor<MicroblogsEntry, Long>() {
 

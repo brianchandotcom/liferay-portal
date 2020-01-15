@@ -39,6 +39,9 @@ public interface AnnouncementsEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.announcements.model.impl.AnnouncementsEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AnnouncementsEntryTable TABLE =
+		AnnouncementsEntryTable.INSTANCE;
+
 	public static final Accessor<AnnouncementsEntry, Long> ENTRY_ID_ACCESSOR =
 		new Accessor<AnnouncementsEntry, Long>() {
 

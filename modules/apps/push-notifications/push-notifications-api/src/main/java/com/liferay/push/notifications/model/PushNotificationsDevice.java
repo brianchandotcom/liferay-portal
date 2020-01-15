@@ -39,6 +39,9 @@ public interface PushNotificationsDevice
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.push.notifications.model.impl.PushNotificationsDeviceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PushNotificationsDeviceTable TABLE =
+		PushNotificationsDeviceTable.INSTANCE;
+
 	public static final Accessor<PushNotificationsDevice, Long>
 		PUSH_NOTIFICATIONS_DEVICE_ID_ACCESSOR =
 			new Accessor<PushNotificationsDevice, Long>() {

@@ -39,6 +39,9 @@ public interface DDMDataProviderInstanceLink
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMDataProviderInstanceLinkTable TABLE =
+		DDMDataProviderInstanceLinkTable.INSTANCE;
+
 	public static final Accessor<DDMDataProviderInstanceLink, Long>
 		DATA_PROVIDER_INSTANCE_LINK_ID_ACCESSOR =
 			new Accessor<DDMDataProviderInstanceLink, Long>() {

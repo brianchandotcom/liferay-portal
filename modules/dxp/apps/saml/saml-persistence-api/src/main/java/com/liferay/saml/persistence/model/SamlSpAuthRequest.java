@@ -39,6 +39,9 @@ public interface SamlSpAuthRequest
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpAuthRequestImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SamlSpAuthRequestTable TABLE =
+		SamlSpAuthRequestTable.INSTANCE;
+
 	public static final Accessor<SamlSpAuthRequest, Long>
 		SAML_SP_AUTHN_REQUEST_ID_ACCESSOR =
 			new Accessor<SamlSpAuthRequest, Long>() {

@@ -35,6 +35,9 @@ public interface LayoutSetBranch extends LayoutSetBranchModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutSetBranchImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutSetBranchTable TABLE =
+		LayoutSetBranchTable.INSTANCE;
+
 	public static final Accessor<LayoutSetBranch, Long>
 		LAYOUT_SET_BRANCH_ID_ACCESSOR = new Accessor<LayoutSetBranch, Long>() {
 

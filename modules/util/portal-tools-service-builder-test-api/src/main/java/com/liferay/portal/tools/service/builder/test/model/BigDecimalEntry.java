@@ -37,6 +37,9 @@ public interface BigDecimalEntry extends BigDecimalEntryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final BigDecimalEntryTable TABLE =
+		BigDecimalEntryTable.INSTANCE;
+
 	public static final Accessor<BigDecimalEntry, Long>
 		BIG_DECIMAL_ENTRY_ID_ACCESSOR = new Accessor<BigDecimalEntry, Long>() {
 

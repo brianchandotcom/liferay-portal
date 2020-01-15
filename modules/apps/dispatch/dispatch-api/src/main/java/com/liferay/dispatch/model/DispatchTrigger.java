@@ -36,6 +36,9 @@ public interface DispatchTrigger extends DispatchTriggerModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dispatch.model.impl.DispatchTriggerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DispatchTriggerTable TABLE =
+		DispatchTriggerTable.INSTANCE;
+
 	public static final Accessor<DispatchTrigger, Long>
 		DISPATCH_TRIGGER_ID_ACCESSOR = new Accessor<DispatchTrigger, Long>() {
 

@@ -36,6 +36,8 @@ public interface Module extends ModuleModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.marketplace.model.impl.ModuleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ModuleTable TABLE = ModuleTable.INSTANCE;
+
 	public static final Accessor<Module, Long> MODULE_ID_ACCESSOR =
 		new Accessor<Module, Long>() {
 

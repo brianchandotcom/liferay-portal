@@ -38,6 +38,9 @@ public interface KaleoCondition extends KaleoConditionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoConditionTable TABLE =
+		KaleoConditionTable.INSTANCE;
+
 	public static final Accessor<KaleoCondition, Long>
 		KALEO_CONDITION_ID_ACCESSOR = new Accessor<KaleoCondition, Long>() {
 

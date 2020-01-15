@@ -38,6 +38,8 @@ public interface TestEntity extends PersistedModel, TestEntityModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.external.data.source.test.model.impl.TestEntityImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final TestEntityTable TABLE = TestEntityTable.INSTANCE;
+
 	public static final Accessor<TestEntity, Long> ID_ACCESSOR =
 		new Accessor<TestEntity, Long>() {
 

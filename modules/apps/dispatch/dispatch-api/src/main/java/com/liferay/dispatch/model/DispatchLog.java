@@ -36,6 +36,8 @@ public interface DispatchLog extends DispatchLogModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dispatch.model.impl.DispatchLogImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DispatchLogTable TABLE = DispatchLogTable.INSTANCE;
+
 	public static final Accessor<DispatchLog, Long> DISPATCH_LOG_ID_ACCESSOR =
 		new Accessor<DispatchLog, Long>() {
 

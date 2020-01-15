@@ -36,6 +36,9 @@ public interface SiteFriendlyURL extends PersistedModel, SiteFriendlyURLModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.site.model.impl.SiteFriendlyURLImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SiteFriendlyURLTable TABLE =
+		SiteFriendlyURLTable.INSTANCE;
+
 	public static final Accessor<SiteFriendlyURL, Long>
 		SITE_FRIENDLY_URL_ID_ACCESSOR = new Accessor<SiteFriendlyURL, Long>() {
 

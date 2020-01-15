@@ -40,6 +40,8 @@ public interface DLFileEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DLFileEntryTable TABLE = DLFileEntryTable.INSTANCE;
+
 	public static final Accessor<DLFileEntry, Long> FILE_ENTRY_ID_ACCESSOR =
 		new Accessor<DLFileEntry, Long>() {
 

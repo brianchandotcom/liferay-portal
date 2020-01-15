@@ -39,6 +39,9 @@ public interface SyncDLFileVersionDiff
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.sync.model.impl.SyncDLFileVersionDiffImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SyncDLFileVersionDiffTable TABLE =
+		SyncDLFileVersionDiffTable.INSTANCE;
+
 	public static final Accessor<SyncDLFileVersionDiff, Long>
 		SYNC_DL_FILE_VERSION_DIFF_ID_ACCESSOR =
 			new Accessor<SyncDLFileVersionDiff, Long>() {

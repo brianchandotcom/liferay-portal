@@ -35,6 +35,8 @@ public interface Phone extends PersistedModel, PhoneModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PhoneImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PhoneTable TABLE = PhoneTable.INSTANCE;
+
 	public static final Accessor<Phone, Long> PHONE_ID_ACCESSOR =
 		new Accessor<Phone, Long>() {
 

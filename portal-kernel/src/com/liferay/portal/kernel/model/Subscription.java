@@ -37,6 +37,8 @@ public interface Subscription extends PersistedModel, SubscriptionModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.SubscriptionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SubscriptionTable TABLE = SubscriptionTable.INSTANCE;
+
 	public static final Accessor<Subscription, Long> SUBSCRIPTION_ID_ACCESSOR =
 		new Accessor<Subscription, Long>() {
 

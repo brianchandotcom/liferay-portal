@@ -38,6 +38,8 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMStructureTable TABLE = DDMStructureTable.INSTANCE;
+
 	public static final Accessor<DDMStructure, Long> STRUCTURE_ID_ACCESSOR =
 		new Accessor<DDMStructure, Long>() {
 

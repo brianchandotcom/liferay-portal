@@ -36,6 +36,8 @@ public interface AppBuilderApp extends AppBuilderAppModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.app.builder.model.impl.AppBuilderAppImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AppBuilderAppTable TABLE = AppBuilderAppTable.INSTANCE;
+
 	public static final Accessor<AppBuilderApp, Long>
 		APP_BUILDER_APP_ID_ACCESSOR = new Accessor<AppBuilderApp, Long>() {
 

@@ -39,6 +39,9 @@ public interface FragmentEntryLink
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.fragment.model.impl.FragmentEntryLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final FragmentEntryLinkTable TABLE =
+		FragmentEntryLinkTable.INSTANCE;
+
 	public static final Accessor<FragmentEntryLink, Long>
 		FRAGMENT_ENTRY_LINK_ID_ACCESSOR =
 			new Accessor<FragmentEntryLink, Long>() {

@@ -38,6 +38,8 @@ public interface ExpandoColumn extends ExpandoColumnModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.expando.model.impl.ExpandoColumnImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ExpandoColumnTable TABLE = ExpandoColumnTable.INSTANCE;
+
 	public static final Accessor<ExpandoColumn, Long> COLUMN_ID_ACCESSOR =
 		new Accessor<ExpandoColumn, Long>() {
 

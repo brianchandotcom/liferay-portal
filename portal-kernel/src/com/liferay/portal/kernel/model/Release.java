@@ -35,6 +35,8 @@ public interface Release extends PersistedModel, ReleaseModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ReleaseImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ReleaseTable TABLE = ReleaseTable.INSTANCE;
+
 	public static final Accessor<Release, Long> RELEASE_ID_ACCESSOR =
 		new Accessor<Release, Long>() {
 

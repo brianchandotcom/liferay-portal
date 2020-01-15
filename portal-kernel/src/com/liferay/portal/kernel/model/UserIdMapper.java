@@ -35,6 +35,8 @@ public interface UserIdMapper extends PersistedModel, UserIdMapperModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserIdMapperImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final UserIdMapperTable TABLE = UserIdMapperTable.INSTANCE;
+
 	public static final Accessor<UserIdMapper, Long>
 		USER_ID_MAPPER_ID_ACCESSOR = new Accessor<UserIdMapper, Long>() {
 

@@ -38,6 +38,9 @@ public interface JournalArticle
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.journal.model.impl.JournalArticleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final JournalArticleTable TABLE =
+		JournalArticleTable.INSTANCE;
+
 	public static final Accessor<JournalArticle, Long> ID_ACCESSOR =
 		new Accessor<JournalArticle, Long>() {
 

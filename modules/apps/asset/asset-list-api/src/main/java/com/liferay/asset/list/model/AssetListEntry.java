@@ -36,6 +36,9 @@ public interface AssetListEntry extends AssetListEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.list.model.impl.AssetListEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AssetListEntryTable TABLE =
+		AssetListEntryTable.INSTANCE;
+
 	public static final Accessor<AssetListEntry, Long>
 		ASSET_LIST_ENTRY_ID_ACCESSOR = new Accessor<AssetListEntry, Long>() {
 

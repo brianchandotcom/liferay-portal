@@ -35,6 +35,8 @@ public interface UserGroupRole extends PersistedModel, UserGroupRoleModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserGroupRoleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final UserGroupRoleTable TABLE = UserGroupRoleTable.INSTANCE;
+
 	public static final Accessor<UserGroupRole, Long> USER_ID_ACCESSOR =
 		new Accessor<UserGroupRole, Long>() {
 

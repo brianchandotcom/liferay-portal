@@ -38,6 +38,8 @@ public interface SocialRequest extends PersistedModel, SocialRequestModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialRequestImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SocialRequestTable TABLE = SocialRequestTable.INSTANCE;
+
 	public static final Accessor<SocialRequest, Long> REQUEST_ID_ACCESSOR =
 		new Accessor<SocialRequest, Long>() {
 

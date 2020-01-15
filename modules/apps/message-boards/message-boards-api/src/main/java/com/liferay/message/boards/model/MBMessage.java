@@ -37,6 +37,8 @@ public interface MBMessage extends MBMessageModel, PersistedModel, TreeModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBMessageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MBMessageTable TABLE = MBMessageTable.INSTANCE;
+
 	public static final Accessor<MBMessage, Long> MESSAGE_ID_ACCESSOR =
 		new Accessor<MBMessage, Long>() {
 

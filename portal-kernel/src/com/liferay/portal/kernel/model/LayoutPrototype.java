@@ -35,6 +35,9 @@ public interface LayoutPrototype extends LayoutPrototypeModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutPrototypeImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutPrototypeTable TABLE =
+		LayoutPrototypeTable.INSTANCE;
+
 	public static final Accessor<LayoutPrototype, Long>
 		LAYOUT_PROTOTYPE_ID_ACCESSOR = new Accessor<LayoutPrototype, Long>() {
 

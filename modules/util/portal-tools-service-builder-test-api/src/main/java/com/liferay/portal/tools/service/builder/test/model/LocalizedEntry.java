@@ -38,6 +38,9 @@ public interface LocalizedEntry extends LocalizedEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LocalizedEntryTable TABLE =
+		LocalizedEntryTable.INSTANCE;
+
 	public static final Accessor<LocalizedEntry, Long>
 		LOCALIZED_ENTRY_ID_ACCESSOR = new Accessor<LocalizedEntry, Long>() {
 

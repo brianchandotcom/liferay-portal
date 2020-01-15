@@ -39,6 +39,9 @@ public interface WeDeployAuthToken
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthTokenImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final WeDeployAuthTokenTable TABLE =
+		WeDeployAuthTokenTable.INSTANCE;
+
 	public static final Accessor<WeDeployAuthToken, Long>
 		WE_DEPLOY_AUTH_TOKEN_ID_ACCESSOR =
 			new Accessor<WeDeployAuthToken, Long>() {

@@ -38,6 +38,8 @@ public interface KaleoTask extends KaleoTaskModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoTaskTable TABLE = KaleoTaskTable.INSTANCE;
+
 	public static final Accessor<KaleoTask, Long> KALEO_TASK_ID_ACCESSOR =
 		new Accessor<KaleoTask, Long>() {
 

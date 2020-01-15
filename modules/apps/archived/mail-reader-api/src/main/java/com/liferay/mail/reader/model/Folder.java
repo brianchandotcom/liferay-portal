@@ -36,6 +36,8 @@ public interface Folder extends FolderModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mail.reader.model.impl.FolderImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final FolderTable TABLE = FolderTable.INSTANCE;
+
 	public static final Accessor<Folder, Long> FOLDER_ID_ACCESSOR =
 		new Accessor<Folder, Long>() {
 

@@ -39,6 +39,9 @@ public interface AssetAutoTaggerEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.auto.tagger.model.impl.AssetAutoTaggerEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AssetAutoTaggerEntryTable TABLE =
+		AssetAutoTaggerEntryTable.INSTANCE;
+
 	public static final Accessor<AssetAutoTaggerEntry, Long>
 		ASSET_AUTO_TAGGER_ENTRY_ID_ACCESSOR =
 			new Accessor<AssetAutoTaggerEntry, Long>() {

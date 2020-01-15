@@ -40,6 +40,8 @@ public interface DLFileVersion
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DLFileVersionTable TABLE = DLFileVersionTable.INSTANCE;
+
 	public static final Accessor<DLFileVersion, Long> FILE_VERSION_ID_ACCESSOR =
 		new Accessor<DLFileVersion, Long>() {
 

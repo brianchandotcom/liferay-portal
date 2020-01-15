@@ -36,6 +36,8 @@ public interface SegmentsEntry extends PersistedModel, SegmentsEntryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.segments.model.impl.SegmentsEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SegmentsEntryTable TABLE = SegmentsEntryTable.INSTANCE;
+
 	public static final Accessor<SegmentsEntry, Long>
 		SEGMENTS_ENTRY_ID_ACCESSOR = new Accessor<SegmentsEntry, Long>() {
 

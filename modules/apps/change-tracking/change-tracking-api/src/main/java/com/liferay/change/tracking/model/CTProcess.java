@@ -36,6 +36,8 @@ public interface CTProcess extends CTProcessModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.model.impl.CTProcessImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CTProcessTable TABLE = CTProcessTable.INSTANCE;
+
 	public static final Accessor<CTProcess, Long> CT_PROCESS_ID_ACCESSOR =
 		new Accessor<CTProcess, Long>() {
 

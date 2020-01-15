@@ -35,6 +35,8 @@ public interface SystemEvent extends PersistedModel, SystemEventModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.SystemEventImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SystemEventTable TABLE = SystemEventTable.INSTANCE;
+
 	public static final Accessor<SystemEvent, Long> SYSTEM_EVENT_ID_ACCESSOR =
 		new Accessor<SystemEvent, Long>() {
 

@@ -35,6 +35,8 @@ public interface Contact extends ContactModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ContactImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ContactTable TABLE = ContactTable.INSTANCE;
+
 	public static final Accessor<Contact, Long> CONTACT_ID_ACCESSOR =
 		new Accessor<Contact, Long>() {
 

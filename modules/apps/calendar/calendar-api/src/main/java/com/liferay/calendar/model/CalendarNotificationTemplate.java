@@ -39,6 +39,9 @@ public interface CalendarNotificationTemplate
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.calendar.model.impl.CalendarNotificationTemplateImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CalendarNotificationTemplateTable TABLE =
+		CalendarNotificationTemplateTable.INSTANCE;
+
 	public static final Accessor<CalendarNotificationTemplate, Long>
 		CALENDAR_NOTIFICATION_TEMPLATE_ID_ACCESSOR =
 			new Accessor<CalendarNotificationTemplate, Long>() {

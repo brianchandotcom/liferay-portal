@@ -36,6 +36,8 @@ public interface PowwowMeeting extends PersistedModel, PowwowMeetingModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.powwow.model.impl.PowwowMeetingImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PowwowMeetingTable TABLE = PowwowMeetingTable.INSTANCE;
+
 	public static final Accessor<PowwowMeeting, Long>
 		POWWOW_MEETING_ID_ACCESSOR = new Accessor<PowwowMeeting, Long>() {
 

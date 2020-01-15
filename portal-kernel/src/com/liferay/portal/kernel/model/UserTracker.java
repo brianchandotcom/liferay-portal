@@ -35,6 +35,8 @@ public interface UserTracker extends PersistedModel, UserTrackerModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserTrackerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final UserTrackerTable TABLE = UserTrackerTable.INSTANCE;
+
 	public static final Accessor<UserTracker, Long> USER_TRACKER_ID_ACCESSOR =
 		new Accessor<UserTracker, Long>() {
 

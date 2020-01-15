@@ -38,6 +38,9 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.asset.model.impl.AssetVocabularyImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AssetVocabularyTable TABLE =
+		AssetVocabularyTable.INSTANCE;
+
 	public static final Accessor<AssetVocabulary, Long> VOCABULARY_ID_ACCESSOR =
 		new Accessor<AssetVocabulary, Long>() {
 

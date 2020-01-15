@@ -36,6 +36,8 @@ public interface WikiNode extends PersistedModel, WikiNodeModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.wiki.model.impl.WikiNodeImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final WikiNodeTable TABLE = WikiNodeTable.INSTANCE;
+
 	public static final Accessor<WikiNode, Long> NODE_ID_ACCESSOR =
 		new Accessor<WikiNode, Long>() {
 

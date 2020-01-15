@@ -38,6 +38,9 @@ public interface UADPartialEntry extends PersistedModel, UADPartialEntryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.UADPartialEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final UADPartialEntryTable TABLE =
+		UADPartialEntryTable.INSTANCE;
+
 	public static final Accessor<UADPartialEntry, Long>
 		UAD_PARTIAL_ENTRY_ID_ACCESSOR = new Accessor<UADPartialEntry, Long>() {
 

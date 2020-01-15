@@ -36,6 +36,8 @@ public interface MBBan extends MBBanModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBBanImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MBBanTable TABLE = MBBanTable.INSTANCE;
+
 	public static final Accessor<MBBan, Long> BAN_ID_ACCESSOR =
 		new Accessor<MBBan, Long>() {
 

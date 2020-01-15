@@ -35,6 +35,8 @@ public interface Ticket extends PersistedModel, TicketModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.TicketImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final TicketTable TABLE = TicketTable.INSTANCE;
+
 	public static final Accessor<Ticket, Long> TICKET_ID_ACCESSOR =
 		new Accessor<Ticket, Long>() {
 

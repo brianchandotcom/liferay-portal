@@ -38,6 +38,8 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDLRecordSetTable TABLE = DDLRecordSetTable.INSTANCE;
+
 	public static final Accessor<DDLRecordSet, Long> RECORD_SET_ID_ACCESSOR =
 		new Accessor<DDLRecordSet, Long>() {
 

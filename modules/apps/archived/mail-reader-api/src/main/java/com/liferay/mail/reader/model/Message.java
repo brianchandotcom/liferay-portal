@@ -36,6 +36,8 @@ public interface Message extends MessageModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mail.reader.model.impl.MessageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MessageTable TABLE = MessageTable.INSTANCE;
+
 	public static final Accessor<Message, Long> MESSAGE_ID_ACCESSOR =
 		new Accessor<Message, Long>() {
 

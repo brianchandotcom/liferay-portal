@@ -37,6 +37,9 @@ public interface CalendarResource
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.calendar.model.impl.CalendarResourceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CalendarResourceTable TABLE =
+		CalendarResourceTable.INSTANCE;
+
 	public static final Accessor<CalendarResource, Long>
 		CALENDAR_RESOURCE_ID_ACCESSOR = new Accessor<CalendarResource, Long>() {
 

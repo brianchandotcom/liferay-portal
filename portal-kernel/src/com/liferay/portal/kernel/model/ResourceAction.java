@@ -35,6 +35,9 @@ public interface ResourceAction extends PersistedModel, ResourceActionModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ResourceActionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ResourceActionTable TABLE =
+		ResourceActionTable.INSTANCE;
+
 	public static final Accessor<ResourceAction, Long>
 		RESOURCE_ACTION_ID_ACCESSOR = new Accessor<ResourceAction, Long>() {
 

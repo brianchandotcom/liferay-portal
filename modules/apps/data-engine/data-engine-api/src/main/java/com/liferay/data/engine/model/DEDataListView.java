@@ -38,6 +38,9 @@ public interface DEDataListView extends DEDataListViewModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.data.engine.model.impl.DEDataListViewImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DEDataListViewTable TABLE =
+		DEDataListViewTable.INSTANCE;
+
 	public static final Accessor<DEDataListView, Long>
 		DE_DATA_LIST_VIEW_ID_ACCESSOR = new Accessor<DEDataListView, Long>() {
 

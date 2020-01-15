@@ -39,6 +39,9 @@ public interface AppBuilderAppDeployment
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.app.builder.model.impl.AppBuilderAppDeploymentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AppBuilderAppDeploymentTable TABLE =
+		AppBuilderAppDeploymentTable.INSTANCE;
+
 	public static final Accessor<AppBuilderAppDeployment, Long>
 		APP_BUILDER_APP_DEPLOYMENT_ID_ACCESSOR =
 			new Accessor<AppBuilderAppDeployment, Long>() {

@@ -38,6 +38,8 @@ public interface SAPEntry extends PersistedModel, SAPEntryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.security.service.access.policy.model.impl.SAPEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SAPEntryTable TABLE = SAPEntryTable.INSTANCE;
+
 	public static final Accessor<SAPEntry, Long> SAP_ENTRY_ID_ACCESSOR =
 		new Accessor<SAPEntry, Long>() {
 

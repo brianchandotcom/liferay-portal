@@ -39,6 +39,9 @@ public interface SiteNavigationMenu
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SiteNavigationMenuTable TABLE =
+		SiteNavigationMenuTable.INSTANCE;
+
 	public static final Accessor<SiteNavigationMenu, Long>
 		SITE_NAVIGATION_MENU_ID_ACCESSOR =
 			new Accessor<SiteNavigationMenu, Long>() {

@@ -36,6 +36,8 @@ public interface TrashVersion extends PersistedModel, TrashVersionModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.trash.model.impl.TrashVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final TrashVersionTable TABLE = TrashVersionTable.INSTANCE;
+
 	public static final Accessor<TrashVersion, Long> VERSION_ID_ACCESSOR =
 		new Accessor<TrashVersion, Long>() {
 

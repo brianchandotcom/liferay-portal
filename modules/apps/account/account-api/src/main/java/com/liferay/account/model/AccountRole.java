@@ -36,6 +36,8 @@ public interface AccountRole extends AccountRoleModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.account.model.impl.AccountRoleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AccountRoleTable TABLE = AccountRoleTable.INSTANCE;
+
 	public static final Accessor<AccountRole, Long> ACCOUNT_ROLE_ID_ACCESSOR =
 		new Accessor<AccountRole, Long>() {
 

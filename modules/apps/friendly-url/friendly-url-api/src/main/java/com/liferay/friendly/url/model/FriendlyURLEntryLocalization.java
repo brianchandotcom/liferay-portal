@@ -38,6 +38,9 @@ public interface FriendlyURLEntryLocalization
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final FriendlyURLEntryLocalizationTable TABLE =
+		FriendlyURLEntryLocalizationTable.INSTANCE;
+
 	public static final Accessor<FriendlyURLEntryLocalization, Long>
 		FRIENDLY_URL_ENTRY_LOCALIZATION_ID_ACCESSOR =
 			new Accessor<FriendlyURLEntryLocalization, Long>() {

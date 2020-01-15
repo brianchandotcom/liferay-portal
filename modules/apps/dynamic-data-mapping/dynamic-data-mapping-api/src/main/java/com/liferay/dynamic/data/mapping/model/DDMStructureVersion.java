@@ -39,6 +39,9 @@ public interface DDMStructureVersion
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMStructureVersionTable TABLE =
+		DDMStructureVersionTable.INSTANCE;
+
 	public static final Accessor<DDMStructureVersion, Long>
 		STRUCTURE_VERSION_ID_ACCESSOR =
 			new Accessor<DDMStructureVersion, Long>() {

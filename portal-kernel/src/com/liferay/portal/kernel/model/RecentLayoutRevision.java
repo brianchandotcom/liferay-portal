@@ -38,6 +38,9 @@ public interface RecentLayoutRevision
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.RecentLayoutRevisionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final RecentLayoutRevisionTable TABLE =
+		RecentLayoutRevisionTable.INSTANCE;
+
 	public static final Accessor<RecentLayoutRevision, Long>
 		RECENT_LAYOUT_REVISION_ID_ACCESSOR =
 			new Accessor<RecentLayoutRevision, Long>() {

@@ -36,6 +36,8 @@ public interface Entry extends EntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.contacts.model.impl.EntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final EntryTable TABLE = EntryTable.INSTANCE;
+
 	public static final Accessor<Entry, Long> ENTRY_ID_ACCESSOR =
 		new Accessor<Entry, Long>() {
 

@@ -38,6 +38,9 @@ public interface BookmarksEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.bookmarks.model.impl.BookmarksEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final BookmarksEntryTable TABLE =
+		BookmarksEntryTable.INSTANCE;
+
 	public static final Accessor<BookmarksEntry, Long> ENTRY_ID_ACCESSOR =
 		new Accessor<BookmarksEntry, Long>() {
 

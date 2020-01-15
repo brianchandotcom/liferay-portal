@@ -38,6 +38,8 @@ public interface Definition extends DefinitionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DefinitionTable TABLE = DefinitionTable.INSTANCE;
+
 	public static final Accessor<Definition, Long> DEFINITION_ID_ACCESSOR =
 		new Accessor<Definition, Long>() {
 

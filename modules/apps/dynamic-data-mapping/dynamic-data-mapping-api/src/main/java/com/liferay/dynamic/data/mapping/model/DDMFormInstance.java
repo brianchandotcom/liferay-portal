@@ -38,6 +38,9 @@ public interface DDMFormInstance extends DDMFormInstanceModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMFormInstanceTable TABLE =
+		DDMFormInstanceTable.INSTANCE;
+
 	public static final Accessor<DDMFormInstance, Long>
 		FORM_INSTANCE_ID_ACCESSOR = new Accessor<DDMFormInstance, Long>() {
 

@@ -36,6 +36,9 @@ public interface ServiceComponent
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ServiceComponentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ServiceComponentTable TABLE =
+		ServiceComponentTable.INSTANCE;
+
 	public static final Accessor<ServiceComponent, Long>
 		SERVICE_COMPONENT_ID_ACCESSOR = new Accessor<ServiceComponent, Long>() {
 

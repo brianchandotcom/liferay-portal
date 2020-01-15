@@ -35,6 +35,8 @@ public interface Website extends PersistedModel, WebsiteModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.WebsiteImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final WebsiteTable TABLE = WebsiteTable.INSTANCE;
+
 	public static final Accessor<Website, Long> WEBSITE_ID_ACCESSOR =
 		new Accessor<Website, Long>() {
 

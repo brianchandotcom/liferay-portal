@@ -38,6 +38,8 @@ public interface CTCollection extends CTCollectionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.model.impl.CTCollectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CTCollectionTable TABLE = CTCollectionTable.INSTANCE;
+
 	public static final Accessor<CTCollection, Long> CT_COLLECTION_ID_ACCESSOR =
 		new Accessor<CTCollection, Long>() {
 

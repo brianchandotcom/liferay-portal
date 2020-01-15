@@ -39,6 +39,9 @@ public interface LayoutPageTemplateStructure
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutPageTemplateStructureTable TABLE =
+		LayoutPageTemplateStructureTable.INSTANCE;
+
 	public static final Accessor<LayoutPageTemplateStructure, Long>
 		LAYOUT_PAGE_TEMPLATE_STRUCTURE_ID_ACCESSOR =
 			new Accessor<LayoutPageTemplateStructure, Long>() {

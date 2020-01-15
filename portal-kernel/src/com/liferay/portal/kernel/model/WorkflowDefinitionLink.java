@@ -38,6 +38,9 @@ public interface WorkflowDefinitionLink
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.WorkflowDefinitionLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final WorkflowDefinitionLinkTable TABLE =
+		WorkflowDefinitionLinkTable.INSTANCE;
+
 	public static final Accessor<WorkflowDefinitionLink, Long>
 		WORKFLOW_DEFINITION_LINK_ID_ACCESSOR =
 			new Accessor<WorkflowDefinitionLink, Long>() {

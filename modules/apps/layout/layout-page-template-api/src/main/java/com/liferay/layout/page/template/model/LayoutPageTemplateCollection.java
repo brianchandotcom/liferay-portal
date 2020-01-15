@@ -39,6 +39,9 @@ public interface LayoutPageTemplateCollection
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutPageTemplateCollectionTable TABLE =
+		LayoutPageTemplateCollectionTable.INSTANCE;
+
 	public static final Accessor<LayoutPageTemplateCollection, Long>
 		LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_ACCESSOR =
 			new Accessor<LayoutPageTemplateCollection, Long>() {

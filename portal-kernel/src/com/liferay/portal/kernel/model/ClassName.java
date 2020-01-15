@@ -35,6 +35,8 @@ public interface ClassName extends ClassNameModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ClassNameImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ClassNameTable TABLE = ClassNameTable.INSTANCE;
+
 	public static final Accessor<ClassName, Long> CLASS_NAME_ID_ACCESSOR =
 		new Accessor<ClassName, Long>() {
 

@@ -39,6 +39,9 @@ public interface DDMTemplateVersion
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMTemplateVersionTable TABLE =
+		DDMTemplateVersionTable.INSTANCE;
+
 	public static final Accessor<DDMTemplateVersion, Long>
 		TEMPLATE_VERSION_ID_ACCESSOR =
 			new Accessor<DDMTemplateVersion, Long>() {

@@ -39,6 +39,9 @@ public interface AssetEntryUsage extends AssetEntryUsageModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.model.impl.AssetEntryUsageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AssetEntryUsageTable TABLE =
+		AssetEntryUsageTable.INSTANCE;
+
 	public static final Accessor<AssetEntryUsage, Long>
 		ASSET_ENTRY_USAGE_ID_ACCESSOR = new Accessor<AssetEntryUsage, Long>() {
 

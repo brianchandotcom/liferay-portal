@@ -39,6 +39,9 @@ public interface OAuth2ScopeGrant
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final OAuth2ScopeGrantTable TABLE =
+		OAuth2ScopeGrantTable.INSTANCE;
+
 	public static final Accessor<OAuth2ScopeGrant, Long>
 		O_AUTH2_SCOPE_GRANT_ID_ACCESSOR =
 			new Accessor<OAuth2ScopeGrant, Long>() {

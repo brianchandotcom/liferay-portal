@@ -38,6 +38,9 @@ public interface DLFileEntryType extends DLFileEntryTypeModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DLFileEntryTypeTable TABLE =
+		DLFileEntryTypeTable.INSTANCE;
+
 	public static final Accessor<DLFileEntryType, Long>
 		FILE_ENTRY_TYPE_ID_ACCESSOR = new Accessor<DLFileEntryType, Long>() {
 

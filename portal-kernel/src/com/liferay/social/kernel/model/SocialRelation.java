@@ -38,6 +38,9 @@ public interface SocialRelation extends PersistedModel, SocialRelationModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialRelationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SocialRelationTable TABLE =
+		SocialRelationTable.INSTANCE;
+
 	public static final Accessor<SocialRelation, Long> RELATION_ID_ACCESSOR =
 		new Accessor<SocialRelation, Long>() {
 

@@ -35,6 +35,8 @@ public interface Company extends CompanyModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.CompanyImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CompanyTable TABLE = CompanyTable.INSTANCE;
+
 	public static final Accessor<Company, Long> COMPANY_ID_ACCESSOR =
 		new Accessor<Company, Long>() {
 

@@ -38,6 +38,8 @@ public interface AuditEvent extends AuditEventModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.security.audit.storage.model.impl.AuditEventImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AuditEventTable TABLE = AuditEventTable.INSTANCE;
+
 	public static final Accessor<AuditEvent, Long> AUDIT_EVENT_ID_ACCESSOR =
 		new Accessor<AuditEvent, Long>() {
 

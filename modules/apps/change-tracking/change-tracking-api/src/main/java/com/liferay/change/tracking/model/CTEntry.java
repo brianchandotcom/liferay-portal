@@ -36,6 +36,8 @@ public interface CTEntry extends CTEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.model.impl.CTEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CTEntryTable TABLE = CTEntryTable.INSTANCE;
+
 	public static final Accessor<CTEntry, Long> CT_ENTRY_ID_ACCESSOR =
 		new Accessor<CTEntry, Long>() {
 

@@ -36,6 +36,9 @@ public interface ViewCountEntry extends PersistedModel, ViewCountEntryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.view.count.model.impl.ViewCountEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ViewCountEntryTable TABLE =
+		ViewCountEntryTable.INSTANCE;
+
 	public static final Accessor<ViewCountEntry, Long> COMPANY_ID_ACCESSOR =
 		new Accessor<ViewCountEntry, Long>() {
 

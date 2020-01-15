@@ -37,6 +37,9 @@ public interface DepotEntryGroupRel
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.depot.model.impl.DepotEntryGroupRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DepotEntryGroupRelTable TABLE =
+		DepotEntryGroupRelTable.INSTANCE;
+
 	public static final Accessor<DepotEntryGroupRel, Long>
 		DEPOT_ENTRY_GROUP_REL_ID_ACCESSOR =
 			new Accessor<DepotEntryGroupRel, Long>() {

@@ -39,6 +39,9 @@ public interface FragmentCollection
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.fragment.model.impl.FragmentCollectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final FragmentCollectionTable TABLE =
+		FragmentCollectionTable.INSTANCE;
+
 	public static final Accessor<FragmentCollection, Long>
 		FRAGMENT_COLLECTION_ID_ACCESSOR =
 			new Accessor<FragmentCollection, Long>() {

@@ -39,6 +39,8 @@ public interface MDRAction extends MDRActionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mobile.device.rules.model.impl.MDRActionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MDRActionTable TABLE = MDRActionTable.INSTANCE;
+
 	public static final Accessor<MDRAction, Long> ACTION_ID_ACCESSOR =
 		new Accessor<MDRAction, Long>() {
 

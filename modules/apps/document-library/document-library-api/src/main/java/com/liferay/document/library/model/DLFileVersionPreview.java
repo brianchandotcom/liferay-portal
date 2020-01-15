@@ -39,6 +39,9 @@ public interface DLFileVersionPreview
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.document.library.model.impl.DLFileVersionPreviewImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DLFileVersionPreviewTable TABLE =
+		DLFileVersionPreviewTable.INSTANCE;
+
 	public static final Accessor<DLFileVersionPreview, Long>
 		DL_FILE_VERSION_PREVIEW_ID_ACCESSOR =
 			new Accessor<DLFileVersionPreview, Long>() {

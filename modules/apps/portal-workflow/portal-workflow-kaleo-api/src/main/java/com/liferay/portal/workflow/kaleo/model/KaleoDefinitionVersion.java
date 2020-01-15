@@ -39,6 +39,9 @@ public interface KaleoDefinitionVersion
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoDefinitionVersionTable TABLE =
+		KaleoDefinitionVersionTable.INSTANCE;
+
 	public static final Accessor<KaleoDefinitionVersion, Long>
 		KALEO_DEFINITION_VERSION_ID_ACCESSOR =
 			new Accessor<KaleoDefinitionVersion, Long>() {

@@ -36,6 +36,8 @@ public interface Calendar extends CalendarModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.calendar.model.impl.CalendarImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CalendarTable TABLE = CalendarTable.INSTANCE;
+
 	public static final Accessor<Calendar, Long> CALENDAR_ID_ACCESSOR =
 		new Accessor<Calendar, Long>() {
 

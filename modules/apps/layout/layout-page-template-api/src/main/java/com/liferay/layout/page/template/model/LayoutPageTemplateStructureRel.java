@@ -39,6 +39,9 @@ public interface LayoutPageTemplateStructureRel
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutPageTemplateStructureRelTable TABLE =
+		LayoutPageTemplateStructureRelTable.INSTANCE;
+
 	public static final Accessor<LayoutPageTemplateStructureRel, Long>
 		LAYOUT_PAGE_TEMPLATE_STRUCTURE_REL_ID_ACCESSOR =
 			new Accessor<LayoutPageTemplateStructureRel, Long>() {

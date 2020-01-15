@@ -39,6 +39,9 @@ public interface DDMFormInstanceVersion
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMFormInstanceVersionTable TABLE =
+		DDMFormInstanceVersionTable.INSTANCE;
+
 	public static final Accessor<DDMFormInstanceVersion, Long>
 		FORM_INSTANCE_VERSION_ID_ACCESSOR =
 			new Accessor<DDMFormInstanceVersion, Long>() {

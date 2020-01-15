@@ -39,6 +39,9 @@ public interface DLFileEntryMetadata
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DLFileEntryMetadataTable TABLE =
+		DLFileEntryMetadataTable.INSTANCE;
+
 	public static final Accessor<DLFileEntryMetadata, Long>
 		FILE_ENTRY_METADATA_ID_ACCESSOR =
 			new Accessor<DLFileEntryMetadata, Long>() {

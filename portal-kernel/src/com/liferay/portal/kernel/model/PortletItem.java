@@ -35,6 +35,8 @@ public interface PortletItem extends PersistedModel, PortletItemModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PortletItemImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PortletItemTable TABLE = PortletItemTable.INSTANCE;
+
 	public static final Accessor<PortletItem, Long> PORTLET_ITEM_ID_ACCESSOR =
 		new Accessor<PortletItem, Long>() {
 

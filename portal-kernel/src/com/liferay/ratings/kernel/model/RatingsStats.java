@@ -38,6 +38,8 @@ public interface RatingsStats extends PersistedModel, RatingsStatsModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.ratings.model.impl.RatingsStatsImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final RatingsStatsTable TABLE = RatingsStatsTable.INSTANCE;
+
 	public static final Accessor<RatingsStats, Long> STATS_ID_ACCESSOR =
 		new Accessor<RatingsStats, Long>() {
 

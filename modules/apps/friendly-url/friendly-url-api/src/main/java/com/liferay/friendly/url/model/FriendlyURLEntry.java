@@ -39,6 +39,9 @@ public interface FriendlyURLEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final FriendlyURLEntryTable TABLE =
+		FriendlyURLEntryTable.INSTANCE;
+
 	public static final Accessor<FriendlyURLEntry, Long>
 		FRIENDLY_URL_ENTRY_ID_ACCESSOR =
 			new Accessor<FriendlyURLEntry, Long>() {

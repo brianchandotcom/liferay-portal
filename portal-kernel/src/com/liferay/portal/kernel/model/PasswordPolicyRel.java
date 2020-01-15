@@ -36,6 +36,9 @@ public interface PasswordPolicyRel
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PasswordPolicyRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PasswordPolicyRelTable TABLE =
+		PasswordPolicyRelTable.INSTANCE;
+
 	public static final Accessor<PasswordPolicyRel, Long>
 		PASSWORD_POLICY_REL_ID_ACCESSOR =
 			new Accessor<PasswordPolicyRel, Long>() {

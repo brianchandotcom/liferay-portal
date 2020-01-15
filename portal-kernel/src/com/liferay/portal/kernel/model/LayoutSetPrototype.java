@@ -36,6 +36,9 @@ public interface LayoutSetPrototype
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutSetPrototypeImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutSetPrototypeTable TABLE =
+		LayoutSetPrototypeTable.INSTANCE;
+
 	public static final Accessor<LayoutSetPrototype, Long>
 		LAYOUT_SET_PROTOTYPE_ID_ACCESSOR =
 			new Accessor<LayoutSetPrototype, Long>() {

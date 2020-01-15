@@ -36,6 +36,9 @@ public interface RecentLayoutBranch
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.RecentLayoutBranchImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final RecentLayoutBranchTable TABLE =
+		RecentLayoutBranchTable.INSTANCE;
+
 	public static final Accessor<RecentLayoutBranch, Long>
 		RECENT_LAYOUT_BRANCH_ID_ACCESSOR =
 			new Accessor<RecentLayoutBranch, Long>() {

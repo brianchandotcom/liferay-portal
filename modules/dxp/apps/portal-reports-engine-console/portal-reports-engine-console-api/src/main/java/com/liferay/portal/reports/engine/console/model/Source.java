@@ -38,6 +38,8 @@ public interface Source extends PersistedModel, SourceModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.reports.engine.console.model.impl.SourceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SourceTable TABLE = SourceTable.INSTANCE;
+
 	public static final Accessor<Source, Long> SOURCE_ID_ACCESSOR =
 		new Accessor<Source, Long>() {
 

@@ -40,6 +40,8 @@ public interface AssetCategory
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.asset.model.impl.AssetCategoryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AssetCategoryTable TABLE = AssetCategoryTable.INSTANCE;
+
 	public static final Accessor<AssetCategory, String> UUID_ACCESSOR =
 		new Accessor<AssetCategory, String>() {
 

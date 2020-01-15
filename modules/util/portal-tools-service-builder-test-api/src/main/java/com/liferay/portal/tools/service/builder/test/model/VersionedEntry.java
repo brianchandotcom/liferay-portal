@@ -38,6 +38,9 @@ public interface VersionedEntry extends PersistedModel, VersionedEntryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final VersionedEntryTable TABLE =
+		VersionedEntryTable.INSTANCE;
+
 	public static final Accessor<VersionedEntry, Long>
 		VERSIONED_ENTRY_ID_ACCESSOR = new Accessor<VersionedEntry, Long>() {
 

@@ -39,6 +39,9 @@ public interface BatchEngineExportTask
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.batch.engine.model.impl.BatchEngineExportTaskImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final BatchEngineExportTaskTable TABLE =
+		BatchEngineExportTaskTable.INSTANCE;
+
 	public static final Accessor<BatchEngineExportTask, Long>
 		BATCH_ENGINE_EXPORT_TASK_ID_ACCESSOR =
 			new Accessor<BatchEngineExportTask, Long>() {

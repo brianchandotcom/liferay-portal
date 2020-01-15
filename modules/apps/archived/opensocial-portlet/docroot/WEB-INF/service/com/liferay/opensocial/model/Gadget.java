@@ -36,6 +36,8 @@ public interface Gadget extends GadgetModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.opensocial.model.impl.GadgetImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final GadgetTable TABLE = GadgetTable.INSTANCE;
+
 	public static final Accessor<Gadget, Long> GADGET_ID_ACCESSOR =
 		new Accessor<Gadget, Long>() {
 

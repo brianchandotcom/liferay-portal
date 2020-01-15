@@ -38,6 +38,8 @@ public interface KaleoTimer extends KaleoTimerModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoTimerTable TABLE = KaleoTimerTable.INSTANCE;
+
 	public static final Accessor<KaleoTimer, Long> KALEO_TIMER_ID_ACCESSOR =
 		new Accessor<KaleoTimer, Long>() {
 

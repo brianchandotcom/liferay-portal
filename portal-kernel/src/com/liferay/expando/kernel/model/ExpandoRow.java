@@ -38,6 +38,8 @@ public interface ExpandoRow extends ExpandoRowModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.expando.model.impl.ExpandoRowImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ExpandoRowTable TABLE = ExpandoRowTable.INSTANCE;
+
 	public static final Accessor<ExpandoRow, Long> ROW_ID_ACCESSOR =
 		new Accessor<ExpandoRow, Long>() {
 

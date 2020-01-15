@@ -164,7 +164,7 @@
 
 			var itemSelectorDialog = new ItemSelectorDialog.default({
 				eventName: '<portlet:namespace />selectAsset',
-				title: encodeURI(delegateTarget.dataset.title),
+				title: delegateTarget.dataset.title,
 				url: delegateTarget.dataset.href
 			});
 

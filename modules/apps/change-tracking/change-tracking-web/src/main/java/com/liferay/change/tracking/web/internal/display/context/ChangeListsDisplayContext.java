@@ -114,7 +114,6 @@ public class ChangeListsDisplayContext {
 				_themeDisplay.getCompanyId(), 0);
 
 		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-		boolean confirmationEnabled = false;
 
 		if (ctPreferences != null) {
 			ctPreferences = _ctPreferencesLocalService.fetchCTPreferences(
@@ -122,12 +121,10 @@ public class ChangeListsDisplayContext {
 
 			if (ctPreferences != null) {
 				ctCollectionId = ctPreferences.getCtCollectionId();
-				confirmationEnabled = ctPreferences.isConfirmationEnabled();
 			}
 		}
 
 		_ctCollectionId = ctCollectionId;
-		_confirmationEnabled = confirmationEnabled;
 	}
 
 	public SoyContext getChangeListsContext() throws Exception {
@@ -146,9 +143,7 @@ public class ChangeListsDisplayContext {
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
 			"urlCheckoutProduction",
-			getCheckoutURL(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION,
-				LanguageUtil.get(_httpServletRequest, "work-on-production"))
+			getCheckoutURL(CTConstants.CT_COLLECTION_ID_PRODUCTION)
 		).put(
 			"urlProductionView", _themeDisplay.getPortalURL()
 		);
@@ -164,7 +159,7 @@ public class ChangeListsDisplayContext {
 		return soyContext;
 	}
 
-	public String getCheckoutURL(long ctCollectionId, String name) {
+	public String getCheckoutURL(long ctCollectionId) {
 		PortletURL checkoutURL = PortletURLFactoryUtil.create(
 			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
 			PortletRequest.ACTION_PHASE);
@@ -173,28 +168,8 @@ public class ChangeListsDisplayContext {
 			ActionRequest.ACTION_NAME, "/change_lists/checkout_ct_collection");
 		checkoutURL.setParameter(
 			"ctCollectionId", String.valueOf(ctCollectionId));
-		checkoutURL.setParameter("name", name);
 
-		if (_confirmationEnabled) {
-			return StringBundler.concat(
-				"javascript:confirm('",
-				HtmlUtil.escapeJS(
-					LanguageUtil.format(
-						_httpServletRequest,
-						"do-you-want-to-switch-to-x-change-list", name, false)),
-				"') && Liferay.Util.navigate('",
-				HtmlUtil.escapeJS(checkoutURL.toString()), "')");
-		}
-
-		return StringBundler.concat(
-			"javascript:Liferay.Util.navigate('",
-			HtmlUtil.escapeJS(checkoutURL.toString()), "');");
-	}
-
-	public String getConfirmationMessage(String ctCollectionName) {
-		return LanguageUtil.format(
-			_httpServletRequest, "do-you-want-to-switch-to-x-change-list",
-			ctCollectionName, true);
+		return checkoutURL.toString();
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -464,10 +439,6 @@ public class ChangeListsDisplayContext {
 		return false;
 	}
 
-	public boolean isCheckoutCtCollectionConfirmationEnabled() {
-		return _confirmationEnabled;
-	}
-
 	private JSONObject _getActiveCTCollectionJSONObject() throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -518,9 +489,7 @@ public class ChangeListsDisplayContext {
 				jsonArray.put(
 					jsonObject.put(
 						"checkoutURL",
-						getCheckoutURL(
-							ctCollection.getCtCollectionId(),
-							ctCollection.getName())
+						getCheckoutURL(ctCollection.getCtCollectionId())
 					).put(
 						"label", ctCollection.getName()
 					));
@@ -799,7 +768,6 @@ public class ChangeListsDisplayContext {
 			OrderByComparatorFactoryUtil.create(
 				"CTCollection", "modifiedDate", false);
 
-	private final boolean _confirmationEnabled;
 	private final long _ctCollectionId;
 	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;

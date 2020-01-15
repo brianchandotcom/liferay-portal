@@ -27,14 +27,7 @@
 		<aui:input name="redirectToOverview" type="hidden" value="<%= false %>" />
 
 		<div class="sheet sheet-lg">
-			<c:choose>
-				<c:when test='<%= Objects.equals(changeListsConfigurationDisplayContext.getNavigation(), "global-settings") %>'>
-					<%@ include file="/change_lists_configuration/global_settings.jspf" %>
-				</c:when>
-				<c:otherwise>
-					<%@ include file="/change_lists_configuration/user_settings.jspf" %>
-				</c:otherwise>
-			</c:choose>
+			<%@ include file="/change_lists_configuration/global_settings.jspf" %>
 		</div>
 	</aui:form>
 </div>

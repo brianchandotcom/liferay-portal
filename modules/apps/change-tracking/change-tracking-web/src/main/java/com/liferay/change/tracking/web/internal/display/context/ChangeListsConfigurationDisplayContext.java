@@ -64,16 +64,9 @@ public class ChangeListsConfigurationDisplayContext {
 	public String getActionURL() {
 		PortletURL actionURL = _renderResponse.createActionURL();
 
-		if (Objects.equals(getNavigation(), "global-settings")) {
-			actionURL.setParameter(
-				ActionRequest.ACTION_NAME,
-				"/change_lists/update_global_change_lists_configuration");
-		}
-		else {
-			actionURL.setParameter(
-				ActionRequest.ACTION_NAME,
-				"/change_lists/update_user_change_lists_configuration");
-		}
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/change_lists/update_global_change_lists_configuration");
 
 		return actionURL.toString();
 	}
@@ -110,38 +103,12 @@ public class ChangeListsConfigurationDisplayContext {
 							LanguageUtil.get(
 								_httpServletRequest, "global-settings"));
 					});
-
-				if (isChangeListsEnabled()) {
-					add(
-						navigationItem -> {
-							navigationItem.setActive(
-								navigation.equals("user-settings"));
-							navigationItem.setHref(
-								_renderResponse.createRenderURL(), "navigation",
-								"user-settings");
-							navigationItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "user-settings"));
-						});
-				}
 			}
 		};
 	}
 
 	public boolean isChangeListsEnabled() {
 		return _changeListsEnabled;
-	}
-
-	public boolean isRequireConfirmationEnabled() {
-		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.fetchCTPreferences(
-				_themeDisplay.getCompanyId(), _themeDisplay.getUserId());
-
-		if (ctPreferences == null) {
-			return false;
-		}
-
-		return ctPreferences.isConfirmationEnabled();
 	}
 
 	private final boolean _changeListsEnabled;

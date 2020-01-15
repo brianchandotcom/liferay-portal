@@ -83,7 +83,7 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		icon: 'cog',
 		id: 'row_configuration',
 		panelId: 'row_configuration',
-		title: Liferay.Language.get('row'),
+		title: Liferay.Language.get('row-configuration'),
 		type: 'panel'
 	}
 };

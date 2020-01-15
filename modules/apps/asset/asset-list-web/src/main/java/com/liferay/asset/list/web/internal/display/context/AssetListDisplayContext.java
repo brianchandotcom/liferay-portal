@@ -97,7 +97,7 @@ public class AssetListDisplayContext {
 		}
 
 		SearchContainer searchContainer = new SearchContainer(
-			_renderRequest, _renderResponse.createRenderURL(), null,
+			_renderRequest, _getAssetListContentURL(), null,
 			"there-are-no-asset-entries");
 
 		List<AssetEntry> assetEntries =
@@ -384,6 +384,18 @@ public class AssetListDisplayContext {
 	private String _getAddAssetListTitle(String title) {
 		return LanguageUtil.format(
 			_httpServletRequest, "add-x-content-set", title, true);
+	}
+
+	private PortletURL _getAssetListContentURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view_content.jsp");
+		portletURL.setParameter(
+			"assetListEntryId", String.valueOf(getAssetListEntryId()));
+		portletURL.setParameter(
+			"segmentsEntryId", String.valueOf(getSegmentsEntryId()));
+
+		return portletURL;
 	}
 
 	private String _getKeywords() {

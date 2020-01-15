@@ -23,7 +23,7 @@ import React, {useState} from 'react';
 /**
  * @class Languages
  */
-const Languages = ({availableLocales, defaultLocaleId, inheritLocales = false}) => {
+const Languages = ({availableLocales, defaultLocaleId, inheritLocales = false, siteDefaultLocaleId, siteAvailableLocales}) => {
 	const defaultOption = 'defaultOption';
 	const customOption = 'customOption';
 
@@ -83,7 +83,7 @@ const Languages = ({availableLocales, defaultLocaleId, inheritLocales = false}) 
 	}
 
 	return (
-		<div class="languages mt-5">
+		<div className="mt-5">
 			<ClayRadioGroup
 				name="TypeSettingsProperties--inheritLocales--"
 				onSelectedValueChange={setSelectedRadioGroupValue}
@@ -105,7 +105,7 @@ const Languages = ({availableLocales, defaultLocaleId, inheritLocales = false}) 
 			)}
 
 			{selectedRadioGroupValue ===  customOption && (
-				<span> customLocales </span>
+				<LanguagesList defaultLocaleId={siteDefaultLocaleId} locales={siteAvailableLocales} showActions={true} />
 			)}
 		</div>
 	);
@@ -120,9 +120,15 @@ Languages.propTypes = {
 	).isRequired,
 	defaultLocaleId: PropTypes.string.isRequired,
 	inheritLocales: PropTypes.bool,
+	siteDefaultLocaleId: PropTypes.string.isRequired,
+	siteAvailableLocales: PropTypes.arrayOf(
+		PropTypes.shape({
+			displayName: PropTypes.string,
+			localeId: PropTypes.string
+		})
+	).isRequired
 };
 
 export default function(props) {
-	//console.log(props);
 	return <Languages {...props} />;
 }

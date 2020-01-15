@@ -778,10 +778,10 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 		Map<BeanPortletMethodType, List<BeanPortletMethod>>
 			descriptorBeanMethodMap = descriptorBeanPortlet.getBeanMethods();
 
-		for (Map.Entry<BeanPortletMethodType, List<BeanPortletMethod>> entry :
-				descriptorBeanMethodMap.entrySet()) {
+		for (List<BeanPortletMethod> curBeanPortletMethods :
+				descriptorBeanMethodMap.values()) {
 
-			beanPortletMethods.addAll(entry.getValue());
+			beanPortletMethods.addAll(curBeanPortletMethods);
 		}
 
 		beanMethodMap = BeanMethodIndexUtil.indexBeanMethods(

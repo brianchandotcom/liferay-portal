@@ -348,6 +348,9 @@ public class InputAssetLinksDisplayContext {
 		portletURL.setParameter("eventName", getEventName());
 		portletURL.setParameter(
 			"multipleSelection", String.valueOf(Boolean.TRUE));
+		portletURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
+		portletURL.setParameter(
+			"showNonindexable", String.valueOf(Boolean.TRUE));
 		portletURL.setPortletMode(PortletMode.VIEW);
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 

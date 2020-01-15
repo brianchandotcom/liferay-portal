@@ -52,6 +52,9 @@ public interface JournalWebConfiguration {
 	)
 	public String[] displayViews();
 
+	@Meta.AD(deflt = "true", name = "journal-article-show-id", required = false)
+	public boolean journalArticleShowId();
+
 	@Meta.AD(
 		deflt = "true", name = "journal-article-force-autogenerate-id",
 		required = false

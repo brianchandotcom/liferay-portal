@@ -28,7 +28,6 @@ import javax.mvc.security.Encoders;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -62,9 +61,7 @@ public class MvcContextProducer implements ApplicationContextAware {
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-		throws BeansException {
-
+	public void setApplicationContext(ApplicationContext applicationContext) {
 		_applicationContext = applicationContext;
 	}
 

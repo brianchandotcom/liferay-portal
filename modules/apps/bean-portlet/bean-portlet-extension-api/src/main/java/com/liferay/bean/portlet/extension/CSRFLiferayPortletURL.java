@@ -17,7 +17,6 @@ package com.liferay.bean.portlet.extension;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.io.IOException;
 import java.io.Writer;
 
 import java.util.HashMap;
@@ -28,11 +27,8 @@ import java.util.function.BiConsumer;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.MutableResourceParameters;
 import javax.portlet.PortletMode;
-import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletSecurityException;
 import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
 import javax.portlet.annotations.PortletSerializable;
 
 /**
@@ -55,14 +51,12 @@ public class CSRFLiferayPortletURL implements LiferayPortletURL {
 	}
 
 	@Override
-	public Appendable append(Appendable appendable) throws IOException {
+	public Appendable append(Appendable appendable) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Appendable append(Appendable appendable, boolean escapeXML)
-		throws IOException {
-
+	public Appendable append(Appendable appendable, boolean escapeXML) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -268,9 +262,7 @@ public class CSRFLiferayPortletURL implements LiferayPortletURL {
 	}
 
 	@Override
-	public void setPortletMode(PortletMode portletMode)
-		throws PortletModeException {
-
+	public void setPortletMode(PortletMode portletMode) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -300,14 +292,12 @@ public class CSRFLiferayPortletURL implements LiferayPortletURL {
 	}
 
 	@Override
-	public void setSecure(boolean secure) throws PortletSecurityException {
+	public void setSecure(boolean secure) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setWindowState(WindowState windowState)
-		throws WindowStateException {
-
+	public void setWindowState(WindowState windowState) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -324,12 +314,12 @@ public class CSRFLiferayPortletURL implements LiferayPortletURL {
 	}
 
 	@Override
-	public void write(Writer writer) throws IOException {
+	public void write(Writer writer) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void write(Writer writer, boolean escapeXML) throws IOException {
+	public void write(Writer writer, boolean escapeXML) {
 		throw new UnsupportedOperationException();
 	}
 

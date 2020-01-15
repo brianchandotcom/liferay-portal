@@ -94,16 +94,14 @@ public class SpringMimeResponseBean extends MimeResponseWrapper {
 	}
 
 	@Override
-	public <T extends PortletURL & ActionURL> T createActionURL()
-		throws IllegalStateException {
-
+	public <T extends PortletURL & ActionURL> T createActionURL() {
 		MimeResponse mimeResponse = getResponse();
 
 		return mimeResponse.createActionURL();
 	}
 
 	@Override
-	public ActionURL createActionURL(Copy option) throws IllegalStateException {
+	public ActionURL createActionURL(Copy option) {
 		MimeResponse mimeResponse = getResponse();
 
 		return mimeResponse.createActionURL(option);
@@ -117,23 +115,21 @@ public class SpringMimeResponseBean extends MimeResponseWrapper {
 	}
 
 	@Override
-	public <T extends PortletURL & RenderURL> T createRenderURL()
-		throws IllegalStateException {
-
+	public <T extends PortletURL & RenderURL> T createRenderURL() {
 		MimeResponse mimeResponse = getResponse();
 
 		return mimeResponse.createRenderURL();
 	}
 
 	@Override
-	public RenderURL createRenderURL(Copy option) throws IllegalStateException {
+	public RenderURL createRenderURL(Copy option) {
 		MimeResponse mimeResponse = getResponse();
 
 		return mimeResponse.createRenderURL(option);
 	}
 
 	@Override
-	public ResourceURL createResourceURL() throws IllegalStateException {
+	public ResourceURL createResourceURL() {
 		MimeResponse mimeResponse = getResponse();
 
 		return mimeResponse.createResourceURL();

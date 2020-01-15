@@ -20,10 +20,8 @@ import java.util.Map;
 
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
-import javax.portlet.PortletModeException;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
 
 import javax.xml.namespace.QName;
 
@@ -74,9 +72,7 @@ public class DummyStateAwareResponse
 	}
 
 	@Override
-	public void setPortletMode(PortletMode portletMode)
-		throws PortletModeException {
-
+	public void setPortletMode(PortletMode portletMode) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -99,9 +95,7 @@ public class DummyStateAwareResponse
 	}
 
 	@Override
-	public void setWindowState(WindowState windowState)
-		throws WindowStateException {
-
+	public void setWindowState(WindowState windowState) {
 		throw new UnsupportedOperationException();
 	}
 

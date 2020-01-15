@@ -20,7 +20,6 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.http.Cookie;
 
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
 /**
@@ -46,7 +45,7 @@ public class DummyPortletResponse implements PortletResponse {
 	}
 
 	@Override
-	public Element createElement(String key) throws DOMException {
+	public Element createElement(String key) {
 		throw new UnsupportedOperationException();
 	}
 

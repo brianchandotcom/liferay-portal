@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
-import java.io.IOException;
-
 import java.net.URL;
 
 import java.util.HashMap;
@@ -32,7 +30,7 @@ import java.util.Map;
 public class DisplayDescriptorParser {
 
 	public static Map<String, String> parse(URL displayDescriptorURL)
-		throws DocumentException, IOException {
+		throws DocumentException {
 
 		Map<String, String> displayCategoryMap = new HashMap<>();
 

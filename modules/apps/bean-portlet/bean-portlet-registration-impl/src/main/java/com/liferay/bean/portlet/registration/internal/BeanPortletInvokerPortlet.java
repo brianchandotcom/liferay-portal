@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.io.IOException;
-
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
@@ -153,7 +151,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 	@Override
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
+		throws PortletException {
 
 		_invokeMethodWithActiveScopes(
 			_beanMethods.get(BeanPortletMethodType.ACTION), actionRequest,
@@ -163,7 +161,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 	@Override
 	public void processEvent(
 			EventRequest eventRequest, EventResponse eventResponse)
-		throws IOException, PortletException {
+		throws PortletException {
 
 		List<BeanPortletMethod> beanPortletMethods = _beanMethods.get(
 			BeanPortletMethodType.EVENT);
@@ -189,7 +187,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
+		throws PortletException {
 
 		_invokeMethodWithActiveScopes(
 			_beanMethods.get(BeanPortletMethodType.RENDER), renderRequest,
@@ -199,7 +197,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 	@Override
 	public void renderHeaders(
 			HeaderRequest headerRequest, HeaderResponse headerResponse)
-		throws IOException, PortletException {
+		throws PortletException {
 
 		_invokeMethodWithActiveScopes(
 			_beanMethods.get(BeanPortletMethodType.HEADER), headerRequest,
@@ -209,7 +207,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws IOException, PortletException {
+		throws PortletException {
 
 		_invokeMethodWithActiveScopes(
 			_beanMethods.get(BeanPortletMethodType.SERVE_RESOURCE),
@@ -217,7 +215,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 	}
 
 	@Override
-	public void setPortletFilters() throws PortletException {
+	public void setPortletFilters() {
 		throw new UnsupportedOperationException();
 	}
 

@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
-import java.io.IOException;
-
 import java.net.URL;
 
 import java.util.AbstractMap;
@@ -84,7 +82,7 @@ public class PortletDescriptorParser {
 			Function<String, String> preferencesValidatorFunction,
 			Map<String, String> displayDescriptorCategories,
 			Map<String, Map<String, Set<String>>> liferayConfigurations)
-		throws DocumentException, IOException {
+		throws DocumentException {
 
 		Document document = UnsecureSAXReaderUtil.read(
 			portletDescriptorURL, _PORTLET_XML_VALIDATE);

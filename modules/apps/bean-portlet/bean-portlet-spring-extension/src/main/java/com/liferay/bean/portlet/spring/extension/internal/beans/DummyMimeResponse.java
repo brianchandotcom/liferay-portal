@@ -14,7 +14,6 @@
 
 package com.liferay.bean.portlet.spring.extension.internal.beans;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
@@ -61,7 +60,7 @@ public class DummyMimeResponse
 	}
 
 	@Override
-	public void flushBuffer() throws IOException {
+	public void flushBuffer() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -91,12 +90,12 @@ public class DummyMimeResponse
 	}
 
 	@Override
-	public OutputStream getPortletOutputStream() throws IOException {
+	public OutputStream getPortletOutputStream() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public PrintWriter getWriter() throws IOException {
+	public PrintWriter getWriter() {
 		throw new UnsupportedOperationException();
 	}
 

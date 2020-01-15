@@ -25,7 +25,6 @@ import java.util.Set;
 
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -38,8 +37,7 @@ public class SpringServletContainerInitializer
 
 	@Override
 	public void onStartup(
-			Set<Class<?>> scannedClasses, ServletContext servletContext)
-		throws ServletException {
+		Set<Class<?>> scannedClasses, ServletContext servletContext) {
 
 		try {
 			Class<?> discoveredClass = Class.forName(

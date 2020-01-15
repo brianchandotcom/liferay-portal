@@ -152,7 +152,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
-			if (LayoutDataConverter.isReactEditor(dataJSONObject)) {
+			if (LayoutDataConverter.isLatestVersion(dataJSONObject)) {
 				_dataJSONObject = dataJSONObject;
 
 				return _dataJSONObject;

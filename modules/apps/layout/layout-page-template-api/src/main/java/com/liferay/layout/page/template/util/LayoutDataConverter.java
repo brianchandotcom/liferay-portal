@@ -220,7 +220,7 @@ public class LayoutDataConverter {
 		return outputDataJSONObject.toJSONString();
 	}
 
-	public static boolean isReactEditor(JSONObject dataJSONObject) {
+	public static boolean isLatestVersion(JSONObject dataJSONObject) {
 		int version = dataJSONObject.getInt("version");
 
 		if (version == LATEST_VERSION) {

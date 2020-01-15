@@ -140,6 +140,7 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 			_portletConfig.getInitParameter("check-auth-token"));
 	}
 
+	@Override
 	public boolean isFacesPortlet() {
 		return _facesPortlet;
 	}

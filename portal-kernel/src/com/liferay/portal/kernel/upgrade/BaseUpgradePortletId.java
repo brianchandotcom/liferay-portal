@@ -32,6 +32,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -196,11 +197,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					typeSettings, oldStagedPortletId,
 					_getStagedPortletId(newRootPortletId));
 
-				ps2.setString(1, newTypeSettings);
+				if (!Objects.equals(typeSettings, newTypeSettings)) {
+					ps2.setString(1, newTypeSettings);
 
-				ps2.setLong(2, groupId);
+					ps2.setLong(2, groupId);
 
-				ps2.addBatch();
+					ps2.addBatch();
+				}
 			}
 
 			ps2.executeBatch();
@@ -264,7 +267,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				String newTypeSettings = StringUtil.replace(
 					typeSettings, oldPortletId, newPortletId);
 
-				updateLayout(plid, newTypeSettings);
+				if (!Objects.equals(typeSettings, newTypeSettings)) {
+					updateLayout(plid, newTypeSettings);
+				}
 			}
 		}
 		catch (Exception exception) {
@@ -321,11 +326,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					typeSettings, oldRootPortletId, newRootPortletId,
 					exactMatch);
 
-				ps2.setString(1, newTypeSettings);
+				if (!Objects.equals(typeSettings, newTypeSettings)) {
+					ps2.setString(1, newTypeSettings);
 
-				ps2.setLong(2, layoutRevisionId);
+					ps2.setLong(2, layoutRevisionId);
 
-				ps2.addBatch();
+					ps2.addBatch();
+				}
 			}
 
 			ps2.executeBatch();
@@ -357,11 +364,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					typeSettings, oldRootPortletId, newRootPortletId,
 					exactMatch);
 
-				ps2.setString(1, newTypeSettings);
+				if (!Objects.equals(typeSettings, newTypeSettings)) {
+					ps2.setString(1, newTypeSettings);
 
-				ps2.setLong(2, plid);
+					ps2.setLong(2, plid);
 
-				ps2.addBatch();
+					ps2.addBatch();
+				}
 			}
 
 			ps2.executeBatch();

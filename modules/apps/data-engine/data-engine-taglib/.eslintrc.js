@@ -12,6 +12,4 @@
  * details.
  */
 
-module.exports = {
-	extends: ['liferay/react']
-};
+module.exports = {};

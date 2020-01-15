@@ -19,10 +19,7 @@ import java.beans.FeatureDescriptor;
 import java.util.Iterator;
 
 import javax.el.ELContext;
-import javax.el.ELException;
 import javax.el.ELResolver;
-import javax.el.PropertyNotFoundException;
-import javax.el.PropertyNotWritableException;
 
 import javax.portlet.PortletRequest;
 
@@ -50,16 +47,12 @@ public class SpringBeanELResolver extends ELResolver {
 	}
 
 	@Override
-	public Class<?> getType(ELContext elContext, Object base, Object property)
-		throws ELException, NullPointerException, PropertyNotFoundException {
-
+	public Class<?> getType(ELContext elContext, Object base, Object property) {
 		return null;
 	}
 
 	@Override
-	public Object getValue(ELContext elContext, Object base, Object property)
-		throws ELException, NullPointerException, PropertyNotFoundException {
-
+	public Object getValue(ELContext elContext, Object base, Object property) {
 		if ((base == null) && (property != null)) {
 			String beanName = property.toString();
 
@@ -85,17 +78,15 @@ public class SpringBeanELResolver extends ELResolver {
 	}
 
 	@Override
-	public boolean isReadOnly(ELContext elContext, Object base, Object property)
-		throws ELException, NullPointerException, PropertyNotFoundException {
+	public boolean isReadOnly(
+		ELContext elContext, Object base, Object property) {
 
 		return false;
 	}
 
 	@Override
 	public void setValue(
-			ELContext elContext, Object base, Object property, Object value)
-		throws ELException, NullPointerException, PropertyNotFoundException,
-			   PropertyNotWritableException {
+		ELContext elContext, Object base, Object property, Object value) {
 	}
 
 	private final BeanFactory _beanFactory;

@@ -23,7 +23,6 @@ import javax.annotation.PostConstruct;
 
 import javax.ws.rs.ext.ParamConverterProvider;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -64,9 +63,7 @@ public class ParamConverterProvidersProducer
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-		throws BeansException {
-
+	public void setApplicationContext(ApplicationContext applicationContext) {
 		_applicationContext = applicationContext;
 	}
 

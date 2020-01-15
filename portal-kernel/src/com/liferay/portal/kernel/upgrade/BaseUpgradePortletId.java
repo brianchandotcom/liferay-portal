@@ -125,13 +125,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		sb.append(portletId);
 		sb.append("\n%' OR typeSettings like '%=");
 		sb.append(portletId);
-		sb.append("%' OR typeSettings like '%,");
+		sb.append("' OR typeSettings like '%,");
 		sb.append(portletId);
 		sb.append(",%' OR typeSettings like '%,");
 		sb.append(portletId);
 		sb.append("\n%' OR typeSettings like '%,");
 		sb.append(portletId);
-		sb.append("%' OR typeSettings like '%=");
+		sb.append("' OR typeSettings like '%=");
 		sb.append(portletId);
 		sb.append("_INSTANCE_%' OR typeSettings like '%,");
 		sb.append(portletId);

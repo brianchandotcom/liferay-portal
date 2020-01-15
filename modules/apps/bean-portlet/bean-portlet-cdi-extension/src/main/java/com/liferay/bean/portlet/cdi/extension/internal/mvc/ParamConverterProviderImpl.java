@@ -94,8 +94,7 @@ public class ParamConverterProviderImpl implements ParamConverterProvider {
 							return rawType.cast(Boolean.TRUE);
 						}
 
-						return rawType.cast(
-							Boolean.valueOf(value.equals("on")));
+						return rawType.cast(value.equals("on"));
 					}
 
 					return null;

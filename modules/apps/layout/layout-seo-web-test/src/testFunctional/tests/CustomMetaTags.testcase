@@ -47,7 +47,7 @@ definition {
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="&amp; property" content="&amp; content"''');
 	}
 
-	@description = "This ensures that the custom meta tag can be eidted."
+	@description = "This ensures that the custom meta tag can be edited."
 	@priority = "5"
 	test EditTag {
 		var portalURL = PropsUtil.get("portal.url");
@@ -113,7 +113,7 @@ definition {
 		CustomMetaTags.viewNoTags(customMetaTagsList = '''property="custom Tag 1 property" content="contenido de metaetiqueta personalizado"''');
 	}
 
-	@description = "This ensures that the required fields when adding a custom meta tag."
+	@description = "This ensures that fields require inputs when adding a custom meta tag."
 	@priority = "5"
 	test ViewRequiredFields {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -151,7 +151,7 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Error: No value is defined for field property.");
 	}
 
-	@description = "This ensures that the translated tag inherit the default property and content."
+	@description = "This ensures that the translated tag inherits the default property and content."
 	@priority = "4"
 	test ViewTranslatedTagWithDefaultValue {
 		var portalURL = PropsUtil.get("portal.url");

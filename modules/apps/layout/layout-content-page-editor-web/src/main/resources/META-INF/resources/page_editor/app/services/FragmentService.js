@@ -40,14 +40,27 @@ export default {
 	 * @param {string} options.fragmentEntryLinkId Id of the Fragment
 	 * @return {Promise<FragmentComment>} Created FragmentComment
 	 */
-	addComment({body, config, fragmentEntryLinkId, parentCommentId = 0}) {
+	addComment({
+		body,
+		config,
+		fragmentEntryLinkId,
+		onNetworkStatus,
+		parentCommentId = 0
+	}) {
 		const {addFragmentEntryLinkCommentURL} = config;
 
-		return serviceFetch(config, addFragmentEntryLinkCommentURL, {
-			body,
-			fragmentEntryLinkId,
-			parentCommentId
-		});
+		return serviceFetch(
+			config,
+			addFragmentEntryLinkCommentURL,
+			{
+				body: {
+					body,
+					fragmentEntryLinkId,
+					parentCommentId
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -63,21 +76,29 @@ export default {
 		config,
 		fragmentEntryKey,
 		groupId,
+		onNetworkStatus,
 		parentItemId,
 		position,
 		segmentsExperienceId
 	}) {
 		const {addFragmentEntryLinkURL, classNameId, classPK} = config;
 
-		return serviceFetch(config, addFragmentEntryLinkURL, {
-			classNameId,
-			classPK,
-			fragmentEntryKey,
-			groupId,
-			parentItemId,
-			position,
-			segmentsExperienceId
-		});
+		return serviceFetch(
+			config,
+			addFragmentEntryLinkURL,
+			{
+				body: {
+					classNameId,
+					classPK,
+					fragmentEntryKey,
+					groupId,
+					parentItemId,
+					position,
+					segmentsExperienceId
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -87,12 +108,17 @@ export default {
 	 * @param {object} options.config AppConfig
 	 * @return {Promise<void>}
 	 */
-	deleteComment({commentId, config}) {
+	deleteComment({commentId, config, onNetworkStatus}) {
 		const {deleteFragmentEntryLinkCommentURL} = config;
 
-		return serviceFetch(config, deleteFragmentEntryLinkCommentURL, {
-			commentId
-		});
+		return serviceFetch(
+			config,
+			deleteFragmentEntryLinkCommentURL,
+			{
+				body: {commentId}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -107,15 +133,23 @@ export default {
 		config,
 		fragmentEntryLinkId,
 		itemId,
+		onNetworkStatus,
 		segmentsExperienceId
 	}) {
 		const {duplicateFragmentEntryLinkURL} = config;
 
-		return serviceFetch(config, duplicateFragmentEntryLinkURL, {
-			fragmentEntryLinkId,
-			itemId,
-			segmentsExperienceId
-		});
+		return serviceFetch(
+			config,
+			duplicateFragmentEntryLinkURL,
+			{
+				body: {
+					fragmentEntryLinkId,
+					itemId,
+					segmentsExperienceId
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -127,14 +161,21 @@ export default {
 	 * @param {boolean} options.resolved Whether the comment should be marked as resolved or not
 	 * @return {Promise<FragmentComment>} Created FragmentComment
 	 */
-	editComment({body, commentId, config, resolved}) {
+	editComment({body, commentId, config, onNetworkStatus, resolved}) {
 		const {editFragmentEntryLinkCommentURL} = config;
 
-		return serviceFetch(config, editFragmentEntryLinkCommentURL, {
-			body,
-			commentId,
-			resolved
-		});
+		return serviceFetch(
+			config,
+			editFragmentEntryLinkCommentURL,
+			{
+				body: {
+					body,
+					commentId,
+					resolved
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -147,14 +188,22 @@ export default {
 	renderFragmentEntryLinkContent({
 		config,
 		fragmentEntryLinkId,
+		onNetworkStatus,
 		segmentsExperienceId
 	}) {
 		const {renderFragmentEntryURL} = config;
 
-		return serviceFetch(config, renderFragmentEntryURL, {
-			fragmentEntryLinkId,
-			segmentsExperienceId
-		});
+		return serviceFetch(
+			config,
+			renderFragmentEntryURL,
+			{
+				body: {
+					fragmentEntryLinkId,
+					segmentsExperienceId
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -164,13 +213,25 @@ export default {
 	 * @param {string} options.fragmentEntryLinkId Id of the fragmentEntryLink
 	 * @param {string} options.editableValues New editableValues
 	 */
-	updateEditableValues({config, editableValues, fragmentEntryLinkId}) {
+	updateEditableValues({
+		config,
+		editableValues,
+		fragmentEntryLinkId,
+		onNetworkStatus
+	}) {
 		const {editFragmentEntryLinkURL} = config;
 
-		return serviceFetch(config, editFragmentEntryLinkURL, {
-			editableValues: JSON.stringify(editableValues),
-			fragmentEntryLinkId,
-			updateClassedModel: true
-		});
+		return serviceFetch(
+			config,
+			editFragmentEntryLinkURL,
+			{
+				body: {
+					editableValues: JSON.stringify(editableValues),
+					fragmentEntryLinkId,
+					updateClassedModel: true
+				}
+			},
+			onNetworkStatus
+		);
 	}
 };

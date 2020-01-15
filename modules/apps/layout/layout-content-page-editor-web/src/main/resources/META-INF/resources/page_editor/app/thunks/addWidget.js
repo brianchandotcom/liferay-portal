@@ -27,6 +27,7 @@ export default function addWidget({
 
 		WidgetService.addPortlet({
 			config,
+			onNetworkStatus: dispatch,
 			parentItemId,
 			portletId,
 			position,

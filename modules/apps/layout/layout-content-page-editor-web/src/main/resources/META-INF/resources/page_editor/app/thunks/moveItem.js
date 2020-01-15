@@ -28,6 +28,7 @@ export default function moveItem({
 		LayoutService.moveItem({
 			config,
 			itemId,
+			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
 			segmentsExperienceId

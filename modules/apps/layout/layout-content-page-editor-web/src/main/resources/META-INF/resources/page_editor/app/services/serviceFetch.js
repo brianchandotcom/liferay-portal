@@ -14,8 +14,11 @@
 
 import {fetch} from 'frontend-js-web';
 
+import {updateNetwork} from '../actions/index';
+import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
+
 /**
- * Returns a new formData built from the given object.
+ * Returns a new FormData built from the given object.
  * @param {{ portletNamespace: string }} config Application configuration constants
  * @param {object} body
  * @return {FormData}
@@ -42,10 +45,20 @@ function getFormData({portletNamespace}, body) {
  * @return {Promise<object>}
  * @review
  */
-export default function serviceFetch(config, url, body = {}) {
+export default function serviceFetch(
+	config,
+	url,
+	{body, method, ...options} = {body: {}},
+	onNetworkStatus
+) {
+	onNetworkStatus(
+		updateNetwork({status: SERVICE_NETWORK_STATUS_TYPES.Fetching})
+	);
+
 	return fetch(url, {
+		...options,
 		body: getFormData(config, body),
-		method: 'POST'
+		method: method || 'POST'
 	})
 		.then(
 			response =>
@@ -62,16 +75,41 @@ export default function serviceFetch(config, url, body = {}) {
 		.then(([response, body]) => {
 			if (typeof body === 'object') {
 				if ('exception' in body) {
-					throw new Error(body.exception);
+					onNetworkStatus(
+						updateNetwork({
+							error: body.exception,
+							status: SERVICE_NETWORK_STATUS_TYPES.Error
+						})
+					);
+					return;
 				} else if ('error' in body) {
-					throw new Error(body.error);
+					onNetworkStatus(
+						updateNetwork({
+							error: body.error,
+							status: SERVICE_NETWORK_STATUS_TYPES.Error
+						})
+					);
+					return;
 				}
 			}
 
 			if (response.status >= 400) {
-				throw new Error(`${response.status} ${body}`);
+				onNetworkStatus(
+					updateNetwork({
+						error: `${response.status} ${body}`,
+						status: SERVICE_NETWORK_STATUS_TYPES.Error
+					})
+				);
+				return;
 			}
 
+			onNetworkStatus(
+				updateNetwork({
+					error: null,
+					lastFetch: new Date(),
+					status: SERVICE_NETWORK_STATUS_TYPES.Idle
+				})
+			);
 			return body;
 		});
 }

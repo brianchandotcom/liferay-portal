@@ -26,6 +26,7 @@ export default function addFragmentComment({
 			body,
 			config,
 			fragmentEntryLinkId,
+			onNetworkStatus: dispatch,
 			parentCommentId
 		}).then(fragmentEntryLinkComment => {
 			dispatch(

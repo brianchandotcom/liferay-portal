@@ -30,19 +30,27 @@ export default {
 		config,
 		itemConfig,
 		itemType,
+		onNetworkStatus,
 		parentItemId,
 		position,
 		segmentsExperienceId
 	}) {
 		const {addItemURL} = config;
 
-		return serviceFetch(config, addItemURL, {
-			itemConfig: JSON.stringify(itemConfig),
-			itemType,
-			parentItemId,
-			position,
-			segmentsExperienceId
-		});
+		return serviceFetch(
+			config,
+			addItemURL,
+			{
+				body: {
+					itemConfig: JSON.stringify(itemConfig),
+					itemType,
+					parentItemId,
+					position,
+					segmentsExperienceId
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -53,13 +61,20 @@ export default {
 	 * @param {object} options.segmentsExperienceId
 	 * @return {Promise<object>}
 	 */
-	deleteItem({config, itemId, segmentsExperienceId}) {
+	deleteItem({config, itemId, onNetworkStatus, segmentsExperienceId}) {
 		const {deleteItemURL} = config;
 
-		return serviceFetch(config, deleteItemURL, {
-			itemId,
-			segmentsExperienceId
-		});
+		return serviceFetch(
+			config,
+			deleteItemURL,
+			{
+				body: {
+					itemId,
+					segmentsExperienceId
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -72,15 +87,29 @@ export default {
 	 * @param {object} options.segmentsExperienceId
 	 * @return {Promise<object>}
 	 */
-	moveItem({config, itemId, parentItemId, position, segmentsExperienceId}) {
+	moveItem({
+		config,
+		itemId,
+		onNetworkStatus,
+		parentItemId,
+		position,
+		segmentsExperienceId
+	}) {
 		const {moveItemURL} = config;
 
-		return serviceFetch(config, moveItemURL, {
-			itemId,
-			parentItemId,
-			position,
-			segmentsExperienceId
-		});
+		return serviceFetch(
+			config,
+			moveItemURL,
+			{
+				body: {
+					itemId,
+					parentItemId,
+					position,
+					segmentsExperienceId
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -92,14 +121,27 @@ export default {
 	 * @param {string} options.segmentsExperienceId Segments experience id
 	 * @return {Promise<void>}
 	 */
-	updateItemConfig({config, itemConfig, itemId, segmentsExperienceId}) {
+	updateItemConfig({
+		config,
+		itemConfig,
+		itemId,
+		onNetworkStatus,
+		segmentsExperienceId
+	}) {
 		const {updateItemConfigURL} = config;
 
-		return serviceFetch(config, updateItemConfigURL, {
-			itemConfig: JSON.stringify(itemConfig),
-			itemId,
-			segmentsExperienceId
-		});
+		return serviceFetch(
+			config,
+			updateItemConfigURL,
+			{
+				body: {
+					itemConfig: JSON.stringify(itemConfig),
+					itemId,
+					segmentsExperienceId
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -110,15 +152,27 @@ export default {
 	 * @param {object} options.layoutData New layoutData
 	 * @return {Promise<void>}
 	 */
-	updateLayoutData({config, layoutData, segmentsExperienceId}) {
+	updateLayoutData({
+		config,
+		layoutData,
+		onNetworkStatus,
+		segmentsExperienceId
+	}) {
 		const {classNameId, classPK, updateLayoutPageTemplateDataURL} = config;
 
-		return serviceFetch(config, updateLayoutPageTemplateDataURL, {
-			classNameId,
-			classPK,
-			data: JSON.stringify(layoutData),
-			segmentsExperienceId
-		});
+		return serviceFetch(
+			config,
+			updateLayoutPageTemplateDataURL,
+			{
+				body: {
+					classNameId,
+					classPK,
+					data: JSON.stringify(layoutData),
+					segmentsExperienceId
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -130,13 +184,26 @@ export default {
 	 * @param {string} options.segmentsExperienceId Segments experience id
 	 * @return {Promise<void>}
 	 */
-	updateRowColumns({config, itemId, numberOfColumns, segmentsExperienceId}) {
+	updateRowColumns({
+		config,
+		itemId,
+		numberOfColumns,
+		onNetworkStatus,
+		segmentsExperienceId
+	}) {
 		const {updateRowColumnsURL} = config;
 
-		return serviceFetch(config, updateRowColumnsURL, {
-			itemId,
-			numberOfColumns,
-			segmentsExperienceId
-		});
+		return serviceFetch(
+			config,
+			updateRowColumnsURL,
+			{
+				body: {
+					itemId,
+					numberOfColumns,
+					segmentsExperienceId
+				}
+			},
+			onNetworkStatus
+		);
 	}
 };

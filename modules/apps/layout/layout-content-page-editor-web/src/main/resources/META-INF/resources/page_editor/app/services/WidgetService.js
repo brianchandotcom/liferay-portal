@@ -28,6 +28,7 @@ export default {
 	 */
 	addPortlet({
 		config,
+		onNetworkStatus,
 		parentItemId,
 		portletId,
 		position,
@@ -35,13 +36,20 @@ export default {
 	}) {
 		const {addPortletURL, classNameId, classPK} = config;
 
-		return serviceFetch(config, addPortletURL, {
-			classNameId,
-			classPK,
-			parentItemId,
-			portletId,
-			position,
-			segmentsExperienceId
-		});
+		return serviceFetch(
+			config,
+			addPortletURL,
+			{
+				body: {
+					classNameId,
+					classPK,
+					parentItemId,
+					portletId,
+					position,
+					segmentsExperienceId
+				}
+			},
+			onNetworkStatus
+		);
 	}
 };

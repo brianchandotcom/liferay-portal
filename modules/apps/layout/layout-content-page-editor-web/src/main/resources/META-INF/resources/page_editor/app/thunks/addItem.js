@@ -30,6 +30,7 @@ export default function addItem({
 			config,
 			itemConfig,
 			itemType,
+			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
 			segmentsExperienceId

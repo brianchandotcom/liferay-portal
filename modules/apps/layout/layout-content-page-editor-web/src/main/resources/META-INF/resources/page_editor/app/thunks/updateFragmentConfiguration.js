@@ -37,12 +37,14 @@ export default function updateFragmentConfiguration({
 		return FragmentService.updateEditableValues({
 			config,
 			editableValues: nextEditableValues,
-			fragmentEntryLinkId
+			fragmentEntryLinkId,
+			onNetworkStatus: dispatch
 		})
 			.then(() => {
 				return FragmentService.renderFragmentEntryLinkContent({
 					config,
 					fragmentEntryLinkId,
+					onNetworkStatus: dispatch,
 					segmentsExperienceId
 				});
 			})

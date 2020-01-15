@@ -22,13 +22,25 @@ export default {
 	 * @param {string} options.classNameId Asset's className
 	 * @param {string} options.classPK Asset's classPK
 	 */
-	getAvailableAssetMappingFields({classNameId, classPK, config}) {
+	getAvailableAssetMappingFields({
+		classNameId,
+		classPK,
+		config,
+		onNetworkStatus
+	}) {
 		const {getAssetMappingFieldsURL} = config;
 
-		return serviceFetch(config, getAssetMappingFieldsURL, {
-			classNameId,
-			classPK
-		});
+		return serviceFetch(
+			config,
+			getAssetMappingFieldsURL,
+			{
+				body: {
+					classNameId,
+					classPK
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -38,13 +50,25 @@ export default {
 	 * @param {string} options.classNameId Asset's className
 	 * @param {string} options.classTypeId Asset's classTypeId
 	 */
-	getAvailableMappingFields({classNameId, classTypeId, config}) {
+	getAvailableMappingFields({
+		classNameId,
+		classTypeId,
+		config,
+		onNetworkStatus
+	}) {
 		const {mappingFieldsURL} = config;
 
-		return serviceFetch(config, mappingFieldsURL, {
-			classNameId,
-			classTypeId
-		});
+		return serviceFetch(
+			config,
+			mappingFieldsURL,
+			{
+				body: {
+					classNameId,
+					classTypeId
+				}
+			},
+			onNetworkStatus
+		);
 	},
 
 	/**
@@ -54,12 +78,19 @@ export default {
 	 * @param {string} options.className Asset's className
 	 * @param {string} options.classPK Asset's classPK
 	 */
-	getAvailableTemplates({className, classPK, config}) {
+	getAvailableTemplates({className, classPK, config, onNetworkStatus}) {
 		const {getAvailableTemplatesURL} = config;
 
-		return serviceFetch(config, getAvailableTemplatesURL, {
-			className,
-			classPK
-		});
+		return serviceFetch(
+			config,
+			getAvailableTemplatesURL,
+			{
+				body: {
+					className,
+					classPK
+				}
+			},
+			onNetworkStatus
+		);
 	}
 };

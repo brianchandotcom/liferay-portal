@@ -22,6 +22,7 @@ export default function deleteItem({config, itemId, store}) {
 		return LayoutService.deleteItem({
 			config,
 			itemId,
+			onNetworkStatus: dispatch,
 			segmentsExperienceId
 		}).then(({deletedFragmentEntryLinkIds, layoutData}) => {
 			dispatch(

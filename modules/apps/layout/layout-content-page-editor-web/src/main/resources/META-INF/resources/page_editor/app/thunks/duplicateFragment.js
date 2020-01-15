@@ -28,6 +28,7 @@ export default function duplicateFragment({
 			config,
 			fragmentEntryLinkId,
 			itemId,
+			onNetworkStatus: dispatch,
 			segmentsExperienceId
 		}).then(({fragmentEntryLink, layoutData}) => {
 			// TODO: LPS-106738

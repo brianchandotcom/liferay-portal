@@ -24,7 +24,8 @@ export default function deleteFragmentComment({
 	return dispatch => {
 		return FragmentService.deleteComment({
 			commentId,
-			config
+			config,
+			onNetworkStatus: dispatch
 		}).then(() => {
 			dispatch(
 				deleteFragmentEntryLinkComment({

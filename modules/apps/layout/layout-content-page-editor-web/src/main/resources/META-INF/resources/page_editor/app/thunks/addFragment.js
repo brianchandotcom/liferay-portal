@@ -30,6 +30,7 @@ export default function addFragment({
 			config,
 			fragmentEntryKey,
 			groupId,
+			onNetworkStatus: dispatch,
 			parentItemId,
 			position,
 			segmentsExperienceId

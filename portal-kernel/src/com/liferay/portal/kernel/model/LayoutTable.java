@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -75,8 +76,8 @@ public class LayoutTable extends Table<LayoutTable> {
 		"robots", String.class, Types.VARCHAR);
 	public final Column<LayoutTable, String> type = createColumn(
 		"type_", String.class, Types.VARCHAR);
-	public final Column<LayoutTable, String> typeSettings = createColumn(
-		"typeSettings", String.class, Types.CLOB);
+	public final Column<LayoutTable, Clob> typeSettings = createColumn(
+		"typeSettings", Clob.class, Types.CLOB);
 	public final Column<LayoutTable, Boolean> hidden = createColumn(
 		"hidden_", Boolean.class, Types.BOOLEAN);
 	public final Column<LayoutTable, Boolean> system = createColumn(
@@ -89,8 +90,8 @@ public class LayoutTable extends Table<LayoutTable> {
 		"themeId", String.class, Types.VARCHAR);
 	public final Column<LayoutTable, String> colorSchemeId = createColumn(
 		"colorSchemeId", String.class, Types.VARCHAR);
-	public final Column<LayoutTable, String> css = createColumn(
-		"css", String.class, Types.CLOB);
+	public final Column<LayoutTable, Clob> css = createColumn(
+		"css", Clob.class, Types.CLOB);
 	public final Column<LayoutTable, Integer> priority = createColumn(
 		"priority", Integer.class, Types.INTEGER);
 	public final Column<LayoutTable, Long> masterLayoutPlid = createColumn(

@@ -38,6 +38,8 @@ public interface AMImageEntry extends AMImageEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AMImageEntryTable TABLE = AMImageEntryTable.INSTANCE;
+
 	public static final Accessor<AMImageEntry, Long>
 		AM_IMAGE_ENTRY_ID_ACCESSOR = new Accessor<AMImageEntry, Long>() {
 

@@ -36,6 +36,8 @@ public interface SharingEntry extends PersistedModel, SharingEntryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.sharing.model.impl.SharingEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SharingEntryTable TABLE = SharingEntryTable.INSTANCE;
+
 	public static final Accessor<SharingEntry, Long> SHARING_ENTRY_ID_ACCESSOR =
 		new Accessor<SharingEntry, Long>() {
 

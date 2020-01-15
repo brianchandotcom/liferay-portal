@@ -36,6 +36,8 @@ public interface OAuthToken extends OAuthTokenModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.opensocial.model.impl.OAuthTokenImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final OAuthTokenTable TABLE = OAuthTokenTable.INSTANCE;
+
 	public static final Accessor<OAuthToken, Long> O_AUTH_TOKEN_ID_ACCESSOR =
 		new Accessor<OAuthToken, Long>() {
 

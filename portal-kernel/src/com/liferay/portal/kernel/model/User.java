@@ -35,6 +35,8 @@ public interface User extends PersistedModel, UserModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final UserTable TABLE = UserTable.INSTANCE;
+
 	public static final Accessor<User, Long> USER_ID_ACCESSOR =
 		new Accessor<User, Long>() {
 

@@ -36,6 +36,8 @@ public interface Status extends PersistedModel, StatusModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.chat.model.impl.StatusImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final StatusTable TABLE = StatusTable.INSTANCE;
+
 	public static final Accessor<Status, Long> STATUS_ID_ACCESSOR =
 		new Accessor<Status, Long>() {
 

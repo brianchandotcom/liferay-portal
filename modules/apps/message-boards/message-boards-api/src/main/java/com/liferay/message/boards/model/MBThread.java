@@ -36,6 +36,8 @@ public interface MBThread extends MBThreadModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBThreadImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MBThreadTable TABLE = MBThreadTable.INSTANCE;
+
 	public static final Accessor<MBThread, Long> THREAD_ID_ACCESSOR =
 		new Accessor<MBThread, Long>() {
 

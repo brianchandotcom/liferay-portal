@@ -38,6 +38,8 @@ public interface DDLRecord extends DDLRecordModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDLRecordTable TABLE = DDLRecordTable.INSTANCE;
+
 	public static final Accessor<DDLRecord, Long> RECORD_ID_ACCESSOR =
 		new Accessor<DDLRecord, Long>() {
 

@@ -36,6 +36,9 @@ public interface UserGroupGroupRole
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserGroupGroupRoleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final UserGroupGroupRoleTable TABLE =
+		UserGroupGroupRoleTable.INSTANCE;
+
 	public static final Accessor<UserGroupGroupRole, Long>
 		USER_GROUP_ID_ACCESSOR = new Accessor<UserGroupGroupRole, Long>() {
 

@@ -38,6 +38,8 @@ public interface MBMailingList extends MBMailingListModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBMailingListImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MBMailingListTable TABLE = MBMailingListTable.INSTANCE;
+
 	public static final Accessor<MBMailingList, Long> MAILING_LIST_ID_ACCESSOR =
 		new Accessor<MBMailingList, Long>() {
 

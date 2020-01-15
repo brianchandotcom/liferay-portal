@@ -36,6 +36,8 @@ public interface WikiPage extends PersistedModel, WikiPageModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.wiki.model.impl.WikiPageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final WikiPageTable TABLE = WikiPageTable.INSTANCE;
+
 	public static final Accessor<WikiPage, Long> PAGE_ID_ACCESSOR =
 		new Accessor<WikiPage, Long>() {
 

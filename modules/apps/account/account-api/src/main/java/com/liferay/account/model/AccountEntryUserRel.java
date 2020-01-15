@@ -39,6 +39,9 @@ public interface AccountEntryUserRel
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.account.model.impl.AccountEntryUserRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AccountEntryUserRelTable TABLE =
+		AccountEntryUserRelTable.INSTANCE;
+
 	public static final Accessor<AccountEntryUserRel, Long>
 		ACCOUNT_ENTRY_USER_REL_ID_ACCESSOR =
 			new Accessor<AccountEntryUserRel, Long>() {

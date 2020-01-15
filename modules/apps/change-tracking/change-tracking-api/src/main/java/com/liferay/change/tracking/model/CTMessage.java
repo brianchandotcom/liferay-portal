@@ -36,6 +36,8 @@ public interface CTMessage extends CTMessageModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.model.impl.CTMessageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CTMessageTable TABLE = CTMessageTable.INSTANCE;
+
 	public static final Accessor<CTMessage, Long> CT_MESSAGE_ID_ACCESSOR =
 		new Accessor<CTMessage, Long>() {
 

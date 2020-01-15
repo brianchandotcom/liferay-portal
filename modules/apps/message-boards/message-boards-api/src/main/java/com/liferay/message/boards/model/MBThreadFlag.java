@@ -38,6 +38,8 @@ public interface MBThreadFlag extends MBThreadFlagModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBThreadFlagImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MBThreadFlagTable TABLE = MBThreadFlagTable.INSTANCE;
+
 	public static final Accessor<MBThreadFlag, Long> THREAD_FLAG_ID_ACCESSOR =
 		new Accessor<MBThreadFlag, Long>() {
 

@@ -38,6 +38,9 @@ public interface LocalizedEntryLocalization
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryLocalizationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LocalizedEntryLocalizationTable TABLE =
+		LocalizedEntryLocalizationTable.INSTANCE;
+
 	public static final Accessor<LocalizedEntryLocalization, Long>
 		LOCALIZED_ENTRY_LOCALIZATION_ID_ACCESSOR =
 			new Accessor<LocalizedEntryLocalization, Long>() {

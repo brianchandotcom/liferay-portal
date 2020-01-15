@@ -39,6 +39,9 @@ public interface ExportImportConfiguration
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ExportImportConfigurationTable TABLE =
+		ExportImportConfigurationTable.INSTANCE;
+
 	public static final Accessor<ExportImportConfiguration, Long>
 		EXPORT_IMPORT_CONFIGURATION_ID_ACCESSOR =
 			new Accessor<ExportImportConfiguration, Long>() {

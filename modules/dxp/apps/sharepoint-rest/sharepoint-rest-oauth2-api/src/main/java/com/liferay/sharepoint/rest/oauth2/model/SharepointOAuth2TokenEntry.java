@@ -39,6 +39,9 @@ public interface SharepointOAuth2TokenEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SharepointOAuth2TokenEntryTable TABLE =
+		SharepointOAuth2TokenEntryTable.INSTANCE;
+
 	public static final Accessor<SharepointOAuth2TokenEntry, Long>
 		SHAREPOINT_O_AUTH2_TOKEN_ENTRY_ID_ACCESSOR =
 			new Accessor<SharepointOAuth2TokenEntry, Long>() {

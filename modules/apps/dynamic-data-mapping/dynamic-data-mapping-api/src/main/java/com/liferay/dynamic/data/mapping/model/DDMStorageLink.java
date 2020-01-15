@@ -38,6 +38,9 @@ public interface DDMStorageLink extends DDMStorageLinkModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMStorageLinkTable TABLE =
+		DDMStorageLinkTable.INSTANCE;
+
 	public static final Accessor<DDMStorageLink, Long>
 		STORAGE_LINK_ID_ACCESSOR = new Accessor<DDMStorageLink, Long>() {
 

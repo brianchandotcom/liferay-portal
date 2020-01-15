@@ -35,6 +35,9 @@ public interface BrowserTracker extends BrowserTrackerModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.BrowserTrackerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final BrowserTrackerTable TABLE =
+		BrowserTrackerTable.INSTANCE;
+
 	public static final Accessor<BrowserTracker, Long>
 		BROWSER_TRACKER_ID_ACCESSOR = new Accessor<BrowserTracker, Long>() {
 

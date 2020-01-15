@@ -39,6 +39,9 @@ public interface LayoutClassedModelUsage
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.layout.model.impl.LayoutClassedModelUsageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutClassedModelUsageTable TABLE =
+		LayoutClassedModelUsageTable.INSTANCE;
+
 	public static final Accessor<LayoutClassedModelUsage, Long>
 		LAYOUT_CLASSED_MODEL_USAGE_ID_ACCESSOR =
 			new Accessor<LayoutClassedModelUsage, Long>() {

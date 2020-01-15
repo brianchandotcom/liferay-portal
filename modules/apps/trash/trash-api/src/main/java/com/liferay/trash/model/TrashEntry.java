@@ -36,6 +36,8 @@ public interface TrashEntry extends PersistedModel, TrashEntryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.trash.model.impl.TrashEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final TrashEntryTable TABLE = TrashEntryTable.INSTANCE;
+
 	public static final Accessor<TrashEntry, Long> ENTRY_ID_ACCESSOR =
 		new Accessor<TrashEntry, Long>() {
 

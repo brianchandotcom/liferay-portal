@@ -38,6 +38,8 @@ public interface MDRRule extends MDRRuleModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mobile.device.rules.model.impl.MDRRuleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MDRRuleTable TABLE = MDRRuleTable.INSTANCE;
+
 	public static final Accessor<MDRRule, Long> RULE_ID_ACCESSOR =
 		new Accessor<MDRRule, Long>() {
 

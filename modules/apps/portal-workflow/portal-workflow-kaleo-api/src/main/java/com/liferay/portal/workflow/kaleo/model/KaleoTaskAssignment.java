@@ -39,6 +39,9 @@ public interface KaleoTaskAssignment
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoTaskAssignmentTable TABLE =
+		KaleoTaskAssignmentTable.INSTANCE;
+
 	public static final Accessor<KaleoTaskAssignment, Long>
 		KALEO_TASK_ASSIGNMENT_ID_ACCESSOR =
 			new Accessor<KaleoTaskAssignment, Long>() {

@@ -39,6 +39,9 @@ public interface KaleoTimerInstanceToken
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoTimerInstanceTokenTable TABLE =
+		KaleoTimerInstanceTokenTable.INSTANCE;
+
 	public static final Accessor<KaleoTimerInstanceToken, Long>
 		KALEO_TIMER_INSTANCE_TOKEN_ID_ACCESSOR =
 			new Accessor<KaleoTimerInstanceToken, Long>() {

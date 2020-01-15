@@ -35,6 +35,8 @@ public interface Address extends AddressModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.AddressImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AddressTable TABLE = AddressTable.INSTANCE;
+
 	public static final Accessor<Address, Long> ADDRESS_ID_ACCESSOR =
 		new Accessor<Address, Long>() {
 

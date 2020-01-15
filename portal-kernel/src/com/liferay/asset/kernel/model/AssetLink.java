@@ -36,6 +36,8 @@ public interface AssetLink extends AssetLinkModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.asset.model.impl.AssetLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AssetLinkTable TABLE = AssetLinkTable.INSTANCE;
+
 	public static final Accessor<AssetLink, Long> LINK_ID_ACCESSOR =
 		new Accessor<AssetLink, Long>() {
 

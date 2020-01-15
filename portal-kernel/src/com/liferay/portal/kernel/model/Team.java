@@ -35,6 +35,8 @@ public interface Team extends PersistedModel, TeamModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.TeamImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final TeamTable TABLE = TeamTable.INSTANCE;
+
 	public static final Accessor<Team, Long> TEAM_ID_ACCESSOR =
 		new Accessor<Team, Long>() {
 

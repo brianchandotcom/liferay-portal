@@ -39,6 +39,9 @@ public interface KaleoTaskInstanceToken
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoTaskInstanceTokenTable TABLE =
+		KaleoTaskInstanceTokenTable.INSTANCE;
+
 	public static final Accessor<KaleoTaskInstanceToken, Long>
 		KALEO_TASK_INSTANCE_TOKEN_ID_ACCESSOR =
 			new Accessor<KaleoTaskInstanceToken, Long>() {

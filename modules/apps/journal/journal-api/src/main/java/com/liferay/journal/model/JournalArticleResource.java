@@ -39,6 +39,9 @@ public interface JournalArticleResource
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.journal.model.impl.JournalArticleResourceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final JournalArticleResourceTable TABLE =
+		JournalArticleResourceTable.INSTANCE;
+
 	public static final Accessor<JournalArticleResource, Long>
 		RESOURCE_PRIM_KEY_ACCESSOR =
 			new Accessor<JournalArticleResource, Long>() {

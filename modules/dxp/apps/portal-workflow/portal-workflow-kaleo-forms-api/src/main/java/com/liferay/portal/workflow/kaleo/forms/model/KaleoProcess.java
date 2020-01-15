@@ -38,6 +38,8 @@ public interface KaleoProcess extends KaleoProcessModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoProcessTable TABLE = KaleoProcessTable.INSTANCE;
+
 	public static final Accessor<KaleoProcess, Long> KALEO_PROCESS_ID_ACCESSOR =
 		new Accessor<KaleoProcess, Long>() {
 

@@ -36,6 +36,8 @@ public interface KBTemplate extends KBTemplateModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.knowledge.base.model.impl.KBTemplateImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KBTemplateTable TABLE = KBTemplateTable.INSTANCE;
+
 	public static final Accessor<KBTemplate, Long> KB_TEMPLATE_ID_ACCESSOR =
 		new Accessor<KBTemplate, Long>() {
 

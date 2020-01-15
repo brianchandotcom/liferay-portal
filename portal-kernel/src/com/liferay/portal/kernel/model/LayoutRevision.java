@@ -35,6 +35,9 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutRevisionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutRevisionTable TABLE =
+		LayoutRevisionTable.INSTANCE;
+
 	public static final Accessor<LayoutRevision, Long>
 		LAYOUT_REVISION_ID_ACCESSOR = new Accessor<LayoutRevision, Long>() {
 

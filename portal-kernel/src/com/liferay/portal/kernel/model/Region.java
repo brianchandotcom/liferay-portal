@@ -35,6 +35,8 @@ public interface Region extends RegionModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.RegionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final RegionTable TABLE = RegionTable.INSTANCE;
+
 	public static final Accessor<Region, Long> REGION_ID_ACCESSOR =
 		new Accessor<Region, Long>() {
 

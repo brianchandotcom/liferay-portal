@@ -35,6 +35,8 @@ public interface LayoutBranch extends LayoutBranchModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutBranchImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutBranchTable TABLE = LayoutBranchTable.INSTANCE;
+
 	public static final Accessor<LayoutBranch, Long> LAYOUT_BRANCH_ID_ACCESSOR =
 		new Accessor<LayoutBranch, Long>() {
 

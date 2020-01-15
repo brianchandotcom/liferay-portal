@@ -37,6 +37,9 @@ public interface VersionedEntryVersion extends VersionedEntryVersionModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final VersionedEntryVersionTable TABLE =
+		VersionedEntryVersionTable.INSTANCE;
+
 	public static final Accessor<VersionedEntryVersion, Long>
 		VERSIONED_ENTRY_VERSION_ID_ACCESSOR =
 			new Accessor<VersionedEntryVersion, Long>() {

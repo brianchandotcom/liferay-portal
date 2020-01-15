@@ -38,6 +38,9 @@ public interface UserNotificationDelivery
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserNotificationDeliveryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final UserNotificationDeliveryTable TABLE =
+		UserNotificationDeliveryTable.INSTANCE;
+
 	public static final Accessor<UserNotificationDelivery, Long>
 		USER_NOTIFICATION_DELIVERY_ID_ACCESSOR =
 			new Accessor<UserNotificationDelivery, Long>() {

@@ -38,6 +38,8 @@ public interface ExpandoValue extends ExpandoValueModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.expando.model.impl.ExpandoValueImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ExpandoValueTable TABLE = ExpandoValueTable.INSTANCE;
+
 	public static final Accessor<ExpandoValue, Long> VALUE_ID_ACCESSOR =
 		new Accessor<ExpandoValue, Long>() {
 

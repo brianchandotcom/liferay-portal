@@ -38,6 +38,8 @@ public interface RatingsEntry extends PersistedModel, RatingsEntryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.ratings.model.impl.RatingsEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final RatingsEntryTable TABLE = RatingsEntryTable.INSTANCE;
+
 	public static final Accessor<RatingsEntry, Long> ENTRY_ID_ACCESSOR =
 		new Accessor<RatingsEntry, Long>() {
 

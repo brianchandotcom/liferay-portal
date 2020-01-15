@@ -39,6 +39,9 @@ public interface KaleoNotificationRecipient
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationRecipientImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoNotificationRecipientTable TABLE =
+		KaleoNotificationRecipientTable.INSTANCE;
+
 	public static final Accessor<KaleoNotificationRecipient, Long>
 		KALEO_NOTIFICATION_RECIPIENT_ID_ACCESSOR =
 			new Accessor<KaleoNotificationRecipient, Long>() {

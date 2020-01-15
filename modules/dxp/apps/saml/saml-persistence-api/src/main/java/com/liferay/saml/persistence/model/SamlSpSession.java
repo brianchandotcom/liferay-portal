@@ -38,6 +38,8 @@ public interface SamlSpSession extends PersistedModel, SamlSpSessionModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpSessionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SamlSpSessionTable TABLE = SamlSpSessionTable.INSTANCE;
+
 	public static final Accessor<SamlSpSession, Long>
 		SAML_SP_SESSION_ID_ACCESSOR = new Accessor<SamlSpSession, Long>() {
 

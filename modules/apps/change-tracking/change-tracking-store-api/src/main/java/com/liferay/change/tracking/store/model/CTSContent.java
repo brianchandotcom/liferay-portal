@@ -38,6 +38,8 @@ public interface CTSContent extends CTSContentModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.store.model.impl.CTSContentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CTSContentTable TABLE = CTSContentTable.INSTANCE;
+
 	public static final Accessor<CTSContent, Long> CTS_CONTENT_ID_ACCESSOR =
 		new Accessor<CTSContent, Long>() {
 

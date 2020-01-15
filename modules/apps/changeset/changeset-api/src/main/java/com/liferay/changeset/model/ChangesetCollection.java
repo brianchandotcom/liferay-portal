@@ -39,6 +39,9 @@ public interface ChangesetCollection
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.changeset.model.impl.ChangesetCollectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ChangesetCollectionTable TABLE =
+		ChangesetCollectionTable.INSTANCE;
+
 	public static final Accessor<ChangesetCollection, Long>
 		CHANGESET_COLLECTION_ID_ACCESSOR =
 			new Accessor<ChangesetCollection, Long>() {

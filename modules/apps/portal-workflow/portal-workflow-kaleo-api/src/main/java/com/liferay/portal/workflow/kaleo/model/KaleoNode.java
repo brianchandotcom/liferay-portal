@@ -38,6 +38,8 @@ public interface KaleoNode extends KaleoNodeModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoNodeImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoNodeTable TABLE = KaleoNodeTable.INSTANCE;
+
 	public static final Accessor<KaleoNode, Long> KALEO_NODE_ID_ACCESSOR =
 		new Accessor<KaleoNode, Long>() {
 

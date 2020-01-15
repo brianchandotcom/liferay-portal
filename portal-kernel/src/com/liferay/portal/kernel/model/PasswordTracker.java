@@ -35,6 +35,9 @@ public interface PasswordTracker extends PasswordTrackerModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PasswordTrackerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PasswordTrackerTable TABLE =
+		PasswordTrackerTable.INSTANCE;
+
 	public static final Accessor<PasswordTracker, Long>
 		PASSWORD_TRACKER_ID_ACCESSOR = new Accessor<PasswordTracker, Long>() {
 

@@ -36,6 +36,9 @@ public interface LayoutFriendlyURL
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.LayoutFriendlyURLImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutFriendlyURLTable TABLE =
+		LayoutFriendlyURLTable.INSTANCE;
+
 	public static final Accessor<LayoutFriendlyURL, Long>
 		LAYOUT_FRIENDLY_U_R_L_ID_ACCESSOR =
 			new Accessor<LayoutFriendlyURL, Long>() {

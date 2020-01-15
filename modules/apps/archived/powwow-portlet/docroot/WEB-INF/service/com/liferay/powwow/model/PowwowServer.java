@@ -36,6 +36,8 @@ public interface PowwowServer extends PersistedModel, PowwowServerModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.powwow.model.impl.PowwowServerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PowwowServerTable TABLE = PowwowServerTable.INSTANCE;
+
 	public static final Accessor<PowwowServer, Long> POWWOW_SERVER_ID_ACCESSOR =
 		new Accessor<PowwowServer, Long>() {
 

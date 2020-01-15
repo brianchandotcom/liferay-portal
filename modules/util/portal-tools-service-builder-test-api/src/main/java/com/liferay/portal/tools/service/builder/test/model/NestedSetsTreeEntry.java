@@ -40,6 +40,9 @@ public interface NestedSetsTreeEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.NestedSetsTreeEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final NestedSetsTreeEntryTable TABLE =
+		NestedSetsTreeEntryTable.INSTANCE;
+
 	public static final Accessor<NestedSetsTreeEntry, Long>
 		NESTED_SETS_TREE_ENTRY_ID_ACCESSOR =
 			new Accessor<NestedSetsTreeEntry, Long>() {

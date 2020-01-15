@@ -36,6 +36,8 @@ public interface OAuthUser extends OAuthUserModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth.model.impl.OAuthUserImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final OAuthUserTable TABLE = OAuthUserTable.INSTANCE;
+
 	public static final Accessor<OAuthUser, Long> O_AUTH_USER_ID_ACCESSOR =
 		new Accessor<OAuthUser, Long>() {
 

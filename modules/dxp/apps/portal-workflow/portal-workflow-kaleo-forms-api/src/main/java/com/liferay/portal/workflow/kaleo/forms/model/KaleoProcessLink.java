@@ -39,6 +39,9 @@ public interface KaleoProcessLink
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoProcessLinkTable TABLE =
+		KaleoProcessLinkTable.INSTANCE;
+
 	public static final Accessor<KaleoProcessLink, Long>
 		KALEO_PROCESS_LINK_ID_ACCESSOR =
 			new Accessor<KaleoProcessLink, Long>() {

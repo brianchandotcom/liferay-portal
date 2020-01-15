@@ -35,6 +35,8 @@ public interface Repository extends PersistedModel, RepositoryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.RepositoryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final RepositoryTable TABLE = RepositoryTable.INSTANCE;
+
 	public static final Accessor<Repository, Long> REPOSITORY_ID_ACCESSOR =
 		new Accessor<Repository, Long>() {
 

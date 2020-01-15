@@ -38,6 +38,8 @@ public interface SPIDefinition extends PersistedModel, SPIDefinitionModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SPIDefinitionTable TABLE = SPIDefinitionTable.INSTANCE;
+
 	public static final Accessor<SPIDefinition, Long>
 		SPI_DEFINITION_ID_ACCESSOR = new Accessor<SPIDefinition, Long>() {
 

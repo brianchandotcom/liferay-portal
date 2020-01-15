@@ -39,6 +39,9 @@ public interface WorkflowMetricsSLADefinitionVersion
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final WorkflowMetricsSLADefinitionVersionTable TABLE =
+		WorkflowMetricsSLADefinitionVersionTable.INSTANCE;
+
 	public static final Accessor<WorkflowMetricsSLADefinitionVersion, Long>
 		WORKFLOW_METRICS_SLA_DEFINITION_VERSION_ID_ACCESSOR =
 			new Accessor<WorkflowMetricsSLADefinitionVersion, Long>() {

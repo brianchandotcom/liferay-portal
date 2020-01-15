@@ -38,6 +38,8 @@ public interface DLContent extends DLContentModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.document.library.content.model.impl.DLContentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DLContentTable TABLE = DLContentTable.INSTANCE;
+
 	public static final Accessor<DLContent, Long> CONTENT_ID_ACCESSOR =
 		new Accessor<DLContent, Long>() {
 

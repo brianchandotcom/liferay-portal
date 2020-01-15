@@ -36,6 +36,8 @@ public interface MBCategory extends MBCategoryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBCategoryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MBCategoryTable TABLE = MBCategoryTable.INSTANCE;
+
 	public static final Accessor<MBCategory, Long> CATEGORY_ID_ACCESSOR =
 		new Accessor<MBCategory, Long>() {
 

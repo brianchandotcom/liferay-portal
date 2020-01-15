@@ -39,6 +39,9 @@ public interface SegmentsExperiment
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.segments.model.impl.SegmentsExperimentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SegmentsExperimentTable TABLE =
+		SegmentsExperimentTable.INSTANCE;
+
 	public static final Accessor<SegmentsExperiment, Long>
 		SEGMENTS_EXPERIMENT_ID_ACCESSOR =
 			new Accessor<SegmentsExperiment, Long>() {

@@ -36,6 +36,9 @@ public interface ChangesetEntry extends ChangesetEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.changeset.model.impl.ChangesetEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ChangesetEntryTable TABLE =
+		ChangesetEntryTable.INSTANCE;
+
 	public static final Accessor<ChangesetEntry, Long>
 		CHANGESET_ENTRY_ID_ACCESSOR = new Accessor<ChangesetEntry, Long>() {
 

@@ -35,6 +35,8 @@ public interface OrgLabor extends OrgLaborModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.OrgLaborImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final OrgLaborTable TABLE = OrgLaborTable.INSTANCE;
+
 	public static final Accessor<OrgLabor, Long> ORG_LABOR_ID_ACCESSOR =
 		new Accessor<OrgLabor, Long>() {
 

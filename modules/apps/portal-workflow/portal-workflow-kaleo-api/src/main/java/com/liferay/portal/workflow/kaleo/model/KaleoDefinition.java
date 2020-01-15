@@ -38,6 +38,9 @@ public interface KaleoDefinition extends KaleoDefinitionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoDefinitionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoDefinitionTable TABLE =
+		KaleoDefinitionTable.INSTANCE;
+
 	public static final Accessor<KaleoDefinition, Long>
 		KALEO_DEFINITION_ID_ACCESSOR = new Accessor<KaleoDefinition, Long>() {
 

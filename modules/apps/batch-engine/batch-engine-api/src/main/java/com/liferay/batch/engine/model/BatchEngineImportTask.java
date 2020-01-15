@@ -39,6 +39,9 @@ public interface BatchEngineImportTask
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.batch.engine.model.impl.BatchEngineImportTaskImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final BatchEngineImportTaskTable TABLE =
+		BatchEngineImportTaskTable.INSTANCE;
+
 	public static final Accessor<BatchEngineImportTask, Long>
 		BATCH_ENGINE_IMPORT_TASK_ID_ACCESSOR =
 			new Accessor<BatchEngineImportTask, Long>() {

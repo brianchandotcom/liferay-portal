@@ -38,6 +38,8 @@ public interface KaleoLog extends KaleoLogModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoLogImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoLogTable TABLE = KaleoLogTable.INSTANCE;
+
 	public static final Accessor<KaleoLog, Long> KALEO_LOG_ID_ACCESSOR =
 		new Accessor<KaleoLog, Long>() {
 

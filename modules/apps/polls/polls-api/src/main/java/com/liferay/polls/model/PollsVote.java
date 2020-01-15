@@ -36,6 +36,8 @@ public interface PollsVote extends PersistedModel, PollsVoteModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.polls.model.impl.PollsVoteImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PollsVoteTable TABLE = PollsVoteTable.INSTANCE;
+
 	public static final Accessor<PollsVote, Long> VOTE_ID_ACCESSOR =
 		new Accessor<PollsVote, Long>() {
 

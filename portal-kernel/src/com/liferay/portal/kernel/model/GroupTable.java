@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 /**
@@ -57,8 +58,8 @@ public class GroupTable extends Table<GroupTable> {
 		"description", String.class, Types.VARCHAR);
 	public final Column<GroupTable, Integer> type = createColumn(
 		"type_", Integer.class, Types.INTEGER);
-	public final Column<GroupTable, String> typeSettings = createColumn(
-		"typeSettings", String.class, Types.CLOB);
+	public final Column<GroupTable, Clob> typeSettings = createColumn(
+		"typeSettings", Clob.class, Types.CLOB);
 	public final Column<GroupTable, Boolean> manualMembership = createColumn(
 		"manualMembership", Boolean.class, Types.BOOLEAN);
 	public final Column<GroupTable, Integer> membershipRestriction =

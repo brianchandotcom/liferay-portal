@@ -39,6 +39,9 @@ public interface MDRRuleGroupInstance
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mobile.device.rules.model.impl.MDRRuleGroupInstanceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MDRRuleGroupInstanceTable TABLE =
+		MDRRuleGroupInstanceTable.INSTANCE;
+
 	public static final Accessor<MDRRuleGroupInstance, Long>
 		RULE_GROUP_INSTANCE_ID_ACCESSOR =
 			new Accessor<MDRRuleGroupInstance, Long>() {

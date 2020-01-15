@@ -39,6 +39,9 @@ public interface DDMDataProviderInstance
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMDataProviderInstanceTable TABLE =
+		DDMDataProviderInstanceTable.INSTANCE;
+
 	public static final Accessor<DDMDataProviderInstance, Long>
 		DATA_PROVIDER_INSTANCE_ID_ACCESSOR =
 			new Accessor<DDMDataProviderInstance, Long>() {

@@ -36,6 +36,8 @@ public interface Attachment extends AttachmentModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.mail.reader.model.impl.AttachmentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AttachmentTable TABLE = AttachmentTable.INSTANCE;
+
 	public static final Accessor<Attachment, Long> ATTACHMENT_ID_ACCESSOR =
 		new Accessor<Attachment, Long>() {
 

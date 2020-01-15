@@ -36,6 +36,9 @@ public interface BlogsStatsUser extends BlogsStatsUserModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.blogs.model.impl.BlogsStatsUserImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final BlogsStatsUserTable TABLE =
+		BlogsStatsUserTable.INSTANCE;
+
 	public static final Accessor<BlogsStatsUser, Long> STATS_USER_ID_ACCESSOR =
 		new Accessor<BlogsStatsUser, Long>() {
 

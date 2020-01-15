@@ -35,6 +35,8 @@ public interface Country extends CountryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.CountryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CountryTable TABLE = CountryTable.INSTANCE;
+
 	public static final Accessor<Country, Long> COUNTRY_ID_ACCESSOR =
 		new Accessor<Country, Long>() {
 

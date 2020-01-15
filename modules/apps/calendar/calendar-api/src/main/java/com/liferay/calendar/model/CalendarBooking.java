@@ -36,6 +36,9 @@ public interface CalendarBooking extends CalendarBookingModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.calendar.model.impl.CalendarBookingImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CalendarBookingTable TABLE =
+		CalendarBookingTable.INSTANCE;
+
 	public static final Accessor<CalendarBooking, Long>
 		CALENDAR_BOOKING_ID_ACCESSOR = new Accessor<CalendarBooking, Long>() {
 

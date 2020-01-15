@@ -35,6 +35,8 @@ public interface WebDAVProps extends PersistedModel, WebDAVPropsModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.WebDAVPropsImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final WebDAVPropsTable TABLE = WebDAVPropsTable.INSTANCE;
+
 	public static final Accessor<WebDAVProps, Long> WEB_DAV_PROPS_ID_ACCESSOR =
 		new Accessor<WebDAVProps, Long>() {
 

@@ -37,6 +37,9 @@ public interface SegmentsEntryRel
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.segments.model.impl.SegmentsEntryRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SegmentsEntryRelTable TABLE =
+		SegmentsEntryRelTable.INSTANCE;
+
 	public static final Accessor<SegmentsEntryRel, Long>
 		SEGMENTS_ENTRY_REL_ID_ACCESSOR =
 			new Accessor<SegmentsEntryRel, Long>() {

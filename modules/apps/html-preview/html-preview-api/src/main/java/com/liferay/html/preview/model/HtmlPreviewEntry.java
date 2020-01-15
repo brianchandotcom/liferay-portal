@@ -39,6 +39,9 @@ public interface HtmlPreviewEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.html.preview.model.impl.HtmlPreviewEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final HtmlPreviewEntryTable TABLE =
+		HtmlPreviewEntryTable.INSTANCE;
+
 	public static final Accessor<HtmlPreviewEntry, Long>
 		HTML_PREVIEW_ENTRY_ID_ACCESSOR =
 			new Accessor<HtmlPreviewEntry, Long>() {

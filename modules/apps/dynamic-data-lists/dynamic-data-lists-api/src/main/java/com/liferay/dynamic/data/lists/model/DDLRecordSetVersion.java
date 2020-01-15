@@ -39,6 +39,9 @@ public interface DDLRecordSetVersion
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordSetVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDLRecordSetVersionTable TABLE =
+		DDLRecordSetVersionTable.INSTANCE;
+
 	public static final Accessor<DDLRecordSetVersion, Long>
 		RECORD_SET_VERSION_ID_ACCESSOR =
 			new Accessor<DDLRecordSetVersion, Long>() {

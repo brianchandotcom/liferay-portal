@@ -39,6 +39,9 @@ public interface DDMStructureLink
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMStructureLinkTable TABLE =
+		DDMStructureLinkTable.INSTANCE;
+
 	public static final Accessor<DDMStructureLink, Long>
 		STRUCTURE_LINK_ID_ACCESSOR = new Accessor<DDMStructureLink, Long>() {
 

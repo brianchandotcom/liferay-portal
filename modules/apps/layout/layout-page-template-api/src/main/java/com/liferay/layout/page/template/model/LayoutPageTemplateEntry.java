@@ -39,6 +39,9 @@ public interface LayoutPageTemplateEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutPageTemplateEntryTable TABLE =
+		LayoutPageTemplateEntryTable.INSTANCE;
+
 	public static final Accessor<LayoutPageTemplateEntry, Long>
 		LAYOUT_PAGE_TEMPLATE_ENTRY_ID_ACCESSOR =
 			new Accessor<LayoutPageTemplateEntry, Long>() {

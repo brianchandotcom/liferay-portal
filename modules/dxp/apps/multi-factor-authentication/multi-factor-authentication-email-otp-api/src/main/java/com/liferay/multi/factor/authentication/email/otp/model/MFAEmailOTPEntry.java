@@ -39,6 +39,9 @@ public interface MFAEmailOTPEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.multi.factor.authentication.email.otp.model.impl.MFAEmailOTPEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MFAEmailOTPEntryTable TABLE =
+		MFAEmailOTPEntryTable.INSTANCE;
+
 	public static final Accessor<MFAEmailOTPEntry, Long>
 		MFA_EMAIL_OTP_ENTRY_ID_ACCESSOR =
 			new Accessor<MFAEmailOTPEntry, Long>() {

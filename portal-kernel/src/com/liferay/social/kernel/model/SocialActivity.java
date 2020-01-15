@@ -38,6 +38,9 @@ public interface SocialActivity extends PersistedModel, SocialActivityModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialActivityImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SocialActivityTable TABLE =
+		SocialActivityTable.INSTANCE;
+
 	public static final Accessor<SocialActivity, Long> ACTIVITY_ID_ACCESSOR =
 		new Accessor<SocialActivity, Long>() {
 

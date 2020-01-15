@@ -35,6 +35,9 @@ public interface PasswordPolicy extends PasswordPolicyModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PasswordPolicyImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PasswordPolicyTable TABLE =
+		PasswordPolicyTable.INSTANCE;
+
 	public static final Accessor<PasswordPolicy, Long>
 		PASSWORD_POLICY_ID_ACCESSOR = new Accessor<PasswordPolicy, Long>() {
 

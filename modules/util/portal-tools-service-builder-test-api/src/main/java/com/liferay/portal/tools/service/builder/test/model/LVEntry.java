@@ -38,6 +38,8 @@ public interface LVEntry extends LVEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.LVEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LVEntryTable TABLE = LVEntryTable.INSTANCE;
+
 	public static final Accessor<LVEntry, Long> LV_ENTRY_ID_ACCESSOR =
 		new Accessor<LVEntry, Long>() {
 

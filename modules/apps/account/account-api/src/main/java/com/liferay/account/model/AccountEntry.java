@@ -36,6 +36,8 @@ public interface AccountEntry extends AccountEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.account.model.impl.AccountEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AccountEntryTable TABLE = AccountEntryTable.INSTANCE;
+
 	public static final Accessor<AccountEntry, Long> ACCOUNT_ENTRY_ID_ACCESSOR =
 		new Accessor<AccountEntry, Long>() {
 

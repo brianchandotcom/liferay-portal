@@ -36,6 +36,8 @@ public interface LayoutSEOSite extends LayoutSEOSiteModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.layout.seo.model.impl.LayoutSEOSiteImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LayoutSEOSiteTable TABLE = LayoutSEOSiteTable.INSTANCE;
+
 	public static final Accessor<LayoutSEOSite, Long>
 		LAYOUT_SEO_SITE_ID_ACCESSOR = new Accessor<LayoutSEOSite, Long>() {
 

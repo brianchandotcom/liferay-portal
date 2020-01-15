@@ -38,6 +38,8 @@ public interface CTPreferences extends CTPreferencesModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.change.tracking.model.impl.CTPreferencesImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final CTPreferencesTable TABLE = CTPreferencesTable.INSTANCE;
+
 	public static final Accessor<CTPreferences, Long>
 		CT_PREFERENCES_ID_ACCESSOR = new Accessor<CTPreferences, Long>() {
 

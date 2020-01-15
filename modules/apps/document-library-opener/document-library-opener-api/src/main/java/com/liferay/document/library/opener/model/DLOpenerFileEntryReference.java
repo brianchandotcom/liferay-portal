@@ -39,6 +39,9 @@ public interface DLOpenerFileEntryReference
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.document.library.opener.model.impl.DLOpenerFileEntryReferenceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DLOpenerFileEntryReferenceTable TABLE =
+		DLOpenerFileEntryReferenceTable.INSTANCE;
+
 	public static final Accessor<DLOpenerFileEntryReference, Long>
 		DL_OPENER_FILE_ENTRY_REFERENCE_ID_ACCESSOR =
 			new Accessor<DLOpenerFileEntryReference, Long>() {

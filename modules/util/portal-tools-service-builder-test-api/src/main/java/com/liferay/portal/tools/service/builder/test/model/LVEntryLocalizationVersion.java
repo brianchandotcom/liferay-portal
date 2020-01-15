@@ -38,6 +38,9 @@ public interface LVEntryLocalizationVersion
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.LVEntryLocalizationVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LVEntryLocalizationVersionTable TABLE =
+		LVEntryLocalizationVersionTable.INSTANCE;
+
 	public static final Accessor<LVEntryLocalizationVersion, Long>
 		LV_ENTRY_LOCALIZATION_VERSION_ID_ACCESSOR =
 			new Accessor<LVEntryLocalizationVersion, Long>() {

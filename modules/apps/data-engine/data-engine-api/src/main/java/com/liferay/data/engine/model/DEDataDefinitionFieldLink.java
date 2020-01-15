@@ -39,6 +39,9 @@ public interface DEDataDefinitionFieldLink
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.data.engine.model.impl.DEDataDefinitionFieldLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DEDataDefinitionFieldLinkTable TABLE =
+		DEDataDefinitionFieldLinkTable.INSTANCE;
+
 	public static final Accessor<DEDataDefinitionFieldLink, Long>
 		DE_DATA_DEFINITION_FIELD_LINK_ID_ACCESSOR =
 			new Accessor<DEDataDefinitionFieldLink, Long>() {

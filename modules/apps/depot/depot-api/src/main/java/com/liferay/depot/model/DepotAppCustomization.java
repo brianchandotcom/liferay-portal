@@ -39,6 +39,9 @@ public interface DepotAppCustomization
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.depot.model.impl.DepotAppCustomizationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DepotAppCustomizationTable TABLE =
+		DepotAppCustomizationTable.INSTANCE;
+
 	public static final Accessor<DepotAppCustomization, Long>
 		DEPOT_APP_CUSTOMIZATION_ID_ACCESSOR =
 			new Accessor<DepotAppCustomization, Long>() {

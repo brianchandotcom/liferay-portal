@@ -38,6 +38,9 @@ public interface LazyBlobEntity extends LazyBlobEntityModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.LazyBlobEntityImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LazyBlobEntityTable TABLE =
+		LazyBlobEntityTable.INSTANCE;
+
 	public static final Accessor<LazyBlobEntity, Long>
 		LAZY_BLOB_ENTITY_ID_ACCESSOR = new Accessor<LazyBlobEntity, Long>() {
 

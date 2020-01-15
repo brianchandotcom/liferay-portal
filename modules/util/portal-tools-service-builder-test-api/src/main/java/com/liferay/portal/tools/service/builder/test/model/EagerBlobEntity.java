@@ -38,6 +38,9 @@ public interface EagerBlobEntity extends EagerBlobEntityModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.EagerBlobEntityImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final EagerBlobEntityTable TABLE =
+		EagerBlobEntityTable.INSTANCE;
+
 	public static final Accessor<EagerBlobEntity, Long>
 		EAGER_BLOB_ENTITY_ID_ACCESSOR = new Accessor<EagerBlobEntity, Long>() {
 

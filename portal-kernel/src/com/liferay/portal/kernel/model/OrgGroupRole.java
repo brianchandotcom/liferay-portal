@@ -35,6 +35,8 @@ public interface OrgGroupRole extends OrgGroupRoleModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.OrgGroupRoleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final OrgGroupRoleTable TABLE = OrgGroupRoleTable.INSTANCE;
+
 	public static final Accessor<OrgGroupRole, Long> ORGANIZATION_ID_ACCESSOR =
 		new Accessor<OrgGroupRole, Long>() {
 

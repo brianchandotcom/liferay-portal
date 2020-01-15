@@ -37,6 +37,9 @@ public interface FriendlyURLEntryMapping extends FriendlyURLEntryMappingModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryMappingImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final FriendlyURLEntryMappingTable TABLE =
+		FriendlyURLEntryMappingTable.INSTANCE;
+
 	public static final Accessor<FriendlyURLEntryMapping, Long>
 		FRIENDLY_URL_ENTRY_MAPPING_ID_ACCESSOR =
 			new Accessor<FriendlyURLEntryMapping, Long>() {

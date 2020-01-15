@@ -35,6 +35,9 @@ public interface UserTrackerPath extends PersistedModel, UserTrackerPathModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.UserTrackerPathImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final UserTrackerPathTable TABLE =
+		UserTrackerPathTable.INSTANCE;
+
 	public static final Accessor<UserTrackerPath, Long>
 		USER_TRACKER_PATH_ID_ACCESSOR = new Accessor<UserTrackerPath, Long>() {
 

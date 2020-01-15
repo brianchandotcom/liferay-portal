@@ -35,6 +35,8 @@ public interface ListType extends ListTypeModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ListTypeImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ListTypeTable TABLE = ListTypeTable.INSTANCE;
+
 	public static final Accessor<ListType, Long> LIST_TYPE_ID_ACCESSOR =
 		new Accessor<ListType, Long>() {
 

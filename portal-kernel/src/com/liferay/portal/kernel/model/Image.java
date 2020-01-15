@@ -35,6 +35,8 @@ public interface Image extends ImageModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.ImageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ImageTable TABLE = ImageTable.INSTANCE;
+
 	public static final Accessor<Image, Long> IMAGE_ID_ACCESSOR =
 		new Accessor<Image, Long>() {
 

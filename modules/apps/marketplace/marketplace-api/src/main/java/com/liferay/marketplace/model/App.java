@@ -36,6 +36,8 @@ public interface App extends AppModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.marketplace.model.impl.AppImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AppTable TABLE = AppTable.INSTANCE;
+
 	public static final Accessor<App, Long> APP_ID_ACCESSOR =
 		new Accessor<App, Long>() {
 

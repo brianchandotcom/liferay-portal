@@ -39,6 +39,9 @@ public interface AnnouncementsDelivery
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AnnouncementsDeliveryTable TABLE =
+		AnnouncementsDeliveryTable.INSTANCE;
+
 	public static final Accessor<AnnouncementsDelivery, Long>
 		DELIVERY_ID_ACCESSOR = new Accessor<AnnouncementsDelivery, Long>() {
 

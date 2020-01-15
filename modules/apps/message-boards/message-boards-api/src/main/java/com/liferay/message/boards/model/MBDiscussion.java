@@ -38,6 +38,8 @@ public interface MBDiscussion extends MBDiscussionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBDiscussionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MBDiscussionTable TABLE = MBDiscussionTable.INSTANCE;
+
 	public static final Accessor<MBDiscussion, Long> DISCUSSION_ID_ACCESSOR =
 		new Accessor<MBDiscussion, Long>() {
 

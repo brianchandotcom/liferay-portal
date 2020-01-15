@@ -38,6 +38,9 @@ public interface JournalArticleLocalization
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.journal.model.impl.JournalArticleLocalizationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final JournalArticleLocalizationTable TABLE =
+		JournalArticleLocalizationTable.INSTANCE;
+
 	public static final Accessor<JournalArticleLocalization, Long>
 		ARTICLE_LOCALIZATION_ID_ACCESSOR =
 			new Accessor<JournalArticleLocalization, Long>() {

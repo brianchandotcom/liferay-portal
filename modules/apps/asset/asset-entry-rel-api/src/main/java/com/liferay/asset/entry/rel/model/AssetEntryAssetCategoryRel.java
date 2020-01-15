@@ -39,6 +39,9 @@ public interface AssetEntryAssetCategoryRel
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.entry.rel.model.impl.AssetEntryAssetCategoryRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AssetEntryAssetCategoryRelTable TABLE =
+		AssetEntryAssetCategoryRelTable.INSTANCE;
+
 	public static final Accessor<AssetEntryAssetCategoryRel, Long>
 		ASSET_ENTRY_ASSET_CATEGORY_REL_ID_ACCESSOR =
 			new Accessor<AssetEntryAssetCategoryRel, Long>() {

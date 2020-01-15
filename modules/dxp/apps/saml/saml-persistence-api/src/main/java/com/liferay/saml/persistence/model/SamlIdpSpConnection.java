@@ -39,6 +39,9 @@ public interface SamlIdpSpConnection
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SamlIdpSpConnectionTable TABLE =
+		SamlIdpSpConnectionTable.INSTANCE;
+
 	public static final Accessor<SamlIdpSpConnection, Long>
 		SAML_IDP_SP_CONNECTION_ID_ACCESSOR =
 			new Accessor<SamlIdpSpConnection, Long>() {

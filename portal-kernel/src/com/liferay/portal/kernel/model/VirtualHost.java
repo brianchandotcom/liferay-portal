@@ -35,6 +35,8 @@ public interface VirtualHost extends PersistedModel, VirtualHostModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.VirtualHostImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final VirtualHostTable TABLE = VirtualHostTable.INSTANCE;
+
 	public static final Accessor<VirtualHost, Long> VIRTUAL_HOST_ID_ACCESSOR =
 		new Accessor<VirtualHost, Long>() {
 

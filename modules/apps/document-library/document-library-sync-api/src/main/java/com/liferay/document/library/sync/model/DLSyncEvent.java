@@ -38,6 +38,8 @@ public interface DLSyncEvent extends DLSyncEventModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.document.library.sync.model.impl.DLSyncEventImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DLSyncEventTable TABLE = DLSyncEventTable.INSTANCE;
+
 	public static final Accessor<DLSyncEvent, Long> SYNC_EVENT_ID_ACCESSOR =
 		new Accessor<DLSyncEvent, Long>() {
 

@@ -37,6 +37,9 @@ public interface PowwowParticipant
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.powwow.model.impl.PowwowParticipantImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PowwowParticipantTable TABLE =
+		PowwowParticipantTable.INSTANCE;
+
 	public static final Accessor<PowwowParticipant, Long>
 		POWWOW_PARTICIPANT_ID_ACCESSOR =
 			new Accessor<PowwowParticipant, Long>() {

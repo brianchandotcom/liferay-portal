@@ -39,6 +39,8 @@ public interface DLFolder extends DLFolderModel, PersistedModel, TreeModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DLFolderTable TABLE = DLFolderTable.INSTANCE;
+
 	public static final Accessor<DLFolder, Long> FOLDER_ID_ACCESSOR =
 		new Accessor<DLFolder, Long>() {
 

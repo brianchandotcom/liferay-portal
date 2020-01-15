@@ -39,6 +39,9 @@ public interface SocialActivityCounter
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialActivityCounterImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SocialActivityCounterTable TABLE =
+		SocialActivityCounterTable.INSTANCE;
+
 	public static final Accessor<SocialActivityCounter, Long>
 		ACTIVITY_COUNTER_ID_ACCESSOR =
 			new Accessor<SocialActivityCounter, Long>() {

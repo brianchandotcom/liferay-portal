@@ -35,6 +35,9 @@ public interface RepositoryEntry extends PersistedModel, RepositoryEntryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.RepositoryEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final RepositoryEntryTable TABLE =
+		RepositoryEntryTable.INSTANCE;
+
 	public static final Accessor<RepositoryEntry, Long>
 		REPOSITORY_ENTRY_ID_ACCESSOR = new Accessor<RepositoryEntry, Long>() {
 

@@ -36,6 +36,9 @@ public interface PortalPreferences
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.PortalPreferencesImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final PortalPreferencesTable TABLE =
+		PortalPreferencesTable.INSTANCE;
+
 	public static final Accessor<PortalPreferences, Long>
 		PORTAL_PREFERENCES_ID_ACCESSOR =
 			new Accessor<PortalPreferences, Long>() {

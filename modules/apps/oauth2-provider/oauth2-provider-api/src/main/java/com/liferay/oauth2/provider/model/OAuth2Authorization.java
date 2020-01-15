@@ -39,6 +39,9 @@ public interface OAuth2Authorization
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth2.provider.model.impl.OAuth2AuthorizationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final OAuth2AuthorizationTable TABLE =
+		OAuth2AuthorizationTable.INSTANCE;
+
 	public static final Accessor<OAuth2Authorization, Long>
 		O_AUTH2_AUTHORIZATION_ID_ACCESSOR =
 			new Accessor<OAuth2Authorization, Long>() {

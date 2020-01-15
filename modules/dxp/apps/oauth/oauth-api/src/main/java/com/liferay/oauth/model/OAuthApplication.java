@@ -37,6 +37,9 @@ public interface OAuthApplication
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth.model.impl.OAuthApplicationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final OAuthApplicationTable TABLE =
+		OAuthApplicationTable.INSTANCE;
+
 	public static final Accessor<OAuthApplication, Long>
 		O_AUTH_APPLICATION_ID_ACCESSOR =
 			new Accessor<OAuthApplication, Long>() {

@@ -38,6 +38,8 @@ public interface SamlSpMessage extends PersistedModel, SamlSpMessageModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpMessageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SamlSpMessageTable TABLE = SamlSpMessageTable.INSTANCE;
+
 	public static final Accessor<SamlSpMessage, Long>
 		SAML_SP_MESSAGE_ID_ACCESSOR = new Accessor<SamlSpMessage, Long>() {
 

@@ -40,6 +40,9 @@ public interface DLFileShortcut
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DLFileShortcutTable TABLE =
+		DLFileShortcutTable.INSTANCE;
+
 	public static final Accessor<DLFileShortcut, Long>
 		FILE_SHORTCUT_ID_ACCESSOR = new Accessor<DLFileShortcut, Long>() {
 

@@ -36,6 +36,8 @@ public interface OAuthConsumer extends OAuthConsumerModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.opensocial.model.impl.OAuthConsumerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final OAuthConsumerTable TABLE = OAuthConsumerTable.INSTANCE;
+
 	public static final Accessor<OAuthConsumer, Long>
 		O_AUTH_CONSUMER_ID_ACCESSOR = new Accessor<OAuthConsumer, Long>() {
 

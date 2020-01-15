@@ -36,6 +36,8 @@ public interface KBFolder extends KBFolderModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.knowledge.base.model.impl.KBFolderImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KBFolderTable TABLE = KBFolderTable.INSTANCE;
+
 	public static final Accessor<KBFolder, Long> KB_FOLDER_ID_ACCESSOR =
 		new Accessor<KBFolder, Long>() {
 

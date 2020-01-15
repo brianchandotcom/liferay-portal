@@ -39,6 +39,9 @@ public interface SocialActivityLimit
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialActivityLimitImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SocialActivityLimitTable TABLE =
+		SocialActivityLimitTable.INSTANCE;
+
 	public static final Accessor<SocialActivityLimit, Long>
 		ACTIVITY_LIMIT_ID_ACCESSOR = new Accessor<SocialActivityLimit, Long>() {
 

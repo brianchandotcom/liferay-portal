@@ -38,6 +38,8 @@ public interface MBStatsUser extends MBStatsUserModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.message.boards.model.impl.MBStatsUserImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final MBStatsUserTable TABLE = MBStatsUserTable.INSTANCE;
+
 	public static final Accessor<MBStatsUser, Long> STATS_USER_ID_ACCESSOR =
 		new Accessor<MBStatsUser, Long>() {
 

@@ -38,6 +38,9 @@ public interface DDMTemplateLink extends DDMTemplateLinkModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMTemplateLinkTable TABLE =
+		DDMTemplateLinkTable.INSTANCE;
+
 	public static final Accessor<DDMTemplateLink, Long>
 		TEMPLATE_LINK_ID_ACCESSOR = new Accessor<DDMTemplateLink, Long>() {
 

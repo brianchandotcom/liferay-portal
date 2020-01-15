@@ -38,6 +38,9 @@ public interface WeDeployAuthApp extends PersistedModel, WeDeployAuthAppModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthAppImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final WeDeployAuthAppTable TABLE =
+		WeDeployAuthAppTable.INSTANCE;
+
 	public static final Accessor<WeDeployAuthApp, Long>
 		WE_DEPLOY_AUTH_APP_ID_ACCESSOR = new Accessor<WeDeployAuthApp, Long>() {
 

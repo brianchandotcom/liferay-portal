@@ -38,6 +38,8 @@ public interface JournalFolder
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.journal.model.impl.JournalFolderImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final JournalFolderTable TABLE = JournalFolderTable.INSTANCE;
+
 	public static final Accessor<JournalFolder, Long> FOLDER_ID_ACCESSOR =
 		new Accessor<JournalFolder, Long>() {
 

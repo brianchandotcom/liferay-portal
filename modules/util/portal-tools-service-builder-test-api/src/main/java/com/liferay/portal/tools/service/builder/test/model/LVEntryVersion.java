@@ -37,6 +37,9 @@ public interface LVEntryVersion extends LVEntryVersionModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final LVEntryVersionTable TABLE =
+		LVEntryVersionTable.INSTANCE;
+
 	public static final Accessor<LVEntryVersion, Long>
 		LV_ENTRY_VERSION_ID_ACCESSOR = new Accessor<LVEntryVersion, Long>() {
 

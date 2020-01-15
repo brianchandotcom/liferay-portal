@@ -39,6 +39,9 @@ public interface AssetListEntrySegmentsEntryRel
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.list.model.impl.AssetListEntrySegmentsEntryRelImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AssetListEntrySegmentsEntryRelTable TABLE =
+		AssetListEntrySegmentsEntryRelTable.INSTANCE;
+
 	public static final Accessor<AssetListEntrySegmentsEntryRel, Long>
 		ASSET_LIST_ENTRY_SEGMENTS_ENTRY_REL_ID_ACCESSOR =
 			new Accessor<AssetListEntrySegmentsEntryRel, Long>() {

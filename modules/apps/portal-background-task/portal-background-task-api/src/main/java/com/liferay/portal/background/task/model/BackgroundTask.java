@@ -38,6 +38,9 @@ public interface BackgroundTask extends BackgroundTaskModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.background.task.model.impl.BackgroundTaskImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final BackgroundTaskTable TABLE =
+		BackgroundTaskTable.INSTANCE;
+
 	public static final Accessor<BackgroundTask, Long>
 		BACKGROUND_TASK_ID_ACCESSOR = new Accessor<BackgroundTask, Long>() {
 

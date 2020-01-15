@@ -39,6 +39,9 @@ public interface OAuth2ApplicationScopeAliases
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationScopeAliasesImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final OAuth2ApplicationScopeAliasesTable TABLE =
+		OAuth2ApplicationScopeAliasesTable.INSTANCE;
+
 	public static final Accessor<OAuth2ApplicationScopeAliases, Long>
 		O_AUTH2_APPLICATION_SCOPE_ALIASES_ID_ACCESSOR =
 			new Accessor<OAuth2ApplicationScopeAliases, Long>() {

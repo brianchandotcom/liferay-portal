@@ -36,6 +36,8 @@ public interface SyncDevice extends PersistedModel, SyncDeviceModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.sync.model.impl.SyncDeviceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SyncDeviceTable TABLE = SyncDeviceTable.INSTANCE;
+
 	public static final Accessor<SyncDevice, Long> SYNC_DEVICE_ID_ACCESSOR =
 		new Accessor<SyncDevice, Long>() {
 

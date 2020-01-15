@@ -39,6 +39,9 @@ public interface ReadingTimeEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.reading.time.model.impl.ReadingTimeEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final ReadingTimeEntryTable TABLE =
+		ReadingTimeEntryTable.INSTANCE;
+
 	public static final Accessor<ReadingTimeEntry, Long>
 		READING_TIME_ENTRY_ID_ACCESSOR =
 			new Accessor<ReadingTimeEntry, Long>() {

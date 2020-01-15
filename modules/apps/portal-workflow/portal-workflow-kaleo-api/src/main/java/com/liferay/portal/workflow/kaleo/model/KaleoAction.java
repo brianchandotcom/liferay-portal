@@ -38,6 +38,8 @@ public interface KaleoAction extends KaleoActionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoActionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final KaleoActionTable TABLE = KaleoActionTable.INSTANCE;
+
 	public static final Accessor<KaleoAction, Long> KALEO_ACTION_ID_ACCESSOR =
 		new Accessor<KaleoAction, Long>() {
 

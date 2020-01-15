@@ -36,6 +36,8 @@ public interface Role extends PersistedModel, RoleModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.RoleImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final RoleTable TABLE = RoleTable.INSTANCE;
+
 	public static final Accessor<Role, Long> ROLE_ID_ACCESSOR =
 		new Accessor<Role, Long>() {
 

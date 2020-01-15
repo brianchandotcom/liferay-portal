@@ -39,6 +39,9 @@ public interface SocialActivitySet
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portlet.social.model.impl.SocialActivitySetImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final SocialActivitySetTable TABLE =
+		SocialActivitySetTable.INSTANCE;
+
 	public static final Accessor<SocialActivitySet, Long>
 		ACTIVITY_SET_ID_ACCESSOR = new Accessor<SocialActivitySet, Long>() {
 

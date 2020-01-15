@@ -39,6 +39,9 @@ public interface DDMFormInstanceRecord
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final DDMFormInstanceRecordTable TABLE =
+		DDMFormInstanceRecordTable.INSTANCE;
+
 	public static final Accessor<DDMFormInstanceRecord, Long>
 		FORM_INSTANCE_RECORD_ID_ACCESSOR =
 			new Accessor<DDMFormInstanceRecord, Long>() {

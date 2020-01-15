@@ -39,6 +39,9 @@ public interface AssetDisplayPageEntry
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.asset.display.page.model.impl.AssetDisplayPageEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final AssetDisplayPageEntryTable TABLE =
+		AssetDisplayPageEntryTable.INSTANCE;
+
 	public static final Accessor<AssetDisplayPageEntry, Long>
 		ASSET_DISPLAY_PAGE_ENTRY_ID_ACCESSOR =
 			new Accessor<AssetDisplayPageEntry, Long>() {

@@ -39,6 +39,9 @@ public interface JournalContentSearch
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.journal.model.impl.JournalContentSearchImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final JournalContentSearchTable TABLE =
+		JournalContentSearchTable.INSTANCE;
+
 	public static final Accessor<JournalContentSearch, Long>
 		CONTENT_SEARCH_ID_ACCESSOR =
 			new Accessor<JournalContentSearch, Long>() {

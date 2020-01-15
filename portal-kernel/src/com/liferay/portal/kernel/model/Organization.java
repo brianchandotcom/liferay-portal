@@ -36,6 +36,8 @@ public interface Organization
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.model.impl.OrganizationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final OrganizationTable TABLE = OrganizationTable.INSTANCE;
+
 	public static final Accessor<Organization, Long> ORGANIZATION_ID_ACCESSOR =
 		new Accessor<Organization, Long>() {
 

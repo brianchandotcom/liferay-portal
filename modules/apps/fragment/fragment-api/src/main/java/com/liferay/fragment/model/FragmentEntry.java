@@ -36,6 +36,8 @@ public interface FragmentEntry extends FragmentEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.fragment.model.impl.FragmentEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final FragmentEntryTable TABLE = FragmentEntryTable.INSTANCE;
+
 	public static final Accessor<FragmentEntry, Long>
 		FRAGMENT_ENTRY_ID_ACCESSOR = new Accessor<FragmentEntry, Long>() {
 

@@ -19,6 +19,7 @@ import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.expressions.impl.Alias;
 import com.liferay.petra.sql.dsl.expressions.impl.NullExpression;
 import com.liferay.petra.sql.dsl.expressions.impl.Operand;
+import com.liferay.petra.sql.dsl.expressions.impl.PredicateImpl;
 import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
 import com.liferay.petra.sql.dsl.expressions.impl.ScalarList;
 import com.liferay.petra.sql.dsl.query.Query;
@@ -44,7 +45,7 @@ public interface Expression<T> extends ASTNode {
 	}
 
 	public default Predicate eq(Expression<T> expression) {
-		return new Predicate(this, Operand.EQUAL, expression);
+		return new PredicateImpl(this, Operand.EQUAL, expression);
 	}
 
 	public default Predicate eq(T value) {
@@ -52,7 +53,7 @@ public interface Expression<T> extends ASTNode {
 	}
 
 	public default Predicate gt(Expression<T> expression) {
-		return new Predicate(this, Operand.GREATER_THAN, expression);
+		return new PredicateImpl(this, Operand.GREATER_THAN, expression);
 	}
 
 	public default Predicate gt(T value) {
@@ -60,7 +61,8 @@ public interface Expression<T> extends ASTNode {
 	}
 
 	public default Predicate gte(Expression<T> expression) {
-		return new Predicate(this, Operand.GREATER_THAN_OR_EQUAL, expression);
+		return new PredicateImpl(
+			this, Operand.GREATER_THAN_OR_EQUAL, expression);
 	}
 
 	public default Predicate gte(T value) {
@@ -68,7 +70,7 @@ public interface Expression<T> extends ASTNode {
 	}
 
 	public default Predicate in(Query query) {
-		return new Predicate(
+		return new PredicateImpl(
 			this, Operand.IN,
 			new Expression<Object>() {
 
@@ -88,19 +90,19 @@ public interface Expression<T> extends ASTNode {
 	}
 
 	public default Predicate in(T[] values) {
-		return new Predicate(this, Operand.IN, new ScalarList<>(values));
+		return new PredicateImpl(this, Operand.IN, new ScalarList<>(values));
 	}
 
 	public default Predicate isNotNull() {
-		return new Predicate(this, Operand.IS_NOT, NullExpression.INSTANCE);
+		return new PredicateImpl(this, Operand.IS_NOT, NullExpression.INSTANCE);
 	}
 
 	public default Predicate isNull() {
-		return new Predicate(this, Operand.IS, NullExpression.INSTANCE);
+		return new PredicateImpl(this, Operand.IS, NullExpression.INSTANCE);
 	}
 
 	public default Predicate like(Expression<String> expression) {
-		return new Predicate(this, Operand.LIKE, expression);
+		return new PredicateImpl(this, Operand.LIKE, expression);
 	}
 
 	public default Predicate like(String s) {
@@ -108,7 +110,7 @@ public interface Expression<T> extends ASTNode {
 	}
 
 	public default Predicate lt(Expression<T> expression) {
-		return new Predicate(this, Operand.LESS_THAN, expression);
+		return new PredicateImpl(this, Operand.LESS_THAN, expression);
 	}
 
 	public default Predicate lt(T value) {
@@ -116,7 +118,7 @@ public interface Expression<T> extends ASTNode {
 	}
 
 	public default Predicate lte(Expression<T> expression) {
-		return new Predicate(this, Operand.LESS_THAN_OR_EQUAL, expression);
+		return new PredicateImpl(this, Operand.LESS_THAN_OR_EQUAL, expression);
 	}
 
 	public default Predicate lte(T value) {
@@ -124,7 +126,7 @@ public interface Expression<T> extends ASTNode {
 	}
 
 	public default Predicate neq(Expression<T> expression) {
-		return new Predicate(this, Operand.NOT_EQUAL, expression);
+		return new PredicateImpl(this, Operand.NOT_EQUAL, expression);
 	}
 
 	public default Predicate neq(T value) {

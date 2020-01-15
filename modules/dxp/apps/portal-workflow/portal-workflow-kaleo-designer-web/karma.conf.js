@@ -25,6 +25,9 @@ module.exports = function(config) {
 		level: 'log',
 		terminal: false
 	};
+	config.client.mocha = {
+		timeout: 10000
+	};
 	config.singleRun = true;
 
 	var resourcesPath = 'src/main/resources/META-INF/resources/';

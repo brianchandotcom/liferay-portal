@@ -17,12 +17,10 @@ package com.liferay.portal.template.soy.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.BaseTemplateManager;
@@ -34,20 +32,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceEvent;
-import org.osgi.framework.ServiceListener;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.util.tracker.BundleTracker;
 
 /**
@@ -59,6 +50,16 @@ import org.osgi.util.tracker.BundleTracker;
 	service = {SoyManager.class, TemplateManager.class}
 )
 public class SoyManager extends BaseTemplateManager {
+
+	public void clearCache(String languageId) {
+		if (Validator.isNull(languageId)) {
+			_soyTofuCacheHandler.removeIfAny(new Locale(StringPool.BLANK));
+		}
+		else {
+			_soyTofuCacheHandler.removeIfAny(
+				LocaleUtil.fromLanguageId(languageId, true));
+		}
+	}
 
 	@Override
 	public void destroy() {
@@ -95,9 +96,7 @@ public class SoyManager extends BaseTemplateManager {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) throws Exception {
-		_bundleContext = bundleContext;
-
+	protected void activate(BundleContext bundleContext) {
 		int stateMask = ~Bundle.INSTALLED & ~Bundle.UNINSTALLED;
 
 		_soyCapabilityBundleTrackerCustomizer =
@@ -114,8 +113,6 @@ public class SoyManager extends BaseTemplateManager {
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
-
-		_bundleContext.removeServiceListener(_resourceBundleServiceListener);
 	}
 
 	@Override
@@ -144,25 +141,6 @@ public class SoyManager extends BaseTemplateManager {
 			_soyTofuCacheHandler, _soyTemplateResourceFactory, restricted);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		target = ModuleServiceLifecycle.PORTAL_INITIALIZED
-	)
-	protected void setModuleServiceLifecycle(
-			ModuleServiceLifecycle moduleServiceLifecycle)
-		throws Exception {
-
-		Bundle bundle = FrameworkUtil.getBundle(SoyManager.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		bundleContext.addServiceListener(
-			_resourceBundleServiceListener,
-			"(&(!(javax.portlet.name=*))(language.id=*)(objectClass=" +
-				ResourceBundle.class.getName() + "))");
-	}
-
 	@Reference(unbind = "-")
 	protected void setSoyProviderCapabilityBundleRegister(
 		SoyProviderCapabilityBundleRegister
@@ -177,16 +155,7 @@ public class SoyManager extends BaseTemplateManager {
 		SoyTemplateBundleResourceParser soyTemplateBundleResourceParser) {
 	}
 
-	protected void unsetModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-
-		_bundleContext.removeServiceListener(_resourceBundleServiceListener);
-	}
-
-	private BundleContext _bundleContext;
 	private BundleTracker<List<TemplateResource>> _bundleTracker;
-	private final ResourceBundleServiceListener _resourceBundleServiceListener =
-		new ResourceBundleServiceListener();
 	private SoyTemplateResourceBundleTrackerCustomizer
 		_soyCapabilityBundleTrackerCustomizer;
 	private SoyProviderCapabilityBundleRegister
@@ -196,26 +165,5 @@ public class SoyManager extends BaseTemplateManager {
 	private SoyTemplateResourceFactory _soyTemplateResourceFactory;
 
 	private SoyTofuCacheHandler _soyTofuCacheHandler;
-
-	private class ResourceBundleServiceListener implements ServiceListener {
-
-		@Override
-		public void serviceChanged(ServiceEvent serviceEvent) {
-			ServiceReference<?> serviceReference =
-				serviceEvent.getServiceReference();
-
-			String languageId = GetterUtil.getString(
-				serviceReference.getProperty("language.id"));
-
-			if (Validator.isNull(languageId)) {
-				_soyTofuCacheHandler.removeIfAny(new Locale(StringPool.BLANK));
-			}
-			else {
-				_soyTofuCacheHandler.removeIfAny(
-					LocaleUtil.fromLanguageId(languageId, true));
-			}
-		}
-
-	}
 
 }

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.language.extender.internal;
+package com.liferay.portal.template.soy.internal;
 
-import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ResourceBundle;
 
@@ -24,20 +24,27 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Mariano Álvaro Sáiz
+ * @author Shuyang Zhou
  */
 @Component(service = {})
 public class ResourceBundleServiceListener implements ServiceListener {
 
 	@Override
 	public void serviceChanged(ServiceEvent serviceEvent) {
-		CacheResourceBundleLoader.clearCache();
+		ServiceReference<?> serviceReference =
+			serviceEvent.getServiceReference();
+
+		String languageId = GetterUtil.getString(
+			serviceReference.getProperty("language.id"));
+
+		_soyManager.clearCache(languageId);
 	}
 
 	@Activate
@@ -59,5 +66,8 @@ public class ResourceBundleServiceListener implements ServiceListener {
 		target = "(&(original.bean=true)(bean.id=javax.servlet.ServletContext))"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private SoyManager _soyManager;
 
 }

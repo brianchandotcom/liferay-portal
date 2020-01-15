@@ -102,7 +102,8 @@ public class AssetListDisplayContext {
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
-				getAssetListEntry(), getSegmentsEntryId());
+				getAssetListEntry(), getSegmentsEntryId(),
+				searchContainer.getStart(), searchContainer.getEnd());
 
 		searchContainer.setResults(assetEntries);
 

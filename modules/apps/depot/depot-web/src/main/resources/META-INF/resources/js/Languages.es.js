@@ -40,7 +40,7 @@ const Languages = ({
 	const Language = ({displayName, isDefault, localeId, showActions}) => {
 		return (
 			<ClayTable.Row>
-				<ClayTable.Cell>
+				<ClayTable.Cell expanded>
 					{displayName}
 					<span className="hide"> {localeId} </span>
 					{isDefault && (
@@ -50,7 +50,7 @@ const Languages = ({
 					)}
 				</ClayTable.Cell>
 				{showActions && (
-					<ClayTable.Cell>
+					<ClayTable.Cell align="center">
 						<ClayIcon symbol="ellipsis-v" />
 					</ClayTable.Cell>
 				)}
@@ -60,7 +60,7 @@ const Languages = ({
 
 	const LanguagesList = ({defaultLocaleId, locales, showActions}) => {
 		return (
-			<ClayTable borderless>
+			<ClayTable borderless headVerticalAlignment="middle">
 				<ClayTable.Head>
 					<ClayTable.Row>
 						<ClayTable.Cell expanded headingCell headingTitle>
@@ -68,7 +68,7 @@ const Languages = ({
 						</ClayTable.Cell>
 
 						{showActions && (
-							<ClayTable.Cell>
+							<ClayTable.Cell align="center">
 								<ClayButton displayType="secondary">
 									{Liferay.Language.get('add')}
 								</ClayButton>

@@ -1507,6 +1507,16 @@ definition {
 		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "3",
 			title = "First App");
+
+		AppBuilderAdmin.chooseSearchFilterByOption(filterOption = "Name");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "First App");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "3",
+			title = "Third App");
 	}
 
 	@description = "Search for an object in the object list"

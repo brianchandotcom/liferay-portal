@@ -44,7 +44,7 @@ const Languages = ({
 					{displayName}
 					<span className="hide"> {localeId} </span>
 					{isDefault && (
-						<ClayLabel displayType="info">
+						<ClayLabel className="ml-3" displayType="info">
 							{Liferay.Language.get('default')}
 						</ClayLabel>
 					)}

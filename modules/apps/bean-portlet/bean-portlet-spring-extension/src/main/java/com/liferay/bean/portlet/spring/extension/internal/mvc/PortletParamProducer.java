@@ -45,7 +45,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InjectionPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -461,9 +460,7 @@ public class PortletParamProducer implements ApplicationContextAware {
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-		throws BeansException {
-
+	public void setApplicationContext(ApplicationContext applicationContext) {
 		_applicationContext = applicationContext;
 	}
 

@@ -15,13 +15,11 @@
 package com.liferay.bean.portlet.spring.extension.internal.beans;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Collection;
 
 import javax.portlet.ClientDataRequest;
-import javax.portlet.PortletException;
 
 import javax.servlet.http.Part;
 
@@ -60,30 +58,27 @@ public class DummyClientDataRequest
 	}
 
 	@Override
-	public Part getPart(String name) throws IOException, PortletException {
+	public Part getPart(String name) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Collection<Part> getParts() throws IOException, PortletException {
+	public Collection<Part> getParts() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public InputStream getPortletInputStream() throws IOException {
+	public InputStream getPortletInputStream() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public BufferedReader getReader()
-		throws IOException, UnsupportedOperationException {
-
+	public BufferedReader getReader() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setCharacterEncoding(String encoding)
-		throws UnsupportedOperationException {
+	public void setCharacterEncoding(String encoding) {
 	}
 
 }

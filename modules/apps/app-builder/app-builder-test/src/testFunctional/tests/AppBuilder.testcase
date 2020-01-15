@@ -724,7 +724,7 @@ definition {
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Standalone"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfStandaloneApp {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";
@@ -977,7 +977,7 @@ definition {
 	@description = "Create, Remove, Update and Delete entries of an application deployed as a Widget"
 	@priority = "5"
 	test CreateRemoveUpdateDeleteEntriesOfWidgetApp {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";

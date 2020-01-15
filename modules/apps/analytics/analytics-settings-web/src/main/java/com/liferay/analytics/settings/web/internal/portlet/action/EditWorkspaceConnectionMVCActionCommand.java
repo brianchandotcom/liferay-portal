@@ -157,14 +157,19 @@ public class EditWorkspaceConnectionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!_disconnectDataSource(themeDisplay.getCompanyId())) {
+		if (!_disconnectDataSource(
+				themeDisplay.getCompanyId(), configurationProperties)) {
+
 			removeCompanyPreferences(themeDisplay.getCompanyId());
 			removeConfigurationProperties(
 				themeDisplay.getCompanyId(), configurationProperties);
 		}
 	}
 
-	private boolean _disconnectDataSource(long companyId) throws Exception {
+	private boolean _disconnectDataSource(
+			long companyId, Dictionary<String, Object> configurationProperties)
+		throws Exception {
+
 		if (!AnalyticsSettingsUtil.isAnalyticsEnabled(companyId)) {
 			return false;
 		}
@@ -180,6 +185,8 @@ public class EditWorkspaceConnectionMVCActionCommand
 
 		if (statusLine.getStatusCode() == HttpStatus.SC_FORBIDDEN) {
 			disconnectDataSource(companyId, httpResponse);
+
+			configurationProperties.remove("token");
 
 			return true;
 		}

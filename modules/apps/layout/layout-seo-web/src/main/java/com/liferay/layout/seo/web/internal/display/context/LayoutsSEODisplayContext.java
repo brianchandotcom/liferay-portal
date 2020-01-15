@@ -57,6 +57,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -182,7 +183,28 @@ public class LayoutsSEODisplayContext {
 				_liferayPortletRequest.getPortletName(),
 				PortletRequest.ACTION_PHASE, MimeResponse.Copy.ALL);
 
-		liferayPortletURL.setCopyCurrentRenderParameters(true);
+		liferayPortletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/edit_open_graph");
+
+		liferayPortletURL.setParameter(
+			"displayStyle",
+			_liferayPortletRequest.getParameter("displayStyle"));
+		liferayPortletURL.setParameter(
+			"mvcRenderCommandName",
+			_liferayPortletRequest.getParameter("mvcRenderCommandName"));
+		liferayPortletURL.setParameter(
+			"privateLayout",
+			_liferayPortletRequest.getParameter("privateLayout"));
+		liferayPortletURL.setParameter(
+			"screenNavigationCategoryKey",
+			_liferayPortletRequest.getParameter("screenNavigationCategoryKey"));
+		liferayPortletURL.setParameter(
+			"screenNavigationEntryKey",
+			_liferayPortletRequest.getParameter("screenNavigationEntryKey"));
+		liferayPortletURL.setParameter(
+			"selPlid", _liferayPortletRequest.getParameter("selPlid"));
+		liferayPortletURL.setParameter(
+			"tabs1", _liferayPortletRequest.getParameter("tabs1"));
 
 		return liferayPortletURL;
 	}

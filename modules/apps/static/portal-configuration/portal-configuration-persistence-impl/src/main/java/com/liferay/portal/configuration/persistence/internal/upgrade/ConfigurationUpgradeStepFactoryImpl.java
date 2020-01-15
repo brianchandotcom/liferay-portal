@@ -15,11 +15,13 @@
 package com.liferay.portal.configuration.persistence.internal.upgrade;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -28,6 +30,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import java.util.Dictionary;
+import java.util.Enumeration;
 
 import org.apache.felix.cm.PersistenceManager;
 
@@ -59,9 +62,57 @@ public class ConfigurationUpgradeStepFactoryImpl
 
 					_persistenceManager.delete(oldPid);
 				}
+				else {
+					Enumeration<Dictionary<String, String>> dictionaries =
+						_persistenceManager.getDictionaries();
 
-				_renameConfigurationFile(oldPid, newPid, "cfg");
-				_renameConfigurationFile(oldPid, newPid, "config");
+					while (dictionaries.hasMoreElements()) {
+						Dictionary<String, String> dictionary =
+							dictionaries.nextElement();
+
+						if (!oldPid.equals(
+								dictionary.get("service.factoryPid"))) {
+
+							continue;
+						}
+
+						dictionary.put("service.factoryPid", newPid);
+
+						String newServicePid = StringUtil.replace(
+							dictionary.get("service.pid"), oldPid, newPid);
+
+						String oldServicePid = dictionary.put(
+							"service.pid", newServicePid);
+
+						dictionary.put(
+							"felix.fileinstall.filename",
+							StringUtil.replace(
+								dictionary.get("felix.fileinstall.filename"),
+								oldPid, newPid));
+
+						_persistenceManager.store(newServicePid, dictionary);
+
+						_persistenceManager.delete(oldServicePid);
+					}
+				}
+
+				File configResourcesDir = new File(
+					PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
+
+				for (File file : configResourcesDir.listFiles()) {
+					String fileName = file.getName();
+
+					if (fileName.equals(oldPid.concat(".cfg")) ||
+						fileName.equals(oldPid.concat(".config")) ||
+						fileName.startsWith(oldPid.concat(StringPool.DASH))) {
+
+						_renameConfigurationFile(
+							file,
+							new File(
+								StringUtil.replace(
+									file.getPath(), oldPid, newPid)));
+					}
+				}
 			}
 			catch (IOException ioException) {
 				throw new UpgradeException(ioException);
@@ -70,22 +121,12 @@ public class ConfigurationUpgradeStepFactoryImpl
 	}
 
 	private void _renameConfigurationFile(
-			String oldPid, String newPid, String extension)
+			File oldConfigFile, File newConfigFile)
 		throws IOException {
-
-		File oldConfigFile = new File(
-			StringBundler.concat(
-				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, "/", oldPid, ".",
-				extension));
 
 		if (!oldConfigFile.exists()) {
 			return;
 		}
-
-		File newConfigFile = new File(
-			StringBundler.concat(
-				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, "/", newPid, ".",
-				extension));
 
 		if (newConfigFile.exists()) {
 			if (_log.isWarnEnabled()) {

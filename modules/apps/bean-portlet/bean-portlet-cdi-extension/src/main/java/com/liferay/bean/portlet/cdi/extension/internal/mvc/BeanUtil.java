@@ -70,10 +70,9 @@ public class BeanUtil {
 			bean, BindingResult.class,
 			beanManager.createCreationalContext(bean));
 
-		BeanInfo beanInfo = null;
-
 		try {
-			beanInfo = Introspector.getBeanInfo(bindingResult.getClass());
+			BeanInfo beanInfo = Introspector.getBeanInfo(
+				bindingResult.getClass());
 
 			PropertyDescriptor[] propertyDescriptors =
 				beanInfo.getPropertyDescriptors();

@@ -166,56 +166,17 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 <div class="site-languages">
 
 	<%
-	Map<String, Object> data = new HashMap<>();
-
-	//default Locale
-	Locale defaultLocale = company.getDefaultUser().getLocale();
-
-	JSONArray availableLocalesJSONArray = JSONFactoryUtil.createJSONArray();
-
-	for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
-		JSONObject languageObject = JSONUtil.put(
-			"displayName", availableLocale.getDisplayName(locale)
-		).put(
-			"localeId", LocaleUtil.toLanguageId(availableLocale)
-		);
-
-		availableLocalesJSONArray.put(languageObject);
-	}
-
-	//custom Locale
-	Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(group.getGroupId());
-
-	Locale[] siteAvailableLocales;
-
-	String groupLanguageIds = typeSettingsProperties.getProperty(PropsKeys.LOCALES);
-
-	if (groupLanguageIds != null) {
-		siteAvailableLocales = LocaleUtil.fromLanguageIds(StringUtil.split(groupLanguageIds));
-	}
-	else {
-		Set<Locale> siteAvailableLocalesSet = LanguageUtil.getAvailableLocales(group.getGroupId());
-
-		siteAvailableLocales = siteAvailableLocalesSet.toArray(new Locale[0]);
-	}
-
-	JSONArray siteAvailableLocalesJSONArray = JSONFactoryUtil.createJSONArray();
-
-	for (Locale siteAvailableLocale : siteAvailableLocales) {
-		JSONObject languageObject = JSONUtil.put(
-			"displayName", siteAvailableLocale.getDisplayName(locale)
-		).put(
-			"localeId", LocaleUtil.toLanguageId(siteAvailableLocale)
-		);
-
-		siteAvailableLocalesJSONArray.put(languageObject);
-	}
-
-	data.put("availableLocales", availableLocalesJSONArray);
-	data.put("defaultLocaleId", LocaleUtil.toLanguageId(defaultLocale));
-	data.put("inheritLocales", inheritLocales);
-	data.put("siteAvailableLocales", siteAvailableLocalesJSONArray);
-	data.put("siteDefaultLocaleId", LocaleUtil.toLanguageId(siteDefaultLocale));
+	HashMap<String, Object> data = HashMapBuilder.<String, Object>put(
+		"availableLocales", DepotLanguageUtil.getAvailableLocalesJSONArray(locale)
+	).put(
+		"defaultLocaleId", LocaleUtil.toLanguageId(PortalUtil.getSiteDefaultLocale(group))
+	).put(
+		"inheritLocales", inheritLocales
+	).put(
+		"siteAvailableLocales", DepotLanguageUtil.getDepotAvailableLocalesJSONArray(group, locale)
+	).put(
+		"siteDefaultLocaleId", LocaleUtil.toLanguageId(PortalUtil.getSiteDefaultLocale(group.getGroupId()))
+	).build();
 	%>
 
 	<react:component

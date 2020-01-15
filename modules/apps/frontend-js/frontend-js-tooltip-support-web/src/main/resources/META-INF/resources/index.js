@@ -109,7 +109,7 @@ const TooltipProvider = () => {
 		return dispose;
 	}, [delay, state]);
 
-	const getContent = element => {
+	const saveTitle = element => {
 		if (element) {
 			const title = element.getAttribute('title');
 
@@ -208,7 +208,7 @@ const TooltipProvider = () => {
 				)
 			);
 
-			getContent(state.target);
+			saveTitle(state.target);
 		}
 	}, [state]);
 

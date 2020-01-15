@@ -12,49 +12,53 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query;
+package com.liferay.petra.sql.dsl.query.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.Expression;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.LimitStep;
+import com.liferay.petra.sql.dsl.query.OrderByStep;
+import com.liferay.petra.sql.dsl.query.Query;
 
 import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class OrderBy extends BaseASTNode implements LimitStep, Query {
+public class GroupBy
+	extends BaseASTNode implements LimitStep, OrderByStep, Query {
 
-	public OrderBy(
-		OrderByStep orderByStep, OrderByExpression[] orderByExpressions) {
+	public GroupBy(GroupByStep groupByStep, Expression<?>... expressions) {
+		super(groupByStep);
 
-		super(orderByStep);
-
-		if (orderByExpressions.length == 0) {
+		if (expressions.length == 0) {
 			throw new IllegalArgumentException();
 		}
 
-		_orderByExpressions = orderByExpressions;
+		_expressions = expressions;
 	}
 
-	public OrderByExpression[] getOrderByExpressions() {
-		return _orderByExpressions;
+	public Expression<?>[] getExpressions() {
+		return _expressions;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("order by ");
+		consumer.accept("group by ");
 
-		for (int i = 0; i < _orderByExpressions.length; i++) {
-			_orderByExpressions[i].toSQL(consumer, astNodeListener);
+		for (int i = 0; i < _expressions.length; i++) {
+			_expressions[i].toSQL(consumer, astNodeListener);
 
-			if (i < (_orderByExpressions.length - 1)) {
+			if (i < (_expressions.length - 1)) {
 				consumer.accept(", ");
 			}
 		}
 	}
 
-	private final OrderByExpression[] _orderByExpressions;
+	private final Expression<?>[] _expressions;
 
 }

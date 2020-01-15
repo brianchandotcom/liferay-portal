@@ -15,8 +15,8 @@
 package com.liferay.petra.sql.dsl.expressions;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
-import com.liferay.petra.sql.dsl.operands.Operand;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.impl.Operand;
 
 import java.util.Objects;
 import java.util.function.Consumer;

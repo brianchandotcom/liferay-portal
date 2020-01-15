@@ -12,47 +12,49 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions;
+package com.liferay.petra.sql.dsl.expressions.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.Expression;
+import com.liferay.petra.string.StringPool;
 
-import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class CaseWhenThen<T>
-	extends BaseASTNode implements ElseEndStep<T>, WhenThenStep<T> {
+public class ScalarList<T> extends BaseASTNode implements Expression<T> {
 
-	public CaseWhenThen(Predicate predicate, Expression<T> thenExpression) {
-		_predicate = Objects.requireNonNull(predicate);
-		_thenExpression = Objects.requireNonNull(thenExpression);
+	public ScalarList(T[] values) {
+		if (values.length == 0) {
+			throw new IllegalArgumentException();
+		}
+
+		_values = values;
 	}
 
-	public Predicate getPredicate() {
-		return _predicate;
-	}
-
-	public Expression<T> getThenExpression() {
-		return _thenExpression;
+	public T[] getValues() {
+		return _values;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("case when ");
+		consumer.accept("(");
 
-		_predicate.toSQL(consumer, astNodeListener);
+		for (int i = 0; i < _values.length; i++) {
+			consumer.accept(StringPool.QUESTION);
 
-		consumer.accept(" then ");
+			if (i < (_values.length - 1)) {
+				consumer.accept(", ");
+			}
+		}
 
-		_thenExpression.toSQL(consumer, astNodeListener);
+		consumer.accept(")");
 	}
 
-	private final Predicate _predicate;
-	private final Expression<T> _thenExpression;
+	private final T[] _values;
 
 }

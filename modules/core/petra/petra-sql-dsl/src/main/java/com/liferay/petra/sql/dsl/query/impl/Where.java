@@ -12,40 +12,45 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query;
+package com.liferay.petra.sql.dsl.query.impl;
 
-import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.Predicate;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.LimitStep;
+import com.liferay.petra.sql.dsl.query.OrderByStep;
+import com.liferay.petra.sql.dsl.query.Query;
+import com.liferay.petra.sql.dsl.query.WhereStep;
 
 import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * @author Shuyang Zhou
+ * @author Preston Crary
  */
-public class QueryTable extends Table<QueryTable> {
+public class Where
+	extends BaseASTNode implements GroupByStep, LimitStep, OrderByStep, Query {
 
-	public QueryTable(String name, Query query) {
-		super(null, () -> new QueryTable(name, query));
+	public Where(WhereStep whereStep, Predicate predicate) {
+		super(whereStep);
 
-		setAlias(Objects.requireNonNull(name));
+		_predicate = Objects.requireNonNull(predicate);
+	}
 
-		_query = Objects.requireNonNull(query);
+	public Predicate getPredicate() {
+		return _predicate;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("(");
+		consumer.accept("where ");
 
-		_query.toSQL(consumer, astNodeListener);
-
-		consumer.accept(") ");
-
-		consumer.accept(getAlias());
+		_predicate.toSQL(consumer, astNodeListener);
 	}
 
-	private final Query _query;
+	private final Predicate _predicate;
 
 }

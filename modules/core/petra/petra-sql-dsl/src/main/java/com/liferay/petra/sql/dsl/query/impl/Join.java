@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.joins;
+package com.liferay.petra.sql.dsl.query.impl;
 
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
-import com.liferay.petra.sql.dsl.query.OrderByStep;
-import com.liferay.petra.sql.dsl.query.Query;
-import com.liferay.petra.sql.dsl.query.WhereStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -28,8 +26,7 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class Join
-	extends BaseASTNode implements JoinStep, OrderByStep, Query, WhereStep {
+public class Join extends BaseASTNode implements JoinStep {
 
 	public Join(
 		JoinStep joinStep, JoinType joinType, Table<?> table,

@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query;
+package com.liferay.petra.sql.dsl.query.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
-import com.liferay.petra.sql.dsl.expressions.Alias;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
 import com.liferay.petra.sql.dsl.expressions.Expression;
+import com.liferay.petra.sql.dsl.expressions.impl.Alias;
+import com.liferay.petra.sql.dsl.query.FromStep;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -25,7 +26,7 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class Select extends BaseASTNode implements FromStep, Query {
+public class Select extends BaseASTNode implements FromStep {
 
 	public Select(boolean distinct, Expression<?>... expressions) {
 		_distinct = distinct;

@@ -12,34 +12,41 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions;
+package com.liferay.petra.sql.dsl.query.impl;
 
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.sql.dsl.query.Query;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * @author Preston Crary
+ * @author Shuyang Zhou
  */
-public class Scalar<T> extends BaseASTNode implements Expression<T> {
+public class QueryTable extends Table<QueryTable> {
 
-	public Scalar(T value) {
-		_value = value;
-	}
+	public QueryTable(String name, Query query) {
+		super(null, () -> new QueryTable(name, query));
 
-	public T getValue() {
-		return _value;
+		setAlias(Objects.requireNonNull(name));
+
+		_query = Objects.requireNonNull(query);
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept(StringPool.QUESTION);
+		consumer.accept("(");
+
+		_query.toSQL(consumer, astNodeListener);
+
+		consumer.accept(") ");
+
+		consumer.accept(getAlias());
 	}
 
-	private final T _value;
+	private final Query _query;
 
 }

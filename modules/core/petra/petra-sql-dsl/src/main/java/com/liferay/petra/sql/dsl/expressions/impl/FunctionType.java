@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.functions;
+package com.liferay.petra.sql.dsl.expressions.impl;
 
 import java.util.Objects;
 

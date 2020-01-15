@@ -12,22 +12,23 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.joins;
+package com.liferay.petra.sql.dsl.query;
 
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
+import com.liferay.petra.sql.dsl.query.impl.Join;
+import com.liferay.petra.sql.dsl.query.impl.JoinType;
 
 /**
  * @author Preston Crary
  */
-public interface JoinStep extends ASTNode {
+public interface JoinStep extends WhereStep {
 
-	public default Join innerJoinON(Table<?> table, Predicate predicate) {
+	public default JoinStep innerJoinON(Table<?> table, Predicate predicate) {
 		return new Join(this, JoinType.INNER, table, predicate);
 	}
 
-	public default Join leftJoinOn(Table<?> table, Predicate predicate) {
+	public default JoinStep leftJoinOn(Table<?> table, Predicate predicate) {
 		return new Join(this, JoinType.LEFT, table, predicate);
 	}
 

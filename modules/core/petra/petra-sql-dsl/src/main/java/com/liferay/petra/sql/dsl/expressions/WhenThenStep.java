@@ -14,20 +14,21 @@
 
 package com.liferay.petra.sql.dsl.expressions;
 
-import com.liferay.petra.sql.dsl.ast.ASTNode;
+import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
+import com.liferay.petra.sql.dsl.expressions.impl.WhenThen;
 
 /**
  * @author Preston Crary
  */
-public interface WhenThenStep<T> extends ASTNode {
+public interface WhenThenStep<T> extends ElseEndStep<T> {
 
-	public default WhenThen<T> whenThen(
+	public default WhenThenStep<T> whenThen(
 		Predicate predicate, Expression<T> expression) {
 
 		return new WhenThen<>(this, predicate, expression);
 	}
 
-	public default WhenThen<T> whenThen(Predicate predicate, T value) {
+	public default WhenThenStep<T> whenThen(Predicate predicate, T value) {
 		return whenThen(predicate, new Scalar<>(value));
 	}
 

@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions;
+package com.liferay.petra.sql.dsl.expressions.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.base.BaseASTNode;
+import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.Expression;
+import com.liferay.petra.sql.dsl.expressions.Predicate;
+import com.liferay.petra.sql.dsl.expressions.WhenThenStep;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -23,8 +26,7 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class WhenThen<T>
-	extends BaseASTNode implements ElseEndStep<T>, WhenThenStep<T> {
+public class WhenThen<T> extends BaseASTNode implements WhenThenStep<T> {
 
 	public WhenThen(
 		WhenThenStep<T> whenThenStep, Predicate predicate,

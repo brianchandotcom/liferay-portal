@@ -15,9 +15,9 @@
 package com.liferay.petra.sql.dsl.ast;
 
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.sql.dsl.expressions.Scalar;
-import com.liferay.petra.sql.dsl.expressions.ScalarList;
-import com.liferay.petra.sql.dsl.query.Limit;
+import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
+import com.liferay.petra.sql.dsl.expressions.impl.ScalarList;
+import com.liferay.petra.sql.dsl.query.impl.Limit;
 
 import java.util.ArrayList;
 import java.util.Collections;

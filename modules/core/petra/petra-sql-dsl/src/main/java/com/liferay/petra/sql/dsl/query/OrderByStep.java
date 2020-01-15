@@ -16,19 +16,20 @@ package com.liferay.petra.sql.dsl.query;
 
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.sql.dsl.ast.ASTNode;
+import com.liferay.petra.sql.dsl.query.impl.OrderBy;
+import com.liferay.petra.sql.dsl.query.impl.OrderByExpression;
 import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Preston Crary
  */
-public interface OrderByStep extends ASTNode {
+public interface OrderByStep extends LimitStep {
 
-	public default OrderBy orderBy(OrderByExpression... orderByExpressions) {
+	public default LimitStep orderBy(OrderByExpression... orderByExpressions) {
 		return new OrderBy(this, orderByExpressions);
 	}
 
-	public default OrderBy orderBy(Table<?> table, OrderByInfo orderByInfo) {
+	public default LimitStep orderBy(Table<?> table, OrderByInfo orderByInfo) {
 		String[] orderByFields = orderByInfo.getOrderByFields();
 
 		OrderByExpression[] orderByExpressions =

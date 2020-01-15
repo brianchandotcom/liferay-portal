@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -381,7 +382,8 @@ public class DataRecordResourceImpl
 			String[] values = JSONUtil.toStringArray(jsonArray);
 
 			for (String value : values) {
-				booleanFilter.addTerm(indexFieldName, value);
+				booleanFilter.addTerm(
+					indexFieldName, value, BooleanClauseOccur.MUST);
 			}
 		}
 

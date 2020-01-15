@@ -2411,12 +2411,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
 				false);
 
-			if (publishing) {
-				_configureDependenciesGroupPortal(
-					project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
-				_configureDependenciesGroupPortal(
-					project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
-			}
+			_configureDependenciesGroupPortal(
+				project, JavaPlugin.COMPILE_CONFIGURATION_NAME, publishing);
+			_configureDependenciesGroupPortal(
+				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
+				publishing);
 		}
 
 		_configureDependenciesTransitive(
@@ -2503,7 +2502,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureDependenciesGroupPortal(
-		final Project project, String configurationName) {
+		final Project project, String configurationName, boolean publishing) {
 
 		final Logger logger = project.getLogger();
 
@@ -2534,10 +2533,50 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					String name = externalModuleDependency.getName();
 
-					String newVersion = GradleUtil.getProperty(
-						project, name + ".version", (String)null);
+					String newNotation = null;
 
-					if (Validator.isNull(newVersion)) {
+					String compatVersion = GradleUtil.getProperty(
+						project, "build.compat.version." + name, (String)null);
+
+					if (Validator.isNotNull(compatVersion)) {
+						StringBuilder sb = new StringBuilder();
+
+						sb.append(group);
+						sb.append(':');
+						sb.append(name);
+						sb.append(':');
+						sb.append(compatVersion);
+
+						newNotation = sb.toString();
+					}
+					else if (publishing) {
+						String newVersion = GradleUtil.getProperty(
+							project, name + ".version", (String)null);
+
+						if (Validator.isNotNull(newVersion)) {
+							StringBuilder sb = new StringBuilder();
+
+							sb.append(group);
+							sb.append(':');
+							sb.append(name);
+							sb.append(":(,");
+
+							int x = newVersion.lastIndexOf("-SNAPSHOT");
+
+							if (x != -1) {
+								sb.append(newVersion.substring(0, x));
+							}
+							else {
+								sb.append(newVersion);
+							}
+
+							sb.append(")");
+
+							newNotation = sb.toString();
+						}
+					}
+
+					if (Validator.isNull(newNotation)) {
 						return;
 					}
 
@@ -2550,24 +2589,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					sb.append(version);
 
 					String oldNotation = sb.toString();
-
-					sb.setLength(0);
-
-					sb.append(group);
-					sb.append(':');
-					sb.append(name);
-					sb.append(':');
-
-					int x = newVersion.lastIndexOf("-SNAPSHOT");
-
-					if (x != -1) {
-						sb.append("(," + newVersion.substring(0, x) + ")");
-					}
-					else {
-						sb.append("(," + newVersion + ")");
-					}
-
-					String newNotation = sb.toString();
 
 					if (logger.isLifecycleEnabled()) {
 						logger.lifecycle(

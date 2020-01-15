@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import javax.json.JsonObject;
 
@@ -83,58 +84,51 @@ public class LiferayWriter
 		return _result;
 	}
 
-	public void doDelete(IndexedRecord indexedRecord) throws IOException {
-		try {
-			_liferaySink.doDeleteRequest(_endpointUrl);
-		}
-		catch (Exception e) {
-			_indexedRecordJsonObjectConverter.reject(indexedRecord, e);
+	public void doDelete(IndexedRecord indexedRecord) {
+		Optional<JsonObject> jsonObjectOptional = _liferaySink.doDeleteRequest(
+			_endpointUrl);
 
-			return;
-		}
-
-		_handleSuccessRecord(indexedRecord);
-	}
-
-	public void doInsert(IndexedRecord indexedRecord) throws IOException {
-		JsonObject jsonObject = null;
-
-		try {
-			jsonObject = _liferaySink.doPostRequest(
-				_endpointUrl,
-				_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
-		}
-		catch (Exception e) {
-			_indexedRecordJsonObjectConverter.reject(indexedRecord, e);
+		if (!jsonObjectOptional.isPresent()) {
+			_handleSuccessRecord(indexedRecord);
 
 			return;
 		}
 
 		_handleSuccessRecord(
-			_jsonObjectIndexedRecordConverter.toIndexedRecord(jsonObject));
+			_jsonObjectIndexedRecordConverter.toIndexedRecord(
+				jsonObjectOptional.get()));
 	}
 
-	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
-		JsonObject jsonObject = null;
+	public void doInsert(IndexedRecord indexedRecord) throws IOException {
+		Optional<JsonObject> jsonObjectOptional = _liferaySink.doPostRequest(
+			_endpointUrl,
+			_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
 
-		try {
-			jsonObject = _liferaySink.doPatchRequest(
-				_endpointUrl,
-				_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
-		}
-		catch (Exception e) {
-			_indexedRecordJsonObjectConverter.reject(indexedRecord, e);
+		if (!jsonObjectOptional.isPresent()) {
+			_handleSuccessRecord(indexedRecord);
 
 			return;
 		}
 
-		if (jsonObject != null) {
-			_handleSuccessRecord(
-				_jsonObjectIndexedRecordConverter.toIndexedRecord(jsonObject));
-		}
-		else {
+		_handleSuccessRecord(
+			_jsonObjectIndexedRecordConverter.toIndexedRecord(
+				jsonObjectOptional.get()));
+	}
+
+	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
+		Optional<JsonObject> jsonObjectOptional = _liferaySink.doPatchRequest(
+			_endpointUrl,
+			_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
+
+		if (!jsonObjectOptional.isPresent()) {
 			_handleSuccessRecord(indexedRecord);
+
+			return;
 		}
+
+		_handleSuccessRecord(
+			_jsonObjectIndexedRecordConverter.toIndexedRecord(
+				jsonObjectOptional.get()));
 	}
 
 	@Override
@@ -169,23 +163,28 @@ public class LiferayWriter
 
 		Operation operation = _liferayOutputProperties.getOperation();
 
-		if (Operation.Delete == operation) {
-			doDelete(indexedRecord);
-		}
-		else if (Operation.Insert == operation) {
-			doInsert(indexedRecord);
-		}
-		else if (Operation.Update == operation) {
-			doUpdate(indexedRecord);
-		}
-		else {
-			_indexedRecordJsonObjectConverter.reject(
-				indexedRecord,
-				TalendRuntimeException.createUnexpectedException(
-					"Unsupported write operation " + operation));
-		}
+		try {
+			if (Operation.Delete == operation) {
+				doDelete(indexedRecord);
+			}
+			else if (Operation.Insert == operation) {
+				doInsert(indexedRecord);
+			}
+			else if (Operation.Update == operation) {
+				doUpdate(indexedRecord);
+			}
+			else {
+				_indexedRecordJsonObjectConverter.reject(
+					indexedRecord,
+					TalendRuntimeException.createUnexpectedException(
+						"Unsupported write operation " + operation));
+			}
 
-		_result.totalCount++;
+			_result.totalCount++;
+		}
+		catch (Exception e) {
+			_indexedRecordJsonObjectConverter.reject(indexedRecord, e);
+		}
 	}
 
 	private void _handleSuccessRecord(IndexedRecord indexedRecord) {

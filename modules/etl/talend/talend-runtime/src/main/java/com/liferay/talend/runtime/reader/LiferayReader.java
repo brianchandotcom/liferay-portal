@@ -26,6 +26,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -65,7 +66,7 @@ public class LiferayReader implements Reader<IndexedRecord> {
 	}
 
 	@Override
-	public boolean advance() {
+	public boolean advance() throws IOException {
 		if (!_started) {
 			throw new IllegalStateException("Reader was not started");
 		}
@@ -103,7 +104,7 @@ public class LiferayReader implements Reader<IndexedRecord> {
 	}
 
 	@Override
-	public void close() throws IOException {
+	public void close() {
 	}
 
 	@Override
@@ -196,7 +197,7 @@ public class LiferayReader implements Reader<IndexedRecord> {
 		return parameters;
 	}
 
-	private void _readEndpointJsonObject() {
+	private void _readEndpointJsonObject() throws IOException {
 		URI resourceURI = URIUtil.updateWithQueryParameters(
 			_liferayInputProperties.getEndpointUrl(),
 			_getPageQueryParameters());
@@ -213,8 +214,16 @@ public class LiferayReader implements Reader<IndexedRecord> {
 					resourceURI.toString());
 		}
 
-		JsonObject jsonObject = liferaySource.doGetRequest(
+		Optional<JsonObject> jsonObjectOptional = liferaySource.doGetRequest(
 			resourceURI.toString());
+
+		if (!jsonObjectOptional.isPresent()) {
+			throw new IOException(
+				"Unable to get JSON object for resource at " +
+					resourceURI.toASCIIString());
+		}
+
+		JsonObject jsonObject = jsonObjectOptional.get();
 
 		if (jsonObject.containsKey("page")) {
 			if (jsonObject.containsKey("items")) {

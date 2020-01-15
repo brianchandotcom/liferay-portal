@@ -14,6 +14,7 @@
 
 package com.liferay.talend.runtime;
 
+import com.liferay.talend.common.oas.OASException;
 import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.util.StringUtil;
 import com.liferay.talend.properties.connection.LiferayConnectionProperties;
@@ -24,6 +25,7 @@ import com.liferay.talend.runtime.client.exception.ResponseContentClientExceptio
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.json.JsonObject;
 
@@ -53,33 +55,35 @@ import org.talend.daikon.properties.ValidationResult;
  */
 public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 
-	public JsonObject doDeleteRequest(String resourceURL) {
+	public Optional<JsonObject> doDeleteRequest(String resourceURL) {
 		LiferayClient liferayClient = getLiferayClient();
 
-		return _getResponseContentJsonObject(
+		return _getResponseContentJsonObjectOptional(
 			liferayClient.executeDeleteRequest(resourceURL));
 	}
 
-	public JsonObject doGetRequest(String resourceURL) {
+	public Optional<JsonObject> doGetRequest(String resourceURL) {
 		LiferayClient liferayClient = getLiferayClient();
 
-		return _getResponseContentJsonObject(
+		return _getResponseContentJsonObjectOptional(
 			liferayClient.executeGetRequest(resourceURL));
 	}
 
-	public JsonObject doPatchRequest(
+	public Optional<JsonObject> doPatchRequest(
 		String resourceURL, JsonObject jsonObject) {
 
 		LiferayClient liferayClient = getLiferayClient();
 
-		return _getResponseContentJsonObject(
+		return _getResponseContentJsonObjectOptional(
 			liferayClient.executePatchRequest(resourceURL, jsonObject));
 	}
 
-	public JsonObject doPostRequest(String resourceURL, JsonObject jsonObject) {
+	public Optional<JsonObject> doPostRequest(
+		String resourceURL, JsonObject jsonObject) {
+
 		LiferayClient liferayClient = getLiferayClient();
 
-		return _responseHandler.asJsonObject(
+		return _getResponseContentJsonObjectOptional(
 			liferayClient.executePostRequest(resourceURL, jsonObject));
 	}
 
@@ -138,12 +142,19 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 	@Deprecated
 	@Override
 	public JsonObject getOASJsonObject() {
-		return doGetRequest((String)null);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public JsonObject getOASJsonObject(String oasUrl) {
-		return doGetRequest(oasUrl);
+		Optional<JsonObject> jsonObjectOptional = doGetRequest(oasUrl);
+
+		if (jsonObjectOptional.isPresent()) {
+			return jsonObjectOptional.get();
+		}
+
+		throw new OASException(
+			"Unable to get OpenAPI specification at location " + oasUrl);
 	}
 
 	@Override
@@ -291,24 +302,21 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 			LiferaySourceOrSink.class);
 	}
 
-	private JsonObject _getResponseContentJsonObject(Response response) {
+	private Optional<JsonObject> _getResponseContentJsonObjectOptional(
+		Response response) {
+
 		if (!_responseHandler.isSuccess(response)) {
 			throw new ResponseContentClientException(
 				"Request did not succeed", response.getStatus(), null);
 		}
 
-		if (!_responseHandler.isApplicationJsonContentType(response)) {
-			if (response.getStatus() == 204) {
-				return null;
-			}
+		if ((response.getLength() <= 0) || !response.hasEntity() ||
+			!_responseHandler.isApplicationJsonContentType(response)) {
 
-			throw new ResponseContentClientException(
-				"Unable to decode response content type " +
-					_responseHandler.getContentType(response),
-				response.getStatus(), null);
+			return Optional.empty();
 		}
 
-		return _responseHandler.asJsonObject(response);
+		return Optional.of(_responseHandler.asJsonObject(response));
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

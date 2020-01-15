@@ -1,15 +1,15 @@
 {
 	"dependencies": {
-		"@clayui/button": "^3.0.3",
-		"@clayui/form": "^3.2.1",
-		"@clayui/icon": "^3.0.1",
-		"@clayui/label": "^3.0.1",
-		"@clayui/table": "^3.0.4",
+		"@clayui/button": "3.0.3",
+		"@clayui/form": "3.2.1",
+		"@clayui/icon": "3.0.1",
+		"@clayui/label": "3.0.1",
+		"@clayui/table": "3.0.4",
 		"frontend-js-web": "*",
 		"metal": "2.16.8",
 		"metal-component": "2.16.8",
 		"metal-state": "2.16.8",
-		"react": "^16.12.0"
+		"react": "16.9.0"
 	},
 	"name": "depot-web",
 	"scripts": {

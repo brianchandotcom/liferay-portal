@@ -13,8 +13,8 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
@@ -23,7 +23,13 @@ import React, {useState} from 'react';
 /**
  * @class Languages
  */
-const Languages = ({availableLocales, defaultLocaleId, inheritLocales = false, siteDefaultLocaleId, siteAvailableLocales}) => {
+const Languages = ({
+	availableLocales,
+	defaultLocaleId,
+	inheritLocales = false,
+	siteAvailableLocales,
+	siteDefaultLocaleId
+}) => {
 	const defaultOption = 'defaultOption';
 	const customOption = 'customOption';
 
@@ -39,11 +45,11 @@ const Languages = ({availableLocales, defaultLocaleId, inheritLocales = false, s
 					<span className="hide"> {localeId} </span>
 					{isDefault && (
 						<ClayLabel displayType="info">
-					        {Liferay.Language.get('default')}
+							{Liferay.Language.get('default')}
 						</ClayLabel>
 					)}
 				</ClayTable.Cell>
-				{ showActions && (
+				{showActions && (
 					<ClayTable.Cell>
 						<ClayIcon symbol="ellipsis-v" />
 					</ClayTable.Cell>
@@ -61,9 +67,11 @@ const Languages = ({availableLocales, defaultLocaleId, inheritLocales = false, s
 							{Liferay.Language.get('language')}
 						</ClayTable.Cell>
 
-						{ showActions && (
+						{showActions && (
 							<ClayTable.Cell>
-								<ClayButton displayType="secondary">{Liferay.Language.get('add')}</ClayButton>
+								<ClayButton displayType="secondary">
+									{Liferay.Language.get('add')}
+								</ClayButton>
 							</ClayTable.Cell>
 						)}
 					</ClayTable.Row>
@@ -71,16 +79,19 @@ const Languages = ({availableLocales, defaultLocaleId, inheritLocales = false, s
 
 				<ClayTable.Body>
 					{locales.map(locale => {
-						return <Language {...locale}
-							isDefault =  {defaultLocaleId === locale.localeId}
-							key={locale.localeId}
-							showActions={showActions}
-						/>;
+						return (
+							<Language
+								{...locale}
+								isDefault={defaultLocaleId === locale.localeId}
+								key={locale.localeId}
+								showActions={showActions}
+							/>
+						);
 					})}
 				</ClayTable.Body>
 			</ClayTable>
-		)
-	}
+		);
+	};
 
 	return (
 		<div className="mt-5">
@@ -90,26 +101,38 @@ const Languages = ({availableLocales, defaultLocaleId, inheritLocales = false, s
 				selectedValue={selectedRadioGroupValue}
 			>
 				<ClayRadio
-					label={Liferay.Language.get('use-the-default-language-options')}
+					label={Liferay.Language.get(
+						'use-the-default-language-options'
+					)}
 					value={defaultOption}
 				/>
 
 				<ClayRadio
-					label={Liferay.Language.get('define-a-custom-default-language-and-additional-available-languages-for-this-repository')}
+					label={Liferay.Language.get(
+						'define-a-custom-default-language-and-additional-available-languages-for-this-repository'
+					)}
 					value={customOption}
 				/>
 			</ClayRadioGroup>
 
-			{selectedRadioGroupValue ===  defaultOption && (
-				<LanguagesList defaultLocaleId={defaultLocaleId} locales={availableLocales} showActions={false} />
+			{selectedRadioGroupValue === defaultOption && (
+				<LanguagesList
+					defaultLocaleId={defaultLocaleId}
+					locales={availableLocales}
+					showActions={false}
+				/>
 			)}
 
-			{selectedRadioGroupValue ===  customOption && (
-				<LanguagesList defaultLocaleId={siteDefaultLocaleId} locales={siteAvailableLocales} showActions={true} />
+			{selectedRadioGroupValue === customOption && (
+				<LanguagesList
+					defaultLocaleId={siteDefaultLocaleId}
+					locales={siteAvailableLocales}
+					showActions={true}
+				/>
 			)}
 		</div>
 	);
-}
+};
 
 Languages.propTypes = {
 	availableLocales: PropTypes.arrayOf(
@@ -120,13 +143,13 @@ Languages.propTypes = {
 	).isRequired,
 	defaultLocaleId: PropTypes.string.isRequired,
 	inheritLocales: PropTypes.bool,
-	siteDefaultLocaleId: PropTypes.string.isRequired,
 	siteAvailableLocales: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,
 			localeId: PropTypes.string
 		})
-	).isRequired
+	).isRequired,
+	siteDefaultLocaleId: PropTypes.string.isRequired
 };
 
 export default function(props) {

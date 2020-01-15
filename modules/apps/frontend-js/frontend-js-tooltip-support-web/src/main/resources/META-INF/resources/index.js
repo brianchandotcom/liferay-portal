@@ -210,7 +210,7 @@ const TooltipProvider = () => {
 
 			saveTitle(state.target);
 		}
-	}, [state]);
+	}, [state.target]);
 
 	return state.target ? (
 		<ClayTooltip

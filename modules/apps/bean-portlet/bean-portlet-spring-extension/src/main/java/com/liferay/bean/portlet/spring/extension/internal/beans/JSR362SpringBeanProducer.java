@@ -270,9 +270,8 @@ public class JSR362SpringBeanProducer {
 		PortletConfig portletConfig = _getPortletConfig();
 
 		if (portletConfig == null) {
-			_log.error(
-				new IllegalStateException(
-					_getDependentStringErrorMessage(PortletName.class)));
+			throw new IllegalStateException(
+				_getDependentStringErrorMessage(PortletName.class));
 		}
 
 		return portletConfig.getPortletName();

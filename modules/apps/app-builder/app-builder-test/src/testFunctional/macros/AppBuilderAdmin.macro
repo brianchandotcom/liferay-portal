@@ -91,6 +91,11 @@ definition {
 	}
 
 	macro deployApp {
+		AssertTextEquals(
+			deployStatus = "Undeployed",
+			locator1 = "AppBuilder#DEPLOY_APP_STATUS",
+			value1 = "Undeployed");
+		
 		Click(
 			key_itemName = "${itemName}",
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
@@ -98,6 +103,7 @@ definition {
 		MenuItem.clickNoError(menuItem = "Deploy");
 
 		AssertTextEquals(
+			deployStatus = "Deployed",
 			locator1 = "AppBuilder#DEPLOY_APP_STATUS",
 			value1 = "Deployed");
 	}
@@ -262,7 +268,6 @@ definition {
 	}
 
 	macro validateRequiredValidNameMessage {
-
 		AssertTextEquals(
 			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",
 			value1 = "This field is required.");

@@ -162,7 +162,7 @@ if (analyticsConfiguration != null) {
 
 <script>
 	function <portlet:namespace />confirmation(event) {
-		<c:if test="<%=connected%>">
+		<c:if test="<%= connected %>">
 			if (
 				!confirm(
 					'<liferay-ui:message key="are-you-sure-you-want-to-disconnect-your-analytics-cloud-workspace-from-this-dxp-instance" />'
@@ -184,5 +184,8 @@ if (analyticsConfiguration != null) {
 		tokenButton.disabled = value.length === 0;
 	}
 
-	<portlet:namespace />validateTokenButton();
+
+	<c:if test="<%= !connected %>">
+		<portlet:namespace />validateTokenButton();
+	</c:if>
 </script>

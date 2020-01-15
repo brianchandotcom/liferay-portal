@@ -16,11 +16,12 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import React, {useContext} from 'react';
 
+import {ConfigContext} from '../../app/config/index';
 import {openImageSelector} from '../../core/openImageSelector';
-import {ConfigContext} from '../config/index';
 
-export function ManualSelectionPanel({
-	backgroundImageTitle = Liferay.Language.get('none'),
+export function ImageSelector({
+	imageTitle = Liferay.Language.get('none'),
+	label,
 	onClearButtonPressed,
 	onImageSelected
 }) {
@@ -29,15 +30,13 @@ export function ManualSelectionPanel({
 	return (
 		<>
 			<ClayForm.Group small>
-				<label htmlFor="containerBackgroundImageTitle">
-					{Liferay.Language.get('image')}
-				</label>
+				<label htmlFor="imageTitle">{label}</label>
 				<ClayInput
-					id="containerBackgroundImageTitle"
+					id="imageTitle"
 					placeholder={Liferay.Language.get('none')}
 					readOnly
 					sizing="sm"
-					value={backgroundImageTitle}
+					value={imageTitle}
 				/>
 			</ClayForm.Group>
 			<ClayButton.Group>

@@ -15,8 +15,8 @@
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useState} from 'react';
 
+import {ImageSelector} from './../../common/components/ImageSelector';
 import InfoItemSelectionPanel from './InfoItemSelectionPanel';
-import {ManualSelectionPanel} from './ManualSelectionPanel';
 
 const IMAGE_SOURCE = {
 	contentMapping: 'content_mapping',
@@ -55,8 +55,9 @@ export const ContainerBackgroundImageConfiguration = ({
 				/>
 			</ClayForm.Group>
 			{imageSource === IMAGE_SOURCE.manualSelection ? (
-				<ManualSelectionPanel
-					backgroundImageTitle={backgroundImageTitle}
+				<ImageSelector
+					imageTitle={backgroundImageTitle}
+					label={Liferay.Language.get('background-image')}
 					onClearButtonPressed={() =>
 						onValueChange({
 							backgroundImage: '',

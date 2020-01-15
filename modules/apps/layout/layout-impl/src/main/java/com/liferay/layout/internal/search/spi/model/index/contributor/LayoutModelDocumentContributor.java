@@ -77,7 +77,6 @@ public class LayoutModelDocumentContributor
 			return;
 		}
 
-		document.addUID(CLASS_NAME, layout.getPlid());
 		document.addText(
 			Field.DEFAULT_LANGUAGE_ID, layout.getDefaultLanguageId());
 		document.addLocalizedText(Field.NAME, layout.getNameMap());

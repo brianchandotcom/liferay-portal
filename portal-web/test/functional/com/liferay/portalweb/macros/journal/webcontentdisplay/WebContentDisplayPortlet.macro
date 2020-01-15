@@ -290,22 +290,26 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		AssertClick(
-			key_breadcrumbName = "Workspaces",
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-			value1 = "Workspaces");
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
-		LexiconCard.clickCard(card = "${otherSiteName}");
+		MenuItem.click(menuItem = "${otherSiteName}");
 
 		var key_listEntry = "${webContentTitle}";
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		AssertClick(
-			locator1 = "LexiconList#LIST_ENTRY_TITLE",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
 			value1 = "${webContentTitle}");
 
 		SelectFrame(value1 = "relative=top");
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		AssertTextEquals.assertPartialText(
+			key_card = "${webContentTitle}",
+			locator1 = "LexiconCard#CARD_TITLE",
+			value1 = "${webContentTitle}");
 
 		PortletEntry.save();
 

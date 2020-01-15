@@ -54,6 +54,7 @@ import org.springframework.context.ApplicationEventPublisher;
 public class ViewRendererMvcImpl
 	implements ApplicationContextAware, ViewRenderer {
 
+	@Override
 	public void render(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
 			PortletConfig portletConfig1)

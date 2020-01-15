@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.frontend.js.web.internal;
+package com.liferay.portal.template.soy.internal;
+
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -33,40 +33,41 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  */
 @Component(service = {})
-public class ResourceBundleServiceListener implements ServiceListener {
-
-	@Override
-	public void serviceChanged(ServiceEvent serviceEvent) {
-		ServiceReference<?> serviceReference =
-			serviceEvent.getServiceReference();
-
-		Bundle bundle = serviceReference.getBundle();
-
-		_javaScriptPortalWebResources.updateLastModifed(
-			bundle.getLastModified());
-	}
+public class SoyManagerCleaner {
 
 	@Activate
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
+		_serviceListener = serviceEvent -> {
+			ServiceReference<?> serviceReference =
+				serviceEvent.getServiceReference();
+
+			String languageId = GetterUtil.getString(
+				serviceReference.getProperty("language.id"));
+
+			_soyManager.clearCache(languageId);
+		};
+
 		bundleContext.addServiceListener(
-			this,
+			_serviceListener,
 			"(&(!(javax.portlet.name=*))(language.id=*)(objectClass=" +
 				ResourceBundle.class.getName() + "))");
 	}
 
 	@Deactivate
 	protected void deactivate(BundleContext bundleContext) {
-		bundleContext.removeServiceListener(this);
+		bundleContext.removeServiceListener(_serviceListener);
 	}
 
-	@Reference
-	private JavaScriptPortalWebResources _javaScriptPortalWebResources;
+	private ServiceListener _serviceListener;
 
 	@Reference(
 		target = "(&(original.bean=true)(bean.id=javax.servlet.ServletContext))"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private SoyManager _soyManager;
 
 }

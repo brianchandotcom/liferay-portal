@@ -303,6 +303,40 @@ public class LayoutsSEODisplayContext {
 			_selLayout, company.getName());
 	}
 
+	public PortletURL getRedirectURL() {
+		LiferayPortletURL liferayPortletURL =
+			_liferayPortletResponse.createLiferayPortletURL(
+				_liferayPortletRequest.getPlid(),
+				_liferayPortletRequest.getPortletName(),
+				PortletRequest.RENDER_PHASE, MimeResponse.Copy.ALL);
+
+		liferayPortletURL.setParameter(
+			"displayStyle",
+			_liferayPortletRequest.getParameter("displayStyle"));
+		liferayPortletURL.setParameter(
+			"groupId", _liferayPortletRequest.getParameter("groupId"));
+		liferayPortletURL.setParameter(
+			"mvcRenderCommandName",
+			_liferayPortletRequest.getParameter("mvcRenderCommandName"));
+		liferayPortletURL.setParameter(
+			"layoutId", _liferayPortletRequest.getParameter("layoutId"));
+		liferayPortletURL.setParameter(
+			"privateLayout",
+			_liferayPortletRequest.getParameter("privateLayout"));
+		liferayPortletURL.setParameter(
+			"screenNavigationCategoryKey",
+			_liferayPortletRequest.getParameter("screenNavigationCategoryKey"));
+		liferayPortletURL.setParameter(
+			"screenNavigationEntryKey",
+			_liferayPortletRequest.getParameter("screenNavigationEntryKey"));
+		liferayPortletURL.setParameter(
+			"selPlid", _liferayPortletRequest.getParameter("selPlid"));
+		liferayPortletURL.setParameter(
+			"tabs1", _liferayPortletRequest.getParameter("tabs1"));
+
+		return liferayPortletURL;
+	}
+
 	public Group getSelGroup() {
 		return _groupDisplayContextHelper.getSelGroup();
 	}

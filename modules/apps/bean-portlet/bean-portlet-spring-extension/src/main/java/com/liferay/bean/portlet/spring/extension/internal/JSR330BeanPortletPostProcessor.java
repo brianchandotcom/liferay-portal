@@ -80,7 +80,7 @@ public class JSR330BeanPortletPostProcessor
 		}
 		catch (Throwable t) {
 			if (t instanceof BeanCreationException) {
-				throw (BeanCreationException)t;
+				throw (RuntimeException)t;
 			}
 
 			throw new BeanCreationException(
@@ -91,9 +91,7 @@ public class JSR330BeanPortletPostProcessor
 	}
 
 	@Override
-	public void processInjection(Object beanInstance)
-		throws BeanCreationException {
-
+	public void processInjection(Object beanInstance) {
 		Class<?> beanClass = beanInstance.getClass();
 
 		InjectionMetadata injectionMetadata = _getInjectionMetadata(
@@ -104,7 +102,7 @@ public class JSR330BeanPortletPostProcessor
 		}
 		catch (Throwable t) {
 			if (t instanceof BeanCreationException) {
-				throw (BeanCreationException)t;
+				throw (RuntimeException)t;
 			}
 
 			throw new BeanCreationException("Unable to @Inject dependencies");

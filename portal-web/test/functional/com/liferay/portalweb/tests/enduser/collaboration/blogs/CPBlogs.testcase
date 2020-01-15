@@ -523,6 +523,8 @@ definition {
 
 		BlogsEntry.saveAsDraft();
 
+		Click(locator1 = "Icon#BACK");
+
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_entryTitle = "Blogs Entry Title";

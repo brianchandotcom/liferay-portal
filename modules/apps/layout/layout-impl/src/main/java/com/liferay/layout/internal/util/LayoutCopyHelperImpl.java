@@ -238,85 +238,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
-		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
-
-		if (structureJSONArray == null) {
-			return;
-		}
-
-		for (int i = 0; i < structureJSONArray.length(); i++) {
-			JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
-
-			JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
-
-			for (int j = 0; j < columnsJSONArray.length(); j++) {
-				JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
-
-				JSONArray fragmentEntryLinkIdsJSONArray =
-					columnJSONObject.getJSONArray("fragmentEntryLinkIds");
-
-				JSONArray newFragmentEntryLinkIdsJSONArray =
-					JSONFactoryUtil.createJSONArray();
-
-				for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length();
-					 k++) {
-
-					if (Objects.equals(
-							fragmentEntryLinkIdsJSONArray.getString(k),
-							"drop-zone")) {
-
-						newFragmentEntryLinkIdsJSONArray.put(
-							fragmentEntryLinkIdsJSONArray.getString(k));
-
-						continue;
-					}
-
-					FragmentEntryLink fragmentEntryLink =
-						fragmentEntryLinkMap.get(
-							fragmentEntryLinkIdsJSONArray.getLong(k));
-
-					if (fragmentEntryLink == null) {
-						continue;
-					}
-
-					FragmentEntryLink newFragmentEntryLink =
-						(FragmentEntryLink)fragmentEntryLink.clone();
-
-					newFragmentEntryLink.setUuid(serviceContext.getUuid());
-					newFragmentEntryLink.setFragmentEntryLinkId(
-						_counterLocalService.increment());
-					newFragmentEntryLink.setUserId(targetLayout.getUserId());
-					newFragmentEntryLink.setUserName(
-						targetLayout.getUserName());
-					newFragmentEntryLink.setCreateDate(
-						serviceContext.getCreateDate(new Date()));
-					newFragmentEntryLink.setModifiedDate(
-						serviceContext.getModifiedDate(new Date()));
-					newFragmentEntryLink.setOriginalFragmentEntryLinkId(0);
-					newFragmentEntryLink.setClassNameId(classNameId);
-					newFragmentEntryLink.setClassPK(targetLayout.getPlid());
-					newFragmentEntryLink.setLastPropagationDate(
-						serviceContext.getCreateDate(new Date()));
-
-					newFragmentEntryLink =
-						_fragmentEntryLinkLocalService.addFragmentEntryLink(
-							newFragmentEntryLink);
-
-					newFragmentEntryLinkIdsJSONArray.put(
-						newFragmentEntryLink.getFragmentEntryLinkId());
-
-					_commentManager.copyDiscussion(
-						targetLayout.getUserId(), targetLayout.getGroupId(),
-						FragmentEntryLink.class.getName(),
-						fragmentEntryLink.getFragmentEntryLinkId(),
-						newFragmentEntryLink.getFragmentEntryLinkId(),
-						className -> serviceContext);
-				}
-
-				columnJSONObject.put(
-					"fragmentEntryLinkIds", newFragmentEntryLinkIdsJSONArray);
-			}
-		}
+		_processDataJSONObject(
+			dataJSONObject, classNameId, targetLayout, fragmentEntryLinkMap,
+			serviceContext);
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructure(
@@ -503,6 +427,93 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		return true;
+	}
+
+	private void _processDataJSONObject(
+			JSONObject dataJSONObject, long classNameId, Layout targetLayout,
+			Map<Long, FragmentEntryLink> fragmentEntryLinkMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
+
+		if (structureJSONArray == null) {
+			return;
+		}
+
+		for (int i = 0; i < structureJSONArray.length(); i++) {
+			JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
+
+			JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
+
+			for (int j = 0; j < columnsJSONArray.length(); j++) {
+				JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
+
+				JSONArray fragmentEntryLinkIdsJSONArray =
+					columnJSONObject.getJSONArray("fragmentEntryLinkIds");
+
+				JSONArray newFragmentEntryLinkIdsJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length();
+					 k++) {
+
+					if (Objects.equals(
+							fragmentEntryLinkIdsJSONArray.getString(k),
+							"drop-zone")) {
+
+						newFragmentEntryLinkIdsJSONArray.put(
+							fragmentEntryLinkIdsJSONArray.getString(k));
+
+						continue;
+					}
+
+					FragmentEntryLink fragmentEntryLink =
+						fragmentEntryLinkMap.get(
+							fragmentEntryLinkIdsJSONArray.getLong(k));
+
+					if (fragmentEntryLink == null) {
+						continue;
+					}
+
+					FragmentEntryLink newFragmentEntryLink =
+						(FragmentEntryLink)fragmentEntryLink.clone();
+
+					newFragmentEntryLink.setUuid(serviceContext.getUuid());
+					newFragmentEntryLink.setFragmentEntryLinkId(
+						_counterLocalService.increment());
+					newFragmentEntryLink.setUserId(targetLayout.getUserId());
+					newFragmentEntryLink.setUserName(
+						targetLayout.getUserName());
+					newFragmentEntryLink.setCreateDate(
+						serviceContext.getCreateDate(new Date()));
+					newFragmentEntryLink.setModifiedDate(
+						serviceContext.getModifiedDate(new Date()));
+					newFragmentEntryLink.setOriginalFragmentEntryLinkId(0);
+					newFragmentEntryLink.setClassNameId(classNameId);
+					newFragmentEntryLink.setClassPK(targetLayout.getPlid());
+					newFragmentEntryLink.setLastPropagationDate(
+						serviceContext.getCreateDate(new Date()));
+
+					newFragmentEntryLink =
+						_fragmentEntryLinkLocalService.addFragmentEntryLink(
+							newFragmentEntryLink);
+
+					newFragmentEntryLinkIdsJSONArray.put(
+						newFragmentEntryLink.getFragmentEntryLinkId());
+
+					_commentManager.copyDiscussion(
+						targetLayout.getUserId(), targetLayout.getGroupId(),
+						FragmentEntryLink.class.getName(),
+						fragmentEntryLink.getFragmentEntryLinkId(),
+						newFragmentEntryLink.getFragmentEntryLinkId(),
+						className -> serviceContext);
+				}
+
+				columnJSONObject.put(
+					"fragmentEntryLinkIds", newFragmentEntryLinkIdsJSONArray);
+			}
+		}
 	}
 
 	private static final TransactionConfig _transactionConfig =

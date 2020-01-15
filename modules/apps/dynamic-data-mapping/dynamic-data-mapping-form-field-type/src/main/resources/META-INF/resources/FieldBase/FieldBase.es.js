@@ -127,10 +127,7 @@ FieldBase.STATE = {
 	tooltip: Config.string()
 };
 
-const composed = compose(
-	withDispatch,
-	withRepetitionControls
-)(FieldBase);
+const composed = compose(withDispatch, withRepetitionControls)(FieldBase);
 
 Soy.register(composed, templates);
 

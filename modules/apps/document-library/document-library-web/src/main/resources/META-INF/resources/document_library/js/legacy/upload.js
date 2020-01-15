@@ -974,8 +974,8 @@ AUI.add(
 					if (Lang.isObject(responseData)) {
 						error =
 							responseData.status &&
-							(responseData.status >= 490 &&
-								responseData.status < 500);
+							responseData.status >= 490 &&
+							responseData.status < 500;
 
 						if (error) {
 							message = responseData.message;

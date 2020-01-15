@@ -122,9 +122,10 @@ export const isEmptyColumn = (pages, pageIndex, rowIndex, columnIndex) => {
 };
 
 export const isEmptyRow = (pages, pageIndex, rowIndex) => {
-	return pages[pageIndex].rows[rowIndex].columns.every(
-		(column, columnIndex) =>
-			isEmptyColumn(pages, pageIndex, rowIndex, columnIndex)
+	return pages[pageIndex].rows[
+		rowIndex
+	].columns.every((column, columnIndex) =>
+		isEmptyColumn(pages, pageIndex, rowIndex, columnIndex)
 	);
 };
 

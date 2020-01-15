@@ -204,7 +204,8 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 			newItem.config &&
 			oldItem &&
 			oldItem.config &&
-			(newItem.config.backgroundImage && !oldItem.config.backgroundImage);
+			newItem.config.backgroundImage &&
+			!oldItem.config.backgroundImage;
 
 		const changedMappedAsset =
 			newItem.config &&

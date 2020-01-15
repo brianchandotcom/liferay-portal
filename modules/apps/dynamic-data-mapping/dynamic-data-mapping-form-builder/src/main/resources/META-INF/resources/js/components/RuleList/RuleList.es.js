@@ -73,12 +73,12 @@ class RuleList extends Component {
 						if (action.action === 'auto-fill') {
 							const {inputs, outputs} = action;
 
-							const inputLabel = Object.values(inputs).map(
-								input => this._getFieldLabel(input)
-							);
-							const outputLabel = Object.values(outputs).map(
-								output => this._getFieldLabel(output)
-							);
+							const inputLabel = Object.values(
+								inputs
+							).map(input => this._getFieldLabel(input));
+							const outputLabel = Object.values(
+								outputs
+							).map(output => this._getFieldLabel(output));
 
 							newAction = {
 								...action,

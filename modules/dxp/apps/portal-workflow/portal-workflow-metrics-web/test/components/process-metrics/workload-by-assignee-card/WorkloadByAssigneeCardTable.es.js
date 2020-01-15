@@ -103,7 +103,9 @@ describe('The workload by assignee table should', () => {
 	test('Be rendered with no rows when items list is empty', () => {
 		const {getAllByTestId} = render(
 			<WorkloadByAssigneeCard.Body.Table currentTab="overdue" />,
-			{wrapper: MockRouter}
+			{
+				wrapper: MockRouter
+			}
 		);
 
 		expect(() => getAllByTestId('assigneeName')).toThrow();

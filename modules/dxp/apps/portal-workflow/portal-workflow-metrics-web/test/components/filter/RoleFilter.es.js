@@ -17,7 +17,10 @@ import {MockRouter} from '../../mock/MockRouter.es';
 
 const query = '?filters.roleIds%5B0%5D=2';
 
-const items = [{id: 1, name: 'Administrador'}, {id: 2, name: 'User'}];
+const items = [
+	{id: 1, name: 'Administrador'},
+	{id: 2, name: 'User'}
+];
 
 const clientMock = {
 	get: jest.fn().mockResolvedValue({data: {items, totalCount: items.length}})

@@ -293,9 +293,7 @@ class SoyPortletRouter extends State {
 		let pathFunctionForOverriddenParameters_;
 
 		if (overriddenParameters['pattern-metal-router']) {
-			const url = `(.*)/${this.friendlyURLMapping}${
-				overriddenParameters['pattern-metal-router']
-			}`;
+			const url = `(.*)/${this.friendlyURLMapping}${overriddenParameters['pattern-metal-router']}`;
 
 			const regex = toRegex(url);
 

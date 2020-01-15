@@ -26,9 +26,12 @@ export default withRouter(({history}) => {
 	const [keywords, setKeywords] = useState('');
 
 	const submit = () =>
-		createQuestion(articleBody, headline, keywords, context.siteKey).then(
-			() => history.push('/')
-		);
+		createQuestion(
+			articleBody,
+			headline,
+			keywords,
+			context.siteKey
+		).then(() => history.push('/'));
 
 	return (
 		<>

@@ -13,26 +13,16 @@
  */
 
 export {default as addFragmentEntryLink} from './addFragmentEntryLink';
-export {
-	default as addFragmentEntryLinkComment
-} from './addFragmentEntryLinkComment';
+export {default as addFragmentEntryLinkComment} from './addFragmentEntryLinkComment';
 export {default as addMappedInfoItem} from './addMappedInfoItem';
-export {
-	default as deleteFragmentEntryLinkComment
-} from './deleteFragmentEntryLinkComment';
-export {
-	default as editFragmentEntryLinkComment
-} from './editFragmentEntryLinkComment';
+export {default as deleteFragmentEntryLinkComment} from './deleteFragmentEntryLinkComment';
+export {default as editFragmentEntryLinkComment} from './editFragmentEntryLinkComment';
 export {default as loadReducer} from './loadReducer';
 export {default as switchSidebarPanel} from './switchSidebarPanel';
-export {
-	default as toggleShowResolvedComments
-} from './toggleShowResolvedComments';
+export {default as toggleShowResolvedComments} from './toggleShowResolvedComments';
 export {default as unloadReducer} from './unloadReducer';
 export {default as updateEditableValues} from './updateEditableValues';
-export {
-	default as updateFragmentEntryLinkContent
-} from './updateFragmentEntryLinkContent';
+export {default as updateFragmentEntryLinkContent} from './updateFragmentEntryLinkContent';
 export {default as updateLanguageId} from './updateLanguageId';
 export {default as updateLayoutData} from './updateLayoutData';
 

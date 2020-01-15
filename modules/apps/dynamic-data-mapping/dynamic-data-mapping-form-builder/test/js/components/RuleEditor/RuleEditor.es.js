@@ -380,9 +380,9 @@ describe('Rule Editor', () => {
 				expect(component.refs.conditionOperator0.value).toEqual([
 					'contains'
 				]);
-				expect(component.refs.secondOperandTypeSelector0.value).toEqual(
-					['value']
-				);
+				expect(
+					component.refs.secondOperandTypeSelector0.value
+				).toEqual(['value']);
 				expect(component.refs.secondOperand0.value).toEqual(['123']);
 			});
 
@@ -594,9 +594,9 @@ describe('Rule Editor', () => {
 
 				expect(component.refs.firstOperand0.value).toEqual(['radio']);
 
-				expect(component.refs.secondOperandTypeSelector0.value).toEqual(
-					['value']
-				);
+				expect(
+					component.refs.secondOperandTypeSelector0.value
+				).toEqual(['value']);
 
 				expect(component.refs.secondOperand0.value).toEqual(['123']);
 			});
@@ -663,9 +663,9 @@ describe('Rule Editor', () => {
 
 				jest.runAllTimers();
 
-				expect(component.refs.secondOperandTypeSelector0.value).toEqual(
-					['']
-				);
+				expect(
+					component.refs.secondOperandTypeSelector0.value
+				).toEqual(['']);
 				expect(component.refs.secondOperand0).toBeFalsy();
 			});
 
@@ -701,9 +701,9 @@ describe('Rule Editor', () => {
 
 				jest.runAllTimers();
 
-				expect(component.refs.secondOperandTypeSelector0.value).toEqual(
-					['']
-				);
+				expect(
+					component.refs.secondOperandTypeSelector0.value
+				).toEqual(['']);
 				expect(component.refs.secondOperand0).toBeFalsy();
 			});
 

@@ -24,15 +24,11 @@ export {cancelDebounce, debounce} from './liferay/debounce/debounce.es';
 
 // Form API
 
-export {
-	default as objectToFormData
-} from './liferay/util/form/object_to_form_data.es.js';
+export {default as objectToFormData} from './liferay/util/form/object_to_form_data.es.js';
 
 // Liferay API
 
-export {
-	default as CompatibilityEventProxy
-} from './liferay/CompatibilityEventProxy.es';
+export {default as CompatibilityEventProxy} from './liferay/CompatibilityEventProxy.es';
 
 export {default as DefaultEventHandler} from './liferay/DefaultEventHandler.es';
 export {default as ItemSelectorDialog} from './liferay/ItemSelectorDialog.es';
@@ -40,27 +36,17 @@ export {default as PortletBase} from './liferay/PortletBase.es';
 
 // Modal API
 
-export {
-	default as openSimpleInputModal
-} from './liferay/modal/commands/OpenSimpleInputModal.es';
+export {default as openSimpleInputModal} from './liferay/modal/commands/OpenSimpleInputModal.es';
 
 // PortletURL API
 
-export {
-	default as createActionURL
-} from './liferay/util/portlet_url/create_action_url.es';
+export {default as createActionURL} from './liferay/util/portlet_url/create_action_url.es';
 
-export {
-	default as createPortletURL
-} from './liferay/util/portlet_url/create_portlet_url.es';
+export {default as createPortletURL} from './liferay/util/portlet_url/create_portlet_url.es';
 
-export {
-	default as createRenderURL
-} from './liferay/util/portlet_url/create_render_url.es';
+export {default as createRenderURL} from './liferay/util/portlet_url/create_render_url.es';
 
-export {
-	default as createResourceURL
-} from './liferay/util/portlet_url/create_resource_url.es';
+export {default as createResourceURL} from './liferay/util/portlet_url/create_resource_url.es';
 
 // Session API
 

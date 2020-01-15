@@ -516,8 +516,8 @@ class Sidebar extends Component {
 		if (
 			this._isCloseButton(target) ||
 			(open &&
-				(!this._isSidebarElement(target) &&
-					!this._isTranslationItem(target)))
+				!this._isSidebarElement(target) &&
+				!this._isTranslationItem(target))
 		) {
 			this.close();
 

@@ -52,134 +52,151 @@ const ViewDataLayoutPageValues = ({
 		));
 };
 
-export default withRouter(({history, match: {params: {entryIndex}}}) => {
-	const {appId, basePortletURL} = useContext(AppContext);
-	const [isLoading, setLoading] = useState(true);
-	const [dataDefinition, setDataDefinition] = useState();
-	const [dataLayout, setDataLayout] = useState({});
+export default withRouter(
+	({
+		history,
+		match: {
+			params: {entryIndex}
+		}
+	}) => {
+		const {appId, basePortletURL} = useContext(AppContext);
+		const [isLoading, setLoading] = useState(true);
+		const [dataDefinition, setDataDefinition] = useState();
+		const [dataLayout, setDataLayout] = useState({});
 
-	const [{dataRecord, page, total}, setResults] = useState({
-		dataRecord: {},
-		page: 1,
-		total: 0
-	});
-
-	const [query] = useQuery(history, {
-		keywords: '',
-		page: 1,
-		sort: ''
-	});
-
-	useEffect(() => {
-		getItem(`/o/app-builder/v1.0/apps/${appId}`).then(
-			({dataDefinitionId, dataLayoutId}) => {
-				Promise.all([
-					getItem(
-						`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
-						{...query, page: entryIndex, pageSize: 1}
-					).then(({items = [], page, totalCount}) => {
-						if (items.length > 0) {
-							setResults({
-								dataRecord: items.pop(),
-								page,
-								total: totalCount
-							});
-						}
-					}),
-					getItem(
-						`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
-					).then(dataDefinition => setDataDefinition(dataDefinition)),
-					getItem(
-						`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`
-					).then(dataLayout => setDataLayout(dataLayout))
-				]).then(() => setLoading(false));
-			}
-		);
-	}, [appId, entryIndex, query]);
-
-	const {dataRecordValues = {}} = dataRecord;
-	const {dataLayoutPages} = dataLayout;
-
-	const onDelete = () => {
-		confirmDelete('/o/data-engine/v2.0/data-records/')({
-			id: dataRecord.id
-		}).then(confirmed => {
-			if (confirmed) {
-				openToast({
-					message: Liferay.Language.get('an-entry-was-deleted'),
-					title: Liferay.Language.get('success'),
-					type: 'success'
-				});
-
-				history.push('/');
-			}
+		const [{dataRecord, page, total}, setResults] = useState({
+			dataRecord: {},
+			page: 1,
+			total: 0
 		});
-	};
 
-	const onEdit = () => {
-		Liferay.Util.navigate(
-			Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
-				dataDefinitionId: dataDefinition.id,
-				dataLayoutId: dataLayout.id,
-				dataRecordId: dataRecord.id,
-				mvcPath: '/edit_entry.jsp',
-				redirect: location.href
-			})
-		);
-	};
+		const [query] = useQuery(history, {
+			keywords: '',
+			page: 1,
+			sort: ''
+		});
 
-	const onNext = () => {
-		const nextIndex = Math.min(parseInt(entryIndex, 10) + 1, total);
+		useEffect(() => {
+			getItem(`/o/app-builder/v1.0/apps/${appId}`).then(
+				({dataDefinitionId, dataLayoutId}) => {
+					Promise.all([
+						getItem(
+							`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
+							{...query, page: entryIndex, pageSize: 1}
+						).then(({items = [], page, totalCount}) => {
+							if (items.length > 0) {
+								setResults({
+									dataRecord: items.pop(),
+									page,
+									total: totalCount
+								});
+							}
+						}),
+						getItem(
+							`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
+						).then(dataDefinition =>
+							setDataDefinition(dataDefinition)
+						),
+						getItem(
+							`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`
+						).then(dataLayout => setDataLayout(dataLayout))
+					]).then(() => setLoading(false));
+				}
+			);
+		}, [appId, entryIndex, query]);
 
-		setLoading(true);
+		const {dataRecordValues = {}} = dataRecord;
+		const {dataLayoutPages} = dataLayout;
 
-		history.push(`/entries/${nextIndex}?${toQueryString(query)}`);
-	};
+		const onDelete = () => {
+			confirmDelete('/o/data-engine/v2.0/data-records/')({
+				id: dataRecord.id
+			}).then(confirmed => {
+				if (confirmed) {
+					openToast({
+						message: Liferay.Language.get('an-entry-was-deleted'),
+						title: Liferay.Language.get('success'),
+						type: 'success'
+					});
 
-	const onPrev = () => {
-		const prevIndex = Math.max(parseInt(entryIndex, 10) - 1, 1);
+					history.push('/');
+				}
+			});
+		};
 
-		setLoading(true);
+		const onEdit = () => {
+			Liferay.Util.navigate(
+				Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
+					dataDefinitionId: dataDefinition.id,
+					dataLayoutId: dataLayout.id,
+					dataRecordId: dataRecord.id,
+					mvcPath: '/edit_entry.jsp',
+					redirect: location.href
+				})
+			);
+		};
 
-		history.push(`/entries/${prevIndex}?${toQueryString(query)}`);
-	};
+		const onNext = () => {
+			const nextIndex = Math.min(parseInt(entryIndex, 10) + 1, total);
 
-	return (
-		<div className="view-entry">
-			<ControlMenu
-				backURL="../../"
-				title={Liferay.Language.get('details-view')}
-			/>
+			setLoading(true);
 
-			<ViewEntryUpperToolbar
-				onDelete={onDelete}
-				onEdit={onEdit}
-				onNext={onNext}
-				onPrev={onPrev}
-				page={page}
-				total={total}
-			/>
+			history.push(`/entries/${nextIndex}?${toQueryString(query)}`);
+		};
 
-			<Loading isLoading={isLoading}>
-				<div className="container">
-					<div className="justify-content-center row">
-						<div className="col-lg-8">
-							{dataLayoutPages &&
-								dataRecordValues &&
-								dataLayoutPages.map((dataLayoutPage, index) => (
-									<div className="sheet" key={index}>
-										<ViewDataLayoutPageValues
-											dataDefinition={dataDefinition}
-											dataLayoutPage={dataLayoutPage}
-											dataRecordValues={dataRecordValues}
-											key={index}
-										/>
-									</div>
-								))}
+		const onPrev = () => {
+			const prevIndex = Math.max(parseInt(entryIndex, 10) - 1, 1);
+
+			setLoading(true);
+
+			history.push(`/entries/${prevIndex}?${toQueryString(query)}`);
+		};
+
+		return (
+			<div className="view-entry">
+				<ControlMenu
+					backURL="../../"
+					title={Liferay.Language.get('details-view')}
+				/>
+
+				<ViewEntryUpperToolbar
+					onDelete={onDelete}
+					onEdit={onEdit}
+					onNext={onNext}
+					onPrev={onPrev}
+					page={page}
+					total={total}
+				/>
+
+				<Loading isLoading={isLoading}>
+					<div className="container">
+						<div className="justify-content-center row">
+							<div className="col-lg-8">
+								{dataLayoutPages &&
+									dataRecordValues &&
+									dataLayoutPages.map(
+										(dataLayoutPage, index) => (
+											<div className="sheet" key={index}>
+												<ViewDataLayoutPageValues
+													dataDefinition={
+														dataDefinition
+													}
+													dataLayoutPage={
+														dataLayoutPage
+													}
+													dataRecordValues={
+														dataRecordValues
+													}
+													key={index}
+												/>
+											</div>
+										)
+									)}
+							</div>
 						</div>
 					</div>
-				</div>
-			</Loading>
-		</div>
-	);
-});
+				</Loading>
+			</div>
+		);
+	}
+);

@@ -65,9 +65,9 @@ export default () => {
 	});
 
 	useEffect(() => {
-		getItem('/o/headless-admin-user/v1.0/my-user-account/sites').then(
-			({items: sites = []}) => setSites(sites)
-		);
+		getItem(
+			'/o/headless-admin-user/v1.0/my-user-account/sites'
+		).then(({items: sites = []}) => setSites(sites));
 	}, []);
 
 	const onScopeChange = event => {

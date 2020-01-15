@@ -91,7 +91,10 @@ test('Should render dashboard route children', () => {
 			client={fetch({data: {}})}
 			getClient={jest.fn(() => fetch({data: {}}))}
 		>
-			{withParams(PendingItemsCard, WorkloadByStepCard)({
+			{withParams(
+				PendingItemsCard,
+				WorkloadByStepCard
+			)({
 				location: {
 					search: ''
 				},

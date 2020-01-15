@@ -83,11 +83,7 @@ const createStore = function(initialState, reducer, componentIds = []) {
 		Liferay.componentReady(componentId).then(component => {
 			component.store = _store;
 
-			connect(
-				component,
-				_store,
-				state => state
-			);
+			connect(component, _store, state => state);
 		});
 	});
 

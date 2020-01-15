@@ -205,9 +205,7 @@ const EditCategoriesModal = ({
 			}
 		};
 
-		const urlCategories = `/bulk/v1.0/sites/${
-			groupIds[0]
-		}/taxonomy-vocabularies/common`;
+		const urlCategories = `/bulk/v1.0/sites/${groupIds[0]}/taxonomy-vocabularies/common`;
 
 		Promise.all([
 			fetchCategories(urlCategories, 'POST', selection),

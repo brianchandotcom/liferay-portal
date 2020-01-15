@@ -143,7 +143,9 @@ class CreateContentDialog extends Component {
 						});
 
 					Promise.all(
-						Object.entries(updatedFragmentEntryLinks).map(
+						Object.entries(
+							updatedFragmentEntryLinks
+						).map(
 							([fragmentEntryLinkId, fragmentEntryLink], index) =>
 								updateEditableValues(
 									fragmentEntryLinkId,

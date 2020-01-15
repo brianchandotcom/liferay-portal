@@ -215,8 +215,8 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 
 		if (
 			(width &&
-				(event.type == 'portletMoved' &&
-					event.portletId == '<%= portletDisplay.getId() %>')) ||
+				event.type == 'portletMoved' &&
+				event.portletId == '<%= portletDisplay.getId() %>') ||
 			(event.type == 'liferaypanel:collapse' &&
 				event.panelId ==
 					'groupStatisticsPanel<%= displayActivityCounterNameIndex %>')

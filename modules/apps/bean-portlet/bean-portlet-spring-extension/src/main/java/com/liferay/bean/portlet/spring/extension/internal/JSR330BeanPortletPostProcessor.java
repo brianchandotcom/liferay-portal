@@ -144,20 +144,6 @@ public class JSR330BeanPortletPostProcessor
 			(ConfigurableListableBeanFactory)beanFactory;
 	}
 
-	@Override
-	public void setRequiredParameterName(String requiredParameterName) {
-		super.setRequiredParameterName(requiredParameterName);
-
-		_requiredParameterName = requiredParameterName;
-	}
-
-	@Override
-	public void setRequiredParameterValue(boolean requiredParameterValue) {
-		super.setRequiredParameterValue(requiredParameterValue);
-
-		_requiredParameterValue = requiredParameterValue;
-	}
-
 	private AnnotationAttributes _getAnnotationAttributes(
 		AccessibleObject accessibleObject) {
 
@@ -290,7 +276,5 @@ public class JSR330BeanPortletPostProcessor
 	private ConfigurableListableBeanFactory _configurableListableBeanFactory;
 	private final Map<String, InjectionMetadata> _injectionMetadataCache =
 		new ConcurrentHashMap<>();
-	private String _requiredParameterName = "required";
-	private boolean _requiredParameterValue = true;
 
 }

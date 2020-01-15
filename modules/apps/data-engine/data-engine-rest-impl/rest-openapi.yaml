@@ -93,6 +93,15 @@ components:
                 visible:
                     type: boolean
             type: object
+        DataDefinitionLayout:
+            properties:
+                dataDefinition:
+                    allOf:
+                        - $ref: "#/components/schemas/DataDefinition"
+                dataLayout:
+                    allOf:
+                        - $ref: "#/components/schemas/DataLayout"
+            type: object
         DataLayout:
             properties:
                 contentType:

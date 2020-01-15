@@ -19,6 +19,7 @@ import {useModal} from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../../app/config/index';
 import {StoreContext} from '../../../app/store/index';
 import AppContext from '../../../core/AppContext';
@@ -30,7 +31,6 @@ import {
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../actions';
 import {
-	getUniqueFragmentEntryLinks,
 	storeModalExperienceState,
 	recoverModalExperienceState,
 	useDebounceCallback
@@ -259,12 +259,42 @@ const ExperienceSelector = ({
 	};
 
 	const deleteExperience = id => {
-		const uniqueFragmentEntryLinks = getUniqueFragmentEntryLinks({
-			experienceIdToExclude: id,
-			layoutData,
-			layoutDataList,
-			selectedExperienceId: selectedExperience.segmentsExperienceId
-		});
+		const getLayoutDataFragmentEntryLinkIds = _layoutData =>
+			Object.values(_layoutData.items)
+				.filter(item => item.type === LAYOUT_DATA_ITEM_TYPES.fragment)
+				.map(item => item.config.fragmentEntryLinkId);
+
+		const upToDateLayoutDataList = layoutDataList
+			.filter(
+				({segmentsExperienceId}) =>
+					segmentsExperienceId !==
+					selectedExperience.segmentsExperienceId
+			)
+			.concat({
+				layoutData,
+				segmentsExperienceId: selectedExperience.segmentsExperienceId
+			});
+
+		const otherExperiencesFragmentEntryLinkIds = upToDateLayoutDataList
+			.filter(entry => entry.segmentsExperienceId !== id)
+			.map(({layoutData}) =>
+				getLayoutDataFragmentEntryLinkIds(layoutData)
+			)
+			.reduce(
+				(acc, fragmentEntryLinkIds) => acc.concat(fragmentEntryLinkIds),
+				[]
+			);
+
+		const uniqueFragmentEntryLinks = getLayoutDataFragmentEntryLinkIds(
+			upToDateLayoutDataList.find(
+				entry => entry.segmentsExperienceId === id
+			).layoutData
+		).filter(
+			fragmentEntryLinkId =>
+				!otherExperiencesFragmentEntryLinkIds.includes(
+					fragmentEntryLinkId
+				)
+		);
 
 		removeExperience(id, uniqueFragmentEntryLinks)
 			.then(() =>

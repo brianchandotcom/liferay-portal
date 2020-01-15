@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -655,8 +656,9 @@ public class EditAssetListDisplayContext {
 					"href", assetBrowserURL.toString()
 				).put(
 					"title",
-					LanguageUtil.format(
-						_httpServletRequest, "select-x", type, false)
+					HtmlUtil.escape(
+						LanguageUtil.format(
+							_httpServletRequest, "select-x", type, false))
 				).put(
 					"type", type
 				).build();

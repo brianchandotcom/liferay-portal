@@ -45,4 +45,14 @@
 			verbose="true"
 		/>
 	</target>
+
+	<target name="test-5">
+		<mirrors-get
+			dest="mysql-connector-java-8.0.15.jar"
+			force="false"
+			src="https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.15/mysql-connector-java-8.0.15.jar"
+			trylocalnetwork="false"
+			verbose="true"
+		/>
+	</target>
 </project>

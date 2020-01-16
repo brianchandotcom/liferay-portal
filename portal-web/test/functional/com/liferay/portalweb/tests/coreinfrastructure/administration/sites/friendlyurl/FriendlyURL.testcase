@@ -65,6 +65,45 @@ definition {
 			value1 = "Not Found");
 	}
 
+	@priority = "4"
+	test VerifyFriendlyURLsOnlyDisplayLocaleOnce {
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Click(locator1 = "Dropdown#FRIENDLY_URL_LOCALE");
+
+		MenuItem.click(menuItem = "hu-HU");
+
+		Type(
+			locator1 = "TextInput#TEXT",
+			value1 = "Test Page");
+
+		Type(
+			locator1 = "TextInput#FRIENDLY_URL",
+			value1 = "/teszt-page");
+
+		Button.clickSave();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "hu/web/test-site-name/test-page");
+
+		AssertLocation(value1 = "${portalURL}/hu/web/test-site-name/teszt-page");
+	}
+
 	@priority = "5"
 	test ViewCanonicalURLWithLocalizedFriendlyURL {
 		property portal.acceptance = "true";

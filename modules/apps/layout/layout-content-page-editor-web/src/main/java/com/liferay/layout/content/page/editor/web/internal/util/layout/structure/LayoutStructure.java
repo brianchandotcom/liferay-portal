@@ -56,25 +56,7 @@ public class LayoutStructure {
 		LayoutStructureItem layoutStructureItem = new LayoutStructureItem(
 			itemConfigJSONObject, itemId, parentItemId, itemType);
 
-		addLayoutStructureItem(layoutStructureItem, parentItemId, position);
-	}
-
-	public void addLayoutStructureItem(
-		LayoutStructureItem layoutStructureItem, String parentItemId,
-		int position) {
-
-		_layoutStructureItems.put(
-			layoutStructureItem.getItemId(), layoutStructureItem);
-
-		if (Validator.isNull(parentItemId)) {
-			return;
-		}
-
-		LayoutStructureItem parentLayoutStructureItem =
-			_layoutStructureItems.get(parentItemId);
-
-		parentLayoutStructureItem.addChildrenItem(
-			position, layoutStructureItem.getItemId());
+		_addLayoutStructureItem(layoutStructureItem, parentItemId, position);
 	}
 
 	public void addRowLayoutStructureItem(
@@ -280,6 +262,24 @@ public class LayoutStructure {
 		addLayoutStructureItem(
 			JSONUtil.put("size", size), String.valueOf(UUID.randomUUID()),
 			LayoutDataItemTypeConstants.TYPE_COLUMN, parentItemId, position);
+	}
+
+	private void _addLayoutStructureItem(
+		LayoutStructureItem layoutStructureItem, String parentItemId,
+		int position) {
+
+		_layoutStructureItems.put(
+			layoutStructureItem.getItemId(), layoutStructureItem);
+
+		if (Validator.isNull(parentItemId)) {
+			return;
+		}
+
+		LayoutStructureItem parentLayoutStructureItem =
+			_layoutStructureItems.get(parentItemId);
+
+		parentLayoutStructureItem.addChildrenItem(
+			position, layoutStructureItem.getItemId());
 	}
 
 	private static final int[][] _COLUMN_SIZES = {

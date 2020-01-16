@@ -191,8 +191,7 @@ public class DDMFormPagesTemplateContextFactory {
 		LocalizedValue description = ddmFormLayoutPage.getDescription();
 
 		pageTemplateContext.put(
-			"description",
-			getValue(_ddmFormRenderingContext, description.getString(_locale)));
+			"description", description.getString(_locale));
 
 		_pageEnabled = isPageEnabled(pageIndex);
 
@@ -220,8 +219,7 @@ public class DDMFormPagesTemplateContextFactory {
 			"showRequiredFieldsWarning", showRequiredFieldsWarning);
 
 		pageTemplateContext.put(
-			"title",
-			getValue(_ddmFormRenderingContext, title.getString(_locale)));
+			"title", title.getString(_locale));
 
 		return pageTemplateContext;
 	}

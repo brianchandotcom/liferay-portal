@@ -15,9 +15,7 @@ task setupElasticsearch
 task startElasticsearch
 task stopElasticsearch
 
-int elasticsearchSidecarClusterSize = project.properties["elasticsearch.sidecar.cluster.size"] as int
 File elasticsearchSidecarDataDir = file("${project.'liferay.home'}/data/elasticsearch${project.'elasticsearch.sidecar.major.version'}/repo")
-File elasticsearchSidecarClusterDir = file("${project.'liferay.home'}/elasticsearch-${project.'elasticsearch.sidecar.major.version'}")
 File elasticsearchSidecarDir = file("${project.'liferay.home'}/elasticsearch-${project.'elasticsearch.sidecar.version'}")
 String elasticsearchSidecarURL = "http://localhost:9200/"
 
@@ -75,44 +73,29 @@ setupElasticsearch {
 
 		ymlFile.append '\n' + project.properties["elasticsearch.configs.sidecar"].replace("\\\"", "\"").split(',').sort().join('\n')
 	}
-
-	doLast {
-		for (int i = 1; i <= elasticsearchSidecarClusterSize; i++) {
-			project.copy {
-				fileMode = 0777
-
-				from elasticsearchSidecarDir
-				into new File(elasticsearchSidecarClusterDir, "node-${i}")
-			}
-		}
-
-		delete elasticsearchSidecarDir
-	}
 }
 
 startElasticsearch {
 	doFirst {
-		for (int i = 1; i <= elasticsearchSidecarClusterSize; i++) {
-			if (System.getenv("JENKINS_HOME")) {
-				project.exec {
-					workingDir = new File(elasticsearchSidecarClusterDir, "node-${i}/bin")
+		if (System.getenv("JENKINS_HOME")) {
+			project.exec {
+				workingDir = new File(elasticsearchSidecarDir, "bin")
 
-					args "-c", "sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -p pid-elasticsearch'"
-					executable "/bin/sh"
-				}
+				args "-c", "sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -p pid-elasticsearch'"
+				executable "/bin/sh"
 			}
-			else if (OSDetector.isWindows()) {
-				ant.exec(dir: new File(elasticsearchSidecarClusterDir, "node-${i}/bin"), executable: "cmd.exe", spawn: true) {
-					arg(value: "/c elasticsearch -d -p pid-elasticsearch")
-				}
+		}
+		else if (OSDetector.isWindows()) {
+			ant.exec(dir: new File(elasticsearchSidecarDir, "bin"), executable: "cmd.exe", spawn: true) {
+				arg(value: "/c elasticsearch -d -p pid-elasticsearch")
 			}
-			else {
-				project.exec {
-					workingDir = new File(elasticsearchSidecarClusterDir, "node-${i}/bin")
+		}
+		else {
+			project.exec {
+				workingDir = new File(elasticsearchSidecarDir, "bin")
 
-					args "-c", "./elasticsearch -d -p pid-elasticsearch"
-					executable "/bin/sh"
-				}
+				args "-c", "./elasticsearch -d -p pid-elasticsearch"
+				executable "/bin/sh"
 			}
 		}
 	}
@@ -130,7 +113,7 @@ startElasticsearch {
 
 			try {
 				if (urlConnection.responseCode == 200) {
-					println new File(elasticsearchSidecarClusterDir, "node-1/logs/LiferayElasticsearchCluster.log").text
+					println new File(elasticsearchSidecarDir, "logs/LiferayElasticsearchCluster.log").text
 
 					return
 				}
@@ -146,20 +129,18 @@ startElasticsearch {
 
 stopElasticsearch {
 	doLast {
-		for (int i = 1; i <= elasticsearchSidecarClusterSize; i++) {
-			project.exec {
-				workingDir = new File(elasticsearchSidecarClusterDir, "node-${i}")
+		project.exec {
+			workingDir = elasticsearchSidecarDir
 
-				if (OSDetector.isWindows()) {
-					args "/c", "for /f %x in (pid-elasticsearch) do taskkill /f /pid %x"
-					executable "cmd.exe"
-				}
-				else {
-					File pidElasticsearchFile = new File(workingDir, "pid-elasticsearch")
+			if (OSDetector.isWindows()) {
+				args "/c", "for /f %x in (pid-elasticsearch) do taskkill /f /pid %x"
+				executable "cmd.exe"
+			}
+			else {
+				File pidElasticsearchFile = new File(workingDir, "pid-elasticsearch")
 
-					args "-c", "kill " + pidElasticsearchFile.text
-					executable "/bin/sh"
-				}
+				args "-c", "kill " + pidElasticsearchFile.text
+				executable "/bin/sh"
 			}
 		}
 	}

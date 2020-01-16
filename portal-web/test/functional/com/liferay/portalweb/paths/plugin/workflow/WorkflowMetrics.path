@@ -119,6 +119,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_DATE_RANGE_DROPDOWN</td>
+	<td>xpath=(//button[contains(@class, 'dropdown-toggle')]//span[contains(@class, 'navbar-text-truncate')])[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN</td>
+	<td>xpath=(//button[contains(@class, 'dropdown-toggle')]//span[contains(@class, 'navbar-text-truncate')])[5]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION</td>
 	<td>//div[@class='dropdown-menu show dropdown-menu-right']//span[@class='custom-control-label-text'][contains(text(),'${completionVelocityDateRange}')]</td>
 	<td></td>
@@ -200,6 +210,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_NO_RESULTS</td>
+	<td>//span[contains(text(),'Performance by Assignee')]/ancestor::div[contains(@data-testid, 'panelHeader')]/following-sibling::div//p[contains(.,'No results were found.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_DROPDOWN_STEP_REVIEW</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//span[contains(text(),'Review')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_DROPDOWN_STEP_UPDATE</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//span[contains(text(),'Update')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_NAME</td>
 	<td>//td[contains(@data-testid,'assigneeProfileInfo')]//span[contains(text(),'${key_assignee}')]</td>
 	<td></td>
@@ -207,6 +232,11 @@
 <tr>
 	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_TASK_COUNT</td>
 	<td>xpath=(//span[contains(text(),'${key_assignee}')]/ancestor::td[contains(@data-testid,'assigneeProfileInfo')]/following-sibling::td//span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_BY_ASSIGNEE_TABLE_POSITION</td>
+	<td>xpath=(//td[contains(@class, 'assignee-name')])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>

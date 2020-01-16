@@ -65,6 +65,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_TAG_FIELD</td>
+	<td>//input[contains(@class,'form-control-inset')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_USER_ID_FIELD</td>
 	<td>//input[contains(@id,'userId')]</td>
 	<td></td>

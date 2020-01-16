@@ -122,4 +122,36 @@ definition {
 		Button.clickSave();
 	}
 
+	@description = "Validate if the user can edit a segment with User Tag"
+	@priority = "5"
+	test EditSegmentUserByUserTag {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "UserTag@liferay.com",
+			userFirstName = "UserTag",
+			userLastName = "UserTag",
+			userScreenName = "UserTag",
+			userTag = "tagtest");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			panel = "Site Administration",
+			portlet = "Segments");
+
+		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
+			Segmentation.editSegment();
+		}
+
+		Segmentation.fillTitle(titleField = "EditSegmentUserByUserTag Test");
+		Segmentation.deleteProperties();
+		Segmentation.addProperties(propertyOption = "Tag");
+		Segmentation.selectTag()
+
+		Button.clickSave();
+	}
+
 }

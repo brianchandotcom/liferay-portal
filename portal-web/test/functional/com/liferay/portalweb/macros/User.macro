@@ -305,6 +305,13 @@ definition {
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
 				value1 = "${userLastName}");
 		}
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD",
+			value1 = "${userTag}");
+		KeyPress(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD",
+			value1 = "\ENTER");
 	}
 
 	macro addCreateAccountPG {

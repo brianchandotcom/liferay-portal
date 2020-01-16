@@ -179,7 +179,11 @@
 						</execute>
 
 						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
-							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout} -Dit.test=!ADF*ApplicantPortletTester
+							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout} -Dit.test='!ADF*ApplicantPortletTester,!*Ice*,issue/*,issue/primefaces/*,demo/JSF*,applicant/*Applicant*'
+						</execute>
+
+						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
+							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=${liferay.faces.test.timeout} -Dit.test='showcase/bridge/*,showcase/portlet/*'
 						</execute>
 
 						<!--

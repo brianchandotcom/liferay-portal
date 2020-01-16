@@ -55,6 +55,7 @@ import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalArticleTable;
 import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalFeedTable;
 import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalFolderTable;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.change.tracking.store.CTStoreFactory;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -290,6 +291,9 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private CTStoreFactory _ctStoreFactory;
 
 	@Reference
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;

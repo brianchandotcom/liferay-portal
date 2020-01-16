@@ -18,10 +18,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -97,15 +96,8 @@ public class AddItemReactMVCActionCommandTest {
 	public void testAddItemToLayoutData() throws Exception {
 		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
 
-		String newItemId = RandomTestUtil.randomString();
-		String newItemType = RandomTestUtil.randomString();
-
 		actionRequest.addParameter(
-			"itemConfig",
-			String.valueOf(
-				JSONUtil.put("someConfig", RandomTestUtil.randomString())));
-		actionRequest.addParameter("itemId", newItemId);
-		actionRequest.addParameter("itemType", newItemType);
+			"itemType", LayoutDataItemTypeConstants.TYPE_CONTAINER);
 		actionRequest.addParameter("parentItemId", "root");
 		actionRequest.addParameter("position", "0");
 
@@ -115,23 +107,19 @@ public class AddItemReactMVCActionCommandTest {
 
 		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
 
-		JSONObject newItemJSONObject = itemsJSONObject.getJSONObject(newItemId);
-
-		JSONObject newItemConfigJSONObject = newItemJSONObject.getJSONObject(
-			"config");
-
-		Assert.assertTrue(newItemConfigJSONObject.has("someConfig"));
-
-		Assert.assertEquals(newItemId, newItemJSONObject.getString("itemId"));
-		Assert.assertEquals(newItemType, newItemJSONObject.getString("type"));
-		Assert.assertEquals("root", newItemJSONObject.getString("parentId"));
-
 		JSONObject rootItemJSONObject = itemsJSONObject.getJSONObject("root");
 
 		JSONArray childrenJSONArray = rootItemJSONObject.getJSONArray(
 			"children");
 
-		Assert.assertEquals(newItemId, childrenJSONArray.getString(0));
+		String itemId = childrenJSONArray.getString(0);
+
+		JSONObject newItemJSONObject = itemsJSONObject.getJSONObject(itemId);
+
+		Assert.assertEquals(
+			LayoutDataItemTypeConstants.TYPE_CONTAINER,
+			newItemJSONObject.getString("type"));
+		Assert.assertEquals("root", newItemJSONObject.getString("parentId"));
 	}
 
 	@Test
@@ -144,11 +132,8 @@ public class AddItemReactMVCActionCommandTest {
 				_portal.getClassNameId(Layout.class.getName()),
 				_layout.getPlid(), _read("layout_data_with_children.json"));
 
-		String newItemId = RandomTestUtil.randomString();
-
-		actionRequest.addParameter("itemId", newItemId);
-
-		actionRequest.addParameter("itemType", RandomTestUtil.randomString());
+		actionRequest.addParameter(
+			"itemType", LayoutDataItemTypeConstants.TYPE_CONTAINER);
 		actionRequest.addParameter("parentItemId", "root");
 		actionRequest.addParameter("position", "1");
 
@@ -163,7 +148,14 @@ public class AddItemReactMVCActionCommandTest {
 		JSONArray childrenJSONArray = rootItemJSONObject.getJSONArray(
 			"children");
 
-		Assert.assertEquals(newItemId, childrenJSONArray.getString(1));
+		String itemId = childrenJSONArray.getString(1);
+
+		JSONObject newItemJSONObject = itemsJSONObject.getJSONObject(itemId);
+
+		Assert.assertEquals(
+			LayoutDataItemTypeConstants.TYPE_CONTAINER,
+			newItemJSONObject.getString("type"));
+		Assert.assertEquals("root", newItemJSONObject.getString("parentId"));
 	}
 
 	private MockActionRequest _getMockActionRequest() throws PortalException {

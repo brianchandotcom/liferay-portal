@@ -18,11 +18,12 @@ import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.FunctionUtil;
 import com.liferay.petra.sql.dsl.QueryUtil;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expressions.Alias;
 import com.liferay.petra.sql.dsl.expressions.Expression;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
 import com.liferay.petra.sql.dsl.expressions.WhenThenStep;
 import com.liferay.petra.sql.dsl.expressions.impl.AggregateExpression;
-import com.liferay.petra.sql.dsl.expressions.impl.Alias;
+import com.liferay.petra.sql.dsl.expressions.impl.AliasImpl;
 import com.liferay.petra.sql.dsl.expressions.impl.CaseWhenThen;
 import com.liferay.petra.sql.dsl.expressions.impl.ElseEnd;
 import com.liferay.petra.sql.dsl.expressions.impl.Function;
@@ -77,7 +78,7 @@ public class SQLDSLTest {
 				assertClasses.clear();
 
 				assertClasses.add(AggregateExpression.class);
-				assertClasses.add(Alias.class);
+				assertClasses.add(AliasImpl.class);
 				assertClasses.add(BaseASTNode.class);
 				assertClasses.add(CaseWhenThen.class);
 				assertClasses.add(Column.class);

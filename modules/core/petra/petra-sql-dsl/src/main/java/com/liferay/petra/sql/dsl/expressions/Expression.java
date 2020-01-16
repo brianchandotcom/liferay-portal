@@ -16,7 +16,7 @@ package com.liferay.petra.sql.dsl.expressions;
 
 import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.expressions.impl.Alias;
+import com.liferay.petra.sql.dsl.expressions.impl.AliasImpl;
 import com.liferay.petra.sql.dsl.expressions.impl.NullExpression;
 import com.liferay.petra.sql.dsl.expressions.impl.Operand;
 import com.liferay.petra.sql.dsl.expressions.impl.PredicateImpl;
@@ -34,7 +34,7 @@ import java.util.function.Consumer;
 public interface Expression<T> extends ASTNode {
 
 	public default Alias<T> as(String name) {
-		return new Alias<>(this, name);
+		return new AliasImpl<>(this, name);
 	}
 
 	public default OrderByExpression ascending() {

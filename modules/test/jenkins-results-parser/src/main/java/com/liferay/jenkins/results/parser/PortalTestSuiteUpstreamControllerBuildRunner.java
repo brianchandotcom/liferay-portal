@@ -138,6 +138,10 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 						new Date(buildData.getStartTime()),
 						"yyyy-MM-dd[HH:mm:ss]", "America/Los_Angeles"));
 
+				if (_getTestrayBuildType(testSuiteName) != null) {
+					testrayBuildType = _getTestrayBuildType(testSuiteName);
+				}
+
 				sb.append("&TESTRAY_BUILD_NAME=");
 				sb.append(testraybuildName);
 				sb.append("&TESTRAY_BUILD_TYPE=");

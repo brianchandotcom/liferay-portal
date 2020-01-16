@@ -105,6 +105,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 				"status", LanguageUtil.get(httpServletRequest, statusLabel));
 		}
 
+		soyContext.put("workflowEnabled", false);
+
 		_editorSoyContext = soyContext;
 
 		return _editorSoyContext;

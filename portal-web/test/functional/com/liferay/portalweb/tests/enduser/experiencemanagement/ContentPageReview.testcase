@@ -539,7 +539,7 @@ definition {
 		Segmentation.addProperties(propertyOption = "Email Address");
 		Segmentation.fillTitle(titleField = "New Segment Title");
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
-		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+		Segmentation.fillProperty(PropertyField = "liferay");
 
 		Button.clickSave();
 

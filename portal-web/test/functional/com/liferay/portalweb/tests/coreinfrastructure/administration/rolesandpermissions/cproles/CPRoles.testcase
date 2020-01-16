@@ -134,7 +134,7 @@ definition {
 
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
 
-		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+		Segmentation.fillProperty(PropertyField = "liferay");
 
 		Button.clickSave();
 
@@ -199,7 +199,7 @@ definition {
 
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
 
-		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+		Segmentation.fillProperty(PropertyField = "liferay");
 
 		Button.clickSave();
 
@@ -272,7 +272,7 @@ definition {
 
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
 
-		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+		Segmentation.fillProperty(PropertyField = "liferay");
 
 		Button.clickSave();
 

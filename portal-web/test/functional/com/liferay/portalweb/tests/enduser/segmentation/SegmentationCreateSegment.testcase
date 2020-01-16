@@ -44,7 +44,7 @@ definition {
 		Segmentation.addProperties(propertyOption = "Email Address");
 		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressContains Test");
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
-		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+		Segmentation.fillProperty(PropertyField = "liferay");
 
 		Button.clickSave();
 
@@ -59,7 +59,7 @@ definition {
 		Segmentation.addProperties(propertyOption = "Email Address");
 		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressEquals Test");
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
-		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+		Segmentation.fillProperty(PropertyField = "liferay");
 
 		Button.clickSave();
 
@@ -74,7 +74,7 @@ definition {
 		Segmentation.addProperties(propertyOption = "Email Address");
 		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressNotContains Test");
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Contains");
-		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+		Segmentation.fillProperty(PropertyField = "liferay");
 
 		Button.clickSave();
 
@@ -89,7 +89,7 @@ definition {
 		Segmentation.addProperties(propertyOption = "Email Address");
 		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressNotEquals Test");
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Equals");
-		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+		Segmentation.fillProperty(PropertyField = "liferay");
 
 		Button.clickSave();
 

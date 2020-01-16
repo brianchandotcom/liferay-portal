@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.target.platform;
 import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformExtension;
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformPluginUtil;
+import com.liferay.gradle.plugins.target.platform.tasks.DependencyManagementTask;
 import com.liferay.gradle.plugins.target.platform.tasks.ResolveTask;
 
 import groovy.lang.Closure;
@@ -33,6 +34,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.plugins.HelpTasksPlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
@@ -45,6 +47,9 @@ import org.gradle.api.tasks.TaskContainer;
  * @author Raymond Augé
  */
 public class TargetPlatformPlugin implements Plugin<Project> {
+
+	public static final String DEPENDENCYMANAGEMENT_TASK_NAME =
+		"dependencyManagement";
 
 	public static final String PLATFORM_BNDRUN_FILE_NAME = "platform.bndrun";
 
@@ -141,6 +146,23 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
+	private DependencyManagementTask _addTaskDependencyManagement(
+		Project project) {
+
+		final DependencyManagementTask dependencyManagementTask =
+			GradleUtil.addTask(
+				project, DEPENDENCYMANAGEMENT_TASK_NAME,
+				DependencyManagementTask.class);
+
+		dependencyManagementTask.setDescription(
+			"Displays the target platform dependency management declared in " +
+				dependencyManagementTask.getProject() + ".");
+
+		dependencyManagementTask.setGroup(HelpTasksPlugin.HELP_GROUP);
+
+		return dependencyManagementTask;
+	}
+
 	private ResolveTask _addTaskResolve(Project project) {
 		final ResolveTask resolveTask = GradleUtil.addTask(
 			project, RESOLVE_TASK_NAME, ResolveTask.class);
@@ -190,6 +212,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			logger.info(
 				"Explicitly excluding {} from resolution", afterProject);
 		}
+
+		_addTaskDependencyManagement(afterProject);
 	}
 
 	private void _configureTaskResolve(

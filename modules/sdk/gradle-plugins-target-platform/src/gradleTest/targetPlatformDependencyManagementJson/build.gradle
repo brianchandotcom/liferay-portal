@@ -1,0 +1,28 @@
+apply plugin: "com.liferay.target.platform.ide"
+apply plugin: "java"
+
+dependencies {
+	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
+	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.compile.only", version: "7.2.1"
+	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.third.party", version: "7.2.1"
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+task runGradleTest(type: com.liferay.gradle.plugins.target.platform.tasks.DependencyManagementTask)
+
+runGradleTest{
+	outputFile = "test.json"
+	outputType = "json"
+
+	doLast{
+		def jsonFile = new File("test.json")
+		String fileContents = jsonFile.getText('UTF-8')
+		assert fileContents.contains("1.1.4c")
+		jsonFile.delete()
+	}
+}

@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.ast;
+package com.liferay.petra.sql.dsl.ast.impl;
+
+import com.liferay.petra.sql.dsl.ast.ASTNode;
+import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 
 import java.util.Objects;
 import java.util.function.Consumer;

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -140,7 +141,7 @@ public class UserGroupIndexerIndexedFieldsTest {
 	}
 
 	protected void setUpUserGroupFixture() {
-		userGroupFixture = new UserGroupFixture(_group);
+		userGroupFixture = new UserGroupFixture(_group, userGroupLocalService);
 
 		_userGroups = userGroupFixture.getUserGroups();
 	}
@@ -181,6 +182,10 @@ public class UserGroupIndexerIndexedFieldsTest {
 
 	protected UserGroupFixture userGroupFixture;
 	protected IndexerFixture<UserGroup> userGroupIndexerFixture;
+
+	@Inject
+	protected UserGroupLocalService userGroupLocalService;
+
 	protected UserSearchFixture userSearchFixture;
 
 	private Map<String, String> _expectedFieldValues(UserGroup userGroup)

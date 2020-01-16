@@ -19,10 +19,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.search.test.util.IndexerFixture;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
@@ -77,7 +79,7 @@ public class UserGroupIndexerReindexTest {
 	}
 
 	protected void setUpUserGroupFixture() {
-		userGroupFixture = new UserGroupFixture(_group);
+		userGroupFixture = new UserGroupFixture(_group, userGroupLocalService);
 
 		_userGroups = userGroupFixture.getUserGroups();
 	}
@@ -100,6 +102,10 @@ public class UserGroupIndexerReindexTest {
 
 	protected UserGroupFixture userGroupFixture;
 	protected IndexerFixture<UserGroup> userGroupIndexerFixture;
+
+	@Inject
+	protected UserGroupLocalService userGroupLocalService;
+
 	protected UserSearchFixture userSearchFixture;
 
 	private Group _group;

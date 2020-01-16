@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -39,8 +39,11 @@ import java.util.Map;
  */
 public class UserGroupFixture {
 
-	public UserGroupFixture(Group group) {
+	public UserGroupFixture(
+		Group group, UserGroupLocalService userGroupLocalService) {
+
 		_group = group;
+		_userGroupLocalService = userGroupLocalService;
 	}
 
 	public UserGroup createUserGroup() throws Exception {
@@ -72,7 +75,7 @@ public class UserGroupFixture {
 
 		serviceContext.setExpandoBridgeAttributes(expandoValues);
 
-		UserGroup userGroup = UserGroupLocalServiceUtil.addUserGroup(
+		UserGroup userGroup = _userGroupLocalService.addUserGroup(
 			serviceContext.getUserId(), serviceContext.getCompanyId(), name,
 			description, serviceContext);
 
@@ -93,6 +96,7 @@ public class UserGroupFixture {
 	}
 
 	private final Group _group;
+	private final UserGroupLocalService _userGroupLocalService;
 	private final List<UserGroup> _userGroups = new ArrayList<>();
 
 }

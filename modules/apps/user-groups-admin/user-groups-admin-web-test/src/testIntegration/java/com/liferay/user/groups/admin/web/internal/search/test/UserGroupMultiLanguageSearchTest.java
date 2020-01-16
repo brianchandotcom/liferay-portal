@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -29,10 +31,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexerFixture;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -107,7 +111,9 @@ public class UserGroupMultiLanguageSearchTest {
 	}
 
 	protected void setUpUserGroupFixture() {
-		userGroupFixture = new UserGroupFixture(_group);
+		userGroupFixture = new UserGroupFixture(_group, userGroupLocalService);
+
+		_userGroups = userGroupFixture.getUserGroups();
 	}
 
 	protected void setUpUserGroupIndexerFixture() {
@@ -119,11 +125,17 @@ public class UserGroupMultiLanguageSearchTest {
 
 		userSearchFixture.setUp();
 
+		_groups = userSearchFixture.getGroups();
+
 		_group = userSearchFixture.addGroup();
 	}
 
 	protected UserGroupFixture userGroupFixture;
 	protected IndexerFixture<UserGroup> userGroupIndexerFixture;
+
+	@Inject
+	protected UserGroupLocalService userGroupLocalService;
+
 	protected UserSearchFixture userSearchFixture;
 
 	private Map<String, String> _getMapResult(String keywords) {
@@ -150,5 +162,11 @@ public class UserGroupMultiLanguageSearchTest {
 
 	private Locale _defaultLocale;
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private List<Group> _groups;
+
+	@DeleteAfterTestRun
+	private List<UserGroup> _userGroups;
 
 }

@@ -110,8 +110,7 @@ public interface DLFileEntryTypeLocalService
 
 	public void clearDLFolderDLFileEntryTypes(long folderId);
 
-	public DLFileEntryType createBasicDocumentDLFileEntryType()
-		throws NoSuchFileEntryTypeException;
+	public DLFileEntryType createBasicDocumentDLFileEntryType();
 
 	/**
 	 * Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.

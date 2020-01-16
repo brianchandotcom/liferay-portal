@@ -43,25 +43,27 @@ public class LayoutStructure {
 	public void addFragmentLayoutStructureItem(
 		long fragmentEntryLinkId, String parentItemId, int position) {
 
+		String itemId = String.valueOf(UUID.randomUUID());
+
 		addLayoutStructureItem(
-			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
-			String.valueOf(UUID.randomUUID()),
-			LayoutDataItemTypeConstants.TYPE_FRAGMENT, parentItemId, position);
+			itemId, LayoutDataItemTypeConstants.TYPE_FRAGMENT, parentItemId,
+			position);
+
+		updateItemConfig(
+			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId), itemId);
 	}
 
 	public void addLayoutStructureItem(
-		JSONObject itemConfigJSONObject, String itemId, String itemType,
-		String parentItemId, int position) {
+		String itemId, String itemType, String parentItemId, int position) {
 
 		LayoutStructureItem layoutStructureItem = new LayoutStructureItem(
-			itemConfigJSONObject, itemId, parentItemId, itemType);
+			itemId, parentItemId, itemType);
 
 		_addLayoutStructureItem(layoutStructureItem, parentItemId, position);
 	}
 
 	public void addRowLayoutStructureItem(
-		JSONObject itemConfigJSONObject, String itemId, String parentItemId,
-		int position) {
+		String itemId, String parentItemId, int position) {
 
 		LayoutStructureItem parentLayoutStructureItem =
 			_layoutStructureItems.get(parentItemId);
@@ -73,16 +75,15 @@ public class LayoutStructure {
 			String containerItemId = String.valueOf(UUID.randomUUID());
 
 			addLayoutStructureItem(
-				JSONFactoryUtil.createJSONObject(), containerItemId,
-				LayoutDataItemTypeConstants.TYPE_CONTAINER, parentItemId,
-				position);
+				containerItemId, LayoutDataItemTypeConstants.TYPE_CONTAINER,
+				parentItemId, position);
 
 			parentItemId = containerItemId;
 		}
 
 		addLayoutStructureItem(
-			itemConfigJSONObject, itemId, LayoutDataItemTypeConstants.TYPE_ROW,
-			parentItemId, position);
+			itemId, LayoutDataItemTypeConstants.TYPE_ROW, parentItemId,
+			position);
 
 		_addColumnLayoutStructureItem(itemId, 0, 4);
 		_addColumnLayoutStructureItem(itemId, 1, 4);
@@ -122,6 +123,8 @@ public class LayoutStructure {
 		LayoutStructureItem layoutStructureItem = getLayoutStructureItem(
 			itemId);
 
+		String newItemId = String.valueOf(UUID.randomUUID());
+
 		LayoutStructureItem parentLayoutStructureItem = getLayoutStructureItem(
 			layoutStructureItem.getParentItemId());
 
@@ -129,11 +132,13 @@ public class LayoutStructure {
 			parentLayoutStructureItem.getChildrenItemIds();
 
 		addLayoutStructureItem(
-			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
-			String.valueOf(UUID.randomUUID()),
-			layoutStructureItem.getItemType(),
+			newItemId, layoutStructureItem.getItemType(),
 			layoutStructureItem.getParentItemId(),
 			childrenItemIds.indexOf(itemId) + 1);
+
+		updateItemConfig(
+			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId),
+			newItemId);
 	}
 
 	public LayoutStructureItem getLayoutStructureItem(String itemId) {
@@ -259,9 +264,13 @@ public class LayoutStructure {
 	private void _addColumnLayoutStructureItem(
 		String parentItemId, int position, int size) {
 
+		String itemId = String.valueOf(UUID.randomUUID());
+
 		addLayoutStructureItem(
-			JSONUtil.put("size", size), String.valueOf(UUID.randomUUID()),
-			LayoutDataItemTypeConstants.TYPE_COLUMN, parentItemId, position);
+			itemId, LayoutDataItemTypeConstants.TYPE_COLUMN, parentItemId,
+			position);
+
+		updateItemConfig(JSONUtil.put("size", size), itemId);
 	}
 
 	private void _addLayoutStructureItem(

@@ -14,6 +14,7 @@
 
 package com.liferay.depot.web.internal.servlet.taglib.util;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.web.internal.resource.DepotEntryPermission;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -21,7 +22,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -42,10 +42,10 @@ import javax.servlet.http.HttpServletRequest;
 public class DepotActionDropdownItemsProvider {
 
 	public DepotActionDropdownItemsProvider(
-		Group group, LiferayPortletRequest liferayPortletRequest,
+		DepotEntry depotEntry, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_group = group;
+		_depotEntry = depotEntry;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -64,7 +64,7 @@ public class DepotActionDropdownItemsProvider {
 						dropdownItem -> {
 							dropdownItem.setHref(
 								DepotEntryURLUtil.getEditDepotEntryPortletURL(
-									_group, _themeDisplay.getURLCurrent(),
+									_depotEntry, _themeDisplay.getURLCurrent(),
 									_liferayPortletRequest));
 
 							dropdownItem.setLabel(
@@ -77,7 +77,7 @@ public class DepotActionDropdownItemsProvider {
 						dropdownItem -> {
 							ActionURL deleteDepotEntryActionURL =
 								DepotEntryURLUtil.getDeleteDepotEntryActionURL(
-									_group.getClassPK(),
+									_depotEntry.getDepotEntryId(),
 									_themeDisplay.getURLCurrent(),
 									_liferayPortletResponse);
 
@@ -105,8 +105,8 @@ public class DepotActionDropdownItemsProvider {
 	private boolean _hasDeletePermission() {
 		try {
 			if (!DepotEntryPermission.contains(
-					_themeDisplay.getPermissionChecker(), _group.getClassPK(),
-					ActionKeys.DELETE)) {
+					_themeDisplay.getPermissionChecker(),
+					_depotEntry.getDepotEntryId(), ActionKeys.DELETE)) {
 
 				return false;
 			}
@@ -121,15 +121,15 @@ public class DepotActionDropdownItemsProvider {
 	private boolean _hasUpdatePermission() {
 		try {
 			return DepotEntryPermission.contains(
-				_themeDisplay.getPermissionChecker(), _group.getClassPK(),
-				ActionKeys.UPDATE);
+				_themeDisplay.getPermissionChecker(),
+				_depotEntry.getDepotEntryId(), ActionKeys.UPDATE);
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
 		}
 	}
 
-	private final Group _group;
+	private final DepotEntry _depotEntry;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

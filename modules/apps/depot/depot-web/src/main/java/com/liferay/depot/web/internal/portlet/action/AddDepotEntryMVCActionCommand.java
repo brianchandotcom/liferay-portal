@@ -83,8 +83,7 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			PortletURL editDepotURL =
 				DepotEntryURLUtil.getEditDepotEntryPortletURL(
-					_groupLocalService.getGroup(depotEntry.getGroupId()),
-					ParamUtil.getString(actionRequest, "redirect"),
+					depotEntry, ParamUtil.getString(actionRequest, "redirect"),
 					_portal.getLiferayPortletRequest(actionRequest));
 
 			MultiSessionMessages.add(

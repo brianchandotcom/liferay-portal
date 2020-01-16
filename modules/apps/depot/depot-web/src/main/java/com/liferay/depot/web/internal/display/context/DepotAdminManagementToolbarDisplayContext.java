@@ -15,6 +15,7 @@
 package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.constants.DepotActionKeys;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.web.internal.resource.DepotEntryPermission;
 import com.liferay.depot.web.internal.resource.DepotPermission;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
@@ -25,7 +26,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -57,7 +57,7 @@ public class DepotAdminManagementToolbarDisplayContext
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			depotAdminDisplayContext.getGroupSearch());
+			depotAdminDisplayContext.searchContainer());
 
 		_depotAdminDisplayContext = depotAdminDisplayContext;
 	}
@@ -145,11 +145,11 @@ public class DepotAdminManagementToolbarDisplayContext
 		return "depotAdminManagementToolbarDefaultEventHandler";
 	}
 
-	public Map<String, Object> getRowData(Group curGroup)
+	public Map<String, Object> getRowData(DepotEntry depotEntry)
 		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(
-			"actions", StringUtil.merge(_getAvailableActions(curGroup))
+			"actions", StringUtil.merge(_getAvailableActions(depotEntry))
 		).build();
 	}
 
@@ -193,27 +193,27 @@ public class DepotAdminManagementToolbarDisplayContext
 		return new String[] {"descriptive-name"};
 	}
 
-	private List<String> _getAvailableActions(Group group)
+	private List<String> _getAvailableActions(DepotEntry depotEntry)
 		throws PortalException {
 
 		List<String> availableActions = new ArrayList<>();
 
-		if (_hasDeleteDepotEntryPermission(group)) {
+		if (_hasDeleteDepotEntryPermission(depotEntry)) {
 			availableActions.add("deleteSelectedDepotEntries");
 		}
 
 		return availableActions;
 	}
 
-	private boolean _hasDeleteDepotEntryPermission(Group group)
+	private boolean _hasDeleteDepotEntryPermission(DepotEntry depotEntry)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (!DepotEntryPermission.contains(
-				themeDisplay.getPermissionChecker(), group.getClassPK(),
-				ActionKeys.DELETE)) {
+				themeDisplay.getPermissionChecker(),
+				depotEntry.getDepotEntryId(), ActionKeys.DELETE)) {
 
 			return false;
 		}

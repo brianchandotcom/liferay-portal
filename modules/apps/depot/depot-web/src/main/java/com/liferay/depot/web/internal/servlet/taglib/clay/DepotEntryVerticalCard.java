@@ -14,17 +14,20 @@
 
 package com.liferay.depot.web.internal.servlet.taglib.clay;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,13 +43,16 @@ public class DepotEntryVerticalCard
 	extends BaseBaseClayCard implements VerticalCard {
 
 	public DepotEntryVerticalCard(
-		Group group, GroupURLProvider groupURLProvider,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, RowChecker rowChecker) {
+			DepotEntry depotEntry, GroupURLProvider groupURLProvider,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			RowChecker rowChecker)
+		throws PortalException {
 
-		super(group, rowChecker);
+		super(depotEntry, rowChecker);
 
-		_group = group;
+		_depotEntry = depotEntry;
+		_group = GroupLocalServiceUtil.getGroup(depotEntry.getGroupId());
 		_groupURLProvider = groupURLProvider;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -59,7 +65,7 @@ public class DepotEntryVerticalCard
 	public List<DropdownItem> getActionDropdownItems() {
 		DepotActionDropdownItemsProvider depotActionDropdownItemsProvider =
 			new DepotActionDropdownItemsProvider(
-				_group, _liferayPortletRequest, _liferayPortletResponse);
+				_depotEntry, _liferayPortletRequest, _liferayPortletResponse);
 
 		return depotActionDropdownItemsProvider.getActionDropdownItems();
 	}
@@ -76,7 +82,7 @@ public class DepotEntryVerticalCard
 
 	@Override
 	public String getIcon() {
-		return _group.getIconCssClass();
+		return "repository";
 	}
 
 	@Override
@@ -85,7 +91,7 @@ public class DepotEntryVerticalCard
 			return null;
 		}
 
-		return String.valueOf(_group.getClassPK());
+		return String.valueOf(_depotEntry.getDepotEntryId());
 	}
 
 	@Override
@@ -109,6 +115,7 @@ public class DepotEntryVerticalCard
 	private static final Log _log = LogFactoryUtil.getLog(
 		DepotEntryVerticalCard.class);
 
+	private final DepotEntry _depotEntry;
 	private final Group _group;
 	private final GroupURLProvider _groupURLProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;

@@ -15,50 +15,43 @@
 import classNames from 'classnames';
 import React from 'react';
 
-const Container = React.forwardRef(
-	(
-		{
-			backgroundColorCssClass,
-			backgroundImage,
-			children,
-			className,
-			paddingBottom,
-			paddingHorizontal,
-			paddingTop,
-			type,
-			...props
-		},
-		ref
-	) => {
-		return (
-			<div
-				className={classNames(
-					className,
-					`pb-${paddingBottom} pt-${paddingTop}`,
-					{
-						[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
-						container: type === 'fixed',
-						'container-fluid': type === 'fluid',
-						[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
-					}
-				)}
-				ref={ref}
-				style={
-					backgroundImage
-						? {
-								backgroundImage: `url(${backgroundImage})`,
-								backgroundPosition: '50% 50%',
-								backgroundRepeat: 'no-repeat',
-								backgroundSize: 'cover'
-						  }
-						: {}
+const Container = React.forwardRef(({children, className, item}, ref) => {
+	const {
+		backgroundColorCssClass,
+		backgroundImage,
+		paddingBottom,
+		paddingHorizontal,
+		paddingTop,
+		type
+	} = item.config;
+
+	return (
+		<div
+			className={classNames(
+				className,
+				`pb-${paddingBottom} pt-${paddingTop}`,
+				{
+					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
+					container: type === 'fixed',
+					'container-fluid': type === 'fluid',
+					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3
 				}
-				{...props}
-			>
-				{children}
-			</div>
-		);
-	}
-);
+			)}
+			ref={ref}
+			style={
+				backgroundImage
+					? {
+							backgroundImage: `url(${backgroundImage})`,
+							backgroundPosition: '50% 50%',
+							backgroundRepeat: 'no-repeat',
+							backgroundSize: 'cover'
+					  }
+					: {}
+			}
+		>
+			{children}
+		</div>
+	);
+});
 
 export default Container;

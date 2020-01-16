@@ -23,15 +23,6 @@ import Container from './Container';
 
 const ContainerWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		const {
-			backgroundColorCssClass,
-			backgroundImage,
-			paddingBottom,
-			paddingHorizontal,
-			paddingTop,
-			type
-		} = item.config;
-
 		return (
 			<Topper
 				acceptDrop={[
@@ -45,16 +36,11 @@ const ContainerWithControls = React.forwardRef(
 			>
 				{() => (
 					<Container
-						backgroundColorCssClass={backgroundColorCssClass}
-						backgroundImage={backgroundImage}
 						className={classNames('page-editor__container', {
 							empty: !item.children.length
 						})}
-						paddingBottom={paddingBottom}
-						paddingHorizontal={paddingHorizontal}
-						paddingTop={paddingTop}
+						item={item}
 						ref={ref}
-						type={type}
 					>
 						<FloatingToolbar
 							buttons={[

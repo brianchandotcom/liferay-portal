@@ -874,9 +874,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		return _hasValidAssetVocabularies;
 	}
 
-	private boolean _hasWorkflowDefinitionLink(FileEntry fileEntry)
-		throws PortalException {
-
+	private boolean _hasWorkflowDefinitionLink(FileEntry fileEntry) {
 		if (!(fileEntry.getModel() instanceof DLFileEntry)) {
 			return false;
 		}
@@ -893,23 +891,14 @@ public class DLAdminManagementToolbarDisplayContext {
 	}
 
 	private boolean _hasWorkflowDefinitionLink(
-			long folderId, long fileEntryTypeId)
-		throws PortalException {
+		long folderId, long fileEntryTypeId) {
 
-		try {
-			return DLUtil.hasWorkflowDefinitionLink(
-				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
-				folderId, fileEntryTypeId);
-		}
-		catch (PortalException | RuntimeException e) {
-			throw e;
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
-		}
+		return DLUtil.hasWorkflowDefinitionLink(
+			_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
+			folderId, fileEntryTypeId);
 	}
 
-	private boolean _isEnableOnBulk() throws PortalException {
+	private boolean _isEnableOnBulk() {
 		long folderId = ParamUtil.getLong(_httpServletRequest, "folderId");
 
 		if (_hasWorkflowDefinitionLink(

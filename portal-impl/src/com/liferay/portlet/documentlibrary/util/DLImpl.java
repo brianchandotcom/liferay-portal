@@ -998,8 +998,7 @@ public class DLImpl implements DL {
 
 	@Override
 	public boolean hasWorkflowDefinitionLink(
-			long companyId, long groupId, long folderId, long fileEntryTypeId)
-		throws Exception {
+		long companyId, long groupId, long folderId, long fileEntryTypeId) {
 
 		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(

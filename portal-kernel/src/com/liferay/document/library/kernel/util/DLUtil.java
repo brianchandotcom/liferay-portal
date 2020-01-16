@@ -377,8 +377,7 @@ public class DLUtil {
 	}
 
 	public static boolean hasWorkflowDefinitionLink(
-			long companyId, long groupId, long folderId, long fileEntryTypeId)
-		throws Exception {
+		long companyId, long groupId, long folderId, long fileEntryTypeId) {
 
 		return getDL().hasWorkflowDefinitionLink(
 			companyId, groupId, folderId, fileEntryTypeId);

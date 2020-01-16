@@ -169,7 +169,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 	HashMap<String, Object> data = HashMapBuilder.<String, Object>put(
 		"availableLocales", DepotLanguageUtil.getAvailableLocalesJSONArray(locale)
 	).put(
-		"defaultLocaleId", LocaleUtil.toLanguageId(PortalUtil.getSiteDefaultLocale(group))
+		"defaultLocaleId", LocaleUtil.toLanguageId(company.getDefaultUser().getLocale())
 	).put(
 		"inheritLocales", inheritLocales
 	).put(

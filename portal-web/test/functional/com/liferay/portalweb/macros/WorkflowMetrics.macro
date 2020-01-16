@@ -591,6 +591,12 @@ definition {
 		AssertTextNotEquals(
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_AVG_COMPLETION_TIME",
 			value1 = "0min");
+
+		for (var isAssigneeNotPresent : list "${isNotPresent}") {
+			var key_assignee = "${isAssigneeNotPresent}";
+
+			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
+		}
 	}
 
 	macro viewUserWorkloadByStepOnAllItems {

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getClosestAssetElement} from '../utils/assets';
+
 const onReady = fn => {
 	if (
 		document.readyState === 'interactive' ||
@@ -26,4 +28,41 @@ const onReady = fn => {
 	return () => document.removeEventListener('DOMContentLoaded', fn);
 };
 
-export {onReady};
+const clickEvent = ({
+	analytics,
+	applicationId,
+	eventType,
+	getPayload,
+	isTrackable,
+	type
+}) => {
+	const onClick = ({target}) => {
+		const element = getClosestAssetElement(target, type);
+
+		if (!isTrackable(element) || target.control) {
+			return;
+		}
+
+		const tagName = target.tagName.toLowerCase();
+
+		const payload = {
+			...getPayload(element),
+			tagName
+		};
+
+		if (tagName === 'a') {
+			payload.href = target.href;
+			payload.text = target.innerText;
+		} else if (tagName === 'img') {
+			payload.src = target.src;
+		}
+
+		analytics.send(eventType, applicationId, payload);
+	};
+
+	document.addEventListener('click', onClick);
+
+	return () => document.removeEventListener('click', onClick);
+};
+
+export {clickEvent, onReady};

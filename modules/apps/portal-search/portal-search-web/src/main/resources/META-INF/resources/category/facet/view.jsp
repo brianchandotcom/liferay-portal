@@ -47,7 +47,6 @@ CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfigurat
 Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 contextObjects.put("assetCategoriesSearchFacetDisplayContext", assetCategoriesSearchFacetDisplayContext);
-
 contextObjects.put("namespace", renderResponse.getNamespace());
 
 List<AssetCategoriesSearchFacetTermDisplayContext> assetCategoriesSearchFacetTermDisplayContexts = assetCategoriesSearchFacetDisplayContext.getTermDisplayContexts();
@@ -58,31 +57,31 @@ List<AssetCategoriesSearchFacetTermDisplayContext> assetCategoriesSearchFacetTer
 		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetCategoriesSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getParameterValue() %>" />
 	</c:when>
 	<c:otherwise>
-		<liferay-ddm:template-renderer
-			className="<%= AssetCategoriesSearchFacetTermDisplayContext.class.getName() %>"
-			contextObjects="<%= contextObjects %>"
-			displayStyle="<%= categoryFacetPortletInstanceConfiguration.displayStyle() %>"
-			displayStyleGroupId="<%= assetCategoriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
-			entries="<%= assetCategoriesSearchFacetTermDisplayContexts %>"
-		>
-			<liferay-ui:panel-container
-				extended="<%= true %>"
-				id='<%= renderResponse.getNamespace() + "facetAssetCategoriesPanelContainer" %>'
-				markupView="lexicon"
-				persistState="<%= true %>"
+		<aui:form method="post" name="categoryFacetForm">
+			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetCategoriesSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getParameterValue() %>" />
+			<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getParameterName() %>" />
+
+			<liferay-ddm:template-renderer
+				className="<%= AssetCategoriesSearchFacetTermDisplayContext.class.getName() %>"
+				contextObjects="<%= contextObjects %>"
+				displayStyle="<%= categoryFacetPortletInstanceConfiguration.displayStyle() %>"
+				displayStyleGroupId="<%= assetCategoriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
+				entries="<%= assetCategoriesSearchFacetTermDisplayContexts %>"
 			>
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					cssClass="search-facet"
-					id='<%= renderResponse.getNamespace() + "facetAssetCategoriesPanel" %>'
+				<liferay-ui:panel-container
+					extended="<%= true %>"
+					id='<%= renderResponse.getNamespace() + "facetAssetCategoriesPanelContainer" %>'
 					markupView="lexicon"
 					persistState="<%= true %>"
-					title="category"
 				>
-					<aui:form method="post" name="categoryFacetForm">
-						<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetCategoriesSearchFacetDisplayContext.getParameterName()) %>" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getParameterValue() %>" />
-						<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= assetCategoriesSearchFacetDisplayContext.getParameterName() %>" />
-
+					<liferay-ui:panel
+						collapsible="<%= true %>"
+						cssClass="search-facet"
+						id='<%= renderResponse.getNamespace() + "facetAssetCategoriesPanel" %>'
+						markupView="lexicon"
+						persistState="<%= true %>"
+						title="category"
+					>
 						<aui:fieldset>
 							<ul class="<%= assetCategoriesSearchFacetDisplayContext.isCloud() ? "tag-cloud" : "tag-list" %> list-unstyled">
 
@@ -96,7 +95,16 @@ List<AssetCategoriesSearchFacetTermDisplayContext> assetCategoriesSearchFacetTer
 									<li class="facet-value tag-popularity-<%= assetCategoriesSearchFacetTermDisplayContext.getPopularity() %>">
 										<div class="custom-checkbox custom-control">
 											<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
-												<input class="custom-control-input facet-term" data-term-id="<%= assetCategoriesSearchFacetTermDisplayContext.getAssetCategoryId() %>" id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= assetCategoriesSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
+												<input
+													<%= assetCategoriesSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
+													class="custom-control-input facet-term"
+													data-term-id="<%= assetCategoriesSearchFacetTermDisplayContext.getAssetCategoryId() %>"
+													disabled
+													id="<portlet:namespace />term_<%= i %>"
+													name="<portlet:namespace />term_<%= i %>"
+													onChange="Liferay.Search.FacetUtil.changeSelection(event);"
+													type="checkbox"
+												/>
 
 												<span class="custom-control-label term-name <%= assetCategoriesSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 													<span class="custom-control-label-text"><%= HtmlUtil.escape(assetCategoriesSearchFacetTermDisplayContext.getDisplayName()) %></span>
@@ -121,11 +129,17 @@ List<AssetCategoriesSearchFacetTermDisplayContext> assetCategoriesSearchFacetTer
 						<c:if test="<%= !assetCategoriesSearchFacetDisplayContext.isNothingSelected() %>">
 							<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
 						</c:if>
-					</aui:form>
-				</liferay-ui:panel>
-			</liferay-ui:panel-container>
-		</liferay-ddm:template-renderer>
+					</liferay-ui:panel>
+				</liferay-ui:panel-container>
+			</liferay-ddm:template-renderer>
+		</aui:form>
 	</c:otherwise>
 </c:choose>
 
-<aui:script use="liferay-search-facet-util"></aui:script>
+<aui:script use="liferay-search-facet-util">
+	Liferay.Search.FacetUtil.enableInputs(
+		document.querySelectorAll(
+			'#<portlet:namespace />categoryFacetForm .facet-term'
+		)
+	);
+</aui:script>

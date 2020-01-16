@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.ast;
+package com.liferay.petra.sql.dsl.ast.impl;
 
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.ast.ASTNode;
+import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
 import com.liferay.petra.sql.dsl.expressions.impl.ScalarList;
 import com.liferay.petra.sql.dsl.query.impl.Limit;

@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.petra.sql.dsl,\
 	com.liferay.petra.sql.dsl.ast,\
+	com.liferay.petra.sql.dsl.ast.impl,\
 	com.liferay.petra.sql.dsl.expressions,\
 	com.liferay.petra.sql.dsl.expressions.impl,\
 	com.liferay.petra.sql.dsl.query,\

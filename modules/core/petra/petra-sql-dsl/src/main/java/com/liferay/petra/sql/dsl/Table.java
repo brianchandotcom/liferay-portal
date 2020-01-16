@@ -15,7 +15,7 @@
 package com.liferay.petra.sql.dsl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
 
 import java.util.Collection;
 import java.util.Collections;

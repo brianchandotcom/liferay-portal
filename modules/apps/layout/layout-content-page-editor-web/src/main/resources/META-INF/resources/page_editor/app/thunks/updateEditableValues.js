@@ -25,7 +25,8 @@ export default function updateEditableValues({
 		FragmentService.updateEditableValues({
 			config,
 			editableValues,
-			fragmentEntryLinkId
+			fragmentEntryLinkId,
+			onNetworkStatus: dispatch
 		}).then(() => {
 			dispatch(
 				updateEditableValuesAction({

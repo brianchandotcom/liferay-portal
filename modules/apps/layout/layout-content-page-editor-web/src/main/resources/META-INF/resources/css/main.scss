@@ -75,6 +75,7 @@
 	height: calc(100vh - #{$controlMenuHeight + $managementBarHeight});
 	margin-top: $controlMenuHeight + $managementBarHeight;
 	overflow-y: auto;
+	position: static;
 
 	@media (min-width: 768px) {
 		height: calc(

@@ -28,6 +28,6 @@ export default function updateItemConfig({
 			itemId,
 			segmentsExperienceId
 		}).then(layoutData => {
-			dispatch(updateLayoutData(layoutData));
+			dispatch(updateLayoutData({layoutData}));
 		});
 }

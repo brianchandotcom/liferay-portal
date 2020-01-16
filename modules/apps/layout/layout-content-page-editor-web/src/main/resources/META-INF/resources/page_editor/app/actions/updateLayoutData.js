@@ -15,7 +15,7 @@
 import {UPDATE_LAYOUT_DATA} from './types';
 
 export default function updateLayoutData({
-	deletedFragmentEntryLinkIds,
+	deletedFragmentEntryLinkIds = [],
 	layoutData
 }) {
 	return {

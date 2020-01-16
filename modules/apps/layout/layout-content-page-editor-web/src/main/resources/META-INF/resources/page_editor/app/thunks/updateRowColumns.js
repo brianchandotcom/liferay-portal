@@ -28,6 +28,6 @@ export default function updateRowColumns({
 			numberOfColumns,
 			segmentsExperienceId
 		}).then(({layoutData}) => {
-			dispatch(updateLayoutData(layoutData));
+			dispatch(updateLayoutData({layoutData}));
 		});
 }

@@ -40,7 +40,7 @@ public class LayoutStructure {
 		_mainItemId = mainItemId;
 	}
 
-	public void addFragmentLayoutStructureItem(
+	public LayoutStructureItem addFragmentLayoutStructureItem(
 		long fragmentEntryLinkId, String parentItemId, int position) {
 
 		LayoutStructureItem layoutStructureItem = addLayoutStructureItem(
@@ -48,6 +48,8 @@ public class LayoutStructure {
 
 		layoutStructureItem.updateItemConfigJSONObject(
 			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId));
+
+		return layoutStructureItem;
 	}
 
 	public LayoutStructureItem addLayoutStructureItem(
@@ -74,7 +76,9 @@ public class LayoutStructure {
 		return layoutStructureItem;
 	}
 
-	public void addRowLayoutStructureItem(String parentItemId, int position) {
+	public LayoutStructureItem addRowLayoutStructureItem(
+		String parentItemId, int position) {
+
 		LayoutStructureItem parentLayoutStructureItem =
 			_layoutStructureItems.get(parentItemId);
 
@@ -100,6 +104,8 @@ public class LayoutStructure {
 		_addColumnLayoutStructureItem(layoutStructureItem.getItemId(), 0, 4);
 		_addColumnLayoutStructureItem(layoutStructureItem.getItemId(), 1, 4);
 		_addColumnLayoutStructureItem(layoutStructureItem.getItemId(), 2, 4);
+
+		return layoutStructureItem;
 	}
 
 	public List<LayoutStructureItem> deleteLayoutStructureItem(String itemId) {
@@ -129,7 +135,7 @@ public class LayoutStructure {
 		return deletedLayoutStructureItems;
 	}
 
-	public void duplicateLayoutStructureItem(
+	public LayoutStructureItem duplicateLayoutStructureItem(
 		long fragmentEntryLinkId, String itemId) {
 
 		LayoutStructureItem layoutStructureItem = getLayoutStructureItem(
@@ -141,20 +147,23 @@ public class LayoutStructure {
 		List<String> childrenItemIds =
 			parentLayoutStructureItem.getChildrenItemIds();
 
-		LayoutStructureItem newLayoutStructureItem = addLayoutStructureItem(
-			layoutStructureItem.getItemType(),
-			layoutStructureItem.getParentItemId(),
-			childrenItemIds.indexOf(itemId) + 1);
+		LayoutStructureItem duplicateLayoutStructureItem =
+			addLayoutStructureItem(
+				layoutStructureItem.getItemType(),
+				layoutStructureItem.getParentItemId(),
+				childrenItemIds.indexOf(itemId) + 1);
 
-		newLayoutStructureItem.updateItemConfigJSONObject(
+		duplicateLayoutStructureItem.updateItemConfigJSONObject(
 			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId));
+
+		return duplicateLayoutStructureItem;
 	}
 
 	public LayoutStructureItem getLayoutStructureItem(String itemId) {
 		return _layoutStructureItems.get(itemId);
 	}
 
-	public void moveLayoutStructureItem(
+	public LayoutStructureItem moveLayoutStructureItem(
 		String itemId, String parentItemId, int position) {
 
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
@@ -169,6 +178,8 @@ public class LayoutStructure {
 			_layoutStructureItems.get(parentItemId);
 
 		newParentLayoutStructureItem.addChildrenItem(position, itemId);
+
+		return layoutStructureItem;
 	}
 
 	public JSONObject toJSONObject() {
@@ -193,13 +204,15 @@ public class LayoutStructure {
 		);
 	}
 
-	public void updateItemConfig(
+	public LayoutStructureItem updateItemConfig(
 		JSONObject itemConfigJSONObject, String itemId) {
 
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);
 
 		layoutStructureItem.updateItemConfigJSONObject(itemConfigJSONObject);
+
+		return layoutStructureItem;
 	}
 
 	public List<LayoutStructureItem> updateRowColumnsLayoutStructureItem(

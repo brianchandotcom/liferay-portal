@@ -395,7 +395,7 @@ public class NavItem implements Serializable {
 			return false;
 		}
 
-		if (Objects.equals(layout.getCreateDate(), layout.getPublishDate())) {
+		if (layout.isSystem()) {
 			return true;
 		}
 

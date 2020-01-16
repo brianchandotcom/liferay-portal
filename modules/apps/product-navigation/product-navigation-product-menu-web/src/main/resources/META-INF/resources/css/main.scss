@@ -100,6 +100,11 @@ $product-menu-pages-administration-link-height: 72px;
 			cursor: pointer;
 			margin-left: 6px;
 			padding-left: 14px;
+
+			.tree-node .tree-node-content {
+				align-items: center;
+				display: flex;
+			}
 		}
 
 		.tree-node {
@@ -139,9 +144,11 @@ $product-menu-pages-administration-link-height: 72px;
 				}
 
 				color: #a7a9bc !important;
+				display: inline-block;
+				flex-grow: 1;
 				margin-left: 8px;
+				padding-right: 17px;
 				vertical-align: middle;
-				width: 86%;
 			}
 
 			.tree-node-selected {

@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
@@ -38,6 +39,13 @@ const Languages = ({
 	);
 
 	const Language = ({displayName, isDefault, localeId, showActions}) => {
+		const [active, setActive] = useState(false);
+
+		const makeDefault = () => {
+			console.log('makeDefault: ' + localeId);
+			setActive(false);
+		}
+
 		return (
 			<ClayTable.Row>
 				<ClayTable.Cell expanded>
@@ -51,7 +59,26 @@ const Languages = ({
 				</ClayTable.Cell>
 				{showActions && (
 					<ClayTable.Cell align="center">
-						<ClayIcon symbol="ellipsis-v" />
+						<ClayDropDown
+							active={active}
+							//data-localeid={localeId}
+							onActiveChange={setActive}
+							trigger={
+								<ClayButton
+									displayType="unstyled"
+									monospaced
+									small
+								>
+									<ClayIcon symbol="ellipsis-v" />
+								</ClayButton>
+							}
+						>
+							<ClayDropDown.ItemList>
+								<ClayDropDown.Item key={localeId} onClick={makeDefault}>
+									{Liferay.Language.get('make-default')}
+								</ClayDropDown.Item>
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
 					</ClayTable.Cell>
 				)}
 			</ClayTable.Row>

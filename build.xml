@@ -118,12 +118,7 @@ message.
 		<antcall target="compile" />
 		<antcall target="deploy" />
 
-		<if>
-			<equals arg1="${elasticsearch.sidecar.enabled}" arg2="true" />
-			<then>
-				<antcall target="setup-elasticsearch-sidecar" />
-			</then>
-		</if>
+		<antcall target="setup-elasticsearch-sidecar" />
 	</target>
 
 	<target name="baseline-current-branch">
@@ -984,6 +979,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			<arg value="--build-file=${project.dir}/modules/elasticsearch-sidecar.gradle" />
 			<arg value="-Pelasticsearch.configs.osgi=${elasticsearch.configs.osgi}" />
 			<arg value="-Pelasticsearch.configs.sidecar=${elasticsearch.configs.sidecar}" />
+			<arg value="-Pelasticsearch.sidecar.enabled=${elasticsearch.sidecar.enabled}" />
 			<arg value="-Pelasticsearch.sidecar.url=${elasticsearch.sidecar.url}" />
 		</gradle-execute>
 	</target>

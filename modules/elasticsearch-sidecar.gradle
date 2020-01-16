@@ -117,7 +117,13 @@ setupElasticsearch {
 
 		File configFile = file("${project.'liferay.home'}/osgi/configs/com.liferay.portal.search.elasticsearch${project.'elasticsearchSidecarMajorVersion'}.configuration.ElasticsearchConfiguration.config")
 
-		configFile.text = project.properties["elasticsearch.configs.osgi"].replace("\\\"", "\"").split(',').sort().join('\n')
+		String text = ""
+
+		if (new Boolean(project.properties["elasticsearch.sidecar.enabled"])) {
+			text = project.properties["elasticsearch.configs.osgi"].replace("\\\"", "\"").split(',').sort().join('\n')
+		}
+
+		configFile.text = text
 
 		configFile = file("${elasticsearchSidecarDir}/config/elasticsearch.yml")
 

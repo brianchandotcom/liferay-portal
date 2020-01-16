@@ -130,10 +130,6 @@ public class RadioDDMFormFieldTemplateContextContributor
 			predefinedValue.getString(ddmFormFieldRenderingContext.getLocale()),
 			"[]");
 
-		if (ddmFormFieldRenderingContext.isViewMode()) {
-			predefinedValueString = HtmlUtil.extractText(predefinedValueString);
-		}
-
 		return getValue(predefinedValueString);
 	}
 

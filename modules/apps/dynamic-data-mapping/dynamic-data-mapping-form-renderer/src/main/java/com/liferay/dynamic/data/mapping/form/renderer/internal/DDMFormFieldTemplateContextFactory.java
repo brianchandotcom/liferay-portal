@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -436,10 +435,6 @@ public class DDMFormFieldTemplateContextFactory {
 
 		String propertyValue = GetterUtil.getString(
 			localizedValue.getString(_locale));
-
-		if (_ddmFormRenderingContext.isViewMode()) {
-			propertyValue = HtmlUtil.extractText(propertyValue);
-		}
 
 		ddmFormFieldTemplateContext.put(propertyName, propertyValue);
 	}

@@ -153,8 +153,9 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 
 				@Override
 				public String apply(DDMFormFieldValue formFieldValue) {
-					return fieldValueRenderer.render(
-						formFieldValue, _renderRequest.getLocale());
+					return HtmlUtil.escape(
+						fieldValueRenderer.render(
+							formFieldValue, _renderRequest.getLocale()));
 				}
 
 			});

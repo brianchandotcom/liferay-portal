@@ -62,11 +62,6 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 
 					String optionLabelString = optionLabel.getString(_locale);
 
-					if (ddmFormFieldRenderingContext.isViewMode()) {
-						optionLabelString = HtmlUtil.extractText(
-							optionLabelString);
-					}
-
 					return optionLabelString;
 				}
 			).put(

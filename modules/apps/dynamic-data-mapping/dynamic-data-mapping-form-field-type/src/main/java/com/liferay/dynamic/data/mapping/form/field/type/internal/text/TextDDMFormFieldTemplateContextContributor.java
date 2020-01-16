@@ -113,11 +113,6 @@ public class TextDDMFormFieldTemplateContextContributor
 					String optionLabelString = optionLabel.getString(
 						ddmFormFieldRenderingContext.getLocale());
 
-					if (ddmFormFieldRenderingContext.isViewMode()) {
-						optionLabelString = HtmlUtil.extractText(
-							optionLabelString);
-					}
-
 					return optionLabelString;
 				}
 			).put(
@@ -155,10 +150,6 @@ public class TextDDMFormFieldTemplateContextContributor
 		String predefinedValueString = predefinedValue.getString(
 			ddmFormFieldRenderingContext.getLocale());
 
-		if (ddmFormFieldRenderingContext.isViewMode()) {
-			predefinedValueString = HtmlUtil.extractText(predefinedValueString);
-		}
-
 		return predefinedValueString;
 	}
 
@@ -195,13 +186,7 @@ public class TextDDMFormFieldTemplateContextContributor
 			return StringPool.BLANK;
 		}
 
-		String valueString = value.getString(locale);
-
-		if (ddmFormFieldRenderingContext.isViewMode()) {
-			valueString = HtmlUtil.extractText(valueString);
-		}
-
-		return valueString;
+		return value.getString(locale);
 	}
 
 	protected boolean isAutocompleteEnabled(DDMFormField ddmFormField) {

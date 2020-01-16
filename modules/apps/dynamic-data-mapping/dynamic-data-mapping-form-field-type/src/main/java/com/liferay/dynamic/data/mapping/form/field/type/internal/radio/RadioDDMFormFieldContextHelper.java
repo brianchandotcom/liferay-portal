@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,14 +48,7 @@ public class RadioDDMFormFieldContextHelper {
 					LocalizedValue optionLabel =
 						_ddmFormFieldOptions.getOptionLabels(optionValue);
 
-					String optionLabelString = optionLabel.getString(_locale);
-
-					if (ddmFormFieldRenderingContext.isViewMode()) {
-						optionLabelString = HtmlUtil.extractText(
-							optionLabelString);
-					}
-
-					return optionLabelString;
+					return optionLabel.getString(_locale);
 				}
 			).put(
 				"value", optionValue

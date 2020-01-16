@@ -15,22 +15,19 @@
 import classNames from 'classnames';
 import React from 'react';
 
-const Column = React.forwardRef(
-	({children, className, item, ...props}, ref) => {
-		const {size} = item.config;
+const Column = React.forwardRef(({children, className, item}, ref) => {
+	const {size} = item.config;
 
-		return (
-			<div
-				className={classNames(className, 'col', {
-					[`col-${size}`]: size
-				})}
-				ref={ref}
-				{...props}
-			>
-				{children}
-			</div>
-		);
-	}
-);
+	return (
+		<div
+			className={classNames(className, 'col', {
+				[`col-${size}`]: size
+			})}
+			ref={ref}
+		>
+			{children}
+		</div>
+	);
+});
 
 export default Column;

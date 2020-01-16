@@ -200,9 +200,7 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	@Override
-	public DLFileEntryType createBasicDocumentDLFileEntryType()
-		throws NoSuchFileEntryTypeException {
-
+	public DLFileEntryType createBasicDocumentDLFileEntryType() {
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
@@ -324,7 +322,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			return dlFolder.getDefaultFileEntryTypeId();
 		}
 
-		return 0;
+		return DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT;
 	}
 
 	@Override
@@ -385,23 +383,20 @@ public class DLFileEntryTypeLocalServiceImpl
 			return dlFolderPersistence.getDLFileEntryTypes(folderId);
 		}
 
-		List<DLFileEntryType> dlFileEntryTypes = null;
-
 		folderId = getFileEntryTypesPrimaryFolderId(
 			dlFolderPersistence, folderId);
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			dlFileEntryTypes = dlFolderPersistence.getDLFileEntryTypes(
-				folderId);
+			return dlFolderPersistence.getDLFileEntryTypes(folderId);
 		}
-		else {
-			dlFileEntryTypes = new ArrayList<>(getFileEntryTypes(groupIds));
 
-			DLFileEntryType dlFileEntryType =
-				dlFileEntryTypeLocalService.getBasicDocumentDLFileEntryType();
+		List<DLFileEntryType> dlFileEntryTypes = new ArrayList<>(
+			getFileEntryTypes(groupIds));
 
-			dlFileEntryTypes.add(0, dlFileEntryType);
-		}
+		DLFileEntryType dlFileEntryType =
+			dlFileEntryTypeLocalService.getBasicDocumentDLFileEntryType();
+
+		dlFileEntryTypes.add(0, dlFileEntryType);
 
 		return dlFileEntryTypes;
 	}
@@ -593,7 +588,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			return dlFolder.getDefaultFileEntryTypeId();
 		}
 
-		return 0;
+		return DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT;
 	}
 
 	protected static long getFileEntryTypesPrimaryFolderId(

@@ -114,8 +114,6 @@ definition {
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Documents and Media");
-
 		DMDocument.enableActionsMenuOnPortlet();
 
 		ProductMenu.gotoPortlet(

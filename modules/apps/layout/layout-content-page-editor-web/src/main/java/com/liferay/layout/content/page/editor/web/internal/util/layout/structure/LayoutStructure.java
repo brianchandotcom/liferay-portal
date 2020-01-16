@@ -53,7 +53,7 @@ public class LayoutStructure {
 			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId), itemId);
 	}
 
-	public void addLayoutStructureItem(
+	public LayoutStructureItem addLayoutStructureItem(
 		String itemId, String itemType, String parentItemId, int position) {
 
 		LayoutStructureItem layoutStructureItem = new LayoutStructureItem(
@@ -63,7 +63,7 @@ public class LayoutStructure {
 			layoutStructureItem.getItemId(), layoutStructureItem);
 
 		if (Validator.isNull(parentItemId)) {
-			return;
+			return layoutStructureItem;
 		}
 
 		LayoutStructureItem parentLayoutStructureItem =
@@ -71,6 +71,8 @@ public class LayoutStructure {
 
 		parentLayoutStructureItem.addChildrenItem(
 			position, layoutStructureItem.getItemId());
+
+		return layoutStructureItem;
 	}
 
 	public void addRowLayoutStructureItem(

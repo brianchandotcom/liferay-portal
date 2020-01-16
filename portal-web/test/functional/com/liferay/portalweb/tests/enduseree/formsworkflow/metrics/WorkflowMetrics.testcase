@@ -100,10 +100,128 @@ definition {
 			value1 = "${key_testSLADefinitionDays}");
 	}
 
+	@description = "Apply filter for workload distribution for all assignees(LRQA-53632)"
+	@priority = "5"
+	test ApplyFilterForWorkloadDistribution {
+		property test.name.skip.portal.instance = "WorkflowMetrics#ApplyFilterForWorkloadDistribution";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+
+		WorkflowMetrics.createUsersAndAssignInstances(
+			numberOfBlogInstances = "6",
+			numberOfUsers = "6");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(
+			key_assigneesNumber = "6",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "1Role");
+
+		WorkflowMetrics.viewWorkloadByAssignee(
+			assigneeName = "1user user1",
+			isNotPresent = "2user user2,3user user3,4user user4,5user user5,6user user6",
+			onTimeTaskCount = "0",
+			overdueTaskCount = "0",
+			totalPendingTaskCount = "1");
+
+		Click(
+			key_assigneeName = "1user user1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_NAME_TABLE");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Pending,1user user1");
+
+		WorkflowMetrics.assertAllItemsValues(
+			assigneeName = "1user user1",
+			isNotPresent = "2user user2,3user user3,4user user4,5user user5,6user user6",
+			isPresent = "Blogs Entry Title 1",
+			taskName = "Review");
+
+		Navigator.gotoBack();
+
+		Click(
+			assigneeName = "1user user1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT_OVERDUE");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Pending,1user user1,Overdue");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "Once there are active processes, metrics will appear here.");
+
+		Navigator.gotoBack();
+
+		Click(
+			assigneeName = "1user user1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT_ON_TIME");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Pending,1user user1,On Time");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "Once there are active processes, metrics will appear here.");
+
+		Navigator.gotoBack();
+
+		Click(
+			assigneeName = "1user user1",
+			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_TASKCOUNT_TOTAL_PENDING");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Pending,1user user1");
+
+		WorkflowMetrics.assertAllItemsValues(
+			assigneeName = "1user user1",
+			isNotPresent = "2user user2,3user user3,4user user4,5user user5,6user user6",
+			isPresent = "Blogs Entry Title 1",
+			taskName = "Review");
+
+		Navigator.gotoBack();
+
+		WorkflowMetrics.clearAllFilter();
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "2Role");
+
+		WorkflowMetrics.viewWorkloadByAssignee(
+			assigneeName = "2user user2",
+			isNotPresent = "1user,user1,3user user3,4user user4,5user user5,6user user6",
+			onTimeTaskCount = "0",
+			overdueTaskCount = "0",
+			totalPendingTaskCount = "1");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValue(workflowStep = "1Role,3Role,4Role,5Role,6Role");
+
+		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "5");
+
+		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValueProcessStep(workflowStep = "Review");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		WorkflowMetrics.viewWorkloadByAssignee(
+			assigneeName = "6user user6",
+			isNotPresent = "1user user1,2user user2,3user user3,4user user4,5user user5",
+			onTimeTaskCount = "0",
+			overdueTaskCount = "0",
+			totalPendingTaskCount = "1");
+	}
+
 	@description = "LRQA-53633 Automate LPS-103368: [Dashboard] Apply searches in the workload distribution for all assignees"
 	@priority = "5"
 	test ApplySearchesForAllAssignees {
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ApplySearchesForAllAssignees";
 
 		ProductMenu.gotoPortlet(
@@ -243,7 +361,6 @@ definition {
 	@description = "LRQA-53628 Automate LPS-98517 [Dashboard] Filter items list by assignee name"
 	@priority = "5"
 	test FilterAllItemsListByAssigneeName {
-		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "WorkflowMetrics#FilterAllItemsListByAssigneeName";
 
 		WorkflowMetrics.createUsersAndAssignInstances(
@@ -554,7 +671,6 @@ definition {
 
 	@description = "LRQA-53639 - Automate LPS-100675"
 	test VerifyFilterTopStepPerformance {
-		property portal.acceptance = "false";
 
 		var key_testSLADefinitionDays = "0";
 		var key_testSLADefinitionHours = "0001";
@@ -759,6 +875,103 @@ definition {
 			workflowProcess = "Single Approver");
 
 		WorkflowMetrics.validateInstanceDetails(processStatus = "Completed");
+	}
+
+	@description = "LRQA-53631 Automate LPS-97666: [Performance] View top assignee performance"
+	test ViewTopAsigneePerformance {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ViewTopAsigneePerformance";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry Unapproved");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Unapproved",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		WorkflowMetrics.viewPerformanceByAssignee(
+			assignee = "Test Test",
+			avgCompletionTime = "1min",
+			taskCount = "1");
+
+		WorkflowMetrics.createUsersAndAssignInstances(
+			numberOfBlogInstances = "10",
+			numberOfUsers = "10");
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "CompleteTasksAssignedToUsers.groovy");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		AssertElementPresent(
+			key_rowNumber = "10",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_TABLE_POSITION");
+
+		AssertElementNotPresent(
+			key_rowNumber = "11",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_TABLE_POSITION");
+
+		AssertElementPresent(
+			key_assigneesNumber = "11",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
+
+		WorkflowMetrics.selectDateRangePerformanceByAssignee(
+			completionVelocityDateRange = "Custom Range",
+			endDateRange = "11/11/2018",
+			startDateRange = "09/22/2018");
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_EMPTY_STATE");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		WorkflowMetrics.selectStepFilterPerformaceByAssignee(velocityUnit = "REVIEW");
+
+		AssertElementPresent(
+			key_assigneesNumber = "11",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_VIEW_ALL_ASSIGNEES_LINK");
+
+		WorkflowMetrics.selectStepFilterPerformaceByAssignee(velocityUnit = "UPDATE");
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_NO_RESULTS");
 	}
 
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"

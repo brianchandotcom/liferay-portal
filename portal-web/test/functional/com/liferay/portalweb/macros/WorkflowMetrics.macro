@@ -134,9 +134,7 @@ definition {
 			var iterator = MathUtil.sum("${iterator}", "1");
 		}
 
-		Workflow.assignBlogEntriesToUsers(
-			numberOfBlogInstances = "4",
-			numberOfUsers = "3");
+		WorkflowMetrics.executeWorkflowScript(scriptName = "assignOpenTasksToUsers.groovy");
 	}
 
 	macro createUsersGroovy {
@@ -291,6 +289,26 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_APPLY");
 	}
 
+	macro selectDateRangePerformanceByAssignee {
+		var key_completionVelocityDateRange = "${selectVelocityDateRange}";
+		var key_endDateRange = "${endDateRange}";
+		var key_startDateRange = "${startDateRange}";
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_DATE_RANGE_DROPDOWN");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
+
+		Type(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_FROM",
+			value1 = "${startDateRange}");
+
+		Type(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_TO",
+			value1 = "${endDateRange}");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_APPLY");
+	}
+
 	macro selectDateRangePerformanceByStep {
 		var key_completionVelocityDateRange = "${selectVelocityDateRange}";
 		var key_endDateRange = "${endDateRange}";
@@ -311,6 +329,14 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_APPLY");
 	}
 
+	macro selectStepFilterPerformaceByAssignee {
+		var key_velocityUnit = "${velocityUnit}";
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_DROPDOWN_STEP_${velocityUnit}");
+	}
+
 	macro selectVelocityUnit {
 		var key_velocityUnit = "${velocityUnit}";
 
@@ -320,14 +346,15 @@ definition {
 	}
 
 	macro selectWorkloadByAssigneeCardFilterValue {
-		var key_workflowStep = "${workflowStep}";
 
-		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER");
+		for (var key_workflowStep : list "${workflowStep}") {
+			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER");
 
-		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION");
+			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION");
 
-		if (IsElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME")) {
-			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME");
+			if (IsElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME")) {
+				Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME");
+			}
 		}
 	}
 

@@ -78,6 +78,8 @@ public class LayoutStructure {
 		LayoutStructureItem parentLayoutStructureItem =
 			_layoutStructureItems.get(parentItemId);
 
+		int newPosition = position;
+
 		if (Objects.equals(
 				parentLayoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_ROOT)) {
@@ -88,10 +90,12 @@ public class LayoutStructure {
 					position);
 
 			parentItemId = containerLayoutStructureItem.getItemId();
+
+			newPosition = 0;
 		}
 
 		LayoutStructureItem layoutStructureItem = addLayoutStructureItem(
-			LayoutDataItemTypeConstants.TYPE_ROW, parentItemId, position);
+			LayoutDataItemTypeConstants.TYPE_ROW, parentItemId, newPosition);
 
 		_addColumnLayoutStructureItem(layoutStructureItem.getItemId(), 0, 4);
 		_addColumnLayoutStructureItem(layoutStructureItem.getItemId(), 1, 4);

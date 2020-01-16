@@ -17,6 +17,7 @@ package com.liferay.site.memberships.web.internal.display.context;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -181,9 +182,8 @@ public class SelectUsersDisplayContext {
 			userParams.put(
 				"usersGroups", Long.valueOf(group.getParentGroupId()));
 		}
-		else {
-			userParams.put("usersGroups", getGroupId());
-		}
+
+		userParams.put(Field.GROUP_ID, Long.valueOf(getGroupId()));
 
 		int usersCount = UserLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),

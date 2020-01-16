@@ -12,10 +12,10 @@
  * details.
  */
 
-import {getClosestAssetElement, getNumberOfWords} from '../utils/assets';
+import {getNumberOfWords} from '../utils/assets';
 import {DEBOUNCE} from '../utils/constants';
 import {debounce} from '../utils/debounce';
-import {onReady} from '../utils/events.js';
+import {clickEvent, onReady} from '../utils/events.js';
 import {ScrollTracker} from '../utils/scroll';
 
 const applicationId = 'Blog';
@@ -117,33 +117,14 @@ function trackBlogViewed(analytics) {
  * @param {object} The Analytics client instance
  */
 function trackBlogClicked(analytics) {
-	const onClick = ({target}) => {
-		const blogElement = getClosestAssetElement(target, 'blog');
-
-		if (!isTrackableBlog(blogElement)) {
-			return;
-		}
-
-		const tagName = target.tagName.toLowerCase();
-
-		const payload = {
-			...getBlogPayload(blogElement),
-			tagName
-		};
-
-		if (tagName === 'a') {
-			payload.href = target.href;
-			payload.text = target.innerText;
-		} else if (tagName === 'img') {
-			payload.src = target.src;
-		}
-
-		analytics.send('blogClicked', applicationId, payload);
-	};
-
-	document.addEventListener('click', onClick);
-
-	return () => document.removeEventListener('click', onClick);
+	return clickEvent({
+		analytics,
+		applicationId,
+		eventType: 'blogClicked',
+		getPayload: getBlogPayload,
+		isTrackable: isTrackableBlog,
+		type: 'blog'
+	});
 }
 
 /**

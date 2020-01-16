@@ -12,8 +12,8 @@
  * details.
  */
 
-import {getClosestAssetElement, getNumberOfWords} from '../utils/assets';
-import {onReady} from '../utils/events.js';
+import {getNumberOfWords} from '../utils/assets';
+import {onReady, clickEvent} from '../utils/events.js';
 
 const applicationId = 'WebContent';
 
@@ -53,33 +53,14 @@ function isTrackableWebContent(element) {
  * @param {object} The Analytics client instance
  */
 function trackWebContentClicked(analytics) {
-	const onClick = ({target}) => {
-		const webContentElement = getClosestAssetElement(target, 'web-content');
-
-		if (!isTrackableWebContent(webContentElement)) {
-			return;
-		}
-
-		const tagName = target.tagName.toLowerCase();
-
-		const payload = {
-			...getWebContentPayload(webContentElement),
-			tagName
-		};
-
-		if (tagName === 'a') {
-			payload.href = target.href;
-			payload.text = target.innerText;
-		} else if (tagName === 'img') {
-			payload.src = target.src;
-		}
-
-		analytics.send('webContentClicked', applicationId, payload);
-	};
-
-	document.addEventListener('click', onClick);
-
-	return () => document.removeEventListener('click', onClick);
+	return clickEvent({
+		analytics,
+		applicationId,
+		eventType: 'webContentClicked',
+		getPayload: getWebContentPayload,
+		isTrackable: isTrackableWebContent,
+		type: 'web-content'
+	});
 }
 
 /**

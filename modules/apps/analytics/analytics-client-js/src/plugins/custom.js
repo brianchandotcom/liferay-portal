@@ -15,7 +15,7 @@
 import {closest, getClosestAssetElement} from '../utils/assets';
 import {DEBOUNCE} from '../utils/constants';
 import {debounce} from '../utils/debounce';
-import {onReady} from '../utils/events.js';
+import {clickEvent, onReady} from '../utils/events.js';
 import {ScrollTracker} from '../utils/scroll';
 
 const applicationId = 'Custom';
@@ -176,33 +176,14 @@ function trackCustomAssetViewed(analytics) {
  * @param {object} analytics The Analytics client instance
  */
 function trackCustomAssetClick(analytics) {
-	const onClick = ({target}) => {
-		const customAssetElement = getClosestAssetElement(target, 'custom');
-
-		if (!isTrackableCustomAsset(customAssetElement)) {
-			return;
-		}
-
-		const tagName = target.tagName.toLowerCase();
-
-		const payload = {
-			...getCustomAssetPayload(customAssetElement),
-			tagName
-		};
-
-		if (tagName === 'a') {
-			payload.href = target.href;
-			payload.text = target.innerText;
-		} else if (tagName === 'img') {
-			payload.src = target.src;
-		}
-
-		analytics.send('assetClicked', applicationId, payload);
-	};
-
-	document.addEventListener('click', onClick);
-
-	return () => document.removeEventListener('click', onClick);
+	return clickEvent({
+		analytics,
+		applicationId,
+		eventType: 'assetClicked',
+		getPayload: getCustomAssetPayload,
+		isTrackable: isTrackableCustomAsset,
+		type: 'custom'
+	});
 }
 
 /**

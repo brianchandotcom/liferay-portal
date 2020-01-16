@@ -117,11 +117,8 @@ export const mergePages = (
 				sourcePages[pageIndex].rows[rowIndex].columns[columnIndex]
 					.fields[fieldIndex];
 
-			let displayErrors = sourceField.displayErrors;
-
-			if (field.fieldName === fieldName) {
-				displayErrors = true;
-			}
+			const displayErrors =
+				sourceField.displayErrors || field.fieldName === fieldName;
 
 			let newField = {
 				...sourceField,

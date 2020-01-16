@@ -123,7 +123,11 @@ public class PublishLayoutMVCActionCommand
 				serviceContext, Collections.emptyMap());
 		}
 		else {
-			_layoutCopyHelper.copyLayout(draftLayout, layout);
+			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+
+			layout.setType(draftLayout.getType());
+
+			_layoutLocalService.updateLayout(layout);
 
 			UnicodeProperties typeSettingsProperties =
 				draftLayout.getTypeSettingsProperties();

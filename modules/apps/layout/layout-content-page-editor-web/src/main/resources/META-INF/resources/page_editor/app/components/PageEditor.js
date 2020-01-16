@@ -36,7 +36,7 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: RowWithControls
 };
 
-export default function PageEditor() {
+export default function PageEditor({withinMasterPage = false}) {
 	const {
 		fragmentEntryLinks,
 		layoutData,
@@ -48,8 +48,10 @@ export default function PageEditor() {
 
 	return (
 		<div
-			className={classNames('page-editor', 'page-editor--with-sidebar', {
-				'page-editor--with-sidebar-open': sidebarPanelId && sidebarOpen
+			className={classNames('page-editor', {
+				'page-editor--with-sidebar': !withinMasterPage,
+				'page-editor--with-sidebar-open':
+					sidebarPanelId && sidebarOpen && !withinMasterPage
 			})}
 			id="page-editor"
 		>

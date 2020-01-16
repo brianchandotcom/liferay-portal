@@ -14,31 +14,42 @@
 
 package com.liferay.dispatch.service.impl;
 
+import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.exception.DispatchTriggerEndDateException;
 import com.liferay.dispatch.exception.DispatchTriggerNameException;
 import com.liferay.dispatch.exception.DispatchTriggerStartDateException;
 import com.liferay.dispatch.exception.DuplicateDispatchTriggerException;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.dispatch.scheduler.DispatchTriggerSchedulerEntryTracker;
 import com.liferay.dispatch.service.base.DispatchTriggerLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 @Component(
 	property = "model.class.name=com.liferay.dispatch.model.DispatchTrigger",
@@ -96,8 +107,7 @@ public class DispatchTriggerLocalServiceImpl
 		resourceLocalService.deleteResource(
 			dispatchTrigger, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		_dispatchTriggerSchedulerEntryTracker.deleteScheduledTask(
-			dispatchTrigger.getDispatchTriggerId());
+		_deleteSchedulerConfiguration(dispatchTrigger.getDispatchTriggerId());
 
 		return dispatchTrigger;
 	}
@@ -135,6 +145,36 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Override
+	public Optional<Date> getNextFireDate(long dispatchTriggerId) {
+		try {
+			return Optional.ofNullable(
+				_schedulerEngineHelper.getNextFireTime(
+					_getJobName(dispatchTriggerId),
+					_getGroupName(dispatchTriggerId), StorageType.PERSISTED));
+		}
+		catch (SchedulerException se) {
+			_log.error(se, se);
+		}
+
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<Date> getPreviousFireDate(long dispatchTriggerId) {
+		try {
+			return Optional.ofNullable(
+				_schedulerEngineHelper.getPreviousFireTime(
+					_getJobName(dispatchTriggerId),
+					_getGroupName(dispatchTriggerId), StorageType.PERSISTED));
+		}
+		catch (SchedulerException se) {
+			_log.error(se, se);
+		}
+
+		return Optional.empty();
+	}
+
+	@Override
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, boolean active, String cronExpression,
 			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
@@ -164,13 +204,12 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
 		if (active) {
-			_dispatchTriggerSchedulerEntryTracker.addScheduledTask(
+			_addSchedulerConfiguration(
 				dispatchTriggerId, cronExpression,
 				dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate());
 		}
 		else {
-			_dispatchTriggerSchedulerEntryTracker.deleteScheduledTask(
-				dispatchTriggerId);
+			_deleteSchedulerConfiguration(dispatchTriggerId);
 		}
 
 		return dispatchTrigger;
@@ -221,11 +260,96 @@ public class DispatchTriggerLocalServiceImpl
 				String.valueOf(companyId)));
 	}
 
-	@Reference
-	private DispatchTriggerSchedulerEntryTracker
-		_dispatchTriggerSchedulerEntryTracker;
+	private void _addSchedulerConfiguration(
+		long dispatchTriggerId, String cronExpression, Date startDate,
+		Date endDate) {
+
+		Optional<SchedulerResponse> schedulerResponseOptional =
+			_getSchedulerResponse(dispatchTriggerId);
+
+		if (schedulerResponseOptional.isPresent()) {
+			_deleteSchedulerConfiguration(dispatchTriggerId);
+		}
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			_getJobName(dispatchTriggerId), _getGroupName(dispatchTriggerId),
+			startDate, endDate, cronExpression);
+
+		try {
+			_schedulerEngineHelper.schedule(
+				trigger, StorageType.PERSISTED, null,
+				DispatchConstants.EXECUTOR_DESTINATION_NAME,
+				_getPayload(dispatchTriggerId), 1000);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Scheduler entry created for dispatch trigger ID " +
+						dispatchTriggerId);
+			}
+		}
+		catch (SchedulerException se) {
+			_log.error(
+				"Unable to create scheduler entry for dispatch trigger ID " +
+					dispatchTriggerId,
+				se);
+		}
+	}
+
+	private void _deleteSchedulerConfiguration(long dispatchTriggerId) {
+		try {
+			_schedulerEngineHelper.delete(
+				_getJobName(dispatchTriggerId),
+				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
+		}
+		catch (SchedulerException se) {
+			_log.error(
+				"Unable to delete scheduler entry for dispatch trigger ID " +
+					dispatchTriggerId,
+				se);
+		}
+	}
+
+	private String _getGroupName(long dispatchTriggerId) {
+		return String.format("DISPATCH_GROUP_%07d", dispatchTriggerId);
+	}
+
+	private String _getJobName(long dispatchTriggerId) {
+		return String.format("DISPATCH_JOB_%07d", dispatchTriggerId);
+	}
+
+	private String _getPayload(long dispatchTriggerId) {
+		return String.format("{\"dispatchTriggerId\"= %d}", dispatchTriggerId);
+	}
+
+	private Optional<SchedulerResponse> _getSchedulerResponse(
+		long dispatchTriggerId) {
+
+		try {
+			return Optional.ofNullable(
+				_schedulerEngineHelper.getScheduledJob(
+					_getJobName(dispatchTriggerId),
+					_getGroupName(dispatchTriggerId), StorageType.PERSISTED));
+		}
+		catch (SchedulerException se) {
+			_log.error(
+				"Unable to get scheduler entry for dispatch trigger ID " +
+					dispatchTriggerId,
+				se);
+		}
+
+		return Optional.empty();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DispatchTriggerLocalServiceImpl.class);
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

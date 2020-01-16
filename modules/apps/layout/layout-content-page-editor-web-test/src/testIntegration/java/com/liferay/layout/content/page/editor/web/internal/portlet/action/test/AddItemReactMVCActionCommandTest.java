@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -164,11 +163,6 @@ public class AddItemReactMVCActionCommandTest {
 		mockActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		mockActionRequest.addParameter(
-			"classNameId",
-			String.valueOf(PortalUtil.getClassNameId(Layout.class.getName())));
-		mockActionRequest.addParameter(
-			"classPK", String.valueOf(_layout.getPlid()));
 		mockActionRequest.addParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 

@@ -22,7 +22,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Blogs.tearDownCP();
+		Workflow._tearDownBlog();
 
 		WorkflowMetrics.executeWorkflowScript(scriptName = "DeleteUsersAndRoles.groovy");
 
@@ -114,7 +114,7 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		WorkflowMetrics.createUsersAndAssignInstances(
+		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
 			numberOfBlogInstances = "3",
 			numberOfUsers = "3");
 
@@ -1107,7 +1107,7 @@ definition {
 			avgCompletionTime = "1min",
 			taskCount = "1");
 
-		WorkflowMetrics.createUsersAndAssignInstances(
+		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
 			numberOfBlogInstances = "10",
 			numberOfUsers = "10");
 

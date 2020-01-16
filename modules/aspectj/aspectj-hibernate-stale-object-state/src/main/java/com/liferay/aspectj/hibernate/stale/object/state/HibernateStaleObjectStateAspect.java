@@ -44,7 +44,7 @@ import org.hibernate.event.SaveOrUpdateEvent;
 public class HibernateStaleObjectStateAspect {
 
 	@AfterThrowing(
-		throwing = "sose",
+		throwing = "staleObjectStateException",
 		value = "execution(void org.hibernate.event.def.DefaultMergeEventListener.onMerge(org.hibernate.event.MergeEvent)) && args(mergeEvent)"
 	)
 	public void suppressMergeFailureCause(
@@ -56,7 +56,7 @@ public class HibernateStaleObjectStateAspect {
 	}
 
 	@AfterThrowing(
-		throwing = "ode",
+		throwing = "objectDeletedException",
 		value = "execution(void org.hibernate.event.SaveOrUpdateEventListener.onSaveOrUpdate(org.hibernate.event.SaveOrUpdateEvent)) && args(saveOrUpdateEvent)"
 	)
 	public void suppressUpdateFailureCause(

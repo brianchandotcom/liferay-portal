@@ -292,6 +292,24 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		return _selectedTestSuiteNames;
 	}
 
+	private String _getTestrayBuildType(String testSuite) {
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			S buildData = getBuildData();
+
+			return buildProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"portal.testsuite.upstream.testray.build.type[",
+					buildData.getPortalUpstreamBranchName(), "][", testSuite,
+					"]"));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	private String _getTestrayProjectName(String testSuite) {
 		try {
 			Properties buildProperties =

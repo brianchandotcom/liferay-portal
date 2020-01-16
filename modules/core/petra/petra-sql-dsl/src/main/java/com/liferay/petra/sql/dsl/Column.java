@@ -17,8 +17,9 @@ package com.liferay.petra.sql.dsl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.Alias;
 import com.liferay.petra.sql.dsl.expressions.Expression;
-import com.liferay.petra.sql.dsl.expressions.impl.Alias;
+import com.liferay.petra.sql.dsl.expressions.impl.AliasImpl;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -41,10 +42,10 @@ public class Column<T extends Table<T>, C>
 	@Override
 	public Alias<C> as(String name) {
 		if (_columnName.equals(name)) {
-			return new Alias<>(this, name);
+			return new AliasImpl<>(this, name);
 		}
 
-		return new Alias<>(_table.aliasColumn(this, name), name);
+		return new AliasImpl<>(_table.aliasColumn(this, name), name);
 	}
 
 	@Override

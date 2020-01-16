@@ -16,6 +16,7 @@ package com.liferay.petra.sql.dsl.expressions.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.expressions.Alias;
 import com.liferay.petra.sql.dsl.expressions.Expression;
 
 import java.util.Objects;
@@ -24,17 +25,19 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class Alias<T> extends BaseASTNode implements Expression<T> {
+public class AliasImpl<T> extends BaseASTNode implements Alias<T> {
 
-	public Alias(Expression<T> expression, String name) {
+	public AliasImpl(Expression<T> expression, String name) {
 		_expression = Objects.requireNonNull(expression);
 		_name = Objects.requireNonNull(name);
 	}
 
+	@Override
 	public Expression<T> getExpression() {
 		return _expression;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}

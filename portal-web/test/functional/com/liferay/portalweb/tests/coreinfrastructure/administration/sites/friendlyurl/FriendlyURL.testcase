@@ -67,7 +67,6 @@ definition {
 
 	@priority = "4"
 	test VerifyFriendlyURLsOnlyDisplayLocaleOnce {
-
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page");

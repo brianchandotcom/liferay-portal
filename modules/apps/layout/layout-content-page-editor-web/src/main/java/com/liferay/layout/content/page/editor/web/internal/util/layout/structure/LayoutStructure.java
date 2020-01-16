@@ -138,11 +138,11 @@ public class LayoutStructure {
 	public LayoutStructureItem duplicateLayoutStructureItem(
 		long fragmentEntryLinkId, String itemId) {
 
-		LayoutStructureItem layoutStructureItem = getLayoutStructureItem(
+		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);
 
-		LayoutStructureItem parentLayoutStructureItem = getLayoutStructureItem(
-			layoutStructureItem.getParentItemId());
+		LayoutStructureItem parentLayoutStructureItem =
+			_layoutStructureItems.get(layoutStructureItem.getParentItemId());
 
 		List<String> childrenItemIds =
 			parentLayoutStructureItem.getChildrenItemIds();
@@ -157,10 +157,6 @@ public class LayoutStructure {
 			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId));
 
 		return duplicateLayoutStructureItem;
-	}
-
-	public LayoutStructureItem getLayoutStructureItem(String itemId) {
-		return _layoutStructureItems.get(itemId);
 	}
 
 	public LayoutStructureItem moveLayoutStructureItem(

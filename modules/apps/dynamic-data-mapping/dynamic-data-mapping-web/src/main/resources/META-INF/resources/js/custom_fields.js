@@ -1139,10 +1139,10 @@ AUI.add(
 					fieldOption.label = {};
 
 					availableLocales.forEach(locale => {
-						var label = instance._getLocaleValue(
-							localizationMap,
+						var label = instance._getValue(
+							'label',
 							locale,
-							'label'
+							localizationMap
 						);
 
 						fieldOption.label[
@@ -1187,24 +1187,18 @@ AUI.add(
 			var translationManager = builder.translationManager;
 
 			translationManager.get('availableLocales').forEach(locale => {
-				var value = instance._getLocaleValue(
-					localizationMap,
-					locale,
-					attribute
-				);
-
 				localizedValue[locale] = LiferayFormBuilderUtil.normalizeValue(
-					value
+					instance._getValue(attribute, locale, localizationMap)
 				);
 			});
 
 			return localizedValue;
 		};
 
-		SerializableFieldSupport.prototype._getLocaleValue = function(
-			localizationMap,
+		SerializableFieldSupport.prototype._getValue = function(
+			attribute,
 			locale,
-			attribute
+			localizationMap
 		) {
 			var instance = this;
 

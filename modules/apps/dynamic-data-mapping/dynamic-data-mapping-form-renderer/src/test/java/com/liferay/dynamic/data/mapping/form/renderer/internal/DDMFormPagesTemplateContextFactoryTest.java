@@ -129,8 +129,8 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		String formFieldLabel = String.format(_HTML_WRAPPER, "label");
-		String formFieldTip = String.format(_HTML_WRAPPER, "tip");
 		String formFieldOption = String.format(_HTML_WRAPPER, "option");
+		String formFieldTip = String.format(_HTML_WRAPPER, "tip");
 
 		ddmForm.addDDMFormField(
 			DDMFormTestUtil.createDDMFormField(
@@ -307,8 +307,8 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		String formFieldLabel = String.format(_HTML_WRAPPER, "label");
-		String formFieldTip = String.format(_HTML_WRAPPER, "tip");
 		String formFieldOption = String.format(_HTML_WRAPPER, "option");
+		String formFieldTip = String.format(_HTML_WRAPPER, "tip");
 
 		ddmForm.addDDMFormField(
 			DDMFormTestUtil.createGridDDMFormField(
@@ -372,9 +372,9 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		String formFieldLabel = String.format(_HTML_WRAPPER, "label");
-		String formFieldTip = String.format(_HTML_WRAPPER, "tip");
 		String formFieldPlaceholder = String.format(
 			_HTML_WRAPPER, "placeHolder");
+		String formFieldTip = String.format(_HTML_WRAPPER, "tip");
 		String formFieldTooltip = String.format(_HTML_WRAPPER, "toolTip");
 
 		ddmForm.addDDMFormField(
@@ -794,10 +794,10 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		String formFieldLabel = String.format(_HTML_WRAPPER, "label");
 		String formFieldOption = String.format(_HTML_WRAPPER, "option");
-		String formFieldPredefinedValue = String.format(
-			_HTML_WRAPPER, "predefinedValue");
 		String formFieldPlaceholder = String.format(
 			_HTML_WRAPPER, "placeHolder");
+		String formFieldPredefinedValue = String.format(
+			_HTML_WRAPPER, "predefinedValue");
 		String formFieldTip = String.format(_HTML_WRAPPER, "tip");
 		String formFieldTooltip = String.format(_HTML_WRAPPER, "toolTip");
 

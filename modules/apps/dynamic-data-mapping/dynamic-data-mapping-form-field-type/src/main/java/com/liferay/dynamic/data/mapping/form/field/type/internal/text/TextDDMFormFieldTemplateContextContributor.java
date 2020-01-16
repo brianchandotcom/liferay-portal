@@ -110,10 +110,8 @@ public class TextDDMFormFieldTemplateContextContributor
 					LocalizedValue optionLabel =
 						ddmFormFieldOptions.getOptionLabels(optionValue);
 
-					String optionLabelString = optionLabel.getString(
+					return optionLabel.getString(
 						ddmFormFieldRenderingContext.getLocale());
-
-					return optionLabelString;
 				}
 			).put(
 				"value", optionValue
@@ -147,10 +145,8 @@ public class TextDDMFormFieldTemplateContextContributor
 			return null;
 		}
 
-		String predefinedValueString = predefinedValue.getString(
+		return predefinedValue.getString(
 			ddmFormFieldRenderingContext.getLocale());
-
-		return predefinedValueString;
 	}
 
 	protected String getTooltip(

@@ -27,18 +27,6 @@ import java.util.List;
 public class LayoutStructureItem {
 
 	public LayoutStructureItem(
-		JSONObject itemConfigJSONObject, String itemId, String parentItemId,
-		String itemType) {
-
-		_itemConfigJSONObject = itemConfigJSONObject;
-		_itemId = itemId;
-		_parentItemId = parentItemId;
-		_itemType = itemType;
-
-		_childrenItemIds = new ArrayList<>();
-	}
-
-	public LayoutStructureItem(
 		List<String> childrenItemIds, JSONObject itemConfigJSONObject,
 		String itemId, String parentItemId, String itemType) {
 
@@ -47,6 +35,17 @@ public class LayoutStructureItem {
 		_itemId = itemId;
 		_parentItemId = parentItemId;
 		_itemType = itemType;
+	}
+
+	public LayoutStructureItem(
+		String itemId, String parentItemId, String itemType) {
+
+		_itemId = itemId;
+		_parentItemId = parentItemId;
+		_itemType = itemType;
+
+		_itemConfigJSONObject = JSONFactoryUtil.createJSONObject();
+		_childrenItemIds = new ArrayList<>();
 	}
 
 	public void addChildrenItem(int position, String itemId) {

@@ -33,6 +33,10 @@ public class QueryUtil {
 			false, new AggregateExpression<>(true, expression, "count"));
 	}
 
+	public static FromStep select() {
+		return _SELECT_STAR;
+	}
+
 	public static FromStep select(Expression<?>... expressions) {
 		return new Select(false, expressions);
 	}
@@ -43,5 +47,7 @@ public class QueryUtil {
 
 	private static final FromStep _SELECT_COUNT_STAR_COUNT_VALUE = new Select(
 		false, AggregateExpression.COUNT_STAR_COUNT_VALUE);
+
+	private static final FromStep _SELECT_STAR = new Select(false);
 
 }

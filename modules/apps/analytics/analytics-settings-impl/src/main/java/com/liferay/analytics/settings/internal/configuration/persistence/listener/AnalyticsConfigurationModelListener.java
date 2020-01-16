@@ -21,6 +21,7 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
 import com.liferay.analytics.settings.internal.security.auth.verifier.AnalyticsSecurityAuthVerifier;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
+import com.liferay.analytics.settings.util.AnalyticsUsersHelper;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -338,7 +339,7 @@ public class AnalyticsConfigurationModelListener
 			return;
 		}
 
-		int count = _userLocalService.getCompanyUsersCount(companyId);
+		int count = _analyticsUsersHelper.getCompanyUsersCount(companyId);
 
 		int pages = count / _DEFAULT_DELTA;
 
@@ -351,7 +352,7 @@ public class AnalyticsConfigurationModelListener
 				end = count;
 			}
 
-			List<User> users = _userLocalService.getCompanyUsers(
+			List<User> users = _analyticsUsersHelper.getCompanyUsers(
 				companyId, start, end);
 
 			_addAnalyticsMessages(users);
@@ -416,7 +417,7 @@ public class AnalyticsConfigurationModelListener
 		}
 
 		for (String organizationId : organizationIds) {
-			int count = _userLocalService.getOrganizationUsersCount(
+			int count = _analyticsUsersHelper.getOrganizationUsersCount(
 				GetterUtil.getLong(organizationId));
 
 			int pages = count / _DEFAULT_DELTA;
@@ -431,8 +432,9 @@ public class AnalyticsConfigurationModelListener
 				}
 
 				try {
-					List<User> users = _userLocalService.getOrganizationUsers(
-						GetterUtil.getLong(organizationId), start, end);
+					List<User> users =
+						_analyticsUsersHelper.getOrganizationUsers(
+							GetterUtil.getLong(organizationId), start, end);
 
 					_addAnalyticsMessages(users);
 					_addContactsAnalyticsMessages(users);
@@ -476,7 +478,7 @@ public class AnalyticsConfigurationModelListener
 		}
 
 		for (String userGroupId : userGroupIds) {
-			int count = _userLocalService.getUserGroupUsersCount(
+			int count = _analyticsUsersHelper.getUserGroupUsersCount(
 				GetterUtil.getLong(userGroupId));
 
 			int pages = count / _DEFAULT_DELTA;
@@ -490,7 +492,7 @@ public class AnalyticsConfigurationModelListener
 					end = count;
 				}
 
-				List<User> users = _userLocalService.getUserGroupUsers(
+				List<User> users = _analyticsUsersHelper.getUserGroupUsers(
 					GetterUtil.getLong(userGroupId), start, end);
 
 				_addAnalyticsMessages(users);
@@ -517,6 +519,9 @@ public class AnalyticsConfigurationModelListener
 
 	@Reference
 	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+
+	@Reference
+	private AnalyticsUsersHelper _analyticsUsersHelper;
 
 	private boolean _authVerifierEnabled;
 

@@ -16,6 +16,7 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.EntityModelListener;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.service.ContactLocalService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,16 +56,24 @@ public class ContactModelListener extends BaseEntityModelListener<Contact> {
 
 	@Override
 	protected boolean isExcluded(Contact contact) {
-		AnalyticsConfiguration analyticsConfiguration =
-			analyticsConfigurationTracker.getAnalyticsConfiguration(
-				contact.getCompanyId());
-
-		if (analyticsConfiguration.syncAllContacts()) {
-			return false;
-		}
-
 		try {
 			User user = userLocalService.getUser(contact.getClassPK());
+
+			if (!user.isActive() ||
+				Objects.equals(
+					user.getScreenName(),
+					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN)) {
+
+				return true;
+			}
+
+			AnalyticsConfiguration analyticsConfiguration =
+				analyticsConfigurationTracker.getAnalyticsConfiguration(
+					contact.getCompanyId());
+
+			if (analyticsConfiguration.syncAllContacts()) {
+				return false;
+			}
 
 			return isExcluded(analyticsConfiguration, user);
 		}

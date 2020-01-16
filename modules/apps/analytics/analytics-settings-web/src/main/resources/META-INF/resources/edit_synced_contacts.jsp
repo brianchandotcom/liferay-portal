@@ -62,7 +62,7 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 					<span class="toggle-switch-handle" />
 				</span>
 				<span class="toggle-switch-text toggle-switch-text-right">
-					<liferay-ui:message arguments="<%= UserLocalServiceUtil.searchCount(themeDisplay.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_APPROVED, new LinkedHashMap<String, Object>()) %>" key="sync-all-x-contacts" />
+					<liferay-ui:message arguments="<%= AnalyticsUsersHelperUtil.getCompanyUsersCount(themeDisplay.getCompanyId()) %>" key="sync-all-x-contacts" />
 				</span>
 			</label>
 		</fieldset>

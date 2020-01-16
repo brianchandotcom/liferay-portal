@@ -33,7 +33,7 @@ if (analyticsConfiguration != null) {
 	}
 
 	if (analyticsConfiguration.syncAllContacts()) {
-		totalContactsSelected = UserLocalServiceUtil.searchCount(themeDisplay.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_APPROVED, new LinkedHashMap<String, Object>());
+		totalContactsSelected = AnalyticsUsersHelperUtil.getCompanyUsersCount(themeDisplay.getCompanyId());
 	}
 	else {
 		String[] syncedOrganizationIds = analyticsConfiguration.syncedOrganizationIds();
@@ -52,7 +52,7 @@ if (analyticsConfiguration != null) {
 			syncedUserGroupIdsLong[i] = Long.parseLong(syncedUserGroupIds[i]);
 		}
 
-		totalContactsSelected = UserServiceUtil.getOrganizationsAndUserGroupsUsersCount(syncedOrganizationIdsLong, syncedUserGroupIdsLong);
+		totalContactsSelected = AnalyticsUsersHelperUtil.getOrganizationsAndUserGroupsUsersCount(syncedOrganizationIdsLong, syncedUserGroupIdsLong);
 	}
 }
 %>

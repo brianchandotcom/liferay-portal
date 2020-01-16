@@ -20,6 +20,9 @@ import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+const CUSTOM_OPTION = 'customOption';
+const DEFAULT_OPTION = 'defaultOption';
+
 /**
  * @class Languages
  */
@@ -30,11 +33,8 @@ const Languages = ({
 	siteAvailableLocales,
 	siteDefaultLocaleId
 }) => {
-	const defaultOption = 'defaultOption';
-	const customOption = 'customOption';
-
 	const [selectedRadioGroupValue, setSelectedRadioGroupValue] = useState(
-		inheritLocales ? defaultOption : customOption
+		inheritLocales ? DEFAULT_OPTION : CUSTOM_OPTION
 	);
 
 	const Language = ({displayName, isDefault, localeId, showActions}) => {
@@ -104,25 +104,25 @@ const Languages = ({
 					label={Liferay.Language.get(
 						'use-the-default-language-options'
 					)}
-					value={defaultOption}
+					value={DEFAULT_OPTION}
 				/>
 
 				<ClayRadio
 					label={Liferay.Language.get(
 						'define-a-custom-default-language-and-additional-available-languages-for-this-repository'
 					)}
-					value={customOption}
+					value={CUSTOM_OPTION}
 				/>
 			</ClayRadioGroup>
 
-			{selectedRadioGroupValue === defaultOption && (
+			{selectedRadioGroupValue === DEFAULT_OPTION && (
 				<LanguagesList
 					defaultLocaleId={defaultLocaleId}
 					locales={availableLocales}
 				/>
 			)}
 
-			{selectedRadioGroupValue === customOption && (
+			{selectedRadioGroupValue === CUSTOM_OPTION && (
 				<LanguagesList
 					defaultLocaleId={siteDefaultLocaleId}
 					locales={siteAvailableLocales}

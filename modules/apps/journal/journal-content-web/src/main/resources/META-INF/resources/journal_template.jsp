@@ -96,6 +96,14 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 		function(event) {
 			event.preventDefault();
 
+			var instance = this;
+
+			var alert = instance._alert;
+
+			if (alert) {
+				alert.destroy();
+			}
+
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -145,7 +153,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 							);
 						});
 
-					new Liferay.Alert({
+					alert = new Liferay.Alert({
 						closeable: true,
 						delay: {
 							hide: 0,
@@ -159,6 +167,8 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 						title: '',
 						type: 'info'
 					}).render(form);
+
+					instance._alert = alert;
 				}
 			);
 		}

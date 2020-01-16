@@ -3654,9 +3654,11 @@ AUI.add(
 
 					radioNodes.set('checked', false);
 
-					radioNodes
-						.filter('[value=' + value + ']')
-						.set('checked', true);
+					radioNodes.each(radioNode => {
+						if (radioNode.get('value') === value) {
+							radioNode.set('checked', true);
+						}
+					});
 				},
 
 				syncReadOnlyUI() {

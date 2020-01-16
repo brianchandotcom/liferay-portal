@@ -22,7 +22,7 @@ import {StoreContext} from '../store/index';
 import updateItemConfig from '../thunks/updateItemConfig';
 import updateRowColumns from '../thunks/updateRowColumns';
 
-const NUMBER_OF_COLUMNS_OPTIONS = ['0', '1', '2', '3', '4', '5', '6'];
+const NUMBER_OF_COLUMNS_OPTIONS = ['1', '2', '3', '4', '5', '6'];
 
 const ROW_CONFIGURATION_IDENTIFIERS = {
 	gutters: 'gutters',

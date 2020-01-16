@@ -88,12 +88,12 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 <c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
 	<div class="icon-sites">
 		<liferay-ui:icon
-			icon="change"
+			icon="sites"
 			id="manageSitesLink"
 			label="<%= false %>"
 			linkCssClass="icon-monospaced"
 			markupView="lexicon"
-			message="go-to-other-space"
+			message="go-to-other-site"
 			url="javascript:;"
 		/>
 	</div>
@@ -127,7 +127,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 							},
 							eventName: '<%= eventName %>',
 							id: '<portlet:namespace />selectSite',
-							title: '<liferay-ui:message key="select-space" />',
+							title: '<liferay-ui:message key="select-site" />',
 							uri: '<%= itemSelectorURL.toString() %>'
 						},
 						function(event) {
@@ -184,7 +184,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 	<c:when test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
 		<div class="collapsed panel-toggler">
 			<span class="site-name">
-				<liferay-ui:message key="choose-a-space" />
+				<liferay-ui:message key="choose-a-site" />
 			</span>
 		</div>
 	</c:when>

@@ -59,20 +59,18 @@
 					<div class="btn-group btn-group-nowrap float-right mt-1">
 						{if $readOnly}
 							<span class="pr-3 pt-1 text-info">
-								{call ClayIcon.render}
-									{param spritemap: $spritemap /}
-									{param symbol: 'exclamation-circle' /}
-								{/call}
+								<svg class="lexicon-icon">
+									<use xlink:href="{$spritemap ?: ''}#exclamation-circle"></use>
+								</svg>
 								{sp}
 								<span>{msg desc=""}read-only-view{/msg}</span>
 							</span>
 						{else}
 							{if $propagationEnabled}
 								<span class="lfr-portal-tooltip pr-3 pt-1 text-info" data-title="{msg desc=""}automatic-propagation-enabled-help{/msg}">
-									{call ClayIcon.render}
-										{param spritemap: $spritemap /}
-										{param symbol: 'exclamation-circle' /}
-									{/call}
+									<svg class="lexicon-icon">
+										<use xlink:href="{$spritemap ?: ''}#exclamation-circle"></use>
+									</svg>
 									{sp}
 									<span>{msg desc=""}automatic-propagation-enabled{/msg}</span>
 								</span>

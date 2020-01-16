@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -861,7 +862,7 @@ public class OrganizationLocalServiceTest {
 	}
 
 	@Test
-	public void testSearchOrganizationsWithOrganizationsTreeParameterAsUser()
+	public void testSearchOrganizationsWithOrganizationsTreeParameterAsAdminUser()
 		throws Exception {
 
 		testSearchOrganizationsWithOrganizationsTreeParameter(true);
@@ -892,10 +893,14 @@ public class OrganizationLocalServiceTest {
 	}
 
 	protected void testSearchOrganizationsWithOrganizationsTreeParameter(
-			boolean searchAsUser)
+			boolean searchAsAdminUser)
 		throws Exception {
 
-		Organization organization = OrganizationTestUtil.addOrganization();
+		Organization rootOrganization = OrganizationTestUtil.addOrganization();
+
+		Organization organization = OrganizationTestUtil.addOrganization(
+			rootOrganization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
 
 		Organization suborganization = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
@@ -905,17 +910,23 @@ public class OrganizationLocalServiceTest {
 
 		_organizations.add(organization);
 
+		_organizations.add(rootOrganization);
+
 		_user = UserTestUtil.addUser();
 
-		if (searchAsUser) {
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(_user);
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
 
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-		}
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 		UserLocalServiceUtil.addOrganizationUsers(
 			organization.getOrganizationId(), new long[] {_user.getUserId()});
+
+		if (searchAsAdminUser) {
+			UserTestUtil.addUserGroupRole(
+				_user.getUserId(), organization.getGroupId(),
+				RoleConstants.ORGANIZATION_ADMINISTRATOR);
+		}
 
 		LinkedHashMap<String, Object> organizationParams =
 			LinkedHashMapBuilder.<String, Object>put(
@@ -928,12 +939,26 @@ public class OrganizationLocalServiceTest {
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
 				organizationParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(1, baseModelSearchResult.getLength());
+		int expectedCount = 1;
+
+		if (searchAsAdminUser) {
+			expectedCount = 2;
+		}
+
+		Assert.assertEquals(expectedCount, baseModelSearchResult.getLength());
 
 		List<Organization> indexerSearchResults =
 			baseModelSearchResult.getBaseModels();
 
-		Assert.assertEquals(organization, indexerSearchResults.get(0));
+		List<Organization> expectedSearchResults = new ArrayList<>();
+
+		expectedSearchResults.add(organization);
+
+		if (searchAsAdminUser) {
+			expectedSearchResults.add(suborganization);
+		}
+
+		Assert.assertEquals(expectedSearchResults, indexerSearchResults);
 
 		List<Organization> finderSearchResults =
 			OrganizationLocalServiceUtil.search(

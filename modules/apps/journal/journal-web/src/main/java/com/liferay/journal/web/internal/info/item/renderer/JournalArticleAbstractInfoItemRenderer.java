@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = "service.ranking:Integer=100", service = InfoItemRenderer.class
+	property = "service.ranking:Integer=200", service = InfoItemRenderer.class
 )
 public class JournalArticleAbstractInfoItemRenderer
 	implements InfoItemRenderer<JournalArticle> {

@@ -149,26 +149,13 @@ public class LangBuilder {
 
 		String content = _orderProperties(propertiesFile, false);
 
-		// Locales that are not invoked by _createProperties should still be
-		// rewritten to use the right line separator
-
-		_orderProperties(
-			new File(
-				StringBundler.concat(
-					_langDirName, "/", _langFileName, "_en_AU.properties")),
-			true);
-		_orderProperties(
-			new File(
-				StringBundler.concat(
-					_langDirName, "/", _langFileName, "_en_GB.properties")),
-			true);
-		_orderProperties(
-			new File(
-				StringBundler.concat(
-					_langDirName, "/", _langFileName, "_fr_CA.properties")),
-			true);
-
 		_copyProperties(propertiesFile, "en");
+
+		// Automatic copy locales
+
+		_createProperties(content, "en_AU"); // English (Australia)
+		_createProperties(content, "en_GB"); // English (United Kingdom)
+		_createProperties(content, "fr_CA"); // French (Canada)
 
 		_createProperties(content, "ar"); // Arabic
 		_createProperties(content, "eu"); // Basque
@@ -388,7 +375,10 @@ public class LangBuilder {
 				if ((translatedText == null) || translatedText.equals("")) {
 					String value = array[1];
 
-					if (line.contains("{") || line.contains("<")) {
+					if (line.contains("{") || line.contains("<") ||
+						ArrayUtil.contains(
+							_AUTOMATIC_COPY_LANGUAGE_IDS, languageId)) {
+
 						translatedText = value + AUTOMATIC_COPY;
 					}
 					else if (line.contains("[")) {
@@ -770,6 +760,10 @@ public class LangBuilder {
 	private void _write(File file, String s) throws IOException {
 		FileUtils.writeStringToFile(file, s, StringPool.UTF8);
 	}
+
+	private static final String[] _AUTOMATIC_COPY_LANGUAGE_IDS = {
+		"en_AU", "en_GB", "fr_CA"
+	};
 
 	private final String[] _excludedLanguageIds;
 	private final Set<String> _keysWithUpdatedValues = new HashSet<>();

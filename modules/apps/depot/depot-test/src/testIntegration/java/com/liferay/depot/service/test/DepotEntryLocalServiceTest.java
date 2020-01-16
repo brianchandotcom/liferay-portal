@@ -41,6 +41,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -133,7 +134,7 @@ public class DepotEntryLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newDescription"
 			).build(),
-			formTypeSettingsProperties,
+			Collections.emptyMap(), formTypeSettingsProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -171,7 +172,7 @@ public class DepotEntryLocalServiceTest {
 			).put(
 				LocaleUtil.fromLanguageId("es_ES"), "nuevaDescripcion"
 			).build(),
-			formTypeSettingsProperties,
+			Collections.emptyMap(), formTypeSettingsProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -199,7 +200,7 @@ public class DepotEntryLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newDescription"
 			).build(),
-			formTypeSettingsProperties,
+			Collections.emptyMap(), formTypeSettingsProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -231,7 +232,8 @@ public class DepotEntryLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "newName"
 			).build(),
-			new HashMap<>(), formTypeSettingsProperties,
+			Collections.emptyMap(), Collections.emptyMap(),
+			formTypeSettingsProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -246,7 +248,8 @@ public class DepotEntryLocalServiceTest {
 		DepotEntry depotEntry = _addDepotEntry("name", "description");
 
 		_depotEntryLocalService.updateDepotEntry(
-			depotEntry.getDepotEntryId(), new HashMap<>(), new HashMap<>(),
+			depotEntry.getDepotEntryId(), new HashMap<>(),
+			Collections.emptyMap(), Collections.emptyMap(),
 			new UnicodeProperties(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -278,7 +281,7 @@ public class DepotEntryLocalServiceTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "description"
 			).build(),
-			formTypeSettingsProperties,
+			Collections.emptyMap(), formTypeSettingsProperties,
 			ServiceContextTestUtil.getServiceContext());
 
 		group = _groupLocalService.getGroup(depotEntry.getGroupId());
@@ -309,7 +312,7 @@ public class DepotEntryLocalServiceTest {
 			).put(
 				LocaleUtil.fromLanguageId("es_ES"), "descripcion"
 			).build(),
-			formTypeSettingsProperties,
+			Collections.emptyMap(), formTypeSettingsProperties,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

@@ -218,8 +218,8 @@ definition {
 			portlet = "Metrics");
 
 		WorkflowMetrics.createUsersAndAssignInstances(
-			numberOfUsers = "6",
-			numberOfBlogInstances = "6");
+			numberOfBlogInstances = "6",
+			numberOfUsers = "6");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -769,7 +769,7 @@ definition {
 
 	@description = "LRQA-53639 - Automate LPS-100675"
 	test VerifyFilterTopStepPerformance {
-		
+
 		var key_testSLADefinitionDays = "0";
 		var key_testSLADefinitionHours = "0001";
 		var key_testSLADefinitionHoursCheck = "00:01";
@@ -1149,7 +1149,6 @@ definition {
 		WorkflowMetrics.selectStepFilterPerformaceByAssignee(velocityUnit = "UPDATE");
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_CARD_NO_RESULTS");
-
 	}
 
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"

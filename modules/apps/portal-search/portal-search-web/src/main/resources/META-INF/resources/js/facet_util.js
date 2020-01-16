@@ -15,7 +15,24 @@
 AUI.add(
 	'liferay-search-facet-util',
 	A => {
-		var FacetUtil = {
+		const FACET_TERM_CLASS = 'facet-term';
+
+		const FACET_TERM_SELECTED_CLASS = 'facet-term-selected';
+
+		/**
+		 * Converts a NodeList to an array of nodes. This allows array
+		 * methods to be performed.
+		 * @param {NodeList} nodeList
+		 */
+		function _transformNodeListToArray(nodeList) {
+			const nodeArray = [];
+
+			nodeList.forEach(node => nodeArray.push(node));
+
+			return nodeArray;
+		}
+
+		const FacetUtil = {
 			addURLParameter(key, value, parameterArray) {
 				key = encodeURIComponent(key);
 				value = encodeURIComponent(value);
@@ -26,25 +43,42 @@ AUI.add(
 			},
 
 			changeSelection(event) {
-				var form = event.currentTarget.form;
+				event.preventDefault();
+
+				const form = event.currentTarget.form;
 
 				if (!form) {
 					return;
 				}
 
-				var selections = [];
-
-				var formCheckboxes = document.querySelectorAll(
-					'#' + form.id + ' input.facet-term'
+				const currentSelectedTermId = event.currentTarget.getAttribute(
+					'data-term-id'
 				);
 
-				Array.prototype.forEach.call(formCheckboxes, checkbox => {
-					if (checkbox.checked) {
-						selections.push(checkbox.getAttribute('data-term-id'));
-					}
-				});
+				const facetTerms = document.querySelectorAll(
+					`#${form.id} .${FACET_TERM_CLASS}`
+				);
 
-				FacetUtil.selectTerms(form, selections);
+				const selectedTerms = _transformNodeListToArray(facetTerms)
+					.filter(term => {
+						if (term.type === 'checkbox') {
+							return term.checked;
+						}
+
+						const isCurrentTarget =
+							term.getAttribute('data-term-id') ===
+							currentSelectedTermId;
+
+						const isSelected = Array.prototype.includes.call(
+							term.classList,
+							FACET_TERM_SELECTED_CLASS
+						);
+
+						return isCurrentTarget ? !isSelected : isSelected;
+					})
+					.map(term => term.getAttribute('data-term-id'));
+
+				FacetUtil.selectTerms(form, selectedTerms);
 			},
 
 			clearSelections(event) {
@@ -57,6 +91,12 @@ AUI.add(
 				var selections = [];
 
 				FacetUtil.selectTerms(form._node, selections);
+			},
+
+			enableInputs(inputs) {
+				inputs.forEach(term => {
+					Liferay.Util.toggleDisabled(term, false);
+				});
 			},
 
 			removeURLParameters(key, parameterArray) {

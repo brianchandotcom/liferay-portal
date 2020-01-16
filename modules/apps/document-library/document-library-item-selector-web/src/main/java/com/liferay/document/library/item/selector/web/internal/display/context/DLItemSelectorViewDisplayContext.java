@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
@@ -291,7 +292,11 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public PortletURL getUploadURL(
 			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException {
+		throws Exception {
+
+		if (!isShowDragAndDropZone()) {
+			return null;
+		}
 
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
@@ -324,6 +329,28 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public boolean isSearch() {
 		return _search;
+	}
+
+	public boolean isShowDragAndDropZone() throws Exception {
+		if (_showDragAndDropZone != null) {
+			return _showDragAndDropZone;
+		}
+
+		long defaultFileEntryTypeId =
+			DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
+				getFolderId());
+
+		if (DLUtil.hasWorkflowDefinitionLink(
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
+				getFolderId(), defaultFileEntryTypeId)) {
+
+			_showDragAndDropZone = false;
+		}
+		else {
+			_showDragAndDropZone = true;
+		}
+
+		return _showDragAndDropZone;
 	}
 
 	private long _getFileEntryTypeId() {
@@ -459,6 +486,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	private Repository _repository;
 	private final boolean _search;
 	private SearchContext _searchContext;
+	private Boolean _showDragAndDropZone;
 	private final StagingGroupHelper _stagingGroupHelper;
 	private int[] _startAndEnd;
 	private final ThemeDisplay _themeDisplay;

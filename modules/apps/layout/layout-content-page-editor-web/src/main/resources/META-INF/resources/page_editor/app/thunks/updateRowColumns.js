@@ -29,6 +29,6 @@ export default function updateRowColumns({
 			onNetworkStatus: dispatch,
 			segmentsExperienceId
 		}).then(({layoutData}) => {
-			dispatch(updateLayoutData(layoutData));
+			dispatch(updateLayoutData({layoutData}));
 		});
 }

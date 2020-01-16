@@ -33,7 +33,7 @@ export default function moveItem({
 			position,
 			segmentsExperienceId
 		}).then(layoutData => {
-			dispatch(updateLayoutData(layoutData));
+			dispatch(updateLayoutData({layoutData}));
 		});
 	};
 }

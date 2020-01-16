@@ -35,7 +35,7 @@ export default function addItem({
 			position,
 			segmentsExperienceId
 		}).then(layoutData => {
-			dispatch(updateLayoutData(layoutData));
+			dispatch(updateLayoutData({layoutData}));
 		});
 	};
 }

@@ -34,7 +34,6 @@ task stopElasticsearch
 
 File elasticsearchSidecarDataDir = file("${project.'liferay.home'}/data/elasticsearch${project.'elasticsearchSidecarMajorVersion'}/repo")
 File elasticsearchSidecarDir = file("${project.'liferay.home'}/elasticsearch-${project.'elasticsearchSidecarMajorVersion'}")
-String elasticsearchSidecarURL = "http://localhost:9200/"
 
 buildElasticsearch {
 	doLast {
@@ -157,6 +156,8 @@ startElasticsearch {
 	}
 
 	doLast {
+		String elasticsearchSidecarURL = "http://localhost:9200/"
+
 		long startTime = System.currentTimeMillis()
 		long waitTime = TimeUnit.SECONDS.toMillis(60)
 

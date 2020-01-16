@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -63,8 +62,6 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
-		String itemId = ParamUtil.getString(
-			actionRequest, "itemId", String.valueOf(UUID.randomUUID()));
 		String itemType = ParamUtil.getString(actionRequest, "itemType");
 		String parentItemId = ParamUtil.getString(
 			actionRequest, "parentItemId");
@@ -75,14 +72,14 @@ public class AddItemReactMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getScopeGroupId(), segmentsExperienceId,
 				themeDisplay.getPlid(),
 				layoutStructure -> layoutStructure.addRowLayoutStructureItem(
-					itemId, parentItemId, position));
+					parentItemId, position));
 		}
 
 		return LayoutStructureUtil.updateLayoutPageTemplateData(
 			themeDisplay.getScopeGroupId(), segmentsExperienceId,
 			themeDisplay.getPlid(),
 			layoutStructure -> layoutStructure.addLayoutStructureItem(
-				itemId, itemType, parentItemId, position));
+				itemType, parentItemId, position));
 	}
 
 	@Override

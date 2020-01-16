@@ -28,7 +28,6 @@ ext {
 
 task buildElasticsearch
 task deployDistribution(type: Zip)
-task downloadElasticsearch
 task setupElasticsearch
 task startElasticsearch
 task stopElasticsearch
@@ -91,7 +90,7 @@ deployDistribution {
 	}
 }
 
-downloadElasticsearch {
+setupElasticsearch {
 	doFirst {
 		logger.lifecycle "Deleting {}", elasticsearchSidecarDataDir
 
@@ -102,48 +101,27 @@ downloadElasticsearch {
 				delete it
 			}
 		}
+
+		project.mkdir elasticsearchSidecarDataDir
 	}
 
 	doLast {
-		String zipName = project.properties["elasticsearch.sidecar.zip.name.linux"]
-
-		if (OSDetector.isWindows()) {
-			zipName = project.properties["elasticsearch.sidecar.zip.name.windows"]
-		}
-		else if (OSDetector.isApple()) {
-			zipName = project.properties["elasticsearch.sidecar.zip.name.mac"]
-		}
-
-		FileUtil.get(project, "${project.'elasticsearch.sidecar.zip.url'}/${zipName}", file("${project.'liferay.home'}/${zipName}"), false, true)
+		FileUtil.get(project, "${project.'elasticsearch.sidecar.url'}", file("${buildDir}/elasticsearch-sidecar.zip"), false, true)
 
 		project.copy {
 			fileMode = 0777
 
-			into project.properties["liferay.home"]
-
-			if (zipName.endsWith(".zip")) {
-				from zipTree(file("${project.'liferay.home'}/${zipName}"))
-			}
-			else {
-				from tarTree(file("${project.'liferay.home'}/${zipName}"))
-			}
+			from zipTree(file("${buildDir}/elasticsearch-sidecar.zip"))
+			into elasticsearchSidecarDir
 		}
-	}
-}
 
-setupElasticsearch {
-	dependsOn downloadElasticsearch
-
-	doFirst {
-		project.mkdir elasticsearchSidecarDataDir
-
-		File configFile = file("${project.'liferay.home'}/osgi/configs/com.liferay.portal.search.elasticsearch${project.'elasticsearch.sidecar.major.version'}.configuration.ElasticsearchConfiguration.config")
+		File configFile = file("${project.'liferay.home'}/osgi/configs/com.liferay.portal.search.elasticsearch${project.'elasticsearchSidecarMajorVersion'}.configuration.ElasticsearchConfiguration.config")
 
 		configFile.text = project.properties["elasticsearch.configs.osgi"].replace("\\\"", "\"").split(',').sort().join('\n')
 
-		File ymlFile = file("${elasticsearchSidecarDir}/config/elasticsearch.yml")
+		configFile = file("${elasticsearchSidecarDir}/config/elasticsearch.yml")
 
-		ymlFile.append '\n' + project.properties["elasticsearch.configs.sidecar"].replace("\\\"", "\"").split(',').sort().join('\n')
+		configFile.append '\n' + project.properties["elasticsearch.configs.sidecar"].replace("\\\"", "\"").split(',').sort().join('\n')
 	}
 }
 

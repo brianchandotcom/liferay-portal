@@ -186,8 +186,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if (fileEntryTypeId == -1) {
 			fileEntryTypeId =
-				DLFileEntryTypeLocalServiceImpl.getDefaultFileEntryTypeId(
-					dlFolderPersistence, folderId);
+				dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(folderId);
 		}
 
 		validateFileEntryTypeId(
@@ -2204,8 +2203,8 @@ public class DLFileEntryLocalServiceImpl
 				_log.debug(ifete, ifete);
 			}
 
-			return DLFileEntryTypeLocalServiceImpl.getDefaultFileEntryTypeId(
-				dlFolderPersistence, dlFileEntry.getFolderId());
+			return dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(
+				dlFileEntry.getFolderId());
 		}
 	}
 

@@ -27,6 +27,7 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
@@ -313,8 +314,7 @@ public class DLFileEntryTypeLocalServiceImpl
 	public long getDefaultFileEntryTypeId(long folderId)
 		throws PortalException {
 
-		folderId = getFileEntryTypesPrimaryFolderId(
-			dlFolderPersistence, folderId);
+		folderId = _getFileEntryTypesPrimaryFolderId(folderId);
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
@@ -383,8 +383,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			return dlFolderPersistence.getDLFileEntryTypes(folderId);
 		}
 
-		folderId = getFileEntryTypesPrimaryFolderId(
-			dlFolderPersistence, folderId);
+		folderId = _getFileEntryTypesPrimaryFolderId(folderId);
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return dlFolderPersistence.getDLFileEntryTypes(folderId);
@@ -575,22 +574,24 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {{@link
+	 *             #getDefaultFileEntryTypeId(long)}}
+	 */
+	@Deprecated
 	protected static long getDefaultFileEntryTypeId(
 			DLFolderPersistence dlFolderPersistence, long folderId)
 		throws PortalException {
 
-		folderId = getFileEntryTypesPrimaryFolderId(
-			dlFolderPersistence, folderId);
-
-		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
-
-			return dlFolder.getDefaultFileEntryTypeId();
-		}
-
-		return DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT;
+		return DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
+			folderId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {{@link
+	 * #_getFileEntryTypesPrimaryFolderId(long)}}
+	 */
+	@Deprecated
 	protected static long getFileEntryTypesPrimaryFolderId(
 			DLFolderPersistence dlFolderPersistence, long folderId)
 		throws NoSuchFolderException {
@@ -824,6 +825,25 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		return null;
+	}
+
+	private long _getFileEntryTypesPrimaryFolderId(long folderId)
+		throws NoSuchFolderException {
+
+		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+
+			if (dlFolder.getRestrictionType() ==
+					DLFolderConstants.
+						RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) {
+
+				break;
+			}
+
+			folderId = dlFolder.getParentFolderId();
+		}
+
+		return folderId;
 	}
 
 	private boolean _isEmptyDDMForm(DDMForm ddmForm) {

@@ -61,6 +61,18 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 		}
 	};
 
+	const portletId = fragmentEntryLink.portletId;
+
+	const floatingToolbarButtons = [
+		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment
+	];
+
+	if (!portletId) {
+		floatingToolbarButtons.push(
+			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
+		);
+	}
+
 	return (
 		<Topper
 			acceptDrop={[LAYOUT_DATA_ITEM_TYPES.fragment]}
@@ -72,10 +84,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 			{() => (
 				<>
 					<FloatingToolbar
-						buttons={[
-							LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateFragment,
-							LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
-						]}
+						buttons={floatingToolbarButtons}
 						item={item}
 						itemRef={ref}
 						onButtonClick={handleButtonClick}

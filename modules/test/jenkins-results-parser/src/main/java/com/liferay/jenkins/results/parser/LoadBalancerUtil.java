@@ -289,10 +289,6 @@ public class LoadBalancerUtil {
 			System.out.println("Blacklist: " + blacklistString);
 		}
 
-		if (blacklistString.isEmpty()) {
-			return Collections.emptyList();
-		}
-
 		List<String> blacklist = new ArrayList<>();
 
 		for (String blacklistItem : blacklistString.split(",")) {

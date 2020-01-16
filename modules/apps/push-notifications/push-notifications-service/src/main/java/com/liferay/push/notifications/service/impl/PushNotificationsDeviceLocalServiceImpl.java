@@ -134,26 +134,26 @@ public class PushNotificationsDeviceLocalServiceImpl
 			return;
 		}
 
-		Exception exception = null;
+		Exception exception1 = null;
 
 		try {
 			pushNotificationsSender.send(tokens, payloadJSONObject);
 		}
 		catch (PortalException portalException) {
-			exception = portalException;
+			exception1 = portalException;
 
 			throw portalException;
 		}
-		catch (Exception e) {
-			exception = e;
+		catch (Exception exception2) {
+			exception1 = exception2;
 
-			throw new PortalException(e);
+			throw new PortalException(exception2);
 		}
 		finally {
-			if (exception != null) {
+			if (exception1 != null) {
 				Message message = new Message();
 
-				message.setPayload(new BaseResponse(platform, exception));
+				message.setPayload(new BaseResponse(platform, exception1));
 
 				_messageBus.sendMessage(
 					PushNotificationsDestinationNames.

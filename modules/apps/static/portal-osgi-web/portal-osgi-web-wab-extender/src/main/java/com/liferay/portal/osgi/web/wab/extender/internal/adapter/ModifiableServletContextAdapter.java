@@ -616,14 +616,14 @@ public class ModifiableServletContextAdapter
 
 				methods.put(method, adapterMethod);
 			}
-			catch (NoSuchMethodException nsme1) {
+			catch (NoSuchMethodException noSuchMethodException1) {
 				try {
 					Method method = ModifiableServletContext.class.getMethod(
 						name, parameterTypes);
 
 					methods.put(method, adapterMethod);
 				}
-				catch (NoSuchMethodException nsme2) {
+				catch (NoSuchMethodException noSuchMethodException2) {
 				}
 			}
 		}

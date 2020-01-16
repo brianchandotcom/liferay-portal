@@ -556,9 +556,9 @@ public class SPIAgentSerializableTest {
 		SPIAgentSerializable agentSerializable = new SPIAgentSerializable(
 			_SERVLET_CONTEXT_NAME);
 
-		IOException ioException = new IOException();
+		IOException ioException1 = new IOException();
 
-		mockIntraband.setIOException(ioException);
+		mockIntraband.setIOException(ioException1);
 
 		try {
 			agentSerializable.writeTo(
@@ -567,11 +567,11 @@ public class SPIAgentSerializableTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Throwable throwable = ioe.getCause();
+		catch (IOException ioException2) {
+			Throwable throwable = ioException2.getCause();
 
 			Assert.assertSame(MailboxException.class, throwable.getClass());
-			Assert.assertSame(ioException, throwable.getCause());
+			Assert.assertSame(ioException1, throwable.getCause());
 		}
 
 		// Successfully send
@@ -658,8 +658,8 @@ public class SPIAgentSerializableTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Throwable throwable = ioe.getCause();
+		catch (IOException ioException2) {
+			Throwable throwable = ioException2.getCause();
 
 			Assert.assertSame(
 				ClassNotFoundException.class, throwable.getClass());

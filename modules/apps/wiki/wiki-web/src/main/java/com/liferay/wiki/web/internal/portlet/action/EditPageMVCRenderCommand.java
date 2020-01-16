@@ -140,11 +140,11 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 				page = _wikiPageService.getPage(nodeId, title, version);
 			}
 		}
-		catch (NoSuchPageException nspe1) {
+		catch (NoSuchPageException noSuchPageException1) {
 			try {
 				page = _wikiPageService.getPage(nodeId, title, false);
 			}
-			catch (NoSuchPageException nspe2) {
+			catch (NoSuchPageException noSuchPageException2) {
 				WikiWebComponentProvider wikiWebComponentProvider =
 					WikiWebComponentProvider.getWikiWebComponentProvider();
 
@@ -162,7 +162,7 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 						serviceContext);
 				}
 				else {
-					throw nspe2;
+					throw noSuchPageException2;
 				}
 			}
 		}

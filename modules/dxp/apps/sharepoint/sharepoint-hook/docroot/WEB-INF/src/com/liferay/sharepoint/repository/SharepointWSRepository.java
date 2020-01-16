@@ -952,7 +952,7 @@ public class SharepointWSRepository
 	}
 
 	protected void processSharepointObjectException(
-			SharepointException sharepointException, boolean folder,
+			SharepointException sharepointException1, boolean folder,
 			String path, String name)
 		throws PortalException {
 
@@ -976,7 +976,7 @@ public class SharepointWSRepository
 
 			throw new DuplicateFileEntryException(name);
 		}
-		catch (SharepointException se) {
+		catch (SharepointException sharepointException2) {
 
 			// The Sharepoint object does not exist
 

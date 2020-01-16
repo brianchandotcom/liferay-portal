@@ -1548,9 +1548,9 @@ public class BaseIntrabandTest {
 
 		// Datagram writing IOException
 
-		IOException ioException = new IOException();
+		IOException ioException1 = new IOException();
 
-		_mockIntraband.setIOException(ioException);
+		_mockIntraband.setIOException(ioException1);
 
 		try {
 			_mockIntraband.sendSyncDatagram(
@@ -1559,8 +1559,8 @@ public class BaseIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertSame(ioException, ioe);
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
 		}
 		finally {
 			_mockIntraband.setIOException(null);

@@ -73,7 +73,7 @@ public class UnsyncFilterOutputStreamTest {
 
 	@Test
 	public void testCloseWithException() throws IOException {
-		IOException ioException = new IOException();
+		IOException ioException1 = new IOException();
 
 		AtomicBoolean closeCalled = new AtomicBoolean();
 
@@ -88,7 +88,7 @@ public class UnsyncFilterOutputStreamTest {
 
 					@Override
 					public void flush() throws IOException {
-						throw ioException;
+						throw ioException1;
 					}
 
 				});
@@ -98,8 +98,8 @@ public class UnsyncFilterOutputStreamTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertSame(ioException, ioe);
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
 		}
 
 		Assert.assertTrue(closeCalled.get());
@@ -107,8 +107,8 @@ public class UnsyncFilterOutputStreamTest {
 
 	@Test
 	public void testCloseWithTwoExceptions() throws IOException {
-		IOException flushException = new IOException();
-		IOException closeException = new IOException();
+		IOException ioException1 = new IOException();
+		IOException ioException2 = new IOException();
 
 		UnsyncFilterOutputStream unsyncFilterOutputStream =
 			new UnsyncFilterOutputStream(
@@ -116,12 +116,12 @@ public class UnsyncFilterOutputStreamTest {
 
 					@Override
 					public void close() throws IOException {
-						throw closeException;
+						throw ioException2;
 					}
 
 					@Override
 					public void flush() throws IOException {
-						throw flushException;
+						throw ioException1;
 					}
 
 				});
@@ -131,14 +131,14 @@ public class UnsyncFilterOutputStreamTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertSame(flushException, ioe);
+		catch (IOException ioException3) {
+			Assert.assertSame(ioException1, ioException3);
 
-			Throwable[] throwables = flushException.getSuppressed();
+			Throwable[] throwables = ioException1.getSuppressed();
 
 			Assert.assertEquals(
 				Arrays.toString(throwables), 1, throwables.length);
-			Assert.assertSame(closeException, throwables[0]);
+			Assert.assertSame(ioException2, throwables[0]);
 		}
 	}
 

@@ -75,7 +75,7 @@ public class XSLTemplate extends BaseTemplate {
 	@Override
 	protected void handleException(
 			TemplateResource templateResource,
-			TemplateResource errorTemplateResource, Exception exception,
+			TemplateResource errorTemplateResource, Exception exception1,
 			Writer writer)
 		throws TemplateException {
 
@@ -119,11 +119,11 @@ public class XSLTemplate extends BaseTemplate {
 				errorTransformer.transform(
 					_xmlStreamSource, new StreamResult(writer));
 			}
-			catch (Exception e) {
+			catch (Exception exception2) {
 				throw new TemplateException(
 					"Unable to process XSL template " +
 						errorTemplateResource.getTemplateId(),
-					e);
+					exception2);
 			}
 		}
 		finally {

@@ -68,9 +68,9 @@ public class StrutsUtil {
 					_log.warn(ioException, ioException);
 				}
 			}
-			catch (ServletException se1) {
+			catch (ServletException servletException1) {
 				httpServletRequest.setAttribute(
-					PageContext.EXCEPTION, se1.getRootCause());
+					PageContext.EXCEPTION, servletException1.getRootCause());
 
 				String errorPath = TEXT_HTML_DIR + "/common/error.jsp";
 
@@ -87,8 +87,8 @@ public class StrutsUtil {
 						_log.warn(ioException, ioException);
 					}
 				}
-				catch (ServletException se2) {
-					throw se2;
+				catch (ServletException servletException2) {
+					throw servletException2;
 				}
 			}
 		}

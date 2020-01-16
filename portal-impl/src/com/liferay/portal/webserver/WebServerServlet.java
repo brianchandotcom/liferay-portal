@@ -888,19 +888,19 @@ public class WebServerServlet extends HttpServlet {
 
 			return;
 		}
-		catch (NoSuchFileEntryException | PrincipalException e1) {
+		catch (NoSuchFileEntryException | PrincipalException exception1) {
 			try {
 				sendFile(
 					httpServletResponse, user, groupId, folderId, "index.htm");
 
 				return;
 			}
-			catch (NoSuchFileEntryException | PrincipalException e2) {
+			catch (NoSuchFileEntryException | PrincipalException exception2) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(e2, e2);
+					_log.debug(exception2, exception2);
 				}
 			}
 		}

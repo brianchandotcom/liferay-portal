@@ -219,20 +219,21 @@ public class Encryptor {
 			try {
 				providerClass = Class.forName(PROVIDER_CLASS);
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException1) {
 				try {
 					if (PROVIDER_CLASS.equals(SUN_PROVIDER_CLASS)) {
 						providerClass = Class.forName(IBM_PROVIDER_CLASS);
 					}
 				}
-				catch (ClassNotFoundException cnfe2) {
-					cnfe.addSuppressed(cnfe2);
+				catch (ClassNotFoundException classNotFoundException2) {
+					classNotFoundException1.addSuppressed(
+						classNotFoundException2);
 				}
 
 				if (providerClass == null) {
 					throw new IllegalStateException(
 						"Unable to find provider class: " + PROVIDER_CLASS,
-						cnfe);
+						classNotFoundException1);
 				}
 			}
 

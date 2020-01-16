@@ -87,18 +87,18 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		}
 
 		Object result = null;
-		Exception exception = null;
+		Exception exception1 = null;
 
 		try {
 			result = _invokeActionMethod();
 		}
-		catch (Exception e) {
-			exception = e;
+		catch (Exception exception2) {
+			exception1 = exception2;
 
-			_log.error(e, e);
+			_log.error(exception2, exception2);
 		}
 
-		return new JSONRPCResponse(jsonRPCRequest, result, exception);
+		return new JSONRPCResponse(jsonRPCRequest, result, exception1);
 	}
 
 	private void _checkTypeIsAssignable(
@@ -344,17 +344,17 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			try {
 				parameterValue = _convertType(value, parameterType);
 			}
-			catch (Exception e1) {
+			catch (Exception exception1) {
 				if (value instanceof Map) {
 					try {
 						parameterValue = _createDefaultParameterValue(
 							null, parameterType);
 					}
-					catch (Exception e2) {
+					catch (Exception exception2) {
 						ClassCastException classCastException =
-							new ClassCastException(e1.getMessage());
+							new ClassCastException(exception1.getMessage());
 
-						classCastException.addSuppressed(e2);
+						classCastException.addSuppressed(exception2);
 
 						throw classCastException;
 					}
@@ -369,7 +369,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					valueString = valueString.trim();
 
 					if (!valueString.startsWith(StringPool.OPEN_CURLY_BRACE)) {
-						throw new ClassCastException(e1.getMessage());
+						throw new ClassCastException(exception1.getMessage());
 					}
 
 					parameterValue = JSONFactoryUtil.looseDeserialize(

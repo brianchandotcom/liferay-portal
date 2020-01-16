@@ -82,20 +82,22 @@ public class SQLStateAcceptor implements RetryAcceptor {
 	}
 
 	private boolean _scanForSQLState(
-		SQLException sqlException, List<String> expectedSQLStates) {
+		SQLException sqlException1, List<String> expectedSQLStates) {
 
 		while (true) {
-			if (_hasSQLState(sqlException.getSQLState(), expectedSQLStates)) {
+			if (_hasSQLState(sqlException1.getSQLState(), expectedSQLStates)) {
 				return true;
 			}
 
-			SQLException nextSQLE = sqlException.getNextException();
+			SQLException sqlException2 = sqlException1.getNextException();
 
-			if ((nextSQLE == null) || nextSQLE.equals(sqlException)) {
+			if ((sqlException2 == null) ||
+				sqlException2.equals(sqlException1)) {
+
 				return false;
 			}
 
-			sqlException = nextSQLE;
+			sqlException1 = sqlException2;
 		}
 	}
 

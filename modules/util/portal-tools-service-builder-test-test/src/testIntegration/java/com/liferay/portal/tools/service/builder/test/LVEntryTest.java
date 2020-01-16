@@ -404,7 +404,7 @@ public class LVEntryTest {
 
 		_lvEntry = _versionService.publishDraft(draftLVEntry);
 
-		PortalException portalException = new PortalException();
+		PortalException portalException1 = new PortalException();
 
 		TestVersionServiceListener testVersionServiceListener =
 			new TestVersionServiceListener(Collections.emptyMap()) {
@@ -413,7 +413,7 @@ public class LVEntryTest {
 				public void afterDelete(LVEntry lvEntry)
 					throws PortalException {
 
-					throw portalException;
+					throw portalException1;
 				}
 
 			};
@@ -426,8 +426,8 @@ public class LVEntryTest {
 
 				Assert.fail();
 			}
-			catch (PortalException pe) {
-				Assert.assertSame(portalException, pe);
+			catch (PortalException portalException2) {
+				Assert.assertSame(portalException1, portalException2);
 			}
 
 			try {
@@ -436,7 +436,7 @@ public class LVEntryTest {
 				Assert.fail();
 			}
 			catch (SystemException systemException) {
-				Assert.assertSame(portalException, systemException.getCause());
+				Assert.assertSame(portalException1, systemException.getCause());
 			}
 		}
 		finally {

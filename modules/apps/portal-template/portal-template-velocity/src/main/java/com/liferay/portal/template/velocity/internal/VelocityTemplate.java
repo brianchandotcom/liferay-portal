@@ -58,7 +58,7 @@ public class VelocityTemplate extends BaseTemplate {
 	@Override
 	protected void handleException(
 			TemplateResource templateResource,
-			TemplateResource errorTemplateResource, Exception exception,
+			TemplateResource errorTemplateResource, Exception exception1,
 			Writer writer)
 		throws TemplateException {
 
@@ -67,7 +67,7 @@ public class VelocityTemplate extends BaseTemplate {
 				_templateResourceCache, errorTemplateResource);
 		}
 
-		put("exception", exception.getMessage());
+		put("exception", exception1.getMessage());
 
 		if (templateResource instanceof StringTemplateResource) {
 			StringTemplateResource stringTemplateResource =
@@ -76,9 +76,9 @@ public class VelocityTemplate extends BaseTemplate {
 			put("script", stringTemplateResource.getContent());
 		}
 
-		if (exception instanceof ParseErrorException) {
+		if (exception1 instanceof ParseErrorException) {
 			ParseErrorException parseErrorException =
-				(ParseErrorException)exception;
+				(ParseErrorException)exception1;
 
 			put("column", parseErrorException.getColumnNumber());
 			put("line", parseErrorException.getLineNumber());
@@ -87,11 +87,11 @@ public class VelocityTemplate extends BaseTemplate {
 		try {
 			processTemplate(errorTemplateResource, writer);
 		}
-		catch (Exception e) {
+		catch (Exception exception2) {
 			throw new TemplateException(
 				"Unable to process Velocity template " +
 					errorTemplateResource.getTemplateId(),
-				e);
+				exception2);
 		}
 	}
 

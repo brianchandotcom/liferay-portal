@@ -138,7 +138,7 @@ public class ServiceConfigurationExtender
 
 				versionRangeFilter = _getVersionRangerFilter(version);
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException1) {
 				try {
 					VersionRange versionRange = new VersionRange(
 						requireSchemaVersion);
@@ -146,14 +146,15 @@ public class ServiceConfigurationExtender
 					versionRangeFilter = versionRange.toFilterString(
 						"release.schema.version");
 				}
-				catch (IllegalArgumentException iae2) {
-					iae.addSuppressed(iae2);
+				catch (IllegalArgumentException illegalArgumentException2) {
+					illegalArgumentException1.addSuppressed(
+						illegalArgumentException2);
 
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Invalid \"Liferay-Require-SchemaVersion\" " +
 								"header for bundle: " + bundle.getBundleId(),
-							iae);
+							illegalArgumentException1);
 					}
 				}
 			}

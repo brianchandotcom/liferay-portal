@@ -73,7 +73,7 @@ public class FreeMarkerTemplate extends BaseTemplate {
 	@Override
 	protected void handleException(
 			TemplateResource templateResource,
-			TemplateResource errorTemplateResource, Exception exception,
+			TemplateResource errorTemplateResource, Exception exception1,
 			Writer writer)
 		throws TemplateException {
 
@@ -82,10 +82,10 @@ public class FreeMarkerTemplate extends BaseTemplate {
 				_templateResourceCache, errorTemplateResource);
 		}
 
-		if (exception instanceof freemarker.template.TemplateException ||
-			exception instanceof ParseException) {
+		if (exception1 instanceof freemarker.template.TemplateException ||
+			exception1 instanceof ParseException) {
 
-			put("exception", exception.getMessage());
+			put("exception", exception1.getMessage());
 
 			if (templateResource instanceof StringTemplateResource) {
 				StringTemplateResource stringTemplateResource =
@@ -94,8 +94,8 @@ public class FreeMarkerTemplate extends BaseTemplate {
 				put("script", stringTemplateResource.getContent());
 			}
 
-			if (exception instanceof ParseException) {
-				ParseException parseException = (ParseException)exception;
+			if (exception1 instanceof ParseException) {
+				ParseException parseException = (ParseException)exception1;
 
 				put("column", parseException.getColumnNumber());
 				put("line", parseException.getLineNumber());
@@ -104,18 +104,18 @@ public class FreeMarkerTemplate extends BaseTemplate {
 			try {
 				processTemplate(errorTemplateResource, writer);
 			}
-			catch (Exception e) {
+			catch (Exception exception2) {
 				throw new TemplateException(
 					"Unable to process FreeMarker template " +
 						errorTemplateResource.getTemplateId(),
-					e);
+					exception2);
 			}
 		}
 		else {
 			throw new TemplateException(
 				"Unable to process FreeMarker template " +
 					templateResource.getTemplateId(),
-				exception);
+				exception1);
 		}
 	}
 

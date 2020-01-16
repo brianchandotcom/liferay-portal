@@ -123,10 +123,11 @@ public class ConfigurationModelListenerTest {
 	public void testOnBeforeDelete() throws Exception {
 		String pid = StringUtil.randomString(20);
 
-		ConfigurationModelListenerException cmle1 =
-			new ConfigurationModelListenerException(
-				"There was an issue", ConfigurationModelListenerTest.class,
-				getClass(), new HashMapDictionary<>());
+		ConfigurationModelListenerException
+			configurationModelListenerException1 =
+				new ConfigurationModelListenerException(
+					"There was an issue", ConfigurationModelListenerTest.class,
+					getClass(), new HashMapDictionary<>());
 
 		ConfigurationModelListener configurationModelListener =
 			new ConfigurationModelListener() {
@@ -135,7 +136,7 @@ public class ConfigurationModelListenerTest {
 				public void onBeforeDelete(String pid)
 					throws ConfigurationModelListenerException {
 
-					throw cmle1;
+					throw configurationModelListenerException1;
 				}
 
 			};
@@ -150,8 +151,12 @@ public class ConfigurationModelListenerTest {
 
 			Assert.fail();
 		}
-		catch (ConfigurationModelListenerException cmle) {
-			Assert.assertSame(cmle1, cmle);
+		catch (ConfigurationModelListenerException
+					configurationModelListenerException2) {
+
+			Assert.assertSame(
+				configurationModelListenerException1,
+				configurationModelListenerException2);
 			Assert.assertTrue(_hasPid(pid));
 		}
 	}
@@ -170,10 +175,11 @@ public class ConfigurationModelListenerTest {
 
 		String newValue = StringUtil.randomString(20);
 
-		ConfigurationModelListenerException cmle1 =
-			new ConfigurationModelListenerException(
-				"There was an issue", ConfigurationModelListenerTest.class,
-				getClass(), new HashMapDictionary<>());
+		ConfigurationModelListenerException
+			configurationModelListenerException1 =
+				new ConfigurationModelListenerException(
+					"There was an issue", ConfigurationModelListenerTest.class,
+					getClass(), new HashMapDictionary<>());
 
 		ConfigurationModelListener configurationModelListener =
 			new ConfigurationModelListener() {
@@ -185,7 +191,7 @@ public class ConfigurationModelListenerTest {
 
 					Assert.assertEquals(newValue, properties.get(_TEST_KEY));
 
-					throw cmle1;
+					throw configurationModelListenerException1;
 				}
 
 			};
@@ -200,8 +206,12 @@ public class ConfigurationModelListenerTest {
 
 			Assert.fail();
 		}
-		catch (ConfigurationModelListenerException cmle) {
-			Assert.assertSame(cmle1, cmle);
+		catch (ConfigurationModelListenerException
+					configurationModelListenerException2) {
+
+			Assert.assertSame(
+				configurationModelListenerException1,
+				configurationModelListenerException2);
 
 			_configuration = _getConfiguration(pid);
 

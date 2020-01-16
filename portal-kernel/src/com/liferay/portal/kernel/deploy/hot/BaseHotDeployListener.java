@@ -43,7 +43,7 @@ public abstract class BaseHotDeployListener implements HotDeployListener {
 			MessageListener clpMessageListener)
 		throws Exception {
 
-		Exception e = null;
+		Exception exception1 = null;
 
 		try {
 			Method servletContextNameMethod = clpMessageListenerClass.getMethod(
@@ -51,8 +51,8 @@ public abstract class BaseHotDeployListener implements HotDeployListener {
 
 			return (String)servletContextNameMethod.invoke(null);
 		}
-		catch (Exception e1) {
-			e = e1;
+		catch (Exception exception2) {
+			exception1 = exception2;
 		}
 
 		try {
@@ -64,10 +64,10 @@ public abstract class BaseHotDeployListener implements HotDeployListener {
 
 			return clpServletContextName.toString();
 		}
-		catch (Exception e2) {
+		catch (Exception exception2) {
 		}
 
-		throw e;
+		throw exception1;
 	}
 
 	protected Object newInstance(

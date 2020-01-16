@@ -34,20 +34,20 @@ public class RetryDataSourceWrapper extends DataSourceWrapper {
 	public Connection getConnection() throws SQLException {
 		int retries = PropsValues.RETRY_DATA_SOURCE_MAX_RETRIES;
 
-		SQLException sqlException = null;
+		SQLException sqlException1 = null;
 
 		while (retries-- >= 0) {
 			try {
 				return super.getConnection();
 			}
-			catch (SQLException sqle) {
-				if (sqlException == null) {
-					sqlException = sqle;
+			catch (SQLException sqlException2) {
+				if (sqlException1 == null) {
+					sqlException1 = sqlException2;
 				}
 			}
 		}
 
-		throw sqlException;
+		throw sqlException1;
 	}
 
 	@Override
@@ -56,20 +56,20 @@ public class RetryDataSourceWrapper extends DataSourceWrapper {
 
 		int retries = PropsValues.RETRY_DATA_SOURCE_MAX_RETRIES;
 
-		SQLException sqlException = null;
+		SQLException sqlException1 = null;
 
 		while (retries-- >= 0) {
 			try {
 				return super.getConnection(username, password);
 			}
-			catch (SQLException sqle) {
-				if (sqlException == null) {
-					sqlException = sqle;
+			catch (SQLException sqlException2) {
+				if (sqlException1 == null) {
+					sqlException1 = sqlException2;
 				}
 			}
 		}
 
-		throw sqlException;
+		throw sqlException1;
 	}
 
 }

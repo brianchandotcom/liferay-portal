@@ -2413,17 +2413,17 @@ public class DLFileEntryLocalServiceImpl
 					serviceContext);
 			}
 		}
-		catch (PortalException | SystemException e) {
+		catch (PortalException | SystemException exception1) {
 			if (autoCheckIn) {
 				try {
 					cancelCheckOut(userId, fileEntryId);
 				}
-				catch (Exception e2) {
-					_log.error(e2, e2);
+				catch (Exception exception2) {
+					_log.error(exception2, exception2);
 				}
 			}
 
-			throw e;
+			throw exception1;
 		}
 		finally {
 			if (!autoCheckIn && !checkedOut) {

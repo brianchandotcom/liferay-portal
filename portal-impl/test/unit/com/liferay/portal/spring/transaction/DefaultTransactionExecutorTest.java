@@ -109,19 +109,19 @@ public class DefaultTransactionExecutorTest
 					"commitThrowable", throwables[0].getMessage());
 			}
 
-			Exception suppliedException1 = new Exception();
+			Exception exception1 = new Exception();
 
 			try {
 				transactionExecutor.execute(
 					new TestTransactionAttributeAdapter(false),
 					() -> {
-						throw suppliedException1;
+						throw exception1;
 					});
 
 				Assert.fail();
 			}
 			catch (Throwable t) {
-				Assert.assertSame(suppliedException1, t);
+				Assert.assertSame(exception1, t);
 
 				Throwable[] throwables = t.getSuppressed();
 
@@ -155,19 +155,19 @@ public class DefaultTransactionExecutorTest
 					"commitThrowable", throwables[0].getMessage());
 			}
 
-			Exception suppliedException2 = new Exception();
+			Exception exception2 = new Exception();
 
 			try {
 				transactionExecutor.execute(
 					new TestTransactionAttributeAdapter(true),
 					() -> {
-						throw suppliedException2;
+						throw exception2;
 					});
 
 				Assert.fail();
 			}
 			catch (Throwable t) {
-				Assert.assertSame(suppliedException2, t);
+				Assert.assertSame(exception2, t);
 
 				Throwable[] throwables = t.getSuppressed();
 

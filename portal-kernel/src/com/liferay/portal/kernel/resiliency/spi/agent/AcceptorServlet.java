@@ -66,18 +66,19 @@ public class AcceptorServlet extends HttpServlet {
 		HttpServletResponse spiAgentHttpServletResponse =
 			spiAgent.prepareResponse(httpServletRequest, httpServletResponse);
 
-		Exception exception = null;
+		Exception exception1 = null;
 
 		try {
 			requestDispatcher.forward(
 				spiAgentHttpServletRequest, spiAgentHttpServletResponse);
 		}
-		catch (Exception e) {
-			exception = e;
+		catch (Exception exception2) {
+			exception1 = exception2;
 		}
 
 		spiAgent.transferResponse(
-			spiAgentHttpServletRequest, spiAgentHttpServletResponse, exception);
+			spiAgentHttpServletRequest, spiAgentHttpServletResponse,
+			exception1);
 
 		HttpSession session = spiAgentHttpServletRequest.getSession();
 

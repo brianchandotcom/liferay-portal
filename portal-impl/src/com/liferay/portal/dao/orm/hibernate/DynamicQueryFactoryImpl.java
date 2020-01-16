@@ -98,17 +98,18 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 		try {
 			implClass = getImplClass(implClassName, classLoader);
 		}
-		catch (Exception e1) {
+		catch (Exception exception1) {
 			if (classLoader != _portalClassLoader) {
 				try {
 					implClass = getImplClass(implClassName, _portalClassLoader);
 				}
-				catch (Exception e2) {
-					_log.error("Unable find model " + implClassName, e2);
+				catch (Exception exception2) {
+					_log.error(
+						"Unable find model " + implClassName, exception2);
 				}
 			}
 			else {
-				_log.error("Unable find model " + implClassName, e1);
+				_log.error("Unable find model " + implClassName, exception1);
 			}
 		}
 

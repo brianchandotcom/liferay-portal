@@ -51,12 +51,12 @@ public class InstancePool {
 
 			_instances.put(className, instance);
 		}
-		catch (Exception e1) {
+		catch (Exception exception1) {
 			if (logErrors && _log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to load " + className +
 						" with the portal class loader",
-					e1);
+					exception1);
 			}
 
 			Thread currentThread = Thread.currentThread();
@@ -71,14 +71,14 @@ public class InstancePool {
 
 				_instances.put(className, instance);
 			}
-			catch (Exception e2) {
+			catch (Exception exception2) {
 				if (logErrors) {
 					_log.error(
 						StringBundler.concat(
 							"Unable to load ", className,
 							" with the portal class loader or the current ",
 							"context class loader"),
-						e2);
+						exception2);
 				}
 			}
 		}

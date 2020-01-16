@@ -289,21 +289,21 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 	@Override
 	public void handleException(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, Exception exception,
+			HttpServletResponse httpServletResponse, Exception exception1,
 			boolean sendBody)
 		throws OAuthException {
 
-		if (exception.getCause() != null) {
-			exception = (Exception)exception.getCause();
+		if (exception1.getCause() != null) {
+			exception1 = (Exception)exception1.getCause();
 		}
 
 		try {
 			OAuthServlet.handleException(
-				httpServletResponse, exception,
+				httpServletResponse, exception1,
 				OAuthConfigurationValues.OAUTH_REALM, sendBody);
 		}
-		catch (Exception e) {
-			throw new OAuthException(e);
+		catch (Exception exception2) {
+			throw new OAuthException(exception2);
 		}
 	}
 

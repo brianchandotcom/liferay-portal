@@ -284,20 +284,20 @@ public class VerifyProcessTrackerOSGiCommands {
 			printWriter.println(
 				"Executing verifiers registered for " + verifyProcessName);
 
-			VerifyException verifyException = null;
+			VerifyException verifyException1 = null;
 
 			for (VerifyProcess verifyProcess : verifyProcesses) {
 				try {
 					verifyProcess.verify();
 				}
-				catch (VerifyException ve) {
-					_log.error(ve, ve);
+				catch (VerifyException verifyException2) {
+					_log.error(verifyException2, verifyException2);
 
-					verifyException = ve;
+					verifyException1 = verifyException2;
 				}
 			}
 
-			if (verifyException == null) {
+			if (verifyException1 == null) {
 				release.setVerified(true);
 				release.setState(ReleaseConstants.STATE_GOOD);
 

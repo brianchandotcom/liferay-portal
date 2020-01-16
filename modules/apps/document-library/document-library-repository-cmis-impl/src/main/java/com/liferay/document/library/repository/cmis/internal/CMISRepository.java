@@ -2158,21 +2158,21 @@ public class CMISRepository extends BaseCmisRepository {
 		return repositoryCapabilities.isAllVersionsSearchableSupported();
 	}
 
-	protected void processException(Exception exception)
+	protected void processException(Exception exception1)
 		throws PortalException {
 
-		String message = exception.getMessage();
+		String message = exception1.getMessage();
 
-		if (((exception instanceof CmisRuntimeException) &&
+		if (((exception1 instanceof CmisRuntimeException) &&
 			 message.contains("authorized")) ||
-			(exception instanceof CmisPermissionDeniedException)) {
+			(exception1 instanceof CmisPermissionDeniedException)) {
 
 			String login = null;
 
 			try {
 				login = _cmisRepositoryHandler.getLogin();
 			}
-			catch (Exception e2) {
+			catch (Exception exception2) {
 			}
 
 			throw new PrincipalException.MustBeAuthenticated(login);

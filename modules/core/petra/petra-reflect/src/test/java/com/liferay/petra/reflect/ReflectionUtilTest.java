@@ -213,15 +213,15 @@ public class ReflectionUtilTest {
 
 	@Test
 	public void testThrowException() {
-		Exception exception = new Exception();
+		Exception exception1 = new Exception();
 
 		try {
-			ReflectionUtil.throwException(exception);
+			ReflectionUtil.throwException(exception1);
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertSame(exception, e);
+		catch (Exception exception2) {
+			Assert.assertSame(exception1, exception2);
 		}
 	}
 

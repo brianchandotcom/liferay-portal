@@ -270,7 +270,7 @@ public class ObjectGraphUtilTest {
 
 	@Test
 	public void testWalkObjectGraphNullReferenceWithException() {
-		final Exception exception = new Exception();
+		final Exception exception1 = new Exception();
 
 		try {
 			ObjectGraphUtil.walkObjectGraph(
@@ -281,15 +281,15 @@ public class ObjectGraphUtilTest {
 					public Object visit(Field field, Object target)
 						throws Exception {
 
-						throw exception;
+						throw exception1;
 					}
 
 				});
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertSame(exception, e);
+		catch (Exception exception2) {
+			Assert.assertSame(exception1, exception2);
 		}
 	}
 

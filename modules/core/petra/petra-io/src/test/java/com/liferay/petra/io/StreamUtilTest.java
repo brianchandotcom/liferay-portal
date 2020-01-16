@@ -70,10 +70,10 @@ public class StreamUtilTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertSame(ioException1, ioe);
+		catch (IOException ioException3) {
+			Assert.assertSame(ioException1, ioException3);
 
-			Throwable[] throwables = ioe.getSuppressed();
+			Throwable[] throwables = ioException3.getSuppressed();
 
 			Assert.assertEquals(
 				Arrays.toString(throwables), 1, throwables.length);

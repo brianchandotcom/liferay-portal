@@ -998,18 +998,18 @@ public class CustomSQLImpl implements CustomSQL {
 
 			if (objectValuePair == null) {
 				Map<String, String> sqlPool = new HashMap<>();
-				Exception exception = null;
+				Exception exception1 = null;
 
 				try {
 					_read(_classLoader, _sourceURL, sqlPool);
 				}
-				catch (Exception e) {
-					exception = e;
+				catch (Exception exception2) {
+					exception1 = exception2;
 
-					_log.error(e, e);
+					_log.error(exception2, exception2);
 				}
 
-				objectValuePair = new ObjectValuePair<>(sqlPool, exception);
+				objectValuePair = new ObjectValuePair<>(sqlPool, exception1);
 
 				_objectValuePair = objectValuePair;
 			}

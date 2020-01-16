@@ -59,8 +59,8 @@ public class JspC extends org.apache.jasper.JspC {
 
 			jspC.execute();
 		}
-		catch (Exception e1) {
-			e1.printStackTrace();
+		catch (Exception exception1) {
+			exception1.printStackTrace();
 
 			try {
 				Field noDieLevelField =
@@ -75,10 +75,10 @@ public class JspC extends org.apache.jasper.JspC {
 					System.exit(dieLevel);
 				}
 			}
-			catch (Exception e2) {
-				e2.addSuppressed(e1);
+			catch (Exception exception2) {
+				exception2.addSuppressed(exception1);
 
-				throw new RuntimeException(e2);
+				throw new RuntimeException(exception2);
 			}
 		}
 	}

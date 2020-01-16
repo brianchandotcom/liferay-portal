@@ -183,14 +183,14 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 
 			_bindNetworkInterface = bindInfo.getNetworkInterface();
 		}
-		catch (IOException e) {
+		catch (IOException ioException1) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to detect bind address for JGroups, using " +
 						"loopback");
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(ioException1, ioException1);
 				}
 			}
 
@@ -200,8 +200,9 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 				_bindNetworkInterface = NetworkInterface.getByInetAddress(
 					_bindInetAddress);
 			}
-			catch (IOException ie) {
-				_log.error("Unable to bind to lopoback interface", ie);
+			catch (IOException ioException2) {
+				_log.error(
+					"Unable to bind to lopoback interface", ioException2);
 			}
 		}
 

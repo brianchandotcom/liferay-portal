@@ -1330,15 +1330,15 @@ public class JenkinsResultsParserUtil {
 
 			return jsonObject.getString("mostAvailableMasterURL");
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException1) {
 			Properties buildProperties = null;
 
 			try {
 				buildProperties = getBuildProperties(false);
 			}
-			catch (IOException ioe2) {
+			catch (IOException ioException2) {
 				throw new RuntimeException(
-					"Unable to get build properties", ioe2);
+					"Unable to get build properties", ioException2);
 			}
 
 			List<JenkinsMaster> availableJenkinsMasters =

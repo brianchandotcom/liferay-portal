@@ -89,7 +89,7 @@ public class TransactionInvokerUtilTest {
 	@Test
 	public void testRollback() {
 		final long classNameId = _counterLocalService.increment();
-		final Exception exception = new Exception();
+		final Exception exception1 = new Exception();
 
 		try {
 			TransactionInvokerUtil.invoke(
@@ -102,13 +102,13 @@ public class TransactionInvokerUtilTest {
 
 					_classNamePersistence.update(className);
 
-					throw exception;
+					throw exception1;
 				});
 
 			Assert.fail();
 		}
 		catch (Throwable throwable) {
-			Assert.assertSame(exception, throwable);
+			Assert.assertSame(exception1, throwable);
 
 			ClassName className = _classNameLocalService.fetchClassName(
 				classNameId);
@@ -119,7 +119,7 @@ public class TransactionInvokerUtilTest {
 			try {
 				_classNameLocalService.deleteClassName(classNameId);
 			}
-			catch (Exception e) {
+			catch (Exception exception2) {
 			}
 		}
 	}

@@ -359,18 +359,18 @@ public class SourceFormatter {
 			futures.add(future);
 		}
 
-		ExecutionException ee1 = null;
+		ExecutionException executionException1 = null;
 
 		for (Future<Void> future : futures) {
 			try {
 				future.get();
 			}
-			catch (ExecutionException ee) {
-				if (ee1 == null) {
-					ee1 = ee;
+			catch (ExecutionException executionException2) {
+				if (executionException1 == null) {
+					executionException1 = executionException2;
 				}
 				else {
-					ee1.addSuppressed(ee);
+					executionException1.addSuppressed(executionException2);
 				}
 			}
 		}
@@ -388,8 +388,8 @@ public class SourceFormatter {
 		_progressStatusQueue.put(
 			new ProgressStatusUpdate(ProgressStatus.SOURCE_FORMAT_COMPLETED));
 
-		if (ee1 != null) {
-			throw ee1;
+		if (executionException1 != null) {
+			throw executionException1;
 		}
 
 		if (_sourceFormatterArgs.isThrowException() &&

@@ -626,13 +626,13 @@ public class MPIHelperUtilTest {
 			Assert.assertTrue(
 				MPIHelperUtil.registerSPIProvider(mockSPIProvider1));
 
-			final RuntimeException runtimeException = new RuntimeException();
+			final RuntimeException runtimeException1 = new RuntimeException();
 
 			mockSPI1 = new MockSPI() {
 
 				@Override
 				public String toString() {
-					throw runtimeException;
+					throw runtimeException1;
 				}
 
 			};
@@ -648,8 +648,8 @@ public class MPIHelperUtilTest {
 
 				Assert.fail();
 			}
-			catch (RuntimeException re) {
-				Assert.assertSame(runtimeException, re);
+			catch (RuntimeException runtimeException2) {
+				Assert.assertSame(runtimeException1, runtimeException2);
 			}
 
 			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());

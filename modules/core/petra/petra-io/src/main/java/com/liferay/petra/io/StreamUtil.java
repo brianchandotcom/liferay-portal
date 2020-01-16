@@ -38,29 +38,29 @@ public class StreamUtil {
 		StreamUtil.class.getName() + ".force.tio");
 
 	public static void cleanUp(Closeable... closeables) throws IOException {
-		IOException ioException = null;
+		IOException ioException1 = null;
 
 		for (Closeable closeable : closeables) {
 			if (closeable != null) {
 				try {
 					closeable.close();
 				}
-				catch (IOException ioe) {
-					if (ioException == null) {
-						ioException = ioe;
+				catch (IOException ioException2) {
+					if (ioException1 == null) {
+						ioException1 = ioException2;
 					}
 					else {
-						ioException.addSuppressed(ioe);
+						ioException1.addSuppressed(ioException2);
 					}
 				}
 			}
 		}
 
-		if (ioException == null) {
+		if (ioException1 == null) {
 			return;
 		}
 
-		throw ioException;
+		throw ioException1;
 	}
 
 	public static byte[] toByteArray(InputStream inputStream)

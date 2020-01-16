@@ -79,14 +79,14 @@ public class OutputStreamWriterTest {
 
 		// Exception close
 
-		final IOException ioException = new IOException();
+		final IOException ioException1 = new IOException();
 
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
 			new UnsyncByteArrayOutputStream() {
 
 				@Override
 				public void close() throws IOException {
-					throw ioException;
+					throw ioException1;
 				}
 
 			});
@@ -98,8 +98,8 @@ public class OutputStreamWriterTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertSame(ioe, ioException);
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException2, ioException1);
 		}
 
 		// Second close to check first close indeed changed the state

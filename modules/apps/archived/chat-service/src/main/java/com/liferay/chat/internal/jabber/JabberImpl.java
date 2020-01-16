@@ -201,8 +201,8 @@ public class JabberImpl implements Jabber {
 		try {
 			connect(userId, password);
 		}
-		catch (XMPPException xmppe1) {
-			String message1 = xmppe1.getMessage();
+		catch (XMPPException xmppException1) {
+			String message1 = xmppException1.getMessage();
 
 			if (Validator.isNotNull(message1) &&
 				message1.contains("not-authorized")) {
@@ -227,8 +227,8 @@ public class JabberImpl implements Jabber {
 
 					connect(userId, password);
 				}
-				catch (XMPPException xmppe2) {
-					String message2 = xmppe2.getMessage();
+				catch (XMPPException xmppException2) {
+					String message2 = xmppException2.getMessage();
 
 					if (message2.contains("conflict(409)")) {
 						_log.error(

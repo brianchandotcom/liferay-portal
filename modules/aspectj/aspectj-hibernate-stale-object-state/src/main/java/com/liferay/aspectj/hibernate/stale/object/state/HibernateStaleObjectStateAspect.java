@@ -108,14 +108,14 @@ public class HibernateStaleObjectStateAspect {
 			return;
 		}
 
-		Exception exception = new Exception(
+		Exception exception1 = new Exception(
 			eventType + " record for " + object);
 
-		Exception previousException = _events.put(
-			new EventKey((BaseModel<?>)object), exception);
+		Exception exception2 = _events.put(
+			new EventKey((BaseModel<?>)object), exception1);
 
-		if (previousException != null) {
-			exception.addSuppressed(previousException);
+		if (exception2 != null) {
+			exception1.addSuppressed(exception2);
 		}
 	}
 

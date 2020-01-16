@@ -101,17 +101,17 @@ public class EmbeddedElasticsearchPluginManagerTest {
 
 	@Test
 	public void testPluginZipIsDeletedOnError() throws Exception {
-		IOException ioException = new IOException();
+		IOException ioException1 = new IOException();
 
-		setUpBrokenDownloadAndExtract(ioException);
+		setUpBrokenDownloadAndExtract(ioException1);
 
 		try {
 			install();
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertSame(ioException, ioe);
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
 		}
 
 		Mockito.verify(

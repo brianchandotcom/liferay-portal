@@ -315,13 +315,13 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 			clusterExecutorImpl.executeClusterRequest(
 				ClusterRequest.createMulticastRequest(StringPool.BLANK));
 
-		Exception exception = clusterNodeResponse.getException();
+		Exception exception1 = clusterNodeResponse.getException();
 
 		Assert.assertEquals(
 			"Payload is not of type " + MethodHandler.class.getName(),
-			exception.getMessage());
+			exception1.getMessage());
 
-		// Test 2, invoke with exception
+		// Test 2, invoke with exception1
 
 		String timestamp = String.valueOf(System.currentTimeMillis());
 
@@ -336,13 +336,13 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Throwable throwable = e.getCause();
+		catch (Exception exception2) {
+			Throwable throwable = exception2.getCause();
 
 			Assert.assertEquals(timestamp, throwable.getMessage());
 		}
 
-		// Test 3, invoke without exception
+		// Test 3, invoke without exception1
 
 		timestamp = String.valueOf(System.currentTimeMillis());
 

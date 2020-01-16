@@ -349,16 +349,16 @@ public class JSONObjectImpl implements JSONObject {
 	}
 
 	@Override
-	public JSONObject putException(Exception exception) {
+	public JSONObject putException(Exception exception1) {
 		try {
 			_jsonObject.put(
 				"exception",
-				exception.getClass() + StringPool.COLON +
-					exception.getMessage());
+				exception1.getClass() + StringPool.COLON +
+					exception1.getMessage());
 		}
-		catch (Exception e) {
+		catch (Exception exception2) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception2, exception2);
 			}
 		}
 

@@ -629,7 +629,7 @@ public class FileHelperUtilTest {
 
 	@Test
 	public void testUnzipUnreadableInputStream() {
-		final IOException ioException = new IOException();
+		final IOException ioException1 = new IOException();
 
 		try {
 			FileHelperUtil.unzip(
@@ -638,14 +638,14 @@ public class FileHelperUtilTest {
 
 					@Override
 					public int read() throws IOException {
-						throw ioException;
+						throw ioException1;
 					}
 
 				},
 				null);
 		}
-		catch (IOException ioe) {
-			Assert.assertSame(ioException, ioe);
+		catch (IOException ioException2) {
+			Assert.assertSame(ioException1, ioException2);
 		}
 	}
 

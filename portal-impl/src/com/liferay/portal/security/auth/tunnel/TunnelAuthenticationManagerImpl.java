@@ -92,12 +92,13 @@ public class TunnelAuthenticationManagerImpl
 
 			throw authException;
 		}
-		catch (AuthException ae) {
-			AuthException authException = new RemoteAuthException(ae);
+		catch (AuthException authException1) {
+			AuthException authException2 = new RemoteAuthException(
+				authException1);
 
-			authException.setType(ae.getType());
+			authException2.setType(authException1.getType());
 
-			throw authException;
+			throw authException2;
 		}
 
 		String password = httpAuthorizationHeader.getAuthParameter(

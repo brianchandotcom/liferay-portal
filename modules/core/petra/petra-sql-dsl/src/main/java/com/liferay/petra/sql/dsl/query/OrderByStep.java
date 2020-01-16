@@ -17,7 +17,7 @@ package com.liferay.petra.sql.dsl.query;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.impl.OrderBy;
-import com.liferay.petra.sql.dsl.query.impl.OrderByExpression;
+import com.liferay.petra.sql.dsl.query.impl.OrderByExpressionImpl;
 import com.liferay.petra.string.StringBundler;
 
 /**
@@ -47,7 +47,7 @@ public interface OrderByStep extends LimitStep {
 						table.getTableName()));
 			}
 
-			orderByExpressions[i] = new OrderByExpression(
+			orderByExpressions[i] = new OrderByExpressionImpl(
 				column, orderByInfo.isAscending(field));
 		}
 

@@ -15,9 +15,15 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 
 const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
+	const gutters =
+		item.config.gutters ||
+		LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.row]
+			.gutters;
+
 	const parent = layoutData.items[item.parentId];
 
 	const rowContent = (
@@ -26,7 +32,7 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 				empty: !item.children.some(
 					childId => layoutData.items[childId].children.length
 				),
-				'no-gutters': !item.config.gutters
+				'no-gutters': !gutters
 			})}
 			ref={ref}
 		>

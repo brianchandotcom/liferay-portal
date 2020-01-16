@@ -15,8 +15,14 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+
 const Column = React.forwardRef(({children, className, item}, ref) => {
-	const {size} = item.config;
+	const size =
+		item.config.size ||
+		LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.column]
+			.size;
 
 	return (
 		<div

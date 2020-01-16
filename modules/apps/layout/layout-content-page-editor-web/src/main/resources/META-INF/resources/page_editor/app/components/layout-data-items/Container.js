@@ -15,6 +15,9 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+
 const Container = React.forwardRef(({children, className, item}, ref) => {
 	const {
 		backgroundColorCssClass,
@@ -23,7 +26,12 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 		paddingHorizontal,
 		paddingTop,
 		type
-	} = item.config;
+	} = {
+		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
+			LAYOUT_DATA_ITEM_TYPES.container
+		],
+		...item.config
+	};
 
 	return (
 		<div

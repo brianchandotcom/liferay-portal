@@ -17,7 +17,6 @@ import LayoutService from '../services/LayoutService';
 
 export default function addItem({
 	config,
-	itemConfig,
 	itemType,
 	parentItemId,
 	position,
@@ -28,7 +27,6 @@ export default function addItem({
 
 		LayoutService.addItem({
 			config,
-			itemConfig,
 			itemType,
 			onNetworkStatus: dispatch,
 			parentItemId,

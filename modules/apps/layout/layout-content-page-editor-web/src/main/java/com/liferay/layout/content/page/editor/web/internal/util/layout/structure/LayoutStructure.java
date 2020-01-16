@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -79,6 +80,23 @@ public class LayoutStructure {
 	public void addRowLayoutStructureItem(
 		JSONObject itemConfigJSONObject, String itemId, String parentItemId,
 		int position) {
+
+		LayoutStructureItem parentLayoutStructureItem =
+			_layoutStructureItems.get(parentItemId);
+
+		if (Objects.equals(
+				parentLayoutStructureItem.getItemType(),
+				LayoutDataItemTypeConstants.TYPE_ROOT)) {
+
+			String containerItemId = String.valueOf(UUID.randomUUID());
+
+			addLayoutStructureItem(
+				JSONFactoryUtil.createJSONObject(), containerItemId,
+				LayoutDataItemTypeConstants.TYPE_CONTAINER, parentItemId,
+				position);
+
+			parentItemId = containerItemId;
+		}
 
 		addLayoutStructureItem(
 			itemConfigJSONObject, itemId, LayoutDataItemTypeConstants.TYPE_ROW,

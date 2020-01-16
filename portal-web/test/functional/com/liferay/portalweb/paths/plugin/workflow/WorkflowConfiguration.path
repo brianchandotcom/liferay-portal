@@ -24,6 +24,11 @@
 	<td>//*[@data-qa-id='row' and contains(.,'${key_workflowResourceValue}')]//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BLOGS_MOVE_TO_RECYCLE_BIN</td>
+	<td>//*[contains(@class, 'icon-trash')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

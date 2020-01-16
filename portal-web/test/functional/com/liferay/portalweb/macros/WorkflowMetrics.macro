@@ -152,6 +152,34 @@ definition {
 			var iterator = MathUtil.sum("${iterator}", "1");
 		}
 
+		Workflow.assignBlogEntriesToUsers(
+			numberOfBlogInstances = MathUtil.sum("${numberOfBlogInstances}", "-1"),
+			numberOfUsers = "${numberOfUsers}");
+	}
+
+	macro createUsersAndAssignInstancesWithGroovy {
+		var iterator = "1";
+		var numberOfBlogInstances = MathUtil.sum("${numberOfBlogInstances}", "1");
+
+		WorkflowMetrics.createUsersGroovy(numberOfUsers = "${numberOfUsers}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		while ("${iterator}" != "${numberOfBlogInstances}") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry ${iterator} Content",
+				entryTitle = "Blogs Entry Title ${iterator}");
+
+			var iterator = MathUtil.sum("${iterator}", "1");
+		}
+
 		WorkflowMetrics.executeWorkflowScript(scriptName = "assignOpenTasksToUsers.groovy");
 	}
 

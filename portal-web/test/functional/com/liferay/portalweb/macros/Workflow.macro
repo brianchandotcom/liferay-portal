@@ -39,6 +39,30 @@ definition {
 		}
 	}
 
+	macro _tearDownBlog {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		if (IsElementPresent.isVisible(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX")) {
+			Click(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX");
+
+			Click(locator1 = "WorkflowConfiguration#BLOGS_MOVE_TO_RECYCLE_BIN");
+		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin");
+
+		RecycleBin.emptyCP();
+	}
+
 	macro _viewActivities {
 		var key_workflowActivityComment = "${workflowActivityComment}";
 		var key_workflowAssetTitle = "${workflowAssetTitle}";
@@ -391,7 +415,7 @@ definition {
 	}
 
 	macro gotoCompletedFilter {
-		Pause(locator1 = "5000");
+		Pause(locator1 = "2000");
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 

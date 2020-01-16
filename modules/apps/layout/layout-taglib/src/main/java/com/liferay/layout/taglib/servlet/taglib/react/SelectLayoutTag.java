@@ -271,8 +271,7 @@ public class SelectLayoutTag extends IncludeTag {
 			if ((layout.isHidden() && !_showHiddenLayouts) ||
 				(Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_CONTENT) &&
-				 Objects.equals(
-					 layout.getCreateDate(), layout.getPublishDate())) ||
+				 !layout.isSystem()) ||
 				StagingUtil.isIncomplete(layout)) {
 
 				continue;

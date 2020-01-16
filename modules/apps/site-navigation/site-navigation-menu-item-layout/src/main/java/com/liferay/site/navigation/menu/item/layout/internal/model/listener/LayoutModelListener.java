@@ -218,7 +218,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		if (layout.isHidden() || !visible ||
 			(Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
-			 Objects.equals(layout.getCreateDate(), layout.getPublishDate()))) {
+			 !layout.isSystem())) {
 
 			return false;
 		}

@@ -10,14 +10,86 @@ buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
 }
 
+ext {
+	elasticsearchSidecarMajorVersion = "7"
+	elasticsearchSidecarVersion = "7.3.1"
+
+	elasticsearchSidecarZipURLLinux = "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${elasticsearchSidecarVersion}-linux-x86_64.tar.gz"
+	elasticsearchSidecarZipURLMac = "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${elasticsearchSidecarVersion}-darwin-x86_64.tar.gz"
+	elasticsearchSidecarZipURLWindows = "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${elasticsearchSidecarVersion}-windows-x86_64.zip"
+
+	elasticsearchPlugins = [
+		"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${elasticsearchSidecarVersion}.zip",
+		"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-kuromoji/analysis-kuromoji-${elasticsearchSidecarVersion}.zip",
+		"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/analysis-smartcn-${elasticsearchSidecarVersion}.zip",
+		"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/analysis-stempel-${elasticsearchSidecarVersion}.zip"
+	]
+}
+
+task buildElasticsearch
+task deployDistribution(type: Zip)
 task downloadElasticsearch
 task setupElasticsearch
 task startElasticsearch
 task stopElasticsearch
 
-File elasticsearchSidecarDataDir = file("${project.'liferay.home'}/data/elasticsearch${project.'elasticsearch.sidecar.major.version'}/repo")
-File elasticsearchSidecarDir = file("${project.'liferay.home'}/elasticsearch-${project.'elasticsearch.sidecar.version'}")
+File elasticsearchSidecarDataDir = file("${project.'liferay.home'}/data/elasticsearch${project.'elasticsearchSidecarMajorVersion'}/repo")
+File elasticsearchSidecarDir = file("${project.'liferay.home'}/elasticsearch-${project.'elasticsearchSidecarMajorVersion'}")
 String elasticsearchSidecarURL = "http://localhost:9200/"
+
+buildElasticsearch {
+	doLast {
+		String zipURL = elasticsearchSidecarZipURLLinux
+
+		if (OSDetector.isWindows()) {
+			zipURL = elasticsearchSidecarZipURLWindows
+		}
+		else if (OSDetector.isApple()) {
+			zipURL = elasticsearchSidecarZipURLMac
+		}
+
+		File zipFile = file("${buildDir}/${zipURL.drop(zipURL.lastIndexOf('/') + 1)}")
+
+		FileUtil.get(project, zipURL, zipFile, false, true)
+
+		delete file("${buildDir}/elasticsearch-${elasticsearchSidecarVersion}"), deployDistribution.archiveFile
+
+		project.copy {
+			fileMode = 0777
+
+			into buildDir
+
+			if (zipURL.endsWith(".zip")) {
+				from zipTree(zipFile)
+			}
+			else {
+				from tarTree(zipFile)
+			}
+		}
+	}
+}
+
+deployDistribution {
+	dependsOn buildElasticsearch
+
+	baseName = "elasticsearch"
+	destinationDir = buildDir
+	version = elasticsearchSidecarVersion
+
+	from {
+		file("${buildDir}/elasticsearch-${elasticsearchSidecarVersion}")
+	}
+
+	if (OSDetector.isApple()) {
+		classifier = "mac"
+	}
+	else if (OSDetector.isWindows()) {
+		classifier = "windows"
+	}
+	else {
+		classifier = "linux"
+	}
+}
 
 downloadElasticsearch {
 	doFirst {
@@ -146,33 +218,25 @@ stopElasticsearch {
 	}
 }
 
-_createPluginTasks(elasticsearchSidecarDir)
+_createPluginTasks()
 
-private void _createPluginTasks(File elasticsearchSidecarDir) {
-	project.properties.each {
-		name, value ->
+private void _createPluginTasks() {
+	elasticsearchPlugins.each {
+		url ->
 
-		if (name.startsWith("elasticsearch.plugins.") && name.endsWith(".zip.name")) {
-			String url = project.properties[name.substring(0, name.length() - 4) + "url"]
+		String fileName = url.drop(url.lastIndexOf('/') + 1)
 
-			if (url != null) {
-				String suffix = value.replaceAll(/[\.-](\w)/) {
-					return it[1].toUpperCase()
-				}
-
-				Task installPluginTask = tasks.create(name: "installPlugin" + StringUtil.capitalize(suffix), type: InstallPluginTask) {
-					pluginFile = file(project.properties["liferay.home"] + '/' + value)
-					pluginURL = url
-					workingDir = file("${elasticsearchSidecarDir}/bin")
-
-					if (name == "elasticsearch.plugins.ltr.zip.name") {
-						input = "y"
-					}
-				}
-
-				setupElasticsearch.dependsOn installPluginTask
-			}
+		String suffix = fileName.replaceAll(/[\.-](\w)/) {
+			return it[1].toUpperCase()
 		}
+
+		Task installPluginTask = tasks.create(name: "installPlugin" + StringUtil.capitalize(suffix), type: InstallPluginTask) {
+			pluginFile = file("${buildDir}/${fileName}")
+			pluginURL = url
+			workingDir = file("${buildDir}/elasticsearch-${elasticsearchSidecarVersion}/bin")
+		}
+
+		buildElasticsearch.finalizedBy installPluginTask
 	}
 }
 

@@ -187,14 +187,10 @@ public class LayoutsSEODisplayContext {
 			ActionRequest.ACTION_NAME, "/layout/edit_open_graph");
 
 		liferayPortletURL.setParameter(
-			"displayStyle",
-			_liferayPortletRequest.getParameter("displayStyle"));
-		liferayPortletURL.setParameter(
 			"mvcRenderCommandName",
 			_liferayPortletRequest.getParameter("mvcRenderCommandName"));
 		liferayPortletURL.setParameter(
-			"privateLayout",
-			_liferayPortletRequest.getParameter("privateLayout"));
+			"tabs1", _liferayPortletRequest.getParameter("tabs1"));
 		liferayPortletURL.setParameter(
 			"screenNavigationCategoryKey",
 			_liferayPortletRequest.getParameter("screenNavigationCategoryKey"));
@@ -204,7 +200,11 @@ public class LayoutsSEODisplayContext {
 		liferayPortletURL.setParameter(
 			"selPlid", _liferayPortletRequest.getParameter("selPlid"));
 		liferayPortletURL.setParameter(
-			"tabs1", _liferayPortletRequest.getParameter("tabs1"));
+			"privateLayout",
+			_liferayPortletRequest.getParameter("privateLayout"));
+		liferayPortletURL.setParameter(
+			"displayStyle",
+			_liferayPortletRequest.getParameter("displayStyle"));
 
 		return liferayPortletURL;
 	}
@@ -311,18 +311,10 @@ public class LayoutsSEODisplayContext {
 				PortletRequest.RENDER_PHASE, MimeResponse.Copy.ALL);
 
 		liferayPortletURL.setParameter(
-			"displayStyle",
-			_liferayPortletRequest.getParameter("displayStyle"));
-		liferayPortletURL.setParameter(
-			"groupId", _liferayPortletRequest.getParameter("groupId"));
-		liferayPortletURL.setParameter(
 			"mvcRenderCommandName",
 			_liferayPortletRequest.getParameter("mvcRenderCommandName"));
 		liferayPortletURL.setParameter(
-			"layoutId", _liferayPortletRequest.getParameter("layoutId"));
-		liferayPortletURL.setParameter(
-			"privateLayout",
-			_liferayPortletRequest.getParameter("privateLayout"));
+			"tabs1", _liferayPortletRequest.getParameter("tabs1"));
 		liferayPortletURL.setParameter(
 			"screenNavigationCategoryKey",
 			_liferayPortletRequest.getParameter("screenNavigationCategoryKey"));
@@ -332,7 +324,11 @@ public class LayoutsSEODisplayContext {
 		liferayPortletURL.setParameter(
 			"selPlid", _liferayPortletRequest.getParameter("selPlid"));
 		liferayPortletURL.setParameter(
-			"tabs1", _liferayPortletRequest.getParameter("tabs1"));
+			"privateLayout",
+			_liferayPortletRequest.getParameter("privateLayout"));
+		liferayPortletURL.setParameter(
+			"displayStyle",
+			_liferayPortletRequest.getParameter("displayStyle"));
 
 		return liferayPortletURL;
 	}

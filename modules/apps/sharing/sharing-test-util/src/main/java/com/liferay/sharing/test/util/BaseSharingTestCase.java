@@ -912,8 +912,8 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 						String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 						role.getRoleId(), actionKey);
 				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 				}
 			}
 		}

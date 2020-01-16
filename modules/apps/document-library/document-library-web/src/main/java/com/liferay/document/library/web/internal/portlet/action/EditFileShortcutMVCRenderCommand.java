@@ -84,13 +84,13 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 
 			return "/document_library/edit_file_shortcut.jsp";
 		}
-		catch (NoSuchFileShortcutException | PrincipalException e) {
-			SessionErrors.add(renderRequest, e.getClass());
+		catch (NoSuchFileShortcutException | PrincipalException exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
 
 			return "/document_library/error.jsp";
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 

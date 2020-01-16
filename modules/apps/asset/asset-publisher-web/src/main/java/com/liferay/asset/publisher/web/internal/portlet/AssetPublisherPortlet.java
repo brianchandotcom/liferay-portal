@@ -196,8 +196,8 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 			writeJSON(resourceRequest, resourceResponse, jsonObject);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -216,7 +216,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 				portal.sendRSSFeedsDisabledError(
 					resourceRequest, resourceResponse);
 			}
-			catch (ServletException se) {
+			catch (ServletException servletException) {
 			}
 
 			return;
@@ -250,8 +250,8 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 			outputStream.write(bytes);
 		}
-		catch (Exception e) {
-			_log.error("Unable to get RSS feed", e);
+		catch (Exception exception) {
+			_log.error("Unable to get RSS feed", exception);
 		}
 	}
 
@@ -350,8 +350,8 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 		}
-		catch (Exception e) {
-			_log.error("Unable to get asset publisher customizer", e);
+		catch (Exception exception) {
+			_log.error("Unable to get asset publisher customizer", exception);
 		}
 
 		if (SessionErrors.contains(

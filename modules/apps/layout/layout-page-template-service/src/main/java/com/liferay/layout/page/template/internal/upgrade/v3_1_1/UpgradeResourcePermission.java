@@ -87,9 +87,9 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 			ps.executeBatch();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 	}

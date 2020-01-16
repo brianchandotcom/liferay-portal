@@ -92,8 +92,8 @@ public class PanelCategoryRegistry {
 				try {
 					return panelCategory.isShow(permissionChecker, group);
 				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 				}
 
 				return false;
@@ -119,8 +119,8 @@ public class PanelCategoryRegistry {
 					count += notificationsCount;
 				}
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 
@@ -140,8 +140,8 @@ public class PanelCategoryRegistry {
 					return panelCategory;
 				}
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 

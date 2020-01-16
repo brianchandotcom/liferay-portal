@@ -87,7 +87,7 @@ public class RoleTestUtil {
 			role = RoleLocalServiceUtil.getRole(
 				TestPropsValues.getCompanyId(), roleName);
 		}
-		catch (NoSuchRoleException nsre) {
+		catch (NoSuchRoleException noSuchRoleException) {
 			role = RoleLocalServiceUtil.addRole(
 				TestPropsValues.getUserId(), null, 0, roleName, null, null,
 				roleType, null, null);

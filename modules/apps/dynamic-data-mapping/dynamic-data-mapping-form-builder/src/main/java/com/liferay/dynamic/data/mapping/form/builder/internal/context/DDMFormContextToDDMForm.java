@@ -458,13 +458,13 @@ public class DDMFormContextToDDMForm
 
 						ddmFormField.setProperty(propertyName, propertyValue);
 					}
-					catch (PortalException pe) {
+					catch (PortalException portalException) {
 						_log.error(
 							String.format(
 								"Unable to set the property \"%s\" of the " +
 									"field \"%s\"",
 								propertyName, ddmFormField.getName()),
-							pe);
+							portalException);
 					}
 				}
 

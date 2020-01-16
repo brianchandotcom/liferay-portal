@@ -48,8 +48,8 @@ public class CalendarSearchFixture {
 			searchContext.setCompanyId(TestPropsValues.getCompanyId());
 			searchContext.setUserId(getUserId());
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 
 		searchContext.setGroupIds(new long[] {_group.getGroupId()});
@@ -67,8 +67,8 @@ public class CalendarSearchFixture {
 		try {
 			return _indexer.search(searchContext);
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 

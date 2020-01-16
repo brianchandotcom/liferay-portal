@@ -69,17 +69,17 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 			moveThread(actionRequest, actionResponse);
 		}
 		catch (LockedThreadException | PrincipalException |
-			   RequiredMessageException e) {
+			   RequiredMessageException exception) {
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/message_boards/error.jsp");
 		}
 		catch (MessageBodyException | MessageSubjectException |
-			   NoSuchThreadException e) {
+			   NoSuchThreadException exception) {
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 		}
 	}
 

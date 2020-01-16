@@ -116,14 +116,16 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 				ContextProviderUtil.getEntityModel(message),
 				ParamUtil.getString(httpServletRequest, "filter"));
 		}
-		catch (ExpressionVisitException eve) {
-			throw new InvalidFilterException(eve.getMessage(), eve);
+		catch (ExpressionVisitException expressionVisitException) {
+			throw new InvalidFilterException(
+				expressionVisitException.getMessage(),
+				expressionVisitException);
 		}
-		catch (InvalidFilterException ife) {
-			throw ife;
+		catch (InvalidFilterException invalidFilterException) {
+			throw invalidFilterException;
 		}
-		catch (Exception e) {
-			throw new ServerErrorException(500, e);
+		catch (Exception exception) {
+			throw new ServerErrorException(500, exception);
 		}
 	}
 

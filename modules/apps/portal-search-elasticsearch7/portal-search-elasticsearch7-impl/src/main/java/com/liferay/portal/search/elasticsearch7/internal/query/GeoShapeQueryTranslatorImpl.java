@@ -128,8 +128,8 @@ public class GeoShapeQueryTranslatorImpl implements GeoShapeQueryTranslator {
 				geoShapeQuery.getField(),
 				shape.accept(_elasticsearchShapeTranslator));
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

@@ -113,8 +113,8 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 				httpResponseResource = _getSHA1ResponseResource(uri, location);
 			}
 		}
-		catch (Exception e) {
-			_logger.error(e.getMessage(), e);
+		catch (Exception exception) {
+			_logger.error(exception.getMessage(), exception);
 		}
 
 		if (httpResponseResource == null) {

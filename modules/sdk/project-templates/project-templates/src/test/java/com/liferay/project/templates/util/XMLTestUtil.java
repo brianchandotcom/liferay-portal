@@ -152,8 +152,11 @@ public class XMLTestUtil {
 		try {
 			_transformer = transformerFactory.newTransformer();
 		}
-		catch (TransformerConfigurationException tce) {
-			throw new ExceptionInInitializerError(tce);
+		catch (TransformerConfigurationException
+					transformerConfigurationException) {
+
+			throw new ExceptionInInitializerError(
+				transformerConfigurationException);
 		}
 
 		_transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");

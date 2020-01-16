@@ -324,7 +324,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			try {
 				content = StringUtil.read(url.openStream());
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				return null;
 			}
 
@@ -334,7 +334,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			return _jsonFactory.createJSONObject(content);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

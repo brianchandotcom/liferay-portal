@@ -57,7 +57,7 @@ public class ObjectDecodeChannelInboundHandlerTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		ReflectionTestUtil.invoke(

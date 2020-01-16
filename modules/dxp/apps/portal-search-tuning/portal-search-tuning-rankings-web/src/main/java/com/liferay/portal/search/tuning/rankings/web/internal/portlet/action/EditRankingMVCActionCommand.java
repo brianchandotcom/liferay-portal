@@ -125,7 +125,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			LiferayPortletResponse liferayPortletResponse =
 				portal.getLiferayPortletResponse(actionResponse);
 
@@ -138,7 +138,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			hideDefaultErrorMessage(actionRequest);
 
@@ -159,12 +159,12 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, actionResponse,
 				editRankingMVCActionRequest.getRedirect());
 		}
-		catch (Exception e) {
-			if (e instanceof DuplicateAliasStringException) {
+		catch (Exception exception) {
+			if (exception instanceof DuplicateAliasStringException) {
 				SessionErrors.add(
 					actionRequest, DuplicateAliasStringException.class);
 			}
-			else if (e instanceof DuplicateQueryStringException) {
+			else if (exception instanceof DuplicateQueryStringException) {
 				SessionErrors.add(
 					actionRequest, DuplicateQueryStringException.class);
 			}
@@ -374,8 +374,8 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, actionResponse,
 				editRankingMVCActionRequest.getRedirect());
 		}
-		catch (Exception e) {
-			if (e instanceof DuplicateAliasStringException) {
+		catch (Exception exception) {
+			if (exception instanceof DuplicateAliasStringException) {
 				SessionErrors.add(actionRequest, Exception.class);
 
 				actionResponse.setRenderParameter(

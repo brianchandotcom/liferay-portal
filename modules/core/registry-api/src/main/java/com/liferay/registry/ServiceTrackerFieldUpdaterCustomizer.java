@@ -128,8 +128,8 @@ public class ServiceTrackerFieldUpdaterCustomizer<S, T>
 				afterServiceUpdate(oldService, newService);
 			}
 		}
-		catch (IllegalAccessException iae) {
-			throw new RuntimeException(iae);
+		catch (IllegalAccessException illegalAccessException) {
+			throw new RuntimeException(illegalAccessException);
 		}
 	}
 

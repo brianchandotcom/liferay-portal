@@ -149,8 +149,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 				return true;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -367,7 +367,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 						_apiCallCount = 1;
 					}
-					catch (InterruptedException ie) {
+					catch (InterruptedException interruptedException) {
 					}
 				}
 
@@ -396,8 +396,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 
 			return responseJSONObject;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -471,7 +471,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 				_joinByPhoneInternationalNumbers.put(country, numbers);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 	}
 
@@ -593,8 +593,8 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 				return true;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;

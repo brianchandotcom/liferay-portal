@@ -49,8 +49,8 @@ public class SessionClicks {
 
 			return portalPreferences.getValue(namespace, key, defaultValue);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return null;
 		}
@@ -123,10 +123,11 @@ public class SessionClicks {
 
 				break;
 			}
-			catch (ConcurrentModificationException cme) {
+			catch (ConcurrentModificationException
+						concurrentModificationException) {
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
 				break;
 			}

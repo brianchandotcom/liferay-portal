@@ -75,7 +75,7 @@ public class EditUserGroupPortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -107,7 +107,7 @@ public class EditUserGroupPortletConfigurationIcon
 
 			return false;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

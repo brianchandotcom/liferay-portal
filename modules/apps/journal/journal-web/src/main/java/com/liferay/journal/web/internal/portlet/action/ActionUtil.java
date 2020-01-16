@@ -153,8 +153,9 @@ public class ActionUtil {
 				new PortletRequestModel(renderRequest, renderResponse),
 				themeDisplay);
 		}
-		catch (CompareVersionsException cve) {
-			renderRequest.setAttribute(WebKeys.DIFF_VERSION, cve.getVersion());
+		catch (CompareVersionsException compareVersionsException) {
+			renderRequest.setAttribute(
+				WebKeys.DIFF_VERSION, compareVersionsException.getVersion());
 		}
 
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
@@ -292,7 +293,7 @@ public class ActionUtil {
 				article = JournalArticleServiceUtil.getLatestArticle(
 					groupId, className, classPK);
 			}
-			catch (NoSuchArticleException nsae) {
+			catch (NoSuchArticleException noSuchArticleException) {
 				return null;
 			}
 		}
@@ -309,7 +310,7 @@ public class ActionUtil {
 					ddmStructure = DDMStructureServiceUtil.getStructure(
 						ddmStructureId);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 			}
 
@@ -334,7 +335,7 @@ public class ActionUtil {
 				article.setArticleId(null);
 				article.setVersion(0);
 			}
-			catch (NoSuchArticleException nsae) {
+			catch (NoSuchArticleException noSuchArticleException) {
 				return null;
 			}
 		}

@@ -144,12 +144,12 @@ public class AssetLinksTag extends IncludeTag {
 					_assetEntryId = assetEntry.getEntryId();
 				}
 			}
-			catch (SystemException se) {
+			catch (SystemException systemException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(se, se);
+					_log.debug(systemException, systemException);
 				}
 			}
 		}
@@ -165,7 +165,7 @@ public class AssetLinksTag extends IncludeTag {
 		try {
 			assetLinkEntries = _getAssetLinkEntries();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if (ListUtil.isEmpty(assetLinkEntries)) {

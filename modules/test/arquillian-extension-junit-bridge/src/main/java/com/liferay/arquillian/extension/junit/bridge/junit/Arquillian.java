@@ -110,8 +110,9 @@ public class Arquillian extends Runner implements Filterable {
 		try {
 			Class.forName(_clazz.getName(), true, _clazz.getClassLoader());
 		}
-		catch (ClassNotFoundException cnfe) {
-			runNotifier.fireTestFailure(new Failure(getDescription(), cnfe));
+		catch (ClassNotFoundException classNotFoundException) {
+			runNotifier.fireTestFailure(
+				new Failure(getDescription(), classNotFoundException));
 
 			return;
 		}

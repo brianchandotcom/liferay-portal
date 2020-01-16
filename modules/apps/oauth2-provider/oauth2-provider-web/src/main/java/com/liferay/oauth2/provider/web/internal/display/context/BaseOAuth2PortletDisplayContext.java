@@ -136,8 +136,8 @@ public abstract class BaseOAuth2PortletDisplayContext {
 				permissionChecker, OAuth2ProviderPortletKeys.OAUTH2_ADMIN,
 				OAuth2ProviderActionKeys.ACTION_VIEW_GRANTED_AUTHORIZATIONS);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return false;
 		}

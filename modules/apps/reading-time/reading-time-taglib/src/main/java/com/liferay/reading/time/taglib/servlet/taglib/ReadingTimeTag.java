@@ -59,8 +59,8 @@ public class ReadingTimeTag extends AttributesTagSupport implements BodyTag {
 
 			return EVAL_PAGE;
 		}
-		catch (IOException ioe) {
-			throw new JspException(ioe);
+		catch (IOException ioException) {
+			throw new JspException(ioException);
 		}
 	}
 

@@ -60,16 +60,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				BookmarksWebKeys.BOOKMARKS_PORTLET_TOOLBAR_CONTRIBUTOR,
 				_bookmarksPortletToolbarContributor);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchFolderException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/bookmarks/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/bookmarks/view.jsp";

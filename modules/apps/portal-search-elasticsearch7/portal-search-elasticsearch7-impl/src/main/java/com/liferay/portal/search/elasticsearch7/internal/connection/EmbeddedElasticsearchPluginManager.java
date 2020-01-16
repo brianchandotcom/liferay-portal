@@ -95,9 +95,9 @@ public class EmbeddedElasticsearchPluginManager {
 		try {
 			pluginManager.install(_pluginName);
 		}
-		catch (IOException ioe) {
-			if (!handle(ioe)) {
-				throw ioe;
+		catch (IOException ioException) {
+			if (!handle(ioException)) {
+				throw ioException;
 			}
 		}
 	}

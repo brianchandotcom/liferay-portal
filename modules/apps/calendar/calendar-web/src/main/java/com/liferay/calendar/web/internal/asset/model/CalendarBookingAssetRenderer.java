@@ -180,8 +180,8 @@ public class CalendarBookingAssetRenderer
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
-			_log.error("Unable to get view in context URL", e);
+		catch (Exception exception) {
+			_log.error("Unable to get view in context URL", exception);
 		}
 
 		return null;
@@ -238,8 +238,8 @@ public class CalendarBookingAssetRenderer
 
 			return calendar.isEnableComments();
 		}
-		catch (Exception e) {
-			_log.error("Unable to check commentable", e);
+		catch (Exception exception) {
+			_log.error("Unable to check commentable", exception);
 		}
 
 		return false;
@@ -257,8 +257,8 @@ public class CalendarBookingAssetRenderer
 
 			return calendar.isEnableRatings();
 		}
-		catch (Exception e) {
-			_log.error("Unable to check ratable", e);
+		catch (Exception exception) {
+			_log.error("Unable to check ratable", exception);
 		}
 
 		return false;

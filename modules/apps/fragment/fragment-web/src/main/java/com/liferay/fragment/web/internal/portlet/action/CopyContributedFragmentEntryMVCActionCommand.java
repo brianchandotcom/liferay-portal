@@ -168,9 +168,9 @@ public class CopyContributedFragmentEntryMVCActionCommand
 
 			return fileEntry.getFileEntryId();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get preview entry image URL", e);
+				_log.debug("Unable to get preview entry image URL", exception);
 			}
 		}
 

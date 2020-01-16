@@ -57,8 +57,8 @@ public class MessageDigestCacheKeyGenerator extends BaseCacheKeyGenerator {
 			return new MessageDigestCacheKeyGenerator(
 				_messageDigest.getAlgorithm(), charset.name());
 		}
-		catch (NoSuchAlgorithmException nsae) {
-			throw new IllegalStateException(nsae);
+		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+			throw new IllegalStateException(noSuchAlgorithmException);
 		}
 	}
 
@@ -69,8 +69,8 @@ public class MessageDigestCacheKeyGenerator extends BaseCacheKeyGenerator {
 
 			return StringUtil.bytesToHexString(_messageDigest.digest());
 		}
-		catch (CharacterCodingException cce) {
-			throw new SystemException(cce);
+		catch (CharacterCodingException characterCodingException) {
+			throw new SystemException(characterCodingException);
 		}
 	}
 
@@ -98,8 +98,8 @@ public class MessageDigestCacheKeyGenerator extends BaseCacheKeyGenerator {
 
 			return StringUtil.bytesToHexString(_messageDigest.digest());
 		}
-		catch (CharacterCodingException cce) {
-			throw new SystemException(cce);
+		catch (CharacterCodingException characterCodingException) {
+			throw new SystemException(characterCodingException);
 		}
 	}
 

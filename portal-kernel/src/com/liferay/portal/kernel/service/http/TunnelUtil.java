@@ -63,12 +63,12 @@ public class TunnelUtil {
 				new ObjectValuePair<HttpPrincipal, MethodHandler>(
 					httpPrincipal, methodHandler));
 		}
-		catch (SocketTimeoutException ste) {
+		catch (SocketTimeoutException socketTimeoutException) {
 			_log.error(
 				"Tunnel connection time out may be configured with the " +
 					"portal property \"tunneling.servlet.timeout\"");
 
-			throw ste;
+			throw socketTimeoutException;
 		}
 
 		Object returnObject = null;
@@ -84,9 +84,9 @@ public class TunnelUtil {
 
 			returnObject = objectInputStream.readObject();
 		}
-		catch (EOFException eofe) {
+		catch (EOFException eofException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to read object", eofe);
+				_log.debug("Unable to read object", eofException);
 			}
 		}
 

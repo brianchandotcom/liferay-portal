@@ -63,7 +63,7 @@ public class ThreadSubscriptionPortletConfigurationIcon
 				key = "unsubscribe";
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return LanguageUtil.get(
@@ -86,7 +86,7 @@ public class ThreadSubscriptionPortletConfigurationIcon
 		try {
 			message = ActionUtil.getMessage(portletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -130,7 +130,7 @@ public class ThreadSubscriptionPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(),
 				ActionUtil.getMessage(portletRequest), ActionKeys.SUBSCRIBE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

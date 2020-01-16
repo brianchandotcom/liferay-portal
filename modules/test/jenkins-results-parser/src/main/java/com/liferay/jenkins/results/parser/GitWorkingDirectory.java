@@ -159,9 +159,9 @@ public class GitWorkingDirectory {
 			try {
 				headContent = JenkinsResultsParserUtil.read(headFile);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new RuntimeException(
-					"Unable to read file " + headFile.getPath(), ioe);
+					"Unable to read file " + headFile.getPath(), ioException);
 			}
 
 			headContent = headContent.trim();
@@ -799,7 +799,7 @@ public class GitWorkingDirectory {
 					GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
 					60 * 60 * 1000, "git gc");
 			}
-			catch (RuntimeException re) {
+			catch (RuntimeException runtimeException) {
 				exceptionThrown = true;
 			}
 
@@ -1175,7 +1175,7 @@ public class GitWorkingDirectory {
 						localGitRepository, branchName,
 						getLocalGitBranchSHA(branchName)));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (!branchName.equals(upstreamBranchName)) {
 					return null;
 				}
@@ -1748,8 +1748,8 @@ public class GitWorkingDirectory {
 				return null;
 			}
 		}
-		catch (RuntimeException re) {
-			re.printStackTrace();
+		catch (RuntimeException runtimeException) {
+			runtimeException.printStackTrace();
 
 			return null;
 		}
@@ -1890,8 +1890,8 @@ public class GitWorkingDirectory {
 
 				return gitStatus;
 			}
-			catch (RuntimeException re) {
-				re.printStackTrace();
+			catch (RuntimeException runtimeException) {
+				runtimeException.printStackTrace();
 
 				JenkinsResultsParserUtil.sleep(1000);
 			}
@@ -2033,9 +2033,9 @@ public class GitWorkingDirectory {
 		try {
 			gitFileContent = JenkinsResultsParserUtil.read(gitFile);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Real .git directory could not be found", ioe);
+				"Real .git directory could not be found", ioException);
 		}
 
 		for (String line : gitFileContent.split("\n")) {
@@ -2189,9 +2189,9 @@ public class GitWorkingDirectory {
 		try {
 			return JenkinsResultsParserUtil.getBuildPropertyAsList(true, key);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to get build property " + key, ioe);
+				"Unable to get build property " + key, ioException);
 		}
 	}
 
@@ -2214,7 +2214,7 @@ public class GitWorkingDirectory {
 				GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
 				1000 * 60 * 10, sb.toString());
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			exceptionThrown = true;
 		}
 
@@ -2259,7 +2259,7 @@ public class GitWorkingDirectory {
 				GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
 				1000 * 60 * 10, sb.toString());
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			exceptionThrown = true;
 		}
 

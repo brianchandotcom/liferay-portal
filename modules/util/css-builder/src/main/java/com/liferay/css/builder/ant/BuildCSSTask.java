@@ -41,8 +41,8 @@ public class BuildCSSTask extends Task {
 		try (CSSBuilder cssBuilder = new CSSBuilder(_cssBuilderArgs)) {
 			cssBuilder.execute();
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

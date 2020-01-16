@@ -98,12 +98,12 @@ public class SSLSocketFactoryBuilderImpl implements SSLSocketFactoryBuilder {
 		try {
 			return new SSLConnectionSocketFactory(sslContext, hostnameVerifier);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Use system defaults because the custom SSL socket " +
 						"factory was not able to initialize",
-					e);
+					exception);
 			}
 
 			return SSLConnectionSocketFactory.getSystemSocketFactory();

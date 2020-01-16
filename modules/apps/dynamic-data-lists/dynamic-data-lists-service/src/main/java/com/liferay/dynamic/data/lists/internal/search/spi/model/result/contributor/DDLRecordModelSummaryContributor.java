@@ -84,8 +84,8 @@ public class DDLRecordModelSummaryContributor
 				getResourceBundle(locale), _getLanguageKey(ddlRecordSet),
 				recordSetName, false);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return StringPool.BLANK;

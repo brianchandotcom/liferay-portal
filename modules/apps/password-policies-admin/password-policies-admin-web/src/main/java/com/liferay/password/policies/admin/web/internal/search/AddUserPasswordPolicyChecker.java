@@ -46,8 +46,8 @@ public class AddUserPasswordPolicyChecker extends EmptyOnClickRowChecker {
 			return UserLocalServiceUtil.hasPasswordPolicyUser(
 				_passwordPolicy.getPasswordPolicyId(), user.getUserId());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -73,8 +73,8 @@ public class AddUserPasswordPolicyChecker extends EmptyOnClickRowChecker {
 				return true;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;

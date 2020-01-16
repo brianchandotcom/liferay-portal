@@ -141,8 +141,8 @@ public class MultisearchSearchRequestExecutorImpl
 			return restHighLevelClient.msearch(
 				multiSearchRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

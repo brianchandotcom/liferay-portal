@@ -162,8 +162,8 @@ public class BufferCacheServletResponseTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Throwable throwable = re.getCause();
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
 
 			Assert.assertTrue(throwable instanceof IOException);
 			Assert.assertEquals("Forced IOException", throwable.getMessage());
@@ -413,7 +413,7 @@ public class BufferCacheServletResponseTest {
 		try {
 			bufferCacheServletResponse.getOutputStream();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 	}
 
@@ -615,7 +615,7 @@ public class BufferCacheServletResponseTest {
 		try {
 			bufferCacheServletResponse.getWriter();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 	}
 
@@ -990,7 +990,7 @@ public class BufferCacheServletResponseTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 	}
 

@@ -40,12 +40,12 @@ public class JournalFolderImpl extends JournalFolderBaseImpl {
 
 				ancestorFolderIds.add(folder.getFolderId());
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 				if (folder.isInTrash()) {
 					break;
 				}
 
-				throw nsfe;
+				throw noSuchFolderException;
 			}
 		}
 

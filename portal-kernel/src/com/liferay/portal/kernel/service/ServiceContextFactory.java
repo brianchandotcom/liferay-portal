@@ -197,14 +197,14 @@ public class ServiceContextFactory {
 			try {
 				user = PortalUtil.getUser(httpServletRequest);
 			}
-			catch (NoSuchUserException nsue) {
+			catch (NoSuchUserException noSuchUserException) {
 
 				// LPS-24160
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsue, nsue);
+					_log.debug(noSuchUserException, noSuchUserException);
 				}
 			}
 

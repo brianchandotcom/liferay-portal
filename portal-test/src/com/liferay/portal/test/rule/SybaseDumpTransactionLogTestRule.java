@@ -88,11 +88,11 @@ public class SybaseDumpTransactionLogTestRule
 
 								_dumpTransactionLog();
 							}
-							catch (InterruptedException ie) {
+							catch (InterruptedException interruptedException) {
 								break;
 							}
-							catch (SQLException sqle) {
-								throw new RuntimeException(sqle);
+							catch (SQLException sqlException) {
+								throw new RuntimeException(sqlException);
 							}
 						}
 					},

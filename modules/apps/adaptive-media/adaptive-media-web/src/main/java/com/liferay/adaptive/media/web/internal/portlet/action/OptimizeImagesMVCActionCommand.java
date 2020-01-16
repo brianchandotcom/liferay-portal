@@ -99,9 +99,10 @@ public class OptimizeImagesMVCActionCommand extends BaseMVCActionCommand {
 					getName(),
 				taskContextMap, new ServiceContext());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortalException(
-				"Unable to schedule adaptive media images optimization", pe);
+				"Unable to schedule adaptive media images optimization",
+				portalException);
 		}
 	}
 
@@ -128,11 +129,11 @@ public class OptimizeImagesMVCActionCommand extends BaseMVCActionCommand {
 					getName(),
 				taskContextMap, new ServiceContext());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortalException(
 				"Unable to schedule adaptive media images optimization for " +
 					"configuration " + configurationEntryUuid,
-				pe);
+				portalException);
 		}
 	}
 

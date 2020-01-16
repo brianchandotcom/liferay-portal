@@ -360,11 +360,11 @@ public class DefaultDLViewFileVersionDisplayContext
 					dlTrashUtil, versioningStrategy, dlURLHelper);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
 				"Unable to build DefaultDLViewFileVersionDisplayContext for " +
 					fileVersion,
-				pe);
+				portalException);
 		}
 	}
 
@@ -454,23 +454,23 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			dlPreviewRenderer.render(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof DLFileEntryPreviewGenerationException ||
-				e instanceof DLPreviewGenerationInProcessException ||
-				e instanceof DLPreviewSizeException) {
+		catch (Exception exception) {
+			if (exception instanceof DLFileEntryPreviewGenerationException ||
+				exception instanceof DLPreviewGenerationInProcessException ||
+				exception instanceof DLPreviewSizeException) {
 
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 			else {
 				_log.error(
 					"Unable to render preview for file version: " +
 						_fileVersion.getTitle(),
-					e);
+					exception);
 			}
 
-			_handleError(httpServletRequest, httpServletResponse, e);
+			_handleError(httpServletRequest, httpServletResponse, exception);
 		}
 	}
 

@@ -143,7 +143,7 @@ public class GetAvailableTemplatesMVCResourceCommand
 
 			return infoDisplayObjectProvider.getDisplayObject();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

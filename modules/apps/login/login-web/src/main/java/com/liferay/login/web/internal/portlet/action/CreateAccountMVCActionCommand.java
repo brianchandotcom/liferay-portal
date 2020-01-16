@@ -243,9 +243,11 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				updateIncompleteUser(actionRequest, actionResponse);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof UserEmailAddressException.MustNotBeDuplicate ||
-				e instanceof UserScreenNameException.MustNotBeDuplicate) {
+		catch (Exception exception) {
+			if (exception instanceof
+					UserEmailAddressException.MustNotBeDuplicate ||
+				exception instanceof
+					UserScreenNameException.MustNotBeDuplicate) {
 
 				String emailAddress = ParamUtil.getString(
 					actionRequest, "emailAddress");
@@ -256,43 +258,45 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				if ((user == null) ||
 					(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
 
-					SessionErrors.add(actionRequest, e.getClass(), e);
+					SessionErrors.add(
+						actionRequest, exception.getClass(), exception);
 				}
 				else {
 					actionResponse.setRenderParameter(
 						"mvcPath", "/update_account.jsp");
 				}
 			}
-			else if (e instanceof AddressCityException ||
-					 e instanceof AddressStreetException ||
-					 e instanceof AddressZipException ||
-					 e instanceof CaptchaException ||
-					 e instanceof CompanyMaxUsersException ||
-					 e instanceof ContactBirthdayException ||
-					 e instanceof ContactNameException ||
-					 e instanceof DuplicateOpenIdException ||
-					 e instanceof EmailAddressException ||
-					 e instanceof GroupFriendlyURLException ||
-					 e instanceof NoSuchCountryException ||
-					 e instanceof NoSuchListTypeException ||
-					 e instanceof NoSuchOrganizationException ||
-					 e instanceof NoSuchRegionException ||
-					 e instanceof OrganizationParentException ||
-					 e instanceof PhoneNumberException ||
-					 e instanceof RequiredFieldException ||
-					 e instanceof RequiredUserException ||
-					 e instanceof TermsOfUseException ||
-					 e instanceof UserEmailAddressException ||
-					 e instanceof UserIdException ||
-					 e instanceof UserPasswordException ||
-					 e instanceof UserScreenNameException ||
-					 e instanceof UserSmsException ||
-					 e instanceof WebsiteURLException) {
+			else if (exception instanceof AddressCityException ||
+					 exception instanceof AddressStreetException ||
+					 exception instanceof AddressZipException ||
+					 exception instanceof CaptchaException ||
+					 exception instanceof CompanyMaxUsersException ||
+					 exception instanceof ContactBirthdayException ||
+					 exception instanceof ContactNameException ||
+					 exception instanceof DuplicateOpenIdException ||
+					 exception instanceof EmailAddressException ||
+					 exception instanceof GroupFriendlyURLException ||
+					 exception instanceof NoSuchCountryException ||
+					 exception instanceof NoSuchListTypeException ||
+					 exception instanceof NoSuchOrganizationException ||
+					 exception instanceof NoSuchRegionException ||
+					 exception instanceof OrganizationParentException ||
+					 exception instanceof PhoneNumberException ||
+					 exception instanceof RequiredFieldException ||
+					 exception instanceof RequiredUserException ||
+					 exception instanceof TermsOfUseException ||
+					 exception instanceof UserEmailAddressException ||
+					 exception instanceof UserIdException ||
+					 exception instanceof UserPasswordException ||
+					 exception instanceof UserScreenNameException ||
+					 exception instanceof UserSmsException ||
+					 exception instanceof WebsiteURLException) {
 
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 
@@ -309,12 +313,12 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
-		catch (NoSuchLayoutException nsle) {
+		catch (NoSuchLayoutException noSuchLayoutException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsle, nsle);
+				_log.debug(noSuchLayoutException, noSuchLayoutException);
 			}
 		}
 	}
@@ -326,8 +330,8 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			return _configurationProvider.getSystemConfiguration(
 				CaptchaConfiguration.class);
 		}
-		catch (Exception e) {
-			throw new CaptchaConfigurationException(e);
+		catch (Exception exception) {
+			throw new CaptchaConfigurationException(exception);
 		}
 	}
 

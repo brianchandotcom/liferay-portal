@@ -82,8 +82,8 @@ public class MethodFactoryImpl implements MethodFactory {
 									className));
 						}
 					}
-					catch (Exception e) {
-						throw new ExceptionInInitializerError(e);
+					catch (Exception exception) {
+						throw new ExceptionInInitializerError(exception);
 					}
 				}
 			};

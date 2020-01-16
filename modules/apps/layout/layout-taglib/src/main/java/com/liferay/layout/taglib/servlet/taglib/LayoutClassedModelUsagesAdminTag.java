@@ -51,13 +51,13 @@ public class LayoutClassedModelUsagesAdminTag extends IncludeTag {
 					PortalUtil.getClassNameId(getClassName()), getClassPK());
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"Unable to check layout classed model usages for ",
 						"class name ", _className, " and class PK ", _classPK),
-					pe);
+					portalException);
 			}
 		}
 

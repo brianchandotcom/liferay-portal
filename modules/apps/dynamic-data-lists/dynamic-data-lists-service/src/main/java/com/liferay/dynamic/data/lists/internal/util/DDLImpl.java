@@ -307,7 +307,7 @@ public class DDLImpl implements DDL {
 
 			return getFileEntryTitle(uuid, groupId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}
@@ -333,7 +333,7 @@ public class DDLImpl implements DDL {
 
 			return fileEntry.getTitle();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return LanguageUtil.format(
 				LocaleUtil.getSiteDefault(), "is-temporarily-unavailable",
 				"content");
@@ -344,7 +344,7 @@ public class DDLImpl implements DDL {
 		try {
 			return JSONFactoryUtil.createJSONArray(String.valueOf(fieldValue));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return JSONFactoryUtil.createJSONArray();
 		}
 	}
@@ -356,7 +356,7 @@ public class DDLImpl implements DDL {
 			return _layoutService.getLayoutName(
 				groupId, privateLayout, layoutId, languageId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return LanguageUtil.format(
 				LocaleUtil.getSiteDefault(), "is-temporarily-unavailable",
 				"content");
@@ -377,7 +377,7 @@ public class DDLImpl implements DDL {
 				groupId, privateLayout, layoutId,
 				LanguageUtil.getLanguageId(locale));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}

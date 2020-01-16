@@ -135,8 +135,8 @@ public class SharingCollaboratorsTag extends BaseSharingTag {
 				themeDisplay.getPermissionChecker(), classNameId, classPK,
 				themeDisplay.getScopeGroupId());
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return false;
 		}

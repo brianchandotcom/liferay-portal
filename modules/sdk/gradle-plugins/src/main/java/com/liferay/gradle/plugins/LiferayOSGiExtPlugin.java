@@ -214,8 +214,8 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			basePluginConvention.setArchivesBaseName(
 				attributes.getValue(Constants.BUNDLE_SYMBOLICNAME));
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 

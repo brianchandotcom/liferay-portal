@@ -202,14 +202,14 @@ public class InjectTestBag {
 			try {
 				countDownLatch.await(_SLEEP_TIME, TimeUnit.MILLISECONDS);
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 				System.out.println(
 					StringBundler.concat(
 						"Stopped waiting for service ", className, " ",
 						filterString, " for field ", testClass.getName(), ".",
 						field.getName(), " due to interruption"));
 
-				throw ie;
+				throw interruptedException;
 			}
 
 			serviceReference = _getServiceReference(

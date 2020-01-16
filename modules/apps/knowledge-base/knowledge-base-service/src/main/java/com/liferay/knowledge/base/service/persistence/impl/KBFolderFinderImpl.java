@@ -162,8 +162,8 @@ public class KBFolderFinderImpl
 
 			return count;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -286,8 +286,8 @@ public class KBFolderFinderImpl
 
 			return models;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

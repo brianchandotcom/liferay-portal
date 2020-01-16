@@ -48,8 +48,8 @@ public abstract class BaseEntityCollectionAdapter<T>
 
 			author = company.getName();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return author;

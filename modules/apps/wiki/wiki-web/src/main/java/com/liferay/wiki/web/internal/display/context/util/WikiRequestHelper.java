@@ -74,8 +74,8 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 			return _wikiGroupServiceOverriddenConfiguration;
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -115,8 +115,8 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 			return _wikiPortletInstanceConfiguration;
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

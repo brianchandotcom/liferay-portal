@@ -1067,7 +1067,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 			Assert.fail();
 		}
-		catch (NoSuchModelException nsme) {
+		catch (NoSuchModelException noSuchModelException) {
 		}
 	}
 
@@ -1162,7 +1162,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 			Assert.fail();
 		}
-		catch (NoSuchModelException nsme) {
+		catch (NoSuchModelException noSuchModelException) {
 		}
 
 		Assert.assertEquals(
@@ -1936,7 +1936,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 			Assert.fail();
 		}
-		catch (NoSuchModelException nsme) {
+		catch (NoSuchModelException noSuchModelException) {
 		}
 	}
 
@@ -1978,7 +1978,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 			Assert.fail();
 		}
-		catch (NoSuchModelException nsme) {
+		catch (NoSuchModelException noSuchModelException) {
 		}
 
 		Assert.assertEquals(

@@ -114,9 +114,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.REDIRECT, renderURL.toString());
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof AuthException) {
-				Throwable cause = e.getCause();
+		catch (Exception exception) {
+			if (exception instanceof AuthException) {
+				Throwable cause = exception.getCause();
 
 				if (cause instanceof PasswordExpiredException ||
 					cause instanceof UserLockoutException) {
@@ -128,25 +128,26 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 						_log.info("Authentication failed");
 					}
 
-					SessionErrors.add(actionRequest, e.getClass());
+					SessionErrors.add(actionRequest, exception.getClass());
 				}
 			}
-			else if (e instanceof CompanyMaxUsersException ||
-					 e instanceof CookieNotSupportedException ||
-					 e instanceof NoSuchUserException ||
-					 e instanceof PasswordExpiredException ||
-					 e instanceof UserEmailAddressException ||
-					 e instanceof UserIdException ||
-					 e instanceof UserLockoutException ||
-					 e instanceof UserPasswordException ||
-					 e instanceof UserScreenNameException) {
+			else if (exception instanceof CompanyMaxUsersException ||
+					 exception instanceof CookieNotSupportedException ||
+					 exception instanceof NoSuchUserException ||
+					 exception instanceof PasswordExpiredException ||
+					 exception instanceof UserEmailAddressException ||
+					 exception instanceof UserIdException ||
+					 exception instanceof UserLockoutException ||
+					 exception instanceof UserPasswordException ||
+					 exception instanceof UserScreenNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 
-				_portal.sendError(e, actionRequest, actionResponse);
+				_portal.sendError(exception, actionRequest, actionResponse);
 
 				return;
 			}

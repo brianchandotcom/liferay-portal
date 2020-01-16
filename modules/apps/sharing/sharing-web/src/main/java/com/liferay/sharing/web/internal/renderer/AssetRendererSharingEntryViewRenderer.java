@@ -61,10 +61,11 @@ public class AssetRendererSharingEntryViewRenderer
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (IOException | ServletException e) {
-			_log.error("Unable to include JSP " + _JSP_PATH, e);
+		catch (IOException | ServletException exception) {
+			_log.error("Unable to include JSP " + _JSP_PATH, exception);
 
-			throw new IOException("Unable to include JSP " + _JSP_PATH, e);
+			throw new IOException(
+				"Unable to include JSP " + _JSP_PATH, exception);
 		}
 	}
 

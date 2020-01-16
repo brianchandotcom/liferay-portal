@@ -241,10 +241,10 @@ public class Serializer {
 
 			objectOutputStream.flush();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to write ordinary serializable object " + serializable,
-				ioe);
+				ioException);
 		}
 	}
 

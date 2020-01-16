@@ -84,8 +84,8 @@ public class StatsClusterRequestExecutorImpl
 
 			return new StatsClusterResponse(clusterHealthStatus, responseBody);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

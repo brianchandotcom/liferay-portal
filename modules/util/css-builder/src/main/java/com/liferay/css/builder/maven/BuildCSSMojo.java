@@ -115,8 +115,8 @@ public class BuildCSSMojo extends AbstractMojo {
 				_execute();
 			}
 		}
-		catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+		catch (Exception exception) {
+			throw new MojoExecutionException(exception.getMessage(), exception);
 		}
 	}
 

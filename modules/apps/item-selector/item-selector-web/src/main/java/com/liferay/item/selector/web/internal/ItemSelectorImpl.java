@@ -204,15 +204,15 @@ public class ItemSelectorImpl implements ItemSelector {
 		try {
 			portletURL.setPortletMode(PortletMode.VIEW);
 		}
-		catch (PortletModeException pme) {
-			throw new SystemException(pme);
+		catch (PortletModeException portletModeException) {
+			throw new SystemException(portletModeException);
 		}
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException wse) {
-			throw new SystemException(wse);
+		catch (WindowStateException windowStateException) {
+			throw new SystemException(windowStateException);
 		}
 
 		Map<String, String[]> parameters = getItemSelectorParameters(

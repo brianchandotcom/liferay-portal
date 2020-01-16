@@ -94,12 +94,12 @@ public class ExportUsersPortletConfigurationIcon
 				permissionChecker, UsersAdminPortletKeys.USERS_ADMIN,
 				ActionKeys.EXPORT_USER);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

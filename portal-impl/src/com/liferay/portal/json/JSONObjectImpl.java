@@ -50,8 +50,8 @@ public class JSONObjectImpl implements JSONObject {
 			_jsonObject = new org.json.JSONObject(
 				jsonObjectImpl.getJSONObject(), names);
 		}
-		catch (Exception e) {
-			throw new JSONException(e);
+		catch (Exception exception) {
+			throw new JSONException(exception);
 		}
 	}
 
@@ -79,8 +79,8 @@ public class JSONObjectImpl implements JSONObject {
 
 			_jsonObject = new org.json.JSONObject(json);
 		}
-		catch (Exception e) {
-			throw new JSONException(e);
+		catch (Exception exception) {
+			throw new JSONException(exception);
 		}
 	}
 
@@ -215,9 +215,9 @@ public class JSONObjectImpl implements JSONObject {
 		try {
 			_jsonObject.put(key, value);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -229,9 +229,9 @@ public class JSONObjectImpl implements JSONObject {
 		try {
 			_jsonObject.put(key, value);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -243,9 +243,9 @@ public class JSONObjectImpl implements JSONObject {
 		try {
 			_jsonObject.put(key, value);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -257,9 +257,9 @@ public class JSONObjectImpl implements JSONObject {
 		try {
 			_jsonObject.put(key, value);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -273,9 +273,9 @@ public class JSONObjectImpl implements JSONObject {
 
 			_jsonObject.put(key, jsonArrayImpl.getJSONArray());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -289,9 +289,9 @@ public class JSONObjectImpl implements JSONObject {
 
 			_jsonObject.put(key, jsonObjectImpl.getJSONObject());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -303,9 +303,9 @@ public class JSONObjectImpl implements JSONObject {
 		try {
 			_jsonObject.put(key, String.valueOf(value));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -325,9 +325,9 @@ public class JSONObjectImpl implements JSONObject {
 				_jsonObject.put(key, value);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -339,9 +339,9 @@ public class JSONObjectImpl implements JSONObject {
 		try {
 			_jsonObject.put(key, value);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -371,8 +371,8 @@ public class JSONObjectImpl implements JSONObject {
 			_jsonObject = new org.json.JSONObject(
 				(String)objectInput.readObject());
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 
@@ -396,8 +396,8 @@ public class JSONObjectImpl implements JSONObject {
 		try {
 			return _jsonObject.toString(indentFactor);
 		}
-		catch (Exception e) {
-			throw new JSONException(e);
+		catch (Exception exception) {
+			throw new JSONException(exception);
 		}
 	}
 
@@ -406,8 +406,8 @@ public class JSONObjectImpl implements JSONObject {
 		try {
 			return _jsonObject.write(writer);
 		}
-		catch (Exception e) {
-			throw new JSONException(e);
+		catch (Exception exception) {
+			throw new JSONException(exception);
 		}
 	}
 

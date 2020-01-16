@@ -118,8 +118,8 @@ public class OrganizationLocalServiceImpl
 		try {
 			reindexUsers(organizationId);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -136,8 +136,8 @@ public class OrganizationLocalServiceImpl
 		try {
 			reindexUsers(organization);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -156,8 +156,8 @@ public class OrganizationLocalServiceImpl
 		try {
 			reindexUsers(organizations);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -174,8 +174,8 @@ public class OrganizationLocalServiceImpl
 		try {
 			reindexUsers(organizationIds);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -1499,8 +1499,8 @@ public class OrganizationLocalServiceImpl
 
 			return indexer.search(searchContext);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -1578,8 +1578,8 @@ public class OrganizationLocalServiceImpl
 
 			return (int)indexer.searchCount(searchContext);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -1646,8 +1646,8 @@ public class OrganizationLocalServiceImpl
 
 			return (int)indexer.searchCount(searchContext);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -1799,8 +1799,8 @@ public class OrganizationLocalServiceImpl
 		try {
 			reindexUsers(organizationIds);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -2329,10 +2329,11 @@ public class OrganizationLocalServiceImpl
 						indexableActionableDynamicQuery.addDocuments(
 							indexer.getDocument(user));
 					}
-					catch (PortalException pe) {
+					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to index user " + user.getUserId(), pe);
+								"Unable to index user " + user.getUserId(),
+								portalException);
 						}
 					}
 				}

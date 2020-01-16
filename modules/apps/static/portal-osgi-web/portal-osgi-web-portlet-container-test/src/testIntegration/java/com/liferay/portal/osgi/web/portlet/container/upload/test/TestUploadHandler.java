@@ -100,12 +100,12 @@ public class TestUploadHandler {
 			JSONPortletResponseUtil.writeJSON(
 				portletRequest, portletResponse, jsonObject);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_handleUploadException(
-				portletRequest, portletResponse, pe, jsonObject);
+				portletRequest, portletResponse, portalException, jsonObject);
 		}
 	}
 
@@ -166,8 +166,8 @@ public class TestUploadHandler {
 				return imageJSONObject;
 			}
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -219,14 +219,15 @@ public class TestUploadHandler {
 			if (portalException instanceof AntivirusScannerException) {
 				errorType =
 					ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
-				AntivirusScannerException ase =
+				AntivirusScannerException antivirusScannerException =
 					(AntivirusScannerException)portalException;
 
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)portletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				errorMessage = themeDisplay.translate(ase.getMessageKey());
+				errorMessage = themeDisplay.translate(
+					antivirusScannerException.getMessageKey());
 			}
 			else if (portalException instanceof FileNameException) {
 				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
@@ -252,8 +253,8 @@ public class TestUploadHandler {
 			JSONPortletResponseUtil.writeJSON(
 				portletRequest, portletResponse, jsonObject);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

@@ -57,10 +57,10 @@ public class UnsafeConsumerTest {
 				},
 				IOException.class);
 		}
-		catch (Exception e) {
-			Assert.assertSame(_exceptions.get(1), e);
+		catch (Exception exception) {
+			Assert.assertSame(_exceptions.get(1), exception);
 
-			Throwable[] throwables = e.getSuppressed();
+			Throwable[] throwables = exception.getSuppressed();
 
 			Assert.assertEquals(
 				Arrays.toString(throwables), 1, throwables.length);
@@ -82,10 +82,10 @@ public class UnsafeConsumerTest {
 				},
 				RuntimeException.class);
 		}
-		catch (Exception e) {
-			Assert.assertSame(_exceptions.get(0), e);
+		catch (Exception exception) {
+			Assert.assertSame(_exceptions.get(0), exception);
 
-			Throwable[] throwables = e.getSuppressed();
+			Throwable[] throwables = exception.getSuppressed();
 
 			Assert.assertEquals(
 				Arrays.toString(throwables), 0, throwables.length);
@@ -106,10 +106,10 @@ public class UnsafeConsumerTest {
 				},
 				Exception.class);
 		}
-		catch (Exception e) {
-			Assert.assertSame(_exceptions.get(0), e);
+		catch (Exception exception) {
+			Assert.assertSame(_exceptions.get(0), exception);
 
-			Throwable[] throwables = e.getSuppressed();
+			Throwable[] throwables = exception.getSuppressed();
 
 			Assert.assertEquals(
 				Arrays.toString(throwables), 2, throwables.length);

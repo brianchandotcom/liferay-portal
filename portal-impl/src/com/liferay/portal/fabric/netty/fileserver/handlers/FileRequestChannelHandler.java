@@ -59,7 +59,7 @@ public class FileRequestChannelHandler
 			basicFileAttributes = Files.readAttributes(
 				path, BasicFileAttributes.class);
 		}
-		catch (NoSuchFileException nsfe) {
+		catch (NoSuchFileException noSuchFileException) {
 			channelHandlerContext.writeAndFlush(
 				new FileResponse(path, FileResponse.FILE_NOT_FOUND, -1, false));
 

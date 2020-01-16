@@ -51,8 +51,8 @@ public class ServiceContextFunction
 			return ServiceContextFactory.getInstance(
 				className, _httpServletRequest);
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

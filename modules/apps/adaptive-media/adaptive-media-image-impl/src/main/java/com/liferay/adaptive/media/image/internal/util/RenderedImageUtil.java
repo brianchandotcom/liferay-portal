@@ -45,8 +45,8 @@ public class RenderedImageUtil {
 
 			return baos.toByteArray();
 		}
-		catch (IOException ioe) {
-			throw new AMRuntimeException.IOException(ioe);
+		catch (IOException ioException) {
+			throw new AMRuntimeException.IOException(ioException);
 		}
 	}
 
@@ -69,7 +69,7 @@ public class RenderedImageUtil {
 
 				return imageReader.read(0);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 			finally {
 				if (imageReader != null) {

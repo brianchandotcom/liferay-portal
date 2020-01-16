@@ -45,7 +45,7 @@ public class MenuItem implements Serializable {
 			wikiPages = WikiPageServiceUtil.getNodePages(
 				nodeId, WikiNavigationConstants.MAX_PAGES);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return new LinkedList<>();
 		}
 

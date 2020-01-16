@@ -105,12 +105,12 @@ public class ModuleFrameworkAdapterHelper {
 
 			return _classLoader;
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			_log.error(
 				"Unable to configure the class loader for the module framework",
-				ioe);
+				ioException);
 
-			return ReflectionUtil.throwException(ioe);
+			return ReflectionUtil.throwException(ioException);
 		}
 	}
 
@@ -119,10 +119,10 @@ public class ModuleFrameworkAdapterHelper {
 			_adaptedObject = InstanceFactory.newInstance(
 				getClassLoader(), className);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error("Unable to load the module framework");
 
-			throw new RuntimeException(e);
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -134,10 +134,10 @@ public class ModuleFrameworkAdapterHelper {
 
 			return method.invoke(_adaptedObject, parameters);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new RuntimeException(e);
+			throw new RuntimeException(exception);
 		}
 	}
 

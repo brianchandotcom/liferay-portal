@@ -164,9 +164,10 @@ public class RankingJSONBuilder {
 		try {
 			return dateFormat.parse(dateStringFieldValue);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new IllegalArgumentException(
-				"Unable to parse date string: " + dateStringFieldValue, e);
+				"Unable to parse date string: " + dateStringFieldValue,
+				exception);
 		}
 	}
 
@@ -204,10 +205,11 @@ public class RankingJSONBuilder {
 
 				return _getIconFileMimeType(fileEntry.getMimeType());
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to get file entry for " + entryClassPK, pe);
+						"Unable to get file entry for " + entryClassPK,
+						portalException);
 				}
 
 				return "document-default";

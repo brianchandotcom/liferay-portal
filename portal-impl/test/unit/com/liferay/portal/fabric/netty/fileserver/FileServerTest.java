@@ -254,9 +254,9 @@ public class FileServerTest {
 
 				return port;
 			}
-			catch (Exception e) {
-				if (!(e instanceof BindException)) {
-					throw e;
+			catch (Exception exception) {
+				if (!(exception instanceof BindException)) {
+					throw exception;
 				}
 
 				System.err.println(

@@ -64,8 +64,8 @@ public class UpgradeTableBuilder {
 				baseDirName, osgiModule, releaseInfoVersion,
 				upgradeTableDirName);
 		}
-		catch (Exception e) {
-			ArgumentsUtil.processMainException(arguments, e);
+		catch (Exception exception) {
+			ArgumentsUtil.processMainException(arguments, exception);
 		}
 	}
 

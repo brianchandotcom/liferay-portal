@@ -57,8 +57,8 @@ public class DLFileVersionStagingModelListener
 		try {
 			dlFileEntry = dlFileVersion.getFileEntry();
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return;
 		}
@@ -88,8 +88,8 @@ public class DLFileVersionStagingModelListener
 		try {
 			dlFileEntry = dlFileVersion.getFileEntry();
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return;
 		}

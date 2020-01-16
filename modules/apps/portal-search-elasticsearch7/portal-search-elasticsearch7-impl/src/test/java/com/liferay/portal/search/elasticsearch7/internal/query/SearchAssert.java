@@ -125,8 +125,8 @@ public class SearchAssert {
 
 			return searchResponse.getHits();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

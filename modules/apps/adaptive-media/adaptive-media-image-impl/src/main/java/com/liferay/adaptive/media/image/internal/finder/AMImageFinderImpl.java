@@ -243,8 +243,8 @@ public class AMImageFinderImpl implements AMImageFinder {
 			try {
 				return _fileVersion.getContentStream(false);
 			}
-			catch (PortalException pe) {
-				throw new AMRuntimeException.IOException(pe);
+			catch (PortalException portalException) {
+				throw new AMRuntimeException.IOException(portalException);
 			}
 		}
 

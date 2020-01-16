@@ -68,9 +68,9 @@ public class LinkToPageDDMFormFieldValueRenderer
 						groupId, privateLayout, layoutId,
 						LanguageUtil.getLanguageId(locale));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(pe, pe);
+						_log.warn(portalException, portalException);
 					}
 
 					return LanguageUtil.format(
@@ -82,8 +82,8 @@ public class LinkToPageDDMFormFieldValueRenderer
 				try {
 					return JSONFactoryUtil.createJSONObject(json);
 				}
-				catch (JSONException jsone) {
-					throw new ValueAccessorException(jsone);
+				catch (JSONException jsonException) {
+					throw new ValueAccessorException(jsonException);
 				}
 			}
 

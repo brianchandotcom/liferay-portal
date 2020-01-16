@@ -92,13 +92,15 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 
 			actionResponse.sendRedirect(portletURL.toString());
 		}
-		catch (NoSuchSubscriptionException nsse) {
-			_log.error(nsse, nsse);
+		catch (NoSuchSubscriptionException noSuchSubscriptionException) {
+			_log.error(
+				noSuchSubscriptionException, noSuchSubscriptionException);
 
 			actionResponse.sendRedirect(portletURL.toString());
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass(), pe);
+		catch (PortalException portalException) {
+			SessionErrors.add(
+				actionRequest, portalException.getClass(), portalException);
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/unsubscribe/error.jsp");

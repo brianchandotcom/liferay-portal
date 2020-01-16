@@ -89,8 +89,8 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 
 			builder = builder.withOutput("Default-Output", keyValuePairs);
 		}
-		catch (WorkflowException we) {
-			throw new DDMDataProviderException(we);
+		catch (WorkflowException workflowException) {
+			throw new DDMDataProviderException(workflowException);
 		}
 
 		return builder.build();

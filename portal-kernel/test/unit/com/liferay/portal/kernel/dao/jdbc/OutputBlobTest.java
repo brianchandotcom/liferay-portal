@@ -39,7 +39,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		try {
@@ -47,7 +47,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		new OutputBlob(new ByteArrayInputStream(new byte[10]), 10);
@@ -71,7 +71,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 	}
 
@@ -87,7 +87,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 		}
 
 		// pos - 1 > _length
@@ -97,7 +97,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 		}
 
 		// pos - 1 + length > _length
@@ -107,7 +107,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 		}
 
 		// Fail to skip enough data
@@ -118,7 +118,7 @@ public class OutputBlobTest {
 			outputBlob.getBinaryStream(6, 1);
 			Assert.fail();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 		}
 
 		// Normal
@@ -146,7 +146,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 		}
 
 		// length < 0
@@ -156,7 +156,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 		}
 
 		// Normal read
@@ -194,7 +194,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		try {
@@ -202,7 +202,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		try {
@@ -210,7 +210,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		try {
@@ -218,7 +218,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		try {
@@ -226,7 +226,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		try {
@@ -234,7 +234,7 @@ public class OutputBlobTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 	}
 

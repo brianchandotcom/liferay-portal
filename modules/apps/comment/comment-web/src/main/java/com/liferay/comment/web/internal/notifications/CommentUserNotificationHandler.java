@@ -56,12 +56,12 @@ public class CommentUserNotificationHandler
 		try {
 			return _mbDiscussionLocalService.fetchDiscussion(classPK);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(se, se);
+				_log.debug(systemException, systemException);
 			}
 
 			return null;

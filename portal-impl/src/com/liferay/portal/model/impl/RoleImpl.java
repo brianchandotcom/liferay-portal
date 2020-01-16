@@ -50,8 +50,8 @@ public class RoleImpl extends RoleBaseImpl {
 			try {
 				value = getDescriptiveName();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -66,8 +66,8 @@ public class RoleImpl extends RoleBaseImpl {
 			try {
 				value = getDescriptiveName();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 

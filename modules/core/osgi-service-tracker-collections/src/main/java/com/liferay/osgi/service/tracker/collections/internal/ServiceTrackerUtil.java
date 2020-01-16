@@ -42,8 +42,8 @@ public class ServiceTrackerUtil {
 				return new ServiceTracker<>(
 					bundleContext, filter, serviceTrackerCustomizer);
 			}
-			catch (InvalidSyntaxException ise) {
-				throwException(ise);
+			catch (InvalidSyntaxException invalidSyntaxException) {
+				throwException(invalidSyntaxException);
 
 				return null;
 			}

@@ -49,8 +49,8 @@ public class ExportUtil {
 
 			return zipWriter.getFile();
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -68,8 +68,8 @@ public class ExportUtil {
 
 			return zipWriter.getFile();
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

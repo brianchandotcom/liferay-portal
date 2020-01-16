@@ -88,7 +88,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 				repository.getRepositoryId(), repository.getDlFolderId(),
 				String.valueOf(getFragmentCollectionId()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (createIfAbsent) {
 				ServiceContext serviceContext = new ServiceContext();
 

@@ -136,7 +136,7 @@ public class FiftyOneDegreesKnownDevices implements KnownDevices {
 				propertiesSet.add(versionableName);
 			}
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 			if (_log.isInfoEnabled()) {
 				StringBundler sb = new StringBundler(6);
 

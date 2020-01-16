@@ -102,8 +102,8 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 		try {
 			_hitsProcessorRegistry.process(searchContext, hits);
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 
 		return hits;
@@ -181,8 +181,8 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 		try {
 			return searchResultPermissionFilter.search(searchContext);
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 

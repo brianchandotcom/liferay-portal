@@ -76,7 +76,7 @@ public class DeleteTrashPortletConfigurationIcon
 
 			return deleteURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -109,7 +109,7 @@ public class DeleteTrashPortletConfigurationIcon
 				return false;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 

@@ -65,8 +65,8 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 					userId.longValue(), groupId.longValue());
 			}
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 
@@ -75,11 +75,11 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 		try {
 			exportToLDAP(user);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ModelListenerException(
 				"Unable to export user " + user.getUserId() +
 					" to LDAP on after create",
-				e);
+				exception);
 		}
 	}
 
@@ -88,11 +88,11 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 		try {
 			exportToLDAP(user);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ModelListenerException(
 				"Unable to export user " + user.getUserId() +
 					" to LDAP on after update",
-				e);
+				exception);
 		}
 	}
 
@@ -114,11 +114,11 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 				try {
 					_userExporter.exportUser(user, expandoBridgeAttributes);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					_log.error(
 						"Unable to export user with user ID " +
 							user.getUserId() + " to LDAP on after create",
-						e);
+						exception);
 				}
 			});
 

@@ -74,15 +74,15 @@ public class DeploymentHelper {
 			new DeploymentHelper(
 				deploymentFileNames, deploymentPath, outputFileName);
 		}
-		catch (ParseException pe) {
-			System.err.println(pe.getMessage());
+		catch (ParseException parseException) {
+			System.err.println(parseException.getMessage());
 
 			_printOptions();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			System.err.println("Error running deployment helper");
 
-			e.printStackTrace();
+			exception.printStackTrace();
 		}
 	}
 

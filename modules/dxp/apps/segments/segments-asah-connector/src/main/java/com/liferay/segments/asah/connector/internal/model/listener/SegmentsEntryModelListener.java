@@ -67,12 +67,12 @@ public class SegmentsEntryModelListener
 					processUpdateSegmentsExperiment(segmentsExperiment);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to update segments entry " +
 						segmentsEntry.getSegmentsEntryId(),
-					e);
+					exception);
 			}
 		}
 	}

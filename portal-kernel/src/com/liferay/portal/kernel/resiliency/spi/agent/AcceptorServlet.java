@@ -93,15 +93,15 @@ public class AcceptorServlet extends HttpServlet {
 		try {
 			doService(httpServletRequest, httpServletResponse);
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 
-			throw ioe;
+			throw ioException;
 		}
-		catch (RuntimeException re) {
-			_log.error(re, re);
+		catch (RuntimeException runtimeException) {
+			_log.error(runtimeException, runtimeException);
 
-			throw re;
+			throw runtimeException;
 		}
 	}
 

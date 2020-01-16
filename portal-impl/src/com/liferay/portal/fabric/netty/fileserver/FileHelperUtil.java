@@ -100,9 +100,9 @@ public class FileHelperUtil {
 					});
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (!quiet) {
-				ReflectionUtil.throwException(ioe);
+				ReflectionUtil.throwException(ioException);
 			}
 		}
 	}
@@ -179,7 +179,9 @@ public class FileHelperUtil {
 
 								return FileVisitResult.CONTINUE;
 							}
-							catch (AtomicMoveNotSupportedException amnse) {
+							catch (AtomicMoveNotSupportedException
+										atomicMoveNotSupportedException) {
+
 								atomicMove.set(false);
 							}
 						}
@@ -193,7 +195,7 @@ public class FileHelperUtil {
 
 				});
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			delete(true, toPath);
 
 			if (touched.get()) {
@@ -201,10 +203,10 @@ public class FileHelperUtil {
 					StringBundler.concat(
 						"Source path ", fromPath,
 						" was left in an inconsistent state"),
-					ioe);
+					ioException);
 			}
 
-			throw ioe;
+			throw ioException;
 		}
 
 		if (!atomicMove.get()) {
@@ -248,10 +250,10 @@ public class FileHelperUtil {
 				_log.debug(sb.toString());
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			delete(destPath);
 
-			throw ioe;
+			throw ioException;
 		}
 
 		return destPath;
@@ -341,10 +343,10 @@ public class FileHelperUtil {
 				_log.debug(sb.toString());
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			Files.delete(zipPath);
 
-			throw ioe;
+			throw ioException;
 		}
 
 		return zipPath;

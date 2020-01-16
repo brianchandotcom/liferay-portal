@@ -314,7 +314,7 @@ public class BlogEntriesDisplayContext {
 			return Optional.of(
 				BlogsEntryServiceUtil.getEntry(searchResult.getClassPK()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Blogs search index is stale and contains entry " +

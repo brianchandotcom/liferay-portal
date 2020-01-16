@@ -90,7 +90,7 @@ public class ThreadPermissionsPortletConfigurationIcon
 				resourcePrimKey, LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return url;
@@ -130,7 +130,7 @@ public class ThreadPermissionsPortletConfigurationIcon
 				return false;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 

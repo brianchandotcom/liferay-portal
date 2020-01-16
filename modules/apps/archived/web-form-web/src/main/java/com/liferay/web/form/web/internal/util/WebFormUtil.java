@@ -61,12 +61,12 @@ public class WebFormUtil {
 			ExpandoTableLocalServiceUtil.deleteTable(
 				companyId, WebFormUtil.class.getName(), tableName);
 		}
-		catch (NoSuchTableException nste) {
+		catch (NoSuchTableException noSuchTableException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nste, nste);
+				_log.debug(noSuchTableException, noSuchTableException);
 			}
 		}
 
@@ -84,12 +84,12 @@ public class WebFormUtil {
 			expandoTable = ExpandoTableLocalServiceUtil.getTable(
 				companyId, WebFormUtil.class.getName(), tableName);
 		}
-		catch (NoSuchTableException nste) {
+		catch (NoSuchTableException noSuchTableException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nste, nste);
+				_log.debug(noSuchTableException, noSuchTableException);
 			}
 
 			expandoTable = addTable(companyId, tableName);
@@ -182,8 +182,8 @@ public class WebFormUtil {
 
 				br.close();
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 		else {
@@ -261,14 +261,14 @@ public class WebFormUtil {
 				throw new Exception("The script must return a boolean value");
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String msg = StringBundler.concat(
 				"The following script has execution errors:\n",
-				validationScript, "\n", e.getMessage());
+				validationScript, "\n", exception.getMessage());
 
 			_log.error(msg);
 
-			throw new Exception(msg, e);
+			throw new Exception(msg, exception);
 		}
 		finally {
 			Context.exit();

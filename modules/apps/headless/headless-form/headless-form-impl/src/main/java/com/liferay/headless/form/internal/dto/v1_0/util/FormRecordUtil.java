@@ -102,9 +102,9 @@ public class FormRecordUtil {
 				fileEntry = dlAppService.getFileEntry(fileEntryId);
 			}
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(jsone, jsone);
+				_log.warn(jsonException, jsonException);
 			}
 		}
 

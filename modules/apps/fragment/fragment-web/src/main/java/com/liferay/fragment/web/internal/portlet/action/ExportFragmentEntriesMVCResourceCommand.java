@@ -87,8 +87,8 @@ public class ExportFragmentEntriesMVCResourceCommand
 				"entries-" + Time.getTimestamp() + ".zip",
 				new FileInputStream(file), ContentTypes.APPLICATION_ZIP);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		return false;

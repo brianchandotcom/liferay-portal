@@ -65,10 +65,11 @@ public final class ReleasePublisher {
 				properties.put("release.schema.version", version);
 			}
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Invalid schema version for release: " + release, iae);
+					"Invalid schema version for release: " + release,
+					illegalArgumentException);
 			}
 		}
 

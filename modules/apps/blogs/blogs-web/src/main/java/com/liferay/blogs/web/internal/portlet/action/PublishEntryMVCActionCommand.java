@@ -66,9 +66,10 @@ public class PublishEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			return _blogsEntryService.getEntry(entryId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get blogs entry " + entryId, pe);
+				_log.debug(
+					"Unable to get blogs entry " + entryId, portalException);
 			}
 		}
 

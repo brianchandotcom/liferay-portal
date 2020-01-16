@@ -73,8 +73,8 @@ public class FreeMarkerPortlet extends MVCPortlet {
 			resourceExists = TemplateResourceLoaderUtil.hasTemplateResource(
 				TemplateConstants.LANG_TYPE_FTL, resourcePath);
 		}
-		catch (TemplateException te) {
-			throw new IOException(te);
+		catch (TemplateException templateException) {
+			throw new IOException(templateException);
 		}
 
 		if (!resourceExists) {
@@ -119,8 +119,8 @@ public class FreeMarkerPortlet extends MVCPortlet {
 
 				template.processTemplate(writer);
 			}
-			catch (Exception e) {
-				throw new PortletException(e);
+			catch (Exception exception) {
+				throw new PortletException(exception);
 			}
 		}
 

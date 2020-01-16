@@ -42,8 +42,10 @@ public class StagingModelListenerImpl<T extends BaseModel<T>>
 		try {
 			_staging.addModelToChangesetCollection(model);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to add created model to the changeset", pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to add created model to the changeset",
+				portalException);
 		}
 	}
 
@@ -56,8 +58,9 @@ public class StagingModelListenerImpl<T extends BaseModel<T>>
 		try {
 			_staging.removeModelFromChangesetCollection(model);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to remove model from the changeset", pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to remove model from the changeset", portalException);
 		}
 	}
 
@@ -70,8 +73,10 @@ public class StagingModelListenerImpl<T extends BaseModel<T>>
 		try {
 			_staging.addModelToChangesetCollection(model);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to add updated model to the changeset", pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to add updated model to the changeset",
+				portalException);
 		}
 	}
 

@@ -648,8 +648,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							new GradleException(buildWSDDTask + " failed");
 						}
 					}
-					catch (Exception e) {
-						new GradleException(buildWSDDTask + " failed", e);
+					catch (Exception exception) {
+						new GradleException(
+							buildWSDDTask + " failed", exception);
 					}
 				}
 
@@ -1084,8 +1085,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					bundleExtension.put(key, value);
 				}
 			}
-			catch (Exception e) {
-				throw new GradleException("Could not read " + file, e);
+			catch (Exception exception) {
+				throw new GradleException("Could not read " + file, exception);
 			}
 		}
 	}

@@ -128,31 +128,33 @@ public class PublishLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof AuthException ||
-					 e instanceof DuplicateLockException ||
-					 e instanceof LayoutPrototypeException ||
-					 e instanceof RemoteAuthException ||
-					 e instanceof RemoteExportException ||
-					 e instanceof RemoteOptionsException ||
-					 e instanceof SystemException) {
+			else if (exception instanceof AuthException ||
+					 exception instanceof DuplicateLockException ||
+					 exception instanceof LayoutPrototypeException ||
+					 exception instanceof RemoteAuthException ||
+					 exception instanceof RemoteExportException ||
+					 exception instanceof RemoteOptionsException ||
+					 exception instanceof SystemException) {
 
-				if (e instanceof RemoteAuthException) {
-					SessionErrors.add(actionRequest, AuthException.class, e);
+				if (exception instanceof RemoteAuthException) {
+					SessionErrors.add(
+						actionRequest, AuthException.class, exception);
 				}
 				else {
-					SessionErrors.add(actionRequest, e.getClass(), e);
+					SessionErrors.add(
+						actionRequest, exception.getClass(), exception);
 				}
 
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

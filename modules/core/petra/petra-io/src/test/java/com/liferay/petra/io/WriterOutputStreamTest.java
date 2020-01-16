@@ -145,10 +145,10 @@ public class WriterOutputStreamTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"Output buffer size 0 must be a positive number",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 	}
 
@@ -272,9 +272,10 @@ public class WriterOutputStreamTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			Assert.assertEquals(
-				"Unexcepted coder result MALFORMED[1]", ioe.getMessage());
+				"Unexcepted coder result MALFORMED[1]",
+				ioException.getMessage());
 		}
 	}
 

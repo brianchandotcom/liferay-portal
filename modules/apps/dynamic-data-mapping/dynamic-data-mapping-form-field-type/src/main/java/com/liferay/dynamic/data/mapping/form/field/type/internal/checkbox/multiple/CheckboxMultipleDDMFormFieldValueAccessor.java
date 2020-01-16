@@ -96,9 +96,9 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 
 			return sb.toString();
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse JSON array", jsone);
+				_log.debug("Unable to parse JSON array", jsonException);
 			}
 
 			return StringPool.BLANK;
@@ -109,9 +109,9 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 		try {
 			return jsonFactory.createJSONArray(json);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse JSON array", jsone);
+				_log.debug("Unable to parse JSON array", jsonException);
 			}
 
 			return jsonFactory.createJSONArray();

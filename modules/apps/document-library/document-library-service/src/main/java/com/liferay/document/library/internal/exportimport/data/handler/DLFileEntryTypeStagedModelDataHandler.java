@@ -114,7 +114,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 					defaultUserId = _userLocalService.getDefaultUserId(
 						fileEntryType.getCompanyId());
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 
 				boolean preloaded = false;

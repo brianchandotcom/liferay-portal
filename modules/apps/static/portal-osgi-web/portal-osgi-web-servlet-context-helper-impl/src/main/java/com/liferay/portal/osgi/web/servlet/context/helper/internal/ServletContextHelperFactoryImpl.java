@@ -62,9 +62,9 @@ public class ServletContextHelperFactoryImpl
 			_saxParserFactory.setFeature(_FEATURES_LOAD_EXTERNAL_DTD, false);
 		}
 		catch (ParserConfigurationException | SAXNotRecognizedException |
-			   SAXNotSupportedException e) {
+			   SAXNotSupportedException exception) {
 
-			ReflectionUtil.throwException(e);
+			ReflectionUtil.throwException(exception);
 		}
 
 		_executorService = _portalExecutorManager.getPortalExecutor(

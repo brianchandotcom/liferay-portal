@@ -86,8 +86,8 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			portlet = ActionUtil.getPortlet(actionRequest);
 		}
-		catch (PrincipalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass());
+		catch (PrincipalException principalException) {
+			SessionErrors.add(actionRequest, principalException.getClass());
 
 			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 
@@ -155,7 +155,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (cmd.equals(Constants.ADD_TEMP) ||
 				cmd.equals(Constants.DELETE_TEMP)) {
 
@@ -165,23 +165,24 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME +
 						portlet.getPortletId(),
-					e);
+					exception);
 			}
 			else {
-				if (e instanceof LARFileException ||
-					e instanceof LARFileNameException ||
-					e instanceof LARFileSizeException ||
-					e instanceof LARTypeException ||
-					e instanceof LocaleException ||
-					e instanceof NoSuchLayoutException ||
-					e instanceof PortletIdException ||
-					e instanceof PrincipalException ||
-					e instanceof StructureDuplicateStructureKeyException) {
+				if (exception instanceof LARFileException ||
+					exception instanceof LARFileNameException ||
+					exception instanceof LARFileSizeException ||
+					exception instanceof LARTypeException ||
+					exception instanceof LocaleException ||
+					exception instanceof NoSuchLayoutException ||
+					exception instanceof PortletIdException ||
+					exception instanceof PrincipalException ||
+					exception instanceof
+						StructureDuplicateStructureKeyException) {
 
-					SessionErrors.add(actionRequest, e.getClass());
+					SessionErrors.add(actionRequest, exception.getClass());
 				}
 				else {
-					_log.error(e, e);
+					_log.error(exception, exception);
 
 					SessionErrors.add(
 						actionRequest,
@@ -221,16 +222,16 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 			_exportImportService.exportPortletInfoAsFileInBackground(
 				exportImportConfiguration);
 		}
-		catch (Exception e) {
-			if (e instanceof LARFileNameException) {
-				throw e;
+		catch (Exception exception) {
+			if (exception instanceof LARFileNameException) {
+				throw exception;
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
-			SessionErrors.add(actionRequest, e.getClass(), e);
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
 		}
 	}
 

@@ -230,8 +230,8 @@ public class SearcherImpl implements Searcher {
 		try {
 			return facetedSearcher.search(searchContext);
 		}
-		catch (SearchException se) {
-			throw uncheck(se);
+		catch (SearchException searchException) {
+			throw uncheck(searchException);
 		}
 	}
 
@@ -239,8 +239,8 @@ public class SearcherImpl implements Searcher {
 		try {
 			return indexer.search(searchContext);
 		}
-		catch (SearchException se) {
-			throw uncheck(se);
+		catch (SearchException searchException) {
+			throw uncheck(searchException);
 		}
 	}
 
@@ -248,8 +248,8 @@ public class SearcherImpl implements Searcher {
 		try {
 			return indexer.searchCount(searchContext);
 		}
-		catch (SearchException se) {
-			throw uncheck(se);
+		catch (SearchException searchException) {
+			throw uncheck(searchException);
 		}
 	}
 

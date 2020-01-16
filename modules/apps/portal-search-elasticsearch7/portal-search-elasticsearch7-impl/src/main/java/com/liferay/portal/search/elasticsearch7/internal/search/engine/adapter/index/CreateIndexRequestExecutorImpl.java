@@ -92,8 +92,8 @@ public class CreateIndexRequestExecutorImpl
 			return indicesClient.create(
 				elasticsearchCreateIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

@@ -385,10 +385,10 @@ public class CTStore implements Store {
 				companyId, repositoryId, fileName, versionLabel, _storeType,
 				inputStream);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SystemException(
 				"Unable to reload change tracking store content for deletion",
-				e);
+				exception);
 		}
 	}
 

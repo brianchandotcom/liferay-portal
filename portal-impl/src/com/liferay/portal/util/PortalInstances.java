@@ -127,8 +127,8 @@ public class PortalInstances {
 						}
 					}
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 				}
 			}
 		}
@@ -169,8 +169,8 @@ public class PortalInstances {
 						WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -240,8 +240,8 @@ public class PortalInstances {
 
 			_webIds = webIdsList.toArray(new String[0]);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		if (ArrayUtil.isEmpty(_webIds)) {
@@ -267,8 +267,8 @@ public class PortalInstances {
 
 			companyId = company.getCompanyId();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		Long currentThreadCompanyId = CompanyThreadLocal.getCompanyId();
@@ -329,8 +329,8 @@ public class PortalInstances {
 				WebAppPool.put(
 					companyId, WebKeys.PORTLET_CATEGORY, portletCategory);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 
 			// Process application startup events
@@ -345,8 +345,8 @@ public class PortalInstances {
 					PropsValues.APPLICATION_STARTUP_EVENTS,
 					new String[] {String.valueOf(companyId)});
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 
 			// End initializing company
@@ -386,8 +386,8 @@ public class PortalInstances {
 				return company.isActive();
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -419,8 +419,8 @@ public class PortalInstances {
 				PropsValues.APPLICATION_SHUTDOWN_EVENTS,
 				new String[] {String.valueOf(companyId)});
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		_companyIds = ArrayUtil.remove(_companyIds, companyId);
@@ -489,8 +489,8 @@ public class PortalInstances {
 
 			return virtualHost.getCompanyId();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return 0;

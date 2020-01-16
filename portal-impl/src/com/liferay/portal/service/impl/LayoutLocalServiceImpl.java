@@ -1072,12 +1072,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			try {
 				layoutLocalService.deleteLayout(layout, serviceContext);
 			}
-			catch (NoSuchLayoutException nsle) {
+			catch (NoSuchLayoutException noSuchLayoutException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsle, nsle);
+					_log.debug(noSuchLayoutException, noSuchLayoutException);
 				}
 			}
 		}
@@ -1583,8 +1583,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return _injectVirtualLayouts(
 				group, layoutSet, layouts, parentLayoutId);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -2140,12 +2140,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			return true;
 		}
-		catch (NoSuchLayoutException nsle) {
+		catch (NoSuchLayoutException noSuchLayoutException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsle, nsle);
+				_log.debug(noSuchLayoutException, noSuchLayoutException);
 			}
 		}
 
@@ -3304,8 +3304,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					throw new SitemapPagePriorityException();
 				}
 			}
-			catch (NumberFormatException nfe) {
-				throw new SitemapPagePriorityException(nfe);
+			catch (NumberFormatException numberFormatException) {
+				throw new SitemapPagePriorityException(numberFormatException);
 			}
 		}
 
@@ -3416,14 +3416,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			SitesUtil.applyLayoutPrototype(
 				layoutPrototype, layout, layoutPrototypeLinkEnabled);
 		}
-		catch (PortalException pe) {
-			throw pe;
+		catch (PortalException portalException) {
+			throw portalException;
 		}
-		catch (SystemException se) {
-			throw se;
+		catch (SystemException systemException) {
+			throw systemException;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -3494,8 +3494,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return _injectVirtualLayouts(
 				group, layoutSet, layouts, parentLayoutIds);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -3635,11 +3635,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 			}
 		}
-		catch (PortalException pe) {
-			throw pe;
+		catch (PortalException portalException) {
+			throw portalException;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			MergeLayoutPrototypesThreadLocal.setMergeComplete(
@@ -3669,9 +3669,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to merge layouts for site template", e);
+				_log.warn(
+					"Unable to merge layouts for site template", exception);
 			}
 		}
 		finally {

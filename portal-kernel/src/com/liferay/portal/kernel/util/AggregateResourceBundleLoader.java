@@ -55,7 +55,7 @@ public class AggregateResourceBundleLoader implements ResourceBundleLoader {
 					resourceBundles.add(resourceBundle);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

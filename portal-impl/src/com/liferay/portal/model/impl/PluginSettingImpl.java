@@ -90,9 +90,10 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
-				"Unable to check if user " + userId + " has permission", e);
+				"Unable to check if user " + userId + " has permission",
+				exception);
 		}
 
 		return false;

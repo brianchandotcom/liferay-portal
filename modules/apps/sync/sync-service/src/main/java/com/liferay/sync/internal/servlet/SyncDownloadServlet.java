@@ -196,18 +196,19 @@ public class SyncDownloadServlet extends HttpServlet {
 				}
 			}
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			_portal.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nsfee, httpServletRequest,
-				httpServletResponse);
+				HttpServletResponse.SC_NOT_FOUND, noSuchFileEntryException,
+				httpServletRequest, httpServletResponse);
 		}
-		catch (NoSuchFileVersionException nsfve) {
+		catch (NoSuchFileVersionException noSuchFileVersionException) {
 			_portal.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nsfve, httpServletRequest,
-				httpServletResponse);
+				HttpServletResponse.SC_NOT_FOUND, noSuchFileVersionException,
+				httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			_portal.sendError(e, httpServletRequest, httpServletResponse);
+		catch (Exception exception) {
+			_portal.sendError(
+				exception, httpServletRequest, httpServletResponse);
 		}
 	}
 
@@ -493,8 +494,8 @@ public class SyncDownloadServlet extends HttpServlet {
 
 				zipWriter.addEntry(zipFileId, inputStream);
 			}
-			catch (Exception e) {
-				Class<?> clazz = e.getClass();
+			catch (Exception exception) {
+				Class<?> clazz = exception.getClass();
 
 				processException(zipFileId, clazz.getName(), errorsJSONObject);
 			}

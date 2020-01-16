@@ -146,8 +146,8 @@ public class FacetedSearcherImpl
 
 			return _indexSearcherHelper.search(searchContext, query);
 		}
-		catch (Exception e) {
-			throw new SearchException(e);
+		catch (Exception exception) {
+			throw new SearchException(exception);
 		}
 	}
 

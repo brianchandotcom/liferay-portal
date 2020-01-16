@@ -93,14 +93,16 @@ public class AuthorizationCodeGrantServiceRegistrator {
 							return client;
 						}
 					}
-					catch (OAuthServiceException oase) {
+					catch (OAuthServiceException oAuthServiceException) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
-								"Unable to validate remote client", oase);
+								"Unable to validate remote client",
+								oAuthServiceException);
 						}
 
-						if (oase.getError() != null) {
-							reportInvalidRequestError(oase.getError(), null);
+						if (oAuthServiceException.getError() != null) {
+							reportInvalidRequestError(
+								oAuthServiceException.getError(), null);
 						}
 					}
 

@@ -200,8 +200,9 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 				doInstallRemoteApp(url, actionRequest, true);
 			}
 		}
-		catch (MalformedURLException murle) {
-			SessionErrors.add(actionRequest, "invalidURL", murle);
+		catch (MalformedURLException malformedURLException) {
+			SessionErrors.add(
+				actionRequest, "invalidURL", malformedURLException);
 		}
 	}
 
@@ -456,11 +457,13 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 				responseCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 			}
 		}
-		catch (MalformedURLException murle) {
-			SessionErrors.add(actionRequest, "invalidUrl", murle);
+		catch (MalformedURLException malformedURLException) {
+			SessionErrors.add(
+				actionRequest, "invalidUrl", malformedURLException);
 		}
-		catch (IOException ioe) {
-			SessionErrors.add(actionRequest, "errorConnectingToUrl", ioe);
+		catch (IOException ioException) {
+			SessionErrors.add(
+				actionRequest, "errorConnectingToUrl", ioException);
 		}
 
 		return responseCode;
@@ -490,8 +493,9 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 					return;
 				}
 			}
-			catch (MalformedURLException murle) {
-				SessionErrors.add(actionRequest, "invalidUrl", murle);
+			catch (MalformedURLException malformedURLException) {
+				SessionErrors.add(
+					actionRequest, "invalidUrl", malformedURLException);
 			}
 		}
 	}

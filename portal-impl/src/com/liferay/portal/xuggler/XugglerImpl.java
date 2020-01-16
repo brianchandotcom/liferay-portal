@@ -44,8 +44,8 @@ public class XugglerImpl implements Xuggler {
 
 			_nativeLibraryCopied = true;
 		}
-		catch (Exception e) {
-			throw new XugglerInstallException.MustInstallJar(name, e);
+		catch (Exception exception) {
+			throw new XugglerInstallException.MustInstallJar(name, exception);
 		}
 	}
 
@@ -62,9 +62,9 @@ public class XugglerImpl implements Xuggler {
 			enabled = PrefsPropsUtil.getBoolean(
 				PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 

@@ -75,8 +75,8 @@ public class KeyStoreCredentialResolver
 		try {
 			_keyStoreManager.saveKeyStore(keyStore);
 		}
-		catch (Exception e) {
-			throw new KeyStoreException(e);
+		catch (Exception exception) {
+			throw new KeyStoreException(exception);
 		}
 	}
 
@@ -95,8 +95,8 @@ public class KeyStoreCredentialResolver
 
 			return Base64.encode(x509Certificate.getEncoded(), 76);
 		}
-		catch (CertificateEncodingException cee) {
-			throw new SamlException(cee);
+		catch (CertificateEncodingException certificateEncodingException) {
+			throw new SamlException(certificateEncodingException);
 		}
 	}
 
@@ -124,8 +124,8 @@ public class KeyStoreCredentialResolver
 
 			return x509Credential.getEntityCertificate();
 		}
-		catch (ResolverException re) {
-			throw new SamlException(re);
+		catch (ResolverException resolverException) {
+			throw new SamlException(resolverException);
 		}
 	}
 
@@ -206,11 +206,11 @@ public class KeyStoreCredentialResolver
 
 			return Collections.singleton(credential);
 		}
-		catch (RuntimeException re) {
-			throw new SecurityException(re);
+		catch (RuntimeException runtimeException) {
+			throw new SecurityException(runtimeException);
 		}
-		catch (Exception e) {
-			throw new SecurityException(e);
+		catch (Exception exception) {
+			throw new SecurityException(exception);
 		}
 	}
 

@@ -74,9 +74,9 @@ public class PortalApplicationContext extends XmlWebApplicationContext {
 		try {
 			super.loadBeanDefinitions(xmlBeanDefinitionReader);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -91,8 +91,8 @@ public class PortalApplicationContext extends XmlWebApplicationContext {
 			try {
 				xmlBeanDefinitionReader.loadBeanDefinitions(configLocation);
 			}
-			catch (Exception e) {
-				Throwable cause = e.getCause();
+			catch (Exception exception) {
+				Throwable cause = exception.getCause();
 
 				if (cause instanceof FileNotFoundException) {
 					if (_log.isWarnEnabled()) {
@@ -100,7 +100,7 @@ public class PortalApplicationContext extends XmlWebApplicationContext {
 					}
 				}
 				else {
-					_log.error(e, e);
+					_log.error(exception, exception);
 				}
 			}
 		}

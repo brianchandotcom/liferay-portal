@@ -55,8 +55,8 @@ public class CORSServletFilter implements Filter {
 					httpServletRequest, (HttpServletResponse)servletResponse,
 					filterChain);
 			}
-			catch (Exception e) {
-				throw new ServletException(e);
+			catch (Exception exception) {
+				throw new ServletException(exception);
 			}
 		}
 		else {

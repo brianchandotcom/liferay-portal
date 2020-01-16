@@ -133,12 +133,12 @@ public class FiftyOneDegreesDevice extends BaseDevice {
 				value = values.toBool();
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get boolean value for property name: " +
 						propertyName,
-					ioe);
+					ioException);
 			}
 		}
 
@@ -155,12 +155,12 @@ public class FiftyOneDegreesDevice extends BaseDevice {
 				value = values.toDouble();
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get double value for property name: " +
 						propertyName,
-					ioe);
+					ioException);
 			}
 		}
 
@@ -181,12 +181,12 @@ public class FiftyOneDegreesDevice extends BaseDevice {
 				}
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get string value for property name: " +
 						propertyName,
-					ioe);
+					ioException);
 			}
 		}
 

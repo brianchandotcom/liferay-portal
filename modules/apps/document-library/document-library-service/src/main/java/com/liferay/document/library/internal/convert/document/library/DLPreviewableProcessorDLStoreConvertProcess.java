@@ -90,8 +90,8 @@ public class DLPreviewableProcessorDLStoreConvertProcess
 							DLPreviewableProcessor.REPOSITORY_ID,
 							actualFileName, Store.VERSION_DEFAULT, delete);
 					}
-					catch (Exception e) {
-						_log.error("Unable to migrate " + fileName, e);
+					catch (Exception exception) {
+						_log.error("Unable to migrate " + fileName, exception);
 					}
 				}
 			});

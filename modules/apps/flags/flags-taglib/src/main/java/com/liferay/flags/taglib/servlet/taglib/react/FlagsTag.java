@@ -161,8 +161,8 @@ public class FlagsTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:onlyIcon", !_label);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

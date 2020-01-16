@@ -71,8 +71,8 @@ public class LiferayCIGitRepositoriesArchiverUtil {
 
 			return true;
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 
 			return false;
 		}
@@ -87,8 +87,8 @@ public class LiferayCIGitRepositoriesArchiverUtil {
 
 			return true;
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 
 			return false;
 		}
@@ -148,8 +148,8 @@ public class LiferayCIGitRepositoriesArchiverUtil {
 
 			return true;
 		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		catch (IOException ioException) {
+			ioException.printStackTrace();
 
 			return false;
 		}
@@ -187,8 +187,8 @@ public class LiferayCIGitRepositoriesArchiverUtil {
 
 			return true;
 		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		catch (IOException ioException) {
+			ioException.printStackTrace();
 
 			return false;
 		}
@@ -276,8 +276,8 @@ public class LiferayCIGitRepositoriesArchiverUtil {
 				JenkinsResultsParserUtil.move(
 					gitRepositoryArchiveTemp, gitRepositoryArchive);
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 			finally {
 				gitRepositoryArchivesDirResourceMonitor.signalWrite(

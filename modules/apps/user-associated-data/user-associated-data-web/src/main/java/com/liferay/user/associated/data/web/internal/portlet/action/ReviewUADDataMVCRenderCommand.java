@@ -118,8 +118,8 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 					applicationKey, renderRequest, renderResponse, scopeDisplay,
 					user, uadDisplay, uadHierarchyDisplay, uadRegistryKey));
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		return "/review_uad_data.jsp";

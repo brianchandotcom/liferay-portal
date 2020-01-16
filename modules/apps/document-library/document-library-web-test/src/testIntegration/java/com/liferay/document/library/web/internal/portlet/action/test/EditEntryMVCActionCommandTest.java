@@ -296,8 +296,8 @@ public class EditEntryMVCActionCommandTest {
 				try {
 					return _getThemeDisplay();
 				}
-				catch (PortalException pe) {
-					throw new AssertionError(pe);
+				catch (PortalException portalException) {
+					throw new AssertionError(portalException);
 				}
 			}
 

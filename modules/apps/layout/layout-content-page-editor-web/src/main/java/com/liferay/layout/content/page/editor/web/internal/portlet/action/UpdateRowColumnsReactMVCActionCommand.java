@@ -114,8 +114,8 @@ public class UpdateRowColumnsReactMVCActionCommand
 				"layoutData", layoutDataJSONObject
 			);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			jsonObject.put(
 				"error",

@@ -223,9 +223,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 			_fragmentEntryValidator.validateConfiguration(configuration);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			status = WorkflowConstants.STATUS_DRAFT;
@@ -623,8 +623,10 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 							path + jsonObject.getString("thumbnailPath")
 						});
 				}
-				catch (Exception e) {
-					_log.error("Unable to read fragments.json file " + name, e);
+				catch (Exception exception) {
+					_log.error(
+						"Unable to read fragments.json file " + name,
+						exception);
 				}
 
 				return Arrays.stream(new String[0]);

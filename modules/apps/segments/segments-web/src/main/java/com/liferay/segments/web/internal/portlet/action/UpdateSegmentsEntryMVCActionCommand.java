@@ -137,25 +137,26 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchEntryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchEntryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof SegmentsEntryCriteriaException ||
-					 e instanceof SegmentsEntryKeyException ||
-					 e instanceof SegmentsEntryNameException) {
+			else if (exception instanceof SegmentsEntryCriteriaException ||
+					 exception instanceof SegmentsEntryKeyException ||
+					 exception instanceof SegmentsEntryNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editSegmentsEntry");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

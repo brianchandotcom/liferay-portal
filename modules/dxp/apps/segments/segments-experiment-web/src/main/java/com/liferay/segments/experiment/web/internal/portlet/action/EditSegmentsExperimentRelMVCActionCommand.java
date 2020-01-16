@@ -77,8 +77,8 @@ public class EditSegmentsExperimentRelMVCActionCommand
 				SegmentsExperimentUtil.toSegmentsExperimentRelJSONObject(
 					themeDisplay.getLocale(), segmentsExperimentRel));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(actionResponse);

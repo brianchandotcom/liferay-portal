@@ -55,8 +55,8 @@ public class ElasticsearchSearchEngineAdapterImpl
 		try {
 			return _clusterRequestExecutor.execute(clusterRequest);
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 
@@ -67,8 +67,8 @@ public class ElasticsearchSearchEngineAdapterImpl
 		try {
 			return documentRequest.accept(_documentRequestExecutor);
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 
@@ -77,8 +77,8 @@ public class ElasticsearchSearchEngineAdapterImpl
 		try {
 			return indexRequest.accept(_indexRequestExecutor);
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 
@@ -89,8 +89,8 @@ public class ElasticsearchSearchEngineAdapterImpl
 		try {
 			return searchRequest.accept(_searchRequestExecutor);
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 
@@ -101,8 +101,8 @@ public class ElasticsearchSearchEngineAdapterImpl
 		try {
 			return snapshotRequest.accept(_snapshotRequestExecutor);
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 
@@ -113,8 +113,8 @@ public class ElasticsearchSearchEngineAdapterImpl
 
 			return queryBuilder.toString();
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 

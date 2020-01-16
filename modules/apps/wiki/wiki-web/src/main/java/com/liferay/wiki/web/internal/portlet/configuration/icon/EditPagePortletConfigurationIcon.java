@@ -74,7 +74,7 @@ public class EditPagePortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -95,7 +95,7 @@ public class EditPagePortletConfigurationIcon
 				themeDisplay.getPermissionChecker(),
 				ActionUtil.getPage(portletRequest), ActionKeys.UPDATE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

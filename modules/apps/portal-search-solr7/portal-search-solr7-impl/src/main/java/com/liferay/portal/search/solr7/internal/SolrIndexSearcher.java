@@ -142,16 +142,16 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 			return hits;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_logExceptionsOnly) {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 			else {
-				if (e instanceof RuntimeException) {
-					throw (RuntimeException)e;
+				if (exception instanceof RuntimeException) {
+					throw (RuntimeException)exception;
 				}
 
-				throw new SystemException(e.getMessage(), e);
+				throw new SystemException(exception.getMessage(), exception);
 			}
 
 			return new HitsImpl();
@@ -194,16 +194,16 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 			return countSearchResponse.getCount();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_logExceptionsOnly) {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 			else {
-				if (e instanceof RuntimeException) {
-					throw (RuntimeException)e;
+				if (exception instanceof RuntimeException) {
+					throw (RuntimeException)exception;
 				}
 
-				throw new SystemException(e.getMessage(), e);
+				throw new SystemException(exception.getMessage(), exception);
 			}
 
 			return 0;

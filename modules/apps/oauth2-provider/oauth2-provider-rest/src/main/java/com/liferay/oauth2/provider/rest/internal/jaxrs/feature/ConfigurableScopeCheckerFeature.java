@@ -155,10 +155,11 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 						Pattern.compile(methodPatternString),
 						Pattern.compile(urlPatternString), scopes));
 			}
-			catch (PatternSyntaxException pse) {
-				_log.error("Invalid pattern " + pattern, pse);
+			catch (PatternSyntaxException patternSyntaxException) {
+				_log.error(
+					"Invalid pattern " + pattern, patternSyntaxException);
 
-				throw new IllegalArgumentException(pse);
+				throw new IllegalArgumentException(patternSyntaxException);
 			}
 		}
 	}

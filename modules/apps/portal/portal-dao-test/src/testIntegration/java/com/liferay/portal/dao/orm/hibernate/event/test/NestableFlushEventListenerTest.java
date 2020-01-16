@@ -111,7 +111,7 @@ public class NestableFlushEventListenerTest {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 		finally {
 			eventListeners.setAutoFlushEventListeners(autoFlushEventListeners);
@@ -133,7 +133,7 @@ public class NestableFlushEventListenerTest {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 		finally {
 			eventListeners.setFlushEventListeners(flushEventListeners);

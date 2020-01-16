@@ -63,8 +63,8 @@ public class TunnelApplicationContext extends XmlWebApplicationContext {
 			try {
 				xmlBeanDefinitionReader.loadBeanDefinitions(configLocation);
 			}
-			catch (Exception e) {
-				Throwable cause = e.getCause();
+			catch (Exception exception) {
+				Throwable cause = exception.getCause();
 
 				if (cause instanceof FileNotFoundException) {
 					if (_log.isWarnEnabled()) {
@@ -72,7 +72,7 @@ public class TunnelApplicationContext extends XmlWebApplicationContext {
 					}
 				}
 				else {
-					_log.error(e, e);
+					_log.error(exception, exception);
 				}
 			}
 		}

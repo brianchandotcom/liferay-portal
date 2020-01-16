@@ -151,8 +151,8 @@ public class RemoteExecutor {
 					_handleError(null);
 				}
 			}
-			catch (Exception e) {
-				_handleError(e.getMessage());
+			catch (Exception exception) {
+				_handleError(exception.getMessage());
 			}
 			finally {
 				synchronized (_remoteExecutor) {

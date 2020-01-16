@@ -91,8 +91,8 @@ public class SalesforceStreamingClientImpl
 		try {
 			_httpClient.stop();
 		}
-		catch (Exception e) {
-			_log.error("Unable to stop http client", e);
+		catch (Exception exception) {
+			_log.error("Unable to stop http client", exception);
 		}
 	}
 
@@ -176,8 +176,8 @@ public class SalesforceStreamingClientImpl
 			subscribeClientSessionChannel.addListener(
 				new SalesforceMessageListener());
 		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+		catch (Exception exception) {
+			_log.error(exception.getMessage(), exception);
 		}
 	}
 
@@ -212,9 +212,9 @@ public class SalesforceStreamingClientImpl
 				}
 
 				if (message.get("exception") != null) {
-					Exception e = (Exception)message.get("exception");
+					Exception exception = (Exception)message.get("exception");
 
-					_log.error(e.getMessage(), e);
+					_log.error(exception.getMessage(), exception);
 				}
 
 				_bayeuxClient.disconnect();

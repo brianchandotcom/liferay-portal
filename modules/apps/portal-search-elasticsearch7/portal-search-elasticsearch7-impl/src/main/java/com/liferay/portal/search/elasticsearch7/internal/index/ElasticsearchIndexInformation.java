@@ -75,8 +75,8 @@ public class ElasticsearchIndexInformation implements IndexInformation {
 		try {
 			return indicesClient.get(getIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -96,8 +96,8 @@ public class ElasticsearchIndexInformation implements IndexInformation {
 			return indicesClient.getMapping(
 				getMappingsRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

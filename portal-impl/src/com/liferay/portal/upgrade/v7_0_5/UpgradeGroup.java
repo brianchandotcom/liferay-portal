@@ -146,8 +146,9 @@ public class UpgradeGroup extends UpgradeProcess {
 
 				_ps.addBatch();
 			}
-			catch (SQLException sqle) {
-				_log.error("Unable to update tree path: " + treePath, sqle);
+			catch (SQLException sqlException) {
+				_log.error(
+					"Unable to update tree path: " + treePath, sqlException);
 			}
 		}
 

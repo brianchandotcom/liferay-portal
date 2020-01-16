@@ -48,8 +48,8 @@ public interface DLStoreConvertProcess {
 					companyId, repositoryId, fileName, versionLabel);
 			}
 		}
-		catch (IOException | PortalException e) {
-			throw new SystemException(e);
+		catch (IOException | PortalException exception) {
+			throw new SystemException(exception);
 		}
 	}
 

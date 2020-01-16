@@ -346,11 +346,11 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		try {
 			notifySubscribers(entry, emailAddresses, fileName, notification);
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe.getMessage());
+		catch (IOException ioException) {
+			throw new PortalException(ioException.getMessage());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

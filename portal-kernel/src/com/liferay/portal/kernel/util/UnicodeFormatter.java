@@ -81,7 +81,7 @@ public class UnicodeFormatter {
 			try {
 				bytes[i / 2] = (byte)Integer.parseInt(s, 16);
 			}
-			catch (NumberFormatException nfe) {
+			catch (NumberFormatException numberFormatException) {
 				return new byte[0];
 			}
 		}
@@ -108,8 +108,8 @@ public class UnicodeFormatter {
 
 				sb.append(c);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
 				return hexString;
 			}

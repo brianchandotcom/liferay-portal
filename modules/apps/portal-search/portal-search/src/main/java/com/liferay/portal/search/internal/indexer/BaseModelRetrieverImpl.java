@@ -64,12 +64,12 @@ public class BaseModelRetrieverImpl implements BaseModelRetriever {
 		try {
 			return persistedModelLocalService.getPersistedModel(classPK);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
 						"No ", className, " found for class PK ", classPK),
-					pe);
+					portalException);
 			}
 
 			return null;

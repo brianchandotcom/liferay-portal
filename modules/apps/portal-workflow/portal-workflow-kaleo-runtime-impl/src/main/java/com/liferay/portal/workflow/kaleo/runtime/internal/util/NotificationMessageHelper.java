@@ -102,12 +102,12 @@ public class NotificationMessageHelper {
 
 			return serviceContext.getGuestOrUserId();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get user from context, using userId from " +
 						"kaleoInstanceToken instead",
-					pe);
+					portalException);
 			}
 
 			return kaleoInstanceToken.getUserId();

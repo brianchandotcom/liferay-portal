@@ -36,9 +36,10 @@ public class MapUtilWhenCreatingAMapFromArrayTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"Array length is not an even number", iae.getMessage());
+				"Array length is not an even number",
+				illegalArgumentException.getMessage());
 		}
 	}
 

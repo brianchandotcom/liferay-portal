@@ -92,8 +92,8 @@ public class DistributedRegistryTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Throwable throwable = re.getCause();
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
 
 			Assert.assertSame(
 				ExceptionInInitializerError.class, throwable.getClass());

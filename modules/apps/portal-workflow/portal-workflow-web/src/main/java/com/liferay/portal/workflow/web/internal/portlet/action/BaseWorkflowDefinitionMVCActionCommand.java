@@ -56,18 +56,19 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 
 			return SessionErrors.isEmpty(actionRequest);
 		}
-		catch (WorkflowException we) {
+		catch (WorkflowException workflowException) {
 			hideDefaultErrorMessage(actionRequest);
 
-			SessionErrors.add(actionRequest, we.getClass(), we);
+			SessionErrors.add(
+				actionRequest, workflowException.getClass(), workflowException);
 
 			return false;
 		}
-		catch (PortletException pe) {
-			throw pe;
+		catch (PortletException portletException) {
+			throw portletException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

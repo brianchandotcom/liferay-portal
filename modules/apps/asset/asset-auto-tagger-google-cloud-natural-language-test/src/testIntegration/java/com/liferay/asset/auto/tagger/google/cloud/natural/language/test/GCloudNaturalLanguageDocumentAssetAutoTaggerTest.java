@@ -99,13 +99,13 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 
 					Assert.fail();
 				}
-				catch (Exception e) {
-					Assert.assertTrue(e instanceof PortalException);
+				catch (Exception exception) {
+					Assert.assertTrue(exception instanceof PortalException);
 					Assert.assertEquals(
 						"Unable to generate tags with the Google Natural " +
 							"Language service. Response code 400: API key " +
 								"not valid. Please pass a valid API key.",
-						e.getMessage());
+						exception.getMessage());
 				}
 				finally {
 					ReflectionTestUtil.setFieldValue(

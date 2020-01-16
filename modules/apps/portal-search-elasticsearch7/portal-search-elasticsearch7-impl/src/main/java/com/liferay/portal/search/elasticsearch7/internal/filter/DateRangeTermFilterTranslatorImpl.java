@@ -52,9 +52,9 @@ public class DateRangeTermFilterTranslatorImpl
 			rangeQueryBuilder.to(
 				format.parseObject(dateRangeTermFilter.getUpperBound()));
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			throw new IllegalArgumentException(
-				"Invalid date range " + dateRangeTermFilter, pe);
+				"Invalid date range " + dateRangeTermFilter, parseException);
 		}
 
 		return rangeQueryBuilder;

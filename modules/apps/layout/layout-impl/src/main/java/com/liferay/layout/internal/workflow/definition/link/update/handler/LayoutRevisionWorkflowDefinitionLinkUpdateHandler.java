@@ -70,13 +70,13 @@ public class LayoutRevisionWorkflowDefinitionLinkUpdateHandler
 							layoutRevision.getModelClassName(),
 							layoutRevision.getLayoutRevisionId());
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to delete workflow instance links for " +
 								"layout revision " +
 									layoutRevision.getLayoutRevisionId(),
-							pe);
+							portalException);
 					}
 				}
 			});

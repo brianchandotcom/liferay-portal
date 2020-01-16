@@ -129,8 +129,8 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 			try {
 				_typeSettingsProperties.load(super.getTypeSettings());
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 

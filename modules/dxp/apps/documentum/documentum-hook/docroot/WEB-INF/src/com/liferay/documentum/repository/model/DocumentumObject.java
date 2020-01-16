@@ -60,8 +60,8 @@ public abstract class DocumentumObject
 
 			return false;
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -72,8 +72,8 @@ public abstract class DocumentumObject
 
 			return idfTime.getDate();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -87,8 +87,8 @@ public abstract class DocumentumObject
 		try {
 			return FileUtil.getExtension(_idfSysObject.getObjectName());
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -99,8 +99,8 @@ public abstract class DocumentumObject
 
 			return idfId.getId();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -115,8 +115,8 @@ public abstract class DocumentumObject
 
 			return idfTime.getDate();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -125,8 +125,8 @@ public abstract class DocumentumObject
 		try {
 			return _idfSysObject.getOwnerName();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -135,8 +135,8 @@ public abstract class DocumentumObject
 		try {
 			return _idfSysObject.getContentSize();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 

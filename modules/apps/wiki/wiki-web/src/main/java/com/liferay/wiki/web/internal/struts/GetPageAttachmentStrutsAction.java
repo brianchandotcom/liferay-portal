@@ -83,16 +83,17 @@ public class GetPageAttachmentStrutsAction implements StrutsAction {
 
 			return null;
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileException ||
-				e instanceof NoSuchPageException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchFileException ||
+				exception instanceof NoSuchPageException) {
 
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 			else {
-				_portal.sendError(e, httpServletRequest, httpServletResponse);
+				_portal.sendError(
+					exception, httpServletRequest, httpServletResponse);
 			}
 
 			return null;

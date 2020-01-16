@@ -160,7 +160,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 
 			kaleoLog.setDuration(endDate.getTime() - startDate.getTime());
 		}
-		catch (NoSuchLogException nsle) {
+		catch (NoSuchLogException noSuchLogException) {
 		}
 
 		kaleoLogPersistence.update(kaleoLog);
@@ -333,7 +333,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 
 			kaleoLog.setDuration(endDate.getTime() - startDate.getTime());
 		}
-		catch (NoSuchLogException nsle) {
+		catch (NoSuchLogException noSuchLogException) {
 		}
 
 		kaleoLogPersistence.update(kaleoLog);
@@ -652,9 +652,9 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 				Collectors.toList()
 			);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -673,9 +673,9 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 					companyId, searchAttributes, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null));
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

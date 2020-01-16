@@ -34,8 +34,8 @@ public class DefaultOAuthValidator implements OAuthValidator {
 				(net.oauth.OAuthAccessor)
 					oAuthAccessor.getWrappedOAuthAccessor());
 		}
-		catch (Exception e) {
-			throw new OAuthException(e);
+		catch (Exception exception) {
+			throw new OAuthException(exception);
 		}
 	}
 

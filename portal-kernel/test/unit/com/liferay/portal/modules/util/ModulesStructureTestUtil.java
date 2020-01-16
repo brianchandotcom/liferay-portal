@@ -160,14 +160,14 @@ public class ModulesStructureTestUtil {
 
 				gradleDependencies.add(gradleDependency);
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
 							"Ignoring dependency in ", gradlePath,
 							" since version ", moduleVersion,
 							" cannot be parsed: ", dependency),
-						iae);
+						illegalArgumentException);
 				}
 			}
 		}
@@ -215,14 +215,14 @@ public class ModulesStructureTestUtil {
 			try (InputStream inputStream = Files.newInputStream(bndBndPath)) {
 				bndProperties.load(inputStream);
 			}
-			catch (NoSuchFileException nsfe) {
+			catch (NoSuchFileException noSuchFileException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
 							"Ignoring dependency in ", gradlePath,
 							" since it points to a non-OSGi project: ",
 							matcher.group()),
-						nsfe);
+						noSuchFileException);
 				}
 
 				continue;

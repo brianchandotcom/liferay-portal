@@ -94,9 +94,9 @@ public class JournalContentConfigurationAction
 				portletRequest, portletResponse, _CLASS_NAME_ID,
 				_ddmTemplateModelResourcePermission);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

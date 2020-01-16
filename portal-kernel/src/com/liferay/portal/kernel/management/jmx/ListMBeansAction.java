@@ -49,8 +49,8 @@ public class ListMBeansAction extends BaseJMXManageAction<Set<MBean>> {
 
 			return mBeans;
 		}
-		catch (MalformedObjectNameException mone) {
-			throw new ManageActionException(mone);
+		catch (MalformedObjectNameException malformedObjectNameException) {
+			throw new ManageActionException(malformedObjectNameException);
 		}
 	}
 

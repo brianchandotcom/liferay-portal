@@ -52,8 +52,8 @@ public class ProxyUtil {
 
 			return null;
 		}
-		catch (IllegalAccessException iae) {
-			throw new IllegalArgumentException(iae);
+		catch (IllegalAccessException illegalAccessException) {
+			throw new IllegalArgumentException(illegalAccessException);
 		}
 	}
 
@@ -65,8 +65,8 @@ public class ProxyUtil {
 		try {
 			return (InvocationHandler)_invocationHandlerField.get(proxy);
 		}
-		catch (IllegalAccessException iae) {
-			throw new IllegalArgumentException(iae);
+		catch (IllegalAccessException illegalAccessException) {
+			throw new IllegalArgumentException(illegalAccessException);
 		}
 	}
 
@@ -128,13 +128,15 @@ public class ProxyUtil {
 				try {
 					return constructor.newInstance(invocationHandler);
 				}
-				catch (ReflectiveOperationException roe) {
-					throw new InternalError(roe);
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
 				}
 			};
 		}
-		catch (NoSuchMethodException nsme) {
-			throw new InternalError(nsme);
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
 		}
 	}
 
@@ -176,8 +178,8 @@ public class ProxyUtil {
 			_invocationHandlerField = ReflectionUtil.getDeclaredField(
 				Proxy.class, "h");
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 
@@ -204,8 +206,8 @@ public class ProxyUtil {
 				return constructor.newInstance(
 					new Object[] {invocationHandler});
 			}
-			catch (ReflectiveOperationException roe) {
-				throw new InternalError(roe);
+			catch (ReflectiveOperationException reflectiveOperationException) {
+				throw new InternalError(reflectiveOperationException);
 			}
 		}
 

@@ -98,8 +98,8 @@ public class RoleModelListenerTest {
 				Assert.fail(
 					"Allowed to delete default role: " + requiredRoleName);
 			}
-			catch (ModelListenerException mle) {
-				Throwable throwable = mle.getCause();
+			catch (ModelListenerException modelListenerException) {
+				Throwable throwable = modelListenerException.getCause();
 
 				Assert.assertTrue(throwable instanceof RequiredRoleException);
 
@@ -126,8 +126,8 @@ public class RoleModelListenerTest {
 			Assert.fail(
 				"Allowed to delete a role associated with an account role");
 		}
-		catch (ModelListenerException mle) {
-			Throwable throwable = mle.getCause();
+		catch (ModelListenerException modelListenerException) {
+			Throwable throwable = modelListenerException.getCause();
 
 			Assert.assertTrue(throwable instanceof RequiredRoleException);
 
@@ -136,7 +136,7 @@ public class RoleModelListenerTest {
 			Assert.assertTrue(
 				message.contains(" is required by account role "));
 
-			throw mle;
+			throw modelListenerException;
 		}
 	}
 

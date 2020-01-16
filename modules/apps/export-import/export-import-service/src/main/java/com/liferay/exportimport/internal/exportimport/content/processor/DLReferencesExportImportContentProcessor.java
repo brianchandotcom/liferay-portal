@@ -279,12 +279,12 @@ public class DLReferencesExportImportContentProcessor
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 		}
 
@@ -308,8 +308,8 @@ public class DLReferencesExportImportContentProcessor
 
 			return configuration.validateFileEntryReferences();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return true;
@@ -420,7 +420,7 @@ public class DLReferencesExportImportContentProcessor
 
 				deleteTimestampParameters(sb, deleteTimestampParametersOffset);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				StringBundler exceptionSB = new StringBundler(6);
 
 				exceptionSB.append("Unable to process file entry ");
@@ -430,12 +430,15 @@ public class DLReferencesExportImportContentProcessor
 				exceptionSB.append(" with primary key ");
 				exceptionSB.append(stagedModel.getPrimaryKeyObj());
 
-				ExportImportContentProcessorException eicpe =
-					new ExportImportContentProcessorException(
-						exceptionSB.toString(), e);
+				ExportImportContentProcessorException
+					exportImportContentProcessorException =
+						new ExportImportContentProcessorException(
+							exceptionSB.toString(), exception);
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(exceptionSB.toString(), eicpe);
+					_log.debug(
+						exceptionSB.toString(),
+						exportImportContentProcessorException);
 				}
 				else if (_log.isWarnEnabled()) {
 					_log.warn(exceptionSB.toString());
@@ -487,7 +490,7 @@ public class DLReferencesExportImportContentProcessor
 						portletDataContext, stagedModel, DLFileEntry.class,
 						classPK);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					StringBundler exceptionSB = new StringBundler(6);
 
 					exceptionSB.append("Unable to process file entry ");
@@ -497,12 +500,15 @@ public class DLReferencesExportImportContentProcessor
 					exceptionSB.append(" with primary key ");
 					exceptionSB.append(stagedModel.getPrimaryKeyObj());
 
-					ExportImportContentProcessorException eicpe =
-						new ExportImportContentProcessorException(
-							exceptionSB.toString(), e);
+					ExportImportContentProcessorException
+						exportImportContentProcessorException =
+							new ExportImportContentProcessorException(
+								exceptionSB.toString(), exception);
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(exceptionSB.toString(), eicpe);
+						_log.debug(
+							exceptionSB.toString(),
+							exportImportContentProcessorException);
 					}
 					else if (_log.isWarnEnabled()) {
 						_log.warn(exceptionSB.toString());
@@ -526,12 +532,12 @@ public class DLReferencesExportImportContentProcessor
 					importedFileEntry = _dlAppLocalService.getFileEntry(
 						fileEntryId);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(pe, pe);
+						_log.debug(portalException, portalException);
 					}
 					else if (_log.isWarnEnabled()) {
-						_log.warn(pe.getMessage());
+						_log.warn(portalException.getMessage());
 					}
 
 					if (content.startsWith("[#dl-reference=", endPos)) {
@@ -673,27 +679,29 @@ public class DLReferencesExportImportContentProcessor
 				}
 
 				if (absolutePortalURL || relativePortalURL) {
-					ExportImportContentValidationException eicve =
-						new ExportImportContentValidationException(
-							DLReferencesExportImportContentProcessor.class.
-								getName(),
-							new NoSuchFileEntryException());
+					ExportImportContentValidationException
+						exportImportContentValidationException =
+							new ExportImportContentValidationException(
+								DLReferencesExportImportContentProcessor.class.
+									getName(),
+								new NoSuchFileEntryException());
 
-					eicve.setDlReferenceParameters(dlReferenceParameters);
+					exportImportContentValidationException.
+						setDlReferenceParameters(dlReferenceParameters);
 
 					ObjectValuePair<String, Integer>
 						dlReferenceEndPosObjectValuePair =
 							getDLReferenceEndPosObjectValuePair(
 								content, beginPos, endPos);
 
-					eicve.setDlReference(
+					exportImportContentValidationException.setDlReference(
 						dlReferenceEndPosObjectValuePair.getKey());
 
-					eicve.setType(
+					exportImportContentValidationException.setType(
 						ExportImportContentValidationException.
 							FILE_ENTRY_NOT_FOUND);
 
-					throw eicve;
+					throw exportImportContentValidationException;
 				}
 			}
 

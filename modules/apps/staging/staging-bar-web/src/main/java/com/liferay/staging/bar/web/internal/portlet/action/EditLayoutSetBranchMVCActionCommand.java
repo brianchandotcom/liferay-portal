@@ -84,10 +84,10 @@ public class EditLayoutSetBranchMVCActionCommand extends BaseMVCActionCommand {
 			ActionUtil.addLayoutBranchSessionMessages(
 				actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			SessionErrors.add(actionRequest, e.getClass(), e);
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
 
-			if (e instanceof LayoutSetBranchNameException) {
+			if (exception instanceof LayoutSetBranchNameException) {
 				actionResponse.setRenderParameter(
 					"mvcPath", "/edit_layout_set_branch.jsp");
 			}

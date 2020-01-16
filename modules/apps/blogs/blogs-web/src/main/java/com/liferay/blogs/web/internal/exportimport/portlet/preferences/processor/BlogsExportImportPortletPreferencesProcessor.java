@@ -75,13 +75,15 @@ public class BlogsExportImportPortletPreferencesProcessor
 			portletDataContext.addPortletPermissions(
 				BlogsConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(BlogsPortletKeys.BLOGS);
-			pde.setType(PortletDataException.EXPORT_PORTLET_PERMISSIONS);
+			portletDataException.setPortletId(BlogsPortletKeys.BLOGS);
+			portletDataException.setType(
+				PortletDataException.EXPORT_PORTLET_PERMISSIONS);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		String portletId = portletDataContext.getPortletId();
@@ -98,13 +100,15 @@ public class BlogsExportImportPortletPreferencesProcessor
 		try {
 			actionableDynamicQuery.performActions();
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(BlogsPortletKeys.BLOGS);
-			pde.setType(PortletDataException.EXPORT_PORTLET_DATA);
+			portletDataException.setPortletId(BlogsPortletKeys.BLOGS);
+			portletDataException.setType(
+				PortletDataException.EXPORT_PORTLET_DATA);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		return portletPreferences;
@@ -126,13 +130,15 @@ public class BlogsExportImportPortletPreferencesProcessor
 			portletDataContext.importPortletPermissions(
 				BlogsConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(BlogsPortletKeys.BLOGS);
-			pde.setType(PortletDataException.IMPORT_PORTLET_PERMISSIONS);
+			portletDataException.setPortletId(BlogsPortletKeys.BLOGS);
+			portletDataException.setType(
+				PortletDataException.IMPORT_PORTLET_PERMISSIONS);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		Element entriesElement = portletDataContext.getImportDataGroupElement(

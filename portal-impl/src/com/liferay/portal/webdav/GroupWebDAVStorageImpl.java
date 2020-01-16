@@ -74,7 +74,7 @@ public class GroupWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		throw new WebDAVException(

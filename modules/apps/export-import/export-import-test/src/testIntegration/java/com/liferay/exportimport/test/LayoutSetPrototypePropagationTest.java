@@ -484,7 +484,7 @@ public class LayoutSetPrototypePropagationTest
 				"The user should not be able to reset another user's " +
 					"dashboard");
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 		}
 	}
 
@@ -819,7 +819,7 @@ public class LayoutSetPrototypePropagationTest
 					"template with link enabled",
 				layoutSetPrototypeLinkEnabled);
 		}
-		catch (LayoutParentLayoutIdException lplie) {
+		catch (LayoutParentLayoutIdException layoutParentLayoutIdException) {
 			Assert.assertTrue(
 				"Unable to add a child page to a page associated to a " +
 					"template with link disabled",

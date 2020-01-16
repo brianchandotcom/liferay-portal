@@ -54,9 +54,9 @@ public class SPIAgentFactoryUtil {
 			return constructor.newInstance(
 				spiConfiguration, registrationReference);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new RuntimeException(
-				"Unable to instantiate " + spiAgentClass, e);
+				"Unable to instantiate " + spiAgentClass, exception);
 		}
 	}
 

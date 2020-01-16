@@ -64,8 +64,9 @@ public class DeleteFragmentCollectionResourcesMVCActionCommand
 					curFileEntryId);
 			}
 		}
-		catch (RequiredFragmentEntryException rfee) {
-			SessionErrors.add(actionRequest, rfee.getClass());
+		catch (RequiredFragmentEntryException requiredFragmentEntryException) {
+			SessionErrors.add(
+				actionRequest, requiredFragmentEntryException.getClass());
 
 			hideDefaultErrorMessage(actionRequest);
 

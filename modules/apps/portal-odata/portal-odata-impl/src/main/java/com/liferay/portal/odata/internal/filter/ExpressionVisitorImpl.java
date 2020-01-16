@@ -480,9 +480,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 			return _format.format(date);
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			throw new InvalidFilterException(
-				"Invalid date format, use ISO 8601: " + pe.getMessage());
+				"Invalid date format, use ISO 8601: " +
+					parseException.getMessage());
 		}
 	}
 

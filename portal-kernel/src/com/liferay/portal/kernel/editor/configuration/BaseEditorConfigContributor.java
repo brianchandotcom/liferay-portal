@@ -70,8 +70,9 @@ public abstract class BaseEditorConfigContributor
 		try {
 			return JSONFactoryUtil.createJSONArray(json);
 		}
-		catch (JSONException jsone) {
-			_log.error("Unable to create a JSON array from: " + json, jsone);
+		catch (JSONException jsonException) {
+			_log.error(
+				"Unable to create a JSON array from: " + json, jsonException);
 		}
 
 		return JSONFactoryUtil.createJSONArray();
@@ -91,8 +92,9 @@ public abstract class BaseEditorConfigContributor
 		try {
 			return JSONFactoryUtil.createJSONObject(json);
 		}
-		catch (JSONException jsone) {
-			_log.error("Unable to create a JSON object from: " + json, jsone);
+		catch (JSONException jsonException) {
+			_log.error(
+				"Unable to create a JSON object from: " + json, jsonException);
 		}
 
 		return JSONFactoryUtil.createJSONObject();

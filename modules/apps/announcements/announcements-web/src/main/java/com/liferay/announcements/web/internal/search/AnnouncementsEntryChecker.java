@@ -76,12 +76,12 @@ public class AnnouncementsEntryChecker extends EmptyOnClickRowChecker {
 		try {
 			entry = AnnouncementsEntryLocalServiceUtil.getEntry(entryId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return StringPool.BLANK;
@@ -100,12 +100,12 @@ public class AnnouncementsEntryChecker extends EmptyOnClickRowChecker {
 				}
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return StringPool.BLANK;

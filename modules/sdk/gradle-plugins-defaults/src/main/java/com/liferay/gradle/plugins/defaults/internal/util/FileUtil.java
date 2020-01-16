@@ -248,8 +248,8 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 				bufferedWriter.write(value);
 			}
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 

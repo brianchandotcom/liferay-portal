@@ -41,8 +41,8 @@ public class SimpleWebSocketEndpoint extends Endpoint {
 
 						basic.sendBinary(byteBuffer);
 					}
-					catch (IOException ioe) {
-						throw new RuntimeException(ioe);
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
 					}
 				}
 
@@ -57,8 +57,8 @@ public class SimpleWebSocketEndpoint extends Endpoint {
 
 						basic.sendText(text);
 					}
-					catch (IOException ioe) {
-						throw new RuntimeException(ioe);
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
 					}
 				}
 

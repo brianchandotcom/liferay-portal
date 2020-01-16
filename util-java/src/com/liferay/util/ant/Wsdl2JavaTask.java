@@ -50,8 +50,8 @@ public class Wsdl2JavaTask {
 		try {
 			wsdl2Java.execute();
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

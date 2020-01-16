@@ -209,11 +209,12 @@ public class CopyIvyDependenciesTask extends Copy {
 					try {
 						_addDependencies(dependencySet);
 					}
-					catch (IOException ioe) {
-						throw new UncheckedIOException(ioe);
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
 					}
-					catch (Exception e) {
-						throw new GradleException(e.getMessage(), e);
+					catch (Exception exception) {
+						throw new GradleException(
+							exception.getMessage(), exception);
 					}
 				}
 

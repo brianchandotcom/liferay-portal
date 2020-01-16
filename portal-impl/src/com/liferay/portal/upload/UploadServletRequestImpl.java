@@ -222,13 +222,17 @@ public class UploadServletRequestImpl
 					liferayFileItem.getFieldName(), liferayFileItems);
 			}
 		}
-		catch (Exception e) {
-			UploadException uploadException = new UploadException(e);
+		catch (Exception exception) {
+			UploadException uploadException = new UploadException(exception);
 
-			if (e instanceof FileUploadBase.FileSizeLimitExceededException) {
+			if (exception instanceof
+					FileUploadBase.FileSizeLimitExceededException) {
+
 				uploadException.setExceededFileSizeLimit(true);
 			}
-			else if (e instanceof FileUploadBase.SizeLimitExceededException) {
+			else if (exception instanceof
+						FileUploadBase.SizeLimitExceededException) {
+
 				uploadException.setExceededUploadRequestSizeLimit(true);
 			}
 
@@ -236,10 +240,12 @@ public class UploadServletRequestImpl
 				WebKeys.UPLOAD_EXCEPTION, uploadException);
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to parse upload request: " + e.getMessage());
+				_log.warn(
+					"Unable to parse upload request: " +
+						exception.getMessage());
 			}
 		}
 
@@ -326,12 +332,12 @@ public class UploadServletRequestImpl
 			try {
 				FileUtil.write(file, liferayFileItem.getInputStream());
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to write temporary file " +
 							file.getAbsolutePath(),
-						ioe);
+						ioException);
 				}
 			}
 		}

@@ -164,11 +164,11 @@ public class AuthPipeline {
 					return authResult;
 				}
 			}
-			catch (AuthException ae) {
-				throw ae;
+			catch (AuthException authException) {
+				throw authException;
 			}
-			catch (Exception e) {
-				throw new AuthException(e);
+			catch (Exception exception) {
+				throw new AuthException(exception);
 			}
 		}
 
@@ -207,11 +207,11 @@ public class AuthPipeline {
 						companyId, userId, headerMap, parameterMap);
 				}
 			}
-			catch (AuthException ae) {
-				throw ae;
+			catch (AuthException authException) {
+				throw authException;
 			}
-			catch (Exception e) {
-				throw new AuthException(e);
+			catch (Exception exception) {
+				throw new AuthException(exception);
 			}
 		}
 	}

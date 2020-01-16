@@ -127,8 +127,8 @@ public class LiferayPortletURLPrivilegedAction {
 				portletURL = constructor.newInstance(
 					new Object[] {_portletResponseImpl, plid, _lifecycle});
 			}
-			catch (Exception e) {
-				_log.error("Unable to create portlet URL", e);
+			catch (Exception exception) {
+				_log.error("Unable to create portlet URL", exception);
 			}
 		}
 
@@ -151,8 +151,8 @@ public class LiferayPortletURLPrivilegedAction {
 				portletURL.setWindowState(_portletRequest.getWindowState());
 			}
 		}
-		catch (WindowStateException wse) {
-			_log.error(wse.getMessage());
+		catch (WindowStateException windowStateException) {
+			_log.error(windowStateException.getMessage());
 		}
 
 		try {
@@ -163,8 +163,8 @@ public class LiferayPortletURLPrivilegedAction {
 				portletURL.setPortletMode(_portletRequest.getPortletMode());
 			}
 		}
-		catch (PortletModeException pme) {
-			_log.error(pme.getMessage());
+		catch (PortletModeException portletModeException) {
+			_log.error(portletModeException.getMessage());
 		}
 
 		return portletURL;

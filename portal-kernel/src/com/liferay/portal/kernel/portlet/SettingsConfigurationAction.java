@@ -162,9 +162,10 @@ public abstract class SettingsConfigurationAction
 			try {
 				modifiableSettings.store();
 			}
-			catch (ValidatorException ve) {
+			catch (ValidatorException validatorException) {
 				SessionErrors.add(
-					actionRequest, ValidatorException.class.getName(), ve);
+					actionRequest, ValidatorException.class.getName(),
+					validatorException);
 
 				return;
 			}

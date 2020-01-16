@@ -44,8 +44,8 @@ public class KBArticleAttachmentsUtil {
 			DLStoreUtil.deleteDirectory(
 				companyId, CompanyConstants.SYSTEM, "knowledgebase/articles");
 		}
-		catch (Exception e) {
-			_log.error(e.getMessage());
+		catch (Exception exception) {
+			_log.error(exception.getMessage());
 		}
 	}
 
@@ -83,8 +83,8 @@ public class KBArticleAttachmentsUtil {
 				_log.info("Added attachments for " + folderId);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e.getMessage());
+		catch (Exception exception) {
+			_log.error(exception.getMessage());
 		}
 	}
 

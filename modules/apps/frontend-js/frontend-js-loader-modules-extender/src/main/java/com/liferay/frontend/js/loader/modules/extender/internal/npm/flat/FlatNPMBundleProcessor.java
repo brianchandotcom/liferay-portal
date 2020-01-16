@@ -160,8 +160,8 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 				moduleDependenciesMap.put(entry.getKey(), entry.getValue());
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -173,8 +173,8 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 				jsonObjects.put(entry.getKey(), entry.getValue());
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -277,8 +277,8 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 			return urlContent.substring(x + 1, y);
 		}
-		catch (IOException ioe) {
-			_log.error("Unable to read URL: " + url, ioe);
+		catch (IOException ioException) {
+			_log.error("Unable to read URL: " + url, ioException);
 
 			return null;
 		}

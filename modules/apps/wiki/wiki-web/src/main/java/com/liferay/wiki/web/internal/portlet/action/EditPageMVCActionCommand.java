@@ -199,34 +199,35 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof NoSuchPageException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchNodeException ||
+				exception instanceof NoSuchPageException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof DuplicatePageException ||
-					 e instanceof PageContentException ||
-					 e instanceof PageTitleException ||
-					 e instanceof PageVersionException ||
-					 e instanceof SanitizerException) {
+			else if (exception instanceof DuplicatePageException ||
+					 exception instanceof PageContentException ||
+					 exception instanceof PageTitleException ||
+					 exception instanceof PageVersionException ||
+					 exception instanceof SanitizerException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
+			else if (exception instanceof AssetCategoryException ||
+					 exception instanceof AssetTagException) {
 
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 			}
 			else {
-				Throwable cause = e.getCause();
+				Throwable cause = exception.getCause();
 
 				if (cause instanceof SanitizerException) {
 					SessionErrors.add(actionRequest, SanitizerException.class);
 				}
 				else {
-					throw e;
+					throw exception;
 				}
 			}
 		}

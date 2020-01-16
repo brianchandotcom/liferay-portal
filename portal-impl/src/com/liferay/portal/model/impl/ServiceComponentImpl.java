@@ -53,8 +53,8 @@ public class ServiceComponentImpl extends ServiceComponentBaseImpl {
 		try {
 			return _getDataEl().elementText(name);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return StringPool.BLANK;
 		}

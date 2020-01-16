@@ -261,10 +261,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			try {
 				_expandoTableLocalService.deleteTable(expandoTableId);
 			}
-			catch (PortalException pe) {
-				_log.error("Unable delete expando table", pe);
+			catch (PortalException portalException) {
+				_log.error("Unable delete expando table", portalException);
 
-				throw pe;
+				throw portalException;
 			}
 		}
 	}
@@ -799,12 +799,12 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to update dynamic data mapping template with " +
 					"template ID " + templateId);
 
-			throw e;
+			throw exception;
 		}
 	}
 
@@ -1799,8 +1799,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				return ddmFormValues;
 			}
-			catch (DocumentException de) {
-				throw new UpgradeException(de);
+			catch (DocumentException documentException) {
+				throw new UpgradeException(documentException);
 			}
 		}
 
@@ -2004,13 +2004,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					locale = UpgradeProcessUtil.getDefaultLanguageId(
 						_companyId);
 				}
-				catch (SQLException sqle) {
+				catch (SQLException sqlException) {
 					_log.error(
 						"Unable to get default locale for company " +
 							_companyId,
-						sqle);
+						sqlException);
 
-					throw new RuntimeException(sqle);
+					throw new RuntimeException(sqlException);
 				}
 
 				return LocaleUtil.fromLanguageId(locale);
@@ -2589,14 +2589,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 						_companyId, CompanyConstants.SYSTEM, filePath,
 						StringPool.BLANK));
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				_log.error(
 					String.format(
 						"Unable to find the binary file with path \"%s\" " +
 							"referenced by %s",
 						filePath, getModelInfo()));
 
-				throw pe;
+				throw portalException;
 			}
 		}
 
@@ -2724,8 +2724,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				return fileEntryUuid;
 			}
-			catch (Exception e) {
-				throw new UpgradeException(e);
+			catch (Exception exception) {
+				throw new UpgradeException(exception);
 			}
 		}
 

@@ -138,7 +138,7 @@ public class UpdateLicenseAction implements Action {
 		try {
 			user = PortalUtil.getUser(httpServletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if ((user != null) && OmniadminUtil.isOmniadmin(user)) {

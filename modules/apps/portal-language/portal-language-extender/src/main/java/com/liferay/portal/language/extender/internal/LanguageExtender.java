@@ -57,10 +57,10 @@ public class LanguageExtender
 		try {
 			languageExtension.start();
 		}
-		catch (InvalidSyntaxException ise) {
+		catch (InvalidSyntaxException invalidSyntaxException) {
 			languageExtension.destroy();
 
-			throw new RuntimeException(ise);
+			throw new RuntimeException(invalidSyntaxException);
 		}
 
 		return languageExtension;

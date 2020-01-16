@@ -199,7 +199,7 @@ public class LayoutTestUtil {
 
 			return layout;
 		}
-		catch (NoSuchLayoutException nsle) {
+		catch (NoSuchLayoutException noSuchLayoutException) {
 		}
 
 		String description = "This is a test page.";

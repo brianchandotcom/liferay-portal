@@ -53,8 +53,8 @@ public class SessionTreeJSClicks {
 			closeNodes(
 				httpServletRequest, treeId, layoutIds.toArray(new String[0]));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -79,10 +79,11 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
-			catch (ConcurrentModificationException cme) {
+			catch (ConcurrentModificationException
+						concurrentModificationException) {
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
 				return;
 			}
@@ -104,10 +105,11 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
-			catch (ConcurrentModificationException cme) {
+			catch (ConcurrentModificationException
+						concurrentModificationException) {
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
 				return;
 			}
@@ -138,10 +140,11 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
-			catch (ConcurrentModificationException cme) {
+			catch (ConcurrentModificationException
+						concurrentModificationException) {
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
 				return;
 			}
@@ -159,8 +162,8 @@ public class SessionTreeJSClicks {
 			return portalPreferences.getValue(
 				SessionTreeJSClicks.class.getName(), treeId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return null;
 		}
@@ -183,8 +186,8 @@ public class SessionTreeJSClicks {
 			openNodes(
 				httpServletRequest, treeId, layoutIds.toArray(new String[0]));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -208,10 +211,11 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
-			catch (ConcurrentModificationException cme) {
+			catch (ConcurrentModificationException
+						concurrentModificationException) {
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
 				return;
 			}
@@ -241,10 +245,11 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
-			catch (ConcurrentModificationException cme) {
+			catch (ConcurrentModificationException
+						concurrentModificationException) {
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
 				return;
 			}

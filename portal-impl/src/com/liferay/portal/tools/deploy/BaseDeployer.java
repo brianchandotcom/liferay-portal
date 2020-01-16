@@ -117,9 +117,9 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		try (BaseDeployer baseDeployer = new BaseDeployer(wars, jars)) {
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 		}
 	}
@@ -165,8 +165,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		try {
 			deploy(context);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -233,8 +233,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		try {
 			return deployFile(autoDeploymentContext);
 		}
-		catch (Exception e) {
-			throw new AutoDeployException(e);
+		catch (Exception exception) {
+			throw new AutoDeployException(exception);
 		}
 	}
 
@@ -304,8 +304,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			return (AutoDeployer)baseDeployer;
 		}
-		catch (Exception e) {
-			throw new AutoDeployException(e);
+		catch (Exception exception) {
+			throw new AutoDeployException(exception);
 		}
 	}
 
@@ -386,8 +386,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				FileUtil.copyFile(
 					portalJarPath, srcFile + "/WEB-INF/lib/" + portalJar, true);
 			}
-			catch (Exception e) {
-				_log.error("Unable to copy portal JAR " + portalJar, e);
+			catch (Exception exception) {
+				_log.error("Unable to copy portal JAR " + portalJar, exception);
 			}
 		}
 
@@ -412,8 +412,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				FileUtil.copyFile(
 					portalTldPath, srcFile + "/WEB-INF/tld/" + portalTld, true);
 			}
-			catch (Exception e) {
-				_log.error("Unable to copy portal TLD " + portalTld, e);
+			catch (Exception exception) {
+				_log.error("Unable to copy portal TLD " + portalTld, exception);
 			}
 		}
 
@@ -644,8 +644,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -732,7 +732,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 				excludes += "**/WEB-INF/lib/el-api.jar,";
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 			}
 		}
 
@@ -1023,13 +1023,13 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			return AutoDeployer.CODE_DEFAULT;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (pluginPackage != null) {
 				PluginPackageUtil.endPluginPackageInstallation(
 					pluginPackage.getContext());
 			}
 
-			throw e;
+			throw exception;
 		}
 	}
 
@@ -1045,7 +1045,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				PropsKeys.HOT_UNDEPLOY_ON_REDEPLOY,
 				PropsValues.HOT_UNDEPLOY_ON_REDEPLOY);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 
 			// This will only happen when running the deploy tool in Ant in the
 			// classical way where the WAR file is actually massaged and
@@ -1805,15 +1805,15 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			return PluginPackageUtil.readPluginPackageXml(xml);
 		}
-		catch (Exception e) {
-			_log.error(file.getPath() + ": " + e.toString(), e);
+		catch (Exception exception) {
+			_log.error(file.getPath() + ": " + exception.toString(), exception);
 		}
 		finally {
 			if (is != null) {
 				try {
 					is.close();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 				}
 			}
 
@@ -1821,7 +1821,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				try {
 					zipFile.close();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 				}
 			}
 		}
@@ -1860,11 +1860,12 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 				FileUtil.write(file, content);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Unable to format ", file, ": ", e.getMessage()));
+							"Unable to format ", file, ": ",
+							exception.getMessage()));
 				}
 			}
 		}

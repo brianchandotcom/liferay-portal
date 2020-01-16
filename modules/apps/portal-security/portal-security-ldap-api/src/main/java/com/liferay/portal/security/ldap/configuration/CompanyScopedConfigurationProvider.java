@@ -70,8 +70,8 @@ public abstract class CompanyScopedConfigurationProvider
 						properties));
 			}
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 
 		return true;
@@ -248,8 +248,9 @@ public abstract class CompanyScopedConfigurationProvider
 						properties));
 			}
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to update configuration", ioe);
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to update configuration", ioException);
 		}
 	}
 

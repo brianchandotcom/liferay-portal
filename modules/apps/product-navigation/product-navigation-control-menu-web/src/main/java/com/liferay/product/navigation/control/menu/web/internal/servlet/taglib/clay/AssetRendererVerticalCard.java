@@ -48,7 +48,7 @@ public class AssetRendererVerticalCard implements VerticalCard {
 		try {
 			return _assetRenderer.getIconCssClass();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -60,7 +60,7 @@ public class AssetRendererVerticalCard implements VerticalCard {
 			return HtmlUtil.escapeAttribute(
 				_assetRenderer.getThumbnailPath(_liferayPortletRequest));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

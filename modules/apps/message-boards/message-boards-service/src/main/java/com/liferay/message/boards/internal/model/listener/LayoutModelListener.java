@@ -40,8 +40,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			commentManager.deleteDiscussion(
 				Layout.class.getName(), layout.getPlid());
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

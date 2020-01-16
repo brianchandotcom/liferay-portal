@@ -72,7 +72,7 @@ public class FileAvailabilityUtil {
 		try {
 			url = servletContext.getResource(path);
 		}
-		catch (MalformedURLException murle) {
+		catch (MalformedURLException malformedURLException) {
 		}
 
 		if ((url == null) && !PortalWebResourcesUtil.isAvailable(path)) {

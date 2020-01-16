@@ -45,8 +45,8 @@ public class BootstrapRPCDatagramReceiveHandler
 
 			serializer.writeObject(new RPCResponse(processCallable.call()));
 		}
-		catch (Exception e) {
-			serializer.writeObject(new RPCResponse(e));
+		catch (Exception exception) {
+			serializer.writeObject(new RPCResponse(exception));
 		}
 
 		Intraband intraband = registrationReference.getIntraband();

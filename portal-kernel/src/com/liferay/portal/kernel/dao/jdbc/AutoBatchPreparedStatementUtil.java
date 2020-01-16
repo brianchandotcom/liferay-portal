@@ -101,8 +101,8 @@ public class AutoBatchPreparedStatementUtil {
 			_closeMethod = PreparedStatement.class.getMethod("close");
 			_executeBatch = PreparedStatement.class.getMethod("executeBatch");
 		}
-		catch (NoSuchMethodException nsme) {
-			throw new ExceptionInInitializerError(nsme);
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new ExceptionInInitializerError(noSuchMethodException);
 		}
 	}
 

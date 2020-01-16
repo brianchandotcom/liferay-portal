@@ -82,7 +82,8 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 
 			Assert.fail();
 		}
-		catch (TemplateDuplicateTemplateKeyException tdtke) {
+		catch (TemplateDuplicateTemplateKeyException
+					templateDuplicateTemplateKeyException) {
 		}
 	}
 
@@ -100,7 +101,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 
 			Assert.fail();
 		}
-		catch (TemplateNameException tne) {
+		catch (TemplateNameException templateNameException) {
 		}
 	}
 
@@ -116,7 +117,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 
 			Assert.fail();
 		}
-		catch (TemplateScriptException tse) {
+		catch (TemplateScriptException templateScriptException) {
 		}
 	}
 

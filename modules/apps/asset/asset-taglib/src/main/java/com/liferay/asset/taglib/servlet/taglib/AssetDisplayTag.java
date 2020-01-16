@@ -48,8 +48,8 @@ public class AssetDisplayTag extends IncludeTag {
 
 			return EVAL_PAGE;
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 		finally {
 			clearDynamicAttributes();
@@ -210,8 +210,8 @@ public class AssetDisplayTag extends IncludeTag {
 				return;
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to include asset renderer template", e);
+		catch (Exception exception) {
+			_log.error("Unable to include asset renderer template", exception);
 		}
 
 		super.includePage(

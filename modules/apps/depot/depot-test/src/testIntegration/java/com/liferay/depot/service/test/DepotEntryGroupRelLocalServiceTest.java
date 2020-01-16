@@ -117,7 +117,7 @@ public class DepotEntryGroupRelLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchEntryGroupRelException nsegre) {
+		catch (NoSuchEntryGroupRelException noSuchEntryGroupRelException) {
 		}
 	}
 

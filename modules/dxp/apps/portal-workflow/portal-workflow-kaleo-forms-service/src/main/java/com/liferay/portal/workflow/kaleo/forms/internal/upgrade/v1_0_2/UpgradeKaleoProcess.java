@@ -115,11 +115,12 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		try {
 			locale = UpgradeProcessUtil.getDefaultLanguageId(companyId);
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			_log.error(
-				"Unable to get default locale for company " + companyId, sqle);
+				"Unable to get default locale for company " + companyId,
+				sqlException);
 
-			throw new RuntimeException(sqle);
+			throw new RuntimeException(sqlException);
 		}
 
 		return LocaleUtil.fromLanguageId(locale);

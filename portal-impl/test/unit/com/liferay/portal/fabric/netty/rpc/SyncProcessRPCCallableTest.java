@@ -54,8 +54,9 @@ public class SyncProcessRPCCallableTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertEquals(runtimeException, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertEquals(
+				runtimeException, executionException.getCause());
 		}
 	}
 

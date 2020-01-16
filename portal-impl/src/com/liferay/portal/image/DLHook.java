@@ -39,8 +39,8 @@ public class DLHook extends BaseHook {
 		try {
 			DLStoreUtil.deleteFile(_COMPANY_ID, _REPOSITORY_ID, fileName);
 		}
-		catch (NoSuchFileException nsfe) {
-			throw new NoSuchImageException(nsfe);
+		catch (NoSuchFileException noSuchFileException) {
+			throw new NoSuchImageException(noSuchFileException);
 		}
 	}
 
@@ -56,8 +56,8 @@ public class DLHook extends BaseHook {
 		try {
 			bytes = FileUtil.getBytes(is);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 
 		return bytes;

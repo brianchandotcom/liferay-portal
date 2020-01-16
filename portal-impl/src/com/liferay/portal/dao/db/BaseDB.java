@@ -112,9 +112,9 @@ public abstract class BaseDB implements DB {
 				try {
 					runSQL(con, sql);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(e.getMessage() + ": " + sql);
+						_log.warn(exception.getMessage() + ": " + sql);
 					}
 				}
 			}
@@ -348,8 +348,8 @@ public abstract class BaseDB implements DB {
 				try {
 					s.executeUpdate(sql);
 				}
-				catch (SQLException sqle) {
-					handleSQLException(sql, sqle);
+				catch (SQLException sqlException) {
+					handleSQLException(sql, sqlException);
 				}
 			}
 		}
@@ -436,8 +436,8 @@ public abstract class BaseDB implements DB {
 			try {
 				template = evaluateVM(template.hashCode() + "", template);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -482,8 +482,8 @@ public abstract class BaseDB implements DB {
 						try {
 							include = evaluateVM(includeFileName, include);
 						}
-						catch (Exception e) {
-							_log.error(e, e);
+						catch (Exception exception) {
+							_log.error(exception, exception);
 						}
 					}
 
@@ -511,29 +511,29 @@ public abstract class BaseDB implements DB {
 								}
 							}
 						}
-						catch (IOException ioe) {
+						catch (IOException ioException) {
 							if (failOnError) {
-								throw ioe;
+								throw ioException;
 							}
 							else if (_log.isWarnEnabled()) {
-								_log.warn(ioe.getMessage());
+								_log.warn(ioException.getMessage());
 							}
 						}
-						catch (SecurityException se) {
+						catch (SecurityException securityException) {
 							if (failOnError) {
-								throw se;
+								throw securityException;
 							}
 							else if (_log.isWarnEnabled()) {
-								_log.warn(se.getMessage());
+								_log.warn(securityException.getMessage());
 							}
 						}
-						catch (SQLException sqle) {
+						catch (SQLException sqlException) {
 							if (failOnError) {
-								throw sqle;
+								throw sqlException;
 							}
 
 							String message = GetterUtil.getString(
-								sqle.getMessage());
+								sqlException.getMessage());
 
 							if (!message.startsWith("Duplicate key name") &&
 								_log.isWarnEnabled()) {
@@ -770,8 +770,8 @@ public abstract class BaseDB implements DB {
 							try {
 								include = evaluateVM(includeFileName, include);
 							}
-							catch (Exception e) {
-								_log.error(e, e);
+							catch (Exception exception) {
+								_log.error(exception, exception);
 							}
 						}
 

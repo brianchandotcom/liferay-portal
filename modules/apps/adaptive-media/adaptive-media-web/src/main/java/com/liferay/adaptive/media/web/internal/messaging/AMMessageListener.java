@@ -77,14 +77,15 @@ public class AMMessageListener extends BaseMessageListener {
 			try {
 				amProcessorCommand.execute(amProcessor, model, modelId);
 			}
-			catch (NoSuchFileEntryException nsfee) {
+			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				if (_log.isInfoEnabled()) {
-					_log.info(nsfee, nsfee);
+					_log.info(
+						noSuchFileEntryException, noSuchFileEntryException);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}

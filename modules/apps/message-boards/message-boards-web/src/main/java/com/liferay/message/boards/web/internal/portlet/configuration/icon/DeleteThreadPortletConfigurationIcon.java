@@ -118,7 +118,7 @@ public class DeleteThreadPortletConfigurationIcon
 			deleteURL.setParameter(
 				"threadId", String.valueOf(message.getThreadId()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -149,7 +149,7 @@ public class DeleteThreadPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;
@@ -171,7 +171,7 @@ public class DeleteThreadPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

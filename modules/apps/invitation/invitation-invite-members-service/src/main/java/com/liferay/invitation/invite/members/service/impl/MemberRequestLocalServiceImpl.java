@@ -88,12 +88,12 @@ public class MemberRequestLocalServiceImpl
 
 			receiverUserId = receiverUser.getUserId();
 		}
-		catch (NoSuchUserException nsue) {
+		catch (NoSuchUserException noSuchUserException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsue, nsue);
+				_log.debug(noSuchUserException, noSuchUserException);
 			}
 		}
 
@@ -123,8 +123,8 @@ public class MemberRequestLocalServiceImpl
 		try {
 			sendEmail(receiverEmailAddress, memberRequest, serviceContext);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 
 		// Notifications

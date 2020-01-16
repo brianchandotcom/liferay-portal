@@ -450,8 +450,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		try {
 			return readLiferayDisplayXML(xml);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -677,8 +677,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		try {
 			return readLiferayDisplayXML(servletContextName, xml);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -821,8 +821,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				setSpriteImages(servletContext, portletApp, "/html/icons/");
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -866,8 +866,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				servletContextName, servletContext, xmls[2], portletsMap,
 				portletIdsByStrutsPath, _getConfiguration(portletApp));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return Collections.emptyList();
 		}
@@ -933,8 +933,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			return ListUtil.fromMapValues(portletsMap);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			// Clean up portlets added prior to error
 
@@ -1590,7 +1590,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				applicationTypes.add(
 					ApplicationType.parse(applicationTypeElement.getText()));
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unknown application type " +
@@ -2198,7 +2198,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					PortletPreferencesFactoryUtil.fromDefaultXML(
 						defaultPreferences));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Portlet with the name " + portletId +

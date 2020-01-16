@@ -41,8 +41,9 @@ public abstract class BaseFileAntivirusScanner implements AntivirusScanner {
 
 			scan(file);
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to write temporary file", ioException);
 		}
 		finally {
 			if (file != null) {

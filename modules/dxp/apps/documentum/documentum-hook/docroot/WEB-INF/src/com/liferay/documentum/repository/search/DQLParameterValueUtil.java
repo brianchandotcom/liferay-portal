@@ -72,7 +72,7 @@ public class DQLParameterValueUtil {
 
 				value = dqlSimpleDateFormat.format(date);
 			}
-			catch (ParseException pe) {
+			catch (ParseException parseException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to parse date " + value + " for field " +

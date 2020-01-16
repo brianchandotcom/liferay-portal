@@ -75,15 +75,15 @@ public class LuceneRepositorySearchQueryTermBuilder
 			try {
 				query = queryParser.parse(value);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				query = queryParser.parse(KeywordsUtil.escape(value));
 			}
 
 			translateQuery(
 				booleanQuery, searchContext, query, BooleanClause.Occur.SHOULD);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

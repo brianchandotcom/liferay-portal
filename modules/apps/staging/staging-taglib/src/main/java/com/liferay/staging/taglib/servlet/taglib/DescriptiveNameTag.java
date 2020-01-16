@@ -78,9 +78,9 @@ public class DescriptiveNameTag extends IncludeTag {
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

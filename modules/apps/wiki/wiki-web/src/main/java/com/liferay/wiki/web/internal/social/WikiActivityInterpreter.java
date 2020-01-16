@@ -85,12 +85,12 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 				fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 					fileEntryId);
 			}
-			catch (NoSuchModelException nsme) {
+			catch (NoSuchModelException noSuchModelException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsme, nsme);
+					_log.debug(noSuchModelException, noSuchModelException);
 				}
 			}
 

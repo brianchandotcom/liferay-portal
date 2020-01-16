@@ -48,8 +48,8 @@ public class ReaderInputStreamTest {
 
 			Assert.assertEquals(_TEST_STRING_ENGLISH.length() - 1, available);
 		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof IllegalArgumentException);
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof IllegalArgumentException);
 		}
 	}
 
@@ -62,8 +62,8 @@ public class ReaderInputStreamTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof IllegalArgumentException);
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof IllegalArgumentException);
 		}
 	}
 
@@ -76,8 +76,8 @@ public class ReaderInputStreamTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof IllegalArgumentException);
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof IllegalArgumentException);
 		}
 	}
 
@@ -211,8 +211,8 @@ public class ReaderInputStreamTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof NullPointerException);
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof NullPointerException);
 		}
 	}
 
@@ -227,8 +227,8 @@ public class ReaderInputStreamTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof IndexOutOfBoundsException);
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof IndexOutOfBoundsException);
 		}
 	}
 
@@ -321,8 +321,8 @@ public class ReaderInputStreamTest {
 			_EXPECTED_BYTES_FOR_ENGLISH = _TEST_STRING_ENGLISH.getBytes(
 				StringPool.UTF8);
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

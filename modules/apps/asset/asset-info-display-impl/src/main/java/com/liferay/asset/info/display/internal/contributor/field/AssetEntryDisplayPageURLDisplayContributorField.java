@@ -92,8 +92,8 @@ public class AssetEntryDisplayPageURLDisplayContributorField
 				assetEntry.getClassName(), assetEntry.getClassPK(),
 				serviceContext.getThemeDisplay());
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to get view in context URL", pe);
+		catch (PortalException portalException) {
+			_log.error("Unable to get view in context URL", portalException);
 		}
 
 		return StringPool.BLANK;

@@ -160,8 +160,8 @@ public class AxisBuild extends BaseBuild {
 		try {
 			return Dom4JUtil.format(unorderedListElement, false);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to generate html", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException("Unable to generate html", ioException);
 		}
 	}
 
@@ -183,8 +183,9 @@ public class AxisBuild extends BaseBuild {
 		try {
 			jobURL = JenkinsResultsParserUtil.decode(jobURL);
 		}
-		catch (UnsupportedEncodingException uee) {
-			throw new RuntimeException("Unable to decode " + jobURL, uee);
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new RuntimeException(
+				"Unable to decode " + jobURL, unsupportedEncodingException);
 		}
 
 		String buildURL = JenkinsResultsParserUtil.combine(
@@ -193,11 +194,13 @@ public class AxisBuild extends BaseBuild {
 		try {
 			return JenkinsResultsParserUtil.encode(buildURL);
 		}
-		catch (MalformedURLException murle) {
-			throw new RuntimeException("Could not encode " + buildURL, murle);
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(
+				"Could not encode " + buildURL, malformedURLException);
 		}
-		catch (URISyntaxException urise) {
-			throw new RuntimeException("Could not encode " + buildURL, urise);
+		catch (URISyntaxException uriSyntaxException) {
+			throw new RuntimeException(
+				"Could not encode " + buildURL, uriSyntaxException);
 		}
 	}
 
@@ -361,7 +364,7 @@ public class AxisBuild extends BaseBuild {
 			try {
 				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new RuntimeException("Unable to get build properties");
 			}
 
@@ -373,8 +376,9 @@ public class AxisBuild extends BaseBuild {
 			try {
 				date = sdf.parse(matcher.group("startTime"));
 			}
-			catch (ParseException pe) {
-				throw new RuntimeException("Unable to get start time", pe);
+			catch (ParseException parseException) {
+				throw new RuntimeException(
+					"Unable to get start time", parseException);
 			}
 
 			startTime = date.getTime();

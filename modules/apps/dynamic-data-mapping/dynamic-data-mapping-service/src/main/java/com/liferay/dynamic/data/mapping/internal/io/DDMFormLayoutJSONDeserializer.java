@@ -70,9 +70,9 @@ public class DDMFormLayoutJSONDeserializer
 			setDDMFormLayoutPaginationMode(
 				jsonObject.getString("paginationMode"), ddmFormLayout);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(jsone, jsone);
+				_log.warn(jsonException, jsonException);
 			}
 		}
 

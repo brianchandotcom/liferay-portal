@@ -107,14 +107,14 @@ public class SectionPortlet extends BaseKBPortlet {
 				KBWebKeys.KNOWLEDGE_BASE_STATUS,
 				WorkflowConstants.STATUS_APPROVED);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchArticleException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchArticleException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 			}
 			else {
-				throw new PortletException(e);
+				throw new PortletException(exception);
 			}
 		}
 	}

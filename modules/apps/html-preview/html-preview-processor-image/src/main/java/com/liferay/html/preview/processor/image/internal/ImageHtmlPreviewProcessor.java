@@ -61,9 +61,9 @@ public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 
 			return _getFile(new Java2DRenderer(tempFile, width));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to generate HTML preview", e);
+				_log.debug("Unable to generate HTML preview", exception);
 			}
 		}
 
@@ -80,9 +80,9 @@ public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 		try {
 			return _getFile(new Java2DRenderer(url, width));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.error("Unable to generate HTML preview", e);
+				_log.error("Unable to generate HTML preview", exception);
 			}
 		}
 

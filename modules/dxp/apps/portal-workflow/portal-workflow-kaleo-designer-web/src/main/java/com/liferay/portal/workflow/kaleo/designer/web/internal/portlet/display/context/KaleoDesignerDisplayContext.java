@@ -235,9 +235,9 @@ public class KaleoDesignerDisplayContext {
 				return kaleoDefinitionVersion.getKaleoDefinition();
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -414,9 +414,9 @@ public class KaleoDesignerDisplayContext {
 
 			return kaleoDefinition.getModifiedDate();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -582,9 +582,9 @@ public class KaleoDesignerDisplayContext {
 				return false;
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -617,9 +617,9 @@ public class KaleoDesignerDisplayContext {
 					permissionChecker, kaleoDefinitionVersion,
 					ActionKeys.UPDATE);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}
@@ -645,9 +645,9 @@ public class KaleoDesignerDisplayContext {
 						permissionChecker, kaleoDefinitionVersion,
 						ActionKeys.UPDATE);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(pe, pe);
+						_log.debug(portalException, portalException);
 					}
 				}
 			}

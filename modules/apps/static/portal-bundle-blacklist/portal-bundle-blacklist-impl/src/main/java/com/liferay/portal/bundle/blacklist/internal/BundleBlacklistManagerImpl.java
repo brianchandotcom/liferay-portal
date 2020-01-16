@@ -131,7 +131,7 @@ public class BundleBlacklistManagerImpl implements BundleBlacklistManager {
 
 			countDownLatch.await();
 		}
-		catch (InterruptedException ie) {
+		catch (InterruptedException interruptedException) {
 		}
 		finally {
 			bundleContext.removeServiceListener(serviceListener);

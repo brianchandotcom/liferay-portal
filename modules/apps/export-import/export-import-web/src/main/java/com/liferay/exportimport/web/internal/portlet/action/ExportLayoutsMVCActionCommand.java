@@ -93,11 +93,11 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
 
-			if (!(e instanceof LARFileNameException)) {
-				_log.error(e, e);
+			if (!(exception instanceof LARFileNameException)) {
+				_log.error(exception, exception);
 			}
 		}
 	}

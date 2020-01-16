@@ -66,8 +66,8 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			try {
 				command = ServletUtil.readRequestBody(httpServletRequest);
 			}
-			catch (IOException ioe) {
-				throw new IllegalArgumentException(ioe);
+			catch (IOException ioException) {
+				throw new IllegalArgumentException(ioException);
 			}
 		}
 

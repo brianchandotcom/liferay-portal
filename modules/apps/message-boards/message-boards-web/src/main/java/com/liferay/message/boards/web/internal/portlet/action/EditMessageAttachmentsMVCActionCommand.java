@@ -103,7 +103,7 @@ public class EditMessageAttachmentsMVCActionCommand
 
 			jsonObject.put("deleted", Boolean.TRUE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			jsonObject.put("deleted", Boolean.FALSE);
 
 			String errorMessage = themeDisplay.translate(
@@ -150,8 +150,8 @@ public class EditMessageAttachmentsMVCActionCommand
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
-		catch (PrincipalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass());
+		catch (PrincipalException principalException) {
+			SessionErrors.add(actionRequest, principalException.getClass());
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/message_boards/error.jsp");

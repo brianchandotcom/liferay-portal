@@ -99,7 +99,7 @@ public class SessionParameters {
 				session.setAttribute(KEY, parameters);
 			}
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			parameters = new HashMap<>();
 		}
 
@@ -120,7 +120,7 @@ public class SessionParameters {
 				portletSession.setAttribute(KEY, parameters);
 			}
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			parameters = new LinkedHashMap<>();
 		}
 

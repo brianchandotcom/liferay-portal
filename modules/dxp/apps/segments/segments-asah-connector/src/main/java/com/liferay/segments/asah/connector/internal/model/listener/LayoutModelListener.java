@@ -67,9 +67,11 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 						segmentsExperiment, layout);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to update layout " + layout.getLayoutId(), e);
+				_log.warn(
+					"Unable to update layout " + layout.getLayoutId(),
+					exception);
 			}
 		}
 	}

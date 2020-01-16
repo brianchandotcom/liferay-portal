@@ -88,8 +88,9 @@ public class InitBundleMojo extends AbstractLiferayMojo {
 
 			initBundleCommand.execute();
 		}
-		catch (Exception e) {
-			throw new MojoExecutionException("Unable to initialize bundle", e);
+		catch (Exception exception) {
+			throw new MojoExecutionException(
+				"Unable to initialize bundle", exception);
 		}
 		finally {
 			if (proxy != null) {

@@ -192,10 +192,10 @@ public class Test {
 
 			testSamples.put(sampleKey, testSample);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			deleteFile(sampleDir);
 
-			throw ioe;
+			throw ioException;
 		}
 	}
 

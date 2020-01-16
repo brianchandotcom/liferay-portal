@@ -47,8 +47,8 @@ public class ServiceTrackerFactory {
 			return new ServiceTracker<>(
 				bundleContext, bundleContext.createFilter(filterString), null);
 		}
-		catch (InvalidSyntaxException ise) {
-			throwException(ise);
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			throwException(invalidSyntaxException);
 
 			return null;
 		}
@@ -63,8 +63,8 @@ public class ServiceTrackerFactory {
 				bundleContext, bundleContext.createFilter(filterString),
 				serviceTrackerCustomizer);
 		}
-		catch (InvalidSyntaxException ise) {
-			throwException(ise);
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			throwException(invalidSyntaxException);
 
 			return null;
 		}

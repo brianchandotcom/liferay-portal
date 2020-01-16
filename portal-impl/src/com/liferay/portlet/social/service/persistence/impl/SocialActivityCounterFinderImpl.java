@@ -101,8 +101,8 @@ public class SocialActivityCounterFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -176,8 +176,8 @@ public class SocialActivityCounterFinderImpl
 				activityCounters.add(activityCounter);
 			}
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			if (activityCounters == null) {
@@ -238,8 +238,8 @@ public class SocialActivityCounterFinderImpl
 
 			return activityCounters;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -280,8 +280,8 @@ public class SocialActivityCounterFinderImpl
 			return (List<SocialActivityCounter>)QueryUtil.list(
 				q, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -320,8 +320,8 @@ public class SocialActivityCounterFinderImpl
 
 			return (List<Long>)QueryUtil.list(q, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

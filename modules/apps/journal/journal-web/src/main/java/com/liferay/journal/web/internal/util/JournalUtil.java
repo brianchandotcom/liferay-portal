@@ -249,10 +249,11 @@ public class JournalUtil {
 			return journalServiceConfiguration.
 				singleAssetPublishIncludeVersionHistory();
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to retrieve journal service configuration", ce);
+					"Unable to retrieve journal service configuration",
+					configurationException);
 			}
 
 			return false;

@@ -58,8 +58,8 @@ public final class AllowedIPAddressesValidatorFactory {
 				return _ALLOWED_IP_ADDRESSES_VALIDATOR;
 			}
 		}
-		catch (Exception e) {
-			_log.error("Invalid configured address: ", e);
+		catch (Exception exception) {
+			_log.error("Invalid configured address: ", exception);
 
 			return _ALLOWED_IP_ADDRESSES_VALIDATOR;
 		}
@@ -86,7 +86,7 @@ public final class AllowedIPAddressesValidatorFactory {
 			try {
 				inetAddress = InetAddressUtil.getInetAddressByName(ipAddress);
 			}
-			catch (UnknownHostException uhe) {
+			catch (UnknownHostException unknownHostException) {
 				return false;
 			}
 

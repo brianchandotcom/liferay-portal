@@ -127,15 +127,15 @@ public class UpgradeClient {
 
 			upgradeClient.upgrade();
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			System.err.println("Unable to parse command line properties");
 
-			pe.printStackTrace();
+			parseException.printStackTrace();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			System.err.println("Error running upgrade");
 
-			e.printStackTrace();
+			exception.printStackTrace();
 		}
 	}
 
@@ -228,8 +228,8 @@ public class UpgradeClient {
 
 			System.out.flush();
 		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		catch (IOException ioException) {
+			ioException.printStackTrace();
 		}
 
 		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
@@ -257,7 +257,7 @@ public class UpgradeClient {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		_close(process.getErrorStream());
@@ -275,8 +275,8 @@ public class UpgradeClient {
 
 			_saveProperties();
 		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		catch (IOException ioException) {
+			ioException.printStackTrace();
 		}
 	}
 
@@ -435,7 +435,7 @@ public class UpgradeClient {
 			try {
 				properties.load(file);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				System.err.println("Unable to load " + file);
 			}
 		}
@@ -750,8 +750,8 @@ public class UpgradeClient {
 
 			_jarDir = jarFile.getParentFile();
 		}
-		catch (URISyntaxException urise) {
-			throw new ExceptionInInitializerError(urise);
+		catch (URISyntaxException uriSyntaxException) {
+			throw new ExceptionInInitializerError(uriSyntaxException);
 		}
 	}
 

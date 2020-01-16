@@ -63,9 +63,9 @@ public class StrutsUtil {
 				requestDispatcher.forward(
 					httpServletRequest, httpServletResponse);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(ioe, ioe);
+					_log.warn(ioException, ioException);
 				}
 			}
 			catch (ServletException se1) {
@@ -82,9 +82,9 @@ public class StrutsUtil {
 					requestDispatcher.forward(
 						httpServletRequest, httpServletResponse);
 				}
-				catch (IOException ioe2) {
+				catch (IOException ioException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(ioe2, ioe2);
+						_log.warn(ioException, ioException);
 					}
 				}
 				catch (ServletException se2) {

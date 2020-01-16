@@ -82,12 +82,12 @@ public class SoyTemplateResourceBundleTrackerCustomizer
 
 			_soyProviderCapabilityBundleRegister.register(bundle);
 		}
-		catch (TemplateException te) {
+		catch (TemplateException templateException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to add template resources for bundle " +
 						bundle.getBundleId(),
-					te);
+					templateException);
 			}
 		}
 
@@ -104,12 +104,12 @@ public class SoyTemplateResourceBundleTrackerCustomizer
 
 				_soyProviderCapabilityBundleRegister.register(providerBundle);
 			}
-			catch (TemplateException te) {
+			catch (TemplateException templateException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to add template resources for bundle " +
 							bundle.getBundleId(),
-						te);
+						templateException);
 				}
 			}
 		}

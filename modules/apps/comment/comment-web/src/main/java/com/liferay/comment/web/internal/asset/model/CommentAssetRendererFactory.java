@@ -102,7 +102,7 @@ public class CommentAssetRendererFactory
 		try {
 			liferayPortletURL.setWindowState(windowState);
 		}
-		catch (WindowStateException wse) {
+		catch (WindowStateException windowStateException) {
 		}
 
 		return liferayPortletURL;

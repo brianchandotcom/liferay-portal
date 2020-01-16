@@ -215,8 +215,8 @@ public class GZipResponse extends HttpServletResponseWrapper {
 
 			_EMPTY_GZIP_OUTPUT_SIZE = ubaos.size();
 		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
+		catch (IOException ioException) {
+			throw new ExceptionInInitializerError(ioException);
 		}
 	}
 

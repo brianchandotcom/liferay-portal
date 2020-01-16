@@ -145,11 +145,11 @@ public class PortletFilterFactory {
 
 			portletFilter.init(filterConfig);
 		}
-		catch (PortletException pe) {
-			throw pe;
+		catch (PortletException portletException) {
+			throw portletException;
 		}
-		catch (Exception e) {
-			throw new UnavailableException(e.getMessage());
+		catch (Exception exception) {
+			throw new UnavailableException(exception.getMessage());
 		}
 
 		return portletFilter;

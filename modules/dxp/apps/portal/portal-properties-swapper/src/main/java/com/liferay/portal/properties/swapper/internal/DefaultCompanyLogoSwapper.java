@@ -59,9 +59,11 @@ public class DefaultCompanyLogoSwapper {
 
 			method.invoke(imageTool);
 		}
-		catch (ReflectiveOperationException roe) {
+		catch (ReflectiveOperationException reflectiveOperationException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to swap default company logo", roe);
+				_log.warn(
+					"Unable to swap default company logo",
+					reflectiveOperationException);
 			}
 		}
 	}

@@ -51,13 +51,13 @@ public class CTServiceRegistry {
 				ctEventListener.onAfterCopy(
 					sourceCTCollection, targetCTCollection);
 			}
-			catch (CTEventException ctee) {
+			catch (CTEventException ctEventException) {
 				_log.error(
 					StringBundler.concat(
 						"On after copy callback failure for change tracking ",
 						"collection ", sourceCTCollection, " by ",
 						ctEventListener),
-					ctee);
+					ctEventException);
 			}
 		}
 	}
@@ -67,13 +67,13 @@ public class CTServiceRegistry {
 			try {
 				ctEventListener.onAfterPublish(ctCollectionId);
 			}
-			catch (CTEventException ctee) {
+			catch (CTEventException ctEventException) {
 				_log.error(
 					StringBundler.concat(
 						"On after publish callback failure for change ",
 						"tracking collection ", ctCollectionId, " by ",
 						ctEventListener),
-					ctee);
+					ctEventException);
 			}
 		}
 	}
@@ -83,13 +83,13 @@ public class CTServiceRegistry {
 			try {
 				ctEventListener.onBeforeRemove(ctCollectionId);
 			}
-			catch (CTEventException ctee) {
+			catch (CTEventException ctEventException) {
 				_log.error(
 					StringBundler.concat(
 						"On before remove callback failure for change ",
 						"tracking collection ", ctCollectionId, " by ",
 						ctEventListener),
-					ctee);
+					ctEventException);
 			}
 		}
 	}

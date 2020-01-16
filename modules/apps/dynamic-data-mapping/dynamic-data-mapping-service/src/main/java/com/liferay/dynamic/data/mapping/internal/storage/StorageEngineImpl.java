@@ -99,14 +99,14 @@ public class StorageEngineImpl implements StorageEngine {
 
 			return getStorageAdapter(ddmStorageLink.getStorageType());
 		}
-		catch (NoSuchStructureException nsse) {
+		catch (NoSuchStructureException noSuchStructureException) {
 			return _storageAdapterRegistry.getDefaultStorageAdapter();
 		}
-		catch (StorageException se) {
-			throw se;
+		catch (StorageException storageException) {
+			throw storageException;
 		}
-		catch (Exception e) {
-			throw new StorageException(e);
+		catch (Exception exception) {
+			throw new StorageException(exception);
 		}
 	}
 
@@ -130,14 +130,14 @@ public class StorageEngineImpl implements StorageEngine {
 
 			return getStorageAdapter(ddmStructure.getStorageType());
 		}
-		catch (NoSuchStructureException nsse) {
+		catch (NoSuchStructureException noSuchStructureException) {
 			return _storageAdapterRegistry.getDefaultStorageAdapter();
 		}
-		catch (StorageException se) {
-			throw se;
+		catch (StorageException storageException) {
+			throw storageException;
 		}
-		catch (Exception e) {
-			throw new StorageException(e);
+		catch (Exception exception) {
+			throw new StorageException(exception);
 		}
 	}
 

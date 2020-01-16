@@ -125,11 +125,11 @@ public class DDMValueUtil {
 						journalArticle = journalArticleService.getLatestArticle(
 							structuredContentLink.getId());
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						throw new BadRequestException(
 							"No structured content exists with ID " +
 								structuredContentLink.getId(),
-							e);
+							exception);
 					}
 
 					valueString = JSONUtil.put(
@@ -217,9 +217,9 @@ public class DDMValueUtil {
 				PermissionThreadLocal.getPermissionChecker(), layout,
 				ActionKeys.VIEW);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new BadRequestException(
-				"No page found with friendly URL " + link, pe);
+				"No page found with friendly URL " + link, portalException);
 		}
 
 		return layout;
@@ -236,9 +236,10 @@ public class DDMValueUtil {
 					"yyyy-MM-dd'T'HH:mm:ss'Z'", valueString, locale),
 				"yyyy-MM-dd", locale);
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			throw new BadRequestException(
-				"Unable to parse date that does not conform to ISO-8601", pe);
+				"Unable to parse date that does not conform to ISO-8601",
+				parseException);
 		}
 	}
 
@@ -250,9 +251,9 @@ public class DDMValueUtil {
 		try {
 			fileEntry = dlAppService.getFileEntry(fileEntryId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new BadRequestException(
-				"No document exists with ID " + fileEntryId, e);
+				"No document exists with ID " + fileEntryId, exception);
 		}
 
 		return JSONUtil.put(

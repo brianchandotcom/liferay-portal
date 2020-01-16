@@ -50,8 +50,9 @@ public class CentralGitSubrepository {
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build properties", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
 		}
 
 		sb.append(buildProperties.getProperty("base.repository.dir"));
@@ -115,7 +116,7 @@ public class CentralGitSubrepository {
 
 			_ciProperties.load(new FileInputStream(ciPropertiesFile));
 		}
-		catch (FileNotFoundException fnfe) {
+		catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(
 				"Unable to find ci.properties in " +
 					_gitSubrepositoryDirectory);

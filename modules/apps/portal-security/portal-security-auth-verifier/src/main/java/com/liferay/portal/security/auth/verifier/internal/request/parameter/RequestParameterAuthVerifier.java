@@ -60,8 +60,8 @@ public class RequestParameterAuthVerifier implements AuthVerifier {
 
 			return authVerifierResult;
 		}
-		catch (AutoLoginException ale) {
-			throw new AuthException(ale);
+		catch (AutoLoginException autoLoginException) {
+			throw new AuthException(autoLoginException);
 		}
 	}
 

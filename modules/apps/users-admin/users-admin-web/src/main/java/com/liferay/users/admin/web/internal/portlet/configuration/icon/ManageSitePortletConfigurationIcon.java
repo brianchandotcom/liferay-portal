@@ -84,7 +84,7 @@ public class ManageSitePortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -119,7 +119,7 @@ public class ManageSitePortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

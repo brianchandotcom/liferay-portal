@@ -62,8 +62,8 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
 		}
-		catch (Exception e) {
-			_log.error("Unable to get preview entry image URL", e);
+		catch (Exception exception) {
+			_log.error("Unable to get preview entry image URL", exception);
 		}
 
 		return StringPool.BLANK;
@@ -143,9 +143,10 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 			return PortletFileRepositoryUtil.getPortletFileEntry(
 				getPreviewFileEntryId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get file entry preview ", pe);
+				_log.debug(
+					"Unable to get file entry preview ", portalException);
 			}
 		}
 

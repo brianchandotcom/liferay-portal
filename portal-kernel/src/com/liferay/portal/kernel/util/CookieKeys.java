@@ -181,9 +181,9 @@ public class CookieKeys {
 
 			return originalValue;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 
 			return value;

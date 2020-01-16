@@ -421,8 +421,8 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 
 			return hits.toList();
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 

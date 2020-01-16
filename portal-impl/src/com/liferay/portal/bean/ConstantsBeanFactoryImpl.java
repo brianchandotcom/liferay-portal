@@ -63,7 +63,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 				constantsBeanClass = classLoader.loadClass(
 					constantsBeanClassName);
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 			}
 
 			try {

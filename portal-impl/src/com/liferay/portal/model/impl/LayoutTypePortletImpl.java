@@ -826,8 +826,8 @@ public class LayoutTypePortletImpl
 
 			return propertiesModifiedDate.after(preferencesModifiedDate);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -879,8 +879,9 @@ public class LayoutTypePortletImpl
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to fire portlet layout listener event", e);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to fire portlet layout listener event", exception);
 		}
 	}
 
@@ -1016,8 +1017,8 @@ public class LayoutTypePortletImpl
 				return;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return;
 		}
@@ -1064,8 +1065,8 @@ public class LayoutTypePortletImpl
 					portletPreferences.setValue(columnId, columnValue);
 					portletPreferences.store();
 				}
-				catch (Exception e) {
-					_log.error("Unable to save portlet preferences", e);
+				catch (Exception exception) {
+					_log.error("Unable to save portlet preferences", exception);
 				}
 			}
 			else if (hasUserPreferences()) {
@@ -1080,8 +1081,8 @@ public class LayoutTypePortletImpl
 			try {
 				onRemoveFromLayout(new String[] {portletId});
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 	}
@@ -1167,8 +1168,8 @@ public class LayoutTypePortletImpl
 		try {
 			onRemoveFromLayout(customPortletIds.toArray(new String[0]));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		_portalPreferences.resetValues(CustomizedPages.namespacePlid(plid));
@@ -1339,8 +1340,8 @@ public class LayoutTypePortletImpl
 				return null;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		if (portlet.isSystem()) {
@@ -1438,8 +1439,8 @@ public class LayoutTypePortletImpl
 				portletPreferences.setValue(columnId, columnValue);
 				portletPreferences.store();
 			}
-			catch (Exception e) {
-				_log.error("Unable to save portlet preferences", e);
+			catch (Exception exception) {
+				_log.error("Unable to save portlet preferences", exception);
 			}
 		}
 		else if (hasUserPreferences()) {
@@ -1462,8 +1463,9 @@ public class LayoutTypePortletImpl
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to fire portlet layout listener event", e);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to fire portlet layout listener event", exception);
 		}
 
 		return portletId;
@@ -1515,7 +1517,7 @@ public class LayoutTypePortletImpl
 				portletPreferencesIds.getPlid(),
 				portletPreferencesIds.getPortletId(), sourcePortletPreferences);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 	}
 
@@ -1809,8 +1811,8 @@ public class LayoutTypePortletImpl
 
 			return layoutSet.getThemeId();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return null;
@@ -1862,8 +1864,8 @@ public class LayoutTypePortletImpl
 					continue;
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 
 			String newPortletId = null;
@@ -1877,8 +1879,8 @@ public class LayoutTypePortletImpl
 				preferencesUniquePerLayout =
 					portlet.isPreferencesUniquePerLayout();
 			}
-			catch (SystemException se) {
-				_log.error(se, se);
+			catch (SystemException systemException) {
+				_log.error(systemException, systemException);
 			}
 
 			if (PortletIdCodec.hasInstanceId(portletId) ||
@@ -1975,8 +1977,8 @@ public class LayoutTypePortletImpl
 
 			return group.isLayoutSetPrototype();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -2020,8 +2022,8 @@ public class LayoutTypePortletImpl
 				getCompanyId(), portletIdList.toArray(new String[0]),
 				getPlid());
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 

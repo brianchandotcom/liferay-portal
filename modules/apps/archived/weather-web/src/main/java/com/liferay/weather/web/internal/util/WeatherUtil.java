@@ -32,7 +32,7 @@ public class WeatherUtil {
 		try {
 			return (Weather)WebCachePoolUtil.get(key, wci);
 		}
-		catch (ClassCastException cce) {
+		catch (ClassCastException classCastException) {
 			WebCachePoolUtil.remove(key);
 
 			return (Weather)WebCachePoolUtil.get(key, wci);

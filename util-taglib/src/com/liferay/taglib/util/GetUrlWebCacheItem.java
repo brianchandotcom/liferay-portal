@@ -37,8 +37,8 @@ public class GetUrlWebCacheItem implements WebCacheItem {
 		try {
 			content = HttpUtil.URLtoString(_url);
 		}
-		catch (Exception e) {
-			throw new WebCacheException(url + " " + e.toString());
+		catch (Exception exception) {
+			throw new WebCacheException(url + " " + exception.toString());
 		}
 
 		return content;

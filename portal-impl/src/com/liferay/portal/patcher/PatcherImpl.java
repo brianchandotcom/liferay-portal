@@ -77,7 +77,7 @@ public class PatcherImpl implements Patcher {
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
 					"Unable to copy ", patchFile.getAbsolutePath(), " to ",
@@ -267,9 +267,9 @@ public class PatcherImpl implements Patcher {
 				properties.load(inputStream);
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 		}
 

@@ -65,7 +65,7 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 					return enumeration;
 				}
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 			}
 		}
 
@@ -88,7 +88,7 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 			try {
 				return bundle.loadClass(name);
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 			}
 		}
 

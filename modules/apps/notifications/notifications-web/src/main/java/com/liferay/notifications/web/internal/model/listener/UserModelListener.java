@@ -47,11 +47,11 @@ public class UserModelListener extends BaseModelListener<User> {
 			_userNotificationEventLocalService.deleteUserNotificationEvents(
 				user.getUserId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to remove chat entries and status for user " +
 					user.getUserId(),
-				e);
+				exception);
 		}
 	}
 

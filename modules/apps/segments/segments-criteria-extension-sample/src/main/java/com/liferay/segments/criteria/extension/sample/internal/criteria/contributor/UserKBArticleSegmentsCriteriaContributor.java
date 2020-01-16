@@ -88,12 +88,12 @@ public class UserKBArticleSegmentsCriteriaContributor
 
 			newFilterString = sb.toString();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				com.liferay.petra.string.StringBundler.concat(
 					"Unable to evaluate criteria ", criteria, " with filter ",
 					filterString, " and conjunction ", conjunction.getValue()),
-				pe);
+				portalException);
 		}
 
 		if (Validator.isNull(newFilterString)) {

@@ -83,8 +83,8 @@ public class TxtReportFormatExporter extends BaseReportFormatExporter {
 
 			jrExporter.exportReport();
 		}
-		catch (Exception e) {
-			throw new ReportExportException(e);
+		catch (Exception exception) {
+			throw new ReportExportException(exception);
 		}
 	}
 

@@ -59,16 +59,16 @@ public class DeleteBackgroundTaskMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			deleteBackgroundTask(actionRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchBackgroundTaskException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchBackgroundTaskException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

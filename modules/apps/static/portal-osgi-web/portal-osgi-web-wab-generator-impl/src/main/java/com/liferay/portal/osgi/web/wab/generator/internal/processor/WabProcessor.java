@@ -125,8 +125,8 @@ public class WabProcessor {
 				outputFile = transformToOSGiBundle(jar);
 			}
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 
 		if (PropsValues.MODULE_FRAMEWORK_WEB_GENERATOR_GENERATED_WABS_STORE) {
@@ -200,8 +200,8 @@ public class WabProcessor {
 				try (Jar jar = new Jar(file)) {
 					jar.expand(deployDir);
 				}
-				catch (Exception e) {
-					ReflectionUtil.throwException(e);
+				catch (Exception exception) {
+					ReflectionUtil.throwException(exception);
 				}
 			}
 		}
@@ -251,8 +251,8 @@ public class WabProcessor {
 
 			autoDeployListener.deploy(autoDeploymentContext);
 		}
-		catch (AutoDeployException ade) {
-			throw new RuntimeException(ade);
+		catch (AutoDeployException autoDeployException) {
+			throw new RuntimeException(autoDeployException);
 		}
 		finally {
 			DependencyManagementThreadLocal.setEnabled(enabled);
@@ -265,8 +265,8 @@ public class WabProcessor {
 		try {
 			FileUtil.write(file, document.formattedString("  "));
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 
@@ -283,8 +283,8 @@ public class WabProcessor {
 					deployableAutoDeployListeners.add(autoDeployListener);
 				}
 			}
-			catch (AutoDeployException ade) {
-				throw new RuntimeException(ade);
+			catch (AutoDeployException autoDeployException) {
+				throw new RuntimeException(autoDeployException);
 			}
 		}
 
@@ -326,7 +326,7 @@ public class WabProcessor {
 		try {
 			return PropertiesUtil.load(FileUtil.read(file));
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return new Properties();
 		}
 	}
@@ -856,7 +856,7 @@ public class WabProcessor {
 				processClass(analyzer, value);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 
 			// Ignore this case
 
@@ -948,8 +948,8 @@ public class WabProcessor {
 			_importPackageParameters.add(
 				"com.liferay.portal.osgi.web.wab.generator", _optionalAttrs);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -1126,7 +1126,7 @@ public class WabProcessor {
 
 			return UnsecureSAXReaderUtil.read(content);
 		}
-		catch (Exception de) {
+		catch (Exception exception) {
 			return SAXReaderUtil.createDocument();
 		}
 	}
@@ -1213,8 +1213,9 @@ public class WabProcessor {
 
 			return outputFile;
 		}
-		catch (Exception e) {
-			throw new IOException("Unable to calculate the manifest", e);
+		catch (Exception exception) {
+			throw new IOException(
+				"Unable to calculate the manifest", exception);
 		}
 		finally {
 			analyzer.close();
@@ -1248,8 +1249,8 @@ public class WabProcessor {
 		try (Jar jar = new Jar(pluginDir)) {
 			jar.write(new File(dir, sb.toString()));
 		}
-		catch (Exception e) {
-			_log.error("Unable to write JAR file for " + pluginDir, e);
+		catch (Exception exception) {
+			_log.error("Unable to write JAR file for " + pluginDir, exception);
 		}
 	}
 

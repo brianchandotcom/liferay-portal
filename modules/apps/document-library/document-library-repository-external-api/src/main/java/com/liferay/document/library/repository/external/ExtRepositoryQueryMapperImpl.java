@@ -58,12 +58,12 @@ public class ExtRepositoryQueryMapperImpl implements ExtRepositoryQueryMapper {
 
 				return searchSimpleDateFormat.parse(fieldValue);
 			}
-			catch (ParseException pe) {
+			catch (ParseException parseException) {
 				throw new SearchException(
 					StringBundler.concat(
 						"Unable to parse date ", fieldValue, " for field ",
 						fieldName),
-					pe);
+					parseException);
 			}
 		}
 		else {
@@ -89,13 +89,15 @@ public class ExtRepositoryQueryMapperImpl implements ExtRepositoryQueryMapper {
 				return _extRepositoryAdapter.getExtRepositoryObjectKey(
 					folderId);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				throw new SearchException(
-					"Unable to get folder folder " + fieldValue, pe);
+					"Unable to get folder folder " + fieldValue,
+					portalException);
 			}
-			catch (SystemException se) {
+			catch (SystemException systemException) {
 				throw new SearchException(
-					"Unable to get folder folder " + fieldValue, se);
+					"Unable to get folder folder " + fieldValue,
+					systemException);
 			}
 		}
 		else if (fieldName.equals(Field.USER_ID)) {
@@ -106,9 +108,9 @@ public class ExtRepositoryQueryMapperImpl implements ExtRepositoryQueryMapper {
 
 				return user.getScreenName();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				throw new SearchException(
-					"Unable to get user user " + fieldValue, e);
+					"Unable to get user user " + fieldValue, exception);
 			}
 		}
 		else {

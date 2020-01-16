@@ -87,9 +87,9 @@ public class SiteVerticalCard implements VerticalCard {
 			childSites = GroupServiceUtil.getGroups(
 				_group.getCompanyId(), _group.getGroupId(), true);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			childSites = Collections.emptyList();
@@ -105,9 +105,9 @@ public class SiteVerticalCard implements VerticalCard {
 			return HtmlUtil.escape(
 				_group.getDescriptiveName(_themeDisplay.getLocale()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 

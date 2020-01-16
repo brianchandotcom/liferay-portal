@@ -65,8 +65,8 @@ public class ClassLoaderBeanHandler implements InvocationHandler {
 
 			return method.invoke(_bean, arguments);
 		}
-		catch (InvocationTargetException ite) {
-			throw ite.getTargetException();
+		catch (InvocationTargetException invocationTargetException) {
+			throw invocationTargetException.getTargetException();
 		}
 		finally {
 			if ((_classLoader != null) &&

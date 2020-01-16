@@ -82,7 +82,7 @@ public class SetupWizardUtil {
 
 			return defaultUser.getTimeZoneId();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return PropsValues.COMPANY_DEFAULT_TIME_ZONE;
 		}
 	}
@@ -470,8 +470,8 @@ public class SetupWizardUtil {
 				return true;
 			}
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 		}
 
 		return false;

@@ -91,8 +91,9 @@ public class SSOImpl implements SSO {
 				new CompanyServiceSettingsLocator(
 					companyId, CASConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to get CAS configuration", ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(
+				"Unable to get CAS configuration", configurationException);
 		}
 
 		return null;

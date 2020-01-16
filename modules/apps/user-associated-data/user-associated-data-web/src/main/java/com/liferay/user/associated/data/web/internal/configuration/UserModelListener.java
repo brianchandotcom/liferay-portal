@@ -40,8 +40,8 @@ public class UserModelListener extends BaseModelListener<User> {
 			_deleteAnonymousUserConfiguration(
 				user.getCompanyId(), user.getUserId());
 		}
-		catch (InvalidSyntaxException | IOException e) {
-			throw new ModelListenerException(e);
+		catch (InvalidSyntaxException | IOException exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

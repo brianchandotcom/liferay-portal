@@ -44,8 +44,8 @@ public class BundleJavaFileObject extends BaseJavaFileObject {
 		try {
 			return _url.toURI();
 		}
-		catch (URISyntaxException urise) {
-			return ReflectionUtil.throwException(urise);
+		catch (URISyntaxException uriSyntaxException) {
+			return ReflectionUtil.throwException(uriSyntaxException);
 		}
 	}
 

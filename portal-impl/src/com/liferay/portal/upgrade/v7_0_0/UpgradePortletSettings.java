@@ -68,12 +68,12 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to add portlet preferences " +
 						portletPreferencesRow.getPortletPreferencesId(),
-					sqle);
+					sqlException);
 			}
 		}
 	}

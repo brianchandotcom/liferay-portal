@@ -75,12 +75,12 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 					return new ResultImpl(themeDisplay.getPlid(), portletId);
 				}
 			}
-			catch (NoSuchLayoutException nsle) {
+			catch (NoSuchLayoutException noSuchLayoutException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsle, nsle);
+					_log.debug(noSuchLayoutException, noSuchLayoutException);
 				}
 			}
 		}

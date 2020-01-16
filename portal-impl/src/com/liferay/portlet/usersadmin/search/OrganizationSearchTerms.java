@@ -70,9 +70,9 @@ public class OrganizationSearchTerms extends OrganizationDisplayTerms {
 
 				countryName = StringUtil.quote(countryName, StringPool.QUOTE);
 			}
-			catch (NoSuchCountryException nsce) {
+			catch (NoSuchCountryException noSuchCountryException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsce.getMessage());
+					_log.warn(noSuchCountryException.getMessage());
 				}
 			}
 		}
@@ -99,9 +99,9 @@ public class OrganizationSearchTerms extends OrganizationDisplayTerms {
 
 				regionName = StringUtil.quote(regionName, StringPool.QUOTE);
 			}
-			catch (NoSuchRegionException nsre) {
+			catch (NoSuchRegionException noSuchRegionException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsre.getMessage());
+					_log.warn(noSuchRegionException.getMessage());
 				}
 			}
 		}

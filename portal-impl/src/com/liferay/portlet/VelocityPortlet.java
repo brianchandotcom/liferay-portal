@@ -62,8 +62,8 @@ public class VelocityPortlet extends GenericPortlet {
 		try {
 			mergeTemplate(_editTemplateId, renderRequest, renderResponse);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -75,8 +75,8 @@ public class VelocityPortlet extends GenericPortlet {
 		try {
 			mergeTemplate(_helpTemplateId, renderRequest, renderResponse);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -88,8 +88,8 @@ public class VelocityPortlet extends GenericPortlet {
 		try {
 			mergeTemplate(_viewTemplateId, renderRequest, renderResponse);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -121,8 +121,8 @@ public class VelocityPortlet extends GenericPortlet {
 		try {
 			mergeTemplate(_actionTemplateId, actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -141,8 +141,8 @@ public class VelocityPortlet extends GenericPortlet {
 			mergeTemplate(
 				_resourceTemplateId, resourceRequest, resourceResponse);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

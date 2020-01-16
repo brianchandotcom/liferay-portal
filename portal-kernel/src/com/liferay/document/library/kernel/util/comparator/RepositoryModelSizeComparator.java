@@ -138,7 +138,7 @@ public class RepositoryModelSizeComparator<T> extends OrderByComparator<T> {
 
 			return dlFileEntry.getSize();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return 0;
 		}
 	}

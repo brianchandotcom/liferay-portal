@@ -80,7 +80,7 @@ public abstract class BaseFileCard
 			try {
 				return user.getPortraitURL(themeDisplay);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

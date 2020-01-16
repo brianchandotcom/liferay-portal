@@ -127,10 +127,10 @@ public class MergeCentralGitSubrepositoryUtil {
 					centralGitWorkingDirectory, centralGitSubrepository,
 					mergeBranchName);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				failedGitrepoPaths.add(gitrepoFile.getParent());
 
-				e.printStackTrace();
+				exception.printStackTrace();
 			}
 		}
 

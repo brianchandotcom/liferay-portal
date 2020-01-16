@@ -92,7 +92,7 @@ public class JournalHistoryManagementToolbarDisplayContext
 							});
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 
 				try {
@@ -123,7 +123,7 @@ public class JournalHistoryManagementToolbarDisplayContext
 							});
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 			}
 		};

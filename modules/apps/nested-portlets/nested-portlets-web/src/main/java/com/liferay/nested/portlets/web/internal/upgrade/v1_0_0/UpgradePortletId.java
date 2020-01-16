@@ -66,9 +66,9 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 				updateLayoutRevision(layoutRevisionId, newTypeSettings);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 	}
@@ -95,9 +95,9 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 				updateLayout(plid, newTypeSettings);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 	}

@@ -69,10 +69,10 @@ public class ModifiedFacetPortletConfigurationAction
 
 			dateRangeFactory.validateRange(ranges);
 		}
-		catch (JSONException | ParseException e) {
+		catch (JSONException | ParseException exception) {
 			SessionErrors.add(actionRequest, "unparsableDate");
 
-			_log.error(e, e);
+			_log.error(exception, exception);
 		}
 
 		if (SessionErrors.isEmpty(actionRequest)) {

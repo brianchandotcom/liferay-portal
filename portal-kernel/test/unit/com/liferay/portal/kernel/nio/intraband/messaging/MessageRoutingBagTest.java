@@ -207,12 +207,12 @@ public class MessageRoutingBagTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			message.remove(MessageRoutingBag.MESSAGE_ROUTING_BAG);
 
 			Assert.assertEquals(
 				"Unable to write ordinary serializable object " + message,
-				re.getMessage());
+				runtimeException.getMessage());
 		}
 	}
 

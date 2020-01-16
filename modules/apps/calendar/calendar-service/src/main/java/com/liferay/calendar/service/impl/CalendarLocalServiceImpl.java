@@ -228,12 +228,12 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 			return true;
 		}
-		catch (NoSuchGroupException nsge) {
+		catch (NoSuchGroupException noSuchGroupException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsge, nsge);
+				_log.debug(noSuchGroupException, noSuchGroupException);
 			}
 
 			return false;

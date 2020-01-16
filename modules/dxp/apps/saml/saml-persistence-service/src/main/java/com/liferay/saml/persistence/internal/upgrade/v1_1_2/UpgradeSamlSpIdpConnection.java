@@ -29,7 +29,7 @@ public class UpgradeSamlSpIdpConnection extends UpgradeProcess {
 		try {
 			runSQL("alter_column_type SamlSpIdpConnection forceAuthn BOOLEAN");
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			upgradeTable(
 				SamlSpIdpConnectionTable.TABLE_NAME,
 				SamlSpIdpConnectionTable.TABLE_COLUMNS,

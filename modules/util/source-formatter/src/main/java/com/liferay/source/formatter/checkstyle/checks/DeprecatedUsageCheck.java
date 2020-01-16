@@ -643,7 +643,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 					classInfo, extendedClassInfo, deprecatedClass);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return classInfo;
@@ -763,7 +763,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 				return file;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

@@ -88,8 +88,8 @@ public class UserExpandoColumnModelListener
 						_userEntityFields);
 				});
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 
@@ -131,8 +131,8 @@ public class UserExpandoColumnModelListener
 
 			_serviceRegistration = _register(_bundleContext, _userEntityFields);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 

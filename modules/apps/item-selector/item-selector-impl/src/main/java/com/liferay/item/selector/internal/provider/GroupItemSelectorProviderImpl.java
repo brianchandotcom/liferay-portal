@@ -62,8 +62,8 @@ public class GroupItemSelectorProviderImpl
 				companyId, _classNameIds, keywords, groupParams, start, end,
 				null);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return Collections.emptyList();
 		}

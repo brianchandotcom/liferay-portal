@@ -60,8 +60,8 @@ public class AddUADExportProcessesMVCRenderCommand implements MVCRenderCommand {
 				_uadApplicationExportHelper.getUADApplicationExportDisplays(
 					themeDisplay.getScopeGroupId(), selectedUser.getUserId()));
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 
 		return "/add_uad_export_processes.jsp";

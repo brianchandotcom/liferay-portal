@@ -105,8 +105,8 @@ public class SPIAgentRequestTest {
 						return File.createTempFile(
 							SPIAgentRequestTest.class.getName(), null);
 					}
-					catch (IOException ioe) {
-						throw new RuntimeException(ioe);
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
 					}
 				}
 
@@ -414,8 +414,9 @@ public class SPIAgentRequestTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Input stream is null", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Input stream is null", illegalArgumentException.getMessage());
 		}
 	}
 

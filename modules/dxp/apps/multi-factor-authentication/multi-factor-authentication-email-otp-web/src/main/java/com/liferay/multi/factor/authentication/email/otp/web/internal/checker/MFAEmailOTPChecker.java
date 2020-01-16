@@ -264,8 +264,8 @@ public class MFAEmailOTPChecker {
 			return ConfigurationProviderUtil.getCompanyConfiguration(
 				MFAEmailOTPConfiguration.class, user.getCompanyId());
 		}
-		catch (ConfigurationException ce) {
-			throw new IllegalStateException(ce);
+		catch (ConfigurationException configurationException) {
+			throw new IllegalStateException(configurationException);
 		}
 	}
 

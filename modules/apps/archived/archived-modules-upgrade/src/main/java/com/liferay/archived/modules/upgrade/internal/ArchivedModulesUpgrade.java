@@ -73,8 +73,8 @@ public class ArchivedModulesUpgrade implements UpgradeStepRegistrator {
 				_archivedModulesUpgradeConfiguration::removeTwitterModuleData,
 				"com.liferay.twitter.service", UpgradeTwitter::new);
 		}
-		catch (UpgradeException ue) {
-			ReflectionUtil.throwException(ue);
+		catch (UpgradeException upgradeException) {
+			ReflectionUtil.throwException(upgradeException);
 		}
 	}
 

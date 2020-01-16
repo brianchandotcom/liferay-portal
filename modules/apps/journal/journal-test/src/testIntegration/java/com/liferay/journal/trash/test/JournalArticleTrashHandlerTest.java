@@ -426,7 +426,7 @@ public class JournalArticleTrashHandlerTest
 
 				return journalArticleResource.getResourcePrimKey();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				return super.getAssetClassPK(classedModel);
 			}
 		}

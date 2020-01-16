@@ -76,8 +76,8 @@ public class OptionsDDMFormFieldContextHelper {
 
 			return localizedValue;
 		}
-		catch (JSONException jsone) {
-			_log.error("Unable to parse JSON array", jsone);
+		catch (JSONException jsonException) {
+			_log.error("Unable to parse JSON array", jsonException);
 
 			return localizedValue;
 		}

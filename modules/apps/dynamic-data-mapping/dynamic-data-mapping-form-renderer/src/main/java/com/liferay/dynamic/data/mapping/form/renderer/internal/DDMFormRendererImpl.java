@@ -61,11 +61,11 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		try {
 			return doRender(ddmForm, ddmFormLayout, ddmFormRenderingContext);
 		}
-		catch (DDMFormRenderingException ddmfre) {
-			throw ddmfre;
+		catch (DDMFormRenderingException ddmFormRenderingException) {
+			throw ddmFormRenderingException;
 		}
-		catch (Exception e) {
-			throw new DDMFormRenderingException(e);
+		catch (Exception exception) {
+			throw new DDMFormRenderingException(exception);
 		}
 	}
 
@@ -79,11 +79,11 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 				ddmForm, _ddm.getDefaultDDMFormLayout(ddmForm),
 				ddmFormRenderingContext);
 		}
-		catch (DDMFormRenderingException ddmfre) {
-			throw ddmfre;
+		catch (DDMFormRenderingException ddmFormRenderingException) {
+			throw ddmFormRenderingException;
 		}
-		catch (Exception e) {
-			throw new DDMFormRenderingException(e);
+		catch (Exception exception) {
+			throw new DDMFormRenderingException(exception);
 		}
 	}
 

@@ -40,11 +40,11 @@ public abstract class BaseChannelImpl implements Channel {
 				try {
 					doCleanUp();
 				}
-				catch (ChannelException ce) {
-					throw ce;
+				catch (ChannelException channelException) {
+					throw channelException;
 				}
-				catch (Exception e) {
-					throw new ChannelException(e);
+				catch (Exception exception) {
+					throw new ChannelException(exception);
 				}
 			}
 		}
@@ -83,8 +83,8 @@ public abstract class BaseChannelImpl implements Channel {
 				return true;
 			}
 		}
-		catch (ChannelException ce) {
-			_log.error("Unable to fetch notifications", ce);
+		catch (ChannelException channelException) {
+			_log.error("Unable to fetch notifications", channelException);
 		}
 
 		return false;

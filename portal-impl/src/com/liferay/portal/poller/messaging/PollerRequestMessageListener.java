@@ -44,13 +44,15 @@ public class PollerRequestMessageListener extends BaseMessageListener {
 			try {
 				pollerResponse = pollerProcessor.receive(pollerRequest);
 			}
-			catch (PollerException pe) {
+			catch (PollerException pollerException) {
 				_log.error(
-					"Unable to receive poller request " + pollerRequest, pe);
+					"Unable to receive poller request " + pollerRequest,
+					pollerException);
 
 				pollerResponse = pollerRequest.createPollerResponse();
 
-				pollerResponse.setParameter("pollerException", pe.getMessage());
+				pollerResponse.setParameter(
+					"pollerException", pollerException.getMessage());
 			}
 			finally {
 				if (pollerResponse == null) {
@@ -66,9 +68,10 @@ public class PollerRequestMessageListener extends BaseMessageListener {
 			try {
 				pollerProcessor.send(pollerRequest);
 			}
-			catch (PollerException pe) {
+			catch (PollerException pollerException) {
 				_log.error(
-					"Unable to send poller request " + pollerRequest, pe);
+					"Unable to send poller request " + pollerRequest,
+					pollerException);
 			}
 		}
 	}

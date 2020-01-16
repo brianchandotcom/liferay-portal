@@ -313,14 +313,14 @@ public class CalendarBookingLocalServiceImpl
 						calendarBooking, now.getTime());
 				}
 			}
-			catch (PortalException pe) {
-				throw pe;
+			catch (PortalException portalException) {
+				throw portalException;
 			}
-			catch (SystemException se) {
-				throw se;
+			catch (SystemException systemException) {
+				throw systemException;
 			}
-			catch (Exception e) {
-				throw new SystemException(e);
+			catch (Exception exception) {
+				throw new SystemException(exception);
 			}
 		}
 	}
@@ -1691,7 +1691,7 @@ public class CalendarBookingLocalServiceImpl
 			try {
 				calendarId = getNotLiveCalendarId(calendarId);
 			}
-			catch (NoSuchCalendarException nsce) {
+			catch (NoSuchCalendarException noSuchCalendarException) {
 				continue;
 			}
 
@@ -2091,9 +2091,9 @@ public class CalendarBookingLocalServiceImpl
 				calendarBooking, notificationType, notificationTemplateType,
 				sender, serviceContext);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 	}
@@ -2338,7 +2338,7 @@ public class CalendarBookingLocalServiceImpl
 			try {
 				calendarId = getNotLiveCalendarId(calendarId);
 			}
-			catch (NoSuchCalendarException nsce) {
+			catch (NoSuchCalendarException noSuchCalendarException) {
 				continue;
 			}
 

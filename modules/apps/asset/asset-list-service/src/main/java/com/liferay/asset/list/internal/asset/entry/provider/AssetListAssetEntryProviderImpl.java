@@ -472,10 +472,10 @@ public class AssetListAssetEntryProviderImpl
 					ClassType::getClassTypeId
 				).toArray();
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				_log.error(
 					"Unable to get class types for class name " + className,
-					pe);
+					portalException);
 			}
 		}
 
@@ -616,8 +616,8 @@ public class AssetListAssetEntryProviderImpl
 
 			return _assetHelper.getAssetEntries(hits);
 		}
-		catch (Exception e) {
-			_log.error("Unable to get asset entries", e);
+		catch (Exception exception) {
+			_log.error("Unable to get asset entries", exception);
 		}
 
 		return Collections.emptyList();

@@ -117,9 +117,10 @@ public class SambaAuth implements Authenticator {
 			PortalSambaUtil.setSambaLMPassword(user, password);
 			PortalSambaUtil.setSambaNTPassword(user, password);
 		}
-		catch (UnsupportedEncodingException uee) {
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(uee, uee);
+				_log.warn(
+					unsupportedEncodingException, unsupportedEncodingException);
 			}
 		}
 	}

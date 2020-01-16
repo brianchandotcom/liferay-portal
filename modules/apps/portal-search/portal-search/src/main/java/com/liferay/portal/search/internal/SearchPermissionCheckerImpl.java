@@ -135,13 +135,13 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				companyId, groupId, className, GetterUtil.getLong(classPK),
 				viewActionId, document);
 		}
-		catch (NoSuchResourceException nsre) {
+		catch (NoSuchResourceException noSuchResourceException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsre, nsre);
+				_log.debug(noSuchResourceException, noSuchResourceException);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -155,8 +155,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				companyId, groupIds, userId, className, booleanFilter,
 				searchContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return booleanFilter;
 		}
@@ -172,8 +172,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 			indexer.reindex(resourceName, GetterUtil.getLong(resourceClassPK));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

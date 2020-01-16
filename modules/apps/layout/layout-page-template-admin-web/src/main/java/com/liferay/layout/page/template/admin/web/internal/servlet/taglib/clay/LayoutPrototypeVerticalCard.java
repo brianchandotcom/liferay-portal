@@ -72,7 +72,7 @@ public class LayoutPrototypeVerticalCard
 			return layoutPrototypeActionDropdownItemsProvider.
 				getActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -99,7 +99,7 @@ public class LayoutPrototypeVerticalCard
 			return HttpUtil.setParameter(
 				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

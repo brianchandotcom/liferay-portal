@@ -68,9 +68,9 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 			portletDataContext.addPortletPermissions(
 				SiteNavigationConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortletDataException(
-				"Unable to export portlet permissions", pe);
+				"Unable to export portlet permissions", portalException);
 		}
 
 		long siteNavigationMenuId = GetterUtil.getLong(
@@ -111,9 +111,9 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 			portletDataContext.importPortletPermissions(
 				SiteNavigationConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortletDataException(
-				"Unable to import portlet permissions", pe);
+				"Unable to import portlet permissions", portalException);
 		}
 
 		long importedSiteNavigationMenuId = GetterUtil.getLong(
@@ -140,10 +140,11 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 				}
 			}
 		}
-		catch (ReadOnlyException roe) {
-			PortletDataException pde = new PortletDataException(roe);
+		catch (ReadOnlyException readOnlyException) {
+			PortletDataException portletDataException =
+				new PortletDataException(readOnlyException);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		return portletPreferences;

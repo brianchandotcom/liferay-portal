@@ -108,12 +108,12 @@ public class SolrSpellCheckIndexWriter
 
 			_searchEngineAdapter.execute(indexDocumentRequest);
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(re, re);
+				_log.error(runtimeException, runtimeException);
 			}
 			else {
-				throw re;
+				throw runtimeException;
 			}
 		}
 	}
@@ -154,12 +154,12 @@ public class SolrSpellCheckIndexWriter
 				}
 			}
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(re, re);
+				_log.error(runtimeException, runtimeException);
 			}
 			else {
-				throw re;
+				throw runtimeException;
 			}
 		}
 	}
@@ -209,12 +209,12 @@ public class SolrSpellCheckIndexWriter
 
 			_searchEngineAdapter.execute(deleteByQueryDocumentRequest);
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(re, re);
+				_log.error(runtimeException, runtimeException);
 			}
 			else {
-				throw re;
+				throw runtimeException;
 			}
 		}
 	}

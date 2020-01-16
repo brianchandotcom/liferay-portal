@@ -152,7 +152,7 @@ public class SetupWizardSampleDataUtil {
 		try {
 			screenName = screenNameGenerator.generate(0, 0, emailAddress);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		User adminUser = UserLocalServiceUtil.fetchUserByEmailAddress(

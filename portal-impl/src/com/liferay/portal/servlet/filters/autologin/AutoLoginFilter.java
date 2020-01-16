@@ -231,7 +231,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 						}
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					StringBundler sb = new StringBundler(6);
 
 					sb.append("Current URL ");
@@ -242,11 +242,11 @@ public class AutoLoginFilter extends BasePortalFilter {
 					sb.append(currentURL);
 
 					sb.append(" generates exception: ");
-					sb.append(e.getMessage());
+					sb.append(exception.getMessage());
 
 					if (_log.isInfoEnabled()) {
 						sb.append(" stack: ");
-						sb.append(StackTraceUtil.getStackTrace(e));
+						sb.append(StackTraceUtil.getStackTrace(exception));
 					}
 
 					if (currentURL.endsWith(_PATH_CHAT_LATEST)) {

@@ -94,13 +94,14 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, actionResponse,
 				JSONUtil.put("redirectURL", editDepotURL.toString()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
-				JSONUtil.put("error", _getErrorMessage(e, themeDisplay)));
+				JSONUtil.put(
+					"error", _getErrorMessage(exception, themeDisplay)));
 		}
 	}
 

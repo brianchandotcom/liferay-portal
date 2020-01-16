@@ -115,8 +115,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 				groupId, userId, className, classPK, portletId, folderId, file,
 				fileName, mimeType, indexingEnabled);
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to write temporary file", ioException);
 		}
 		finally {
 			FileUtil.delete(file);
@@ -193,8 +194,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 				groupId, userId, className, classPK, portletId, folderId, file,
 				fileName, mimeType, indexingEnabled);
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to write temporary file", ioException);
 		}
 		finally {
 			FileUtil.delete(file);
@@ -218,12 +220,13 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 					return localRepository.getFolder(
 						parentFolderId, folderName);
 				}
-				catch (NoSuchFolderException nsfe) {
+				catch (NoSuchFolderException noSuchFolderException) {
 
 					// LPS-52675
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(nsfe, nsfe);
+						_log.debug(
+							noSuchFolderException, noSuchFolderException);
 					}
 
 					return localRepository.addFolder(
@@ -333,9 +336,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 					});
 			}
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsfee, nsfee);
+				_log.warn(noSuchFileEntryException, noSuchFileEntryException);
 			}
 		}
 	}
@@ -364,9 +367,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 					localRepository.deleteFolder(folderId);
 				}
-				catch (NoSuchFolderException nsfe) {
+				catch (NoSuchFolderException noSuchFolderException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(nsfe, nsfe);
+						_log.warn(noSuchFolderException, noSuchFolderException);
 					}
 				}
 
@@ -394,9 +397,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			return getPortletFileEntry(groupId, folderId, fileName);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -646,7 +649,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 				uniqueFileName = FileUtil.appendParentheticalSuffix(
 					fileName, String.valueOf(i));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				break;
 			}
 		}

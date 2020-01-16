@@ -266,8 +266,8 @@ public class CounterLocalServiceTest {
 					ids.add(CounterLocalServiceUtil.increment(_counterName));
 				}
 			}
-			catch (SystemException se) {
-				throw new ProcessException(se);
+			catch (SystemException systemException) {
+				throw new ProcessException(systemException);
 			}
 
 			return ids.toArray(new Long[0]);

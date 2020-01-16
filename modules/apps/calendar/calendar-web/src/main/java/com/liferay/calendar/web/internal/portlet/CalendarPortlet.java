@@ -232,7 +232,7 @@ public class CalendarPortlet extends MVCPortlet {
 
 				jsonObject.put("success", true);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				String message = themeDisplay.translate(
 					"an-unexpected-error-occurred-while-importing-your-file");
 
@@ -313,14 +313,14 @@ public class CalendarPortlet extends MVCPortlet {
 			getCalendarResource(renderRequest);
 			setRenderRequestAttributes(renderRequest, renderResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchResourceException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchResourceException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 			}
 			else {
-				throw new PortletException(e);
+				throw new PortletException(exception);
 			}
 		}
 
@@ -370,8 +370,8 @@ public class CalendarPortlet extends MVCPortlet {
 				serveUnknownResource(resourceRequest, resourceResponse);
 			}
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -647,13 +647,15 @@ public class CalendarPortlet extends MVCPortlet {
 			jsonObject = CalendarUtil.toCalendarBookingJSONObject(
 				themeDisplay, calendarBooking, timeZone);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			String errorMessage = "";
 
-			if (pe instanceof AssetCategoryException) {
-				AssetCategoryException ace = (AssetCategoryException)pe;
+			if (portalException instanceof AssetCategoryException) {
+				AssetCategoryException assetCategoryException =
+					(AssetCategoryException)portalException;
 
-				errorMessage = getErrorMessageForException(ace, themeDisplay);
+				errorMessage = getErrorMessageForException(
+					assetCategoryException, themeDisplay);
 			}
 
 			jsonObject = JSONUtil.put("exception", errorMessage);

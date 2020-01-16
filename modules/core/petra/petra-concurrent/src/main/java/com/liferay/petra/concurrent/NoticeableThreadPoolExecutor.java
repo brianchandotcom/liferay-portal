@@ -74,7 +74,7 @@ public class NoticeableThreadPoolExecutor
 				try {
 					taskQueue.put(runnable);
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 					rejectedExecutionHandler.rejectedExecution(
 						runnable, threadPoolExecutor);
 				}

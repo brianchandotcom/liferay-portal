@@ -59,7 +59,7 @@ public class StructureLinkStructureNameComparator
 
 			return -value;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return 0;
 		}
 	}

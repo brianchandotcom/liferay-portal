@@ -112,9 +112,9 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 			portletDataContext.addPortletPermissions(
 				WikiConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortletDataException(
-				"Unable to export portlet permissions", pe);
+				"Unable to export portlet permissions", portalException);
 		}
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -127,9 +127,9 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 		try {
 			actionableDynamicQuery.performActions();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortletDataException(
-				"Unable to export referenced pages", pe);
+				"Unable to export referenced pages", portalException);
 		}
 
 		return portletPreferences;
@@ -145,9 +145,9 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 			portletDataContext.importPortletPermissions(
 				WikiConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortletDataException(
-				"Unable to import portlet permissions", pe);
+				"Unable to import portlet permissions", portalException);
 		}
 
 		long nodeId = GetterUtil.getLong(
@@ -163,9 +163,10 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 			try {
 				portletPreferences.setValue("nodeId", String.valueOf(nodeId));
 			}
-			catch (ReadOnlyException roe) {
+			catch (ReadOnlyException readOnlyException) {
 				throw new PortletDataException(
-					"Unable to update portlet preferences during import", roe);
+					"Unable to update portlet preferences during import",
+					readOnlyException);
 			}
 		}
 

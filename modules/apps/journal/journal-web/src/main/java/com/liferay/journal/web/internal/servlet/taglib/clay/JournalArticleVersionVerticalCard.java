@@ -73,7 +73,7 @@ public class JournalArticleVersionVerticalCard extends BaseVerticalCard {
 			return articleActionDropdownItemsProvider.
 				getArticleVersionActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

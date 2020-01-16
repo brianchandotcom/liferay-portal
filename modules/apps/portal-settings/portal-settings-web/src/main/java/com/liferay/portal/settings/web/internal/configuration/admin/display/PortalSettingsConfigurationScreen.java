@@ -102,9 +102,10 @@ public class PortalSettingsConfigurationScreen implements ConfigurationScreen {
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
+		catch (ServletException servletException) {
 			throw new IOException(
-				"Unable to render /configuration/screen/entry.jsp", se);
+				"Unable to render /configuration/screen/entry.jsp",
+				servletException);
 		}
 	}
 

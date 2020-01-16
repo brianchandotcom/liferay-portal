@@ -231,13 +231,13 @@ public class DefaultAttributeResolver implements AttributeResolver {
 					AttributePublisher.AttributeValue[]::new
 				));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String message = StringBundler.concat(
 				"Unable to get groups for user ", user.getUserId(), ": ",
-				e.getMessage());
+				exception.getMessage());
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, e);
+				_log.debug(message, exception);
 			}
 			else {
 				_log.error(message);
@@ -330,13 +330,13 @@ public class DefaultAttributeResolver implements AttributeResolver {
 					));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String message = StringBundler.concat(
 				"Unable to get organization roles for user ", user.getUserId(),
-				": ", e.getMessage());
+				": ", exception.getMessage());
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, e);
+				_log.debug(message, exception);
 			}
 			else {
 				_log.error(message);
@@ -380,13 +380,13 @@ public class DefaultAttributeResolver implements AttributeResolver {
 					AttributePublisher.AttributeValue[]::new
 				));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String message = StringBundler.concat(
 				"Unable to get organizations for user ", user.getUserId(), ": ",
-				e.getMessage());
+				exception.getMessage());
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, e);
+				_log.debug(message, exception);
 			}
 			else {
 				_log.error(message);
@@ -475,13 +475,13 @@ public class DefaultAttributeResolver implements AttributeResolver {
 					AttributePublisher.AttributeValue[]::new
 				));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String message = StringBundler.concat(
 				"Unable to get roles for user  ", user.getUserId(), ": ",
-				e.getMessage());
+				exception.getMessage());
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, e);
+				_log.debug(message, exception);
 			}
 			else {
 				_log.error(message);
@@ -603,13 +603,13 @@ public class DefaultAttributeResolver implements AttributeResolver {
 					));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String message = StringBundler.concat(
 				"Unable to get user group roles for user ", user.getUserId(),
-				": ", e.getMessage());
+				": ", exception.getMessage());
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, e);
+				_log.debug(message, exception);
 			}
 			else {
 				_log.error(message);
@@ -712,13 +712,13 @@ public class DefaultAttributeResolver implements AttributeResolver {
 					AttributePublisher.AttributeValue[]::new
 				));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String message = StringBundler.concat(
 				"Unable to get user groups for user ", user.getUserId(), ": ",
-				e.getMessage());
+				exception.getMessage());
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, e);
+				_log.debug(message, exception);
 			}
 			else {
 				_log.error(message);

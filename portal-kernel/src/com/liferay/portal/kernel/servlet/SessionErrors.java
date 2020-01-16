@@ -412,7 +412,7 @@ public class SessionErrors {
 
 			return map;
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 
 			// Session is already invalidated, just return a null map
 

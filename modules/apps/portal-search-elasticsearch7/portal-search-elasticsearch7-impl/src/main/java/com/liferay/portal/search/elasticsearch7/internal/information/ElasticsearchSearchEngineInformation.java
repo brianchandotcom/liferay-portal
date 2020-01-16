@@ -156,16 +156,16 @@ public class ElasticsearchSearchEngineInformation
 
 			return sb.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get node information", e);
+				_log.warn("Unable to get node information", exception);
 			}
 
 			StringBundler sb = new StringBundler(4);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append("Error: ");
-			sb.append(e.toString());
+			sb.append(exception.toString());
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			return sb.toString();

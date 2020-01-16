@@ -155,21 +155,21 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 				unsubscribeNode(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchNodeException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/wiki/error.jsp");
 			}
-			else if (e instanceof DuplicateNodeNameException ||
-					 e instanceof NodeNameException) {
+			else if (exception instanceof DuplicateNodeNameException ||
+					 exception instanceof NodeNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

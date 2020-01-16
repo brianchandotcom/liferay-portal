@@ -102,8 +102,8 @@ public class FragmentPortlet extends MVCPortlet {
 					FragmentPortletConfiguration.class,
 					themeDisplay.getCompanyId());
 		}
-		catch (ConfigurationException ce) {
-			throw new PortletException(ce);
+		catch (ConfigurationException configurationException) {
+			throw new PortletException(configurationException);
 		}
 
 		renderRequest.setAttribute(
@@ -128,9 +128,9 @@ public class FragmentPortlet extends MVCPortlet {
 				FragmentWebKeys.INHERITED_FRAGMENT_COLLECTIONS,
 				_getInheritedFragmentCollections(themeDisplay));
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 

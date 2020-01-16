@@ -54,8 +54,8 @@ public class WikiNavigationWebUpgrade implements UpgradeStepRegistrator {
 		try {
 			upgradeWebModuleRelease.upgrade();
 		}
-		catch (UpgradeException ue) {
-			throw new RuntimeException(ue);
+		catch (UpgradeException upgradeException) {
+			throw new RuntimeException(upgradeException);
 		}
 
 		registry.register("0.0.0", "1.0.1", new DummyUpgradeStep());

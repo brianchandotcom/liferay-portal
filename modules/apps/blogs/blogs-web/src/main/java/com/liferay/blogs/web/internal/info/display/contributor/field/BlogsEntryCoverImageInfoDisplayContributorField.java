@@ -71,8 +71,8 @@ public class BlogsEntryCoverImageInfoDisplayContributorField
 				jsonObject.put(
 					"url", blogsEntry.getCoverImageURL(themeDisplay));
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 		else {

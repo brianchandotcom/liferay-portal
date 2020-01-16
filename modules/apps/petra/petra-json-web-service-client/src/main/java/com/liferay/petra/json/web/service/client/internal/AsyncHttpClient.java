@@ -78,17 +78,18 @@ public class AsyncHttpClient implements Closeable {
 
 				return httpResponseFuture;
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_logger.isTraceEnabled()) {
 					_logger.trace(
-						"Unable to execute HTTP request in attempt " + i, e);
+						"Unable to execute HTTP request in attempt " + i,
+						exception);
 				}
 
 				try {
 					Thread.sleep(100L);
 				}
-				catch (InterruptedException ie) {
-					_logger.error("Interrupted", ie);
+				catch (InterruptedException interruptedException) {
+					_logger.error("Interrupted", interruptedException);
 
 					if (_logger.isInfoEnabled()) {
 						_logger.info(

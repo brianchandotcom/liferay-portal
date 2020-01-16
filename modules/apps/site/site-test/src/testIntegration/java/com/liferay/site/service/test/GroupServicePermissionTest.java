@@ -218,7 +218,7 @@ public class GroupServicePermissionTest {
 				"The user should not be able to add top level sites",
 				group == null);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 		}
 
 		try {
@@ -233,7 +233,7 @@ public class GroupServicePermissionTest {
 				_groupLocalService.deleteGroup(group);
 			}
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			Assert.assertFalse(
 				"The user should be able to add this site",
 				hasManageSubsitePermisionOnGroup1 || hasManageSite1);
@@ -251,7 +251,7 @@ public class GroupServicePermissionTest {
 				_groupLocalService.deleteGroup(group);
 			}
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			Assert.assertFalse(
 				"The user should be able to add this site",
 				hasManageSubsitePermisionOnGroup11 || hasManageSite1);
@@ -269,7 +269,7 @@ public class GroupServicePermissionTest {
 				_groupLocalService.deleteGroup(group);
 			}
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			Assert.assertFalse(
 				"The user should be able to add this site",
 				hasManageSubsitePermisionOnGroup111 || hasManageSite1);
@@ -292,7 +292,7 @@ public class GroupServicePermissionTest {
 				"The user should not be able to update this site",
 				hasManageSite1);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			Assert.assertFalse(
 				"The user should be able to update this site", hasManageSite1);
 		}
@@ -305,7 +305,7 @@ public class GroupServicePermissionTest {
 				hasManageSubsitePermisionOnGroup1 || hasManageSite1 ||
 				hasManageSite11);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			Assert.assertFalse(
 				"The user should be able to update this site",
 				hasManageSubsitePermisionOnGroup1 || hasManageSite1 ||
@@ -319,7 +319,7 @@ public class GroupServicePermissionTest {
 				"The user should not be able to update this site",
 				hasManageSubsitePermisionOnGroup11 || hasManageSite1);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			Assert.assertFalse(
 				"The user should be able to update this site",
 				hasManageSubsitePermisionOnGroup1 || hasManageSite1);

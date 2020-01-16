@@ -183,8 +183,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		try {
 			doProcessAuthnRequest(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			ExceptionHandlerUtil.handleException(e);
+		catch (Exception exception) {
+			ExceptionHandlerUtil.handleException(exception);
 		}
 	}
 
@@ -197,8 +197,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		try {
 			doProcessResponse(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			ExceptionHandlerUtil.handleException(e);
+		catch (Exception exception) {
+			ExceptionHandlerUtil.handleException(exception);
 		}
 	}
 
@@ -212,8 +212,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			doSendAuthnRequest(
 				httpServletRequest, httpServletResponse, relayState);
 		}
-		catch (Exception e) {
-			ExceptionHandlerUtil.handleException(e);
+		catch (Exception exception) {
+			ExceptionHandlerUtil.handleException(exception);
 		}
 	}
 
@@ -235,9 +235,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				samlSpSessionLocalService.updateSamlSpSession(
 					samlSpSession.getPrimaryKey(), jSessionId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 			}
 		}
@@ -668,8 +668,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				try {
 					assertions.add(_decrypter.decrypt(encryptedAssertion));
 				}
-				catch (DecryptionException de) {
-					_log.error("Unable to assertion decryption", de);
+				catch (DecryptionException decryptionException) {
+					_log.error(
+						"Unable to assertion decryption", decryptionException);
 				}
 			}
 
@@ -691,10 +692,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				verifyAssertion(
 					curAssertion, messageContext, signatureTrustEngine);
 			}
-			catch (SamlException se) {
+			catch (SamlException samlException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Rejecting assertion " + curAssertion.getID(), se);
+						"Rejecting assertion " + curAssertion.getID(),
+						samlException);
 				}
 
 				continue;
@@ -1330,8 +1332,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		try {
 			httpServletResponse.sendRedirect(redirect);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -1663,7 +1665,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				samlIdpSsoSession.getSamlIdpSsoSessionId(),
 				samlPeerEntityContext.getEntityId());
 		}
-		catch (NoSuchIdpSpSessionException nsisse) {
+		catch (NoSuchIdpSpSessionException noSuchIdpSpSessionException) {
 			_samlIdpSpSessionLocalService.addSamlIdpSpSession(
 				samlIdpSsoSession.getSamlIdpSsoSessionId(),
 				samlPeerEntityContext.getEntityId(), nameID.getFormat(),
@@ -1920,8 +1922,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				idpEntityId, messageKey, notOnOrAfterDateTime.toDate(),
 				serviceContext);
 		}
-		catch (SystemException se) {
-			throw new SamlException(se);
+		catch (SystemException systemException) {
+			throw new SamlException(systemException);
 		}
 	}
 
@@ -1949,12 +1951,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				throw new SignatureException("Unable validate signature trust");
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof PortalException) {
-				throw (PortalException)e;
+		catch (Exception exception) {
+			if (exception instanceof PortalException) {
+				throw (PortalException)exception;
 			}
 
-			throw new SignatureException("Unable to verify signature", e);
+			throw new SignatureException(
+				"Unable to verify signature", exception);
 		}
 	}
 

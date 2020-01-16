@@ -72,7 +72,7 @@ public class DynamicResourceIncludeUtil {
 				return url;
 			}
 		}
-		catch (MalformedURLException murle) {
+		catch (MalformedURLException malformedURLException) {
 		}
 
 		return null;

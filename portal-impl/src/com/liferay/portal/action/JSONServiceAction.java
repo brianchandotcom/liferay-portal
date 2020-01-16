@@ -152,16 +152,16 @@ public class JSONServiceAction extends JSONAction {
 
 			return JSONFactoryUtil.getNullJSON();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"Invoked ", clazz, " on method ", method.getName(),
 						" with args ", Arrays.toString(args)),
-					e);
+					exception);
 			}
 
-			return JSONFactoryUtil.serializeThrowable(e);
+			return JSONFactoryUtil.serializeThrowable(exception);
 		}
 	}
 
@@ -413,7 +413,7 @@ public class JSONServiceAction extends JSONAction {
 			try {
 				return JSONFactoryUtil.looseDeserialize(value);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					StringBundler.concat(
 						"Unsupported parameter type for class ", clazz,

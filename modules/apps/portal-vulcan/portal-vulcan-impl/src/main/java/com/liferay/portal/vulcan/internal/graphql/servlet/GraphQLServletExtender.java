@@ -374,8 +374,10 @@ public class GraphQLServletExtender {
 						try {
 							return method.invoke(servlet, args);
 						}
-						catch (InvocationTargetException ite) {
-							throw ite.getCause();
+						catch (InvocationTargetException
+									invocationTargetException) {
+
+							throw invocationTargetException.getCause();
 						}
 					}
 
@@ -410,8 +412,8 @@ public class GraphQLServletExtender {
 
 					return method.invoke(annotation);
 				}
-				catch (Exception e) {
-					throw new RuntimeException(e);
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
 				}
 			}
 		}
@@ -647,11 +649,11 @@ public class GraphQLServletExtender {
 							CompanyThreadLocal.getCompanyId(),
 							(String)argument));
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					throw new Exception(
 						"Unable to convert site key \"" + argument +
 							"\" to group ID",
-						e);
+						exception);
 				}
 			}
 
@@ -800,8 +802,8 @@ public class GraphQLServletExtender {
 									httpServletRequest.getParameterMap()),
 								filterString);
 						}
-						catch (Exception e) {
-							throw new BadRequestException(e);
+						catch (Exception exception) {
+							throw new BadRequestException(exception);
 						}
 					};
 
@@ -824,8 +826,8 @@ public class GraphQLServletExtender {
 									httpServletRequest.getParameterMap()),
 								sortsString);
 						}
-						catch (Exception e) {
-							throw new BadRequestException(e);
+						catch (Exception exception) {
+							throw new BadRequestException(exception);
 						}
 					};
 
@@ -1089,8 +1091,8 @@ public class GraphQLServletExtender {
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -1874,11 +1876,12 @@ public class GraphQLServletExtender {
 			try {
 				return _createObject(dataFetchingEnvironment, _method);
 			}
-			catch (InvocationTargetException ite) {
-				throw new RuntimeException(ite.getTargetException());
+			catch (InvocationTargetException invocationTargetException) {
+				throw new RuntimeException(
+					invocationTargetException.getTargetException());
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 

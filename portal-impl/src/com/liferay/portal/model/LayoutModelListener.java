@@ -56,17 +56,17 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			LayoutRevisionLocalServiceUtil.deleteLayoutLayoutRevisions(
 				layout.getPlid());
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 
 			// This is only needed because of LayoutPersistenceTest but should
 			// never happen in a deployed environment
 
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
-		catch (SystemException se) {
-			throw new ModelListenerException(se);
+		catch (SystemException systemException) {
+			throw new ModelListenerException(systemException);
 		}
 	}
 

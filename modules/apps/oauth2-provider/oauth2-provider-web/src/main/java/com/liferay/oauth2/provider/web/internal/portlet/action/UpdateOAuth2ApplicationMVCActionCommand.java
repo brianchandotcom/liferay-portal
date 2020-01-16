@@ -197,14 +197,14 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 				}
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
-			Class<?> peClass = pe.getClass();
+			Class<?> peClass = portalException.getClass();
 
-			SessionErrors.add(request, peClass.getName(), pe);
+			SessionErrors.add(request, peClass.getName(), portalException);
 		}
 
 		String backURL = ParamUtil.get(request, "backURL", StringPool.BLANK);

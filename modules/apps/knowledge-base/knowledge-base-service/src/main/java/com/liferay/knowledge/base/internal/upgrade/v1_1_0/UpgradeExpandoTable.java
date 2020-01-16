@@ -40,12 +40,12 @@ public class UpgradeExpandoTable extends UpgradeProcess {
 			expandoTable = ExpandoTableLocalServiceUtil.getTable(
 				companyId, Subscription.class.getName(), "KB");
 		}
-		catch (NoSuchTableException nste) {
+		catch (NoSuchTableException noSuchTableException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nste, nste);
+				_log.debug(noSuchTableException, noSuchTableException);
 			}
 
 			return;

@@ -47,8 +47,8 @@ public class CompanyWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		try {
 			return getResources(webDAVRequest.getUserId());
 		}
-		catch (Exception e) {
-			throw new WebDAVException(e);
+		catch (Exception exception) {
+			throw new WebDAVException(exception);
 		}
 	}
 

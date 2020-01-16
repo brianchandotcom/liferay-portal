@@ -78,8 +78,8 @@ public class AutocompletePageTitleMVCResourceCommand
 			ServletResponseUtil.write(
 				httpServletResponse, jsonArray.toString());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

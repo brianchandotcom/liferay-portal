@@ -50,8 +50,9 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 			return value;
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new GradleException("Unable to get property", roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new GradleException(
+				"Unable to get property", reflectiveOperationException);
 		}
 	}
 

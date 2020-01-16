@@ -313,9 +313,10 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 			try {
 				Dom4JUtil.addRawXMLToElement(subheadingElement, description);
 			}
-			catch (DocumentException de) {
+			catch (DocumentException documentException) {
 				throw new RuntimeException(
-					"Unable to parse description HTML " + description, de);
+					"Unable to parse description HTML " + description,
+					documentException);
 			}
 		}
 

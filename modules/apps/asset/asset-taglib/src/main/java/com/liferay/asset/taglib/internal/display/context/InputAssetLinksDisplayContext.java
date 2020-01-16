@@ -153,11 +153,11 @@ public class InputAssetLinksDisplayContext {
 
 			assetType = classType.getName();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				"Unable to get asset type for class type primary key " +
 					entry.getClassTypeId(),
-				pe);
+				portalException);
 		}
 
 		return assetType;

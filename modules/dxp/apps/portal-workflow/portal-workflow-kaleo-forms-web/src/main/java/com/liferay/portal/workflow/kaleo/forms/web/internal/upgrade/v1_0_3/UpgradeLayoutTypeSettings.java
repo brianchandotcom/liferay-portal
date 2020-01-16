@@ -73,10 +73,11 @@ public class UpgradeLayoutTypeSettings extends BaseUpgradePortletId {
 							layout.getPlid(), newTypeSettings.toString());
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to update layout " + layout.getPlid(), e);
+							"Unable to update layout " + layout.getPlid(),
+							exception);
 					}
 				}
 			});

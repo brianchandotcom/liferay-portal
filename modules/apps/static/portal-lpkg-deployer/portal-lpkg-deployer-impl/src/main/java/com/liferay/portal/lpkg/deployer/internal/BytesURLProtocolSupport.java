@@ -52,8 +52,8 @@ public class BytesURLProtocolSupport {
 
 			return url;
 		}
-		catch (MalformedURLException murle) {
-			return ReflectionUtil.throwException(murle);
+		catch (MalformedURLException malformedURLException) {
+			return ReflectionUtil.throwException(malformedURLException);
 		}
 	}
 

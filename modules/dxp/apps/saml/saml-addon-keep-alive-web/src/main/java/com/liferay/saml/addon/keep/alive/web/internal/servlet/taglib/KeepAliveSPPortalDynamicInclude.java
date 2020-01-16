@@ -88,8 +88,9 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 			printWriter.write(HtmlUtil.escapeHREF(keepAliveURL));
 			printWriter.write("\" type=\"text/javascript\"></script>");
 		}
-		catch (IOException ioe) {
-			throw new IOException("Unable to include keep alive URL", ioe);
+		catch (IOException ioException) {
+			throw new IOException(
+				"Unable to include keep alive URL", ioException);
 		}
 	}
 
@@ -126,12 +127,13 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 			keepAliveURL = (String)expandoBridge.getAttribute(
 				SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			String message =
-				"Unable to get IdP keep alive URL: " + pe.getMessage();
+				"Unable to get IdP keep alive URL: " +
+					portalException.getMessage();
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, pe);
+				_log.debug(message, portalException);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(message);

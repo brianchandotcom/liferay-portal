@@ -367,8 +367,8 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		try {
 			return _layoutCopyHelper.copyLayout(layout, draftLayout);
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 
@@ -404,8 +404,8 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 					"portletSetupPortletDecoratorId",
 					defaultPortletDecoratorId);
 			}
-			catch (ReadOnlyException roe) {
-				throw new PortalException(roe);
+			catch (ReadOnlyException readOnlyException) {
+				throw new PortalException(readOnlyException);
 			}
 
 			portletPreferences.setPreferences(

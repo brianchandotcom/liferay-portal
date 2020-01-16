@@ -78,13 +78,15 @@ public class MBExportImportPortletPreferencesProcessor
 		try {
 			portletDataContext.addPortletPermissions(MBConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(MBPortletKeys.MESSAGE_BOARDS);
-			pde.setType(PortletDataException.EXPORT_PORTLET_PERMISSIONS);
+			portletDataException.setPortletId(MBPortletKeys.MESSAGE_BOARDS);
+			portletDataException.setType(
+				PortletDataException.EXPORT_PORTLET_PERMISSIONS);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		try {
@@ -155,13 +157,15 @@ public class MBExportImportPortletPreferencesProcessor
 				banActionableDynamicQuery.performActions();
 			}
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(MBPortletKeys.MESSAGE_BOARDS);
-			pde.setType(PortletDataException.EXPORT_PORTLET_DATA);
+			portletDataException.setPortletId(MBPortletKeys.MESSAGE_BOARDS);
+			portletDataException.setType(
+				PortletDataException.EXPORT_PORTLET_DATA);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		return portletPreferences;
@@ -177,13 +181,15 @@ public class MBExportImportPortletPreferencesProcessor
 			portletDataContext.importPortletPermissions(
 				MBConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(MBPortletKeys.MESSAGE_BOARDS);
-			pde.setType(PortletDataException.IMPORT_PORTLET_PERMISSIONS);
+			portletDataException.setPortletId(MBPortletKeys.MESSAGE_BOARDS);
+			portletDataException.setType(
+				PortletDataException.IMPORT_PORTLET_PERMISSIONS);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		String namespace = _mbPortletDataHandler.getNamespace();

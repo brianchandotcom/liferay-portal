@@ -124,8 +124,8 @@ public class JournalContentPortlet extends MVCPortlet {
 				articleDisplay =
 					journalContentDisplayContext.getArticleDisplay();
 			}
-			catch (PortalException pe) {
-				_log.error("Unable to get journal article", pe);
+			catch (PortalException portalException) {
+				_log.error("Unable to get journal article", portalException);
 			}
 		}
 		else if ((articleGroupId > 0) && Validator.isNotNull(articleId)) {
@@ -155,7 +155,7 @@ public class JournalContentPortlet extends MVCPortlet {
 					new PortletRequestModel(renderRequest, renderResponse),
 					themeDisplay);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				renderRequest.removeAttribute(WebKeys.JOURNAL_ARTICLE);
 			}
 		}
@@ -188,9 +188,9 @@ public class JournalContentPortlet extends MVCPortlet {
 				renderRequest, renderResponse, _CLASS_NAME_ID,
 				_ddmTemplateModelResourcePermission);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -245,9 +245,9 @@ public class JournalContentPortlet extends MVCPortlet {
 					resourceRequest, resourceResponse, _CLASS_NAME_ID,
 					_ddmTemplateModelResourcePermission);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 

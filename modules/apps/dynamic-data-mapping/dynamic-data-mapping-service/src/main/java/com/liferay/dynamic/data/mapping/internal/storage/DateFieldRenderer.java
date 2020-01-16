@@ -70,9 +70,9 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 		try {
 			return DateUtil.formatDate("yyyy-MM-dd", value.toString(), locale);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return _language.format(

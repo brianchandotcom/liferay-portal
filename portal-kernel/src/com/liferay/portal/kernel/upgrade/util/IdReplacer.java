@@ -65,9 +65,9 @@ public class IdReplacer {
 				try {
 					newValue = (Long)valueMapper.getNewValue(oldValue);
 				}
-				catch (StagnantRowException sre) {
+				catch (StagnantRowException stagnantRowException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(sre, sre);
+						_log.warn(stagnantRowException, stagnantRowException);
 					}
 				}
 
@@ -119,9 +119,9 @@ public class IdReplacer {
 			try {
 				newValue = (Long)valueMapper.getNewValue(oldValue);
 			}
-			catch (StagnantRowException sre) {
+			catch (StagnantRowException stagnantRowException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(sre, sre);
+					_log.warn(stagnantRowException, stagnantRowException);
 				}
 			}
 

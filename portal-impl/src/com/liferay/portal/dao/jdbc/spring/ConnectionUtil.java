@@ -52,8 +52,8 @@ public class ConnectionUtil {
 		try {
 			_closeMethod = Connection.class.getMethod("close");
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new ExceptionInInitializerError(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new ExceptionInInitializerError(reflectiveOperationException);
 		}
 	}
 

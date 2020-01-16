@@ -133,9 +133,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		try {
 			return getDLFileShortcut(classPK);
 		}
-		catch (PortalException | UnsupportedCapabilityException e) {
+		catch (PortalException | UnsupportedCapabilityException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			return null;
@@ -172,9 +172,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 			return parentFolder.isInTrash();
 		}
-		catch (NoSuchFolderException nsfe) {
+		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfe, nsfe);
+				_log.debug(noSuchFolderException, noSuchFolderException);
 			}
 
 			return true;
@@ -188,9 +188,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		try {
 			dlFileShortcut.getFolder();
 		}
-		catch (NoSuchFolderException nsfe) {
+		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfe, nsfe);
+				_log.debug(noSuchFolderException, noSuchFolderException);
 			}
 
 			return false;

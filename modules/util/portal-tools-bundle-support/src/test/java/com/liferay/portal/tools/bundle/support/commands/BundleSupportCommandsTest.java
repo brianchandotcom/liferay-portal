@@ -876,8 +876,8 @@ public class BundleSupportCommandsTest {
 			_HTTP_SERVER_PORT = _getTestPort(
 				_AUTHENTICATED_HTTP_PROXY_SERVER_PORT, _HTTP_PROXY_SERVER_PORT);
 		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
+		catch (IOException ioException) {
+			throw new ExceptionInInitializerError(ioException);
 		}
 	}
 

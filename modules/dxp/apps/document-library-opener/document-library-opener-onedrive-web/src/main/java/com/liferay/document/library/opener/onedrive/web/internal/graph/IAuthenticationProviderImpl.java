@@ -34,8 +34,8 @@ public class IAuthenticationProviderImpl implements IAuthenticationProvider {
 			iHttpRequest.addHeader(
 				"Authorization", "Bearer " + _accessToken.getAccessToken());
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

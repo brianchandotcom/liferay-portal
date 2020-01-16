@@ -119,8 +119,8 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 			return settingsFactory.getSettings(
 				new CompanyServiceSettingsLocator(companyId, getSettingsId()));
 		}
-		catch (SettingsException se) {
-			throw new IllegalStateException(se);
+		catch (SettingsException settingsException) {
+			throw new IllegalStateException(settingsException);
 		}
 	}
 
@@ -144,7 +144,7 @@ public abstract class BaseCompanySettingsVerifyProcessTestCase
 			return (VerifyProcess)_bundleContext.getService(
 				serviceReferences[0]);
 		}
-		catch (Exception ise) {
+		catch (Exception exception) {
 			throw new IllegalStateException("Unable to get verify process");
 		}
 	}

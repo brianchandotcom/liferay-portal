@@ -105,8 +105,8 @@ public class MentionsPortlet extends MVCPortlet {
 			ServletResponseUtil.write(
 				httpServletResponse, jsonArray.toString());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -203,8 +203,8 @@ public class MentionsPortlet extends MVCPortlet {
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 					query, jsonObject);
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 
 				return Collections.emptyList();
 			}

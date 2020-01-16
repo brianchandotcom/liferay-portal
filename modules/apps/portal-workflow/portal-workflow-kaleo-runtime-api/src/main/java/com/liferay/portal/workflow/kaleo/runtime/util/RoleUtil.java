@@ -50,9 +50,9 @@ public class RoleUtil {
 					"Role already exists with name " + name);
 			}
 		}
-		catch (NoSuchRoleException nsre) {
+		catch (NoSuchRoleException noSuchRoleException) {
 			if (!autoCreate) {
-				throw nsre;
+				throw noSuchRoleException;
 			}
 
 			Map<Locale, String> descriptionMap = HashMapBuilder.put(

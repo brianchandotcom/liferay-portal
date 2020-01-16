@@ -114,7 +114,7 @@ public class ViewChartMVCResourceCommand extends BaseMVCResourceCommand {
 
 			ChartUtilities.writeChartAsJPEG(outputStream, jFreeChart, 400, 400);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PortletSession portletSession = resourceRequest.getPortletSession();
 
 			PortletContext portletContext = portletSession.getPortletContext();

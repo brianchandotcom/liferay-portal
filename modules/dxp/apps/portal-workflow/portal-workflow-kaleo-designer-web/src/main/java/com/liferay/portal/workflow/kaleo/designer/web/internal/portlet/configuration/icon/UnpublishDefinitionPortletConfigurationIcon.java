@@ -119,9 +119,9 @@ public class UnpublishDefinitionPortletConfigurationIcon
 					return true;
 				}
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}
@@ -142,9 +142,9 @@ public class UnpublishDefinitionPortletConfigurationIcon
 		try {
 			return kaleoDefinitionVersion.getKaleoDefinition();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

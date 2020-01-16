@@ -48,8 +48,8 @@ public class LogUtil {
 			actionResponse.writeTo(
 				new OutputStreamStreamOutput(stringOutputStream));
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		log.info(stringOutputStream);

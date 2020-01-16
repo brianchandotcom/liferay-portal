@@ -1087,7 +1087,7 @@ public class CTStoreTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchFileException nsfe) {
+		catch (NoSuchFileException noSuchFileException) {
 		}
 
 		_assertMethods(readMethod);
@@ -1116,7 +1116,7 @@ public class CTStoreTest {
 
 					Assert.fail();
 				}
-				catch (NoSuchFileException nsfe) {
+				catch (NoSuchFileException noSuchFileException) {
 				}
 
 				_assertMethods(readMethod);
@@ -1195,7 +1195,7 @@ public class CTStoreTest {
 
 					Assert.fail();
 				}
-				catch (NoSuchContentException | NoSuchFileException e) {
+				catch (NoSuchContentException | NoSuchFileException exception) {
 				}
 
 				_assertMethods();
@@ -1212,7 +1212,7 @@ public class CTStoreTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchFileException nsfe) {
+		catch (NoSuchFileException noSuchFileException) {
 		}
 
 		_assertMethods(readMethod);
@@ -1222,7 +1222,7 @@ public class CTStoreTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchFileException nsfe) {
+		catch (NoSuchFileException noSuchFileException) {
 		}
 	}
 
@@ -1328,8 +1328,8 @@ public class CTStoreTest {
 			_HAS_FILE_METHOD = Store.class.getMethod(
 				"hasFile", long.class, long.class, String.class, String.class);
 		}
-		catch (NoSuchMethodException nsme) {
-			throw new ExceptionInInitializerError(nsme);
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new ExceptionInInitializerError(noSuchMethodException);
 		}
 	}
 
@@ -1351,8 +1351,9 @@ public class CTStoreTest {
 			try {
 				return method.invoke(_target, args);
 			}
-			catch (InvocationTargetException ite) {
-				return ReflectionUtil.throwException(ite.getCause());
+			catch (InvocationTargetException invocationTargetException) {
+				return ReflectionUtil.throwException(
+					invocationTargetException.getCause());
 			}
 		}
 

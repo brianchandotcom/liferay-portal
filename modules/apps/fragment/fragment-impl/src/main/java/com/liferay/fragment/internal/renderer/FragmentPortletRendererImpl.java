@@ -54,8 +54,8 @@ public class FragmentPortletRendererImpl implements FragmentPortletRenderer {
 				defaultPreferences, false, null, httpServletRequest,
 				pipingServletResponse);
 		}
-		catch (Exception e) {
-			throw new FragmentEntryContentException(e);
+		catch (Exception exception) {
+			throw new FragmentEntryContentException(exception);
 		}
 
 		return unsyncStringWriter.toString();

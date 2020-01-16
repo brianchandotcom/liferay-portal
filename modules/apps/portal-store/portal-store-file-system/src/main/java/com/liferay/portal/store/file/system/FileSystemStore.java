@@ -62,8 +62,8 @@ public class FileSystemStore implements Store {
 		try {
 			FileUtil.mkdirs(_rootDir);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -78,8 +78,8 @@ public class FileSystemStore implements Store {
 
 			FileUtil.write(fileNameVersionFile, is);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -136,9 +136,9 @@ public class FileSystemStore implements Store {
 		try {
 			return new FileInputStream(fileNameVersionFile);
 		}
-		catch (FileNotFoundException fnfe) {
+		catch (FileNotFoundException fileNotFoundException) {
 			throw new NoSuchFileException(
-				companyId, repositoryId, fileName, fnfe);
+				companyId, repositoryId, fileName, fileNotFoundException);
 		}
 	}
 

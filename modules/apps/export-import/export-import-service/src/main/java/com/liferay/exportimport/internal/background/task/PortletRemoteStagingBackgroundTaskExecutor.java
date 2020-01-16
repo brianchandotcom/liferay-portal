@@ -160,10 +160,11 @@ public class PortletRemoteStagingBackgroundTaskExecutor
 					StagingServiceHttp.cleanUpStagingRequest(
 						httpPrincipal, stagingRequestId);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to clean up the remote live site", pe);
+							"Unable to clean up the remote live site",
+							portalException);
 					}
 				}
 			}

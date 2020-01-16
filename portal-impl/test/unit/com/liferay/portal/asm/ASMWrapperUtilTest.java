@@ -157,8 +157,8 @@ public class ASMWrapperUtilTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Throwable throwable = re.getCause();
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
 
 			Assert.assertSame(NullPointerException.class, throwable.getClass());
 		}
@@ -174,9 +174,10 @@ public class ASMWrapperUtilTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				Object.class + " is not an interface", iae.getMessage());
+				Object.class + " is not an interface",
+				illegalArgumentException.getMessage());
 		}
 	}
 

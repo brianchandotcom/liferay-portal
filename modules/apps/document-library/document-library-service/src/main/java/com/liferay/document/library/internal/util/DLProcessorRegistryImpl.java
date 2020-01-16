@@ -264,15 +264,15 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		try {
 			return fileEntry.getLatestFileVersion(trusted);
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isInfoEnabled()) {
-				_log.info(nsfee, nsfee);
+				_log.info(noSuchFileEntryException, noSuchFileEntryException);
 			}
 
 			return null;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return null;
 		}

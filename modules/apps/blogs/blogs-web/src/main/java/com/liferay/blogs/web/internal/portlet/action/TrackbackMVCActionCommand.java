@@ -96,8 +96,10 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 				entry, themeDisplay, excerpt, url, blogName, title,
 				new ServiceContextFunction(actionRequest));
 		}
-		catch (TrackbackValidationException tve) {
-			sendError(actionRequest, actionResponse, tve.getMessage());
+		catch (TrackbackValidationException trackbackValidationException) {
+			sendError(
+				actionRequest, actionResponse,
+				trackbackValidationException.getMessage());
 
 			return;
 		}
@@ -113,13 +115,13 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			addTrackback(actionRequest, actionResponse);
 		}
-		catch (NoSuchEntryException nsee) {
+		catch (NoSuchEntryException noSuchEntryException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsee, nsee);
+				_log.warn(noSuchEntryException, noSuchEntryException);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -129,11 +131,11 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			return ActionUtil.getEntry(actionRequest);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			throw new TrackbackValidationException(
 				"Blog entry must have guest view permissions to enable " +
 					"trackbacks",
-				pe);
+				principalException);
 		}
 	}
 

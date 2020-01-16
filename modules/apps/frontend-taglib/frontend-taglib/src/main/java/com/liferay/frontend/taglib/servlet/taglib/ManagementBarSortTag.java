@@ -134,7 +134,7 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 						orderByColURL.toString()));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return managementBarFilterItems;

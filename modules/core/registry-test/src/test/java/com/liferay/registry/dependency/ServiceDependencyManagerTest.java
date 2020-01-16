@@ -280,7 +280,7 @@ public class ServiceDependencyManagerTest {
 
 			Assert.assertTrue(dependenciesSatisfied.get());
 		}
-		catch (InterruptedException ie) {
+		catch (InterruptedException interruptedException) {
 		}
 	}
 
@@ -341,7 +341,7 @@ public class ServiceDependencyManagerTest {
 
 			Assert.fail("Dependencies should have timed out");
 		}
-		catch (InterruptedException ie) {
+		catch (InterruptedException interruptedException) {
 		}
 	}
 

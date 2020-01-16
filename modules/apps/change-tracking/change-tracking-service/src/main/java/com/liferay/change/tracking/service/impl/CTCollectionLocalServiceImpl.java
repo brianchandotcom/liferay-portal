@@ -203,8 +203,8 @@ public class CTCollectionLocalServiceImpl
 
 						return preparedStatement.executeUpdate();
 					}
-					catch (Exception e) {
-						throw new SystemException(e);
+					catch (Exception exception) {
+						throw new SystemException(exception);
 					}
 				});
 		}
@@ -334,8 +334,8 @@ public class CTCollectionLocalServiceImpl
 				ctServiceCopier.copy();
 			}
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 
 		_ctServiceRegistry.onAfterCopy(undoCTCollection, newCTCollection);

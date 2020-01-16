@@ -282,8 +282,8 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 			return null;
 		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
+		catch (Exception exception) {
+			throw new IllegalStateException(exception);
 		}
 	}
 
@@ -324,8 +324,8 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 			return null;
 		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
+		catch (Exception exception) {
+			throw new IllegalStateException(exception);
 		}
 	}
 
@@ -347,7 +347,7 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 			return (VerifyProcess)_bundleContext.getService(
 				serviceReferences[0]);
 		}
-		catch (InvalidSyntaxException ise) {
+		catch (InvalidSyntaxException invalidSyntaxException) {
 			throw new IllegalStateException("Unable to get verify process");
 		}
 	}
@@ -383,8 +383,8 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 					company.getCompanyId(), properties);
 			}
 		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
+		catch (Exception exception) {
+			throw new IllegalStateException(exception);
 		}
 	}
 

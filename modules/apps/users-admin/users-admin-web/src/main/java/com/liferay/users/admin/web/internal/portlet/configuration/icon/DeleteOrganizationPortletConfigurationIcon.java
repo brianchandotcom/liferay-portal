@@ -93,7 +93,7 @@ public class DeleteOrganizationPortletConfigurationIcon
 
 			sb.append("');");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return sb.toString();
@@ -125,7 +125,7 @@ public class DeleteOrganizationPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

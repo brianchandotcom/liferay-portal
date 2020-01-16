@@ -798,7 +798,7 @@ public class MetaInfoCacheServletResponseTest {
 		try {
 			metaInfoCacheServletResponse.setBufferSize(2048);
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 	}
 
@@ -1139,7 +1139,7 @@ public class MetaInfoCacheServletResponseTest {
 		try {
 			metaInfoCacheServletResponse.reset();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 	}
 
@@ -1178,7 +1178,7 @@ public class MetaInfoCacheServletResponseTest {
 		try {
 			metaInfoCacheServletResponse.resetBuffer();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 	}
 
@@ -1255,7 +1255,7 @@ public class MetaInfoCacheServletResponseTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 
 		// Set status after commit
@@ -1270,7 +1270,7 @@ public class MetaInfoCacheServletResponseTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 	}
 
@@ -1334,7 +1334,7 @@ public class MetaInfoCacheServletResponseTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 	}
 

@@ -44,8 +44,8 @@ public class GitRepo {
 			content = new String(
 				Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 
 		boolean readOnly = false;

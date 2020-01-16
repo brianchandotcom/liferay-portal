@@ -48,7 +48,7 @@ public class ServletInputStreamAdapter extends ServletInputStream {
 
 			return false;
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return true;
 		}
 	}
@@ -62,7 +62,7 @@ public class ServletInputStreamAdapter extends ServletInputStream {
 
 			return false;
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return false;
 		}
 	}

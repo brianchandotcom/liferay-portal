@@ -151,9 +151,9 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 
 			_enabled = true;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 		}
 	}

@@ -130,13 +130,13 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 				Assert.fail();
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 				Assert.assertEquals(
 					logRecords.toString(), 0, logRecords.size());
 				Assert.assertEquals(
 					"java.lang.IllegalArgumentException: Channel count must " +
 						"be between 1 and " + ClusterLinkImpl.MAX_CHANNEL_COUNT,
-					ise.getMessage());
+					illegalStateException.getMessage());
 			}
 
 			// Test 2, create 0 channels
@@ -148,7 +148,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 				Assert.fail();
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 				Assert.assertEquals(
 					logRecords.toString(), 1, logRecords.size());
 
@@ -160,7 +160,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 				Assert.assertEquals(
 					"java.lang.IllegalArgumentException: Channel count must " +
 						"be between 1 and " + ClusterLinkImpl.MAX_CHANNEL_COUNT,
-					ise.getMessage());
+					illegalStateException.getMessage());
 			}
 		}
 	}

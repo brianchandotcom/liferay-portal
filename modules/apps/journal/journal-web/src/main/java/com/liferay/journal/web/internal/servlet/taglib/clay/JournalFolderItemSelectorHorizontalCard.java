@@ -52,7 +52,7 @@ public class JournalFolderItemSelectorHorizontalCard implements HorizontalCard {
 
 			return rowURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

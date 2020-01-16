@@ -66,8 +66,9 @@ public class FindRecentPostsStrutsAction implements StrutsAction {
 
 			return null;
 		}
-		catch (Exception e) {
-			_portal.sendError(e, httpServletRequest, httpServletResponse);
+		catch (Exception exception) {
+			_portal.sendError(
+				exception, httpServletRequest, httpServletResponse);
 
 			return null;
 		}

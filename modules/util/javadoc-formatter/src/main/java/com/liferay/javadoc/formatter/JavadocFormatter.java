@@ -94,8 +94,8 @@ public class JavadocFormatter {
 		try {
 			new JavadocFormatter(arguments);
 		}
-		catch (Exception e) {
-			ArgumentsUtil.processMainException(arguments, e);
+		catch (Exception exception) {
+			ArgumentsUtil.processMainException(arguments, exception);
 		}
 	}
 
@@ -210,9 +210,9 @@ public class JavadocFormatter {
 				try {
 					_format(fileName);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					throw new RuntimeException(
-						"Unable to format file " + fileName, e);
+						"Unable to format file " + fileName, exception);
 				}
 			}
 		}
@@ -1108,7 +1108,7 @@ public class JavadocFormatter {
 			javaClass = _getJavaClass(
 				fileName, new UnsyncStringReader(originalContent));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (!fileName.contains("__")) {
 				System.out.println(
 					"Qdox parsing error while formatting file " + fileName);
@@ -1355,7 +1355,7 @@ public class JavadocFormatter {
 				JavadocFormatterUtil.getDeprecationsDocument(
 					_deprecationSyncDirName);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_deprecationsDocument = DocumentHelper.createDocument();
 		}
 

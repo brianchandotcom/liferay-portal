@@ -96,12 +96,12 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 
 			SessionMessages.add(actionRequest, "fragmentEntryLinkAdded");
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			String errorMessage = "an-unexpected-error-occurred";
 
-			if (e instanceof NoSuchEntryException) {
+			if (exception instanceof NoSuchEntryException) {
 				errorMessage =
 					"the-fragment-can-no-longer-be-added-because-it-has-been-" +
 						"deleted";

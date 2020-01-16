@@ -82,12 +82,12 @@ public class GridDDMFormFieldValueValidator
 		try {
 			return jsonFactory.createJSONObject(json);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsone, jsone);
+				_log.debug(jsonException, jsonException);
 			}
 
 			throw new IllegalStateException(

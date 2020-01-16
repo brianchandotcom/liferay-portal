@@ -94,10 +94,10 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 				resourceRequest, resourceResponse, "users.csv", csv.getBytes(),
 				ContentTypes.TEXT_CSV_UTF8);
 		}
-		catch (Exception e) {
-			SessionErrors.add(resourceRequest, e.getClass());
+		catch (Exception exception) {
+			SessionErrors.add(resourceRequest, exception.getClass());
 
-			_log.error(e, e);
+			_log.error(exception, exception);
 		}
 	}
 

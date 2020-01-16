@@ -94,7 +94,7 @@ public class MBDiscussionStagedModelDataHandler
 
 			return assetEntry.getTitleCurrentValue();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return discussion.getUuid();
 		}
 	}

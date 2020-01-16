@@ -89,8 +89,8 @@ public class FileTimestampUtil {
 				timestamp = URLUtil.getLastModifiedTime(url);
 			}
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 		}
 
 		timestamps.put(path, timestamp);

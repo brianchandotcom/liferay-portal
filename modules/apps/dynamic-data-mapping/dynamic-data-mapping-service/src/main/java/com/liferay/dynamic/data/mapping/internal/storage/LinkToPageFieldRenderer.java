@@ -83,9 +83,9 @@ public class LinkToPageFieldRenderer extends BaseFieldRenderer {
 		try {
 			jsonObject = _jsonFactory.createJSONObject(value);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse JSON", jsone);
+				_log.debug("Unable to parse JSON", jsonException);
 			}
 
 			return StringPool.BLANK;
@@ -100,9 +100,9 @@ public class LinkToPageFieldRenderer extends BaseFieldRenderer {
 				groupId, privateLayout, layoutId,
 				_language.getLanguageId(locale));
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchLayoutException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchLayoutException ||
+				exception instanceof PrincipalException) {
 
 				return _language.format(
 					locale, "is-temporarily-unavailable", "content");

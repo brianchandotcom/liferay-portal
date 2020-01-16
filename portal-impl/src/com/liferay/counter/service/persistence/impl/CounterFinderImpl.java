@@ -79,8 +79,8 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 
 			return list;
 		}
-		catch (SQLException sqle) {
-			throw processException(sqle);
+		catch (SQLException sqlException) {
+			throw processException(sqlException);
 		}
 		finally {
 			DataAccess.cleanUp(connection, preparedStatement, resultSet);
@@ -141,10 +141,10 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 
 				preparedStatement.executeUpdate();
 			}
-			catch (ObjectNotFoundException onfe) {
+			catch (ObjectNotFoundException objectNotFoundException) {
 			}
-			catch (Exception e) {
-				throw processException(e);
+			catch (Exception exception) {
+				throw processException(exception);
 			}
 			finally {
 				DataAccess.cleanUp(connection, preparedStatement);
@@ -173,10 +173,10 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 
 				session.flush();
 			}
-			catch (ObjectNotFoundException onfe) {
+			catch (ObjectNotFoundException objectNotFoundException) {
 			}
-			catch (Exception e) {
-				throw processException(e);
+			catch (Exception exception) {
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -229,8 +229,8 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 				}
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 
 		int rangeSize = getRangeSize(name);
@@ -342,8 +342,8 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 			try {
 				competeLatch.await();
 			}
-			catch (InterruptedException ie) {
-				throw processException(ie);
+			catch (InterruptedException interruptedException) {
+				throw processException(interruptedException);
 			}
 
 			// Compete again
@@ -371,8 +371,8 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 				counterRegister.setCounterHolder(newCounterHolder);
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 
@@ -413,8 +413,8 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 
 			return counterHolder;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);

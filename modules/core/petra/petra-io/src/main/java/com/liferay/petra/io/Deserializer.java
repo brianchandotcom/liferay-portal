@@ -154,8 +154,8 @@ public class Deserializer {
 
 				return (T)objectInputStream.readObject();
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 		}
 

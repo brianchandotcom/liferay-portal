@@ -84,8 +84,8 @@ public class SyncDLObjectFinderImpl
 
 			return (List<Long>)sqlQuery.list();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -148,8 +148,8 @@ public class SyncDLObjectFinderImpl
 			return (List<SyncDLObject>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

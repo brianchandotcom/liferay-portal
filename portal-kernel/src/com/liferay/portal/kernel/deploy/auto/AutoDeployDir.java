@@ -197,8 +197,8 @@ public class AutoDeployDir {
 					_log.info("Auto deploy scanner started for " + _deployDir);
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
 				stop();
 			}
@@ -271,8 +271,8 @@ public class AutoDeployDir {
 
 			return;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		if (_log.isInfoEnabled()) {

@@ -106,7 +106,7 @@ public class KBArticleExportImportPortletPreferencesProcessor
 			portletPreferences.setValue(
 				"resourcePrimKey", String.valueOf(resourcePrimKey));
 		}
-		catch (ReadOnlyException roe) {
+		catch (ReadOnlyException readOnlyException) {
 			StringBundler sb = new StringBundler(7);
 
 			sb.append("Unable to save converted portlet preference ");
@@ -117,7 +117,7 @@ public class KBArticleExportImportPortletPreferencesProcessor
 			sb.append(portletDataContext.getPortletId());
 			sb.append(")");
 
-			throw new PortletDataException(sb.toString(), roe);
+			throw new PortletDataException(sb.toString(), readOnlyException);
 		}
 
 		return portletPreferences;

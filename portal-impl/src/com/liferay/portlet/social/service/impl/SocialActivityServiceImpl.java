@@ -805,7 +805,7 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 						return true;
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 			}
 		}

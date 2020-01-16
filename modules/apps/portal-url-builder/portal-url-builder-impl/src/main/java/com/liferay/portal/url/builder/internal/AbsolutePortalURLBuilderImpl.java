@@ -262,11 +262,13 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		try {
 			cdnHost = _portal.getCDNHost(httpServletRequest);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			cdnHost = StringPool.BLANK;
 
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to retrieve CDN host from request", pe);
+				_log.warn(
+					"Unable to retrieve CDN host from request",
+					portalException);
 			}
 		}
 

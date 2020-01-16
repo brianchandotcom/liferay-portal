@@ -59,26 +59,26 @@ public class DLPortletToolbarContributorHelper {
 
 			rootFolderId = dlPortletInstanceSettings.getRootFolderId();
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			try {
 				folder = _dlAppLocalService.getFolder(rootFolderId);
 			}
-			catch (NoSuchFolderException | PrincipalException e) {
+			catch (NoSuchFolderException | PrincipalException exception) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 
 				folder = null;
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 

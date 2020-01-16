@@ -145,8 +145,8 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 					className, ClassPathUtil.getFile(resourceURL),
 					resourceName);
 			}
-			catch (IOException ioe) {
-				_log.error(ioe.getMessage(), ioe);
+			catch (IOException ioException) {
+				_log.error(ioException.getMessage(), ioException);
 			}
 		}
 		else if (protocol.equals("vfs")) {
@@ -154,8 +154,9 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				return new VfsJavaFileObject(
 					className, resourceURL, resourceName);
 			}
-			catch (MalformedURLException murle) {
-				_log.error(murle.getMessage(), murle);
+			catch (MalformedURLException malformedURLException) {
+				_log.error(
+					malformedURLException.getMessage(), malformedURLException);
 			}
 		}
 
@@ -199,8 +200,8 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 					urls = Collections.list(enumeration);
 				}
 			}
-			catch (IOException ioe) {
-				_log.error(ioe.getMessage(), ioe);
+			catch (IOException ioException) {
+				_log.error(ioException.getMessage(), ioException);
 			}
 		}
 
@@ -263,8 +264,8 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 					}
 				}
 			}
-			catch (IOException ioe) {
-				_log.error(ioe.getMessage(), ioe);
+			catch (IOException ioException) {
+				_log.error(ioException.getMessage(), ioException);
 			}
 		}
 

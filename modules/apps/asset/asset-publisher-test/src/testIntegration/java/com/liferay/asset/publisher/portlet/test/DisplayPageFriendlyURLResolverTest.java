@@ -170,8 +170,8 @@ public class DisplayPageFriendlyURLResolverTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchLayoutException nsle) {
-			_assertCause(nsle, urlTitle);
+		catch (NoSuchLayoutException noSuchLayoutException) {
+			_assertCause(noSuchLayoutException, urlTitle);
 		}
 	}
 
@@ -188,8 +188,8 @@ public class DisplayPageFriendlyURLResolverTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchLayoutException nsle) {
-			_assertCause(nsle, urlTitle);
+		catch (NoSuchLayoutException noSuchLayoutException) {
+			_assertCause(noSuchLayoutException, urlTitle);
 		}
 	}
 
@@ -209,8 +209,8 @@ public class DisplayPageFriendlyURLResolverTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchLayoutException nsle) {
-			_assertCause(nsle, urlTitle);
+		catch (NoSuchLayoutException noSuchLayoutException) {
+			_assertCause(noSuchLayoutException, urlTitle);
 		}
 	}
 

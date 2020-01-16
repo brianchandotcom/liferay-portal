@@ -64,8 +64,8 @@ public class JabberMessageListener implements MessageListener {
 
 			EntryLocalServiceUtil.addEntry(fromUserId, _userId, body);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -74,8 +74,10 @@ public class JabberMessageListener implements MessageListener {
 			return ConfigurationProviderUtil.getCompanyConfiguration(
 				ChatGroupServiceConfiguration.class, _companyId);
 		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to load chat group service configuration", ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(
+				"Unable to load chat group service configuration",
+				configurationException);
 		}
 
 		return null;

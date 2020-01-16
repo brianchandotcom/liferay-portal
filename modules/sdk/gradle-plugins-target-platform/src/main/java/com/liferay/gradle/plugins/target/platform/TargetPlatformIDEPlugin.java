@@ -171,7 +171,7 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 						sb.toString());
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				Logger logger = project.getLogger();
 
 				if (logger.isWarnEnabled()) {

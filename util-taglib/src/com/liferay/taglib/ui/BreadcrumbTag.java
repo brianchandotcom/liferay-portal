@@ -134,7 +134,7 @@ public class BreadcrumbTag extends IncludeTag {
 			breadcrumbEntries = BreadcrumbUtil.getBreadcrumbEntries(
 				httpServletRequest, ArrayUtil.toIntArray(breadcrumbEntryTypes));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return breadcrumbEntries;

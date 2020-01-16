@@ -223,7 +223,7 @@ public class BookmarksUtil {
 
 				entries.add(obj);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Bookmarks search index is stale and contains entry " +

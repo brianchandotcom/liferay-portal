@@ -81,8 +81,8 @@ public class TrashEntryVerticalCard extends BaseVerticalCard {
 			return trashViewContentActionDropdownItemsProvider.
 				getActionDropdownItems();
 		}
-		catch (Exception e) {
-			_log.error("Unable to get trash entry actions", e);
+		catch (Exception exception) {
+			_log.error("Unable to get trash entry actions", exception);
 		}
 
 		return Collections.emptyList();
@@ -103,8 +103,9 @@ public class TrashEntryVerticalCard extends BaseVerticalCard {
 		try {
 			return _trashRenderer.getIconCssClass();
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to get trash renderer icon css class", pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get trash renderer icon css class", portalException);
 		}
 
 		return "magic";

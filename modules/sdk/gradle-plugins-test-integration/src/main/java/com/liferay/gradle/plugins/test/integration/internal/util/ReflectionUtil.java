@@ -29,7 +29,7 @@ public class ReflectionUtil {
 		try {
 			return clazz.getMethod(name, parameterTypes);
 		}
-		catch (NoSuchMethodException nsme) {
+		catch (NoSuchMethodException noSuchMethodException) {
 			return null;
 		}
 	}

@@ -97,13 +97,13 @@ public class PublishArticleMVCActionCommand extends BaseMVCActionCommand {
 				return latestApprovedJournalArticle;
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
 						"Unable to get journal article by group ", groupId,
 						" and article ID ", articleId),
-					pe);
+					portalException);
 			}
 		}
 

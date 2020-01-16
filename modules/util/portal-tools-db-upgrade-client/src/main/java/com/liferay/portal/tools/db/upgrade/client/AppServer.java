@@ -168,8 +168,8 @@ public class AppServer {
 				_dir = _dir.getCanonicalFile();
 			}
 		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		catch (IOException ioException) {
+			ioException.printStackTrace();
 		}
 	}
 

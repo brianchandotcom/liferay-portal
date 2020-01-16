@@ -95,8 +95,8 @@ public class LARImporter extends BaseImporter {
 			setPublicLARInputStream(
 				new BufferedInputStream(new FileInputStream(file)));
 		}
-		catch (FileNotFoundException fnfe) {
-			_log.error(fnfe, fnfe);
+		catch (FileNotFoundException fileNotFoundException) {
+			_log.error(fileNotFoundException, fileNotFoundException);
 		}
 	}
 

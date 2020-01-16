@@ -65,10 +65,11 @@ public class LockProtectedAction<T> {
 			try {
 				Thread.sleep(_retryDelay);
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Interrupted while waiting to reacquire lock", ie);
+						"Interrupted while waiting to reacquire lock",
+						interruptedException);
 				}
 			}
 		}

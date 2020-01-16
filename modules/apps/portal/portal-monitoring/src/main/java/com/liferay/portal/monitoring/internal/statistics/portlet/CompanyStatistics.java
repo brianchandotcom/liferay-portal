@@ -50,9 +50,9 @@ public class CompanyStatistics
 
 			_webId = webId;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new IllegalStateException(
-				"Unable to get company with web id " + webId, e);
+				"Unable to get company with web id " + webId, exception);
 		}
 	}
 

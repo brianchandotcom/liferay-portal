@@ -42,8 +42,8 @@ public class DocumentumFileVersion implements ExtRepositoryFileVersion {
 		try {
 			return _idfDocument.getLogEntry();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -54,8 +54,8 @@ public class DocumentumFileVersion implements ExtRepositoryFileVersion {
 
 			return creationDate.getDate();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -66,8 +66,8 @@ public class DocumentumFileVersion implements ExtRepositoryFileVersion {
 
 			return idfId.getId() + StringPool.AT + getVersion();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -85,8 +85,8 @@ public class DocumentumFileVersion implements ExtRepositoryFileVersion {
 		try {
 			return _idfDocument.getOwnerName();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -95,8 +95,8 @@ public class DocumentumFileVersion implements ExtRepositoryFileVersion {
 		try {
 			return _idfDocument.getContentSize();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -105,8 +105,8 @@ public class DocumentumFileVersion implements ExtRepositoryFileVersion {
 		try {
 			return _idfDocument.getVersionLabel(0);
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 

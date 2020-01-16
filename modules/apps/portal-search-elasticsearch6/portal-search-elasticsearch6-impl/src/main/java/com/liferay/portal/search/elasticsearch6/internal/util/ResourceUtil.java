@@ -36,9 +36,9 @@ public class ResourceUtil {
 
 			return StringUtil.read(inputStream);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to load resource: " + resourceName, ioe);
+				"Unable to load resource: " + resourceName, ioException);
 		}
 	}
 

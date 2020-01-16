@@ -32,7 +32,7 @@ public class UpgradeSamlSpAuthRequest extends UpgradeProcess {
 				"alter_column_type SamlSpAuthRequest samlIdpEntityId " +
 					"VARCHAR(1024) null");
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			upgradeTable(
 				SamlSpAuthRequestTable.TABLE_NAME,
 				SamlSpAuthRequestTable.TABLE_COLUMNS,

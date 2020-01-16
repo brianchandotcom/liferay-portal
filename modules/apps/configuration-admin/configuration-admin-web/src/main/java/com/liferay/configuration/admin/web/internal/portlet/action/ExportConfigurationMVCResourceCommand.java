@@ -85,8 +85,8 @@ public class ExportConfigurationMVCResourceCommand
 				exportAll(resourceRequest, resourceResponse);
 			}
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		return false;

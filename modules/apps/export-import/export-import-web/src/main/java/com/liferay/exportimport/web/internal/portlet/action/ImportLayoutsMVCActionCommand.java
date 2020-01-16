@@ -105,7 +105,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			_layoutService.addTempFileEntry(
 				groupId, folderName, sourceFileName, inputStream, contentType);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			UploadException uploadException =
 				(UploadException)actionRequest.getAttribute(
 					WebKeys.UPLOAD_EXCEPTION);
@@ -128,7 +128,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}
@@ -171,7 +171,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 			jsonObject.put("deleted", Boolean.TRUE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String errorMessage = themeDisplay.translate(
 				"an-unexpected-error-occurred-while-deleting-the-file");
 
@@ -234,7 +234,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (cmd.equals(Constants.ADD_TEMP) ||
 				cmd.equals(Constants.DELETE_TEMP)) {
 
@@ -242,22 +242,23 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 				handleUploadException(
 					actionRequest, actionResponse,
-					ExportImportHelper.TEMP_FOLDER_NAME, e);
+					ExportImportHelper.TEMP_FOLDER_NAME, exception);
 			}
 			else {
-				if (e instanceof LARFileException ||
-					e instanceof LARFileSizeException ||
-					e instanceof LARTypeException) {
+				if (exception instanceof LARFileException ||
+					exception instanceof LARFileSizeException ||
+					exception instanceof LARTypeException) {
 
-					SessionErrors.add(actionRequest, e.getClass());
+					SessionErrors.add(actionRequest, exception.getClass());
 				}
-				else if (e instanceof LayoutPrototypeException ||
-						 e instanceof LocaleException) {
+				else if (exception instanceof LayoutPrototypeException ||
+						 exception instanceof LocaleException) {
 
-					SessionErrors.add(actionRequest, e.getClass(), e);
+					SessionErrors.add(
+						actionRequest, exception.getClass(), exception);
 				}
 				else {
-					_log.error(e, e);
+					_log.error(exception, exception);
 
 					SessionErrors.add(
 						actionRequest, LayoutImportException.class.getName());

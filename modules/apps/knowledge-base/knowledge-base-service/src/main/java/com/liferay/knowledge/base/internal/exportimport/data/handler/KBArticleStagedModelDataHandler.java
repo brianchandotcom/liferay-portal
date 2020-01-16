@@ -326,12 +326,14 @@ public class KBArticleStagedModelDataHandler
 					importedKBArticle.getAttachmentsFolderId(), inputStream,
 					fileEntry.getFileName(), fileEntry.getMimeType(), true);
 			}
-			catch (DuplicateFileEntryException dfee) {
+			catch (DuplicateFileEntryException duplicateFileEntryException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(dfee, dfee);
+					_log.debug(
+						duplicateFileEntryException,
+						duplicateFileEntryException);
 				}
 			}
 		}
@@ -459,12 +461,12 @@ public class KBArticleStagedModelDataHandler
 			try {
 				return FileEntryUtil.getContentStream(fileEntry);
 			}
-			catch (NoSuchFileException nsfe) {
+			catch (NoSuchFileException noSuchFileException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsfe, nsfe);
+					_log.debug(noSuchFileException, noSuchFileException);
 				}
 
 				return null;

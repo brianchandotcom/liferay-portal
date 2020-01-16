@@ -91,13 +91,13 @@ public class VirtualHostLocalServiceImpl
 		try {
 			return virtualHostPersistence.findByHostname(hostname);
 		}
-		catch (NoSuchVirtualHostException nsvhe) {
+		catch (NoSuchVirtualHostException noSuchVirtualHostException) {
 			if (hostname.contains("xn--")) {
 				return virtualHostPersistence.findByHostname(
 					IDN.toUnicode(hostname));
 			}
 
-			throw nsvhe;
+			throw noSuchVirtualHostException;
 		}
 	}
 

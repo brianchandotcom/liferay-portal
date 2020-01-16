@@ -50,9 +50,9 @@ public class ReplicasManagerImpl implements ReplicasManager {
 
 			LogUtil.logActionResponse(_log, actionResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to update number of replicas", e);
+				_log.warn("Unable to update number of replicas", exception);
 			}
 		}
 	}

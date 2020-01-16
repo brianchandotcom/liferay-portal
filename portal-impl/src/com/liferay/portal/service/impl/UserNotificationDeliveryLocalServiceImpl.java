@@ -68,12 +68,15 @@ public class UserNotificationDeliveryLocalServiceImpl
 			userNotificationDeliveryPersistence.removeByU_P_C_N_D(
 				userId, portletId, classNameId, notificationType, deliveryType);
 		}
-		catch (NoSuchUserNotificationDeliveryException nsunde) {
+		catch (NoSuchUserNotificationDeliveryException
+					noSuchUserNotificationDeliveryException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsunde, nsunde);
+				_log.debug(
+					noSuchUserNotificationDeliveryException,
+					noSuchUserNotificationDeliveryException);
 			}
 		}
 	}

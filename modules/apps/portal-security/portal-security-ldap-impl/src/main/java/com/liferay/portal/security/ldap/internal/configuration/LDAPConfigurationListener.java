@@ -69,10 +69,10 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 				configurationProvider.registerConfiguration(configuration);
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new SystemException(
 				"Unable to load configuration " + configurationEvent.getPid(),
-				ioe);
+				ioException);
 		}
 	}
 
@@ -118,9 +118,9 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to register configurations", e);
+				_log.warn("Unable to register configurations", exception);
 			}
 		}
 	}

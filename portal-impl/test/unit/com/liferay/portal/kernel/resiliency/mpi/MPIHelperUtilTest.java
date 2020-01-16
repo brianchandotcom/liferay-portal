@@ -305,7 +305,7 @@ public class MPIHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 
 		try (CaptureHandler captureHandler =
@@ -404,7 +404,7 @@ public class MPIHelperUtilTest {
 
 				Assert.fail();
 			}
-			catch (NullPointerException npe) {
+			catch (NullPointerException nullPointerException) {
 			}
 
 			// Unregister SPI provider, nonexistent name, with log
@@ -761,7 +761,7 @@ public class MPIHelperUtilTest {
 
 				Assert.fail();
 			}
-			catch (NullPointerException npe) {
+			catch (NullPointerException nullPointerException) {
 			}
 
 			// No such SPI provider, with log
@@ -897,8 +897,8 @@ public class MPIHelperUtilTest {
 
 				Assert.fail();
 			}
-			catch (RuntimeException re) {
-				Throwable throwable = re.getCause();
+			catch (RuntimeException runtimeException) {
+				Throwable throwable = runtimeException.getCause();
 
 				Assert.assertSame(RemoteException.class, throwable.getClass());
 			}
@@ -1113,8 +1113,8 @@ public class MPIHelperUtilTest {
 
 				Assert.fail();
 			}
-			catch (RuntimeException re) {
-				throwable = re.getCause();
+			catch (RuntimeException runtimeException) {
+				throwable = runtimeException.getCause();
 
 				Assert.assertSame(RemoteException.class, throwable.getClass());
 			}

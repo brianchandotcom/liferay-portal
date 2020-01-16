@@ -69,8 +69,9 @@ public class PortletModeFactory {
 						}
 					}
 				}
-				catch (IllegalAccessException iae) {
-					throw new ExceptionInInitializerError(iae);
+				catch (IllegalAccessException illegalAccessException) {
+					throw new ExceptionInInitializerError(
+						illegalAccessException);
 				}
 			}
 		};

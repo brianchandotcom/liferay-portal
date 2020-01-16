@@ -75,9 +75,9 @@ public class DBInitUtil {
 					"alter table Release_ add mvccVersion LONG default 0 not " +
 						"null");
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e.getMessage());
+					_log.debug(exception.getMessage());
 				}
 			}
 
@@ -86,9 +86,9 @@ public class DBInitUtil {
 					connection,
 					"alter table Release_ add schemaVersion VARCHAR(75) null");
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e.getMessage());
+					_log.debug(exception.getMessage());
 				}
 			}
 
@@ -155,9 +155,9 @@ public class DBInitUtil {
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage(), e);
+				_log.debug(exception.getMessage(), exception);
 			}
 		}
 

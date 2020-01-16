@@ -60,8 +60,8 @@ public class InetAddressTask extends Task {
 					_vmId2Property, String.valueOf(id * 2));
 			}
 		}
-		catch (UnknownHostException uhe) {
-			throw new BuildException(uhe);
+		catch (UnknownHostException unknownHostException) {
+			throw new BuildException(unknownHostException);
 		}
 	}
 

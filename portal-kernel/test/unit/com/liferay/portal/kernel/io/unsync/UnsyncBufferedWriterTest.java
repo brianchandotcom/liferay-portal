@@ -98,7 +98,7 @@ public class UnsyncBufferedWriterTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -106,7 +106,7 @@ public class UnsyncBufferedWriterTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -114,7 +114,7 @@ public class UnsyncBufferedWriterTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -122,7 +122,7 @@ public class UnsyncBufferedWriterTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 	}
 

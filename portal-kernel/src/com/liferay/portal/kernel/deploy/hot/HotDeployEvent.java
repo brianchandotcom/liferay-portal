@@ -58,8 +58,8 @@ public class HotDeployEvent {
 		try {
 			initDependentServletContextNames();
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 		}
 	}
 

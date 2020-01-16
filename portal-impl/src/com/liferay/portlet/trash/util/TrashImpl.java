@@ -253,7 +253,7 @@ public class TrashImpl implements Trash {
 
 				entries.add(entry);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
@@ -579,7 +579,7 @@ public class TrashImpl implements Trash {
 				title = trashEntry.getTypeSettingsProperty(paramName);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No trash entry or trash version exists with ID " +

@@ -69,7 +69,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 					template.getClassPK());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

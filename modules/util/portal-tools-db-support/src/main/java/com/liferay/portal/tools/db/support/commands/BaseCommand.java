@@ -39,12 +39,12 @@ public abstract class BaseCommand implements Command {
 
 			connection.commit();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (connection != null) {
 				connection.rollback();
 			}
 
-			throw e;
+			throw exception;
 		}
 		finally {
 			if (connection != null) {

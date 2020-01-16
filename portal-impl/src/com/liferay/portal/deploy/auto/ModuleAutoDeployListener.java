@@ -68,8 +68,8 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 
 			manifest = jarInputStream.getManifest();
 		}
-		catch (IOException ioe) {
-			throw new AutoDeployException(ioe);
+		catch (IOException ioException) {
+			throw new AutoDeployException(ioException);
 		}
 
 		if (manifest == null) {

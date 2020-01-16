@@ -97,7 +97,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 					newPreferences = convertStagingPreferencesToJSON(
 						oldPreferences);
 				}
-				catch (DocumentException de) {
+				catch (DocumentException documentException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(

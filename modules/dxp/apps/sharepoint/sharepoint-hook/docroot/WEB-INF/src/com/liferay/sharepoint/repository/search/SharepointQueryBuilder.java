@@ -256,13 +256,15 @@ public class SharepointQueryBuilder {
 
 				return prefixPath + folderPath;
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				throw new SearchException(
-					"Unable to get folder with folder ID" + folderId, pe);
+					"Unable to get folder with folder ID" + folderId,
+					portalException);
 			}
-			catch (SystemException se) {
+			catch (SystemException systemException) {
 				throw new SearchException(
-					"Unable to get folder with folder ID" + folderId, se);
+					"Unable to get folder with folder ID" + folderId,
+					systemException);
 			}
 		}
 		else if (fieldName.equals(Field.CREATE_DATE) ||

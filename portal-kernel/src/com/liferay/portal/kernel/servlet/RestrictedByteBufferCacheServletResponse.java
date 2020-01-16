@@ -144,11 +144,11 @@ public class RestrictedByteBufferCacheServletResponse
 			try {
 				flushCache();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new IllegalStateException(
 					"Unable to transfer restricted byte buffer to underneath" +
 						"response's buffer",
-					ioe);
+					ioException);
 			}
 		}
 	}

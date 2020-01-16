@@ -59,11 +59,12 @@ public class VersionsXmlReportRenderer implements ReportRenderer {
 		try {
 			_render(projectData);
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
-		catch (Exception e) {
-			throw new GradleException("Unable to render " + projectData, e);
+		catch (Exception exception) {
+			throw new GradleException(
+				"Unable to render " + projectData, exception);
 		}
 	}
 

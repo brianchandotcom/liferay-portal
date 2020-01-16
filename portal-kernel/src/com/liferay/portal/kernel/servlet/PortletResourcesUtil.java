@@ -61,7 +61,7 @@ public class PortletResourcesUtil {
 				return url;
 			}
 		}
-		catch (MalformedURLException murle) {
+		catch (MalformedURLException malformedURLException) {
 		}
 
 		return null;

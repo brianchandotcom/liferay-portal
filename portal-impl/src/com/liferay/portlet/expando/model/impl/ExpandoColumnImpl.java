@@ -106,7 +106,7 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 
 			return value.getString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -141,8 +141,8 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 			try {
 				_typeSettingsProperties.load(super.getTypeSettings());
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 

@@ -95,14 +95,14 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 					return false;
 				}
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
 							"Entity with ClassPK: ", classPK,
 							" and ClassNameId: ", classNameId,
 							" is not categorizable"),
-						pe);
+						portalException);
 				}
 
 				return false;

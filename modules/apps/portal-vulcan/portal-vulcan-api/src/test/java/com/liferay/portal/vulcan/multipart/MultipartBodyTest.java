@@ -95,10 +95,11 @@ public class MultipartBodyTest {
 
 			throw new AssertionError("Should thrown exception");
 		}
-		catch (Exception e) {
-			assertThat(e, is(instanceOf(BadRequestException.class)));
+		catch (Exception exception) {
+			assertThat(exception, is(instanceOf(BadRequestException.class)));
 			assertThat(
-				e.getMessage(), is("Missing JSON property with the key: null"));
+				exception.getMessage(),
+				is("Missing JSON property with the key: null"));
 		}
 
 		// Without object mapper
@@ -112,14 +113,15 @@ public class MultipartBodyTest {
 
 			throw new AssertionError();
 		}
-		catch (Exception e) {
-			assertThat(e, is(instanceOf(InternalServerErrorException.class)));
+		catch (Exception exception) {
+			assertThat(
+				exception, is(instanceOf(InternalServerErrorException.class)));
 
 			String expectedMessage =
 				"Unable to get object mapper for class " +
 					TestClass.class.getName();
 
-			assertThat(e.getMessage(), is(expectedMessage));
+			assertThat(exception.getMessage(), is(expectedMessage));
 		}
 	}
 
@@ -178,8 +180,9 @@ public class MultipartBodyTest {
 
 			throw new AssertionError();
 		}
-		catch (Exception e) {
-			assertThat(e, is(instanceOf(UnrecognizedPropertyException.class)));
+		catch (Exception exception) {
+			assertThat(
+				exception, is(instanceOf(UnrecognizedPropertyException.class)));
 		}
 	}
 

@@ -38,8 +38,8 @@ public class AssetCategoryPermissionCheckerImpl
 			return AssetCategoryPermission.contains(
 				_permissionChecker, assetCategory, ActionKeys.VIEW);
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

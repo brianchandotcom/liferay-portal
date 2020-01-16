@@ -150,8 +150,8 @@ public class ServicePreAction extends Action {
 		try {
 			servicePre(httpServletRequest, httpServletResponse, true);
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -913,12 +913,12 @@ public class ServicePreAction extends Action {
 		try {
 			user = PortalUtil.initUser(httpServletRequest);
 		}
-		catch (NoSuchUserException nsue) {
+		catch (NoSuchUserException noSuchUserException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsue, nsue);
+				_log.debug(noSuchUserException, noSuchUserException);
 			}
 
 			return null;
@@ -985,7 +985,7 @@ public class ServicePreAction extends Action {
 
 			CookieKeys.validateSupportCookie(httpServletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			CookieKeys.addSupportCookie(
 				httpServletRequest, httpServletResponse);
 		}
@@ -1867,9 +1867,9 @@ public class ServicePreAction extends Action {
 					previousGroup = GroupLocalServiceUtil.getGroup(
 						previousGroupId.longValue());
 				}
-				catch (NoSuchGroupException nsge) {
+				catch (NoSuchGroupException noSuchGroupException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(nsge, nsge);
+						_log.warn(noSuchGroupException, noSuchGroupException);
 					}
 
 					return layouts;

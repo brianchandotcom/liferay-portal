@@ -119,7 +119,7 @@ public abstract class BaseAssetInfoDisplayContributor<T>
 
 			return new AssetInfoDisplayObjectProvider(assetEntry);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

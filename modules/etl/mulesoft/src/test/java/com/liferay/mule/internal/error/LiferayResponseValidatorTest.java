@@ -113,10 +113,10 @@ public class LiferayResponseValidatorTest {
 
 			Assert.fail();
 		}
-		catch (ModuleException me) {
-			Assert.assertEquals(liferayError, me.getType());
+		catch (ModuleException moduleException) {
+			Assert.assertEquals(liferayError, moduleException.getType());
 
-			throw me;
+			throw moduleException;
 		}
 	}
 

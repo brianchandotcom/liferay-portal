@@ -69,8 +69,9 @@ public class URLCodec {
 				try {
 					charBuffer = charsetDecoder.decode(byteBuffer);
 				}
-				catch (CharacterCodingException cce) {
-					_log.error(cce, cce);
+				catch (CharacterCodingException characterCodingException) {
+					_log.error(
+						characterCodingException, characterCodingException);
 
 					return StringPool.BLANK;
 				}
@@ -184,8 +185,8 @@ public class URLCodec {
 			try {
 				byteBuffer = charsetEncoder.encode(charBuffer);
 			}
-			catch (CharacterCodingException cce) {
-				_log.error(cce, cce);
+			catch (CharacterCodingException characterCodingException) {
+				_log.error(characterCodingException, characterCodingException);
 
 				return StringPool.BLANK;
 			}

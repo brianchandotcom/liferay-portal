@@ -50,9 +50,10 @@ public class XMLHelper {
 		try {
 			return anyContentType.get_any()[0].getAsDOM();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SharepointRuntimeException(
-				"Unable to parse response from the Sharepoint server", e);
+				"Unable to parse response from the Sharepoint server",
+				exception);
 		}
 	}
 
@@ -86,8 +87,10 @@ public class XMLHelper {
 		try {
 			transformer = transformerFactory.newTransformer();
 		}
-		catch (TransformerConfigurationException tce) {
-			throw new RuntimeException(tce);
+		catch (TransformerConfigurationException
+					transformerConfigurationException) {
+
+			throw new RuntimeException(transformerConfigurationException);
 		}
 
 		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
@@ -98,8 +101,8 @@ public class XMLHelper {
 			transformer.transform(
 				new DOMSource(element), new StreamResult(stringWriter));
 		}
-		catch (TransformerException te) {
-			throw new RuntimeException(te);
+		catch (TransformerException transformerException) {
+			throw new RuntimeException(transformerException);
 		}
 
 		StringBuffer stringBuffer = stringWriter.getBuffer();
@@ -123,14 +126,14 @@ public class XMLHelper {
 
 			return document.getDocumentElement();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
-		catch (ParserConfigurationException pce) {
-			throw new RuntimeException(pce);
+		catch (ParserConfigurationException parserConfigurationException) {
+			throw new RuntimeException(parserConfigurationException);
 		}
-		catch (SAXException saxe) {
-			throw new RuntimeException(saxe);
+		catch (SAXException saxException) {
+			throw new RuntimeException(saxException);
 		}
 	}
 

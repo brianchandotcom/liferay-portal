@@ -125,7 +125,7 @@ public class ConfigurationModelToDDMFormConverter {
 			try {
 				return DDMFormFactory.create(formClass);
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 			}
 		}
 

@@ -82,8 +82,8 @@ public class AssetLinkFinderImpl
 
 			return (List<AssetLink>)QueryUtil.list(q, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -115,8 +115,8 @@ public class AssetLinkFinderImpl
 
 			return q.list();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

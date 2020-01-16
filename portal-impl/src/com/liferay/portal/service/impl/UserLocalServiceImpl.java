@@ -432,8 +432,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			addDefaultRolesAndTeams(groupId, new long[] {userId});
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -498,8 +498,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			reindex(userId);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -516,8 +516,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			reindex(user);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -581,8 +581,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			reindex(userId);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -599,8 +599,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			reindex(user);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -648,8 +648,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			reindex(userId);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -666,8 +666,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			reindex(user);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -802,8 +802,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			reindex(userId);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -838,8 +838,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			addUserGroupUsers(userGroupId, ArrayUtil.toLongArray(userIds));
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -971,8 +971,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				screenName = screenNameGenerator.generate(
 					companyId, userId, emailAddress);
 			}
-			catch (Exception e) {
-				throw new SystemException(e);
+			catch (Exception exception) {
+				throw new SystemException(exception);
 			}
 		}
 
@@ -1564,8 +1564,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to authenticate for JAAS", e);
+		catch (Exception exception) {
+			_log.error("Unable to authenticate for JAAS", exception);
 		}
 
 		return false;
@@ -1771,8 +1771,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			name = Encryptor.decrypt(company.getKeyObj(), name);
 		}
-		catch (EncryptorException ee) {
-			throw new SystemException(ee);
+		catch (EncryptorException encryptorException) {
+			throw new SystemException(encryptorException);
 		}
 
 		long userId = GetterUtil.getLong(name);
@@ -1782,8 +1782,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			password = Encryptor.decrypt(company.getKeyObj(), password);
 		}
-		catch (EncryptorException ee) {
-			throw new SystemException(ee);
+		catch (EncryptorException encryptorException) {
+			throw new SystemException(encryptorException);
 		}
 
 		String userPassword = user.getPassword();
@@ -1877,10 +1877,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			imageLocalService.deleteImage(user.getPortraitId());
 		}
-		catch (NoSuchImageException nsie) {
+		catch (NoSuchImageException noSuchImageException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to delete image " + user.getPortraitId(), nsie);
+					"Unable to delete image " + user.getPortraitId(),
+					noSuchImageException);
 			}
 		}
 
@@ -2005,8 +2006,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			return Encryptor.encrypt(company.getKeyObj(), name);
 		}
-		catch (EncryptorException ee) {
-			throw new SystemException(ee);
+		catch (EncryptorException encryptorException) {
+			throw new SystemException(encryptorException);
 		}
 	}
 
@@ -3008,8 +3009,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					companyId, keywords, status, params, start, end,
 					getSorts(obc)));
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -3099,8 +3100,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			return indexer.search(searchContext);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -3166,8 +3167,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					emailAddress, status, params, andSearch, start, end,
 					getSorts(obc)));
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -3236,8 +3237,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			return indexer.search(searchContext);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -3311,8 +3312,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			return (int)indexer.searchCount(searchContext);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -3367,8 +3368,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			return (int)indexer.searchCount(searchContext);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -3962,9 +3963,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				passwordPolicyLocalService.getDefaultPasswordPolicy(companyId),
 				userIds);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 
@@ -4401,8 +4402,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					screenName = screenNameGenerator.generate(
 						companyId, user.getUserId(), emailAddress);
 				}
-				catch (Exception e) {
-					throw new SystemException(e);
+				catch (Exception exception) {
+					throw new SystemException(exception);
 				}
 			}
 
@@ -4789,8 +4790,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			user = userPersistence.update(user);
 		}
-		catch (ModelListenerException mle) {
-			Throwable throwable = mle.getCause();
+		catch (ModelListenerException modelListenerException) {
+			Throwable throwable = modelListenerException.getCause();
 
 			String msg = GetterUtil.getString(throwable.getMessage());
 
@@ -4810,7 +4811,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 
 			throw new UserPasswordException.MustComplyWithModelListeners(
-				userId, mle);
+				userId, modelListenerException);
 		}
 
 		if (!silentUpdate) {
@@ -5910,8 +5911,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return Authenticator.FAILURE;
@@ -6009,8 +6010,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			portalURL = company.getPortalURL(0);
 		}
-		catch (PortalException pe) {
-			ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
 		}
 
 		final Map<Locale, String> localizedBodyMap;
@@ -6084,8 +6085,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				fromAddress, fromName, user.getEmailAddress(), user, subject,
 				body, mailTemplateContext);
 		}
-		catch (PortalException pe) {
-			ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -6096,8 +6097,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		try {
 			indexer.reindex(users);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -6255,8 +6256,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				fromAddress, fromName, toAddress, user, localizedSubject,
 				localizedBody, mailTemplateContext);
 		}
-		catch (PortalException pe) {
-			ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -6884,9 +6885,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			try {
 				updatePasswordReset(userId, false);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(pe, pe);
+					_log.warn(portalException, portalException);
 				}
 			}
 		}
@@ -6941,8 +6942,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			mailService.sendEmail(mailMessage);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

@@ -81,8 +81,8 @@ public abstract class BaseContextContainerRequestFilter
 					applicationClassName);
 			}
 		}
-		catch (InvalidSyntaxException ise) {
-			throw new IllegalArgumentException(ise);
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			throw new IllegalArgumentException(invalidSyntaxException);
 		}
 
 		return applicationClassName;

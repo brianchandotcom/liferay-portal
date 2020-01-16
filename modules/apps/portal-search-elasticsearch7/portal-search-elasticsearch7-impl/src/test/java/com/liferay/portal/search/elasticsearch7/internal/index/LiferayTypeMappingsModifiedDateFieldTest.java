@@ -105,8 +105,8 @@ public class LiferayTypeMappingsModifiedDateFieldTest {
 			_liferayIndexFixture.index(
 				Collections.singletonMap(Field.MODIFIED_DATE, value));
 		}
-		catch (ElasticsearchStatusException ese) {
-			throw (Exception)ese.getCause();
+		catch (ElasticsearchStatusException elasticsearchStatusException) {
+			throw (Exception)elasticsearchStatusException.getCause();
 		}
 	}
 

@@ -91,8 +91,8 @@ public class MSCognitiveServicesImageAssetAutoTagProvider
 
 			return JSONUtil.toStringList(tagsJSONArray, "name");
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return Collections.emptyList();
 		}
@@ -157,13 +157,13 @@ public class MSCognitiveServicesImageAssetAutoTagProvider
 			return JSONFactoryUtil.createJSONObject(
 				StringUtil.read(inputStream));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			try (InputStream inputStream = httpURLConnection.getErrorStream()) {
 				throw new PortalException(
 					StringBundler.concat(
 						"Response code ", httpURLConnection.getResponseCode(),
 						":", StringUtil.read(inputStream)),
-					e);
+					exception);
 			}
 		}
 	}

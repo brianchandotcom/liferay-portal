@@ -120,8 +120,8 @@ public class SetOptionsFunction
 				}
 			}
 		}
-		catch (JSONException jsone) {
-			_log.error(jsone, jsone);
+		catch (JSONException jsonException) {
+			_log.error(jsonException, jsonException);
 		}
 
 		return keyValuePairs;

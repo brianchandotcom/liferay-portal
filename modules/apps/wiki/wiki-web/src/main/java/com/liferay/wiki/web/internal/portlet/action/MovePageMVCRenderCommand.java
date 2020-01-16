@@ -64,14 +64,14 @@ public class MovePageMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 		}
 		catch (NoSuchNodeException | NoSuchPageException | PageTitleException |
-			   PageVersionException | PrincipalException e) {
+			   PageVersionException | PrincipalException exception) {
 
-			SessionErrors.add(renderRequest, e.getClass());
+			SessionErrors.add(renderRequest, exception.getClass());
 
 			return "/wiki/error.jsp";
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		return "/wiki/move_page.jsp";

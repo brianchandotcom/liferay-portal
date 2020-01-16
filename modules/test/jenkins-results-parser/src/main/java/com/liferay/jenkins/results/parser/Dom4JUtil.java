@@ -203,7 +203,7 @@ public class Dom4JUtil {
 					throw new IllegalArgumentException(
 						"Invalid target element\n" + format(targetElement));
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					throw new IllegalArgumentException(
 						"Invalid target element");
 				}
@@ -230,7 +230,7 @@ public class Dom4JUtil {
 					throw new IllegalArgumentException(
 						"Invalid target element\n" + format(targetElement));
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					throw new IllegalArgumentException(
 						"Invalid target element");
 				}

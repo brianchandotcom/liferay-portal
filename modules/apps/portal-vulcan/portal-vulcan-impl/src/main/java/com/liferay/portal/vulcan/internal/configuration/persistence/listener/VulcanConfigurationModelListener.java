@@ -93,9 +93,9 @@ public class VulcanConfigurationModelListener
 
 			_validateUniqueConfiguration(path, dictionary);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
-				e.getMessage(), VulcanConfigurationModelListener.class,
+				exception.getMessage(), VulcanConfigurationModelListener.class,
 				getClass(), dictionary);
 		}
 	}

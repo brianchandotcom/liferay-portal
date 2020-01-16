@@ -34,7 +34,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 	}
 
@@ -47,7 +47,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 	}
 
@@ -60,7 +60,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -73,7 +73,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -86,7 +86,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -99,7 +99,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -112,7 +112,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -125,7 +125,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -138,7 +138,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -151,7 +151,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -164,7 +164,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -177,7 +177,7 @@ public abstract class BaseWriterTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 

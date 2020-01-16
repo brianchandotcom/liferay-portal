@@ -43,8 +43,8 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		try {
 			_moveTree(sourceRootDir.toPath(), destinationRootDir.toPath());
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 
@@ -53,8 +53,8 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 			return new String(
 				Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 

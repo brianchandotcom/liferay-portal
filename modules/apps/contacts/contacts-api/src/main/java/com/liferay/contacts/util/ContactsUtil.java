@@ -89,7 +89,7 @@ public class ContactsUtil {
 
 			return (String[])field.get((Object)null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

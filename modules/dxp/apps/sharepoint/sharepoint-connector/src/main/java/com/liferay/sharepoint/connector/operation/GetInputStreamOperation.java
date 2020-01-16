@@ -91,9 +91,9 @@ public class GetInputStreamOperation extends BaseOperation {
 				try {
 					bytes = FileUtil.getBytes(inputStream);
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					throw new SharepointException(
-						"Unable to read input stream", ioe);
+						"Unable to read input stream", ioException);
 				}
 
 				return new ByteArrayInputStream(bytes);
@@ -103,9 +103,10 @@ public class GetInputStreamOperation extends BaseOperation {
 				StringBundler.concat(
 					"Downloading ", url, " failed with status ", status));
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new SharepointException(
-				"Unable to communicate with the Sharepoint server", ioe);
+				"Unable to communicate with the Sharepoint server",
+				ioException);
 		}
 		finally {
 			getMethod.releaseConnection();

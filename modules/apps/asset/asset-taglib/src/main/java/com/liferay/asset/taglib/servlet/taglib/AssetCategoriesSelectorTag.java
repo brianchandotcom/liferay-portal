@@ -231,7 +231,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				categoryIdsTitles.add(categoryIdsTitle);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return categoryIdsTitles;
@@ -256,7 +256,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 			return PortalUtil.getCurrentAndAncestorSiteGroupIds(_groupIds);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return new long[0];
@@ -287,7 +287,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 			return portletURL;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -393,8 +393,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-asset:asset-categories-selector:data", data);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

@@ -58,8 +58,8 @@ public class GoogleDocsPortalInstanceLifecycleListener
 
 			googleDocsDLFileEntryTypeHelper.addGoogleDocsDLFileEntryType();
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

@@ -32,7 +32,7 @@ public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 		try {
 			checkRoles(new long[] {userId}, new long[] {roleId}, null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 
@@ -46,7 +46,7 @@ public abstract class BaseRoleMembershipPolicy implements RoleMembershipPolicy {
 		try {
 			checkRoles(new long[] {userId}, null, new long[] {roleId});
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return true;
 		}
 

@@ -418,8 +418,8 @@ public class ExpandoColumnLocalServiceImpl
 				SystemEventConstants.TYPE_DELETE,
 				extraDataJSONObject.toString());
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

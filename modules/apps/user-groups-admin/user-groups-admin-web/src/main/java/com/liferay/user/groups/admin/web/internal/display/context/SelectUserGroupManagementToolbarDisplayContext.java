@@ -165,8 +165,8 @@ public class SelectUserGroupManagementToolbarDisplayContext {
 		try {
 			return PortalUtil.getSelectedUser(_httpServletRequest);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return null;
 		}

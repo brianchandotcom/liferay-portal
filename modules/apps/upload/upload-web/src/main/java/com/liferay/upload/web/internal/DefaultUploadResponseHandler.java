@@ -73,14 +73,15 @@ public class DefaultUploadResponseHandler implements UploadResponseHandler {
 			if (portalException instanceof AntivirusScannerException) {
 				errorType =
 					ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
-				AntivirusScannerException ase =
+				AntivirusScannerException antivirusScannerException =
 					(AntivirusScannerException)portalException;
 
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)portletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				errorMessage = themeDisplay.translate(ase.getMessageKey());
+				errorMessage = themeDisplay.translate(
+					antivirusScannerException.getMessageKey());
 			}
 			else if (portalException instanceof FileExtensionException) {
 				errorType =

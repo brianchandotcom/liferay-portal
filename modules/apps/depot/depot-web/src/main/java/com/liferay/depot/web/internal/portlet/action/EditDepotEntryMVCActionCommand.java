@@ -73,10 +73,11 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 				ServiceContextFactory.getInstance(
 					DepotEntry.class.getName(), actionRequest));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
-			SessionErrors.add(actionRequest, pe.getClass(), pe);
+			SessionErrors.add(
+				actionRequest, portalException.getClass(), portalException);
 
 			actionResponse.sendRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));

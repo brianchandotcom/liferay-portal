@@ -49,7 +49,7 @@ public class AbortPolicyTest {
 
 			Assert.fail();
 		}
-		catch (RejectedExecutionException ree) {
+		catch (RejectedExecutionException rejectedExecutionException) {
 		}
 	}
 

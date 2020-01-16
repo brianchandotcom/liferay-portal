@@ -121,12 +121,12 @@ public class StagedLayoutSetStagedModelRepository
 			stagedLayoutSet = ModelAdapterUtil.adapt(
 				layoutSet, LayoutSet.class, StagedLayoutSet.class);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -146,12 +146,12 @@ public class StagedLayoutSetStagedModelRepository
 			return ModelAdapterUtil.adapt(
 				layoutSet, LayoutSet.class, StagedLayoutSet.class);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return null;

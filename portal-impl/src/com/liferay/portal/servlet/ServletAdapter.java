@@ -145,8 +145,8 @@ public class ServletAdapter extends HttpServlet {
 			try {
 				servlet.init(servletConfig);
 			}
-			catch (ServletException se) {
-				_log.error("Unable to initialize servlet", se);
+			catch (ServletException servletException) {
+				_log.error("Unable to initialize servlet", servletException);
 			}
 
 			return servlet;

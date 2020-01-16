@@ -121,7 +121,7 @@ public class PoshiTestResult extends BaseTestResult {
 			liferayLog = JenkinsResultsParserUtil.toString(
 				getLiferayLogURL(), false, 0, 0, 0);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return false;
 		}
 

@@ -181,10 +181,10 @@ public class RenderFragmentLayoutDisplayContext {
 				PortletJSONUtil.writeFooterPaths(
 					pipingServletResponse, jsonObject);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					"Unable to write portlet paths " + portlet.getPortletId(),
-					e);
+					exception);
 			}
 		}
 

@@ -109,7 +109,7 @@ public class LiferaySyncCapability
 
 			return group.isStagingGroup();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 	}
@@ -130,8 +130,8 @@ public class LiferaySyncCapability
 				return;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		registerDLSyncEventCallback(

@@ -71,7 +71,7 @@ public class OrganizationsVerticalCard
 			return organizationActionDropdownItemsProvider.
 				getActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

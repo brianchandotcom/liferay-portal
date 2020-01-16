@@ -354,7 +354,7 @@ public class AuthenticatedSessionManagerImpl
 		try {
 			session.invalidate();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		EventsProcessorUtil.process(

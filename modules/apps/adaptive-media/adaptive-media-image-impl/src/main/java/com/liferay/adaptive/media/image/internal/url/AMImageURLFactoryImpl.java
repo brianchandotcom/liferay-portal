@@ -70,8 +70,9 @@ public class AMImageURLFactoryImpl implements AMImageURLFactory {
 		try {
 			return URLEncoder.encode(s, StandardCharsets.UTF_8.name());
 		}
-		catch (UnsupportedEncodingException uee) {
-			throw new AMRuntimeException.UnsupportedEncodingException(uee);
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new AMRuntimeException.UnsupportedEncodingException(
+				unsupportedEncodingException);
 		}
 	}
 

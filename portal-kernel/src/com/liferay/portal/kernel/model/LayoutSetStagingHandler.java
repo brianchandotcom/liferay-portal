@@ -47,10 +47,10 @@ public class LayoutSetStagingHandler
 		try {
 			_layoutSetBranch = _getLayoutSetBranch(layoutSet);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new IllegalStateException(e);
+			throw new IllegalStateException(exception);
 		}
 	}
 
@@ -100,15 +100,15 @@ public class LayoutSetStagingHandler
 
 					bean = _layoutSetBranch;
 				}
-				catch (NoSuchMethodException nsme) {
-					_log.error(nsme, nsme);
+				catch (NoSuchMethodException noSuchMethodException) {
+					_log.error(noSuchMethodException, noSuchMethodException);
 				}
 			}
 
 			return method.invoke(bean, arguments);
 		}
-		catch (InvocationTargetException ite) {
-			throw ite.getTargetException();
+		catch (InvocationTargetException invocationTargetException) {
+			throw invocationTargetException.getTargetException();
 		}
 	}
 

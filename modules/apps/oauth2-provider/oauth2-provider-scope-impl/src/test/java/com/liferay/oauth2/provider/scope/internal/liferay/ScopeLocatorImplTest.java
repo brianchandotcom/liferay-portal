@@ -355,8 +355,8 @@ public class ScopeLocatorImplTest extends PowerMockito {
 
 			field.set(object, value);
 		}
-		catch (Exception e) {
-			throw new IllegalArgumentException(e);
+		catch (Exception exception) {
+			throw new IllegalArgumentException(exception);
 		}
 	}
 

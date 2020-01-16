@@ -131,7 +131,7 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 			return HttpUtil.addParameter(
 				previewURL, "p_l_back_url", themeDisplay.getURLCurrent());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}

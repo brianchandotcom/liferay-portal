@@ -62,7 +62,7 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 			try {
 				runSQL(sb.toString());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				sb = new StringBundler(7);
 
 				sb.append("select ");

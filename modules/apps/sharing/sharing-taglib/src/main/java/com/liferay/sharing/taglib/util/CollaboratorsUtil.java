@@ -65,8 +65,8 @@ public class CollaboratorsUtil {
 
 			return user.getDisplayURL(themeDisplay);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return null;
 		}
@@ -83,8 +83,8 @@ public class CollaboratorsUtil {
 
 			return UserLocalServiceUtil.fetchUser(assetRenderer.getUserId());
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return null;
@@ -100,8 +100,8 @@ public class CollaboratorsUtil {
 
 			return user.getPortraitURL(themeDisplay);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return null;
 		}

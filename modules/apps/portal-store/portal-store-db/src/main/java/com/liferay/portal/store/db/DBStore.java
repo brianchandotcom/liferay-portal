@@ -82,9 +82,10 @@ public class DBStore implements Store {
 			return _dlContentLocalService.openDataInputStream(
 				dlContent.getContentId());
 		}
-		catch (NoSuchContentException nsce) {
+		catch (NoSuchContentException noSuchContentException) {
 			throw new NoSuchFileException(
-				companyId, repositoryId, fileName, versionLabel, nsce);
+				companyId, repositoryId, fileName, versionLabel,
+				noSuchContentException);
 		}
 	}
 
@@ -119,9 +120,9 @@ public class DBStore implements Store {
 			dlContent = _dlContentLocalService.getContent(
 				companyId, repositoryId, fileName, versionLabel);
 		}
-		catch (NoSuchContentException nsce) {
+		catch (NoSuchContentException noSuchContentException) {
 			throw new NoSuchFileException(
-				companyId, repositoryId, fileName, nsce);
+				companyId, repositoryId, fileName, noSuchContentException);
 		}
 
 		return dlContent.getSize();

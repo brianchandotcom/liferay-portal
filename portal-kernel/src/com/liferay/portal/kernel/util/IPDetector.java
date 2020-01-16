@@ -65,8 +65,8 @@ public class IPDetector {
 				}
 			}
 		}
-		catch (UnknownHostException uhe) {
-			_log.error(uhe, uhe);
+		catch (UnknownHostException unknownHostException) {
+			_log.error(unknownHostException, unknownHostException);
 		}
 
 		if (_suppportsV6 == null) {

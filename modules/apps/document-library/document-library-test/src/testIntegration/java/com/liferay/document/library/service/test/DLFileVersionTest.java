@@ -340,7 +340,7 @@ public class DLFileVersionTest {
 				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				"Test Folder");
 		}
-		catch (NoSuchFolderException nsfe) {
+		catch (NoSuchFolderException noSuchFolderException) {
 		}
 
 		ServiceContext serviceContext =

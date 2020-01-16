@@ -104,8 +104,9 @@ public abstract class BaseDateRangeTermQueryTestCase
 								expirationDate.before(
 									getDate("2018-12-31T23:59:59")));
 						}
-						catch (ParseException pe) {
-							Assert.fail(StackTraceUtil.getStackTrace(pe));
+						catch (ParseException parseException) {
+							Assert.fail(
+								StackTraceUtil.getStackTrace(parseException));
 						}
 					});
 			});

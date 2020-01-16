@@ -64,8 +64,8 @@ public class UpdateDocumentRequestExecutorImpl
 			return restHighLevelClient.update(
 				updateRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

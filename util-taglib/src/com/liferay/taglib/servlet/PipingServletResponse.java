@@ -85,8 +85,8 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 			try {
 				jspWriter.flush();
 			}
-			catch (IOException ioe) {
-				ReflectionUtil.throwException(ioe);
+			catch (IOException ioException) {
+				ReflectionUtil.throwException(ioException);
 			}
 		}
 

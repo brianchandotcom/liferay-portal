@@ -28,8 +28,8 @@ public class BuildSoyTask extends BuildSoyCommand {
 		try {
 			super.execute();
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

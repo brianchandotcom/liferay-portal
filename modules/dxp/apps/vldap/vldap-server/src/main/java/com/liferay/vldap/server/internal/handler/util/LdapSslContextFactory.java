@@ -47,8 +47,8 @@ public class LdapSslContextFactory {
 			clientSSLContext = _createClientSSLContext();
 			serverSSLContext = _createServerSSLContext();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		_clientSSLContext = clientSSLContext;
@@ -86,9 +86,9 @@ public class LdapSslContextFactory {
 				try {
 					inputStream.close();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(ioe, ioe);
+						_log.debug(ioException, ioException);
 					}
 				}
 			}

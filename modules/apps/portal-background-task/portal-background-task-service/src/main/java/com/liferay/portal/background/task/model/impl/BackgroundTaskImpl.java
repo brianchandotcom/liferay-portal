@@ -151,12 +151,12 @@ public class BackgroundTaskImpl extends BackgroundTaskBaseImpl {
 
 			_attachmentsFolderId = folder.getFolderId();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No portlet repository for background task " +
 						getBackgroundTaskId(),
-					e);
+					exception);
 			}
 		}
 

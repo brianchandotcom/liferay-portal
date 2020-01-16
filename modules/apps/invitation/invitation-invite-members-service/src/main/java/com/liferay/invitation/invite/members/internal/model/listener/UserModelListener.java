@@ -70,8 +70,8 @@ public class UserModelListener extends BaseModelListener<User> {
 					key, user.getUserId());
 			}
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

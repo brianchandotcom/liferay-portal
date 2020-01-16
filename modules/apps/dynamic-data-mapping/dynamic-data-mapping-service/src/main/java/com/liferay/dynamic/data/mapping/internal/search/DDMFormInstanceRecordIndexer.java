@@ -318,8 +318,8 @@ public class DDMFormInstanceRecordIndexer
 				getResourceBundle(locale), "form-record-for-form-x",
 				ddmFormInstanceName, false);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return StringPool.BLANK;
@@ -367,12 +367,12 @@ public class DDMFormInstanceRecordIndexer
 						indexableActionableDynamicQuery.addDocuments(document);
 					}
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index form instance record " +
 								ddmFormInstanceRecord.getFormInstanceRecordId(),
-							pe);
+							portalException);
 					}
 				}
 			});

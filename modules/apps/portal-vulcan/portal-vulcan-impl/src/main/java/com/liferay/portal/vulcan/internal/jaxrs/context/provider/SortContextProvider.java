@@ -115,11 +115,11 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 				ContextProviderUtil.getEntityModel(message),
 				ParamUtil.getString(httpServletRequest, "sort"));
 		}
-		catch (InvalidSortException ise) {
-			throw ise;
+		catch (InvalidSortException invalidSortException) {
+			throw invalidSortException;
 		}
-		catch (Exception e) {
-			throw new ServerErrorException(500, e);
+		catch (Exception exception) {
+			throw new ServerErrorException(500, exception);
 		}
 	}
 

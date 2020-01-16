@@ -789,12 +789,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			UserPermissionUtil.check(
 				getPermissionChecker(), userId, ActionKeys.VIEW);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 
 			GroupPermissionUtil.check(

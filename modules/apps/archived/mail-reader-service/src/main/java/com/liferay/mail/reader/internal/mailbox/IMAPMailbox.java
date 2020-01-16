@@ -244,9 +244,10 @@ public class IMAPMailbox extends BaseMailbox {
 				}
 			}
 		}
-		catch (AddressException ae) {
+		catch (AddressException addressException) {
 			throw new MailException(
-				MailException.MESSAGE_INVALID_ADDRESS, ae, addresses);
+				MailException.MESSAGE_INVALID_ADDRESS, addressException,
+				addresses);
 		}
 
 		return internetAddresses;
@@ -424,8 +425,8 @@ public class IMAPMailbox extends BaseMailbox {
 				message.getFolderId(),
 				new long[] {message.getRemoteMessageId()});
 		}
-		catch (IOException ioe) {
-			throw new MailException(ioe);
+		catch (IOException ioException) {
+			throw new MailException(ioException);
 		}
 	}
 
@@ -443,7 +444,7 @@ public class IMAPMailbox extends BaseMailbox {
 			try {
 				MessageLocalServiceUtil.getMessage(folderId, remoteMessageId);
 			}
-			catch (NoSuchMessageException nsme) {
+			catch (NoSuchMessageException noSuchMessageException) {
 				missingRemoteMessageIdsList.add(remoteMessageId);
 			}
 		}
@@ -491,7 +492,7 @@ public class IMAPMailbox extends BaseMailbox {
 				FolderLocalServiceUtil.getFolder(
 					account.getAccountId(), jxFolder.getFullName());
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 				FolderLocalServiceUtil.addFolder(
 					user.getUserId(), account.getAccountId(),
 					jxFolder.getFullName(), jxFolder.getName(), 0);

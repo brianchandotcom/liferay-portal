@@ -197,12 +197,13 @@ public class WebServerServlet extends HttpServlet {
 
 						folderId = folder.getFolderId();
 					}
-					catch (NoSuchFolderException nsfe) {
+					catch (NoSuchFolderException noSuchFolderException) {
 
 						// LPS-52675
 
 						if (_log.isDebugEnabled()) {
-							_log.debug(nsfe, nsfe);
+							_log.debug(
+								noSuchFolderException, noSuchFolderException);
 						}
 
 						if (i != (pathArray.length - 1)) {
@@ -219,7 +220,7 @@ public class WebServerServlet extends HttpServlet {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 		finally {
@@ -312,17 +313,19 @@ public class WebServerServlet extends HttpServlet {
 				_createFileServingCallable(
 					httpServletRequest, httpServletResponse, user));
 		}
-		catch (NoSuchFileEntryException | NoSuchFolderException e) {
+		catch (NoSuchFileEntryException | NoSuchFolderException exception) {
 			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, e, httpServletRequest,
+				HttpServletResponse.SC_NOT_FOUND, exception, httpServletRequest,
 				httpServletResponse);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			processPrincipalException(
-				pe, user, httpServletRequest, httpServletResponse);
+				principalException, user, httpServletRequest,
+				httpServletResponse);
 		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
+		catch (Exception exception) {
+			PortalUtil.sendError(
+				exception, httpServletRequest, httpServletResponse);
 		}
 		catch (Throwable t) {
 			PortalUtil.sendError(
@@ -385,11 +388,11 @@ public class WebServerServlet extends HttpServlet {
 
 			return image;
 		}
-		catch (PortalException | SystemException e) {
-			throw e;
+		catch (PortalException | SystemException exception) {
+			throw exception;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -532,7 +535,7 @@ public class WebServerServlet extends HttpServlet {
 
 					image = convertFileEntry(igSmallImage, fileEntry);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 			}
 		}
@@ -592,9 +595,10 @@ public class WebServerServlet extends HttpServlet {
 
 			return ImageToolUtil.getBytes(renderedImage, imageBag.getType());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Error scaling image " + image.getImageId(), e);
+				_log.warn(
+					"Error scaling image " + image.getImageId(), exception);
 			}
 		}
 
@@ -679,7 +683,7 @@ public class WebServerServlet extends HttpServlet {
 				try {
 					fileEntry = getFileEntry(pathArray);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 
 				if (fileEntry == null) {
@@ -707,13 +711,13 @@ public class WebServerServlet extends HttpServlet {
 
 			return (modifiedDate.getTime() / 1000) * 1000;
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(principalException, principalException);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return -1;
@@ -811,7 +815,7 @@ public class WebServerServlet extends HttpServlet {
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;
@@ -865,9 +869,9 @@ public class WebServerServlet extends HttpServlet {
 
 				folderId = folder.getFolderId();
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 				if (i != (pathArray.length - 1)) {
-					throw nsfe;
+					throw noSuchFolderException;
 				}
 
 				String title = name;
@@ -1335,9 +1339,9 @@ public class WebServerServlet extends HttpServlet {
 				ServletResponseUtil.write(httpServletResponse, bytes);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 	}
@@ -1378,12 +1382,12 @@ public class WebServerServlet extends HttpServlet {
 			try {
 				DLAppLocalServiceUtil.getFileEntry(groupId, folderId, fileName);
 			}
-			catch (RepositoryException re) {
+			catch (RepositoryException repositoryException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(re, re);
+					_log.debug(repositoryException, repositoryException);
 				}
 			}
 		}
@@ -1396,12 +1400,12 @@ public class WebServerServlet extends HttpServlet {
 				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
 					uuid, groupId);
 			}
-			catch (RepositoryException re) {
+			catch (RepositoryException repositoryException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(re, re);
+					_log.debug(repositoryException, repositoryException);
 				}
 			}
 		}

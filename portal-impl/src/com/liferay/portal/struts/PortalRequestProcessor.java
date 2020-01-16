@@ -421,11 +421,11 @@ public class PortalRequestProcessor {
 					httpServletResponse);
 			}
 		}
-		catch (IOException | ServletException e) {
-			throw e;
+		catch (IOException | ServletException exception) {
+			throw exception;
 		}
-		catch (Exception e) {
-			throw new ServletException(e);
+		catch (Exception exception) {
+			throw new ServletException(exception);
 		}
 	}
 
@@ -488,8 +488,8 @@ public class PortalRequestProcessor {
 						path, themeDisplay, httpServletRequest);
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 
 			String fullPathWithoutQueryString = fullPath;
@@ -537,7 +537,7 @@ public class PortalRequestProcessor {
 		try {
 			user = PortalUtil.getUser(httpServletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		// Last path
@@ -673,8 +673,8 @@ public class PortalRequestProcessor {
 							return _PATH_PORTAL_UPDATE_PASSWORD;
 						}
 					}
-					catch (Exception e) {
-						_log.error(e, e);
+					catch (Exception exception) {
+						_log.error(exception, exception);
 
 						return _PATH_PORTAL_UPDATE_PASSWORD;
 					}
@@ -735,7 +735,7 @@ public class PortalRequestProcessor {
 		try {
 			user = PortalUtil.getUser(httpServletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if ((user != null) && _isPortletPath(path)) {
@@ -798,7 +798,7 @@ public class PortalRequestProcessor {
 					authorized = false;
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				SessionErrors.add(
 					httpServletRequest, PrincipalException.class.getName());
 

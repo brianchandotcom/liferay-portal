@@ -120,8 +120,8 @@ public class ServletAuthorizingFilter extends BasePortalFilter {
 
 				session.setAttribute(WebKeys.LOCALE, user.getLocale());
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 

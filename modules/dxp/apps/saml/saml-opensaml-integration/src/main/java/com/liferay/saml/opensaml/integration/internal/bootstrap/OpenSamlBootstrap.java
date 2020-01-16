@@ -111,10 +111,10 @@ public class OpenSamlBootstrap {
 
 			xmlObjectProviderRegistry.setParserPool(parserPool);
 		}
-		catch (Exception xmlpe) {
+		catch (Exception exception) {
 			throw new InitializationException(
-				"Unable to initialize parser pool: " + xmlpe.getMessage(),
-				xmlpe);
+				"Unable to initialize parser pool: " + exception.getMessage(),
+				exception);
 		}
 	}
 

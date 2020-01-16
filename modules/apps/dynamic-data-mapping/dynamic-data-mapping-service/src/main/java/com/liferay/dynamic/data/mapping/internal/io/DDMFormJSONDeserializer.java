@@ -85,9 +85,9 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 
 			return builder.build();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 

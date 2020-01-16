@@ -49,8 +49,8 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		try {
 			_renderJavaScript();
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 		finally {
 			cleanUp();

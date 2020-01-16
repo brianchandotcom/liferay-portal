@@ -132,8 +132,9 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
-			throw new IOException("Unable to include JSP " + jspPath, se);
+		catch (ServletException servletException) {
+			throw new IOException(
+				"Unable to include JSP " + jspPath, servletException);
 		}
 	}
 

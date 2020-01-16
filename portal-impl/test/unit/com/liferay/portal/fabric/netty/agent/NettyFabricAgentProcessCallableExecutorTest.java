@@ -92,8 +92,8 @@ public class NettyFabricAgentProcessCallableExecutorTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertSame(processException, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertSame(processException, executionException.getCause());
 		}
 	}
 

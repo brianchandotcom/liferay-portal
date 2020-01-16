@@ -83,10 +83,11 @@ public class IndexerDocumentBuilderImpl implements IndexerDocumentBuilder {
 					indexerPostProcessor.postProcessDocument(
 						document, baseModel);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to post process document " + document, e);
+							"Unable to post process document " + document,
+							exception);
 					}
 				}
 			});

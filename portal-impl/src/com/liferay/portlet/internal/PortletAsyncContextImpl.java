@@ -288,8 +288,10 @@ public class PortletAsyncContextImpl implements PortletAsyncContext {
 				try {
 					return clazz.newInstance();
 				}
-				catch (ReflectiveOperationException roe) {
-					throw new PortletException(roe);
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new PortletException(reflectiveOperationException);
 				}
 			}
 

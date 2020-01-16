@@ -55,8 +55,8 @@ public class DLFileEntryRelatedEntryModelDocumentContributor
 
 			document.addKeyword(Field.RELATED_ENTRY, true);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

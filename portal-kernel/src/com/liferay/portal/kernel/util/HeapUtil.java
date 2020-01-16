@@ -83,8 +83,9 @@ public class HeapUtil {
 		try {
 			return ProcessUtil.execute(outputProcessor, arguments);
 		}
-		catch (Exception e) {
-			throw new RuntimeException("Unable to perform heap dump", e);
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to perform heap dump", exception);
 		}
 	}
 
@@ -174,9 +175,10 @@ public class HeapUtil {
 
 				supported = true;
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(HeapUtil.class.getName() + " is disabled", e);
+					_log.warn(
+						HeapUtil.class.getName() + " is disabled", exception);
 				}
 			}
 		}

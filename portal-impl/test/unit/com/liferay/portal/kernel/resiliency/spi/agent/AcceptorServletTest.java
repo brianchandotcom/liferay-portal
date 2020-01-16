@@ -226,9 +226,10 @@ public class AcceptorServletTest {
 
 				Assert.fail();
 			}
-			catch (RuntimeException re) {
+			catch (RuntimeException runtimeException) {
 				Assert.assertEquals(
-					"RuntimeException on prepare request", re.getMessage());
+					"RuntimeException on prepare request",
+					runtimeException.getMessage());
 			}
 
 			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());

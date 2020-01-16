@@ -73,8 +73,8 @@ public class OrganizationModelDocumentContributor
 				document, organization.getAddresses(),
 				organization.getRegionId(), organization.getCountryId());
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -139,9 +139,9 @@ public class OrganizationModelDocumentContributor
 					_getLocalizedCountryNames(
 						_countryService.getCountry(countryId)));
 			}
-			catch (NoSuchCountryException nsce) {
+			catch (NoSuchCountryException noSuchCountryException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsce.getMessage());
+					_log.warn(noSuchCountryException.getMessage());
 				}
 			}
 		}
@@ -154,9 +154,9 @@ public class OrganizationModelDocumentContributor
 
 				regions.add(StringUtil.toLowerCase(region.getName()));
 			}
-			catch (NoSuchRegionException nsre) {
+			catch (NoSuchRegionException noSuchRegionException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsre.getMessage());
+					_log.warn(noSuchRegionException.getMessage());
 				}
 			}
 		}

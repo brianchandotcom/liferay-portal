@@ -52,8 +52,8 @@ public class TestPropsUtil {
 
 			_props.load(is);
 		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
 		}
 
 		try (InputStream is = TestPropsUtil.class.getResourceAsStream(
@@ -63,8 +63,8 @@ public class TestPropsUtil {
 				_props.load(is);
 			}
 		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
 		}
 
 		_printProperties(false);

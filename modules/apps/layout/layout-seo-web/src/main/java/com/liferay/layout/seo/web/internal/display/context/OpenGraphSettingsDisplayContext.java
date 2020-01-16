@@ -113,8 +113,8 @@ public class OpenGraphSettingsDisplayContext {
 
 			return fileEntry.getTitle();
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return null;
 		}
@@ -132,8 +132,8 @@ public class OpenGraphSettingsDisplayContext {
 				_dlAppService.getFileEntry(openGraphImageFileEntryId),
 				_themeDisplay);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return null;
 		}

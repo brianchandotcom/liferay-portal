@@ -41,8 +41,8 @@ public class ReflectionTestUtil {
 
 			return t;
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -58,8 +58,8 @@ public class ReflectionTestUtil {
 
 			return t;
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -106,10 +106,10 @@ public class ReflectionTestUtil {
 
 			return field;
 		}
-		catch (NoSuchFieldException nsfe) {
+		catch (NoSuchFieldException noSuchFieldException) {
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 
 		while (clazz != null) {
@@ -122,11 +122,11 @@ public class ReflectionTestUtil {
 
 				return field;
 			}
-			catch (NoSuchFieldException nsfe) {
+			catch (NoSuchFieldException noSuchFieldException) {
 				clazz = clazz.getSuperclass();
 			}
-			catch (Exception e) {
-				return ReflectionUtil.throwException(e);
+			catch (Exception exception) {
+				return ReflectionUtil.throwException(exception);
 			}
 		}
 
@@ -142,8 +142,8 @@ public class ReflectionTestUtil {
 		try {
 			return (T)field.get(null);
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -153,8 +153,8 @@ public class ReflectionTestUtil {
 		try {
 			return (T)field.get(instance);
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -168,7 +168,7 @@ public class ReflectionTestUtil {
 
 			return method;
 		}
-		catch (NoSuchMethodException nsme) {
+		catch (NoSuchMethodException noSuchMethodException) {
 		}
 
 		while (clazz != null) {
@@ -180,7 +180,7 @@ public class ReflectionTestUtil {
 
 				return method;
 			}
-			catch (NoSuchMethodException nsme) {
+			catch (NoSuchMethodException noSuchMethodException) {
 				clazz = clazz.getSuperclass();
 			}
 		}
@@ -201,11 +201,12 @@ public class ReflectionTestUtil {
 		try {
 			return (T)method.invoke(null, parameters);
 		}
-		catch (InvocationTargetException ite) {
-			return ReflectionUtil.throwException(ite.getCause());
+		catch (InvocationTargetException invocationTargetException) {
+			return ReflectionUtil.throwException(
+				invocationTargetException.getCause());
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -219,11 +220,12 @@ public class ReflectionTestUtil {
 		try {
 			return (T)method.invoke(instance, parameters);
 		}
-		catch (InvocationTargetException ite) {
-			return ReflectionUtil.throwException(ite.getCause());
+		catch (InvocationTargetException invocationTargetException) {
+			return ReflectionUtil.throwException(
+				invocationTargetException.getCause());
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -237,11 +239,12 @@ public class ReflectionTestUtil {
 		try {
 			return (T)method.invoke(instance, parameters);
 		}
-		catch (InvocationTargetException ite) {
-			return ReflectionUtil.throwException(ite.getCause());
+		catch (InvocationTargetException invocationTargetException) {
+			return ReflectionUtil.throwException(
+				invocationTargetException.getCause());
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -313,8 +316,8 @@ public class ReflectionTestUtil {
 			return (T)newInstanceMethod.invoke(
 				constructorAccessor, new Object[] {parameters});
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -332,8 +335,8 @@ public class ReflectionTestUtil {
 		try {
 			field.set(null, value);
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -345,8 +348,8 @@ public class ReflectionTestUtil {
 		try {
 			field.set(instance, value);
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 	}
 

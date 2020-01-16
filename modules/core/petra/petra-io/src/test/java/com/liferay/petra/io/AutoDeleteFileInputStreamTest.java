@@ -110,8 +110,9 @@ public class AutoDeleteFileInputStreamTest {
 
 			Assert.fail();
 		}
-		catch (SecurityException se) {
-			Assert.assertEquals("Unable to delete", se.getMessage());
+		catch (SecurityException securityException) {
+			Assert.assertEquals(
+				"Unable to delete", securityException.getMessage());
 		}
 
 		Assert.assertTrue(_tempFile.exists());

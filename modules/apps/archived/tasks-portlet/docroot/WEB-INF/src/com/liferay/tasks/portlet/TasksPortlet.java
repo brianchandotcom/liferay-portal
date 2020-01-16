@@ -165,13 +165,14 @@ public class TasksPortlet extends MVCPortlet {
 
 			actionResponse.sendRedirect(portletURL.toString());
 		}
-		catch (AssetTagException ate) {
+		catch (AssetTagException assetTagException) {
 			actionResponse.setRenderParameter(
 				"mvcPath", "/tasks/edit_task.jsp");
 
 			actionResponse.setRenderParameters(actionRequest.getParameterMap());
 
-			SessionErrors.add(actionRequest, ate.getClass(), ate);
+			SessionErrors.add(
+				actionRequest, assetTagException.getClass(), assetTagException);
 		}
 	}
 

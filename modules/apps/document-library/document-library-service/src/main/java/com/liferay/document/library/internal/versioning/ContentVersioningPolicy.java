@@ -82,9 +82,9 @@ public class ContentVersioningPolicy implements VersioningPolicy {
 
 			return dlFileVersion.getChecksum();
 		}
-		catch (IOException | PortalException e) {
+		catch (IOException | PortalException exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return null;

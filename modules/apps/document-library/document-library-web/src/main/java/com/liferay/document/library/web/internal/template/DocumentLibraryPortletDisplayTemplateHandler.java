@@ -66,8 +66,8 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 		try {
 			contextObjects.put("dlUtil", DLUtil.getDL());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		return contextObjects;

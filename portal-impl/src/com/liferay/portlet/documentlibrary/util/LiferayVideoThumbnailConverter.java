@@ -110,7 +110,7 @@ public class LiferayVideoThumbnailConverter extends LiferayConverter {
 			thumbnailGenerated = generateThumbnail(
 				inputIStreamCoders, inputIVideoPictures);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if (!thumbnailGenerated) {

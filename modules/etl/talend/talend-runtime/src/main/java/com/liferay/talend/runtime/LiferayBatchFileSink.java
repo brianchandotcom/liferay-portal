@@ -85,7 +85,7 @@ public class LiferayBatchFileSink implements Sink {
 			try {
 				parentFile.mkdirs();
 			}
-			catch (SecurityException se) {
+			catch (SecurityException securityException) {
 				return _getErrorValidationResult(
 					"Unable to create batch file due security settings for " +
 						parentFile.getAbsolutePath());

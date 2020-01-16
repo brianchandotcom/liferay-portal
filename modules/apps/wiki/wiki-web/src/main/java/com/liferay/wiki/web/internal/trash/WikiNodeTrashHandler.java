@@ -78,14 +78,15 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			node.getGroupId(), originalTitle);
 
 		if (duplicateNode != null) {
-			RestoreEntryException ree = new RestoreEntryException(
-				RestoreEntryException.DUPLICATE);
+			RestoreEntryException restoreEntryException =
+				new RestoreEntryException(RestoreEntryException.DUPLICATE);
 
-			ree.setDuplicateEntryId(duplicateNode.getNodeId());
-			ree.setOldName(duplicateNode.getName());
-			ree.setTrashEntryId(trashEntry.getEntryId());
+			restoreEntryException.setDuplicateEntryId(
+				duplicateNode.getNodeId());
+			restoreEntryException.setOldName(duplicateNode.getName());
+			restoreEntryException.setTrashEntryId(trashEntry.getEntryId());
 
-			throw ree;
+			throw restoreEntryException;
 		}
 	}
 

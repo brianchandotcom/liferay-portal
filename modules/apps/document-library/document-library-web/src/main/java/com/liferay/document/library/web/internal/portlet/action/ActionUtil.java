@@ -72,9 +72,10 @@ public class ActionUtil {
 			try {
 				fileEntries.add(DLAppServiceUtil.getFileEntry(fileEntryId));
 			}
-			catch (NoSuchFileEntryException nsfee) {
+			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsfee, nsfee);
+					_log.debug(
+						noSuchFileEntryException, noSuchFileEntryException);
 				}
 			}
 		}
@@ -150,9 +151,11 @@ public class ActionUtil {
 				fileShortcuts.add(
 					DLAppServiceUtil.getFileShortcut(fileShortcutId));
 			}
-			catch (NoSuchFileShortcutException nsfse) {
+			catch (NoSuchFileShortcutException noSuchFileShortcutException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsfse, nsfse);
+					_log.debug(
+						noSuchFileShortcutException,
+						noSuchFileShortcutException);
 				}
 			}
 		}
@@ -280,9 +283,9 @@ public class ActionUtil {
 			try {
 				folders.add(DLAppServiceUtil.getFolder(folderId));
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsfe, nsfe);
+					_log.debug(noSuchFolderException, noSuchFolderException);
 				}
 			}
 		}

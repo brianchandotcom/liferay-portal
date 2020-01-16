@@ -66,8 +66,8 @@ public class SoyJavaScriptRendererUtil {
 		try {
 			js = StringUtil.read(inputStream);
 		}
-		catch (Exception e) {
-			_log.error("Unable to read template", e);
+		catch (Exception exception) {
+			_log.error("Unable to read template", exception);
 		}
 
 		_JAVA_SCRIPT_TPL = js;

@@ -86,7 +86,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 				userLocalService.getDefaultUserId(shardedModel.getCompanyId()),
 				analyticsMessageJSON.getBytes(Charset.defaultCharset()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Unable to add analytics message " + jsonObject.toString());
@@ -116,8 +116,8 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 			addAnalyticsMessage(true, "update", getAttributeNames(), model);
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 
@@ -185,7 +185,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			try {
 				companyService.updatePreferences(companyId, unicodeProperties);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to update preferences for company ID " +
@@ -201,7 +201,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 				AnalyticsConfiguration.class, companyId,
 				configurationProperties);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to update configuration for company ID " +

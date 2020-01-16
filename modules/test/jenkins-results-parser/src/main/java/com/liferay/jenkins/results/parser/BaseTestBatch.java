@@ -30,8 +30,8 @@ public abstract class BaseTestBatch
 		try {
 			executeBatch();
 		}
-		catch (AntException ae) {
-			throw new RuntimeException(ae);
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
 		}
 		finally {
 			publishResults();

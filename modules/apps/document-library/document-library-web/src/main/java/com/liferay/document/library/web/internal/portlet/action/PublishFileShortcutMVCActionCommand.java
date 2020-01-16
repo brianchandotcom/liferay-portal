@@ -66,9 +66,11 @@ public class PublishFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			return _dlAppLocalService.getFileShortcut(fileShortcutId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get file shortcut " + fileShortcutId, pe);
+				_log.debug(
+					"Unable to get file shortcut " + fileShortcutId,
+					portalException);
 			}
 		}
 

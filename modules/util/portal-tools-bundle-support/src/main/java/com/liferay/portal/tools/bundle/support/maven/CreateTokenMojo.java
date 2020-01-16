@@ -47,9 +47,9 @@ public class CreateTokenMojo extends AbstractMojo {
 
 			createTokenCommand.execute();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new MojoExecutionException(
-				"Unable to create liferay.com download token", e);
+				"Unable to create liferay.com download token", exception);
 		}
 	}
 

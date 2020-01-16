@@ -84,8 +84,8 @@ public class LayoutPageTemplateEntryImpl
 
 			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
 		}
-		catch (Exception e) {
-			_log.error("Unable to get preview entry image URL", e);
+		catch (Exception exception) {
+			_log.error("Unable to get preview entry image URL", exception);
 		}
 
 		return StringPool.BLANK;

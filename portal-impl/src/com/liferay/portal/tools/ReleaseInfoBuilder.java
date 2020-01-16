@@ -85,8 +85,8 @@ public class ReleaseInfoBuilder {
 
 			_fileImpl.write(file, content);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

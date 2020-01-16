@@ -34,8 +34,8 @@ public class WhitespaceRemoverTag extends BodyTagSupport {
 
 			jspWriter.write(getBodyContentString());
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 
 		return EVAL_PAGE;

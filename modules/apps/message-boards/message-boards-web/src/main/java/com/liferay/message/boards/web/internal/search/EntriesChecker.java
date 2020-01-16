@@ -98,7 +98,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 					showInput = true;
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 		else {
@@ -115,7 +115,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 					showInput = true;
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

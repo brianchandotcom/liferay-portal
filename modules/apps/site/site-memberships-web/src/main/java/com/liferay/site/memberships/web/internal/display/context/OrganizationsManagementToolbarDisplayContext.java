@@ -67,7 +67,7 @@ public class OrganizationsManagementToolbarDisplayContext
 				return null;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -125,7 +125,7 @@ public class OrganizationsManagementToolbarDisplayContext
 				}
 			};
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -166,7 +166,7 @@ public class OrganizationsManagementToolbarDisplayContext
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

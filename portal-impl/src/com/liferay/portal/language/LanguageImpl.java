@@ -302,9 +302,9 @@ public class LanguageImpl implements Language, Serializable {
 				value = pattern;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -472,9 +472,9 @@ public class LanguageImpl implements Language, Serializable {
 				value = pattern;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -651,9 +651,9 @@ public class LanguageImpl implements Language, Serializable {
 				value = pattern;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -791,9 +791,9 @@ public class LanguageImpl implements Language, Serializable {
 				value = pattern;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -996,7 +996,7 @@ public class LanguageImpl implements Language, Serializable {
 				return companyLocalesBag.getAvailableLocales();
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		Map<String, Locale> groupLanguageIdLocalesMap =
@@ -1100,7 +1100,7 @@ public class LanguageImpl implements Language, Serializable {
 				return getLocale(languageCode);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to check if group inherits locales");
 			}
@@ -1240,9 +1240,9 @@ public class LanguageImpl implements Language, Serializable {
 
 			value = format(httpServletRequest, "x-" + unit, parts[0]);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -1383,9 +1383,9 @@ public class LanguageImpl implements Language, Serializable {
 
 			value = format(locale, "x-" + unit, parts[0]);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -1504,7 +1504,7 @@ public class LanguageImpl implements Language, Serializable {
 				return isAvailableLocale(languageId);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		Map<String, Locale> groupLanguageIdLocalesMap =
@@ -1706,7 +1706,7 @@ public class LanguageImpl implements Language, Serializable {
 				languageIds = StringUtil.split(groupLanguageIds);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		HashMap<String, Locale> groupLanguageIdLocalesMap =
@@ -2012,12 +2012,12 @@ public class LanguageImpl implements Language, Serializable {
 						companyId, PropsKeys.LOCALES, StringPool.COMMA,
 						PropsValues.LOCALES_ENABLED);
 				}
-				catch (SystemException se) {
+				catch (SystemException systemException) {
 
 					// LPS-52675
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(se, se);
+						_log.debug(systemException, systemException);
 					}
 
 					languageIds = PropsValues.LOCALES_ENABLED;

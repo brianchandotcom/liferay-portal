@@ -48,11 +48,11 @@ public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 		try {
 			return doTranslate(fromLanguageId, toLanguageId, fromText);
 		}
-		catch (MicrosoftTranslatorException mte) {
-			throw mte;
+		catch (MicrosoftTranslatorException microsoftTranslatorException) {
+			throw microsoftTranslatorException;
 		}
-		catch (Exception e) {
-			throw new MicrosoftTranslatorException(e);
+		catch (Exception exception) {
+			throw new MicrosoftTranslatorException(exception);
 		}
 	}
 

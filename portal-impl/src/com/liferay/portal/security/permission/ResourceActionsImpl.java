@@ -94,8 +94,8 @@ public class ResourceActionsImpl implements ResourceActions {
 				read(null, classLoader, config);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -926,7 +926,7 @@ public class ResourceActionsImpl implements ResourceActions {
 						group = GroupServiceUtil.getGroup(
 							group.getParentGroupId());
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 					}
 				}
 

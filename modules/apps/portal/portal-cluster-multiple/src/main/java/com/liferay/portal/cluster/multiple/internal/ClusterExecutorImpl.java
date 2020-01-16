@@ -313,10 +313,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 						methodHandler, " returned value ", result,
 						" that is not serializable")));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return ClusterNodeResponse.createExceptionClusterNodeResponse(
 				_localClusterNodeStatus.getClusterNode(),
-				clusterRequest.getUuid(), e);
+				clusterRequest.getUuid(), exception);
 		}
 		finally {
 			ClusterInvokeThreadLocal.setEnabled(true);
@@ -350,8 +350,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 				clusterExecutorConfiguration.clusterNodeAddressTimeout(),
 				TimeUnit.MILLISECONDS);
 		}
-		catch (Exception e) {
-			_log.error("Unable to get cluster node with address " + address, e);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to get cluster node with address " + address,
+				exception);
 		}
 
 		return null;
@@ -383,11 +385,11 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		try {
 			hostInetAddress = InetAddress.getByName(parts[0]);
 		}
-		catch (UnknownHostException uhe) {
+		catch (UnknownHostException unknownHostException) {
 			throw new IllegalArgumentException(
 				"Unable to parse the portal instance host name and port from " +
 					portalInstanceInetSocketAddress,
-				uhe);
+				unknownHostException);
 		}
 
 		int port = -1;
@@ -395,11 +397,11 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		try {
 			port = GetterUtil.getIntegerStrict(parts[1]);
 		}
-		catch (NumberFormatException nfe) {
+		catch (NumberFormatException numberFormatException) {
 			throw new IllegalArgumentException(
 				"Unable to parse portal InetSocketAddress port from " +
 					portalInstanceInetSocketAddress,
-				nfe);
+				numberFormatException);
 		}
 
 		return new InetSocketAddress(hostInetAddress, port);

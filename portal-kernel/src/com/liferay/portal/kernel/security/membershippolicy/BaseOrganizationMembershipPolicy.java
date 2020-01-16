@@ -55,7 +55,7 @@ public abstract class BaseOrganizationMembershipPolicy
 			checkMembership(
 				new long[] {userId}, new long[] {organizationId}, null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 
@@ -109,7 +109,7 @@ public abstract class BaseOrganizationMembershipPolicy
 			checkMembership(
 				new long[] {userId}, null, new long[] {organizationId});
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return true;
 		}
 
@@ -136,7 +136,7 @@ public abstract class BaseOrganizationMembershipPolicy
 		try {
 			checkRoles(userGroupRoles, null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 
@@ -197,7 +197,7 @@ public abstract class BaseOrganizationMembershipPolicy
 		try {
 			checkRoles(null, userGroupRoles);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return true;
 		}
 

@@ -381,13 +381,13 @@ public abstract class UpgradeProcess
 					}
 				}
 			}
-			catch (SQLException sqle) {
+			catch (SQLException sqlException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
 							"Attempting to upgrade table ", tableName,
 							" by recreating the table due to: ",
-							sqle.getMessage()));
+							sqlException.getMessage()));
 				}
 
 				Field tableColumnsField = tableClass.getField("TABLE_COLUMNS");

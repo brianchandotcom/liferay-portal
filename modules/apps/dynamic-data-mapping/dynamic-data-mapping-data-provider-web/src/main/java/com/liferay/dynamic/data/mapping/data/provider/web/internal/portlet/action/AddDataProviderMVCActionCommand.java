@@ -100,10 +100,13 @@ public class AddDataProviderMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getSiteDefaultLocale(), description),
 				ddmFormValues, type, serviceContext);
 		}
-		catch (DataProviderInstanceURLException dpiurle) {
+		catch (DataProviderInstanceURLException
+					dataProviderInstanceURLException) {
+
 			hideDefaultErrorMessage(actionRequest);
 
-			SessionErrors.add(actionRequest, dpiurle.getClass());
+			SessionErrors.add(
+				actionRequest, dataProviderInstanceURLException.getClass());
 		}
 	}
 

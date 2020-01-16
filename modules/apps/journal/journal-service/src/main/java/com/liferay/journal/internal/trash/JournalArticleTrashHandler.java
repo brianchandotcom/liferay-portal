@@ -315,19 +315,20 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			(journalArticleResource.getPrimaryKey() !=
 				originalArticleResource.getPrimaryKey())) {
 
-			RestoreEntryException ree = new RestoreEntryException(
-				RestoreEntryException.DUPLICATE);
+			RestoreEntryException restoreEntryException =
+				new RestoreEntryException(RestoreEntryException.DUPLICATE);
 
 			JournalArticle duplicateArticle =
 				_journalArticleLocalService.getArticle(
 					originalArticleResource.getGroupId(), originalTitle);
 
-			ree.setDuplicateEntryId(duplicateArticle.getResourcePrimKey());
-			ree.setOldName(duplicateArticle.getArticleId());
+			restoreEntryException.setDuplicateEntryId(
+				duplicateArticle.getResourcePrimKey());
+			restoreEntryException.setOldName(duplicateArticle.getArticleId());
 
-			ree.setTrashEntryId(trashEntryId);
+			restoreEntryException.setTrashEntryId(trashEntryId);
 
-			throw ree;
+			throw restoreEntryException;
 		}
 	}
 

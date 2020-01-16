@@ -45,9 +45,9 @@ public class DataAccess {
 				connection.close();
 			}
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqle.getMessage());
+				_log.warn(sqlException.getMessage());
 			}
 		}
 	}
@@ -74,9 +74,9 @@ public class DataAccess {
 				resultSet.close();
 			}
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqle.getMessage());
+				_log.warn(sqlException.getMessage());
 			}
 		}
 	}
@@ -87,9 +87,9 @@ public class DataAccess {
 				statement.close();
 			}
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqle.getMessage());
+				_log.warn(sqlException.getMessage());
 			}
 		}
 	}
@@ -108,9 +108,9 @@ public class DataAccess {
 				cleanUp(statement.getConnection(), statement, resultSet);
 			}
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqle.getMessage());
+				_log.warn(sqlException.getMessage());
 			}
 		}
 	}

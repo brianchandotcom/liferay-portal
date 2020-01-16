@@ -85,7 +85,7 @@ public class ViewSourcePortletConfigurationIcon
 			httpServletRequest.setAttribute(
 				WebKeys.JOURNAL_ARTICLE, ActionUtil.getArticle(portletRequest));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return super.include(httpServletRequest, httpServletResponse);
@@ -98,7 +98,7 @@ public class ViewSourcePortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

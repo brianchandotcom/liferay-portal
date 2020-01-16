@@ -111,11 +111,11 @@ public class IndexUpdaterOSGiCommands {
 
 					db.updateIndexes(connection, tablesSQL, indexesSQL, true);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					System.out.println(
 						StringBundler.concat(
 							"Unable to update indexes for ",
-							bundle.getSymbolicName(), ": ", e));
+							bundle.getSymbolicName(), ": ", exception));
 				}
 			}
 		}

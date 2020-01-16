@@ -106,14 +106,14 @@ public class ViewFileEntryMVCRenderCommand
 			return super.render(renderRequest, renderResponse);
 		}
 		catch (NoSuchFileEntryException | NoSuchFileVersionException |
-			   NoSuchRepositoryEntryException | PrincipalException e) {
+			   NoSuchRepositoryEntryException | PrincipalException exception) {
 
-			SessionErrors.add(renderRequest, e.getClass());
+			SessionErrors.add(renderRequest, exception.getClass());
 
 			return "/document_library/error.jsp";
 		}
-		catch (IOException | PortalException e) {
-			throw new PortletException(e);
+		catch (IOException | PortalException exception) {
+			throw new PortletException(exception);
 		}
 	}
 

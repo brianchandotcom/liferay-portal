@@ -153,8 +153,8 @@ public abstract class BaseTopLevelBuildData
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties(
 				false);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		String cohortName = getCohortName();

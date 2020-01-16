@@ -118,8 +118,9 @@ public class FileUploadChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Async broker is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Async broker is null", nullPointerException.getMessage());
 		}
 
 		try {
@@ -127,8 +128,9 @@ public class FileUploadChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("File response is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"File response is null", nullPointerException.getMessage());
 		}
 
 		FileResponse fileResponse = new FileResponse(
@@ -139,8 +141,9 @@ public class FileUploadChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Event executor is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Event executor is null", nullPointerException.getMessage());
 		}
 
 		try {
@@ -149,9 +152,10 @@ public class FileUploadChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"File response has no content for uploading", iae.getMessage());
+				"File response has no content for uploading",
+				illegalArgumentException.getMessage());
 		}
 	}
 
@@ -397,9 +401,9 @@ public class FileUploadChannelHandlerTest {
 						FileServerTestUtil.wrapSecondHalf(data));
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				fileUploadChannelHandler.exceptionCaught(
-					channelPipeline.firstContext(), e);
+					channelPipeline.firstContext(), exception);
 			}
 
 			if (postAsyncBroker) {
@@ -409,8 +413,8 @@ public class FileUploadChannelHandlerTest {
 
 						Assert.fail();
 					}
-					catch (ExecutionException ee) {
-						Throwable throwable = ee.getCause();
+					catch (ExecutionException executionException) {
+						Throwable throwable = executionException.getCause();
 
 						if (folder) {
 							Assert.assertEquals(

@@ -128,11 +128,11 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 		}
 		catch (DiscussionMaxCommentsException | MessageBodyException |
 			   NoSuchMessageException | PrincipalException |
-			   RequiredMessageException e) {
+			   RequiredMessageException exception) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.putException(e);
+			jsonObject.putException(exception);
 
 			writeJSON(
 				namespacedHttpServletRequest, httpServletResponse, jsonObject);

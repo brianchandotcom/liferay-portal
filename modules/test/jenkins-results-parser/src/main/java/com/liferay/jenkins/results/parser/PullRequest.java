@@ -92,10 +92,10 @@ public class PullRequest {
 
 			return new Comment(responseJSONObject);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to post comment in GitHub pull request " + getURL(),
-				ioe);
+				ioException);
 		}
 	}
 
@@ -131,10 +131,10 @@ public class PullRequest {
 			JenkinsResultsParserUtil.toString(
 				gitHubApiUrl, jsonArray.toString());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			System.out.println("Unable to add label " + label.getName());
 
-			ioe.printStackTrace();
+			ioException.printStackTrace();
 
 			return false;
 		}
@@ -179,9 +179,9 @@ public class PullRequest {
 
 				page++;
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new RuntimeException(
-					"Unable to get pull request comments", ioe);
+					"Unable to get pull request comments", ioException);
 			}
 		}
 
@@ -371,8 +371,8 @@ public class PullRequest {
 						labelJSONObject, getGitHubRemoteGitRepository()));
 			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -391,10 +391,10 @@ public class PullRequest {
 					editCommentURL, "/comments/", id),
 				false, HttpRequestMethod.DELETE);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to delete comment in GitHub pull request " + getURL(),
-				ioe);
+				ioException);
 		}
 	}
 
@@ -415,10 +415,10 @@ public class PullRequest {
 
 			refresh();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			System.out.println("Unable to remove label " + labelName);
 
-			ioe.printStackTrace();
+			ioException.printStackTrace();
 		}
 	}
 
@@ -547,10 +547,10 @@ public class PullRequest {
 						editCommentURL, "/comments/", id),
 					false, HttpRequestMethod.PATCH));
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to update comment in GitHub pull request " + getURL(),
-				ioe);
+				ioException);
 		}
 	}
 
@@ -569,11 +569,11 @@ public class PullRequest {
 				return _UtcIso8601SimpleDateFormat.parse(
 					_commentJSONObject.getString("created_at"));
 			}
-			catch (ParseException pe) {
+			catch (ParseException parseException) {
 				throw new RuntimeException(
 					"Unable to parse created date " +
 						_commentJSONObject.getString("created_at"),
-					pe);
+					parseException);
 			}
 		}
 
@@ -586,11 +586,11 @@ public class PullRequest {
 				return _UtcIso8601SimpleDateFormat.parse(
 					_commentJSONObject.getString("modified_at"));
 			}
-			catch (ParseException pe) {
+			catch (ParseException parseException) {
 				throw new RuntimeException(
 					"Unable to parse modified date " +
 						_commentJSONObject.getString("modified_at"),
-					pe);
+					parseException);
 			}
 		}
 
@@ -645,8 +645,8 @@ public class PullRequest {
 			JenkinsResultsParserUtil.toJSONObject(
 				getIssueURL(), jsonObject.toString());
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

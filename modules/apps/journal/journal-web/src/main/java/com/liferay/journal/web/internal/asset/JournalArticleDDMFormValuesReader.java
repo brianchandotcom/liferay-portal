@@ -51,9 +51,10 @@ public final class JournalArticleDDMFormValuesReader
 			return DDMBeanTranslatorUtil.translate(
 				_fieldsToDDMFormValuesConverter.convert(ddmStructure, fields));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PortalException(
-				"Unable to read fields for article " + _article.getId(), e);
+				"Unable to read fields for article " + _article.getId(),
+				exception);
 		}
 	}
 

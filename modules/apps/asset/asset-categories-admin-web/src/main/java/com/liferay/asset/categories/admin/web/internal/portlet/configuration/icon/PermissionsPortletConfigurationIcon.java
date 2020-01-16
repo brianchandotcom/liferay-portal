@@ -68,7 +68,7 @@ public class PermissionsPortletConfigurationIcon
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return url;
@@ -104,7 +104,7 @@ public class PermissionsPortletConfigurationIcon
 				return false;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 

@@ -59,11 +59,11 @@ public class ResolveFileEntryUUIDServlet extends HttpServlet {
 				httpServletResponse,
 				_getFileEntryByUuidAndGroupId(httpServletRequest));
 		}
-		catch (PrincipalException pe) {
-			_sendError(httpServletResponse, 403, pe);
+		catch (PrincipalException principalException) {
+			_sendError(httpServletResponse, 403, principalException);
 		}
-		catch (Exception e) {
-			_sendError(httpServletResponse, 500, e);
+		catch (Exception exception) {
+			_sendError(httpServletResponse, 500, exception);
 		}
 	}
 
@@ -91,8 +91,8 @@ public class ResolveFileEntryUUIDServlet extends HttpServlet {
 
 			httpServletResponse.setStatus(status);
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 
 			httpServletResponse.setStatus(500);
 		}

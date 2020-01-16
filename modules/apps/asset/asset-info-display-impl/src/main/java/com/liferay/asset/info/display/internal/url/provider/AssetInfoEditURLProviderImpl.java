@@ -77,7 +77,7 @@ public class AssetInfoEditURLProviderImpl implements AssetInfoEditURLProvider {
 
 			return editAssetEntryURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;

@@ -149,7 +149,7 @@ public abstract class BasePortletExportImportTestCase
 
 			Assert.assertNull(importedStagedModel);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 	}
 
@@ -529,7 +529,7 @@ public abstract class BasePortletExportImportTestCase
 
 			Assert.assertFalse(expectFailure);
 		}
-		catch (LocaleException le) {
+		catch (LocaleException localeException) {
 			Assert.assertTrue(expectFailure);
 		}
 	}

@@ -83,8 +83,10 @@ public class ServiceTrackerFieldUpdaterCustomizerTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals(field + " is not volatile", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				field + " is not volatile",
+				illegalArgumentException.getMessage());
 		}
 	}
 
@@ -214,8 +216,8 @@ public class ServiceTrackerFieldUpdaterCustomizerTest {
 
 				_serviceTracker.open();
 			}
-			catch (NoSuchFieldException nsfe) {
-				throw new ExceptionInInitializerError(nsfe);
+			catch (NoSuchFieldException noSuchFieldException) {
+				throw new ExceptionInInitializerError(noSuchFieldException);
 			}
 		}
 

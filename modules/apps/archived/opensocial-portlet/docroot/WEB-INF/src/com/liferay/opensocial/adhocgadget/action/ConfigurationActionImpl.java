@@ -67,7 +67,7 @@ public class ConfigurationActionImpl extends BaseConfigurationAction {
 			httpServletRequest.setAttribute(
 				WebKeys.OAUTH_SERVICES, oAuthServices);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
@@ -107,8 +107,8 @@ public class ConfigurationActionImpl extends BaseConfigurationAction {
 			try {
 				ShindigUtil.getGadgetSpec(url, false, true);
 			}
-			catch (Exception e) {
-				SessionErrors.add(actionRequest, e.getClass());
+			catch (Exception exception) {
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 
 			setPreference(actionRequest, "url", url);

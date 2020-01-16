@@ -51,8 +51,8 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to initialize tree walker", e);
+		catch (Exception exception) {
+			_log.error("Unable to initialize tree walker", exception);
 		}
 
 		_messages = messages;

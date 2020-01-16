@@ -144,7 +144,7 @@ public class BlogsEntryActionDropdownItemsProvider {
 
 			return false;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 	}
@@ -182,7 +182,7 @@ public class BlogsEntryActionDropdownItemsProvider {
 
 			return _isShowPublishMenuItem(group, portletId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 	}
@@ -261,8 +261,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 				LiferayWindowState.POP_UP.toString(), null,
 				_httpServletRequest);
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -298,8 +298,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 			return BlogsEntryPermission.contains(
 				_permissionChecker, _blogsEntry, ActionKeys.DELETE);
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -309,8 +309,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 				_permissionChecker, _blogsEntry.getGroupId(),
 				ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -319,8 +319,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 			return BlogsEntryPermission.contains(
 				_permissionChecker, _blogsEntry, ActionKeys.PERMISSIONS);
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -329,8 +329,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 			return BlogsEntryPermission.contains(
 				_permissionChecker, _blogsEntry, ActionKeys.UPDATE);
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -349,8 +349,8 @@ public class BlogsEntryActionDropdownItemsProvider {
 			return _trashHelper.isTrashEnabled(
 				PortalUtil.getScopeGroupId(_httpServletRequest));
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 

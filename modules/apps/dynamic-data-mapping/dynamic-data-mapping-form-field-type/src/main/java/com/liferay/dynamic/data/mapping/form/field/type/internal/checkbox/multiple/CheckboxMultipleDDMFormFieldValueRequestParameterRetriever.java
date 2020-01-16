@@ -68,9 +68,9 @@ public class CheckboxMultipleDDMFormFieldValueRequestParameterRetriever
 			return jsonFactory.looseDeserialize(
 				defaultDDMFormFieldParameterValue, String[].class);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			return StringUtil.split(defaultDDMFormFieldParameterValue);

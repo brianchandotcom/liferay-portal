@@ -72,8 +72,9 @@ public abstract class BaseAnalyticsConfigurationScreen
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			throw new IOException("Unable to render " + getJspPath(), e);
+		catch (Exception exception) {
+			throw new IOException(
+				"Unable to render " + getJspPath(), exception);
 		}
 	}
 

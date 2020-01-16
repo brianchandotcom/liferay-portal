@@ -253,8 +253,8 @@ public class PropsUtil {
 
 					webId = company.getWebId();
 				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 				}
 
 				configuration = new ConfigurationImpl(

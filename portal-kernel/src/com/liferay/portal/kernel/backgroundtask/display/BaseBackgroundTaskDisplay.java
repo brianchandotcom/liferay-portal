@@ -130,9 +130,9 @@ public abstract class BaseBackgroundTaskDisplay
 		try {
 			template.processTemplate(writer);
 		}
-		catch (TemplateException te) {
+		catch (TemplateException templateException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(te, te);
+				_log.debug(templateException, templateException);
 			}
 
 			return StringPool.BLANK;
@@ -160,9 +160,9 @@ public abstract class BaseBackgroundTaskDisplay
 			jsonObject = JSONFactoryUtil.createJSONObject(
 				backgroundTask.getStatusMessage());
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsone, jsone);
+				_log.debug(jsonException, jsonException);
 			}
 		}
 

@@ -191,7 +191,7 @@ public class WebSphereDeploymentExtension implements DeploymentExtension {
 							"of " + exitValue);
 				}
 			}
-			catch (IllegalThreadStateException itse) {
+			catch (IllegalThreadStateException illegalThreadStateException) {
 				_log.info("Process did not terminate");
 			}
 		}

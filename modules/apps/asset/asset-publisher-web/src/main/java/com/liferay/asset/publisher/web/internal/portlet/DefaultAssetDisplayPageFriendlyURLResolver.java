@@ -232,8 +232,8 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey());
 				}
-				catch (PortalException pe) {
-					throw new RuntimeException(pe);
+				catch (PortalException portalException) {
+					throw new RuntimeException(portalException);
 				}
 			}
 		);

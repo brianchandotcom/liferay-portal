@@ -56,8 +56,8 @@ public class Base64 {
 		try (ObjectOutputStream os = new ObjectOutputStream(ubaos)) {
 			os.writeObject(o);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return _encode(ubaos.unsafeGetByteArray(), 0, ubaos.size(), false);
@@ -273,9 +273,9 @@ public class Base64 {
 
 			return is.readObject();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (!silent) {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 		}
 

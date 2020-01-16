@@ -59,8 +59,8 @@ public class LayoutCustomizationTemplateContextContributor
 				contextObjects.put("bodyCssClass", sb.toString());
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 

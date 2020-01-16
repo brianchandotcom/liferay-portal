@@ -64,9 +64,9 @@ public class DateDDMFormFieldValueValidator
 			try {
 				DateUtil.formatDate("yyyy-MM-dd", valueString, defaultLocale);
 			}
-			catch (ParseException pe) {
+			catch (ParseException parseException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(parseException, parseException);
 				}
 
 				throw new DDMFormFieldValueValidationException(

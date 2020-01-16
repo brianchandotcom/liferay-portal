@@ -38,8 +38,8 @@ public class TestItemHelper {
 		try {
 			Files.deleteIfExists(_path);
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 

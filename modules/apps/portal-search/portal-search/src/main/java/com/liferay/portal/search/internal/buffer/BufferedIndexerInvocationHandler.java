@@ -150,7 +150,7 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 					classPK = resourcedModel.getResourcePrimKey();
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(

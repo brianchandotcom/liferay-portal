@@ -96,8 +96,8 @@ public class OpenIndexRequestExecutorImpl implements OpenIndexRequestExecutor {
 			return indicesClient.open(
 				elasticsearchOpenIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

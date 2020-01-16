@@ -82,21 +82,23 @@ public class AuthorizePortlet extends MVCPortlet {
 		try {
 			oAuthAccessor = _oAuth.getOAuthAccessor(oAuthMessage);
 		}
-		catch (OAuthException oae) {
+		catch (OAuthException oAuthException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("OAuth authorisation failed", oae);
+				_log.warn("OAuth authorisation failed", oAuthException);
 			}
 
 			if (Validator.isNotNull(oAuthCallbackURL)) {
 				oAuthCallbackURL = _oAuth.addParameters(
-					oAuthCallbackURL, "oauth_problem", oae.getMessage());
+					oAuthCallbackURL, "oauth_problem",
+					oAuthException.getMessage());
 
 				actionResponse.sendRedirect(oAuthCallbackURL);
 
 				return;
 			}
 
-			SessionErrors.add(actionRequest, OAuthException.class, oae);
+			SessionErrors.add(
+				actionRequest, OAuthException.class, oAuthException);
 
 			return;
 		}

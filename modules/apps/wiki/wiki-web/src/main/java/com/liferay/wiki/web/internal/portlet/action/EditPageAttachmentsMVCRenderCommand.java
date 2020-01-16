@@ -55,17 +55,17 @@ public class EditPageAttachmentsMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WikiWebKeys.WIKI_PAGE, ActionUtil.getPage(renderRequest));
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof NoSuchPageException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchNodeException ||
+				exception instanceof NoSuchPageException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/wiki/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/wiki/edit_page_attachment.jsp";

@@ -35,8 +35,8 @@ public class CheckOutFileOperation extends BaseOperation {
 				filePathURL.toString(), Boolean.FALSE.toString(),
 				StringPool.BLANK);
 		}
-		catch (RemoteException re) {
-			RemoteExceptionUtil.handleRemoteException(re);
+		catch (RemoteException remoteException) {
+			RemoteExceptionUtil.handleRemoteException(remoteException);
 
 			throw new IllegalStateException();
 		}

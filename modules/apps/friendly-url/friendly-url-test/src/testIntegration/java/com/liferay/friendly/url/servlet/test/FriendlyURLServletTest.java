@@ -417,8 +417,8 @@ public class FriendlyURLServletTest {
 				expectedRedirect,
 				_getRedirectMethod.invoke(_servlet, httpServletRequest, path));
 		}
-		catch (InvocationTargetException ite) {
-			throw ite.getCause();
+		catch (InvocationTargetException invocationTargetException) {
+			throw invocationTargetException.getCause();
 		}
 	}
 

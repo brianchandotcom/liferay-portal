@@ -79,8 +79,8 @@ public class DNSLookupWebCacheItem implements WebCacheItem {
 
 			dnsLookup = new DNSLookup(_domain, results);
 		}
-		catch (Exception e) {
-			throw new WebCacheException(_domain + " " + e.toString());
+		catch (Exception exception) {
+			throw new WebCacheException(_domain + " " + exception.toString());
 		}
 
 		return dnsLookup;

@@ -82,8 +82,8 @@ public class FindBugsDefaultsPlugin extends BaseDefaultsPlugin<FindBugsPlugin> {
 				"com/liferay/gradle/plugins/internal/dependencies" +
 					"/fb-exclude.xml");
 		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
+		catch (IOException ioException) {
+			throw new ExceptionInInitializerError(ioException);
 		}
 	}
 

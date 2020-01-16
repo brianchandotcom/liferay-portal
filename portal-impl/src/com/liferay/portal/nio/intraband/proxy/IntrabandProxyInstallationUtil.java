@@ -79,8 +79,8 @@ public class IntrabandProxyInstallationUtil {
 			return IntrabandProxyUtil.getProxyMethodSignatures(
 				proxySkeletonClass);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -116,8 +116,8 @@ public class IntrabandProxyInstallationUtil {
 					classLoader, classLoader.loadClass(_skeletonId),
 					_targetLocator);
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (Exception exception) {
+				throw new ProcessException(exception);
 			}
 		}
 

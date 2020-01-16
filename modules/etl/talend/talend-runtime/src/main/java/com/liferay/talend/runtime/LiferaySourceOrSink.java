@@ -214,9 +214,10 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 
 			return ValidationResult.OK;
 		}
-		catch (TalendRuntimeException tre) {
+		catch (TalendRuntimeException talendRuntimeException) {
 			return new ValidationResult(
-				ValidationResult.Result.ERROR, tre.getMessage());
+				ValidationResult.Result.ERROR,
+				talendRuntimeException.getMessage());
 		}
 	}
 
@@ -259,23 +260,25 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 				ValidationResult.Result.OK,
 				i18nMessages.getMessage("success.validation.connection"));
 		}
-		catch (TalendRuntimeException tre) {
-			_logger.error(tre.getMessage(), tre);
+		catch (TalendRuntimeException talendRuntimeException) {
+			_logger.error(
+				talendRuntimeException.getMessage(), talendRuntimeException);
 
 			return new ValidationResult(
 				ValidationResult.Result.ERROR,
 				i18nMessages.getMessage(
 					"error.validation.connection.testconnection",
-					tre.getLocalizedMessage()));
+					talendRuntimeException.getLocalizedMessage()));
 		}
-		catch (ProcessingException pe) {
-			_logger.error(pe.getMessage(), pe);
+		catch (ProcessingException processingException) {
+			_logger.error(
+				processingException.getMessage(), processingException);
 
 			return new ValidationResult(
 				ValidationResult.Result.ERROR,
 				i18nMessages.getMessage(
 					"error.validation.connection.testconnection.jersey",
-					pe.getLocalizedMessage()));
+					processingException.getLocalizedMessage()));
 		}
 		catch (Throwable t) {
 			_logger.error(t.getMessage(), t);

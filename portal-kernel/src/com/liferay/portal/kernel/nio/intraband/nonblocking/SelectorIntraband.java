@@ -112,8 +112,8 @@ public class SelectorIntraband extends BaseIntraband {
 		try {
 			return registerFutureTask.get();
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 
@@ -173,8 +173,8 @@ public class SelectorIntraband extends BaseIntraband {
 		try {
 			return registerFutureTask.get();
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 
@@ -393,7 +393,8 @@ public class SelectorIntraband extends BaseIntraband {
 										_processWriting(selectionKey);
 									}
 								}
-								catch (CancelledKeyException cke) {
+								catch (CancelledKeyException
+											cancelledKeyException) {
 
 									// Concurrent cancelling, move to next key
 
@@ -412,7 +413,7 @@ public class SelectorIntraband extends BaseIntraband {
 					selector.close();
 				}
 			}
-			catch (ClosedSelectorException cse) {
+			catch (ClosedSelectorException closedSelectorException) {
 				if (_log.isInfoEnabled()) {
 					Thread currentThread = Thread.currentThread();
 

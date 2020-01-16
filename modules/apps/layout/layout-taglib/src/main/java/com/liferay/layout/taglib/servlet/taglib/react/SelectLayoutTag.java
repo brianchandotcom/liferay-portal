@@ -174,8 +174,8 @@ public class SelectLayoutTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-layout:select-layout:data", _getData());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

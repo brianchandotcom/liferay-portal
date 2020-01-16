@@ -83,9 +83,10 @@ public abstract class BaseChangeListsPortlet extends MVCPortlet {
 		try {
 			checkPermissions(renderRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PortletException(
-				"Unable to check permissions: " + e.getMessage(), e);
+				"Unable to check permissions: " + exception.getMessage(),
+				exception);
 		}
 	}
 

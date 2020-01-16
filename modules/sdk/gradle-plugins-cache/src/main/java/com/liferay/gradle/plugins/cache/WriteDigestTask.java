@@ -57,8 +57,8 @@ public class WriteDigestTask extends SourceTask {
 				Files.readAllBytes(digestFile.toPath()),
 				StandardCharsets.UTF_8);
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 
@@ -90,8 +90,8 @@ public class WriteDigestTask extends SourceTask {
 				logger.info("Updated {} to {}", digestFile, digest);
 			}
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 

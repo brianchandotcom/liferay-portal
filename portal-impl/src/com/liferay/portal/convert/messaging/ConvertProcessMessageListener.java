@@ -32,8 +32,8 @@ public class ConvertProcessMessageListener implements MessageListener {
 		try {
 			doReceive(message);
 		}
-		catch (Exception e) {
-			_log.fatal("Unable to process message " + message, e);
+		catch (Exception exception) {
+			_log.fatal("Unable to process message " + message, exception);
 
 			ShutdownUtil.shutdown(0);
 		}

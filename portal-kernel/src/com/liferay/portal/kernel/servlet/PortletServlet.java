@@ -115,10 +115,10 @@ public class PortletServlet extends HttpServlet {
 			PortletFilterUtil.doFilter(
 				portletRequest, portletResponse, lifecycle, filterChain);
 		}
-		catch (PortletException pe) {
-			_log.error(pe, pe);
+		catch (PortletException portletException) {
+			_log.error(portletException, portletException);
 
-			throw new ServletException(pe);
+			throw new ServletException(portletException);
 		}
 	}
 

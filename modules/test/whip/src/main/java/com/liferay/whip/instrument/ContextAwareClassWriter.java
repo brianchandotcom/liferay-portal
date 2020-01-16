@@ -99,15 +99,15 @@ public class ContextAwareClassWriter extends ClassWriter {
 
 			return classReader.getSuperName();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to parse class definition for " + type, ioe);
+				"Unable to parse class definition for " + type, ioException);
 		}
 		finally {
 			try {
 				inputStream.close();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 			}
 		}
 	}

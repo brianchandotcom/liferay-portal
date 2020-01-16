@@ -129,8 +129,8 @@ public class PortletPreferencesFinderImpl
 
 			return count;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -205,8 +205,8 @@ public class PortletPreferencesFinderImpl
 
 			return count;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -239,8 +239,8 @@ public class PortletPreferencesFinderImpl
 
 			return q.list(true);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -303,11 +303,11 @@ public class PortletPreferencesFinderImpl
 				FinderCacheUtil.putResult(
 					FINDER_PATH_FIND_BY_C_G_O_O_P_P, finderArgs, list);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				FinderCacheUtil.removeResult(
 					FINDER_PATH_FIND_BY_C_G_O_O_P_P, finderArgs);
 
-				throw new SystemException(e);
+				throw new SystemException(exception);
 			}
 			finally {
 				closeSession(session);

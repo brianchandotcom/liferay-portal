@@ -66,9 +66,9 @@ public class HTMLTag extends BaseHTMLTag {
 		try {
 			return DDMUtil.getDDMForm(getClassNameId(), getClassPK());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(getLogMessage(), pe);
+				_log.warn(getLogMessage(), portalException);
 			}
 		}
 
@@ -86,9 +86,9 @@ public class HTMLTag extends BaseHTMLTag {
 				return DDMUtil.getDDMFormValues(
 					ddmForm, serializedDDMFormValues);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}
@@ -119,9 +119,9 @@ public class HTMLTag extends BaseHTMLTag {
 				return DDMUtil.getFields(ddmStructureId, getDdmFormValues());
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(getLogMessage(), pe);
+				_log.warn(getLogMessage(), portalException);
 			}
 		}
 
@@ -148,9 +148,9 @@ public class HTMLTag extends BaseHTMLTag {
 
 			return ddmTemplate.getMode();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(getLogMessage(), pe);
+				_log.warn(getLogMessage(), portalException);
 			}
 		}
 

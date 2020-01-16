@@ -47,8 +47,8 @@ public class UserModelListener extends SyncBaseModelListener<User> {
 				_syncDeviceLocalService.deleteSyncDevice(syncDevice);
 			}
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 
@@ -116,8 +116,8 @@ public class UserModelListener extends SyncBaseModelListener<User> {
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

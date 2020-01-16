@@ -103,8 +103,8 @@ public class UnicodePropertiesTest {
 				try {
 					unicodeProperties.load(props);
 				}
-				catch (IOException ioe) {
-					ReflectionUtil.throwException(ioe);
+				catch (IOException ioException) {
+					ReflectionUtil.throwException(ioException);
 				}
 			},
 			false);
@@ -114,8 +114,8 @@ public class UnicodePropertiesTest {
 				try {
 					unicodeProperties.load(props);
 				}
-				catch (IOException ioe) {
-					ReflectionUtil.throwException(ioe);
+				catch (IOException ioException) {
+					ReflectionUtil.throwException(ioException);
 				}
 			},
 			true);

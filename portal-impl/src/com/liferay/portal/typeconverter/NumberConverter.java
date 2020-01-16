@@ -41,8 +41,8 @@ public class NumberConverter implements TypeConverter<Number> {
 
 			return new BigDecimal(valueString);
 		}
-		catch (NumberFormatException nfe) {
-			throw new TypeConversionException(value, nfe);
+		catch (NumberFormatException numberFormatException) {
+			throw new TypeConversionException(value, numberFormatException);
 		}
 	}
 

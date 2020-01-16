@@ -152,8 +152,8 @@ public class Archetyper {
 			_loggerField = ReflectionUtil.getField(
 				AbstractLogEnabled.class, "logger");
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

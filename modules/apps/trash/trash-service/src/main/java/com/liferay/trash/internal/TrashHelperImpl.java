@@ -234,7 +234,7 @@ public class TrashHelperImpl implements TrashHelper {
 				title = trashEntry.getTypeSettingsProperty(paramName);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No trash entry or trash version exists with ID " +

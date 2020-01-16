@@ -65,8 +65,9 @@ public class PluginSchedulingConfigurator {
 						schedulerEntry.getEventListenerClass(),
 						messageListener);
 				}
-				catch (Exception e) {
-					_log.error("Unable to schedule " + schedulerEntry, e);
+				catch (Exception exception) {
+					_log.error(
+						"Unable to schedule " + schedulerEntry, exception);
 				}
 			}
 		}

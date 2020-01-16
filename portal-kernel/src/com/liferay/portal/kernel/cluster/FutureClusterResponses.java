@@ -60,8 +60,8 @@ public class FutureClusterResponses
 		try {
 			return super.get();
 		}
-		catch (ExecutionException ee) {
-			throw new AssertionError(ee);
+		catch (ExecutionException executionException) {
+			throw new AssertionError(executionException);
 		}
 	}
 
@@ -72,8 +72,8 @@ public class FutureClusterResponses
 		try {
 			return super.get(timeout, unit);
 		}
-		catch (ExecutionException ee) {
-			throw new AssertionError(ee);
+		catch (ExecutionException executionException) {
+			throw new AssertionError(executionException);
 		}
 	}
 

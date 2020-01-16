@@ -133,7 +133,9 @@ public class DLFileShortcutTrashHandlerTest
 		try {
 			super.testTrashParentAndBaseModel();
 		}
-		catch (com.liferay.trash.kernel.exception.TrashEntryException tee) {
+		catch (com.liferay.trash.kernel.exception.TrashEntryException
+					trashEntryException) {
+
 			throw new TrashEntryException();
 		}
 	}
@@ -144,7 +146,9 @@ public class DLFileShortcutTrashHandlerTest
 		try {
 			super.testTrashParentAndRestoreParentAndBaseModel();
 		}
-		catch (com.liferay.trash.kernel.exception.RestoreEntryException ree) {
+		catch (com.liferay.trash.kernel.exception.RestoreEntryException
+					restoreEntryException) {
+
 			throw new RestoreEntryException();
 		}
 	}

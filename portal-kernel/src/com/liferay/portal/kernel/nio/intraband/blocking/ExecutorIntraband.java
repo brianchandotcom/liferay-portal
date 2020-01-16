@@ -260,7 +260,7 @@ public class ExecutorIntraband extends BaseIntraband {
 					cleanUpTimeoutResponseWaitingDatagrams();
 				}
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 			}
 
 			return null;

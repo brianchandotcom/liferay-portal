@@ -143,8 +143,8 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
 					_dlAppLocalService.getFileEntry(fileEntryId));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return StringPool.BLANK;
@@ -279,8 +279,8 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 					OneDriveBackgroundTaskConstants.PORTAL_END, fileEntry,
 					BackgroundTaskConstants.STATUS_IN_PROGRESS);
 			}
-			catch (IOException ioe) {
-				throw new PortalException(ioe);
+			catch (IOException ioException) {
+				throw new PortalException(ioException);
 			}
 		}
 		else if (Objects.equals(
@@ -307,11 +307,12 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 				iDriveItemStreamRequest.put(
 					byteArrayOutputStream.toByteArray());
 			}
-			catch (GraphServiceException gse) {
-				throw GraphServiceExceptionPortalExceptionMapper.map(gse);
+			catch (GraphServiceException graphServiceException) {
+				throw GraphServiceExceptionPortalExceptionMapper.map(
+					graphServiceException);
 			}
-			catch (IOException ioe) {
-				throw new PortalException(ioe);
+			catch (IOException ioException) {
+				throw new PortalException(ioException);
 			}
 		}
 

@@ -92,9 +92,9 @@ public class FileShortcutStagedModelDataHandler
 
 			return new LiferayFileShortcut(dlFileShortcut);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return null;
@@ -271,9 +271,10 @@ public class FileShortcutStagedModelDataHandler
 		try {
 			return _dlAppLocalService.getFileEntry(fileEntryId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get file entry " + fileEntryId, pe);
+				_log.warn(
+					"Unable to get file entry " + fileEntryId, portalException);
 			}
 
 			return null;

@@ -97,11 +97,11 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 			return fullQuery;
 		}
-		catch (SearchException se) {
-			throw se;
+		catch (SearchException searchException) {
+			throw searchException;
 		}
-		catch (Exception e) {
-			throw new SearchException(e);
+		catch (Exception exception) {
+			throw new SearchException(exception);
 		}
 	}
 
@@ -128,9 +128,10 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			_indexWriterHelper.updateDocuments(
 				getSearchEngineId(), CompanyConstants.SYSTEM, documents, false);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 			_log.error(
-				"Unable to index documents for " + configurationModels, se);
+				"Unable to index documents for " + configurationModels,
+				searchException);
 		}
 	}
 
@@ -143,11 +144,11 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 			return hits;
 		}
-		catch (SearchException se) {
-			throw se;
+		catch (SearchException searchException) {
+			throw searchException;
 		}
-		catch (Exception e) {
-			throw new SearchException(e);
+		catch (Exception exception) {
+			throw new SearchException(exception);
 		}
 	}
 

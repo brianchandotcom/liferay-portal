@@ -240,15 +240,15 @@ public class WabBundleProcessor {
 				webXMLDefinition.getServletDefinitions(),
 				modifiableServletContext);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Catastrophic initialization failure! Shutting down " +
-					_contextName + " WAB due to: " + e.getMessage(),
-				e);
+					_contextName + " WAB due to: " + exception.getMessage(),
+				exception);
 
 			destroy();
 
-			throw e;
+			throw exception;
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -379,8 +379,8 @@ public class WabBundleProcessor {
 			try {
 				serviceRegistration.unregister();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -394,8 +394,8 @@ public class WabBundleProcessor {
 			try {
 				serviceRegistration.unregister();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -409,8 +409,8 @@ public class WabBundleProcessor {
 			try {
 				serviceRegistration.unregister();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -681,8 +681,8 @@ public class WabBundleProcessor {
 					}
 				}
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 	}
@@ -776,8 +776,8 @@ public class WabBundleProcessor {
 			initializerClass = clazz.asSubclass(
 				ServletContainerInitializer.class);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return;
 		}
@@ -855,7 +855,7 @@ public class WabBundleProcessor {
 
 				webXMLDefinition.addListenerDefinition(listenerDefinition);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					"Bundle " + _bundle + " is unable to load listener " +
 						listenerClassName);
@@ -891,7 +891,7 @@ public class WabBundleProcessor {
 				printWriter.println(sb.toString());
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 	}
 

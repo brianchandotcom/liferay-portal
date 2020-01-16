@@ -41,7 +41,7 @@ public enum DLVersionNumberIncrease {
 		try {
 			return valueOf(name);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			return defaultValue;
 		}
 	}

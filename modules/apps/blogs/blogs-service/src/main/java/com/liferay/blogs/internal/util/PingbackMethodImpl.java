@@ -95,14 +95,15 @@ public class PingbackMethodImpl implements Method {
 
 			return XmlRpcUtil.createSuccess("Pingback accepted");
 		}
-		catch (DuplicateCommentException dce) {
+		catch (DuplicateCommentException duplicateCommentException) {
 			return XmlRpcUtil.createFault(
 				PINGBACK_ALREADY_REGISTERED,
-				"Pingback is already registered: " + dce.getMessage());
+				"Pingback is already registered: " +
+					duplicateCommentException.getMessage());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			return XmlRpcUtil.createFault(
@@ -128,9 +129,9 @@ public class PingbackMethodImpl implements Method {
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			return false;
@@ -347,9 +348,9 @@ public class PingbackMethodImpl implements Method {
 
 			source = new Source(html);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			return XmlRpcUtil.createFault(
@@ -378,9 +379,9 @@ public class PingbackMethodImpl implements Method {
 			return InetAddressUtil.isLocalInetAddress(
 				InetAddressUtil.getInetAddressByName(url.getHost()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 

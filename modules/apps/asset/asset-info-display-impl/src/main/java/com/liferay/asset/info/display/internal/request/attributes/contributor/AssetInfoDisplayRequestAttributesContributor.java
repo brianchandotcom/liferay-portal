@@ -84,8 +84,8 @@ public class AssetInfoDisplayRequestAttributesContributor
 					infoDisplayObjectProvider);
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to get info display object provider", e);
+		catch (Exception exception) {
+			_log.error("Unable to get info display object provider", exception);
 		}
 
 		httpServletRequest.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);

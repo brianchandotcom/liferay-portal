@@ -71,8 +71,8 @@ public class RepositoryPermissionPortletConfigurationIcon
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 

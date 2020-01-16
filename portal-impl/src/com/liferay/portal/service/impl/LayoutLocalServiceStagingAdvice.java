@@ -572,7 +572,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 						user, layoutSet.getLayoutSetId());
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					_log.debug("No layout set branch found for user " + userId);
 				}
@@ -781,10 +781,10 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 					returnValue = layoutLocalServiceStagingAdviceMethod.invoke(
 						_layoutLocalServiceStagingAdvice, arguments);
 				}
-				catch (InvocationTargetException ite) {
-					throw ite.getTargetException();
+				catch (InvocationTargetException invocationTargetException) {
+					throw invocationTargetException.getTargetException();
 				}
-				catch (NoSuchMethodException nsme) {
+				catch (NoSuchMethodException noSuchMethodException) {
 					returnValue = _invoke(method, arguments);
 				}
 			}
@@ -808,8 +808,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 			try {
 				return method.invoke(_targetObject, arguments);
 			}
-			catch (InvocationTargetException ite) {
-				throw ite.getCause();
+			catch (InvocationTargetException invocationTargetException) {
+				throw invocationTargetException.getCause();
 			}
 		}
 

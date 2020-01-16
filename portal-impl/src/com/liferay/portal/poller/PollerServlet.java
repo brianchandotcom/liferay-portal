@@ -71,11 +71,11 @@ public class PollerServlet extends HttpServlet {
 					httpServletResponse, content.getBytes(StringPool.UTF8));
 			}
 		}
-		catch (Exception e) {
-			_log.error(e.getMessage());
+		catch (Exception exception) {
+			_log.error(exception.getMessage());
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception,
 				httpServletRequest, httpServletResponse);
 		}
 	}
@@ -150,7 +150,7 @@ public class PollerServlet extends HttpServlet {
 			try {
 				_countDownLatch.await(timeout, TimeUnit.MILLISECONDS);
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 			}
 
 			List<NotificationEvent> notificationEvents =

@@ -95,8 +95,8 @@ public class InformationMessagesProductNavigationControlMenuEntry
 				INFORMATION_MESSAGES_MODIFIED_LAYOUT,
 				isModifiedLayout(themeDisplay));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return super.includeIcon(httpServletRequest, httpServletResponse);

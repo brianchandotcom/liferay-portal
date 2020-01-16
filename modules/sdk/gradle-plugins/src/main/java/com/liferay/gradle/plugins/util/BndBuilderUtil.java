@@ -39,7 +39,7 @@ public class BndBuilderUtil {
 		try {
 			return GradleUtil.getExtension(project, BundleExtension.class);
 		}
-		catch (UnknownDomainObjectException udoe) {
+		catch (UnknownDomainObjectException unknownDomainObjectException) {
 			BundleExtension bundleExtension = new BundleExtension();
 
 			ExtensionContainer extensionContainer = project.getExtensions();

@@ -34,8 +34,8 @@ public class EchoOutputProcessor implements OutputProcessor<Void, Void> {
 		try {
 			StreamUtil.transfer(stdErrInputStream, System.err, false);
 		}
-		catch (IOException ioe) {
-			throw new ProcessException(ioe);
+		catch (IOException ioException) {
+			throw new ProcessException(ioException);
 		}
 
 		return null;
@@ -48,8 +48,8 @@ public class EchoOutputProcessor implements OutputProcessor<Void, Void> {
 		try {
 			StreamUtil.transfer(stdOutInputStream, System.out, false);
 		}
-		catch (IOException ioe) {
-			throw new ProcessException(ioe);
+		catch (IOException ioException) {
+			throw new ProcessException(ioException);
 		}
 
 		return null;

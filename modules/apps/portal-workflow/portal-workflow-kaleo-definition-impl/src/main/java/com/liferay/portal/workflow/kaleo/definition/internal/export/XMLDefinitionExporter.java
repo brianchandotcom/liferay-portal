@@ -122,8 +122,9 @@ public class XMLDefinitionExporter implements DefinitionExporter {
 
 			return document.formattedString();
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to export definition", ioe);
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to export definition", ioException);
 		}
 	}
 

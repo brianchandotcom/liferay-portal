@@ -93,8 +93,8 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 				_auditRouter.route(auditMessage);
 			}
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 
@@ -127,8 +127,8 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 
 			_auditRouter.route(auditMessage);
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 
@@ -143,8 +143,8 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 
 			_auditRouter.route(auditMessage);
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

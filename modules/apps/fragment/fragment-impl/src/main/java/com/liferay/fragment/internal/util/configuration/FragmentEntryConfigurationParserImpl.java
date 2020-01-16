@@ -203,7 +203,7 @@ public class FragmentEntryConfigurationParserImpl
 			editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
 				editableValues);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -399,11 +399,11 @@ public class FragmentEntryConfigurationParserImpl
 
 			return configurationJSONObject.getJSONArray("fieldSets");
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to parse configuration JSON: " + configuration,
-					jsone);
+					jsonException);
 			}
 		}
 
@@ -424,10 +424,11 @@ public class FragmentEntryConfigurationParserImpl
 			try {
 				return JSONFactoryUtil.createJSONObject(value);
 			}
-			catch (JSONException jsone) {
+			catch (JSONException jsonException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Unable to parse configuration JSON: " + value, jsone);
+						"Unable to parse configuration JSON: " + value,
+						jsonException);
 				}
 			}
 		}
@@ -466,9 +467,9 @@ public class FragmentEntryConfigurationParserImpl
 				return infoDisplayObjectProvider.getDisplayObject();
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get entry: " + value, e);
+				_log.debug("Unable to get entry: " + value, exception);
 			}
 		}
 
@@ -510,12 +511,12 @@ public class FragmentEntryConfigurationParserImpl
 
 			return jsonObject;
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to serialize info display object entry to JSON: " +
 						value,
-					jsone);
+					jsonException);
 			}
 		}
 

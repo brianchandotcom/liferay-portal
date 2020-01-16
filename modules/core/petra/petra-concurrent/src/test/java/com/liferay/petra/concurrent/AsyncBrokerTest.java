@@ -52,7 +52,7 @@ public class AsyncBrokerTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
@@ -179,8 +179,8 @@ public class AsyncBrokerTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertSame(exception, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertSame(exception, executionException.getCause());
 		}
 
 		Assert.assertTrue(

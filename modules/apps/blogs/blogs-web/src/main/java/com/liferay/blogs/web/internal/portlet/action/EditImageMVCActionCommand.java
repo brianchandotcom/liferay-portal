@@ -106,17 +106,17 @@ public class EditImageMVCActionCommand extends BaseMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchEntryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchEntryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcPath", "/blogs/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 		catch (Throwable t) {

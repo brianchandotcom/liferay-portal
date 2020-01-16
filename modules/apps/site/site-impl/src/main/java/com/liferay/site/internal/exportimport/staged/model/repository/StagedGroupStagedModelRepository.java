@@ -98,13 +98,13 @@ public class StagedGroupStagedModelRepository
 				ModelAdapterUtil.adapt(
 					layoutSet, LayoutSet.class, StagedLayoutSet.class));
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				StringBundler.concat(
 					"Unable to fetch Layout Set with groupId ",
 					stagedGroup.getGroupId(), " and private layout ",
 					portletDataContext.isPrivateLayout()),
-				pe);
+				portalException);
 		}
 
 		return childrenStagedModels;

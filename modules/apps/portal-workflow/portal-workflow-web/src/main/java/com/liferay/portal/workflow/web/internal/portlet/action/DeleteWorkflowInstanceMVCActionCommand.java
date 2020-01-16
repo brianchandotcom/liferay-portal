@@ -98,11 +98,11 @@ public class DeleteWorkflowInstanceMVCActionCommand
 
 			deleteWorkflowInstance(workflowContext);
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException ||
-				e instanceof WorkflowException) {
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException ||
+				exception instanceof WorkflowException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				PortletSession portletSession =
 					actionRequest.getPortletSession();
@@ -116,7 +116,7 @@ public class DeleteWorkflowInstanceMVCActionCommand
 				portletRequestDispatcher.include(actionRequest, actionResponse);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

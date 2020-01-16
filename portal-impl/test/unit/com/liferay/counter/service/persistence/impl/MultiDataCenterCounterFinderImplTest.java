@@ -124,10 +124,10 @@ public class MultiDataCenterCounterFinderImplTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"Invalid data center count 2 or data center deployment ID 2",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		try {
@@ -135,9 +135,10 @@ public class MultiDataCenterCounterFinderImplTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"Unable to shift more than 8 bits", iae.getMessage());
+				"Unable to shift more than 8 bits",
+				illegalArgumentException.getMessage());
 		}
 	}
 

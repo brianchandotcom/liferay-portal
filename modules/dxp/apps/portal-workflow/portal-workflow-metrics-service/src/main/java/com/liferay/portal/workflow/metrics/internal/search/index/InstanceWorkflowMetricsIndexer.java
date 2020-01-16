@@ -157,9 +157,9 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 								"completionDate",
 								document.getDate("completionDate"));
 						}
-						catch (ParseException pe) {
+						catch (ParseException parseException) {
 							if (_log.isWarnEnabled()) {
-								_log.warn(pe, pe);
+								_log.warn(parseException, parseException);
 							}
 						}
 
@@ -242,9 +242,9 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 					assetEntry.getGroupId());
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

@@ -94,7 +94,7 @@ public class SocketState {
 
 				return serverSocket;
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				port++;
 			}
 		}
@@ -108,7 +108,7 @@ public class SocketState {
 		try {
 			return _objectInputStream.readObject();
 		}
-		catch (WriteAbortedException wae) {
+		catch (WriteAbortedException writeAbortedException) {
 			return _objectInputStream.readObject();
 		}
 	}

@@ -57,9 +57,12 @@ public class SerialDestination extends BaseAsyncDestination {
 						try {
 							messageListener.receive(message);
 						}
-						catch (MessageListenerException mle) {
+						catch (MessageListenerException
+									messageListenerException) {
+
 							_log.error(
-								"Unable to process message " + message, mle);
+								"Unable to process message " + message,
+								messageListenerException);
 						}
 					}
 				}

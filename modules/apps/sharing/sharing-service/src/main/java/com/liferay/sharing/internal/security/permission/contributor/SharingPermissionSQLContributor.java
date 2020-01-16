@@ -117,8 +117,8 @@ public class SharingPermissionSQLContributor
 			return _sharingConfigurationFactory.getGroupSharingConfiguration(
 				_groupLocalService.getGroup(groupId));
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 

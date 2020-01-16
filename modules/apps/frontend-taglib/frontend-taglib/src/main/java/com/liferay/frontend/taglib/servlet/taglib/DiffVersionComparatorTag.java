@@ -272,9 +272,9 @@ public class DiffVersionComparatorTag extends IncludeTag {
 			data.put("sourceVersion", String.valueOf(_sourceVersion));
 			data.put("targetVersion", String.valueOf(_targetVersion));
 		}
-		catch (PortalException | PortletException e) {
+		catch (PortalException | PortletException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 

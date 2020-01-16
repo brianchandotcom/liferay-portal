@@ -177,9 +177,10 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 				return null;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
-				"Unable to replace tokens in CSS " + originalRequestPath, e);
+				"Unable to replace tokens in CSS " + originalRequestPath,
+				exception);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(content);

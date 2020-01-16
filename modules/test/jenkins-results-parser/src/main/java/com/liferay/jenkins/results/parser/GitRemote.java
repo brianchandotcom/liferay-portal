@@ -166,7 +166,7 @@ public class GitRemote {
 		try {
 			_username = remoteURLMatcher.group("username");
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			_username = "liferay";
 		}
 

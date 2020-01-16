@@ -53,7 +53,7 @@ public class SamlConfigurationUtil {
 					SamlConfiguration.class, Collections.emptyMap());
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			samlConfiguration = ConfigurableUtil.createConfigurable(
 				SamlConfiguration.class, Collections.emptyMap());
 		}

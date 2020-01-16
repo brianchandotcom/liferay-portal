@@ -130,7 +130,7 @@ public class BlogImagesDisplayContext {
 
 					results.add(fileEntry);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(

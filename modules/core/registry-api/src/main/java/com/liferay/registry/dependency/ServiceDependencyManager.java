@@ -173,7 +173,7 @@ public class ServiceDependencyManager {
 				try {
 					_serviceDependencies.wait(timeout);
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 				}
 			}
 		}

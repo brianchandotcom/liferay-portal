@@ -86,8 +86,8 @@ public class LockManagerImpl implements LockManager {
 		try {
 			return new LockImpl(_lockLocalService.getLock(className, key));
 		}
-		catch (PortalException pe) {
-			throw translate(pe);
+		catch (PortalException portalException) {
+			throw translate(portalException);
 		}
 	}
 
@@ -96,8 +96,8 @@ public class LockManagerImpl implements LockManager {
 		try {
 			return new LockImpl(_lockLocalService.getLock(className, key));
 		}
-		catch (PortalException pe) {
-			throw translate(pe);
+		catch (PortalException portalException) {
+			throw translate(portalException);
 		}
 	}
 
@@ -109,8 +109,8 @@ public class LockManagerImpl implements LockManager {
 			return new LockImpl(
 				_lockLocalService.getLockByUuidAndCompanyId(uuid, companyId));
 		}
-		catch (PortalException pe) {
-			throw translate(pe);
+		catch (PortalException portalException) {
+			throw translate(portalException);
 		}
 	}
 
@@ -156,8 +156,8 @@ public class LockManagerImpl implements LockManager {
 					userId, className, key, owner, inheritable, expirationTime,
 					renew));
 		}
-		catch (PortalException pe) {
-			throw translate(pe);
+		catch (PortalException portalException) {
+			throw translate(portalException);
 		}
 	}
 
@@ -183,8 +183,8 @@ public class LockManagerImpl implements LockManager {
 					userId, className, key, owner, inheritable, expirationTime,
 					renew));
 		}
-		catch (PortalException pe) {
-			throw translate(pe);
+		catch (PortalException portalException) {
+			throw translate(portalException);
 		}
 	}
 
@@ -211,8 +211,8 @@ public class LockManagerImpl implements LockManager {
 			return new LockImpl(
 				_lockLocalService.refresh(uuid, companyId, expirationTime));
 		}
-		catch (PortalException pe) {
-			throw translate(pe);
+		catch (PortalException portalException) {
+			throw translate(portalException);
 		}
 	}
 

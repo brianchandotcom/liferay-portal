@@ -49,9 +49,9 @@ public class BaseModelPermissionCheckerUtil {
 					modelResourcePermission, permissionChecker, groupId,
 					classPK, actionId);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(pe, pe);
+					_log.warn(portalException, portalException);
 				}
 
 				return false;
@@ -69,7 +69,7 @@ public class BaseModelPermissionCheckerUtil {
 			baseModelPermissionChecker.checkBaseModel(
 				permissionChecker, groupId, classPK, actionId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 

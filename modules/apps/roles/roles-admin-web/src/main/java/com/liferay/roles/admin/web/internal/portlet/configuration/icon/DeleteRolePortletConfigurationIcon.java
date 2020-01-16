@@ -79,7 +79,7 @@ public class DeleteRolePortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -115,8 +115,8 @@ public class DeleteRolePortletConfigurationIcon
 
 			return false;
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return false;

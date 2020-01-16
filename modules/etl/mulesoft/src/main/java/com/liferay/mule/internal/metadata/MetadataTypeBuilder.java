@@ -118,13 +118,14 @@ public class MetadataTypeBuilder {
 			return _jsonNodeReader.fromHttpResponse(
 				liferayConnection.getOpenAPISpec());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new MetadataResolvingException(
-				ioe.getMessage(), FailureCode.NO_DYNAMIC_METADATA_AVAILABLE);
+				ioException.getMessage(),
+				FailureCode.NO_DYNAMIC_METADATA_AVAILABLE);
 		}
-		catch (TimeoutException te) {
+		catch (TimeoutException timeoutException) {
 			throw new MetadataResolvingException(
-				te.getMessage(), FailureCode.CONNECTION_FAILURE);
+				timeoutException.getMessage(), FailureCode.CONNECTION_FAILURE);
 		}
 	}
 

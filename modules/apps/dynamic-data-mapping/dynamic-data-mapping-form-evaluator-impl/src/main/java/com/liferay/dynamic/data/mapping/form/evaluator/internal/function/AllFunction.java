@@ -83,9 +83,9 @@ public class AllFunction
 
 			return ddmExpression.evaluate();
 		}
-		catch (DDMExpressionException ddmee) {
+		catch (DDMExpressionException ddmExpressionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ddmee, ddmee);
+				_log.debug(ddmExpressionException, ddmExpressionException);
 			}
 		}
 

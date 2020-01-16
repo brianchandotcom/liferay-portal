@@ -32,11 +32,11 @@ public class CompanyIdsRequiredParameterValidator
 			try {
 				Long.parseLong(companyId);
 			}
-			catch (NumberFormatException nfe) {
+			catch (NumberFormatException numberFormatException) {
 				throw new ParameterException(
 					"Parameter " + name + " with value " + companyId +
 						" is not a valid number",
-					nfe);
+					numberFormatException);
 			}
 		}
 	}

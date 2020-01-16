@@ -54,8 +54,8 @@ public class CollatorUtil {
 						rules = StringUtil.read(is);
 					}
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 
 					rules = StringPool.BLANK;
 				}
@@ -68,8 +68,8 @@ public class CollatorUtil {
 			try {
 				return new RuleBasedCollator(rules);
 			}
-			catch (ParseException pe) {
-				_log.error(pe, pe);
+			catch (ParseException parseException) {
+				_log.error(parseException, parseException);
 
 				_rules.put(locale, StringPool.BLANK);
 			}

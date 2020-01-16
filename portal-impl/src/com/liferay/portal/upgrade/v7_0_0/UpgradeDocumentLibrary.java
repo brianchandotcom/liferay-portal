@@ -82,12 +82,12 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to add dynamic data mapping structure link for file " +
 					"entry type " + classPK);
 
-			throw e;
+			throw exception;
 		}
 	}
 

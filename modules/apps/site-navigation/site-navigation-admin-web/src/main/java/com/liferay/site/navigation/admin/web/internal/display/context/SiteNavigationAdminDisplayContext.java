@@ -336,7 +336,7 @@ public class SiteNavigationAdminDisplayContext {
 		try {
 			addURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException wse) {
+		catch (WindowStateException windowStateException) {
 			return StringPool.BLANK;
 		}
 

@@ -93,7 +93,7 @@ public class SchedulerEventMessageListenerWrapperTest {
 
 			Assert.fail("Should throw TimeoutException");
 		}
-		catch (TimeoutException te) {
+		catch (TimeoutException timeoutException) {
 		}
 
 		_testMessageListener.unblock();
@@ -247,7 +247,7 @@ public class SchedulerEventMessageListenerWrapperTest {
 
 					message.setResponse(message.getPayload());
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 				}
 				finally {
 					_lock.unlock();

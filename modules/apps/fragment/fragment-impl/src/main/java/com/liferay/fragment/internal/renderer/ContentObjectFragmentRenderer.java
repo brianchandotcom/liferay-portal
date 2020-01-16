@@ -159,7 +159,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 
 			return infoDisplayObjectProvider.getDisplayObject();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

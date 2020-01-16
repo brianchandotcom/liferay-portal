@@ -159,12 +159,12 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 				_log.info("Index created: " + createIndexResponse.index());
 			}
 		}
-		catch (ResourceAlreadyExistsException raee) {
+		catch (ResourceAlreadyExistsException resourceAlreadyExistsException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Skipping index creation because it already exists: " +
-						raee.getIndex(),
-					raee);
+						resourceAlreadyExistsException.getIndex(),
+					resourceAlreadyExistsException);
 			}
 		}
 	}

@@ -54,7 +54,7 @@ public class EncryptedServletRequest extends HttpServletRequestWrapper {
 					try {
 						values[i] = Encryptor.decrypt(_key, values[i]);
 					}
-					catch (EncryptorException ee) {
+					catch (EncryptorException encryptorException) {
 						values[i] = StringPool.BLANK;
 					}
 				}

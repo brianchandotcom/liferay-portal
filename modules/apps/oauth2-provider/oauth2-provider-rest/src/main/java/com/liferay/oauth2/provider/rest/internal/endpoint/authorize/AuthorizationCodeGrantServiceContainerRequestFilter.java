@@ -125,8 +125,8 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 				return;
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to resolve authenticated user", e);
+		catch (Exception exception) {
+			_log.error("Unable to resolve authenticated user", exception);
 
 			containerRequestContext.abortWith(
 				Response.status(
@@ -141,8 +141,9 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 		try {
 			loginURL = getLoginURL();
 		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to locate configuration", ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(
+				"Unable to locate configuration", configurationException);
 
 			throw new WebApplicationException(
 				Response.status(

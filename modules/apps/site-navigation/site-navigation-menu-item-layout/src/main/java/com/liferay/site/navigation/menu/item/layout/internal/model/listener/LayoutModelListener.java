@@ -81,8 +81,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				_deleteSiteNavigationMenuItem(siteNavigationMenu, layout);
 			}
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 
@@ -147,8 +147,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),
 				serviceContext);
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

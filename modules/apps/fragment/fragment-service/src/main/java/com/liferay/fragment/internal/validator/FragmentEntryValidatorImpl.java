@@ -97,16 +97,16 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 				}
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof JSONException) {
-				JSONException jsonException = (JSONException)e;
+		catch (Exception exception) {
+			if (exception instanceof JSONException) {
+				JSONException jsonException = (JSONException)exception;
 
 				throw new FragmentEntryConfigurationException(
 					jsonException.getMessage(), jsonException);
 			}
-			else if (e instanceof ValidationException) {
+			else if (exception instanceof ValidationException) {
 				ValidationException validationException =
-					(ValidationException)e;
+					(ValidationException)exception;
 
 				String errorMessage = validationException.getErrorMessage();
 
@@ -131,10 +131,11 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 						formattedMessages, StringPool.NEW_LINE);
 				}
 
-				throw new FragmentEntryConfigurationException(errorMessage, e);
+				throw new FragmentEntryConfigurationException(
+					errorMessage, exception);
 			}
 
-			throw new FragmentEntryConfigurationException(e);
+			throw new FragmentEntryConfigurationException(exception);
 		}
 	}
 

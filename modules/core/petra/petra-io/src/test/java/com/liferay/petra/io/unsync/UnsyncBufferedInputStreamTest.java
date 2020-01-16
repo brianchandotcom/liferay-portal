@@ -203,8 +203,9 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Size is less than 1", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Size is less than 1", illegalArgumentException.getMessage());
 		}
 
 		try {
@@ -213,8 +214,9 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Size is less than 1", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Size is less than 1", illegalArgumentException.getMessage());
 		}
 	}
 
@@ -297,8 +299,9 @@ public class UnsyncBufferedInputStreamTest extends BaseInputStreamTestCase {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertEquals("Resetting to invalid mark", ioe.getMessage());
+		catch (IOException ioException) {
+			Assert.assertEquals(
+				"Resetting to invalid mark", ioException.getMessage());
 		}
 
 		// Shuffle

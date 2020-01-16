@@ -45,8 +45,8 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 			actionableDynamicQuery.performActions();
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

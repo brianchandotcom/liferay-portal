@@ -78,9 +78,9 @@ public class PermissionPortletConfigurationIcon
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -102,9 +102,9 @@ public class PermissionPortletConfigurationIcon
 				PermissionThreadLocal.getPermissionChecker(),
 				kaleoDefinitionVersion, ActionKeys.PERMISSIONS);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

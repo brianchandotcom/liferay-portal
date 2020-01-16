@@ -122,8 +122,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				unlockThreads(actionRequest);
 			}
 		}
-		catch (LockedThreadException | PrincipalException e) {
-			SessionErrors.add(actionRequest, e.getClass());
+		catch (LockedThreadException | PrincipalException exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/message_boards/error.jsp");

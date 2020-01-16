@@ -1055,7 +1055,7 @@ public class Validator {
 
 				return true;
 			}
-			catch (URISyntaxException urise) {
+			catch (URISyntaxException uriSyntaxException) {
 			}
 		}
 
@@ -1098,7 +1098,7 @@ public class Validator {
 
 				return true;
 			}
-			catch (MalformedURLException murle) {
+			catch (MalformedURLException malformedURLException) {
 			}
 		}
 

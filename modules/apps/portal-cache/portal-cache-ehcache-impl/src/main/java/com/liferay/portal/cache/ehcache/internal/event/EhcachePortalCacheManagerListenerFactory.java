@@ -68,11 +68,11 @@ public class EhcachePortalCacheManagerListenerFactory
 						ehcachePortalCacheManager.getEhcacheManager(),
 						properties));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SystemException(
 				"Unable to instantiate cache manager event listener " +
 					className,
-				e);
+				exception);
 		}
 	}
 

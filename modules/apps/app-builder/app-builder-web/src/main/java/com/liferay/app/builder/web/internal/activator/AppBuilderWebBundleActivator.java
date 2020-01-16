@@ -68,8 +68,9 @@ public class AppBuilderWebBundleActivator implements BundleActivator {
 				try {
 					appDeployer.deploy(appBuilderAppId);
 				}
-				catch (Exception e) {
-					_log.error("Unable to deploy app " + appBuilderAppId, e);
+				catch (Exception exception) {
+					_log.error(
+						"Unable to deploy app " + appBuilderAppId, exception);
 				}
 			}
 

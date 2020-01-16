@@ -56,8 +56,8 @@ public class ModuleAutoDeployer extends BaseDeployer {
 			FileUtils.copyFileToDirectory(
 				autoDeploymentContext.getFile(), new File(destDir));
 		}
-		catch (IOException ioe) {
-			throw new AutoDeployException(ioe);
+		catch (IOException ioException) {
+			throw new AutoDeployException(ioException);
 		}
 
 		return AutoDeployer.CODE_DEFAULT;

@@ -171,8 +171,8 @@ public class IconTag extends BaseIconTag {
 				jspWriter.write("</span>");
 			}
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 	}
 

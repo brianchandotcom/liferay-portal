@@ -176,8 +176,8 @@ public class Provider extends javax.xml.ws.spi.Provider {
 
 			return provider;
 		}
-		catch (InterruptedException ie) {
-			throw new RuntimeException(ie);
+		catch (InterruptedException interruptedException) {
+			throw new RuntimeException(interruptedException);
 		}
 	}
 

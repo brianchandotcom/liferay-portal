@@ -58,11 +58,11 @@ public class GoogleDocsIGDisplayContextFactory
 				parentIGViewFileVersionDisplayContext, httpServletRequest,
 				httpServletResponse, fileEntry.getFileVersion());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
 				"Unable to build GoogleDocsDLViewFileVersionDisplayContext " +
 					"for shortcut " + fileShortcut.getPrimaryKey(),
-				pe);
+				portalException);
 		}
 	}
 

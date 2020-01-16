@@ -596,8 +596,8 @@ public class WabProcessorTest {
 					_file.toPath(), newFile.toPath(),
 					StandardCopyOption.REPLACE_EXISTING);
 			}
-			catch (IOException ioe) {
-				ioe.printStackTrace();
+			catch (IOException ioException) {
+				ioException.printStackTrace();
 			}
 		}
 

@@ -42,8 +42,8 @@ public class SetAttributeAction extends BaseJMXManageAction<Void> {
 
 			return null;
 		}
-		catch (Exception e) {
-			throw new ManageActionException(e);
+		catch (Exception exception) {
+			throw new ManageActionException(exception);
 		}
 	}
 

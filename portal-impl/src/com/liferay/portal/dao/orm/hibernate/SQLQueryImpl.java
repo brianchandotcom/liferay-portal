@@ -123,8 +123,8 @@ public class SQLQueryImpl implements SQLQuery {
 		try {
 			return _sqlQuery.executeUpdate();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -142,8 +142,8 @@ public class SQLQueryImpl implements SQLQuery {
 
 			return list.iterator();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -184,8 +184,8 @@ public class SQLQueryImpl implements SQLQuery {
 
 			return list;
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -194,8 +194,8 @@ public class SQLQueryImpl implements SQLQuery {
 		try {
 			return new ScrollableResultsImpl(_sqlQuery.scroll());
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -441,8 +441,8 @@ public class SQLQueryImpl implements SQLQuery {
 		try {
 			return _sqlQuery.uniqueResult();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 

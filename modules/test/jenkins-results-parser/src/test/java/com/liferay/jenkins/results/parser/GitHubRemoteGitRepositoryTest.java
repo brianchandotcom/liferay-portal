@@ -248,8 +248,8 @@ public class GitHubRemoteGitRepositoryTest extends GitRepositoryTest {
 
 			return gitHubRemoteGitRepository;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

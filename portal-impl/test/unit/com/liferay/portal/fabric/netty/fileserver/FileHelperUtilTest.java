@@ -140,8 +140,8 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertSame(ioException, e.getCause());
+		catch (Exception exception) {
+			Assert.assertSame(ioException, exception.getCause());
 		}
 		finally {
 			Files.delete(undeleteableFilePath);
@@ -208,8 +208,9 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertSame(DirectoryNotEmptyException.class, e.getClass());
+		catch (Exception exception) {
+			Assert.assertSame(
+				DirectoryNotEmptyException.class, exception.getClass());
 		}
 		finally {
 			Files.delete(newRegularFilePath);
@@ -244,8 +245,8 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertSame(ioException, e);
+		catch (Exception exception) {
+			Assert.assertSame(ioException, exception);
 		}
 		finally {
 			Files.delete(undeleteableFilePath);
@@ -279,8 +280,8 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertSame(ioException, e);
+		catch (Exception exception) {
+			Assert.assertSame(ioException, exception);
 		}
 		finally {
 			Files.delete(unreadableFilePath);
@@ -299,8 +300,9 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertSame(NoSuchFileException.class, ioe.getClass());
+		catch (IOException ioException) {
+			Assert.assertSame(
+				NoSuchFileException.class, ioException.getClass());
 		}
 
 		try {
@@ -308,8 +310,9 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertSame(NoSuchFileException.class, ioe.getClass());
+		catch (IOException ioException) {
+			Assert.assertSame(
+				NoSuchFileException.class, ioException.getClass());
 		}
 	}
 
@@ -465,7 +468,7 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (DirectoryNotEmptyException dnee) {
+		catch (DirectoryNotEmptyException directoryNotEmptyException) {
 		}
 		finally {
 			Assert.assertTrue(Files.exists(regularToFilePath));
@@ -505,13 +508,13 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			Assert.assertEquals(
 				"Source path " + unmoveableFromDirectoryPath +
 					" was left in an inconsistent state",
-				ioe.getMessage());
+				ioException.getMessage());
 
-			Throwable throwable = ioe.getCause();
+			Throwable throwable = ioException.getCause();
 
 			Assert.assertSame(
 				DirectoryNotEmptyException.class, throwable.getClass());
@@ -561,12 +564,12 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Zip stream for entry ", fileEntryName, " is ", actualSize,
 					" bytes but should ", annotatedSize, " bytes"),
-				ioe.getMessage());
+				ioException.getMessage());
 		}
 	}
 
@@ -597,7 +600,7 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 	}
 
@@ -607,8 +610,9 @@ public class FileHelperUtilTest {
 			FileHelperUtil.unzip(
 				Paths.get("NoSuchFile"), FileHelperUtil.TEMP_DIR_PATH);
 		}
-		catch (IOException ioe) {
-			Assert.assertSame(NoSuchFileException.class, ioe.getClass());
+		catch (IOException ioException) {
+			Assert.assertSame(
+				NoSuchFileException.class, ioException.getClass());
 		}
 	}
 
@@ -619,7 +623,7 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 	}
 
@@ -761,7 +765,7 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 	}
 
@@ -772,8 +776,9 @@ public class FileHelperUtilTest {
 				Paths.get("NoSuchFile"), FileHelperUtil.TEMP_DIR_PATH,
 				CompressionLevel.NO_COMPRESSION);
 		}
-		catch (IOException ioe) {
-			Assert.assertSame(NoSuchFileException.class, ioe.getClass());
+		catch (IOException ioException) {
+			Assert.assertSame(
+				NoSuchFileException.class, ioException.getClass());
 		}
 	}
 
@@ -787,7 +792,7 @@ public class FileHelperUtilTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 	}
 
@@ -815,8 +820,8 @@ public class FileHelperUtilTest {
 				file.deleteOnExit();
 			}
 		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
 		}
 	}
 

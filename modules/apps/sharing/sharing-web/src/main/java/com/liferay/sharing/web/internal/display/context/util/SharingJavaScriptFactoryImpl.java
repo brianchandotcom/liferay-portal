@@ -97,12 +97,12 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 			return assetRenderer.getTitle(locale);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get asset renderer with class primary key " +
 						classPK,
-					pe);
+					portalException);
 			}
 
 			return null;

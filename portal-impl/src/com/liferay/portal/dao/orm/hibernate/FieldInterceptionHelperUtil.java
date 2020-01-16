@@ -43,14 +43,14 @@ public class FieldInterceptionHelperUtil {
 				new ConcurrentReferenceKeyHashMap<Class<?>, Boolean>(
 					FinalizeManager.WEAK_REFERENCE_FACTORY));
 		}
-		catch (NoSuchFieldException nsfe) {
+		catch (NoSuchFieldException noSuchFieldException) {
 			_log.error(
 				"Missing Hibernate FieldInterceptionHelper patch from " +
 					"LPS-52218",
-				nsfe);
+				noSuchFieldException);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

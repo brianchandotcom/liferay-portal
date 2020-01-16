@@ -135,8 +135,9 @@ public class URLWeavingAdapter extends WeavingAdaptor {
 				byteArrayInputStream = new ByteArrayInputStream(
 					classData, 0, unsyncByteArrayOutputStream.size());
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException("Unable to reload class data", ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(
+					"Unable to reload class data", ioException);
 			}
 		}
 
@@ -146,8 +147,8 @@ public class URLWeavingAdapter extends WeavingAdaptor {
 		try {
 			return classParser.parse();
 		}
-		catch (Exception e) {
-			throw new RuntimeException("Unable to parse class data", e);
+		catch (Exception exception) {
+			throw new RuntimeException("Unable to parse class data", exception);
 		}
 	}
 

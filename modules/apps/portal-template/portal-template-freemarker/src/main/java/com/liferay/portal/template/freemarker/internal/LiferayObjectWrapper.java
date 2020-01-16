@@ -78,8 +78,8 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 				});
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -211,8 +211,8 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			_classIntrospectorField = ReflectionUtil.getDeclaredField(
 				BeansWrapper.class, "classIntrospector");
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

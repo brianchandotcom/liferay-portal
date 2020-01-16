@@ -75,8 +75,8 @@ public class IntrabandBridgeDestination extends DestinationWrapper {
 
 			messageRoutingBag.setMessage(message);
 		}
-		catch (ClassNotFoundException cnfe) {
-			throw new RuntimeException(cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new RuntimeException(classNotFoundException);
 		}
 
 		Set<MessageListener> messageListeners =
@@ -86,8 +86,8 @@ public class IntrabandBridgeDestination extends DestinationWrapper {
 			try {
 				messageListener.receive(message);
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 	}
@@ -106,8 +106,8 @@ public class IntrabandBridgeDestination extends DestinationWrapper {
 						spi.getRegistrationReference(), messageRoutingBag);
 				}
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 
@@ -129,8 +129,8 @@ public class IntrabandBridgeDestination extends DestinationWrapper {
 					}
 				}
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 	}
@@ -162,8 +162,8 @@ public class IntrabandBridgeDestination extends DestinationWrapper {
 			message.put(
 				MessageRoutingBag.MESSAGE_ROUTING_BAG, messageRoutingBag);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

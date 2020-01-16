@@ -97,8 +97,8 @@ public class ServiceWrapperRegistry {
 			try {
 				serviceBag.replace();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -122,7 +122,7 @@ public class ServiceWrapperRegistry {
 				service = PortalBeanLocatorUtil.locate(
 					serviceTypeClass.getName());
 			}
-			catch (BeanLocatorException ble) {
+			catch (BeanLocatorException beanLocatorException) {
 				serviceReference = registry.getServiceReference(
 					serviceTypeClass);
 

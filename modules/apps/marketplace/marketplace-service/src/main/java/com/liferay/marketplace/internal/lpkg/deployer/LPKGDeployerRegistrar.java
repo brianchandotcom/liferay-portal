@@ -226,11 +226,11 @@ public class LPKGDeployerRegistrar {
 		try {
 			_doRegister(lpkgBundle, apps, modules);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to track installed app " +
 					lpkgBundle.getSymbolicName() + " with Marketplace",
-				e);
+				exception);
 		}
 	}
 

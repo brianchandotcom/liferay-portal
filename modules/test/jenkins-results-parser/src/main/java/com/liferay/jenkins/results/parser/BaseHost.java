@@ -31,8 +31,8 @@ public abstract class BaseHost implements Host {
 			try {
 				hostService.cleanUpService();
 			}
-			catch (Exception e) {
-				System.out.println(e.getMessage());
+			catch (Exception exception) {
+				System.out.println(exception.getMessage());
 			}
 		}
 	}
@@ -72,8 +72,8 @@ public abstract class BaseHost implements Host {
 					new HostService(serviceName, serviceCleanCommand));
 			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

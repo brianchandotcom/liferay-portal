@@ -298,13 +298,13 @@ public class SharingEntryLocalServiceImpl
 			try {
 				indexer.reindex(className, classPK);
 			}
-			catch (SearchException se) {
+			catch (SearchException searchException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
 							"Unable to index sharing entry for class name ",
 							className, " and primary key ", classPK),
-						se);
+						searchException);
 				}
 			}
 		}

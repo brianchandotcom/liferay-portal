@@ -185,8 +185,8 @@ public class CalendarIndexerLocalizedContentTest
 			return calendarFixture.addCalendar(
 				nameMap, descriptionMap, calendarFixture.getServiceContext());
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

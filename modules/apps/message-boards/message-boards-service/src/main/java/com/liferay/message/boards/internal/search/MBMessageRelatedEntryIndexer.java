@@ -73,9 +73,9 @@ public class MBMessageRelatedEntryIndexer extends BaseRelatedEntryIndexer {
 				return indexer.isVisible(mbMessage.getClassPK(), status);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Unable to get message boards message", e);
+				_log.info("Unable to get message boards message", exception);
 			}
 
 			return false;

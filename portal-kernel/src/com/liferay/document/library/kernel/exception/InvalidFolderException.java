@@ -54,9 +54,9 @@ public class InvalidFolderException extends PortalException {
 
 			return folder.getName();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 
 			return StringPool.BLANK;

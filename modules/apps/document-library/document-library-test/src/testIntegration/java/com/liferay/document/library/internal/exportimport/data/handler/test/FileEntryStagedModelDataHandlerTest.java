@@ -599,7 +599,7 @@ public class FileEntryStagedModelDataHandlerTest
 		try {
 			latestFileVersion = fileEntry.getLatestFileVersion();
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			return;
 		}
 

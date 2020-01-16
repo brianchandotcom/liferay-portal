@@ -92,12 +92,12 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 			indexer.delete(layout);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
-			throw new ModelListenerException(pe);
+			throw new ModelListenerException(portalException);
 		}
 	}
 
@@ -179,12 +179,14 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		try {
 			indexer.reindex(layout);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to reindex layout " + layout.getPlid(), se);
+				_log.debug(
+					"Unable to reindex layout " + layout.getPlid(),
+					searchException);
 			}
 
-			throw new ModelListenerException(se);
+			throw new ModelListenerException(searchException);
 		}
 	}
 

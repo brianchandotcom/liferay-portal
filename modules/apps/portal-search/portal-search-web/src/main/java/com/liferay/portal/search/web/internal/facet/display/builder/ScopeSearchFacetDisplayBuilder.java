@@ -181,8 +181,8 @@ public class ScopeSearchFacetDisplayBuilder {
 		try {
 			return group.getDescriptiveName(_locale);
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

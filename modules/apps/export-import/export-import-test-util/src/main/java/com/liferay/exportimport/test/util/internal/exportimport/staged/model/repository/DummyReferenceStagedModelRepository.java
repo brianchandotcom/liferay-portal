@@ -383,8 +383,8 @@ public class DummyReferenceStagedModelRepository
 					);
 				}
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 
 			return result;

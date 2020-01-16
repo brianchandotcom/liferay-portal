@@ -358,7 +358,7 @@ public class MicroblogsUtil {
 				try {
 					portletURL.setWindowState(LiferayWindowState.NORMAL);
 				}
-				catch (WindowStateException wse) {
+				catch (WindowStateException windowStateException) {
 				}
 			}
 			else {
@@ -371,7 +371,7 @@ public class MicroblogsUtil {
 				try {
 					portletURL.setWindowState(WindowState.MAXIMIZED);
 				}
-				catch (WindowStateException wse) {
+				catch (WindowStateException windowStateException) {
 				}
 			}
 
@@ -437,9 +437,9 @@ public class MicroblogsUtil {
 
 				content = StringUtil.replace(content, result, userLink);
 			}
-			catch (NoSuchUserException nsue) {
+			catch (NoSuchUserException noSuchUserException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsue, nsue);
+					_log.debug(noSuchUserException, noSuchUserException);
 				}
 			}
 		}

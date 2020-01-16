@@ -61,8 +61,8 @@ public class SQLFunctionTransformerTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("WORLD", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals("WORLD", illegalArgumentException.getMessage());
 		}
 	}
 
@@ -116,8 +116,9 @@ public class SQLFunctionTransformerTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("World(", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"World(", illegalArgumentException.getMessage());
 		}
 	}
 
@@ -142,8 +143,9 @@ public class SQLFunctionTransformerTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("HELLO WORLD()", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"HELLO WORLD()", illegalArgumentException.getMessage());
 		}
 	}
 
@@ -154,8 +156,9 @@ public class SQLFunctionTransformerTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("HELLO WORLD()", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"HELLO WORLD()", illegalArgumentException.getMessage());
 		}
 	}
 
@@ -170,10 +173,10 @@ public class SQLFunctionTransformerTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"Unclosed string literal in: TEST('This string is not closed)",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 	}
 
@@ -209,9 +212,10 @@ public class SQLFunctionTransformerTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"Unclosed function in: TEST(a, b, c", iae.getMessage());
+				"Unclosed function in: TEST(a, b, c",
+				illegalArgumentException.getMessage());
 		}
 	}
 

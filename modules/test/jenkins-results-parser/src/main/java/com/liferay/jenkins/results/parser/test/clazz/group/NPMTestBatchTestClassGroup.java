@@ -130,8 +130,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		try {
 			JenkinsResultsParserUtil.write(csvReportFile, csvReport.toString());
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -223,8 +223,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 								this));
 					}
 				}
-				catch (IOException ioe) {
-					throw new RuntimeException(ioe);
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
 				}
 			}
 		}
@@ -262,8 +262,8 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 					portalGitWorkingDirectory.getNPMTestModuleDirsList();
 			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		if (moduleDirs.isEmpty()) {

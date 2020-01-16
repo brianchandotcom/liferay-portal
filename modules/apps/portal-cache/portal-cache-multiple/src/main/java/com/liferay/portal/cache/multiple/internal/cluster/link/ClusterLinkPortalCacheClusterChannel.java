@@ -102,7 +102,7 @@ public class ClusterLinkPortalCacheClusterChannel
 
 					_sentEventCounter.incrementAndGet();
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 				}
 			}
 			catch (Throwable t) {
@@ -132,7 +132,7 @@ public class ClusterLinkPortalCacheClusterChannel
 			try {
 				_portalCacheClusterEventQueue.put(portalCacheClusterEvent);
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 			}
 		}
 	}

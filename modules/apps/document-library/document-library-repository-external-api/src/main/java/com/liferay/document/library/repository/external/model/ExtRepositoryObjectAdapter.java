@@ -53,9 +53,10 @@ public abstract class ExtRepositoryObjectAdapter<T>
 			return _extRepositoryObject.containsPermission(
 				extRepositoryPermission);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			throw new RepositoryException(
-				"Unexpected permission action " + actionId, iae);
+				"Unexpected permission action " + actionId,
+				illegalArgumentException);
 		}
 	}
 

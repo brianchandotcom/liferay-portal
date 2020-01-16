@@ -55,15 +55,15 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 
 			stagingLocalService.cleanUpStagingRequest(stagingRequestId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"StagingServiceImpl#cleanUpStagingRequest(" +
 						stagingRequestId + ")",
-					pe);
+					portalException);
 			}
 
-			throw pe;
+			throw portalException;
 		}
 		finally {
 			ExportImportThreadLocal.setStagingInProcessOnRemoteLive(
@@ -88,16 +88,16 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 			return stagingLocalService.createStagingRequest(
 				getUserId(), groupId, checksum);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"StagingServiceImpl#createStagingRequest(", groupId,
 						", ", checksum, ")"),
-					pe);
+					portalException);
 			}
 
-			throw pe;
+			throw portalException;
 		}
 		finally {
 			ExportImportThreadLocal.setStagingInProcessOnRemoteLive(
@@ -117,16 +117,16 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 
 			return layoutLocalService.hasLayout(uuid, groupId, privateLayout);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"StagingServiceImpl#hasRemoteLayout(", uuid, ", ",
 						groupId, ", ", privateLayout, ")"),
-					pe);
+					portalException);
 			}
 
-			throw pe;
+			throw portalException;
 		}
 	}
 
@@ -164,7 +164,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 				code, processFlag, processId,
 				arguments.toArray(new Serializable[0]));
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				StringBundler sb = new StringBundler(9);
 
@@ -179,10 +179,10 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 				sb.append(arguments);
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 
-				_log.debug(sb.toString(), pe);
+				_log.debug(sb.toString(), portalException);
 			}
 
-			throw pe;
+			throw portalException;
 		}
 	}
 
@@ -203,16 +203,16 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 			return stagingLocalService.publishStagingRequest(
 				getUserId(), stagingRequestId, exportImportConfiguration);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"StagingServiceImpl#publishStagingRequest(",
 						stagingRequestId, ", ", exportImportConfiguration, ")"),
-					pe);
+					portalException);
 			}
 
-			throw pe;
+			throw portalException;
 		}
 		finally {
 			ExportImportThreadLocal.setStagingInProcessOnRemoteLive(
@@ -236,17 +236,17 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 			stagingLocalService.updateStagingRequest(
 				getUserId(), stagingRequestId, fileName, bytes);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"StagingServiceImpl#updateStagingRequest(",
 						stagingRequestId, ", ", fileName, ", ", bytes.length,
 						"bytes)"),
-					pe);
+					portalException);
 			}
 
-			throw pe;
+			throw portalException;
 		}
 		finally {
 			ExportImportThreadLocal.setStagingInProcessOnRemoteLive(

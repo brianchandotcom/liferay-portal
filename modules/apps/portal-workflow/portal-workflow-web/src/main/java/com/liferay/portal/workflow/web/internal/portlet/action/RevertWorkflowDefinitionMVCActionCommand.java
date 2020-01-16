@@ -69,21 +69,22 @@ public class RevertWorkflowDefinitionMVCActionCommand
 
 			return SessionErrors.isEmpty(actionRequest);
 		}
-		catch (WorkflowException we) {
+		catch (WorkflowException workflowException) {
 			hideDefaultErrorMessage(actionRequest);
 
-			SessionErrors.add(actionRequest, we.getClass(), we);
+			SessionErrors.add(
+				actionRequest, workflowException.getClass(), workflowException);
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/definition/edit_workflow_definition.jsp");
 
 			return false;
 		}
-		catch (PortletException pe) {
-			throw pe;
+		catch (PortletException portletException) {
+			throw portletException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -179,7 +180,7 @@ public class RevertWorkflowDefinitionMVCActionCommand
 		try {
 			workflowDefinitionManager.validateWorkflowDefinition(bytes);
 		}
-		catch (WorkflowException we) {
+		catch (WorkflowException workflowException) {
 			DateFormat dateFormat = _getDateFormat(locale);
 
 			String message = LanguageUtil.format(
@@ -187,7 +188,8 @@ public class RevertWorkflowDefinitionMVCActionCommand
 				"the-version-from-x-is-not-valid-for-publication",
 				dateFormat.format(previousDateModification));
 
-			throw new WorkflowDefinitionFileException(message, we);
+			throw new WorkflowDefinitionFileException(
+				message, workflowException);
 		}
 	}
 

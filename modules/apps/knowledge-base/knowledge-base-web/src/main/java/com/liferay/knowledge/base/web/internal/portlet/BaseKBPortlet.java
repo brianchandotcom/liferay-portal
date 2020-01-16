@@ -118,21 +118,21 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 				themeDisplay.getScopeGroupId(), resourcePrimKey, sourceFileName,
 				KBWebKeys.TEMP_FOLDER_NAME, inputStream, mimeType);
 		}
-		catch (Exception e) {
-			if (e instanceof AntivirusScannerException ||
-				e instanceof DuplicateFileEntryException ||
-				e instanceof FileExtensionException ||
-				e instanceof FileNameException ||
-				e instanceof FileSizeException ||
-				e instanceof UploadRequestSizeException) {
+		catch (Exception exception) {
+			if (exception instanceof AntivirusScannerException ||
+				exception instanceof DuplicateFileEntryException ||
+				exception instanceof FileExtensionException ||
+				exception instanceof FileNameException ||
+				exception instanceof FileSizeException ||
+				exception instanceof UploadRequestSizeException) {
 
 				JSONObject jsonObject = uploadResponseHandler.onFailure(
-					actionRequest, (PortalException)e);
+					actionRequest, (PortalException)exception);
 
 				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}
@@ -206,7 +206,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 			jsonObject.put("deleted", Boolean.TRUE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String errorMessage = themeDisplay.translate(
 				"an-unexpected-error-occurred-while-deleting-the-file");
 
@@ -326,15 +326,15 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 						resourcePrimKey, GetterUtil.getInteger(sourceVersion),
 						GetterUtil.getInteger(targetVersion), "content");
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					try {
 						PortalUtil.sendError(
-							e,
+							exception,
 							PortalUtil.getHttpServletRequest(resourceRequest),
 							PortalUtil.getHttpServletResponse(
 								resourceResponse));
 					}
-					catch (ServletException se) {
+					catch (ServletException servletException) {
 					}
 				}
 
@@ -358,14 +358,14 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 				serveKBArticleRSS(resourceRequest, resourceResponse);
 			}
 		}
-		catch (IOException ioe) {
-			throw ioe;
+		catch (IOException ioException) {
+			throw ioException;
 		}
-		catch (PortletException pe) {
-			throw pe;
+		catch (PortletException portletException) {
+			throw portletException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -608,8 +608,8 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 				resourcePrimKey, GetterUtil.getInteger(sourceVersion),
 				GetterUtil.getInteger(targetVersion), "content");
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);

@@ -113,8 +113,8 @@ public class MessageTag extends TagSupport implements DirectTag {
 
 			return EVAL_PAGE;
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 		finally {
 			_arguments = null;

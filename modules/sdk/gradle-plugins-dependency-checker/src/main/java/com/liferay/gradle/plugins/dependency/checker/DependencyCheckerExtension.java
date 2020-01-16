@@ -90,27 +90,27 @@ public class DependencyCheckerExtension {
 		try {
 			dependencyChecker.check(group, name, version);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (!isIgnoreFailures()) {
-				if (e instanceof IOException) {
-					throw new UncheckedIOException(e);
+				if (exception instanceof IOException) {
+					throw new UncheckedIOException(exception);
 				}
 
-				if (e instanceof RuntimeException) {
-					throw (RuntimeException)e;
+				if (exception instanceof RuntimeException) {
+					throw (RuntimeException)exception;
 				}
 
-				throw new GradleException(e.getMessage(), e);
+				throw new GradleException(exception.getMessage(), exception);
 			}
 
-			if (e instanceof DependencyCheckerException) {
-				System.out.println(e.getMessage());
+			if (exception instanceof DependencyCheckerException) {
+				System.out.println(exception.getMessage());
 			}
 			else {
 				logger.error(
 					"Unable to check dependency '" + group + ":" + name + ":" +
 						version + "' in configuration '" + configuration + "'",
-					e);
+					exception);
 			}
 		}
 	}

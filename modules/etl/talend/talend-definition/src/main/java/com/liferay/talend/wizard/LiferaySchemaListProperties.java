@@ -118,8 +118,8 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new ComponentException(e);
+		catch (Exception exception) {
+			throw new ComponentException(exception);
 		}
 
 		selectedSchemaNames.setPossibleValues(schemaNames);

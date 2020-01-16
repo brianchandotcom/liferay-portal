@@ -40,8 +40,8 @@ public class UserContextProvider implements ContextProvider<User> {
 			return _portal.getUser(
 				ContextProviderUtil.getHttpServletRequest(message));
 		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
+		catch (PortalException portalException) {
+			throw new ServerErrorException(500, portalException);
 		}
 	}
 

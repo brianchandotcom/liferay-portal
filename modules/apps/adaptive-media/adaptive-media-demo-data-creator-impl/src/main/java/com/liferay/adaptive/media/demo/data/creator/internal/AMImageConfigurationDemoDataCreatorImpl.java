@@ -79,9 +79,10 @@ public class AMImageConfigurationDemoDataCreatorImpl
 			_addConfigurationUuid(
 				companyId, amImageConfigurationEntry.getUUID());
 		}
-		catch (AMImageConfigurationException amice) {
+		catch (AMImageConfigurationException amImageConfigurationException) {
 			_log.error(
-				"Unable to add image adaptive media configuration", amice);
+				"Unable to add image adaptive media configuration",
+				amImageConfigurationException);
 		}
 
 		return amImageConfigurationEntry;

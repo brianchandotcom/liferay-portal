@@ -1077,8 +1077,8 @@ public class ProjectTemplateFilesTest {
 			_addXmlDeclaration("service.xml", "service_xml_declaration.tmpl");
 			_addXmlDeclaration("web.xml", "web_xml_declaration.tmpl");
 		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
+		catch (IOException ioException) {
+			throw new ExceptionInInitializerError(ioException);
 		}
 	}
 

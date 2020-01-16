@@ -120,7 +120,7 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 		try {
 			return getJavaScriptPackageName(bundle);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}

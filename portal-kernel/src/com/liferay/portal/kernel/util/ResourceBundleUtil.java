@@ -121,7 +121,7 @@ public class ResourceBundleUtil {
 		try {
 			return resourceBundle.getString(key);
 		}
-		catch (MissingResourceException mre) {
+		catch (MissingResourceException missingResourceException) {
 			return null;
 		}
 	}

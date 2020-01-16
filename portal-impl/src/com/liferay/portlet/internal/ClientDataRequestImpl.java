@@ -296,8 +296,8 @@ public abstract class ClientDataRequestImpl
 
 				_fileItem.write(file);
 			}
-			catch (Exception e) {
-				throw new IOException(e);
+			catch (Exception exception) {
+				throw new IOException(exception);
 			}
 		}
 

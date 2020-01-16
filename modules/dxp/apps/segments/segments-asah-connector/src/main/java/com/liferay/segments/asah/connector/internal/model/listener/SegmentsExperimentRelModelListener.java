@@ -54,11 +54,11 @@ public class SegmentsExperimentRelModelListener
 
 			_processUpdateSegmentsExperimentRel(segmentsExperimentRel);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ModelListenerException(
 				"Unable to create segments experiment rel " +
 					segmentsExperimentRel.getSegmentsExperimentRelId(),
-				e);
+				exception);
 		}
 	}
 
@@ -81,11 +81,11 @@ public class SegmentsExperimentRelModelListener
 
 			_processUpdateSegmentsExperimentRel(segmentsExperimentRel);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ModelListenerException(
 				"Unable to remove segments experiment rel " +
 					segmentsExperimentRel.getSegmentsExperimentRelId(),
-				e);
+				exception);
 		}
 	}
 

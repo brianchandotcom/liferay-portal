@@ -149,7 +149,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		threadPoolExecutor = new ThreadPoolExecutor(
@@ -160,7 +160,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		threadPoolExecutor = new ThreadPoolExecutor(
@@ -171,7 +171,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		threadPoolExecutor = new ThreadPoolExecutor(
@@ -182,7 +182,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 	}
 
@@ -319,7 +319,7 @@ public class ThreadPoolExecutorTest {
 
 					Assert.fail();
 				}
-				catch (RejectedExecutionException ree) {
+				catch (RejectedExecutionException rejectedExecutionException) {
 				}
 
 				Assert.assertEquals(10, threadPoolExecutor.getPoolSize());
@@ -426,7 +426,7 @@ public class ThreadPoolExecutorTest {
 
 					Assert.fail();
 				}
-				catch (RejectedExecutionException ree) {
+				catch (RejectedExecutionException rejectedExecutionException) {
 				}
 
 				Assert.assertEquals(10, threadPoolExecutor.getPoolSize());
@@ -656,7 +656,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		try {
@@ -665,7 +665,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		try {
@@ -674,7 +674,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		try {
@@ -683,7 +683,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		try {
@@ -691,7 +691,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		try {
@@ -700,7 +700,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		try {
@@ -709,7 +709,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		try {
@@ -720,7 +720,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 
 		try {
@@ -730,7 +730,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 
 		try {
@@ -740,7 +740,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 	}
 
@@ -784,7 +784,7 @@ public class ThreadPoolExecutorTest {
 						takeLock.unlock();
 					}
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 				}
 			}
 
@@ -963,7 +963,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 		finally {
 			TestUtil.closePool(threadPoolExecutor);
@@ -1008,7 +1008,7 @@ public class ThreadPoolExecutorTest {
 						putLock.unlock();
 					}
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 				}
 			}
 

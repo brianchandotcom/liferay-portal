@@ -151,7 +151,7 @@ public class UsersManagementToolbarDisplayContext
 						}
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 			}
 		};
@@ -224,7 +224,7 @@ public class UsersManagementToolbarDisplayContext
 				}
 			};
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -295,7 +295,7 @@ public class UsersManagementToolbarDisplayContext
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

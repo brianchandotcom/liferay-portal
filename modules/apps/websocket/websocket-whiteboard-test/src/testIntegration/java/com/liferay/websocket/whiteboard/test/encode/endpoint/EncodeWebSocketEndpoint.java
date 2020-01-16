@@ -42,11 +42,11 @@ public class EncodeWebSocketEndpoint extends Endpoint {
 
 						basic.sendObject(data);
 					}
-					catch (IOException ioe) {
-						throw new RuntimeException(ioe);
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
 					}
-					catch (EncodeException ee) {
-						throw new RuntimeException(ee);
+					catch (EncodeException encodeException) {
+						throw new RuntimeException(encodeException);
 					}
 				}
 

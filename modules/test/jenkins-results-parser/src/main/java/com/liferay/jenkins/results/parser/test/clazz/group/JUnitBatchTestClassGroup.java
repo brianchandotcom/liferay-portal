@@ -118,8 +118,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		try {
 			JenkinsResultsParserUtil.write(csvReportFile, csvReport.toString());
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -201,8 +201,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 				_initTestClassMethods();
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 		}
 
@@ -435,7 +435,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		try {
 			moduleDirsList = portalGitWorkingDirectory.getModuleDirsList();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			File workingDirectory =
 				portalGitWorkingDirectory.getWorkingDirectory();
 
@@ -443,7 +443,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				JenkinsResultsParserUtil.combine(
 					"Unable to get module directories in ",
 					workingDirectory.getPath()),
-				ioe);
+				ioException);
 		}
 
 		List<File> modifiedFilesList =
@@ -596,11 +596,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 				});
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to search for test file names in " +
 					_rootWorkingDirectory.getPath(),
-				ioe);
+				ioException);
 		}
 
 		Collections.sort(testClasses);

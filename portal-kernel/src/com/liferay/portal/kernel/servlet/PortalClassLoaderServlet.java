@@ -79,8 +79,8 @@ public class PortalClassLoaderServlet
 
 			_servlet.init(_servletConfig);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

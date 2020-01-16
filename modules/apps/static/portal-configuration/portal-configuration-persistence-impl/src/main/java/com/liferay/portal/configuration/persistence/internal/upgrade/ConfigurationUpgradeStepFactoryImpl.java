@@ -63,8 +63,8 @@ public class ConfigurationUpgradeStepFactoryImpl
 				_renameConfigurationFile(oldPid, newPid, "cfg");
 				_renameConfigurationFile(oldPid, newPid, "config");
 			}
-			catch (IOException ioe) {
-				throw new UpgradeException(ioe);
+			catch (IOException ioException) {
+				throw new UpgradeException(ioException);
 			}
 		};
 	}

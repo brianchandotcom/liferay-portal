@@ -96,12 +96,12 @@ public class ExportKaleoProcessPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(), kaleoProcessId,
 				ActionKeys.VIEW);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return false;

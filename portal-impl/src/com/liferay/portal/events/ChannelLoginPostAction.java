@@ -46,8 +46,8 @@ public class ChannelLoginPostAction extends Action {
 					user.getCompanyId(), user.getUserId(), true);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

@@ -53,11 +53,11 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 					UserOperation.ADD);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to export user group with user ID " +
 					associationClassPK + " to LDAP on after add association",
-				e);
+				exception);
 		}
 	}
 
@@ -73,11 +73,11 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 					UserOperation.REMOVE);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to export user group with user ID " +
 					associationClassPK + " to LDAP on after remove association",
-				e);
+				exception);
 		}
 	}
 
@@ -102,9 +102,9 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 					_userExporter.exportUser(
 						userId, userGroupId, userOperation);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(e, e);
+						_log.warn(exception, exception);
 					}
 				}
 

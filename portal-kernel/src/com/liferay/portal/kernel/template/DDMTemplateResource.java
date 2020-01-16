@@ -102,9 +102,10 @@ public class DDMTemplateResource implements TemplateResource {
 		try {
 			_ddmTemplate = DDMTemplateManagerUtil.getTemplate(ddmTemplateId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new IOException(
-				"Unable to retrieve ddm template with ID " + ddmTemplateId, e);
+				"Unable to retrieve ddm template with ID " + ddmTemplateId,
+				exception);
 		}
 
 		_ddmTemplateKey = objectInput.readUTF();

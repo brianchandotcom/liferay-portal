@@ -113,8 +113,8 @@ public class DepotActionDropdownItemsProvider {
 
 			return true;
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -124,8 +124,8 @@ public class DepotActionDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(),
 				_depotEntry.getDepotEntryId(), ActionKeys.UPDATE);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

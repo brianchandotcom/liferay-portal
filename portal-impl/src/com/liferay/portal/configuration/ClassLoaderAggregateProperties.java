@@ -202,7 +202,7 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 			return newFileConfiguration;
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Configuration source " + fileName + " ignored");
 			}
@@ -234,9 +234,9 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 			try {
 				url = _classLoader.getResource(fileName);
 			}
-			catch (RuntimeException re) {
+			catch (RuntimeException runtimeException) {
 				if (fileName.startsWith("file:/")) {
-					throw re;
+					throw runtimeException;
 				}
 
 				fileName = "file:/".concat(fileName);
@@ -287,12 +287,12 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 			return newConfiguration;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"Configuration source ", sourceName, " ignored: ",
-						e.getMessage()));
+						exception.getMessage()));
 			}
 
 			return null;
@@ -325,12 +325,12 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 					_commentField.set(propertyLayoutData, null);
 				}
 			}
-			catch (ReflectiveOperationException roe) {
+			catch (ReflectiveOperationException reflectiveOperationException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to clear out comments from " +
 							propertiesConfiguration,
-						roe);
+						reflectiveOperationException);
 				}
 			}
 
@@ -343,7 +343,7 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 			return propertiesConfiguration;
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Configuration source " + url + " ignored");
 			}
@@ -369,7 +369,7 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 				try {
 					return new URL(fileName);
 				}
-				catch (MalformedURLException murle) {
+				catch (MalformedURLException malformedURLException) {
 					return null;
 				}
 			}
@@ -396,8 +396,8 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 			_layoutDataField = ReflectionUtil.getDeclaredField(
 				PropertiesConfigurationLayout.class, "layoutData");
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

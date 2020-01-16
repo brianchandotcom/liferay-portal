@@ -82,7 +82,7 @@ public class AtomUtil {
 
 			portletTitle = company.getName();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -104,7 +104,7 @@ public class AtomUtil {
 		try {
 			company = getCompany();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 

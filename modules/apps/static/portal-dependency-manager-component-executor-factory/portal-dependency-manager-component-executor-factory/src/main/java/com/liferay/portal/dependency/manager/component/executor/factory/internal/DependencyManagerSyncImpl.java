@@ -55,7 +55,7 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 			try {
 				dependencyManagerSyncServiceRegistration.unregister();
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 
 				// Concurrent unregister, no need to do anything
 
@@ -67,7 +67,7 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 		try {
 			_componentExecutorFactoryRegistration.unregister();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 
 			// Concurrent unregister, no need to do anything
 
@@ -88,8 +88,9 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 				}
 			}
 		}
-		catch (InterruptedException ie) {
-			_log.error("Dependency manager sync interrupted", ie);
+		catch (InterruptedException interruptedException) {
+			_log.error(
+				"Dependency manager sync interrupted", interruptedException);
 		}
 	}
 

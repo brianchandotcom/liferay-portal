@@ -103,8 +103,8 @@ public class ReferredSegmentsEntryProvider
 			return _segmentsEntryODataMatcher.matches(
 				referredFilterString, segmentsEntryMap);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return member;

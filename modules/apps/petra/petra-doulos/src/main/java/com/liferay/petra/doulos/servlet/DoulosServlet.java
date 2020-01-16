@@ -55,8 +55,8 @@ public abstract class DoulosServlet extends HttpServlet {
 			try {
 				doulosRequestProcessor.destroy();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -86,8 +86,8 @@ public abstract class DoulosServlet extends HttpServlet {
 		try {
 			registerDoulosRequestProcessors();
 		}
-		catch (Exception e) {
-			throw new ServletException(e);
+		catch (Exception exception) {
+			throw new ServletException(exception);
 		}
 
 		String validIpsString = servletConfig.getInitParameter("validIps");
@@ -244,12 +244,12 @@ public abstract class DoulosServlet extends HttpServlet {
 					httpServletResponse,
 					new ByteArrayInputStream(json.getBytes("UTF-8")));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				StringWriter stringWriter = new StringWriter();
 
 				PrintWriter printWriter = new PrintWriter(stringWriter);
 
-				e.printStackTrace(printWriter);
+				exception.printStackTrace(printWriter);
 
 				String output = stringWriter.toString();
 
@@ -296,9 +296,9 @@ public abstract class DoulosServlet extends HttpServlet {
 					outputStream.flush();
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 
@@ -307,9 +307,9 @@ public abstract class DoulosServlet extends HttpServlet {
 					outputStream.close();
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 
@@ -318,9 +318,9 @@ public abstract class DoulosServlet extends HttpServlet {
 					inputStream.close();
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}

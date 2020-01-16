@@ -89,10 +89,10 @@ public abstract class BaseTestPreparatorBundleActivator
 		try {
 			prepareTest();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_cleanUp();
 
-			throw new RuntimeException(e);
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -193,18 +193,18 @@ public abstract class BaseTestPreparatorBundleActivator
 
 				return configuration;
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 				try {
 					configuration.delete();
 				}
-				catch (IOException ioe) {
-					throw new RuntimeException(ioe);
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
 				}
 
-				throw new RuntimeException(ie);
+				throw new RuntimeException(interruptedException);
 			}
 			finally {
 				bundleContext.ungetService(serviceReference);
@@ -320,8 +320,8 @@ public abstract class BaseTestPreparatorBundleActivator
 				() -> sapEntryLocalService.deleteSAPEntry(
 					sapEntry.getSapEntryId()));
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 
@@ -433,8 +433,8 @@ public abstract class BaseTestPreparatorBundleActivator
 			try {
 				previousAutoCloseable.close();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 	}

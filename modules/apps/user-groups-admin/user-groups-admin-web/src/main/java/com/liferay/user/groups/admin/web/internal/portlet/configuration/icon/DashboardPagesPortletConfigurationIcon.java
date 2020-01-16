@@ -68,7 +68,7 @@ public class DashboardPagesPortletConfigurationIcon
 
 			return group.getDisplayURL(themeDisplay, true);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -100,7 +100,7 @@ public class DashboardPagesPortletConfigurationIcon
 
 			return false;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

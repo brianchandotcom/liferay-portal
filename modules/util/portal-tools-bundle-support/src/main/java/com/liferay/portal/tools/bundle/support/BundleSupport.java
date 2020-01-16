@@ -73,9 +73,9 @@ public class BundleSupport {
 				command.execute();
 			}
 		}
-		catch (ParameterException pe) {
+		catch (ParameterException parameterException) {
 			if (!bundleSupportArgs.isHelp()) {
-				System.err.println(pe.getMessage());
+				System.err.println(parameterException.getMessage());
 			}
 
 			_printHelp(jCommander);

@@ -28,8 +28,8 @@ public class FunctionalPortalTestBatch
 		try {
 			executeBatch();
 		}
-		catch (AntException ae) {
-			throw new RuntimeException(ae);
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
 		}
 		finally {
 			publishResults();
@@ -68,8 +68,8 @@ public class FunctionalPortalTestBatch
 							portalBatchBuildData.getArtifactDir(),
 							poshiResultsDirName));
 				}
-				catch (IOException ioe) {
-					throw new RuntimeException(ioe);
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
 				}
 			}
 		}

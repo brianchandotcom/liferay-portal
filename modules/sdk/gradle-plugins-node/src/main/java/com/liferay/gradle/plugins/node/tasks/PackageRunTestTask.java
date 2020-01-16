@@ -32,16 +32,16 @@ public class PackageRunTestTask
 		try {
 			super.executeNode();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (isIgnoreFailures()) {
 				Logger logger = getLogger();
 
 				if (logger.isWarnEnabled()) {
-					logger.warn(e.getMessage());
+					logger.warn(exception.getMessage());
 				}
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

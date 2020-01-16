@@ -78,12 +78,12 @@ public class DiscardDraftLayoutMVCActionCommand
 			LayoutPermissionUtil.check(
 				themeDisplay.getPermissionChecker(), plid, ActionKeys.UPDATE);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (!LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), plid,
 					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
 
-				throw pe;
+				throw principalException;
 			}
 		}
 

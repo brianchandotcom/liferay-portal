@@ -59,8 +59,8 @@ public class AxisCleanUpFilter extends BaseFilter {
 					cacheThreadLocal.remove();
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 	}
@@ -75,8 +75,8 @@ public class AxisCleanUpFilter extends BaseFilter {
 			_CACHE_FIELD = ReflectionUtil.getDeclaredField(
 				MethodCache.class, "cache");
 		}
-		catch (Exception e) {
-			throw new LoggedExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new LoggedExceptionInInitializerError(exception);
 		}
 	}
 

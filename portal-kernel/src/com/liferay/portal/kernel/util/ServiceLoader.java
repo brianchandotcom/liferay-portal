@@ -68,12 +68,12 @@ public class ServiceLoader {
 			try {
 				_load(services, defineClassLoader, clazz, url);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					StringBundler.concat(
 						"Unable to load ", String.valueOf(clazz), " with ",
 						String.valueOf(defineClassLoader)),
-					e);
+					exception);
 			}
 		}
 

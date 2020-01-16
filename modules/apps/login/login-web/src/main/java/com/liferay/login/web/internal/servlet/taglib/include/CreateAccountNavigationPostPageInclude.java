@@ -86,8 +86,8 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 			iconTag.setUrl(
 				_portal.getCreateAccountURL(httpServletRequest, themeDisplay));
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 
 		iconTag.doTag(pageContext);

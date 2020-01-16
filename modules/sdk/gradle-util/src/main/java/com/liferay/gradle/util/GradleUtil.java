@@ -491,8 +491,8 @@ public class GradleUtil {
 			try {
 				object = callable.call();
 			}
-			catch (Exception e) {
-				throw new GradleException(e.getMessage(), e);
+			catch (Exception exception) {
+				throw new GradleException(exception.getMessage(), exception);
 			}
 		}
 		else if (object instanceof Closure<?>) {

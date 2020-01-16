@@ -51,8 +51,8 @@ public class ClusterSerializationUtil {
 
 			return objectInputStream.readObject();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -73,10 +73,10 @@ public class ClusterSerializationUtil {
 
 			return unsyncByteArrayOutputStream.unsafeGetByteArray();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to write ordinary serializable object " + serializable,
-				ioe);
+				ioException);
 		}
 	}
 

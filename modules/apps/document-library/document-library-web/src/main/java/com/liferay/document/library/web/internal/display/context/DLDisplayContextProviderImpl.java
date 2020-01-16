@@ -178,8 +178,8 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 			return dlViewFileVersionDisplayContext;
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

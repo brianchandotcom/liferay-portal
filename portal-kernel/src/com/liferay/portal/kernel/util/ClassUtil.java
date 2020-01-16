@@ -176,7 +176,7 @@ public class ClassUtil {
 				}
 			}
 		}
-		catch (URISyntaxException urise) {
+		catch (URISyntaxException uriSyntaxException) {
 			path = url.getFile();
 		}
 

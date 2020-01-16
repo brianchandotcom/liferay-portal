@@ -114,9 +114,10 @@ public abstract class BaseStagingBackgroundTaskExecutor
 				ExportImportServiceConfiguration.class,
 				CompanyThreadLocal.getCompanyId());
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			_log.error(
-				"Unable to load export import service configuration", ce);
+				"Unable to load export import service configuration",
+				configurationException);
 		}
 
 		return null;

@@ -65,8 +65,8 @@ public class UsersTemplateContextContributor
 			contextObjects.put("is_male", contact.isMale());
 			contextObjects.put("user_birthday", contact.getBirthday());
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		contextObjects.put("is_setup_complete", user.isSetupComplete());
@@ -93,8 +93,8 @@ public class UsersTemplateContextContributor
 
 				contextObjects.put("user2", user2);
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 

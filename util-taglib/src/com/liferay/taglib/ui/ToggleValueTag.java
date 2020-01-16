@@ -54,8 +54,8 @@ public class ToggleValueTag extends TagSupport {
 
 			return EVAL_PAGE;
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 	}
 

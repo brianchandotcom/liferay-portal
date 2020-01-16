@@ -89,8 +89,8 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 						verifyLocks(group.getGroupId());
 						verifyMacPackages(group.getGroupId());
 					}
-					catch (Exception e) {
-						throw new PortalException(e);
+					catch (Exception exception) {
+						throw new PortalException(exception);
 					}
 				});
 

@@ -65,8 +65,9 @@ public class DeletePortalSettingsFormMVCActionCommand
 
 			deleteSettings(themeDisplay);
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass(), pe);
+		catch (PortalException portalException) {
+			SessionErrors.add(
+				actionRequest, portalException.getClass(), portalException);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

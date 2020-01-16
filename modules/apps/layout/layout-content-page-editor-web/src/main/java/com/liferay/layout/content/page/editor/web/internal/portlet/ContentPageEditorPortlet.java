@@ -145,8 +145,8 @@ public class ContentPageEditorPortlet extends MVCPortlet {
 					_http.addParameter(
 						layoutFullURL, "p_l_mode", Constants.EDIT));
 			}
-			catch (PortalException pe) {
-				throw new PortletException(pe);
+			catch (PortalException portalException) {
+				throw new PortletException(portalException);
 			}
 		}
 		else {

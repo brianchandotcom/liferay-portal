@@ -111,8 +111,8 @@ public class WSDDMerger {
 		try {
 			merge(source, destination);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

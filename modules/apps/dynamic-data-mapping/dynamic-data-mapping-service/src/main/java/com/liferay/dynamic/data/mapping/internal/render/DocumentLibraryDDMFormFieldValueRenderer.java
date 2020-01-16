@@ -68,7 +68,7 @@ public class DocumentLibraryDDMFormFieldValueRenderer
 
 					return fileEntry.getTitle();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					return LanguageUtil.format(
 						locale, "is-temporarily-unavailable", "content");
 				}
@@ -78,8 +78,8 @@ public class DocumentLibraryDDMFormFieldValueRenderer
 				try {
 					return JSONFactoryUtil.createJSONObject(json);
 				}
-				catch (JSONException jsone) {
-					throw new ValueAccessorException(jsone);
+				catch (JSONException jsonException) {
+					throw new ValueAccessorException(jsonException);
 				}
 			}
 

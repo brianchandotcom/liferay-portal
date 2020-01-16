@@ -216,7 +216,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 			sb.append(name);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			sb.append("@group_id@");
 		}
 
@@ -310,7 +310,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 				PortalUtil.getLiferayPortletResponse(portletResponse),
 				StringPool.BLANK);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -337,7 +337,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, true);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -383,12 +383,12 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 			return HttpUtil.removeDomain(layoutFriendlyURL);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to get friendly URL for URL " +
 						_themeDisplay.getURLCurrent(),
-					e);
+					exception);
 			}
 
 			return getUrl();

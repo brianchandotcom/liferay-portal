@@ -71,10 +71,10 @@ public class NoticeableThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"To ensure FIFO, core pool size must be 1 or greater",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		noticeableThreadPoolExecutor.setCorePoolSize(2);
@@ -136,10 +136,10 @@ public class NoticeableThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"To ensure FIFO, core pool size must be 1 or greater",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		new NoticeableThreadPoolExecutor(
@@ -165,7 +165,7 @@ public class NoticeableThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 
 		Assert.assertFalse(noticeableThreadPoolExecutor.isShutdown());
@@ -209,8 +209,8 @@ public class NoticeableThreadPoolExecutorTest {
 			try {
 				semaphore.acquire();
 			}
-			catch (InterruptedException ie) {
-				ReflectionUtil.throwException(ie);
+			catch (InterruptedException interruptedException) {
+				ReflectionUtil.throwException(interruptedException);
 			}
 		};
 
@@ -258,8 +258,8 @@ public class NoticeableThreadPoolExecutorTest {
 			try {
 				semaphore.acquire();
 			}
-			catch (InterruptedException ie) {
-				ReflectionUtil.throwException(ie);
+			catch (InterruptedException interruptedException) {
+				ReflectionUtil.throwException(interruptedException);
 			}
 		};
 
@@ -356,8 +356,8 @@ public class NoticeableThreadPoolExecutorTest {
 			try {
 				semaphore.acquire();
 			}
-			catch (InterruptedException ie) {
-				ReflectionUtil.throwException(ie);
+			catch (InterruptedException interruptedException) {
+				ReflectionUtil.throwException(interruptedException);
 			}
 		};
 
@@ -506,8 +506,9 @@ public class NoticeableThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Callable is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Callable is null", nullPointerException.getMessage());
 		}
 
 		NoticeableFuture<String> noticeableFuture1 =
@@ -529,8 +530,9 @@ public class NoticeableThreadPoolExecutorTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Runnable is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Runnable is null", nullPointerException.getMessage());
 		}
 
 		NoticeableFuture<String> noticeableFuture3 =
@@ -665,7 +667,7 @@ public class NoticeableThreadPoolExecutorTest {
 			try {
 				semaphore.acquire();
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 			}
 		};
 
@@ -708,9 +710,9 @@ public class NoticeableThreadPoolExecutorTest {
 		}
 
 		private MethodNameThreadFactory() {
-			Exception e = new Exception();
+			Exception exception = new Exception();
 
-			StackTraceElement[] stackTraceElements = e.getStackTrace();
+			StackTraceElement[] stackTraceElements = exception.getStackTrace();
 
 			_prefix = stackTraceElements[2].getMethodName() + "-";
 		}

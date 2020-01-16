@@ -70,8 +70,8 @@ public class MBMessageModelPreFilterContributor
 			try {
 				addRelatedClassNames(booleanFilter, searchContext);
 			}
-			catch (Exception e) {
-				throw new SystemException(e);
+			catch (Exception exception) {
+				throw new SystemException(exception);
 			}
 		}
 
@@ -102,12 +102,12 @@ public class MBMessageModelPreFilterContributor
 				try {
 					mbCategoryService.getCategory(categoryId);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"Unable to get message boards category " +
 								categoryId,
-							pe);
+							portalException);
 					}
 
 					continue;

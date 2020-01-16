@@ -62,7 +62,7 @@ public class CategorySubscriptionPortletConfigurationIcon
 				key = "unsubscribe";
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return LanguageUtil.get(
@@ -85,7 +85,7 @@ public class CategorySubscriptionPortletConfigurationIcon
 		try {
 			category = ActionUtil.getCategory(portletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -129,7 +129,7 @@ public class CategorySubscriptionPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(),
 				ActionUtil.getCategory(portletRequest), ActionKeys.SUBSCRIBE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

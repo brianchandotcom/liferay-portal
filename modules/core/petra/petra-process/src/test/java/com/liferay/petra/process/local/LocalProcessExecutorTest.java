@@ -147,8 +147,8 @@ public class LocalProcessExecutorTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable throwable = executionException.getCause();
 
 			Assert.assertSame(ProcessException.class, throwable.getClass());
 			Assert.assertEquals(
@@ -170,8 +170,8 @@ public class LocalProcessExecutorTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable throwable = executionException.getCause();
 
 			Assert.assertSame(ProcessException.class, throwable.getClass());
 
@@ -235,8 +235,8 @@ public class LocalProcessExecutorTest {
 
 			Assert.fail();
 		}
-		catch (ProcessException pe) {
-			Throwable throwable = pe.getCause();
+		catch (ProcessException processException) {
+			Throwable throwable = processException.getCause();
 
 			Assert.assertTrue(throwable instanceof IOException);
 		}
@@ -374,11 +374,12 @@ public class LocalProcessExecutorTest {
 
 						return "NULL_SHUTDOWN_HOOK_ACCEPTED";
 					}
-					catch (IllegalArgumentException iae) {
+					catch (IllegalArgumentException illegalArgumentException) {
 						if (!Objects.equals(
-								iae.getMessage(), "Shutdown hook is null")) {
+								illegalArgumentException.getMessage(),
+								"Shutdown hook is null")) {
 
-							return iae.getMessage();
+							return illegalArgumentException.getMessage();
 						}
 					}
 
@@ -483,8 +484,8 @@ public class LocalProcessExecutorTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable cause = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable cause = executionException.getCause();
 
 			Assert.assertSame(ClassNotFoundException.class, cause.getClass());
 		}
@@ -523,8 +524,8 @@ public class LocalProcessExecutorTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable cause = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable cause = executionException.getCause();
 
 			Assert.assertTrue(cause instanceof ProcessException);
 
@@ -581,8 +582,8 @@ public class LocalProcessExecutorTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable throwable = executionException.getCause();
 
 			Assert.assertSame(
 				TerminationProcessException.class, throwable.getClass());
@@ -608,8 +609,8 @@ public class LocalProcessExecutorTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable throwable = executionException.getCause();
 
 			Assert.assertSame(ProcessException.class, throwable.getClass());
 
@@ -672,15 +673,16 @@ public class LocalProcessExecutorTest {
 								localReactorThreadBlockingQueue.put(
 									Thread.currentThread());
 							}
-							catch (InterruptedException ie) {
-								throw new ProcessException(ie);
+							catch (InterruptedException interruptedException) {
+								throw new ProcessException(
+									interruptedException);
 							}
 
 							return null;
 						});
 				}
-				catch (IOException ioe) {
-					throw new ProcessException(ioe);
+				catch (IOException ioException) {
+					throw new ProcessException(ioException);
 				}
 
 				return null;
@@ -747,8 +749,9 @@ public class LocalProcessExecutorTest {
 								localReactorThreadBlockingQueue.put(
 									Thread.currentThread());
 							}
-							catch (InterruptedException ie) {
-								throw new ProcessException(ie);
+							catch (InterruptedException interruptedException) {
+								throw new ProcessException(
+									interruptedException);
 							}
 
 							return null;
@@ -762,8 +765,8 @@ public class LocalProcessExecutorTest {
 					ReflectionTestUtil.invoke(
 						processOutputStream, "close", new Class<?>[0]);
 				}
-				catch (IOException ioe) {
-					throw new ProcessException(ioe);
+				catch (IOException ioException) {
+					throw new ProcessException(ioException);
 				}
 
 				return null;
@@ -781,8 +784,8 @@ public class LocalProcessExecutorTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable throwable = executionException.getCause();
 
 			Assert.assertSame(ProcessException.class, throwable.getClass());
 
@@ -968,8 +971,8 @@ public class LocalProcessExecutorTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable cause = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable cause = executionException.getCause();
 
 			Assert.assertSame(ProcessException.class, cause.getClass());
 
@@ -1071,7 +1074,7 @@ public class LocalProcessExecutorTest {
 
 				return serverSocketChannel;
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				port++;
 			}
 		}
@@ -1085,8 +1088,8 @@ public class LocalProcessExecutorTest {
 				try {
 					thread.join();
 				}
-				catch (InterruptedException ie) {
-					ReflectionUtil.throwException(ie);
+				catch (InterruptedException interruptedException) {
+					ReflectionUtil.throwException(interruptedException);
 				}
 
 				break;
@@ -1101,8 +1104,8 @@ public class LocalProcessExecutorTest {
 				Class.forName("java.lang.ApplicationShutdownHooks"), "runHooks",
 				new Class<?>[0]);
 		}
-		catch (ClassNotFoundException cnfe) {
-			ReflectionUtil.throwException(cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			ReflectionUtil.throwException(classNotFoundException);
 		}
 
 		Map<String, Object> attributes =
@@ -1119,8 +1122,8 @@ public class LocalProcessExecutorTest {
 			try {
 				serverSocket.close();
 			}
-			catch (IOException ioe) {
-				ReflectionUtil.throwException(ioe);
+			catch (IOException ioException) {
+				ReflectionUtil.throwException(ioException);
 			}
 
 			break;
@@ -1247,8 +1250,8 @@ public class LocalProcessExecutorTest {
 
 				return (T)objectInputStream.readObject();
 			}
-			catch (Exception e) {
-				return ReflectionUtil.throwException(e);
+			catch (Exception exception) {
+				return ReflectionUtil.throwException(exception);
 			}
 		}
 
@@ -1256,7 +1259,7 @@ public class LocalProcessExecutorTest {
 			try {
 				return invoke(() -> true);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				return false;
 			}
 		}
@@ -1284,8 +1287,8 @@ public class LocalProcessExecutorTest {
 					objectOutputStream.writeObject(
 						(ProcessCallable<String>)() -> "DONE");
 				}
-				catch (Exception e) {
-					throw new ProcessException(e);
+				catch (Exception exception) {
+					throw new ProcessException(exception);
 				}
 
 				byte[] serializedData =
@@ -1301,8 +1304,8 @@ public class LocalProcessExecutorTest {
 
 					fileOutputStream.flush();
 				}
-				catch (Exception e) {
-					throw new ProcessException(e);
+				catch (Exception exception) {
+					throw new ProcessException(exception);
 				}
 
 				return null;
@@ -1312,8 +1315,8 @@ public class LocalProcessExecutorTest {
 			try {
 				LocalProcessLauncher.ProcessContext.detach();
 			}
-			catch (InterruptedException ie) {
-				throw new ProcessException(ie);
+			catch (InterruptedException interruptedException) {
+				throw new ProcessException(interruptedException);
 			}
 
 			return "DONE";
@@ -1401,8 +1404,8 @@ public class LocalProcessExecutorTest {
 
 				System.setOut(new PrintStream(fileOutputStream));
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (Exception exception) {
+				throw new ProcessException(exception);
 			}
 
 			return "DONE";
@@ -1417,8 +1420,8 @@ public class LocalProcessExecutorTest {
 								"Exception ProcessCallable");
 						});
 				}
-				catch (IOException ioe) {
-					throw new ProcessException(ioe);
+				catch (IOException ioException) {
+					throw new ProcessException(ioException);
 				}
 
 				return null;
@@ -1456,8 +1459,8 @@ public class LocalProcessExecutorTest {
 							unsyncByteArrayOutputStream.toByteArray());
 					}
 				}
-				catch (IOException ioe) {
-					throw new ProcessException(ioe);
+				catch (IOException ioException) {
+					throw new ProcessException(ioException);
 				}
 
 				return null;
@@ -1471,8 +1474,8 @@ public class LocalProcessExecutorTest {
 					LocalProcessLauncher.ProcessContext.writeProcessCallable(
 						() -> (Serializable)obj);
 				}
-				catch (IOException ioe) {
-					throw new ProcessException(ioe);
+				catch (IOException ioException) {
+					throw new ProcessException(ioException);
 				}
 
 				return null;
@@ -1512,15 +1515,15 @@ public class LocalProcessExecutorTest {
 
 						});
 				}
-				catch (IOException ioe) {
-					throw new ProcessException(ioe);
+				catch (IOException ioException) {
+					throw new ProcessException(ioException);
 				}
 
 				try {
 					heartBeatThread.join();
 				}
-				catch (InterruptedException ie) {
-					throw new ProcessException(ie);
+				catch (InterruptedException interruptedException) {
+					throw new ProcessException(interruptedException);
 				}
 
 				return null;
@@ -1540,8 +1543,8 @@ public class LocalProcessExecutorTest {
 				try {
 					heartBeatThread.join();
 				}
-				catch (InterruptedException ie) {
-					throw new ProcessException(ie);
+				catch (InterruptedException interruptedException) {
+					throw new ProcessException(interruptedException);
 				}
 
 				return null;
@@ -1581,15 +1584,15 @@ public class LocalProcessExecutorTest {
 
 						});
 				}
-				catch (IOException ioe) {
-					throw new ProcessException(ioe);
+				catch (IOException ioException) {
+					throw new ProcessException(ioException);
 				}
 
 				try {
 					heartBeatThread.join();
 				}
-				catch (InterruptedException ie) {
-					throw new ProcessException(ie);
+				catch (InterruptedException interruptedException) {
+					throw new ProcessException(interruptedException);
 				}
 
 				return null;
@@ -1599,7 +1602,7 @@ public class LocalProcessExecutorTest {
 			try {
 				Thread.sleep(Long.MAX_VALUE);
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 			}
 
 			return "DONE";
@@ -1643,11 +1646,13 @@ public class LocalProcessExecutorTest {
 									objectOutputStream.writeObject(
 										requestProcessCallable.call());
 								}
-								catch (ClosedChannelException cce) {
+								catch (ClosedChannelException
+											closedChannelException) {
+
 									return;
 								}
-								catch (Exception e) {
-									e.printStackTrace();
+								catch (Exception exception) {
+									exception.printStackTrace();
 
 									System.exit(10);
 								}
@@ -1659,8 +1664,8 @@ public class LocalProcessExecutorTest {
 
 					return processCallable.call();
 				}
-				catch (IOException ioe) {
-					throw new ProcessException(ioe);
+				catch (IOException ioException) {
+					throw new ProcessException(ioException);
 				}
 			};
 		}
@@ -1681,8 +1686,8 @@ public class LocalProcessExecutorTest {
 
 					return childControllerFuture.get();
 				}
-				catch (Exception e) {
-					throw new ProcessException(e);
+				catch (Exception exception) {
+					throw new ProcessException(exception);
 				}
 			};
 		}

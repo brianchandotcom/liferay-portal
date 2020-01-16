@@ -144,8 +144,8 @@ public class Transformer {
 			template.processTemplate(
 				unsyncStringWriter, () -> getErrorTemplateResource(langType));
 		}
-		catch (Exception e) {
-			throw new TransformException("Unhandled exception", e);
+		catch (Exception exception) {
+			throw new TransformException("Unhandled exception", exception);
 		}
 
 		return unsyncStringWriter.toString();

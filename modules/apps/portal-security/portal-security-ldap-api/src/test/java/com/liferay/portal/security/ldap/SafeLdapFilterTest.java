@@ -239,10 +239,10 @@ public class SafeLdapFilterTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"Parameter key @unknownKey@ is not supported by the template",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 	}
 
@@ -287,11 +287,11 @@ public class SafeLdapFilterTest {
 
 			Assert.fail();
 		}
-		catch (LDAPFilterException ldapfe) {
+		catch (LDAPFilterException ldapFilterException) {
 			Assert.assertEquals(
 				"Expression '(key@in@' cannot contain '@in@' inside template " +
 					"'(key@in@=value)'",
-				ldapfe.getMessage());
+				ldapFilterException.getMessage());
 		}
 	}
 

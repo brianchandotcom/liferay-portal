@@ -244,9 +244,9 @@ public class UpgradeJournalArticles extends BaseUpgradePortletId {
 			updateInstanceablePortletPreferences(
 				oldRootPortletId, newRootPortletId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 	}
@@ -265,9 +265,9 @@ public class UpgradeJournalArticles extends BaseUpgradePortletId {
 
 			ps.executeUpdate();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqle, sqle);
+				_log.warn(sqlException, sqlException);
 			}
 		}
 	}

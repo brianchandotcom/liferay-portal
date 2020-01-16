@@ -125,7 +125,7 @@ public abstract class BasePortletRequestWhitelist
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

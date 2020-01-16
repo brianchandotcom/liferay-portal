@@ -68,8 +68,8 @@ public abstract class BaseAsyncDatagramReceiveHandler
 			try {
 				doReceive(_registrationReference, _datagram);
 			}
-			catch (Exception e) {
-				_log.error("Unable to dispatch", e);
+			catch (Exception exception) {
+				_log.error("Unable to dispatch", exception);
 			}
 		}
 

@@ -61,8 +61,9 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 						_portletAsyncContext, resourceRequest,
 						resourceResponse));
 			}
-			catch (IOException ioe) {
-				_log.error("Unable to notify listener for onError", ioe);
+			catch (IOException ioException) {
+				_log.error(
+					"Unable to notify listener for onError", ioException);
 			}
 		}
 
@@ -73,8 +74,9 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 						_portletAsyncContext, resourceRequest,
 						resourceResponse));
 			}
-			catch (IOException ioe) {
-				_log.error("Unable to notify listener for onTimeout", ioe);
+			catch (IOException ioException) {
+				_log.error(
+					"Unable to notify listener for onTimeout", ioException);
 			}
 		}
 
@@ -85,8 +87,9 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 						_portletAsyncContext, resourceRequest,
 						resourceResponse));
 			}
-			catch (IOException ioe) {
-				_log.error("Unable to notify listener for onComplete", ioe);
+			catch (IOException ioException) {
+				_log.error(
+					"Unable to notify listener for onComplete", ioException);
 			}
 		}
 
@@ -141,7 +144,7 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 			try {
 				_portletAsyncContext.complete();
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 			}
 		}
 	}
@@ -205,7 +208,7 @@ public class PortletAsyncListenerAdapter implements AsyncListener {
 			try {
 				_portletAsyncContext.complete();
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 			}
 		}
 	}

@@ -106,13 +106,14 @@ public class SharepointWSRepository
 
 			return new SharepointWSFileEntry(fileSharepointObject);
 		}
-		catch (SharepointException se) {
-			processSharepointObjectException(se, false, filePath, title);
+		catch (SharepointException sharepointException) {
+			processSharepointObjectException(
+				sharepointException, false, filePath, title);
 
-			throw new SystemException(se);
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -143,13 +144,14 @@ public class SharepointWSRepository
 
 			return new SharepointWSFolder(folderSharepointObject);
 		}
-		catch (SharepointException se) {
-			processSharepointObjectException(se, true, folderPath, name);
+		catch (SharepointException sharepointException) {
+			processSharepointObjectException(
+				sharepointException, true, folderPath, name);
 
-			throw new SystemException(se);
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -161,9 +163,10 @@ public class SharepointWSRepository
 				_libraryName, _libraryPath, _credentialsProvider.getLogin(),
 				_credentialsProvider.getPassword());
 		}
-		catch (SharepointRuntimeException sre) {
+		catch (SharepointRuntimeException sharepointRuntimeException) {
 			throw new RepositoryException(
-				"Unable to communicate with the Sharepoint server", sre);
+				"Unable to communicate with the Sharepoint server",
+				sharepointRuntimeException);
 		}
 	}
 
@@ -183,11 +186,11 @@ public class SharepointWSRepository
 
 			sharepointConnection.cancelCheckOutFile(filePath);
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 
 		return null;
@@ -219,11 +222,11 @@ public class SharepointWSRepository
 
 			sharepointConnection.checkInFile(filePath, changeLog, checkInType);
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -245,11 +248,11 @@ public class SharepointWSRepository
 
 			return new SharepointWSFileEntry(fileSharepointObject);
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -286,11 +289,11 @@ public class SharepointWSRepository
 			return toExtRepositoryObject(
 				extRepositoryObjectType, newSharepointObject);
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -311,11 +314,11 @@ public class SharepointWSRepository
 			sharepointConnection.deleteSharepointObject(
 				sharepointObject.getPath());
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -340,11 +343,11 @@ public class SharepointWSRepository
 
 			return sharepointConnection.getInputStream(fileSharepointObject);
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -362,11 +365,11 @@ public class SharepointWSRepository
 			return sharepointConnection.getInputStream(
 				sharepointWSFileVersion.getSharepointVersion());
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -397,11 +400,11 @@ public class SharepointWSRepository
 
 			return null;
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -451,11 +454,11 @@ public class SharepointWSRepository
 
 			return sharepointWSVersions;
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -484,11 +487,11 @@ public class SharepointWSRepository
 			return toExtRepositoryObject(
 				extRepositoryObjectType, sharepointObject);
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -528,11 +531,11 @@ public class SharepointWSRepository
 
 			throw new NoSuchFileEntryException(title);
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -570,11 +573,11 @@ public class SharepointWSRepository
 
 			return extRepositoryObjects;
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -600,11 +603,11 @@ public class SharepointWSRepository
 			return sharepointConnection.getSharepointObjectsCount(
 				folderPath, objectTypeFilter);
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -633,11 +636,11 @@ public class SharepointWSRepository
 
 			return new SharepointWSFolder(parentFolderSharepointObject);
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -691,8 +694,8 @@ public class SharepointWSRepository
 
 			return extRepositoryFolderKeys;
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
 	}
 
@@ -757,8 +760,8 @@ public class SharepointWSRepository
 			_rootFolderKey = String.valueOf(
 				rootFolderSharepointObject.getSharepointObjectId());
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
 	}
 
@@ -802,11 +805,11 @@ public class SharepointWSRepository
 			return toExtRepositoryObject(
 				extRepositoryObjectType, sharepointObject);
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -857,11 +860,11 @@ public class SharepointWSRepository
 
 			return new SharepointWSFileEntry(fileSharepointObject);
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
-		catch (SharepointRuntimeException sre) {
-			throw new SystemException(sre);
+		catch (SharepointRuntimeException sharepointRuntimeException) {
+			throw new SystemException(sharepointRuntimeException);
 		}
 	}
 
@@ -882,8 +885,8 @@ public class SharepointWSRepository
 				sharepointQueryBuilder.getQuery(),
 				sharepointQueryBuilder.getQueryOptionsList());
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
 	}
 
@@ -935,8 +938,8 @@ public class SharepointWSRepository
 					folderSharepointObject.getPath(), extRepositoryFolderKeys);
 			}
 		}
-		catch (SharepointException se) {
-			throw new SystemException(se);
+		catch (SharepointException sharepointException) {
+			throw new SystemException(sharepointException);
 		}
 	}
 

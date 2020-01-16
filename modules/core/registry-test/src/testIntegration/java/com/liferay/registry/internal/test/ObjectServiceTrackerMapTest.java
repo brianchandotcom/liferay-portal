@@ -101,7 +101,7 @@ public class ObjectServiceTrackerMapTest {
 
 				Assert.fail();
 			}
-			catch (NullPointerException npe) {
+			catch (NullPointerException nullPointerException) {
 			}
 
 			serviceRegistration1.unregister();
@@ -455,7 +455,8 @@ public class ObjectServiceTrackerMapTest {
 
 				Assert.fail();
 			}
-			catch (UnsupportedOperationException uoe) {
+			catch (UnsupportedOperationException
+						unsupportedOperationException) {
 			}
 
 			serviceRegistration1.unregister();

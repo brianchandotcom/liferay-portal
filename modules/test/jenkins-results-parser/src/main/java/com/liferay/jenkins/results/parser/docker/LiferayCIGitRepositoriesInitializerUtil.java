@@ -102,8 +102,8 @@ public class LiferayCIGitRepositoriesInitializerUtil {
 
 						continue;
 					}
-					catch (Exception e) {
-						e.printStackTrace();
+					catch (Exception exception) {
+						exception.printStackTrace();
 					}
 				}
 
@@ -128,11 +128,11 @@ public class LiferayCIGitRepositoriesInitializerUtil {
 				JenkinsResultsParserUtil.copy(
 					gitRepositoryArchiveFile, localGitRepositoryArchiveFile);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				JenkinsResultsParserUtil.delete(localGitRepositoryArchiveFile);
 
 				throw new RuntimeException(
-					"Unable to copy repository archive file", ioe);
+					"Unable to copy repository archive file", ioException);
 			}
 			finally {
 				gitRepositoryArchivesDirResourceMonitor.signal(
@@ -149,9 +149,10 @@ public class LiferayCIGitRepositoriesInitializerUtil {
 				TGZUtil.unarchive(
 					localGitRepositoryArchiveFile, gitRepositoriesBaseDir);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new RuntimeException(
-					"Unable to unarchive the repository archive file", ioe);
+					"Unable to unarchive the repository archive file",
+					ioException);
 			}
 			finally {
 				k8sNodeReadWriteResourceMonitor.signalWrite(

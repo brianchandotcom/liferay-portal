@@ -165,8 +165,8 @@ public class PrefixHandlerFactoryImpl implements PrefixHandlerFactory {
 			modifiers.load(
 				new StringReader(serviceProperty.substring(indexOfSpace)));
 		}
-		catch (IOException ioe) {
-			throw new IllegalArgumentException(ioe);
+		catch (IOException ioException) {
+			throw new IllegalArgumentException(ioException);
 		}
 
 		_defaults.put(

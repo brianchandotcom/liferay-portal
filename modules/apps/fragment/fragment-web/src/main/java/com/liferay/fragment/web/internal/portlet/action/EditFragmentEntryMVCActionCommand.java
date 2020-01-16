@@ -87,13 +87,13 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (FragmentEntryConfigurationException |
-			   FragmentEntryContentException fece) {
+			   FragmentEntryContentException exception) {
 
 			hideDefaultErrorMessage(actionRequest);
 
-			String errorMessage = fece.getLocalizedMessage();
+			String errorMessage = exception.getLocalizedMessage();
 
-			if (fece instanceof FragmentEntryConfigurationException) {
+			if (exception instanceof FragmentEntryConfigurationException) {
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)actionRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);

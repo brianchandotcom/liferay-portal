@@ -73,8 +73,8 @@ public class DLFileEntryMetadataIndexer
 				indexer.reindex(dlFileEntry);
 			}
 		}
-		catch (Exception e) {
-			throw new SearchException(e);
+		catch (Exception exception) {
+			throw new SearchException(exception);
 		}
 	}
 

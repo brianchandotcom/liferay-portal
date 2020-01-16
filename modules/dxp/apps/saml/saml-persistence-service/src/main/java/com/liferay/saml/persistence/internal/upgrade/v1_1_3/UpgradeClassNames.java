@@ -79,8 +79,8 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 					}
 				}
 			}
-			catch (SQLException sqle) {
-				throw new UpgradeException(sqle);
+			catch (SQLException sqlException) {
+				throw new UpgradeException(sqlException);
 			}
 		}
 	}

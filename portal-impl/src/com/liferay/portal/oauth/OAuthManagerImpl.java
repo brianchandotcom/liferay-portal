@@ -65,8 +65,8 @@ public class OAuthManagerImpl implements OAuthManager {
 					(org.scribe.model.Token)requestToken.getWrappedToken(),
 					(org.scribe.model.Verifier)verifier.getWrappedVerifier()));
 		}
-		catch (Exception e) {
-			throw new OAuthException(e);
+		catch (Exception exception) {
+			throw new OAuthException(exception);
 		}
 	}
 
@@ -75,8 +75,8 @@ public class OAuthManagerImpl implements OAuthManager {
 		try {
 			return new TokenImpl(_oAuthService.getRequestToken());
 		}
-		catch (Exception e) {
-			throw new OAuthException(e);
+		catch (Exception exception) {
+			throw new OAuthException(exception);
 		}
 	}
 
@@ -85,8 +85,8 @@ public class OAuthManagerImpl implements OAuthManager {
 		try {
 			return _oAuthService.getVersion();
 		}
-		catch (Exception e) {
-			throw new OAuthException(e);
+		catch (Exception exception) {
+			throw new OAuthException(exception);
 		}
 	}
 
@@ -100,8 +100,8 @@ public class OAuthManagerImpl implements OAuthManager {
 				(org.scribe.model.OAuthRequest)
 					oAuthRequest.getWrappedOAuthRequest());
 		}
-		catch (Exception e) {
-			throw new OAuthException(e);
+		catch (Exception exception) {
+			throw new OAuthException(exception);
 		}
 	}
 

@@ -112,8 +112,8 @@ public class EntrySearch extends SearchContainer<TrashEntry> {
 			setOrderByType(orderByType);
 			setOrderByComparator(orderByComparator);
 		}
-		catch (Exception e) {
-			_log.error("Unable to initialize entry search", e);
+		catch (Exception exception) {
+			_log.error("Unable to initialize entry search", exception);
 		}
 	}
 

@@ -513,8 +513,9 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Channel is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Channel is null", nullPointerException.getMessage());
 		}
 
 		// Channel is not of type GatheringByteChannel
@@ -525,10 +526,10 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"Channel is not of type GatheringByteChannel",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		// Channel is not of type ScatteringByteChannel
@@ -540,10 +541,10 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"Channel is not of type ScatteringByteChannel",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		// Channel is not of type SelectableChannel
@@ -555,9 +556,10 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"Channel is not of type SelectableChannel", iae.getMessage());
+				"Channel is not of type SelectableChannel",
+				illegalArgumentException.getMessage());
 		}
 
 		// Channel is not valid for reading
@@ -568,9 +570,10 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"Channel is not valid for reading", iae.getMessage());
+				"Channel is not valid for reading",
+				illegalArgumentException.getMessage());
 		}
 
 		// Channel is not valid for writing
@@ -581,9 +584,10 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"Channel is not valid for writing", iae.getMessage());
+				"Channel is not valid for writing",
+				illegalArgumentException.getMessage());
 		}
 
 		SocketChannel[] peerSocketChannels =
@@ -625,8 +629,8 @@ public class SelectorIntrabandTest {
 
 					Assert.fail();
 				}
-				catch (IOException ioe) {
-					Throwable cause = ioe.getCause();
+				catch (IOException ioException) {
+					Throwable cause = ioException.getCause();
 
 					Assert.assertTrue(cause instanceof InterruptedException);
 				}
@@ -700,7 +704,7 @@ public class SelectorIntrabandTest {
 
 				Assert.fail();
 			}
-			catch (ClosedIntrabandException cie) {
+			catch (ClosedIntrabandException closedIntrabandException) {
 			}
 		}
 		finally {
@@ -719,9 +723,10 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 			Assert.assertEquals(
-				"Scattering byte channel is null", npe.getMessage());
+				"Scattering byte channel is null",
+				nullPointerException.getMessage());
 		}
 
 		// Gathering byte channel is null
@@ -734,9 +739,10 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 			Assert.assertEquals(
-				"Gathering byte channel is null", npe.getMessage());
+				"Gathering byte channel is null",
+				nullPointerException.getMessage());
 		}
 
 		// Scattering byte channel is not of type SelectableChannel
@@ -750,10 +756,10 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"Scattering byte channel is not of type SelectableChannel",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		// Gathering byte channel is not of type SelectableChannel
@@ -766,10 +772,10 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"Gathering byte channel is not of type SelectableChannel",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		// Scattering byte channel is not valid for reading
@@ -781,10 +787,10 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"Scattering byte channel is not valid for reading",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		// Gathering byte channel is not valid for writing
@@ -796,10 +802,10 @@ public class SelectorIntrabandTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"Gathering byte channel is not valid for writing",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		// Interruptted on register
@@ -841,8 +847,8 @@ public class SelectorIntrabandTest {
 
 					Assert.fail();
 				}
-				catch (IOException ioe) {
-					Throwable cause = ioe.getCause();
+				catch (IOException ioException) {
+					Throwable cause = ioException.getCause();
 
 					Assert.assertTrue(cause instanceof InterruptedException);
 				}
@@ -900,7 +906,7 @@ public class SelectorIntrabandTest {
 
 				Assert.fail();
 			}
-			catch (ClosedIntrabandException cie) {
+			catch (ClosedIntrabandException closedIntrabandException) {
 			}
 		}
 	}

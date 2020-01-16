@@ -46,8 +46,8 @@ public class BuildServiceMojo extends AbstractMojo {
 				ServiceBuilderArgs.OUTPUT_KEY_MODIFIED_FILES,
 				serviceBuilder.getModifiedFileNames());
 		}
-		catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+		catch (Exception exception) {
+			throw new MojoExecutionException(exception.getMessage(), exception);
 		}
 	}
 

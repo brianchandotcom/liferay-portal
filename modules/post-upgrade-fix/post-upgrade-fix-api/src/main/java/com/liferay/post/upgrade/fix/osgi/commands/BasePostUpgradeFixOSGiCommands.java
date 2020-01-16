@@ -46,9 +46,10 @@ public abstract class BasePostUpgradeFixOSGiCommands {
 				log.info("Finished executing " + getCommand());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			log.error(
-				"An exception was thrown while executing " + getCommand(), e);
+				"An exception was thrown while executing " + getCommand(),
+				exception);
 		}
 	}
 

@@ -115,13 +115,13 @@ public class SharedAssetsViewMVCRenderCommand implements MVCRenderCommand {
 
 				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 			}
-			catch (PortalException pe) {
-				SessionErrors.add(renderRequest, pe.getClass());
+			catch (PortalException portalException) {
+				SessionErrors.add(renderRequest, portalException.getClass());
 
 				return "/shared_assets/error.jsp";
 			}
-			catch (IOException ioe) {
-				throw new PortletException(ioe);
+			catch (IOException ioException) {
+				throw new PortletException(ioException);
 			}
 		}
 

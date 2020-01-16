@@ -149,8 +149,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				userId, repositoryId, folderId, sourceFileName, mimeType, title,
 				description, changeLog, file, serviceContext);
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to write temporary file", ioException);
 		}
 		finally {
 			FileUtil.delete(file);
@@ -277,9 +278,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 						mimeType, title, description, changeLog, file,
 						serviceContext);
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					throw new SystemException(
-						"Unable to write temporary file", ioe);
+						"Unable to write temporary file", ioException);
 				}
 				finally {
 					FileUtil.delete(file);
@@ -517,9 +518,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			return localRepository.getFileEntry(folderId, title);
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				throw nsfee;
+				throw noSuchFileEntryException;
 			}
 
 			LocalRepository localRepository =
@@ -546,9 +547,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			return localRepository.getFileEntryByUuid(uuid);
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfee, nsfee);
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
 			}
 		}
 
@@ -562,9 +563,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 				return localRepository.getFileEntryByUuid(uuid);
 			}
-			catch (NoSuchFileEntryException nsfee) {
+			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsfee, nsfee);
+					_log.debug(
+						noSuchFileEntryException, noSuchFileEntryException);
 				}
 			}
 		}
@@ -890,8 +892,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				description, changeLog, dlVersionNumberIncrease, file,
 				serviceContext);
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to write temporary file", ioException);
 		}
 		finally {
 			FileUtil.delete(file);
@@ -1030,9 +1033,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 						description, changeLog, dlVersionNumberIncrease, file,
 						serviceContext);
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					throw new SystemException(
-						"Unable to write temporary file", ioe);
+						"Unable to write temporary file", ioException);
 				}
 				finally {
 					FileUtil.delete(file);
@@ -1182,11 +1185,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 					fileVersion.getContentStream(false), fileVersion.getSize(),
 					serviceContext);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				toLocalRepository.deleteFileEntry(
 					destinationFileEntry.getFileEntryId());
 
-				throw pe;
+				throw portalException;
 			}
 		}
 
@@ -1217,12 +1220,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			return newFolder;
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (newFolder != null) {
 				toLocalRepository.deleteFolder(newFolder.getFolderId());
 			}
 
-			throw pe;
+			throw portalException;
 		}
 	}
 
@@ -1286,7 +1289,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			dlAppHelperLocalService.deleteFileEntry(fileEntry);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			FileEntry fileEntry = toLocalRepository.getFileEntry(
 				newFileEntryId);
 
@@ -1294,7 +1297,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 			dlAppHelperLocalService.deleteFileEntry(fileEntry);
 
-			throw pe;
+			throw portalException;
 		}
 	}
 
@@ -1331,14 +1334,15 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		try {
 			return repositoryProvider.getLocalRepository(repositoryId);
 		}
-		catch (InvalidRepositoryIdException irie) {
+		catch (InvalidRepositoryIdException invalidRepositoryIdException) {
 			StringBundler sb = new StringBundler(3);
 
 			sb.append("No Group exists with the key {repositoryId=");
 			sb.append(repositoryId);
 			sb.append("}");
 
-			throw new NoSuchGroupException(sb.toString(), irie);
+			throw new NoSuchGroupException(
+				sb.toString(), invalidRepositoryIdException);
 		}
 	}
 

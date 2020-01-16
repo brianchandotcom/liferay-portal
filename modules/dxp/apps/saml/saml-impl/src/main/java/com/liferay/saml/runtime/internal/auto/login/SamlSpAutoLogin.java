@@ -71,15 +71,15 @@ public class SamlSpAutoLogin extends BaseAutoLogin {
 
 			return credentials;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 
-			throw new AutoLoginException(e);
+			throw new AutoLoginException(exception);
 		}
 	}
 

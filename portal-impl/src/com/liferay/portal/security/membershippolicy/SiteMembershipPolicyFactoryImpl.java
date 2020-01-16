@@ -76,8 +76,8 @@ public class SiteMembershipPolicyFactoryImpl
 				try {
 					siteMembershipPolicy.verifyPolicy();
 				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 				}
 			}
 

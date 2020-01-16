@@ -185,8 +185,9 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 						StagedModelDataHandlerUtil.exportStagedModel(
 							portletDataContext, stagedModel);
 					}
-					catch (PortletDataException pde) {
-						throw new ExportImportRuntimeException(pde);
+					catch (PortletDataException portletDataException) {
+						throw new ExportImportRuntimeException(
+							portletDataException);
 					}
 				}
 			);

@@ -112,9 +112,9 @@ public class SessionAuthToken implements AuthToken {
 				return;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage(), e);
+				_log.debug(exception.getMessage(), exception);
 			}
 		}
 

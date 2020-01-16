@@ -592,14 +592,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 							Files.write(file.toPath(), template.getBytes());
 						}
-						catch (IOException ioe) {
+						catch (IOException ioException) {
 							throw new GradleException(
 								"Unable to write script file: " +
 									file.getAbsolutePath(),
-								ioe);
+								ioException);
 						}
 					}
-					catch (IOException ioe) {
+					catch (IOException ioException) {
 						Logger logger = dockerfile.getLogger();
 
 						if (logger.isWarnEnabled()) {
@@ -882,9 +882,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 							file = project.file(uri);
 						}
-						catch (Exception e) {
+						catch (Exception exception) {
 							if (logger.isDebugEnabled()) {
-								logger.debug(e.getMessage(), e);
+								logger.debug(exception.getMessage(), exception);
 							}
 						}
 
@@ -955,8 +955,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 						download.src(bundleUrl);
 					}
-					catch (MalformedURLException murle) {
-						throw new GradleException(murle.getMessage(), murle);
+					catch (MalformedURLException malformedURLException) {
+						throw new GradleException(
+							malformedURLException.getMessage(),
+							malformedURLException);
 					}
 				}
 
@@ -1377,8 +1379,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			return StringUtil.read(inputStream);
 		}
-		catch (Exception e) {
-			throw new GradleException("Unable to read template " + name, e);
+		catch (Exception exception) {
+			throw new GradleException(
+				"Unable to read template " + name, exception);
 		}
 	}
 

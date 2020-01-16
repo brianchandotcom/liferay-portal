@@ -178,7 +178,7 @@ public class PortletSessionAttributeMapTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		try {
@@ -186,7 +186,7 @@ public class PortletSessionAttributeMapTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		try {
@@ -194,7 +194,7 @@ public class PortletSessionAttributeMapTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		try {
@@ -202,7 +202,7 @@ public class PortletSessionAttributeMapTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		Set<String> keySet = portletSessionAttributeMap.keySet();
@@ -212,7 +212,7 @@ public class PortletSessionAttributeMapTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 
 		Set<Map.Entry<String, Object>> entrySet =
@@ -223,7 +223,7 @@ public class PortletSessionAttributeMapTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 	}
 

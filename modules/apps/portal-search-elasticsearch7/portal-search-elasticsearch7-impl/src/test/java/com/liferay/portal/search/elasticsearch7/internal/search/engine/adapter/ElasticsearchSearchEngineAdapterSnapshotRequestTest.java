@@ -315,8 +315,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 		try {
 			_indicesClient.create(createIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -337,8 +337,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			_snapshotClient.createRepository(
 				putRepositoryRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -358,8 +358,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			_snapshotClient.create(
 				createSnapshotRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -370,8 +370,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 		try {
 			_indicesClient.delete(deleteIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -383,8 +383,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			_snapshotClient.deleteRepository(
 				deleteRepositoryRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -398,8 +398,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			_snapshotClient.delete(
 				deleteSnapshotRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -413,8 +413,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			return _snapshotClient.getRepository(
 				getRepositoriesRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -433,8 +433,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			getSnapshotsResponse = _snapshotClient.get(
 				getSnapshotsRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		return getSnapshotsResponse.getSnapshots();
@@ -449,8 +449,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			return _indicesClient.exists(
 				getIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

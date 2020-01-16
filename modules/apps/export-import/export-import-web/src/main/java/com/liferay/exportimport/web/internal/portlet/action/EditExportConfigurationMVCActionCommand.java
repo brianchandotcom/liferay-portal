@@ -187,10 +187,10 @@ public class EditExportConfigurationMVCActionCommand
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 		}
 	}
 

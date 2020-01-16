@@ -82,8 +82,8 @@ public class SaveMVCActionCommand implements MVCActionCommand {
 
 			portletPreferences.store();
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		return true;

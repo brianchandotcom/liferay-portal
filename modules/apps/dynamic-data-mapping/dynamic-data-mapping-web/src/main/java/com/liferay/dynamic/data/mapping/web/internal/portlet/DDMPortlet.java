@@ -128,38 +128,39 @@ public class DDMPortlet extends MVCPortlet {
 		try {
 			super.processAction(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchStructureException ||
-				e instanceof NoSuchTemplateException ||
-				e instanceof PortletPreferencesException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchStructureException ||
+				exception instanceof NoSuchTemplateException ||
+				exception instanceof PortletPreferencesException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				include("/error.jsp", actionRequest, actionResponse);
 			}
-			else if (e instanceof DDMFormLayoutValidationException ||
-					 e instanceof DDMFormValidationException ||
-					 e instanceof LocaleException ||
-					 e instanceof MustNotDuplicateFieldName ||
-					 e instanceof MustSetOptionsForField ||
-					 e instanceof MustSetValidCharactersForFieldName ||
-					 e instanceof RequiredStructureException ||
-					 e instanceof RequiredTemplateException ||
-					 e instanceof StructureDefinitionException ||
-					 e instanceof StructureDuplicateElementException ||
-					 e instanceof StructureNameException ||
-					 e instanceof TemplateNameException ||
-					 e instanceof TemplateNameException ||
-					 e instanceof TemplateScriptException ||
-					 e instanceof TemplateSmallImageContentException ||
-					 e instanceof TemplateSmallImageNameException ||
-					 e instanceof TemplateSmallImageSizeException) {
+			else if (exception instanceof DDMFormLayoutValidationException ||
+					 exception instanceof DDMFormValidationException ||
+					 exception instanceof LocaleException ||
+					 exception instanceof MustNotDuplicateFieldName ||
+					 exception instanceof MustSetOptionsForField ||
+					 exception instanceof MustSetValidCharactersForFieldName ||
+					 exception instanceof RequiredStructureException ||
+					 exception instanceof RequiredTemplateException ||
+					 exception instanceof StructureDefinitionException ||
+					 exception instanceof StructureDuplicateElementException ||
+					 exception instanceof StructureNameException ||
+					 exception instanceof TemplateNameException ||
+					 exception instanceof TemplateNameException ||
+					 exception instanceof TemplateScriptException ||
+					 exception instanceof TemplateSmallImageContentException ||
+					 exception instanceof TemplateSmallImageNameException ||
+					 exception instanceof TemplateSmallImageSizeException) {
 
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 
-				if (e instanceof RequiredStructureException ||
-					e instanceof RequiredTemplateException) {
+				if (exception instanceof RequiredStructureException ||
+					exception instanceof RequiredTemplateException) {
 
 					String redirect = portal.escapeRedirect(
 						ParamUtil.getString(actionRequest, "redirect"));
@@ -170,7 +171,7 @@ public class DDMPortlet extends MVCPortlet {
 				}
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}
@@ -187,25 +188,25 @@ public class DDMPortlet extends MVCPortlet {
 
 			setDDMStructureRequestAttribute(renderRequest);
 		}
-		catch (NoSuchStructureException | NoSuchTemplateException e) {
+		catch (NoSuchStructureException | NoSuchTemplateException exception) {
 
 			// Let this slide because the user can manually input a structure
 			// or template key for a new model that does not yet exist
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof PortletPreferencesException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof PortletPreferencesException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				include("/error.jsp", renderRequest, renderResponse);
 			}
 			else {
-				throw new PortletException(e);
+				throw new PortletException(exception);
 			}
 		}
 

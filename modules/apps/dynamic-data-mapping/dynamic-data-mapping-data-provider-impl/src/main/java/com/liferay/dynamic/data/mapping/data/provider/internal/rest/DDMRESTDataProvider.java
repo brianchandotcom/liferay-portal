@@ -87,8 +87,8 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		try {
 			return doGetData(ddmDataProviderRequest);
 		}
-		catch (HttpException he) {
-			Throwable cause = he.getCause();
+		catch (HttpException httpException) {
+			Throwable cause = httpException.getCause();
 
 			if (cause instanceof ConnectException) {
 				if (_log.isWarnEnabled()) {
@@ -103,10 +103,10 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				).build();
 			}
 
-			throw new DDMDataProviderException(he);
+			throw new DDMDataProviderException(httpException);
 		}
-		catch (Exception e) {
-			throw new DDMDataProviderException(e);
+		catch (Exception exception) {
+			throw new DDMDataProviderException(exception);
 		}
 	}
 
@@ -402,12 +402,13 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				proxySettings.put("proxyPort", Integer.valueOf(proxyPort));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			proxySettings.clear();
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get proxy settings from system properties", e);
+					"Unable to get proxy settings from system properties",
+					exception);
 			}
 		}
 

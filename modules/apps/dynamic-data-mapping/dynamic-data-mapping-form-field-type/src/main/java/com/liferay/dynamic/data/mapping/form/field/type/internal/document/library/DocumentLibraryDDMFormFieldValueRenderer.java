@@ -57,7 +57,7 @@ public class DocumentLibraryDDMFormFieldValueRenderer
 
 			return fileEntry.getTitle();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return LanguageUtil.format(
 				locale, "is-temporarily-unavailable", "content");
 		}

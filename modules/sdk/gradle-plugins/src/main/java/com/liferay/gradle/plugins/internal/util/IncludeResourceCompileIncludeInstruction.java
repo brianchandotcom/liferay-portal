@@ -42,8 +42,8 @@ public class IncludeResourceCompileIncludeInstruction {
 			expand = _expandCallable.call();
 			files = _filesIterable.call();
 		}
-		catch (Exception e) {
-			throw new GradleException("Unable to build instruction", e);
+		catch (Exception exception) {
+			throw new GradleException("Unable to build instruction", exception);
 		}
 
 		StringBuilder sb = new StringBuilder();

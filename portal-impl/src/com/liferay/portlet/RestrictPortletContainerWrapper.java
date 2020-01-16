@@ -154,8 +154,8 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 			_portletContainer.serveResource(
 				httpServletRequest, httpServletResponse, portlet);
 		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
+		catch (Exception exception) {
+			throw new PortletContainerException(exception);
 		}
 		finally {
 			restrictPortletServletRequest.mergeSharedAttributes();

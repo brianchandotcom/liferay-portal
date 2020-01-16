@@ -50,16 +50,16 @@ public abstract class BaseFilter implements LiferayFilter {
 				(HttpServletRequest)servletRequest,
 				(HttpServletResponse)servletResponse, filterChain);
 		}
-		catch (IOException ioe) {
-			throw ioe;
+		catch (IOException ioException) {
+			throw ioException;
 		}
-		catch (ServletException se) {
-			throw se;
+		catch (ServletException servletException) {
+			throw servletException;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			Log log = getLog();
 
-			log.error(e, e);
+			log.error(exception, exception);
 		}
 	}
 

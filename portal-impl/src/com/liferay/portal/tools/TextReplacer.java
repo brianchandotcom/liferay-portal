@@ -90,8 +90,8 @@ public class TextReplacer {
 				}
 			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

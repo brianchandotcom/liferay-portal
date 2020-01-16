@@ -58,8 +58,9 @@ public class LanguageServlet extends HttpServlet {
 			AuthTokenUtil.checkCSRFToken(
 				httpServletRequest, LanguageServlet.class.getName());
 		}
-		catch (PortalException pe) {
-			_log.error("Invalid authentication token received", pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"Invalid authentication token received", portalException);
 
 			return;
 		}
@@ -103,9 +104,9 @@ public class LanguageServlet extends HttpServlet {
 				value = LanguageUtil.format(locale, key, arguments);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 

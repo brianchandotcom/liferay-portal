@@ -133,17 +133,17 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 			return;
 		}
-		catch (NoSuchMethodException nsme) {
+		catch (NoSuchMethodException noSuchMethodException) {
 		}
 
 		try {
 			remoteProcessAction(actionRequest, actionResponse);
 		}
-		catch (IOException ioe) {
-			throw ioe;
+		catch (IOException ioException) {
+			throw ioException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -176,11 +176,11 @@ public class RemoteMVCPortlet extends MVCPortlet {
 				return;
 			}
 		}
-		catch (IOException ioe) {
-			throw ioe;
+		catch (IOException ioException) {
+			throw ioException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		super.render(renderRequest, renderResponse);
@@ -196,11 +196,11 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		try {
 			remoteServeResource(resourceRequest, resourceResponse);
 		}
-		catch (IOException ioe) {
-			throw ioe;
+		catch (IOException ioException) {
+			throw ioException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

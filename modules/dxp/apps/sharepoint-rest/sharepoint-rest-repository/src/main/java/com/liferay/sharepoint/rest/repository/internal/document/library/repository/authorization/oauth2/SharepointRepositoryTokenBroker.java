@@ -65,8 +65,8 @@ public class SharepointRepositoryTokenBroker {
 			return SharepointRepositoryToken.newInstance(
 				httpResponse.getBody(), token);
 		}
-		catch (JSONException | UnirestException e) {
-			throw new IOException(e);
+		catch (JSONException | UnirestException exception) {
+			throw new IOException(exception);
 		}
 	}
 
@@ -98,8 +98,8 @@ public class SharepointRepositoryTokenBroker {
 			return SharepointRepositoryToken.newInstance(
 				httpResponse.getBody());
 		}
-		catch (JSONException | UnirestException e) {
-			throw new IOException(e);
+		catch (JSONException | UnirestException exception) {
+			throw new IOException(exception);
 		}
 	}
 

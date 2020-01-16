@@ -85,7 +85,7 @@ public class PrintKBTemplatePorletConfigurationIcon
 
 			return sb.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;

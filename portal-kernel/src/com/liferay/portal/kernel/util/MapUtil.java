@@ -435,8 +435,8 @@ public class MapUtil {
 
 						map.put(kvp[0], constructor.newInstance(kvp[1]));
 					}
-					catch (Exception e) {
-						_log.error(e.getMessage(), e);
+					catch (Exception exception) {
+						_log.error(exception.getMessage(), exception);
 					}
 				}
 			}

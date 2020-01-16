@@ -46,8 +46,8 @@ public class FormatSourceMojo extends AbstractMojo {
 				SourceFormatterArgs.OUTPUT_KEY_MODIFIED_FILES,
 				sourceFormatter.getModifiedFileNames());
 		}
-		catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+		catch (Exception exception) {
+			throw new MojoExecutionException(exception.getMessage(), exception);
 		}
 	}
 

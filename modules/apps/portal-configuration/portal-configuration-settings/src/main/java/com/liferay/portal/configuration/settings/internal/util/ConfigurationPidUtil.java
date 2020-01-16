@@ -38,9 +38,12 @@ public class ConfigurationPidUtil {
 
 					return (String)method.invoke(annotation);
 				}
-				catch (ReflectiveOperationException roe) {
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
 					throw new IllegalArgumentException(
-						"Unable to obtain configuration PID", roe);
+						"Unable to obtain configuration PID",
+						reflectiveOperationException);
 				}
 			}
 		}

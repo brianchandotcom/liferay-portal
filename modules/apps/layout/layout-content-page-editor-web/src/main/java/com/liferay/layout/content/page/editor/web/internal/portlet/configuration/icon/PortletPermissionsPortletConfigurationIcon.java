@@ -83,7 +83,7 @@ public class PortletPermissionsPortletConfigurationIcon
 
 			return sb.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -140,12 +140,12 @@ public class PortletPermissionsPortletConfigurationIcon
 					showPermissionsIcon = true;
 				}
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 
 				showPermissionsIcon = false;

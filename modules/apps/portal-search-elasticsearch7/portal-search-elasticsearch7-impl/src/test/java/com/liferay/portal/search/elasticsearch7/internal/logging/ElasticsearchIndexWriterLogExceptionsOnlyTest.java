@@ -70,7 +70,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		try {
 			indexWriter.addDocuments(createSearchContext(), documents);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -94,7 +94,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		try {
 			indexWriter.addDocuments(createSearchContext(), documents);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -111,7 +111,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		try {
 			indexWriter.commit(searchContext);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -128,7 +128,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		try {
 			indexWriter.deleteDocument(searchContext, "1");
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -149,7 +149,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		try {
 			indexWriter.deleteDocuments(searchContext, uids);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -172,7 +172,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		try {
 			indexWriter.deleteDocuments(searchContext, uids);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -189,7 +189,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		try {
 			indexWriter.deleteEntityDocuments(searchContext, "test");
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -207,7 +207,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 			indexWriter.partiallyUpdateDocument(
 				createSearchContext(), document);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -229,7 +229,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 			indexWriter.partiallyUpdateDocuments(
 				createSearchContext(), documents);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -253,7 +253,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 			indexWriter.partiallyUpdateDocuments(
 				createSearchContext(), documents);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -271,7 +271,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		try {
 			indexWriter.updateDocument(createSearchContext(), document);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -292,7 +292,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		try {
 			indexWriter.updateDocument(createSearchContext(), document);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -314,7 +314,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		try {
 			indexWriter.updateDocuments(createSearchContext(), documents);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -339,7 +339,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 		try {
 			indexWriter.updateDocuments(createSearchContext(), documents);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 

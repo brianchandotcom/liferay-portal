@@ -84,8 +84,8 @@ public class GoogleDocsMetadataHelper {
 			_ddmStructure = getGoogleDocsDDMStructure(
 				dlFileEntry.getDLFileEntryType());
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -108,8 +108,8 @@ public class GoogleDocsMetadataHelper {
 			_ddmStructure = getGoogleDocsDDMStructure(
 				dlFileVersion.getDLFileEntryType());
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -204,11 +204,11 @@ public class GoogleDocsMetadataHelper {
 				_dlFileEntryMetadataLocalService.addDLFileEntryMetadata(
 					_dlFileEntryMetadata);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
 				"Unable to add DDM fields for file version " +
 					_dlFileVersion.getFileVersionId(),
-				pe);
+				portalException);
 		}
 	}
 
@@ -257,11 +257,11 @@ public class GoogleDocsMetadataHelper {
 				_fieldsMap.put(field.getName(), field);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
 				"Unable to load DDM fields for file version " +
 					_dlFileVersion.getFileVersionId(),
-				pe);
+				portalException);
 		}
 	}
 

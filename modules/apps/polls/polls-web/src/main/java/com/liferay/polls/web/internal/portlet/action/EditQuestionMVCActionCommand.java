@@ -159,30 +159,30 @@ public class EditQuestionMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchQuestionException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchQuestionException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcPath", "/polls/error.jsp");
 			}
-			else if (e instanceof DuplicateVoteException ||
-					 e instanceof NoSuchChoiceException ||
-					 e instanceof QuestionChoiceException ||
-					 e instanceof QuestionDescriptionException ||
-					 e instanceof QuestionExpirationDateException ||
-					 e instanceof QuestionTitleException) {
+			else if (exception instanceof DuplicateVoteException ||
+					 exception instanceof NoSuchChoiceException ||
+					 exception instanceof QuestionChoiceException ||
+					 exception instanceof QuestionDescriptionException ||
+					 exception instanceof QuestionExpirationDateException ||
+					 exception instanceof QuestionTitleException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				hideDefaultErrorMessage(actionRequest);
 			}
-			else if (e instanceof QuestionExpiredException) {
+			else if (exception instanceof QuestionExpiredException) {
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

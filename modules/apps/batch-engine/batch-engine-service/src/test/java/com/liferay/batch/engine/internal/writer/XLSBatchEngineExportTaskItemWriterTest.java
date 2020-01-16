@@ -81,7 +81,7 @@ public class XLSBatchEngineExportTaskItemWriterTest
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 	}
 

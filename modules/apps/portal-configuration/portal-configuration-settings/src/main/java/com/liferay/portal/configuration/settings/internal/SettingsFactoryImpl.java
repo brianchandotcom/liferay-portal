@@ -71,8 +71,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 			return new ArchivedSettingsImpl(portletItem);
 		}
-		catch (PortalException pe) {
-			throw new SettingsException(pe);
+		catch (PortalException portalException) {
+			throw new SettingsException(portalException);
 		}
 	}
 
@@ -148,8 +148,8 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 			return group.getCompanyId();
 		}
-		catch (PortalException pe) {
-			throw new SettingsException(pe);
+		catch (PortalException portalException) {
+			throw new SettingsException(portalException);
 		}
 	}
 
@@ -163,12 +163,13 @@ public class SettingsFactoryImpl implements SettingsFactory {
 			portletItem = _portletItemLocalService.getPortletItem(
 				groupId, name, portletId, PortletPreferences.class.getName());
 		}
-		catch (NoSuchPortletItemException nspie) {
+		catch (NoSuchPortletItemException noSuchPortletItemException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nspie, nspie);
+				_log.debug(
+					noSuchPortletItemException, noSuchPortletItemException);
 			}
 
 			portletItem = _portletItemLocalService.updatePortletItem(

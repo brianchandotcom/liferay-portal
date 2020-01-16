@@ -52,7 +52,7 @@ public class SocketUtil {
 
 				return serverSocketChannel;
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				port++;
 			}
 		}
@@ -83,7 +83,7 @@ public class SocketUtil {
 				try {
 					socket.close();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 				}
 			}
 		}

@@ -77,9 +77,9 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 
 				});
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_verifyException(
-				e,
+				exception,
 				HashMapBuilder.put(
 					DBType.DB2, "DB2 SQL Error: SQLCODE="
 				).put(
@@ -124,9 +124,9 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		try {
 			_testDoVerify(verifiableUUIDModels);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_verifyException(
-				e,
+				exception,
 				HashMapBuilder.put(
 					DBType.DB2, "DB2 SQL Error: SQLCODE="
 				).put(
@@ -167,9 +167,9 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 
 				});
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_verifyException(
-				e,
+				exception,
 				HashMapBuilder.put(
 					DBType.DB2, "DB2 SQL Error: SQLCODE="
 				).put(

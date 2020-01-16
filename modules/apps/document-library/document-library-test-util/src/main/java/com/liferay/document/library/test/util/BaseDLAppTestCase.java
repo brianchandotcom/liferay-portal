@@ -66,9 +66,9 @@ public abstract class BaseDLAppTestCase {
 				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				"Test Folder");
 		}
-		catch (NoSuchFolderException nsfe) {
+		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfe, nsfe);
+				_log.debug(noSuchFolderException, noSuchFolderException);
 			}
 		}
 

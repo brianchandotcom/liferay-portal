@@ -64,11 +64,11 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 
 			return _invokeTypedSettings(method);
 		}
-		catch (InvocationTargetException ite) {
-			throw ite;
+		catch (InvocationTargetException invocationTargetException) {
+			throw invocationTargetException;
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new RuntimeException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

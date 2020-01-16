@@ -85,9 +85,9 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 				clusterReceiver, _bindInetAddress,
 				_clusterExecutorConfiguration, _classLoaders);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SystemException(
-				"Unable to create JGroupsClusterChannel", e);
+				"Unable to create JGroupsClusterChannel", exception);
 		}
 	}
 

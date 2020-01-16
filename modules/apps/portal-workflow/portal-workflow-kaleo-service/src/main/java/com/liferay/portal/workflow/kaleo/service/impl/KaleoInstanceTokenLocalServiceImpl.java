@@ -288,8 +288,8 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 			return indexer.search(searchContext);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -322,8 +322,8 @@ public class KaleoInstanceTokenLocalServiceImpl
 
 			return (int)indexer.searchCount(searchContext);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 

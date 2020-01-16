@@ -155,9 +155,9 @@ public class UADSearchContainerBuilder {
 					selectedUser.getUserId(), groupIds,
 					displayTerms.getKeywords()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			searchContainer.setResults(Collections.emptyList());
@@ -236,9 +236,9 @@ public class UADSearchContainerBuilder {
 
 			searchContainer.setTotal(entities.size());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			searchContainer.setResults(Collections.emptyList());
@@ -413,7 +413,7 @@ public class UADSearchContainerBuilder {
 					try {
 						return Long.valueOf((String)entry);
 					}
-					catch (NumberFormatException nfe) {
+					catch (NumberFormatException numberFormatException) {
 						return 0L;
 					}
 				});

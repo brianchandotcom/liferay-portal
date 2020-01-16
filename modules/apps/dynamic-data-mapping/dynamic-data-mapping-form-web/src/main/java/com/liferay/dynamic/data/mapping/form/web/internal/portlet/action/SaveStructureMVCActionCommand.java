@@ -138,8 +138,8 @@ public class SaveStructureMVCActionCommand extends BaseMVCActionCommand {
 			return ddlFormBuilderContextToDDMForm.deserialize(
 				DDMFormContextDeserializerRequest.with(serializedFormContext));
 		}
-		catch (PortalException pe) {
-			throw new StructureDefinitionException(pe);
+		catch (PortalException portalException) {
+			throw new StructureDefinitionException(portalException);
 		}
 	}
 
@@ -153,8 +153,8 @@ public class SaveStructureMVCActionCommand extends BaseMVCActionCommand {
 			return ddlFormBuilderContextToDDMFormLayout.deserialize(
 				DDMFormContextDeserializerRequest.with(serializedFormContext));
 		}
-		catch (PortalException pe) {
-			throw new StructureLayoutException(pe);
+		catch (PortalException portalException) {
+			throw new StructureLayoutException(portalException);
 		}
 	}
 

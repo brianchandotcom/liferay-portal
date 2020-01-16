@@ -184,8 +184,8 @@ public class SimilarResultsPortlet extends MVCPortlet {
 			return new SimilarResultsDisplayContext(
 				getHttpServletRequest(renderRequest));
 		}
-		catch (ConfigurationException ce) {
-			throw new RuntimeException(ce);
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
 		}
 	}
 

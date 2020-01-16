@@ -80,12 +80,12 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		try {
 			_searchEngineAdapter.execute(indexDocumentRequest);
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(re, re);
+				_log.error(runtimeException, runtimeException);
 			}
 			else {
-				throw re;
+				throw runtimeException;
 			}
 		}
 	}
@@ -138,12 +138,12 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		try {
 			_searchEngineAdapter.execute(refreshIndexRequest);
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(re, re);
+				_log.error(runtimeException, runtimeException);
 			}
 			else {
-				throw re;
+				throw runtimeException;
 			}
 		}
 	}
@@ -165,12 +165,12 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		try {
 			_searchEngineAdapter.execute(deleteDocumentRequest);
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(re, re);
+				_log.error(runtimeException, runtimeException);
 			}
 			else {
-				throw re;
+				throw runtimeException;
 			}
 		}
 	}
@@ -243,15 +243,15 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 
 			_searchEngineAdapter.execute(deleteByQueryDocumentRequest);
 		}
-		catch (ParseException pe) {
-			throw new SystemException(pe);
+		catch (ParseException parseException) {
+			throw new SystemException(parseException);
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(re, re);
+				_log.error(runtimeException, runtimeException);
 			}
 			else {
-				throw re;
+				throw runtimeException;
 			}
 		}
 	}
@@ -275,12 +275,12 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		try {
 			_searchEngineAdapter.execute(updateDocumentRequest);
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			if (_logExceptionsOnly) {
-				_log.error(re, re);
+				_log.error(runtimeException, runtimeException);
 			}
 			else {
-				throw re;
+				throw runtimeException;
 			}
 		}
 	}

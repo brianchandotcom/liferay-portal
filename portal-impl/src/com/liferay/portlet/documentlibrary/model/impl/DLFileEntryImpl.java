@@ -145,9 +145,9 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 			return dlFileVersion.getExpandoBridge();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 
@@ -171,8 +171,8 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 			try {
 				_extraSettingsProperties.load(super.getExtraSettings());
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 
@@ -287,7 +287,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 			return dlFileVersion.getStatus();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return WorkflowConstants.STATUS_APPROVED;
 		}
 	}
@@ -304,9 +304,9 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 			return DLFileEntryServiceUtil.isFileEntryCheckedOut(
 				getFileEntryId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 
@@ -330,9 +330,9 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 			return dlFolder.isHidden();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 

@@ -55,8 +55,8 @@ public class LayoutRevisionAssetRenderer
 				LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
 					_layoutRevision.getLayoutSetBranchId());
 		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
+		catch (Exception exception) {
+			throw new IllegalStateException(exception);
 		}
 	}
 
@@ -153,7 +153,7 @@ public class LayoutRevisionAssetRenderer
 
 			return layoutURL;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}

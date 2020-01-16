@@ -254,9 +254,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 				MBUtil.updateCategoryStatistics(category.getCategoryId());
 			}
-			catch (NoSuchCategoryException nsce) {
+			catch (NoSuchCategoryException noSuchCategoryException) {
 				if (!thread.isInTrash()) {
-					throw nsce;
+					throw noSuchCategoryException;
 				}
 			}
 		}

@@ -99,8 +99,8 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 					_ICON_NAME_SPREADSHEET, _ICON_COLOR_SPREADSHEET,
 					_translate(portletRequest, "create-excel-document")));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 
@@ -158,8 +158,8 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 
 			return liferayPortletURL.toString();
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

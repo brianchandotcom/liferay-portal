@@ -38,8 +38,8 @@ public class LoginMaxFailures implements AuthFailure {
 			UserLocalServiceUtil.updateLockoutByEmailAddress(
 				companyId, emailAddress, true);
 		}
-		catch (Exception e) {
-			throw new AuthException(e);
+		catch (Exception exception) {
+			throw new AuthException(exception);
 		}
 	}
 
@@ -53,8 +53,8 @@ public class LoginMaxFailures implements AuthFailure {
 			UserLocalServiceUtil.updateLockoutByScreenName(
 				companyId, screenName, true);
 		}
-		catch (Exception e) {
-			throw new AuthException(e);
+		catch (Exception exception) {
+			throw new AuthException(exception);
 		}
 	}
 
@@ -67,8 +67,8 @@ public class LoginMaxFailures implements AuthFailure {
 		try {
 			UserLocalServiceUtil.updateLockoutById(userId, true);
 		}
-		catch (Exception e) {
-			throw new AuthException(e);
+		catch (Exception exception) {
+			throw new AuthException(exception);
 		}
 	}
 

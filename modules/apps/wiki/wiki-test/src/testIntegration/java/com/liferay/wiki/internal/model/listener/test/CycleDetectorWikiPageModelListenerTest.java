@@ -86,8 +86,8 @@ public class CycleDetectorWikiPageModelListenerTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			String message = re.getMessage();
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
 
 			Assert.assertEquals(
 				"Unable to update wiki page Title3 because a cycle was " +
@@ -106,8 +106,8 @@ public class CycleDetectorWikiPageModelListenerTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			String message = re.getMessage();
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
 
 			Assert.assertEquals(
 				"Unable to update wiki page Other because a cycle was detected",
@@ -130,8 +130,8 @@ public class CycleDetectorWikiPageModelListenerTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			String message = re.getMessage();
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
 
 			Assert.assertEquals(
 				"Unable to create wiki page " + title +
@@ -153,8 +153,8 @@ public class CycleDetectorWikiPageModelListenerTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			String message = re.getMessage();
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
 
 			Assert.assertEquals(
 				"Unable to update wiki page Title because a cycle was detected",
@@ -172,8 +172,8 @@ public class CycleDetectorWikiPageModelListenerTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			String message = re.getMessage();
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
 
 			Assert.assertEquals(
 				"Unable to update wiki page Other Title because a cycle was " +

@@ -114,8 +114,8 @@ public class IntrabandBridgeDestinationTest {
 					return Datagram.createResponseDatagram(
 						datagram, receivedMessageRoutingBag.toByteArray());
 				}
-				catch (ClassNotFoundException cnfe) {
-					throw new RuntimeException(cnfe);
+				catch (ClassNotFoundException classNotFoundException) {
+					throw new RuntimeException(classNotFoundException);
 				}
 			}
 
@@ -222,8 +222,8 @@ public class IntrabandBridgeDestinationTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Throwable throwable = re.getCause();
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
 
 			Assert.assertSame(
 				ClassNotFoundException.class, throwable.getClass());
@@ -241,8 +241,8 @@ public class IntrabandBridgeDestinationTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Throwable throwable = re.getCause();
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
 
 			Assert.assertSame(RuntimeException.class, throwable.getClass());
 		}
@@ -281,8 +281,8 @@ public class IntrabandBridgeDestinationTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Throwable throwable = re.getCause();
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
 
 			Assert.assertEquals(RuntimeException.class, throwable.getClass());
 			Assert.assertSame(ioException, throwable.getCause());
@@ -353,8 +353,8 @@ public class IntrabandBridgeDestinationTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Throwable throwable = re.getCause();
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
 
 			Assert.assertEquals(RuntimeException.class, throwable.getClass());
 			Assert.assertSame(ioException, throwable.getCause());

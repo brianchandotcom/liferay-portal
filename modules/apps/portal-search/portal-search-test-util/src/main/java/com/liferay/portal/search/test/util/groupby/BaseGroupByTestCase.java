@@ -308,12 +308,14 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 				try {
 					indexingTestHelper.search();
 				}
-				catch (RuntimeException re) {
-					if (_shouldIgnoreSearchEngineGlitchAndRetry(re)) {
-						Assert.fail(re.getMessage());
+				catch (RuntimeException runtimeException) {
+					if (_shouldIgnoreSearchEngineGlitchAndRetry(
+							runtimeException)) {
+
+						Assert.fail(runtimeException.getMessage());
 					}
 
-					throw re;
+					throw runtimeException;
 				}
 
 				indexingTestHelper.verify(
@@ -631,11 +633,11 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 					DocumentCreationHelpers.twoKeywords(
 						field, name, SORT_FIELD, String.valueOf(i)));
 			}
-			catch (RuntimeException re) {
-				throw re;
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 	}

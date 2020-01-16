@@ -124,11 +124,11 @@ public class MBMessageModelIndexerWriterContributor
 				indexer.reindex((DLFileEntry)attachmentsFileEntry.getModel());
 			}
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

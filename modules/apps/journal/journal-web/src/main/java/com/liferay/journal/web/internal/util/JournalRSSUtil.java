@@ -220,9 +220,9 @@ public class JournalRSSUtil {
 						groupId, folderId, title);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}
@@ -235,9 +235,9 @@ public class JournalRSSUtil {
 
 				fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}
@@ -251,9 +251,9 @@ public class JournalRSSUtil {
 				fileEntry = _dlAppLocalService.getFileEntryByUuidAndGroupId(
 					uuid, groupId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}
@@ -333,9 +333,9 @@ public class JournalRSSUtil {
 
 				image = _imageLocalService.getImage(imageId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}
@@ -358,7 +358,7 @@ public class JournalRSSUtil {
 			try {
 				feed = _journalFeedLocalService.getFeed(id);
 			}
-			catch (NoSuchFeedException nsfe) {
+			catch (NoSuchFeedException noSuchFeedException) {
 
 				// Backward compatibility with old URLs
 
@@ -433,9 +433,9 @@ public class JournalRSSUtil {
 					resourceRequest, resourceResponse, feed, article,
 					languageId, themeDisplay, syndEntry, syndContent);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 

@@ -411,7 +411,7 @@ public class WatchTask extends DefaultTask {
 
 				return Long.parseLong(installedBundleID);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

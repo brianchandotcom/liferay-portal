@@ -39,8 +39,9 @@ public class PasswordUtil {
 
 			unencryptedPassword = new String(bytes, StringPool.UTF8);
 		}
-		catch (UnsupportedEncodingException uee) {
-			_log.error("Unable to decrypt the password", uee);
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			_log.error(
+				"Unable to decrypt the password", unsupportedEncodingException);
 		}
 
 		return unencryptedPassword;
@@ -54,8 +55,9 @@ public class PasswordUtil {
 
 			encryptedPassword = Base64.encode(bytes);
 		}
-		catch (UnsupportedEncodingException uee) {
-			_log.error("Unable to encrypt the password", uee);
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			_log.error(
+				"Unable to encrypt the password", unsupportedEncodingException);
 		}
 
 		return encryptedPassword;

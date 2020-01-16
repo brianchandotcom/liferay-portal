@@ -231,12 +231,12 @@ public class LDAPUserExporterImpl implements UserExporter {
 			safeLdapContext.modifyAttributes(
 				userGroupSafeLdapName, modificationItems);
 		}
-		catch (SchemaViolationException sve) {
+		catch (SchemaViolationException schemaViolationException) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Unable to update LDAP bindings for user group " +
 						userGroup.getName(),
-					sve);
+					schemaViolationException);
 			}
 
 			Attributes attributes = _safePortalLDAP.getGroupAttributes(
@@ -370,15 +370,15 @@ public class LDAPUserExporterImpl implements UserExporter {
 					userSafeLdapName, groupModificationItems);
 			}
 		}
-		catch (NameNotFoundException nnfe) {
+		catch (NameNotFoundException nameNotFoundException) {
 			LDAPAuthConfiguration ldapAuthConfiguration =
 				_ldapAuthConfigurationProvider.getConfiguration(companyId);
 
 			if (ldapAuthConfiguration.required()) {
-				throw nnfe;
+				throw nameNotFoundException;
 			}
 
-			_log.error(nnfe, nnfe);
+			_log.error(nameNotFoundException, nameNotFoundException);
 		}
 		finally {
 			if (safeLdapContext != null) {

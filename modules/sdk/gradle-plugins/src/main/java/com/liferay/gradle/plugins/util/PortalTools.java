@@ -160,8 +160,8 @@ public class PortalTools {
 		try {
 			_populateVersionsMap(classLoader, null, null);
 		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
+		catch (IOException ioException) {
+			throw new ExceptionInInitializerError(ioException);
 		}
 	}
 

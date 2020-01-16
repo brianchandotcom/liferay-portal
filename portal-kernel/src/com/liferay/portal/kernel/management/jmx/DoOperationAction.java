@@ -42,8 +42,8 @@ public class DoOperationAction extends BaseJMXManageAction<Object> {
 			return mBeanServer.invoke(
 				_objectName, _operationName, _parameters, _signature);
 		}
-		catch (Exception e) {
-			throw new ManageActionException(e);
+		catch (Exception exception) {
+			throw new ManageActionException(exception);
 		}
 	}
 

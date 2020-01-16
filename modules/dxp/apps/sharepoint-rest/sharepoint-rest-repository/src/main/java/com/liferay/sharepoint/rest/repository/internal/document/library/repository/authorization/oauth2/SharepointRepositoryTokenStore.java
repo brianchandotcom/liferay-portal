@@ -63,8 +63,8 @@ public class SharepointRepositoryTokenStore implements TokenStore {
 
 			return freshToken;
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -88,8 +88,8 @@ public class SharepointRepositoryTokenStore implements TokenStore {
 
 			return freshToken;
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

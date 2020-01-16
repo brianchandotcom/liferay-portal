@@ -94,8 +94,8 @@ public class WebXML23Converter {
 
 			FileUtil.write(output, webXML23);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

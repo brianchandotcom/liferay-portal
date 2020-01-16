@@ -240,9 +240,9 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 				}
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 		}
 

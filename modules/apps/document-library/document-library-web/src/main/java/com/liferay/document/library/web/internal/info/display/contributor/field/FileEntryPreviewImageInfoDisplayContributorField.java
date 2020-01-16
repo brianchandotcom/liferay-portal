@@ -59,7 +59,7 @@ public class FileEntryPreviewImageInfoDisplayContributorField
 			return JSONUtil.put(
 				"url", _dlURLHelper.getImagePreviewURL(fileEntry, null));
 		}
-		catch (Exception pe) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

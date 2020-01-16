@@ -101,9 +101,9 @@ public class LiferayBatchFileProperties
 			entity.setPossibleNamedThingValues(
 				DaikonUtil.toNamedThings(entitySchemaNames));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return new ValidationResult(
-				ValidationResult.Result.ERROR, e.getMessage());
+				ValidationResult.Result.ERROR, exception.getMessage());
 		}
 
 		return null;

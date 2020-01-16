@@ -96,8 +96,10 @@ public class MailboxFactoryUtil {
 
 						emitter.emit(mailboxFactory.getMailboxFactoryName());
 					}
-					catch (PortalException pe) {
-						_log.error("Unable to initialize mail box factory", pe);
+					catch (PortalException portalException) {
+						_log.error(
+							"Unable to initialize mail box factory",
+							portalException);
 					}
 					finally {
 						bundleContext.ungetService(serviceReference);

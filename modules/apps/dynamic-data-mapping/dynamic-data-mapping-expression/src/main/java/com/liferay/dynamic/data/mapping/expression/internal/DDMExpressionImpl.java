@@ -70,11 +70,11 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 			return (T)_expressionContext.accept(ddmExpressionEvaluatorVisitor);
 		}
-		catch (DDMExpressionException ddmee) {
-			throw ddmee;
+		catch (DDMExpressionException ddmExpressionException) {
+			throw ddmExpressionException;
 		}
-		catch (Exception e) {
-			throw new DDMExpressionException(e);
+		catch (Exception exception) {
+			throw new DDMExpressionException(exception);
 		}
 	}
 
@@ -117,8 +117,8 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		try {
 			_expressionContext = ddmExpressionParser.expression();
 		}
-		catch (Exception e) {
-			throw new DDMExpressionException.InvalidSyntax(e);
+		catch (Exception exception) {
+			throw new DDMExpressionException.InvalidSyntax(exception);
 		}
 
 		ParseTreeWalker parseTreeWalker = new ParseTreeWalker();

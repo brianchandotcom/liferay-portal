@@ -54,7 +54,7 @@ public class UserModelListener extends BaseModelListener<User> {
 				mailbox.deleteAccount();
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to remove mail accounts for user " + user.getUserId());
 		}

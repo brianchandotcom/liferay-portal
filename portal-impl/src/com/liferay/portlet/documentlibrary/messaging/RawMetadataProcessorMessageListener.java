@@ -33,12 +33,12 @@ public class RawMetadataProcessorMessageListener extends BaseMessageListener {
 		try {
 			RawMetadataProcessorUtil.saveMetadata(fileVersion);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to save metadata for file version " +
 						fileVersion.getFileVersionId(),
-					e);
+					exception);
 			}
 		}
 	}

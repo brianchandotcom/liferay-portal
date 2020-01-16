@@ -65,7 +65,7 @@ public class NumericDDMFormFieldValueRenderer
 
 				return formatter.parse(valueString);
 			}
-			catch (ParseException pe) {
+			catch (ParseException parseException) {
 			}
 		}
 

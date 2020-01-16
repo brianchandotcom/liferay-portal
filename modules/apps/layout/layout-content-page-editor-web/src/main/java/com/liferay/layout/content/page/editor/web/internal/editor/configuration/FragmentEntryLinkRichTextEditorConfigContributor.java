@@ -160,7 +160,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		try {
 			resourceBundle = resourceBundleLoader.loadResourceBundle(locale);
 		}
-		catch (MissingResourceException mre) {
+		catch (MissingResourceException missingResourceException) {
 			resourceBundle = ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE;
 		}
 

@@ -338,12 +338,12 @@ public class WikiSocialActivityHelper {
 		try {
 			return PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfee, nsfee);
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
 			}
 		}
 

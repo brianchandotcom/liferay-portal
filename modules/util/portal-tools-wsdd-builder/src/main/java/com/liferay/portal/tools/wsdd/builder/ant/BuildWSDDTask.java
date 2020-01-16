@@ -33,8 +33,8 @@ public class BuildWSDDTask extends Task {
 
 			WSDDBuilderInvoker.invoke(project.getBaseDir(), _wsddBuilderArgs);
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

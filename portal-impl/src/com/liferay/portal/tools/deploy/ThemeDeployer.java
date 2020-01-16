@@ -52,9 +52,9 @@ public class ThemeDeployer extends BaseDeployer {
 
 		try (ThemeDeployer themeDeployer = new ThemeDeployer(wars, jars)) {
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 		}
 	}

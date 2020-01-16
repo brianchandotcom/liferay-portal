@@ -102,14 +102,16 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 			try {
 				uadDisplay.get(parentContainerId);
 			}
-			catch (Exception e) {
-				if (NoSuchModelException.class.isAssignableFrom(e.getClass())) {
+			catch (Exception exception) {
+				if (NoSuchModelException.class.isAssignableFrom(
+						exception.getClass())) {
+
 					sendRedirect(actionRequest, actionResponse, redirect);
 
 					return;
 				}
 
-				throw e;
+				throw exception;
 			}
 		}
 
@@ -130,7 +132,7 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 				try {
 					entityUADAnonymizer.delete(entity);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					ThemeDisplay themeDisplay =
 						(ThemeDisplay)actionRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
@@ -139,10 +141,10 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 						entityUADAnonymizer.getExceptionMessageMap(
 							themeDisplay.getLocale());
 
-					if (exceptionMessageMap.containsKey(e.getClass())) {
+					if (exceptionMessageMap.containsKey(exception.getClass())) {
 						SessionErrors.add(
 							actionRequest, "deleteUADEntityException",
-							exceptionMessageMap.get(e.getClass()));
+							exceptionMessageMap.get(exception.getClass()));
 
 						String redirect = ParamUtil.getString(
 							actionRequest, "redirect");
@@ -153,7 +155,7 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 						}
 					}
 					else {
-						throw e;
+						throw exception;
 					}
 				}
 			}
@@ -186,9 +188,11 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 								containerItemUADAnonymizer.delete(
 									containerItem);
 							}
-							catch (NoSuchModelException nsme) {
+							catch (NoSuchModelException noSuchModelException) {
 								if (_log.isDebugEnabled()) {
-									_log.debug(nsme, nsme);
+									_log.debug(
+										noSuchModelException,
+										noSuchModelException);
 								}
 							}
 						});

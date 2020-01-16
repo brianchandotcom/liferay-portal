@@ -84,17 +84,17 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String mvcPath = "/error.jsp";
 
-			if (e instanceof NoSuchCompanyException ||
-				e instanceof PrincipalException) {
+			if (exception instanceof NoSuchCompanyException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof CompanyMxException ||
-					 e instanceof CompanyVirtualHostException ||
-					 e instanceof CompanyWebIdException) {
+			else if (exception instanceof CompanyMxException ||
+					 exception instanceof CompanyVirtualHostException ||
+					 exception instanceof CompanyWebIdException) {
 
 				long companyId = ParamUtil.getLong(actionRequest, "companyId");
 
@@ -105,7 +105,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest.setAttribute(WebKeys.SEL_COMPANY, company);
 				}
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				SessionMessages.add(
 					actionRequest,
@@ -114,13 +114,13 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 				mvcPath = "/edit_instance.jsp";
 			}
-			else if (e instanceof RequiredCompanyException) {
-				SessionErrors.add(actionRequest, e.getClass());
+			else if (exception instanceof RequiredCompanyException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 
-				throw e;
+				throw exception;
 			}
 
 			actionResponse.setRenderParameter("mvcPath", mvcPath);

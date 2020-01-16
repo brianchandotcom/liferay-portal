@@ -121,22 +121,22 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		try {
 			DirectServletRegistryUtil.clearServlets();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		try {
 			HotDeployUtil.reset();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		try {
 			PortalLifecycleUtil.reset();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		closeDataSource("counterDataSource");
@@ -148,16 +148,16 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		try {
 			ModuleFrameworkUtilAdapter.stopRuntime();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		try {
 			ModuleFrameworkUtilAdapter.stopFramework(
 				PropsValues.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		ModuleFrameworkUtilAdapter.unregisterContext(_arrayApplicationContext);
@@ -170,15 +170,15 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		try {
 			ClearThreadLocalUtil.clearThreadLocal();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		try {
 			ClearTimerThreadUtil.clearTimerThread();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -187,8 +187,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		try {
 			Class.forName(SystemProperties.class.getName());
 		}
-		catch (ClassNotFoundException cnfe) {
-			throw new RuntimeException(cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new RuntimeException(classNotFoundException);
 		}
 
 		FieldInterceptionHelperUtil.initialize();
@@ -234,8 +234,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			try {
 				Files.createDirectories(tempDirPath);
 			}
-			catch (IOException ioe) {
-				_log.error("Unable to create " + tempDirPath, ioe);
+			catch (IOException ioException) {
+				_log.error("Unable to create " + tempDirPath, ioException);
 			}
 		}
 
@@ -251,8 +251,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 				PortalApplicationContext.PARENT_APPLICATION_CONTEXT,
 				_arrayApplicationContext);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
@@ -308,8 +308,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 			ModuleFrameworkUtilAdapter.startRuntime();
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		if (springInitTask == null) {
@@ -319,8 +319,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			try {
 				springInitTask.get();
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 
@@ -355,8 +355,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		try {
 			ModuleFrameworkUtilAdapter.registerContext(applicationContext);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		CustomJspBagRegistryUtil.getCustomJspBags();
@@ -376,8 +376,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 			filteredPropertyDescriptorsCache.clear();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -397,8 +397,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 				closeable.close();
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 	}
@@ -471,8 +471,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 					AbstractAutowireCapableBeanFactory.class,
 					"filteredPropertyDescriptorsCache");
 		}
-		catch (Exception e) {
-			throw new LoggedExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new LoggedExceptionInInitializerError(exception);
 		}
 	}
 

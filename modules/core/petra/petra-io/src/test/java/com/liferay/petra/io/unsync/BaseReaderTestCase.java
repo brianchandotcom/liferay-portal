@@ -90,7 +90,7 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 	}
 
@@ -103,7 +103,7 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -116,7 +116,7 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -129,7 +129,7 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -142,7 +142,7 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -155,7 +155,7 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -194,7 +194,7 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 	}
 
@@ -206,8 +206,8 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertEquals(message, ioe.getMessage());
+		catch (IOException ioException) {
+			Assert.assertEquals(message, ioException.getMessage());
 		}
 
 		try {
@@ -215,8 +215,8 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertEquals(message, ioe.getMessage());
+		catch (IOException ioException) {
+			Assert.assertEquals(message, ioException.getMessage());
 		}
 
 		try {
@@ -224,8 +224,8 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertEquals(message, ioe.getMessage());
+		catch (IOException ioException) {
+			Assert.assertEquals(message, ioException.getMessage());
 		}
 
 		try {
@@ -233,8 +233,8 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertEquals(message, ioe.getMessage());
+		catch (IOException ioException) {
+			Assert.assertEquals(message, ioException.getMessage());
 		}
 
 		try {
@@ -242,8 +242,8 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertEquals(message, ioe.getMessage());
+		catch (IOException ioException) {
+			Assert.assertEquals(message, ioException.getMessage());
 		}
 
 		try {
@@ -251,8 +251,8 @@ public abstract class BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertEquals(message, ioe.getMessage());
+		catch (IOException ioException) {
+			Assert.assertEquals(message, ioException.getMessage());
 		}
 
 		reader.close();

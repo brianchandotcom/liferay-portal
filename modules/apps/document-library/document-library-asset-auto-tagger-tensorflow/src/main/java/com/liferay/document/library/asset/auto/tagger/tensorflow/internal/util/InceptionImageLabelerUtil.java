@@ -149,8 +149,8 @@ public class InceptionImageLabelerUtil {
 					graphBuilder.constant("scale", 1F)),
 				Float.class);
 		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
+		catch (IOException ioException) {
+			throw new ExceptionInInitializerError(ioException);
 		}
 	}
 

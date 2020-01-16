@@ -187,7 +187,7 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 		try {
 			fieldValue = field.get(metadata);
 		}
-		catch (IllegalAccessException iae) {
+		catch (IllegalAccessException illegalAccessException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"The property " + field.getName() +

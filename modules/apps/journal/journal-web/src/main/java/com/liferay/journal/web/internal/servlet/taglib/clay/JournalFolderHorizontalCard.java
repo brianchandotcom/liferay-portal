@@ -61,7 +61,7 @@ public class JournalFolderHorizontalCard extends BaseHorizontalCard {
 		try {
 			return folderActionDropdownItems.getActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

@@ -634,18 +634,24 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
 		}
 		else if (exception instanceof ExportImportContentProcessorException) {
-			ExportImportContentProcessorException eicpe =
-				(ExportImportContentProcessorException)exception;
+			ExportImportContentProcessorException
+				exportImportContentProcessorException =
+					(ExportImportContentProcessorException)exception;
 
-			if (eicpe.getType() ==
+			if (exportImportContentProcessorException.getType() ==
 					ExportImportContentProcessorException.ARTICLE_NOT_FOUND) {
 
-				if (Validator.isNotNull(eicpe.getStagedModelClassName())) {
+				if (Validator.isNotNull(
+						exportImportContentProcessorException.
+							getStagedModelClassName())) {
+
 					errorMessage = LanguageUtil.format(
 						resourceBundle,
 						"unable-to-process-referenced-article-because-it-" +
 							"cannot-be-found-with-key-x",
-						String.valueOf(eicpe.getStagedModelClassPK()));
+						String.valueOf(
+							exportImportContentProcessorException.
+								getStagedModelClassPK()));
 				}
 				else {
 					errorMessage = LanguageUtil.get(
@@ -658,10 +664,11 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (exception instanceof ExportImportContentValidationException) {
-			ExportImportContentValidationException eicve =
-				(ExportImportContentValidationException)exception;
+			ExportImportContentValidationException
+				exportImportContentValidationException =
+					(ExportImportContentValidationException)exception;
 
-			if (eicve.getType() ==
+			if (exportImportContentValidationException.getType() ==
 					ExportImportContentValidationException.ARTICLE_NOT_FOUND) {
 
 				if ((cause != null) && (cause.getLocalizedMessage() != null)) {
@@ -676,20 +683,28 @@ public class StagingImpl implements Staging {
 						"unable-to-validate-referenced-journal-article");
 				}
 			}
-			else if (eicve.getType() ==
+			else if (exportImportContentValidationException.getType() ==
 						ExportImportContentValidationException.
 							FILE_ENTRY_NOT_FOUND) {
 
-				if (Validator.isNotNull(eicve.getStagedModelClassName())) {
+				if (Validator.isNotNull(
+						exportImportContentValidationException.
+							getStagedModelClassName())) {
+
 					errorMessage = LanguageUtil.format(
 						resourceBundle,
 						"unable-to-validate-referenced-file-entry-because-it-" +
 							"cannot-be-found-with-the-following-parameters-x-" +
 								"within-the-content-of-x-with-primary-key-x",
 						new String[] {
-							MapUtil.toString(eicve.getDlReferenceParameters()),
-							eicve.getStagedModelClassName(),
-							String.valueOf(eicve.getStagedModelPrimaryKeyObj())
+							MapUtil.toString(
+								exportImportContentValidationException.
+									getDlReferenceParameters()),
+							exportImportContentValidationException.
+								getStagedModelClassName(),
+							String.valueOf(
+								exportImportContentValidationException.
+									getStagedModelPrimaryKeyObj())
 						});
 				}
 				else {
@@ -697,14 +712,18 @@ public class StagingImpl implements Staging {
 						resourceBundle,
 						"unable-to-validate-referenced-file-entry-because-it-" +
 							"cannot-be-found-with-the-following-parameters-x",
-						eicve.getDlReferenceParameters());
+						exportImportContentValidationException.
+							getDlReferenceParameters());
 				}
 			}
-			else if (eicve.getType() ==
+			else if (exportImportContentValidationException.getType() ==
 						ExportImportContentValidationException.
 							LAYOUT_GROUP_NOT_FOUND) {
 
-				if (Validator.isNotNull(eicve.getStagedModelClassName())) {
+				if (Validator.isNotNull(
+						exportImportContentValidationException.
+							getStagedModelClassName())) {
+
 					errorMessage = LanguageUtil.format(
 						resourceBundle,
 						StringBundler.concat(
@@ -712,9 +731,15 @@ public class StagingImpl implements Staging {
 							"because-the-page-group-with-url-x-cannot-be-",
 							"found-within-the-content-of-x-with-primary-key-x"),
 						new String[] {
-							eicve.getLayoutURL(), eicve.getGroupFriendlyURL(),
-							eicve.getStagedModelClassName(),
-							String.valueOf(eicve.getStagedModelPrimaryKeyObj())
+							exportImportContentValidationException.
+								getLayoutURL(),
+							exportImportContentValidationException.
+								getGroupFriendlyURL(),
+							exportImportContentValidationException.
+								getStagedModelClassName(),
+							String.valueOf(
+								exportImportContentValidationException.
+									getStagedModelPrimaryKeyObj())
 						});
 				}
 				else {
@@ -723,15 +748,21 @@ public class StagingImpl implements Staging {
 						"unable-to-validate-referenced-page-with-url-x-" +
 							"because-the-page-group-with-url-x-cannot-be-found",
 						new String[] {
-							eicve.getLayoutURL(), eicve.getGroupFriendlyURL()
+							exportImportContentValidationException.
+								getLayoutURL(),
+							exportImportContentValidationException.
+								getGroupFriendlyURL()
 						});
 				}
 			}
-			else if (eicve.getType() ==
+			else if (exportImportContentValidationException.getType() ==
 						ExportImportContentValidationException.
 							LAYOUT_NOT_FOUND) {
 
-				if (Validator.isNotNull(eicve.getStagedModelClassName())) {
+				if (Validator.isNotNull(
+						exportImportContentValidationException.
+							getStagedModelClassName())) {
+
 					errorMessage = LanguageUtil.format(
 						resourceBundle,
 						"unable-to-validate-referenced-page-because-it-" +
@@ -739,9 +770,13 @@ public class StagingImpl implements Staging {
 								"within-the-content-of-x-with-primary-key-x",
 						new String[] {
 							MapUtil.toString(
-								eicve.getLayoutReferenceParameters()),
-							eicve.getStagedModelClassName(),
-							String.valueOf(eicve.getStagedModelPrimaryKeyObj())
+								exportImportContentValidationException.
+									getLayoutReferenceParameters()),
+							exportImportContentValidationException.
+								getStagedModelClassName(),
+							String.valueOf(
+								exportImportContentValidationException.
+									getStagedModelPrimaryKeyObj())
 						});
 				}
 				else {
@@ -749,23 +784,31 @@ public class StagingImpl implements Staging {
 						resourceBundle,
 						"unable-to-validate-referenced-page-because-it-" +
 							"cannot-be-found-with-the-following-parameters-x",
-						eicve.getLayoutReferenceParameters());
+						exportImportContentValidationException.
+							getLayoutReferenceParameters());
 				}
 			}
-			else if (eicve.getType() ==
+			else if (exportImportContentValidationException.getType() ==
 						ExportImportContentValidationException.
 							LAYOUT_WITH_URL_NOT_FOUND) {
 
-				if (Validator.isNotNull(eicve.getStagedModelClassName())) {
+				if (Validator.isNotNull(
+						exportImportContentValidationException.
+							getStagedModelClassName())) {
+
 					errorMessage = LanguageUtil.format(
 						resourceBundle,
 						"unable-to-validate-referenced-page-because-it-" +
 							"cannot-be-found-with-url-x-within-the-content-" +
 								"of-x-with-primary-key-x",
 						new String[] {
-							eicve.getLayoutURL(),
-							eicve.getStagedModelClassName(),
-							String.valueOf(eicve.getStagedModelPrimaryKeyObj())
+							exportImportContentValidationException.
+								getLayoutURL(),
+							exportImportContentValidationException.
+								getStagedModelClassName(),
+							String.valueOf(
+								exportImportContentValidationException.
+									getStagedModelPrimaryKeyObj())
 						});
 				}
 				else {
@@ -773,43 +816,50 @@ public class StagingImpl implements Staging {
 						resourceBundle,
 						"unable-to-validate-referenced-page-because-it-" +
 							"cannot-be-found-with-url-x",
-						eicve.getLayoutURL());
+						exportImportContentValidationException.getLayoutURL());
 				}
 			}
 			else {
-				if (Validator.isNotNull(eicve.getStagedModelClassName())) {
+				if (Validator.isNotNull(
+						exportImportContentValidationException.
+							getStagedModelClassName())) {
+
 					errorMessage = LanguageUtil.format(
 						resourceBundle,
 						"unable-to-validate-content-of-x-with-primary-key-x-" +
 							"in-x",
 						new String[] {
-							eicve.getClassName(),
-							eicve.getStagedModelClassName(),
-							String.valueOf(eicve.getStagedModelPrimaryKeyObj())
+							exportImportContentValidationException.
+								getClassName(),
+							exportImportContentValidationException.
+								getStagedModelClassName(),
+							String.valueOf(
+								exportImportContentValidationException.
+									getStagedModelPrimaryKeyObj())
 						});
 				}
 				else {
 					errorMessage = LanguageUtil.format(
 						resourceBundle, "unable-to-validate-content-in-x",
-						eicve.getClassName());
+						exportImportContentValidationException.getClassName());
 				}
 			}
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (exception instanceof ExportImportDocumentException) {
-			ExportImportDocumentException eide =
+			ExportImportDocumentException exportImportDocumentException =
 				(ExportImportDocumentException)exception;
 
-			if (eide.getType() ==
+			if (exportImportDocumentException.getType() ==
 					ExportImportDocumentException.PORTLET_DATA_IMPORT) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-parse-xml-document-for-portlet-x-during-import",
-					eide.getPortletId());
+					exportImportDocumentException.getPortletId());
 			}
-			else if (eide.getType() ==
+			else if (exportImportDocumentException.getType() ==
 						ExportImportDocumentException.
 							PORTLET_PREFERENCES_IMPORT) {
 
@@ -817,7 +867,7 @@ public class StagingImpl implements Staging {
 					resourceBundle,
 					"unable-to-parse-xml-portlet-preferences-for-portlet-x-" +
 						"while-importing-portlet-preferences",
-					eide.getPortletId());
+					exportImportDocumentException.getPortletId());
 			}
 			else {
 				errorMessage = LanguageUtil.get(
@@ -830,65 +880,71 @@ public class StagingImpl implements Staging {
 				 ((cause instanceof SystemException) &&
 				  (cause.getCause() instanceof ExportImportIOException))) {
 
-			ExportImportIOException eiioe = null;
+			ExportImportIOException exportImportIOException = null;
 
 			if (exception instanceof ExportImportIOException) {
-				eiioe = (ExportImportIOException)exception;
+				exportImportIOException = (ExportImportIOException)exception;
 			}
 			else {
-				eiioe = (ExportImportIOException)cause.getCause();
+				exportImportIOException =
+					(ExportImportIOException)cause.getCause();
 			}
 
-			if (eiioe.getType() ==
+			if (exportImportIOException.getType() ==
 					ExportImportIOException.ADD_ZIP_ENTRY_BYTES) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-add-data-bytes-to-the-lar-file-with-path-x",
-					eiioe.getFileName());
+					exportImportIOException.getFileName());
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.ADD_ZIP_ENTRY_STREAM) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-add-data-stream-to-the-lar-file-with-path-x",
-					eiioe.getFileName());
+					exportImportIOException.getFileName());
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.ADD_ZIP_ENTRY_STRING) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-add-data-string-to-the-lar-file-with-path-x",
-					eiioe.getFileName());
+					exportImportIOException.getFileName());
 			}
-			else if (eiioe.getType() == ExportImportIOException.LAYOUT_IMPORT) {
+			else if (exportImportIOException.getType() ==
+						ExportImportIOException.LAYOUT_IMPORT) {
+
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-process-lar-file-for-layout-import-while-" +
 						"executing-x-due-to-a-file-system-error",
-					eiioe.getClassName());
+					exportImportIOException.getClassName());
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.LAYOUT_IMPORT_FILE) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-process-lar-file-x-for-layout-import-while-" +
 						"executing-x-due-to-a-file-system-error",
-					new String[] {eiioe.getFileName(), eiioe.getClassName()});
+					new String[] {
+						exportImportIOException.getFileName(),
+						exportImportIOException.getClassName()
+					});
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.LAYOUT_VALIDATE) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-process-lar-file-for-layout-import-validation-" +
 						"while-executing-x-due-to-a-file-system-error",
-					eiioe.getClassName());
+					exportImportIOException.getClassName());
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.LAYOUT_VALIDATE_FILE) {
 
 				errorMessage = LanguageUtil.format(
@@ -896,36 +952,42 @@ public class StagingImpl implements Staging {
 					"unable-to-process-lar-file-x-for-layout-import-" +
 						"validation-while-executing-x-due-to-a-file-system-" +
 							"error",
-					new String[] {eiioe.getFileName(), eiioe.getClassName()});
+					new String[] {
+						exportImportIOException.getFileName(),
+						exportImportIOException.getClassName()
+					});
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.PORTLET_EXPORT) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-create-the-export-lar-manifest-file-for-" +
 						"portlet-x",
-					eiioe.getPortletId());
+					exportImportIOException.getPortletId());
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.PORTLET_IMPORT) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-process-lar-file-for-portlet-import-while-" +
 						"executing-x-due-to-a-file-system-error",
-					eiioe.getClassName());
+					exportImportIOException.getClassName());
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.PORTLET_IMPORT_FILE) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-process-lar-file-x-for-portlet-import-while-" +
 						"executing-x-due-to-a-file-system-error",
-					new String[] {eiioe.getFileName(), eiioe.getClassName()});
+					new String[] {
+						exportImportIOException.getFileName(),
+						exportImportIOException.getClassName()
+					});
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.PORTLET_VALIDATE) {
 
 				errorMessage = LanguageUtil.format(
@@ -933,9 +995,9 @@ public class StagingImpl implements Staging {
 					"unable-to-process-lar-file-for-portlet-import-" +
 						"validation-while-executing-x-due-to-a-file-system-" +
 							"error",
-					eiioe.getClassName());
+					exportImportIOException.getClassName());
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.PORTLET_VALIDATE_FILE) {
 
 				errorMessage = LanguageUtil.format(
@@ -943,27 +1005,30 @@ public class StagingImpl implements Staging {
 					"unable-to-process-lar-file-x-for-portlet-import-" +
 						"validation-while-executing-x-due-to-a-file-system-" +
 							"error",
-					new String[] {eiioe.getFileName(), eiioe.getClassName()});
+					new String[] {
+						exportImportIOException.getFileName(),
+						exportImportIOException.getClassName()
+					});
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.PUBLISH_STAGING_REQUEST) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-complete-remote-staging-publication-request-x-" +
 						"due-to-a-file-system-error",
-					eiioe.getStagingRequestId());
+					exportImportIOException.getStagingRequestId());
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.STAGING_REQUEST_CHECKSUM) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-process-lar-file-pieces-for-remote-staging-" +
 						"publication-because-lar-file-checksum-is-not-x",
-					eiioe.getChecksum());
+					exportImportIOException.getChecksum());
 			}
-			else if (eiioe.getType() ==
+			else if (exportImportIOException.getType() ==
 						ExportImportIOException.
 							STAGING_REQUEST_REASSEMBLE_FILE) {
 
@@ -971,12 +1036,12 @@ public class StagingImpl implements Staging {
 					resourceBundle,
 					"unable-to-reassemble-lar-file-for-remote-staging-" +
 						"publication-request-x",
-					eiioe.getStagingRequestId());
+					exportImportIOException.getStagingRequestId());
 			}
 			else {
 				errorMessage = LanguageUtil.format(
 					resourceBundle, "x-failed-due-to-a-file-system-error",
-					eiioe.getClassName());
+					exportImportIOException.getClassName());
 			}
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
@@ -984,18 +1049,21 @@ public class StagingImpl implements Staging {
 		else if (exception instanceof ExportImportRuntimeException) {
 			_log.error(exception, exception);
 
-			ExportImportRuntimeException eire =
+			ExportImportRuntimeException exportImportRuntimeException =
 				(ExportImportRuntimeException)exception;
 
-			if (Validator.isNull(eire.getMessage())) {
+			if (Validator.isNull(exportImportRuntimeException.getMessage())) {
 				errorMessage = LanguageUtil.format(
 					resourceBundle, "an-unexpected-error-occurred-within-x",
-					eire.getClassName());
+					exportImportRuntimeException.getClassName());
 			}
 			else {
 				errorMessage = LanguageUtil.format(
 					resourceBundle, "the-following-error-occurred-within-x-x",
-					new String[] {eire.getClassName(), eire.getMessage()});
+					new String[] {
+						exportImportRuntimeException.getClassName(),
+						exportImportRuntimeException.getMessage()
+					});
 			}
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
@@ -1048,23 +1116,29 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 		}
 		else if (exception instanceof LARTypeException) {
-			LARTypeException lte = (LARTypeException)exception;
+			LARTypeException larTypeException = (LARTypeException)exception;
 
-			if (lte.getType() == LARTypeException.TYPE_COMPANY_GROUP) {
+			if (larTypeException.getType() ==
+					LARTypeException.TYPE_COMPANY_GROUP) {
+
 				errorMessage = LanguageUtil.format(
 					resourceBundle, "a-x-can-only-be-imported-to-a-x",
 					"global-site");
 			}
-			else if (lte.getType() == LARTypeException.TYPE_LAYOUT_PROTOTYPE) {
+			else if (larTypeException.getType() ==
+						LARTypeException.TYPE_LAYOUT_PROTOTYPE) {
+
 				errorMessage = LanguageUtil.format(
 					resourceBundle, "a-x-can-only-be-imported-to-a-x",
 					LanguageUtil.get(locale, "page-template"));
 			}
-			else if (lte.getType() == LARTypeException.TYPE_LAYOUT_SET) {
+			else if (larTypeException.getType() ==
+						LARTypeException.TYPE_LAYOUT_SET) {
+
 				errorMessage = LanguageUtil.format(
 					resourceBundle, "a-x-can-only-be-imported-to-a-x", "site");
 			}
-			else if (lte.getType() ==
+			else if (larTypeException.getType() ==
 						LARTypeException.TYPE_LAYOUT_SET_PROTOTYPE) {
 
 				errorMessage = LanguageUtil.format(
@@ -1075,9 +1149,9 @@ public class StagingImpl implements Staging {
 				errorMessage = LanguageUtil.format(
 					resourceBundle, "uploaded-lar-file-type-x-does-not-match-x",
 					new Object[] {
-						lte.getActualLARType(),
+						larTypeException.getActualLARType(),
 						StringUtil.merge(
-							lte.getExpectedLARTypes(),
+							larTypeException.getExpectedLARTypes(),
 							StringPool.COMMA_AND_SPACE)
 					});
 			}
@@ -1085,13 +1159,18 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (exception instanceof LARFileException) {
-			LARFileException lfe = (LARFileException)exception;
+			LARFileException larFileException = (LARFileException)exception;
 
-			if (lfe.getType() == LARFileException.TYPE_INVALID_MANIFEST) {
+			if (larFileException.getType() ==
+					LARFileException.TYPE_INVALID_MANIFEST) {
+
 				errorMessage = LanguageUtil.format(
-					resourceBundle, "invalid-manifest.xml-x", lfe.getMessage());
+					resourceBundle, "invalid-manifest.xml-x",
+					larFileException.getMessage());
 			}
-			else if (lfe.getType() == LARFileException.TYPE_MISSING_MANIFEST) {
+			else if (larFileException.getType() ==
+						LARFileException.TYPE_MISSING_MANIFEST) {
+
 				errorMessage = LanguageUtil.get(
 					resourceBundle, "missing-manifest.xml");
 			}
@@ -1105,37 +1184,37 @@ public class StagingImpl implements Staging {
 		else if ((exception instanceof LayoutImportException) ||
 				 (cause instanceof LayoutImportException)) {
 
-			LayoutImportException lie = null;
+			LayoutImportException layoutImportException = null;
 
 			if (exception instanceof LayoutImportException) {
-				lie = (LayoutImportException)exception;
+				layoutImportException = (LayoutImportException)exception;
 			}
 			else {
-				lie = (LayoutImportException)cause;
+				layoutImportException = (LayoutImportException)cause;
 			}
 
-			if (lie.getType() ==
+			if (layoutImportException.getType() ==
 					LayoutImportException.TYPE_WRONG_BUILD_NUMBER) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"lar-build-number-x-does-not-match-portal-build-number-x",
-					lie.getArguments());
+					layoutImportException.getArguments());
 			}
-			else if (lie.getType() ==
+			else if (layoutImportException.getType() ==
 						LayoutImportException.TYPE_WRONG_LAR_SCHEMA_VERSION) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"lar-schema-version-x-does-not-match-deployed-export-" +
 						"import-schema-version-x",
-					lie.getArguments());
+					layoutImportException.getArguments());
 			}
-			else if (lie.getType() ==
+			else if (layoutImportException.getType() ==
 						LayoutImportException.
 							TYPE_WRONG_PORTLET_SCHEMA_VERSION) {
 
-				Object[] arguments = lie.getArguments();
+				Object[] arguments = layoutImportException.getArguments();
 
 				Portlet portlet = _portletLocalService.getPortletById(
 					(String)arguments[1]);
@@ -1146,7 +1225,7 @@ public class StagingImpl implements Staging {
 					resourceBundle,
 					"applications's-schema-version-x-in-the-lar-is-not-valid-" +
 						"for-the-deployed-application-x-with-schema-version-x",
-					lie.getArguments());
+					layoutImportException.getArguments());
 			}
 			else {
 				errorMessage = exception.getLocalizedMessage();
@@ -1155,7 +1234,8 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (exception instanceof LayoutPrototypeException) {
-			LayoutPrototypeException lpe = (LayoutPrototypeException)exception;
+			LayoutPrototypeException layoutPrototypeException =
+				(LayoutPrototypeException)exception;
 
 			StringBundler sb = new StringBundler(4);
 
@@ -1169,7 +1249,7 @@ public class StagingImpl implements Staging {
 			errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
 			List<Tuple> missingLayoutPrototypes =
-				lpe.getMissingLayoutPrototypes();
+				layoutPrototypeException.getMissingLayoutPrototypes();
 
 			for (Tuple missingLayoutPrototype : missingLayoutPrototypes) {
 				String layoutPrototypeUuid =
@@ -1197,7 +1277,7 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (exception instanceof LocaleException) {
-			LocaleException le = (LocaleException)exception;
+			LocaleException localeException = (LocaleException)exception;
 
 			errorMessage = LanguageUtil.format(
 				locale,
@@ -1205,10 +1285,10 @@ public class StagingImpl implements Staging {
 					"site's-available-languages-x",
 				new String[] {
 					StringUtil.merge(
-						le.getSourceAvailableLocales(),
+						localeException.getSourceAvailableLocales(),
 						StringPool.COMMA_AND_SPACE),
 					StringUtil.merge(
-						le.getTargetAvailableLocales(),
+						localeException.getTargetAvailableLocales(),
 						StringPool.COMMA_AND_SPACE)
 				},
 				false);
@@ -1216,7 +1296,7 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (exception instanceof MissingReferenceException) {
-			MissingReferenceException mre =
+			MissingReferenceException missingReferenceException =
 				(MissingReferenceException)exception;
 
 			if ((exportImportConfiguration != null) &&
@@ -1246,7 +1326,8 @@ public class StagingImpl implements Staging {
 						"the-current-site");
 			}
 
-			MissingReferences missingReferences = mre.getMissingReferences();
+			MissingReferences missingReferences =
+				missingReferenceException.getMissingReferences();
 
 			errorMessagesJSONArray = getErrorMessagesJSONArray(
 				locale, missingReferences.getDependencyMissingReferences());
@@ -1256,32 +1337,40 @@ public class StagingImpl implements Staging {
 				locale, missingReferences.getWeakMissingReferences());
 		}
 		else if (exception instanceof PortletDataException) {
-			PortletDataException pde = (PortletDataException)exception;
+			PortletDataException portletDataException =
+				(PortletDataException)exception;
 
-			String referrerClassName = pde.getStagedModelClassName();
-			String referrerDisplayName = pde.getStagedModelDisplayName();
+			String referrerClassName =
+				portletDataException.getStagedModelClassName();
+			String referrerDisplayName =
+				portletDataException.getStagedModelDisplayName();
 
 			String modelResource = ResourceActionsUtil.getModelResource(
 				locale, referrerClassName);
 
-			if (pde.getType() == PortletDataException.COMPANY_BEING_DELETED) {
+			if (portletDataException.getType() ==
+					PortletDataException.COMPANY_BEING_DELETED) {
+
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-create-a-portlet-data-context-for-company-x-" +
 						"because-it-is-being-deleted",
-					String.valueOf(pde.getCompanyId()));
+					String.valueOf(portletDataException.getCompanyId()));
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.DELETE_PORTLET_DATA) {
 
-				if (Validator.isNotNull(pde.getLocalizedMessage())) {
+				if (Validator.isNotNull(
+						portletDataException.getLocalizedMessage())) {
+
 					errorMessage = LanguageUtil.format(
 						locale,
 						"the-following-error-in-x-while-deleting-its-data-" +
 							"has-stopped-the-process-x",
 						new String[] {
-							_portal.getPortletTitle(pde.getPortletId(), locale),
-							pde.getLocalizedMessage()
+							_portal.getPortletTitle(
+								portletDataException.getPortletId(), locale),
+							portletDataException.getLocalizedMessage()
 						},
 						false);
 				}
@@ -1291,12 +1380,13 @@ public class StagingImpl implements Staging {
 						"an-unexpected-error-in-x-while-deleting-its-data-" +
 							"has-stopped-the-process",
 						new String[] {
-							_portal.getPortletTitle(pde.getPortletId(), locale)
+							_portal.getPortletTitle(
+								portletDataException.getPortletId(), locale)
 						},
 						false);
 				}
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.EXPORT_DATA_GROUP_ELEMENT) {
 
 				errorMessage = LanguageUtil.format(
@@ -1304,19 +1394,22 @@ public class StagingImpl implements Staging {
 					"unable-to-return-the-export-data-group-element-for-" +
 						"group-x-because-the-root-data-element-is-not-" +
 							"initialized",
-					pde.getStagedModelClassName());
+					portletDataException.getStagedModelClassName());
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.EXPORT_PORTLET_DATA) {
 
-				if (Validator.isNotNull(pde.getLocalizedMessage())) {
+				if (Validator.isNotNull(
+						portletDataException.getLocalizedMessage())) {
+
 					errorMessage = LanguageUtil.format(
 						locale,
 						"the-following-error-in-x-while-exporting-its-data-" +
 							"has-stopped-the-process-x",
 						new String[] {
-							_portal.getPortletTitle(pde.getPortletId(), locale),
-							pde.getLocalizedMessage()
+							_portal.getPortletTitle(
+								portletDataException.getPortletId(), locale),
+							portletDataException.getLocalizedMessage()
 						},
 						false);
 				}
@@ -1326,42 +1419,48 @@ public class StagingImpl implements Staging {
 						"an-unexpected-error-in-x-while-exporting-its-data-" +
 							"has-stopped-the-process",
 						new String[] {
-							_portal.getPortletTitle(pde.getPortletId(), locale)
+							_portal.getPortletTitle(
+								portletDataException.getPortletId(), locale)
 						},
 						false);
 				}
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.EXPORT_PORTLET_PERMISSIONS) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-export-portlet-permissions-for-x-while-" +
 						"processing-portlet-preferences-during-export",
-					pde.getPortletId());
+					portletDataException.getPortletId());
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.EXPORT_REFERENCED_TEMPLATE) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-export-referenced-article-template-for-x-" +
 						"while-processing-portlet-preferences-during-export",
-					pde.getPortletId());
+					portletDataException.getPortletId());
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.EXPORT_STAGED_MODEL) {
 
-				String localizedMessage = pde.getLocalizedMessage();
+				String localizedMessage =
+					portletDataException.getLocalizedMessage();
 
-				if ((pde.getCause() instanceof ExportImportRuntimeException) &&
-					Validator.isNull(pde.getMessage())) {
+				if ((portletDataException.getCause() instanceof
+						ExportImportRuntimeException) &&
+					Validator.isNull(portletDataException.getMessage())) {
 
-					ExportImportRuntimeException eire =
-						(ExportImportRuntimeException)pde.getCause();
+					ExportImportRuntimeException exportImportRuntimeException =
+						(ExportImportRuntimeException)
+							portletDataException.getCause();
 
 					localizedMessage = LanguageUtil.format(
-						resourceBundle, eire.getMessageKey(), eire.getData());
+						resourceBundle,
+						exportImportRuntimeException.getMessageKey(),
+						exportImportRuntimeException.getData());
 				}
 
 				errorMessage = LanguageUtil.format(
@@ -1373,7 +1472,7 @@ public class StagingImpl implements Staging {
 					},
 					false);
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.IMPORT_DATA_GROUP_ELEMENT) {
 
 				errorMessage = LanguageUtil.format(
@@ -1381,19 +1480,22 @@ public class StagingImpl implements Staging {
 					"unable-to-return-the-import-data-group-element-for-" +
 						"group-x-because-the-root-data-element-is-not-" +
 							"initialized",
-					pde.getStagedModelClassName());
+					portletDataException.getStagedModelClassName());
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.IMPORT_PORTLET_DATA) {
 
-				if (Validator.isNotNull(pde.getLocalizedMessage())) {
+				if (Validator.isNotNull(
+						portletDataException.getLocalizedMessage())) {
+
 					errorMessage = LanguageUtil.format(
 						locale,
 						"the-following-error-in-x-while-importing-its-data-" +
 							"has-stopped-the-process-x",
 						new String[] {
-							_portal.getPortletTitle(pde.getPortletId(), locale),
-							pde.getLocalizedMessage()
+							_portal.getPortletTitle(
+								portletDataException.getPortletId(), locale),
+							portletDataException.getLocalizedMessage()
 						},
 						false);
 				}
@@ -1403,21 +1505,22 @@ public class StagingImpl implements Staging {
 						"an-unexpected-error-in-x-while-importing-its-data-" +
 							"has-stopped-the-process",
 						new String[] {
-							_portal.getPortletTitle(pde.getPortletId(), locale)
+							_portal.getPortletTitle(
+								portletDataException.getPortletId(), locale)
 						},
 						false);
 				}
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.IMPORT_PORTLET_PERMISSIONS) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-import-portlet-permissions-for-x-while-" +
 						"processing-portlet-preferences-during-import",
-					pde.getPortletId());
+					portletDataException.getPortletId());
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.IMPORT_STAGED_MODEL) {
 
 				errorMessage = LanguageUtil.format(
@@ -1426,42 +1529,51 @@ public class StagingImpl implements Staging {
 						"error-x",
 					new String[] {
 						modelResource, referrerDisplayName,
-						pde.getLocalizedMessage()
+						portletDataException.getLocalizedMessage()
 					},
 					false);
 			}
-			else if (pde.getType() == PortletDataException.INVALID_GROUP) {
+			else if (portletDataException.getType() ==
+						PortletDataException.INVALID_GROUP) {
+
 				errorMessage = LanguageUtil.format(
 					locale,
 					"the-x-x-could-not-be-exported-because-it-is-not-in-the-" +
 						"currently-exported-group",
 					new String[] {modelResource, referrerDisplayName}, false);
 			}
-			else if (pde.getType() == PortletDataException.MISSING_DEPENDENCY) {
+			else if (portletDataException.getType() ==
+						PortletDataException.MISSING_DEPENDENCY) {
+
 				errorMessage = LanguageUtil.format(
 					locale,
 					"the-x-x-has-missing-references-that-could-not-be-found-" +
 						"during-the-process",
 					new String[] {modelResource, referrerDisplayName}, false);
 			}
-			else if (pde.getType() == PortletDataException.MISSING_REFERENCE) {
+			else if (portletDataException.getType() ==
+						PortletDataException.MISSING_REFERENCE) {
+
 				errorMessage = LanguageUtil.format(
 					locale,
 					"the-x-x-missing-reference-could-not-be-found-during-the-" +
 						"process",
 					new String[] {modelResource, referrerDisplayName}, false);
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.PREPARE_MANIFEST_SUMMARY) {
 
-				if (Validator.isNotNull(pde.getLocalizedMessage())) {
+				if (Validator.isNotNull(
+						portletDataException.getLocalizedMessage())) {
+
 					errorMessage = LanguageUtil.format(
 						locale,
 						"the-following-error-in-x-while-preparing-its-" +
 							"manifest-has-stopped-the-process-x",
 						new String[] {
-							_portal.getPortletTitle(pde.getPortletId(), locale),
-							pde.getLocalizedMessage()
+							_portal.getPortletTitle(
+								portletDataException.getPortletId(), locale),
+							portletDataException.getLocalizedMessage()
 						},
 						false);
 				}
@@ -1471,26 +1583,31 @@ public class StagingImpl implements Staging {
 						"an-unexpected-error-in-x-while-preparing-its-" +
 							"manifest-has-stopped-the-process",
 						new String[] {
-							_portal.getPortletTitle(pde.getPortletId(), locale)
+							_portal.getPortletTitle(
+								portletDataException.getPortletId(), locale)
 						},
 						false);
 				}
 			}
-			else if (pde.getType() == PortletDataException.STATUS_IN_TRASH) {
+			else if (portletDataException.getType() ==
+						PortletDataException.STATUS_IN_TRASH) {
+
 				errorMessage = LanguageUtil.format(
 					locale,
 					"the-x-x-could-not-be-exported-because-it-is-in-the-" +
 						"recycle-bin",
 					new String[] {modelResource, referrerDisplayName}, false);
 			}
-			else if (pde.getType() == PortletDataException.STATUS_UNAVAILABLE) {
+			else if (portletDataException.getType() ==
+						PortletDataException.STATUS_UNAVAILABLE) {
+
 				errorMessage = LanguageUtil.format(
 					locale,
 					"the-x-x-could-not-be-exported-because-its-workflow-" +
 						"status-is-not-exportable",
 					new String[] {modelResource, referrerDisplayName}, false);
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.
 							UPDATE_JOURNAL_CONTENT_SEARCH_DATA) {
 
@@ -1498,15 +1615,15 @@ public class StagingImpl implements Staging {
 					resourceBundle,
 					"unable-to-update-journal-content-search-data-for-x-" +
 						"while-processing-portlet-preferences-during-import",
-					pde.getPortletId());
+					portletDataException.getPortletId());
 			}
-			else if (pde.getType() ==
+			else if (portletDataException.getType() ==
 						PortletDataException.UPDATE_PORTLET_PREFERENCES) {
 
 				errorMessage = LanguageUtil.format(
 					resourceBundle,
 					"unable-to-update-portlet-preferences-for-x-during-import",
-					pde.getPortletId());
+					portletDataException.getPortletId());
 			}
 			else if (Validator.isNotNull(referrerDisplayName)) {
 				errorMessage = LanguageUtil.format(
@@ -1524,10 +1641,11 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (exception instanceof PortletIdException) {
-			PortletIdException pie = (PortletIdException)exception;
+			PortletIdException portletIdException =
+				(PortletIdException)exception;
 
 			Portlet portlet = _portletLocalService.getPortletById(
-				pie.getMessage());
+				portletIdException.getMessage());
 
 			errorMessage = LanguageUtil.format(
 				resourceBundle, "a-x-can-only-be-imported-to-a-x",
@@ -1645,7 +1763,7 @@ public class StagingImpl implements Staging {
 					stagingGroup = group.getStagingGroup();
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 
@@ -1762,8 +1880,8 @@ public class StagingImpl implements Staging {
 
 			return remoteSiteURL.toString();
 		}
-		catch (MalformedURLException murle) {
-			throw new PortalException(murle);
+		catch (MalformedURLException malformedURLException) {
+			throw new PortalException(malformedURLException);
 		}
 	}
 
@@ -1925,9 +2043,9 @@ public class StagingImpl implements Staging {
 					return true;
 				}
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Company group does not exist", pe);
+					_log.warn("Company group does not exist", portalException);
 				}
 			}
 
@@ -2002,13 +2120,13 @@ public class StagingImpl implements Staging {
 			return LayoutServiceHttp.hasPortletId(
 				httpPrincipal, plid, portletId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
 						"Unable to determine if remote layout ", plid,
 						" contains portlet ", portletId),
-					pe);
+					portalException);
 			}
 		}
 
@@ -3104,12 +3222,13 @@ public class StagingImpl implements Staging {
 		throws PortalException {
 
 		if (remoteGroupId <= 0) {
-			RemoteOptionsException roe = new RemoteOptionsException(
-				RemoteOptionsException.REMOTE_GROUP_ID);
+			RemoteOptionsException remoteOptionsException =
+				new RemoteOptionsException(
+					RemoteOptionsException.REMOTE_GROUP_ID);
 
-			roe.setRemoteGroupId(remoteGroupId);
+			remoteOptionsException.setRemoteGroupId(remoteGroupId);
 
-			throw roe;
+			throw remoteOptionsException;
 		}
 
 		Thread currentThread = Thread.currentThread();
@@ -3163,71 +3282,74 @@ public class StagingImpl implements Staging {
 						"validationTimestamp"));
 
 				if (validationTimestamp.equals(remoteValidationTimestamp)) {
-					RemoteExportException ree = new RemoteExportException(
-						RemoteExportException.SAME_GROUP);
+					RemoteExportException remoteExportException =
+						new RemoteExportException(
+							RemoteExportException.SAME_GROUP);
 
-					ree.setGroupId(remoteGroupId);
+					remoteExportException.setGroupId(remoteGroupId);
 
-					throw ree;
+					throw remoteExportException;
 				}
 			}
 		}
-		catch (NoSuchGroupException nsge) {
+		catch (NoSuchGroupException noSuchGroupException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsge, nsge);
+				_log.debug(noSuchGroupException, noSuchGroupException);
 			}
 
-			RemoteExportException ree = new RemoteExportException(
-				RemoteExportException.NO_GROUP);
+			RemoteExportException remoteExportException =
+				new RemoteExportException(RemoteExportException.NO_GROUP);
 
-			ree.setGroupId(remoteGroupId);
+			remoteExportException.setGroupId(remoteGroupId);
 
-			throw ree;
+			throw remoteExportException;
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 
-			RemoteExportException ree = new RemoteExportException(
-				RemoteExportException.NO_PERMISSIONS);
+			RemoteExportException remoteExportException =
+				new RemoteExportException(RemoteExportException.NO_PERMISSIONS);
 
-			ree.setGroupId(remoteGroupId);
+			remoteExportException.setGroupId(remoteGroupId);
 
-			throw ree;
+			throw remoteExportException;
 		}
-		catch (RemoteAuthException rae) {
+		catch (RemoteAuthException remoteAuthException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(rae, rae);
+				_log.debug(remoteAuthException, remoteAuthException);
 			}
 
-			rae.setURL(remoteURL);
+			remoteAuthException.setURL(remoteURL);
 
-			throw rae;
+			throw remoteAuthException;
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(se, se);
+				_log.debug(systemException, systemException);
 			}
 
-			RemoteExportException ree = new RemoteExportException(
-				RemoteExportException.BAD_CONNECTION, se.getMessage());
+			RemoteExportException remoteExportException =
+				new RemoteExportException(
+					RemoteExportException.BAD_CONNECTION,
+					systemException.getMessage());
 
-			ree.setURL(remoteURL);
+			remoteExportException.setURL(remoteURL);
 
-			throw ree;
+			throw remoteExportException;
 		}
 		finally {
 			_setGroupTypeSetting(groupId, "validationTimestamp", null);
@@ -3340,12 +3462,13 @@ public class StagingImpl implements Staging {
 
 			return masterLayoutBranch.getLayoutBranchId();
 		}
-		catch (NoSuchLayoutBranchException nslbe) {
+		catch (NoSuchLayoutBranchException noSuchLayoutBranchException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nslbe, nslbe);
+				_log.debug(
+					noSuchLayoutBranchException, noSuchLayoutBranchException);
 			}
 		}
 
@@ -3391,12 +3514,14 @@ public class StagingImpl implements Staging {
 
 				layoutBranchId = layoutBranch.getLayoutBranchId();
 			}
-			catch (NoSuchLayoutBranchException nslbe) {
+			catch (NoSuchLayoutBranchException noSuchLayoutBranchException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nslbe, nslbe);
+					_log.debug(
+						noSuchLayoutBranchException,
+						noSuchLayoutBranchException);
 				}
 			}
 		}
@@ -3411,12 +3536,15 @@ public class StagingImpl implements Staging {
 					return layoutRevision.getLayoutRevisionId();
 				}
 			}
-			catch (NoSuchLayoutRevisionException nslre) {
+			catch (NoSuchLayoutRevisionException
+						noSuchLayoutRevisionException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nslre, nslre);
+					_log.debug(
+						noSuchLayoutRevisionException,
+						noSuchLayoutRevisionException);
 				}
 			}
 		}
@@ -3696,7 +3824,7 @@ public class StagingImpl implements Staging {
 					recentLayoutRevision);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
@@ -3704,7 +3832,7 @@ public class StagingImpl implements Staging {
 						"with layout set branch ", layoutSetBranchId,
 						" and PLID ", plid, " and layout branch ",
 						layoutBranchId),
-					pe);
+					portalException);
 			}
 		}
 

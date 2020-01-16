@@ -61,9 +61,9 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 			_slaveRAM = slaveRAM;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new RuntimeException(
-				"Unable to determine URL for master " + _masterName, e);
+				"Unable to determine URL for master " + _masterName, exception);
 		}
 	}
 
@@ -197,7 +197,7 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 					_masterURL + "/queue/api/json?tree=items[task[name],why]"),
 				false, 5000);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			System.out.println("Unable to read " + _masterURL);
 
 			_available = false;

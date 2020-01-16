@@ -67,15 +67,15 @@ public class MultipleFileEntryBulkSelection
 		try {
 			return _dlAppService.getFileEntry(fileEntryId);
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsfee, nsfee);
+				_log.warn(noSuchFileEntryException, noSuchFileEntryException);
 			}
 
 			return null;
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 

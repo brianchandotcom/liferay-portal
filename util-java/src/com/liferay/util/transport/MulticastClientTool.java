@@ -32,8 +32,8 @@ public class MulticastClientTool {
 		try {
 			new MulticastClientTool(args);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 
 			StringBuilder sb = new StringBuilder(3);
 

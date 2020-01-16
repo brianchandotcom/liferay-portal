@@ -86,8 +86,8 @@ public class UpdateIndexSettingsIndexRequestExecutorImpl
 			return indicesClient.putSettings(
 				updateSettingsRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

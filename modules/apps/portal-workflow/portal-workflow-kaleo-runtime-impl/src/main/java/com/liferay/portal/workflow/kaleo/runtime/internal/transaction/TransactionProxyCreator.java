@@ -75,8 +75,9 @@ public class TransactionProxyCreator {
 		try {
 			return method.invoke(target, args);
 		}
-		catch (InvocationTargetException ite) {
-			return ReflectionUtil.throwException(ite.getCause());
+		catch (InvocationTargetException invocationTargetException) {
+			return ReflectionUtil.throwException(
+				invocationTargetException.getCause());
 		}
 	}
 

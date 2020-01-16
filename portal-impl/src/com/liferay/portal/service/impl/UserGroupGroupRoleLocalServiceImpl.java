@@ -92,12 +92,15 @@ public class UserGroupGroupRoleLocalServiceImpl
 			try {
 				userGroupGroupRolePersistence.remove(pk);
 			}
-			catch (NoSuchUserGroupGroupRoleException nsuggre) {
+			catch (NoSuchUserGroupGroupRoleException
+						noSuchUserGroupGroupRoleException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsuggre, nsuggre);
+					_log.debug(
+						noSuchUserGroupGroupRoleException,
+						noSuchUserGroupGroupRoleException);
 				}
 			}
 		}
@@ -128,12 +131,15 @@ public class UserGroupGroupRoleLocalServiceImpl
 			try {
 				userGroupGroupRolePersistence.remove(pk);
 			}
-			catch (NoSuchUserGroupGroupRoleException nsuggre) {
+			catch (NoSuchUserGroupGroupRoleException
+						noSuchUserGroupGroupRoleException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsuggre, nsuggre);
+					_log.debug(
+						noSuchUserGroupGroupRoleException,
+						noSuchUserGroupGroupRoleException);
 				}
 			}
 		}

@@ -375,7 +375,7 @@ public class KaleoFormsUtil {
 			return WorkflowDefinitionManagerUtil.getWorkflowDefinition(
 				companyId, name, version);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

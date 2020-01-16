@@ -177,7 +177,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 
 				return theme.getSetting(key);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 
@@ -186,7 +186,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 
 			value = layoutSet.getThemeSetting(key, device);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return value;

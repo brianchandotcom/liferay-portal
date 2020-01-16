@@ -83,13 +83,13 @@ public class RobotsAction implements Action {
 				httpServletRequest, httpServletResponse, null,
 				robots.getBytes(StringPool.UTF8), ContentTypes.TEXT_PLAIN_UTF8);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception,
 				httpServletRequest, httpServletResponse);
 		}
 

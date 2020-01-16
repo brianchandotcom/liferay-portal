@@ -223,17 +223,17 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 				}
 			}
 		}
-		catch (AssociationException ae) {
+		catch (AssociationException associationException) {
 			throw new OpenIdServiceException.AssociationException(
-				ae.getMessage(), ae);
+				associationException.getMessage(), associationException);
 		}
-		catch (DiscoveryException de) {
+		catch (DiscoveryException discoveryException) {
 			throw new OpenIdServiceException.DiscoveryException(
-				de.getMessage(), de);
+				discoveryException.getMessage(), discoveryException);
 		}
-		catch (MessageException me) {
+		catch (MessageException messageException) {
 			throw new OpenIdServiceException.MessageException(
-				me.getMessage(), me);
+				messageException.getMessage(), messageException);
 		}
 
 		String openId = normalize(authSuccess.getIdentity());
@@ -278,8 +278,8 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 				return createAccountURL;
 			}
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 
 		long creatorUserId = 0;
@@ -411,21 +411,21 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 			httpServletResponse.sendRedirect(
 				authRequest.getDestinationUrl(true));
 		}
-		catch (ConsumerException ce) {
+		catch (ConsumerException consumerException) {
 			throw new OpenIdServiceException.ConsumerException(
-				ce.getMessage(), ce);
+				consumerException.getMessage(), consumerException);
 		}
-		catch (DiscoveryException de) {
+		catch (DiscoveryException discoveryException) {
 			throw new OpenIdServiceException.DiscoveryException(
-				de.getMessage(), de);
+				discoveryException.getMessage(), discoveryException);
 		}
-		catch (MessageException me) {
+		catch (MessageException messageException) {
 			throw new OpenIdServiceException.MessageException(
-				me.getMessage(), me);
+				messageException.getMessage(), messageException);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new SystemException(
-				"Unable to communicate with OpenId provider", ioe);
+				"Unable to communicate with OpenId provider", ioException);
 		}
 	}
 
@@ -439,9 +439,9 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 				new InMemoryConsumerAssociationStore());
 			_consumerManager.setNonceVerifier(new InMemoryNonceVerifier(5000));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new IllegalStateException(
-				"Unable to start consumer manager", e);
+				"Unable to start consumer manager", exception);
 		}
 	}
 

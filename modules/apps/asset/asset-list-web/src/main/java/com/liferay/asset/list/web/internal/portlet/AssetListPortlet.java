@@ -158,8 +158,8 @@ public class AssetListPortlet extends MVCPortlet {
 
 			writeJSON(resourceRequest, resourceResponse, jsonObject);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

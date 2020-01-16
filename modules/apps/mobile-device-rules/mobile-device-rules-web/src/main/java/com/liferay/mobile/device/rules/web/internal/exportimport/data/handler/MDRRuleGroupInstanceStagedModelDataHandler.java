@@ -169,7 +169,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 				classPK = layoutSet.getLayoutSetId();
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(5);
 

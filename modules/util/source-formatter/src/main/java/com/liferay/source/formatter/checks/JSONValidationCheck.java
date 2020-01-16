@@ -35,8 +35,8 @@ public class JSONValidationCheck extends BaseFileCheck {
 		try {
 			new JSONObject(content);
 		}
-		catch (JSONException jsone) {
-			addMessage(fileName, jsone.getMessage());
+		catch (JSONException jsonException) {
+			addMessage(fileName, jsonException.getMessage());
 		}
 
 		return content;

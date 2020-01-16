@@ -87,7 +87,7 @@ public class LiferayAccessTokenService extends AccessTokenService {
 
 			remoteHost = inetAddress.getCanonicalHostName();
 		}
-		catch (UnknownHostException uhe) {
+		catch (UnknownHostException unknownHostException) {
 		}
 
 		properties.put(

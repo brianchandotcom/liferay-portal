@@ -139,7 +139,7 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer<User> {
 		try {
 			return _user.getDisplayURL(themeDisplay);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return noSuchEntryRedirect;

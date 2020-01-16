@@ -203,9 +203,9 @@ public class CustomFieldsUtil {
 		try {
 			return dateFormat.parse(data);
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			throw new IllegalArgumentException(
-				"Unable to parse date from " + data, pe);
+				"Unable to parse date from " + data, parseException);
 		}
 	}
 

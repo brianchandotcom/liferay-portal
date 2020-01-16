@@ -51,8 +51,8 @@ public class UpdateSearchableMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getLong(actionRequest, "depotEntryGroupRelId"),
 				ParamUtil.getBoolean(actionRequest, "searchable"));
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 

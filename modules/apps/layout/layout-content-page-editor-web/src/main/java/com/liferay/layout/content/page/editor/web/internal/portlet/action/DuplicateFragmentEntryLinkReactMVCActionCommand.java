@@ -202,15 +202,15 @@ public class DuplicateFragmentEntryLinkReactMVCActionCommand
 					actionRequest, duplicateFragmentEntryLink)
 			);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String errorMessage = "an-unexpected-error-occurred";
 
-			if (e instanceof NoSuchEntryLinkException) {
+			if (exception instanceof NoSuchEntryLinkException) {
 				errorMessage =
 					"the-section-could-not-be-duplicated-because-it-has-been-" +
 						"deleted";
 			}
-			else if (e instanceof PortletIdException) {
+			else if (exception instanceof PortletIdException) {
 				errorMessage = "uninstanceable-widget-cannot-be-duplicated";
 			}
 

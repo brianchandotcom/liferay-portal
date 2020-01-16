@@ -62,12 +62,12 @@ public class RemoveAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchEntryUserRelException) {
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof NoSuchEntryUserRelException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 
 			actionResponse.setRenderParameter(

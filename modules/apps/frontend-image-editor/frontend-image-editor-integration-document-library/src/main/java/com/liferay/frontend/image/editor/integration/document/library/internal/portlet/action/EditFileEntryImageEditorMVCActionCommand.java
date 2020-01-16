@@ -103,15 +103,15 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 			updateFileEntry(actionRequest, actionResponse);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			handleUploadException(actionRequest, actionResponse);
@@ -128,8 +128,8 @@ public class EditFileEntryImageEditorMVCActionCommand
 			JSONPortletResponseUtil.writeJSON(
 				portletRequest, portletResponse, jsonObject);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

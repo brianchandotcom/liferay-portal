@@ -208,8 +208,8 @@ public class SPIAgentResponse extends SPIAgentSerializable {
 					httpServletResponse, CharBuffer.wrap(stringData));
 			}
 		}
-		catch (IOException ioe) {
-			throw new PortalResiliencyException(ioe);
+		catch (IOException ioException) {
+			throw new PortalResiliencyException(ioException);
 		}
 
 		restoreThreadLocals();

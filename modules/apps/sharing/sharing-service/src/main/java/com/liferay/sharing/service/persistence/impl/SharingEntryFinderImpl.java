@@ -82,8 +82,8 @@ public class SharingEntryFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -123,8 +123,8 @@ public class SharingEntryFinderImpl
 			return (List<SharingEntry>)QueryUtil.list(
 				q, getDialect(), begin, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

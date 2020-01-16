@@ -93,7 +93,7 @@ public class DeleteFolderPortletConfigurationIcon
 		try {
 			folder = ActionUtil.getFolder(portletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -149,7 +149,7 @@ public class DeleteFolderPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;
@@ -161,7 +161,7 @@ public class DeleteFolderPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

@@ -80,7 +80,7 @@ public class MoveThreadPortletConfigurationIcon
 			portletURL.setParameter(
 				"threadId", String.valueOf(message.getThreadId()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -110,7 +110,7 @@ public class MoveThreadPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

@@ -55,8 +55,8 @@ public class UpgradeOracle extends UpgradeProcess {
 							"alter table ", tableName, " modify ", columnName,
 							" varchar2(", rs.getInt(3), " char)"));
 				}
-				catch (SQLException sqle) {
-					if (sqle.getErrorCode() == 1441) {
+				catch (SQLException sqlException) {
+					if (sqlException.getErrorCode() == 1441) {
 						if (_log.isWarnEnabled()) {
 							StringBundler sb = new StringBundler(6);
 
@@ -71,7 +71,7 @@ public class UpgradeOracle extends UpgradeProcess {
 						}
 					}
 					else {
-						throw sqle;
+						throw sqlException;
 					}
 				}
 			}

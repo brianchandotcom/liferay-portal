@@ -40,8 +40,8 @@ public abstract class ChartObject extends AbstractMap<String, Object> {
 			try {
 				value = clazz.newInstance();
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 
 			_properties.put(name, value);

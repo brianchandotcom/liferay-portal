@@ -76,7 +76,7 @@ public class EditEntryPortletConfigurationIcon
 			portletURL.setParameter(
 				"entryId", String.valueOf(entry.getEntryId()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -99,8 +99,8 @@ public class EditEntryPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(),
 				ActionUtil.getEntry(portletRequest), ActionKeys.UPDATE);
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

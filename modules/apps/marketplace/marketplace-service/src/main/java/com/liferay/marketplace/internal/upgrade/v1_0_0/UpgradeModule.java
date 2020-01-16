@@ -67,17 +67,17 @@ public class UpgradeModule extends UpgradeProcess {
 							"update Marketplace_Module set contextName = '",
 							newContextName, "' where moduleId = ", moduleId));
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					_log.error(
 						StringBundler.concat(
 							"Unable to update module + ", moduleId,
 							" with the new context name ", newContextName),
-						ioe);
+						ioException);
 				}
 			}
 		}
-		catch (SQLException sqle) {
-			_log.error("Unable to update modules", sqle);
+		catch (SQLException sqlException) {
+			_log.error("Unable to update modules", sqlException);
 		}
 	}
 

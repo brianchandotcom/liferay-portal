@@ -191,9 +191,9 @@ public class BookmarksEntryAssetRenderer
 			return _bookmarksEntryModelResourcePermission.contains(
 				permissionChecker, _entry, ActionKeys.UPDATE);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return false;
@@ -206,9 +206,9 @@ public class BookmarksEntryAssetRenderer
 			return _bookmarksEntryModelResourcePermission.contains(
 				permissionChecker, _entry, ActionKeys.VIEW);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return false;

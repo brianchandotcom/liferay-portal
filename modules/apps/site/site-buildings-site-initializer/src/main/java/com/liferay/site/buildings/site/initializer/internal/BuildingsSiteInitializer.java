@@ -146,10 +146,10 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 
 			_updateLookAndFeel();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new InitializationException(e);
+			throw new InitializationException(exception);
 		}
 	}
 
@@ -269,7 +269,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 				StringPool.BLANK, editableValues, StringPool.BLANK, 0,
 				fragmentEntryKey, _serviceContext);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

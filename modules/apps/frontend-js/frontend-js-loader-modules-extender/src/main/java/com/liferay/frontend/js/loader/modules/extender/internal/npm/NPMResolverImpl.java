@@ -138,8 +138,8 @@ public class NPMResolverImpl implements NPMResolver {
 
 			return map;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -170,8 +170,8 @@ public class NPMResolverImpl implements NPMResolver {
 
 			return sb.toString();
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

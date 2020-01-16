@@ -73,7 +73,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 				portletDataContext, portletDataContext.getRootPortletId(),
 				portletPreferences);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return portletPreferences;
 		}
 	}
@@ -88,7 +88,7 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 			return updateImportPortletPreferences(
 				portletDataContext, portletPreferences);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return portletPreferences;
 		}
 	}

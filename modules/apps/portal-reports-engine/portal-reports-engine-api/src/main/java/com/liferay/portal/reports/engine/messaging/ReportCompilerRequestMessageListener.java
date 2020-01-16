@@ -64,10 +64,11 @@ public class ReportCompilerRequestMessageListener extends BaseMessageListener {
 		try {
 			_reportEngine.compile(reportRequest);
 		}
-		catch (ReportGenerationException rge) {
-			_log.error("Unable to compile report", rge);
+		catch (ReportGenerationException reportGenerationException) {
+			_log.error("Unable to compile report", reportGenerationException);
 
-			reportResultContainer.setReportGenerationException(rge);
+			reportResultContainer.setReportGenerationException(
+				reportGenerationException);
 		}
 		finally {
 			Message responseMessage = MessageBusUtil.createResponseMessage(

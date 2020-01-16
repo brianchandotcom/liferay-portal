@@ -165,8 +165,11 @@ public class PropertiesPortalEnvironmentVariablesCheck extends BaseFileCheck {
 						}
 					}
 				}
-				catch (ReflectiveOperationException roe) {
-					throw new ExceptionInInitializerError(roe);
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new ExceptionInInitializerError(
+						reflectiveOperationException);
 				}
 			}
 		};

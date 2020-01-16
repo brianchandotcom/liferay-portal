@@ -73,7 +73,7 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 
 			return renderURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;

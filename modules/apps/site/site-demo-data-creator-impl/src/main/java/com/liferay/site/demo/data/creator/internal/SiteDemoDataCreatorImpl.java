@@ -87,9 +87,9 @@ public class SiteDemoDataCreatorImpl implements SiteDemoDataCreator {
 			try {
 				_groupLocalService.deleteGroup(groupId);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(pe, pe);
+					_log.warn(portalException, portalException);
 				}
 			}
 

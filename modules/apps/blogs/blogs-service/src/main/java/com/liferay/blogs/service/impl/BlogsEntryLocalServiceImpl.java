@@ -584,8 +584,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		try {
 			return blogsEntryLocalService.deleteEntry(blogsEntry);
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -704,9 +704,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				BlogsConstants.SERVICE_NAME);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -1569,8 +1569,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				imageSelector.getImageTitle(), imageSelector.getImageMimeType(),
 				imageBytes);
 		}
-		catch (IOException ioe) {
-			throw new EntryCoverImageCropException(ioe);
+		catch (IOException ioException) {
+			throw new EntryCoverImageCropException(ioException);
 		}
 	}
 
@@ -1647,8 +1647,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				imageSelector.getImageTitle(), imageSelector.getImageMimeType(),
 				imageBytes);
 		}
-		catch (IOException ioe) {
-			throw new EntrySmallImageScaleException(ioe);
+		catch (IOException ioException) {
+			throw new EntrySmallImageScaleException(ioException);
 		}
 	}
 
@@ -1671,9 +1671,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			return false;
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return false;
@@ -1692,9 +1692,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return _portletFileRepository.getPortletFileEntry(
 				groupId, folderId, fileName);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return null;
@@ -1753,11 +1753,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		try {
 			return group.getDescriptiveName(locale);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				"Unable to get descriptive name for group " +
 					group.getGroupId(),
-				pe);
+				portalException);
 		}
 
 		return StringPool.BLANK;
@@ -2078,8 +2078,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				_log.info("Google ping response: " + response);
 			}
 		}
-		catch (IOException ioe) {
-			_log.error("Unable to ping Google at " + location, ioe);
+		catch (IOException ioException) {
+			_log.error("Unable to ping Google at " + location, ioException);
 		}
 	}
 
@@ -2123,8 +2123,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				try {
 					LinkbackProducerUtil.sendPingback(sourceUri, targetUri);
 				}
-				catch (Exception e) {
-					_log.error("Error while sending pingback " + targetUri, e);
+				catch (Exception exception) {
+					_log.error(
+						"Error while sending pingback " + targetUri, exception);
 				}
 			}
 		}
@@ -2206,8 +2207,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					validTrackbacks.add(trackback);
 				}
 			}
-			catch (Exception e) {
-				_log.error("Error while sending trackback at " + trackback, e);
+			catch (Exception exception) {
+				_log.error(
+					"Error while sending trackback at " + trackback, exception);
 			}
 		}
 

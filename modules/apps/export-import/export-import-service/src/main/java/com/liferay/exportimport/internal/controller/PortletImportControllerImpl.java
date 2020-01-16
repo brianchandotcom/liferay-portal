@@ -466,16 +466,19 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 					element = preferencesDocument.getRootElement();
 				}
-				catch (DocumentException de) {
-					ExportImportDocumentException eide =
-						new ExportImportDocumentException(de);
+				catch (DocumentException documentException) {
+					ExportImportDocumentException
+						exportImportDocumentException =
+							new ExportImportDocumentException(
+								documentException);
 
-					eide.setPortletId(portletDataContext.getPortletId());
-					eide.setType(
+					exportImportDocumentException.setPortletId(
+						portletDataContext.getPortletId());
+					exportImportDocumentException.setType(
 						ExportImportDocumentException.
 							PORTLET_PREFERENCES_IMPORT);
 
-					throw eide;
+					throw exportImportDocumentException;
 				}
 
 				long ownerId = GetterUtil.getLong(
@@ -692,12 +695,12 @@ public class PortletImportControllerImpl implements PortletImportController {
 				expandoTable = _expandoTableLocalService.getDefaultTable(
 					portletDataContext.getCompanyId(), className);
 			}
-			catch (NoSuchTableException nste) {
+			catch (NoSuchTableException noSuchTableException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nste, nste);
+					_log.debug(noSuchTableException, noSuchTableException);
 				}
 
 				expandoTable = _expandoTableLocalService.addDefaultTable(
@@ -970,14 +973,16 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 			portletElement = portletDocument.getRootElement();
 		}
-		catch (DocumentException de) {
-			ExportImportDocumentException eide =
-				new ExportImportDocumentException(de);
+		catch (DocumentException documentException) {
+			ExportImportDocumentException exportImportDocumentException =
+				new ExportImportDocumentException(documentException);
 
-			eide.setPortletId(portletDataContext.getPortletId());
-			eide.setType(ExportImportDocumentException.PORTLET_DATA_IMPORT);
+			exportImportDocumentException.setPortletId(
+				portletDataContext.getPortletId());
+			exportImportDocumentException.setType(
+				ExportImportDocumentException.PORTLET_DATA_IMPORT);
 
-			throw eide;
+			throw exportImportDocumentException;
 		}
 
 		_permissionImporter.clearCache();
@@ -1103,21 +1108,22 @@ public class PortletImportControllerImpl implements PortletImportController {
 						portletDataContext, serviceDocument.getRootElement());
 				}
 			}
-			catch (DocumentException de) {
-				ExportImportDocumentException eide =
-					new ExportImportDocumentException(de);
+			catch (DocumentException documentException) {
+				ExportImportDocumentException exportImportDocumentException =
+					new ExportImportDocumentException(documentException);
 
-				eide.setPortletId(portletDataContext.getPortletId());
-				eide.setType(
+				exportImportDocumentException.setPortletId(
+					portletDataContext.getPortletId());
+				exportImportDocumentException.setType(
 					ExportImportDocumentException.PORTLET_SERVICE_IMPORT);
 
-				throw eide;
+				throw exportImportDocumentException;
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				throw new PortletDataException(
 					"Unable to import service preferences for portlet " +
 						portletDataContext.getPortletId(),
-					pe);
+					portalException);
 			}
 		}
 
@@ -1189,12 +1195,15 @@ public class PortletImportControllerImpl implements PortletImportController {
 						ownerId, ownerType, plid, serviceName);
 			}
 		}
-		catch (NoSuchPortletPreferencesException nsppe) {
+		catch (NoSuchPortletPreferencesException
+					noSuchPortletPreferencesException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsppe, nsppe);
+				_log.debug(
+					noSuchPortletPreferencesException,
+					noSuchPortletPreferencesException);
 			}
 
 			portletPreferences =
@@ -1390,9 +1399,9 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 			rootElement = document.getRootElement();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new LARFileException(
-				LARFileException.TYPE_INVALID_MANIFEST, e);
+				LARFileException.TYPE_INVALID_MANIFEST, exception);
 		}
 
 		// Build compatibility
@@ -1501,15 +1510,16 @@ public class PortletImportControllerImpl implements PortletImportController {
 						_portal.getSiteGroupId(groupId),
 						sourceAvailableLocale)) {
 
-					LocaleException le = new LocaleException(
+					LocaleException localeException = new LocaleException(
 						LocaleException.TYPE_EXPORT_IMPORT);
 
-					le.setSourceAvailableLocales(sourceAvailableLocales);
-					le.setTargetAvailableLocales(
+					localeException.setSourceAvailableLocales(
+						sourceAvailableLocales);
+					localeException.setTargetAvailableLocales(
 						LanguageUtil.getAvailableLocales(
 							_portal.getSiteGroupId(groupId)));
 
-					throw le;
+					throw localeException;
 				}
 			}
 		}

@@ -92,10 +92,10 @@ public class RandomLayoutAction extends Action {
 				httpServletRequest.setAttribute(WebKeys.LAYOUT, randomLayout);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new ActionException(e);
+			throw new ActionException(exception);
 		}
 	}
 

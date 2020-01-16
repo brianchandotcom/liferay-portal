@@ -349,11 +349,11 @@ public class DDMFormPagesTemplateContextFactory {
 			_ddmFormEvaluatorEvaluateResponse = _ddmFormEvaluator.evaluate(
 				formEvaluatorEvaluateRequestBuilder.build());
 		}
-		catch (Exception e) {
-			_log.error("Unable to evaluate the form", e);
+		catch (Exception exception) {
+			_log.error("Unable to evaluate the form", exception);
 
 			throw new IllegalStateException(
-				"Unexpected error occurred during form evaluation", e);
+				"Unexpected error occurred during form evaluation", exception);
 		}
 	}
 

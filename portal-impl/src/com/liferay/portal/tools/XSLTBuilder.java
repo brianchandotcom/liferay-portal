@@ -107,8 +107,8 @@ public class XSLTBuilder {
 				new DocumentSource(document),
 				new StreamResult(new FileOutputStream(html)));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

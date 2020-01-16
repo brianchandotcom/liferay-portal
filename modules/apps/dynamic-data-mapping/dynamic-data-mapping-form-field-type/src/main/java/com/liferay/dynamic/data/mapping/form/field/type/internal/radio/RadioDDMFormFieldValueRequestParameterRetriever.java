@@ -59,9 +59,9 @@ public class RadioDDMFormFieldValueRequestParameterRetriever
 
 			return predefinedValueJSONArray.getString(0);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse JSON", jsone);
+				_log.debug("Unable to parse JSON", jsonException);
 			}
 		}
 

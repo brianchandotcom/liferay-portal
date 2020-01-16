@@ -112,9 +112,9 @@ public class LdapUtil {
 				return valueObj.toString();
 			}
 		}
-		catch (LdapInvalidDnException lide) {
+		catch (LdapInvalidDnException ldapInvalidDnException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(lide, lide);
+				_log.debug(ldapInvalidDnException, ldapInvalidDnException);
 			}
 		}
 

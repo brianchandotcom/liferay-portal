@@ -89,8 +89,9 @@ public class DestinationAwaitClassTestRule
 
 								destination.unregister(this);
 							}
-							catch (InterruptedException ie) {
-								ReflectionUtil.throwException(ie);
+							catch (InterruptedException interruptedException) {
+								ReflectionUtil.throwException(
+									interruptedException);
 							}
 						}
 					}

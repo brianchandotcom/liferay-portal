@@ -77,9 +77,11 @@ public class AlloyPermission {
 		try {
 			ResourceActionsUtil.checkAction(name, actionId);
 		}
-		catch (NoSuchResourceActionException nsrae) {
+		catch (NoSuchResourceActionException noSuchResourceActionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsrae, nsrae);
+				_log.debug(
+					noSuchResourceActionException,
+					noSuchResourceActionException);
 			}
 
 			return true;
@@ -193,7 +195,7 @@ public class AlloyPermission {
 
 			baseModel = alloyServiceInvoker.fetchModel(classPK);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return BeanPropertiesUtil.getLongSilent(baseModel, "userId");

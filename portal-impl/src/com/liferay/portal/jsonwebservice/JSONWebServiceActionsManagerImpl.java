@@ -201,7 +201,7 @@ public class JSONWebServiceActionsManagerImpl
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(14);
 
@@ -218,7 +218,7 @@ public class JSONWebServiceActionsManagerImpl
 				sb.append(", path=");
 				sb.append(path);
 				sb.append("} due to ");
-				sb.append(e.getMessage());
+				sb.append(exception.getMessage());
 
 				_log.warn(sb.toString());
 			}
@@ -243,7 +243,7 @@ public class JSONWebServiceActionsManagerImpl
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			StringBundler sb = new StringBundler(17);
 
 			sb.append("Something went wrong attempting to register service ");
@@ -262,7 +262,7 @@ public class JSONWebServiceActionsManagerImpl
 			sb.append(",method=");
 			sb.append(method);
 			sb.append("} due to ");
-			sb.append(e.getMessage());
+			sb.append(exception.getMessage());
 
 			_log.warn(sb.toString());
 		}

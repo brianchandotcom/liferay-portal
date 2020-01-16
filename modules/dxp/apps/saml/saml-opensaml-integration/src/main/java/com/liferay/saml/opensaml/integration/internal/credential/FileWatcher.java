@@ -102,7 +102,9 @@ public class FileWatcher implements Closeable {
 				try {
 					watchKey = _watchService.take();
 				}
-				catch (ClosedWatchServiceException | InterruptedException e) {
+				catch (ClosedWatchServiceException | InterruptedException
+							exception) {
+
 					return;
 				}
 
@@ -146,7 +148,7 @@ public class FileWatcher implements Closeable {
 						notificationTimeout, notificationTimeUnit);
 				}
 				catch (ExecutionException | InterruptedException |
-					   TimeoutException e) {
+					   TimeoutException exception) {
 
 					return;
 				}
@@ -161,7 +163,7 @@ public class FileWatcher implements Closeable {
 		try {
 			_watchService.close();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		_notificationsExecutorService.shutdown();

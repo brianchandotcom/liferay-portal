@@ -158,8 +158,8 @@ public class RemoteFabricStatus implements FabricStatus {
 						objectName, mxBeanInterface, processCallableExecutor));
 			}
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 
 		return list;

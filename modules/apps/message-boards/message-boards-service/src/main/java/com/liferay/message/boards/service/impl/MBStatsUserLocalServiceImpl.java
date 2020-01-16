@@ -66,7 +66,7 @@ public class MBStatsUserLocalServiceImpl
 		try {
 			mbStatsUserPersistence.update(statsUser);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
@@ -78,7 +78,7 @@ public class MBStatsUserLocalServiceImpl
 				groupId, userId, false);
 
 			if (statsUser == null) {
-				throw se;
+				throw systemException;
 			}
 		}
 

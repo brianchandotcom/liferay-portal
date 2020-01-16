@@ -64,8 +64,8 @@ public class DefaultElasticsearchDocumentFactory
 		try {
 			return Strings.toString(translate(legacyDocument));
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -74,8 +74,8 @@ public class DefaultElasticsearchDocumentFactory
 		try {
 			return translate(document);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

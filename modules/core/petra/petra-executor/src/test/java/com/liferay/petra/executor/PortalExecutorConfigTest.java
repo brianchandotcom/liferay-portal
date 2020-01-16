@@ -50,10 +50,10 @@ public class PortalExecutorConfigTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"To ensure FIFO, core pool size must be 1 or greater",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		String name = "name";

@@ -118,8 +118,8 @@ public class UpgradeUnsupportedGuestPermissions implements UpgradeStep {
 
 			actionableDynamicQuery.performActions();
 		}
-		catch (PortalException pe) {
-			throw new UpgradeException(pe);
+		catch (PortalException portalException) {
+			throw new UpgradeException(portalException);
 		}
 	}
 

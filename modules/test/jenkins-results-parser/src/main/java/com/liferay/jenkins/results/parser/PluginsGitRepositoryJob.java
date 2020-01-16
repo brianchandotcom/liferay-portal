@@ -99,9 +99,9 @@ public class PluginsGitRepositoryJob
 			try {
 				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new RuntimeException(
-					"Unable to get build properties", ioe);
+					"Unable to get build properties", ioException);
 			}
 		}
 

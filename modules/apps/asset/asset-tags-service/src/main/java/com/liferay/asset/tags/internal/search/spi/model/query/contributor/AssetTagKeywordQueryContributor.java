@@ -60,8 +60,8 @@ public class AssetTagKeywordQueryContributor
 			try {
 				booleanQuery.add(nameQuery, BooleanClauseOccur.SHOULD);
 			}
-			catch (ParseException pe) {
-				throw new SystemException(pe);
+			catch (ParseException parseException) {
+				throw new SystemException(parseException);
 			}
 		}
 	}

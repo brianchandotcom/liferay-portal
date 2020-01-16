@@ -282,11 +282,13 @@ public class WikiPageStagedModelDataHandlerTest
 					stagedModelDataHandler.deleteStagedModel(
 						dependentStagedModel);
 				}
-				catch (NoSuchModelException nsme) {
-					if (!(nsme instanceof NoSuchFileEntryException) &&
-						!(nsme instanceof NoSuchFolderException)) {
+				catch (NoSuchModelException noSuchModelException) {
+					if (!(noSuchModelException instanceof
+							NoSuchFileEntryException) &&
+						!(noSuchModelException instanceof
+							NoSuchFolderException)) {
 
-						throw nsme;
+						throw noSuchModelException;
 					}
 				}
 			}

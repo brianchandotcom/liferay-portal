@@ -60,11 +60,11 @@ public class MicrosoftGeolocationProvider implements GeolocationProvider {
 		try {
 			return _getGeolocationAddress(geolocationPosition);
 		}
-		catch (GeolocationException ge) {
-			throw ge;
+		catch (GeolocationException geolocationException) {
+			throw geolocationException;
 		}
-		catch (Exception e) {
-			throw new GeolocationException(e);
+		catch (Exception exception) {
+			throw new GeolocationException(exception);
 		}
 	}
 
@@ -83,11 +83,11 @@ public class MicrosoftGeolocationProvider implements GeolocationProvider {
 		try {
 			return _getGeolocationPosition(geolocationAddress);
 		}
-		catch (GeolocationException ge) {
-			throw ge;
+		catch (GeolocationException geolocationException) {
+			throw geolocationException;
 		}
-		catch (Exception e) {
-			throw new GeolocationException(e);
+		catch (Exception exception) {
+			throw new GeolocationException(exception);
 		}
 	}
 

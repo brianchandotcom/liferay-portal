@@ -110,8 +110,8 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

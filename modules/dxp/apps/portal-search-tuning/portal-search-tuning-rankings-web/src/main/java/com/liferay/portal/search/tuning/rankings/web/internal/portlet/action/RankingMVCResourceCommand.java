@@ -68,10 +68,10 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 
 			return false;
 		}
-		catch (RuntimeException re) {
-			re.printStackTrace();
+		catch (RuntimeException runtimeException) {
+			runtimeException.printStackTrace();
 
-			throw re;
+			throw runtimeException;
 		}
 	}
 
@@ -177,8 +177,8 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse, jsonObject);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

@@ -54,7 +54,7 @@ public class LicenseInstaller implements ArtifactInstaller {
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

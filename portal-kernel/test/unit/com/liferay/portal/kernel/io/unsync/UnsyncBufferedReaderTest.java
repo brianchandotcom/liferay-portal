@@ -121,7 +121,7 @@ public class UnsyncBufferedReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -129,7 +129,7 @@ public class UnsyncBufferedReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -137,7 +137,7 @@ public class UnsyncBufferedReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -145,7 +145,7 @@ public class UnsyncBufferedReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -153,7 +153,7 @@ public class UnsyncBufferedReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -161,7 +161,7 @@ public class UnsyncBufferedReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -169,7 +169,7 @@ public class UnsyncBufferedReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		unsyncBufferedReader.close();
@@ -191,14 +191,14 @@ public class UnsyncBufferedReaderTest {
 			new UnsyncBufferedReader(new StringReader(""), 0);
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		try {
 			new UnsyncBufferedReader(new StringReader(""), -1);
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 	}
 
@@ -222,7 +222,7 @@ public class UnsyncBufferedReaderTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		Assert.assertEquals(-1, unsyncBufferedReader.markLimitIndex);
@@ -274,7 +274,7 @@ public class UnsyncBufferedReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		// Shuffle
@@ -420,7 +420,7 @@ public class UnsyncBufferedReaderTest {
 		try {
 			unsyncBufferedReader.skip(-1);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		// Load data into buffer

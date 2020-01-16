@@ -41,8 +41,8 @@ public class CompanyContextProvider implements ContextProvider<Company> {
 			return _portal.getCompany(
 				ContextProviderUtil.getHttpServletRequest(message));
 		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
+		catch (PortalException portalException) {
+			throw new ServerErrorException(500, portalException);
 		}
 	}
 

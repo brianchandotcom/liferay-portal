@@ -30,8 +30,8 @@ public class CleanServiceBuilderTask extends BaseTask {
 		try {
 			_cleanServiceBuilderCommand.execute(dbSupportArgs);
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

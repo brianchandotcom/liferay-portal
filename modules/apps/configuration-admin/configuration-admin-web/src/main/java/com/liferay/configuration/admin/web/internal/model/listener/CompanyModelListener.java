@@ -42,8 +42,8 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		try {
 			_clean(company);
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 
 		super.onAfterRemove(company);
@@ -67,9 +67,9 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 			try {
 				configuration.delete();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(ioe, ioe);
+					_log.warn(ioException, ioException);
 				}
 			}
 		}

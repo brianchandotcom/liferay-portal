@@ -85,7 +85,7 @@ public class StrutsResourceBundle extends ResourceBundle {
 			try {
 				return parent.getObject(key);
 			}
-			catch (MissingResourceException mre) {
+			catch (MissingResourceException missingResourceException) {
 				return null;
 			}
 		}

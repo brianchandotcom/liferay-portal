@@ -53,9 +53,9 @@ public class ContextODataMatcher implements ODataMatcher<Context> {
 
 			return predicate.test(pattern);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PortalException(
-				"Unable to match filter: " + e.getMessage(), e);
+				"Unable to match filter: " + exception.getMessage(), exception);
 		}
 	}
 
@@ -112,9 +112,9 @@ public class ContextODataMatcher implements ODataMatcher<Context> {
 			return (Predicate<Context>)_expressionConvert.convert(
 				filter.getExpression(), LocaleUtil.getDefault(), _entityModel);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new InvalidFilterException(
-				"Invalid filter: " + e.getMessage(), e);
+				"Invalid filter: " + exception.getMessage(), exception);
 		}
 	}
 

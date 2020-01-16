@@ -611,9 +611,9 @@ public class AssigneeUserResourceImpl
 				}
 			};
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 
 			return null;

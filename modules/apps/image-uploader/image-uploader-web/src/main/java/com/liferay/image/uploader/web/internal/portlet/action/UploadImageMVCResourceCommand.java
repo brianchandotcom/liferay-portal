@@ -75,16 +75,16 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 					flashMagicBytesUtilResult.getInputStream());
 			}
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfee, nsfee);
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to serve resource", e);
+		catch (Exception exception) {
+			_log.error("Unable to serve resource", exception);
 		}
 	}
 

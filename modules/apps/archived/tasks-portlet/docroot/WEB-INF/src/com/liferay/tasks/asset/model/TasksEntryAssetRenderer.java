@@ -123,7 +123,7 @@ public class TasksEntryAssetRenderer extends BaseJSPAssetRenderer<TasksEntry> {
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

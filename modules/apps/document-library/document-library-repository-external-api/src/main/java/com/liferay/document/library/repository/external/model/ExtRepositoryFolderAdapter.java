@@ -85,8 +85,8 @@ public class ExtRepositoryFolderAdapter
 
 				return folder.getName();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -102,8 +102,8 @@ public class ExtRepositoryFolderAdapter
 				return parentFolder.getFolderId();
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -181,9 +181,10 @@ public class ExtRepositoryFolderAdapter
 		try {
 			return RepositoryProviderUtil.getRepository(getRepositoryId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
-				"Unable to get repository for folder " + getFolderId(), pe);
+				"Unable to get repository for folder " + getFolderId(),
+				portalException);
 		}
 	}
 

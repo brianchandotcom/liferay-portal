@@ -32,8 +32,8 @@ public class PortalLoginModule extends BasicLoginModule {
 			return (Principal)InstanceFactory.newInstance(
 				_WLS_USER_IMPL, String.class, name);
 		}
-		catch (Exception e) {
-			throw new LoginException(e.getMessage());
+		catch (Exception exception) {
+			throw new LoginException(exception.getMessage());
 		}
 	}
 

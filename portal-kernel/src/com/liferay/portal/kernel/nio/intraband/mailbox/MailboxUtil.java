@@ -67,8 +67,8 @@ public class MailboxUtil {
 
 			return byteBuffer.getLong();
 		}
-		catch (Exception e) {
-			throw new MailboxException(e);
+		catch (Exception exception) {
+			throw new MailboxException(exception);
 		}
 	}
 
@@ -118,7 +118,7 @@ public class MailboxUtil {
 
 					_mailMap.remove(receiptStub.getReceipt());
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 				}
 			}
 		}

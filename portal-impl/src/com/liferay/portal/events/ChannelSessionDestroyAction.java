@@ -39,7 +39,7 @@ public class ChannelSessionDestroyAction extends SessionAction {
 		try {
 			user = (User)session.getAttribute(WebKeys.USER);
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			return;
 		}
 
@@ -64,17 +64,17 @@ public class ChannelSessionDestroyAction extends SessionAction {
 				ChannelHubManagerUtil.destroyChannel(
 					user.getCompanyId(), user.getUserId());
 			}
-			catch (ChannelException ce) {
+			catch (ChannelException channelException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"User channel " + user.getUserId() +
 							" is already unregistered",
-						ce);
+						channelException);
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

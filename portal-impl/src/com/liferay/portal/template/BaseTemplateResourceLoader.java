@@ -118,13 +118,13 @@ public abstract class BaseTemplateResourceLoader
 					return templateResource;
 				}
 			}
-			catch (TemplateException te) {
+			catch (TemplateException templateException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
 							"Unable to parse template ", templateId,
 							" with parser ", templateResourceParser),
-						te);
+						templateException);
 				}
 			}
 		}

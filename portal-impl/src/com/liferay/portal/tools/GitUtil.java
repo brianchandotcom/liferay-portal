@@ -182,8 +182,8 @@ public class GitUtil {
 				System.out.println(fileName);
 			}
 		}
-		catch (Exception e) {
-			ArgumentsUtil.processMainException(arguments, e);
+		catch (Exception exception) {
+			ArgumentsUtil.processMainException(arguments, exception);
 		}
 	}
 
@@ -337,15 +337,15 @@ public class GitUtil {
 		try {
 			process = runtime.exec(gitCommand);
 		}
-		catch (IOException ioe) {
-			String errorMessage = ioe.getMessage();
+		catch (IOException ioException) {
+			String errorMessage = ioException.getMessage();
 
 			if (errorMessage.contains("Cannot run program")) {
 				throw new GitException(
 					"Add Git to your PATH system variable first");
 			}
 
-			throw ioe;
+			throw ioException;
 		}
 
 		return new UnsyncBufferedReader(

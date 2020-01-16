@@ -64,8 +64,8 @@ public class QueryContributors {
 		try {
 			booleanQuery.add(query, booleanClauseOccur);
 		}
-		catch (ParseException pe) {
-			throw new RuntimeException(pe);
+		catch (ParseException parseException) {
+			throw new RuntimeException(parseException);
 		}
 	}
 

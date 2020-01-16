@@ -433,9 +433,10 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		try {
 			return RepositoryProviderUtil.getRepository(getRepositoryId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
-				"Unable to get repository for folder " + getFolderId(), pe);
+				"Unable to get repository for folder " + getFolderId(),
+				portalException);
 		}
 	}
 

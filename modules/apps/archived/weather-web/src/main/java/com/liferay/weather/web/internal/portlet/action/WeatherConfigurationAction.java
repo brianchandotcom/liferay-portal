@@ -57,9 +57,10 @@ public class WeatherConfigurationAction extends DefaultConfigurationAction {
 		try {
 			super.processAction(portletConfig, actionRequest, actionResponse);
 		}
-		catch (ValidatorException ve) {
+		catch (ValidatorException validatorException) {
 			SessionErrors.add(
-				actionRequest, ValidatorException.class.getName(), ve);
+				actionRequest, ValidatorException.class.getName(),
+				validatorException);
 		}
 	}
 

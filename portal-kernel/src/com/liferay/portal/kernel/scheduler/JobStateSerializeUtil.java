@@ -64,9 +64,10 @@ public class JobStateSerializeUtil {
 		try {
 			triggerState = TriggerState.valueOf(triggerStateString);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			throw new IllegalStateException(
-				"Invalid value " + triggerStateString, iae);
+				"Invalid value " + triggerStateString,
+				illegalArgumentException);
 		}
 
 		int exceptionsMaxSize = (Integer)jobStateMap.get(

@@ -105,11 +105,11 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 					return serviceRegistration;
 				});
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to register SAP entry scope descriptor finder for " +
 					"company " + companyId,
-				e);
+				exception);
 		}
 	}
 
@@ -156,7 +156,7 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 				serviceRegistration.setProperties(
 					_buildScopeDescriptorProperties(entry.getKey()));
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 
 				// Concurrent unregistration from register(long)
 
@@ -219,7 +219,7 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 				serviceRegistration.setProperties(
 					_buildScopeDescriptorProperties(entry.getKey()));
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 
 				// Concurrent unregistration from register(long)
 

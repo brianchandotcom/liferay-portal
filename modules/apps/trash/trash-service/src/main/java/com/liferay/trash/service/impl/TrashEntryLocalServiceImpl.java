@@ -186,8 +186,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 							trashHandler.deleteTrashEntry(
 								trashEntry.getClassPK());
 						}
-						catch (Exception e) {
-							_log.error(e, e);
+						catch (Exception exception) {
+							_log.error(exception, exception);
 						}
 					}
 				}
@@ -219,8 +219,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 					try {
 						trashHandler.deleteTrashEntry(entry.getClassPK());
 					}
-					catch (Exception e) {
-						_log.error(e, e);
+					catch (Exception exception) {
+						_log.error(exception, exception);
 					}
 				}
 			}
@@ -395,8 +395,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 			return indexer.search(searchContext);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -418,8 +418,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 			return new BaseModelSearchResult<>(trashEntries, hits.getLength());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -512,7 +512,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 				entries.add(entry);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(

@@ -177,16 +177,16 @@ public abstract class BaseSalesforceClientImpl implements SalesforceClient {
 
 					Files.createFile(filePath);
 				}
-				catch (IOException ioe) {
-					_logger.error("Unable to create log file", ioe);
+				catch (IOException ioException) {
+					_logger.error("Unable to create log file", ioException);
 				}
 			}
 
 			try {
 				_connectorConfig.setTraceFile(filePathName);
 			}
-			catch (FileNotFoundException fnfe) {
-				_logger.error("File not found", fnfe);
+			catch (FileNotFoundException fileNotFoundException) {
+				_logger.error("File not found", fileNotFoundException);
 			}
 		}
 	}
@@ -240,7 +240,7 @@ public abstract class BaseSalesforceClientImpl implements SalesforceClient {
 						sessionSecondsValid);
 				}
 			}
-			catch (ConnectionException ce) {
+			catch (ConnectionException connectionException) {
 				if (_logger.isInfoEnabled()) {
 					_logger.info("Session has expired and will be renewed now");
 				}

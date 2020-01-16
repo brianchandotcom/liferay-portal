@@ -41,8 +41,8 @@ public class MBCategoryModelVisibilityContributor
 		try {
 			mbCategory = mbCategoryLocalService.getCategory(classPK);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 
 		return isVisible(mbCategory.getStatus(), status);

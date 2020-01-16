@@ -70,8 +70,8 @@ public class WhoisWebCacheItem implements WebCacheItem {
 				StringUtil.replace(
 					StringUtil.trim(sb.toString()), "\n\n", "\n"));
 		}
-		catch (Exception e) {
-			throw new WebCacheException(_domain + " " + e.toString());
+		catch (Exception exception) {
+			throw new WebCacheException(_domain + " " + exception.toString());
 		}
 
 		return whois;

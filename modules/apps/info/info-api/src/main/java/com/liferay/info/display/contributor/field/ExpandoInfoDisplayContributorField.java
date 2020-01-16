@@ -121,8 +121,8 @@ public class ExpandoInfoDisplayContributorField
 
 				attributeValue = sb.toString();
 			}
-			catch (JSONException jsone) {
-				_log.error("Unable to parse geolocation JSON", jsone);
+			catch (JSONException jsonException) {
+				_log.error("Unable to parse geolocation JSON", jsonException);
 			}
 		}
 		else if (attributeType == ExpandoColumnConstants.INTEGER_ARRAY) {

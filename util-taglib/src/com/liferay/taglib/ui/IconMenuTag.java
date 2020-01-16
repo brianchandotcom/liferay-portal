@@ -84,8 +84,8 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		try {
 			return processEndTag();
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 		finally {
 			_cssClass = null;

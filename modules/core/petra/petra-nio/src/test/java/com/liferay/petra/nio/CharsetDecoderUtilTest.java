@@ -57,8 +57,8 @@ public class CharsetDecoderUtilTest {
 
 			Assert.fail();
 		}
-		catch (MalformedInputException mie) {
-			Assert.assertEquals(1, mie.getInputLength());
+		catch (MalformedInputException malformedInputException) {
+			Assert.assertEquals(1, malformedInputException.getInputLength());
 		}
 
 		TestCharset testCharset = new TestCharset();

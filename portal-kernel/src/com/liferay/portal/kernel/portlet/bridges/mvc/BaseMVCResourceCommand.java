@@ -42,11 +42,11 @@ public abstract class BaseMVCResourceCommand implements MVCResourceCommand {
 
 			return !SessionErrors.isEmpty(resourceRequest);
 		}
-		catch (PortletException pe) {
-			throw pe;
+		catch (PortletException portletException) {
+			throw portletException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

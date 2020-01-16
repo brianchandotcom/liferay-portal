@@ -104,11 +104,11 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 		try {
 			exportImportLayouts(layoutIds, getExportParameterMap());
 		}
-		catch (PortletDataException pde) {
-			Throwable cause = pde.getCause();
+		catch (PortletDataException portletDataException) {
+			Throwable cause = portletDataException.getCause();
 
 			if (!(cause instanceof NullPointerException)) {
-				throw pde;
+				throw portletDataException;
 			}
 
 			StackTraceElement[] stackTrace = cause.getStackTrace();
@@ -120,7 +120,7 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 					stackTrace[0].getMethodName(),
 					"doImportReferenceStagedModel")) {
 
-				throw pde;
+				throw portletDataException;
 			}
 		}
 
@@ -250,8 +250,8 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 								zipReader.getEntryAsInputStream(zipEntry));
 						}
 					}
-					catch (Exception e) {
-						throw new RuntimeException(e);
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
 					}
 				});
 

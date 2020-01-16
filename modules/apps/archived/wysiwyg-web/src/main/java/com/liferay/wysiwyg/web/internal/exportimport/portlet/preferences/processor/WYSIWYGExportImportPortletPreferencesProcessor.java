@@ -66,10 +66,10 @@ public class WYSIWYGExportImportPortletPreferencesProcessor
 					message, "/documents/" + portletDataContext.getGroupId(),
 					"/documents/[$groupId$]"));
 		}
-		catch (ReadOnlyException roe) {
+		catch (ReadOnlyException readOnlyException) {
 			throw new PortletDataException(
 				"Unable to update WYSIWYG portlet preferences during export",
-				roe);
+				readOnlyException);
 		}
 
 		return portletPreferences;
@@ -91,10 +91,10 @@ public class WYSIWYGExportImportPortletPreferencesProcessor
 					message, "/documents/[$groupId$]",
 					"/documents/" + portletDataContext.getGroupId()));
 		}
-		catch (ReadOnlyException roe) {
+		catch (ReadOnlyException readOnlyException) {
 			throw new PortletDataException(
 				"Unable to update WYSIWYG portlet preferences during import",
-				roe);
+				readOnlyException);
 		}
 
 		return portletPreferences;

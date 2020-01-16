@@ -77,9 +77,9 @@ public class ContactModelListener extends BaseEntityModelListener<Contact> {
 
 			return isExcluded(analyticsConfiguration, user);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			return true;

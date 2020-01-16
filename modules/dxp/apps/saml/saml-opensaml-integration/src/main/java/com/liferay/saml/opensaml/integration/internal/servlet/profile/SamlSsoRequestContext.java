@@ -76,7 +76,7 @@ public class SamlSsoRequestContext implements Serializable {
 		try {
 			return _userLocalService.fetchUserById(_userId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

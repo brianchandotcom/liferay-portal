@@ -103,8 +103,8 @@ public class LiferayTypeMappingsModifiedDateFieldTest {
 			_liferayIndexFixture.index(
 				Collections.singletonMap(Field.MODIFIED_DATE, value));
 		}
-		catch (MapperParsingException mpe) {
-			throw (Exception)mpe.getCause();
+		catch (MapperParsingException mapperParsingException) {
+			throw (Exception)mapperParsingException.getCause();
 		}
 	}
 

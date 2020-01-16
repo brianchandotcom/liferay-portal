@@ -70,8 +70,8 @@ public class OutputStreamWriterTest {
 
 				Assert.fail();
 			}
-			catch (IOException ioe) {
-				Assert.assertEquals("Stream closed", ioe.getMessage());
+			catch (IOException ioException) {
+				Assert.assertEquals("Stream closed", ioException.getMessage());
 			}
 		}
 
@@ -184,9 +184,10 @@ public class OutputStreamWriterTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"Output buffer size 3 is less than 4", iae.getMessage());
+				"Output buffer size 3 is less than 4",
+				illegalArgumentException.getMessage());
 		}
 	}
 
@@ -264,8 +265,8 @@ public class OutputStreamWriterTest {
 		try {
 			outputStreamWriter.close();
 		}
-		catch (MalformedInputException mie) {
-			Assert.assertEquals(1, mie.getInputLength());
+		catch (MalformedInputException malformedInputException) {
+			Assert.assertEquals(1, malformedInputException.getInputLength());
 		}
 	}
 
@@ -290,8 +291,9 @@ public class OutputStreamWriterTest {
 
 			Assert.fail();
 		}
-		catch (UnmappableCharacterException uce) {
-			Assert.assertEquals(1, uce.getInputLength());
+		catch (UnmappableCharacterException unmappableCharacterException) {
+			Assert.assertEquals(
+				1, unmappableCharacterException.getInputLength());
 		}
 	}
 

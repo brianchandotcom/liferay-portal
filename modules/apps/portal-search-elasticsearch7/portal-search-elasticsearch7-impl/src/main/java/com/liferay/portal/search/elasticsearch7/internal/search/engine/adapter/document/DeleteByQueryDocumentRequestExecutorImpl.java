@@ -87,8 +87,8 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 			return restHighLevelClient.deleteByQuery(
 				deleteByQueryRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

@@ -197,7 +197,7 @@ public class NettyFabricClient implements FabricClient {
 						_nettyFabricClientConfig.getExecutionTimeout(),
 						TimeUnit.MILLISECONDS);
 				}
-				catch (TimeoutException te) {
+				catch (TimeoutException timeoutException) {
 					fabricWorker.write(_runtimeHaltProcessCallable);
 
 					noticeableFuture.get(
@@ -211,14 +211,15 @@ public class NettyFabricClient implements FabricClient {
 
 					if (cause instanceof TerminationProcessException) {
 						if (_log.isWarnEnabled()) {
-							TerminationProcessException tpe =
-								(TerminationProcessException)cause;
+							TerminationProcessException
+								terminationProcessException =
+									(TerminationProcessException)cause;
 
 							_log.warn(
 								StringBundler.concat(
 									"Forcibly terminate fabric worker ",
 									entry.getKey(), " with exit code ",
-									tpe.getExitCode()));
+									terminationProcessException.getExitCode()));
 						}
 
 						continue;

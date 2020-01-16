@@ -96,10 +96,10 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				writerInterceptorContext.getEntity(),
 				nestedFieldsContext.getFieldNames(), nestedFieldsContext);
 		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+		catch (Exception exception) {
+			_log.error(exception.getMessage(), exception);
 
-			throw new WebApplicationException(e);
+			throw new WebApplicationException(exception);
 		}
 
 		writerInterceptorContext.proceed();
@@ -129,8 +129,8 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 					"(&(api.version=*)(osgi.jaxrs.resource=true))"),
 				_nestedFieldServiceTrackerCustomizer);
 		}
-		catch (InvalidSyntaxException ise) {
-			throw new RuntimeException(ise);
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			throw new RuntimeException(invalidSyntaxException);
 		}
 
 		_serviceTracker.open();
@@ -316,9 +316,9 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 						return itemField.get(item);
 					}
 				}
-				catch (NoSuchFieldException nsfe) {
+				catch (NoSuchFieldException noSuchFieldException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(nsfe.getMessage());
+						_log.debug(noSuchFieldException.getMessage());
 					}
 				}
 			}
@@ -421,9 +421,9 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 				parentParameters = parentResourceMethod.getParameters();
 			}
-			catch (NoSuchMethodException nsme) {
+			catch (NoSuchMethodException noSuchMethodException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsme.getMessage());
+					_log.debug(noSuchMethodException.getMessage());
 				}
 			}
 

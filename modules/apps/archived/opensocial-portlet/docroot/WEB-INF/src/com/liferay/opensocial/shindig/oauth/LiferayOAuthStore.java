@@ -129,9 +129,9 @@ public class LiferayOAuthStore implements OAuthStore {
 		try {
 			OAuthTokenLocalServiceUtil.deleteOAuthToken(oAuthToken);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new GadgetException(
-				GadgetException.Code.INTERNAL_SERVER_ERROR, e);
+				GadgetException.Code.INTERNAL_SERVER_ERROR, exception);
 		}
 	}
 
@@ -147,9 +147,9 @@ public class LiferayOAuthStore implements OAuthStore {
 		try {
 			user = UserLocalServiceUtil.getUser(userId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new GadgetException(
-				GadgetException.Code.INTERNAL_SERVER_ERROR, e);
+				GadgetException.Code.INTERNAL_SERVER_ERROR, exception);
 		}
 
 		Gadget gadget = null;
@@ -158,9 +158,9 @@ public class LiferayOAuthStore implements OAuthStore {
 			gadget = GadgetLocalServiceUtil.fetchGadget(
 				user.getCompanyId(), securityToken.getAppUrl());
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			throw new GadgetException(
-				GadgetException.Code.INTERNAL_SERVER_ERROR, se);
+				GadgetException.Code.INTERNAL_SERVER_ERROR, systemException);
 		}
 
 		String gadgetKey = StringPool.BLANK;
@@ -181,9 +181,9 @@ public class LiferayOAuthStore implements OAuthStore {
 				tokenInfo.getTokenSecret(), tokenInfo.getSessionHandle(),
 				tokenInfo.getTokenExpireMillis());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new GadgetException(
-				GadgetException.Code.INTERNAL_SERVER_ERROR, e);
+				GadgetException.Code.INTERNAL_SERVER_ERROR, exception);
 		}
 	}
 
@@ -197,9 +197,9 @@ public class LiferayOAuthStore implements OAuthStore {
 			oAuthConsumer = OAuthConsumerLocalServiceUtil.fetchOAuthConsumer(
 				securityToken.getAppId(), serviceName);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			throw new GadgetException(
-				GadgetException.Code.INTERNAL_SERVER_ERROR, se);
+				GadgetException.Code.INTERNAL_SERVER_ERROR, systemException);
 		}
 
 		if (oAuthConsumer == null) {
@@ -234,9 +234,9 @@ public class LiferayOAuthStore implements OAuthStore {
 				userId, securityToken.getAppId(), serviceName,
 				securityToken.getModuleId(), tokenName);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			throw new GadgetException(
-				GadgetException.Code.INTERNAL_SERVER_ERROR, se);
+				GadgetException.Code.INTERNAL_SERVER_ERROR, systemException);
 		}
 
 		return oAuthToken;

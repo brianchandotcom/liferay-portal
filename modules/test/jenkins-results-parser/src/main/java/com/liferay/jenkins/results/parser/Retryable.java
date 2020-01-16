@@ -46,16 +46,16 @@ public abstract class Retryable<T> {
 			try {
 				return execute();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				retryCount++;
 
 				if (_verbose) {
-					System.out.println("An error has occurred: " + e);
+					System.out.println("An error has occurred: " + exception);
 				}
 
 				if ((_maxRetries >= 0) && (retryCount > _maxRetries)) {
 					if (_exceptionOnFail) {
-						throw e;
+						throw exception;
 					}
 
 					return null;
@@ -75,8 +75,8 @@ public abstract class Retryable<T> {
 		try {
 			Thread.sleep(duration);
 		}
-		catch (InterruptedException ie) {
-			throw new RuntimeException(ie);
+		catch (InterruptedException interruptedException) {
+			throw new RuntimeException(interruptedException);
 		}
 	}
 

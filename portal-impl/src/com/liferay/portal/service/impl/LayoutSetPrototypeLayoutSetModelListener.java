@@ -64,12 +64,12 @@ public class LayoutSetPrototypeLayoutSetModelListener
 				return;
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return;
@@ -89,8 +89,8 @@ public class LayoutSetPrototypeLayoutSetModelListener
 
 			LayoutSetPrototypeUtil.update(layoutSetPrototype);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

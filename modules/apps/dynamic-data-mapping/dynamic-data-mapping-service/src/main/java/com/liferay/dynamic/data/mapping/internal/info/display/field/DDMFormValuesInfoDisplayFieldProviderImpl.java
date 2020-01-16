@@ -129,11 +129,11 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 						return _sanitizeFieldValue(
 							t, ddmFormFieldValue, locale);
 					}
-					catch (PortalException pe) {
+					catch (PortalException portalException) {
 						_log.error(
 							"Unable to sanitize field " +
 								ddmFormFieldValue.getName(),
-							pe);
+							portalException);
 
 						return null;
 					}
@@ -211,7 +211,7 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 
 				return dateFormat.format(date);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				return valueString;
 			}
 		}
@@ -252,9 +252,9 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 			return _dlURLHelper.getDownloadURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 

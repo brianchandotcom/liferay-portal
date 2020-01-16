@@ -44,8 +44,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					assetListEntry);
 			}
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

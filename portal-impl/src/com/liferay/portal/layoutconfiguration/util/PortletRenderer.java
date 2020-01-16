@@ -211,8 +211,8 @@ public class PortletRenderer {
 
 			return bufferCacheServletResponse.getStringBundler();
 		}
-		catch (IOException ioe) {
-			throw new PortletContainerException(ioe);
+		catch (IOException ioException) {
+			throw new PortletContainerException(ioException);
 		}
 		finally {
 			httpServletRequest.setAttribute(
@@ -333,7 +333,7 @@ public class PortletRenderer {
 
 				return _render(httpServletRequest, _httpServletResponse);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 
 				// Under parallel rendering context. An interrupted state means
 				// the call was cancelled and so we should not rethrow the
@@ -342,7 +342,7 @@ public class PortletRenderer {
 				Thread currentThread = Thread.currentThread();
 
 				if (!currentThread.isInterrupted()) {
-					throw e;
+					throw exception;
 				}
 
 				return null;

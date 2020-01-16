@@ -52,9 +52,9 @@ public class FiftyOneDegreesDeviceRecognitionProvider
 		try {
 			reload();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new IllegalStateException(
-				"Unable to load 51Degrees device data", e);
+				"Unable to load 51Degrees device data", exception);
 		}
 	}
 

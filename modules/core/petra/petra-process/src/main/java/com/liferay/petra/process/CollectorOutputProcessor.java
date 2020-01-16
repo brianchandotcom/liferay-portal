@@ -50,8 +50,8 @@ public class CollectorOutputProcessor
 		try {
 			StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream);
 		}
-		catch (IOException ioe) {
-			throw new ProcessException(ioe);
+		catch (IOException ioException) {
+			throw new ProcessException(ioException);
 		}
 
 		return unsyncByteArrayOutputStream.toByteArray();

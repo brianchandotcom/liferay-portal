@@ -327,8 +327,9 @@ public class StreamUtilTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Input stream is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Input stream is null", nullPointerException.getMessage());
 		}
 
 		try {
@@ -337,8 +338,9 @@ public class StreamUtilTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Output stream is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Output stream is null", nullPointerException.getMessage());
 		}
 	}
 

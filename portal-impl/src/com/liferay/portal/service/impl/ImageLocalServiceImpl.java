@@ -69,13 +69,13 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			try {
 				hook.deleteImage(image);
 			}
-			catch (NoSuchImageException nsie) {
+			catch (NoSuchImageException noSuchImageException) {
 
 				// DLHook throws NoSuchImageException if the file no longer
 				// exists. See LPS-30430. This exception can be ignored.
 
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsie, nsie);
+					_log.warn(noSuchImageException, noSuchImageException);
 				}
 			}
 		}
@@ -101,12 +101,12 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			try {
 				return imagePersistence.fetchByPrimaryKey(imageId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
 							"Unable to get image ", imageId, ": ",
-							e.getMessage()));
+							exception.getMessage()));
 				}
 			}
 		}
@@ -155,8 +155,8 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		try {
 			image = ImageToolUtil.getImage(bytes);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 
 		return updateImage(
@@ -202,8 +202,8 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		try {
 			image = ImageToolUtil.getImage(file);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 
 		return updateImage(
@@ -220,8 +220,8 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		try {
 			image = ImageToolUtil.getImage(is);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 
 		return updateImage(
@@ -239,8 +239,8 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		try {
 			image = ImageToolUtil.getImage(is, cleanUpStream);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 
 		return updateImage(

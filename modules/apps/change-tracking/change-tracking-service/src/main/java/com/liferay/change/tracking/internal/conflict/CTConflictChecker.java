@@ -217,8 +217,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 			return primaryKeys;
 		}
-		catch (SQLException sqle) {
-			throw new SystemException(sqle);
+		catch (SQLException sqlException) {
+			throw new SystemException(sqlException);
 		}
 	}
 

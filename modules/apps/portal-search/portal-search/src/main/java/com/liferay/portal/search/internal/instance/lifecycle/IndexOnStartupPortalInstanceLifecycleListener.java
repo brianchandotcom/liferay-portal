@@ -51,8 +51,8 @@ public class IndexOnStartupPortalInstanceLifecycleListener
 				"reindexOnActivate#" + _className,
 				new long[] {company.getCompanyId()}, _className, null);
 		}
-		catch (SearchException se) {
-			_log.error("Unable to reindex on activation", se);
+		catch (SearchException searchException) {
+			_log.error("Unable to reindex on activation", searchException);
 		}
 	}
 

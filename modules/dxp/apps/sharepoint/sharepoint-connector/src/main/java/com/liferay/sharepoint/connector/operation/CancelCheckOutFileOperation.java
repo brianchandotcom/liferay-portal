@@ -32,8 +32,8 @@ public class CancelCheckOutFileOperation extends BaseOperation {
 
 			return listsSoap.undoCheckOut(filePathURL.toString());
 		}
-		catch (RemoteException re) {
-			RemoteExceptionUtil.handleRemoteException(re);
+		catch (RemoteException remoteException) {
+			RemoteExceptionUtil.handleRemoteException(remoteException);
 
 			throw new IllegalStateException();
 		}

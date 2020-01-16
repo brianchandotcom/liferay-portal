@@ -191,9 +191,9 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 					fromAddress, recipient.getFullName(),
 					recipient.getEmailAddress(), subject, body, serviceContext);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(ioe, ioe);
+					_log.warn(ioException, ioException);
 				}
 			}
 		}
@@ -323,11 +323,11 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		try {
 			return group.getDescriptiveName(locale);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				"Unable to get descriptive name for group " +
 					group.getGroupId(),
-				pe);
+				portalException);
 		}
 
 		return StringPool.BLANK;

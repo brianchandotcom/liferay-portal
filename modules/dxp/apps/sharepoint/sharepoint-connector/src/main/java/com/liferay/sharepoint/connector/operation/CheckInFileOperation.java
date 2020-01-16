@@ -41,8 +41,8 @@ public class CheckInFileOperation extends BaseOperation {
 			return listsSoap.checkInFile(
 				filePathURL.toString(), comment, protocolValue);
 		}
-		catch (RemoteException re) {
-			RemoteExceptionUtil.handleRemoteException(re);
+		catch (RemoteException remoteException) {
+			RemoteExceptionUtil.handleRemoteException(remoteException);
 
 			throw new IllegalStateException();
 		}

@@ -148,8 +148,8 @@ public class PortalPreferencesImplTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Throwable cause = e.getCause();
+		catch (Exception exception) {
+			Throwable cause = exception.getCause();
 
 			Assert.assertSame(
 				ConcurrentModificationException.class, cause.getClass());
@@ -186,8 +186,8 @@ public class PortalPreferencesImplTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Throwable cause = e.getCause();
+		catch (Exception exception) {
+			Throwable cause = exception.getCause();
 
 			Assert.assertSame(
 				ConcurrentModificationException.class, cause.getClass());
@@ -258,8 +258,8 @@ public class PortalPreferencesImplTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Throwable cause = e.getCause();
+		catch (Exception exception) {
+			Throwable cause = exception.getCause();
 
 			Assert.assertSame(
 				ConcurrentModificationException.class, cause.getClass());
@@ -330,8 +330,8 @@ public class PortalPreferencesImplTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Throwable cause = e.getCause();
+		catch (Exception exception) {
+			Throwable cause = exception.getCause();
 
 			Assert.assertSame(
 				ConcurrentModificationException.class, cause.getClass());

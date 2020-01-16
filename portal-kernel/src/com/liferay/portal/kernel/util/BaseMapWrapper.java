@@ -45,8 +45,8 @@ public abstract class BaseMapWrapper<K, V> {
 				_put(key, value);
 			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -61,8 +61,8 @@ public abstract class BaseMapWrapper<K, V> {
 				_put(key, value);
 			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -79,8 +79,8 @@ public abstract class BaseMapWrapper<K, V> {
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -101,8 +101,8 @@ public abstract class BaseMapWrapper<K, V> {
 				_put(key, value);
 			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

@@ -57,8 +57,8 @@ public class WebBundleInstaller extends ServiceTracker<WabGenerator, Void> {
 			BundleStartLevelUtil.setStartLevelAndStart(
 				bundle, _startLevel, context);
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 		finally {
 			context.ungetService(serviceReference);

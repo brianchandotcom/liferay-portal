@@ -658,7 +658,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return absolutePath.contains("/modules/");

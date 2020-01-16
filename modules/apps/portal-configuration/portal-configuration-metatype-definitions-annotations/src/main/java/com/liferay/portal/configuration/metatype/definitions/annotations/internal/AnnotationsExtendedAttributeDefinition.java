@@ -136,7 +136,7 @@ public class AnnotationsExtendedAttributeDefinition
 					ExtendedAttributeDefinition.XML_NAMESPACE, map);
 			}
 		}
-		catch (NoSuchMethodException nsme) {
+		catch (NoSuchMethodException noSuchMethodException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
@@ -144,7 +144,7 @@ public class AnnotationsExtendedAttributeDefinition
 						_configurationBeanClass.getName(),
 						" does not have a method for the attribute definition ",
 						_attributeDefinition.getID()),
-					nsme);
+					noSuchMethodException);
 			}
 		}
 	}

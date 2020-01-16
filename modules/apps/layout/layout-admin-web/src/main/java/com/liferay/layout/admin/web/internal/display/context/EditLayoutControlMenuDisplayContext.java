@@ -94,7 +94,7 @@ public class EditLayoutControlMenuDisplayContext {
 				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
 				ActionKeys.PERMISSIONS);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

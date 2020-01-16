@@ -51,8 +51,8 @@ public class LockMethodImpl implements Method {
 		try {
 			return doProcess(webDAVRequest);
 		}
-		catch (Exception e) {
-			throw new WebDAVException(e);
+		catch (Exception exception) {
+			throw new WebDAVException(exception);
 		}
 	}
 
@@ -139,12 +139,12 @@ public class LockMethodImpl implements Method {
 
 				status = new Status(HttpServletResponse.SC_OK);
 			}
-			catch (WebDAVException wdave) {
-				if (wdave.getCause() instanceof NoSuchLockException) {
+			catch (WebDAVException webDAVException) {
+				if (webDAVException.getCause() instanceof NoSuchLockException) {
 					return HttpServletResponse.SC_PRECONDITION_FAILED;
 				}
 
-				throw wdave;
+				throw webDAVException;
 			}
 		}
 
@@ -178,9 +178,9 @@ public class LockMethodImpl implements Method {
 		try {
 			ServletResponseUtil.write(httpServletResponse, xml);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 

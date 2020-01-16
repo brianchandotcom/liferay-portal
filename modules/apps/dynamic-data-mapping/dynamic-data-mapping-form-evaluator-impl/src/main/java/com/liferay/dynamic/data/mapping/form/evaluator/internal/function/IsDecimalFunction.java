@@ -33,7 +33,7 @@ public class IsDecimalFunction
 
 			return true;
 		}
-		catch (NumberFormatException nfe) {
+		catch (NumberFormatException numberFormatException) {
 			return false;
 		}
 	}

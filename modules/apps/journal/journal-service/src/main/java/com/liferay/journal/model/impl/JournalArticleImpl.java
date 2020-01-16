@@ -321,9 +321,9 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			try {
 				_document = SAXReaderUtil.read(getContent());
 			}
-			catch (DocumentException de) {
+			catch (DocumentException documentException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(de, de);
+					_log.warn(documentException, documentException);
 				}
 			}
 		}
@@ -467,7 +467,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 			_imagesFolderId = folder.getFolderId();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Unable to get folder for " + getResourcePrimKey());
 			}

@@ -171,9 +171,9 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 					assetRenderer.getClassName(), assetRenderer.getClassPK());
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

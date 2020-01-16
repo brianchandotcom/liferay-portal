@@ -66,8 +66,8 @@ public class DirectSynchronousMessageSender
 				try {
 					messageListener.receive(message);
 				}
-				catch (MessageListenerException mle) {
-					throw new MessageBusException(mle);
+				catch (MessageListenerException messageListenerException) {
+					throw new MessageBusException(messageListenerException);
 				}
 			}
 		}

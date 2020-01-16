@@ -77,8 +77,8 @@ public class JournalArticleAbstractInfoItemRenderer
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

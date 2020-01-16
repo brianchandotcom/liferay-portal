@@ -269,11 +269,11 @@ public class DefaultDLEditFileEntryDisplayContext
 			_showSelectFolder = ParamUtil.getBoolean(
 				httpServletRequest, "showSelectFolder");
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
 				"Unable to build DefaultDLEditFileEntryDisplayContext for " +
 					fileEntry,
-				pe);
+				portalException);
 		}
 	}
 
@@ -293,9 +293,10 @@ public class DefaultDLEditFileEntryDisplayContext
 				_dlRequestHelper.getCompanyId(),
 				_dlRequestHelper.getScopeGroupId(), folderId, fileEntryTypeId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SystemException(
-				"Unable to check if folder has workflow definition link", e);
+				"Unable to check if folder has workflow definition link",
+				exception);
 		}
 	}
 

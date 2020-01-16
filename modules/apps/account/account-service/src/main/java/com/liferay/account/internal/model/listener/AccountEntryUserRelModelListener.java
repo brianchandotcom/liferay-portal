@@ -65,8 +65,8 @@ public class AccountEntryUserRelModelListener
 
 			indexer.reindex(User.class.getName(), accountUserId);
 		}
-		catch (SearchException se) {
-			throw new ModelListenerException(se);
+		catch (SearchException searchException) {
+			throw new ModelListenerException(searchException);
 		}
 	}
 
@@ -81,8 +81,8 @@ public class AccountEntryUserRelModelListener
 				_accountEntryUserRelLocalService.addAccountEntryUserRel(
 					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, accountUserId);
 			}
-			catch (PortalException pe) {
-				throw new ModelListenerException(pe);
+			catch (PortalException portalException) {
+				throw new ModelListenerException(portalException);
 			}
 		}
 		else if (accountEntryUserRels.size() > 1) {

@@ -177,8 +177,8 @@ public class TableMapperTest {
 
 			Assert.fail();
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 			Assert.assertEquals(
@@ -247,8 +247,8 @@ public class TableMapperTest {
 
 			Assert.fail();
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 			Assert.assertEquals(
@@ -368,8 +368,8 @@ public class TableMapperTest {
 
 			Assert.fail();
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 
@@ -612,8 +612,8 @@ public class TableMapperTest {
 
 			Assert.fail();
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 
@@ -785,8 +785,8 @@ public class TableMapperTest {
 
 			Assert.fail();
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 
@@ -893,8 +893,8 @@ public class TableMapperTest {
 
 			Assert.fail();
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 
@@ -1171,8 +1171,8 @@ public class TableMapperTest {
 			_tableMapperImpl.getLeftBaseModels(
 				rightPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(NoSuchModelException.class, cause.getClass());
 
@@ -1236,8 +1236,8 @@ public class TableMapperTest {
 		try {
 			_tableMapperImpl.getLeftPrimaryKeys(rightPrimaryKey);
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 
@@ -1359,8 +1359,8 @@ public class TableMapperTest {
 			_tableMapperImpl.getRightBaseModels(
 				leftPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(NoSuchModelException.class, cause.getClass());
 
@@ -1424,8 +1424,8 @@ public class TableMapperTest {
 		try {
 			_tableMapperImpl.getRightPrimaryKeys(leftPrimaryKey);
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 
@@ -1625,10 +1625,10 @@ public class TableMapperTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 			Assert.assertEquals(
 				"The TableMapper only supports BaseModel queries on one side",
-				uoe.getMessage());
+				unsupportedOperationException.getMessage());
 		}
 		finally {
 			_mappingStore.remove(leftPrimaryKey);

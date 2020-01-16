@@ -51,8 +51,8 @@ public class NavigationItemList extends ArrayList<NavigationItem> {
 					navigationItemList.add(navigationItem);
 				}
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 
@@ -65,8 +65,8 @@ public class NavigationItemList extends ArrayList<NavigationItem> {
 		try {
 			unsafeConsumer.accept(navigationItem);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		add(navigationItem);

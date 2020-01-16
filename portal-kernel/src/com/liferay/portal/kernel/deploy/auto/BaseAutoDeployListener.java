@@ -52,8 +52,8 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 			return code;
 		}
-		catch (IOException ioe) {
-			throw new AutoDeployException(ioe);
+		catch (IOException ioException) {
+			throw new AutoDeployException(ioException);
 		}
 	}
 

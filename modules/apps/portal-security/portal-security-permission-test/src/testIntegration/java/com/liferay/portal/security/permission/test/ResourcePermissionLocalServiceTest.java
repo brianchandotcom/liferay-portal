@@ -74,10 +74,10 @@ public class ResourcePermissionLocalServiceTest {
 				},
 				_roleIds, ActionKeys.VIEW);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"The first resource must be an individual scope",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 	}
 
@@ -95,9 +95,10 @@ public class ResourcePermissionLocalServiceTest {
 				},
 				_roleIds, ActionKeys.VIEW);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"The last resource must be a company scope", iae.getMessage());
+				"The last resource must be a company scope",
+				illegalArgumentException.getMessage());
 		}
 	}
 
@@ -108,10 +109,10 @@ public class ResourcePermissionLocalServiceTest {
 				Collections.singletonList(new ResourceImpl()), _roleIds,
 				ActionKeys.VIEW);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"The list of resources must contain at least two values",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 	}
 

@@ -133,11 +133,11 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 					fileEntry, fileEntry.getFileVersion(), null, "", false,
 					false);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				bundleContext.ungetService(dlAppLocalServiceServiceReference);
 				bundleContext.ungetService(dlUrlHelperServiceReference);
 
-				throw e;
+				throw exception;
 			}
 
 			Dictionary<String, Object> properties = new HashMapDictionary<>();

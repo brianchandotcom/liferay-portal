@@ -51,9 +51,9 @@ public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 		try {
 			ldapFilterParser.parse();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Unable to parse filter " + filter, e);
+				_log.info("Unable to parse filter " + filter, exception);
 			}
 
 			return false;

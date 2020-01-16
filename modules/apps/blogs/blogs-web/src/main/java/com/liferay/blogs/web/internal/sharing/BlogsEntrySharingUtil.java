@@ -57,8 +57,8 @@ public class BlogsEntrySharingUtil {
 				permissionChecker, classNameId, blogsEntry.getEntryId(),
 				blogsEntry.getGroupId());
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -70,8 +70,8 @@ public class BlogsEntrySharingUtil {
 				permissionChecker, PortalUtil.getClassNameId(BlogsEntry.class),
 				blogsEntry.getEntryId(), blogsEntry.getGroupId());
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -84,8 +84,8 @@ public class BlogsEntrySharingUtil {
 					BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 					httpServletRequest);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -97,8 +97,8 @@ public class BlogsEntrySharingUtil {
 				BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 				httpServletRequest);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -110,8 +110,8 @@ public class BlogsEntrySharingUtil {
 				BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 				httpServletRequest);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -123,8 +123,8 @@ public class BlogsEntrySharingUtil {
 				BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 				httpServletRequest);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

@@ -45,11 +45,11 @@ public abstract class WorkflowTaskBaseMVCActionCommand
 
 			return SessionErrors.isEmpty(actionRequest);
 		}
-		catch (PortletException pe) {
-			throw pe;
+		catch (PortletException portletException) {
+			throw portletException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

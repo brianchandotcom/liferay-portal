@@ -64,11 +64,11 @@ public class ImageEditorIGViewFileVersionDisplayContext
 				new ImageEditorDLDisplayContextHelper(
 					fileVersion, httpServletRequest, dlURLHelper);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
 				"Unable to create image editor image gallery view file " +
 					"version display context for file version " + fileVersion,
-				pe);
+				portalException);
 		}
 	}
 

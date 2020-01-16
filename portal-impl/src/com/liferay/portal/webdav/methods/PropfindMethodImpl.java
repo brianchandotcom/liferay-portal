@@ -49,18 +49,18 @@ public class PropfindMethodImpl extends BasePropMethodImpl implements Method {
 		try {
 			return writeResponseXML(webDAVRequest, getProps(webDAVRequest));
 		}
-		catch (InvalidRequestException ire) {
+		catch (InvalidRequestException invalidRequestException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(ire, ire);
+				_log.debug(invalidRequestException, invalidRequestException);
 			}
 
 			return HttpServletResponse.SC_BAD_REQUEST;
 		}
-		catch (Exception e) {
-			throw new WebDAVException(e);
+		catch (Exception exception) {
+			throw new WebDAVException(exception);
 		}
 	}
 
@@ -134,8 +134,8 @@ public class PropfindMethodImpl extends BasePropMethodImpl implements Method {
 
 			return props;
 		}
-		catch (Exception e) {
-			throw new InvalidRequestException(e);
+		catch (Exception exception) {
+			throw new InvalidRequestException(exception);
 		}
 	}
 

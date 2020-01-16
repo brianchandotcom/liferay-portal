@@ -75,9 +75,10 @@ public class WikiPageTitleSearcher extends BaseSearcher {
 				try {
 					_wikiNodeService.getNode(nodeId);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to get wiki node " + nodeId, e);
+						_log.debug(
+							"Unable to get wiki node " + nodeId, exception);
 					}
 
 					continue;

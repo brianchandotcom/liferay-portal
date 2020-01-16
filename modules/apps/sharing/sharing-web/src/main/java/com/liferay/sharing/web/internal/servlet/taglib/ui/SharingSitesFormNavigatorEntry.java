@@ -102,8 +102,8 @@ public class SharingSitesFormNavigatorEntry
 
 			return companySharingConfiguration.isEnabled();
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return false;
 		}

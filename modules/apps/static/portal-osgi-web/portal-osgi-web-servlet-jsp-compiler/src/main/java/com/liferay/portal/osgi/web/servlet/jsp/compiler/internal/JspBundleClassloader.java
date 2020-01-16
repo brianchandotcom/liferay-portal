@@ -65,7 +65,7 @@ public class JspBundleClassloader extends URLClassLoader {
 					return enumeration;
 				}
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 			}
 		}
 
@@ -98,7 +98,7 @@ public class JspBundleClassloader extends URLClassLoader {
 
 				break;
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 			}
 		}
 

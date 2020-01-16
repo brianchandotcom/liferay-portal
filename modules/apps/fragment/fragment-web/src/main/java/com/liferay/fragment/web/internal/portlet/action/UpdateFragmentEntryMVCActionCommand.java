@@ -74,13 +74,13 @@ public class UpdateFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			SessionErrors.add(actionRequest, "fragmentNameInvalid");
 
 			hideDefaultErrorMessage(actionRequest);
 
 			_fragmentEntryExceptionRequestHandler.handlePortalException(
-				actionRequest, actionResponse, pe);
+				actionRequest, actionResponse, portalException);
 		}
 	}
 

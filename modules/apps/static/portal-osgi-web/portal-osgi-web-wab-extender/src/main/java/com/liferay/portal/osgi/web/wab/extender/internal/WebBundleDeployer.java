@@ -77,7 +77,7 @@ public class WebBundleDeployer {
 		try (InputStream inputStream = url.openStream()) {
 			properties.load(inputStream);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		Set<String> portalProfileNames = SetUtil.fromArray(
@@ -110,7 +110,7 @@ public class WebBundleDeployer {
 
 			handleCollidedWABs(bundle);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 	}
 
@@ -158,7 +158,7 @@ public class WebBundleDeployer {
 
 			newWabBundleProcessor.init(_properties);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 	}
 

@@ -82,8 +82,8 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 				_modelSearchSettings.getSearchEngineId(), companyId, uid,
 				_modelSearchSettings.isCommitImmediately());
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 
@@ -204,7 +204,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 				try {
 					batchIndexingActionable.performActions();
 				}
-				catch (Exception pe) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						StringBundler sb = new StringBundler(4);
 
@@ -213,7 +213,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 						sb.append(" for company: ");
 						sb.append(companyId);
 
-						_log.warn(sb.toString(), pe);
+						_log.warn(sb.toString(), exception);
 					}
 				}
 			}

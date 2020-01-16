@@ -301,45 +301,48 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String mvcPath = "/edit_user.jsp";
 
-			if (e instanceof NoSuchUserException ||
-				e instanceof PrincipalException) {
+			if (exception instanceof NoSuchUserException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				mvcPath = "/error.jsp";
 			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException ||
-					 e instanceof CompanyMaxUsersException ||
-					 e instanceof ContactBirthdayException ||
-					 e instanceof ContactNameException ||
-					 e instanceof GroupFriendlyURLException ||
-					 e instanceof MembershipPolicyException ||
-					 e instanceof NoSuchListTypeException ||
-					 e instanceof RequiredUserException ||
-					 e instanceof UserEmailAddressException ||
-					 e instanceof UserFieldException ||
-					 e instanceof UserIdException ||
-					 e instanceof UserReminderQueryException ||
-					 e instanceof UserScreenNameException) {
+			else if (exception instanceof AssetCategoryException ||
+					 exception instanceof AssetTagException ||
+					 exception instanceof CompanyMaxUsersException ||
+					 exception instanceof ContactBirthdayException ||
+					 exception instanceof ContactNameException ||
+					 exception instanceof GroupFriendlyURLException ||
+					 exception instanceof MembershipPolicyException ||
+					 exception instanceof NoSuchListTypeException ||
+					 exception instanceof RequiredUserException ||
+					 exception instanceof UserEmailAddressException ||
+					 exception instanceof UserFieldException ||
+					 exception instanceof UserIdException ||
+					 exception instanceof UserReminderQueryException ||
+					 exception instanceof UserScreenNameException) {
 
-				if (e instanceof NoSuchListTypeException) {
-					NoSuchListTypeException nslte = (NoSuchListTypeException)e;
+				if (exception instanceof NoSuchListTypeException) {
+					NoSuchListTypeException noSuchListTypeException =
+						(NoSuchListTypeException)exception;
 
-					Class<?> clazz = e.getClass();
+					Class<?> clazz = exception.getClass();
 
 					SessionErrors.add(
-						actionRequest, clazz.getName() + nslte.getType());
+						actionRequest,
+						clazz.getName() + noSuchListTypeException.getType());
 				}
 				else {
-					SessionErrors.add(actionRequest, e.getClass(), e);
+					SessionErrors.add(
+						actionRequest, exception.getClass(), exception);
 				}
 
-				if (e instanceof CompanyMaxUsersException ||
-					e instanceof RequiredUserException) {
+				if (exception instanceof CompanyMaxUsersException ||
+					exception instanceof RequiredUserException) {
 
 					String redirect = portal.escapeRedirect(
 						ParamUtil.getString(actionRequest, "redirect"));
@@ -352,7 +355,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 
 			actionResponse.setRenderParameter("mvcPath", mvcPath);

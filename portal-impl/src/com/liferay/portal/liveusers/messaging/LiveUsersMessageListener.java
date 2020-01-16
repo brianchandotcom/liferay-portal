@@ -150,8 +150,9 @@ public class LiveUsersMessageListener extends BaseMessageListener {
 
 				LiveUsers.addClusterNode(_clusterNodeId, clusterUsers);
 			}
-			catch (Exception e) {
-				_log.error("Unable to add cluster node " + _clusterNodeId, e);
+			catch (Exception exception) {
+				_log.error(
+					"Unable to add cluster node " + _clusterNodeId, exception);
 			}
 		}
 

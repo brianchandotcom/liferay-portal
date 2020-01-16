@@ -96,8 +96,8 @@ public class DDMFormEmailNotificationSender {
 
 			_mailService.sendEmail(mailMessage);
 		}
-		catch (Exception e) {
-			_log.error("Unable to send form email", e);
+		catch (Exception exception) {
+			_log.error("Unable to send form email", exception);
 		}
 	}
 

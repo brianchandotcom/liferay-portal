@@ -51,8 +51,8 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 			actionableDynamicQuery.performActions();
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

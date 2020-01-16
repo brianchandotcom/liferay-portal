@@ -87,7 +87,7 @@ public class MySitesItemSelectorViewDisplayContext
 			SitesUtil.addPortletBreadcrumbEntries(
 				group, httpServletRequest, portletURL);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to add breadcrumb entries for group " +
 					group.getGroupId());

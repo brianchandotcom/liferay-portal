@@ -670,8 +670,9 @@ public class BeanPortletImpl implements BeanPortlet {
 						}
 					}
 				}
-				catch (IllegalAccessException iae) {
-					throw new ExceptionInInitializerError(iae);
+				catch (IllegalAccessException illegalAccessException) {
+					throw new ExceptionInInitializerError(
+						illegalAccessException);
 				}
 			}
 		};

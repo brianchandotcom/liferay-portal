@@ -85,10 +85,10 @@ public class CompressionLevelTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"Compression level 10 is not within the range of -1 and 9",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 	}
 

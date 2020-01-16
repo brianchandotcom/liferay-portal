@@ -137,8 +137,8 @@ public class SPDXBuilder {
 				new DocumentSource(document),
 				new StreamResult(new FileOutputStream(versionHtmlFile)));
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

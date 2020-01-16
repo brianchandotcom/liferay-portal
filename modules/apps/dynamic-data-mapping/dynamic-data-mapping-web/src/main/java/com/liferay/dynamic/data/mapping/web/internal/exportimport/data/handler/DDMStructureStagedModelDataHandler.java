@@ -150,7 +150,7 @@ public class DDMStructureStagedModelDataHandler
 			defaultUserId = _userLocalService.getDefaultUserId(
 				structure.getCompanyId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return referenceAttributes;
 		}
 
@@ -588,7 +588,7 @@ public class DDMStructureStagedModelDataHandler
 
 			return jsonArray.getLong(0);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return GetterUtil.getLong(value);
 		}
 	}
@@ -713,8 +713,8 @@ public class DDMStructureStagedModelDataHandler
 					structure.getStructureId(),
 					DDMStructureConstants.VERSION_DEFAULT);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		if ((ddmStructureVersion != null) &&

@@ -70,8 +70,8 @@ public class GroupItemSelectorProviderImpl
 				Collectors.toList()
 			);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return Collections.emptyList();
 		}
@@ -83,8 +83,8 @@ public class GroupItemSelectorProviderImpl
 			return _depotEntryGroupRelService.getDepotEntryGroupRelsCount(
 				_getLiveGroupId(groupId));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return 0;
 		}
@@ -129,8 +129,8 @@ public class GroupItemSelectorProviderImpl
 
 			return Optional.of(_groupService.getGroup(depotEntry.getGroupId()));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return Optional.empty();
 		}

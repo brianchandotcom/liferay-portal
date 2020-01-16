@@ -239,7 +239,8 @@ public class CalendarResourceStagedModelDataHandler
 						calendarResource.getDescriptionMap(),
 						calendarResource.isActive(), serviceContext);
 			}
-			catch (DuplicateCalendarResourceException dcre) {
+			catch (DuplicateCalendarResourceException
+						duplicateCalendarResourceException) {
 
 				// The calendar resource for the site's default calendar is
 				// always generated beforehand, so we only want to add it once

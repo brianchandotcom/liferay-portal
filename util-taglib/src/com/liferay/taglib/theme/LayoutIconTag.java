@@ -74,8 +74,8 @@ public class LayoutIconTag extends IncludeTag implements BodyTag {
 				WebServerServletTokenUtil.getToken(layout.getIconImageId()));
 			jspWriter.write("\" />");
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 	}
 

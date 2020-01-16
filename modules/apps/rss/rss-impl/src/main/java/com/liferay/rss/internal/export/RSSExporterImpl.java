@@ -54,7 +54,7 @@ public class RSSExporterImpl implements RSSExporter {
 		try {
 			return output.outputString(realSyndFeed);
 		}
-		catch (IllegalDataException ide) {
+		catch (IllegalDataException illegalDataException) {
 
 			// LEP-4450
 
@@ -63,12 +63,12 @@ public class RSSExporterImpl implements RSSExporter {
 			try {
 				return output.outputString(realSyndFeed);
 			}
-			catch (FeedException fe) {
-				throw new SystemException(fe);
+			catch (FeedException feedException) {
+				throw new SystemException(feedException);
 			}
 		}
-		catch (FeedException fe) {
-			throw new SystemException(fe);
+		catch (FeedException feedException) {
+			throw new SystemException(feedException);
 		}
 	}
 

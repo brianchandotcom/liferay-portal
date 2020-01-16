@@ -122,7 +122,7 @@ public class CORSServletFilterServletContextHelperTracker {
 			try {
 				serviceRegistration.unregister();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

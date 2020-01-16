@@ -45,7 +45,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 			try {
 				field = itemClass.getDeclaredField(name);
 			}
-			catch (NoSuchFieldException nsfe) {
+			catch (NoSuchFieldException noSuchFieldException) {
 				field = itemClass.getDeclaredField(StringPool.UNDERLINE + name);
 			}
 

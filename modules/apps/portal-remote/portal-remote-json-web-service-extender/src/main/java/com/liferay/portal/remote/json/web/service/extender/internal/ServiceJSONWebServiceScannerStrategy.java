@@ -86,7 +86,8 @@ public class ServiceJSONWebServiceScannerStrategy
 
 					service = method.invoke(invocationHandler);
 				}
-				catch (ReflectiveOperationException roe) {
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
 				}
 			}
 		}

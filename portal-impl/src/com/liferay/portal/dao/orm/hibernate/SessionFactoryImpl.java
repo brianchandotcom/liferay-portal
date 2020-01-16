@@ -121,8 +121,8 @@ public class SessionFactoryImpl implements SessionFactory {
 
 			return classes;
 		}
-		catch (ClassNotFoundException cnfe) {
-			throw new RuntimeException(cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new RuntimeException(classNotFoundException);
 		}
 	}
 

@@ -47,8 +47,8 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 			return _kaleoLogLocalService.getKaleoInstanceKaleoLogsCount(
 				companyId, workflowInstanceId, logTypes);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -62,8 +62,8 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 				getKaleoTaskInstanceTokenKaleoLogsCount(
 					companyId, workflowTaskId, logTypes);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -83,8 +83,8 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 
 			return toWorkflowLogs(kaleoLogs);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -104,8 +104,8 @@ public class WorkflowLogManagerImpl implements WorkflowLogManager {
 
 			return toWorkflowLogs(kaleoLogs);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 

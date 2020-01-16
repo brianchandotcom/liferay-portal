@@ -81,7 +81,7 @@ public class BufferedIncrementRunnable implements Runnable {
 				try {
 					Thread.sleep(standbyTime);
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 					break;
 				}
 			}

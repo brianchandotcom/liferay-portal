@@ -35,8 +35,8 @@ public class PortalLoginModule implements LoginModule {
 
 			_loginModule = (LoginModule)clazz.newInstance();
 		}
-		catch (Exception e) {
-			throw new AssertionError(e);
+		catch (Exception exception) {
+			throw new AssertionError(exception);
 		}
 	}
 

@@ -141,10 +141,11 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
 					url = uri.toURL();
 				}
-				catch (MalformedURLException murle) {
+				catch (MalformedURLException malformedURLException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Invalid override URL " + file.toString(), murle);
+							"Invalid override URL " + file.toString(),
+							malformedURLException);
 					}
 				}
 			}
@@ -185,8 +186,9 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
 			printWriter.print(content);
 		}
-		catch (IOException ioe) {
-			_log.error("Unable to read " + resourceDescriptor.toString(), ioe);
+		catch (IOException ioException) {
+			_log.error(
+				"Unable to read " + resourceDescriptor.toString(), ioException);
 
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,

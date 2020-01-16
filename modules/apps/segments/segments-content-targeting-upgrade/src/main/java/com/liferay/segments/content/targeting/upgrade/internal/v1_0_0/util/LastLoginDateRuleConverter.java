@@ -118,11 +118,11 @@ public class LastLoginDateRuleConverter implements RuleConverter {
 			_contextSegmentsCriteriaContributor.contribute(
 				criteria, filterString, Criteria.Conjunction.AND);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to convert last login date rule with type settings " +
 					typeSettings,
-				e);
+				exception);
 		}
 	}
 

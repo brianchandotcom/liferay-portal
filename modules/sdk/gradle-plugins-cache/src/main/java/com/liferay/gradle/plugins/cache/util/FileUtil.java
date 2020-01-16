@@ -98,12 +98,12 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 			digest = Integer.toHexString(lines.hashCode());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 
 			// File is not a text file
 
 			if (_logger.isDebugEnabled()) {
-				_logger.debug(file + " is not a text file", ioe);
+				_logger.debug(file + " is not a text file", ioException);
 			}
 
 			HashValue hashValue = HashUtil.sha1(file);
@@ -130,8 +130,8 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		try {
 			sortedFiles = flattenAndSort(files);
 		}
-		catch (IOException ioe) {
-			throw new GradleException("Unable to flatten files", ioe);
+		catch (IOException ioException) {
+			throw new GradleException("Unable to flatten files", ioException);
 		}
 
 		if (excludeIgnoredFiles) {
@@ -247,9 +247,9 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 			return canonicalPath;
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new UncheckedIOException(
-				"Unable to get canonical path of " + file, ioe);
+				"Unable to get canonical path of " + file, ioException);
 		}
 	}
 
@@ -311,7 +311,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 			return gitIgnoreDirs;
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_logger.isWarnEnabled()) {
 				_logger.warn("Unable to get .gitignore files");
 			}
@@ -340,9 +340,9 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 				});
 		}
-		catch (ExecException ee) {
+		catch (ExecException execException) {
 			if (_logger.isInfoEnabled()) {
-				_logger.info(ee.getMessage(), ee);
+				_logger.info(execException.getMessage(), execException);
 			}
 		}
 

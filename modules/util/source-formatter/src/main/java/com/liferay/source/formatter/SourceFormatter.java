@@ -265,19 +265,19 @@ public class SourceFormatter {
 
 			sourceFormatter.format();
 		}
-		catch (Exception e) {
-			if (e instanceof GitException) {
-				System.out.println(e.getMessage());
+		catch (Exception exception) {
+			if (exception instanceof GitException) {
+				System.out.println(exception.getMessage());
 			}
 			else {
 				CheckstyleException checkstyleException =
-					_getNestedCheckstyleException(e);
+					_getNestedCheckstyleException(exception);
 
 				if (checkstyleException != null) {
 					checkstyleException.printStackTrace();
 				}
 				else {
-					e.printStackTrace();
+					exception.printStackTrace();
 				}
 			}
 
@@ -1031,7 +1031,7 @@ public class SourceFormatter {
 						break;
 					}
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 				}
 			}
 		}

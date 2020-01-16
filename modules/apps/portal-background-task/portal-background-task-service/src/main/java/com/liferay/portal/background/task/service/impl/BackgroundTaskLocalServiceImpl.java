@@ -220,7 +220,7 @@ public class BackgroundTaskLocalServiceImpl
 			_backgroundTaskLockHelper.unlockBackgroundTask(
 				new BackgroundTaskImpl(backgroundTask));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		TransactionCommitCallbackUtil.registerCallback(

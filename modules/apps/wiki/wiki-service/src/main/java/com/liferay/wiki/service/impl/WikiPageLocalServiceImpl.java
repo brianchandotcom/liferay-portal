@@ -413,9 +413,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 				fileEntries.add(fileEntry);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new SystemException(
-					"Unable to write temporary file", ioe);
+					"Unable to write temporary file", ioException);
 			}
 			finally {
 				FileUtil.delete(file);
@@ -1976,9 +1976,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		try {
 			wikiNodePersistence.update(node);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(se, se);
+				_log.warn(systemException, systemException);
 			}
 		}
 	}
@@ -2003,7 +2003,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				userId, oldPage, StringPool.BLANK, content, summary, minorEdit,
 				format, parentTitle, redirectTitle, serviceContext);
 		}
-		catch (NoSuchPageException nspe) {
+		catch (NoSuchPageException noSuchPageException) {
 			return addPage(
 				userId, nodeId, title, WikiPageConstants.VERSION_DEFAULT,
 				content, summary, minorEdit, format, true, parentTitle,
@@ -2413,7 +2413,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			return parentPage.getTitle();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -2946,7 +2946,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			pageDiffs = _wikiEngineRenderer.diffHtml(
 				previousVersionPage, page, null, null, attachmentURLPrefix);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		String pageContent = null;

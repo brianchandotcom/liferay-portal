@@ -44,7 +44,7 @@ public class IdleConnectionMonitorThread extends Thread {
 				}
 			}
 		}
-		catch (InterruptedException ie) {
+		catch (InterruptedException interruptedException) {
 		}
 	}
 

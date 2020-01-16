@@ -50,11 +50,13 @@ public class ArchivedSettingsImpl
 			PortletPreferencesServiceUtil.deleteArchivedPreferences(
 				_portletItem.getPortletItemId());
 		}
-		catch (PortalException pe) {
-			throw new IOException("Unable to delete archived settings", pe);
+		catch (PortalException portalException) {
+			throw new IOException(
+				"Unable to delete archived settings", portalException);
 		}
-		catch (SystemException se) {
-			throw new IOException("Unable to delete archived settings", se);
+		catch (SystemException systemException) {
+			throw new IOException(
+				"Unable to delete archived settings", systemException);
 		}
 	}
 
@@ -144,8 +146,9 @@ public class ArchivedSettingsImpl
 					PortletIdCodec.decodePortletName(
 						_portletItem.getPortletId()));
 		}
-		catch (SystemException se) {
-			throw new RuntimeException("Unable to load settings", se);
+		catch (SystemException systemException) {
+			throw new RuntimeException(
+				"Unable to load settings", systemException);
 		}
 
 		_portletPreferencesSettings = new PortletPreferencesSettings(

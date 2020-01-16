@@ -109,9 +109,9 @@ public class MDRServicePreAction extends Action {
 				_log.debug(logMessage);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to retrieve rule group", e);
+				_log.warn("Unable to retrieve rule group", exception);
 			}
 
 			return;
@@ -131,9 +131,9 @@ public class MDRServicePreAction extends Action {
 			ActionHandlerManagerUtil.applyActions(
 				mdrActions, httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to apply device profile", e);
+				_log.warn("Unable to apply device profile", exception);
 			}
 		}
 	}

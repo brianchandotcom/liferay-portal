@@ -41,8 +41,9 @@ public class PluginZipImpl implements PluginZip {
 		try {
 			return uri.toURL();
 		}
-		catch (MalformedURLException murle) {
-			throw new RuntimeException("Invalid file " + _file, murle);
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(
+				"Invalid file " + _file, malformedURLException);
 		}
 	}
 

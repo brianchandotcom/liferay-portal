@@ -75,11 +75,11 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 				portletDataContext, portletPreferences,
 				portletDataContext.getPortletId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PortletDataException(
 				"Unable to update asset categories navigation portlet " +
 					"preferences during export",
-				e);
+				exception);
 		}
 	}
 
@@ -93,11 +93,11 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 			return updateImportPortletPreferences(
 				portletDataContext, portletPreferences);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PortletDataException(
 				"Unable to update asset categories navigation portlet " +
 					"preferences during import",
-				e);
+				exception);
 		}
 	}
 

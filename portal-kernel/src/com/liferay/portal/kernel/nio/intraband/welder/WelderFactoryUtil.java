@@ -33,9 +33,10 @@ public class WelderFactoryUtil {
 		try {
 			return welderClass.newInstance();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new RuntimeException(
-				"Unable to create Welder instance for class " + welderClass, e);
+				"Unable to create Welder instance for class " + welderClass,
+				exception);
 		}
 	}
 
@@ -45,10 +46,10 @@ public class WelderFactoryUtil {
 				return (Class<? extends Welder>)Class.forName(
 					_INTRABAND_WELDER_IMPL);
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 				throw new RuntimeException(
 					"Unable to load class with name " + _INTRABAND_WELDER_IMPL,
-					cnfe);
+					classNotFoundException);
 			}
 		}
 		else {

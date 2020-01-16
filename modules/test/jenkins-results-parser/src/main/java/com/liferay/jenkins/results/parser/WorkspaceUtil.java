@@ -134,7 +134,7 @@ public class WorkspaceUtil {
 					JenkinsResultsParserUtil.toString(
 						_URL_WORKSPACE_PROPERTIES, false)));
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			System.out.println(
 				"Skipped downloading " + _URL_WORKSPACE_PROPERTIES);
 		}

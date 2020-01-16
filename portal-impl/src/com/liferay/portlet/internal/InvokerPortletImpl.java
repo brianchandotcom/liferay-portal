@@ -285,8 +285,8 @@ public class InvokerPortletImpl
 		try {
 			invokeAction(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			processException(e, actionRequest, actionResponse);
+		catch (Exception exception) {
+			processException(exception, actionRequest, actionResponse);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -308,8 +308,8 @@ public class InvokerPortletImpl
 		try {
 			invokeEvent(eventRequest, eventResponse);
 		}
-		catch (Exception e) {
-			processException(e, eventRequest, eventResponse);
+		catch (Exception exception) {
+			processException(exception, eventRequest, eventResponse);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -495,8 +495,8 @@ public class InvokerPortletImpl
 		try {
 			invokeResource(resourceRequest, resourceResponse);
 		}
-		catch (Exception e) {
-			processException(e, resourceRequest, resourceResponse);
+		catch (Exception exception) {
+			processException(exception, resourceRequest, resourceResponse);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -517,8 +517,8 @@ public class InvokerPortletImpl
 
 			closeable.close();
 		}
-		catch (IOException ioe) {
-			_log.error("Unable to close invoker filter container", ioe);
+		catch (IOException ioException) {
+			_log.error("Unable to close invoker filter container", ioException);
 		}
 	}
 
@@ -572,8 +572,8 @@ public class InvokerPortletImpl
 						httpServletRequest, httpServletResponse);
 				}
 			}
-			catch (ServletException se) {
-				Throwable cause = se.getRootCause();
+			catch (ServletException servletException) {
+				Throwable cause = servletException.getRootCause();
 
 				if (cause instanceof PortletException) {
 					throw (PortletException)cause;
@@ -641,10 +641,10 @@ public class InvokerPortletImpl
 				PortletRequest.HEADER_PHASE,
 				_invokerFilterContainer.getHeaderFilters());
 		}
-		catch (Exception e) {
-			processException(e, headerRequest, headerResponse);
+		catch (Exception exception) {
+			processException(exception, headerRequest, headerResponse);
 
-			throw e;
+			throw exception;
 		}
 	}
 
@@ -663,10 +663,10 @@ public class InvokerPortletImpl
 				PortletRequest.RENDER_PHASE,
 				_invokerFilterContainer.getRenderFilters());
 		}
-		catch (Exception e) {
-			processException(e, renderRequest, renderResponse);
+		catch (Exception exception) {
+			processException(exception, renderRequest, renderResponse);
 
-			throw e;
+			throw exception;
 		}
 
 		RenderResponseImpl renderResponseImpl =

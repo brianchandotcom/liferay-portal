@@ -71,8 +71,8 @@ public class JournalSelectArticleTranslationsManagementToolbarDisplayContext
 			portletURL.setParameter(
 				"status", String.valueOf(article.getStatus()));
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to get the article", pe);
+		catch (PortalException portalException) {
+			_log.error("Unable to get the article", portalException);
 		}
 
 		return portletURL.toString();

@@ -88,12 +88,12 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof DuplicateLDAPServerNameException ||
-				e instanceof LDAPFilterException ||
-				e instanceof LDAPServerNameException) {
+		catch (Exception exception) {
+			if (exception instanceof DuplicateLDAPServerNameException ||
+				exception instanceof LDAPFilterException ||
+				exception instanceof LDAPServerNameException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				PortletURL portletURL = PortletURLFactoryUtil.create(
 					actionRequest,
@@ -114,15 +114,15 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 				return;
 			}
 
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 
 				return;
 			}
 
-			throw e;
+			throw exception;
 		}
 	}
 

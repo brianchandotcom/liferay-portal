@@ -169,9 +169,9 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		try {
 			return getDLFolder(classPK);
 		}
-		catch (PortalException | UnsupportedCapabilityException e) {
+		catch (PortalException | UnsupportedCapabilityException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			return null;
@@ -320,14 +320,15 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 			dlFolder.getGroupId(), containerModelId, originalTitle);
 
 		if (duplicateDLFolder != null) {
-			RestoreEntryException ree = new RestoreEntryException(
-				RestoreEntryException.DUPLICATE);
+			RestoreEntryException restoreEntryException =
+				new RestoreEntryException(RestoreEntryException.DUPLICATE);
 
-			ree.setDuplicateEntryId(duplicateDLFolder.getFolderId());
-			ree.setOldName(duplicateDLFolder.getName());
-			ree.setTrashEntryId(trashEntryId);
+			restoreEntryException.setDuplicateEntryId(
+				duplicateDLFolder.getFolderId());
+			restoreEntryException.setOldName(duplicateDLFolder.getName());
+			restoreEntryException.setTrashEntryId(trashEntryId);
 
-			throw ree;
+			throw restoreEntryException;
 		}
 
 		DLFileEntry duplicateDLFileEntry =
@@ -335,15 +336,16 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 				dlFolder.getGroupId(), containerModelId, originalTitle);
 
 		if (duplicateDLFileEntry != null) {
-			RestoreEntryException ree = new RestoreEntryException(
-				RestoreEntryException.DUPLICATE);
+			RestoreEntryException restoreEntryException =
+				new RestoreEntryException(RestoreEntryException.DUPLICATE);
 
-			ree.setDuplicateEntryId(duplicateDLFileEntry.getFileEntryId());
-			ree.setOldName(duplicateDLFileEntry.getTitle());
-			ree.setOverridable(false);
-			ree.setTrashEntryId(trashEntryId);
+			restoreEntryException.setDuplicateEntryId(
+				duplicateDLFileEntry.getFileEntryId());
+			restoreEntryException.setOldName(duplicateDLFileEntry.getTitle());
+			restoreEntryException.setOverridable(false);
+			restoreEntryException.setTrashEntryId(trashEntryId);
 
-			throw ree;
+			throw restoreEntryException;
 		}
 	}
 

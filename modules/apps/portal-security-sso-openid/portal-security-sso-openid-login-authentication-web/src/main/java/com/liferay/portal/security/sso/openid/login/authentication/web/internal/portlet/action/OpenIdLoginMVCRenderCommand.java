@@ -80,10 +80,11 @@ public class OpenIdLoginMVCRenderCommand implements MVCRenderCommand {
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			_log.error("Unable to include JSP " + _JSP_PATH, e);
+		catch (Exception exception) {
+			_log.error("Unable to include JSP " + _JSP_PATH, exception);
 
-			throw new PortletException("Unable to include JSP " + _JSP_PATH, e);
+			throw new PortletException(
+				"Unable to include JSP " + _JSP_PATH, exception);
 		}
 
 		return "/navigation.jsp";

@@ -63,8 +63,8 @@ public class ServletExceptionAdapter implements Servlet {
 				new ServletConfigWrapper(
 					servletConfig, _modifiableServletContext));
 		}
-		catch (Exception e) {
-			_exception = e;
+		catch (Exception exception) {
+			_exception = exception;
 		}
 	}
 

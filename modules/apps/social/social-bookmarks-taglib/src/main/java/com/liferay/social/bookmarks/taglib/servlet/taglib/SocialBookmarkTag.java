@@ -62,8 +62,8 @@ public class SocialBookmarkTag extends AttributesTagSupport {
 
 			return EVAL_PAGE;
 		}
-		catch (IOException | ServletException e) {
-			throw new JspException(e);
+		catch (IOException | ServletException exception) {
+			throw new JspException(exception);
 		}
 	}
 

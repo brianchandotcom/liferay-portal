@@ -62,8 +62,8 @@ public abstract class BaseDataPartitioningExporter
 		try {
 			exportProcess.export(exportContext);
 		}
-		catch (IOException ioe) {
-			_logger.error("Unable to export", ioe);
+		catch (IOException ioException) {
+			_logger.error("Unable to export", ioException);
 		}
 	}
 
@@ -126,11 +126,11 @@ public abstract class BaseDataPartitioningExporter
 				outputStream.write(insertSQL.getBytes());
 			}
 		}
-		catch (IOException | SQLException e) {
+		catch (IOException | SQLException exception) {
 			_logger.error(
 				"Unable to generate insert SQL statements for table " +
 					tableName,
-				e);
+				exception);
 		}
 	}
 
@@ -160,11 +160,11 @@ public abstract class BaseDataPartitioningExporter
 				outputStream.write(deleteSQL.getBytes());
 			}
 		}
-		catch (IOException | SQLException e) {
+		catch (IOException | SQLException exception) {
 			_logger.error(
 				"Unable to generate delete SQL statements for table " +
 					tableName,
-				e);
+				exception);
 		}
 	}
 
@@ -204,9 +204,10 @@ public abstract class BaseDataPartitioningExporter
 				tableNames.add(resultSet.getString(getTableNameFieldName()));
 			}
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			_logger.error(
-				"Unable to get table names using SQL query: " + sql, sqle);
+				"Unable to get table names using SQL query: " + sql,
+				sqlException);
 		}
 
 		return tableNames;

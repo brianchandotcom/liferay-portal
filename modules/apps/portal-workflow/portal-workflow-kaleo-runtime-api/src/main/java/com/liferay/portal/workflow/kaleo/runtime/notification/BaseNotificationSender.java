@@ -54,9 +54,9 @@ public abstract class BaseNotificationSender implements NotificationSender {
 				notificationRecipientsMap, defaultSubject, notificationMessage,
 				executionContext);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new NotificationMessageSenderException(
-				"Unable to send notification message", e);
+				"Unable to send notification message", exception);
 		}
 	}
 

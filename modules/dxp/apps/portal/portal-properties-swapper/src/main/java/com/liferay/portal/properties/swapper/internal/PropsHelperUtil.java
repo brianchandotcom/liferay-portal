@@ -98,12 +98,14 @@ public class PropsHelperUtil {
 					}
 				}
 			}
-			catch (IOException ioe) {
-				_log.error("Unable to read " + propertiesLocation, ioe);
+			catch (IOException ioException) {
+				_log.error("Unable to read " + propertiesLocation, ioException);
 			}
-			catch (InvalidPathException ipe) {
+			catch (InvalidPathException invalidPathException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to parse " + propertiesLocation, ipe);
+					_log.debug(
+						"Unable to parse " + propertiesLocation,
+						invalidPathException);
 				}
 			}
 		}

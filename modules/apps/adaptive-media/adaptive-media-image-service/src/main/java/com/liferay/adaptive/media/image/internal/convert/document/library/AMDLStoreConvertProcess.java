@@ -93,8 +93,8 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 								versionLabel);
 						}
 					}
-					catch (IOException ioe) {
-						throw new PortalException(ioe);
+					catch (IOException ioException) {
+						throw new PortalException(ioException);
 					}
 				}
 			});

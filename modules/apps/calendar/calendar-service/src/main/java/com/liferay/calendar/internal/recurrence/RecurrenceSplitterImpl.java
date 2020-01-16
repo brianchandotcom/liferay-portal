@@ -61,7 +61,9 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 				firstRecurrence, secondRecurrence,
 				recurrence.getExceptionJCalendars(), splitTimeJCalendar);
 		}
-		catch (SplitTimeOutsideRecurrenceException store) {
+		catch (SplitTimeOutsideRecurrenceException
+					splitTimeOutsideRecurrenceException) {
+
 			firstRecurrence = recurrence.clone();
 
 			secondRecurrence = null;
@@ -96,8 +98,8 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 				RecurrenceSerializer.serialize(recurrence), startTimeDateValue,
 				recurrence.getTimeZone());
 		}
-		catch (ParseException pe) {
-			throw new IllegalStateException(pe);
+		catch (ParseException parseException) {
+			throw new IllegalStateException(parseException);
 		}
 	}
 

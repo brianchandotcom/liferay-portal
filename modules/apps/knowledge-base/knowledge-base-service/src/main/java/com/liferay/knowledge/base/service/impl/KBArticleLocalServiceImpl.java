@@ -1571,8 +1571,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 						kbArticle.getResourcePrimKey(), version),
 					kbArticle.getVersion() - 1, kbArticle.getVersion(), param);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 
 			emailKBArticleDiffs.put(param, value);

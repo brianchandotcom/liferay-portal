@@ -57,9 +57,9 @@ public class PollerCometDelayedJobImpl
 				try {
 					pollerCometDelayedTask.executeTask();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to do task" + e);
+						_log.warn("Unable to do task" + exception);
 					}
 				}
 			}
@@ -86,9 +86,9 @@ public class PollerCometDelayedJobImpl
 					try {
 						pollerCometDelayedTask.executeTask();
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						if (_log.isWarnEnabled()) {
-							_log.warn("Unable to do task" + e);
+							_log.warn("Unable to do task" + exception);
 						}
 					}
 				}

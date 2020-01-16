@@ -35,8 +35,8 @@ public class MethodParameter {
 		try {
 			_genericTypes = _getGenericTypes(classLoader, signatures);
 		}
-		catch (ClassNotFoundException cnfe) {
-			throw new IllegalArgumentException(cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new IllegalArgumentException(classNotFoundException);
 		}
 	}
 
@@ -104,7 +104,7 @@ public class MethodParameter {
 			try {
 				return Class.forName(className, true, contextClassLoader);
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 			}
 		}
 

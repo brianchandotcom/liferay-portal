@@ -92,7 +92,7 @@ public class SQLEqualsTest {
 
 				con.commit();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				con.rollback();
 			}
 			finally {

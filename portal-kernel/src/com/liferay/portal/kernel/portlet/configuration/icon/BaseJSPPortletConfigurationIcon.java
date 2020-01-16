@@ -56,8 +56,8 @@ public abstract class BaseJSPPortletConfigurationIcon
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + jspPath, se);
+		catch (ServletException servletException) {
+			_log.error("Unable to include JSP " + jspPath, servletException);
 
 			return false;
 		}

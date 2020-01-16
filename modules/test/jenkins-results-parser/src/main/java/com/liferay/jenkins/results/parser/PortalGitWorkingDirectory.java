@@ -211,13 +211,13 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 				jsonObject = JenkinsResultsParserUtil.createJSONObject(
 					JenkinsResultsParserUtil.read(packageJSONFile));
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				System.out.println(
 					"Unable to read invalid JSON " + packageJSONFile.getPath());
 
 				continue;
 			}
-			catch (JSONException jsone) {
+			catch (JSONException jsonException) {
 				System.out.println(
 					"Invalid JSON file " + packageJSONFile.getPath());
 

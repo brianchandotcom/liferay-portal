@@ -88,14 +88,15 @@ public class AddMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			SessionErrors.add(
 				actionRequest, "layoutPageTemplateEntryNameInvalid");
 
 			hideDefaultErrorMessage(actionRequest);
 
 			_layoutPageTemplateEntryExceptionRequestHandler.
-				handlePortalException(actionRequest, actionResponse, pe);
+				handlePortalException(
+					actionRequest, actionResponse, portalException);
 		}
 	}
 

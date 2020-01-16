@@ -161,7 +161,7 @@ public class RESTBuilderPlugin implements Plugin<Project> {
 				Files.readAllBytes(restConfigYAMLFile.toPath()),
 				StandardCharsets.UTF_8);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			Logger logger = project.getLogger();
 
 			if (logger.isWarnEnabled()) {

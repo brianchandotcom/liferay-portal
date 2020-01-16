@@ -92,8 +92,8 @@ public abstract class SyncBaseModelListener<T extends BaseModel<T>>
 						try {
 							actionableDynamicQuery.performActions();
 						}
-						catch (Exception e) {
-							throw new ModelListenerException(e);
+						catch (Exception exception) {
+							throw new ModelListenerException(exception);
 						}
 
 						return null;
@@ -134,8 +134,8 @@ public abstract class SyncBaseModelListener<T extends BaseModel<T>>
 						try {
 							actionableDynamicQuery.performActions();
 						}
-						catch (Exception e) {
-							throw new ModelListenerException(e);
+						catch (Exception exception) {
+							throw new ModelListenerException(exception);
 						}
 
 						return null;

@@ -264,8 +264,8 @@ public class SPIAgentSerializable implements Serializable {
 
 			return t;
 		}
-		catch (ClassNotFoundException cnfe) {
-			throw new IOException(cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new IOException(classNotFoundException);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -300,8 +300,8 @@ public class SPIAgentSerializable implements Serializable {
 
 			outputStream.flush();
 		}
-		catch (MailboxException me) {
-			throw new IOException(me);
+		catch (MailboxException mailboxException) {
+			throw new IOException(mailboxException);
 		}
 	}
 

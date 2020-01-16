@@ -51,8 +51,8 @@ public class UserOrganizationChecker extends RowChecker {
 			return UserLocalServiceUtil.hasOrganizationUser(
 				_organization.getOrganizationId(), user.getUserId());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -91,8 +91,8 @@ public class UserOrganizationChecker extends RowChecker {
 			return !UserPermissionUtil.contains(
 				permissionChecker, user.getUserId(), ActionKeys.UPDATE);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return super.isDisabled(obj);

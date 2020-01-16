@@ -114,31 +114,32 @@ public class UpdateContactInformationMVCActionCommand
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrganizationException ||
-				e instanceof NoSuchUserException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchOrganizationException ||
+				exception instanceof NoSuchUserException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof AddressCityException ||
-					 e instanceof AddressStreetException ||
-					 e instanceof AddressZipException ||
-					 e instanceof DuplicateOpenIdException ||
-					 e instanceof EmailAddressException ||
-					 e instanceof NoSuchCountryException ||
-					 e instanceof NoSuchListTypeException ||
-					 e instanceof NoSuchOrgLaborException ||
-					 e instanceof NoSuchRegionException ||
-					 e instanceof PhoneNumberException ||
-					 e instanceof PhoneNumberExtensionException ||
-					 e instanceof UserEmailAddressException ||
-					 e instanceof UserSmsException ||
-					 e instanceof WebsiteURLException) {
+			else if (exception instanceof AddressCityException ||
+					 exception instanceof AddressStreetException ||
+					 exception instanceof AddressZipException ||
+					 exception instanceof DuplicateOpenIdException ||
+					 exception instanceof EmailAddressException ||
+					 exception instanceof NoSuchCountryException ||
+					 exception instanceof NoSuchListTypeException ||
+					 exception instanceof NoSuchOrgLaborException ||
+					 exception instanceof NoSuchRegionException ||
+					 exception instanceof PhoneNumberException ||
+					 exception instanceof PhoneNumberExtensionException ||
+					 exception instanceof UserEmailAddressException ||
+					 exception instanceof UserSmsException ||
+					 exception instanceof WebsiteURLException) {
 
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 
 				String errorMVCPath = ParamUtil.getString(
 					actionRequest, "errorMVCPath");
@@ -152,7 +153,7 @@ public class UpdateContactInformationMVCActionCommand
 				}
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

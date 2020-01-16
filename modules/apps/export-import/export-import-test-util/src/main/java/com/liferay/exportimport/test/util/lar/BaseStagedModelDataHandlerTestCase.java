@@ -1205,7 +1205,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			try {
 				return TestPropsValues.getUserId();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				return 0;
 			}
 		}

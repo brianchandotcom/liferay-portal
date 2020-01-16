@@ -34,7 +34,7 @@ public class EntityMapping {
 		try {
 			return _entityNames[index];
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

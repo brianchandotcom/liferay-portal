@@ -129,8 +129,8 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 					amImageScaledImage.getSize());
 			}
 		}
-		catch (IOException ioe) {
-			throw new AMRuntimeException.IOException(ioe);
+		catch (IOException ioException) {
+			throw new AMRuntimeException.IOException(ioException);
 		}
 	}
 

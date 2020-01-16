@@ -53,7 +53,7 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 				return rootElement.attributeValue("default-locale");
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		Locale locale = LocaleUtil.getSiteDefault();

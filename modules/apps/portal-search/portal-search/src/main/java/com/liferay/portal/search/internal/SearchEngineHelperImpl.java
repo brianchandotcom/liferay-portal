@@ -261,12 +261,12 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 					queuingSearchEngine.invokeQueued(
 						searchEngine.getIndexWriter());
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to execute pending write events for " +
 								"engine: " + searchEngineId,
-							e);
+							exception);
 					}
 				}
 			}

@@ -132,8 +132,8 @@ public class AssetEntriesFacet extends MultiValueFacet {
 						entityBooleanFilter, BooleanClauseOccur.SHOULD);
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 

@@ -94,9 +94,9 @@ public class CallFunction
 
 			setDDMFormFieldValues(ddmDataProviderResponse, resultMap);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -213,9 +213,9 @@ public class CallFunction
 
 			return (String)jsonArray.get(0);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsone, jsone);
+				_log.debug(jsonException, jsonException);
 			}
 
 			return String.valueOf(value);

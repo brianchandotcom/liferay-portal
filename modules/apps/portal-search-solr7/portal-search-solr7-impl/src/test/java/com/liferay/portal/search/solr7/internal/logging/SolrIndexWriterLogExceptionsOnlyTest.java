@@ -66,7 +66,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 				createSearchContext(),
 				Collections.singletonList(getTestDocument()));
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -84,7 +84,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 				createSearchContext(),
 				Collections.singletonList(getTestDocument()));
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -98,7 +98,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 		try {
 			indexWriter.commit(createSearchContext());
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -112,7 +112,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 		try {
 			indexWriter.deleteDocument(createSearchContext(), null);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -126,7 +126,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 			indexWriter.deleteDocuments(
 				createSearchContext(), Collections.singletonList(null));
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -143,7 +143,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 			indexWriter.deleteDocuments(
 				createSearchContext(), Collections.singletonList(null));
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -157,7 +157,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 		try {
 			indexWriter.deleteEntityDocuments(createSearchContext(), null);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -172,7 +172,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 			indexWriter.partiallyUpdateDocument(
 				createSearchContext(), getTestDocument());
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -187,7 +187,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 				createSearchContext(),
 				Collections.singletonList(getTestDocument()));
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -205,7 +205,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 				createSearchContext(),
 				Collections.singletonList(getTestDocument()));
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -219,7 +219,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 			indexWriter.updateDocument(
 				createSearchContext(), getTestDocument());
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -236,7 +236,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 			indexWriter.updateDocument(
 				createSearchContext(), getTestDocument());
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -251,7 +251,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 				createSearchContext(),
 				Collections.singletonList(getTestDocument()));
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -269,7 +269,7 @@ public class SolrIndexWriterLogExceptionsOnlyTest extends BaseIndexingTestCase {
 				createSearchContext(),
 				Collections.singletonList(getTestDocument()));
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 

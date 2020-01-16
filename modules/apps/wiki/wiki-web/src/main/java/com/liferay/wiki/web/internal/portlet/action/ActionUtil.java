@@ -287,7 +287,7 @@ public class ActionUtil {
 				throw new NoSuchNodeException();
 			}
 		}
-		catch (NoSuchNodeException nsne) {
+		catch (NoSuchNodeException noSuchNodeException) {
 			node = getFirstVisibleNode(portletRequest);
 		}
 
@@ -332,7 +332,7 @@ public class ActionUtil {
 				node = WikiNodeServiceUtil.getNode(nodeId);
 			}
 		}
-		catch (NoSuchNodeException nsne) {
+		catch (NoSuchNodeException noSuchNodeException) {
 		}
 
 		if (node == null) {
@@ -357,14 +357,14 @@ public class ActionUtil {
 		try {
 			return WikiPageServiceUtil.getPage(nodeId, title, version);
 		}
-		catch (NoSuchPageException nspe) {
+		catch (NoSuchPageException noSuchPageException) {
 			if (title.equals(wikiGroupServiceConfiguration.frontPageName()) &&
 				(version == 0)) {
 
 				return getFirstVisiblePage(nodeId, portletRequest);
 			}
 
-			throw nspe;
+			throw noSuchPageException;
 		}
 	}
 
@@ -402,16 +402,16 @@ public class ActionUtil {
 
 			getFirstVisiblePage(node.getNodeId(), renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchNodeException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/wiki/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		long categoryId = ParamUtil.getLong(renderRequest, "categoryId");

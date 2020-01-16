@@ -68,10 +68,10 @@ public class KaleoActionExecutorImpl implements KaleoActionExecutor {
 					kaleoInstanceToken.getKaleoInstanceId(),
 					executionContext.getWorkflowContext(), serviceContext);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
-				comment = e.getMessage();
+				comment = exception.getMessage();
 			}
 			finally {
 				_kaleoLogLocalService.addActionExecutionKaleoLog(

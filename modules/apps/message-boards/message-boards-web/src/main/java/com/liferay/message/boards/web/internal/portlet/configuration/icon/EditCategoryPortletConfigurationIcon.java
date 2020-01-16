@@ -72,7 +72,7 @@ public class EditCategoryPortletConfigurationIcon
 		try {
 			category = ActionUtil.getCategory(portletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -109,7 +109,7 @@ public class EditCategoryPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

@@ -90,12 +90,12 @@ public class MyOrganizationsPortlet extends UsersAdminPortlet {
 					}
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				path = "/error.jsp";
 			}

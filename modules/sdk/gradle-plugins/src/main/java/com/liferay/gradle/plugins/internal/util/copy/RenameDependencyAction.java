@@ -61,8 +61,8 @@ public class RenameDependencyAction implements Action<FileCopyDetails> {
 
 			fileCopyDetails.setName(fileName);
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 

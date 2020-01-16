@@ -71,15 +71,15 @@ public class LoggingOutputProcessor implements OutputProcessor<Void, Void> {
 				_logLineConsumer.accept(stdErr, line);
 			}
 		}
-		catch (IOException ioe) {
-			throw new ProcessException(ioe);
+		catch (IOException ioException) {
+			throw new ProcessException(ioException);
 		}
 		finally {
 			try {
 				unsyncBufferedReader.close();
 			}
-			catch (IOException ioe) {
-				throw new ProcessException(ioe);
+			catch (IOException ioException) {
+				throw new ProcessException(ioException);
 			}
 		}
 	}

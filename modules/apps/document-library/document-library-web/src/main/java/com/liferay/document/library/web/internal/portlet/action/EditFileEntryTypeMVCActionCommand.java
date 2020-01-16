@@ -115,19 +115,21 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (DuplicateFileEntryTypeException | NoSuchMetadataSetException |
 			   RequiredStructureException | StructureDefinitionException |
-			   StructureDuplicateElementException | StructureNameException e) {
+			   StructureDuplicateElementException | StructureNameException
+				   exception) {
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 		}
-		catch (RequiredFileEntryTypeException rfete) {
-			SessionErrors.add(actionRequest, rfete.getClass());
+		catch (RequiredFileEntryTypeException requiredFileEntryTypeException) {
+			SessionErrors.add(
+				actionRequest, requiredFileEntryTypeException.getClass());
 
 			actionResponse.setRenderParameter("navigation", "file_entry_types");
 		}
 		catch (NoSuchFileEntryTypeException | NoSuchStructureException |
-			   PrincipalException e) {
+			   PrincipalException exception) {
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/document_library/error.jsp");

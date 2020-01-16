@@ -94,8 +94,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 					fragmentRendererContext, httpServletRequest,
 					httpServletResponse));
 		}
-		catch (PortalException pe) {
-			throw new IOException(pe);
+		catch (PortalException portalException) {
+			throw new IOException(portalException);
 		}
 	}
 

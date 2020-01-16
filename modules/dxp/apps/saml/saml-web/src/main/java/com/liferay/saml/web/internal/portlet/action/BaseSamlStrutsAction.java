@@ -51,20 +51,20 @@ public abstract class BaseSamlStrutsAction implements StrutsAction {
 
 			return doExecute(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 			else {
-				_log.error(e.getMessage());
+				_log.error(exception.getMessage());
 			}
 
-			Class<?> clazz = e.getClass();
+			Class<?> clazz = exception.getClass();
 
 			SessionErrors.add(httpServletRequest, clazz.getName());
 
-			if (e instanceof StatusException) {
-				StatusException statusException = (StatusException)e;
+			if (exception instanceof StatusException) {
+				StatusException statusException = (StatusException)exception;
 
 				SessionErrors.add(
 					httpServletRequest, "statusCodeURI",

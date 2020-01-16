@@ -87,8 +87,8 @@ public class ErrorSPIAgent implements SPIAgent {
 				printWriter.write("SPI is temporarily unavailable.");
 				printWriter.write("</div>");
 			}
-			catch (IOException ioe) {
-				throw new PortalResiliencyException(ioe);
+			catch (IOException ioException) {
+				throw new PortalResiliencyException(ioException);
 			}
 		}
 	}

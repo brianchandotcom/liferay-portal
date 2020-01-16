@@ -189,8 +189,8 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		try {
 			userId = getUserId();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -232,8 +232,8 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 			_directSynchronousMessageSender.send(
 				DestinationNames.TEST_TRANSACTION, message);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

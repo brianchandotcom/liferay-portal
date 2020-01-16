@@ -65,10 +65,10 @@ public class SPISynchronousQueueUtilTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			Assert.assertEquals(
 				"No SPI synchronous queue with uuid nonexistent",
-				ise.getMessage());
+				illegalStateException.getMessage());
 		}
 
 		// Notify existent

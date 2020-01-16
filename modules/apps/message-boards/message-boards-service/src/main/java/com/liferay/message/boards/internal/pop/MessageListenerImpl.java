@@ -113,8 +113,8 @@ public class MessageListenerImpl implements MessageListener {
 
 			return true;
 		}
-		catch (Exception e) {
-			_log.error("Unable to process message: " + message, e);
+		catch (Exception exception) {
+			_log.error("Unable to process message: " + message, exception);
 
 			return false;
 		}
@@ -235,17 +235,17 @@ public class MessageListenerImpl implements MessageListener {
 					"Delivering message takes " + stopWatch.getTime() + " ms");
 			}
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Prevented unauthorized post from " + from);
 			}
 
-			throw new MessageListenerException(pe);
+			throw new MessageListenerException(principalException);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new MessageListenerException(e);
+			throw new MessageListenerException(exception);
 		}
 		finally {
 			if (inputStreamOVPs != null) {
@@ -254,9 +254,9 @@ public class MessageListenerImpl implements MessageListener {
 
 					try (InputStream inputStream = inputStreamOVP.getValue()) {
 					}
-					catch (IOException ioe) {
+					catch (IOException ioException) {
 						if (_log.isWarnEnabled()) {
-							_log.warn(ioe, ioe);
+							_log.warn(ioException, ioException);
 						}
 					}
 				}

@@ -31,7 +31,7 @@ public class FileData {
 		try {
 			bytes = FileUtil.getBytes(file);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			bytes = null;
 		}
 

@@ -91,7 +91,7 @@ public class AssetEntryVerticalCard implements VerticalCard {
 					"groupdescriptivename",
 					group.getDescriptiveName(_themeDisplay.getLocale()));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 
@@ -120,7 +120,7 @@ public class AssetEntryVerticalCard implements VerticalCard {
 		try {
 			return _assetRenderer.getThumbnailPath(_renderRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -142,7 +142,7 @@ public class AssetEntryVerticalCard implements VerticalCard {
 			return HtmlUtil.escape(
 				group.getDescriptiveName(_themeDisplay.getLocale()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

@@ -94,8 +94,8 @@ public class WebSsoAutoLogin extends BaseAutoLogin {
 
 			return credentials;
 		}
-		catch (Exception e) {
-			throw new AutoLoginException(e);
+		catch (Exception exception) {
+			throw new AutoLoginException(exception);
 		}
 	}
 

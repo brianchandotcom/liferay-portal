@@ -152,7 +152,7 @@ public class ValidateSchemaTask extends SourceTask {
 								}
 							});
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						if (logger.isErrorEnabled()) {
 							String fileName = file.getName();
 

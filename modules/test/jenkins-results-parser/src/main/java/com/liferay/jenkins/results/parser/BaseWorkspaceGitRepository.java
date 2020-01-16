@@ -46,8 +46,8 @@ public abstract class BaseWorkspaceGitRepository
 
 			return fileContent.trim();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

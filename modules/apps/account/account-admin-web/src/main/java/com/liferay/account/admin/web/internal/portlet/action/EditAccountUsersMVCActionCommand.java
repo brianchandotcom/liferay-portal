@@ -80,18 +80,18 @@ public class EditAccountUsersMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String mvcPath = "/account_users_admin/view.jsp";
 
-			if (e instanceof NoSuchUserException ||
-				e instanceof PrincipalException) {
+			if (exception instanceof NoSuchUserException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				mvcPath = "/account_users_admin/error.jsp";
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 
 			actionResponse.setRenderParameter("mvcPath", mvcPath);

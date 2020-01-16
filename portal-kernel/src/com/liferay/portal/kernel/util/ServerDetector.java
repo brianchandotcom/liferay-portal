@@ -194,7 +194,7 @@ public class ServerDetector {
 
 			return true;
 		}
-		catch (ClassNotFoundException cnfe) {
+		catch (ClassNotFoundException classNotFoundException) {
 			if (ServerDetector.class.getResource(className) != null) {
 				return true;
 			}

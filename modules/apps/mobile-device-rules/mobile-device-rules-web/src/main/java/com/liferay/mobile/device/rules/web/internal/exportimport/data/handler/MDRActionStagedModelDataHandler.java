@@ -125,12 +125,12 @@ public class MDRActionStagedModelDataHandler
 
 				actionElement.addAttribute("layout-uuid", layout.getUuid());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to set the layout uuid of layout " + plid +
 							". Site redirect may not match after import.",
-						e);
+						exception);
 				}
 			}
 		}
@@ -244,7 +244,7 @@ public class MDRActionStagedModelDataHandler
 			typeSettingsProperties.setProperty(
 				"plid", String.valueOf(layout.getPlid()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(5);
 
@@ -254,7 +254,7 @@ public class MDRActionStagedModelDataHandler
 				sb.append(groupId);
 				sb.append(". Site redirect may not match the target layout.");
 
-				_log.warn(sb.toString(), e);
+				_log.warn(sb.toString(), exception);
 			}
 		}
 	}

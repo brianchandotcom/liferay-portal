@@ -153,11 +153,11 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 					indexableActionableDynamicQuery.addDocuments(
 						getDocument(node));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index wiki node " + node.getNodeId(),
-							pe);
+							portalException);
 					}
 				}
 			});

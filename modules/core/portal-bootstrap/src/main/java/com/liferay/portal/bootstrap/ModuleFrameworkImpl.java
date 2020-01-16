@@ -179,8 +179,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			return null;
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
 	}
 
@@ -366,10 +366,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		try {
 			bundle.start(options);
 		}
-		catch (BundleException be) {
-			_log.error(be, be);
+		catch (BundleException bundleException) {
+			_log.error(bundleException, bundleException);
 
-			throw new PortalException(be);
+			throw new PortalException(bundleException);
 		}
 	}
 
@@ -453,10 +453,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		try {
 			bundle.stop(options);
 		}
-		catch (BundleException be) {
-			_log.error(be, be);
+		catch (BundleException bundleException) {
+			_log.error(bundleException, bundleException);
 
-			throw new PortalException(be);
+			throw new PortalException(bundleException);
 		}
 	}
 
@@ -543,10 +543,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		try {
 			bundle.uninstall();
 		}
-		catch (BundleException be) {
-			_log.error(be, be);
+		catch (BundleException bundleException) {
+			_log.error(bundleException, bundleException);
 
-			throw new PortalException(be);
+			throw new PortalException(bundleException);
 		}
 	}
 
@@ -591,10 +591,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		try {
 			bundle.update(inputStream);
 		}
-		catch (BundleException be) {
-			_log.error(be, be);
+		catch (BundleException bundleException) {
+			_log.error(bundleException, bundleException);
 
-			throw new PortalException(be);
+			throw new PortalException(bundleException);
 		}
 	}
 
@@ -662,8 +662,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			try {
 				unsyncBufferedInputStream.reset();
 			}
-			catch (IOException ioe) {
-				throw new PortalException(ioe);
+			catch (IOException ioException) {
+				throw new PortalException(ioException);
 			}
 
 			if (bundle != null) {
@@ -676,10 +676,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		try {
 			return bundleContext.installBundle(location, inputStream);
 		}
-		catch (BundleException be) {
-			_log.error(be, be);
+		catch (BundleException bundleException) {
+			_log.error(bundleException, bundleException);
 
-			throw new PortalException(be);
+			throw new PortalException(bundleException);
 		}
 	}
 
@@ -1033,8 +1033,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			return manifest.getMainAttributes();
 		}
-		catch (IOException ioe) {
-			return ReflectionUtil.throwException(ioe);
+		catch (IOException ioException) {
+			return ReflectionUtil.throwException(ioException);
 		}
 	}
 
@@ -1113,8 +1113,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			return null;
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 
@@ -1219,8 +1219,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					bundle.start();
 				}
 			}
-			catch (BundleException be) {
-				_log.error("Unable to install bundle at " + location, be);
+			catch (BundleException bundleException) {
+				_log.error(
+					"Unable to install bundle at " + location, bundleException);
 			}
 		}
 	}
@@ -1301,8 +1302,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			return bundle;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return null;
 		}
@@ -1394,10 +1395,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				try {
 					bean = configurableApplicationContext.getBean(beanName);
 				}
-				catch (BeanIsAbstractException biae) {
+				catch (BeanIsAbstractException beanIsAbstractException) {
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 				}
 
 				if (bean != null) {
@@ -1731,11 +1732,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				try {
 					future.get();
 				}
-				catch (ExecutionException ee) {
-					throwableCollector.collect(ee.getCause());
+				catch (ExecutionException executionException) {
+					throwableCollector.collect(executionException.getCause());
 				}
-				catch (InterruptedException ie) {
-					throwableCollector.collect(ie);
+				catch (InterruptedException interruptedException) {
+					throwableCollector.collect(interruptedException);
 				}
 			}
 		}
@@ -1880,9 +1881,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						dynamicBundleChecksums,
 						currentBundle.getBundleContext());
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					_log.error(
-						"Unable to register dynamic bundle checksums", e);
+						"Unable to register dynamic bundle checksums",
+						exception);
 				}
 			};
 
@@ -1919,7 +1921,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			try {
 				serviceRegistration.unregister();
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Service registration " + serviceRegistration +

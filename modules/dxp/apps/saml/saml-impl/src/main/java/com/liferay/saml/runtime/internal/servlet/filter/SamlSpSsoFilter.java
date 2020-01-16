@@ -99,12 +99,12 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage(), e);
+				_log.debug(exception.getMessage(), exception);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 		}
 
@@ -157,10 +157,11 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 				try {
 					login(httpServletRequest, httpServletResponse);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Failed to send Authn request: " + pe.getMessage());
+							"Failed to send Authn request: " +
+								portalException.getMessage());
 					}
 				}
 			}

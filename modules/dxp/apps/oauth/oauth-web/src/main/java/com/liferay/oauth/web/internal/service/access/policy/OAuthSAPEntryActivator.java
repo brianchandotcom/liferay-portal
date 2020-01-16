@@ -116,11 +116,11 @@ public class OAuthSAPEntryActivator {
 			try {
 				addSAPEntry(company.getCompanyId());
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				_log.error(
 					"Unable to add service access policy entry for company " +
 						company.getCompanyId(),
-					pe);
+					portalException);
 			}
 		}
 

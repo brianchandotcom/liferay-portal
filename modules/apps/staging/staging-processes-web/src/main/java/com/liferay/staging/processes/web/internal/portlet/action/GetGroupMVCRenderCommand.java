@@ -36,16 +36,16 @@ public abstract class GetGroupMVCRenderCommand implements MVCRenderCommand {
 		try {
 			ActionUtil.getGroup(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchGroupException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchGroupException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return getPath();

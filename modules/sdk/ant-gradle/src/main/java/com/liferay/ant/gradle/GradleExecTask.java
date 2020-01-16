@@ -48,8 +48,8 @@ public class GradleExecTask extends ExecTask {
 		try {
 			setExecutable(_getExecutable());
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 
 		setFailonerror(true);

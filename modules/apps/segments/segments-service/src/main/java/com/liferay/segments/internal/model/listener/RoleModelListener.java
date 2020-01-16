@@ -35,8 +35,8 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			_segmentsEntryRoleLocalService.deleteSegmentsEntryRolesByRoleId(
 				role.getRoleId());
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

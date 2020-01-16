@@ -73,8 +73,8 @@ public class ProjectDataUtil {
 					fileLock.release();
 				}
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 		}
 	}
@@ -109,8 +109,8 @@ public class ProjectDataUtil {
 				outputStream.write(byteArrayOutputStream.toByteArray());
 			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -121,8 +121,8 @@ public class ProjectDataUtil {
 
 			return (ProjectData)objectInputStream.readObject();
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -135,8 +135,8 @@ public class ProjectDataUtil {
 
 			objectOutputStream.writeObject(projectData);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

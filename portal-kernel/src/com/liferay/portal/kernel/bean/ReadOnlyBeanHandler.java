@@ -45,8 +45,8 @@ public class ReadOnlyBeanHandler implements InvocationHandler {
 		try {
 			return method.invoke(_bean, arguments);
 		}
-		catch (InvocationTargetException ite) {
-			throw ite.getTargetException();
+		catch (InvocationTargetException invocationTargetException) {
+			throw invocationTargetException.getTargetException();
 		}
 	}
 

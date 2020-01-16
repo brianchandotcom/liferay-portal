@@ -197,7 +197,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 			Assert.fail();
 		}
-		catch (Exception ignore) {
+		catch (Exception exception) {
 		}
 
 		map.clear();

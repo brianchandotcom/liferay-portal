@@ -163,7 +163,9 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 					layoutSiteNavigationMenuItemMap);
 			}
 		}
-		catch (SiteNavigationMenuItemNameException snmine) {
+		catch (SiteNavigationMenuItemNameException
+					siteNavigationMenuItemNameException) {
+
 			jsonObject.put(
 				"errorMessage",
 				LanguageUtil.get(

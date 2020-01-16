@@ -94,7 +94,7 @@ public class UnsyncCharArrayReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -102,7 +102,7 @@ public class UnsyncCharArrayReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -110,7 +110,7 @@ public class UnsyncCharArrayReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -118,7 +118,7 @@ public class UnsyncCharArrayReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -126,7 +126,7 @@ public class UnsyncCharArrayReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -134,7 +134,7 @@ public class UnsyncCharArrayReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -142,7 +142,7 @@ public class UnsyncCharArrayReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		unsyncCharArrayReader.close();

@@ -163,13 +163,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 			return hits;
 		}
-		catch (RuntimeException re) {
-			if (!handle(re)) {
+		catch (RuntimeException runtimeException) {
+			if (!handle(runtimeException)) {
 				if (_logExceptionsOnly) {
-					_log.error(re, re);
+					_log.error(runtimeException, runtimeException);
 				}
 				else {
-					throw re;
+					throw runtimeException;
 				}
 			}
 
@@ -213,13 +213,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 			return countSearchResponse.getCount();
 		}
-		catch (RuntimeException re) {
-			if (!handle(re)) {
+		catch (RuntimeException runtimeException) {
+			if (!handle(runtimeException)) {
 				if (_logExceptionsOnly) {
-					_log.error(re, re);
+					_log.error(runtimeException, runtimeException);
 				}
 				else {
-					throw re;
+					throw runtimeException;
 				}
 			}
 

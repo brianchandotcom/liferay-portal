@@ -57,8 +57,8 @@ public class FileSystemHook extends BaseHook {
 
 			return FileUtil.getBytes(file);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -73,8 +73,8 @@ public class FileSystemHook extends BaseHook {
 
 			return new FileInputStream(file);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -85,8 +85,8 @@ public class FileSystemHook extends BaseHook {
 
 			FileUtil.write(file, bytes);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

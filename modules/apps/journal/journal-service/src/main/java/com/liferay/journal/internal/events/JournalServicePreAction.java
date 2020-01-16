@@ -52,8 +52,8 @@ public class JournalServicePreAction extends Action {
 		try {
 			servicePre(httpServletRequest);
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 	}
 
@@ -84,9 +84,9 @@ public class JournalServicePreAction extends Action {
 			httpServletRequest.setAttribute(
 				WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 		}
-		catch (NoSuchArticleException nsae) {
+		catch (NoSuchArticleException noSuchArticleException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsae.getMessage());
+				_log.warn(noSuchArticleException.getMessage());
 			}
 		}
 	}

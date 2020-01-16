@@ -79,9 +79,10 @@ public class SynchronousMessageListener implements MessageListener {
 
 			return _results;
 		}
-		catch (InterruptedException ie) {
+		catch (InterruptedException interruptedException) {
 			throw new MessageBusException(
-				"Message sending interrupted for: " + _message, ie);
+				"Message sending interrupted for: " + _message,
+				interruptedException);
 		}
 		finally {
 			_messageBus.unregisterMessageListener(

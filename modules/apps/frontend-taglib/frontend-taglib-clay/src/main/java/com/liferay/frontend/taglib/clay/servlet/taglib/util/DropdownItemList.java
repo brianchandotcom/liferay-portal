@@ -51,8 +51,8 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 					dropdownItemList.add(dropdownItem);
 				}
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 
@@ -65,8 +65,8 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		try {
 			unsafeConsumer.accept(dropdownItem);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		add(dropdownItem);
@@ -80,8 +80,8 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		try {
 			unsafeConsumer.accept(dropdownCheckboxItem);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		add(dropdownCheckboxItem);
@@ -95,8 +95,8 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		try {
 			unsafeConsumer.accept(dropdownGroupItem);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		add(dropdownGroupItem);
@@ -110,8 +110,8 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		try {
 			unsafeConsumer.accept(dropdownRadioItem);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		add(dropdownRadioItem);
@@ -126,8 +126,8 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		try {
 			unsafeConsumer.accept(dropdownRadioGroupItem);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		add(dropdownRadioGroupItem);

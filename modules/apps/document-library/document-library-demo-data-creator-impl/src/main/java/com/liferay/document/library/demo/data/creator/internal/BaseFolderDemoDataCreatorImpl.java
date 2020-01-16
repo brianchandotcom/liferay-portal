@@ -41,9 +41,9 @@ public abstract class BaseFolderDemoDataCreatorImpl
 			try {
 				dlAppLocalService.deleteFolder(folderId);
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsfe, nsfe);
+					_log.warn(noSuchFolderException, noSuchFolderException);
 				}
 			}
 
@@ -60,9 +60,9 @@ public abstract class BaseFolderDemoDataCreatorImpl
 		try {
 			folder = dlAppLocalService.getFolder(groupId, folderId, name);
 		}
-		catch (NoSuchFolderException nsfe) {
+		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsfe, nsfe);
+				_log.warn(noSuchFolderException, noSuchFolderException);
 			}
 
 			folder = dlAppLocalService.addFolder(

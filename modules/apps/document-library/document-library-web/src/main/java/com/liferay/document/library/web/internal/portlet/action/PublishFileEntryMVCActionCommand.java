@@ -66,9 +66,10 @@ public class PublishFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			return _dlAppLocalService.getFileEntry(fileEntryId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get file entry " + fileEntryId, pe);
+				_log.debug(
+					"Unable to get file entry " + fileEntryId, portalException);
 			}
 		}
 

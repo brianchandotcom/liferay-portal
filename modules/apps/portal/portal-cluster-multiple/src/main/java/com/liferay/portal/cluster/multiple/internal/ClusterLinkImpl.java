@@ -201,10 +201,10 @@ public class ClusterLinkImpl implements ClusterLink {
 			initChannels(
 				channelLogicNames, channelPropertiesLocations, channelNames);
 		}
-		catch (Exception e) {
-			_log.error("Unable to initialize channels", e);
+		catch (Exception exception) {
+			_log.error("Unable to initialize channels", exception);
 
-			throw new IllegalStateException(e);
+			throw new IllegalStateException(exception);
 		}
 
 		for (ClusterReceiver clusterReceiver : _clusterReceivers) {

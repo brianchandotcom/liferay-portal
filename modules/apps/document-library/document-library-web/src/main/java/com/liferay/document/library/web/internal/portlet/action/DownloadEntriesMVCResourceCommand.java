@@ -93,8 +93,8 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 			return false;
 		}
-		catch (IOException | PortalException e) {
-			throw new PortletException(e);
+		catch (IOException | PortalException exception) {
+			throw new PortletException(exception);
 		}
 	}
 

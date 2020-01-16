@@ -87,8 +87,8 @@ public class ServiceProxyFactory {
 				serviceClass, null, field, filterString, blocking,
 				useNullAsDummyService);
 		}
-		catch (ReflectiveOperationException roe) {
-			return ReflectionUtil.throwException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			return ReflectionUtil.throwException(reflectiveOperationException);
 		}
 	}
 
@@ -125,8 +125,8 @@ public class ServiceProxyFactory {
 
 			return serviceInstance;
 		}
-		catch (ReflectiveOperationException roe) {
-			return ReflectionUtil.throwException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			return ReflectionUtil.throwException(reflectiveOperationException);
 		}
 	}
 
@@ -242,8 +242,10 @@ public class ServiceProxyFactory {
 						try {
 							return method.invoke(service, arguments);
 						}
-						catch (InvocationTargetException ite) {
-							throw ite.getCause();
+						catch (InvocationTargetException
+									invocationTargetException) {
+
+							throw invocationTargetException.getCause();
 						}
 					}
 

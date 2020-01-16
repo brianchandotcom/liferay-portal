@@ -81,23 +81,23 @@ public class ArquillianConnectorThread extends Thread {
 							new FrameworkResult<>(
 								frameworkCommand.execute(_bundleContext)));
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						objectOutputStream.writeObject(
-							new FrameworkResult<>(e));
+							new FrameworkResult<>(exception));
 					}
 
 					objectOutputStream.flush();
 				}
 			}
-			catch (EOFException eofe) {
+			catch (EOFException eofException) {
 			}
-			catch (SocketException se) {
+			catch (SocketException socketException) {
 				break;
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_logger.error(
 					"Dropped connection due to unrecoverable framework failure",
-					e);
+					exception);
 			}
 		}
 	}

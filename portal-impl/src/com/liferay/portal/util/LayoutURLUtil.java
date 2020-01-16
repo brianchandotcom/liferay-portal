@@ -47,7 +47,7 @@ public class LayoutURLUtil {
 		try {
 			return PortalUtil.getLayoutURL(layout, themeDisplay, false);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}

@@ -84,8 +84,8 @@ public class StubMapImpl<T>
 		try {
 			return spi.getRegistrationReference();
 		}
-		catch (RemoteException re) {
-			throw new RuntimeException(re);
+		catch (RemoteException remoteException) {
+			throw new RuntimeException(remoteException);
 		}
 	}
 

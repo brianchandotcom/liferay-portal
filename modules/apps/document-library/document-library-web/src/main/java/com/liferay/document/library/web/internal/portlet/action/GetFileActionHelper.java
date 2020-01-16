@@ -92,17 +92,18 @@ public class GetFileActionHelper {
 				uuid, groupId, targetExtension, httpServletRequest,
 				httpServletResponse);
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nsfee, httpServletRequest,
-				httpServletResponse);
+				HttpServletResponse.SC_NOT_FOUND, noSuchFileEntryException,
+				httpServletRequest, httpServletResponse);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			_processPrincipalException(
-				pe, httpServletRequest, httpServletResponse);
+				principalException, httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
+		catch (Exception exception) {
+			PortalUtil.sendError(
+				exception, httpServletRequest, httpServletResponse);
 		}
 	}
 

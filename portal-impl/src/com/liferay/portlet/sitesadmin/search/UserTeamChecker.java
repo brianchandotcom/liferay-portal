@@ -51,8 +51,8 @@ public class UserTeamChecker extends EmptyOnClickRowChecker {
 			return UserLocalServiceUtil.hasTeamUser(
 				_team.getTeamId(), user.getUserId());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}

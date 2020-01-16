@@ -91,8 +91,8 @@ public class HealthClusterRequestExecutorImpl
 			return clusterClient.health(
 				clusterHealthRequest, RequestOptions.DEFAULT);
 		}
-		catch (Exception ioe) {
-			throw new RuntimeException(ioe);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

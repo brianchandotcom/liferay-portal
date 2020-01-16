@@ -152,12 +152,13 @@ public class SingleLogoutProfileImpl
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String message =
-				"Unable to verify single logout support: " + e.getMessage();
+				"Unable to verify single logout support: " +
+					exception.getMessage();
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, e);
+				_log.debug(message, exception);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(message);
@@ -226,8 +227,8 @@ public class SingleLogoutProfileImpl
 				}
 			}
 		}
-		catch (Exception e) {
-			ExceptionHandlerUtil.handleException(e);
+		catch (Exception exception) {
+			ExceptionHandlerUtil.handleException(exception);
 		}
 	}
 
@@ -290,8 +291,8 @@ public class SingleLogoutProfileImpl
 						inboundSamlMessage.getClass());
 			}
 		}
-		catch (Exception e) {
-			ExceptionHandlerUtil.handleException(e);
+		catch (Exception exception) {
+			ExceptionHandlerUtil.handleException(exception);
 		}
 	}
 
@@ -304,8 +305,8 @@ public class SingleLogoutProfileImpl
 		try {
 			sendSpLogoutRequest(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			ExceptionHandlerUtil.handleException(e);
+		catch (Exception exception) {
+			ExceptionHandlerUtil.handleException(exception);
 		}
 	}
 
@@ -360,12 +361,12 @@ public class SingleLogoutProfileImpl
 				httpServletRequest, httpServletResponse,
 				SamlWebKeys.SAML_SP_SESSION_KEY, StringPool.BLANK, 0);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(se.getMessage(), se);
+				_log.debug(systemException.getMessage(), systemException);
 			}
 			else {
-				_log.error(se.getMessage());
+				_log.error(systemException.getMessage());
 			}
 		}
 	}
@@ -399,12 +400,12 @@ public class SingleLogoutProfileImpl
 					}
 				}
 			}
-			catch (SystemException se) {
+			catch (SystemException systemException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(se.getMessage(), se);
+					_log.debug(systemException.getMessage(), systemException);
 				}
 				else {
-					_log.error(se.getMessage());
+					_log.error(systemException.getMessage());
 				}
 			}
 		}
@@ -616,7 +617,7 @@ public class SingleLogoutProfileImpl
 					httpServletRequest, httpServletResponse, samlSloContext,
 					samlSloRequestInfo);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					StringBundler sb = new StringBundler(7);
 
@@ -628,7 +629,7 @@ public class SingleLogoutProfileImpl
 					sb.append(" to ");
 					sb.append(singleLogoutService.getLocation());
 
-					_log.debug(sb.toString(), e);
+					_log.debug(sb.toString(), exception);
 				}
 
 				samlSloRequestInfo.setStatus(

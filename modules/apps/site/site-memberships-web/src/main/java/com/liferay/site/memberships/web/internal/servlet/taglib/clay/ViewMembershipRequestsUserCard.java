@@ -103,7 +103,7 @@ public class ViewMembershipRequestsUserCard extends BaseUserCard {
 
 			return HtmlUtil.escape(membershipRequestReplierCompany.getName());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;

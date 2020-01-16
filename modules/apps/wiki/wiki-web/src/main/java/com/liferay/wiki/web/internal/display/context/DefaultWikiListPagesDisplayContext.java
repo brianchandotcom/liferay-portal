@@ -281,12 +281,12 @@ public class DefaultWikiListPagesDisplayContext
 						lastPage = WikiPageLocalServiceUtil.getPage(
 							curPage.getResourcePrimKey(), false);
 					}
-					catch (PortalException pe) {
+					catch (PortalException portalException) {
 
 						// LPS-52675
 
 						if (_log.isDebugEnabled()) {
-							_log.debug(pe, pe);
+							_log.debug(portalException, portalException);
 						}
 					}
 
@@ -662,8 +662,9 @@ public class DefaultWikiListPagesDisplayContext
 				LiferayWindowState.POP_UP.toString(), null,
 				_httpServletRequest);
 		}
-		catch (Exception e) {
-			throw new SystemException("Unable to create permissions URL", e);
+		catch (Exception exception) {
+			throw new SystemException(
+				"Unable to create permissions URL", exception);
 		}
 
 		urlMenuItem.setURL(url);
@@ -708,7 +709,7 @@ public class DefaultWikiListPagesDisplayContext
 
 			menuItems.add(javaScriptMenuItem);
 		}
-		catch (WindowStateException wse) {
+		catch (WindowStateException windowStateException) {
 		}
 	}
 

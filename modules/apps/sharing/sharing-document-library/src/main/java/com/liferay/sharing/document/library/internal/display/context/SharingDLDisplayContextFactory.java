@@ -102,11 +102,11 @@ public class SharingDLDisplayContextFactory implements DLDisplayContextFactory {
 				_sharingMenuItemFactory, _sharingToolbarItemFactory,
 				_sharingPermission, sharingConfiguration);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
 				"Unable to create sharing document library view file version " +
 					"display context for file version " + fileVersion,
-				pe);
+				portalException);
 		}
 	}
 

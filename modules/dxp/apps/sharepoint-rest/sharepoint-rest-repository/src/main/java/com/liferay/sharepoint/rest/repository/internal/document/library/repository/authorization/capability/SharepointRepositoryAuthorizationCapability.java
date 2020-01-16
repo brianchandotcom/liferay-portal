@@ -190,11 +190,11 @@ public class SharepointRepositoryAuthorizationCapability
 				_sharepointRepositoryOAuth2Configuration.name(), userId,
 				freshToken);
 		}
-		catch (AuthorizationException ae) {
+		catch (AuthorizationException authorizationException) {
 			_tokenStore.delete(
 				_sharepointRepositoryOAuth2Configuration.name(), userId);
 
-			throw ae;
+			throw authorizationException;
 		}
 	}
 

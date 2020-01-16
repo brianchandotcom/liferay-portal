@@ -102,7 +102,7 @@ public class PasswordPolicyToolkitTest {
 			_passwordPolicyToolkit.validate(
 				password, password, _passwordPolicy);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 

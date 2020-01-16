@@ -60,12 +60,12 @@ public class RequestDispatcherAttributeNames {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Current JDK HashMap does not have hash(Object) method. " +
 						"Fallback to regular HashSet creation.",
-					e);
+					exception);
 			}
 		}
 
@@ -105,8 +105,8 @@ public class RequestDispatcherAttributeNames {
 				break;
 			}
 		}
-		catch (ReflectiveOperationException roe) {
-			_log.error("Unable to get hash code", roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			_log.error("Unable to get hash code", reflectiveOperationException);
 		}
 
 		return size;

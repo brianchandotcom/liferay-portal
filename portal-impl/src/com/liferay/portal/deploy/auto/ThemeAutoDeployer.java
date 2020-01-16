@@ -64,8 +64,8 @@ public class ThemeAutoDeployer extends ThemeDeployer implements AutoDeployer {
 
 			checkArguments();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -93,8 +93,8 @@ public class ThemeAutoDeployer extends ThemeDeployer implements AutoDeployer {
 
 				return AutoDeployer.CODE_DEFAULT;
 			}
-			catch (Exception e) {
-				throw new AutoDeployException(e);
+			catch (Exception exception) {
+				throw new AutoDeployException(exception);
 			}
 		}
 		else {

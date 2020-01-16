@@ -117,8 +117,8 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 		try {
 			_layoutCopyHelper.copyLayout(draftLayout, layout);
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 
 		UnicodeProperties typeSettingsProperties =

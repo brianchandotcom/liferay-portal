@@ -62,8 +62,8 @@ public class UserGroupGroupRoleFinderImpl
 
 			return q.list(true);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -91,8 +91,8 @@ public class UserGroupGroupRoleFinderImpl
 
 			return q.list(true);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -124,8 +124,8 @@ public class UserGroupGroupRoleFinderImpl
 
 			return q.list(true);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

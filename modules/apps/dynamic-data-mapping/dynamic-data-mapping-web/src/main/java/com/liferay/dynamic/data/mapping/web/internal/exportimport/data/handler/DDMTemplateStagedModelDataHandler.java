@@ -134,7 +134,7 @@ public class DDMTemplateStagedModelDataHandler
 			defaultUserId = _userLocalService.getDefaultUserId(
 				template.getCompanyId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return referenceAttributes;
 		}
 
@@ -278,9 +278,9 @@ public class DDMTemplateStagedModelDataHandler
 			portletDataContext.addPermissions(
 				getResourceName(template), template.getPrimaryKey());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 	}
@@ -472,9 +472,9 @@ public class DDMTemplateStagedModelDataHandler
 					getResourceName(importedTemplate), template.getPrimaryKey(),
 					importedTemplate.getPrimaryKey());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 			}
 
@@ -565,8 +565,8 @@ public class DDMTemplateStagedModelDataHandler
 					template.getTemplateId(),
 					DDMTemplateConstants.VERSION_DEFAULT);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		if ((ddmTemplateVersion != null) &&

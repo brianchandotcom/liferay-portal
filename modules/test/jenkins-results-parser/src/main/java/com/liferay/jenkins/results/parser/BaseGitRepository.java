@@ -79,7 +79,7 @@ public abstract class BaseGitRepository implements GitRepository {
 					JenkinsResultsParserUtil.toString(
 						_URL_PROPERTIES_REPOSITORY, false)));
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			System.out.println(
 				"Skipped downloading " + _URL_PROPERTIES_REPOSITORY);
 		}

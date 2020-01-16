@@ -136,8 +136,8 @@ public class LoginPostAction extends Action {
 					httpServletRequest, passwordPolicy, user);
 			}
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 	}
 

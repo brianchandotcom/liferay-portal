@@ -293,8 +293,8 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 				new CompanyServiceSettingsLocator(
 					companyId, GoogleConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException ce) {
-			throw new SystemException(ce);
+		catch (ConfigurationException configurationException) {
+			throw new SystemException(configurationException);
 		}
 	}
 

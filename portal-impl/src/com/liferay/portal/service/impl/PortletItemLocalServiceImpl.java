@@ -105,12 +105,13 @@ public class PortletItemLocalServiceImpl
 
 			portletItemPersistence.update(portletItem);
 		}
-		catch (NoSuchPortletItemException nspie) {
+		catch (NoSuchPortletItemException noSuchPortletItemException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nspie, nspie);
+				_log.debug(
+					noSuchPortletItemException, noSuchPortletItemException);
 			}
 
 			portletItem = addPortletItem(

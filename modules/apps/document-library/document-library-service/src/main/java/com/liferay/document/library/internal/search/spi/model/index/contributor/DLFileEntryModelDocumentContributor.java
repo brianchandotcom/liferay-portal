@@ -90,9 +90,9 @@ public class DLFileEntryModelDocumentContributor
 
 				is = dlFileVersion.getContentStream(false);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to retrieve document stream", e);
+					_log.debug("Unable to retrieve document stream", exception);
 				}
 			}
 		}
@@ -113,9 +113,9 @@ public class DLFileEntryModelDocumentContributor
 							localizedField, is, dlFileEntry.getTitle(),
 							PropsValues.DL_FILE_INDEXING_MAX_SIZE);
 					}
-					catch (IOException ioe) {
+					catch (IOException ioException) {
 						if (_log.isWarnEnabled()) {
-							_log.warn("Unable to index content", ioe);
+							_log.warn("Unable to index content", ioException);
 						}
 					}
 				}
@@ -195,15 +195,15 @@ public class DLFileEntryModelDocumentContributor
 				_log.debug("Document " + dlFileEntry + " indexed successfully");
 			}
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			if (is != null) {
 				try {
 					is.close();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 				}
 			}
 		}
@@ -229,9 +229,9 @@ public class DLFileEntryModelDocumentContributor
 						ddmFormValues);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to retrieve metadata values", e);
+					_log.debug("Unable to retrieve metadata values", exception);
 				}
 			}
 		}
@@ -260,9 +260,9 @@ public class DLFileEntryModelDocumentContributor
 							ddmFormValues, locale));
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to retrieve metadata values", e);
+					_log.debug("Unable to retrieve metadata values", exception);
 				}
 			}
 		}

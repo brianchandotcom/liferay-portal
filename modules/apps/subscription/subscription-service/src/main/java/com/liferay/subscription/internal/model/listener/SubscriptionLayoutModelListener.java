@@ -41,8 +41,8 @@ public class SubscriptionLayoutModelListener extends BaseModelListener<Layout> {
 				layout.getCompanyId(), Layout.class.getName(),
 				layout.getPlid());
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

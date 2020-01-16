@@ -71,10 +71,11 @@ public abstract class BaseJSPAssetRenderer<T>
 
 			return true;
 		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + jspPath, se);
+		catch (ServletException servletException) {
+			_log.error("Unable to include JSP " + jspPath, servletException);
 
-			throw new IOException("Unable to include " + jspPath, se);
+			throw new IOException(
+				"Unable to include " + jspPath, servletException);
 		}
 		finally {
 			httpServletRequest.setAttribute(

@@ -181,12 +181,12 @@ public class PermissionImporterImpl implements PermissionImporter {
 			try {
 				team = _teamLocalService.getTeam(groupId, name);
 			}
-			catch (NoSuchTeamException nste) {
+			catch (NoSuchTeamException noSuchTeamException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nste, nste);
+					_log.debug(noSuchTeamException, noSuchTeamException);
 				}
 
 				team = _teamLocalService.addTeam(

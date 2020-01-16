@@ -75,9 +75,9 @@ public class DBSupport {
 				command.execute(dbSupportArgs);
 			}
 		}
-		catch (ParameterException pe) {
+		catch (ParameterException parameterException) {
 			if (!dbSupportArgs.isHelp()) {
-				System.err.println(pe.getMessage());
+				System.err.println(parameterException.getMessage());
 			}
 
 			_printHelp(jCommander);

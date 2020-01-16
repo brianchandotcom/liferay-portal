@@ -176,7 +176,7 @@ public class LockLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (DuplicateLockException dle) {
+		catch (DuplicateLockException duplicateLockException) {
 		}
 
 		// Set lock to be expired
@@ -225,8 +225,9 @@ public class LockLocalServiceTest {
 							try {
 								continueCountDownLatch.await();
 							}
-							catch (InterruptedException ie) {
-								ReflectionUtil.throwException(ie);
+							catch (InterruptedException interruptedException) {
+								ReflectionUtil.throwException(
+									interruptedException);
 							}
 						}
 					}
@@ -266,8 +267,8 @@ public class LockLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable throwable = executionException.getCause();
 
 			Assert.assertSame(
 				ConstraintViolationException.class, throwable.getClass());
@@ -416,22 +417,22 @@ public class LockLocalServiceTest {
 
 								break;
 							}
-							catch (RuntimeException re) {
-								if (_isExpectedException(re)) {
+							catch (RuntimeException runtimeException) {
+								if (_isExpectedException(runtimeException)) {
 									continue;
 								}
 
-								throw re;
+								throw runtimeException;
 							}
 						}
 					}
 				}
-				catch (RuntimeException re) {
-					if (_isExpectedException(re)) {
+				catch (RuntimeException runtimeException) {
+					if (_isExpectedException(runtimeException)) {
 						continue;
 					}
 
-					throw re;
+					throw runtimeException;
 				}
 			}
 		}

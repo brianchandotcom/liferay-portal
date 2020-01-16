@@ -216,8 +216,8 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 				}
 			}
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 

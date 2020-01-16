@@ -56,11 +56,15 @@ public class SSHAPasswordEncryptor
 			return Base64.encode(
 				ArrayUtil.append(messageDigestBytes, saltBytes));
 		}
-		catch (NoSuchAlgorithmException nsae) {
-			throw new PwdEncryptorException(nsae.getMessage(), nsae);
+		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+			throw new PwdEncryptorException(
+				noSuchAlgorithmException.getMessage(),
+				noSuchAlgorithmException);
 		}
-		catch (UnsupportedEncodingException uee) {
-			throw new PwdEncryptorException(uee.getMessage(), uee);
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new PwdEncryptorException(
+				unsupportedEncodingException.getMessage(),
+				unsupportedEncodingException);
 		}
 	}
 
@@ -86,11 +90,11 @@ public class SSHAPasswordEncryptor
 					encryptedPasswordBytes, encryptedPasswordBytes.length - 8,
 					saltBytes, 0, saltBytes.length);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				throw new PwdEncryptorException(
 					"Unable to extract salt from encrypted password " +
-						e.getMessage(),
-					e);
+						exception.getMessage(),
+					exception);
 			}
 		}
 

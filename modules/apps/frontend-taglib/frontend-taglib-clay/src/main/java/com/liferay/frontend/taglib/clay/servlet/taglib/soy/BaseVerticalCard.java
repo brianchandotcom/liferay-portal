@@ -127,7 +127,7 @@ public abstract class BaseVerticalCard
 
 			return user.getPortraitURL(themeDisplay);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}

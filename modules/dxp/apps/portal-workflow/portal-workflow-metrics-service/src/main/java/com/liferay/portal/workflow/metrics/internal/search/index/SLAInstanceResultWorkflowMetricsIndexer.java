@@ -243,9 +243,9 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 
 			return kaleoDefinition.getKaleoDefinitionId();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

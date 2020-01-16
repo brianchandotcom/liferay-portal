@@ -82,8 +82,8 @@ public class DefaultTaskManagerImpl
 				workflowTaskId, Role.class.getName(), roleId, comment, dueDate,
 				workflowContext, serviceContext);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -99,8 +99,8 @@ public class DefaultTaskManagerImpl
 				workflowTaskId, User.class.getName(), assigneeUserId, comment,
 				dueDate, workflowContext, serviceContext);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -165,8 +165,8 @@ public class DefaultTaskManagerImpl
 				workflowTaskId, transitionName, null, workflowContext,
 				serviceContext);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -182,8 +182,8 @@ public class DefaultTaskManagerImpl
 				workflowTaskId, transitionName, comment, workflowContext,
 				serviceContext);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -230,8 +230,8 @@ public class DefaultTaskManagerImpl
 
 			return kaleoTaskFormDefinitions;
 		}
-		catch (PortalException pe) {
-			throw new WorkflowException(pe);
+		catch (PortalException portalException) {
+			throw new WorkflowException(portalException);
 		}
 	}
 
@@ -275,8 +275,8 @@ public class DefaultTaskManagerImpl
 			return _kaleoWorkflowModelConverter.toWorkflowTask(
 				kaleoTaskInstanceToken, workflowContext);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 

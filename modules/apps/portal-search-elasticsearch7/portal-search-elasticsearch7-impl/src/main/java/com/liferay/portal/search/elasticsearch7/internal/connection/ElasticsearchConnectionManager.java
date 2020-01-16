@@ -190,11 +190,11 @@ public class ElasticsearchConnectionManager
 				indexFactory.createIndices(
 					restHighLevelClient.indices(), companyId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to reinitialize index for company " + companyId,
-						e);
+						exception);
 				}
 			}
 		}

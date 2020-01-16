@@ -116,18 +116,18 @@ public class SitemapAction implements Action {
 				httpServletRequest, httpServletResponse, null,
 				sitemap.getBytes(StringPool.UTF8), ContentTypes.TEXT_XML_UTF8);
 		}
-		catch (NoSuchLayoutSetException nslse) {
+		catch (NoSuchLayoutSetException noSuchLayoutSetException) {
 			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nslse, httpServletRequest,
-				httpServletResponse);
+				HttpServletResponse.SC_NOT_FOUND, noSuchLayoutSetException,
+				httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception,
 				httpServletRequest, httpServletResponse);
 		}
 

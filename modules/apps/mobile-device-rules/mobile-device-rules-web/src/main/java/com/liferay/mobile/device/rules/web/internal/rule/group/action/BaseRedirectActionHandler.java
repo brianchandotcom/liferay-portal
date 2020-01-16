@@ -62,8 +62,9 @@ public abstract class BaseRedirectActionHandler implements ActionHandler {
 		try {
 			httpServletResponse.sendRedirect(url);
 		}
-		catch (IOException ioe) {
-			throw new PortalException("Unable to redirect to " + url, ioe);
+		catch (IOException ioException) {
+			throw new PortalException(
+				"Unable to redirect to " + url, ioException);
 		}
 	}
 

@@ -53,8 +53,8 @@ public class OAuthRequestImpl implements OAuthRequest {
 		try {
 			return new OAuthResponseImpl(_oAuthRequest.send());
 		}
-		catch (Exception e) {
-			throw new OAuthException(e);
+		catch (Exception exception) {
+			throw new OAuthException(exception);
 		}
 	}
 

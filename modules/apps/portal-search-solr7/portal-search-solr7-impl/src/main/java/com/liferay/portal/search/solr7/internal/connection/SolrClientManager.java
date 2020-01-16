@@ -216,7 +216,7 @@ public class SolrClientManager {
 			try {
 				_solrClient.close();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("");
 				}

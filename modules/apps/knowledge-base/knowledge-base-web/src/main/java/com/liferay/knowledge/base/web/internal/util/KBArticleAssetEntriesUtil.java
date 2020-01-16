@@ -104,12 +104,12 @@ public class KBArticleAssetEntriesUtil {
 			try {
 				AssetTagServiceUtil.getTag(tagId);
 			}
-			catch (PrincipalException pe) {
+			catch (PrincipalException principalException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(principalException, principalException);
 				}
 
 				continue;

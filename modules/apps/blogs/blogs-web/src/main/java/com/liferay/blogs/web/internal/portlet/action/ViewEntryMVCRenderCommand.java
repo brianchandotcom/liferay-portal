@@ -132,16 +132,16 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 					_portal.getPortalURL(renderRequest) + "/xmlrpc/pingback");
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchEntryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchEntryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/blogs/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/blogs/view_entry.jsp";

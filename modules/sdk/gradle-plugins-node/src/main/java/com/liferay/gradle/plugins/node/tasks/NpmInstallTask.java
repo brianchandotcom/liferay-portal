@@ -421,12 +421,12 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 
 			super.executeNode();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (logger.isWarnEnabled()) {
 				String message = "Unable to run \"npm cache verify\"";
 
-				if (Validator.isNotNull(e.getMessage())) {
-					message = e.getMessage() + ". " + message;
+				if (Validator.isNotNull(exception.getMessage())) {
+					message = exception.getMessage() + ". " + message;
 				}
 
 				logger.warn(message);
@@ -452,14 +452,15 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 
 				break;
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (i == npmInstallRetries) {
-					throw ioe;
+					throw ioException;
 				}
 
 				if (logger.isWarnEnabled()) {
 					logger.warn(
-						ioe.getMessage() + ". Running \"npm install\" again");
+						ioException.getMessage() +
+							". Running \"npm install\" again");
 				}
 
 				_npmCacheVerify();

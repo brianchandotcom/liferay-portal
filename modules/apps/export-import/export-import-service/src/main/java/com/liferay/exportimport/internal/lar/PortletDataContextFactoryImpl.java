@@ -232,14 +232,15 @@ public class PortletDataContextFactoryImpl
 				portletDataContext.setCompanyGroupId(companyGroup.getGroupId());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (CompanyThreadLocal.isDeleteInProcess()) {
-				PortletDataException pde = new PortletDataException(
-					PortletDataException.COMPANY_BEING_DELETED, e);
+				PortletDataException portletDataException =
+					new PortletDataException(
+						PortletDataException.COMPANY_BEING_DELETED, exception);
 
-				pde.setCompanyId(companyId);
+				portletDataException.setCompanyId(companyId);
 
-				throw new SystemException(pde);
+				throw new SystemException(portletDataException);
 			}
 		}
 
@@ -256,14 +257,15 @@ public class PortletDataContextFactoryImpl
 					userPersonalSiteGroup.getGroupId());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (CompanyThreadLocal.isDeleteInProcess()) {
-				PortletDataException pde = new PortletDataException(
-					PortletDataException.COMPANY_BEING_DELETED, e);
+				PortletDataException portletDataException =
+					new PortletDataException(
+						PortletDataException.COMPANY_BEING_DELETED, exception);
 
-				pde.setCompanyId(companyId);
+				portletDataException.setCompanyId(companyId);
 
-				throw new SystemException(pde);
+				throw new SystemException(portletDataException);
 			}
 		}
 
@@ -282,11 +284,11 @@ public class PortletDataContextFactoryImpl
 
 			rootElement = document.getRootElement();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PortletDataException(
 				"Unable to create portlet data context for the import " +
 					"process because of an invalid LAR manifest",
-				e);
+				exception);
 		}
 
 		portletDataContext.setImportDataRootElement(rootElement);

@@ -72,8 +72,8 @@ public class RecurrenceUtil {
 				}
 			}
 		}
-		catch (ParseException pe) {
-			_log.error("Unable to parse data ", pe);
+		catch (ParseException parseException) {
+			_log.error("Unable to parse data ", parseException);
 		}
 
 		return expandedCalendarBookings;
@@ -120,8 +120,8 @@ public class RecurrenceUtil {
 				}
 			}
 		}
-		catch (ParseException pe) {
-			_log.error("Unable to parse data ", pe);
+		catch (ParseException parseException) {
+			_log.error("Unable to parse data ", parseException);
 		}
 
 		return null;
@@ -150,8 +150,8 @@ public class RecurrenceUtil {
 				count++;
 			}
 		}
-		catch (ParseException pe) {
-			_log.error("Unable to parse data ", pe);
+		catch (ParseException parseException) {
+			_log.error("Unable to parse data ", parseException);
 		}
 
 		return count;

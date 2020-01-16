@@ -98,8 +98,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			jenkinsAuthenticationToken = buildProperties.getProperty(
 				"jenkins.authentication.token");
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		S buildData = getBuildData();
@@ -158,13 +158,13 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 				_invokedTestSuiteNames.add(testSuiteName);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
 						"Unable to invoke a new build for test suite, '",
 						testSuiteName, "'"));
 
-				ioe.printStackTrace();
+				ioException.printStackTrace();
 			}
 		}
 
@@ -204,8 +204,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		Map<String, Long> candidateTestSuiteStaleDurations =
@@ -327,8 +327,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 					buildData.getPortalUpstreamBranchName(), "][", testSuite,
 					"]"));
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -342,8 +342,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 					"portal.testsuite.upstream.suites[",
 					buildData.getPortalUpstreamBranchName(), "]"));
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

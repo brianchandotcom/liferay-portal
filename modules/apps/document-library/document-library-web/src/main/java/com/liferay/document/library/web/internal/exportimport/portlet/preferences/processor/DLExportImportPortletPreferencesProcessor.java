@@ -108,7 +108,7 @@ public class DLExportImportPortletPreferencesProcessor
 			try {
 				folder = _dlAppLocalService.getFolder(rootFolderId);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				StringBundler sb = new StringBundler(4);
 
 				sb.append("Portlet ");
@@ -118,7 +118,7 @@ public class DLExportImportPortletPreferencesProcessor
 
 				_log.error(sb.toString());
 
-				throw new PortletDataException(sb.toString(), pe);
+				throw new PortletDataException(sb.toString(), portalException);
 			}
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -136,13 +136,15 @@ public class DLExportImportPortletPreferencesProcessor
 		try {
 			portletDataContext.addPortletPermissions(DLConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
-			pde.setType(PortletDataException.EXPORT_PORTLET_PERMISSIONS);
+			portletDataException.setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
+			portletDataException.setType(
+				PortletDataException.EXPORT_PORTLET_PERMISSIONS);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		try {
@@ -263,13 +265,15 @@ public class DLExportImportPortletPreferencesProcessor
 				fileShortcutActionableDynamicQuery.performActions();
 			}
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
-			pde.setType(PortletDataException.EXPORT_PORTLET_DATA);
+			portletDataException.setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
+			portletDataException.setType(
+				PortletDataException.EXPORT_PORTLET_DATA);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		return portletPreferences;
@@ -307,10 +311,10 @@ public class DLExportImportPortletPreferencesProcessor
 					portletPreferences.setValue(
 						"rootFolderId", String.valueOf(rootFolderId));
 				}
-				catch (ReadOnlyException roe) {
+				catch (ReadOnlyException readOnlyException) {
 					throw new PortletDataException(
 						"Unable to update portlet preferences during import",
-						roe);
+						readOnlyException);
 				}
 			}
 		}
@@ -321,13 +325,15 @@ public class DLExportImportPortletPreferencesProcessor
 			portletDataContext.importPortletPermissions(
 				DLConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
-			pde.setType(PortletDataException.IMPORT_PORTLET_PERMISSIONS);
+			portletDataException.setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
+			portletDataException.setType(
+				PortletDataException.IMPORT_PORTLET_PERMISSIONS);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		String namespace = _dlPortletDataHandler.getNamespace();

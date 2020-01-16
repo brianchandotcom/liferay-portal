@@ -51,9 +51,10 @@ public class UserModelDocumentContributor
 				document.addKeyword("segmentsEntryIds", segmentsEntryIds);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to index user " + user.getUserId(), e);
+				_log.warn(
+					"Unable to index user " + user.getUserId(), exception);
 			}
 		}
 	}

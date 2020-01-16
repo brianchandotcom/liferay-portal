@@ -58,8 +58,8 @@ public class LoginPostAction implements LifecycleAction {
 			_memberRequestLocalService.updateMemberRequest(
 				memberRequestKey, user.getUserId());
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 	}
 

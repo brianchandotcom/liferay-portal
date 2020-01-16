@@ -220,8 +220,8 @@ public class KQLQueryVisitor implements QueryVisitor<KQLQuery> {
 
 			return String.format("\"%s\"", formattedValue);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 

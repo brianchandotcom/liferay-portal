@@ -104,8 +104,8 @@ public abstract class AlloyPortlet extends GenericPortlet {
 						serviceRegistration.unregister();
 					}
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 				}
 			}
 		}

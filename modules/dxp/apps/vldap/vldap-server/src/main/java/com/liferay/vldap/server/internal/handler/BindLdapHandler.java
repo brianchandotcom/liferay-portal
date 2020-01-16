@@ -153,8 +153,8 @@ public class BindLdapHandler extends BaseLdapHandler {
 
 			bindResponse.setServerSaslCreds(challenge);
 		}
-		catch (SaslException se) {
-			_log.error(se, se);
+		catch (SaslException saslException) {
+			_log.error(saslException, saslException);
 
 			ldapHandlerContext.setSaslCallbackHandler(null);
 			ldapHandlerContext.setSaslServer(null);
@@ -285,9 +285,11 @@ public class BindLdapHandler extends BaseLdapHandler {
 		try {
 			company = CompanyLocalServiceUtil.getCompanyByWebId(webId);
 		}
-		catch (NoSuchCompanyException nsce) {
+		catch (NoSuchCompanyException noSuchCompanyException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get company with web ID " + webId, nsce);
+				_log.warn(
+					"Unable to get company with web ID " + webId,
+					noSuchCompanyException);
 			}
 
 			long companyId = PortalUtil.getDefaultCompanyId();

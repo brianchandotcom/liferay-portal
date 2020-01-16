@@ -116,8 +116,8 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		try {
 			return _jsonFactory.createJSONObject(mappings);
 		}
-		catch (JSONException jsone) {
-			throw new RuntimeException(jsone);
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
 		}
 	}
 

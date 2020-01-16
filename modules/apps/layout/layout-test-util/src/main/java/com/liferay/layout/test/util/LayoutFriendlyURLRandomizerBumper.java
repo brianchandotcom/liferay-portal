@@ -48,7 +48,7 @@ public class LayoutFriendlyURLRandomizerBumper
 
 			return true;
 		}
-		catch (LayoutFriendlyURLException lfurle) {
+		catch (LayoutFriendlyURLException layoutFriendlyURLException) {
 			return false;
 		}
 	}

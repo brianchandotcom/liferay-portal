@@ -80,12 +80,12 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		try {
 			RepositoryFactoryUtil.createRepository(repositoryId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
-			throw new InvalidRepositoryException(e);
+			throw new InvalidRepositoryException(exception);
 		}
 
 		return repository;
@@ -102,8 +102,9 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		try {
 			repositoryPersistence.findByPrimaryKey(repositoryId);
 		}
-		catch (NoSuchRepositoryException nsre) {
-			throw new InvalidRepositoryIdException(nsre.getMessage());
+		catch (NoSuchRepositoryException noSuchRepositoryException) {
+			throw new InvalidRepositoryIdException(
+				noSuchRepositoryException.getMessage());
 		}
 	}
 
@@ -145,12 +146,14 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 					localRepository);
 			}
 		}
-		catch (UndeployedExternalRepositoryException uere) {
+		catch (UndeployedExternalRepositoryException
+					undeployedExternalRepositoryException) {
+
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Repository deletion events for this repository will not " +
 						"be triggered",
-					uere);
+					undeployedExternalRepositoryException);
 			}
 		}
 

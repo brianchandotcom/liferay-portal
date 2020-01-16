@@ -69,8 +69,8 @@ public class CurrencyConverterWebCacheItem implements WebCacheItem {
 			rate =
 				GetterUtil.getDouble(toRate) / GetterUtil.getDouble(fromRate);
 		}
-		catch (Exception e) {
-			throw new WebCacheException(e);
+		catch (Exception exception) {
+			throw new WebCacheException(exception);
 		}
 
 		return new CurrencyConverter(symbol, rate);

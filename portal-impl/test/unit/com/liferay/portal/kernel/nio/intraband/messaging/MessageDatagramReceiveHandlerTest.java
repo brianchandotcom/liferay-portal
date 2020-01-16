@@ -218,8 +218,9 @@ public class MessageDatagramReceiveHandlerTest {
 
 			Assert.fail();
 		}
-		catch (MessageBusException mbe) {
-			Assert.assertSame(messageListenerException, mbe.getCause());
+		catch (MessageBusException messageBusException) {
+			Assert.assertSame(
+				messageListenerException, messageBusException.getCause());
 		}
 
 		// Intraband bridge destination, not synchronized, no listener

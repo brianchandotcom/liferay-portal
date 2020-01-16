@@ -37,9 +37,9 @@ public abstract class BaseAutoLogin implements AutoLogin {
 		try {
 			return doLogin(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return doHandleException(
-				httpServletRequest, httpServletResponse, e);
+				httpServletRequest, httpServletResponse, exception);
 		}
 	}
 

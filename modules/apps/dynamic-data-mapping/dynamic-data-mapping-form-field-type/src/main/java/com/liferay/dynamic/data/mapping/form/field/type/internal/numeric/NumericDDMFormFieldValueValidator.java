@@ -62,7 +62,7 @@ public class NumericDDMFormFieldValueValidator
 
 			numberFormat.parse(valueString);
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			return false;
 		}
 

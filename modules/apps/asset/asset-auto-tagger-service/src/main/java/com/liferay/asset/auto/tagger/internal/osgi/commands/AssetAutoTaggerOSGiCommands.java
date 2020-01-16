@@ -157,8 +157,8 @@ public class AssetAutoTaggerOSGiCommands {
 
 			actionableDynamicQuery.performActions();
 		}
-		catch (Exception pe) {
-			_log.error(pe, pe);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

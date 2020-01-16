@@ -44,8 +44,8 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 
 			return hikariPoolMXBean.getActiveConnections();
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new RuntimeException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 
@@ -58,8 +58,8 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 
 			return hikariPoolMXBean.getIdleConnections();
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new RuntimeException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 
@@ -73,8 +73,8 @@ public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 		try {
 			return (String)_getPoolNameMethod.invoke(_dataSource);
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new RuntimeException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

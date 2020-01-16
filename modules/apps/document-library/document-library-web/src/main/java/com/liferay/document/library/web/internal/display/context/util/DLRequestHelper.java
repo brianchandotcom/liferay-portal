@@ -60,8 +60,8 @@ public class DLRequestHelper extends BaseRequestHelper {
 					getScopeGroupId());
 			}
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 
 		httpServletRequest.setAttribute(
@@ -101,8 +101,8 @@ public class DLRequestHelper extends BaseRequestHelper {
 						getLayout(), getPortletId());
 			}
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 
 		httpServletRequest.setAttribute(

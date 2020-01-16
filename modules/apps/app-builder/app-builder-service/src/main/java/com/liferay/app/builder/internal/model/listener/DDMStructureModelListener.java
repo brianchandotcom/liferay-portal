@@ -39,8 +39,8 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			_appBuilderAppLocalService.deleteAppBuilderApps(
 				ddmStructure.getStructureId());
 		}
-		catch (Exception e) {
-			_log.error("Unable to delete app builder apps", e);
+		catch (Exception exception) {
+			_log.error("Unable to delete app builder apps", exception);
 		}
 	}
 

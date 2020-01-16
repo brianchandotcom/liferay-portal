@@ -71,10 +71,10 @@ public class OSGiLogServiceExtenderBundleActivator implements BundleActivator {
 			_loadLogConfigurations(
 				bundle, "osgi-logging-ext.properties", logLevels);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			_log.error(
 				"Unable to load OSGi logging configurations for " + bundle,
-				ioe);
+				ioException);
 
 			return Collections.emptyMap();
 		}
@@ -105,7 +105,7 @@ public class OSGiLogServiceExtenderBundleActivator implements BundleActivator {
 					try {
 						logLevels.put(name, LogLevel.valueOf(value));
 					}
-					catch (IllegalArgumentException iae) {
+					catch (IllegalArgumentException illegalArgumentException) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								StringBundler.concat(

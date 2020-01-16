@@ -47,16 +47,16 @@ public class AddQuestionRedirectMVCRenderCommand implements MVCRenderCommand {
 		try {
 			ActionUtil.getQuestion(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchQuestionException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchQuestionException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/polls/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/polls/view_question.jsp";

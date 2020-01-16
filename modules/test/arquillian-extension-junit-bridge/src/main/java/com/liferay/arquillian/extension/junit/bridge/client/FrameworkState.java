@@ -63,7 +63,7 @@ public class FrameworkState {
 
 				break;
 			}
-			catch (ConnectException ce) {
+			catch (ConnectException connectException) {
 				if (retries++ < _MAX_RETRY_ATTEMPTS) {
 					_logger.log(
 						Level.INFO,
@@ -79,7 +79,7 @@ public class FrameworkState {
 						"Unable to connect after " + _MAX_RETRY_ATTEMPTS +
 							" attempts");
 
-					throw ce;
+					throw connectException;
 				}
 			}
 		}

@@ -147,12 +147,12 @@ public class AssetCategoriesDisplayContext {
 
 						name = classType.getName();
 					}
-					catch (NoSuchModelException nsme) {
+					catch (NoSuchModelException noSuchModelException) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
 								"Unable to get asset type for class type " +
 									"primary key " + classTypePK,
-								nsme);
+								noSuchModelException);
 						}
 
 						continue;

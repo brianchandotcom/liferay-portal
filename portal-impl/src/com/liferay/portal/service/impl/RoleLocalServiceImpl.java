@@ -281,7 +281,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		try {
 			roles = roleFinder.findBySystem(companyId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 
 			// LPS-34324
 
@@ -1574,12 +1574,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				roleLocalService.updateRole(role);
 			}
 		}
-		catch (NoSuchRoleException nsre) {
+		catch (NoSuchRoleException noSuchRoleException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsre, nsre);
+				_log.debug(noSuchRoleException, noSuchRoleException);
 			}
 
 			User user = userLocalService.getDefaultUser(companyId);
@@ -1748,12 +1748,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				throw new DuplicateRoleException("{roleId=" + roleId + "}");
 			}
 		}
-		catch (NoSuchRoleException nsre) {
+		catch (NoSuchRoleException noSuchRoleException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsre, nsre);
+				_log.debug(noSuchRoleException, noSuchRoleException);
 			}
 		}
 

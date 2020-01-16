@@ -52,8 +52,9 @@ public class LoggingAuditMessageProcessor implements AuditMessageProcessor {
 		try {
 			doProcess(auditMessage);
 		}
-		catch (Exception e) {
-			_log.fatal("Unable to process audit message " + auditMessage, e);
+		catch (Exception exception) {
+			_log.fatal(
+				"Unable to process audit message " + auditMessage, exception);
 		}
 	}
 

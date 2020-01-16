@@ -118,13 +118,13 @@ public class VerifyProcessUtil {
 
 			return true;
 		}
-		catch (ClassNotFoundException cnfe) {
+		catch (ClassNotFoundException classNotFoundException) {
 			_log.error(verifyProcessClassName + " cannot be found");
 		}
-		catch (IllegalAccessException iae) {
+		catch (IllegalAccessException illegalAccessException) {
 			_log.error(verifyProcessClassName + " cannot be accessed");
 		}
-		catch (InstantiationException ie) {
+		catch (InstantiationException instantiationException) {
 			_log.error(verifyProcessClassName + " cannot be initiated");
 		}
 

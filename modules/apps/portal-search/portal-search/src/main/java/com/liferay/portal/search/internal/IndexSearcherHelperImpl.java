@@ -49,9 +49,9 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		try {
 			return indexSearcher.getQueryString(searchContext, query);
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse query " + query, pe);
+				_log.debug("Unable to parse query " + query, parseException);
 			}
 		}
 

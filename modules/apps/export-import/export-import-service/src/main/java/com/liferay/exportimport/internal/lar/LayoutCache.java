@@ -49,12 +49,12 @@ public class LayoutCache {
 
 				nameRolesMap.put(roleName, role);
 			}
-			catch (NoSuchRoleException nsre) {
+			catch (NoSuchRoleException noSuchRoleException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsre, nsre);
+					_log.debug(noSuchRoleException, noSuchRoleException);
 				}
 			}
 		}
@@ -74,12 +74,12 @@ public class LayoutCache {
 
 				uuidRolesMap.put(uuid, role);
 			}
-			catch (NoSuchRoleException nsre) {
+			catch (NoSuchRoleException noSuchRoleException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsre, nsre);
+					_log.debug(noSuchRoleException, noSuchRoleException);
 				}
 			}
 		}

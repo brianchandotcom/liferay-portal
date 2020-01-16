@@ -112,20 +112,20 @@ public class OAuthVerifier implements AuthVerifier {
 						OAuthSAPEntryActivator.SAP_ENTRY_OBJECT_ARRAYS[1][0]));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			try {
 				boolean sendBody = GetterUtil.getBoolean(
 					properties.getProperty("send.body"));
 
 				_oAuth.handleException(
-					httpServletRequest, accessControlContext.getResponse(), e,
-					sendBody);
+					httpServletRequest, accessControlContext.getResponse(),
+					exception, sendBody);
 
 				authVerifierResult.setState(
 					AuthVerifierResult.State.INVALID_CREDENTIALS);
 			}
-			catch (OAuthException oae) {
-				throw new AuthException(oae);
+			catch (OAuthException oAuthException) {
+				throw new AuthException(oAuthException);
 			}
 		}
 

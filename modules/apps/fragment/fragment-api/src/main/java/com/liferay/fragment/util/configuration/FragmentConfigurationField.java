@@ -132,8 +132,9 @@ public class FragmentConfigurationField {
 				return defaultValueJSONObject.toString();
 			}
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to parse default value JSON object", pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to parse default value JSON object", portalException);
 		}
 
 		return _defaultValue;

@@ -43,8 +43,8 @@ public class CoalescedPipeTest {
 					try {
 						coalescedPipe.put("test1");
 					}
-					catch (InterruptedException ie) {
-						Assert.fail(ie.getMessage());
+					catch (InterruptedException interruptedException) {
+						Assert.fail(interruptedException.getMessage());
 					}
 				}
 
@@ -92,7 +92,7 @@ public class CoalescedPipeTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 
 		// Normal
@@ -138,7 +138,7 @@ public class CoalescedPipeTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 
 		// Normal

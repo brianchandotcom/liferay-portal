@@ -52,8 +52,8 @@ public class KBServicePreAction extends Action {
 		try {
 			doRun(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

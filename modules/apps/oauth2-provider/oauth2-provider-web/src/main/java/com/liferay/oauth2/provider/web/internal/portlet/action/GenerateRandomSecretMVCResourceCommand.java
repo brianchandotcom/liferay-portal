@@ -55,8 +55,8 @@ public class GenerateRandomSecretMVCResourceCommand
 
 			printWriter.write(randomSecret);
 		}
-		catch (IOException ioe) {
-			throw new PortletException(ioe);
+		catch (IOException ioException) {
+			throw new PortletException(ioException);
 		}
 
 		return false;

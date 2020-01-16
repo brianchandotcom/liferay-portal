@@ -56,11 +56,11 @@ public class PortletSetupUtil {
 
 			return jsonObject.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			css = null;
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 

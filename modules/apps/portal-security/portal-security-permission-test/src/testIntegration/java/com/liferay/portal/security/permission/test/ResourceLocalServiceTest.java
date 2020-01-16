@@ -112,7 +112,7 @@ public class ResourceLocalServiceTest {
 					String.valueOf(
 						TestPropsValues.getPlid(_group.getGroupId())));
 			}
-			catch (NoSuchResourceException nsre) {
+			catch (NoSuchResourceException noSuchResourceException) {
 				_resourceLocalService.addResources(
 					TestPropsValues.getCompanyId(), _group.getGroupId(), 0,
 					Layout.class.getName(),

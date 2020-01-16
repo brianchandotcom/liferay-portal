@@ -74,8 +74,8 @@ public class AMImageSerializerImpl implements AMImageSerializer {
 				AMImageAttributeMapping.fromProperties(properties),
 				URI.create(uri));
 		}
-		catch (JSONException jsone) {
-			throw new AMRuntimeException(jsone);
+		catch (JSONException jsonException) {
+			throw new AMRuntimeException(jsonException);
 		}
 	}
 

@@ -47,8 +47,8 @@ public class CompanionPortalWorkspaceGitRepository
 						"git-commit-portal"),
 					getBranchSHA());
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 
 			try {
@@ -56,8 +56,8 @@ public class CompanionPortalWorkspaceGitRepository
 					_parentWorkspaceGitRepository.getDirectory(),
 					"build-working-dir.xml", "prepare-working-dir");
 			}
-			catch (AntException ae) {
-				throw new RuntimeException(ae);
+			catch (AntException antException) {
+				throw new RuntimeException(antException);
 			}
 
 			return;
@@ -76,8 +76,8 @@ public class CompanionPortalWorkspaceGitRepository
 			JenkinsResultsParserUtil.copy(
 				modulesPrivateDir, parentModulesPrivateDir);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

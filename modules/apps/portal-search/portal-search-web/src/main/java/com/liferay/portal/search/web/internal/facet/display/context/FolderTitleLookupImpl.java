@@ -97,8 +97,8 @@ public class FolderTitleLookupImpl implements FolderTitleLookup {
 		try {
 			return _folderSearcher.search(getSearchContext(curFolderId));
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 

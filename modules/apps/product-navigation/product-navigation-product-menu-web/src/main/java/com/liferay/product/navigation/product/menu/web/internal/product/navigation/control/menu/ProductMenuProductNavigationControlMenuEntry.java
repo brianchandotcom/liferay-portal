@@ -142,8 +142,8 @@ public class ProductMenuProductNavigationControlMenuEntry
 			try {
 				portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 			}
-			catch (WindowStateException wse) {
-				ReflectionUtil.throwException(wse);
+			catch (WindowStateException windowStateException) {
+				ReflectionUtil.throwException(windowStateException);
 			}
 
 			values.put("dataURL", "data-url='" + portletURL.toString() + "'");
@@ -231,8 +231,8 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 			jspWriter.write("</div></div>");
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 	}
 

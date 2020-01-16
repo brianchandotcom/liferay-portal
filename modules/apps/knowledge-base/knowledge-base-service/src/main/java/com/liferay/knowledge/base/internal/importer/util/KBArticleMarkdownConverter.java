@@ -56,11 +56,11 @@ public class KBArticleMarkdownConverter {
 		try {
 			html = markdownConverter.convert(markdown);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new KBArticleImportException(
 				"Unable to convert Markdown to HTML: " +
-					ioe.getLocalizedMessage(),
-				ioe);
+					ioException.getLocalizedMessage(),
+				ioException);
 		}
 
 		String heading = getHeading(html);
@@ -186,12 +186,12 @@ public class KBArticleMarkdownConverter {
 						imageFileEntry, imageFileEntry.getFileVersion(), null,
 						StringPool.BLANK);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to obtain image URL from file entry " +
 								imageFileEntry.getFileEntryId(),
-							pe);
+							portalException);
 					}
 				}
 

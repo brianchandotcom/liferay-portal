@@ -48,8 +48,8 @@ public class JspC extends org.apache.jasper.JspC {
 				return;
 			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		JspC jspC = new JspC();
@@ -94,8 +94,8 @@ public class JspC extends org.apache.jasper.JspC {
 
 			pages = (List<String>)pagesField.get(this);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		_pages = pages;

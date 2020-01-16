@@ -318,9 +318,9 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			SitesUtil.importLayoutSetPrototype(
 				importedLayoutSetPrototype, inputStream, serviceContext);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 		}
 	}

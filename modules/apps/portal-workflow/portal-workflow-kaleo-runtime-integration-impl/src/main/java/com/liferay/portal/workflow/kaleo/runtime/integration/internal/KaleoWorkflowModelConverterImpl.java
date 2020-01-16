@@ -94,9 +94,10 @@ public class KaleoWorkflowModelConverterImpl
 				_kaleoDefinitionLocalService.updateKaleoDefinition(
 					kaleoDefinition);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to export definition to string", e);
+					_log.warn(
+						"Unable to export definition to string", exception);
 				}
 			}
 		}
@@ -129,7 +130,7 @@ public class KaleoWorkflowModelConverterImpl
 
 			defaultWorkflowDefinition.setActive(kaleoDefinition.isActive());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			defaultWorkflowDefinition.setActive(false);
 		}
 
@@ -145,9 +146,10 @@ public class KaleoWorkflowModelConverterImpl
 				_kaleoDefinitionVersionLocalService.
 					updateKaleoDefinitionVersion(kaleoDefinitionVersion);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to export definition to string", e);
+					_log.warn(
+						"Unable to export definition to string", exception);
 				}
 			}
 		}

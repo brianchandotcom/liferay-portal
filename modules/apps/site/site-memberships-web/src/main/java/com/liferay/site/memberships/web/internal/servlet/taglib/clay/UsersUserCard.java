@@ -54,7 +54,7 @@ public class UsersUserCard extends BaseUserCard {
 
 			return userActionDropdownItemsProvider.getActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

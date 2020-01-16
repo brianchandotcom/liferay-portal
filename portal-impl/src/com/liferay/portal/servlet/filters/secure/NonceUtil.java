@@ -52,8 +52,9 @@ public class NonceUtil {
 
 			companyKey = company.getKey();
 		}
-		catch (Exception e) {
-			throw new RuntimeException("Invalid companyId " + companyId, e);
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Invalid companyId " + companyId, exception);
 		}
 
 		long timestamp = System.currentTimeMillis();
@@ -118,7 +119,7 @@ public class NonceUtil {
 				}
 			}
 		}
-		catch (InterruptedException ie) {
+		catch (InterruptedException interruptedException) {
 			_log.error(
 				"Interrupted while waiting for nonce verification in the " +
 					"cluster");

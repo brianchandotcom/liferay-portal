@@ -281,9 +281,9 @@ public class RulesEngineImpl implements RulesEngine {
 
 			return knowledgeBase;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new RulesEngineException(
-				"Unable to create knowledge base", e);
+				"Unable to create knowledge base", exception);
 		}
 	}
 

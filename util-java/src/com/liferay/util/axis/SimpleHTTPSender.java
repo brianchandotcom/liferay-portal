@@ -95,8 +95,8 @@ public class SimpleHTTPSender extends HTTPSender {
 			_writeToConnection(urlConnection, messageContext);
 			_readFromConnection(urlConnection, messageContext);
 		}
-		catch (Exception e) {
-			throw AxisFault.makeFault(e);
+		catch (Exception exception) {
+			throw AxisFault.makeFault(exception);
 		}
 		finally {
 			Authenticator.setDefault(null);

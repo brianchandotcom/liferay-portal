@@ -126,7 +126,7 @@ public class TemplateProcessor implements ColumnProcessor {
 		try {
 			portlets.add(PortletLocalServiceUtil.getPortletById(portletId));
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 
 		ThemeDisplay themeDisplay =

@@ -66,7 +66,7 @@ public class ServerAuthorizationCodeGrantProvider {
 		try {
 			return future.get(_timeout, TimeUnit.SECONDS);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error("Timeout getting code grant from master node");
 
 			return null;
@@ -91,7 +91,7 @@ public class ServerAuthorizationCodeGrantProvider {
 		try {
 			return future.get(_timeout, TimeUnit.SECONDS);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error("Timeout getting code grants from master node");
 
 			return Collections.emptyList();
@@ -115,7 +115,7 @@ public class ServerAuthorizationCodeGrantProvider {
 			try {
 				future.get(_timeout, TimeUnit.SECONDS);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error("Timeout setting code grant to master node");
 			}
 		}
@@ -138,7 +138,7 @@ public class ServerAuthorizationCodeGrantProvider {
 		try {
 			return future.get(_timeout, TimeUnit.SECONDS);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error("Timeout removing code grant from master node");
 
 			return null;

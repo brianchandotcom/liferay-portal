@@ -54,7 +54,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		try {
 			checkMembership(new long[] {userId}, new long[] {groupId}, null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 
@@ -98,7 +98,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		try {
 			checkMembership(new long[] {userId}, null, new long[] {groupId});
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return true;
 		}
 
@@ -122,7 +122,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		try {
 			checkRoles(userGroupRoles, null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 
@@ -173,7 +173,7 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		try {
 			checkRoles(null, userGroupRoles);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return true;
 		}
 

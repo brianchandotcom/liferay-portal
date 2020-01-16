@@ -103,9 +103,9 @@ public class OrganizationSegmentsFieldCustomizer
 					Organization.class.getName()),
 				portletURL.toString(), true);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get select entity", e);
+				_log.warn("Unable to get select entity", exception);
 			}
 
 			return null;

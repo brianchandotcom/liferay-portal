@@ -97,8 +97,8 @@ public class OpenSSOFilter extends BaseFilter {
 				return true;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -149,8 +149,8 @@ public class OpenSSOFilter extends BaseFilter {
 			authenticated = _openSSO.isAuthenticated(
 				httpServletRequest, openSSOConfiguration.serviceURL());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			processFilter(
 				OpenSSOFilter.class.getName(), httpServletRequest,

@@ -44,8 +44,8 @@ public class DefaultInfoListProviderContext implements InfoListProviderContext {
 		try {
 			_company = CompanyLocalServiceUtil.getCompany(group.getCompanyId());
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

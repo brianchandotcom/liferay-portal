@@ -61,8 +61,8 @@ public class WSDDBuilder {
 
 			wsddBuilder.build();
 		}
-		catch (Exception e) {
-			ArgumentsUtil.processMainException(arguments, e);
+		catch (Exception exception) {
+			ArgumentsUtil.processMainException(arguments, exception);
 		}
 	}
 

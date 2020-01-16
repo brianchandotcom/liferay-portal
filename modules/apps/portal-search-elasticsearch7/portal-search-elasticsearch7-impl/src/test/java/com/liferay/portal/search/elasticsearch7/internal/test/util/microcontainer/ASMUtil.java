@@ -40,8 +40,8 @@ public class ASMUtil {
 		try {
 			return new ClassReader(name);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

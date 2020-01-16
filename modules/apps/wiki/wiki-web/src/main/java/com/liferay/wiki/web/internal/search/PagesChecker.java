@@ -76,12 +76,12 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 		try {
 			page = WikiPageLocalServiceUtil.getPageByPageId(pageId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return StringPool.BLANK;
@@ -96,9 +96,9 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 				showInput = true;
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 

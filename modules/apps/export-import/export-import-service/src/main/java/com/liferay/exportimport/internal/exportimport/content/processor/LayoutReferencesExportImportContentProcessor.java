@@ -505,8 +505,8 @@ public class LayoutReferencesExportImportContentProcessor
 					stagedModel, entityElement, layout,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
-			catch (Exception e) {
-				if ((e instanceof NoSuchLayoutException) &&
+			catch (Exception exception) {
+				if ((exception instanceof NoSuchLayoutException) &&
 					!_exportImportServiceConfiguration.
 						validateLayoutReferences()) {
 
@@ -522,12 +522,15 @@ public class LayoutReferencesExportImportContentProcessor
 				exceptionSB.append(" with primary key ");
 				exceptionSB.append(stagedModel.getPrimaryKeyObj());
 
-				ExportImportContentProcessorException eicpe =
-					new ExportImportContentProcessorException(
-						exceptionSB.toString(), e);
+				ExportImportContentProcessorException
+					exportImportContentProcessorException =
+						new ExportImportContentProcessorException(
+							exceptionSB.toString(), exception);
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(exceptionSB.toString(), eicpe);
+					_log.debug(
+						exceptionSB.toString(),
+						exportImportContentProcessorException);
 				}
 				else if (_log.isWarnEnabled()) {
 					_log.warn(exceptionSB.toString());
@@ -918,18 +921,20 @@ public class LayoutReferencesExportImportContentProcessor
 				group.getCompanyId(), groupFriendlyURL);
 
 			if (urlGroup == null) {
-				ExportImportContentValidationException eicve =
-					new ExportImportContentValidationException(
-						LayoutReferencesExportImportContentProcessor.class.
-							getName());
+				ExportImportContentValidationException
+					exportImportContentValidationException =
+						new ExportImportContentValidationException(
+							LayoutReferencesExportImportContentProcessor.class.
+								getName());
 
-				eicve.setGroupFriendlyURL(groupFriendlyURL);
-				eicve.setLayoutURL(url);
-				eicve.setType(
+				exportImportContentValidationException.setGroupFriendlyURL(
+					groupFriendlyURL);
+				exportImportContentValidationException.setLayoutURL(url);
+				exportImportContentValidationException.setType(
 					ExportImportContentValidationException.
 						LAYOUT_GROUP_NOT_FOUND);
 
-				throw eicve;
+				throw exportImportContentValidationException;
 			}
 
 			if (pos == -1) {
@@ -942,19 +947,20 @@ public class LayoutReferencesExportImportContentProcessor
 				_layoutLocalService.getFriendlyURLLayout(
 					urlGroup.getGroupId(), privateLayout, url);
 			}
-			catch (NoSuchLayoutException nsle) {
-				ExportImportContentValidationException eicve =
-					new ExportImportContentValidationException(
-						LayoutReferencesExportImportContentProcessor.class.
-							getName(),
-						nsle);
+			catch (NoSuchLayoutException noSuchLayoutException) {
+				ExportImportContentValidationException
+					exportImportContentValidationException =
+						new ExportImportContentValidationException(
+							LayoutReferencesExportImportContentProcessor.class.
+								getName(),
+							noSuchLayoutException);
 
-				eicve.setLayoutURL(url);
-				eicve.setType(
+				exportImportContentValidationException.setLayoutURL(url);
+				exportImportContentValidationException.setType(
 					ExportImportContentValidationException.
 						LAYOUT_WITH_URL_NOT_FOUND);
 
-				throw eicve;
+				throw exportImportContentValidationException;
 			}
 		}
 	}
@@ -979,8 +985,8 @@ public class LayoutReferencesExportImportContentProcessor
 				return sb.toString();
 			}
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 
 		return portalURL;

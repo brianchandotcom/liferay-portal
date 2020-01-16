@@ -81,8 +81,8 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 
 			return Collections.emptyList();
 		}
-		catch (Exception e) {
-			throw new ResolverException(e);
+		catch (Exception exception) {
+			throw new ResolverException(exception);
 		}
 	}
 
@@ -134,7 +134,9 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 
 				return samlIdpSpConnection.getMetadataXml();
 			}
-			catch (NoSuchIdpSpConnectionException nsisce) {
+			catch (NoSuchIdpSpConnectionException
+						noSuchIdpSpConnectionException) {
+
 				return null;
 			}
 		}
@@ -150,7 +152,9 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 
 				return samlSpIdpConnection.getMetadataXml();
 			}
-			catch (NoSuchSpIdpConnectionException nssice) {
+			catch (NoSuchSpIdpConnectionException
+						noSuchSpIdpConnectionException) {
+
 				return null;
 			}
 		}
@@ -172,8 +176,8 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 
 			return Collections.singletonList(entityDescriptor);
 		}
-		catch (Exception e) {
-			throw new ResolverException(e);
+		catch (Exception exception) {
+			throw new ResolverException(exception);
 		}
 	}
 

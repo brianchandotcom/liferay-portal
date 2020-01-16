@@ -32,7 +32,7 @@ public class UpgradeSamlIdpSpConnection extends UpgradeProcess {
 				SamlIdpSpConnectionTable.class,
 				new AlterTableAddColumn("encryptionForced BOOLEAN"));
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			upgradeTable(
 				SamlIdpSpConnectionTable.TABLE_NAME,
 				SamlIdpSpConnectionTable.TABLE_COLUMNS,

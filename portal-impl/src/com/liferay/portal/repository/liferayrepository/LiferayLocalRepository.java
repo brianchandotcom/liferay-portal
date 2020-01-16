@@ -290,8 +290,8 @@ public class LiferayLocalRepository
 
 			return RepositoryModelUtil.toFileEntries(dlFileEntries);
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 
@@ -348,8 +348,8 @@ public class LiferayLocalRepository
 				getGroupId(), 0, new ArrayList<>(), toFolderIds(folderIds),
 				mimeTypes, queryDefinition);
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 

@@ -93,8 +93,8 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 			return resourceActionsImpl.getModelResourceGuestUnsupportedActions(
 				_CALENDAR_RESOURCE_NAME);
 		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
+		catch (Exception exception) {
+			throw new UpgradeException(exception);
 		}
 	}
 

@@ -209,9 +209,9 @@ public class AppModelPermissionResourceImpl
 
 				roles.add(role);
 			}
-			catch (NoSuchRoleException nsre) {
+			catch (NoSuchRoleException noSuchRoleException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(roleName, nsre);
+					_log.debug(roleName, noSuchRoleException);
 				}
 
 				invalidRoleNames.add(roleName);

@@ -229,7 +229,7 @@ public class ByteArrayFileInputStreamTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		// File does not exist
@@ -239,7 +239,7 @@ public class ByteArrayFileInputStreamTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		// Constructor 1

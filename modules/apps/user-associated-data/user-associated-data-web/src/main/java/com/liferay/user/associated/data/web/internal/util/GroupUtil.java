@@ -63,8 +63,8 @@ public class GroupUtil {
 				return ListUtil.toLongArray(allGroups, Group.GROUP_ID_ACCESSOR);
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return null;

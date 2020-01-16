@@ -134,7 +134,7 @@ public class DBSupportDefaultsPlugin
 						properties = FileUtil.readPropertiesFromZipFile(
 							jarFile, "portal.properties");
 					}
-					catch (IOException ioe) {
+					catch (IOException ioException) {
 						Logger logger = baseDBSupportTask.getLogger();
 
 						if (logger.isWarnEnabled()) {

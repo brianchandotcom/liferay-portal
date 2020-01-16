@@ -72,9 +72,9 @@ public class EditPreferencesMVCActionCommand implements MVCActionCommand {
 		try {
 			portletPreferences.store();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			SessionErrors.add(
-				actionRequest, ValidatorException.class.getName(), e);
+				actionRequest, ValidatorException.class.getName(), exception);
 
 			return false;
 		}

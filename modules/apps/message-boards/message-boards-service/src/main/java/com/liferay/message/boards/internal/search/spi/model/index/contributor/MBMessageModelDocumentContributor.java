@@ -123,8 +123,8 @@ public class MBMessageModelDocumentContributor
 							relatedEntryIndexer.addRelatedEntryFields(
 								document, comment);
 						}
-						catch (Exception e) {
-							throw new SystemException(e);
+						catch (Exception exception) {
+							throw new SystemException(exception);
 						}
 
 						document.addKeyword(Field.RELATED_ENTRY, true);
@@ -142,12 +142,12 @@ public class MBMessageModelDocumentContributor
 				content = BBCodeTranslatorUtil.getHTML(content);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
 					"Unable to parse message ", message.getMessageId(), ": ",
-					e.getMessage()),
-				e);
+					exception.getMessage()),
+				exception);
 		}
 
 		content = HtmlUtil.extractText(content);

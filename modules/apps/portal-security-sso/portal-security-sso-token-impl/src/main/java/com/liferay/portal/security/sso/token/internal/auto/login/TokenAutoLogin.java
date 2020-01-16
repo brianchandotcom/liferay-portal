@@ -171,9 +171,9 @@ public class TokenAutoLogin extends BaseAutoLogin {
 					}
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to import from LDAP", e);
+					_log.warn("Unable to import from LDAP", exception);
 				}
 			}
 		}

@@ -66,10 +66,11 @@ public class EditSiteNavigationMenuItemMVCActionCommand
 				siteNavigationMenuItemId, typeSettingsProperties.toString(),
 				serviceContext);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			hideDefaultErrorMessage(actionRequest);
 
-			SessionErrors.add(actionRequest, pe.getClass(), pe);
+			SessionErrors.add(
+				actionRequest, portalException.getClass(), portalException);
 
 			sendRedirect(actionRequest, actionResponse);
 		}

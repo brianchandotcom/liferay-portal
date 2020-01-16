@@ -155,8 +155,8 @@ public class ConfigurationTestUtil {
 			try {
 				eventCountdownLatch.await();
 			}
-			catch (InterruptedException ie) {
-				ReflectionUtil.throwException(ie);
+			catch (InterruptedException interruptedException) {
+				ReflectionUtil.throwException(interruptedException);
 			}
 
 			updateCountDownLatch.countDown();

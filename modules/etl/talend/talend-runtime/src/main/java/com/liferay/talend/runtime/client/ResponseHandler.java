@@ -62,9 +62,10 @@ public class ResponseHandler {
 				}
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new ResponseContentClientException(
-				"Unable to read response content", response.getStatus(), ioe);
+				"Unable to read response content", response.getStatus(),
+				ioException);
 		}
 
 		return sb.toString();

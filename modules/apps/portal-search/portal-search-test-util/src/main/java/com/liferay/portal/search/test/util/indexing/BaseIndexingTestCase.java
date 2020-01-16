@@ -144,10 +144,10 @@ public abstract class BaseIndexingTestCase {
 		try {
 			_indexWriter.addDocument(createSearchContext(), document);
 		}
-		catch (SearchException se) {
-			_handle(se);
+		catch (SearchException searchException) {
+			_handle(searchException);
 
-			throw new RuntimeException(se);
+			throw new RuntimeException(searchException);
 		}
 	}
 
@@ -178,11 +178,11 @@ public abstract class BaseIndexingTestCase {
 				() -> indexingTestHelperConsumer.accept(
 					new IndexingTestHelper()));
 		}
-		catch (RuntimeException re) {
-			throw re;
+		catch (RuntimeException runtimeException) {
+			throw runtimeException;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -247,10 +247,10 @@ public abstract class BaseIndexingTestCase {
 		try {
 			return _indexSearcher.search(searchContext, query);
 		}
-		catch (SearchException se) {
-			_handle(se);
+		catch (SearchException searchException) {
+			_handle(searchException);
 
-			throw new RuntimeException(se);
+			throw new RuntimeException(searchException);
 		}
 	}
 
@@ -258,10 +258,10 @@ public abstract class BaseIndexingTestCase {
 		try {
 			return _indexSearcher.searchCount(searchContext, query);
 		}
-		catch (SearchException se) {
-			_handle(se);
+		catch (SearchException searchException) {
+			_handle(searchException);
 
-			throw new RuntimeException(se);
+			throw new RuntimeException(searchException);
 		}
 	}
 

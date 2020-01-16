@@ -45,10 +45,10 @@ public class JaxWsApiBundleActivator implements BundleActivator {
 		try {
 			_endpoint = Endpoint.publish("/greeterApi", new GreeterImpl());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			cleanUp(bundleContext);
 
-			throw e;
+			throw exception;
 		}
 	}
 
@@ -61,7 +61,7 @@ public class JaxWsApiBundleActivator implements BundleActivator {
 		try {
 			_endpoint.stop();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		_configurationAdminBundleActivator.stop(bundleContext);

@@ -186,9 +186,9 @@ public class DDMFormValuesExportImportContentProcessor
 				try {
 					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
 				}
-				catch (JSONException jsone) {
+				catch (JSONException jsonException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to parse JSON", jsone);
+						_log.debug("Unable to parse JSON", jsonException);
 					}
 
 					continue;
@@ -207,9 +207,9 @@ public class DDMFormValuesExportImportContentProcessor
 					fileEntry = _dlAppLocalService.getFileEntryByUuidAndGroupId(
 						uuid, groupId);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to find file entry", pe);
+						_log.warn("Unable to find file entry", portalException);
 					}
 
 					continue;
@@ -280,9 +280,9 @@ public class DDMFormValuesExportImportContentProcessor
 				try {
 					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
 				}
-				catch (JSONException jsone) {
+				catch (JSONException jsonException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to parse JSON", jsone);
+						_log.debug("Unable to parse JSON", jsonException);
 					}
 
 					continue;
@@ -317,12 +317,12 @@ public class DDMFormValuesExportImportContentProcessor
 				try {
 					return _dlAppLocalService.getFileEntry(newClassPK);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to find file entry with file entry ID " +
 								newClassPK,
-							pe);
+							portalException);
 					}
 				}
 			}
@@ -343,9 +343,9 @@ public class DDMFormValuesExportImportContentProcessor
 					return _dlAppLocalService.getFileEntryByUuidAndGroupId(
 						uuid, groupId);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to find file entry", pe);
+						_log.warn("Unable to find file entry", portalException);
 					}
 				}
 			}
@@ -405,9 +405,9 @@ public class DDMFormValuesExportImportContentProcessor
 				try {
 					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
 				}
-				catch (JSONException jsone) {
+				catch (JSONException jsonException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to parse JSON", jsone);
+						_log.debug("Unable to parse JSON", jsonException);
 					}
 
 					continue;
@@ -501,9 +501,9 @@ public class DDMFormValuesExportImportContentProcessor
 				try {
 					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
 				}
-				catch (JSONException jsone) {
+				catch (JSONException jsonException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to parse JSON", jsone);
+						_log.debug("Unable to parse JSON", jsonException);
 					}
 
 					continue;
@@ -537,12 +537,12 @@ public class DDMFormValuesExportImportContentProcessor
 					return _journalArticleLocalService.getLatestArticle(
 						newClassPK);
 				}
-				catch (NoSuchArticleException nsae) {
+				catch (NoSuchArticleException noSuchArticleException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to find journal article with primary key " +
 								newClassPK,
-							nsae);
+							noSuchArticleException);
 					}
 				}
 			}
@@ -600,9 +600,9 @@ public class DDMFormValuesExportImportContentProcessor
 				try {
 					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
 				}
-				catch (JSONException jsone) {
+				catch (JSONException jsonException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to parse JSON", jsone);
+						_log.debug("Unable to parse JSON", jsonException);
 					}
 
 					continue;
@@ -662,9 +662,9 @@ public class DDMFormValuesExportImportContentProcessor
 				try {
 					jsonObject = JSONFactoryUtil.createJSONObject(valueString);
 				}
-				catch (JSONException jsone) {
+				catch (JSONException jsonException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to parse JSON", jsone);
+						_log.debug("Unable to parse JSON", jsonException);
 					}
 
 					continue;

@@ -61,8 +61,8 @@ public class UpdateRequestMVCRenderCommand extends BaseMVCActionCommand {
 				actionResponse.sendRedirect(redirect);
 			}
 		}
-		catch (NoSuchRequestException | PrincipalException e) {
-			SessionErrors.add(actionRequest, e.getClass());
+		catch (NoSuchRequestException | PrincipalException exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}

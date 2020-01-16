@@ -134,8 +134,8 @@ public class NtlmFilter extends BaseFilter {
 
 			return ntlmConfiguration.enabled();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -298,8 +298,8 @@ public class NtlmFilter extends BaseFilter {
 				ntlmUserAccount = ntlmManager.authenticate(
 					src, serverChallenge);
 			}
-			catch (Exception e) {
-				_log.error("Unable to perform NTLM authentication", e);
+			catch (Exception exception) {
+				_log.error("Unable to perform NTLM authentication", exception);
 			}
 			finally {
 				_portalCache.remove(portalCacheKey);

@@ -92,8 +92,9 @@ public class LocationVariableResolver {
 		try {
 			return StringUtil.read(new FileInputStream(location.substring(2)));
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to read file " + location, ioe);
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to read file " + location, ioException);
 		}
 	}
 
@@ -104,9 +105,9 @@ public class LocationVariableResolver {
 		try {
 			return StringUtil.read(resourceRetriever.getInputStream());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new SystemException(
-				"Unable to read resource " + location, ioe);
+				"Unable to read resource " + location, ioException);
 		}
 	}
 

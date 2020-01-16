@@ -131,8 +131,8 @@ public class LiferayReader implements Reader<IndexedRecord> {
 			return _jsonObjectIndexedRecordConverter.toIndexedRecord(
 				currentJsonValue.asJsonObject());
 		}
-		catch (Exception e) {
-			throw new ComponentException(e);
+		catch (Exception exception) {
+			throw new ComponentException(exception);
 		}
 	}
 

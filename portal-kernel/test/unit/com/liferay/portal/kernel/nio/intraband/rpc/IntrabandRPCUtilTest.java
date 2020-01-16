@@ -81,7 +81,7 @@ public class IntrabandRPCUtilTest {
 					return Datagram.createResponseDatagram(
 						datagram, serializer.toByteBuffer());
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					throw new RuntimeException();
 				}
 			}
@@ -99,8 +99,8 @@ public class IntrabandRPCUtilTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable t = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable t = executionException.getCause();
 
 			Assert.assertEquals(exception.getMessage(), t.getMessage());
 		}
@@ -131,8 +131,8 @@ public class IntrabandRPCUtilTest {
 					return Datagram.createResponseDatagram(
 						datagram, serializer.toByteBuffer());
 				}
-				catch (Exception e) {
-					throw new RuntimeException(e);
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
 				}
 			}
 
@@ -164,17 +164,17 @@ public class IntrabandRPCUtilTest {
 		futureCompletionHandler.delivered(null);
 		futureCompletionHandler.submitted(null);
 
-		IOException ioe = new IOException();
+		IOException ioException = new IOException();
 
-		futureCompletionHandler.failed(null, ioe);
+		futureCompletionHandler.failed(null, ioException);
 
 		try {
 			defaultNoticeableFuture.get();
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertSame(ioe, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertSame(ioException, executionException.getCause());
 		}
 
 		// Class not found exception
@@ -203,8 +203,8 @@ public class IntrabandRPCUtilTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable throwable = executionException.getCause();
 
 			Assert.assertSame(
 				ClassNotFoundException.class, throwable.getClass());
@@ -225,7 +225,7 @@ public class IntrabandRPCUtilTest {
 
 			Assert.fail();
 		}
-		catch (CancellationException ce) {
+		catch (CancellationException cancellationException) {
 		}
 	}
 

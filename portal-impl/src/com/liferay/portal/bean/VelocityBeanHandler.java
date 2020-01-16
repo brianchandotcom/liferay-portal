@@ -45,7 +45,7 @@ public class VelocityBeanHandler implements InvocationHandler {
 
 			return method.invoke(_bean, arguments);
 		}
-		catch (InvocationTargetException ite) {
+		catch (InvocationTargetException invocationTargetException) {
 			return null;
 		}
 		finally {

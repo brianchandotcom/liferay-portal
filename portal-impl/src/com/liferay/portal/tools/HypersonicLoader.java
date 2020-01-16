@@ -78,8 +78,8 @@ public class HypersonicLoader {
 			new HypersonicLoader(
 				databaseName, sqlDir, fileNames, username, password);
 		}
-		catch (Exception e) {
-			ArgumentsUtil.processMainException(arguments, e);
+		catch (Exception exception) {
+			ArgumentsUtil.processMainException(arguments, exception);
 		}
 	}
 

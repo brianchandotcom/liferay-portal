@@ -50,8 +50,8 @@ public class ServiceXMLTest {
 				"Remove deprecated tx-required element from " + path,
 				stream.anyMatch(line -> line.contains("<tx-required>")));
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

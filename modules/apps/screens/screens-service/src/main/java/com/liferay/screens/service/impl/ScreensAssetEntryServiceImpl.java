@@ -168,11 +168,11 @@ public class ScreensAssetEntryServiceImpl
 
 			return toJSONArray(assetEntries, locale);
 		}
-		catch (PortalException | SystemException e) {
-			throw e;
+		catch (PortalException | SystemException exception) {
+			throw exception;
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 
@@ -220,9 +220,9 @@ public class ScreensAssetEntryServiceImpl
 					filteredAssetEntries.add(assetEntry);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 			}
 		}
@@ -311,7 +311,7 @@ public class ScreensAssetEntryServiceImpl
 			journalArticle = journalArticleLocalService.getArticle(
 				assetEntry.getClassPK());
 		}
-		catch (Exception nsae) {
+		catch (Exception exception) {
 			JournalArticleResource journalArticleResource =
 				journalArticleResourceLocalService.getArticleResource(
 					assetEntry.getClassPK());

@@ -60,11 +60,11 @@ public class BackgroundTaskModelListener
 					deleteExportImportConfiguration(exportImportConfiguration);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ModelListenerException(
 				"Unable to delete the process configuration for background " +
 					"task " + backgroundTask.getBackgroundTaskId(),
-				e);
+				exception);
 		}
 	}
 

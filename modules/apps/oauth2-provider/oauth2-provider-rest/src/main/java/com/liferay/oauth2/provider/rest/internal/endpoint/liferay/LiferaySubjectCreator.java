@@ -66,8 +66,8 @@ public class LiferaySubjectCreator implements SubjectCreator {
 
 			return userSubject;
 		}
-		catch (PortalException pe) {
-			throw new OAuthServiceException(pe);
+		catch (PortalException portalException) {
+			throw new OAuthServiceException(portalException);
 		}
 	}
 

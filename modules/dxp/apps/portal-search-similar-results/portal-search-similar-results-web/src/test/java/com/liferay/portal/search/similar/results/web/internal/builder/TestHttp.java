@@ -74,7 +74,7 @@ public class TestHttp {
 		try {
 			return URLCodec.decodeURL(url, StringPool.UTF8);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		return StringPool.BLANK;
@@ -190,7 +190,7 @@ public class TestHttp {
 					try {
 						value = decodeURL(kvp[1]);
 					}
-					catch (IllegalArgumentException iae) {
+					catch (IllegalArgumentException illegalArgumentException) {
 						continue;
 					}
 				}

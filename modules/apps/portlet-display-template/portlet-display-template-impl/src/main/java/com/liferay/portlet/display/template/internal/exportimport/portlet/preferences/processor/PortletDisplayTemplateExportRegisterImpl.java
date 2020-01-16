@@ -54,7 +54,7 @@ public class PortletDisplayTemplateExportRegisterImpl
 				return portletPreferences.getValue("displayStyle", null);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -74,7 +74,7 @@ public class PortletDisplayTemplateExportRegisterImpl
 					portletPreferences.getValue("displayStyleGroupId", null));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return 0;

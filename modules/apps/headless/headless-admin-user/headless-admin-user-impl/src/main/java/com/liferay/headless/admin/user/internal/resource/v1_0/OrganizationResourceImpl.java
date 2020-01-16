@@ -481,9 +481,9 @@ public class OrganizationResourceImpl
 
 			return _countryService.getCountryByName(addressCountry);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -799,9 +799,9 @@ public class OrganizationResourceImpl
 		try {
 			date = dateFormat.parse(timeString);
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(parseException, parseException);
 			}
 
 			return -1;

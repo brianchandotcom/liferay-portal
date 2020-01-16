@@ -74,7 +74,7 @@ public class ConfigurableUtil {
 						classLoader, snapshotClassName, snapshotClassData, 0,
 						snapshotClassData.length);
 				}
-				catch (InvocationTargetException ite) {
+				catch (InvocationTargetException invocationTargetException) {
 					snapshotClass = (Class<T>)classLoader.loadClass(
 						snapshotClassName);
 				}

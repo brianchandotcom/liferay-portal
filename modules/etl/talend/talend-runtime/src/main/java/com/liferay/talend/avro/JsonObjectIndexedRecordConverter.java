@@ -78,13 +78,13 @@ public class JsonObjectIndexedRecordConverter {
 			try {
 				record.put(field.pos(), _convert(jsonValue, fieldSchema));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				throw new ConverterException(
 					String.format(
 						"Unable to convert field `%s` value `%s`to %s",
 						fieldName, jsonValue.toString(),
 						fieldSchema.toString(true)),
-					e);
+					exception);
 			}
 		}
 

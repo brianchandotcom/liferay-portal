@@ -205,8 +205,8 @@ public class ElasticsearchSearchEngineTest {
 			snapshotClient.create(
 				createSnapshotRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -223,8 +223,8 @@ public class ElasticsearchSearchEngineTest {
 			snapshotClient.delete(
 				deleteSnapshotRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -246,8 +246,8 @@ public class ElasticsearchSearchEngineTest {
 			return snapshotClient.get(
 				getSnapshotsRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

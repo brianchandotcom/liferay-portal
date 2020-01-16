@@ -116,9 +116,10 @@ public class CompilerWrapper extends Compiler {
 				return true;
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			_log.error(
-				"Unable to determine if " + className + " is outdated", ioe);
+				"Unable to determine if " + className + " is outdated",
+				ioException);
 		}
 
 		return super.isOutDated();
@@ -144,9 +145,9 @@ public class CompilerWrapper extends Compiler {
 				try {
 					url = uri.toURL();
 				}
-				catch (MalformedURLException murle) {
+				catch (MalformedURLException malformedURLException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(murle, murle);
+						_log.warn(malformedURLException, malformedURLException);
 					}
 				}
 			}
@@ -184,9 +185,9 @@ public class CompilerWrapper extends Compiler {
 					}
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 

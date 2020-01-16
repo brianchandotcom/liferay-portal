@@ -57,8 +57,8 @@ public class AllowRestrictedHeadersCallable
 				String.valueOf(httpURLConnection.getResponseCode())
 			};
 		}
-		catch (Exception e) {
-			throw new ProcessException(e);
+		catch (Exception exception) {
+			throw new ProcessException(exception);
 		}
 	}
 

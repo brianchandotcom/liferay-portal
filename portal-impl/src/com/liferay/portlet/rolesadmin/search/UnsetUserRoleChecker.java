@@ -46,8 +46,8 @@ public class UnsetUserRoleChecker extends EmptyOnClickRowChecker {
 				return true;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return super.isDisabled(obj);

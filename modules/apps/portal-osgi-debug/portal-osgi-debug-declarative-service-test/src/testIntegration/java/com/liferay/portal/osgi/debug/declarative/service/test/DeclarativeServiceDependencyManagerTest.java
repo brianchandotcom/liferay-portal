@@ -215,8 +215,8 @@ public class DeclarativeServiceDependencyManagerTest {
 						_unsatisfiedComponentScannerConfiguration.update(
 							new HashMapDictionary<String, Object>());
 					}
-					catch (IOException ioe) {
-						ReflectionUtil.throwException(ioe);
+					catch (IOException ioException) {
+						ReflectionUtil.throwException(ioException);
 					}
 
 					Thread thread = Thread.currentThread();

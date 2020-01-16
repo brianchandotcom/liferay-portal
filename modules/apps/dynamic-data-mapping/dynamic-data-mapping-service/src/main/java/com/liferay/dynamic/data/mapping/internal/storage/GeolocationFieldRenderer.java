@@ -81,9 +81,9 @@ public class GeolocationFieldRenderer extends BaseFieldRenderer {
 		try {
 			jsonObject = _jsonFactory.createJSONObject(value);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse JSON", jsone);
+				_log.debug("Unable to parse JSON", jsonException);
 			}
 
 			return StringPool.BLANK;

@@ -98,8 +98,8 @@ public class AppLicenseVerifierTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertSame(FailAppLicenseVerifier.EXCEPTION, e);
+		catch (Exception exception) {
+			Assert.assertSame(FailAppLicenseVerifier.EXCEPTION, exception);
 		}
 		finally {
 			_bundleContext.ungetService(serviceReference);

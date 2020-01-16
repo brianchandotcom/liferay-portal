@@ -59,8 +59,8 @@ public class StateClusterRequestExecutorImpl
 
 			return new StateClusterResponse(responseBody);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

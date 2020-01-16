@@ -90,7 +90,7 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 
 			_attachmentsFolderId = folder.getFolderId();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return _attachmentsFolderId;

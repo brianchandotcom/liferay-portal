@@ -74,8 +74,8 @@ public class InstanceWrapperBuilder {
 				_createIW(parentDir, srcFile);
 			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

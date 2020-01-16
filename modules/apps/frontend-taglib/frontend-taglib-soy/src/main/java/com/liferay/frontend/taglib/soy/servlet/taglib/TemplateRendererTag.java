@@ -60,8 +60,8 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			soyComponentRenderer.renderSoyComponent(
 				request, jspWriter, componentDescriptor, context);
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 		finally {
 			cleanUp();

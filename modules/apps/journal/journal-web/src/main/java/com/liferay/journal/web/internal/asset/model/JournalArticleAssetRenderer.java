@@ -156,8 +156,8 @@ public class JournalArticleAssetRenderer
 						JournalServiceConfiguration.class,
 						_article.getCompanyId());
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
 				return null;
 			}
@@ -237,7 +237,7 @@ public class JournalArticleAssetRenderer
 			summary = HtmlUtil.render(
 				HtmlUtil.stripHtml(articleDisplay.getContent()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return summary;
@@ -341,8 +341,8 @@ public class JournalArticleAssetRenderer
 		try {
 			return _article.getUrlTitle(locale);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return getUrlTitle();

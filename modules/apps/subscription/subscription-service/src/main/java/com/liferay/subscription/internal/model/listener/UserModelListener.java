@@ -35,8 +35,8 @@ public class UserModelListener extends BaseModelListener<User> {
 		try {
 			_subscriptionLocalService.deleteSubscriptions(user.getUserId());
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

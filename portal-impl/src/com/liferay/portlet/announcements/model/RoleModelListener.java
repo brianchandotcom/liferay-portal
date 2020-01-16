@@ -30,8 +30,8 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			AnnouncementsEntryLocalServiceUtil.deleteEntries(
 				role.getClassNameId(), role.getRoleId());
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

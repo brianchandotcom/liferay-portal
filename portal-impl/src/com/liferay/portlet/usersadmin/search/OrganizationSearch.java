@@ -135,8 +135,8 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 			setOrderByType(orderByType);
 			setOrderByComparator(orderByComparator);
 		}
-		catch (Exception e) {
-			_log.error("Unable to initialize organization search", e);
+		catch (Exception exception) {
+			_log.error("Unable to initialize organization search", exception);
 		}
 	}
 

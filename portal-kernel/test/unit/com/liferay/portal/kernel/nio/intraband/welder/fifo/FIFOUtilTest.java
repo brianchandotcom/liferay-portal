@@ -88,7 +88,7 @@ public class FIFOUtilTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 	}
 
@@ -142,8 +142,8 @@ public class FIFOUtilTest {
 
 								checkFlag.set(false);
 							}
-							catch (IOException ioe) {
-								ReflectionUtil.throwException(ioe);
+							catch (IOException ioException) {
+								ReflectionUtil.throwException(ioException);
 							}
 						}
 					}

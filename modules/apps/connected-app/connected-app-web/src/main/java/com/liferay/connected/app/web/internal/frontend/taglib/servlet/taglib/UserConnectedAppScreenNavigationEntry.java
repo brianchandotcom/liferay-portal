@@ -91,8 +91,8 @@ public class UserConnectedAppScreenNavigationEntry
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
-			throw new IOException(se);
+		catch (ServletException servletException) {
+			throw new IOException(servletException);
 		}
 	}
 

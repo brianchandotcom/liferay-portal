@@ -43,9 +43,9 @@ public class IntrabandFactoryUtil {
 
 				return constructor.newInstance(_INTRABAND_TIMEOUT_DEFAULT);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				throw new RuntimeException(
-					"Unable to instantiate " + _INTRABAND_IMPL, e);
+					"Unable to instantiate " + _INTRABAND_IMPL, exception);
 			}
 		}
 		else {

@@ -231,7 +231,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 
 			return portletURL;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

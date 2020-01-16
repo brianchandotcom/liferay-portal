@@ -226,9 +226,9 @@ public class MailboxUtilTest {
 
 		MockIntraband mockIntraband = new MockIntraband();
 
-		IOException iOException = new IOException();
+		IOException ioException = new IOException();
 
-		mockIntraband.setIOException(iOException);
+		mockIntraband.setIOException(ioException);
 
 		try {
 			MailboxUtil.sendMail(
@@ -237,8 +237,8 @@ public class MailboxUtilTest {
 
 			Assert.fail();
 		}
-		catch (MailboxException me) {
-			Assert.assertSame(iOException, me.getCause());
+		catch (MailboxException mailboxException) {
+			Assert.assertSame(ioException, mailboxException.getCause());
 		}
 	}
 

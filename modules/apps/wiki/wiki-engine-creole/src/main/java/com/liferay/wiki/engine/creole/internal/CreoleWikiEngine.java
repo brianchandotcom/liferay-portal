@@ -116,8 +116,8 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 				outgoingLinks.put(title, existingLink);
 			}
 		}
-		catch (SystemException se) {
-			throw new PageContentException(se);
+		catch (SystemException systemException) {
+			throw new PageContentException(systemException);
 		}
 
 		return outgoingLinks;
@@ -157,9 +157,10 @@ public class CreoleWikiEngine extends BaseWikiEngine {
 		try {
 			creole10Parser.wikipage();
 		}
-		catch (RecognitionException re) {
+		catch (RecognitionException recognitionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse:\n" + creoleCode, re);
+				_log.debug(
+					"Unable to parse:\n" + creoleCode, recognitionException);
 
 				for (String error : creole10Parser.getErrors()) {
 					_log.debug(error);

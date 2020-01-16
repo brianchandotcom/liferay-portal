@@ -86,8 +86,8 @@ public class UnsubscribeHooks {
 					_addUnsubscribeHeader(mailMessage, unsubscribeURL);
 					_addUnsubscribeLink(mailMessage, unsubscribeURL);
 				}
-				catch (IOException ioe) {
-					throw new RuntimeException(ioe);
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
 				}
 				finally {
 					_userTicketMap.remove(user.getUserId());
@@ -169,8 +169,8 @@ public class UnsubscribeHooks {
 				SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
 				calendar.getTime());
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

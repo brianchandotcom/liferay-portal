@@ -135,7 +135,7 @@ public class DayAndPosition implements Cloneable, Serializable {
 
 			return other;
 		}
-		catch (CloneNotSupportedException cnse) {
+		catch (CloneNotSupportedException cloneNotSupportedException) {
 			throw new InternalError();
 		}
 	}

@@ -45,8 +45,9 @@ public class GitUtil {
 		try {
 			process = JenkinsResultsParserUtil.executeBashCommands(command);
 		}
-		catch (IOException | TimeoutException e) {
-			throw new RuntimeException("Unable to clone " + remoteURL, e);
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(
+				"Unable to clone " + remoteURL, exception);
 		}
 
 		if ((process != null) && (process.exitValue() != 0)) {
@@ -56,8 +57,8 @@ public class GitUtil {
 				errorString = JenkinsResultsParserUtil.readInputStream(
 					process.getErrorStream());
 			}
-			catch (IOException ioe) {
-				ioe.printStackTrace();
+			catch (IOException ioException) {
+				ioException.printStackTrace();
 			}
 
 			throw new RuntimeException(
@@ -182,8 +183,8 @@ public class GitUtil {
 						remoteGitBranchName, workingDirectory,
 						gitHubDevNodeRemoteURL);
 				}
-				catch (Exception e) {
-					e.printStackTrace();
+				catch (Exception exception) {
+					exception.printStackTrace();
 				}
 
 				usedGitHubDevNodeHostnames.add(gitHubDevNodeHostname);
@@ -247,7 +248,7 @@ public class GitUtil {
 		try {
 			username = remoteURLMatcher.group("username");
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		RemoteGitRepository remoteGitRepository =
@@ -415,12 +416,12 @@ public class GitUtil {
 
 				break;
 			}
-			catch (IOException | TimeoutException e) {
+			catch (IOException | TimeoutException exception) {
 				if (retries == maxRetries) {
 					throw new RuntimeException(
 						"Unable to execute bash commands: " +
 							Arrays.toString(commands),
-						e);
+						exception);
 				}
 
 				usedGitHubDevNodeHostnames.add(gitHubDevNodeHostname);
@@ -428,7 +429,7 @@ public class GitUtil {
 				System.out.println(
 					"Unable to execute bash commands retrying... ");
 
-				e.printStackTrace();
+				exception.printStackTrace();
 
 				JenkinsResultsParserUtil.sleep(retryDelay);
 			}
@@ -445,7 +446,7 @@ public class GitUtil {
 			standardErr = JenkinsResultsParserUtil.readInputStream(
 				process.getErrorStream());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			standardErr = "";
 		}
 
@@ -455,9 +456,9 @@ public class GitUtil {
 			standardOut = JenkinsResultsParserUtil.readInputStream(
 				process.getInputStream());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to read process input stream", ioe);
+				"Unable to read process input stream", ioException);
 		}
 
 		return new ExecutionResult(
@@ -471,7 +472,7 @@ public class GitUtil {
 			standardErr = JenkinsResultsParserUtil.readInputStream(
 				process.getErrorStream());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			standardErr = "";
 		}
 
@@ -491,9 +492,9 @@ public class GitUtil {
 					JenkinsResultsParserUtil.readInputStream(
 						digProcess.getInputStream()));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				System.out.println(
-					"Unable to execute debug DNS: " + e.getMessage());
+					"Unable to execute debug DNS: " + exception.getMessage());
 			}
 		}
 	}

@@ -58,13 +58,17 @@ public class PortalSettingsTestLDAPUsersMVCRenderCommand
 
 			return super.render(renderRequest, renderResponse);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to test LDAP connection: " + pe.getMessage(), pe);
+					"Unable to test LDAP connection: " +
+						principalException.getMessage(),
+					principalException);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to test LDAP connection: " + pe.getMessage());
+				_log.warn(
+					"Unable to test LDAP connection: " +
+						principalException.getMessage());
 			}
 		}
 

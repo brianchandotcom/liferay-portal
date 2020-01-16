@@ -52,17 +52,18 @@ public class PollerCometChannelListener implements ChannelListener {
 			ChannelHubManagerUtil.unregisterChannelListener(
 				cometRequest.getCompanyId(), cometRequest.getUserId(), this);
 		}
-		catch (UnknownChannelException uce) {
+		catch (UnknownChannelException unknownChannelException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(uce, uce);
+				_log.debug(unknownChannelException, unknownChannelException);
 			}
 		}
-		catch (ChannelException ce) {
+		catch (ChannelException channelException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to unregister channel listener", ce);
+				_log.warn(
+					"Unable to unregister channel listener", channelException);
 			}
 		}
 

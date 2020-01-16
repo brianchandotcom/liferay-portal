@@ -68,11 +68,11 @@ public class SAPServiceVerifyProcess extends VerifyProcess {
 					_sapEntryLocalService.checkSystemSAPEntries(
 						company.getCompanyId());
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					_log.error(
 						"Unable to add default service access policy for " +
 							"company " + company.getCompanyId(),
-						pe);
+						portalException);
 				}
 			}
 		}

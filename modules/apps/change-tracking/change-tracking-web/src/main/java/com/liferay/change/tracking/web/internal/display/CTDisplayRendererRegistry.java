@@ -214,7 +214,7 @@ public class CTDisplayRendererRegistry {
 				clazz = classLoader.loadClass(
 					assetRendererFactory.getClassName());
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 				return null;
 			}
 

@@ -128,8 +128,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Repository is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Repository is null", nullPointerException.getMessage());
 		}
 
 		try {
@@ -138,8 +139,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Fabric agent is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Fabric agent is null", nullPointerException.getMessage());
 		}
 
 		new NettyFabricWorkerExecutionChannelHandler(
@@ -211,10 +213,10 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (ProcessException pe) {
+		catch (ProcessException processException) {
 			Assert.assertEquals(
 				"Unable to locate fabric agent on channel " + _embeddedChannel,
-				pe.getMessage());
+				processException.getMessage());
 		}
 
 		NettyFabricAgentStub nettyFabricAgentStub =
@@ -248,10 +250,10 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (ProcessException pe) {
+		catch (ProcessException processException) {
 			Assert.assertEquals(
 				"Unable to locate fabric agent on channel " + _embeddedChannel,
-				pe.getMessage());
+				processException.getMessage());
 		}
 
 		// Unable to locate fabric worker
@@ -263,11 +265,11 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (ProcessException pe) {
+		catch (ProcessException processException) {
 			Assert.assertEquals(
 				"Unable to locate fabric worker on channel " +
 					_embeddedChannel + ", with fabric worker id 0",
-				pe.getMessage());
+				processException.getMessage());
 		}
 
 		// Finish with result
@@ -299,8 +301,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertSame(throwable, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertSame(throwable, executionException.getCause());
 		}
 	}
 
@@ -419,8 +421,9 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (ProcessException pe) {
-			Assert.assertSame(malformedURLException, pe.getCause());
+		catch (ProcessException processException) {
+			Assert.assertSame(
+				malformedURLException, processException.getCause());
 		}
 		finally {
 			handlers.clear();
@@ -734,8 +737,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		try {
 			noticeableFuture.get();
 		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable throwable = executionException.getCause();
 
 			Assert.assertSame(IOException.class, throwable.getClass());
 			Assert.assertEquals(
@@ -924,8 +927,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertEquals(throwable, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertEquals(throwable, executionException.getCause());
 		}
 
 		// Finish startup failure
@@ -1055,8 +1058,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertEquals(throwable, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertEquals(throwable, executionException.getCause());
 		}
 
 		// Finish with null pointer exception
@@ -1074,8 +1077,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable t = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable t = executionException.getCause();
 
 			Assert.assertSame(NullPointerException.class, t.getClass());
 		}
@@ -1168,8 +1171,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertSame(throwable, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertSame(throwable, executionException.getCause());
 		}
 
 		// Loaded paths
@@ -1271,8 +1274,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertSame(throwable, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertSame(throwable, executionException.getCause());
 		}
 	}
 

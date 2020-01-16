@@ -81,9 +81,9 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 			return doParse(document);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new WorkflowDefinitionFileException(
-				"Unable to parse definition", e);
+				"Unable to parse definition", exception);
 		}
 	}
 
@@ -94,9 +94,9 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 			return doParse(document);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new WorkflowDefinitionFileException(
-				"Unable to parse definition", e);
+				"Unable to parse definition", exception);
 		}
 	}
 

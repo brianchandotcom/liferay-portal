@@ -41,8 +41,8 @@ public class PropertiesDocIndexBuilder {
 		try {
 			new PropertiesDocIndexBuilder(arguments);
 		}
-		catch (Exception e) {
-			ArgumentsUtil.processMainException(arguments, e);
+		catch (Exception exception) {
+			ArgumentsUtil.processMainException(arguments, exception);
 		}
 	}
 
@@ -101,14 +101,14 @@ public class PropertiesDocIndexBuilder {
 						"/index.ftl",
 					context, writer);
 			}
-			catch (Exception e) {
-				e.printStackTrace();
+			catch (Exception exception) {
+				exception.printStackTrace();
 			}
 
 			writer.flush();
 		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		catch (IOException ioException) {
+			ioException.printStackTrace();
 		}
 	}
 

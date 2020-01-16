@@ -38,7 +38,7 @@ public class UserGroupsAdminExportImportPortletPreferencesProcessorUtil {
 				return portletPreferences.getValue("displayStyle", null);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -57,7 +57,7 @@ public class UserGroupsAdminExportImportPortletPreferencesProcessorUtil {
 					portletPreferences.getValue("displayStyleGroupId", null));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return 0;

@@ -91,8 +91,8 @@ public class WarArtifactUrlTransformer implements ArtifactUrlTransformer {
 					properties.getProperty("resources-importer-external-dir"));
 			}
 		}
-		catch (IOException ioe) {
-			_log.error("Unable to check resources in " + artifact, ioe);
+		catch (IOException ioException) {
+			_log.error("Unable to check resources in " + artifact, ioException);
 		}
 
 		return false;

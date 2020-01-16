@@ -93,8 +93,8 @@ public class NGramHolderBuilderImpl implements NGramHolderBuilder {
 
 			return nGramHolder;
 		}
-		catch (Exception e) {
-			throw new SearchException(e);
+		catch (Exception exception) {
+			throw new SearchException(exception);
 		}
 	}
 

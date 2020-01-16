@@ -241,11 +241,11 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 					_userId, _groupId, _classNameId, _classPK, 0,
 					AssetDisplayPageConstants.TYPE_SPECIFIC, serviceContext);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					"Unable to add asset display page entry for article " +
 						_classPK,
-					e);
+					exception);
 
 				return false;
 			}

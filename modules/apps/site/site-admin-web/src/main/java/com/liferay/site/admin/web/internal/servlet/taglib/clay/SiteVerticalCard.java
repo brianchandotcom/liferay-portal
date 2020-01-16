@@ -71,7 +71,7 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 		try {
 			return siteActionDropdownItemsProvider.getActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -138,7 +138,7 @@ public class SiteVerticalCard extends BaseBaseClayCard implements VerticalCard {
 			return HtmlUtil.escape(
 				_group.getDescriptiveName(_themeDisplay.getLocale()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return _group.getName(_themeDisplay.getLocale());

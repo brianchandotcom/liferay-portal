@@ -56,7 +56,7 @@ public class ResourceBundleEnumerationTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchElementException nsee) {
+		catch (NoSuchElementException noSuchElementException) {
 		}
 	}
 
@@ -76,7 +76,7 @@ public class ResourceBundleEnumerationTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchElementException nsee) {
+		catch (NoSuchElementException noSuchElementException) {
 		}
 	}
 

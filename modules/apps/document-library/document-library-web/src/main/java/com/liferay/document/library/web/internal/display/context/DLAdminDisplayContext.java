@@ -247,8 +247,8 @@ public class DLAdminDisplayContext {
 					_searchContainer = _getDLSearchContainer();
 				}
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
 			}
 		}
 
@@ -319,17 +319,19 @@ public class DLAdminDisplayContext {
 				try {
 					_folder = DLAppLocalServiceUtil.getFolder(_folderId);
 				}
-				catch (NoSuchFolderException nsfe) {
+				catch (NoSuchFolderException noSuchFolderException) {
 					_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to get folder " + _folderId, nsfe);
+						_log.warn(
+							"Unable to get folder " + _folderId,
+							noSuchFolderException);
 					}
 				}
 			}
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -351,7 +353,7 @@ public class DLAdminDisplayContext {
 					_rootFolderName = StringPool.BLANK;
 				}
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 				_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 				if (_log.isWarnEnabled()) {
@@ -359,11 +361,11 @@ public class DLAdminDisplayContext {
 						StringBundler.concat(
 							"Could not find folder {folderId=", _rootFolderId,
 							"}"),
-						nsfe);
+						noSuchFolderException);
 				}
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
 			}
 		}
 	}
@@ -515,7 +517,7 @@ public class DLAdminDisplayContext {
 				try {
 					fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
@@ -691,8 +693,8 @@ public class DLAdminDisplayContext {
 					searchResults.add(folder);
 				}
 			}
-			catch (ClassNotFoundException cnfe) {
-				throw new PortalException(cnfe);
+			catch (ClassNotFoundException classNotFoundException) {
+				throw new PortalException(classNotFoundException);
 			}
 		}
 

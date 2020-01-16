@@ -81,9 +81,9 @@ public class WeDeployAccessTokenStrutsAction implements StrutsAction {
 
 			jsonObject.put("access_token", weDeployAuthToken.getToken());
 		}
-		catch (NoSuchAppException nsae) {
+		catch (NoSuchAppException noSuchAppException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsae, nsae);
+				_log.debug(noSuchAppException, noSuchAppException);
 			}
 
 			jsonObject.put(
@@ -92,9 +92,9 @@ public class WeDeployAccessTokenStrutsAction implements StrutsAction {
 					LocaleUtil.getDefault(),
 					"client-id-and-client-secret-do-not-match"));
 		}
-		catch (NoSuchTokenException nste) {
+		catch (NoSuchTokenException noSuchTokenException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nste, nste);
+				_log.debug(noSuchTokenException, noSuchTokenException);
 			}
 
 			jsonObject.put(
@@ -102,8 +102,8 @@ public class WeDeployAccessTokenStrutsAction implements StrutsAction {
 				LanguageUtil.get(
 					LocaleUtil.getDefault(), "request-token-does-not-match"));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			jsonObject.put(
 				"error_message",

@@ -147,7 +147,7 @@ public class AlloyEditorCreoleConfigContributor
 		try {
 			resourceBundle = _resourceBundleLoader.loadResourceBundle(locale);
 		}
-		catch (MissingResourceException mre) {
+		catch (MissingResourceException missingResourceException) {
 			resourceBundle = ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE;
 		}
 

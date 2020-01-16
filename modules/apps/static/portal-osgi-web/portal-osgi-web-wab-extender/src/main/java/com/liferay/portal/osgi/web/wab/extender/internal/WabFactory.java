@@ -92,13 +92,13 @@ public class WabFactory
 					_wabExtenderConfiguration.stopTimeout(),
 					TimeUnit.MILLISECONDS);
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 				_log.error(
 					String.format(
 						"The wait for bundle {0}/{1} to start before " +
 							"destroying was interrupted",
 						_bundle.getSymbolicName(), _bundle.getBundleId()),
-					ie);
+					interruptedException);
 			}
 
 			if (_serviceRegistration != null) {

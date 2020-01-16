@@ -52,8 +52,8 @@ public class DDMStructureResourceImpl extends BaseResourceImpl {
 			return new UnsyncByteArrayInputStream(
 				definition.getBytes(StringPool.UTF8));
 		}
-		catch (Exception e) {
-			throw new WebDAVException(e);
+		catch (Exception exception) {
+			throw new WebDAVException(exception);
 		}
 	}
 

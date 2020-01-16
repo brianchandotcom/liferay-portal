@@ -33,8 +33,8 @@ public class XMLMergerTask extends Task {
 
 			runner.mergeAndSave(_masterFile, _slaveFile, _outputFile);
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

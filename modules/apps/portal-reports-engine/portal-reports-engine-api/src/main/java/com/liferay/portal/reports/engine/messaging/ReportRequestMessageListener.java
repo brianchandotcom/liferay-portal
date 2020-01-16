@@ -64,10 +64,11 @@ public class ReportRequestMessageListener extends BaseMessageListener {
 		try {
 			_reportEngine.execute(reportRequest, reportResultContainer);
 		}
-		catch (ReportGenerationException rge) {
-			_log.error("Unable to generate report", rge);
+		catch (ReportGenerationException reportGenerationException) {
+			_log.error("Unable to generate report", reportGenerationException);
 
-			reportResultContainer.setReportGenerationException(rge);
+			reportResultContainer.setReportGenerationException(
+				reportGenerationException);
 		}
 		finally {
 			Message responseMessage = MessageBusUtil.createResponseMessage(

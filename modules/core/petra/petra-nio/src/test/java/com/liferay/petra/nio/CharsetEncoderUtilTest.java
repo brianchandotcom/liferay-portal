@@ -55,8 +55,9 @@ public class CharsetEncoderUtilTest {
 
 			Assert.fail();
 		}
-		catch (UnmappableCharacterException uce) {
-			Assert.assertEquals(1, uce.getInputLength());
+		catch (UnmappableCharacterException unmappableCharacterException) {
+			Assert.assertEquals(
+				1, unmappableCharacterException.getInputLength());
 		}
 
 		TestCharset testCharset = new TestCharset();

@@ -245,7 +245,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 					}
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 	}
@@ -447,7 +447,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 					}
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 
@@ -511,9 +511,10 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 
 			return uriFinder.hasURI();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			analyzer.error(
-				"Unexpected exception in processing TLD " + path + ": " + e);
+				"Unexpected exception in processing TLD " + path + ": " +
+					exception);
 		}
 
 		return false;

@@ -235,8 +235,8 @@ public class FragmentsImporterTest {
 
 			return zipWriter.getFile();
 		}
-		catch (Exception e) {
-			throw new Exception(e);
+		catch (Exception exception) {
+			throw new Exception(exception);
 		}
 	}
 

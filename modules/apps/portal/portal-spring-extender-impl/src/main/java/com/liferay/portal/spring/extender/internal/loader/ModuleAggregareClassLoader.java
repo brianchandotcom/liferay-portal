@@ -112,7 +112,7 @@ public class ModuleAggregareClassLoader extends ClassLoader {
 		try {
 			return _extenderClassLoader.loadClass(name);
 		}
-		catch (ClassNotFoundException cnfe) {
+		catch (ClassNotFoundException classNotFoundException) {
 			return _moduleClassLoader.loadClass(name);
 		}
 	}
@@ -123,12 +123,14 @@ public class ModuleAggregareClassLoader extends ClassLoader {
 			return (Class<?>)_FIND_CLASS_METHOD.invoke(
 				_moduleClassLoader, name);
 		}
-		catch (InvocationTargetException ite) {
+		catch (InvocationTargetException invocationTargetException) {
 			throw new ClassNotFoundException(
-				"Unable to find class " + name, ite.getTargetException());
+				"Unable to find class " + name,
+				invocationTargetException.getTargetException());
 		}
-		catch (Exception e) {
-			throw new ClassNotFoundException("Unable to find class " + name, e);
+		catch (Exception exception) {
+			throw new ClassNotFoundException(
+				"Unable to find class " + name, exception);
 		}
 	}
 
@@ -142,8 +144,8 @@ public class ModuleAggregareClassLoader extends ClassLoader {
 			_FIND_CLASS_METHOD = ReflectionUtil.getDeclaredMethod(
 				ClassLoader.class, "findClass", String.class);
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

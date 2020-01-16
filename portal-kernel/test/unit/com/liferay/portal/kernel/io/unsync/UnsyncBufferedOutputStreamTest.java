@@ -75,13 +75,13 @@ public class UnsyncBufferedOutputStreamTest {
 		try {
 			new UnsyncBufferedOutputStream(byteArrayOutputStream, 0);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		try {
 			new UnsyncBufferedOutputStream(byteArrayOutputStream, -1);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 	}
 

@@ -220,12 +220,12 @@ public class SearchBarPortletDisplayBuilder {
 		try {
 			return _portal.getLayoutFriendlyURL(layout, _themeDisplay);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get friendly URL for layout " +
 						layout.getLinkedToLayout(),
-					pe);
+					portalException);
 			}
 
 			return null;

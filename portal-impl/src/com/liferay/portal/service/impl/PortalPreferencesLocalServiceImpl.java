@@ -67,7 +67,7 @@ public class PortalPreferencesLocalServiceImpl
 		try {
 			portalPreferencesPersistence.update(portalPreferences);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
@@ -79,7 +79,7 @@ public class PortalPreferencesLocalServiceImpl
 				ownerId, ownerType, false);
 
 			if (portalPreferences == null) {
-				throw se;
+				throw systemException;
 			}
 		}
 

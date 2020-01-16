@@ -143,8 +143,9 @@ public class ShellHook implements Hook {
 
 			future.get();
 		}
-		catch (Exception e) {
-			_log.error("Unable to execute shell command " + cmdLine[0], e);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to execute shell command " + cmdLine[0], exception);
 		}
 	}
 

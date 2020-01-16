@@ -193,11 +193,11 @@ public class UpgradeContentImages extends UpgradeProcess {
 			fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 				fileEntryId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			String message = "Unable to get file entry " + fileEntryId;
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, pe);
+				_log.debug(message, portalException);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(message);
@@ -223,14 +223,14 @@ public class UpgradeContentImages extends UpgradeProcess {
 			fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 				groupId, folderId, id);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			String message = StringBundler.concat(
 				"Unable to get file entry with group ID ", groupId,
 				", folder ID ", folderId, ", and file name ", id,
 				" for resourcePrimKey ", resourcePrimKey);
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, pe);
+				_log.debug(message, portalException);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(message);

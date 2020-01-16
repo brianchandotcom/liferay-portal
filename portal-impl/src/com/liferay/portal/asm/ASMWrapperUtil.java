@@ -63,7 +63,7 @@ public class ASMWrapperUtil {
 					asmWrapperClass = classLoader.loadClass(
 						asmWrapperClassName);
 				}
-				catch (ClassNotFoundException cnfe) {
+				catch (ClassNotFoundException classNotFoundException) {
 					byte[] classData = _generateASMWrapperClassData(
 						StringUtil.replace(asmWrapperClassName, '.', '/'),
 						interfaceClass, delegateObject, defaultObject);
@@ -173,7 +173,7 @@ public class ASMWrapperUtil {
 					"_delegate", delegateObjectClassDescriptor,
 					_getClassBinaryName(delegateObjectClass));
 			}
-			catch (NoSuchMethodException nsme) {
+			catch (NoSuchMethodException noSuchMethodException) {
 				_generateMethod(
 					classWriter, method, asmWrapperClassBinaryName, "_default",
 					defaultObjectClassDescriptor,

@@ -76,9 +76,10 @@ public class AssetEntryPermission {
 			return assetRendererFactory.hasPermission(
 				permissionChecker, entry.getClassPK(), actionId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, className, entry.getClassPK(), e, actionId);
+				permissionChecker, className, entry.getClassPK(), exception,
+				actionId);
 		}
 	}
 
@@ -104,9 +105,9 @@ public class AssetEntryPermission {
 			return assetRendererFactory.hasPermission(
 				permissionChecker, classPK, actionId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, className, classPK, e, actionId);
+				permissionChecker, className, classPK, exception, actionId);
 		}
 	}
 

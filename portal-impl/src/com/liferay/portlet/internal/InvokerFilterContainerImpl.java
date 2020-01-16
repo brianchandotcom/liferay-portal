@@ -325,8 +325,8 @@ public class InvokerFilterContainerImpl
 				try {
 					portletFilter.init(filterConfig);
 				}
-				catch (PortletException pe) {
-					_log.error(pe, pe);
+				catch (PortletException portletException) {
+					_log.error(portletException, portletException);
 
 					registry.ungetService(serviceReference);
 

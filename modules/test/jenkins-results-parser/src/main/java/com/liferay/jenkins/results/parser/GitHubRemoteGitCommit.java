@@ -54,8 +54,8 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 			JenkinsResultsParserUtil.toJSONObject(
 				getGitHubStatusURL(), jsonObject.toString());
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

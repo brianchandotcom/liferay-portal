@@ -76,7 +76,7 @@ public class DeleteUserGroupPortletConfigurationIcon
 
 			sb.append("');");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return sb.toString();
@@ -107,7 +107,7 @@ public class DeleteUserGroupPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(), userGroup.getUserGroupId(),
 				ActionKeys.DELETE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

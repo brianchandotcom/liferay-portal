@@ -156,8 +156,8 @@ public class DLFolderUADDisplay extends BaseDLFolderUADDisplay {
 						ancestorFolderIds.indexOf(parentFolderId) - 1));
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return null;

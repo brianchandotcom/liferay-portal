@@ -1322,7 +1322,7 @@ public class GroupServiceTest {
 
 			Assert.assertFalse(expectFailure);
 		}
-		catch (LocaleException le) {
+		catch (LocaleException localeException) {
 			Assert.assertTrue(expectFailure);
 		}
 		finally {

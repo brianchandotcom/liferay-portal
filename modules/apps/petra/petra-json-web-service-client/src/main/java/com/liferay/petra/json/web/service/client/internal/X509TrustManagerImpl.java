@@ -50,8 +50,8 @@ public class X509TrustManagerImpl implements X509TrustManager {
 
 			_x509TrustManager = x509TrustManager;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

@@ -95,9 +95,9 @@ public class BuildFactory {
 					JenkinsResultsParserUtil.toString(
 						JenkinsResultsParserUtil.getLocalURL(url))));
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to find archive " + archiveName, ioe);
+				"Unable to find archive " + archiveName, ioException);
 		}
 
 		return newBuild(

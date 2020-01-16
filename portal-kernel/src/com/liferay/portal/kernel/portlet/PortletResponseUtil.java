@@ -221,9 +221,9 @@ public class PortletResponseUtil {
 				try {
 					inputStream.close();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(ioe, ioe);
+						_log.warn(ioException, ioException);
 					}
 				}
 			}
@@ -305,9 +305,9 @@ public class PortletResponseUtil {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -323,7 +323,7 @@ public class PortletResponseUtil {
 				mimeTypesContentDispositionInline = PropsUtil.getArray(
 					"mime.types.content.disposition.inline");
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				mimeTypesContentDispositionInline = new String[0];
 			}
 

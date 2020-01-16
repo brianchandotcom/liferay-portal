@@ -115,8 +115,8 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 		try {
 			return extractMetadata(file);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return null;
@@ -139,8 +139,8 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 
 			return extractMetadata(file);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 		finally {
 			FileUtil.delete(file);

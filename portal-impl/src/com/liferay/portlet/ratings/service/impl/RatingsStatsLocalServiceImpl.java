@@ -53,7 +53,7 @@ public class RatingsStatsLocalServiceImpl
 		try {
 			ratingsStatsPersistence.update(stats);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
@@ -65,7 +65,7 @@ public class RatingsStatsLocalServiceImpl
 				classNameId, classPK, false);
 
 			if (stats == null) {
-				throw se;
+				throw systemException;
 			}
 		}
 
@@ -79,9 +79,9 @@ public class RatingsStatsLocalServiceImpl
 		try {
 			ratingsStatsPersistence.removeByC_C(classNameId, classPK);
 		}
-		catch (NoSuchStatsException nsse) {
+		catch (NoSuchStatsException noSuchStatsException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsse, nsse);
+				_log.warn(noSuchStatsException, noSuchStatsException);
 			}
 		}
 

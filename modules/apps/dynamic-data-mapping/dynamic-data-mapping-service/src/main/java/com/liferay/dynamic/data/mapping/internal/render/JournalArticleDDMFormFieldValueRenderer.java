@@ -66,7 +66,7 @@ public class JournalArticleDDMFormFieldValueRenderer
 
 					return assetEntry.getTitle(locale);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					return LanguageUtil.format(
 						locale, "is-temporarily-unavailable", "content");
 				}
@@ -76,8 +76,8 @@ public class JournalArticleDDMFormFieldValueRenderer
 				try {
 					return JSONFactoryUtil.createJSONObject(json);
 				}
-				catch (JSONException jsone) {
-					throw new ValueAccessorException(jsone);
+				catch (JSONException jsonException) {
+					throw new ValueAccessorException(jsonException);
 				}
 			}
 

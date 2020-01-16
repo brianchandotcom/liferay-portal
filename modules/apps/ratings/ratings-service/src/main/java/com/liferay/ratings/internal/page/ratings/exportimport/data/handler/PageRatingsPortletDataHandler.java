@@ -151,9 +151,10 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 			persistedModel = persistedModelLocalService.getPersistedModel(
 				ratingsEntry.getClassPK());
 		}
-		catch (NoSuchModelException nsme) {
+		catch (NoSuchModelException noSuchModelException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsme.getMessage(), nsme);
+				_log.debug(
+					noSuchModelException.getMessage(), noSuchModelException);
 			}
 
 			return GroupConstants.DEFAULT_PARENT_GROUP_ID;

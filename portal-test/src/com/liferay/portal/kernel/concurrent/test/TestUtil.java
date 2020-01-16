@@ -56,7 +56,7 @@ public class TestUtil {
 				throw new IllegalStateException();
 			}
 		}
-		catch (InterruptedException ie) {
+		catch (InterruptedException interruptedException) {
 			throw new RuntimeException();
 		}
 	}

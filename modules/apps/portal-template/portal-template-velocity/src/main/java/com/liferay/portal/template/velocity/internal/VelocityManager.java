@@ -239,8 +239,8 @@ public class VelocityManager extends BaseTemplateManager {
 
 			_velocityEngine.init();
 		}
-		catch (Exception e) {
-			throw new TemplateException(e);
+		catch (Exception exception) {
+			throw new TemplateException(exception);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

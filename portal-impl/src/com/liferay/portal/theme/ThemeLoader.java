@@ -149,8 +149,8 @@ public class ThemeLoader {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		_loadFromServletContext = loadFromServletContext;
@@ -175,10 +175,10 @@ public class ThemeLoader {
 				_servletContextName, _servletContext, _themesPath,
 				_loadFromServletContext, new String[] {content}, null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Error registering theme " + liferayLookAndFeelXML.toString(),
-				e);
+				exception);
 		}
 	}
 

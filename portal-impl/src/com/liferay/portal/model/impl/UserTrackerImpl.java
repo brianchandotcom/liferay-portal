@@ -36,9 +36,11 @@ public class UserTrackerImpl extends UserTrackerBaseImpl {
 		try {
 			_paths.add(path);
 		}
-		catch (ArrayIndexOutOfBoundsException aioobe) {
+		catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(aioobe, aioobe);
+				_log.warn(
+					arrayIndexOutOfBoundsException,
+					arrayIndexOutOfBoundsException);
 			}
 		}
 
@@ -69,7 +71,7 @@ public class UserTrackerImpl extends UserTrackerBaseImpl {
 
 				_emailAddress = _user.getEmailAddress();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 
@@ -90,7 +92,7 @@ public class UserTrackerImpl extends UserTrackerBaseImpl {
 
 				_fullName = _user.getFullName();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

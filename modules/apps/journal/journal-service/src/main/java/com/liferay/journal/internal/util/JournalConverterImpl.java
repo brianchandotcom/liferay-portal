@@ -196,9 +196,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 			return XMLUtil.formatXML(content);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ArticleContentException(
-				"Unable to read content with an XML parser", e);
+				"Unable to read content with an XML parser", exception);
 		}
 	}
 
@@ -239,8 +239,8 @@ public class JournalConverterImpl implements JournalConverter {
 		try {
 			return getDDMFields(ddmStructure, SAXReaderUtil.read(content));
 		}
-		catch (DocumentException de) {
-			throw new PortalException(de);
+		catch (DocumentException documentException) {
+			throw new PortalException(documentException);
 		}
 	}
 
@@ -428,7 +428,7 @@ public class JournalConverterImpl implements JournalConverter {
 		try {
 			return _http.decodeURL(url);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			return url;
 		}
 	}
@@ -482,8 +482,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 			return fieldsDisplayValues.toArray(new String[0]);
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 
@@ -594,7 +594,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 				serializable = dynamicContentElement.getText();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				return StringPool.BLANK;
 			}
 		}
@@ -640,7 +640,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 				serializable = jsonObject.toString();
 			}
-			catch (JSONException jsone) {
+			catch (JSONException jsonException) {
 				serializable = StringPool.BLANK;
 			}
 		}
@@ -992,9 +992,9 @@ public class JournalConverterImpl implements JournalConverter {
 			try {
 				jsonArray = JSONFactoryUtil.createJSONArray(fieldValue);
 			}
-			catch (JSONException jsone) {
+			catch (JSONException jsonException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to parse object", jsone);
+					_log.debug("Unable to parse object", jsonException);
 				}
 
 				return;

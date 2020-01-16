@@ -93,8 +93,8 @@ public class InfrastructureUtil {
 
 				return (Session)JNDIUtil.lookup(context, jndiName);
 			}
-			catch (Exception e) {
-				_log.error("Unable to lookup " + jndiName, e);
+			catch (Exception exception) {
+				_log.error("Unable to lookup " + jndiName, exception);
 			}
 		}
 

@@ -39,13 +39,13 @@ public class GuestOrUserUtil {
 		try {
 			return getUser(user.getUserId());
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			try {
 				return UserLocalServiceUtil.getDefaultUser(
 					CompanyThreadLocal.getCompanyId());
 			}
-			catch (Exception e) {
-				throw pe;
+			catch (Exception exception) {
+				throw principalException;
 			}
 		}
 	}
@@ -54,13 +54,13 @@ public class GuestOrUserUtil {
 		try {
 			return getUserId();
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			try {
 				return UserLocalServiceUtil.getDefaultUserId(
 					CompanyThreadLocal.getCompanyId());
 			}
-			catch (Exception e) {
-				throw pe;
+			catch (Exception exception) {
+				throw principalException;
 			}
 		}
 	}

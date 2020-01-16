@@ -118,9 +118,9 @@ public class OpenIdConnectFilter extends BaseFilter {
 			}
 		}
 		catch (StrangersNotAllowedException |
-			   UserEmailAddressException.MustNotUseCompanyMx e) {
+			   UserEmailAddressException.MustNotUseCompanyMx exception) {
 
-			Class<?> clazz = e.getClass();
+			Class<?> clazz = exception.getClass();
 
 			httpSession.removeAttribute(
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
@@ -128,16 +128,17 @@ public class OpenIdConnectFilter extends BaseFilter {
 			sendError(
 				clazz.getSimpleName(), httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to process OpenID Connect authentication response: " +
-					e.getMessage(),
-				e);
+					exception.getMessage(),
+				exception);
 
 			httpSession.removeAttribute(
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
 
-			_portal.sendError(e, httpServletRequest, httpServletResponse);
+			_portal.sendError(
+				exception, httpServletRequest, httpServletResponse);
 		}
 	}
 

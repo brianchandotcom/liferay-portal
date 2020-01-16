@@ -105,8 +105,10 @@ public class KBObjectsSearch extends SearchContainer<Object> {
 			setOrderByType(orderByType);
 			setOrderByComparator(orderByComparator);
 		}
-		catch (Exception e) {
-			_log.error("Unable to initialize knowledge base objects search", e);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to initialize knowledge base objects search",
+				exception);
 		}
 	}
 

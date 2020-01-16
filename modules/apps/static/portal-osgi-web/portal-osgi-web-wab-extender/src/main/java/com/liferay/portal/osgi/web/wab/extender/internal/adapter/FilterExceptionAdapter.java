@@ -55,8 +55,8 @@ public class FilterExceptionAdapter implements Filter {
 		try {
 			_filter.init(filterConfig);
 		}
-		catch (Exception e) {
-			_exception = e;
+		catch (Exception exception) {
+			_exception = exception;
 		}
 	}
 

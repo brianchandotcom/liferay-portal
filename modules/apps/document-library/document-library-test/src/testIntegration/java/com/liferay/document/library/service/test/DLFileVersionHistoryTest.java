@@ -217,7 +217,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 
 			Assert.fail();
 		}
-		catch (InvalidFileVersionException ifve) {
+		catch (InvalidFileVersionException invalidFileVersionException) {
 		}
 	}
 
@@ -229,7 +229,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 
 			Assert.fail();
 		}
-		catch (InvalidFileVersionException ifve) {
+		catch (InvalidFileVersionException invalidFileVersionException) {
 		}
 	}
 

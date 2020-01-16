@@ -98,7 +98,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 				writeArchiveFile(
 					sw.toString(), archiveName + "/archive.properties");
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new RuntimeException(
 					"Unable to write archive properties");
 			}
@@ -108,8 +108,9 @@ public abstract class TopLevelBuild extends BaseBuild {
 			writeArchiveFile(
 				getJenkinsReport(), getArchivePath() + "/jenkins-report.html");
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to archive Jenkins report", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to archive Jenkins report", ioException);
 		}
 	}
 
@@ -127,7 +128,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 						acceptanceUpstreamJobURL),
 					false, 0, 0, 0);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				return null;
 			}
 
@@ -215,8 +216,9 @@ public abstract class TopLevelBuild extends BaseBuild {
 			return JenkinsResultsParserUtil.toString(
 				JenkinsResultsParserUtil.getLocalURL(getJenkinsReportURL()));
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get Jenkins report", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get Jenkins report", ioException);
 		}
 	}
 
@@ -356,8 +358,9 @@ public abstract class TopLevelBuild extends BaseBuild {
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build.properties", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build.properties", ioException);
 		}
 
 		_sendBuildMetrics = Boolean.valueOf(
@@ -380,7 +383,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 			try {
 				_metricsHostPort = Integer.parseInt(metricsHostPortString);
 			}
-			catch (NumberFormatException nfe) {
+			catch (NumberFormatException numberFormatException) {
 				throw new IllegalArgumentException(
 					"Please set \"build.metrics.host.port\" to an integer");
 			}
@@ -428,16 +431,17 @@ public abstract class TopLevelBuild extends BaseBuild {
 						getArchivePath() + "/git." + gitRepositoryType +
 							".properties.json");
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					throw new RuntimeException(
 						"Unable to create git." + gitRepositoryType +
 							".properties.json",
-						ioe);
+						ioException);
 				}
 			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build properties", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
 		}
 	}
 
@@ -872,9 +876,10 @@ public abstract class TopLevelBuild extends BaseBuild {
 			try {
 				Dom4JUtil.addRawXMLToElement(subheadingElement, description);
 			}
-			catch (DocumentException de) {
+			catch (DocumentException documentException) {
 				throw new RuntimeException(
-					"Unable to parse description HTML " + description, de);
+					"Unable to parse description HTML " + description,
+					documentException);
 			}
 		}
 
@@ -900,9 +905,9 @@ public abstract class TopLevelBuild extends BaseBuild {
 				JenkinsResultsParserUtil.getResourceFileContent(
 					"dependencies/chart_template.js");
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to load resource chart_template.js", ioe);
+				"Unable to load resource chart_template.js", ioException);
 		}
 
 		resourceFileContent = resourceFileContent.replace("'xData'", xData);
@@ -1044,8 +1049,9 @@ public abstract class TopLevelBuild extends BaseBuild {
 				}
 			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build properties", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
 		}
 
 		return summaryElement;
@@ -1231,9 +1237,9 @@ public abstract class TopLevelBuild extends BaseBuild {
 			resourceFileContent =
 				JenkinsResultsParserUtil.getResourceFileContent(resourceName);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to load resource " + resourceName, ioe);
+				"Unable to load resource " + resourceName, ioException);
 		}
 
 		return Dom4JUtil.getNewElement(
@@ -1392,8 +1398,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 					Dom4JUtil.getNewElement("h4", null, companionBranchLabel),
 					getCompanionBranchDetailsElement());
 			}
-			catch (Exception e) {
-				e.printStackTrace();
+			catch (Exception exception) {
+				exception.printStackTrace();
 			}
 		}
 

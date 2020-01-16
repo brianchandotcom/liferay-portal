@@ -40,8 +40,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId());
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

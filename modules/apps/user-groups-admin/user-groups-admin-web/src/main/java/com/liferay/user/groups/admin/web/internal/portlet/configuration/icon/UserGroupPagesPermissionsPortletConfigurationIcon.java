@@ -80,7 +80,7 @@ public class UserGroupPagesPermissionsPortletConfigurationIcon
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return url;
@@ -104,7 +104,7 @@ public class UserGroupPagesPermissionsPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(), userGroup.getGroup(),
 				ActionKeys.PERMISSIONS);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

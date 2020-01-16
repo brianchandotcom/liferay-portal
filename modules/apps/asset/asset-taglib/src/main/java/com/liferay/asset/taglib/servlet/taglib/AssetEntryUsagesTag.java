@@ -56,13 +56,13 @@ public class AssetEntryUsagesTag extends IncludeTag {
 				assetEntryUsageRecorder.record(assetEntry);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"Unable to check asset entry usages for class name ",
 						_className, " and class PK ", _classPK),
-					pe);
+					portalException);
 			}
 		}
 

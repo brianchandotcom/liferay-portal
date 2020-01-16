@@ -63,7 +63,7 @@ public abstract class BaseModelUserNotificationHandler
 		try {
 			assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return assetRenderer;

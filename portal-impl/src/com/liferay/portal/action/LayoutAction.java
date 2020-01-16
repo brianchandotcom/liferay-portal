@@ -177,8 +177,9 @@ public class LayoutAction implements Action {
 			return actionMapping.getActionForward(
 				ActionConstants.COMMON_FORWARD_JSP);
 		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
+		catch (Exception exception) {
+			PortalUtil.sendError(
+				exception, httpServletRequest, httpServletResponse);
 
 			return null;
 		}
@@ -418,8 +419,9 @@ public class LayoutAction implements Action {
 
 			return actionMapping.getActionForward("portal.layout");
 		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
+		catch (Exception exception) {
+			PortalUtil.sendError(
+				exception, httpServletRequest, httpServletResponse);
 
 			return null;
 		}

@@ -98,8 +98,8 @@ public class OAuth2Manager {
 			return googleAuthorizationCodeFlow.loadCredential(
 				String.valueOf(userId));
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
 	}
 
@@ -119,9 +119,9 @@ public class OAuth2Manager {
 
 			return false;
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ce, ce);
+				_log.debug(configurationException, configurationException);
 			}
 
 			return false;
@@ -168,8 +168,8 @@ public class OAuth2Manager {
 				credentialDataStore.delete(String.valueOf(userId));
 			}
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
 	}
 
@@ -264,11 +264,11 @@ public class OAuth2Manager {
 
 			return googleAuthorizationCodeFlow;
 		}
-		catch (GeneralSecurityException gse) {
-			throw new PrincipalException(gse);
+		catch (GeneralSecurityException generalSecurityException) {
+			throw new PrincipalException(generalSecurityException);
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
 	}
 

@@ -44,8 +44,8 @@ public abstract class BaseMethodImpl implements Method {
 		try {
 			doProcess(sharepointRequest);
 		}
-		catch (Exception e) {
-			throw new SharepointException(e);
+		catch (Exception exception) {
+			throw new SharepointException(exception);
 		}
 	}
 

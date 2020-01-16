@@ -38,7 +38,7 @@ public class UpgradeSamlIdpSpSession extends UpgradeProcess {
 				"alter_column_type SamlIdpSpSession nameIdValue " +
 					"VARCHAR(1024) null");
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			upgradeTable(
 				SamlIdpSpSessionTable.TABLE_NAME,
 				SamlIdpSpSessionTable.TABLE_COLUMNS,

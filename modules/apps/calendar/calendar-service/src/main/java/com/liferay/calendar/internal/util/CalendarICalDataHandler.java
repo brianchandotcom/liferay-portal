@@ -460,7 +460,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 		try {
 			NotificationType.parse(value);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			return false;
 		}
 

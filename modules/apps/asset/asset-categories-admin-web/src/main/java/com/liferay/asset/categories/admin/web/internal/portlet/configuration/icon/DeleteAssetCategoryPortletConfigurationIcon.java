@@ -98,9 +98,9 @@ public class DeleteAssetCategoryPortletConfigurationIcon
 			return assetCategoriesDisplayContext.hasPermission(
 				category, ActionKeys.DELETE);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

@@ -94,8 +94,8 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 					DLOpenerMimeTypes.APPLICATION_VND_XLSX,
 					_ICON_NAME_SPREADSHEET, _ICON_COLOR_SPREADSHEET));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 
@@ -149,8 +149,8 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 
 			return liferayPortletURL.toString();
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

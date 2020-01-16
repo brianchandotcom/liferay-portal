@@ -80,11 +80,11 @@ public class PortalJobStore extends JobStoreTX {
 
 			return _driverDelegate;
 		}
-		catch (NoSuchDelegateException nsde) {
-			throw nsde;
+		catch (NoSuchDelegateException noSuchDelegateException) {
+			throw noSuchDelegateException;
 		}
-		catch (Exception e) {
-			throw new NoSuchDelegateException(e.getMessage());
+		catch (Exception exception) {
+			throw new NoSuchDelegateException(exception.getMessage());
 		}
 	}
 

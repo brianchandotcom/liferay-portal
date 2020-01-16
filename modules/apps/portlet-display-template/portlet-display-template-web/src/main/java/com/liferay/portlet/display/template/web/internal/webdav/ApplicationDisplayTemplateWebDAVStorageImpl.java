@@ -77,8 +77,8 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 
 			return new ArrayList<>();
 		}
-		catch (Exception e) {
-			throw new WebDAVException(e);
+		catch (Exception exception) {
+			throw new WebDAVException(exception);
 		}
 	}
 

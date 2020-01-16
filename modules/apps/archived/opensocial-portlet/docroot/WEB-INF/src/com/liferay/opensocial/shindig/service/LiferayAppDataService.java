@@ -63,14 +63,14 @@ public class LiferayAppDataService implements AppDataService {
 
 			return ImmediateFuture.newInstance(null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -85,14 +85,14 @@ public class LiferayAppDataService implements AppDataService {
 
 			return ImmediateFuture.newInstance(dataCollection);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -107,14 +107,14 @@ public class LiferayAppDataService implements AppDataService {
 
 			return ImmediateFuture.newInstance(null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -234,8 +234,8 @@ public class LiferayAppDataService implements AppDataService {
 				companyId, User.class.getName(),
 				ShindigUtil.getTableOpenSocial());
 		}
-		catch (NoSuchTableException nste) {
-			_log.error(nste, nste);
+		catch (NoSuchTableException noSuchTableException) {
+			_log.error(noSuchTableException, noSuchTableException);
 		}
 
 		ExpandoColumn expandoColumn = ExpandoColumnLocalServiceUtil.getColumn(
@@ -258,7 +258,7 @@ public class LiferayAppDataService implements AppDataService {
 				companyId, User.class.getName(),
 				ShindigUtil.getTableOpenSocial());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -275,7 +275,7 @@ public class LiferayAppDataService implements AppDataService {
 
 			return expandoValue.getData();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}

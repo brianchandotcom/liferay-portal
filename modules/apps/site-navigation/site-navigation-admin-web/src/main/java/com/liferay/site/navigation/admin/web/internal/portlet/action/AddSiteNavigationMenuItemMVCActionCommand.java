@@ -86,7 +86,9 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 				"siteNavigationMenuItemId",
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 		}
-		catch (SiteNavigationMenuItemNameException snmine) {
+		catch (SiteNavigationMenuItemNameException
+					siteNavigationMenuItemNameException) {
+
 			jsonObject.put(
 				"errorMessage",
 				LanguageUtil.format(

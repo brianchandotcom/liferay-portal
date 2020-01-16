@@ -32,8 +32,8 @@ public abstract class BaseAtomCollectionAdapter<E>
 		try {
 			doDeleteEntry(resourceName, atomRequestContext);
 		}
-		catch (Exception e) {
-			Class<?> clazz = e.getClass();
+		catch (Exception exception) {
+			Class<?> clazz = exception.getClass();
 
 			String className = clazz.getSimpleName();
 
@@ -41,7 +41,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
-			throw new AtomException(SC_INTERNAL_SERVER_ERROR, e);
+			throw new AtomException(SC_INTERNAL_SERVER_ERROR, exception);
 		}
 	}
 
@@ -53,8 +53,8 @@ public abstract class BaseAtomCollectionAdapter<E>
 		try {
 			return doGetEntry(resourceName, atomRequestContext);
 		}
-		catch (Exception e) {
-			Class<?> clazz = e.getClass();
+		catch (Exception exception) {
+			Class<?> clazz = exception.getClass();
 
 			String className = clazz.getSimpleName();
 
@@ -62,7 +62,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
-			throw new AtomException(SC_INTERNAL_SERVER_ERROR, e);
+			throw new AtomException(SC_INTERNAL_SERVER_ERROR, exception);
 		}
 	}
 
@@ -73,8 +73,8 @@ public abstract class BaseAtomCollectionAdapter<E>
 		try {
 			return doGetFeedEntries(atomRequestContext);
 		}
-		catch (Exception e) {
-			Class<?> clazz = e.getClass();
+		catch (Exception exception) {
+			Class<?> clazz = exception.getClass();
 
 			String className = clazz.getSimpleName();
 
@@ -82,7 +82,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
-			throw new AtomException(SC_INTERNAL_SERVER_ERROR, e);
+			throw new AtomException(SC_INTERNAL_SERVER_ERROR, exception);
 		}
 	}
 
@@ -111,8 +111,8 @@ public abstract class BaseAtomCollectionAdapter<E>
 			return doPostEntry(
 				title, summary, content, date, atomRequestContext);
 		}
-		catch (Exception e) {
-			Class<?> clazz = e.getClass();
+		catch (Exception exception) {
+			Class<?> clazz = exception.getClass();
 
 			String className = clazz.getSimpleName();
 
@@ -120,7 +120,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
-			throw new AtomException(SC_INTERNAL_SERVER_ERROR, e);
+			throw new AtomException(SC_INTERNAL_SERVER_ERROR, exception);
 		}
 	}
 
@@ -133,8 +133,8 @@ public abstract class BaseAtomCollectionAdapter<E>
 		try {
 			return doPostMedia(mimeType, slug, inputStream, atomRequestContext);
 		}
-		catch (Exception e) {
-			Class<?> clazz = e.getClass();
+		catch (Exception exception) {
+			Class<?> clazz = exception.getClass();
 
 			String className = clazz.getSimpleName();
 
@@ -142,7 +142,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
-			throw new AtomException(SC_INTERNAL_SERVER_ERROR, e);
+			throw new AtomException(SC_INTERNAL_SERVER_ERROR, exception);
 		}
 	}
 
@@ -156,8 +156,8 @@ public abstract class BaseAtomCollectionAdapter<E>
 			doPutEntry(
 				entry, title, summary, content, date, atomRequestContext);
 		}
-		catch (Exception e) {
-			Class<?> clazz = e.getClass();
+		catch (Exception exception) {
+			Class<?> clazz = exception.getClass();
 
 			String className = clazz.getSimpleName();
 
@@ -165,7 +165,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
-			throw new AtomException(SC_INTERNAL_SERVER_ERROR, e);
+			throw new AtomException(SC_INTERNAL_SERVER_ERROR, exception);
 		}
 	}
 
@@ -178,8 +178,8 @@ public abstract class BaseAtomCollectionAdapter<E>
 		try {
 			doPutMedia(entry, mimeType, slug, inputStream, atomRequestContext);
 		}
-		catch (Exception e) {
-			Class<?> clazz = e.getClass();
+		catch (Exception exception) {
+			Class<?> clazz = exception.getClass();
 
 			String className = clazz.getSimpleName();
 
@@ -187,7 +187,7 @@ public abstract class BaseAtomCollectionAdapter<E>
 				throw new AtomException(SC_NOT_FOUND);
 			}
 
-			throw new AtomException(SC_INTERNAL_SERVER_ERROR, e);
+			throw new AtomException(SC_INTERNAL_SERVER_ERROR, exception);
 		}
 	}
 

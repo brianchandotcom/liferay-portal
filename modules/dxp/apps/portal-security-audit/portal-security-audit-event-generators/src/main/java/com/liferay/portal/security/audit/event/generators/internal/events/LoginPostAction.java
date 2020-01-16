@@ -49,8 +49,8 @@ public class LoginPostAction extends Action {
 		try {
 			doRun(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 	}
 

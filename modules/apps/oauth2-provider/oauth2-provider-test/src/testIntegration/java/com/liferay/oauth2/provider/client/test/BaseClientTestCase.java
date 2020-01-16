@@ -583,7 +583,7 @@ public abstract class BaseClientTestCase {
 		try {
 			return new JSONObjectImpl(json);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			throw new IllegalArgumentException(
 				"The token service returned " + json);
 		}

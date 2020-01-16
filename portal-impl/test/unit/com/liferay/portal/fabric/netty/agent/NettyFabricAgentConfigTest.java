@@ -39,7 +39,7 @@ public class NettyFabricAgentConfigTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 
 		File repositoryFolder = new File("RepositoryFolder");

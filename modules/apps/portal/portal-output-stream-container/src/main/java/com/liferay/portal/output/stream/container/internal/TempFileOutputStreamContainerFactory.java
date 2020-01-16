@@ -57,15 +57,15 @@ public class TempFileOutputStreamContainerFactory
 						return StreamUtil.uncloseable(
 							new FileOutputStream(tempFilePath.toFile()));
 					}
-					catch (FileNotFoundException fnfe) {
-						throw new RuntimeException(fnfe);
+					catch (FileNotFoundException fileNotFoundException) {
+						throw new RuntimeException(fileNotFoundException);
 					}
 				}
 
 			};
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

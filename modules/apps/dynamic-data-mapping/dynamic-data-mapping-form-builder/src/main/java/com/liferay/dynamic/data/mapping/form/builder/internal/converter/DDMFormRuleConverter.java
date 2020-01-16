@@ -235,11 +235,11 @@ public class DDMFormRuleConverter {
 
 			return ddmExpression.getModel();
 		}
-		catch (DDMExpressionException ddmee) {
+		catch (DDMExpressionException ddmExpressionException) {
 			throw new IllegalStateException(
 				String.format(
 					"Unable to parse expression \"%s\"", expressionString),
-				ddmee);
+				ddmExpressionException);
 		}
 	}
 

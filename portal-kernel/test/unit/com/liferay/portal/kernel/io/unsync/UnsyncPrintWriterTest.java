@@ -206,8 +206,8 @@ public class UnsyncPrintWriterTest {
 
 			_writerField.setAccessible(true);
 		}
-		catch (Exception e) {
-			throw new LoggedExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new LoggedExceptionInInitializerError(exception);
 		}
 	}
 

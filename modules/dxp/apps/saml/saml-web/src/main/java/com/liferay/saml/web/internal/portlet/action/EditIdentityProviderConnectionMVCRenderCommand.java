@@ -76,8 +76,8 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 				renderRequest.setAttribute(
 					SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
 			}
-			catch (PortalException pe) {
-				throw new PortletException(pe);
+			catch (PortalException portalException) {
+				throw new PortletException(portalException);
 			}
 		}
 		else {

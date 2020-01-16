@@ -143,8 +143,9 @@ public class LiferayBatchFileWriter
 				_outputStreamWriter.flush();
 			}
 		}
-		catch (ConverterException ce) {
-			_indexedRecordJsonObjectConverter.reject(indexedRecord, ce);
+		catch (ConverterException converterException) {
+			_indexedRecordJsonObjectConverter.reject(
+				indexedRecord, converterException);
 		}
 
 		_result.totalCount++;

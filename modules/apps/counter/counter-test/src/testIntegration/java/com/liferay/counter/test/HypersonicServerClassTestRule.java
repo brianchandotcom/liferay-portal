@@ -101,8 +101,8 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 
 					return state;
 				}
-				catch (InterruptedException ie) {
-					return ReflectionUtil.throwException(ie);
+				catch (InterruptedException interruptedException) {
+					return ReflectionUtil.throwException(interruptedException);
 				}
 			}
 

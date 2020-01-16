@@ -58,8 +58,8 @@ public class ParallelExecutor<T> {
 				try {
 					results.add(future.get());
 				}
-				catch (ExecutionException | InterruptedException e) {
-					throw new RuntimeException(e);
+				catch (ExecutionException | InterruptedException exception) {
+					throw new RuntimeException(exception);
 				}
 			}
 

@@ -75,8 +75,8 @@ public class VirtualLayout extends LayoutWrapper {
 
 			sb.append(group.getFriendlyURL());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		if (locale == null) {
@@ -223,8 +223,8 @@ public class VirtualLayout extends LayoutWrapper {
 
 			return sb.toString();
 		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
+		catch (Exception exception) {
+			throw new IllegalStateException(exception);
 		}
 	}
 

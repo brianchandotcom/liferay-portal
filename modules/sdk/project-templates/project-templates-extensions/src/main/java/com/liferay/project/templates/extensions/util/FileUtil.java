@@ -290,7 +290,7 @@ public class FileUtil {
 		try {
 			Files.setPosixFilePermissions(path, posixFilePermissions);
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 	}
 

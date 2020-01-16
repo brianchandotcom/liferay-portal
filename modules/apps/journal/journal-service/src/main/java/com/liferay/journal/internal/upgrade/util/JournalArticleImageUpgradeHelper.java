@@ -68,7 +68,7 @@ public class JournalArticleImageUpgradeHelper {
 
 			return jsonObject.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -87,11 +87,11 @@ public class JournalArticleImageUpgradeHelper {
 				fileEntry = _getFileEntryByDocumentLibraryURL(url);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			String message = "Unable to get file entry from URL " + url;
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, pe);
+				_log.debug(message, portalException);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(message);
@@ -113,12 +113,12 @@ public class JournalArticleImageUpgradeHelper {
 
 			return folder.getFolderId();
 		}
-		catch (NoSuchFolderException nsfe) {
+		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to get folder for " +
 						String.valueOf(resourcePrimKey),
-					nsfe);
+					noSuchFolderException);
 			}
 		}
 
@@ -210,19 +210,19 @@ public class JournalArticleImageUpgradeHelper {
 
 			return fileEntry.getUuid();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			String message = StringBundler.concat(
 				"Unable to get file entry with group ID ", groupId,
 				", folder ID ", folderId, ", and title ", title);
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, pe);
+				_log.debug(message, portalException);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(message);
 			}
 
-			throw pe;
+			throw portalException;
 		}
 	}
 

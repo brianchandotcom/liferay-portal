@@ -137,7 +137,7 @@ public class AuthPipelineTest {
 			AuthPipeline.onFailureByScreenName(
 				"auth.failure", 0, RandomTestUtil.randomString(), null, null);
 		}
-		catch (AuthException ae) {
+		catch (AuthException authException) {
 		}
 
 		Assert.assertTrue(_calledAuthFailure);
@@ -149,7 +149,7 @@ public class AuthPipelineTest {
 			AuthPipeline.onFailureByUserId(
 				"auth.failure", 0, RandomTestUtil.randomLong(), null, null);
 		}
-		catch (AuthException ae) {
+		catch (AuthException authException) {
 		}
 
 		Assert.assertTrue(_calledAuthFailure);
@@ -162,7 +162,7 @@ public class AuthPipelineTest {
 				"auth.max.failures", 0, RandomTestUtil.randomString(), null,
 				null);
 		}
-		catch (AuthException ae) {
+		catch (AuthException authException) {
 		}
 
 		Assert.assertTrue(_calledAuthFailure);
@@ -175,7 +175,7 @@ public class AuthPipelineTest {
 				"auth.max.failures", 0, RandomTestUtil.randomString(), null,
 				null);
 		}
-		catch (AuthException ae) {
+		catch (AuthException authException) {
 		}
 
 		Assert.assertTrue(_calledAuthFailure);
@@ -188,7 +188,7 @@ public class AuthPipelineTest {
 				"auth.max.failures", 0, RandomTestUtil.randomLong(), null,
 				null);
 		}
-		catch (AuthException ae) {
+		catch (AuthException authException) {
 		}
 
 		Assert.assertTrue(_calledAuthFailure);

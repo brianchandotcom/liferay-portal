@@ -107,7 +107,7 @@ public class AssetPublisherViewContentDisplayContext {
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			SessionErrors.add(
 				_renderRequest,
 				PrincipalException.MustHavePermission.class.getName());
@@ -191,7 +191,7 @@ public class AssetPublisherViewContentDisplayContext {
 					_assetRenderer.getClassPK());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			SessionErrors.add(
 				_renderRequest, NoSuchModelException.class.getName());
 		}

@@ -105,7 +105,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		try {
 			workspaceGitRepository.storeCommitHistory(_getPortalBranchSHAs());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String portalGitHubURL = getBuildParameter(
 				_NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL);
 
@@ -117,7 +117,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 						WorkspaceGitRepository.COMMITS_HISTORY_SIZE_MAX),
 					" commits of <a href=\"", portalGitHubURL, "\">",
 					portalGitHubURL, "</a>"),
-				e);
+				exception);
 		}
 	}
 

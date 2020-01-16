@@ -43,8 +43,9 @@ public class SalesforceBulkClientImpl
 
 			return bulkConnection.abortJob(jobInfoId);
 		}
-		catch (AsyncApiException aae) {
-			return abortJob(jobInfoId, getRetryCount(retryCount, aae));
+		catch (AsyncApiException asyncApiException) {
+			return abortJob(
+				jobInfoId, getRetryCount(retryCount, asyncApiException));
 		}
 	}
 
@@ -57,8 +58,9 @@ public class SalesforceBulkClientImpl
 
 			return bulkConnection.closeJob(jobInfoId);
 		}
-		catch (AsyncApiException aae) {
-			return closeJob(jobInfoId, getRetryCount(retryCount, aae));
+		catch (AsyncApiException asyncApiException) {
+			return closeJob(
+				jobInfoId, getRetryCount(retryCount, asyncApiException));
 		}
 	}
 
@@ -72,9 +74,10 @@ public class SalesforceBulkClientImpl
 
 			return bulkConnection.createBatchFromStream(jobInfo, inputStream);
 		}
-		catch (AsyncApiException aae) {
+		catch (AsyncApiException asyncApiException) {
 			return createBatchFromStream(
-				jobInfo, inputStream, getRetryCount(retryCount, aae));
+				jobInfo, inputStream,
+				getRetryCount(retryCount, asyncApiException));
 		}
 	}
 
@@ -87,8 +90,9 @@ public class SalesforceBulkClientImpl
 
 			return bulkConnection.createJob(jobInfo);
 		}
-		catch (AsyncApiException aae) {
-			return createJob(jobInfo, getRetryCount(retryCount, aae));
+		catch (AsyncApiException asyncApiException) {
+			return createJob(
+				jobInfo, getRetryCount(retryCount, asyncApiException));
 		}
 	}
 
@@ -102,9 +106,10 @@ public class SalesforceBulkClientImpl
 
 			return bulkConnection.getBatchInfo(jobInfoId, batchInfoId);
 		}
-		catch (AsyncApiException aae) {
+		catch (AsyncApiException asyncApiException) {
 			return getBatchInfo(
-				jobInfoId, batchInfoId, getRetryCount(retryCount, aae));
+				jobInfoId, batchInfoId,
+				getRetryCount(retryCount, asyncApiException));
 		}
 	}
 
@@ -118,9 +123,10 @@ public class SalesforceBulkClientImpl
 
 			return bulkConnection.getQueryResultList(jobInfoId, batchInfoId);
 		}
-		catch (AsyncApiException aae) {
+		catch (AsyncApiException asyncApiException) {
 			return getQueryResultList(
-				jobInfoId, batchInfoId, getRetryCount(retryCount, aae));
+				jobInfoId, batchInfoId,
+				getRetryCount(retryCount, asyncApiException));
 		}
 	}
 
@@ -136,10 +142,10 @@ public class SalesforceBulkClientImpl
 			return bulkConnection.getQueryResultStream(
 				jobInfoId, batchInfoId, queryResultId);
 		}
-		catch (AsyncApiException aae) {
+		catch (AsyncApiException asyncApiException) {
 			return getQueryResultStream(
 				jobInfoId, batchInfoId, queryResultId,
-				getRetryCount(retryCount, aae));
+				getRetryCount(retryCount, asyncApiException));
 		}
 	}
 

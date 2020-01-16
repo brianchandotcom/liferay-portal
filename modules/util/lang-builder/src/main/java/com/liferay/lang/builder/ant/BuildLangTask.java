@@ -33,8 +33,8 @@ public class BuildLangTask extends Task {
 
 			LangBuilderInvoker.invoke(project.getBaseDir(), _langBuilderArgs);
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

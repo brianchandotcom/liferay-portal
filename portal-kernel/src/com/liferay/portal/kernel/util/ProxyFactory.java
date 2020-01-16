@@ -111,8 +111,8 @@ public class ProxyFactory {
 				try {
 					return method.invoke(service, arguments);
 				}
-				catch (InvocationTargetException ite) {
-					throw ite.getTargetException();
+				catch (InvocationTargetException invocationTargetException) {
+					throw invocationTargetException.getTargetException();
 				}
 			}
 

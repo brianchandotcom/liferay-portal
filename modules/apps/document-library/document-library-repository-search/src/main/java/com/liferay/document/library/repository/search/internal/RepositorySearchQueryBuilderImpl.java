@@ -82,8 +82,8 @@ public class RepositorySearchQueryBuilderImpl
 
 			return fullQuery;
 		}
-		catch (Exception e) {
-			throw new SearchException(e);
+		catch (Exception exception) {
+			throw new SearchException(exception);
 		}
 	}
 
@@ -107,7 +107,7 @@ public class RepositorySearchQueryBuilderImpl
 			try {
 				_dlAppService.getFolder(folderId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				continue;
 			}
 

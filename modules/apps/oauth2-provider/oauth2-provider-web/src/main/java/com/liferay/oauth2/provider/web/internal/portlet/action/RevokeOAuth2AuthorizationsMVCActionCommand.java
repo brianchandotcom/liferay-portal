@@ -63,12 +63,12 @@ public class RevokeOAuth2AuthorizationsMVCActionCommand
 					oAuth2AuthorizationId);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
-			SessionErrors.add(actionRequest, pe.getClass());
+			SessionErrors.add(actionRequest, portalException.getClass());
 		}
 
 		String backURL = ParamUtil.get(

@@ -182,9 +182,9 @@ public class BatchBuild extends BaseBuild {
 			try {
 				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new RuntimeException(
-					"Unable to get build properties", ioe);
+					"Unable to get build properties", ioException);
 			}
 
 			SimpleDateFormat sdf = new SimpleDateFormat(
@@ -195,8 +195,9 @@ public class BatchBuild extends BaseBuild {
 			try {
 				date = sdf.parse(matcher.group("invokedTime"));
 			}
-			catch (ParseException pe) {
-				throw new RuntimeException("Unable to get invoked time", pe);
+			catch (ParseException parseException) {
+				throw new RuntimeException(
+					"Unable to get invoked time", parseException);
 			}
 
 			invokedTime = date.getTime();
@@ -447,8 +448,9 @@ public class BatchBuild extends BaseBuild {
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build properties", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
 		}
 
 		List<String> environmentOptions = new ArrayList<>(

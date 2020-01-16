@@ -37,8 +37,8 @@ public class OAuthFactoryImpl implements OAuthFactory {
 			return new OAuthManagerImpl(
 				key, secret, accessURL, requestURL, callbackURL, scope);
 		}
-		catch (Exception e) {
-			throw new OAuthException(e);
+		catch (Exception exception) {
+			throw new OAuthException(exception);
 		}
 	}
 
@@ -51,8 +51,8 @@ public class OAuthFactoryImpl implements OAuthFactory {
 				new org.scribe.model.OAuthRequest(
 					VerbTranslator.translate(verb), url));
 		}
-		catch (Exception e) {
-			throw new OAuthException(e);
+		catch (Exception exception) {
+			throw new OAuthException(exception);
 		}
 	}
 
@@ -63,8 +63,8 @@ public class OAuthFactoryImpl implements OAuthFactory {
 		try {
 			return new TokenImpl(new org.scribe.model.Token(token, secret));
 		}
-		catch (Exception e) {
-			throw new OAuthException(e);
+		catch (Exception exception) {
+			throw new OAuthException(exception);
 		}
 	}
 
@@ -73,8 +73,8 @@ public class OAuthFactoryImpl implements OAuthFactory {
 		try {
 			return new VerifierImpl(new org.scribe.model.Verifier(verifier));
 		}
-		catch (Exception e) {
-			throw new OAuthException(e);
+		catch (Exception exception) {
+			throw new OAuthException(exception);
 		}
 	}
 

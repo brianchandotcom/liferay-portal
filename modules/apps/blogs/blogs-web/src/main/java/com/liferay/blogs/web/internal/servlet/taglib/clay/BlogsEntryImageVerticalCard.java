@@ -84,8 +84,8 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 		try {
 			return DLURLHelperUtil.getThumbnailSrc(_fileEntry, _themeDisplay);
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -130,8 +130,8 @@ public class BlogsEntryImageVerticalCard implements VerticalCard {
 
 			return user.getPortraitURL(_themeDisplay);
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 

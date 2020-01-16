@@ -161,7 +161,7 @@ public class FileUtil {
 						project, mirrorsUrl, null, null,
 						mirrorsCacheArtifactFile, ignoreErrors);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					_get(
 						project, url, username, password,
 						mirrorsCacheArtifactFile, ignoreErrors);
@@ -257,8 +257,8 @@ public class FileUtil {
 				upToDate = true;
 			}
 		}
-		catch (IOException ioe) {
-			throw new GradleException(ioe.getMessage(), ioe);
+		catch (IOException ioException) {
+			throw new GradleException(ioException.getMessage(), ioException);
 		}
 
 		return upToDate;

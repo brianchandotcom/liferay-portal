@@ -135,8 +135,8 @@ public class DDMFormValuesToPropertiesConverter {
 					valueString = jsonArray.getString(0);
 				}
 			}
-			catch (JSONException jsone) {
-				ReflectionUtil.throwException(jsone);
+			catch (JSONException jsonException) {
+				ReflectionUtil.throwException(jsonException);
 			}
 		}
 

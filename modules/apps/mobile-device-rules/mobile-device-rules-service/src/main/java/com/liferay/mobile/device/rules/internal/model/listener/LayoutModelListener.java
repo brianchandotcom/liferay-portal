@@ -46,8 +46,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 					mdrRuleGroupInstance);
 			}
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

@@ -155,8 +155,8 @@ public final class LiferayConnection {
 			_httpAuthentication = new OAuth2Authentication(
 				consumerKey, consumerSecret, _httpClient, _openAPISpecPath);
 		}
-		catch (MalformedURLException murle) {
-			throw new ConnectionException(murle);
+		catch (MalformedURLException malformedURLException) {
+			throw new ConnectionException(malformedURLException);
 		}
 	}
 
@@ -194,8 +194,8 @@ public final class LiferayConnection {
 
 			return oasURLParser.getServerBaseURL();
 		}
-		catch (MalformedURLException murle) {
-			throw new ConnectionException(murle);
+		catch (MalformedURLException malformedURLException) {
+			throw new ConnectionException(malformedURLException);
 		}
 	}
 

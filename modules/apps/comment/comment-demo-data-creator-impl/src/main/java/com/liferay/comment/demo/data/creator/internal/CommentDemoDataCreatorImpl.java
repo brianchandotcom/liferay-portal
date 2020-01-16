@@ -97,9 +97,9 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 			try {
 				_commentManager.deleteComment(commentId);
 			}
-			catch (NoSuchMessageException nsme) {
+			catch (NoSuchMessageException noSuchMessageException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsme, nsme);
+					_log.warn(noSuchMessageException, noSuchMessageException);
 				}
 			}
 

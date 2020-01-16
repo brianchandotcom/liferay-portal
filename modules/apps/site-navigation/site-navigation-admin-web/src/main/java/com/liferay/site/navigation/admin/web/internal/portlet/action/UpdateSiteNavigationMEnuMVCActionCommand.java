@@ -73,11 +73,11 @@ public class UpdateSiteNavigationMEnuMVCActionCommand
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			hideDefaultSuccessMessage(actionRequest);
 
 			_siteNavigationMenuExceptionRequestHandler.handlePortalException(
-				actionRequest, actionResponse, pe);
+				actionRequest, actionResponse, portalException);
 		}
 	}
 

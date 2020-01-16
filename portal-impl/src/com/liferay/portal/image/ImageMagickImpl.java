@@ -160,9 +160,9 @@ public class ImageMagickImpl implements ImageMagick {
 		try {
 			enabled = PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -193,8 +193,8 @@ public class ImageMagickImpl implements ImageMagick {
 
 				_resourceLimitsProperties = getResourceLimitsProperties();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 	}

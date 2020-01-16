@@ -71,8 +71,8 @@ public class ImageRequestAuthVerifier implements AuthVerifier {
 
 			return authVerifierResult;
 		}
-		catch (Exception e) {
-			throw new AuthException(e);
+		catch (Exception exception) {
+			throw new AuthException(exception);
 		}
 	}
 

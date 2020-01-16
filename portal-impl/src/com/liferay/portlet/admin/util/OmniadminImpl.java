@@ -45,12 +45,12 @@ public class OmniadminImpl implements Omniadmin {
 
 			return isOmniadmin(user);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(se, se);
+				_log.debug(systemException, systemException);
 			}
 
 			return false;
@@ -87,8 +87,8 @@ public class OmniadminImpl implements Omniadmin {
 				user.getUserId(), user.getCompanyId(),
 				RoleConstants.ADMINISTRATOR, true);
 		}
-		catch (Exception e) {
-			_log.error("Unable to check if a user is an omniadmin", e);
+		catch (Exception exception) {
+			_log.error("Unable to check if a user is an omniadmin", exception);
 
 			return false;
 		}

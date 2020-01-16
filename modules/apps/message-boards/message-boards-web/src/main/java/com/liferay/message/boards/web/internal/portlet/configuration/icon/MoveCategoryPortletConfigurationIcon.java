@@ -72,7 +72,7 @@ public class MoveCategoryPortletConfigurationIcon
 		try {
 			category = ActionUtil.getCategory(portletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -109,7 +109,7 @@ public class MoveCategoryPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

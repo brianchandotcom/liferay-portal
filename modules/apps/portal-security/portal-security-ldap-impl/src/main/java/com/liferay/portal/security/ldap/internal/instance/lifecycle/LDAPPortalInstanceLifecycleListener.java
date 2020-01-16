@@ -40,11 +40,11 @@ public class LDAPPortalInstanceLifecycleListener
 			try {
 				_userImporter.importUsers(company.getCompanyId());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					"Unable to import users for company " +
 						company.getCompanyId(),
-					e);
+					exception);
 			}
 		}
 	}

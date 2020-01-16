@@ -219,10 +219,10 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 						_setValue(ddmFormFieldValue);
 					}
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 
-					throw new BadRequestException(e);
+					throw new BadRequestException(exception);
 				}
 			}
 		);

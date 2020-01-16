@@ -45,10 +45,10 @@ public class CallerRunsPolicy implements RejectedExecutionHandler {
 		try {
 			runnable.run();
 		}
-		catch (RuntimeException re) {
-			throwable = re;
+		catch (RuntimeException runtimeException) {
+			throwable = runtimeException;
 
-			throw re;
+			throw runtimeException;
 		}
 		finally {
 			threadPoolHandler.afterExecute(runnable, throwable);

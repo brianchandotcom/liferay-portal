@@ -57,8 +57,8 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 		try {
 			return xml.getBytes(StringPool.UTF8);
 		}
-		catch (UnsupportedEncodingException uee) {
-			throw new PortalException(uee);
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new PortalException(unsupportedEncodingException);
 		}
 	}
 
@@ -76,8 +76,8 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 				try {
 					writeToZip(baseModel, zipWriter);
 				}
-				catch (Exception e) {
-					throw new PortalException(e);
+				catch (Exception exception) {
+					throw new PortalException(exception);
 				}
 			});
 

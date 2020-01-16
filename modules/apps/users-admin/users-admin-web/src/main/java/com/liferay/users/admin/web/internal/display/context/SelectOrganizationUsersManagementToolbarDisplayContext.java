@@ -176,8 +176,8 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 			try {
 				userParams.put("usersOrgsTree", user.getOrganizations(true));
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 

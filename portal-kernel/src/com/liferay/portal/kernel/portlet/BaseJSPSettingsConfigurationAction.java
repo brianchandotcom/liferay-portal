@@ -79,12 +79,14 @@ public class BaseJSPSettingsConfigurationAction
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
+		catch (ServletException servletException) {
 			_log.error(
-				"Unable to include JSP " + getJspPath(httpServletRequest), se);
+				"Unable to include JSP " + getJspPath(httpServletRequest),
+				servletException);
 
 			throw new IOException(
-				"Unable to include " + getJspPath(httpServletRequest), se);
+				"Unable to include " + getJspPath(httpServletRequest),
+				servletException);
 		}
 	}
 

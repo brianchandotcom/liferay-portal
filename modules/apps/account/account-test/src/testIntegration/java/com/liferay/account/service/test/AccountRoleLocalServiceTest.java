@@ -227,8 +227,8 @@ public class AccountRoleLocalServiceTest {
 					try {
 						userGroupRole.getRole();
 					}
-					catch (PortalException pe) {
-						throw new ModelListenerException(pe);
+					catch (PortalException portalException) {
+						throw new ModelListenerException(portalException);
 					}
 				}
 

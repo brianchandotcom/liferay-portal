@@ -109,14 +109,14 @@ public class LiferayPortlet extends GenericPortlet {
 				addSuccessMessage(actionRequest, actionResponse);
 			}
 		}
-		catch (PortletException pe) {
-			Throwable cause = pe.getCause();
+		catch (PortletException portletException) {
+			Throwable cause = portletException.getCause();
 
 			if (isSessionErrorException(cause)) {
 				SessionErrors.add(actionRequest, cause.getClass(), cause);
 			}
 			else {
-				throw pe;
+				throw portletException;
 			}
 		}
 	}
@@ -175,27 +175,27 @@ public class LiferayPortlet extends GenericPortlet {
 
 			return true;
 		}
-		catch (NoSuchMethodException nsme) {
+		catch (NoSuchMethodException noSuchMethodException) {
 			try {
 				super.processAction(actionRequest, actionResponse);
 
 				return true;
 			}
-			catch (Exception e) {
-				throw new PortletException(e);
+			catch (Exception exception) {
+				throw new PortletException(exception);
 			}
 		}
-		catch (InvocationTargetException ite) {
-			Throwable cause = ite.getCause();
+		catch (InvocationTargetException invocationTargetException) {
+			Throwable cause = invocationTargetException.getCause();
 
 			if (cause != null) {
 				throw new PortletException(cause);
 			}
 
-			throw new PortletException(ite);
+			throw new PortletException(invocationTargetException);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -220,27 +220,27 @@ public class LiferayPortlet extends GenericPortlet {
 
 			return true;
 		}
-		catch (NoSuchMethodException nsme) {
+		catch (NoSuchMethodException noSuchMethodException) {
 			try {
 				super.serveResource(resourceRequest, resourceResponse);
 
 				return true;
 			}
-			catch (Exception e) {
-				throw new PortletException(e);
+			catch (Exception exception) {
+				throw new PortletException(exception);
 			}
 		}
-		catch (InvocationTargetException ite) {
-			Throwable cause = ite.getCause();
+		catch (InvocationTargetException invocationTargetException) {
+			Throwable cause = invocationTargetException.getCause();
 
 			if (cause != null) {
 				throw new PortletException(cause);
 			}
 
-			throw new PortletException(ite);
+			throw new PortletException(invocationTargetException);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -455,7 +455,7 @@ public class LiferayPortlet extends GenericPortlet {
 		try {
 			return PortalUtil.getPortletTitle(renderRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return super.getTitle(renderRequest);
 		}
 	}

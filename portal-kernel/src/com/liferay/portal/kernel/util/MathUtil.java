@@ -69,8 +69,8 @@ public class MathUtil {
 
 			x = number.doubleValue();
 		}
-		catch (Exception e) {
-			_log.error(e.getMessage());
+		catch (Exception exception) {
+			_log.error(exception.getMessage());
 		}
 
 		return x;

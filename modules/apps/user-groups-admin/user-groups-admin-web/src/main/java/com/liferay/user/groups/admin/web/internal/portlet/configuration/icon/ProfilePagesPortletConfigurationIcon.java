@@ -68,7 +68,7 @@ public class ProfilePagesPortletConfigurationIcon
 
 			return group.getDisplayURL(themeDisplay, false);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -100,7 +100,7 @@ public class ProfilePagesPortletConfigurationIcon
 
 			return false;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

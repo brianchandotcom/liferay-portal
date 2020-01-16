@@ -267,14 +267,15 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 			folder.getGroupId(), containerModelId, originalTitle);
 
 		if (duplicateFolder != null) {
-			RestoreEntryException ree = new RestoreEntryException(
-				RestoreEntryException.DUPLICATE);
+			RestoreEntryException restoreEntryException =
+				new RestoreEntryException(RestoreEntryException.DUPLICATE);
 
-			ree.setDuplicateEntryId(duplicateFolder.getFolderId());
-			ree.setOldName(duplicateFolder.getName());
-			ree.setTrashEntryId(trashEntryId);
+			restoreEntryException.setDuplicateEntryId(
+				duplicateFolder.getFolderId());
+			restoreEntryException.setOldName(duplicateFolder.getName());
+			restoreEntryException.setTrashEntryId(trashEntryId);
 
-			throw ree;
+			throw restoreEntryException;
 		}
 	}
 
@@ -296,9 +297,10 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 			_journalFolderLocalService.validateFolderDDMStructures(
 				classPK, containerModelId);
 		}
-		catch (InvalidDDMStructureException iddmse) {
+		catch (InvalidDDMStructureException invalidDDMStructureException) {
 			throw new RestoreEntryException(
-				RestoreEntryException.INVALID_CONTAINER, iddmse);
+				RestoreEntryException.INVALID_CONTAINER,
+				invalidDDMStructureException);
 		}
 	}
 

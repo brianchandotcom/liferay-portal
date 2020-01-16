@@ -78,14 +78,14 @@ public class DefaultUpgradeTableImpl
 
 					appendColumn(sb, newValue, last);
 				}
-				catch (StagnantRowException sre) {
+				catch (StagnantRowException stagnantRowException) {
 					_upgradeColumns[i].setNewValue(null);
 
 					throw new StagnantRowException(
 						StringBundler.concat(
 							"Column ", columns[i][0], " with value ",
-							sre.getMessage()),
-						sre);
+							stagnantRowException.getMessage()),
+						stagnantRowException);
 				}
 			}
 		}

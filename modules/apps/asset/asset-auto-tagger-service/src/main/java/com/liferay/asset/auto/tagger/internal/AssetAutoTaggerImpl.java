@@ -95,18 +95,18 @@ public class AssetAutoTaggerImpl implements AopService, AssetAutoTagger {
 				_assetTagLocalService.incrementAssetCount(
 					assetTag.getTagId(), assetEntry.getClassNameId());
 			}
-			catch (AssetTagException ate) {
+			catch (AssetTagException assetTagException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						String.format(
 							"Unable to add auto tag: %s", assetTagName),
-						ate);
+						assetTagException);
 				}
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				_log.error(
 					String.format("Unable to add auto tag: %s", assetTagName),
-					pe);
+					portalException);
 			}
 		}
 

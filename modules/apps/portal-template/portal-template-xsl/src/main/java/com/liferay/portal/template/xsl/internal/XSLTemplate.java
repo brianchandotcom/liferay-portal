@@ -67,7 +67,8 @@ public class XSLTemplate extends BaseTemplate {
 				XMLConstants.FEATURE_SECURE_PROCESSING,
 				xslEngineConfiguration.secureProcessingEnabled());
 		}
-		catch (TransformerConfigurationException tce) {
+		catch (TransformerConfigurationException
+					transformerConfigurationException) {
 		}
 	}
 
@@ -196,11 +197,11 @@ public class XSLTemplate extends BaseTemplate {
 
 			return transformer;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new TemplateException(
 				"Unable to get Transformer for template " +
 					templateResource.getTemplateId(),
-				e);
+				exception);
 		}
 	}
 

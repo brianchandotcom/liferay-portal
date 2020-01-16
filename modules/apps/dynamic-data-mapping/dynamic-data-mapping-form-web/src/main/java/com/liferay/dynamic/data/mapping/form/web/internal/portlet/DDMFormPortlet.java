@@ -100,10 +100,10 @@ public class DDMFormPortlet extends MVCPortlet {
 		try {
 			super.processAction(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_portal.copyRequestParameters(actionRequest, actionResponse);
 
-			Throwable cause = getRootCause(e);
+			Throwable cause = getRootCause(exception);
 
 			hideDefaultErrorMessage(actionRequest);
 
@@ -150,18 +150,18 @@ public class DDMFormPortlet extends MVCPortlet {
 					renderRequest, ddmFormPortletDisplayContext);
 			}
 		}
-		catch (Exception e) {
-			if (isSessionErrorException(e)) {
+		catch (Exception exception) {
+			if (isSessionErrorException(exception)) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 
 				hideDefaultErrorMessage(renderRequest);
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 			}
 			else {
-				throw new PortletException(e);
+				throw new PortletException(exception);
 			}
 		}
 

@@ -60,8 +60,8 @@ public class EditDepotEntryMVCRenderCommand implements MVCRenderCommand {
 
 			return "/edit_depot_entry.jsp";
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 

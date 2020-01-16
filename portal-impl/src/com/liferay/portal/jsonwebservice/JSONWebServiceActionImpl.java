@@ -193,7 +193,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			outputObject = TypeConverterManager.convertType(
 				inputObject, targetType);
 		}
-		catch (TypeConversionException tce) {
+		catch (TypeConversionException typeConversionException) {
 			if (inputObject instanceof Map) {
 				try {
 					if (targetType.isInterface()) {
@@ -208,7 +208,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						try {
 							targetType = classLoader.loadClass(modelClassName);
 						}
-						catch (ClassNotFoundException cnfe) {
+						catch (ClassNotFoundException classNotFoundException) {
 							Class<?> actionClass =
 								_jsonWebServiceActionConfig.getActionClass();
 
@@ -227,12 +227,12 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 					return outputObject;
 				}
-				catch (Exception e) {
-					throw new TypeConversionException(e);
+				catch (Exception exception) {
+					throw new TypeConversionException(exception);
 				}
 			}
 
-			throw tce;
+			throw typeConversionException;
 		}
 
 		return outputObject;
@@ -351,12 +351,12 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 							null, parameterType);
 					}
 					catch (Exception e2) {
-						ClassCastException cce = new ClassCastException(
-							e1.getMessage());
+						ClassCastException classCastException =
+							new ClassCastException(e1.getMessage());
 
-						cce.addSuppressed(e2);
+						classCastException.addSuppressed(e2);
 
-						throw cce;
+						throw classCastException;
 					}
 
 					BeanCopy beanCopy = BeanCopy.beans(value, parameterValue);
@@ -469,13 +469,13 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					parameterValue, innerParameter.getName(),
 					innerParameter.getValue());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
 							"Unable to set inner parameter ", parameterName,
 							".", innerParameter.getName()),
-						e);
+						exception);
 				}
 			}
 		}

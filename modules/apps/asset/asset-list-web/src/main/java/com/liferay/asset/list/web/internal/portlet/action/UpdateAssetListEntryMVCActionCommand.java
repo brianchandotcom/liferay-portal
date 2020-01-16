@@ -79,13 +79,13 @@ public class UpdateAssetListEntryMVCActionCommand extends BaseMVCActionCommand {
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			SessionErrors.add(actionRequest, "assetListEntryNameInvalid");
 
 			hideDefaultErrorMessage(actionRequest);
 
 			_assetListEntryExceptionRequestHandler.handlePortalException(
-				actionRequest, actionResponse, pe);
+				actionRequest, actionResponse, portalException);
 		}
 	}
 

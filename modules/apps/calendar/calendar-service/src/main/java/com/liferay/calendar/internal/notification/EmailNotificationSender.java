@@ -78,8 +78,8 @@ public class EmailNotificationSender implements NotificationSender {
 				notificationTemplateContext.getFromName(),
 				notificationRecipient, subject, body);
 		}
-		catch (Exception e) {
-			throw new NotificationSenderException(e);
+		catch (Exception exception) {
+			throw new NotificationSenderException(exception);
 		}
 	}
 
@@ -106,9 +106,9 @@ public class EmailNotificationSender implements NotificationSender {
 
 			_mailService.sendEmail(mailMessage);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new NotificationSenderException(
-				"Unable to send mail message", e);
+				"Unable to send mail message", exception);
 		}
 	}
 

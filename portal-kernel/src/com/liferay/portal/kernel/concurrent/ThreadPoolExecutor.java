@@ -577,7 +577,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 					_mainLock.unlock();
 				}
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 			}
 		}
 	}
@@ -753,10 +753,10 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 
 					_localCompletedTaskCount++;
 				}
-				catch (RuntimeException re) {
-					throwable = re;
+				catch (RuntimeException runtimeException) {
+					throwable = runtimeException;
 
-					throw re;
+					throw runtimeException;
 				}
 				finally {
 					_threadPoolHandler.afterExecute(task, throwable);

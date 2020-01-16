@@ -77,8 +77,8 @@ public class ServiceMethodProcessCallable
 
 			return (Serializable)_methodHandler.invoke();
 		}
-		catch (Exception e) {
-			throw new ProcessException(e);
+		catch (Exception exception) {
+			throw new ProcessException(exception);
 		}
 		finally {
 			PrincipalThreadLocal.setName(oldName);

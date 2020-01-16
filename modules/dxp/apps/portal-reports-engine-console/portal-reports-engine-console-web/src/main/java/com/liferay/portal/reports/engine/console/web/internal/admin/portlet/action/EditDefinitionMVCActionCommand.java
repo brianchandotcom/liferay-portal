@@ -101,8 +101,11 @@ public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					serviceContext);
 			}
 		}
-		catch (DefinitionFileException.InvalidDefinitionFile dfe) {
-			SessionErrors.add(actionRequest, dfe.getClass());
+		catch (DefinitionFileException.InvalidDefinitionFile
+					definitionFileException) {
+
+			SessionErrors.add(
+				actionRequest, definitionFileException.getClass());
 
 			SessionMessages.add(
 				actionRequest,

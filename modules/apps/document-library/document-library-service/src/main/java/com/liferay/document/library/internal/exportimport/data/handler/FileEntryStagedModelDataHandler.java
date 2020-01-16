@@ -142,9 +142,9 @@ public class FileEntryStagedModelDataHandler
 			return _dlAppLocalService.getFileEntryByUuidAndGroupId(
 				uuid, groupId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return null;
@@ -208,11 +208,11 @@ public class FileEntryStagedModelDataHandler
 		try {
 			doRestoreStagedModel(portletDataContext, stagedModel);
 		}
-		catch (PortletDataException pde) {
-			throw pde;
+		catch (PortletDataException portletDataException) {
+			throw portletDataException;
 		}
-		catch (Exception e) {
-			throw new PortletDataException(e);
+		catch (Exception exception) {
+			throw new PortletDataException(exception);
 		}
 	}
 
@@ -292,12 +292,12 @@ public class FileEntryStagedModelDataHandler
 			try {
 				is = FileEntryUtil.getContentStream(fileEntry);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to retrieve content for file entry " +
 							fileEntry.getFileEntryId(),
-						e);
+						exception);
 				}
 			}
 
@@ -319,8 +319,8 @@ public class FileEntryStagedModelDataHandler
 				try {
 					is.close();
 				}
-				catch (IOException ioe) {
-					_log.error(ioe, ioe);
+				catch (IOException ioException) {
+					_log.error(ioException, ioException);
 				}
 			}
 		}
@@ -429,12 +429,12 @@ public class FileEntryStagedModelDataHandler
 				try {
 					is = FileEntryUtil.getContentStream(fileEntry);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to retrieve content for file entry " +
 								fileEntry.getFileEntryId(),
-							e);
+							exception);
 					}
 
 					return;
@@ -530,9 +530,9 @@ public class FileEntryStagedModelDataHandler
 								latestExistingFileVersion.getContentStream(
 									false);
 						}
-						catch (Exception e) {
+						catch (Exception exception) {
 							if (_log.isDebugEnabled()) {
-								_log.debug(e, e);
+								_log.debug(exception, exception);
 							}
 						}
 						finally {
@@ -680,8 +680,8 @@ public class FileEntryStagedModelDataHandler
 					is.close();
 				}
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 	}
@@ -896,15 +896,17 @@ public class FileEntryStagedModelDataHandler
 		if ((fileEntry.getGroupId() != portletDataContext.getGroupId()) &&
 			(fileEntry.getGroupId() != portletDataContext.getScopeGroupId())) {
 
-			PortletDataException pde = new PortletDataException(
-				PortletDataException.INVALID_GROUP);
+			PortletDataException portletDataException =
+				new PortletDataException(PortletDataException.INVALID_GROUP);
 
-			pde.setStagedModelDisplayName(getDisplayName(fileEntry));
-			pde.setStagedModelClassName(fileEntry.getModelClassName());
-			pde.setStagedModelClassPK(
+			portletDataException.setStagedModelDisplayName(
+				getDisplayName(fileEntry));
+			portletDataException.setStagedModelClassName(
+				fileEntry.getModelClassName());
+			portletDataException.setStagedModelClassPK(
 				GetterUtil.getString(fileEntry.getFileEntryId()));
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		try {
@@ -914,23 +916,26 @@ public class FileEntryStagedModelDataHandler
 				!ArrayUtil.contains(
 					getExportableStatuses(), fileVersion.getStatus())) {
 
-				PortletDataException pde = new PortletDataException(
-					PortletDataException.STATUS_UNAVAILABLE);
+				PortletDataException portletDataException =
+					new PortletDataException(
+						PortletDataException.STATUS_UNAVAILABLE);
 
-				pde.setStagedModelDisplayName(getDisplayName(fileEntry));
-				pde.setStagedModelClassName(fileVersion.getModelClassName());
-				pde.setStagedModelClassPK(
+				portletDataException.setStagedModelDisplayName(
+					getDisplayName(fileEntry));
+				portletDataException.setStagedModelClassName(
+					fileVersion.getModelClassName());
+				portletDataException.setStagedModelClassPK(
 					GetterUtil.getString(fileVersion.getFileVersionId()));
 
-				throw pde;
+				throw portletDataException;
 			}
 		}
-		catch (PortletDataException pde) {
-			throw pde;
+		catch (PortletDataException portletDataException) {
+			throw portletDataException;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(
@@ -940,12 +945,12 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		if (fileEntry.isInTrash() || fileEntry.isInTrashContainer()) {
-			PortletDataException pde = new PortletDataException(
-				PortletDataException.STATUS_IN_TRASH);
+			PortletDataException portletDataException =
+				new PortletDataException(PortletDataException.STATUS_IN_TRASH);
 
-			pde.setStagedModel(fileEntry);
+			portletDataException.setStagedModel(fileEntry);
 
-			throw pde;
+			throw portletDataException;
 		}
 	}
 
@@ -1065,8 +1070,8 @@ public class FileEntryStagedModelDataHandler
 						dlFileEntry.getFileEntryId());
 				});
 		}
-		catch (PortalException | SystemException e) {
-			throw e;
+		catch (PortalException | SystemException exception) {
+			throw exception;
 		}
 		catch (Throwable t) {
 			throw new PortalException(t);

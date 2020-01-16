@@ -58,7 +58,7 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 
 			TestCase.fail();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 	}
 
@@ -101,7 +101,7 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 
 			TestCase.fail();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 	}
 
@@ -166,7 +166,7 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 
 			TestCase.fail();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		Registry registry = RegistryUtil.getRegistry();

@@ -33,7 +33,7 @@ public class UpgradeKaleoNotificationRecipient extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 		}
 	}
 

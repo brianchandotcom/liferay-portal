@@ -79,14 +79,14 @@ public class SolrSearchEngineInformation implements SearchEngineInformation {
 
 			return sb.toString();
 		}
-		catch (Exception e) {
-			_log.error("Could not retrieve node information", e);
+		catch (Exception exception) {
+			_log.error("Could not retrieve node information", exception);
 
 			StringBundler sb = new StringBundler(4);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append("Error: ");
-			sb.append(e.toString());
+			sb.append(exception.toString());
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			return sb.toString();

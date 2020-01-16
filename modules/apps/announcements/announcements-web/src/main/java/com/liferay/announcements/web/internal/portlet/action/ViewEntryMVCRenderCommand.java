@@ -59,12 +59,12 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 				AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE,
 				AnnouncementsFlagConstants.NOT_HIDDEN);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return "/announcements/error.jsp";

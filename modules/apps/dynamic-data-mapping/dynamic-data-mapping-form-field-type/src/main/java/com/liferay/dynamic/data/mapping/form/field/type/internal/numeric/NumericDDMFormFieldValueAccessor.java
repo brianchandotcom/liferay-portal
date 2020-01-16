@@ -59,9 +59,9 @@ public class NumericDDMFormFieldValueAccessor
 
 			return (BigDecimal)formatter.parse(value.getString(locale));
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(parseException, parseException);
 			}
 		}
 

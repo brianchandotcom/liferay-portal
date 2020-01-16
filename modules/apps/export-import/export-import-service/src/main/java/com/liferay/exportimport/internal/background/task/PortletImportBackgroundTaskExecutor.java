@@ -89,19 +89,24 @@ public class PortletImportBackgroundTaskExecutor
 					transactionConfig,
 					new PortletImportCallable(exportImportConfiguration, file));
 			}
-			catch (IOException ioe) {
-				ExportImportIOException eiioe = new ExportImportIOException(
-					LayoutImportBackgroundTaskExecutor.class.getName(), ioe);
+			catch (IOException ioException) {
+				ExportImportIOException exportImportIOException =
+					new ExportImportIOException(
+						LayoutImportBackgroundTaskExecutor.class.getName(),
+						ioException);
 
 				if (Validator.isNotNull(attachmentsFileEntry.getFileName())) {
-					eiioe.setFileName(attachmentsFileEntry.getFileName());
-					eiioe.setType(ExportImportIOException.PORTLET_IMPORT_FILE);
+					exportImportIOException.setFileName(
+						attachmentsFileEntry.getFileName());
+					exportImportIOException.setType(
+						ExportImportIOException.PORTLET_IMPORT_FILE);
 				}
 				else {
-					eiioe.setType(ExportImportIOException.PORTLET_IMPORT);
+					exportImportIOException.setType(
+						ExportImportIOException.PORTLET_IMPORT);
 				}
 
-				throw eiioe;
+				throw exportImportIOException;
 			}
 			catch (Throwable t) {
 				throw new SystemException(t);

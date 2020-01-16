@@ -344,8 +344,8 @@ public class AMImageRequestHandlerTest {
 				try {
 					return fileVersion.getContentStream(false);
 				}
-				catch (PortalException pe) {
-					throw new AMRuntimeException(pe);
+				catch (PortalException portalException) {
+					throw new AMRuntimeException(portalException);
 				}
 			},
 			AMImageAttributeMapping.fromProperties(properties), null);

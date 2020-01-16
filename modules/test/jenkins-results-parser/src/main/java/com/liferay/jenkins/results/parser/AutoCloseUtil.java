@@ -118,10 +118,10 @@ public class AutoCloseUtil {
 		try {
 			sb.append(Dom4JUtil.format(build.getGitHubMessageElement(), false));
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 
-			throw e;
+			throw exception;
 		}
 
 		if (!_autoCloseGitHubCommentMentionUsernames.isEmpty()) {
@@ -258,10 +258,10 @@ public class AutoCloseUtil {
 							failedDownstreamBuild.getGitHubMessageElement(),
 							false));
 				}
-				catch (Exception e) {
-					e.printStackTrace();
+				catch (Exception exception) {
+					exception.printStackTrace();
 
-					throw e;
+					throw exception;
 				}
 			}
 
@@ -431,10 +431,10 @@ public class AutoCloseUtil {
 						failedDownstreamBuild.getGitHubMessageElement(),
 						false));
 			}
-			catch (Exception e) {
-				e.printStackTrace();
+			catch (Exception exception) {
+				exception.printStackTrace();
 
-				throw e;
+				throw exception;
 			}
 
 			if (!_autoCloseGitHubCommentMentionUsernames.isEmpty()) {
@@ -594,9 +594,9 @@ public class AutoCloseUtil {
 			return JenkinsResultsParserUtil.getBuildPropertyAsList(
 				true, propertyName);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to get property " + propertyName, ioe);
+				"Unable to get property " + propertyName, ioException);
 		}
 	}
 

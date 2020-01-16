@@ -110,7 +110,7 @@ public class ProjectTemplates {
 								templates.put(templateName, bundleDescription);
 							}
 						}
-						catch (IOException ioe) {
+						catch (IOException ioException) {
 						}
 					}
 				}
@@ -280,8 +280,8 @@ public class ProjectTemplates {
 				new ProjectTemplates(projectTemplatesArgs);
 			}
 		}
-		catch (ParameterException pe) {
-			System.err.println(pe.getMessage());
+		catch (ParameterException parameterException) {
+			System.err.println(parameterException.getMessage());
 
 			_printHelp(jCommander, projectTemplatesArgs);
 		}
@@ -349,10 +349,10 @@ public class ProjectTemplates {
 					projectTemplatesArgs, destinationDir);
 
 			if (archetypeGenerationResult != null) {
-				Exception cause = archetypeGenerationResult.getCause();
+				Exception exception = archetypeGenerationResult.getCause();
 
-				if (cause != null) {
-					throw cause;
+				if (exception != null) {
+					throw exception;
 				}
 			}
 
@@ -583,7 +583,7 @@ public class ProjectTemplates {
 				method = clazz.getMethod(
 					methodName, new Class<?>[] {String.class});
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				return false;
 			}
 
@@ -605,8 +605,8 @@ public class ProjectTemplates {
 			try {
 				statement.execute();
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 	}

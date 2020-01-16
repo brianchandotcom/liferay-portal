@@ -132,10 +132,10 @@ public class SyncDirTask extends Task {
 
 			return syncronizedFileCount;
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 
-			throw new RuntimeException(e);
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -164,9 +164,10 @@ public class SyncDirTask extends Task {
 						Paths.get(_file.toURI()), Paths.get(_toFile.toURI()));
 				}
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new RuntimeException(
-					"Unable to sync " + _file + " into " + _toFile, ioe);
+					"Unable to sync " + _file + " into " + _toFile,
+					ioException);
 			}
 
 			return 1;

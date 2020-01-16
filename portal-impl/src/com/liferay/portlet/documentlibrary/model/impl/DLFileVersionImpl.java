@@ -103,8 +103,8 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 			try {
 				_extraSettingsProperties.load(super.getExtraSettings());
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 

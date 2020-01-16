@@ -128,7 +128,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 			return _http.setParameter(redirect, "p_l_mode", Constants.EDIT);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;

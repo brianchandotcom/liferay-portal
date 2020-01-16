@@ -55,8 +55,8 @@ public class SessionImpl implements Session {
 		try {
 			_session.clear();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -65,8 +65,8 @@ public class SessionImpl implements Session {
 		try {
 			return _session.close();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -75,8 +75,8 @@ public class SessionImpl implements Session {
 		try {
 			return _session.contains(object);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -122,8 +122,8 @@ public class SessionImpl implements Session {
 			return new SQLQueryImpl(
 				_session.createSQLQuery(queryString), strictName);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -150,8 +150,8 @@ public class SessionImpl implements Session {
 
 			return sqlQuery;
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -160,8 +160,8 @@ public class SessionImpl implements Session {
 		try {
 			_session.delete(object);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -170,8 +170,8 @@ public class SessionImpl implements Session {
 		try {
 			_session.evict(object);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -180,8 +180,8 @@ public class SessionImpl implements Session {
 		try {
 			_session.flush();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -190,8 +190,8 @@ public class SessionImpl implements Session {
 		try {
 			return _session.get(clazz, id);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -205,8 +205,8 @@ public class SessionImpl implements Session {
 		try {
 			return _session.get(clazz, id, lockOptions);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -220,8 +220,8 @@ public class SessionImpl implements Session {
 		try {
 			return _session.isDirty();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -230,8 +230,8 @@ public class SessionImpl implements Session {
 		try {
 			return _session.load(clazz, id);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -240,8 +240,8 @@ public class SessionImpl implements Session {
 		try {
 			return _session.merge(object);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e, _session, object);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception, _session, object);
 		}
 	}
 
@@ -250,8 +250,8 @@ public class SessionImpl implements Session {
 		try {
 			return _session.save(object);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -260,8 +260,8 @@ public class SessionImpl implements Session {
 		try {
 			_session.saveOrUpdate(object);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e, _session, object);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception, _session, object);
 		}
 	}
 
@@ -284,8 +284,8 @@ public class SessionImpl implements Session {
 
 			return new QueryImpl(_session.createQuery(queryString), strictName);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 

@@ -34,8 +34,8 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		try {
 			_portalKaleoManager.deleteKaleoData(company.getCompanyId());
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

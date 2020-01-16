@@ -96,8 +96,8 @@ public class ZoomAPICallbackServlet extends HttpServlet {
 
 			httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 

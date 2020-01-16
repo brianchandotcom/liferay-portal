@@ -53,8 +53,8 @@ public class LayoutTypeURLImpl extends LayoutTypePortletImpl {
 			return layoutTypeAccessPolicy.isViewLayoutAllowed(
 				PermissionThreadLocal.getPermissionChecker(), getLayout());
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to check view permission", pe);
+		catch (PortalException portalException) {
+			_log.error("Unable to check view permission", portalException);
 
 			return false;
 		}

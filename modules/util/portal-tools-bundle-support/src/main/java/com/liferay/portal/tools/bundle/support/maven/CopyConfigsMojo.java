@@ -52,8 +52,9 @@ public class CopyConfigsMojo extends AbstractLiferayMojo {
 
 			copyConfigsCommand.execute();
 		}
-		catch (Exception e) {
-			throw new MojoExecutionException("Unable to initialize bundle", e);
+		catch (Exception exception) {
+			throw new MojoExecutionException(
+				"Unable to initialize bundle", exception);
 		}
 	}
 

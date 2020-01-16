@@ -269,8 +269,8 @@ public class UIItemsBuilder {
 		try {
 			selectFileVersionURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException wse) {
-			throw new PortalException(wse);
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
 		}
 
 		selectFileVersionURL.setParameter("version", _fileVersion.getVersion());
@@ -735,8 +735,9 @@ public class UIItemsBuilder {
 					_httpServletRequest);
 			}
 		}
-		catch (Exception e) {
-			throw new SystemException("Unable to create permissions URL", e);
+		catch (Exception exception) {
+			throw new SystemException(
+				"Unable to create permissions URL", exception);
 		}
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
@@ -764,8 +765,9 @@ public class UIItemsBuilder {
 				LiferayWindowState.POP_UP.toString(), null,
 				_httpServletRequest);
 		}
-		catch (Exception e) {
-			throw new SystemException("Unable to create permissions URL", e);
+		catch (Exception exception) {
+			throw new SystemException(
+				"Unable to create permissions URL", exception);
 		}
 
 		StringBundler sb = new StringBundler(6);
@@ -1080,9 +1082,10 @@ public class UIItemsBuilder {
 			_fileVersionDisplayContextHelper =
 				new FileVersionDisplayContextHelper(fileVersion);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
-				"Unable to build UIItemsBuilder for " + fileVersion, pe);
+				"Unable to build UIItemsBuilder for " + fileVersion,
+				portalException);
 		}
 	}
 
@@ -1351,7 +1354,7 @@ public class UIItemsBuilder {
 
 			return false;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 	}

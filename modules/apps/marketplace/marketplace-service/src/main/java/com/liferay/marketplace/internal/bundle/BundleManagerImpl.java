@@ -105,7 +105,7 @@ public class BundleManagerImpl implements BundleManager {
 				return new Manifest(inputStream);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -145,8 +145,8 @@ public class BundleManagerImpl implements BundleManager {
 		try {
 			bundle.uninstall();
 		}
-		catch (BundleException be) {
-			_log.error(be, be);
+		catch (BundleException bundleException) {
+			_log.error(bundleException, bundleException);
 		}
 	}
 
@@ -205,7 +205,7 @@ public class BundleManagerImpl implements BundleManager {
 			return GetterUtil.getBoolean(
 				properties.getProperty("restart-required"), true);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to read liferay-marketplace.properties from " +

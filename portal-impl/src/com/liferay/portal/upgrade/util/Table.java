@@ -122,7 +122,7 @@ public class Table {
 		try {
 			value = getValue(rs, name, type);
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (name.equals("uuid_")) {
 				sb.append(PortalUUIDUtil.generate());
 			}
@@ -192,12 +192,12 @@ public class Table {
 
 					empty = false;
 				}
-				catch (StagnantRowException sre) {
+				catch (StagnantRowException stagnantRowException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
 								"Skipping stagnant data in ", _tableName, ": ",
-								sre.getMessage()));
+								stagnantRowException.getMessage()));
 					}
 				}
 			}
@@ -209,10 +209,10 @@ public class Table {
 						" in ", stopWatch.getTime(), " ms"));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			FileUtil.delete(tempFileName);
 
-			throw e;
+			throw exception;
 		}
 		finally {
 			DataAccess.cleanUp(ps, rs);
@@ -368,7 +368,7 @@ public class Table {
 			try {
 				value = GetterUtil.getLong(rs.getLong(name));
 			}
-			catch (SQLException sqle) {
+			catch (SQLException sqlException) {
 				value = GetterUtil.getLong(rs.getString(name));
 			}
 		}
@@ -426,7 +426,7 @@ public class Table {
 					}
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 
 				// If the database doesn't allow CLOB types for the column
 				// value, then try retrieving it as a String
@@ -438,7 +438,7 @@ public class Table {
 			try {
 				value = rs.getBigDecimal(name);
 			}
-			catch (SQLException sqle) {
+			catch (SQLException sqlException) {
 				value = rs.getString(name);
 			}
 
@@ -466,7 +466,7 @@ public class Table {
 			try {
 				value = rs.getTimestamp(name);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 
 			if (value == null) {
@@ -689,10 +689,11 @@ public class Table {
 
 			ps.executeUpdate();
 		}
-		catch (SQLException sqle) {
-			_log.error(sqle, sqle);
+		catch (SQLException sqlException) {
+			_log.error(sqlException, sqlException);
 
-			throw new RuntimeException("Unable to execute " + sql, sqle);
+			throw new RuntimeException(
+				"Unable to execute " + sql, sqlException);
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);

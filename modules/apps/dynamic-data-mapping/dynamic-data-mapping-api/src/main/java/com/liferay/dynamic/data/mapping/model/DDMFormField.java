@@ -162,7 +162,7 @@ public class DDMFormField implements Serializable {
 					return GetterUtil.getString(
 						jsonArray.get(0), _DATA_SOURCE_TYPE_MANUAL);
 				}
-				catch (JSONException jsone) {
+				catch (JSONException jsonException) {
 					return dataSourceType;
 				}
 			}

@@ -57,8 +57,8 @@ public class VersionedModelInvocationHandler implements InvocationHandler {
 		try {
 			return mappedMethod.invoke(_versionModel, arguments);
 		}
-		catch (InvocationTargetException ite) {
-			throw ite.getTargetException();
+		catch (InvocationTargetException invocationTargetException) {
+			throw invocationTargetException.getTargetException();
 		}
 	}
 

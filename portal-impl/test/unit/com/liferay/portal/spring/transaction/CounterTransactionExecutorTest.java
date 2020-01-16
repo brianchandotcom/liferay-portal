@@ -280,8 +280,8 @@ public class CounterTransactionExecutorTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertSame(appException, e);
+		catch (Exception exception) {
+			Assert.assertSame(appException, exception);
 		}
 
 		assertTransactionExecutorThreadLocal(transactionHandler, false);

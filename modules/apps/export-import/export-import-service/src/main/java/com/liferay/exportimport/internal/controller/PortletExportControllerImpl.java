@@ -504,12 +504,15 @@ public class PortletExportControllerImpl implements PortletExportController {
 					groupPortletPreferences, portlet.getRootPortletId(),
 					PortletKeys.PREFS_PLID_SHARED, portletElement);
 			}
-			catch (NoSuchPortletPreferencesException nsppe) {
+			catch (NoSuchPortletPreferencesException
+						noSuchPortletPreferencesException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsppe, nsppe);
+					_log.debug(
+						noSuchPortletPreferencesException,
+						noSuchPortletPreferencesException);
 				}
 			}
 		}
@@ -580,9 +583,9 @@ public class PortletExportControllerImpl implements PortletExportController {
 		try {
 			portletDataContext.addZipEntry(path, document.formattedString());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe.getMessage());
+				_log.warn(ioException.getMessage());
 			}
 		}
 	}
@@ -916,14 +919,17 @@ public class PortletExportControllerImpl implements PortletExportController {
 			portletDataContext.addZipEntry(
 				"/manifest.xml", document.formattedString());
 		}
-		catch (IOException ioe) {
-			ExportImportIOException eiioe = new ExportImportIOException(
-				PortletExportControllerImpl.class.getName(), ioe);
+		catch (IOException ioException) {
+			ExportImportIOException exportImportIOException =
+				new ExportImportIOException(
+					PortletExportControllerImpl.class.getName(), ioException);
 
-			eiioe.setPortletId(portletDataContext.getPortletId());
-			eiioe.setType(ExportImportIOException.PORTLET_EXPORT);
+			exportImportIOException.setPortletId(
+				portletDataContext.getPortletId());
+			exportImportIOException.setType(
+				ExportImportIOException.PORTLET_EXPORT);
 
-			throw eiioe;
+			throw exportImportIOException;
 		}
 
 		ZipWriter zipWriter = portletDataContext.getZipWriter();
@@ -1054,12 +1060,15 @@ public class PortletExportControllerImpl implements PortletExportController {
 			portletPreferences = getPortletPreferences(
 				ownerId, ownerType, plid, portletId);
 		}
-		catch (NoSuchPortletPreferencesException nsppe) {
+		catch (NoSuchPortletPreferencesException
+					noSuchPortletPreferencesException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsppe, nsppe);
+				_log.debug(
+					noSuchPortletPreferencesException,
+					noSuchPortletPreferencesException);
 			}
 
 			return;
@@ -1146,12 +1155,15 @@ public class PortletExportControllerImpl implements PortletExportController {
 			portletPreferences = getPortletPreferences(
 				ownerId, ownerType, LayoutConstants.DEFAULT_PLID, serviceName);
 		}
-		catch (NoSuchPortletPreferencesException nsppe) {
+		catch (NoSuchPortletPreferencesException
+					noSuchPortletPreferencesException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsppe, nsppe);
+				_log.debug(
+					noSuchPortletPreferencesException,
+					noSuchPortletPreferencesException);
 			}
 
 			return;

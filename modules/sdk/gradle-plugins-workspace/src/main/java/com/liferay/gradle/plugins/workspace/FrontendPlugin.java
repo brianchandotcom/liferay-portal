@@ -140,8 +140,9 @@ public class FrontendPlugin implements Plugin<Project> {
 				nodeExtension.setNodeVersion(nodeVersion);
 			}
 		}
-		catch (Exception e) {
-			throw new GradleException("Unable to parse node version", e);
+		catch (Exception exception) {
+			throw new GradleException(
+				"Unable to parse node version", exception);
 		}
 
 		String npmVersion = nodeExtension.getNpmVersion();
@@ -155,8 +156,8 @@ public class FrontendPlugin implements Plugin<Project> {
 				nodeExtension.setNpmVersion(npmVersion);
 			}
 		}
-		catch (Exception e) {
-			throw new GradleException("Unable to parse npm version", e);
+		catch (Exception exception) {
+			throw new GradleException("Unable to parse npm version", exception);
 		}
 	}
 

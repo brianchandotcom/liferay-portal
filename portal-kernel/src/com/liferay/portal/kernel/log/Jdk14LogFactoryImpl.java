@@ -40,8 +40,8 @@ public class Jdk14LogFactoryImpl implements LogFactory {
 				logManager.readConfiguration(inputStream);
 			}
 		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		catch (IOException ioException) {
+			ioException.printStackTrace();
 		}
 	}
 

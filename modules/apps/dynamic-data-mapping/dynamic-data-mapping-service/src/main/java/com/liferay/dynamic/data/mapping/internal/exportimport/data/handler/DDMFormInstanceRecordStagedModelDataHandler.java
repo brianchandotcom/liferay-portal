@@ -240,22 +240,24 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 		try {
 			status = record.getStatus();
 		}
-		catch (Exception e) {
-			throw new PortletDataException(e);
+		catch (Exception exception) {
+			throw new PortletDataException(exception);
 		}
 
 		if (!portletDataContext.isInitialPublication() &&
 			!ArrayUtil.contains(getExportableStatuses(), status)) {
 
-			PortletDataException pde = new PortletDataException(
-				PortletDataException.STATUS_UNAVAILABLE);
+			PortletDataException portletDataException =
+				new PortletDataException(
+					PortletDataException.STATUS_UNAVAILABLE);
 
-			pde.setStagedModelDisplayName(record.getUuid());
-			pde.setStagedModelClassName(record.getModelClassName());
-			pde.setStagedModelClassPK(
+			portletDataException.setStagedModelDisplayName(record.getUuid());
+			portletDataException.setStagedModelClassName(
+				record.getModelClassName());
+			portletDataException.setStagedModelClassPK(
 				GetterUtil.getString(record.getFormInstanceRecordId()));
 
-			throw pde;
+			throw portletDataException;
 		}
 	}
 

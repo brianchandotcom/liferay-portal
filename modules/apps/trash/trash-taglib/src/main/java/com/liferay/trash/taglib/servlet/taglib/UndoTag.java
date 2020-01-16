@@ -130,7 +130,7 @@ public class UndoTag extends IncludeTag {
 				restoreTrashEntryIds.add(trashEntry.getEntryId());
 				titles.add(trashRenderer.getTitle(themeDisplay.getLocale()));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

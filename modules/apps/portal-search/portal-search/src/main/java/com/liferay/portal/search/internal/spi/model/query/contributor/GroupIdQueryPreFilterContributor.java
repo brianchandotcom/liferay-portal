@@ -138,8 +138,8 @@ public class GroupIdQueryPreFilterContributor
 		try {
 			return groupLocalService.getGroup(groupId);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

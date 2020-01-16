@@ -148,15 +148,15 @@ public class WebFormPortlet extends MVCPortlet {
 			try {
 				CaptchaUtil.check(actionRequest);
 			}
-			catch (CaptchaException ce) {
+			catch (CaptchaException captchaException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(ce, ce);
+					_log.debug(captchaException, captchaException);
 				}
 
-				Class<?> clazz = ce.getClass();
+				Class<?> clazz = captchaException.getClass();
 
 				SessionErrors.add(actionRequest, clazz.getName());
 
@@ -197,10 +197,10 @@ public class WebFormPortlet extends MVCPortlet {
 				fieldsMap, webFormServiceConfiguration.validationScriptEnable(),
 				preferences);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			SessionErrors.add(
 				actionRequest, "validationScriptError",
-				StringUtil.trim(e.getMessage()));
+				StringUtil.trim(exception.getMessage()));
 
 			return;
 		}
@@ -300,8 +300,8 @@ public class WebFormPortlet extends MVCPortlet {
 				exportData(resourceRequest, resourceResponse);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -466,9 +466,10 @@ public class WebFormPortlet extends MVCPortlet {
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
-				"The web form data could not be saved to the database", e);
+				"The web form data could not be saved to the database",
+				exception);
 
 			return false;
 		}
@@ -491,8 +492,9 @@ public class WebFormPortlet extends MVCPortlet {
 
 			return true;
 		}
-		catch (Exception e) {
-			_log.error("The web form data could not be saved to a file", e);
+		catch (Exception exception) {
+			_log.error(
+				"The web form data could not be saved to a file", exception);
 
 			return false;
 		}
@@ -539,8 +541,8 @@ public class WebFormPortlet extends MVCPortlet {
 
 			return true;
 		}
-		catch (Exception e) {
-			_log.error("The web form email could not be sent", e);
+		catch (Exception exception) {
+			_log.error("The web form email could not be sent", exception);
 
 			return false;
 		}

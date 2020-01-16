@@ -77,10 +77,11 @@ public class VelocityTemplate extends BaseTemplate {
 		}
 
 		if (exception instanceof ParseErrorException) {
-			ParseErrorException pee = (ParseErrorException)exception;
+			ParseErrorException parseErrorException =
+				(ParseErrorException)exception;
 
-			put("column", pee.getColumnNumber());
-			put("line", pee.getLineNumber());
+			put("column", parseErrorException.getColumnNumber());
+			put("line", parseErrorException.getLineNumber());
 		}
 
 		try {

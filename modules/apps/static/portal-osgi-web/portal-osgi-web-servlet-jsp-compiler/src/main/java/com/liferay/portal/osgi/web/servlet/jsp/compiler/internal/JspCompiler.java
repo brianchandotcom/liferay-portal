@@ -105,8 +105,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			standardJavaFileManager.setLocation(
 				StandardLocation.CLASS_PATH, cpath);
 		}
-		catch (IOException ioe) {
-			throw new JasperException(ioe);
+		catch (IOException ioException) {
+			throw new JasperException(ioException);
 		}
 
 		try (JavaFileManager javaFileManager = getJavaFileManager(
@@ -133,8 +133,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				return null;
 			}
 		}
-		catch (IOException ioe) {
-			throw new JasperException(ioe);
+		catch (IOException ioException) {
+			throw new JasperException(ioException);
 		}
 
 		List<Diagnostic<? extends JavaFileObject>> diagnostics =
@@ -252,7 +252,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 				addDependencyToClassPath(clazz);
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 				_log.error(
 					"Unable to add depedency " + className +
 						" to the classpath");
@@ -287,8 +287,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				_classPath.add(0, file);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+		catch (Exception exception) {
+			_log.error(exception.getMessage(), exception);
 		}
 	}
 
@@ -342,8 +342,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				standardJavaFileManager.setLocation(
 					StandardLocation.CLASS_PATH, _classPath);
 			}
-			catch (IOException ioe) {
-				_log.error(ioe.getMessage(), ioe);
+			catch (IOException ioException) {
+				_log.error(ioException.getMessage(), ioException);
 			}
 
 			javaFileManager = new BundleJavaFileManager(
@@ -417,8 +417,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				collectTLDMappings(tldMappings, tagFileJarUrls, bundle);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+		catch (Exception exception) {
+			_log.error(exception.getMessage(), exception);
 		}
 
 		Map<String, String> map =

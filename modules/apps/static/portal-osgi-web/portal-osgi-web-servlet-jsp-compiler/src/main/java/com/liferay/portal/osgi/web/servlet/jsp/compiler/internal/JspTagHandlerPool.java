@@ -45,8 +45,8 @@ public class JspTagHandlerPool extends TagHandlerPool {
 			try {
 				jspTag = jspTagClass.newInstance();
 			}
-			catch (Exception e) {
-				throw new JspException(e);
+			catch (Exception exception) {
+				throw new JspException(exception);
 			}
 		}
 		else {

@@ -200,10 +200,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			try {
 				installXuggler(actionRequest, actionResponse);
 			}
-			catch (XugglerInstallException xie) {
+			catch (XugglerInstallException xugglerInstallException) {
 				SessionErrors.add(
 					actionRequest, XugglerInstallException.class.getName(),
-					xie);
+					xugglerInstallException);
 			}
 		}
 		else if (cmd.equals("runScript")) {
@@ -448,8 +448,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			convertProcess.validate();
 		}
-		catch (ConvertException ce) {
-			SessionErrors.add(actionRequest, ce.getClass(), ce);
+		catch (ConvertException convertException) {
+			SessionErrors.add(
+				actionRequest, convertException.getClass(), convertException);
 
 			return null;
 		}
@@ -530,13 +531,14 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "scriptOutput",
 				unsyncByteArrayOutputStream.toString());
 		}
-		catch (ScriptingException se) {
+		catch (ScriptingException scriptingException) {
 			SessionErrors.add(
-				actionRequest, ScriptingException.class.getName(), se);
+				actionRequest, ScriptingException.class.getName(),
+				scriptingException);
 
 			Log log = SanitizerLogWrapper.allowCRLF(_log);
 
-			log.error(se.getMessage());
+			log.error(scriptingException.getMessage());
 		}
 	}
 

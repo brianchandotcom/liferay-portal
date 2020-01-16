@@ -42,10 +42,10 @@ public class HandlerBundleActivator implements BundleActivator {
 		try {
 			_greeterBundleActivator.start(bundleContext);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			cleanUp(bundleContext);
 
-			throw e;
+			throw exception;
 		}
 	}
 
@@ -58,7 +58,7 @@ public class HandlerBundleActivator implements BundleActivator {
 		try {
 			_greeterBundleActivator.stop(bundleContext);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		_serviceRegistration.unregister();

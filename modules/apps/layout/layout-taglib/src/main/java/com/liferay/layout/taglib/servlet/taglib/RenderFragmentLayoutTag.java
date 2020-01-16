@@ -191,8 +191,8 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 			return _dataJSONObject;
 		}
-		catch (Exception e) {
-			_log.error("Unable to get data JSON object", e);
+		catch (Exception exception) {
+			_log.error("Unable to get data JSON object", exception);
 
 			return null;
 		}

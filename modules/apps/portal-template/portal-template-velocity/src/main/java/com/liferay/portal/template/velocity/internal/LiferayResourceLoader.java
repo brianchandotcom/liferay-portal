@@ -97,9 +97,9 @@ public class LiferayResourceLoader extends ResourceLoader {
 				is.close();
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
-		catch (ResourceNotFoundException rnfe) {
+		catch (ResourceNotFoundException resourceNotFoundException) {
 		}
 
 		if (is != null) {
@@ -122,7 +122,7 @@ public class LiferayResourceLoader extends ResourceLoader {
 
 			return new ReaderInputStream(templateResource.getReader());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

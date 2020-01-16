@@ -52,8 +52,8 @@ public class SolrSearchEngineAdapterImpl implements SearchEngineAdapter {
 		try {
 			return _clusterRequestExecutor.execute(clusterRequest);
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 
@@ -64,8 +64,8 @@ public class SolrSearchEngineAdapterImpl implements SearchEngineAdapter {
 		try {
 			return documentRequest.accept(_documentRequestExecutor);
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 
@@ -74,8 +74,8 @@ public class SolrSearchEngineAdapterImpl implements SearchEngineAdapter {
 		try {
 			return indexRequest.accept(_indexRequestExecutor);
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 
@@ -86,8 +86,8 @@ public class SolrSearchEngineAdapterImpl implements SearchEngineAdapter {
 		try {
 			return searchRequest.accept(_searchRequestExecutor);
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 
@@ -98,8 +98,8 @@ public class SolrSearchEngineAdapterImpl implements SearchEngineAdapter {
 		try {
 			return snapshotRequest.accept(_snapshotRequestExecutor);
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 
@@ -108,8 +108,8 @@ public class SolrSearchEngineAdapterImpl implements SearchEngineAdapter {
 		try {
 			return _queryTranslator.translate(query, null);
 		}
-		catch (RuntimeException re) {
-			throw _getRuntimeException(re);
+		catch (RuntimeException runtimeException) {
+			throw _getRuntimeException(runtimeException);
 		}
 	}
 

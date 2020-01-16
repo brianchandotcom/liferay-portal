@@ -71,8 +71,8 @@ public class GroupDisplayContext {
 				_getGroupParams(), groupSearch.getStart(), groupSearch.getEnd(),
 				new GroupNameComparator(_isOrderByAscending()));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		groupSearch.setResults(groups);

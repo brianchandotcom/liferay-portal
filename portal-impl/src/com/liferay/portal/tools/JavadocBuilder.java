@@ -58,8 +58,8 @@ public class JavadocBuilder {
 		try {
 			new JavadocBuilder(args);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

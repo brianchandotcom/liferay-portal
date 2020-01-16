@@ -75,7 +75,7 @@ public class SiteCustomFieldsFormNavigatorEntry
 					themeDisplay.getCompanyId(), Group.class.getName(),
 					group.getGroupId(), null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if (!hasCustomAttributesAvailable) {

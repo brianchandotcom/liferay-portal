@@ -161,7 +161,7 @@ public class PortletSessionImplTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		try {
@@ -171,7 +171,7 @@ public class PortletSessionImplTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		Assert.assertSame(_value1, portletSessionImpl.getAttribute(_KEY_1));
@@ -278,7 +278,7 @@ public class PortletSessionImplTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 
 		try {
@@ -288,7 +288,7 @@ public class PortletSessionImplTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 
 		Assert.assertTrue(portletSessionImpl.isInvalidated());
@@ -342,7 +342,8 @@ public class PortletSessionImplTest {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ClassNotFoundException cnfe = new ClassNotFoundException();
+		ClassNotFoundException classNotFoundException =
+			new ClassNotFoundException();
 
 		currentThread.setContextClassLoader(
 			new ClassLoader() {
@@ -352,7 +353,7 @@ public class PortletSessionImplTest {
 					throws ClassNotFoundException {
 
 					if (name.equals(TestSerializable.class.getName())) {
-						throw cnfe;
+						throw classNotFoundException;
 					}
 
 					return super.loadClass(name);
@@ -377,7 +378,7 @@ public class PortletSessionImplTest {
 
 			Assert.assertEquals(
 				"Unable to deserialize object", logRecord.getMessage());
-			Assert.assertSame(cnfe, logRecord.getThrown());
+			Assert.assertSame(classNotFoundException, logRecord.getThrown());
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
@@ -397,7 +398,7 @@ public class PortletSessionImplTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		portletSessionImpl.removeAttribute(_KEY_1);
@@ -515,7 +516,7 @@ public class PortletSessionImplTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		String key7 = "key7";

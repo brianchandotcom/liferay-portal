@@ -100,15 +100,15 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 				setWorkflowDefinitionRenderRequestAttribute(renderRequest);
 			}
 		}
-		catch (Exception e) {
-			if (workflowPreprocessorHelper.isSessionErrorException(e)) {
+		catch (Exception exception) {
+			if (workflowPreprocessorHelper.isSessionErrorException(exception)) {
 				workflowPreprocessorHelper.hideDefaultErrorMessage(
 					renderRequest);
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 			}
 			else {
-				throw new PortletException(e);
+				throw new PortletException(exception);
 			}
 		}
 	}

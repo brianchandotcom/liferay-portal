@@ -40,11 +40,11 @@ public class PortalClassInvoker {
 
 			return methodHandler.invoke();
 		}
-		catch (InvocationTargetException ite) {
-			Throwable cause = ite.getCause();
+		catch (InvocationTargetException invocationTargetException) {
+			Throwable cause = invocationTargetException.getCause();
 
 			if (cause instanceof Error) {
-				throw new SystemException(ite);
+				throw new SystemException(invocationTargetException);
 			}
 
 			throw (Exception)cause;

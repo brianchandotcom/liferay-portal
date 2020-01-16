@@ -38,8 +38,8 @@ public class LoginFailure implements AuthFailure {
 			UserLocalServiceUtil.checkLoginFailureByEmailAddress(
 				companyId, emailAddress);
 		}
-		catch (Exception e) {
-			throw new AuthException(e);
+		catch (Exception exception) {
+			throw new AuthException(exception);
 		}
 	}
 
@@ -53,8 +53,8 @@ public class LoginFailure implements AuthFailure {
 			UserLocalServiceUtil.checkLoginFailureByScreenName(
 				companyId, screenName);
 		}
-		catch (Exception e) {
-			throw new AuthException(e);
+		catch (Exception exception) {
+			throw new AuthException(exception);
 		}
 	}
 
@@ -67,8 +67,8 @@ public class LoginFailure implements AuthFailure {
 		try {
 			UserLocalServiceUtil.checkLoginFailureById(userId);
 		}
-		catch (Exception e) {
-			throw new AuthException(e);
+		catch (Exception exception) {
+			throw new AuthException(exception);
 		}
 	}
 

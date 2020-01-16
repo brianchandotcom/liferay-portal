@@ -356,8 +356,8 @@ public class PluginExecutor extends BaseExecutor {
 		try {
 			tempFile = getFileItemTempFile(httpServletRequest);
 		}
-		catch (Exception e) {
-			_log.error(message, e);
+		catch (Exception exception) {
+			_log.error(message, exception);
 		}
 
 		if (tempFile != null) {

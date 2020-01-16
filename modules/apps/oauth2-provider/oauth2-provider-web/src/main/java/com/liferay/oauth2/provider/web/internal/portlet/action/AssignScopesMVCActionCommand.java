@@ -73,14 +73,15 @@ public class AssignScopesMVCActionCommand implements MVCActionCommand {
 			_oAuth2ApplicationService.updateScopeAliases(
 				oAuth2ApplicationId, scopeAliasesList);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
-			Class<?> peClass = pe.getClass();
+			Class<?> peClass = portalException.getClass();
 
-			SessionErrors.add(actionRequest, peClass.getName(), pe);
+			SessionErrors.add(
+				actionRequest, peClass.getName(), portalException);
 		}
 
 		String backURL = ParamUtil.get(

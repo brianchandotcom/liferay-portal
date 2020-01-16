@@ -139,12 +139,12 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 					table.getTableId(), name, type, defaultValue);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof PortalException) {
-				throw (PortalException)e;
+		catch (Exception exception) {
+			if (exception instanceof PortalException) {
+				throw (PortalException)exception;
 			}
 
-			throw new RuntimeException(e);
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -169,7 +169,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 				return false;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 
@@ -214,8 +214,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 					ExpandoTableConstants.DEFAULT_TABLE_NAME, name, _classPK);
 			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		return data;
@@ -230,8 +230,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 			return column.getDefaultValue();
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -255,8 +255,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 			return column.getTypeSettingsProperties();
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -314,8 +314,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 					ExpandoTableConstants.DEFAULT_TABLE_NAME, names, _classPK);
 			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		return attributeValues;
@@ -330,8 +330,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 			return column.getType();
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -358,8 +358,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			column = ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
 				_companyId, _className, name);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		if (column != null) {
@@ -376,7 +376,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		try {
 			hash = HashUtil.hash(0, getTable());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return HashUtil.hash(hash, getAttributeColumns());
@@ -401,8 +401,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		try {
 			indexer.reindex(_className, _classPK);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -439,8 +439,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 					value);
 			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -455,8 +455,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 				column.getColumnId(), column.getName(), column.getType(),
 				defaultValue);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -492,8 +492,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 					column.getColumnId(), properties.toString());
 			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -536,8 +536,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 					attributes);
 			}
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -650,8 +650,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			columns = ExpandoColumnLocalServiceUtil.getDefaultTableColumns(
 				_companyId, _className);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		return columns;

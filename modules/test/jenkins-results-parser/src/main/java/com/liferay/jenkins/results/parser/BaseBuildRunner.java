@@ -101,8 +101,8 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 							buildJSONObject.getString("url") + "api/json")));
 			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		return _previousBuildJSONObjects;
@@ -157,16 +157,16 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 
 				break;
 			}
-			catch (IOException | TimeoutException e) {
+			catch (IOException | TimeoutException exception) {
 				if (retries == maxRetries) {
 					throw new RuntimeException(
-						"Unable to send " + file.getName(), e);
+						"Unable to send " + file.getName(), exception);
 				}
 
 				System.out.println(
 					"Unable to execute bash commands, retrying... ");
 
-				e.printStackTrace();
+				exception.printStackTrace();
 
 				JenkinsResultsParserUtil.sleep(3000);
 			}
@@ -215,8 +215,8 @@ public abstract class BaseBuildRunner<T extends BuildData, S extends Workspace>
 					envMapJSONObject.getString("JOB_NAME"),
 					envMapJSONObject.getString("HOSTNAME"));
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 		}
 	}

@@ -156,9 +156,10 @@ public class NettyFabricWorkerBridgeRPCCallableTest {
 
 			Assert.fail();
 		}
-		catch (ProcessException pe) {
+		catch (ProcessException processException) {
 			Assert.assertEquals(
-				"Unable to locate fabric worker with ID 0", pe.getMessage());
+				"Unable to locate fabric worker with ID 0",
+				processException.getMessage());
 		}
 	}
 

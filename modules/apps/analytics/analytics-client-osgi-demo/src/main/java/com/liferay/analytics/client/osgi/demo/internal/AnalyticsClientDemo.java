@@ -60,8 +60,8 @@ public class AnalyticsClientDemo extends BasePortalInstanceLifecycleListener {
 			_analyticsClient.sendAnalytics(
 				analyticsEventsMessageBuilder.build());
 		}
-		catch (Exception e) {
-			_log.error("Unable to send analytics", e);
+		catch (Exception exception) {
+			_log.error("Unable to send analytics", exception);
 		}
 		finally {
 			PrincipalThreadLocal.setName(name);

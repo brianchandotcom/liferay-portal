@@ -83,9 +83,9 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 			return searchResultPermissionFilter.search(searchContext);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PortalException(
-				"Unable to search with filter " + filterString, e);
+				"Unable to search with filter " + filterString, exception);
 		}
 	}
 
@@ -124,9 +124,9 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 			return hits.getLength();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PortalException(
-				"Unable to search with filter " + filterString, e);
+				"Unable to search with filter " + filterString, exception);
 		}
 	}
 
@@ -184,9 +184,9 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 			return _expressionConvert.convert(
 				filter.getExpression(), locale, entityModel);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new InvalidFilterException(
-				"Invalid filter: " + e.getMessage(), e);
+				"Invalid filter: " + exception.getMessage(), exception);
 		}
 	}
 

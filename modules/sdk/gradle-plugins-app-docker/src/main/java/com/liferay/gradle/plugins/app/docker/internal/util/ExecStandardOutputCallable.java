@@ -67,10 +67,10 @@ public class ExecStandardOutputCallable implements Callable<String> {
 
 			return result.trim();
 		}
-		catch (GradleException ge) {
+		catch (GradleException gradleException) {
 			Logger logger = _project.getLogger();
 
-			logger.error("Unable to execute {}", _commandLine, ge);
+			logger.error("Unable to execute {}", _commandLine, gradleException);
 
 			return null;
 		}

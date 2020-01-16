@@ -65,8 +65,8 @@ public class AutoEscapeBeanHandler implements InvocationHandler, Serializable {
 		try {
 			result = method.invoke(_bean, arguments);
 		}
-		catch (InvocationTargetException ite) {
-			throw ite.getTargetException();
+		catch (InvocationTargetException invocationTargetException) {
+			throw invocationTargetException.getTargetException();
 		}
 
 		if (method.getAnnotation(AutoEscape.class) != null) {

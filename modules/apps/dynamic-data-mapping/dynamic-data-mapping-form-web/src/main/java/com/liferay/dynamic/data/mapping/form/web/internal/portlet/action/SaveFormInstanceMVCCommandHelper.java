@@ -136,8 +136,8 @@ public class SaveFormInstanceMVCCommandHelper {
 				DDMFormContextDeserializerRequest.with(
 					serializedFormBuilderContext));
 		}
-		catch (PortalException pe) {
-			throw new StructureDefinitionException(pe);
+		catch (PortalException portalException) {
+			throw new StructureDefinitionException(portalException);
 		}
 	}
 
@@ -152,8 +152,8 @@ public class SaveFormInstanceMVCCommandHelper {
 				DDMFormContextDeserializerRequest.with(
 					serializedFormBuilderContext));
 		}
-		catch (PortalException pe) {
-			throw new StructureLayoutException(pe);
+		catch (PortalException portalException) {
+			throw new StructureLayoutException(portalException);
 		}
 	}
 

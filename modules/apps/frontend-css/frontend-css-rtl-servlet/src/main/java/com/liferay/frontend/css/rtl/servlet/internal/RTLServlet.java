@@ -87,7 +87,7 @@ public class RTLServlet extends HttpServlet {
 
 			return super.getLastModified(httpServletRequest);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return super.getLastModified(httpServletRequest);
 		}
 	}
@@ -159,9 +159,9 @@ public class RTLServlet extends HttpServlet {
 
 			StreamUtil.transfer(inputStream, outputStream, false);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to cache RTL CSS", ioe);
+				_log.warn("Unable to cache RTL CSS", ioException);
 			}
 		}
 		finally {

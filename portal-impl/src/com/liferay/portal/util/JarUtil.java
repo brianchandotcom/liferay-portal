@@ -69,7 +69,7 @@ public class JarUtil {
 								newURLString));
 					}
 				}
-				catch (UnknownHostException uhe) {
+				catch (UnknownHostException unknownHostException) {
 					if (_log.isDebugEnabled()) {
 						_log.debug("Unable to resolve \"mirrors\"");
 					}
@@ -128,8 +128,8 @@ public class JarUtil {
 			_addURLMethod = ReflectionUtil.getDeclaredMethod(
 				URLClassLoader.class, "addURL", URL.class);
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

@@ -138,9 +138,9 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 			_elasticsearchConnectionManager.unregisterCompanyId(companyId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to delete index for " + companyId, e);
+				_log.warn("Unable to delete index for " + companyId, exception);
 			}
 		}
 	}
@@ -230,8 +230,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 				return false;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return true;

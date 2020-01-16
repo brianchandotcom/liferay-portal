@@ -132,8 +132,10 @@ public class ConfigurationBeanSettingsTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Configuration bean is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Configuration bean is null",
+				nullPointerException.getMessage());
 		}
 	}
 
@@ -145,9 +147,10 @@ public class ConfigurationBeanSettingsTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 			Assert.assertEquals(
-				"Location variable resolver is null", npe.getMessage());
+				"Location variable resolver is null",
+				nullPointerException.getMessage());
 		}
 	}
 

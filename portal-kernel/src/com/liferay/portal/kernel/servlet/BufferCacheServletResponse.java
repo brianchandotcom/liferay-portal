@@ -64,8 +64,8 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 		try {
 			_flushInternalBuffer();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		if (_unsyncByteArrayOutputStream != null) {

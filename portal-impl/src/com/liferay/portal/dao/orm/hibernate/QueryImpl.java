@@ -61,8 +61,8 @@ public class QueryImpl implements Query {
 		try {
 			return _query.executeUpdate();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -78,8 +78,8 @@ public class QueryImpl implements Query {
 
 			return list.iterator();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -120,8 +120,8 @@ public class QueryImpl implements Query {
 
 			return list;
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -130,8 +130,8 @@ public class QueryImpl implements Query {
 		try {
 			return new ScrollableResultsImpl(_query.scroll());
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -384,8 +384,8 @@ public class QueryImpl implements Query {
 		try {
 			return _query.uniqueResult();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 

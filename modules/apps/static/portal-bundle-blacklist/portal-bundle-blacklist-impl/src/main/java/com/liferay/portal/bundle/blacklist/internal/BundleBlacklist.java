@@ -202,8 +202,8 @@ public class BundleBlacklist {
 
 				_addToBlacklistFile(symbolicName, uninstalledBundleData);
 			}
-			catch (Exception e) {
-				_log.error("Unable to uninstall " + bundle, e);
+			catch (Exception exception) {
+				_log.error("Unable to uninstall " + bundle, exception);
 
 				_uninstalledBundles.remove(symbolicName);
 			}

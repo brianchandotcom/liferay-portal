@@ -185,8 +185,8 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 
 				serviceTracker.open();
 			}
-			catch (InvalidSyntaxException ise) {
-				throw new ExceptionInInitializerError(ise);
+			catch (InvalidSyntaxException invalidSyntaxException) {
+				throw new ExceptionInInitializerError(invalidSyntaxException);
 			}
 		}
 

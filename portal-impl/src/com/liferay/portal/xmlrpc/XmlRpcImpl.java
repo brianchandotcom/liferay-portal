@@ -55,8 +55,8 @@ public class XmlRpcImpl implements XmlRpc {
 		try {
 			return doExecuteMethod(url, methodName, arguments);
 		}
-		catch (Exception e) {
-			throw new XmlRpcException(e);
+		catch (Exception exception) {
+			throw new XmlRpcException(exception);
 		}
 	}
 

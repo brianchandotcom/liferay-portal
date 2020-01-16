@@ -138,8 +138,8 @@ public class CreateTokenCommand implements Command {
 			_DEFAULT_TOKEN_URL = new URL(
 				BundleSupportConstants.DEFAULT_TOKEN_URL);
 		}
-		catch (MalformedURLException murle) {
-			throw new ExceptionInInitializerError(murle);
+		catch (MalformedURLException malformedURLException) {
+			throw new ExceptionInInitializerError(malformedURLException);
 		}
 	}
 

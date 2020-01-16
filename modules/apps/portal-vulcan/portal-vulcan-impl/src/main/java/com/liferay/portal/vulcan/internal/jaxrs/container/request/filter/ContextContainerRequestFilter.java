@@ -58,8 +58,8 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 		try {
 			_handleMessage(message);
 		}
-		catch (Exception e) {
-			throw new Fault(e);
+		catch (Exception exception) {
+			throw new Fault(exception);
 		}
 	}
 

@@ -144,10 +144,11 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 			contextObjects.put(variableName, templateModel);
 		}
-		catch (TemplateModelException tme) {
+		catch (TemplateModelException templateModelException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Variable " + variableName + " registration fail", tme);
+					"Variable " + variableName + " registration fail",
+					templateModelException);
 			}
 		}
 	}
@@ -212,10 +213,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 				contextObjects.put(
 					entry.getKey(), taglibFactoryWrapper.get(entry.getValue()));
 			}
-			catch (TemplateModelException tme) {
+			catch (TemplateModelException templateModelException) {
 				_log.error(
 					"Unable to add taglib " + entry.getKey() + " to context",
-					tme);
+					templateModelException);
 			}
 		}
 	}
@@ -290,9 +291,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 			field.set(_configuration, templateCache);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new TemplateException(
-				"Unable to Initialize FreeMarker manager", e);
+				"Unable to Initialize FreeMarker manager", exception);
 		}
 
 		_configuration.setDefaultEncoding(StringPool.UTF8);
@@ -306,8 +307,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 				"template_exception_handler",
 				_freeMarkerEngineConfiguration.templateExceptionHandler());
 		}
-		catch (Exception e) {
-			throw new TemplateException("Unable to init FreeMarker manager", e);
+		catch (Exception exception) {
+			throw new TemplateException(
+				"Unable to init FreeMarker manager", exception);
 		}
 
 		_defaultObjectWrapper = new LiferayObjectWrapper();
@@ -608,7 +610,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			try {
 				return url.openStream();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				return null;
 			}
 		}
@@ -674,8 +676,8 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 					return map.keySet();
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 				}
 			}
 

@@ -99,9 +99,9 @@ public class LiferayJSONSerializer extends JSONSerializer {
 					}
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				throw new UnmarshallException(
-					"Unable to get class " + className, e);
+					"Unable to get class " + className, exception);
 			}
 		}
 

@@ -116,7 +116,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						portletName, fragmentEntryLink.getNamespace(),
 						element.attr("id"), new long[0]));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 	}

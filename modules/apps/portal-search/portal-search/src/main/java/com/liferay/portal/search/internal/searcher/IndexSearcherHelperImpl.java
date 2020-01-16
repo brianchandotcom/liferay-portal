@@ -41,8 +41,8 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		try {
 			return _indexSearcherHelper.search(searchContext, query);
 		}
-		catch (SearchException se) {
-			throw uncheck(se);
+		catch (SearchException searchException) {
+			throw uncheck(searchException);
 		}
 	}
 
@@ -51,8 +51,8 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		try {
 			return _indexSearcherHelper.searchCount(searchContext, query);
 		}
-		catch (SearchException se) {
-			throw uncheck(se);
+		catch (SearchException searchException) {
+			throw uncheck(searchException);
 		}
 	}
 
@@ -61,8 +61,8 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		try {
 			return _indexSearcherHelper.spellCheckKeywords(searchContext);
 		}
-		catch (SearchException se) {
-			throw uncheck(se);
+		catch (SearchException searchException) {
+			throw uncheck(searchException);
 		}
 	}
 
@@ -73,8 +73,8 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 		try {
 			return _indexSearcherHelper.spellCheckKeywords(searchContext, max);
 		}
-		catch (SearchException se) {
-			throw uncheck(se);
+		catch (SearchException searchException) {
+			throw uncheck(searchException);
 		}
 	}
 
@@ -86,8 +86,8 @@ public class IndexSearcherHelperImpl implements IndexSearcherHelper {
 			return _indexSearcherHelper.suggestKeywordQueries(
 				searchContext, max);
 		}
-		catch (SearchException se) {
-			throw uncheck(se);
+		catch (SearchException searchException) {
+			throw uncheck(searchException);
 		}
 	}
 

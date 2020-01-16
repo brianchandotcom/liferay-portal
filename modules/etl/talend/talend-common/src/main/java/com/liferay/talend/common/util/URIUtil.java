@@ -102,8 +102,8 @@ public class URIUtil {
 		try {
 			serverURL = new URL(protocol, host, port, "");
 		}
-		catch (java.net.MalformedURLException murle) {
-			throw new MalformedURLException(murle);
+		catch (java.net.MalformedURLException malformedURLException) {
+			throw new MalformedURLException(malformedURLException);
 		}
 
 		return serverURL;
@@ -152,10 +152,10 @@ public class URIUtil {
 		try {
 			return new URI(StringUtil.removeQuotes(href));
 		}
-		catch (URISyntaxException urise) {
+		catch (URISyntaxException uriSyntaxException) {
 			_logger.error("Unable to convert URL to URI: " + href);
 
-			throw new RuntimeException(urise);
+			throw new RuntimeException(uriSyntaxException);
 		}
 	}
 
@@ -165,8 +165,8 @@ public class URIUtil {
 		try {
 			url = new URL(StringUtil.removeQuotes(href));
 		}
-		catch (java.net.MalformedURLException murle) {
-			throw new MalformedURLException(murle);
+		catch (java.net.MalformedURLException malformedURLException) {
+			throw new MalformedURLException(malformedURLException);
 		}
 
 		return url;

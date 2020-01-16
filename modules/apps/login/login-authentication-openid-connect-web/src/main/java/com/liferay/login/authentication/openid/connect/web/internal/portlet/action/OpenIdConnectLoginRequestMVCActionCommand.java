@@ -157,42 +157,42 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 				openIdConnectProviderName, httpServletRequest,
 				httpServletResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			actionResponse.setRenderParameter(
 				"mvcRenderCommandName",
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME);
 
-			if (e instanceof OpenIdConnectServiceException) {
+			if (exception instanceof OpenIdConnectServiceException) {
 				String message =
 					"Unable to communicate with OpenID Connect provider: " +
-						e.getMessage();
+						exception.getMessage();
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(message, e);
+					_log.debug(message, exception);
 				}
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(message);
 				}
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof
+			else if (exception instanceof
 						UserEmailAddressException.MustNotBeDuplicate) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
 				_log.error(
 					"Unable to process the OpenID Connect login: " +
-						e.getMessage(),
-					e);
+						exception.getMessage(),
+					exception);
 
-				_portal.sendError(e, actionRequest, actionResponse);
+				_portal.sendError(exception, actionRequest, actionResponse);
 			}
 		}
 	}

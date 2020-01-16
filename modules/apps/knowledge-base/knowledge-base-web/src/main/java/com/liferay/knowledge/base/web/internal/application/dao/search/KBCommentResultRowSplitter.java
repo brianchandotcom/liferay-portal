@@ -108,11 +108,11 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 			completedKBCommentsCount =
 				_kbSuggestionListDisplayContext.getCompletedKBCommentsCount();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				"Unable to obtain completed knowledge base comments count " +
 					"for group " + _kbSuggestionListDisplayContext.getGroupId(),
-				pe);
+				portalException);
 		}
 
 		return String.format(
@@ -127,12 +127,12 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 			inProgressKBCommentsCount =
 				_kbSuggestionListDisplayContext.getInProgressKBCommentsCount();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				"Unable to obtain in progress knowledge base comments count " +
 					"for  group " +
 						_kbSuggestionListDisplayContext.getGroupId(),
-				pe);
+				portalException);
 		}
 
 		return String.format(
@@ -147,11 +147,11 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 			newKBCommentsCount =
 				_kbSuggestionListDisplayContext.getNewKBCommentsCount();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				"Unable to obtain new knowledge base comments count for " +
 					"group " + _kbSuggestionListDisplayContext.getGroupId(),
-				pe);
+				portalException);
 		}
 
 		return String.format(

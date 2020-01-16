@@ -124,8 +124,8 @@ public class CTIndicatorProductNavigationControlMenuEntry
 		try {
 			changeTrackingURL.setWindowState(WindowState.MAXIMIZED);
 		}
-		catch (WindowStateException wse) {
-			ReflectionUtil.throwException(wse);
+		catch (WindowStateException windowStateException) {
+			ReflectionUtil.throwException(windowStateException);
 		}
 
 		Map<String, String> values = HashMapBuilder.put(
@@ -145,8 +145,8 @@ public class CTIndicatorProductNavigationControlMenuEntry
 				"changeTrackingIcon",
 				iconTag.doTagAsString(httpServletRequest, httpServletResponse));
 		}
-		catch (JspException je) {
-			ReflectionUtil.throwException(je);
+		catch (JspException jspException) {
+			ReflectionUtil.throwException(jspException);
 		}
 
 		StringBundler sb = StringUtil.replaceToStringBundler(

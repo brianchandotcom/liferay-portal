@@ -63,8 +63,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			_calendarResourceLocalService.updateCalendarResource(
 				calendarResource);
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 
@@ -90,8 +90,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			_calendarResourceLocalService.deleteCalendarResources(
 				group.getGroupId());
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

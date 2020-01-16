@@ -62,8 +62,8 @@ public class FileEntrySharingEntryMenuItemContributor
 			return Collections.singleton(
 				_createDownloadMenuItem(sharingEntry, themeDisplay));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return Collections.emptyList();
 		}

@@ -107,8 +107,8 @@ public class FileEntrySearchFixture {
 				MimeTypesUtil.getContentType(fileName), title, StringPool.BLANK,
 				StringPool.BLANK, file, serviceContext);
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 
@@ -121,11 +121,11 @@ public class FileEntrySearchFixture {
 				userId, groupId, 0, StringPool.BLANK, title, true,
 				serviceContext);
 		}
-		catch (RuntimeException re) {
-			throw re;
+		catch (RuntimeException runtimeException) {
+			throw runtimeException;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -133,8 +133,8 @@ public class FileEntrySearchFixture {
 		try {
 			return FileUtil.createTempFile(inputStream);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -151,8 +151,8 @@ public class FileEntrySearchFixture {
 			return ServiceContextTestUtil.getServiceContext(
 				fileEntryBlueprint.getGroupId());
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

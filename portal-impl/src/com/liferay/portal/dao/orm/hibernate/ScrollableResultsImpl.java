@@ -34,8 +34,8 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		try {
 			return _scrollableResults.first();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -44,8 +44,8 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		try {
 			return _scrollableResults.get();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -54,8 +54,8 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		try {
 			return _scrollableResults.get(i);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -64,8 +64,8 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		try {
 			return _scrollableResults.last();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -74,8 +74,8 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		try {
 			return _scrollableResults.next();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -84,8 +84,8 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		try {
 			return _scrollableResults.previous();
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 
@@ -94,8 +94,8 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		try {
 			return _scrollableResults.scroll(i);
 		}
-		catch (Exception e) {
-			throw ExceptionTranslator.translate(e);
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
 		}
 	}
 

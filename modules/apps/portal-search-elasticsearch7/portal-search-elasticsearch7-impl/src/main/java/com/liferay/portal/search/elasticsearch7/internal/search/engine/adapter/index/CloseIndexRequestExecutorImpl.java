@@ -90,8 +90,8 @@ public class CloseIndexRequestExecutorImpl
 			return indicesClient.close(
 				elasticsearchCloseIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

@@ -88,8 +88,8 @@ public class SignInNavigationPrePageInclude implements PageInclude {
 				fastLoginURL.setPortletMode(PortletMode.VIEW);
 				fastLoginURL.setWindowState(LiferayWindowState.POP_UP);
 			}
-			catch (PortletException pe) {
-				throw new JspException(pe);
+			catch (PortletException portletException) {
+				throw new JspException(portletException);
 			}
 
 			signInURL = fastLoginURL.toString();

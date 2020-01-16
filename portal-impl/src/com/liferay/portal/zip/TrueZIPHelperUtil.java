@@ -42,8 +42,8 @@ public class TrueZIPHelperUtil {
 				_thread = thread;
 			}
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -56,8 +56,8 @@ public class TrueZIPHelperUtil {
 			try {
 				thread.join();
 			}
-			catch (InterruptedException ie) {
-				ReflectionUtil.throwException(ie);
+			catch (InterruptedException interruptedException) {
+				ReflectionUtil.throwException(interruptedException);
 			}
 		}
 	}

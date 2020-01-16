@@ -81,8 +81,8 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 					applicationKey, renderRequest, renderResponse, uadDisplay,
 					uadHierarchyDisplay));
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		return "/view_uad_hierarchy.jsp";

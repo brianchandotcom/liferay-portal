@@ -71,9 +71,9 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 
 			setDDMFormLocalizedValuesDefaultLocale(ddmForm);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 

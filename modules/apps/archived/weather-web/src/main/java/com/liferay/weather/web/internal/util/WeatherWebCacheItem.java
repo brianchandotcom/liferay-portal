@@ -51,8 +51,8 @@ public class WeatherWebCacheItem implements WebCacheItem {
 		try {
 			weather = doConvert();
 		}
-		catch (Exception e) {
-			throw new WebCacheException(_zip, e);
+		catch (Exception exception) {
+			throw new WebCacheException(_zip, exception);
 		}
 
 		return weather;

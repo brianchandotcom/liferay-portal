@@ -177,7 +177,7 @@ public class LinkbackProducerUtil {
 				try {
 					xmlStreamReader.close();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 			}
 		}
@@ -215,8 +215,8 @@ public class LinkbackProducerUtil {
 
 			serverUri = response.getHeader("X-Pingback");
 		}
-		catch (Exception e) {
-			_log.error("Unable to call HEAD of " + targetUri, e);
+		catch (Exception exception) {
+			_log.error("Unable to call HEAD of " + targetUri, exception);
 		}
 
 		if (Validator.isNotNull(serverUri)) {
@@ -240,8 +240,8 @@ public class LinkbackProducerUtil {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to call GET of " + targetUri, e);
+		catch (Exception exception) {
+			_log.error("Unable to call GET of " + targetUri, exception);
 		}
 
 		return serverUri;

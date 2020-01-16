@@ -81,7 +81,7 @@ public class PortletPreferencesModelListener
 				CacheUtil.clearCache(companyId);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			CacheUtil.clearCache();
 		}
 	}
@@ -136,8 +136,9 @@ public class PortletPreferencesModelListener
 					layout.getLayoutId(), layout.getTypeSettings());
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to update the layout's modified date", e);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to update the layout's modified date", exception);
 		}
 	}
 

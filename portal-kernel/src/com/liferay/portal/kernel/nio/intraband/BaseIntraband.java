@@ -440,7 +440,7 @@ public abstract class BaseIntraband implements Intraband {
 				}
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			RegistrationReference registrationReference =
 				channelContext.getRegistrationReference();
 
@@ -449,7 +449,7 @@ public abstract class BaseIntraband implements Intraband {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Broken read channel, unregister " + registrationReference,
-					ioe);
+					ioException);
 			}
 			else if (_log.isInfoEnabled()) {
 				_log.info(
@@ -486,7 +486,7 @@ public abstract class BaseIntraband implements Intraband {
 
 			return false;
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			RegistrationReference registrationReference =
 				channelContext.getRegistrationReference();
 
@@ -496,13 +496,13 @@ public abstract class BaseIntraband implements Intraband {
 				datagram.completionHandler;
 
 			if (completionHandler != null) {
-				completionHandler.failed(datagram.attachment, ioe);
+				completionHandler.failed(datagram.attachment, ioException);
 			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Broken write channel, unregister " + registrationReference,
-					ioe);
+					ioException);
 			}
 			else if (_log.isInfoEnabled()) {
 				_log.info(

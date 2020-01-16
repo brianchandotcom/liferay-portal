@@ -136,8 +136,8 @@ public class ASMUtil {
 			classReader = new ClassReader(
 				classLoader.getResourceAsStream(name.concat(".class")));
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		ClassNode classNode = new ClassNode();

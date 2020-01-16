@@ -812,11 +812,14 @@ public class DefaultExportImportContentProcessorTest {
 				_exportImportContentProcessor.validateContentReferences(
 					_stagingGroup.getGroupId(), layoutReference);
 			}
-			catch (ExportImportContentValidationException eicve) {
-				Throwable cause = eicve.getCause();
+			catch (ExportImportContentValidationException
+						exportImportContentValidationException) {
+
+				Throwable cause =
+					exportImportContentValidationException.getCause();
 
 				if ((cause instanceof NoSuchLayoutException) ||
-					(eicve.getType() ==
+					(exportImportContentValidationException.getType() ==
 						ExportImportContentValidationException.
 							LAYOUT_GROUP_NOT_FOUND)) {
 

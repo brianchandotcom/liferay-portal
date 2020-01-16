@@ -69,9 +69,9 @@ public class JournalPermissionAssetEntryAction implements AssetEntryAction {
 				String.valueOf(article.getResourcePrimKey()),
 				LiferayWindowState.POP_UP.toString(), null, httpServletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 

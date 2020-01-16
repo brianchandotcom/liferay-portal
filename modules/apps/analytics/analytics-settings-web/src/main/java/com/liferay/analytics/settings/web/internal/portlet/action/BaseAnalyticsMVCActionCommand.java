@@ -106,8 +106,8 @@ public abstract class BaseAnalyticsMVCActionCommand
 
 			saveCompanyConfiguration(actionRequest, themeDisplay);
 		}
-		catch (PrincipalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass());
+		catch (PrincipalException principalException) {
+			SessionErrors.add(actionRequest, principalException.getClass());
 
 			MutableRenderParameters mutableRenderParameters =
 				actionResponse.getRenderParameters();
@@ -206,7 +206,7 @@ public abstract class BaseAnalyticsMVCActionCommand
 				return;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Analytics configuration not found");
 			}

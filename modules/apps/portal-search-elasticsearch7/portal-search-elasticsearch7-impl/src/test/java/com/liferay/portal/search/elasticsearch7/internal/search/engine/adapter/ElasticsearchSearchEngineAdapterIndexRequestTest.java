@@ -675,8 +675,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 			Assert.assertEquals(translateState(indexMetaDataState), state);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -702,8 +702,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			_indicesClient.close(
 				elasticsearchCloseIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -717,8 +717,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			_indicesClient.create(
 				elasticsearchCreateIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -732,8 +732,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			return _indicesClient.delete(
 				elasticsearchDeleteIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -749,8 +749,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			return _indicesClient.getMapping(
 				getMappingsRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -763,8 +763,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			return _indicesClient.getSettings(
 				getSettingsRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -777,8 +777,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			return _indicesClient.exists(
 				getIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -792,8 +792,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			_indicesClient.open(
 				elasticsearchOpenIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -808,8 +808,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			_indicesClient.putMapping(
 				putMappingRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -825,8 +825,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			_indicesClient.putSettings(
 				updateSettingsRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		_openIndex(_INDEX_NAME);

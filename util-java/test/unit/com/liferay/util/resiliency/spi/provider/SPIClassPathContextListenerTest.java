@@ -473,10 +473,10 @@ public class SPIClassPathContextListenerTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			Assert.assertEquals(
 				"Unable to find directory " + file.getAbsolutePath(),
-				re.getMessage());
+				runtimeException.getMessage());
 		}
 
 		// Not a directory
@@ -491,10 +491,10 @@ public class SPIClassPathContextListenerTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			Assert.assertEquals(
 				"Unable to find directory " + file.getAbsolutePath(),
-				re.getMessage());
+				runtimeException.getMessage());
 		}
 		finally {
 			file.delete();

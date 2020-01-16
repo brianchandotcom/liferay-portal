@@ -164,11 +164,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 					cacheResult(model);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				entityCache.removeResult(
 					entityCacheEnabled, _modelImplClass, primaryKey);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -299,8 +299,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 					entityCacheEnabled, _modelImplClass, primaryKey, nullModel);
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -327,8 +327,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 			return dynamicQuery.list();
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -350,8 +350,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 			return dynamicQuery.list();
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -377,8 +377,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 				session.flush();
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 	}
 

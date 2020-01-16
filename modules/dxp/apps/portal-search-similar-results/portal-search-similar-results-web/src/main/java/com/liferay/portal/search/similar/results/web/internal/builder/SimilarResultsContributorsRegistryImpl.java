@@ -77,7 +77,7 @@ public class SimilarResultsContributorsRegistryImpl
 			similarResultsContributor.detectRoute(
 				routeBuilderImpl, routeHelper);
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			return Optional.empty();
 		}
 

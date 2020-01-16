@@ -107,8 +107,8 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 				null, portletNamespace, namespace, mode, readOnly,
 				showEmptyFieldLabel, ddmFormFieldRenderingContext.getLocale());
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 
@@ -550,8 +550,10 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			freeMarkerContext.put(
 				"itemSelectorAuthToken", itemSelectorAuthToken);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to generate item selector auth token ", pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to generate item selector auth token ",
+				portalException);
 		}
 
 		freeMarkerContext.put("namespace", namespace);
@@ -606,8 +608,10 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 					ClassLoaderPool.getContextName(clazz.getClassLoader()),
 					TemplateConstants.CLASS_LOADER_SEPARATOR, resource));
 		}
-		catch (TemplateException te) {
-			_log.error("Unable to find template resource " + resource, te);
+		catch (TemplateException templateException) {
+			_log.error(
+				"Unable to find template resource " + resource,
+				templateException);
 		}
 
 		return null;

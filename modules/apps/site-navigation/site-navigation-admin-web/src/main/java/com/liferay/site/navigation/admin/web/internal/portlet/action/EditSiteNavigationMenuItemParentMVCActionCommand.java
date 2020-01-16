@@ -71,8 +71,12 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
-		catch (InvalidSiteNavigationMenuItemOrderException isnmioe) {
-			SessionErrors.add(actionRequest, isnmioe.getClass());
+		catch (InvalidSiteNavigationMenuItemOrderException
+					invalidSiteNavigationMenuItemOrderException) {
+
+			SessionErrors.add(
+				actionRequest,
+				invalidSiteNavigationMenuItemOrderException.getClass());
 
 			sendRedirect(actionRequest, actionResponse);
 		}

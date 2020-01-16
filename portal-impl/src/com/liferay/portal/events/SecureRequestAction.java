@@ -65,8 +65,8 @@ public class SecureRequestAction extends Action {
 				httpServletResponse.sendRedirect(redirect);
 			}
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 	}
 

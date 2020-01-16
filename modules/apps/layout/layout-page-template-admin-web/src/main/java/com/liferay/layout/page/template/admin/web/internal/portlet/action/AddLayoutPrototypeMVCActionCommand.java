@@ -162,12 +162,14 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 							"please-enter-a-valid-name")));
 			}
 			else if (t instanceof LayoutPageTemplateEntryNameException) {
-				LayoutPageTemplateEntryNameException lptene =
-					(LayoutPageTemplateEntryNameException)t;
+				LayoutPageTemplateEntryNameException
+					layoutPageTemplateEntryNameException =
+						(LayoutPageTemplateEntryNameException)t;
 
 				_layoutPageTemplateEntryExceptionRequestHandler.
 					handlePortalException(
-						actionRequest, actionResponse, lptene);
+						actionRequest, actionResponse,
+						layoutPageTemplateEntryNameException);
 			}
 			else {
 				JSONPortletResponseUtil.writeJSON(

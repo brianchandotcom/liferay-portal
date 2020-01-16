@@ -60,9 +60,10 @@ public class ModifiedFacetPortletPreferencesImpl
 		try {
 			return JSONFactoryUtil.createJSONArray(rangesString);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			_log.error(
-				"Unable to create a JSON array from: " + rangesString, jsone);
+				"Unable to create a JSON array from: " + rangesString,
+				jsonException);
 
 			return getDefaultRangesJSONArray();
 		}

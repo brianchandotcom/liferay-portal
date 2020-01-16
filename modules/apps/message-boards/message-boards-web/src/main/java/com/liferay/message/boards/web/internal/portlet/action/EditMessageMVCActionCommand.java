@@ -209,9 +209,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (NoSuchMessageException | PrincipalException |
-			   RequiredMessageException e) {
+			   RequiredMessageException exception) {
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/message_boards/error.jsp");
@@ -221,26 +221,27 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			   FileNameException | FileSizeException |
 			   LiferayFileItemException | LockedThreadException |
 			   MessageBodyException | MessageSubjectException |
-			   SanitizerException | UploadRequestSizeException e) {
+			   SanitizerException | UploadRequestSizeException exception) {
 
-			if (e instanceof AntivirusScannerException) {
-				SessionErrors.add(actionRequest, e.getClass(), e);
+			if (exception instanceof AntivirusScannerException) {
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 			}
 			else {
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 		}
-		catch (AssetCategoryException | AssetTagException e) {
-			SessionErrors.add(actionRequest, e.getClass(), e);
+		catch (AssetCategoryException | AssetTagException exception) {
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
 		}
-		catch (Exception e) {
-			Throwable cause = e.getCause();
+		catch (Exception exception) {
+			Throwable cause = exception.getCause();
 
 			if (cause instanceof SanitizerException) {
 				SessionErrors.add(actionRequest, SanitizerException.class);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 		catch (Throwable t) {
@@ -260,8 +261,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			return _configurationProvider.getSystemConfiguration(
 				CaptchaConfiguration.class);
 		}
-		catch (Exception e) {
-			throw new CaptchaConfigurationException(e);
+		catch (Exception exception) {
+			throw new CaptchaConfigurationException(exception);
 		}
 	}
 
@@ -530,9 +531,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 				try (InputStream inputStream = inputStreamOVP.getValue()) {
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(ioe, ioe);
+						_log.warn(ioException, ioException);
 					}
 				}
 			}

@@ -73,8 +73,8 @@ public class AuthRedirectAction extends BaseSamlStrutsAction {
 		try {
 			httpServletResponse.sendRedirect(redirect);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 
 		return null;

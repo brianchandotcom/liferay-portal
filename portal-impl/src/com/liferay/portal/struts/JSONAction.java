@@ -85,27 +85,27 @@ public abstract class JSONAction implements Action {
 				json = sb.toString();
 			}
 		}
-		catch (PrincipalException pe) {
-			_log.error(pe.getMessage());
+		catch (PrincipalException principalException) {
+			_log.error(principalException.getMessage());
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_FORBIDDEN, pe, httpServletRequest,
-				httpServletResponse);
+				HttpServletResponse.SC_FORBIDDEN, principalException,
+				httpServletRequest, httpServletResponse);
 
 			return null;
 		}
-		catch (SecurityException se) {
+		catch (SecurityException securityException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(se.getMessage());
+				_log.warn(securityException.getMessage());
 			}
 
-			json = JSONFactoryUtil.serializeThrowable(se);
+			json = JSONFactoryUtil.serializeThrowable(securityException);
 		}
-		catch (Exception e) {
-			_log.error(e.getMessage());
+		catch (Exception exception) {
+			_log.error(exception.getMessage());
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception,
 				httpServletRequest, httpServletResponse);
 
 			return null;

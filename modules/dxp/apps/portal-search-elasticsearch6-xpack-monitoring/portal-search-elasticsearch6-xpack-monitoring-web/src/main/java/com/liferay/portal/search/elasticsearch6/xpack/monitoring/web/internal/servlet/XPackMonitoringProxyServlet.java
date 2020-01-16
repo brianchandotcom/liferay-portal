@@ -217,8 +217,8 @@ public class XPackMonitoringProxyServlet extends ProxyServlet {
 
 			super.service(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			sendError(e, httpServletRequest, httpServletResponse);
+		catch (Exception exception) {
+			sendError(exception, httpServletRequest, httpServletResponse);
 		}
 	}
 

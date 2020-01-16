@@ -50,8 +50,8 @@ public class AddUserOrganizationChecker extends EmptyOnClickRowChecker {
 			return UserLocalServiceUtil.hasOrganizationUser(
 				_organization.getOrganizationId(), user.getUserId());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -94,8 +94,8 @@ public class AddUserOrganizationChecker extends EmptyOnClickRowChecker {
 			return !UserPermissionUtil.contains(
 				permissionChecker, user.getUserId(), ActionKeys.UPDATE);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return super.isDisabled(obj);

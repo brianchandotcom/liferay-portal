@@ -197,7 +197,7 @@ public class SourceFormatterUtil {
 		try {
 			return StringUtil.read(url.openStream());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return null;
 		}
 	}
@@ -226,7 +226,7 @@ public class SourceFormatterUtil {
 					SourceFormatterUtil.GIT_LIFERAY_PORTAL_URL,
 					portalBranchName, StringPool.SLASH, fileName));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -460,8 +460,8 @@ public class SourceFormatterUtil {
 
 			return canonicalFile.toPath();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -538,7 +538,7 @@ public class SourceFormatterUtil {
 										return FileVisitResult.SKIP_SUBTREE;
 									}
 								}
-								catch (Exception e) {
+								catch (Exception exception) {
 								}
 							}
 						}

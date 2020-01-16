@@ -133,8 +133,8 @@ public class DecrypterRegistrator {
 			try {
 				return _metadataManager.getEncryptionCredential();
 			}
-			catch (SamlException se) {
-				throw new ResolverException(se);
+			catch (SamlException samlException) {
+				throw new ResolverException(samlException);
 			}
 		}
 

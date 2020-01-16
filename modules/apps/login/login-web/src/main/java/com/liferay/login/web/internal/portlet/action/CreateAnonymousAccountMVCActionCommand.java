@@ -222,40 +222,41 @@ public class CreateAnonymousAccountMVCActionCommand
 					actionRequest, actionResponse, jsonObject);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (cmd.equals(Constants.UPDATE)) {
-				jsonObject.putException(e);
+				jsonObject.putException(exception);
 
 				JSONPortletResponseUtil.writeJSON(
 					actionRequest, actionResponse, jsonObject);
 			}
-			else if (e instanceof
+			else if (exception instanceof
 						UserEmailAddressException.MustNotBeDuplicate) {
 
 				User user = _userLocalService.getUserByEmailAddress(
 					themeDisplay.getCompanyId(), emailAddress);
 
 				if (user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
-					SessionErrors.add(actionRequest, e.getClass());
+					SessionErrors.add(actionRequest, exception.getClass());
 				}
 				else {
 					sendRedirect(
 						actionRequest, actionResponse, portletURL.toString());
 				}
 			}
-			else if (e instanceof CaptchaException ||
-					 e instanceof CompanyMaxUsersException ||
-					 e instanceof ContactNameException ||
-					 e instanceof EmailAddressException ||
-					 e instanceof GroupFriendlyURLException ||
-					 e instanceof UserEmailAddressException) {
+			else if (exception instanceof CaptchaException ||
+					 exception instanceof CompanyMaxUsersException ||
+					 exception instanceof ContactNameException ||
+					 exception instanceof EmailAddressException ||
+					 exception instanceof GroupFriendlyURLException ||
+					 exception instanceof UserEmailAddressException) {
 
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 			}
 			else {
-				_log.error("Unable to create anonymous account", e);
+				_log.error("Unable to create anonymous account", exception);
 
-				_portal.sendError(e, actionRequest, actionResponse);
+				_portal.sendError(exception, actionRequest, actionResponse);
 			}
 		}
 	}
@@ -267,8 +268,8 @@ public class CreateAnonymousAccountMVCActionCommand
 			return _configurationProvider.getSystemConfiguration(
 				CaptchaConfiguration.class);
 		}
-		catch (Exception e) {
-			throw new CaptchaConfigurationException(e);
+		catch (Exception exception) {
+			throw new CaptchaConfigurationException(exception);
 		}
 	}
 

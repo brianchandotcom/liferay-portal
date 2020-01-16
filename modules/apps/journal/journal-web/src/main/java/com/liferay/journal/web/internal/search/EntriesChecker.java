@@ -103,7 +103,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 					showInput = true;
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 		else if (folder != null) {
@@ -116,7 +116,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 					showInput = true;
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

@@ -152,8 +152,8 @@ public class PortalInstancesLocalServiceImpl
 				PortalInstances.removeCompany(companyId);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

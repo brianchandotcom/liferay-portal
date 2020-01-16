@@ -59,8 +59,8 @@ public class UserGroupKeywordQueryContributor
 			queryHelper.addSearchTerm(
 				booleanQuery, searchContext, "name", false);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 
 		LinkedHashMap<String, Object> params =

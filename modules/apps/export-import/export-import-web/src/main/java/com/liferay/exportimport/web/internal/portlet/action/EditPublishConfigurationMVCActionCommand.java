@@ -155,10 +155,10 @@ public class EditPublishConfigurationMVCActionCommand
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			SessionErrors.add(actionRequest, e.getClass(), e);
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
 		}
 	}
 

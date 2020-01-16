@@ -141,8 +141,8 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 					DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 					_dlAppLocalService.getFileEntry(fileEntryId));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return StringPool.BLANK;

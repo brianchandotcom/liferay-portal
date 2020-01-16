@@ -71,9 +71,9 @@ public class PublicRenderParametersPool {
 			return publicRenderParametersPool.computeIfAbsent(
 				layoutSet.getLayoutSetId(), key -> new HashMap<>());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return new HashMap<>();

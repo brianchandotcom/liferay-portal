@@ -180,10 +180,11 @@ public class DirectoryTree {
 		try {
 			company = CompanyLocalServiceUtil.getCompanyByWebId(companyWebId);
 		}
-		catch (NoSuchCompanyException nsce) {
+		catch (NoSuchCompanyException noSuchCompanyException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get company with web ID " + companyWebId, nsce);
+					"Unable to get company with web ID " + companyWebId,
+					noSuchCompanyException);
 			}
 
 			return null;

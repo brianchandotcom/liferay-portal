@@ -81,11 +81,11 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 				}
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			_log.error(
 				StringBundler.concat(
 					"Unable to copy from ", location, " to ", path),
-				ioe);
+				ioException);
 		}
 	}
 
@@ -97,9 +97,9 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 
 			return uri.getPath();
 		}
-		catch (URISyntaxException urise) {
+		catch (URISyntaxException uriSyntaxException) {
 			throw new IllegalArgumentException(
-				"Unable to parse location " + location, urise);
+				"Unable to parse location " + location, uriSyntaxException);
 		}
 	}
 

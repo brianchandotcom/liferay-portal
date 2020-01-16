@@ -29,8 +29,8 @@ public class LabelItemList extends ArrayList<LabelItem> {
 		try {
 			unsafeConsumer.accept(labelItem);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		add(labelItem);

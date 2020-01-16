@@ -151,26 +151,30 @@ public class ViewAuthorizationRequestMVCRenderCommand
 				OAuth2ProviderWebKeys.OAUTH2_AUTHORIZE_PORTLET_DISPLAY_CONTEXT,
 				oAuth2AuthorizePortletDisplayContext);
 		}
-		catch (NoSuchOAuth2ApplicationException nsoaae) {
+		catch (NoSuchOAuth2ApplicationException
+					noSuchOAuth2ApplicationException) {
+
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsoaae, nsoaae);
+				_log.debug(
+					noSuchOAuth2ApplicationException,
+					noSuchOAuth2ApplicationException);
 			}
 
 			SessionErrors.add(renderRequest, "clientIdInvalid");
 
 			return "/authorize/error.jsp";
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 
-			SessionErrors.add(renderRequest, pe.getClass());
+			SessionErrors.add(renderRequest, principalException.getClass());
 
 			return "/authorize/error.jsp";
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 
 		return "/authorize/authorize.jsp";

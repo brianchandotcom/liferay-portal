@@ -82,8 +82,10 @@ public class DLFileVersionDLStoreConvertProcess
 						repositoryId, dlFileEntry.getName(),
 						dlFileVersion.getVersion(), delete);
 				}
-				catch (Exception e) {
-					_log.error("Unable to migrate " + dlFileEntry.getName(), e);
+				catch (Exception exception) {
+					_log.error(
+						"Unable to migrate " + dlFileEntry.getName(),
+						exception);
 				}
 			});
 

@@ -163,8 +163,8 @@ public class BookmarksFolderStagedModelRepository
 					userId, existingFolder.getFolderId());
 			}
 		}
-		catch (PortalException pe) {
-			throw new PortletDataException(pe);
+		catch (PortalException portalException) {
+			throw new PortletDataException(portalException);
 		}
 	}
 

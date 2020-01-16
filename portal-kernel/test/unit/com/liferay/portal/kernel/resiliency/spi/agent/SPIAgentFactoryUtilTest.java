@@ -55,7 +55,7 @@ public class SPIAgentFactoryUtilTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 
 		// Bad name
@@ -71,9 +71,10 @@ public class SPIAgentFactoryUtilTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"Unkown SPI agent class name " + badName, iae.getMessage());
+				"Unkown SPI agent class name " + badName,
+				illegalArgumentException.getMessage());
 		}
 
 		// Bad SPIAgent class
@@ -87,10 +88,10 @@ public class SPIAgentFactoryUtilTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			Assert.assertEquals(
 				"Unable to instantiate " + BadMockSPIAgent.class,
-				re.getMessage());
+				runtimeException.getMessage());
 		}
 
 		// Success creation

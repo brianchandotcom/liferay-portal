@@ -82,8 +82,8 @@ public class WorkflowMetricsSLADefinitionVersionFinderImpl
 			return (List<WorkflowMetricsSLADefinitionVersion>)QueryUtil.list(
 				q, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

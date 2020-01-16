@@ -89,8 +89,8 @@ public class PathInterpreter {
 
 			return Optional.of(Tuple.of(fileVersion, properties));
 		}
-		catch (PortalException pe) {
-			throw new AMRuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new AMRuntimeException(portalException);
 		}
 	}
 

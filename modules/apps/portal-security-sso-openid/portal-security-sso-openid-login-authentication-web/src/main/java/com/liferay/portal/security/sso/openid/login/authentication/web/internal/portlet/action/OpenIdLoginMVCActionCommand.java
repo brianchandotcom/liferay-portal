@@ -148,26 +148,26 @@ public class OpenIdLoginMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay, actionRequest, actionResponse);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof OpenIdServiceException) {
+		catch (Exception exception) {
+			if (exception instanceof OpenIdServiceException) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Error communicating with OpenID provider: " +
-							e.getMessage());
+							exception.getMessage());
 				}
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof UserEmailAddressException) {
-				SessionErrors.add(actionRequest, e.getClass());
+			else if (exception instanceof UserEmailAddressException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof StrangersNotAllowedException) {
-				SessionErrors.add(actionRequest, e.getClass());
+			else if (exception instanceof StrangersNotAllowedException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				_log.error("Error processing the OpenID login", e);
+				_log.error("Error processing the OpenID login", exception);
 
-				_portal.sendError(e, actionRequest, actionResponse);
+				_portal.sendError(exception, actionRequest, actionResponse);
 			}
 		}
 	}

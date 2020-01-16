@@ -1710,10 +1710,10 @@ public class ClusterSchedulerEngineTest {
 
 			Assert.fail();
 		}
-		catch (SchedulerException se) {
+		catch (SchedulerException schedulerException) {
 			Assert.assertEquals(
 				"Unable to update trigger for memory clustered job",
-				se.getMessage());
+				schedulerException.getMessage());
 		}
 
 		// Test 3, with not existed job name
@@ -1728,10 +1728,10 @@ public class ClusterSchedulerEngineTest {
 
 			Assert.fail();
 		}
-		catch (SchedulerException se) {
+		catch (SchedulerException schedulerException) {
 			Assert.assertEquals(
 				"Unable to update trigger for memory clustered job",
-				se.getMessage());
+				schedulerException.getMessage());
 		}
 	}
 

@@ -102,7 +102,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 
 			return String.valueOf(userId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -186,8 +186,8 @@ public class SyncAuthVerifier implements AuthVerifier {
 
 			return authVerifierResult;
 		}
-		catch (Exception e) {
-			throw new AuthException(e);
+		catch (Exception exception) {
+			throw new AuthException(exception);
 		}
 	}
 
@@ -197,7 +197,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 		try {
 			signer = getSigner();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -215,7 +215,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 		try {
 			return jsonToken.serializeAndSign();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -264,7 +264,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 
 			return _signer;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

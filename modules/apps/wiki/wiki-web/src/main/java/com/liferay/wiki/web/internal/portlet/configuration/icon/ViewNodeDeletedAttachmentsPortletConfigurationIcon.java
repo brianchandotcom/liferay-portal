@@ -78,7 +78,7 @@ public class ViewNodeDeletedAttachmentsPortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -99,7 +99,7 @@ public class ViewNodeDeletedAttachmentsPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(),
 				ActionUtil.getNode(portletRequest), ActionKeys.UPDATE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

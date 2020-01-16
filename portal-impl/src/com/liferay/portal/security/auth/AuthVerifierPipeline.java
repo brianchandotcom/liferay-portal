@@ -262,11 +262,12 @@ public class AuthVerifierPipeline {
 				authVerifierResult = authVerifier.verify(
 					accessControlContext, properties);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					Class<?> authVerifierClass = authVerifier.getClass();
 
-					_log.debug("Skipping " + authVerifierClass.getName(), e);
+					_log.debug(
+						"Skipping " + authVerifierClass.getName(), exception);
 				}
 
 				continue;

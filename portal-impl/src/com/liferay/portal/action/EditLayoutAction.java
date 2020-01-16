@@ -101,14 +101,16 @@ public class EditLayoutAction extends JSONAction {
 
 			jsonObject.put("status", HttpServletResponse.SC_OK);
 		}
-		catch (LayoutTypeException lte) {
+		catch (LayoutTypeException layoutTypeException) {
 			jsonObject.put(
 				"message",
-				getLayoutTypeExceptionMessage(themeDisplay, lte, cmd));
+				getLayoutTypeExceptionMessage(
+					themeDisplay, layoutTypeException, cmd));
 
 			long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
-			if ((lte.getType() == LayoutTypeException.FIRST_LAYOUT) &&
+			if ((layoutTypeException.getType() ==
+					LayoutTypeException.FIRST_LAYOUT) &&
 				(plid > 0)) {
 
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);

@@ -62,9 +62,9 @@ public class ViewActionMVCRenderCommand implements MVCRenderCommand {
 					_pollsQuestionService.getQuestion(questionId));
 			}
 		}
-		catch (Exception e) {
-			if (!(e instanceof NoSuchQuestionException)) {
-				SessionErrors.add(renderRequest, e.getClass());
+		catch (Exception exception) {
+			if (!(exception instanceof NoSuchQuestionException)) {
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/polls_display/error.jsp";
 			}

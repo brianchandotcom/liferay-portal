@@ -538,12 +538,14 @@ public class LayoutSetBranchLocalServiceImpl
 					LayoutSetBranchNameException.DUPLICATE);
 			}
 		}
-		catch (NoSuchLayoutSetBranchException nslsbe) {
+		catch (NoSuchLayoutSetBranchException noSuchLayoutSetBranchException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nslsbe, nslsbe);
+				_log.debug(
+					noSuchLayoutSetBranchException,
+					noSuchLayoutSetBranchException);
 			}
 		}
 
@@ -560,12 +562,15 @@ public class LayoutSetBranchLocalServiceImpl
 						LayoutSetBranchNameException.MASTER);
 				}
 			}
-			catch (NoSuchLayoutSetBranchException nslsbe) {
+			catch (NoSuchLayoutSetBranchException
+						noSuchLayoutSetBranchException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nslsbe, nslsbe);
+					_log.debug(
+						noSuchLayoutSetBranchException,
+						noSuchLayoutSetBranchException);
 				}
 			}
 		}

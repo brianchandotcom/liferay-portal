@@ -792,9 +792,9 @@ public class PortletRequestModel implements Serializable {
 			_applicationScopeSessionAttributes = portletSession.getAttributeMap(
 				PortletSession.APPLICATION_SCOPE);
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ise.getMessage());
+				_log.warn(illegalStateException.getMessage());
 			}
 		}
 	}
@@ -810,9 +810,9 @@ public class PortletRequestModel implements Serializable {
 
 				_actionURL = actionURL.toString();
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(ise.getMessage());
+					_log.warn(illegalStateException.getMessage());
 				}
 			}
 
@@ -826,7 +826,7 @@ public class PortletRequestModel implements Serializable {
 
 					_renderURLExclusive = renderURL.toString();
 				}
-				catch (WindowStateException wse) {
+				catch (WindowStateException windowStateException) {
 				}
 
 				try {
@@ -834,7 +834,7 @@ public class PortletRequestModel implements Serializable {
 
 					_renderURLMaximized = renderURL.toString();
 				}
-				catch (WindowStateException wse) {
+				catch (WindowStateException windowStateException) {
 				}
 
 				try {
@@ -842,7 +842,7 @@ public class PortletRequestModel implements Serializable {
 
 					_renderURLMinimized = renderURL.toString();
 				}
-				catch (WindowStateException wse) {
+				catch (WindowStateException windowStateException) {
 				}
 
 				try {
@@ -850,7 +850,7 @@ public class PortletRequestModel implements Serializable {
 
 					_renderURLNormal = renderURL.toString();
 				}
-				catch (WindowStateException wse) {
+				catch (WindowStateException windowStateException) {
 				}
 
 				try {
@@ -858,12 +858,12 @@ public class PortletRequestModel implements Serializable {
 
 					_renderURLPopUp = renderURL.toString();
 				}
-				catch (WindowStateException wse) {
+				catch (WindowStateException windowStateException) {
 				}
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(ise.getMessage());
+					_log.warn(illegalStateException.getMessage());
 				}
 			}
 

@@ -83,7 +83,7 @@ public class EditAssetCategoryPortletConfigurationIcon
 
 			return editCategoryURL.toString();
 		}
-		catch (WindowStateException wse) {
+		catch (WindowStateException windowStateException) {
 		}
 
 		return StringPool.BLANK;
@@ -110,9 +110,9 @@ public class EditAssetCategoryPortletConfigurationIcon
 			return assetCategoriesDisplayContext.hasPermission(
 				category, ActionKeys.UPDATE);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

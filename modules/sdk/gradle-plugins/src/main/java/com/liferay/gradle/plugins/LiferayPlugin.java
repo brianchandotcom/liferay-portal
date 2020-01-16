@@ -120,8 +120,8 @@ public class LiferayPlugin implements Plugin<Project> {
 			gulpFileContent = new String(
 				Files.readAllBytes(gulpFile.toPath()), StandardCharsets.UTF_8);
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 
 		if (gulpFileContent.contains("require('liferay-theme-tasks')")) {

@@ -55,8 +55,8 @@ public class DeploymentHandler {
 			deploymentManager = deploymentFactoryManager.getDeploymentManager(
 				dmId, dmUser, dmPassword);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		_deploymentManager = deploymentManager;

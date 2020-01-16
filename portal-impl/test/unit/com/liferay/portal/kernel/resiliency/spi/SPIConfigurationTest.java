@@ -257,8 +257,9 @@ public class SPIConfigurationTest {
 		try {
 			SPIConfiguration.fromXMLString(sb.toString());
 		}
-		catch (NumberFormatException nfe) {
-			Assert.assertEquals("Unable to parse 808X", nfe.getMessage());
+		catch (NumberFormatException numberFormatException) {
+			Assert.assertEquals(
+				"Unable to parse 808X", numberFormatException.getMessage());
 		}
 	}
 

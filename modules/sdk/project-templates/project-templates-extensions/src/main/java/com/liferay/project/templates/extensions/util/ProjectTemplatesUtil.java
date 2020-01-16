@@ -74,8 +74,8 @@ public class ProjectTemplatesUtil {
 
 				return archetypeFile;
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 
@@ -219,7 +219,7 @@ public class ProjectTemplatesUtil {
 							return templateFile;
 						}
 					}
-					catch (IOException ioe) {
+					catch (IOException ioException) {
 					}
 				}
 			}

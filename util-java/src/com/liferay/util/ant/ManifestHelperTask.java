@@ -43,8 +43,8 @@ public class ManifestHelperTask extends Task {
 		try {
 			doExecute();
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

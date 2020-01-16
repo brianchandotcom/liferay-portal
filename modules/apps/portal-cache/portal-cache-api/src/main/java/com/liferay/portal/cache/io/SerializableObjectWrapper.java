@@ -79,8 +79,8 @@ public class SerializableObjectWrapper implements Serializable {
 		try {
 			_serializable = deserializer.readObject();
 		}
-		catch (ClassNotFoundException cnfe) {
-			_log.error("Unable to deserialize object", cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			_log.error("Unable to deserialize object", classNotFoundException);
 		}
 	}
 

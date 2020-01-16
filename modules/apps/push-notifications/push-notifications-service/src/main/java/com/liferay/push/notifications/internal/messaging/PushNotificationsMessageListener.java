@@ -67,8 +67,8 @@ public class PushNotificationsMessageListener extends BaseMessageListener {
 			_pushNotificationsDeviceLocalService.sendPushNotification(
 				toUserIds, payloadJSONObject);
 		}
-		catch (Exception e) {
-			_log.error("Unable to send notification", e);
+		catch (Exception exception) {
+			_log.error("Unable to send notification", exception);
 		}
 	}
 

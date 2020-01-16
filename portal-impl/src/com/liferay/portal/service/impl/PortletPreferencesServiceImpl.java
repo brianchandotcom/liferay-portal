@@ -150,7 +150,7 @@ public class PortletPreferencesServiceImpl
 				try {
 					targetJxPortletPreferences.reset(key);
 				}
-				catch (ReadOnlyException roe) {
+				catch (ReadOnlyException readOnlyException) {
 				}
 			}
 
@@ -164,17 +164,17 @@ public class PortletPreferencesServiceImpl
 						sourceJxPortletPreferences.getValues(
 							key, new String[0]));
 				}
-				catch (ReadOnlyException roe) {
+				catch (ReadOnlyException readOnlyException) {
 				}
 			}
 
 			targetJxPortletPreferences.store();
 		}
-		catch (IOException ioe) {
-			_log.error("Unable to copy jxPortletPreferences", ioe);
+		catch (IOException ioException) {
+			_log.error("Unable to copy jxPortletPreferences", ioException);
 		}
-		catch (ValidatorException ve) {
-			throw new SystemException(ve);
+		catch (ValidatorException validatorException) {
+			throw new SystemException(validatorException);
 		}
 	}
 

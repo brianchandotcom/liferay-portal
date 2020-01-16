@@ -106,9 +106,9 @@ public class DeleteMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
 				_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(
 					deleteLayoutPageTemplateEntryId);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 
 				SessionErrors.add(actionRequest, PortalException.class);

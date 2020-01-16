@@ -30,8 +30,8 @@ public abstract class BasePollerProcessor implements PollerProcessor {
 		try {
 			return doReceive(pollerRequest);
 		}
-		catch (Exception e) {
-			throw new PollerException(e);
+		catch (Exception exception) {
+			throw new PollerException(exception);
 		}
 	}
 
@@ -40,8 +40,8 @@ public abstract class BasePollerProcessor implements PollerProcessor {
 		try {
 			doSend(pollerRequest);
 		}
-		catch (Exception e) {
-			throw new PollerException(e);
+		catch (Exception exception) {
+			throw new PollerException(exception);
 		}
 	}
 

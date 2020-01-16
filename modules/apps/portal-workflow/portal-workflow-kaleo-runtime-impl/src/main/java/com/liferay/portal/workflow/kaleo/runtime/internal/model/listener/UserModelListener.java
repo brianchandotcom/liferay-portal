@@ -60,8 +60,8 @@ public class UserModelListener extends BaseModelListener<User> {
 		try {
 			_reassignKaleoTaskInstance(user.getUserId());
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 
@@ -72,8 +72,8 @@ public class UserModelListener extends BaseModelListener<User> {
 				_reassignKaleoTaskInstance(user.getUserId());
 			}
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

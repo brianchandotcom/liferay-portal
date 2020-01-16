@@ -85,9 +85,9 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 				DLStoreUtil.addFile(
 					attachment.getCompanyId(), _REPOSITORY_ID, filePath, file);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}
@@ -150,8 +150,8 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 
 			return file;
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

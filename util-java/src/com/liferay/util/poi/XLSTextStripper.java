@@ -88,8 +88,8 @@ public class XLSTextStripper {
 
 			text = sb.toString();
 		}
-		catch (Exception e) {
-			_log.error(e.getMessage());
+		catch (Exception exception) {
+			_log.error(exception.getMessage());
 		}
 
 		_text = text;

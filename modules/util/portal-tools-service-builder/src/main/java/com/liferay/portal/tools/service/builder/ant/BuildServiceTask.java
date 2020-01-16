@@ -39,8 +39,8 @@ public class BuildServiceTask extends Task {
 				ServiceBuilderArgs.OUTPUT_KEY_MODIFIED_FILES,
 				serviceBuilder.getModifiedFileNames());
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

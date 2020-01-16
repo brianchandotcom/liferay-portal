@@ -76,7 +76,7 @@ public class BaseWebDAVTestCase {
 			mockHttpServletRequest.setRemoteUser(
 				String.valueOf(TestPropsValues.getUserId()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			Assert.fail("User ID cannot be initialized");
 		}
 
@@ -89,8 +89,8 @@ public class BaseWebDAVTestCase {
 		try {
 			throw new Exception();
 		}
-		catch (Exception e) {
-			StackTraceElement[] stackTraceElements = e.getStackTrace();
+		catch (Exception exception) {
+			StackTraceElement[] stackTraceElements = exception.getStackTrace();
 
 			for (StackTraceElement stackTraceElement : stackTraceElements) {
 				String methodName = stackTraceElement.getMethodName();
@@ -153,8 +153,8 @@ public class BaseWebDAVTestCase {
 
 			return new Tuple(statusCode, responseBody, responseHeaders);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 
 		return null;

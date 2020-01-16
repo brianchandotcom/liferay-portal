@@ -168,8 +168,8 @@ public class WebXMLDefinitionLoaderTest {
 			OrderUtil.getOrderedWebXMLDefinitions(
 				webXMLDefinitions, webXMLDefinition.getAbsoluteOrderingNames());
 		}
-		catch (Exception e) {
-			if (e instanceof OrderBeforeAndAfterException) {
+		catch (Exception exception) {
+			if (exception instanceof OrderBeforeAndAfterException) {
 				threwOrderBeforeAndAfterException = true;
 			}
 		}
@@ -197,8 +197,8 @@ public class WebXMLDefinitionLoaderTest {
 			OrderUtil.getOrderedWebXMLDefinitions(
 				webXMLDefinitions, webXMLDefinition.getAbsoluteOrderingNames());
 		}
-		catch (Exception e) {
-			if (e instanceof OrderCircularDependencyException) {
+		catch (Exception exception) {
+			if (exception instanceof OrderCircularDependencyException) {
 				threwOrderCircularDependencyException = true;
 			}
 		}

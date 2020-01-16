@@ -56,11 +56,11 @@ public class JenkinsConsoleTextLoader {
 					this.buildComplete = true;
 				}
 			}
-			catch (IOException | JSONException e) {
+			catch (IOException | JSONException exception) {
 				throw new RuntimeException(
 					"Unable to determine build status for build " +
 						this.buildURL,
-					e);
+					exception);
 			}
 		}
 
@@ -78,8 +78,8 @@ public class JenkinsConsoleTextLoader {
 				consoleText = JenkinsResultsParserUtil.toString(
 					buildURL + "/consoleText", false);
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 		}
 
@@ -155,12 +155,13 @@ public class JenkinsConsoleTextLoader {
 
 				serverLogSize = latestServerLogSize;
 			}
-			catch (MalformedURLException murle) {
+			catch (MalformedURLException malformedURLException) {
 				throw new IllegalArgumentException(
-					"Invalid buildURL " + buildURL, murle);
+					"Invalid buildURL " + buildURL, malformedURLException);
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException("Unable to update console log", ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(
+					"Unable to update console log", ioException);
 			}
 		}
 

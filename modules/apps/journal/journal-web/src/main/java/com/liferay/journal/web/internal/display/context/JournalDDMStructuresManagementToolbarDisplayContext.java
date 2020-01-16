@@ -170,7 +170,7 @@ public class JournalDDMStructuresManagementToolbarDisplayContext
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

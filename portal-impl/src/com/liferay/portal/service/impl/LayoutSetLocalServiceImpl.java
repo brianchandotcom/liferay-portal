@@ -116,11 +116,11 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			try {
 				imageLocalService.deleteImage(layoutSet.getLogoId());
 			}
-			catch (NoSuchImageException nsie) {
+			catch (NoSuchImageException noSuchImageException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to delete image " + layoutSet.getLogoId(),
-						nsie);
+						noSuchImageException);
 				}
 			}
 		}
@@ -199,13 +199,13 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			virtualHost = virtualHostPersistence.findByHostname(
 				virtualHostname);
 		}
-		catch (NoSuchVirtualHostException nsvhe) {
+		catch (NoSuchVirtualHostException noSuchVirtualHostException) {
 			if (virtualHostname.contains("xn--")) {
 				virtualHost = virtualHostPersistence.findByHostname(
 					IDN.toUnicode(virtualHostname));
 			}
 			else {
-				throw nsvhe;
+				throw noSuchVirtualHostException;
 			}
 		}
 
@@ -331,8 +331,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		try {
 			bytes = FileUtil.getBytes(file);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 
 		return updateLogo(groupId, privateLayout, hasLogo, bytes);
@@ -358,8 +358,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		try {
 			bytes = FileUtil.getBytes(is, -1, cleanUpStream);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 
 		return updateLogo(groupId, privateLayout, hasLogo, bytes);

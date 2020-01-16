@@ -121,8 +121,8 @@ public class DeserializerTest {
 
 			Assert.fail();
 		}
-		catch (InvocationTargetException ite) {
-			Throwable cause = ite.getCause();
+		catch (InvocationTargetException invocationTargetException) {
+			Throwable cause = invocationTargetException.getCause();
 
 			Assert.assertTrue(
 				cause.toString(), cause instanceof IllegalStateException);
@@ -532,9 +532,10 @@ public class DeserializerTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			Assert.assertTrue(
-				re.getCause() instanceof StreamCorruptedException);
+				runtimeException.getCause() instanceof
+					StreamCorruptedException);
 		}
 	}
 
@@ -613,8 +614,9 @@ public class DeserializerTest {
 		try {
 			deserializer.readObject();
 		}
-		catch (IllegalStateException ise) {
-			Assert.assertEquals("Unkown TC code 12", ise.getMessage());
+		catch (IllegalStateException illegalStateException) {
+			Assert.assertEquals(
+				"Unkown TC code 12", illegalStateException.getMessage());
 		}
 	}
 
@@ -720,8 +722,9 @@ public class DeserializerTest {
 				_readBytesMethod = ReflectionTestUtil.getMethod(
 					clazz, "read", byte[].class);
 			}
-			catch (ReflectiveOperationException roe) {
-				throw new ExceptionInInitializerError(roe);
+			catch (ReflectiveOperationException reflectiveOperationException) {
+				throw new ExceptionInInitializerError(
+					reflectiveOperationException);
 			}
 		}
 

@@ -46,7 +46,7 @@ public abstract class BaseMailbox implements Mailbox {
 
 			throw new MailException(MailException.ACCOUNT_ALREADY_EXISTS);
 		}
-		catch (NoSuchAccountException nsae) {
+		catch (NoSuchAccountException noSuchAccountException) {
 			long inboxFolderId = 0;
 			long draftFolderId = 0;
 			long sentFolderId = 0;

@@ -179,13 +179,15 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 				namesMap.put("prefix", prefix);
 			}
-			catch (NoSuchListTypeException nslte) {
+			catch (NoSuchListTypeException noSuchListTypeException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Ignoring full name prefix " + prefixId, nslte);
+					_log.debug(
+						"Ignoring full name prefix " + prefixId,
+						noSuchListTypeException);
 				}
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
 			}
 		}
 
@@ -199,13 +201,15 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 				namesMap.put("suffix", suffix);
 			}
-			catch (NoSuchListTypeException nslte) {
+			catch (NoSuchListTypeException noSuchListTypeException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Ignoring full name suffix " + suffixId, nslte);
+					_log.debug(
+						"Ignoring full name suffix " + suffixId,
+						noSuchListTypeException);
 				}
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
 			}
 		}
 

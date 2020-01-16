@@ -216,7 +216,7 @@ public class PortletTracker
 		try {
 			_bundleContext.ungetService(serviceReference);
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 
 			// We still need to remove the service so we can ignore this and
 			// keep going
@@ -357,12 +357,12 @@ public class PortletTracker
 
 			return portletModel;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
 					"Portlet ", portletId, " from ", bundle,
 					" failed to initialize"),
-				e);
+				exception);
 
 			return null;
 		}
@@ -404,7 +404,7 @@ public class PortletTracker
 
 				applicationTypes.add(applicationType);
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 				_log.error("Application type " + applicationTypeValue);
 			}
 		}
@@ -939,8 +939,8 @@ public class PortletTracker
 				try {
 					defaultPreferences = StringUtil.read(url.openStream());
 				}
-				catch (IOException ioe) {
-					_log.error(ioe, ioe);
+				catch (IOException ioException) {
+					_log.error(ioException, ioException);
 				}
 			}
 		}
@@ -1301,8 +1301,8 @@ public class PortletTracker
 					properties.getProperty(
 						PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

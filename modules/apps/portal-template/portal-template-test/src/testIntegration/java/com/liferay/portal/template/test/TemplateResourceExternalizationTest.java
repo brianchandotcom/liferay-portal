@@ -173,10 +173,10 @@ public class TemplateResourceExternalizationTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			Assert.assertEquals(
 				"Unable to retrieve ddm template with ID " + templateId,
-				ioe.getMessage());
+				ioException.getMessage());
 		}
 		finally {
 			ConsoleTestUtil.restoreStdErr(hijackedUnsyncByteArrayOutputStream);

@@ -50,10 +50,10 @@ public class PasswordPoliciesConfigurationModelListener
 			_validateDurations(
 				(Long[])properties.get("resetTicketMaxAgeDurations"));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
-				e.getMessage(), PasswordPoliciesConfiguration.class, getClass(),
-				properties);
+				exception.getMessage(), PasswordPoliciesConfiguration.class,
+				getClass(), properties);
 		}
 	}
 

@@ -76,7 +76,7 @@ public class ServiceRankingUtil {
 			try {
 				return Integer.parseInt((String)serviceRanking);
 			}
-			catch (NumberFormatException nfe) {
+			catch (NumberFormatException numberFormatException) {
 			}
 		}
 

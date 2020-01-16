@@ -104,9 +104,9 @@ public class SegmentsEntryRelIndexerBackgroundTaskExecutor
 				indexer.reindex(type, classPK);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to index segment members", pe);
+				_log.warn("Unable to index segment members", portalException);
 			}
 		}
 

@@ -92,9 +92,9 @@ public class DDLRecordModelPreFilterContributor
 
 				booleanFilter.add(queryFilter, BooleanClauseOccur.MUST);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 			}
 		}

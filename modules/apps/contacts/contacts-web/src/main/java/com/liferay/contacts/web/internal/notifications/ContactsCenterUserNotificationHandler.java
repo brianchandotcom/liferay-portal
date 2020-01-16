@@ -187,7 +187,7 @@ public class ContactsCenterUserNotificationHandler
 				"<a href=\"", userDisplayURL, "\">", HtmlUtil.escape(userName),
 				"</a>");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}

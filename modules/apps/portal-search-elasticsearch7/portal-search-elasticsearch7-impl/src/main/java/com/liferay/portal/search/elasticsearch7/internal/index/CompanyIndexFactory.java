@@ -101,8 +101,8 @@ public class CompanyIndexFactory
 
 			LogUtil.logActionResponse(_log, actionResponse);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -172,8 +172,8 @@ public class CompanyIndexFactory
 
 			LogUtil.logActionResponse(_log, actionResponse);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		updateLiferayDocumentType(indexName, liferayDocumentTypeFactory);
@@ -234,8 +234,8 @@ public class CompanyIndexFactory
 			return indicesClient.exists(
 				getIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

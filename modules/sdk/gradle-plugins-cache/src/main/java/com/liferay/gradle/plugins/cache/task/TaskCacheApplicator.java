@@ -204,8 +204,9 @@ public class TaskCacheApplicator {
 				Files.readAllBytes(digestFile.toPath()),
 				StandardCharsets.UTF_8);
 		}
-		catch (IOException ioe) {
-			throw new GradleException("Unable to read digest file", ioe);
+		catch (IOException ioException) {
+			throw new GradleException(
+				"Unable to read digest file", ioException);
 		}
 	}
 
@@ -274,8 +275,9 @@ public class TaskCacheApplicator {
 				logger.info("Updated digest file to " + digest);
 			}
 		}
-		catch (IOException ioe) {
-			throw new GradleException("Unable to write digest file", ioe);
+		catch (IOException ioException) {
+			throw new GradleException(
+				"Unable to write digest file", ioException);
 		}
 	}
 

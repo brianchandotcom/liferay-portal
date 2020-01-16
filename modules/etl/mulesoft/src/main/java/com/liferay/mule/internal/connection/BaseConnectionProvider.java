@@ -57,8 +57,9 @@ public abstract class BaseConnectionProvider
 				new ConnectionException(
 					"Unable to connect to Liferay instance"));
 		}
-		catch (IOException | TimeoutException e) {
-			return ConnectionValidationResult.failure(e.getMessage(), e);
+		catch (IOException | TimeoutException exception) {
+			return ConnectionValidationResult.failure(
+				exception.getMessage(), exception);
 		}
 	}
 

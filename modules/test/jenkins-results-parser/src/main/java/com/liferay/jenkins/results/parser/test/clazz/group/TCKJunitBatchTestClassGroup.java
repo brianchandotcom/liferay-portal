@@ -134,11 +134,11 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 				});
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to search for test file names in " +
 					_tckHomeDirectory.getPath(),
-				ioe);
+				ioException);
 		}
 
 		Collections.sort(testClasses);

@@ -94,8 +94,9 @@ public class SSOImpl implements SSO {
 				new CompanyServiceSettingsLocator(
 					companyId, OpenSSOConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to get OpenSSO configuration", ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(
+				"Unable to get OpenSSO configuration", configurationException);
 		}
 
 		return null;

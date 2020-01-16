@@ -200,8 +200,8 @@ public class AopServiceManagerConcurrencyTest {
 
 						Assert.fail();
 					}
-					catch (RuntimeException re) {
-						String message = re.getMessage();
+					catch (RuntimeException runtimeException) {
+						String message = runtimeException.getMessage();
 
 						Assert.assertTrue(
 							message,

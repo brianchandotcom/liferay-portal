@@ -76,8 +76,8 @@ public class ThemeBuilder {
 				themeBuilder.build();
 			}
 		}
-		catch (ParameterException pe) {
-			System.err.println(pe.getMessage());
+		catch (ParameterException parameterException) {
+			System.err.println(parameterException.getMessage());
 
 			_printHelp(jCommander);
 		}

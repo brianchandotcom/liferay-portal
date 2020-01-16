@@ -61,7 +61,7 @@ public class CurrencyConverterUtil {
 		try {
 			return (CurrencyConverter)WebCachePoolUtil.get(key, wci);
 		}
-		catch (ClassCastException cce) {
+		catch (ClassCastException classCastException) {
 			WebCachePoolUtil.remove(key);
 		}
 

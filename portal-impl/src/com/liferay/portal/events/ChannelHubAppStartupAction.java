@@ -39,13 +39,13 @@ public class ChannelHubAppStartupAction extends SimpleAction {
 
 			ChannelHubManagerUtil.createChannelHub(companyId);
 		}
-		catch (DuplicateChannelHubException dche) {
+		catch (DuplicateChannelHubException duplicateChannelHubException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(dche.getMessage());
+				_log.warn(duplicateChannelHubException.getMessage());
 			}
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 	}
 

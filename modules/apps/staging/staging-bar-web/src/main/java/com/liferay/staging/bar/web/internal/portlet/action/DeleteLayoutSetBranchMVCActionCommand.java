@@ -69,8 +69,8 @@ public class DeleteLayoutSetBranchMVCActionCommand
 			ActionUtil.addLayoutBranchSessionMessages(
 				actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			SessionErrors.add(actionRequest, e.getClass(), e);
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
 
 			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 		}

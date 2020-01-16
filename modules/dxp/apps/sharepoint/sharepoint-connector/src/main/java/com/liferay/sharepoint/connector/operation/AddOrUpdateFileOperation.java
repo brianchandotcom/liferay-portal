@@ -55,8 +55,9 @@ public class AddOrUpdateFileOperation extends BaseOperation {
 		try {
 			bytes = FileUtil.getBytes(inputStream);
 		}
-		catch (IOException ioe) {
-			throw new SharepointException("Unable to read input stream", ioe);
+		catch (IOException ioException) {
+			throw new SharepointException(
+				"Unable to read input stream", ioException);
 		}
 
 		CopyResultCollectionHolder copyResultCollectionHolder =
@@ -69,8 +70,8 @@ public class AddOrUpdateFileOperation extends BaseOperation {
 				_EMPTY_FIELD_INFORMATIONS, bytes, new UnsignedIntHolder(),
 				copyResultCollectionHolder);
 		}
-		catch (RemoteException re) {
-			RemoteExceptionUtil.handleRemoteException(re);
+		catch (RemoteException remoteException) {
+			RemoteExceptionUtil.handleRemoteException(remoteException);
 		}
 
 		CopyResult copyResult = copyResultCollectionHolder.value[0];

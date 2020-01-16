@@ -92,8 +92,8 @@ public class IntrabandRPCUtil {
 					_defaultNoticeableFuture.set((V)rpcResponse.getResult());
 				}
 			}
-			catch (ClassNotFoundException cnfe) {
-				_defaultNoticeableFuture.setException(cnfe);
+			catch (ClassNotFoundException classNotFoundException) {
+				_defaultNoticeableFuture.setException(classNotFoundException);
 			}
 		}
 

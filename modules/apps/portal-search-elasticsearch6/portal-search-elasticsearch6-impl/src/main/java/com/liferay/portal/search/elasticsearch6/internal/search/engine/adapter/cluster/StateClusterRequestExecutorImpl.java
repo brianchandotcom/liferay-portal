@@ -64,8 +64,8 @@ public class StateClusterRequestExecutorImpl
 
 			return new StateClusterResponse(Strings.toString(xContentBuilder));
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

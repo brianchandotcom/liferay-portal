@@ -145,8 +145,8 @@ public class ExternalDataSourceControllerTest {
 
 			testRunListener.rethrow(null);
 		}
-		catch (Exception e) {
-			testRunListener.rethrow(e);
+		catch (Exception exception) {
+			testRunListener.rethrow(exception);
 		}
 		finally {
 			serviceRegistration.unregister();

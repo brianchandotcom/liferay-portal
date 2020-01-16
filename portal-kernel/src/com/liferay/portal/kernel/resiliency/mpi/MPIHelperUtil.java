@@ -53,8 +53,8 @@ public class MPIHelperUtil {
 		try {
 			alive = spi.isAlive();
 		}
-		catch (RemoteException re) {
-			_log.error(re, re);
+		catch (RemoteException remoteException) {
+			_log.error(remoteException, remoteException);
 		}
 
 		if (alive) {
@@ -222,8 +222,8 @@ public class MPIHelperUtil {
 
 			return true;
 		}
-		catch (RemoteException re) {
-			throw new RuntimeException(re);
+		catch (RemoteException remoteException) {
+			throw new RuntimeException(remoteException);
 		}
 	}
 
@@ -257,18 +257,19 @@ public class MPIHelperUtil {
 		try {
 			UnicastRemoteObject.unexportObject(_mpiImpl, true);
 		}
-		catch (NoSuchObjectException nsoe) {
+		catch (NoSuchObjectException noSuchObjectException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to unexport " + _mpiImpl, nsoe);
+				_log.warn(
+					"Unable to unexport " + _mpiImpl, noSuchObjectException);
 			}
 		}
 
 		try {
 			_intraband.close();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to close intraband", e);
+				_log.warn("Unable to close intraband", exception);
 			}
 		}
 	}
@@ -326,8 +327,8 @@ public class MPIHelperUtil {
 
 			return false;
 		}
-		catch (RemoteException re) {
-			throw new RuntimeException(re);
+		catch (RemoteException remoteException) {
+			throw new RuntimeException(remoteException);
 		}
 	}
 
@@ -366,12 +367,12 @@ public class MPIHelperUtil {
 								spiProvider));
 					}
 				}
-				catch (RemoteException re) {
+				catch (RemoteException remoteException) {
 					_log.error(
 						StringBundler.concat(
 							"Unable to unregister SPI ", spi,
 							" while unregistering SPI provider ", spiProvider),
-						re);
+						remoteException);
 				}
 				finally {
 					_unregisteringSPIThreadLocal.remove();
@@ -499,8 +500,8 @@ public class MPIHelperUtil {
 
 			_mpi = (MPI)UnicastRemoteObject.exportObject(_mpiImpl, 0);
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

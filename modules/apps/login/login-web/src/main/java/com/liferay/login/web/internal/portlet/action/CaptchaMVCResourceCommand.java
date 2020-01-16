@@ -49,8 +49,8 @@ public class CaptchaMVCResourceCommand implements MVCResourceCommand {
 
 			return false;
 		}
-		catch (IOException ioe) {
-			throw new PortletException(ioe);
+		catch (IOException ioException) {
+			throw new PortletException(ioException);
 		}
 	}
 

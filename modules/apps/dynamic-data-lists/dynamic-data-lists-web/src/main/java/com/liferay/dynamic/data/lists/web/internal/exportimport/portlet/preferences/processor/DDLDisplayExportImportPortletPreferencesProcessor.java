@@ -77,9 +77,9 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			portletDataContext.addPortletPermissions(
 				DDLConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortletDataException(
-				"Unable to export portlet permissions", pe);
+				"Unable to export portlet permissions", portalException);
 		}
 
 		String portletId = portletDataContext.getPortletId();
@@ -111,9 +111,9 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			try {
 				recordActionableDynamicQuery.performActions();
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				throw new PortletDataException(
-					"Unable to export referenced records", pe);
+					"Unable to export referenced records", portalException);
 			}
 		}
 
@@ -142,9 +142,9 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			portletDataContext.importPortletPermissions(
 				DDLConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortletDataException(
-				"Unable to export portlet permissions", pe);
+				"Unable to export portlet permissions", portalException);
 		}
 
 		long importedRecordSetId = GetterUtil.getLong(
@@ -182,9 +182,10 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			portletPreferences.setValue(
 				"formDDMTemplateId", String.valueOf(formDDMTemplateId));
 		}
-		catch (ReadOnlyException roe) {
+		catch (ReadOnlyException readOnlyException) {
 			throw new PortletDataException(
-				"Unable to update portlet preferences during import", roe);
+				"Unable to update portlet preferences during import",
+				readOnlyException);
 		}
 
 		return portletPreferences;

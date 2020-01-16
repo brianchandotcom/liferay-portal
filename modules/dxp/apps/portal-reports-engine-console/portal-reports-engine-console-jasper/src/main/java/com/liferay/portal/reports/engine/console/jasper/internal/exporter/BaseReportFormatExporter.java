@@ -43,9 +43,10 @@ public abstract class BaseReportFormatExporter implements ReportFormatExporter {
 
 			jrExporter.exportReport();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ReportExportException(
-				"Unable to export report using " + jrExporter.getClass(), e);
+				"Unable to export report using " + jrExporter.getClass(),
+				exception);
 		}
 	}
 

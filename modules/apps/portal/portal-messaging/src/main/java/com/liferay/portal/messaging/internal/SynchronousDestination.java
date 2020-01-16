@@ -45,8 +45,10 @@ public class SynchronousDestination extends BaseDestination {
 			try {
 				messageListener.receive(message);
 			}
-			catch (MessageListenerException mle) {
-				_log.error("Unable to process message " + message, mle);
+			catch (MessageListenerException messageListenerException) {
+				_log.error(
+					"Unable to process message " + message,
+					messageListenerException);
 			}
 		}
 

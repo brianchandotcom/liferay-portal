@@ -69,8 +69,8 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 				unbanUser(actionRequest);
 			}
 		}
-		catch (PrincipalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass());
+		catch (PrincipalException principalException) {
+			SessionErrors.add(actionRequest, principalException.getClass());
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/message_boards/error.jsp");

@@ -65,12 +65,12 @@ public class EditActivitySettingsMVCActionCommand extends BaseMVCActionCommand {
 				updateActivitySettings(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

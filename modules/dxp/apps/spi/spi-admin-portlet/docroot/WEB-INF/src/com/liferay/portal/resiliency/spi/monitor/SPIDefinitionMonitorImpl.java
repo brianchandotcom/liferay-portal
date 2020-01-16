@@ -165,7 +165,7 @@ public class SPIDefinitionMonitorImpl implements SPIDefinitionMonitor {
 				try {
 					Thread.sleep(_interval);
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 				}
 
 				performHealthCheck();

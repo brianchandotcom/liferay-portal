@@ -102,8 +102,8 @@ public class MailPortlet extends MVCPortlet {
 						attachmentHandler.getInputStream(), contentType);
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 			finally {
 				attachmentHandler.cleanUp();

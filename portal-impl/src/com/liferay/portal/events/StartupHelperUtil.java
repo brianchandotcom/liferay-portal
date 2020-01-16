@@ -131,9 +131,9 @@ public class StartupHelperUtil {
 
 			updateIndexes(db, connection, dropIndexes);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 		finally {
@@ -159,9 +159,9 @@ public class StartupHelperUtil {
 
 			db.updateIndexes(connection, tablesSQL, indexesSQL, dropIndexes);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 	}

@@ -159,8 +159,9 @@ public class ElasticsearchConnectionManager
 			try {
 				oldElasticsearchConnection.close();
 			}
-			catch (Exception e) {
-				_log.error("Unable to close " + oldElasticsearchConnection, e);
+			catch (Exception exception) {
+				_log.error(
+					"Unable to close " + oldElasticsearchConnection, exception);
 			}
 		}
 
@@ -170,11 +171,11 @@ public class ElasticsearchConnectionManager
 			try {
 				indexFactory.createIndices(getAdminClient(), companyId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to reinitialize index for company " + companyId,
-						e);
+						exception);
 				}
 			}
 		}

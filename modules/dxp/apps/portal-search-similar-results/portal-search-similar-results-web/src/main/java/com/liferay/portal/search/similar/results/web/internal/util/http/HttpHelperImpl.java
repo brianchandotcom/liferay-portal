@@ -43,7 +43,7 @@ public class HttpHelperImpl implements HttpHelper {
 			return StringUtil.split(
 				subpath[subpath.length - 1], CharPool.FORWARD_SLASH);
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			return StringPool.EMPTY_ARRAY;
 		}
 	}
@@ -69,7 +69,7 @@ public class HttpHelperImpl implements HttpHelper {
 					StringPool.UNDERLINE, ppid, StringPool.UNDERLINE,
 					parameterName))[0];
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			return null;
 		}
 	}
@@ -87,7 +87,7 @@ public class HttpHelperImpl implements HttpHelper {
 					StringPool.UNDERLINE, portletId, StringPool.UNDERLINE,
 					parameterName))[0];
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			return null;
 		}
 	}

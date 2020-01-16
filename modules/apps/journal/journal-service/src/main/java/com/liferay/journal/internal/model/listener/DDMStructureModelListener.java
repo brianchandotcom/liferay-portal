@@ -38,8 +38,8 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 				ddmStructure.getGroupId(), DDMStructure.class.getName(),
 				ddmStructure.getStructureId());
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

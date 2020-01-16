@@ -71,7 +71,7 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 			return layoutPageTemplateEntryActionDropdownItemsProvider.
 				getActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -130,7 +130,7 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 			return HttpUtil.setParameter(
 				layoutFullURL, "p_l_back_url", themeDisplay.getURLCurrent());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

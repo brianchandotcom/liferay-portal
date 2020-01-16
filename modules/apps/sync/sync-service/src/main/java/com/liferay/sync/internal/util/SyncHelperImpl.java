@@ -311,7 +311,7 @@ public class SyncHelperImpl implements SyncHelper {
 			return DigesterUtil.digestBase64(
 				Digester.SHA_1, dlFileVersion.getContentStream(false));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}
@@ -328,7 +328,7 @@ public class SyncHelperImpl implements SyncHelper {
 		try (FileInputStream fileInputStream = new FileInputStream(file)) {
 			return DigesterUtil.digestBase64(Digester.SHA_1, fileInputStream);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}
@@ -363,8 +363,8 @@ public class SyncHelperImpl implements SyncHelper {
 
 			checksumsByteChannelWriter.finish();
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 
 		deltaFile = FileUtil.createTempFile();
@@ -393,8 +393,8 @@ public class SyncHelperImpl implements SyncHelper {
 
 			deltaByteChannelWriter.finish();
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 		finally {
 			FileUtil.delete(checksumsFile);
@@ -483,8 +483,8 @@ public class SyncHelperImpl implements SyncHelper {
 				originalFileChannel, patchedWritableByteChannel,
 				deltaByteChannelReader);
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 
@@ -567,12 +567,13 @@ public class SyncHelperImpl implements SyncHelper {
 				lockUserName = lock.getUserName();
 				type = SyncDLObjectConstants.TYPE_PRIVATE_WORKING_COPY;
 			}
-			catch (NoSuchFileVersionException nsfve) {
+			catch (NoSuchFileVersionException noSuchFileVersionException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsfve, nsfve);
+					_log.debug(
+						noSuchFileVersionException, noSuchFileVersionException);
 				}
 
 				// Publishing a checked out file entry on a staged site will

@@ -95,9 +95,9 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		try {
 			return Long.valueOf(days);
 		}
-		catch (NumberFormatException nfe) {
+		catch (NumberFormatException numberFormatException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse " + days, nfe);
+				_log.debug("Unable to parse " + days, numberFormatException);
 			}
 
 			return null;
@@ -157,9 +157,9 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 			return null;
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new NestableRuntimeException(
-				_ERROR_MSG + ioe.getMessage(), ioe);
+				_ERROR_MSG + ioException.getMessage(), ioException);
 		}
 	}
 
@@ -181,9 +181,9 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 			return _individualJSONObjectMapper.mapToResults(response);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new NestableRuntimeException(
-				_ERROR_MSG + ioe.getMessage(), ioe);
+				_ERROR_MSG + ioException.getMessage(), ioException);
 		}
 	}
 
@@ -211,9 +211,9 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 			return _individualSegmentJSONObjectMapper.mapToResults(response);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new NestableRuntimeException(
-				_ERROR_MSG + ioe.getMessage(), ioe);
+				_ERROR_MSG + ioException.getMessage(), ioException);
 		}
 	}
 
@@ -226,9 +226,10 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 			return _interestTermsJSONObjectMapper.mapToResults(response);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new NestableRuntimeException(
-				"Unable to handle JSON response: " + ioe.getMessage(), ioe);
+				"Unable to handle JSON response: " + ioException.getMessage(),
+				ioException);
 		}
 	}
 

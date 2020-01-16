@@ -142,8 +142,8 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsUnitTest {
 					"contains", PermissionChecker.class, Layout.class,
 					String.class);
 			}
-			catch (NoSuchMethodException nsme) {
-				throw new RuntimeException(nsme);
+			catch (NoSuchMethodException noSuchMethodException) {
+				throw new RuntimeException(noSuchMethodException);
 			}
 		}
 
@@ -171,8 +171,8 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsUnitTest {
 				_getUserIdMethod = PermissionChecker.class.getMethod(
 					"getUserId");
 			}
-			catch (NoSuchMethodException nsme) {
-				throw new RuntimeException(nsme);
+			catch (NoSuchMethodException noSuchMethodException) {
+				throw new RuntimeException(noSuchMethodException);
 			}
 		}
 
@@ -207,8 +207,8 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsUnitTest {
 				_getPortletByIdMethod = PortletLocalService.class.getMethod(
 					"getPortletById", long.class, String.class);
 			}
-			catch (NoSuchMethodException nsme) {
-				throw new RuntimeException(nsme);
+			catch (NoSuchMethodException noSuchMethodException) {
+				throw new RuntimeException(noSuchMethodException);
 			}
 		}
 

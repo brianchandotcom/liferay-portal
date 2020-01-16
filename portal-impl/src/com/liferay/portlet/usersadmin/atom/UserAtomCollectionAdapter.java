@@ -76,7 +76,7 @@ public class UserAtomCollectionAdapter extends BaseAtomCollectionAdapter<User> {
 				sb.append(StringPool.NEW_LINE);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return new AtomEntryContent(sb.toString());

@@ -43,8 +43,8 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 				JenkinsResultsParserUtil.combine(
 					"build_database=", _jsonObject.toString()));
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		return buildDatabaseJSFile;
@@ -225,8 +225,8 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		try {
 			JenkinsResultsParserUtil.write(destFilePath, sb.toString());
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -262,8 +262,8 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 				return new JSONObject(
 					JenkinsResultsParserUtil.read(_jsonObjectFile));
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 		}
 
@@ -294,8 +294,8 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 			JenkinsResultsParserUtil.write(
 				_jsonObjectFile, _jsonObject.toString());
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

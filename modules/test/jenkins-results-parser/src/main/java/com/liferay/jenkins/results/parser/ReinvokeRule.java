@@ -37,8 +37,9 @@ public class ReinvokeRule {
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to load reinvoke rules", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to load reinvoke rules", ioException);
 		}
 
 		_reinvokeRules = new ArrayList<>();

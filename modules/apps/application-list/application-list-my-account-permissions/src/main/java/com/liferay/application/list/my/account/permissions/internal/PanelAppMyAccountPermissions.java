@@ -82,13 +82,13 @@ public class PanelAppMyAccountPermissions {
 					companyId, portlet.getPortletId(),
 					portlet.getRootPortletId(), userRole, actionIds);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					StringBundler.concat(
 						"Unable to initialize My Account panel permissions ",
 						"for portlet ", portlet.getPortletId(), " in company ",
 						companyId),
-					e);
+					exception);
 			}
 		}
 	}
@@ -114,8 +114,10 @@ public class PanelAppMyAccountPermissions {
 		try {
 			return _roleLocalService.getRole(companyId, RoleConstants.USER);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to get user role in company " + companyId, pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get user role in company " + companyId,
+				portalException);
 		}
 
 		return null;

@@ -91,9 +91,9 @@ public class SegmentsEntryRoleContributor implements RoleContributor {
 						user.getUserId(),
 						_requestContextMapper.map(httpServletRequest));
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(pe.getMessage());
+					_log.warn(portalException.getMessage());
 				}
 			}
 		}

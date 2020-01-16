@@ -73,14 +73,14 @@ public class LiferayMediaItemService implements MediaItemService {
 
 			return ImmediateFuture.newInstance(null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -95,14 +95,14 @@ public class LiferayMediaItemService implements MediaItemService {
 
 			return ImmediateFuture.newInstance(null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -117,14 +117,14 @@ public class LiferayMediaItemService implements MediaItemService {
 
 			return ImmediateFuture.newInstance(mediaItem);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -141,14 +141,14 @@ public class LiferayMediaItemService implements MediaItemService {
 
 			return ImmediateFuture.newInstance(mediaItems);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -164,14 +164,14 @@ public class LiferayMediaItemService implements MediaItemService {
 
 			return ImmediateFuture.newInstance(mediaItems);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -188,14 +188,14 @@ public class LiferayMediaItemService implements MediaItemService {
 
 			return ImmediateFuture.newInstance(mediaItems);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -210,14 +210,14 @@ public class LiferayMediaItemService implements MediaItemService {
 
 			return ImmediateFuture.newInstance(null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 

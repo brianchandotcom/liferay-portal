@@ -60,7 +60,7 @@ public class UnsyncStringReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -68,7 +68,7 @@ public class UnsyncStringReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -76,7 +76,7 @@ public class UnsyncStringReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -84,7 +84,7 @@ public class UnsyncStringReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
@@ -92,7 +92,7 @@ public class UnsyncStringReaderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		unsyncStringReader.close();

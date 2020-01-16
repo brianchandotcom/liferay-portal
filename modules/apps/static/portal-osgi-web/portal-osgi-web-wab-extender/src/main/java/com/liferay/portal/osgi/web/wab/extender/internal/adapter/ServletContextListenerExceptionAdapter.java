@@ -58,7 +58,7 @@ public class ServletContextListenerExceptionAdapter
 			try {
 				thread.join();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 		else {
@@ -92,7 +92,7 @@ public class ServletContextListenerExceptionAdapter
 			try {
 				thread.join();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 		else {
@@ -109,8 +109,8 @@ public class ServletContextListenerExceptionAdapter
 			_servletContextListener.contextDestroyed(
 				new ServletContextEvent(_servletContext));
 		}
-		catch (Exception e) {
-			_exception = e;
+		catch (Exception exception) {
+			_exception = exception;
 		}
 	}
 
@@ -119,8 +119,8 @@ public class ServletContextListenerExceptionAdapter
 			_servletContextListener.contextInitialized(
 				new ServletContextEvent(_servletContext));
 		}
-		catch (Exception e) {
-			_exception = e;
+		catch (Exception exception) {
+			_exception = exception;
 		}
 	}
 

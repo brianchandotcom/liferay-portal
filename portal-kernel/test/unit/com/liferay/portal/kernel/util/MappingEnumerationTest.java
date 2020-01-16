@@ -73,7 +73,7 @@ public class MappingEnumerationTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchElementException nsee) {
+		catch (NoSuchElementException noSuchElementException) {
 		}
 	}
 

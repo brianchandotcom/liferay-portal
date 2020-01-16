@@ -138,9 +138,9 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 		try {
 			jsonArray = jsonFactory.createJSONArray(valueString);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsone, jsone);
+				_log.debug(jsonException, jsonException);
 			}
 
 			jsonArray = jsonFactory.createJSONArray();

@@ -161,7 +161,7 @@ public class KBArticleAssetRendererFactory
 		try {
 			kbArticle = _kbArticleLocalService.getKBArticle(classPK);
 		}
-		catch (NoSuchArticleException nsae) {
+		catch (NoSuchArticleException noSuchArticleException) {
 			kbArticle = _kbArticleLocalService.getLatestKBArticle(
 				classPK, status);
 		}

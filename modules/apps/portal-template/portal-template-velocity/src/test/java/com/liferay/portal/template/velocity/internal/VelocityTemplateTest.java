@@ -234,8 +234,8 @@ public class VelocityTemplateTest {
 
 			Assert.fail();
 		}
-		catch (TemplateException te) {
-			String message = te.getMessage();
+		catch (TemplateException templateException) {
+			String message = templateException.getMessage();
 
 			Assert.assertTrue(message, message.contains(_WRONG_TEMPLATE_ID));
 		}
@@ -316,8 +316,8 @@ public class VelocityTemplateTest {
 
 			Assert.fail();
 		}
-		catch (TemplateException te) {
-			String message = te.getMessage();
+		catch (TemplateException templateException) {
+			String message = templateException.getMessage();
 
 			Assert.assertTrue(
 				message, message.contains(_WRONG_ERROR_TEMPLATE_ID));

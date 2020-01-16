@@ -164,8 +164,8 @@ public class AssetEntriesCheckerUtil {
 
 			portletPreferences.store();
 		}
-		catch (IOException | PortletException e) {
-			throw new PortalException(e);
+		catch (IOException | PortletException exception) {
+			throw new PortalException(exception);
 		}
 	}
 
@@ -183,7 +183,7 @@ public class AssetEntriesCheckerUtil {
 		try {
 			permissionChecker = PermissionCheckerFactoryUtil.create(user);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return Collections.emptyList();
 		}
 
@@ -197,7 +197,7 @@ public class AssetEntriesCheckerUtil {
 					filteredAssetEntries.add(assetEntry);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 
@@ -234,7 +234,7 @@ public class AssetEntriesCheckerUtil {
 
 			return baseModelSearchResult.getBaseModels();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return Collections.emptyList();
 		}
 	}

@@ -83,10 +83,10 @@ public class JenkinsSlave {
 			JenkinsResultsParserUtil.executeJenkinsScript(
 				_jenkinsMaster.getName(), script);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			System.out.println("Unable to set the status for slaves: " + _name);
 
-			ioe.printStackTrace();
+			ioException.printStackTrace();
 		}
 	}
 

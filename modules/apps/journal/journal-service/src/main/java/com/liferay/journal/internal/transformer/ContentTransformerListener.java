@@ -91,8 +91,8 @@ public class ContentTransformerListener extends BaseTransformerListener {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return GetterUtil.getString(content);
@@ -124,9 +124,9 @@ public class ContentTransformerListener extends BaseTransformerListener {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 		}
 
@@ -142,9 +142,9 @@ public class ContentTransformerListener extends BaseTransformerListener {
 
 			replace(rootElement, articleGroupId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 		}
 	}
@@ -212,9 +212,9 @@ public class ContentTransformerListener extends BaseTransformerListener {
 
 			xml = XMLUtil.formatXML(document);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 		}
 

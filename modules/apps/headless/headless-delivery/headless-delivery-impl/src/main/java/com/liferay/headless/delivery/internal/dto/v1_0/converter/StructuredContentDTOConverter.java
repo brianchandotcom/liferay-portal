@@ -423,9 +423,10 @@ public class StructuredContentDTOConverter
 				"yyyy-MM-dd'T'HH:mm:ss'Z'", locale,
 				TimeZone.getTimeZone("UTC"));
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			throw new BadRequestException(
-				"Unable to parse date that does not conform to ISO-8601", pe);
+				"Unable to parse date that does not conform to ISO-8601",
+				parseException);
 		}
 	}
 

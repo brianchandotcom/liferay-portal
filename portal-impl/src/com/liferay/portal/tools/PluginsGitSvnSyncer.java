@@ -63,8 +63,8 @@ public class PluginsGitSvnSyncer {
 				_updateSvnIgnores(gitPluginsDirName, svnPluginsDirName);
 			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 
@@ -120,7 +120,7 @@ public class PluginsGitSvnSyncer {
 				try {
 					unsyncBufferedReader.close();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 			}
 		}
@@ -277,14 +277,14 @@ public class PluginsGitSvnSyncer {
 			try {
 				_exec(_SVN_DEL_IGNORES + destDirName + dirName);
 			}
-			catch (Exception e) {
-				String message = e.getMessage();
+			catch (Exception exception) {
+				String message = exception.getMessage();
 
 				if (!message.contains(
 						"svn: Attempting to delete nonexistent property " +
 							"'svn:ignore'")) {
 
-					throw e;
+					throw exception;
 				}
 			}
 

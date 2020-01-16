@@ -46,8 +46,8 @@ public class ThreadLocalUtil {
 
 			return (ThreadLocal<T>)field.get(null);
 		}
-		catch (ReflectiveOperationException roe) {
-			return ReflectionUtil.throwException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			return ReflectionUtil.throwException(reflectiveOperationException);
 		}
 	}
 

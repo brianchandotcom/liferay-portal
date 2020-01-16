@@ -59,14 +59,14 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			ActionUtil.compareVersions(
 				renderRequest, renderResponse, _wikiEngineRenderer);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchPageException) {
-				SessionErrors.add(renderRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof NoSuchPageException) {
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/wiki/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/wiki/compare_versions.jsp";

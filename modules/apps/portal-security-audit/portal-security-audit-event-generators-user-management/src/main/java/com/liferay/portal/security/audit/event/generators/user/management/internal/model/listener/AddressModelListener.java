@@ -64,8 +64,8 @@ public class AddressModelListener extends BaseModelListener<Address> {
 				_auditRouter.route(auditMessage);
 			}
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

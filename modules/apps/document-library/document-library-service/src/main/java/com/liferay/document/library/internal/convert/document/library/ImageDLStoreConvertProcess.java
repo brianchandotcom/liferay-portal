@@ -68,8 +68,8 @@ public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 						sourceStore, targetStore, 0L, 0L, fileName,
 						Store.VERSION_DEFAULT, delete);
 				}
-				catch (Exception e) {
-					_log.error("Unable to migrate " + fileName, e);
+				catch (Exception exception) {
+					_log.error("Unable to migrate " + fileName, exception);
 				}
 			});
 

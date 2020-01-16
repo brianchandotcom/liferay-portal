@@ -121,8 +121,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 			_readdForcedExclusions();
 		}
-		catch (Exception e) {
-			throw new GradleException(e.getMessage(), e);
+		catch (Exception exception) {
+			throw new GradleException(exception.getMessage(), exception);
 		}
 		finally {
 			if (preparedSourceDir != null) {
@@ -505,7 +505,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 						try {
 							_formatXML(filePath);
 						}
-						catch (Exception e) {
+						catch (Exception exception) {
 						}
 					}
 
@@ -695,9 +695,11 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			try {
 				return GradleUtil.getArchivesBaseName(dependencyProject);
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 				if (logger.isWarnEnabled()) {
-					logger.warn("Unable to find name for " + dependency, ise);
+					logger.warn(
+						"Unable to find name for " + dependency,
+						illegalStateException);
 				}
 			}
 		}

@@ -80,8 +80,8 @@ public class ChangeListsHistoryPortlet extends BaseChangeListsPortlet {
 					_ctCollectionLocalService.getCTCollection(ctCollectionId));
 			}
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(renderRequest, pe.getClass());
+		catch (PortalException portalException) {
+			SessionErrors.add(renderRequest, portalException.getClass());
 		}
 
 		ChangeListsHistoryDisplayContext changeListsHistoryDisplayContext =

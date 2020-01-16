@@ -39,7 +39,7 @@ public class Log4JLoggerTestUtil {
 		try {
 			logger = ReflectionTestUtil.getFieldValue(log, "_logger");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new IllegalStateException(
 				"Log " + name + " is not a Log4j logger");
 		}
@@ -63,7 +63,7 @@ public class Log4JLoggerTestUtil {
 		try {
 			logger = ReflectionTestUtil.getFieldValue(log, "_logger");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new IllegalStateException(
 				"Log " + name + " is not a Log4j logger");
 		}

@@ -115,8 +115,8 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 			try {
 				portletPreferences.setValue("formPassword", formPassword);
 			}
-			catch (ReadOnlyException roe) {
-				throw new PortalException(roe);
+			catch (ReadOnlyException readOnlyException) {
+				throw new PortalException(readOnlyException);
 			}
 		}
 	}

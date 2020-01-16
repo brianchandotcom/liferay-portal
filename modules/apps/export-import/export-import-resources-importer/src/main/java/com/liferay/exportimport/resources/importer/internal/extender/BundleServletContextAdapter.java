@@ -235,9 +235,9 @@ public class BundleServletContextAdapter
 			try {
 				return url.openStream();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to open resource: " + name, ioe);
+					_log.debug("Unable to open resource: " + name, ioException);
 				}
 			}
 		}

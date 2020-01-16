@@ -72,8 +72,8 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 			return blogsEntryActionDropdownItemsProvider.
 				getActionDropdownItems();
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -99,8 +99,8 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 
 			return _blogsEntryURL;
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -120,8 +120,8 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 
 			return coverImageURL;
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 

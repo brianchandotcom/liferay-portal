@@ -127,8 +127,8 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 				_backgroundTaskLocalService.deleteBackgroundTask(
 					backgroundTask);
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 

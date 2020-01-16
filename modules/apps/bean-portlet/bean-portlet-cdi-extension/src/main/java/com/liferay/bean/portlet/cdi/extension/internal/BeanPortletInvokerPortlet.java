@@ -94,8 +94,8 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 		try {
 			_invokeBeanMethods(_beanMethods.get(MethodType.DESTROY));
 		}
-		catch (PortletException pe) {
-			_log.error(pe, pe);
+		catch (PortletException portletException) {
+			_log.error(portletException, portletException);
 		}
 	}
 
@@ -363,8 +363,8 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 			try {
 				_invokeBeanMethod(beanMethod, args);
 			}
-			catch (InvocationTargetException ite) {
-				Throwable cause = ite.getCause();
+			catch (InvocationTargetException invocationTargetException) {
+				Throwable cause = invocationTargetException.getCause();
 
 				if (cause instanceof PortletException) {
 					throw (PortletException)cause;
@@ -372,11 +372,11 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 
 				throw new PortletException(cause);
 			}
-			catch (PortletException pe) {
-				throw pe;
+			catch (PortletException portletException) {
+				throw portletException;
 			}
-			catch (Exception e) {
-				throw new PortletException(e);
+			catch (Exception exception) {
+				throw new PortletException(exception);
 			}
 		}
 	}

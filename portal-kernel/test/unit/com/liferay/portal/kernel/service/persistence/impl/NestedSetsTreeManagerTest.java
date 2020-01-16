@@ -393,8 +393,8 @@ public class NestedSetsTreeManagerTest {
 			try {
 				return (SimpleNestedSetsTreeNode)super.clone();
 			}
-			catch (CloneNotSupportedException cnse) {
-				throw new RuntimeException(cnse);
+			catch (CloneNotSupportedException cloneNotSupportedException) {
+				throw new RuntimeException(cloneNotSupportedException);
 			}
 		}
 

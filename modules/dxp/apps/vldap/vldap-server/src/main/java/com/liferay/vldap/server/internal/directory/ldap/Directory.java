@@ -170,10 +170,10 @@ public abstract class Directory {
 		try {
 			return new Dn(name);
 		}
-		catch (LdapInvalidDnException lide) {
+		catch (LdapInvalidDnException ldapInvalidDnException) {
 			_log.error("Invalid name " + name);
 
-			throw lide;
+			throw ldapInvalidDnException;
 		}
 	}
 

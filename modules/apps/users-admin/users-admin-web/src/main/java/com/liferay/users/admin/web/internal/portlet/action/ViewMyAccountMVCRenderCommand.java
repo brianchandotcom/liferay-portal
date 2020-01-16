@@ -67,8 +67,8 @@ public class ViewMyAccountMVCRenderCommand implements MVCRenderCommand {
 
 			return "/edit_user.jsp";
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 

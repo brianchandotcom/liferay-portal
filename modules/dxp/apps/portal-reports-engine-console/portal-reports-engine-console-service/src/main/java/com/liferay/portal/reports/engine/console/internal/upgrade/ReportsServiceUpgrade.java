@@ -52,8 +52,8 @@ public class ReportsServiceUpgrade implements UpgradeStepRegistrator {
 
 			upgradeServiceModuleRelease.upgrade();
 		}
-		catch (UpgradeException ue) {
-			throw new RuntimeException(ue);
+		catch (UpgradeException upgradeException) {
+			throw new RuntimeException(upgradeException);
 		}
 
 		registry.register(

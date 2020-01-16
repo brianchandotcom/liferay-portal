@@ -60,13 +60,13 @@ public class UpdateOrganizationReminderQueriesMVCActionCommand
 		try {
 			updateReminderQueries(actionRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String mvcPath = "/edit_organization.jsp";
 
-			if (e instanceof NoSuchOrganizationException ||
-				e instanceof PrincipalException) {
+			if (exception instanceof NoSuchOrganizationException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				mvcPath = "/error.jsp";
 			}

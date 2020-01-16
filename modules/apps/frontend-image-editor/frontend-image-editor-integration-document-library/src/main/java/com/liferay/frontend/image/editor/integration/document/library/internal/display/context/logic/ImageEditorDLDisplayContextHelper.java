@@ -83,11 +83,11 @@ public class ImageEditorDLDisplayContextHelper {
 
 			_fileEntry = fileEntry;
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
 				"Unable to create image editor document library display " +
 					"context helper for file version " + fileVersion,
-				pe);
+				portalException);
 		}
 	}
 
@@ -218,8 +218,8 @@ public class ImageEditorDLDisplayContextHelper {
 		try {
 			imageEditorURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (Exception e) {
-			throw new SystemException("Unable to set window state", e);
+		catch (Exception exception) {
+			throw new SystemException("Unable to set window state", exception);
 		}
 
 		LiferayPortletResponse liferayPortletResponse =

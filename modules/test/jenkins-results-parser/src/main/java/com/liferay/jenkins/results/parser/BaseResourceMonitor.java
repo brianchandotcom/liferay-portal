@@ -80,8 +80,8 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 			_maxResourceConnections = Integer.valueOf(
 				buildProperties.getProperty(key));
 		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		catch (IOException ioException) {
+			ioException.printStackTrace();
 		}
 
 		return _maxResourceConnections;
@@ -258,8 +258,8 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 
 			_maxInQueueAge = Long.valueOf(buildProperties.getProperty(key));
 		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		catch (IOException ioException) {
+			ioException.printStackTrace();
 		}
 
 		return _maxInQueueAge;
@@ -285,8 +285,8 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 
 			_maxInUseAge = Long.valueOf(buildProperties.getProperty(key));
 		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		catch (IOException ioException) {
+			ioException.printStackTrace();
 		}
 
 		return _maxInUseAge;

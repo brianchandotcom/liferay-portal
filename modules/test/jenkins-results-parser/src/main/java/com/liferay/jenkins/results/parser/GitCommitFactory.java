@@ -67,12 +67,13 @@ public class GitCommitFactory {
 
 				return remoteGitCommit;
 			}
-			catch (ParseException pe) {
-				throw new RuntimeException(pe);
+			catch (ParseException parseException) {
+				throw new RuntimeException(parseException);
 			}
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get commit details", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get commit details", ioException);
 		}
 	}
 

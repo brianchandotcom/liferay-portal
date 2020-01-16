@@ -61,7 +61,7 @@ public class ParameterMapInvocationHandler<S> implements InvocationHandler {
 		try {
 			result = _invokeMap(method);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if (result != null) {
@@ -71,7 +71,7 @@ public class ParameterMapInvocationHandler<S> implements InvocationHandler {
 		try {
 			return _invokeConfigurationInstance(method, arguments);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

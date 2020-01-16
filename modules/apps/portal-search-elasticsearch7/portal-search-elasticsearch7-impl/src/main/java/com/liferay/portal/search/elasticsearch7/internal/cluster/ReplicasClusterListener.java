@@ -71,9 +71,9 @@ public class ReplicasClusterListener
 				getNumberOfReplicas(),
 				_replicasClusterContext.getTargetIndexNames());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to update number of replicas", e);
+				_log.warn("Unable to update number of replicas", exception);
 			}
 		}
 	}

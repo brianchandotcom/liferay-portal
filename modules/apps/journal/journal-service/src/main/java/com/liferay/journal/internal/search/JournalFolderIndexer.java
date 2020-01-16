@@ -198,12 +198,12 @@ public class JournalFolderIndexer
 						indexableActionableDynamicQuery.addDocuments(document);
 					}
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to index journal folder " +
 								folder.getFolderId(),
-							pe);
+							portalException);
 					}
 				}
 			});

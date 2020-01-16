@@ -808,14 +808,14 @@ public class SerializerTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			String message = re.getMessage();
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
 
 			Assert.assertTrue(
 				message.startsWith(
 					"Unable to write ordinary serializable object "));
 
-			Throwable throwable = re.getCause();
+			Throwable throwable = runtimeException.getCause();
 
 			Assert.assertTrue(throwable instanceof IOException);
 			Assert.assertEquals("Forced IOException", throwable.getMessage());

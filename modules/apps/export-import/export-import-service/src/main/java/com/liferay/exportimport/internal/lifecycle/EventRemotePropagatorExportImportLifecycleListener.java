@@ -181,12 +181,12 @@ public class EventRemotePropagatorExportImportLifecycleListener
 				remoteURL, user.getLogin(), user.getPassword(),
 				user.isPasswordEncrypted());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to generate HttpPrincipal for user " +
 						user.getFullName(),
-					pe);
+					portalException);
 			}
 		}
 
@@ -219,11 +219,11 @@ public class EventRemotePropagatorExportImportLifecycleListener
 						exportImportLifecycleEvent.getProcessId(),
 						exportImportLifecycleEvent.getAttributes());
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					_log.error(
 						"Unable to propagate staging lifecycle event to the " +
 							"remote live site",
-						pe);
+						portalException);
 				}
 			}
 		);

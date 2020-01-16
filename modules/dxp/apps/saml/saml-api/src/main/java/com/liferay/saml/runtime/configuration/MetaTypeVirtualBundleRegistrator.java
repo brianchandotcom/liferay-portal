@@ -63,19 +63,19 @@ public class MetaTypeVirtualBundleRegistrator implements Closeable {
 		try {
 			_servicesDropDownMetaTypeProvider.close();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		try {
 			_serviceRegistration.unregister();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		try {
 			_bundle.uninstall();
 		}
-		catch (BundleException be) {
+		catch (BundleException bundleException) {
 		}
 	}
 

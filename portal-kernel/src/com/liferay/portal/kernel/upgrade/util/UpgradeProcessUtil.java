@@ -92,7 +92,7 @@ public class UpgradeProcessUtil {
 
 				upgradeProcess = (UpgradeProcess)clazz.newInstance();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					"Unable to initialize upgrade " + upgradeProcessClassName);
 

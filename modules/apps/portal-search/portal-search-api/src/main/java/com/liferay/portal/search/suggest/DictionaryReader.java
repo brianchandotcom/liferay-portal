@@ -75,8 +75,8 @@ public class DictionaryReader {
 
 					_calledHasNext = true;
 				}
-				catch (IOException ioe) {
-					throw new IllegalStateException(ioe);
+				catch (IOException ioException) {
+					throw new IllegalStateException(ioException);
 				}
 			}
 

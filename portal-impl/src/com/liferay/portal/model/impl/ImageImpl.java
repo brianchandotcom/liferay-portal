@@ -65,8 +65,8 @@ public class ImageImpl extends ImageBaseImpl {
 
 			_textObj = bytes;
 		}
-		catch (Exception e) {
-			_log.error("Error reading image " + imageId, e);
+		catch (Exception exception) {
+			_log.error("Error reading image " + imageId, exception);
 		}
 
 		return _textObj;

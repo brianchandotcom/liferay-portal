@@ -69,9 +69,10 @@ public class ScriptingExecutorMessageListener extends BaseMessageListener {
 					null, new HashMap<String, Object>(), scriptingLanguage,
 					StringUtil.read(inputStream));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to execute script " + url.getFile(), e);
+					_log.warn(
+						"Unable to execute script " + url.getFile(), exception);
 				}
 			}
 			finally {

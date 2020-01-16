@@ -295,9 +295,9 @@ public class SharepointConnectionImpl implements SharepointConnection {
 
 			return operation;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SharepointRuntimeException(
-				"Unable to initialize operation " + clazz.getName(), e);
+				"Unable to initialize operation " + clazz.getName(), exception);
 		}
 	}
 
@@ -370,9 +370,9 @@ public class SharepointConnectionImpl implements SharepointConnection {
 
 			return new URL(url.toExternalForm());
 		}
-		catch (MalformedURLException murle) {
+		catch (MalformedURLException malformedURLException) {
 			throw new SharepointRuntimeException(
-				"Unable to load WSDL " + name, murle);
+				"Unable to load WSDL " + name, malformedURLException);
 		}
 	}
 
@@ -388,9 +388,10 @@ public class SharepointConnectionImpl implements SharepointConnection {
 
 			configureStub((Stub)_copySoap, serviceURL);
 		}
-		catch (ServiceException se) {
+		catch (ServiceException serviceException) {
 			throw new SharepointRuntimeException(
-				"Unable to configure SOAP endpoint " + wsdlURL, se);
+				"Unable to configure SOAP endpoint " + wsdlURL,
+				serviceException);
 		}
 	}
 
@@ -406,9 +407,10 @@ public class SharepointConnectionImpl implements SharepointConnection {
 
 			configureStub((Stub)_listsSoap, serviceURL);
 		}
-		catch (ServiceException se) {
+		catch (ServiceException serviceException) {
 			throw new SharepointRuntimeException(
-				"Unable to configure SOAP endpoint " + wsdlURL, se);
+				"Unable to configure SOAP endpoint " + wsdlURL,
+				serviceException);
 		}
 	}
 
@@ -424,9 +426,10 @@ public class SharepointConnectionImpl implements SharepointConnection {
 
 			configureStub((Stub)_versionsSoap, serviceURL);
 		}
-		catch (ServiceException se) {
+		catch (ServiceException serviceException) {
 			throw new SharepointRuntimeException(
-				"Unable to configure SOAP endpoint " + wsdlURL, se);
+				"Unable to configure SOAP endpoint " + wsdlURL,
+				serviceException);
 		}
 	}
 

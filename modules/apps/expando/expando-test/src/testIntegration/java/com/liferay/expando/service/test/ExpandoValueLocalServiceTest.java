@@ -161,7 +161,7 @@ public class ExpandoValueLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ValueDataException vde) {
+		catch (ValueDataException valueDataException) {
 		}
 	}
 

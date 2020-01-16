@@ -79,8 +79,8 @@ public class KBArticleImporter {
 				userId, groupId, parentKBFolderId, prioritizeByNumericalPrefix,
 				zipReader, getMetadata(zipReader), serviceContext);
 		}
-		catch (IOException ioe) {
-			throw new KBArticleImportException(ioe);
+		catch (IOException ioException) {
+			throw new KBArticleImportException(ioException);
 		}
 	}
 
@@ -121,18 +121,19 @@ public class KBArticleImporter {
 				serviceContext.setWorkflowAction(workflowAction);
 			}
 		}
-		catch (AssetCategoryException ace) {
-			throw new KBArticleImportException.MustHaveACategory(ace);
+		catch (AssetCategoryException assetCategoryException) {
+			throw new KBArticleImportException.MustHaveACategory(
+				assetCategoryException);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("Unable to add basic KB article for file entry ");
 			sb.append(fileEntryName);
 			sb.append(": ");
-			sb.append(e.getLocalizedMessage());
+			sb.append(exception.getLocalizedMessage());
 
-			throw new KBArticleImportException(sb.toString(), e);
+			throw new KBArticleImportException(sb.toString(), exception);
 		}
 
 		try {
@@ -149,15 +150,15 @@ public class KBArticleImporter {
 
 			return kbArticle;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("Unable to update KB article for file entry ");
 			sb.append(fileEntryName);
 			sb.append(": ");
-			sb.append(e.getLocalizedMessage());
+			sb.append(exception.getLocalizedMessage());
 
-			throw new KBArticleImportException(sb.toString(), e);
+			throw new KBArticleImportException(sb.toString(), exception);
 		}
 	}
 
@@ -188,10 +189,11 @@ public class KBArticleImporter {
 				KBArticleConstants.DEFAULT_PRIORITY,
 				Double.parseDouble(leadingDigits));
 		}
-		catch (NumberFormatException nfe) {
+		catch (NumberFormatException numberFormatException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Invalid numerical prefix: " + kbArchiveResourceName, nfe);
+					"Invalid numerical prefix: " + kbArchiveResourceName,
+					numberFormatException);
 			}
 		}
 
@@ -226,8 +228,8 @@ public class KBArticleImporter {
 
 			return metadata;
 		}
-		catch (IOException ioe) {
-			throw new KBArticleImportException(ioe);
+		catch (IOException ioException) {
+			throw new KBArticleImportException(ioException);
 		}
 	}
 

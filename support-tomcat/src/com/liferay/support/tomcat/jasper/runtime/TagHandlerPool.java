@@ -45,8 +45,8 @@ public class TagHandlerPool extends org.apache.jasper.runtime.TagHandlerPool {
 			try {
 				tag = (Tag)tagClass.newInstance();
 			}
-			catch (Exception e) {
-				throw new JspException(e);
+			catch (Exception exception) {
+				throw new JspException(exception);
 			}
 		}
 		else {

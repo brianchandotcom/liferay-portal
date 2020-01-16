@@ -204,8 +204,8 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 
 			return doc.asXML();
 		}
-		catch (Exception e) {
-			throw new SearchException(e);
+		catch (Exception exception) {
+			throw new SearchException(exception);
 		}
 	}
 

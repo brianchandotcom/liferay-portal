@@ -118,8 +118,8 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			return ServiceContextTestUtil.getServiceContext(
 				dlFixture.getGroupId(), dlFixture.getUserId());
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

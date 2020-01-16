@@ -109,10 +109,11 @@ public class PortalInstanceLifecycleListenerManagerImpl
 			portalInstanceLifecycleListener.portalInstancePreunregistered(
 				company);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to preunregister portal instance " + company, e);
+					"Unable to preunregister portal instance " + company,
+					exception);
 			}
 		}
 	}
@@ -140,9 +141,10 @@ public class PortalInstanceLifecycleListenerManagerImpl
 
 			portalInstanceLifecycleListener.portalInstanceRegistered(company);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to register portal instance " + company, e);
+				_log.warn(
+					"Unable to register portal instance " + company, exception);
 			}
 		}
 		finally {
@@ -185,9 +187,11 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		try {
 			portalInstanceLifecycleListener.portalInstanceUnregistered(company);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to unregister portal instance " + company, e);
+				_log.warn(
+					"Unable to unregister portal instance " + company,
+					exception);
 			}
 		}
 	}

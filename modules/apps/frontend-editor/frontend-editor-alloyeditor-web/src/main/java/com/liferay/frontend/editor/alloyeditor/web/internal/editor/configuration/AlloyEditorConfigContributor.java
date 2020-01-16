@@ -102,7 +102,7 @@ public class AlloyEditorConfigContributor
 			resourceBundle = _aggregateResourceBundleLoader.loadResourceBundle(
 				locale);
 		}
-		catch (MissingResourceException mre) {
+		catch (MissingResourceException missingResourceException) {
 			resourceBundle = ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE;
 		}
 

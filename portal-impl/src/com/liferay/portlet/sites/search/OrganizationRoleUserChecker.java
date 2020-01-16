@@ -49,8 +49,8 @@ public class OrganizationRoleUserChecker extends RowChecker {
 				user.getUserId(), _organization.getGroupId(),
 				_role.getRoleId());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -82,8 +82,8 @@ public class OrganizationRoleUserChecker extends RowChecker {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return super.isDisabled(obj);

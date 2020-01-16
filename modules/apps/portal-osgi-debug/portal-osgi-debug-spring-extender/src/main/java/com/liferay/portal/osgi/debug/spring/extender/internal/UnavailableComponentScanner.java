@@ -103,7 +103,7 @@ public class UnavailableComponentScanner {
 					}
 				}
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Stopped scanning for unavailable components");
 				}

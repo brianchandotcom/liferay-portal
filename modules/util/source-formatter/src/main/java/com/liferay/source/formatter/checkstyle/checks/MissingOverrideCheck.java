@@ -66,7 +66,7 @@ public class MissingOverrideCheck extends BaseCheck {
 		try {
 			javaProjectBuilder = _getJavaProjectBuilder(absolutePath);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return;
 		}
 
@@ -181,7 +181,7 @@ public class MissingOverrideCheck extends BaseCheck {
 				javaProjectBuilder.addSource(
 					new File(SourceUtil.getAbsolutePath(curFileName)));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

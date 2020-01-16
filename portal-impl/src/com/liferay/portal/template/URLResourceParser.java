@@ -55,8 +55,8 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 
 			return new URLTemplateResource(templateId, url);
 		}
-		catch (IOException ioe) {
-			throw new TemplateException(ioe);
+		catch (IOException ioException) {
+			throw new TemplateException(ioException);
 		}
 	}
 

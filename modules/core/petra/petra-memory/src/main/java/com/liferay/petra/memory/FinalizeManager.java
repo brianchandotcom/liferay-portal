@@ -134,7 +134,7 @@ public class FinalizeManager {
 						}
 					}
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 				}
 			}
 		}

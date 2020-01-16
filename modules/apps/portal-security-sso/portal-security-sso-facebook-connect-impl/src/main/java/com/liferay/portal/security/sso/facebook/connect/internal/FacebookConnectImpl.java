@@ -106,9 +106,9 @@ public class FacebookConnectImpl implements FacebookConnect {
 						" because of response:", content));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SystemException(
-				"Unable to retrieve Facebook access token", e);
+				"Unable to retrieve Facebook access token", exception);
 		}
 
 		return null;
@@ -168,9 +168,9 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 			return JSONFactoryUtil.createJSONObject(json);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -246,8 +246,10 @@ public class FacebookConnectImpl implements FacebookConnect {
 				new CompanyServiceSettingsLocator(
 					companyId, FacebookConnectConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to get Facebook Connect configuration", ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(
+				"Unable to get Facebook Connect configuration",
+				configurationException);
 		}
 
 		return null;

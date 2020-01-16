@@ -133,12 +133,12 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 				try {
 					addTransportAddress(transportClient, transportAddress);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to add transport address " +
 								transportAddress,
-							e);
+							exception);
 					}
 				}
 			}

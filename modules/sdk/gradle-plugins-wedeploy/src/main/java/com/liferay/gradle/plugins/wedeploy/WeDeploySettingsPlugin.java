@@ -51,8 +51,8 @@ public class WeDeploySettingsPlugin implements Plugin<Settings> {
 		try {
 			_apply(settings);
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 

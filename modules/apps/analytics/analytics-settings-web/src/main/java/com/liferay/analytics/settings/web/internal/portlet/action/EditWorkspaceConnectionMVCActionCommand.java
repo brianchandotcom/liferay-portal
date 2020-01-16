@@ -144,8 +144,8 @@ public class EditWorkspaceConnectionMVCActionCommand
 			return JSONFactoryUtil.createJSONObject(
 				new String(Base64.decode(token)));
 		}
-		catch (Exception e) {
-			throw new PortalException("Invalid token", e);
+		catch (Exception exception) {
+			throw new PortalException("Invalid token", exception);
 		}
 	}
 

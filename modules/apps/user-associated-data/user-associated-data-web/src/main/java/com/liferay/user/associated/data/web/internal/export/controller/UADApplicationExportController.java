@@ -90,8 +90,8 @@ public class UADApplicationExportController {
 							sendStatusMessage("entity", uadRegistryKey);
 					}
 				}
-				catch (IOException ioe) {
-					throw new PortalException(ioe);
+				catch (IOException ioException) {
+					throw new PortalException(ioException);
 				}
 			}
 		}

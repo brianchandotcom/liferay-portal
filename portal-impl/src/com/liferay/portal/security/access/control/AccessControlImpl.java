@@ -82,8 +82,8 @@ public class AccessControlImpl implements AccessControl {
 
 			AccessControlThreadLocal.setRemoteAccess(false);
 		}
-		catch (Exception e) {
-			throw new AuthException(e.getMessage(), e);
+		catch (Exception exception) {
+			throw new AuthException(exception.getMessage(), exception);
 		}
 	}
 

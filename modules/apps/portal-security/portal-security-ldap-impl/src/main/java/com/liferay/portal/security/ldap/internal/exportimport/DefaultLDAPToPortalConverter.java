@@ -211,7 +211,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 			contact.setBirthday(birthday);
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar(
 				1970, Calendar.JANUARY, 1);
 

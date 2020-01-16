@@ -80,12 +80,12 @@ public class AssetCategoryPropertyServiceImpl
 					entryId);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to get asset category property for asset entry " +
 						entryId,
-					pe);
+					portalException);
 			}
 		}
 
@@ -144,12 +144,12 @@ public class AssetCategoryPropertyServiceImpl
 					filteredAssetCategoryProperties.add(assetCategoryProperty);
 				}
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}

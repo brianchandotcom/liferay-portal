@@ -76,8 +76,8 @@ public class BuildDatabaseUtil {
 			try {
 				JenkinsResultsParserUtil.write(buildDatabaseFile, "{}");
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 
 			return;
@@ -114,19 +114,21 @@ public class BuildDatabaseUtil {
 
 				break;
 			}
-			catch (IOException | RuntimeException | TimeoutException e) {
+			catch (IOException | RuntimeException | TimeoutException
+						exception) {
+
 				if (retries == maxRetries) {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
 							"Unable to get ",
 							BuildDatabase.FILE_NAME_BUILD_DATABASE, " file"),
-						e);
+						exception);
 				}
 
 				System.out.println(
 					"Unable to execute bash commands, retrying... ");
 
-				e.printStackTrace();
+				exception.printStackTrace();
 
 				JenkinsResultsParserUtil.sleep(3000);
 			}

@@ -96,7 +96,7 @@ public class MainTest {
 			try {
 				Main.main(requiredArgument);
 			}
-			catch (ParameterException pe) {
+			catch (ParameterException parameterException) {
 			}
 		}
 	}

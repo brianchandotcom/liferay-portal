@@ -82,8 +82,8 @@ public class BlogsEntryAssetEntryBulkSelection
 			return _assetEntryLocalService.getEntry(
 				BlogsEntry.class.getName(), blogsEntry.getEntryId());
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 

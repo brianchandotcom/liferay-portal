@@ -205,7 +205,7 @@ public class JournalArticleExportImportContentProcessor
 				groupId, content);
 		}
 		catch (ExportImportContentValidationException |
-			   NoSuchFileEntryException | NoSuchLayoutException e) {
+			   NoSuchFileEntryException | NoSuchLayoutException exception) {
 
 			if (ExportImportThreadLocal.isImportInProcess()) {
 				if (_log.isDebugEnabled()) {
@@ -215,8 +215,9 @@ public class JournalArticleExportImportContentProcessor
 
 					String type = "page";
 
-					if ((e instanceof NoSuchFileEntryException) ||
-						(e.getCause() instanceof NoSuchFileEntryException)) {
+					if ((exception instanceof NoSuchFileEntryException) ||
+						(exception.getCause() instanceof
+							NoSuchFileEntryException)) {
 
 						type = "file entry";
 					}
@@ -236,7 +237,7 @@ public class JournalArticleExportImportContentProcessor
 				return;
 			}
 
-			throw e;
+			throw exception;
 		}
 	}
 
@@ -263,7 +264,7 @@ public class JournalArticleExportImportContentProcessor
 		try {
 			document = SAXReaderUtil.read(content);
 		}
-		catch (DocumentException de) {
+		catch (DocumentException documentException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Invalid content:\n" + content);
 			}
@@ -290,9 +291,9 @@ public class JournalArticleExportImportContentProcessor
 				try {
 					jsonObject = _jsonFactory.createJSONObject(jsonData);
 				}
-				catch (JSONException jsone) {
+				catch (JSONException jsonException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to parse JSON", jsone);
+						_log.debug("Unable to parse JSON", jsonException);
 					}
 
 					continue;
@@ -342,7 +343,7 @@ public class JournalArticleExportImportContentProcessor
 							portletDataContext, stagedModel, journalArticle,
 							PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						if (_log.isDebugEnabled()) {
 							StringBundler messageSB = new StringBundler(10);
 
@@ -355,16 +356,16 @@ public class JournalArticleExportImportContentProcessor
 							messageSB.append(classPK);
 							messageSB.append(" that could not be exported ");
 							messageSB.append("due to ");
-							messageSB.append(e);
+							messageSB.append(exception);
 
 							String errorMessage = messageSB.toString();
 
-							if (Validator.isNotNull(e.getMessage())) {
+							if (Validator.isNotNull(exception.getMessage())) {
 								errorMessage = StringBundler.concat(
-									errorMessage, ": ", e.getMessage());
+									errorMessage, ": ", exception.getMessage());
 							}
 
-							_log.debug(errorMessage, e);
+							_log.debug(errorMessage, exception);
 						}
 					}
 				}
@@ -502,38 +503,40 @@ public class JournalArticleExportImportContentProcessor
 							return;
 						}
 
-						NoSuchArticleException nsae =
+						NoSuchArticleException noSuchArticleException =
 							new NoSuchArticleException(
 								StringBundler.concat(
 									"No JournalArticle exists with the key ",
 									"{resourcePrimKey=", classPK, "}"));
 
 						if (throwable == null) {
-							throwable = nsae;
+							throwable = noSuchArticleException;
 						}
 						else {
-							throwable.addSuppressed(nsae);
+							throwable.addSuppressed(noSuchArticleException);
 						}
 					}
 				}
 			}
 		}
-		catch (DocumentException de) {
+		catch (DocumentException documentException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Invalid content:\n" + content);
 			}
 		}
 
 		if (throwable != null) {
-			ExportImportContentValidationException eicve =
-				new ExportImportContentValidationException(
-					JournalArticleExportImportContentProcessor.class.getName(),
-					throwable);
+			ExportImportContentValidationException
+				exportImportContentValidationException =
+					new ExportImportContentValidationException(
+						JournalArticleExportImportContentProcessor.class.
+							getName(),
+						throwable);
 
-			eicve.setType(
+			exportImportContentValidationException.setType(
 				ExportImportContentValidationException.ARTICLE_NOT_FOUND);
 
-			throw eicve;
+			throw exportImportContentValidationException;
 		}
 	}
 
@@ -603,9 +606,9 @@ public class JournalArticleExportImportContentProcessor
 		try {
 			return _journalConverter.getDDMFields(ddmStructure, content);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return null;

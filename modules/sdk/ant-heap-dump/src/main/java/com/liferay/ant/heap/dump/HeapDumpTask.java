@@ -42,8 +42,8 @@ public class HeapDumpTask extends Task {
 
 			log("Successfully dumped heap at " + dumpFile.getCanonicalPath());
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

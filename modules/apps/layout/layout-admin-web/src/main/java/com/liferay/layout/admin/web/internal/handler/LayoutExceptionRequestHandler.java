@@ -58,10 +58,11 @@ public class LayoutExceptionRequestHandler {
 		String errorMessage = null;
 
 		if (portalException instanceof AssetCategoryException) {
-			AssetCategoryException ace =
+			AssetCategoryException assetCategoryException =
 				(AssetCategoryException)portalException;
 
-			AssetVocabulary assetVocabulary = ace.getVocabulary();
+			AssetVocabulary assetVocabulary =
+				assetCategoryException.getVocabulary();
 
 			String assetVocabularyTitle = StringPool.BLANK;
 
@@ -70,13 +71,15 @@ public class LayoutExceptionRequestHandler {
 					themeDisplay.getLocale());
 			}
 
-			if (ace.getType() == AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
+			if (assetCategoryException.getType() ==
+					AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
+
 				errorMessage = LanguageUtil.format(
 					themeDisplay.getRequest(),
 					"please-select-at-least-one-category-for-x",
 					assetVocabularyTitle);
 			}
-			else if (ace.getType() ==
+			else if (assetCategoryException.getType() ==
 						AssetCategoryException.TOO_MANY_CATEGORIES) {
 
 				errorMessage = LanguageUtil.format(
@@ -86,9 +89,10 @@ public class LayoutExceptionRequestHandler {
 			}
 		}
 		else if (portalException instanceof LayoutNameException) {
-			LayoutNameException lne = (LayoutNameException)portalException;
+			LayoutNameException layoutNameException =
+				(LayoutNameException)portalException;
 
-			if (lne.getType() == LayoutNameException.TOO_LONG) {
+			if (layoutNameException.getType() == LayoutNameException.TOO_LONG) {
 				errorMessage = LanguageUtil.format(
 					themeDisplay.getRequest(),
 					"page-name-cannot-exceed-x-characters",
@@ -102,13 +106,16 @@ public class LayoutExceptionRequestHandler {
 			}
 		}
 		else if (portalException instanceof LayoutTypeException) {
-			LayoutTypeException lte = (LayoutTypeException)portalException;
+			LayoutTypeException layoutTypeException =
+				(LayoutTypeException)portalException;
 
-			if ((lte.getType() == LayoutTypeException.FIRST_LAYOUT) ||
-				(lte.getType() == LayoutTypeException.NOT_INSTANCEABLE)) {
+			if ((layoutTypeException.getType() ==
+					LayoutTypeException.FIRST_LAYOUT) ||
+				(layoutTypeException.getType() ==
+					LayoutTypeException.NOT_INSTANCEABLE)) {
 
 				errorMessage = _handleLayoutTypeException(
-					actionRequest, lte.getType());
+					actionRequest, layoutTypeException.getType());
 			}
 		}
 

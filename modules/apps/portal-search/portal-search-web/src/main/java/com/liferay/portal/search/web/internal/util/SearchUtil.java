@@ -105,18 +105,18 @@ public class SearchUtil {
 
 					resultRows.add(element);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					_log.error(
 						"Unable to retrieve individual search result for " +
 							className,
-						e);
+						exception);
 
 					totalRows--;
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to display content for " + className, e);
+		catch (Exception exception) {
+			_log.error("Unable to display content for " + className, exception);
 		}
 
 		return new Tuple(resultRows, totalRows);
@@ -215,12 +215,12 @@ public class SearchUtil {
 
 			return viewURL;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
 					"Unable to get search result view URL for class ",
 					className, " with primary key ", classPK),
-				e);
+				exception);
 
 			return StringPool.BLANK;
 		}

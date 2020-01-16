@@ -101,8 +101,8 @@ public class OAuth2ControllerFactory {
 				_oAuth2Manager.getAuthorizationURL(
 					companyId, _portal.getPortalURL(portletRequest), state));
 		}
-		catch (PortalException pe) {
-			return new OAuth2Result(pe);
+		catch (PortalException portalException) {
+			return new OAuth2Result(portalException);
 		}
 	}
 
@@ -230,8 +230,8 @@ public class OAuth2ControllerFactory {
 						oAuth2Result.getResponse());
 				}
 			}
-			catch (IOException ioe) {
-				throw new PortalException(ioe);
+			catch (IOException ioException) {
+				throw new PortalException(ioException);
 			}
 		}
 

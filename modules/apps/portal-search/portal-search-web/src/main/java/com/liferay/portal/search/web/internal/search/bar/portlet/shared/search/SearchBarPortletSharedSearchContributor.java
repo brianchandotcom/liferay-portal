@@ -140,7 +140,7 @@ public class SearchBarPortletSharedSearchContributor
 
 			return ArrayUtil.toLongArray(groupIds);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return new long[] {themeDisplay.getScopeGroupId()};
 		}
 	}

@@ -41,7 +41,7 @@ public class LayoutSetModelAdapterBuilder
 
 			return (LayoutSet)layoutSetField.get(stagedLayoutSet);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

@@ -47,8 +47,8 @@ public class SubscriptionPortletPreferencesModelListener
 				portletPreferences.getModelClassName(),
 				portletPreferences.getPortletPreferencesId());
 		}
-		catch (Exception e) {
-			_log.error("Unable to delete subscriptions", e);
+		catch (Exception exception) {
+			_log.error("Unable to delete subscriptions", exception);
 		}
 	}
 

@@ -39,8 +39,8 @@ public class SegmentsExperienceModelListener
 				deleteLayoutPageTemplateStructureRelsBySegmentsExperienceId(
 					segmentsExperience.getSegmentsExperienceId());
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

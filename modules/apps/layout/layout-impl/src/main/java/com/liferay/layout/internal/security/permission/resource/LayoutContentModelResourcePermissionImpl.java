@@ -80,8 +80,10 @@ public class LayoutContentModelResourcePermissionImpl
 				return true;
 			}
 		}
-		catch (PortalException pe) {
-			_log.error("An error occurred while checking permissions", pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"An error occurred while checking permissions",
+				portalException);
 		}
 
 		return false;

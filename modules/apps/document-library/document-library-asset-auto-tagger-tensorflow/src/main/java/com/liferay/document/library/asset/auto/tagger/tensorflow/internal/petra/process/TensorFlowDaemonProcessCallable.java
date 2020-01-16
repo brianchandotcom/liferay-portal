@@ -37,8 +37,8 @@ public class TensorFlowDaemonProcessCallable
 		try {
 			Thread.sleep(Long.MAX_VALUE);
 		}
-		catch (InterruptedException ie) {
-			throw new ProcessException(ie);
+		catch (InterruptedException interruptedException) {
+			throw new ProcessException(interruptedException);
 		}
 
 		return "DONE";

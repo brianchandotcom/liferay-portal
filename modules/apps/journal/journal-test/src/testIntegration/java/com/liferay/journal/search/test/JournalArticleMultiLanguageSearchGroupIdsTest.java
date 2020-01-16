@@ -304,8 +304,8 @@ public class JournalArticleMultiLanguageSearchGroupIdsTest {
 
 			return searchContext;
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 
@@ -315,8 +315,8 @@ public class JournalArticleMultiLanguageSearchGroupIdsTest {
 
 			return hits.toList();
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 

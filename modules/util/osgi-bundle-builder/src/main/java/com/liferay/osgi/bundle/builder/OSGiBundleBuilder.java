@@ -73,9 +73,9 @@ public class OSGiBundleBuilder {
 				command.build(osgiBundleBuilderArgs);
 			}
 		}
-		catch (ParameterException pe) {
+		catch (ParameterException parameterException) {
 			if (!osgiBundleBuilderArgs.isHelp()) {
-				System.err.println(pe.getMessage());
+				System.err.println(parameterException.getMessage());
 			}
 
 			_printHelp(jCommander);

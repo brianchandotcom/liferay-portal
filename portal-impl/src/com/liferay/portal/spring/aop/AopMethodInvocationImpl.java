@@ -49,8 +49,8 @@ public class AopMethodInvocationImpl implements AopMethodInvocation {
 			try {
 				return _method.invoke(_target, arguments);
 			}
-			catch (InvocationTargetException ite) {
-				throw ite.getTargetException();
+			catch (InvocationTargetException invocationTargetException) {
+				throw invocationTargetException.getTargetException();
 			}
 		}
 

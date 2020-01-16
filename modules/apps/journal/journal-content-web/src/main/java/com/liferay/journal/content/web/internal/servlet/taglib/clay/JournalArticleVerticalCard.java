@@ -57,7 +57,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 			return HtmlUtil.escapeAttribute(
 				_assetRenderer.getThumbnailPath(_renderRequest));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -91,7 +91,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 
 			return sb.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return title;
 		}
 	}

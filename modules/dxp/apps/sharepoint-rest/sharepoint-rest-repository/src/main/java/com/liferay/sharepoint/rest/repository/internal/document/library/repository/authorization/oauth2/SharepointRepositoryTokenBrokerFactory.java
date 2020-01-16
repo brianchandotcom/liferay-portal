@@ -71,8 +71,8 @@ public class SharepointRepositoryTokenBrokerFactory {
 			throw new NoSuchElementException(
 				"No configuration found with name " + configurationPid);
 		}
-		catch (InvalidSyntaxException | IOException e) {
-			throw new SystemException(e);
+		catch (InvalidSyntaxException | IOException exception) {
+			throw new SystemException(exception);
 		}
 	}
 

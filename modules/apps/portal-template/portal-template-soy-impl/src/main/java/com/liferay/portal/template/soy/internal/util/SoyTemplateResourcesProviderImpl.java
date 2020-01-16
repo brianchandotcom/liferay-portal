@@ -52,12 +52,12 @@ public class SoyTemplateResourcesProviderImpl
 			return SoyTemplateResourcesCollectorUtil.getTemplateResources(
 				bundle, templatePath);
 		}
-		catch (TemplateException te) {
+		catch (TemplateException templateException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to get template resources for bundle " +
 						bundle.getBundleId(),
-					te);
+					templateException);
 			}
 		}
 

@@ -99,10 +99,10 @@ public class TensorflowProcessHolder {
 		try {
 			return future.get();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_stop();
 
-			return ReflectionUtil.throwException(e);
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -230,8 +230,8 @@ public class TensorflowProcessHolder {
 
 				_lastLaunchTime = System.currentTimeMillis();
 			}
-			catch (ProcessException pe) {
-				ReflectionUtil.throwException(pe);
+			catch (ProcessException processException) {
+				ReflectionUtil.throwException(processException);
 			}
 		}
 

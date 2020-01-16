@@ -92,7 +92,8 @@ public class SamlSloContext implements Serializable {
 
 					name = samlIdpSpConnection.getName();
 				}
-				catch (NoSuchIdpSpConnectionException nsisce) {
+				catch (NoSuchIdpSpConnectionException
+							noSuchIdpSpConnectionException) {
 				}
 
 				SamlSloRequestInfo samlSloRequestInfo =
@@ -104,12 +105,12 @@ public class SamlSloContext implements Serializable {
 				_samlRequestInfos.put(samlSpEntityId, samlSloRequestInfo);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage(), e);
+				_log.debug(exception.getMessage(), exception);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 		}
 	}
@@ -149,7 +150,7 @@ public class SamlSloContext implements Serializable {
 		try {
 			return _userLocalService.fetchUserById(_userId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

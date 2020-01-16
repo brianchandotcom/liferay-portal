@@ -65,8 +65,8 @@ public class Translation implements Serializable {
 		try {
 			_fromText = new String(fromText.getBytes(), StringPool.UTF8);
 		}
-		catch (UnsupportedEncodingException uee) {
-			ReflectionUtil.throwException(uee);
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			ReflectionUtil.throwException(unsupportedEncodingException);
 		}
 	}
 
@@ -74,8 +74,8 @@ public class Translation implements Serializable {
 		try {
 			_toText = new String(toText.getBytes(), StringPool.UTF8);
 		}
-		catch (UnsupportedEncodingException uee) {
-			ReflectionUtil.throwException(uee);
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			ReflectionUtil.throwException(unsupportedEncodingException);
 		}
 	}
 

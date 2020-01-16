@@ -60,15 +60,15 @@ public class MultipleFolderBulkSelection
 		try {
 			return _dlAppService.getFolder(folderId);
 		}
-		catch (NoSuchFolderException nsfe) {
+		catch (NoSuchFolderException noSuchFolderException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsfe, nsfe);
+				_log.warn(noSuchFolderException, noSuchFolderException);
 			}
 
 			return null;
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 

@@ -57,8 +57,8 @@ public class EditLayoutSetMVCRenderCommand implements MVCRenderCommand {
 					themeDisplay.getPermissionChecker(), groupId,
 					ActionKeys.VIEW);
 			}
-			catch (PortalException pe) {
-				SessionErrors.add(renderRequest, pe.getClass());
+			catch (PortalException portalException) {
+				SessionErrors.add(renderRequest, portalException.getClass());
 			}
 		}
 

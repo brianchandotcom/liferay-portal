@@ -57,7 +57,7 @@ public final class ServiceReferenceMapperFactory {
 			try {
 				emitter.emit(function.apply(serviceReference, service));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				b.ungetService(serviceReference);
 			}
 		};

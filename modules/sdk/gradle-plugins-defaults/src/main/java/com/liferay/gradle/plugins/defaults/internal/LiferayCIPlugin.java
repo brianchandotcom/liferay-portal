@@ -407,8 +407,8 @@ public class LiferayCIPlugin implements Plugin<Project> {
 							yarnLockFile.toPath(),
 							text.getBytes(StandardCharsets.UTF_8));
 					}
-					catch (IOException ioe) {
-						throw new UncheckedIOException(ioe);
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
 					}
 				}
 

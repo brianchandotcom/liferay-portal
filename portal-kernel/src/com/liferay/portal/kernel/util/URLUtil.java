@@ -40,7 +40,7 @@ public class URLUtil {
 
 					inputStream.close();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 				}
 			}
 		}

@@ -79,7 +79,7 @@ public class ModelPermissionsFactory {
 				modelPermissions.addRolePermissions(
 					role.getName(), entry.getValue());
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Unable to get role " + entry.getKey());
 				}
@@ -87,7 +87,7 @@ public class ModelPermissionsFactory {
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}

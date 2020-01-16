@@ -45,8 +45,8 @@ public class SearchPortletPermissionUtil {
 				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
 				portal.getPortletId(renderRequest), ActionKeys.CONFIGURATION);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return false;
 		}

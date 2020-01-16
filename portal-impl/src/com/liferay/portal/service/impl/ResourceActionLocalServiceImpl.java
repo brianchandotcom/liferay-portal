@@ -285,8 +285,8 @@ public class ResourceActionLocalServiceImpl
 			try {
 				actionableDynamicQuery.performActions();
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
 			}
 		}
 

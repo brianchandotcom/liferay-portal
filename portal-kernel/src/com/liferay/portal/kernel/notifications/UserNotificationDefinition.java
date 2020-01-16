@@ -90,7 +90,7 @@ public class UserNotificationDefinition {
 			return ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass());
 		}
-		catch (MissingResourceException mre) {
+		catch (MissingResourceException missingResourceException) {
 			return ResourceBundleUtil.getBundle(
 				"content.Language", locale,
 				PortalClassLoaderUtil.getClassLoader());

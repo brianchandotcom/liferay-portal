@@ -124,10 +124,10 @@ public class UserBagFactoryImpl implements UserBagFactory {
 
 			return userBag;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PermissionCacheUtil.removeUserBag(userId);
 
-			throw e;
+			throw exception;
 		}
 	}
 

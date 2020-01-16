@@ -63,9 +63,9 @@ public class KaleoDefinitionVersionActiveComparator
 
 			return kaleoDefinition.isActive();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return false;

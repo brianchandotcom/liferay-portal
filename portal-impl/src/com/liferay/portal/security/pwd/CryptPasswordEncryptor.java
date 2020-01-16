@@ -47,8 +47,10 @@ public class CryptPasswordEncryptor
 			return Crypt.crypt(
 				saltBytes, plainTextPassword.getBytes(Digester.ENCODING));
 		}
-		catch (UnsupportedEncodingException uee) {
-			throw new PwdEncryptorException(uee.getMessage(), uee);
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new PwdEncryptorException(
+				unsupportedEncodingException.getMessage(),
+				unsupportedEncodingException);
 		}
 	}
 
@@ -82,11 +84,11 @@ public class CryptPasswordEncryptor
 				saltBytes = salt.getBytes(Digester.ENCODING);
 			}
 		}
-		catch (UnsupportedEncodingException uee) {
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
 			throw new PwdEncryptorException(
 				"Unable to extract salt from encrypted password " +
-					uee.getMessage(),
-				uee);
+					unsupportedEncodingException.getMessage(),
+				unsupportedEncodingException);
 		}
 
 		return saltBytes;

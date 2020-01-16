@@ -76,8 +76,8 @@ public class IFramePortlet extends MVCPortlet {
 		try {
 			src = transformSrc(renderRequest, renderResponse);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		renderRequest.setAttribute(IFrameWebKeys.IFRAME_SRC, src);

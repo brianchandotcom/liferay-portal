@@ -66,9 +66,10 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 			configurationJSONObject = JSONFactoryUtil.createJSONObject(
 				configuration);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to parse configuration", jsone.getCause());
+				_log.warn(
+					"Unable to parse configuration", jsonException.getCause());
 			}
 
 			return null;

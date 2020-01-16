@@ -54,16 +54,16 @@ public class EditNodeMVCRenderCommand implements MVCRenderCommand {
 					WikiWebKeys.WIKI_NODE, ActionUtil.getNode(renderRequest));
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchNodeException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/wiki/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/wiki_admin/edit_node.jsp";

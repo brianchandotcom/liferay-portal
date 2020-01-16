@@ -122,8 +122,8 @@ public class WhipClassFileTransformer implements ClassFileTransformer {
 				return data;
 			}
 		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
 		}
 
 		return null;

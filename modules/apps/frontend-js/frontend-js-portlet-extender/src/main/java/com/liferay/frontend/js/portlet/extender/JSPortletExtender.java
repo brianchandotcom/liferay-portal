@@ -168,8 +168,8 @@ public class JSPortletExtender {
 		try (InputStream inputStream = url.openStream()) {
 			return _jsonFactory.createJSONObject(StringUtil.read(inputStream));
 		}
-		catch (Exception e) {
-			_log.error("Unable to parse " + url, e);
+		catch (Exception exception) {
+			_log.error("Unable to parse " + url, exception);
 
 			return null;
 		}
@@ -195,11 +195,11 @@ public class JSPortletExtender {
 				new String[] {ConfigurationAction.class.getName()},
 				configurationAction, properties);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				"Unable to register configuration action service for portlet" +
 					portletName,
-				pe);
+				portalException);
 		}
 	}
 

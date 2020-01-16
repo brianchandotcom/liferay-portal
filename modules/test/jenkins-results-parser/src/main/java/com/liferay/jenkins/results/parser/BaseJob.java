@@ -111,8 +111,8 @@ public abstract class BaseJob implements Job {
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get job JSON", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException("Unable to get job JSON", ioException);
 		}
 	}
 

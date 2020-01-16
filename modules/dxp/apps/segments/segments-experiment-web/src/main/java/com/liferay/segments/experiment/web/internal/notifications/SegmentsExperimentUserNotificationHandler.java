@@ -160,7 +160,7 @@ public class SegmentsExperimentUserNotificationHandler
 			return _http.addParameter(
 				layoutURL, "segmentsExperimentKey", segmentsExperimentKey);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}

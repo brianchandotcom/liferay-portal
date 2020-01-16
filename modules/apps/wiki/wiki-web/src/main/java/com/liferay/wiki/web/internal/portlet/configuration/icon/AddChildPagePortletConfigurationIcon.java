@@ -78,7 +78,7 @@ public class AddChildPagePortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -105,7 +105,7 @@ public class AddChildPagePortletConfigurationIcon
 				themeDisplay.getPermissionChecker(), page.getNodeId(),
 				ActionKeys.ADD_PAGE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

@@ -52,8 +52,8 @@ public class MessageSenderJob implements Job {
 		try {
 			doExecute(jobExecutionContext);
 		}
-		catch (Exception e) {
-			_log.error("Unable to execute job", e);
+		catch (Exception exception) {
+			_log.error("Unable to execute job", exception);
 		}
 	}
 

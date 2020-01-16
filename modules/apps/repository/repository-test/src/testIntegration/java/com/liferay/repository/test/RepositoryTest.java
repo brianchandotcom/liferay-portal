@@ -143,7 +143,7 @@ public class RepositoryTest {
 				Assert.fail(
 					"Should not be able to access repository " + repositoryId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 	}
@@ -213,7 +213,7 @@ public class RepositoryTest {
 						"Should not be able to get file entry ", fileEntryId,
 						" from repository ", dlRepository.getRepositoryId()));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 	}
@@ -295,7 +295,7 @@ public class RepositoryTest {
 				"Should not be able to get file entry from repository " +
 					_group.getGroupId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		LocalRepository localRepository =
@@ -352,7 +352,7 @@ public class RepositoryTest {
 				"Should be able to get file entry from repository " +
 					repository2.getRepositoryId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		LocalRepository localRepository =

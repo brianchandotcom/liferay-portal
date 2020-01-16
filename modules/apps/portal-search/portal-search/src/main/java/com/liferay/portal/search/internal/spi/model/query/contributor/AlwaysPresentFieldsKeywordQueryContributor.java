@@ -51,8 +51,8 @@ public class AlwaysPresentFieldsKeywordQueryContributor
 			try {
 				booleanQuery.add(query, BooleanClauseOccur.SHOULD);
 			}
-			catch (ParseException pe) {
-				throw new SystemException(pe);
+			catch (ParseException parseException) {
+				throw new SystemException(parseException);
 			}
 		}
 	}

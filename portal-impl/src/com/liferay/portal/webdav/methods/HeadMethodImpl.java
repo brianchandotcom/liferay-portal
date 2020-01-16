@@ -48,8 +48,8 @@ public class HeadMethodImpl implements Method {
 
 			return HttpServletResponse.SC_OK;
 		}
-		catch (Exception e) {
-			throw new WebDAVException(e);
+		catch (Exception exception) {
+			throw new WebDAVException(exception);
 		}
 	}
 

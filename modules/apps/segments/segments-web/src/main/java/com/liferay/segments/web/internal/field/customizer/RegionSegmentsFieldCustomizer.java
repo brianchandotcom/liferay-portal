@@ -84,8 +84,8 @@ public class RegionSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 			return StringBundler.concat(
 				country.getName(locale), " - ", region.getName());
 		}
-		catch (Exception e) {
-			return ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 

@@ -180,12 +180,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 		String keyword = _getFriendlyURLKeyword(friendlyURL);
 
 		if (Validator.isNotNull(keyword)) {
-			LayoutFriendlyURLException lfurle = new LayoutFriendlyURLException(
-				LayoutFriendlyURLException.KEYWORD_CONFLICT);
+			LayoutFriendlyURLException layoutFriendlyURLException =
+				new LayoutFriendlyURLException(
+					LayoutFriendlyURLException.KEYWORD_CONFLICT);
 
-			lfurle.setKeywordConflict(keyword);
+			layoutFriendlyURLException.setKeywordConflict(keyword);
 
-			throw lfurle;
+			throw layoutFriendlyURLException;
 		}
 	}
 
@@ -390,7 +391,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 				return theme.getSetting(key);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 
@@ -399,7 +400,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 			return layoutSet.getThemeSetting(key, device);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -517,7 +518,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 			friendlyURL = layoutFriendlyURL.getFriendlyURL();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return friendlyURL;
@@ -580,8 +581,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 		try {
 			return GroupLocalServiceUtil.getGroup(getGroupId());
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -649,8 +650,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 				_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					getGroupId(), isPrivateLayout());
 			}
-			catch (PortalException pe) {
-				ReflectionUtil.throwException(pe);
+			catch (PortalException portalException) {
+				ReflectionUtil.throwException(portalException);
 			}
 		}
 
@@ -725,12 +726,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 			group = GroupLocalServiceUtil.getLayoutGroup(
 				getCompanyId(), getPlid());
 		}
-		catch (NoSuchGroupException nsge) {
+		catch (NoSuchGroupException noSuchGroupException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsge, nsge);
+				_log.debug(noSuchGroupException, noSuchGroupException);
 			}
 		}
 
@@ -1432,8 +1433,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 					layoutTypePortlet = _getLayoutTypePortletClone(
 						httpServletRequest);
 				}
-				catch (IOException ioe) {
-					_log.error("Unable to clone layout settings", ioe);
+				catch (IOException ioException) {
+					_log.error("Unable to clone layout settings", ioException);
 
 					layoutTypePortlet = (LayoutTypePortlet)getLayoutType();
 				}
@@ -1451,8 +1452,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 					portletURL.setWindowState(WindowState.NORMAL);
 					portletURL.setPortletMode(PortletMode.VIEW);
 				}
-				catch (PortletException pe) {
-					throw new SystemException(pe);
+				catch (PortletException portletException) {
+					throw new SystemException(portletException);
 				}
 
 				portletURL.setAnchor(false);

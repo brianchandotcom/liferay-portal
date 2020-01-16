@@ -311,9 +311,9 @@ public class ResourceHelper {
 		try {
 			return dateFormat.format(date);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return null;

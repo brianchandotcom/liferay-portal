@@ -139,8 +139,8 @@ public class LiferayThemePlugin implements Plugin<Project> {
 							liferayThemeJsonFile.toPath(),
 							json.getBytes(StandardCharsets.UTF_8));
 					}
-					catch (IOException ioe) {
-						throw new UncheckedIOException(ioe);
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
 					}
 				}
 

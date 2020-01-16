@@ -145,9 +145,9 @@ public class InviteMembersPortlet extends MVCPortlet {
 		try {
 			doSendInvite(actionRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 	}
@@ -167,8 +167,8 @@ public class InviteMembersPortlet extends MVCPortlet {
 				super.serveResource(resourceRequest, resourceResponse);
 			}
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -191,7 +191,7 @@ public class InviteMembersPortlet extends MVCPortlet {
 
 			jsonObject.put("success", Boolean.TRUE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			jsonObject.put("success", Boolean.FALSE);
 		}
 

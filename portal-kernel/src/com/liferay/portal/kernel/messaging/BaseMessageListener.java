@@ -25,11 +25,11 @@ public abstract class BaseMessageListener implements MessageListener {
 		try {
 			doReceive(message);
 		}
-		catch (MessageListenerException mle) {
-			throw mle;
+		catch (MessageListenerException messageListenerException) {
+			throw messageListenerException;
 		}
-		catch (Exception e) {
-			throw new MessageListenerException(e);
+		catch (Exception exception) {
+			throw new MessageListenerException(exception);
 		}
 	}
 

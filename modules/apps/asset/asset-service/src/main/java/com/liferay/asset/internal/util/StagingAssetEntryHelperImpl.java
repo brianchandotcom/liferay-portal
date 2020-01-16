@@ -64,7 +64,7 @@ public class StagingAssetEntryHelperImpl implements StagingAssetEntryHelper {
 
 			stagedModel = assetRenderer.getAssetObject();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return;
 		}
 
@@ -154,9 +154,9 @@ public class StagingAssetEntryHelperImpl implements StagingAssetEntryHelper {
 					return assetEntry;
 				}
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}
@@ -179,7 +179,7 @@ public class StagingAssetEntryHelperImpl implements StagingAssetEntryHelper {
 
 			stagedModel = assetRenderer.getAssetObject();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 

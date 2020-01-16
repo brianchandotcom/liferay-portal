@@ -76,8 +76,8 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 				sharepointObject.getSharepointObjectId(),
 				getVersionsResponseGetVersionsResultElement);
 		}
-		catch (RemoteException re) {
-			RemoteExceptionUtil.handleRemoteException(re);
+		catch (RemoteException remoteException) {
+			RemoteExceptionUtil.handleRemoteException(remoteException);
 
 			throw new IllegalStateException();
 		}

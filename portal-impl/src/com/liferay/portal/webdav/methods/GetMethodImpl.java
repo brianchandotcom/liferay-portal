@@ -51,8 +51,8 @@ public class GetMethodImpl implements Method {
 			try {
 				is = resource.getContentAsStream();
 			}
-			catch (Exception e) {
-				_log.error(e.getMessage());
+			catch (Exception exception) {
+				_log.error(exception.getMessage());
 			}
 
 			if (is != null) {
@@ -73,9 +73,9 @@ public class GetMethodImpl implements Method {
 						webDAVRequest.getHttpServletResponse(), fileName, is,
 						resource.getSize(), resource.getContentType());
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(e, e);
+						_log.warn(exception, exception);
 					}
 				}
 
@@ -84,8 +84,8 @@ public class GetMethodImpl implements Method {
 
 			return HttpServletResponse.SC_NOT_FOUND;
 		}
-		catch (Exception e) {
-			throw new WebDAVException(e);
+		catch (Exception exception) {
+			throw new WebDAVException(exception);
 		}
 	}
 

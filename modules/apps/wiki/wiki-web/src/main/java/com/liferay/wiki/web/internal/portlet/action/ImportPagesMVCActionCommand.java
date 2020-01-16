@@ -61,17 +61,17 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			importPages(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchNodeException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof PortalException) {
-				SessionErrors.add(actionRequest, e.getClass());
+			else if (exception instanceof PortalException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw new PortletException(e);
+				throw new PortletException(exception);
 			}
 		}
 	}
@@ -116,9 +116,9 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 					try {
 						inputStream.close();
 					}
-					catch (IOException ioe) {
+					catch (IOException ioException) {
 						if (_log.isWarnEnabled()) {
-							_log.warn(ioe, ioe);
+							_log.warn(ioException, ioException);
 						}
 					}
 				}

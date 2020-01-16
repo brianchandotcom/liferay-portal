@@ -101,12 +101,12 @@ public class PublishLayoutMVCActionCommand
 			LayoutPermissionUtil.check(
 				themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (!LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), layout,
 					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
 
-				throw pe;
+				throw principalException;
 			}
 		}
 

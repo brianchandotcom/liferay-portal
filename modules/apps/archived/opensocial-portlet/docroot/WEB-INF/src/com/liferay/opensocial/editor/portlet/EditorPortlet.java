@@ -109,20 +109,20 @@ public class EditorPortlet extends AdminPortlet {
 				serveUpdateFolderName(resourceRequest, resourceResponse);
 			}
 		}
-		catch (IOException ioe) {
-			serveException(ioe, resourceRequest, resourceResponse);
+		catch (IOException ioException) {
+			serveException(ioException, resourceRequest, resourceResponse);
 
-			throw ioe;
+			throw ioException;
 		}
-		catch (PortletException pe) {
-			serveException(pe, resourceRequest, resourceResponse);
+		catch (PortletException portletException) {
+			serveException(portletException, resourceRequest, resourceResponse);
 
-			throw pe;
+			throw portletException;
 		}
-		catch (Exception e) {
-			serveException(e, resourceRequest, resourceResponse);
+		catch (Exception exception) {
+			serveException(exception, resourceRequest, resourceResponse);
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 	}
 
@@ -358,7 +358,7 @@ public class EditorPortlet extends AdminPortlet {
 
 					gadgetId = gadget.getGadgetId();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 
 				jsonObject.put(

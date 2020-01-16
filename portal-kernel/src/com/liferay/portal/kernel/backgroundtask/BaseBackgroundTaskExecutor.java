@@ -81,9 +81,9 @@ public abstract class BaseBackgroundTaskExecutor
 					return user.getLocale();
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to get the user's locale", e);
+					_log.debug("Unable to get the user's locale", exception);
 				}
 			}
 		}

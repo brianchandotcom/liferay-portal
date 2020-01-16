@@ -83,8 +83,8 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 					performAuthorizationFlow(actionRequest, actionResponse);
 			}
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass());
+		catch (PortalException portalException) {
+			SessionErrors.add(actionRequest, portalException.getClass());
 		}
 	}
 
@@ -148,8 +148,8 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 
 				hideDefaultSuccessMessage(actionRequest);
 			}
-			catch (PortalException pe) {
-				throw pe;
+			catch (PortalException portalException) {
+				throw portalException;
 			}
 			catch (Throwable throwable) {
 				throw new PortalException(throwable);
@@ -187,8 +187,8 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 
 				hideDefaultSuccessMessage(actionRequest);
 			}
-			catch (PortalException pe) {
-				throw pe;
+			catch (PortalException portalException) {
+				throw portalException;
 			}
 			catch (Throwable throwable) {
 				throw new PortalException(throwable);

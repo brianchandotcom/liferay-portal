@@ -30,8 +30,8 @@ public class BuildRESTTask extends RESTBuilderArgs {
 
 			restBuilder.build();
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

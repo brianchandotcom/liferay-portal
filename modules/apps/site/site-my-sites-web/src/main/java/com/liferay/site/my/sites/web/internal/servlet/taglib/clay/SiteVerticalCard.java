@@ -64,7 +64,7 @@ public class SiteVerticalCard implements VerticalCard {
 
 			return siteActionDropdownItemsProvider.getActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return Collections.emptyList();
@@ -112,7 +112,7 @@ public class SiteVerticalCard implements VerticalCard {
 			return HtmlUtil.escape(
 				_group.getDescriptiveName(_themeDisplay.getLocale()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return HtmlUtil.escape(_group.getName(_themeDisplay.getLocale()));

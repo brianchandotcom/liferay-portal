@@ -179,8 +179,8 @@ public class SourceLocalServiceImpl extends SourceLocalServiceBaseImpl {
 		try {
 			Class.forName(driverClassName, true, portalClassLoader);
 		}
-		catch (ClassNotFoundException cnfe) {
-			throw new SourceDriverClassNameException(cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new SourceDriverClassNameException(classNotFoundException);
 		}
 
 		Thread currentThread = Thread.currentThread();

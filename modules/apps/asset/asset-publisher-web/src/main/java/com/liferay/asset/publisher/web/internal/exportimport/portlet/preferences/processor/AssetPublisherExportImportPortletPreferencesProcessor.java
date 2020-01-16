@@ -155,14 +155,18 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				portletDataContext, portletDataContext.getPortletId(),
 				portletPreferences);
 		}
-		catch (Exception e) {
-			PortletDataException pde = new PortletDataException(
-				"Unable to update portlet preferences during export", e);
+		catch (Exception exception) {
+			PortletDataException portletDataException =
+				new PortletDataException(
+					"Unable to update portlet preferences during export",
+					exception);
 
-			pde.setPortletId(AssetPublisherPortletKeys.ASSET_PUBLISHER);
-			pde.setType(PortletDataException.EXPORT_PORTLET_DATA);
+			portletDataException.setPortletId(
+				AssetPublisherPortletKeys.ASSET_PUBLISHER);
+			portletDataException.setType(
+				PortletDataException.EXPORT_PORTLET_DATA);
 
-			throw pde;
+			throw portletDataException;
 		}
 	}
 
@@ -180,14 +184,18 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			return updateImportPortletPreferences(
 				portletDataContext, portletPreferences);
 		}
-		catch (Exception e) {
-			PortletDataException pde = new PortletDataException(
-				"Unable to update portlet preferences during import", e);
+		catch (Exception exception) {
+			PortletDataException portletDataException =
+				new PortletDataException(
+					"Unable to update portlet preferences during import",
+					exception);
 
-			pde.setPortletId(AssetPublisherPortletKeys.ASSET_PUBLISHER);
-			pde.setType(PortletDataException.IMPORT_PORTLET_DATA);
+			portletDataException.setPortletId(
+				AssetPublisherPortletKeys.ASSET_PUBLISHER);
+			portletDataException.setType(
+				PortletDataException.IMPORT_PORTLET_DATA);
 
-			throw pde;
+			throw portletDataException;
 		}
 	}
 
@@ -636,7 +644,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 				newValues[i++] = className;
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to get class name ID for class name " +
@@ -984,7 +992,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				newValues[i++] = String.valueOf(
 					portal.getClassNameId(oldValue));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to find class name ID for class name " +
@@ -1201,32 +1209,32 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 				newValues.add(newValue);
 			}
-			catch (NoSuchGroupException nsge) {
+			catch (NoSuchGroupException noSuchGroupException) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
 							"Ignoring scope ", newValue, " because the ",
 							"referenced group was not found"),
-						nsge);
+						noSuchGroupException);
 				}
 			}
-			catch (NoSuchLayoutException nsle) {
+			catch (NoSuchLayoutException noSuchLayoutException) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
 							"Ignoring scope ", newValue, " because the ",
 							"referenced layout was not found"),
-						nsle);
+						noSuchLayoutException);
 				}
 			}
-			catch (PrincipalException pe) {
+			catch (PrincipalException principalException) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
 							"Ignoring scope ", newValue, " because the ",
 							"referenced parent group no longer allows sharing ",
 							"content with child sites"),
-						pe);
+						principalException);
 				}
 			}
 		}

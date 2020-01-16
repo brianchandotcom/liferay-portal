@@ -79,13 +79,13 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 		try {
 			_deploy(autoDeploymentContext.getFile());
 		}
-		catch (AutoDeployException ade) {
-			_log.error(ade, ade);
+		catch (AutoDeployException autoDeployException) {
+			_log.error(autoDeployException, autoDeployException);
 
-			throw ade;
+			throw autoDeployException;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -116,9 +116,9 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 

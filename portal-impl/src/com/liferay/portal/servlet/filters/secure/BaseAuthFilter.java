@@ -111,8 +111,8 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 			try {
 				userId = HttpAuthManagerUtil.getBasicUserId(httpServletRequest);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 
 			if (userId > 0) {
@@ -161,8 +161,8 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 				userId = HttpAuthManagerUtil.getDigestUserId(
 					httpServletRequest);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 
 			if (userId > 0) {
@@ -293,12 +293,12 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 			try {
 				user = PortalUtil.initUser(httpServletRequest);
 			}
-			catch (NoSuchUserException nsue) {
+			catch (NoSuchUserException noSuchUserException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsue, nsue);
+					_log.debug(noSuchUserException, noSuchUserException);
 				}
 
 				httpServletResponse.sendRedirect(

@@ -126,9 +126,10 @@ public abstract class BaseSettingsLocatorTestCase {
 
 			return null;
 		}
-		catch (InvalidSyntaxException | IOException e) {
+		catch (InvalidSyntaxException | IOException exception) {
 			throw new ConfigurationException(
-				"Unable to retrieve factory configuration " + factoryPid, e);
+				"Unable to retrieve factory configuration " + factoryPid,
+				exception);
 		}
 	}
 

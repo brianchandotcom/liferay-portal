@@ -165,18 +165,18 @@ public class SearchPermissionDocumentContributorImpl
 			document.addKeyword(
 				Field.GROUP_ROLE_ID, groupRoleIds.toArray(new String[0]));
 		}
-		catch (NoSuchResourceException nsre) {
+		catch (NoSuchResourceException noSuchResourceException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsre, nsre);
+				_log.debug(noSuchResourceException, noSuchResourceException);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
 						"Unable to get permission fields for class name ",
 						permissionName, " and class PK ", classPK),
-					e);
+					exception);
 			}
 		}
 	}

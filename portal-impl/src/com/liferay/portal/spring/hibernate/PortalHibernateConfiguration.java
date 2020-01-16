@@ -178,8 +178,8 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 			return classes;
 		}
-		catch (ClassNotFoundException cnfe) {
-			throw new RuntimeException(cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new RuntimeException(classNotFoundException);
 		}
 	}
 
@@ -245,9 +245,9 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				try {
 					readResource(configuration, resource);
 				}
-				catch (Exception e2) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(e2, e2);
+						_log.warn(exception, exception);
 					}
 				}
 			}
@@ -272,8 +272,8 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				configuration.setInterceptor(new CTSQLInterceptor());
 			}
 		}
-		catch (Exception e1) {
-			_log.error(e1, e1);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return configuration;
@@ -311,9 +311,10 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 					(SessionFactoryImplementor)sessionFactory,
 					configuration.getImports()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to inject optimized query plan cache", e);
+				_log.warn(
+					"Unable to inject optimized query plan cache", exception);
 			}
 		}
 

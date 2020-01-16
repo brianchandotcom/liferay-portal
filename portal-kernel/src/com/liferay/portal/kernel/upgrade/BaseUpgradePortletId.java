@@ -163,9 +163,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqle, sqle);
+				_log.warn(sqlException, sqlException);
 			}
 		}
 	}
@@ -243,9 +243,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqle, sqle);
+				_log.warn(sqlException, sqlException);
 			}
 		}
 	}
@@ -267,9 +267,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				updateLayout(plid, newTypeSettings);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 	}
@@ -287,9 +287,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqle, sqle);
+				_log.warn(sqlException, sqlException);
 			}
 		}
 	}
@@ -386,9 +386,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			updateInstanceablePortletPreferences(
 				oldRootPortletId, newRootPortletId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 	}

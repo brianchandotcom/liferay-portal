@@ -85,8 +85,8 @@ public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 				}
 			}
 		}
-		catch (ReadOnlyException roe) {
-			throw new SystemException(roe);
+		catch (ReadOnlyException readOnlyException) {
+			throw new SystemException(readOnlyException);
 		}
 	}
 

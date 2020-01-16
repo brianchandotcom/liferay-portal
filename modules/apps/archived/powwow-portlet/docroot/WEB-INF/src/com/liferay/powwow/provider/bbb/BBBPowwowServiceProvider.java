@@ -114,8 +114,8 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 				return true;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -225,8 +225,8 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 
 			return document;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -375,8 +375,8 @@ public class BBBPowwowServiceProvider extends BasePowwowServiceProvider {
 
 			return GetterUtil.getBoolean(running);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;

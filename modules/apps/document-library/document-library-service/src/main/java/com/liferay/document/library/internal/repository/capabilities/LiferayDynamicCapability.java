@@ -60,8 +60,8 @@ public class LiferayDynamicCapability
 					")(|(repository.class.name=", repositoryClassName,
 					")(repository.class.name=ALL)))"));
 		}
-		catch (InvalidSyntaxException ise) {
-			ReflectionUtil.throwException(ise);
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			ReflectionUtil.throwException(invalidSyntaxException);
 		}
 
 		_serviceTracker = new ServiceTracker<>(

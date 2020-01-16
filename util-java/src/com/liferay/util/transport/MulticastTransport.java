@@ -71,8 +71,8 @@ public class MulticastTransport extends Thread implements Transport {
 				_socket.leaveGroup(_address);
 				_address = null;
 			}
-			catch (IOException ioe) {
-				_log.error("Unable to leave group", ioe);
+			catch (IOException ioException) {
+				_log.error("Unable to leave group", ioException);
 			}
 		}
 
@@ -96,22 +96,22 @@ public class MulticastTransport extends Thread implements Transport {
 				_handler.process(_inboundPacket);
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (!_connected) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to disconnect", ioe);
+					_log.debug("Unable to disconnect", ioException);
 				}
 
 				return;
 			}
 
-			_log.error("Unable to process ", ioe);
+			_log.error("Unable to process ", ioException);
 
 			_socket.disconnect();
 
 			_connected = false;
 
-			_handler.errorReceived(ioe);
+			_handler.errorReceived(ioException);
 		}
 	}
 

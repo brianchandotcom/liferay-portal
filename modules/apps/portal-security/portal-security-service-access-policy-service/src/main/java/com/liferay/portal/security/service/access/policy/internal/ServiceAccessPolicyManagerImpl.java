@@ -83,12 +83,12 @@ public class ServiceAccessPolicyManagerImpl
 			return toServiceAccessPolicy(
 				_sapEntryService.getSAPEntry(companyId, name));
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return null;
@@ -102,9 +102,10 @@ public class ServiceAccessPolicyManagerImpl
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get SAP configuration", ce);
+				_log.warn(
+					"Unable to get SAP configuration", configurationException);
 			}
 
 			return null;

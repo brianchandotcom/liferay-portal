@@ -108,9 +108,9 @@ public abstract class BaseConnectionPoolMetrics
 						return;
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(e.getMessage());
+						_log.debug(exception.getMessage());
 					}
 				}
 			}

@@ -129,8 +129,8 @@ public class WabDirURLStreamHandlerService
 
 			return wabDirHandler.openConnection(url);
 		}
-		catch (Exception e) {
-			_log.error("Unable to open connection", e);
+		catch (Exception exception) {
+			_log.error("Unable to open connection", exception);
 		}
 
 		return null;
@@ -211,8 +211,8 @@ public class WabDirURLStreamHandlerService
 		try {
 			return UnsecureSAXReaderUtil.read(content);
 		}
-		catch (DocumentException de) {
-			throw new IOException(de);
+		catch (DocumentException documentException) {
+			throw new IOException(documentException);
 		}
 	}
 

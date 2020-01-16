@@ -44,8 +44,8 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		try {
 			ActionUtil.compareVersions(renderRequest, renderResponse);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		return "/compare_versions.jsp";

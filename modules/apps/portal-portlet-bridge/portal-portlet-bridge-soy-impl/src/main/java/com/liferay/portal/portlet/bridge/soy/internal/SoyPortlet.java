@@ -126,8 +126,8 @@ public class SoyPortlet extends MVCPortlet {
 			_soyPortletHelper = new SoyPortletHelper(
 				_bundle, mvcRenderCommandCache, friendlyURLMapper);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -143,8 +143,8 @@ public class SoyPortlet extends MVCPortlet {
 			try {
 				_createRequestTemplate(renderRequest);
 			}
-			catch (TemplateException te) {
-				throw new PortletException(te);
+			catch (TemplateException templateException) {
+				throw new PortletException(templateException);
 			}
 		}
 
@@ -186,8 +186,8 @@ public class SoyPortlet extends MVCPortlet {
 				callResourceMethod(resourceRequest, resourceResponse);
 			}
 		}
-		catch (Exception e) {
-			_log.error("Error on the Serve Resource Phase", e);
+		catch (Exception exception) {
+			_log.error("Error on the Serve Resource Phase", exception);
 		}
 	}
 
@@ -207,7 +207,7 @@ public class SoyPortlet extends MVCPortlet {
 
 			return javaScriptRequiredModules;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return Collections.emptySet();
 		}
 	}
@@ -255,8 +255,9 @@ public class SoyPortlet extends MVCPortlet {
 		try {
 			return _createRequestTemplate(portletRequest);
 		}
-		catch (TemplateException te) {
-			throw new PortletException("Unable to create template", te);
+		catch (TemplateException templateException) {
+			throw new PortletException(
+				"Unable to create template", templateException);
 		}
 	}
 
@@ -275,8 +276,8 @@ public class SoyPortlet extends MVCPortlet {
 
 			_writeJavaScript(portletRequest, portletResponse, writer);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		if (clearRequestParameters &&

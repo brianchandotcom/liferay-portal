@@ -354,8 +354,8 @@ public abstract class CMISRepositoryHandler
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new RepositoryException(e);
+		catch (Exception exception) {
+			throw new RepositoryException(exception);
 		}
 
 		return login;

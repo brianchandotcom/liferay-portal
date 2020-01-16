@@ -89,13 +89,16 @@ public class XugglerAutoInstallHelper {
 			try {
 				xuggler.installNativeLibraries(xugglerJarFile);
 			}
-			catch (XugglerInstallException.MustBeURLClassLoader xie) {
+			catch (XugglerInstallException.MustBeURLClassLoader
+						xugglerInstallException) {
+
 				if (_log.isDebugEnabled()) {
-					_log.debug(xie, xie);
+					_log.debug(
+						xugglerInstallException, xugglerInstallException);
 				}
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (Exception exception) {
+				throw new ProcessException(exception);
 			}
 
 			if (xuggler.isNativeLibraryInstalled()) {
@@ -250,7 +253,7 @@ public class XugglerAutoInstallHelper {
 
 			return callable.call();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 		finally {

@@ -257,8 +257,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 				Assert.fail();
 			}
-			catch (SystemException se) {
-				Throwable t = se.getCause();
+			catch (SystemException systemException) {
+				Throwable t = systemException.getCause();
 
 				t = t.getCause();
 
@@ -273,8 +273,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 				Assert.fail();
 			}
-			catch (SystemException se) {
-				Throwable t = se.getCause();
+			catch (SystemException systemException) {
+				Throwable t = systemException.getCause();
 
 				t = t.getCause();
 
@@ -289,8 +289,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 				Assert.fail();
 			}
-			catch (SystemException se) {
-				Throwable t = se.getCause();
+			catch (SystemException systemException) {
+				Throwable t = systemException.getCause();
 
 				t = t.getCause();
 
@@ -305,8 +305,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 				Assert.fail();
 			}
-			catch (SystemException se) {
-				Throwable t = se.getCause();
+			catch (SystemException systemException) {
+				Throwable t = systemException.getCause();
 
 				t = t.getCause();
 
@@ -324,8 +324,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 				Assert.fail();
 			}
-			catch (SystemException se) {
-				Throwable t = se.getCause();
+			catch (SystemException systemException) {
+				Throwable t = systemException.getCause();
 
 				t = t.getCause();
 
@@ -343,8 +343,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 				Assert.fail();
 			}
-			catch (SystemException se) {
-				Throwable t = se.getCause();
+			catch (SystemException systemException) {
+				Throwable t = systemException.getCause();
 
 				t = t.getCause();
 
@@ -358,8 +358,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 				Assert.fail();
 			}
-			catch (SystemException se) {
-				Throwable t = se.getCause();
+			catch (SystemException systemException) {
+				Throwable t = systemException.getCause();
 
 				t = t.getCause();
 

@@ -111,8 +111,8 @@ public class WikiPageAssetRenderer
 						new GroupServiceSettingsLocator(
 							_page.getGroupId(), WikiConstants.SERVICE_NAME));
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 
 				return null;
 			}
@@ -161,8 +161,8 @@ public class WikiPageAssetRenderer
 			return HtmlUtil.extractText(
 				_wikiEngineRenderer.convert(_page, null, null, null));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return _page.getContent();
 		}
@@ -389,9 +389,9 @@ public class WikiPageAssetRenderer
 
 			return true;
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return false;

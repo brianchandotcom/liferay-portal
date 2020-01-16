@@ -443,8 +443,8 @@ public class FinderCacheImpl
 
 			_NULL_MODEL = field.get(null);
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new ExceptionInInitializerError(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new ExceptionInInitializerError(reflectiveOperationException);
 		}
 	}
 

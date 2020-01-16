@@ -68,8 +68,8 @@ public class ScopeFacet extends MultiValueFacet {
 
 			return ArrayUtil.toLongArray(groupIds);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return new long[] {groupId};
@@ -127,9 +127,9 @@ public class ScopeFacet extends MultiValueFacet {
 					scopeGroupIdsTermsFilter.addValue(String.valueOf(groupId));
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 			}
 		}

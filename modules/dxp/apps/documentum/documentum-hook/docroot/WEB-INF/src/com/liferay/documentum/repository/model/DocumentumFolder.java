@@ -42,8 +42,8 @@ public class DocumentumFolder
 		try {
 			return _idfFolder.getObjectName();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 

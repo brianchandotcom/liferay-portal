@@ -179,7 +179,7 @@ public class NettyRepository implements Repository<Channel> {
 
 			return fileTime.toMillis();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return Long.MIN_VALUE;
 		}
 	}

@@ -39,8 +39,8 @@ public class FormatTLDTask extends Task {
 				TLDFormatterArgs.OUTPUT_KEY_MODIFIED_FILES,
 				tldFormatter.getModifiedFileNames());
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

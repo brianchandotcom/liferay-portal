@@ -438,7 +438,7 @@ public class ReleaseManagerOSGiCommands {
 					buildNumber = GetterUtil.getInteger(
 						properties.getProperty("build.number"));
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"Unable to read service.properties for " +

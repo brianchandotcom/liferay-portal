@@ -94,8 +94,10 @@ public class UpdatePasswordAction implements Action {
 					UserLocalServiceUtil.updatePasswordReset(
 						user.getUserId(), true);
 				}
-				catch (UserLockoutException ule) {
-					SessionErrors.add(httpServletRequest, ule.getClass(), ule);
+				catch (UserLockoutException userLockoutException) {
+					SessionErrors.add(
+						httpServletRequest, userLockoutException.getClass(),
+						userLockoutException);
 				}
 			}
 
@@ -121,21 +123,23 @@ public class UpdatePasswordAction implements Action {
 
 			return null;
 		}
-		catch (Exception e) {
-			if (e instanceof UserPasswordException) {
-				SessionErrors.add(httpServletRequest, e.getClass(), e);
+		catch (Exception exception) {
+			if (exception instanceof UserPasswordException) {
+				SessionErrors.add(
+					httpServletRequest, exception.getClass(), exception);
 
 				return actionMapping.getActionForward("portal.update_password");
 			}
-			else if (e instanceof NoSuchUserException ||
-					 e instanceof PrincipalException) {
+			else if (exception instanceof NoSuchUserException ||
+					 exception instanceof PrincipalException) {
 
-				SessionErrors.add(httpServletRequest, e.getClass());
+				SessionErrors.add(httpServletRequest, exception.getClass());
 
 				return actionMapping.getActionForward("portal.error");
 			}
 
-			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
+			PortalUtil.sendError(
+				exception, httpServletRequest, httpServletResponse);
 
 			return null;
 		}
@@ -163,7 +167,7 @@ public class UpdatePasswordAction implements Action {
 
 			TicketLocalServiceUtil.deleteTicket(ticket);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

@@ -132,11 +132,11 @@ public class ModulesCompileBatchTestClassGroup
 
 					});
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new RuntimeException(
 					"Unable to get module marker files from " +
 						moduleBaseDir.getPath(),
-					ioe);
+					ioException);
 			}
 
 			initTestClassMethods(modulesProjectDirs, modulesDir, "assemble");

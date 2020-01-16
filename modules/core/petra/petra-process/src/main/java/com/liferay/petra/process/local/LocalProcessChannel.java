@@ -50,7 +50,7 @@ class LocalProcessChannel<T extends Serializable> implements ProcessChannel<T> {
 					try {
 						_objectOutputStream.close();
 					}
-					catch (IOException ioe) {
+					catch (IOException ioException) {
 					}
 					finally {
 						Map<Long, NoticeableFuture<Serializable>> map =
@@ -88,8 +88,8 @@ class LocalProcessChannel<T extends Serializable> implements ProcessChannel<T> {
 				_objectOutputStream.flush();
 			}
 		}
-		catch (IOException ioe) {
-			_asyncBroker.takeWithException(id, ioe);
+		catch (IOException ioException) {
+			_asyncBroker.takeWithException(id, ioException);
 		}
 
 		return (NoticeableFuture<V>)noticeableFuture;

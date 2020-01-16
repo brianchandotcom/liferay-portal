@@ -74,8 +74,8 @@ public class SegmentsServicePreAction extends Action {
 		try {
 			doRun(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 	}
 
@@ -158,9 +158,9 @@ public class SegmentsServicePreAction extends Action {
 						groupId, User.class.getName(), userId,
 						_requestContextMapper.map(httpServletRequest));
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(pe.getMessage());
+					_log.warn(portalException.getMessage());
 				}
 			}
 		}
@@ -183,9 +183,9 @@ public class SegmentsServicePreAction extends Action {
 						httpServletRequest, httpServletResponse, groupId,
 						classNameId, classPK, segmentsEntryIds);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 

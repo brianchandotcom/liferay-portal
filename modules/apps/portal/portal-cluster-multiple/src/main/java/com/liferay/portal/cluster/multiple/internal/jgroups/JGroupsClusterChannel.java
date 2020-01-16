@@ -110,9 +110,9 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 				_log.info(sb.toString());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SystemException(
-				"Unable to initial cluster channel " + clusterName, e);
+				"Unable to initial cluster channel " + clusterName, exception);
 		}
 	}
 
@@ -183,13 +183,14 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (address == null) {
 				throw new SystemException(
-					"Unable to send multicast message", e);
+					"Unable to send multicast message", exception);
 			}
 
-			throw new SystemException("Unable to send unicast message", e);
+			throw new SystemException(
+				"Unable to send unicast message", exception);
 		}
 	}
 
@@ -247,8 +248,8 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 			_getPropsMethod = ReflectionUtil.getDeclaredMethod(
 				ProtocolStack.class, "getProps", Protocol.class);
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

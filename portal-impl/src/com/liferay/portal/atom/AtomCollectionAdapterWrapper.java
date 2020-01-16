@@ -59,9 +59,9 @@ public class AtomCollectionAdapterWrapper<E>
 			_atomCollectionAdapter.deleteEntry(
 				resourceName, new AtomRequestContextImpl(requestContext));
 		}
-		catch (AtomException ae) {
+		catch (AtomException atomException) {
 			throw new ResponseContextException(
-				ae.getErrorCode(), ae.getCause());
+				atomException.getErrorCode(), atomException.getCause());
 		}
 	}
 
@@ -121,9 +121,9 @@ public class AtomCollectionAdapterWrapper<E>
 			return _atomCollectionAdapter.getFeedEntries(
 				new AtomRequestContextImpl(requestContext));
 		}
-		catch (AtomException ae) {
+		catch (AtomException atomException) {
 			throw new ResponseContextException(
-				ae.getErrorCode(), ae.getCause());
+				atomException.getErrorCode(), atomException.getCause());
 		}
 	}
 
@@ -140,9 +140,9 @@ public class AtomCollectionAdapterWrapper<E>
 			return _atomCollectionAdapter.getEntry(
 				resourceName, new AtomRequestContextImpl(requestContext));
 		}
-		catch (AtomException ae) {
+		catch (AtomException atomException) {
 			throw new ResponseContextException(
-				ae.getErrorCode(), ae.getCause());
+				atomException.getErrorCode(), atomException.getCause());
 		}
 	}
 
@@ -151,9 +151,9 @@ public class AtomCollectionAdapterWrapper<E>
 		try {
 			return _atomCollectionAdapter.getMediaName(entry);
 		}
-		catch (AtomException ae) {
+		catch (AtomException atomException) {
 			throw new ResponseContextException(
-				ae.getErrorCode(), ae.getCause());
+				atomException.getErrorCode(), atomException.getCause());
 		}
 	}
 
@@ -162,9 +162,9 @@ public class AtomCollectionAdapterWrapper<E>
 		try {
 			return _atomCollectionAdapter.getMediaStream(entry);
 		}
-		catch (AtomException ae) {
+		catch (AtomException atomException) {
 			throw new ResponseContextException(
-				ae.getErrorCode(), ae.getCause());
+				atomException.getErrorCode(), atomException.getCause());
 		}
 	}
 
@@ -209,9 +209,9 @@ public class AtomCollectionAdapterWrapper<E>
 				title, summary, content.getText(), updated,
 				new AtomRequestContextImpl(requestContext));
 		}
-		catch (AtomException ae) {
+		catch (AtomException atomException) {
 			throw new ResponseContextException(
-				ae.getErrorCode(), ae.getCause());
+				atomException.getErrorCode(), atomException.getCause());
 		}
 	}
 
@@ -226,9 +226,9 @@ public class AtomCollectionAdapterWrapper<E>
 				mimeType.toString(), slug, inputStream,
 				new AtomRequestContextImpl(requestContext));
 		}
-		catch (AtomException ae) {
+		catch (AtomException atomException) {
 			throw new ResponseContextException(
-				ae.getErrorCode(), ae.getCause());
+				atomException.getErrorCode(), atomException.getCause());
 		}
 	}
 
@@ -243,9 +243,9 @@ public class AtomCollectionAdapterWrapper<E>
 				entry, title, summary, content.getText(), updated,
 				new AtomRequestContextImpl(requestContext));
 		}
-		catch (AtomException ae) {
+		catch (AtomException atomException) {
 			throw new ResponseContextException(
-				ae.getErrorCode(), ae.getCause());
+				atomException.getErrorCode(), atomException.getCause());
 		}
 	}
 
@@ -260,9 +260,9 @@ public class AtomCollectionAdapterWrapper<E>
 				entry, contentType.toString(), slug, inputStream,
 				new AtomRequestContextImpl(requestContext));
 		}
-		catch (AtomException ae) {
+		catch (AtomException atomException) {
 			throw new ResponseContextException(
-				ae.getErrorCode(), ae.getCause());
+				atomException.getErrorCode(), atomException.getCause());
 		}
 	}
 

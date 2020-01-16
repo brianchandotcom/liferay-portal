@@ -133,8 +133,8 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 
 			return "/view_factory_instances.jsp";
 		}
-		catch (IOException ioe) {
-			throw new PortletException(ioe);
+		catch (IOException ioException) {
+			throw new PortletException(ioException);
 		}
 	}
 

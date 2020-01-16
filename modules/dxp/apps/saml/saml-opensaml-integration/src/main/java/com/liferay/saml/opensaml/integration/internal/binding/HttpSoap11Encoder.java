@@ -59,8 +59,8 @@ public class HttpSoap11Encoder extends HTTPSOAP11Encoder {
 			try {
 				_httpClient.execute((HttpUriRequest)httpRequest);
 			}
-			catch (IOException ioe) {
-				throw new MessageEncodingException(ioe);
+			catch (IOException ioException) {
+				throw new MessageEncodingException(ioException);
 			}
 		}
 	}

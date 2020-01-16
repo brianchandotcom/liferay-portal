@@ -416,7 +416,7 @@ public class SessionMessages {
 
 			return map;
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 
 			// Session is already invalidated, just return a null map
 

@@ -87,14 +87,15 @@ public class ExecuteNodeTask extends DefaultTask {
 
 				break;
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (i == npmInstallRetries) {
-					throw ioe;
+					throw ioException;
 				}
 
 				if (logger.isWarnEnabled()) {
 					logger.warn(
-						ioe.getMessage() + ". Running \"npm install\" again");
+						ioException.getMessage() +
+							". Running \"npm install\" again");
 				}
 
 				npmInstallTask.executeNpmInstall(true);

@@ -288,9 +288,9 @@ public class SiteBrowserDisplayContext {
 		try {
 			selUser = PortalUtil.getSelectedUser(_httpServletRequest);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -380,7 +380,7 @@ public class SiteBrowserDisplayContext {
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

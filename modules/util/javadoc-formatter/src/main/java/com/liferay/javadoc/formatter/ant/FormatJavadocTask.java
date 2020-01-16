@@ -39,8 +39,8 @@ public class FormatJavadocTask extends Task {
 				JavadocFormatterArgs.OUTPUT_KEY_MODIFIED_FILES,
 				javadocFormatter.getModifiedFileNames());
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

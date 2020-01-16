@@ -66,8 +66,8 @@ public class MinifierUtil {
 
 			return unsyncStringWriter.toString();
 		}
-		catch (Exception e) {
-			_log.error("Unable to minify CSS:\n" + content, e);
+		catch (Exception exception) {
+			_log.error("Unable to minify CSS:\n" + content, exception);
 
 			unsyncStringWriter.append(content);
 

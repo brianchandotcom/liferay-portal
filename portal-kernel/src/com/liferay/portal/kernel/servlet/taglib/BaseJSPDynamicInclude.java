@@ -41,12 +41,14 @@ public abstract class BaseJSPDynamicInclude extends BaseDynamicInclude {
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
+		catch (ServletException servletException) {
 			Log log = getLog();
 
-			log.error("Unable to include JSP " + getJspPath(), se);
+			log.error(
+				"Unable to include JSP " + getJspPath(), servletException);
 
-			throw new IOException("Unable to include JSP " + getJspPath(), se);
+			throw new IOException(
+				"Unable to include JSP " + getJspPath(), servletException);
 		}
 	}
 

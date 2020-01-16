@@ -45,8 +45,8 @@ public class ThemeServicePreAction extends Action {
 		try {
 			servicePre(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 	}
 

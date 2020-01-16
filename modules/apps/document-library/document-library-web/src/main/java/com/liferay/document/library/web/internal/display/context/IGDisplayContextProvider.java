@@ -84,8 +84,8 @@ public class IGDisplayContextProvider {
 
 			return igViewFileVersionDisplayContext;
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -124,8 +124,8 @@ public class IGDisplayContextProvider {
 
 			return igViewFileVersionDisplayContext;
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

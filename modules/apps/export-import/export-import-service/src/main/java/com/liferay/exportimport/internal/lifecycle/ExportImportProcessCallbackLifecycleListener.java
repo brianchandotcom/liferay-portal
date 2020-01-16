@@ -69,9 +69,10 @@ public class ExportImportProcessCallbackLifecycleListener
 			try {
 				callable.call();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
-					"Unable to execute export import process callback", e);
+					"Unable to execute export import process callback",
+					exception);
 			}
 		}
 	}

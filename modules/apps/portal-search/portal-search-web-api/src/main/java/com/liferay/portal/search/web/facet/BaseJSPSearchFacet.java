@@ -51,11 +51,13 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + getDisplayJspPath(), se);
+		catch (ServletException servletException) {
+			_log.error(
+				"Unable to include JSP " + getDisplayJspPath(),
+				servletException);
 
 			throw new IOException(
-				"Unable to include " + getDisplayJspPath(), se);
+				"Unable to include " + getDisplayJspPath(), servletException);
 		}
 	}
 
@@ -75,11 +77,11 @@ public abstract class BaseJSPSearchFacet extends BaseSearchFacet {
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP", se);
+		catch (ServletException servletException) {
+			_log.error("Unable to include JSP", servletException);
 
 			throw new IOException(
-				"Unable to include " + getDisplayJspPath(), se);
+				"Unable to include " + getDisplayJspPath(), servletException);
 		}
 	}
 

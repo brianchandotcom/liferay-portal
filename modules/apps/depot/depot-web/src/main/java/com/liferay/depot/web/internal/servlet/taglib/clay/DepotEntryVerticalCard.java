@@ -100,8 +100,8 @@ public class DepotEntryVerticalCard
 			return HtmlUtil.escape(
 				_group.getDescriptiveName(_themeDisplay.getLocale()));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return _group.getName(_themeDisplay.getLocale());

@@ -109,12 +109,12 @@ public class SearchPortlet extends MVCPortlet {
 					httpServletRequest, httpServletResponse, null, xml,
 					ContentTypes.TEXT_XML_UTF8);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				try {
 					_portal.sendError(
-						e, httpServletRequest, httpServletResponse);
+						exception, httpServletRequest, httpServletResponse);
 				}
-				catch (ServletException se) {
+				catch (ServletException servletException) {
 				}
 			}
 		}

@@ -165,12 +165,12 @@ public class BookmarksPortletToolbarContributor
 				_bookmarksFolderModelResourcePermission, permissionChecker,
 				groupId, folderId, actionId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return false;
@@ -192,16 +192,16 @@ public class BookmarksPortletToolbarContributor
 			addPortletTitleAddFolderMenuItem(
 				menuItems, folder, themeDisplay, portletRequest);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to add folder menu item", pe);
+		catch (PortalException portalException) {
+			_log.error("Unable to add folder menu item", portalException);
 		}
 
 		try {
 			addPortletTitleAddBookmarkMenuItem(
 				menuItems, folder, themeDisplay, portletRequest);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to add bookmark menu item", pe);
+		catch (PortalException portalException) {
+			_log.error("Unable to add bookmark menu item", portalException);
 		}
 
 		return menuItems;
@@ -231,11 +231,11 @@ public class BookmarksPortletToolbarContributor
 			rootFolderId =
 				bookmarksGroupServiceOverriddenConfiguration.rootFolderId();
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			_log.error(
 				"Unable to obtain bookmarks root folder ID for group " +
 					themeDisplay.getScopeGroupId(),
-				ce);
+				configurationException);
 		}
 
 		long folderId = BeanParamUtil.getLong(
@@ -245,11 +245,11 @@ public class BookmarksPortletToolbarContributor
 			try {
 				folder = _bookmarksFolderService.getFolder(folderId);
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 				folder = null;
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 

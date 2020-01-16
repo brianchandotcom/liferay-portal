@@ -73,9 +73,10 @@ public class GetSnapshotRepositoriesRequestExecutorImpl
 							snapshotRepositoryDetails);
 				});
 		}
-		catch (RepositoryMissingException rme) {
+		catch (RepositoryMissingException repositoryMissingException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(rme, rme);
+				_log.debug(
+					repositoryMissingException, repositoryMissingException);
 			}
 		}
 		finally {

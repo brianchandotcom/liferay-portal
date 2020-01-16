@@ -380,12 +380,12 @@ public class JournalFolderActionDropdownItems {
 
 			return false;
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"An exception occured when checking if the publish " +
 						"action should be displayed",
-					pe);
+					portalException);
 			}
 
 			return false;

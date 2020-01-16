@@ -72,7 +72,7 @@ public class ContextResourcePathsUtil {
 				(Enumeration<URL>)method.invoke(
 					bundle, path, filePattern, true));
 		}
-		catch (ReflectiveOperationException roe) {
+		catch (ReflectiveOperationException reflectiveOperationException) {
 			return null;
 		}
 	}

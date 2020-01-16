@@ -154,9 +154,9 @@ public class SolrQuerySuggester implements QuerySuggester {
 
 			return querySuggestions;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to execute Solr query", e);
+				_log.warn("Unable to execute Solr query", exception);
 			}
 
 			return new String[0];
@@ -415,12 +415,12 @@ public class SolrQuerySuggester implements QuerySuggester {
 
 			return weightedWordsSet;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to execute Solr query", e);
+				_log.debug("Unable to execute Solr query", exception);
 			}
 
-			throw new SearchException(e.getMessage(), e);
+			throw new SearchException(exception.getMessage(), exception);
 		}
 	}
 

@@ -81,8 +81,8 @@ public class CopySharepointObjectOperation extends BaseOperation {
 				pathURL.toString(), new String[] {newPathURL.toString()},
 				new UnsignedIntHolder(), copyResultCollectionHolder);
 		}
-		catch (RemoteException re) {
-			RemoteExceptionUtil.handleRemoteException(re);
+		catch (RemoteException remoteException) {
+			RemoteExceptionUtil.handleRemoteException(remoteException);
 		}
 
 		CopyResult copyResult = copyResultCollectionHolder.value[0];
@@ -129,9 +129,11 @@ public class CopySharepointObjectOperation extends BaseOperation {
 
 			_addFolderOperation.execute(parentFolderPath, folderName);
 		}
-		catch (SharepointException se) {
+		catch (SharepointException sharepointException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to create folder at " + folderPath, se);
+				_log.warn(
+					"Unable to create folder at " + folderPath,
+					sharepointException);
 			}
 		}
 	}

@@ -169,9 +169,10 @@ public class SiteNavigationMenuAddPortletToolbarContributor
 
 			return Collections.singletonList(menuItem);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
-				"Unable to set edit site navigation menu to menu item", e);
+				"Unable to set edit site navigation menu to menu item",
+				exception);
 
 			return Collections.emptyList();
 		}

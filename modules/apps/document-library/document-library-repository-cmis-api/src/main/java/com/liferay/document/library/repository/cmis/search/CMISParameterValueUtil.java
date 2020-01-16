@@ -66,7 +66,7 @@ public class CMISParameterValueUtil {
 
 				value = cmisSimpleDateFormat.format(date);
 			}
-			catch (ParseException pe) {
+			catch (ParseException parseException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(

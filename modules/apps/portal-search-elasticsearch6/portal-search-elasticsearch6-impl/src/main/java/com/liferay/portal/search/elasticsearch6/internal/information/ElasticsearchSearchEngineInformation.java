@@ -84,14 +84,14 @@ public class ElasticsearchSearchEngineInformation
 				Collectors.joining(StringPool.COMMA_AND_SPACE)
 			);
 		}
-		catch (Exception e) {
-			_log.error("Unable to get node information", e);
+		catch (Exception exception) {
+			_log.error("Unable to get node information", exception);
 
 			StringBundler sb = new StringBundler(4);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append("Error: ");
-			sb.append(e.toString());
+			sb.append(exception.toString());
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			return sb.toString();

@@ -210,9 +210,9 @@ public class EtcdUtil {
 				return;
 			}
 			catch (EtcdAuthenticationException | EtcdException | IOException |
-				   TimeoutException e) {
+				   TimeoutException exception) {
 
-				e.printStackTrace();
+				exception.printStackTrace();
 			}
 
 			retryCount++;
@@ -234,11 +234,11 @@ public class EtcdUtil {
 		try {
 			return new EtcdClient(new URI(url));
 		}
-		catch (URISyntaxException urise) {
+		catch (URISyntaxException uriSyntaxException) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to create an etcd client for ", url),
-				urise);
+				uriSyntaxException);
 		}
 	}
 
@@ -259,9 +259,9 @@ public class EtcdUtil {
 				return etcdKeysResponse.getNode();
 			}
 			catch (EtcdAuthenticationException | EtcdException | IOException |
-				   TimeoutException e) {
+				   TimeoutException exception) {
 
-				String errorMessage = e.getMessage();
+				String errorMessage = exception.getMessage();
 
 				if (errorMessage.contains("Key not found")) {
 					return null;
@@ -311,9 +311,9 @@ public class EtcdUtil {
 				return etcdKeysResponse.getNode();
 			}
 			catch (EtcdAuthenticationException | EtcdException | IOException |
-				   TimeoutException e) {
+				   TimeoutException exception) {
 
-				e.printStackTrace();
+				exception.printStackTrace();
 			}
 
 			retryCount++;

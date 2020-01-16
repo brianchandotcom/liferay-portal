@@ -490,9 +490,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		try {
 			creatorUserId = getGuestOrUserId();
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get guest or current user ID", pe);
+				_log.warn(
+					"Unable to get guest or current user ID",
+					principalException);
 			}
 		}
 
@@ -1658,9 +1660,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		try {
 			creatorUserId = getGuestOrUserId();
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get guest or current user ID", pe);
+				_log.warn(
+					"Unable to get guest or current user ID",
+					principalException);
 			}
 		}
 
@@ -2797,18 +2801,18 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			fields.add("suffix");
 		}
 
-		UserFieldException ufe = new UserFieldException();
+		UserFieldException userFieldException = new UserFieldException();
 
 		for (String field : fields) {
 			if (!UsersAdminUtil.hasUpdateFieldPermission(
 					getPermissionChecker(), getUser(), user, field)) {
 
-				ufe.addField(field);
+				userFieldException.addField(field);
 			}
 		}
 
-		if (ufe.hasFields()) {
-			throw ufe;
+		if (userFieldException.hasFields()) {
+			throw userFieldException;
 		}
 	}
 

@@ -65,8 +65,8 @@ public class ProcessUtil {
 			return _wrapNoticeableFuture(
 				stdOutNoticeableFuture, stdErrNoticeableFuture, process);
 		}
-		catch (IOException ioe) {
-			throw new ProcessException(ioe);
+		catch (IOException ioException) {
+			throw new ProcessException(ioException);
 		}
 	}
 
@@ -236,11 +236,12 @@ public class ProcessUtil {
 						throw new TerminationProcessException(exitCode);
 					}
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 					_process.destroy();
 
 					throw new ProcessException(
-						"Forcibly killed subprocess on interruption", ie);
+						"Forcibly killed subprocess on interruption",
+						interruptedException);
 				}
 			}
 		}

@@ -168,8 +168,8 @@ public class ViewCountEntryLocalServiceTest {
 				try {
 					return method.invoke(session, args);
 				}
-				catch (InvocationTargetException ite) {
-					throw ite.getCause();
+				catch (InvocationTargetException invocationTargetException) {
+					throw invocationTargetException.getCause();
 				}
 			});
 	}

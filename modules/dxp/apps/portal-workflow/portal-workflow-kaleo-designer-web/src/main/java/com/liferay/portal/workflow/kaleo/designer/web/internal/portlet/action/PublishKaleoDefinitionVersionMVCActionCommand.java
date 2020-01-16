@@ -114,9 +114,9 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 			return unproxiedWorkflowDefinitionManager.
 				getLatestWorkflowDefinition(companyId, name);
 		}
-		catch (WorkflowException we) {
+		catch (WorkflowException workflowException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(we, we);
+				_log.debug(workflowException, workflowException);
 			}
 		}
 

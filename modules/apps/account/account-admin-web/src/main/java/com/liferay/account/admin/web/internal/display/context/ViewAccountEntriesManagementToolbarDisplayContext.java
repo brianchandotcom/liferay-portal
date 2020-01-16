@@ -245,9 +245,9 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 		try {
 			return PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return liferayPortletResponse.createRenderURL();

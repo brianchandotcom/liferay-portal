@@ -64,8 +64,9 @@ public class ElasticsearchSpellCheckIndexWriter
 			deleteDocuments(
 				searchContext, SuggestionConstants.TYPE_QUERY_SUGGESTION);
 		}
-		catch (Exception e) {
-			throw new SearchException("Unable to clear query suggestions", e);
+		catch (Exception exception) {
+			throw new SearchException(
+				"Unable to clear query suggestions", exception);
 		}
 	}
 
@@ -77,8 +78,9 @@ public class ElasticsearchSpellCheckIndexWriter
 			deleteDocuments(
 				searchContext, SuggestionConstants.TYPE_SPELL_CHECKER);
 		}
-		catch (Exception e) {
-			throw new SearchException("Unable to to clear spell checks", e);
+		catch (Exception exception) {
+			throw new SearchException(
+				"Unable to to clear spell checks", exception);
 		}
 	}
 
@@ -180,8 +182,8 @@ public class ElasticsearchSpellCheckIndexWriter
 
 			_searchEngineAdapter.execute(deleteByQueryDocumentRequest);
 		}
-		catch (ParseException pe) {
-			throw new SystemException(pe);
+		catch (ParseException parseException) {
+			throw new SystemException(parseException);
 		}
 	}
 

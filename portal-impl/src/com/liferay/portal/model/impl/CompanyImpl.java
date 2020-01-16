@@ -272,7 +272,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 			virtualHost = VirtualHostLocalServiceUtil.fetchVirtualHost(
 				getCompanyId(), 0);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if (virtualHost == null) {

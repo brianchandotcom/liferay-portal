@@ -89,12 +89,12 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 
 			return ArrayUtil.toStringArray(jsonArray);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsone, jsone);
+				_log.debug(jsonException, jsonException);
 			}
 
 			return StringUtil.split(value);

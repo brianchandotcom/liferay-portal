@@ -245,7 +245,7 @@ public class SPIRegistryImplTest {
 
 				Assert.fail();
 			}
-			catch (RuntimeException re) {
+			catch (RuntimeException runtimeException) {
 			}
 
 			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
@@ -306,7 +306,7 @@ public class SPIRegistryImplTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 		}
 	}
 

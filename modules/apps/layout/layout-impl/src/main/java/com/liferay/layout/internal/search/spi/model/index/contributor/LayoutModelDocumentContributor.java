@@ -148,8 +148,8 @@ public class LayoutModelDocumentContributor
 				document.addText(
 					Field.getLocalizedName(locale, Field.CONTENT), content);
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
 			}
 		}
 	}

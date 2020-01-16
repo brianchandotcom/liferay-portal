@@ -160,11 +160,11 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 				});
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to search for test file names in " +
 					workingDirectory.getPath(),
-				ioe);
+				ioException);
 		}
 
 		Collections.sort(testClasses);

@@ -696,7 +696,7 @@ public class AssetPublisherDisplayContext {
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -1160,7 +1160,7 @@ public class AssetPublisherDisplayContext {
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

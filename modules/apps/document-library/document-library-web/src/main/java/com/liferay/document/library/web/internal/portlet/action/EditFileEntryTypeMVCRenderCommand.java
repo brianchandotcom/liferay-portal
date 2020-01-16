@@ -101,13 +101,13 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 
 			return "/document_library/edit_file_entry_type.jsp";
 		}
-		catch (NoSuchFileEntryTypeException | PrincipalException e) {
-			SessionErrors.add(renderRequest, e.getClass());
+		catch (NoSuchFileEntryTypeException | PrincipalException exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
 
 			return "/document_library/error.jsp";
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 

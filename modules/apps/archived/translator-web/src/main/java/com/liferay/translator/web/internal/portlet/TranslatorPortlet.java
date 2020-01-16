@@ -107,18 +107,18 @@ public class TranslatorPortlet extends MVCPortlet {
 					translation);
 			}
 		}
-		catch (WebCacheException wce) {
-			Throwable cause = wce.getCause();
+		catch (WebCacheException webCacheException) {
+			Throwable cause = webCacheException.getCause();
 
 			if (cause instanceof MicrosoftTranslatorException) {
 				SessionErrors.add(actionRequest, cause.getClass(), cause);
 			}
 			else {
-				throw new PortletException(wce);
+				throw new PortletException(webCacheException);
 			}
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

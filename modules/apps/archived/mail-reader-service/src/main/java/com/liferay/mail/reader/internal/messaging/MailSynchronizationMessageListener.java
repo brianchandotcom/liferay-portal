@@ -119,7 +119,7 @@ public class MailSynchronizationMessageListener extends BaseMessageListener {
 				}
 			}
 		}
-		catch (NoSuchAccountException nsae) {
+		catch (NoSuchAccountException noSuchAccountException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Skipping syncronization of accountId " + accountId);
 			}

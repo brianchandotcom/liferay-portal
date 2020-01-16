@@ -40,7 +40,7 @@ public class CurrentUserIdStrategy implements UserIdStrategy {
 
 			return user.getUserId();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return _user.getUserId();
 		}
 	}

@@ -48,12 +48,12 @@ public class DefaultPKMapper extends ValueMapperWrapper {
 
 			return valueMapper.getNewValue(oldValue);
 		}
-		catch (StagnantRowException sre) {
+		catch (StagnantRowException stagnantRowException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sre, sre);
+				_log.debug(stagnantRowException, stagnantRowException);
 			}
 
 			return Long.valueOf(0);

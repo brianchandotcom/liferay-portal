@@ -301,7 +301,7 @@ public class JAASTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 	}
 

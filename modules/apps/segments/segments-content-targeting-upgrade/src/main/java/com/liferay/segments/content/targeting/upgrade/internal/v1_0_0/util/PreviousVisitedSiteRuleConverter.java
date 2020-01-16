@@ -52,11 +52,11 @@ public class PreviousVisitedSiteRuleConverter implements RuleConverter {
 					Criteria.Conjunction.AND);
 			}
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			_log.error(
 				"Unable to convert previous visited site rule with type " +
 					"settings" + typeSettings,
-				jsone);
+				jsonException);
 		}
 	}
 

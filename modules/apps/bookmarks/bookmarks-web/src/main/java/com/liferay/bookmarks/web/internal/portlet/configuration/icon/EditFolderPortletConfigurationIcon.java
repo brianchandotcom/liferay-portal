@@ -72,7 +72,7 @@ public class EditFolderPortletConfigurationIcon
 		try {
 			folder = ActionUtil.getFolder(portletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -111,7 +111,7 @@ public class EditFolderPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

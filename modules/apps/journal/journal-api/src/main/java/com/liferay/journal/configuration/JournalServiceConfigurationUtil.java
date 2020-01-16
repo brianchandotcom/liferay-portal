@@ -46,7 +46,7 @@ public class JournalServiceConfigurationUtil {
 				JournalServiceConfigurationUtil.class.getClassLoader(),
 				location);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return null;
 		}
 	}

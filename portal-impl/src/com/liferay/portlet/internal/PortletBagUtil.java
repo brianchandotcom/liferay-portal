@@ -53,8 +53,8 @@ public class PortletBagUtil {
 			try {
 				portletBag = portletBagFactory.create(portletModel);
 			}
-			catch (Exception e) {
-				throw new PortletException(e);
+			catch (Exception exception) {
+				throw new PortletException(exception);
 			}
 		}
 

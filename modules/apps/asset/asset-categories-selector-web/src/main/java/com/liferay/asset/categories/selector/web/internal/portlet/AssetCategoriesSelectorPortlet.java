@@ -106,8 +106,8 @@ public class AssetCategoriesSelectorPortlet extends MVCPortlet {
 				writeJSON(
 					resourceRequest, resourceResponse, jsonArray.toString());
 			}
-			catch (PortalException pe) {
-				throw new PortletException(pe);
+			catch (PortalException portalException) {
+				throw new PortletException(portalException);
 			}
 		}
 		else {

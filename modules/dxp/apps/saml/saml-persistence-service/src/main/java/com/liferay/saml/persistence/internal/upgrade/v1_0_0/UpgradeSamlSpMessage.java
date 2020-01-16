@@ -32,7 +32,7 @@ public class UpgradeSamlSpMessage extends UpgradeProcess {
 				"alter_column_type SamlSpMessage samlIdpEntityId " +
 					"VARCHAR(1024) null");
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			upgradeTable(
 				SamlSpMessageTable.TABLE_NAME, SamlSpMessageTable.TABLE_COLUMNS,
 				SamlSpMessageTable.TABLE_SQL_CREATE,

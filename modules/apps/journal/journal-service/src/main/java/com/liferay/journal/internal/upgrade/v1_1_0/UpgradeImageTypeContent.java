@@ -180,11 +180,11 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 
 				_imageLocalService.deleteImage(image.getImageId());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					"Unable to add the journal article image " + fileName +
 						" into the file repository",
-					e);
+					exception);
 
 				return false;
 			}

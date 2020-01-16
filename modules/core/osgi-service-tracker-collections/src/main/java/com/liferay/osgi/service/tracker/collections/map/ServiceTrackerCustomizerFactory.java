@@ -39,10 +39,10 @@ public class ServiceTrackerCustomizerFactory {
 				try {
 					return function.apply(serviceReference, service);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					b.ungetService(serviceReference);
 
-					throw e;
+					throw exception;
 				}
 			}
 

@@ -66,8 +66,8 @@ public class PortletContainerUtil {
 					layout.getGroupId(), layout.isPrivateLayout(),
 					LayoutConstants.TYPE_PORTLET);
 			}
-			catch (PortalException pe) {
-				throw new PortletContainerException(pe);
+			catch (PortalException portalException) {
+				throw new PortletContainerException(portalException);
 			}
 
 			List<LayoutTypePortlet> layoutTypePortlets = new ArrayList<>(
@@ -164,16 +164,16 @@ public class PortletContainerUtil {
 					location = liferayPortletURL.toString();
 				}
 			}
-			catch (MalformedURLException murle) {
-				throw new PortletContainerException(murle);
+			catch (MalformedURLException malformedURLException) {
+				throw new PortletContainerException(malformedURLException);
 			}
 		}
 
 		try {
 			httpServletResponse.sendRedirect(location);
 		}
-		catch (IOException ioe) {
-			throw new PortletContainerException(ioe);
+		catch (IOException ioException) {
+			throw new PortletContainerException(ioException);
 		}
 	}
 
@@ -382,8 +382,8 @@ public class PortletContainerUtil {
 			try {
 				portlets = layoutTypePortlet.getAllPortlets();
 			}
-			catch (Exception e) {
-				throw new PortletContainerException(e);
+			catch (Exception exception) {
+				throw new PortletContainerException(exception);
 			}
 
 			for (Portlet portlet : portlets) {

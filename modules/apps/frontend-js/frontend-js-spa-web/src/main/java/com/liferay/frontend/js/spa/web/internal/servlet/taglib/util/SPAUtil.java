@@ -287,7 +287,7 @@ public class SPAUtil {
 			try {
 				jsonArray.put(field.getInt(null));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

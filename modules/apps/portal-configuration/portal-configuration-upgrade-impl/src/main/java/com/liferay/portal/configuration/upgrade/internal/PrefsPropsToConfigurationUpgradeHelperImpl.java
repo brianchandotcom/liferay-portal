@@ -155,8 +155,8 @@ public class PrefsPropsToConfigurationUpgradeHelperImpl
 			try {
 				portletPreferences.reset(keyValuePair.getKey());
 			}
-			catch (ReadOnlyException roe) {
-				throw new RuntimeException(roe);
+			catch (ReadOnlyException readOnlyException) {
+				throw new RuntimeException(readOnlyException);
 			}
 		}
 	}

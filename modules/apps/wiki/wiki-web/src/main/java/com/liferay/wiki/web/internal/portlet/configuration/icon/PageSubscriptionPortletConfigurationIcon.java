@@ -64,7 +64,7 @@ public class PageSubscriptionPortletConfigurationIcon
 				key = "unsubscribe";
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return LanguageUtil.get(
@@ -101,7 +101,7 @@ public class PageSubscriptionPortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -133,7 +133,7 @@ public class PageSubscriptionPortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

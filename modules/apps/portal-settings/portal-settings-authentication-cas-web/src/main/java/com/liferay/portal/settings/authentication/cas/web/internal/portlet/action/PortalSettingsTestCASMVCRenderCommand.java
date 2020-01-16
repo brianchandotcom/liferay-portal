@@ -56,12 +56,13 @@ public class PortalSettingsTestCASMVCRenderCommand implements MVCRenderCommand {
 				_portal.getHttpServletRequest(renderRequest),
 				_portal.getHttpServletResponse(renderResponse));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to include JSP " + _JSP_PATH, e);
+				_log.debug("Unable to include JSP " + _JSP_PATH, exception);
 			}
 
-			throw new PortletException("Unable to include JSP " + _JSP_PATH, e);
+			throw new PortletException(
+				"Unable to include JSP " + _JSP_PATH, exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

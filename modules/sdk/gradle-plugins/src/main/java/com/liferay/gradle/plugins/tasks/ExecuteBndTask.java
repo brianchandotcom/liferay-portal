@@ -158,8 +158,8 @@ public class ExecuteBndTask extends DefaultTask {
 
 					manifest.write(outputStream);
 				}
-				catch (IOException ioe) {
-					throw new GradleException(this + " failed", ioe);
+				catch (IOException ioException) {
+					throw new GradleException(this + " failed", ioException);
 				}
 			}
 			else {

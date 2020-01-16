@@ -177,8 +177,8 @@ public class PortalLogAssertorTest {
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 

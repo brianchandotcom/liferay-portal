@@ -75,8 +75,8 @@ public class SystemCheckerUtil {
 				registry.ungetService(serviceReference);
 			}
 		}
-		catch (Exception e) {
-			log.error(e, e);
+		catch (Exception exception) {
+			log.error(exception, exception);
 		}
 	}
 

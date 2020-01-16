@@ -35,11 +35,11 @@ public class AddressImpl extends AddressBaseImpl {
 		try {
 			country = CountryServiceUtil.getCountry(getCountryId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			country = new CountryImpl();
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -53,11 +53,11 @@ public class AddressImpl extends AddressBaseImpl {
 		try {
 			region = RegionServiceUtil.getRegion(getRegionId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			region = new RegionImpl();
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -71,11 +71,11 @@ public class AddressImpl extends AddressBaseImpl {
 		try {
 			type = ListTypeServiceUtil.getListType(getTypeId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			type = new ListTypeImpl();
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 

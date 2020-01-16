@@ -76,11 +76,11 @@ public class CustomFieldRuleConverter implements RuleConverter {
 					"(customField/", fieldName, " eq '", value, "')"),
 				Criteria.Conjunction.AND);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to convert custom field rule with type settings " +
 					typeSettings,
-				e);
+				exception);
 		}
 	}
 

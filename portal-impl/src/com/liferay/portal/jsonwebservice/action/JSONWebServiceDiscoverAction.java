@@ -238,7 +238,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 			return beanAnalyzerTransformer.collect();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -434,7 +434,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 				modelType = classLoader.loadClass(modelImplClassName);
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 			}
 		}
 

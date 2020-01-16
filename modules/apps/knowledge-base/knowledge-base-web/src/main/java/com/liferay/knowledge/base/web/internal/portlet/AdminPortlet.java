@@ -234,8 +234,10 @@ public class AdminPortlet extends BaseKBPortlet {
 					importedKBArticlesCount);
 			}
 		}
-		catch (KBArticleImportException kbaie) {
-			SessionErrors.add(actionRequest, kbaie.getClass(), kbaie);
+		catch (KBArticleImportException kbArticleImportException) {
+			SessionErrors.add(
+				actionRequest, kbArticleImportException.getClass(),
+				kbArticleImportException);
 		}
 	}
 
@@ -273,8 +275,8 @@ public class AdminPortlet extends BaseKBPortlet {
 				portletRequestDispatcher.include(
 					resourceRequest, resourceResponse);
 			}
-			catch (Exception e) {
-				throw new PortletException(e);
+			catch (Exception exception) {
+				throw new PortletException(exception);
 			}
 		}
 		else {
@@ -426,8 +428,8 @@ public class AdminPortlet extends BaseKBPortlet {
 
 			return portletURL.toString();
 		}
-		catch (WindowStateException wse) {
-			throw new PortalException(wse);
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
 		}
 	}
 
@@ -525,16 +527,16 @@ public class AdminPortlet extends BaseKBPortlet {
 
 			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchArticleException ||
-				e instanceof NoSuchFolderException ||
-				e instanceof NoSuchTemplateException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchArticleException ||
+				exception instanceof NoSuchFolderException ||
+				exception instanceof NoSuchTemplateException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 			}
 			else {
-				throw new PortletException(e);
+				throw new PortletException(exception);
 			}
 		}
 	}

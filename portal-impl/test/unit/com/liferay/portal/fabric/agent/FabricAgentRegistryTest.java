@@ -41,9 +41,10 @@ public class FabricAgentRegistryTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 			Assert.assertEquals(
-				"Default fabric agent is null", npe.getMessage());
+				"Default fabric agent is null",
+				nullPointerException.getMessage());
 		}
 
 		FabricAgent fabricAgent = new LocalFabricAgent(

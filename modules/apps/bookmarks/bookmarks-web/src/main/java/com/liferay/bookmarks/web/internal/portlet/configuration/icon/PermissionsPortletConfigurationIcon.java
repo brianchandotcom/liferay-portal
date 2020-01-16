@@ -88,7 +88,7 @@ public class PermissionsPortletConfigurationIcon
 				resourcePrimKey, LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return url;
@@ -121,12 +121,12 @@ public class PermissionsPortletConfigurationIcon
 				return false;
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return false;

@@ -140,7 +140,7 @@ public class RatingsEntryStagedModelDataHandler
 				try {
 					persistedModelLocalService.getPersistedModel(newClassPK);
 				}
-				catch (NoSuchModelException nsme) {
+				catch (NoSuchModelException noSuchModelException) {
 					if (Objects.equals(
 							entry.getClassName(), Discussion.class.getName()) ||
 						Objects.equals(
@@ -158,15 +158,16 @@ public class RatingsEntryStagedModelDataHandler
 							newClassPK);
 					}
 					else {
-						throw nsme;
+						throw noSuchModelException;
 					}
 				}
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to import ratings entry " + entry.getEntryId(), pe);
+					"Unable to import ratings entry " + entry.getEntryId(),
+					portalException);
 			}
 
 			return;

@@ -94,8 +94,8 @@ public class DepotSettingsPortlet extends MVCPortlet {
 					).build()),
 				renderResponse);
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 

@@ -71,12 +71,12 @@ public class SegmentsExperienceModelListener
 					segmentsExperience, segmentsExperiment);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to update segments experience " +
 						segmentsExperience.getSegmentsExperienceId(),
-					e);
+					exception);
 			}
 		}
 	}

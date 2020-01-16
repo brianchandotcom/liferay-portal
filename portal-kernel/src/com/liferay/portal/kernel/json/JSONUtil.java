@@ -151,7 +151,7 @@ public class JSONUtil {
 
 			return true;
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			return false;
 		}
 	}

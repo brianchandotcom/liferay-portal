@@ -97,8 +97,8 @@ public class CertificateToolImpl implements CertificateTool {
 			return jcaX509CertificateConverter.getCertificate(
 				x509CertificateHolder);
 		}
-		catch (Exception oce) {
-			throw new CertificateException(oce);
+		catch (Exception exception) {
+			throw new CertificateException(exception);
 		}
 	}
 

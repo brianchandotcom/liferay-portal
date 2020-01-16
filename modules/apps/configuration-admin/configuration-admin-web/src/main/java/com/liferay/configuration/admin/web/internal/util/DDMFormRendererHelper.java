@@ -62,10 +62,10 @@ public class DDMFormRendererHelper {
 				ddmForm, getDDMFormLayout(ddmForm),
 				createDDMFormRenderingContext(ddmForm));
 		}
-		catch (DDMFormRenderingException ddmfre) {
-			_log.error("Unable to render DDM Form ", ddmfre);
+		catch (DDMFormRenderingException ddmFormRenderingException) {
+			_log.error("Unable to render DDM Form ", ddmFormRenderingException);
 
-			throw new PortletException(ddmfre);
+			throw new PortletException(ddmFormRenderingException);
 		}
 	}
 
@@ -114,7 +114,7 @@ public class DDMFormRendererHelper {
 			try {
 				return DDMFormLayoutFactory.create(formClass);
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 			}
 		}
 

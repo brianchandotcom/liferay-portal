@@ -143,12 +143,13 @@ public class OAuthManager {
 			try {
 				setupExpando(company.getCompanyId());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
 							"Unable to setup Marketplace for company ",
-							company.getCompanyId(), ": ", e.getMessage()));
+							company.getCompanyId(), ": ",
+							exception.getMessage()));
 				}
 			}
 		}
@@ -194,12 +195,13 @@ public class OAuthManager {
 			table = _expandoTableLocalService.addTable(
 				companyId, User.class.getName(), "MP");
 		}
-		catch (DuplicateTableNameException dtne) {
+		catch (DuplicateTableNameException duplicateTableNameException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(dtne, dtne);
+				_log.debug(
+					duplicateTableNameException, duplicateTableNameException);
 			}
 
 			table = _expandoTableLocalService.getTable(
@@ -220,12 +222,13 @@ public class OAuthManager {
 				table.getTableId(), "requestToken",
 				ExpandoColumnConstants.STRING);
 		}
-		catch (DuplicateColumnNameException dcne) {
+		catch (DuplicateColumnNameException duplicateColumnNameException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(dcne, dcne);
+				_log.debug(
+					duplicateColumnNameException, duplicateColumnNameException);
 			}
 		}
 	}

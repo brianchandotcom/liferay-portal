@@ -129,10 +129,11 @@ public class CustomServletContextHelper
 
 					url = uri.toURL();
 				}
-				catch (MalformedURLException murle) {
+				catch (MalformedURLException malformedURLException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Invalid override URL " + file.toString(), murle);
+							"Invalid override URL " + file.toString(),
+							malformedURLException);
 					}
 				}
 			}
@@ -156,12 +157,12 @@ public class CustomServletContextHelper
 					url = enumeration.nextElement();
 				}
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				_log.error(
 					StringBundler.concat(
 						"Unable to get resource name ", name, " on bundle ",
 						_bundle),
-					ioe);
+					ioException);
 			}
 		}
 
@@ -321,7 +322,7 @@ public class CustomServletContextHelper
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_FORBIDDEN, path);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
 		}
 

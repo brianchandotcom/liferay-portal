@@ -39,8 +39,8 @@ public class DynamicQueryBatchIndexingActionableAdapter
 		try {
 			_indexableActionableDynamicQuery.addDocuments(documents);
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 
@@ -49,8 +49,8 @@ public class DynamicQueryBatchIndexingActionableAdapter
 		try {
 			_indexableActionableDynamicQuery.performActions();
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

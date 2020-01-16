@@ -63,7 +63,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 				portletDataContext, portletDataContext.getPortletId(),
 				portletPreferences);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return portletPreferences;
 		}
 	}

@@ -37,9 +37,9 @@ public class C3P0ConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 		try {
 			return _abstractPoolBackedDataSource.getNumBusyConnections();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(sqle.getMessage());
+				_log.debug(sqlException.getMessage());
 			}
 
 			return -1;
@@ -51,9 +51,9 @@ public class C3P0ConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 		try {
 			return _abstractPoolBackedDataSource.getNumIdleConnections();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(sqle.getMessage());
+				_log.debug(sqlException.getMessage());
 			}
 
 			return -1;

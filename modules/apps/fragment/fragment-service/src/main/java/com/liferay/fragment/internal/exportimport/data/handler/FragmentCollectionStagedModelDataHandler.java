@@ -203,9 +203,9 @@ public class FragmentCollectionStagedModelDataHandler
 			try {
 				return FileEntryUtil.getContentStream(fileEntry);
 			}
-			catch (NoSuchFileException nsfe) {
+			catch (NoSuchFileException noSuchFileException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsfe, nsfe);
+					_log.debug(noSuchFileException, noSuchFileException);
 				}
 
 				return null;

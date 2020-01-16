@@ -121,19 +121,19 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 
 					_sendStatusMessage(atomicCounter.incrementAndGet(), total);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					_log.error(
 						"Unable to process file entry " +
 							fileEntry.getFileEntryId(),
-						pe);
+						portalException);
 				}
 			});
 
 		try {
 			actionableDynamicQuery.performActions();
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 

@@ -98,8 +98,8 @@ public class SelfMonitorBundleListener implements BundleListener {
 			classLoader.loadClass(ParamUtil.class.getName());
 			classLoader.loadClass(WebBundleInstaller.class.getName());
 		}
-		catch (ClassNotFoundException cnfe) {
-			throw new ExceptionInInitializerError(cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new ExceptionInInitializerError(classNotFoundException);
 		}
 	}
 

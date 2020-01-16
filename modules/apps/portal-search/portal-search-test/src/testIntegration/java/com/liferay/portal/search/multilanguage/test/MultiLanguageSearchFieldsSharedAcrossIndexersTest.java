@@ -291,8 +291,8 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 			searchContext.setGroupIds(new long[] {_group.getGroupId()});
 			searchContext.setUserId(TestPropsValues.getUserId());
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 
 		return searchContext;
@@ -331,8 +331,8 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 		try {
 			return facetedSearcher.search(searchContext);
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 

@@ -258,15 +258,15 @@ public class JMXProxyUtil {
 				return (Serializable)mBeanServer.getAttribute(
 					_objectName, _attributeName);
 			}
-			catch (AttributeNotFoundException anfe) {
+			catch (AttributeNotFoundException attributeNotFoundException) {
 				if (_optional) {
 					return null;
 				}
 
-				throw new ProcessException(anfe);
+				throw new ProcessException(attributeNotFoundException);
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (Exception exception) {
+				throw new ProcessException(exception);
 			}
 		}
 
@@ -369,8 +369,8 @@ public class JMXProxyUtil {
 					_objectName, _operationName, _arguments,
 					_parameterTypeNames);
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (Exception exception) {
+				throw new ProcessException(exception);
 			}
 		}
 
@@ -406,13 +406,13 @@ public class JMXProxyUtil {
 					_objectName,
 					new Attribute(_attributeName, _attributeValue));
 			}
-			catch (AttributeNotFoundException anfe) {
+			catch (AttributeNotFoundException attributeNotFoundException) {
 				if (!_optional) {
-					throw new ProcessException(anfe);
+					throw new ProcessException(attributeNotFoundException);
 				}
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (Exception exception) {
+				throw new ProcessException(exception);
 			}
 
 			return null;

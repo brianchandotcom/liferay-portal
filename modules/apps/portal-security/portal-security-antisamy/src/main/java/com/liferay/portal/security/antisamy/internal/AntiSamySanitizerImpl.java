@@ -48,8 +48,9 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		try (InputStream inputstream = url.openStream()) {
 			_policy = Policy.getInstance(inputstream);
 		}
-		catch (Exception e) {
-			throw new IllegalStateException("Unable to initialize policy", e);
+		catch (Exception exception) {
+			throw new IllegalStateException(
+				"Unable to initialize policy", exception);
 		}
 
 		if (blacklist != null) {
@@ -110,10 +111,10 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 
 			return cleanResults.getCleanHTML();
 		}
-		catch (Exception e) {
-			_log.error("Unable to sanitize input", e);
+		catch (Exception exception) {
+			_log.error("Unable to sanitize input", exception);
 
-			throw new SanitizerException(e);
+			throw new SanitizerException(exception);
 		}
 	}
 

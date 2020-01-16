@@ -292,10 +292,10 @@ public class LiferayOAuthDataProvider
 		try {
 			return populateAccessToken(oAuth2Authorization);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to populate access token", pe);
+		catch (PortalException portalException) {
+			_log.error("Unable to populate access token", portalException);
 
-			throw new OAuthServiceException(pe);
+			throw new OAuthServiceException(portalException);
 		}
 	}
 
@@ -418,8 +418,8 @@ public class LiferayOAuthDataProvider
 
 			return refreshToken;
 		}
-		catch (PortalException pe) {
-			throw new OAuthServiceException(pe);
+		catch (PortalException portalException) {
+			throw new OAuthServiceException(portalException);
 		}
 	}
 
@@ -1071,10 +1071,11 @@ public class LiferayOAuthDataProvider
 
 				userName = user.getFullName();
 			}
-			catch (Exception e) {
-				_log.error("Unable to load user " + userSubject.getId(), e);
+			catch (Exception exception) {
+				_log.error(
+					"Unable to load user " + userSubject.getId(), exception);
 
-				throw new RuntimeException(e);
+				throw new RuntimeException(exception);
 			}
 		}
 
@@ -1106,11 +1107,11 @@ public class LiferayOAuthDataProvider
 					oAuth2Authorization.getOAuth2ApplicationScopeAliasesId(),
 					scopeAliasesList));
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error("Unable to find authorization " + oAuth2Authorization);
 
 			throw new OAuthServiceException(
-				"Unable to grant scope for token", pe);
+				"Unable to grant scope for token", portalException);
 		}
 	}
 

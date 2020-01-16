@@ -144,14 +144,14 @@ public class AMImageDLPluggableContentDataHandler
 			try (InputStream inputStream = adaptiveMedia.getInputStream()) {
 				portletDataContext.addZipEntry(basePath + ".bin", inputStream);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
 							"Unable to find adaptive media for file entry ",
 							fileEntry.getFileEntryId(), " and configuration ",
 							configurationUuidOptional.get()),
-						e);
+						exception);
 				}
 
 				return;
@@ -176,7 +176,7 @@ public class AMImageDLPluggableContentDataHandler
 					amImageConfigurationEntry.getUUID()
 				).done());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("Unable to find adaptive media for file entry ");
@@ -184,7 +184,7 @@ public class AMImageDLPluggableContentDataHandler
 			sb.append(" and configuration ");
 			sb.append(amImageConfigurationEntry.getUUID());
 
-			_log.error(sb.toString(), pe);
+			_log.error(sb.toString(), portalException);
 		}
 
 		return Stream.empty();

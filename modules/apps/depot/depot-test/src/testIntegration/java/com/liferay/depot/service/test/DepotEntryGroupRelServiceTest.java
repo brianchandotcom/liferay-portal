@@ -97,8 +97,8 @@ public class DepotEntryGroupRelServiceTest {
 			_depotEntryGroupRelService.getDepotEntryGroupRels(
 				group.getGroupId(), 0, 20);
 		}
-		catch (PrincipalException.MustHavePermission mhp) {
-			String message = mhp.getMessage();
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(

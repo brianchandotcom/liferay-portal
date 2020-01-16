@@ -81,7 +81,7 @@ public class IntrabandProxyUtil {
 
 			return (String[])field.get(null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -127,8 +127,8 @@ public class IntrabandProxyUtil {
 			return constructor.newInstance(
 				id, registrationReference, exceptionHandler);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -615,7 +615,7 @@ public class IntrabandProxyUtil {
 		try {
 			return Class.forName(className.concat(postfix), false, classLoader);
 		}
-		catch (ClassNotFoundException cnfe) {
+		catch (ClassNotFoundException classNotFoundException) {
 		}
 
 		return null;
@@ -701,8 +701,8 @@ public class IntrabandProxyUtil {
 					classNode.name, CharPool.SLASH, CharPool.PERIOD),
 				data, 0, data.length);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -730,7 +730,7 @@ public class IntrabandProxyUtil {
 		try {
 			reloadedClass = Class.forName(clazz.getName(), false, classLoader);
 		}
-		catch (ClassNotFoundException cnfe) {
+		catch (ClassNotFoundException classNotFoundException) {
 		}
 
 		if (reloadedClass != clazz) {
@@ -845,11 +845,12 @@ public class IntrabandProxyUtil {
 			try {
 				doDispatch(registrationReference, datagram, deserializer);
 			}
-			catch (Exception e) {
-				_log.error("Unable to dispatch", e);
+			catch (Exception exception) {
+				_log.error("Unable to dispatch", exception);
 
 				_sendResponse(
-					registrationReference, datagram, new RPCResponse(e));
+					registrationReference, datagram,
+					new RPCResponse(exception));
 			}
 		}
 
@@ -971,17 +972,17 @@ public class IntrabandProxyUtil {
 
 				RPCResponse rpcResponse = deserializer.readObject();
 
-				Exception e = rpcResponse.getException();
+				Exception exception = rpcResponse.getException();
 
-				if (e != null) {
-					throw e;
+				if (exception != null) {
+					throw exception;
 				}
 
 				return (T)rpcResponse.getResult();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_exceptionHandler != null) {
-					_exceptionHandler.onException(e);
+					_exceptionHandler.onException(exception);
 				}
 
 				return null;

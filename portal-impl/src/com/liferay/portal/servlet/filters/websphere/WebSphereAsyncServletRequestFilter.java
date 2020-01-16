@@ -64,10 +64,11 @@ public class WebSphereAsyncServletRequestFilter extends BasePortalFilter {
 
 				_setAsyncSupportedMethod.invoke(servletRequest, true);
 			}
-			catch (ReflectiveOperationException roe) {
+			catch (ReflectiveOperationException reflectiveOperationException) {
 				Log log = getLog();
 
-				log.error(roe, roe);
+				log.error(
+					reflectiveOperationException, reflectiveOperationException);
 			}
 		}
 	}

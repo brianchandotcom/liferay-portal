@@ -39,8 +39,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				_classNameLocalService.getClassNameId(Layout.class),
 				layout.getPlid());
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

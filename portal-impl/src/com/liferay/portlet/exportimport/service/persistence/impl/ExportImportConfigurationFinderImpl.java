@@ -294,8 +294,8 @@ public class ExportImportConfigurationFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -359,8 +359,8 @@ public class ExportImportConfigurationFinderImpl
 				q, getDialect(), queryDefinition.getStart(),
 				queryDefinition.getEnd());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

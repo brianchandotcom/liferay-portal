@@ -57,8 +57,8 @@ public class LayoutTemplateAutoDeployer
 
 			checkArguments();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

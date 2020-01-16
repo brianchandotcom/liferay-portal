@@ -328,8 +328,8 @@ public class DDMFormAdminDisplayContext {
 
 				jsonObject.put("settingsContext", settingsContext);
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 
@@ -1177,8 +1177,8 @@ public class DDMFormAdminDisplayContext {
 
 			return availableLocales.toArray(new Locale[0]);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return null;
 		}
@@ -1207,8 +1207,8 @@ public class DDMFormAdminDisplayContext {
 
 			return locales;
 		}
-		catch (JSONException jsone) {
-			_log.error("Unable to deserialize form context", jsone);
+		catch (JSONException jsonException) {
+			_log.error("Unable to deserialize form context", jsonException);
 
 			return null;
 		}
@@ -1228,8 +1228,8 @@ public class DDMFormAdminDisplayContext {
 
 			return jsonObject.getString("defaultLanguageId");
 		}
-		catch (JSONException jsone) {
-			_log.error("Unable to deserialize form context", jsone);
+		catch (JSONException jsonException) {
+			_log.error("Unable to deserialize form context", jsonException);
 
 			return null;
 		}
@@ -1247,8 +1247,8 @@ public class DDMFormAdminDisplayContext {
 
 			return LocaleUtil.toLanguageId(form.getDefaultLocale());
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return null;
 		}
@@ -1277,13 +1277,13 @@ public class DDMFormAdminDisplayContext {
 
 			return jsonObject.getString(getDefaultLanguageId());
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			_log.error(
 				String.format(
 					"Unable to deserialize JSON localized property \"%s\" " +
 						"from request",
 					propertyName),
-				jsone);
+				jsonException);
 		}
 
 		return StringPool.BLANK;

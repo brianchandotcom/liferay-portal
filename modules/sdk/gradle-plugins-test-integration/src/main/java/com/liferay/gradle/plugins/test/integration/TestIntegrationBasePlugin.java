@@ -177,11 +177,11 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 					setTestClassesDirsMethod.invoke(test, testClassesDirs);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					throw new GradleException(
 						"Unable to set the \"testClassesDirs\" property of " +
 							test,
-						e);
+						exception);
 				}
 			}
 

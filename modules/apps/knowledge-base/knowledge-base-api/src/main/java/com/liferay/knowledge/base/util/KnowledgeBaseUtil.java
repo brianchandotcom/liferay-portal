@@ -114,9 +114,9 @@ public class KnowledgeBaseUtil {
 		try (InputStream inputStream = new UnsyncByteArrayInputStream(bytes)) {
 			return MimeTypesUtil.getContentType(inputStream, fileName);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 		}
 

@@ -123,7 +123,7 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 				}
 			};
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

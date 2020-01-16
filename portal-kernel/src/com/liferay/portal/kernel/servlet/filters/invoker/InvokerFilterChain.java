@@ -99,17 +99,17 @@ public class InvokerFilterChain implements FilterChain {
 						processDirectCallFilter(
 							filter, httpServletRequest, httpServletResponse);
 					}
-					catch (IOException ioe) {
-						throw ioe;
+					catch (IOException ioException) {
+						throw ioException;
 					}
-					catch (RuntimeException re) {
-						throw re;
+					catch (RuntimeException runtimeException) {
+						throw runtimeException;
 					}
-					catch (ServletException se) {
-						throw se;
+					catch (ServletException servletException) {
+						throw servletException;
 					}
-					catch (Exception e) {
-						throw new ServletException(e);
+					catch (Exception exception) {
+						throw new ServletException(exception);
 					}
 				}
 				else {

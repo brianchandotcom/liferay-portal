@@ -81,7 +81,7 @@ public class LiferayOAuthStoreProvider implements Provider<OAuthStore> {
 		try {
 			consumerSecret = FileUtil.read(keyFileName);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 		finally {
 			if (consumerSecret == null) {

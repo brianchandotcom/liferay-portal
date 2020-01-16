@@ -53,8 +53,9 @@ public class NettyFabricWorkerConfigTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Process config is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Process config is null", nullPointerException.getMessage());
 		}
 
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();
@@ -66,8 +67,9 @@ public class NettyFabricWorkerConfigTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Process callable is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Process callable is null", nullPointerException.getMessage());
 		}
 
 		ProcessCallable<String> processCallable = new ReturnProcessCallable<>(
@@ -79,8 +81,9 @@ public class NettyFabricWorkerConfigTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Input path map is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Input path map is null", nullPointerException.getMessage());
 		}
 
 		NettyFabricWorkerConfig<String> nettyFabricWorkerConfig =

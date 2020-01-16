@@ -100,7 +100,7 @@ public class DLFileEntryPermissionCheckerTest extends BasePermissionTestCase {
 				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				name);
 		}
-		catch (NoSuchFolderException nsfe) {
+		catch (NoSuchFolderException noSuchFolderException) {
 		}
 
 		ServiceContext serviceContext =

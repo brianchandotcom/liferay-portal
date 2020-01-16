@@ -74,13 +74,13 @@ public class UserPersonalSitePermissions {
 					companyId, powerUserRole.getRoleId(), rootPortletId,
 					userPersonalSiteGroup.getGroupId());
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				_log.error(
 					StringBundler.concat(
 						"Unable to initialize user personal site permissions ",
 						"for portlet ", portlet.getPortletId(), " in company ",
 						companyId),
-					pe);
+					portalException);
 			}
 		}
 	}
@@ -105,13 +105,13 @@ public class UserPersonalSitePermissions {
 					portlet.getRootPortletId(),
 					userPersonalSiteGroup.getGroupId());
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				_log.error(
 					StringBundler.concat(
 						"Unable to initialize user personal site permissions ",
 						"for portlet ", portlet.getPortletId(), " in company ",
 						companyId),
-					pe);
+					portalException);
 			}
 		}
 	}
@@ -138,9 +138,10 @@ public class UserPersonalSitePermissions {
 			return _roleLocalService.getRole(
 				companyId, RoleConstants.POWER_USER);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
-				"Unable to get power user role in company " + companyId, pe);
+				"Unable to get power user role in company " + companyId,
+				portalException);
 		}
 
 		return null;
@@ -150,11 +151,11 @@ public class UserPersonalSitePermissions {
 		try {
 			return _groupLocalService.getUserPersonalSiteGroup(companyId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				"Unable to get user personal site group in company " +
 					companyId,
-				pe);
+				portalException);
 		}
 
 		return null;

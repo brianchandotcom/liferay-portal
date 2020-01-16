@@ -118,7 +118,7 @@ public class SyncDLFileVersionDiffLocalServiceImpl
 			_portletFileRepository.deletePortletFileEntry(
 				syncDLFileVersionDiff.getDataFileEntryId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to delete file entry " +

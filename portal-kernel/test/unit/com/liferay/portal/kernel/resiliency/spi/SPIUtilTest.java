@@ -52,9 +52,10 @@ public class SPIUtilTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			Assert.assertEquals(
-				"Current process is not an SPI instance", ise.getMessage());
+				"Current process is not an SPI instance",
+				illegalStateException.getMessage());
 		}
 	}
 

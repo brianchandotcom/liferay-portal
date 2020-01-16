@@ -61,8 +61,8 @@ public class DefaultUploadHandler implements UploadHandler {
 			JSONPortletResponseUtil.writeJSON(
 				portletRequest, portletResponse, responseJSONObject);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -82,8 +82,9 @@ public class DefaultUploadHandler implements UploadHandler {
 			return uploadResponseHandler.onSuccess(
 				uploadPortletRequest, fileEntry);
 		}
-		catch (PortalException pe) {
-			return uploadResponseHandler.onFailure(portletRequest, pe);
+		catch (PortalException portalException) {
+			return uploadResponseHandler.onFailure(
+				portletRequest, portalException);
 		}
 	}
 

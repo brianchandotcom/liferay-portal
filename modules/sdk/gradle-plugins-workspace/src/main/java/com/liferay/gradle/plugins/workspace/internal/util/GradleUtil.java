@@ -93,8 +93,9 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 			return value;
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new GradleException("Unable to get property", roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new GradleException(
+				"Unable to get property", reflectiveOperationException);
 		}
 	}
 
@@ -180,8 +181,9 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		try {
 			return new URL(toString(url));
 		}
-		catch (MalformedURLException murle) {
-			throw new GradleException("Unable to parse " + s, murle);
+		catch (MalformedURLException malformedURLException) {
+			throw new GradleException(
+				"Unable to parse " + s, malformedURLException);
 		}
 	}
 

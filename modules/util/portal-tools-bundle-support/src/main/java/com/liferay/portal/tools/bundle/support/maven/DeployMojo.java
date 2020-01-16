@@ -46,9 +46,9 @@ public class DeployMojo extends AbstractLiferayMojo {
 
 			deployCommand.execute();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new MojoExecutionException(
-				"Unable to deploy " + outputFileName, e);
+				"Unable to deploy " + outputFileName, exception);
 		}
 	}
 

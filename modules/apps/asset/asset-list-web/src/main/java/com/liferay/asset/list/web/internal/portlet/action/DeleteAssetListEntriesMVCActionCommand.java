@@ -64,8 +64,8 @@ public class DeleteAssetListEntriesMVCActionCommand
 			_assetListEntryService.deleteAssetListEntries(
 				deleteAssetListEntryIds);
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass());
+		catch (PortalException portalException) {
+			SessionErrors.add(actionRequest, portalException.getClass());
 
 			hideDefaultErrorMessage(actionRequest);
 

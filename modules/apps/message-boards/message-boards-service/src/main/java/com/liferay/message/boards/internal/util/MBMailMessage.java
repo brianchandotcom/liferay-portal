@@ -40,9 +40,11 @@ public class MBMailMessage {
 		try {
 			fileName = MimeUtility.decodeText(fileName);
 		}
-		catch (UnsupportedEncodingException uee) {
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to decode file name " + fileName, uee);
+				_log.warn(
+					"Unable to decode file name " + fileName,
+					unsupportedEncodingException);
 			}
 		}
 

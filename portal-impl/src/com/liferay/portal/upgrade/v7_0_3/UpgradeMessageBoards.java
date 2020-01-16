@@ -59,8 +59,8 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			_deleteTable("MBMessage", tempTableName);
 			_deleteTable("MBThread", tempTableName);
 		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
+		catch (Exception exception) {
+			throw new UpgradeException(exception);
 		}
 		finally {
 			runSQL("drop table " + tempTableName);

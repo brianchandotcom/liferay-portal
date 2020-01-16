@@ -105,9 +105,9 @@ public class UpgradePermission extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to add resource permission", e);
+				_log.warn("Unable to add resource permission", exception);
 			}
 		}
 		finally {
@@ -142,9 +142,9 @@ public class UpgradePermission extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to add resource action", e);
+				_log.warn("Unable to add resource action", exception);
 			}
 		}
 		finally {

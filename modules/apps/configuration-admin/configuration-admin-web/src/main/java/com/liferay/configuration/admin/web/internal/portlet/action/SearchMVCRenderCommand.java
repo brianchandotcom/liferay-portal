@@ -196,8 +196,8 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 				ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
 				_resourceBundleLoaderProvider);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		return "/search_results.jsp";
@@ -223,9 +223,9 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		try {
 			_indexWriterHelper.commit(indexer.getSearchEngineId());
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to commit", se);
+				_log.warn("Unable to commit", searchException);
 			}
 		}
 	}
@@ -365,9 +365,9 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 				try {
 					_configurationModelIndexer.delete(configurationModel);
 				}
-				catch (SearchException se) {
+				catch (SearchException searchException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to reindex models", se);
+						_log.warn("Unable to reindex models", searchException);
 					}
 				}
 			}

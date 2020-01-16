@@ -56,8 +56,8 @@ public class SharepointServlet extends HttpServlet {
 				vtiInfHtml(httpServletResponse);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -127,8 +127,8 @@ public class SharepointServlet extends HttpServlet {
 				}
 			}
 		}
-		catch (SharepointException se) {
-			_log.error(se, se);
+		catch (SharepointException sharepointException) {
+			_log.error(sharepointException, sharepointException);
 		}
 	}
 

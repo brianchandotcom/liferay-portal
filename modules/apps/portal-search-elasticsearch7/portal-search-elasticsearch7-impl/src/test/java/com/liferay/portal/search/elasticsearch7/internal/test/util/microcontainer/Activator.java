@@ -64,8 +64,8 @@ public class Activator {
 						_classNode));
 			}
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new RuntimeException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

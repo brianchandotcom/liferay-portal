@@ -113,12 +113,12 @@ public class ExportImportConfigurationModelDocumentContributor
 			try {
 				layoutIds = _exportImportHelper.getLayoutIds(layoutIdMap);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}

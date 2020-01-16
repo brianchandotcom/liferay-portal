@@ -66,13 +66,13 @@ public class Log4JUtil {
 				configureLog4J(enu.nextElement());
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			java.util.logging.Logger logger =
 				java.util.logging.Logger.getLogger(Log4JUtil.class.getName());
 
 			logger.log(
 				java.util.logging.Level.WARNING,
-				"Unable to load portal-log4j-ext.xml", ioe);
+				"Unable to load portal-log4j-ext.xml", ioException);
 		}
 	}
 
@@ -136,8 +136,8 @@ public class Log4JUtil {
 				jdkLogger.setLevel(_getJdkLevel(priority));
 			}
 		}
-		catch (Exception e) {
-			_logger.error(e, e);
+		catch (Exception exception) {
+			_logger.error(exception, exception);
 		}
 	}
 
@@ -178,8 +178,8 @@ public class Log4JUtil {
 		try {
 			LogFactoryUtil.setLogFactory(logFactory);
 		}
-		catch (Exception e) {
-			_logger.error(e, e);
+		catch (Exception exception) {
+			_logger.error(exception, exception);
 		}
 
 		for (Map.Entry<String, String> entry : customLogSettings.entrySet()) {
@@ -271,8 +271,8 @@ public class Log4JUtil {
 
 			urlContent = new String(bytes, StringPool.UTF8);
 		}
-		catch (Exception e) {
-			_logger.error(e, e);
+		catch (Exception exception) {
+			_logger.error(exception, exception);
 
 			return null;
 		}

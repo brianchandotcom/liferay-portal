@@ -334,8 +334,8 @@ public class TemplateContextHelper {
 
 					contextObjects.put("navItems", navItems);
 				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 				}
 			}
 
@@ -408,8 +408,8 @@ public class TemplateContextHelper {
 				"auditMessageFactoryUtil",
 				AuditMessageFactoryUtil.getAuditMessageFactory());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Audit router util
@@ -417,8 +417,8 @@ public class TemplateContextHelper {
 		try {
 			variables.put("auditRouterUtil", AuditRouterUtil.getAuditRouter());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Browser sniffer
@@ -427,8 +427,8 @@ public class TemplateContextHelper {
 			variables.put(
 				"browserSniffer", BrowserSnifferUtil.getBrowserSniffer());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Calendar factory
@@ -437,8 +437,8 @@ public class TemplateContextHelper {
 			variables.put(
 				"calendarFactory", CalendarFactoryUtil.getCalendarFactory());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Date format
@@ -448,8 +448,8 @@ public class TemplateContextHelper {
 				"dateFormatFactory",
 				FastDateFormatFactoryUtil.getFastDateFormatFactory());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Date util
@@ -471,8 +471,8 @@ public class TemplateContextHelper {
 					serviceLocator.findService(
 						ExpandoColumnLocalService.class.getName()));
 			}
-			catch (SecurityException se) {
-				_log.error(se, se);
+			catch (SecurityException securityException) {
+				_log.error(securityException, securityException);
 			}
 
 			// Expando row service
@@ -483,8 +483,8 @@ public class TemplateContextHelper {
 					serviceLocator.findService(
 						ExpandoRowLocalService.class.getName()));
 			}
-			catch (SecurityException se) {
-				_log.error(se, se);
+			catch (SecurityException securityException) {
+				_log.error(securityException, securityException);
 			}
 
 			// Expando table service
@@ -495,8 +495,8 @@ public class TemplateContextHelper {
 					serviceLocator.findService(
 						ExpandoTableLocalService.class.getName()));
 			}
-			catch (SecurityException se) {
-				_log.error(se, se);
+			catch (SecurityException securityException) {
+				_log.error(securityException, securityException);
 			}
 
 			// Expando value service
@@ -507,12 +507,12 @@ public class TemplateContextHelper {
 					serviceLocator.findService(
 						ExpandoValueLocalService.class.getName()));
 			}
-			catch (SecurityException se) {
-				_log.error(se, se);
+			catch (SecurityException securityException) {
+				_log.error(securityException, securityException);
 			}
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Getter util
@@ -524,8 +524,8 @@ public class TemplateContextHelper {
 		try {
 			variables.put("htmlUtil", HtmlUtil.getHtml());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Http util
@@ -533,16 +533,16 @@ public class TemplateContextHelper {
 		try {
 			variables.put("httpUtil", new HttpWrapper(HttpUtil.getHttp()));
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
 			variables.put(
 				"httpUtilUnsafe", new HttpWrapper(HttpUtil.getHttp(), false));
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Image tool util
@@ -550,8 +550,8 @@ public class TemplateContextHelper {
 		try {
 			variables.put("imageToolUtil", ImageToolUtil.getImageTool());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// JSON factory util
@@ -559,8 +559,8 @@ public class TemplateContextHelper {
 		try {
 			variables.put("jsonFactoryUtil", JSONFactoryUtil.getJSONFactory());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Language util
@@ -568,8 +568,8 @@ public class TemplateContextHelper {
 		try {
 			variables.put("languageUtil", LanguageUtil.getLanguage());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
@@ -577,8 +577,8 @@ public class TemplateContextHelper {
 				"unicodeLanguageUtil",
 				UnicodeLanguageUtil.getUnicodeLanguage());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Locale util
@@ -586,8 +586,8 @@ public class TemplateContextHelper {
 		try {
 			variables.put("localeUtil", LocaleUtil.getInstance());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Param util
@@ -599,15 +599,15 @@ public class TemplateContextHelper {
 		try {
 			variables.put("portalUtil", PortalUtil.getPortal());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
 			variables.put("portal", PortalUtil.getPortal());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Prefs props util
@@ -615,8 +615,8 @@ public class TemplateContextHelper {
 		try {
 			variables.put("prefsPropsUtil", PrefsPropsUtil.getPrefsProps());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Props util
@@ -624,8 +624,8 @@ public class TemplateContextHelper {
 		try {
 			variables.put("propsUtil", PropsUtil.getProps());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Portlet mode factory
@@ -640,8 +640,8 @@ public class TemplateContextHelper {
 				"portletURLFactory",
 				PortletURLFactoryUtil.getPortletURLFactory());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
@@ -658,12 +658,12 @@ public class TemplateContextHelper {
 					"saxReaderUtil",
 					utilLocator.findUtil(SAXReader.class.getName()));
 			}
-			catch (SecurityException se) {
-				_log.error(se, se);
+			catch (SecurityException securityException) {
+				_log.error(securityException, securityException);
 			}
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Session clicks
@@ -701,8 +701,8 @@ public class TemplateContextHelper {
 				"webServerToken",
 				WebServerServletTokenUtil.getWebServerServletToken());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Window state factory
@@ -717,32 +717,32 @@ public class TemplateContextHelper {
 				"accountPermission",
 				AccountPermissionUtil.getAccountPermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
 			variables.put(
 				"commonPermission", CommonPermissionUtil.getCommonPermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
 			variables.put(
 				"groupPermission", GroupPermissionUtil.getGroupPermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
 			variables.put(
 				"layoutPermission", LayoutPermissionUtil.getLayoutPermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
@@ -750,8 +750,8 @@ public class TemplateContextHelper {
 				"organizationPermission",
 				OrganizationPermissionUtil.getOrganizationPermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
@@ -759,16 +759,16 @@ public class TemplateContextHelper {
 				"passwordPolicyPermission",
 				PasswordPolicyPermissionUtil.getPasswordPolicyPermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
 			variables.put(
 				"portalPermission", PortalPermissionUtil.getPortalPermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
@@ -776,8 +776,8 @@ public class TemplateContextHelper {
 				"portletPermission",
 				PortletPermissionUtil.getPortletPermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		Map<String, PortletProvider.Action> portletProviderActionMap =
@@ -790,16 +790,16 @@ public class TemplateContextHelper {
 		try {
 			variables.put("portletProviderAction", portletProviderActionMap);
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
 			variables.put(
 				"rolePermission", RolePermissionUtil.getRolePermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
@@ -807,16 +807,16 @@ public class TemplateContextHelper {
 				"userGroupPermission",
 				UserGroupPermissionUtil.getUserGroupPermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
 			variables.put(
 				"userPermission", UserPermissionUtil.getUserPermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		// Deprecated
@@ -833,8 +833,8 @@ public class TemplateContextHelper {
 				"dateFormats",
 				FastDateFormatFactoryUtil.getFastDateFormatFactory());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
@@ -842,8 +842,8 @@ public class TemplateContextHelper {
 				"imageToken",
 				WebServerServletTokenUtil.getWebServerServletToken());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
@@ -851,15 +851,15 @@ public class TemplateContextHelper {
 				"locationPermission",
 				OrganizationPermissionUtil.getOrganizationPermission());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 
 		try {
 			variables.put("random", new Random());
 		}
-		catch (SecurityException se) {
-			_log.error(se, se);
+		catch (SecurityException securityException) {
+			_log.error(securityException, securityException);
 		}
 	}
 

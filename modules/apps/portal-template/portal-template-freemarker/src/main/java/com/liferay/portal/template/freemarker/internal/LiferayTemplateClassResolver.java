@@ -121,8 +121,8 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				return Class.forName(
 					className, true, wwhitelistedAggregateClassLoader);
 			}
-			catch (Exception e) {
-				throw new TemplateException(e, environment);
+			catch (Exception exception) {
+				throw new TemplateException(exception, environment);
 			}
 		}
 

@@ -58,8 +58,8 @@ public class EditWeDeployAuthAppMVCActionCommand extends BaseMVCActionCommand {
 				deleteWeDeployAuthApp(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
 		}
 	}
 

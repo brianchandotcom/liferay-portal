@@ -179,13 +179,13 @@ public class InitialUpgradeExtender
 						db.runSQLTemplateString(
 							connection, tablesSQL, false, true);
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						throw new UpgradeException(
 							StringBundler.concat(
 								"Bundle ", _bundle,
 								" has invalid content in tables.sql:\n",
 								tablesSQL),
-							e);
+							exception);
 					}
 				}
 
@@ -194,13 +194,13 @@ public class InitialUpgradeExtender
 						db.runSQLTemplateString(
 							connection, sequencesSQL, false, true);
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						throw new UpgradeException(
 							StringBundler.concat(
 								"Bundle ", _bundle,
 								" has invalid content in sequences.sql:\n",
 								sequencesSQL),
-							e);
+							exception);
 					}
 				}
 
@@ -209,18 +209,18 @@ public class InitialUpgradeExtender
 						db.runSQLTemplateString(
 							connection, indexesSQL, false, true);
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						throw new UpgradeException(
 							StringBundler.concat(
 								"Bundle ", _bundle,
 								" has invalid content in indexes.sql:\n",
 								indexesSQL),
-							e);
+							exception);
 					}
 				}
 			}
-			catch (SQLException sqle) {
-				throw new UpgradeException(sqle);
+			catch (SQLException sqlException) {
+				throw new UpgradeException(sqlException);
 			}
 		}
 
@@ -245,9 +245,9 @@ public class InitialUpgradeExtender
 			try (InputStream inputStream = resource.openStream()) {
 				return StringUtil.read(inputStream);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new UpgradeException(
-					"Unable to read SQL template " + templateName, ioe);
+					"Unable to read SQL template " + templateName, ioException);
 			}
 		}
 

@@ -64,11 +64,11 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 					_configureLog4j(bundle, "module-log4j-ext.xml");
 					_configureLog4j(bundle.getSymbolicName());
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					_logger.error(
 						"Unable to configure Log4j for bundle " +
 							bundle.getSymbolicName(),
-						ioe);
+						ioException);
 				}
 
 				return bundle;
@@ -132,8 +132,8 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 
 			urlContent = new String(bytes, StringPool.UTF8);
 		}
-		catch (Exception e) {
-			_logger.error(e, e);
+		catch (Exception exception) {
+			_logger.error(exception, exception);
 
 			return null;
 		}

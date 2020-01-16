@@ -460,9 +460,9 @@ public class MicroblogsEntryLocalServiceImpl
 
 			return subscription.getSubscriptionId();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -500,9 +500,9 @@ public class MicroblogsEntryLocalServiceImpl
 				serviceContext.getLiferayPortletRequest(),
 				serviceContext.getLiferayPortletResponse(), null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -635,8 +635,8 @@ public class MicroblogsEntryLocalServiceImpl
 					_receiverUserIds, _microblogsEntry,
 					_notificationEventJSONObject);
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (Exception exception) {
+				throw new ProcessException(exception);
 			}
 
 			return null;

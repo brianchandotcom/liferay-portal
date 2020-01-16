@@ -49,9 +49,9 @@ public class KaleoDefinitionVersionActivePredicate
 
 			return !kaleoDefinition.isActive();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			if (_status == WorkflowConstants.STATUS_DRAFT) {

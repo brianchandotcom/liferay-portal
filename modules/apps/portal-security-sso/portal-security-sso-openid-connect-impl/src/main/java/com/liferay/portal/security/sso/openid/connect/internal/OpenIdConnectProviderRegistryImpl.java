@@ -161,14 +161,14 @@ public class OpenIdConnectProviderRegistryImpl
 						openIdConnectProviderConfiguration.userInfoEndPoint());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ConfigurationException(
 				null,
 				StringBundler.concat(
 					"Unable to instantiate provider metadata factory for ",
 					openIdConnectProviderConfiguration.providerName(), ": ",
-					e.getMessage()),
-				e);
+					exception.getMessage()),
+				exception);
 		}
 
 		return new OpenIdConnectProviderImpl(

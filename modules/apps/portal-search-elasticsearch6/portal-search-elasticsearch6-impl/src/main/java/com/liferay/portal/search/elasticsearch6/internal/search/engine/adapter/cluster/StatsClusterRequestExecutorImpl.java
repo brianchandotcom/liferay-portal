@@ -67,8 +67,8 @@ public class StatsClusterRequestExecutorImpl
 				_clusterHealthStatusTranslator.translate(clusterHealthStatus),
 				Strings.toString(xContentBuilder));
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

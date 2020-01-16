@@ -192,10 +192,10 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 					}
 				}
 			}
-			catch (SystemException se) {
+			catch (SystemException systemException) {
 				throw new SearchException(
 					"Unable to determine folder {folderId=" + folderId + "}",
-					se);
+					systemException);
 			}
 		}
 		else if (field.equals(Field.USER_ID)) {
@@ -211,15 +211,15 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 					getCmisField(field), screenName,
 					cmisSimpleExpressionOperator);
 			}
-			catch (Exception e) {
-				if (e instanceof SearchException) {
-					throw (SearchException)e;
+			catch (Exception exception) {
+				if (exception instanceof SearchException) {
+					throw (SearchException)exception;
 				}
 
 				throw new SearchException(
 					StringBundler.concat(
 						"Unable to determine user {", field, "=", value, "}"),
-					e);
+					exception);
 			}
 		}
 		else {

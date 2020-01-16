@@ -175,14 +175,14 @@ public class JournalFolderModelValidator
 				ddmStructureIds[i] = ddmStructure.getStructureId();
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			ModelValidationResults.FailureBuilder failureBuilder =
 				ModelValidationResults.failure();
 
 			return failureBuilder.exceptionFailure(
 				"Unable to retrieve folder structures for validation: " +
-					pe.getMessage(),
-				pe
+					portalException.getMessage(),
+				portalException
 			).getResults();
 		}
 
@@ -195,12 +195,12 @@ public class JournalFolderModelValidator
 				folderId, folder.getGroupId(), folder.getParentFolderId(),
 				folder.getName());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			ModelValidationResults.FailureBuilder failureBuilder =
 				ModelValidationResults.failure();
 
 			return failureBuilder.exceptionFailure(
-				pe.getMessage(), pe
+				portalException.getMessage(), portalException
 			).getResults();
 		}
 

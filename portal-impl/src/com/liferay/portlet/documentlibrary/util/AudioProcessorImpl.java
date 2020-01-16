@@ -145,8 +145,8 @@ public class AudioProcessorImpl
 				_queueGeneration(null, fileVersion);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return hasAudio;
@@ -309,17 +309,17 @@ public class AudioProcessorImpl
 					_fileVersionPreviewEventListener.onSuccess(
 						destinationFileVersion);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					_fileVersionPreviewEventListener.onFailure(
 						destinationFileVersion);
 
-					_log.error(e, e);
+					_log.error(exception, exception);
 				}
 			}
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfee, nsfee);
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
 			}
 
 			_fileVersionPreviewEventListener.onFailure(destinationFileVersion);
@@ -384,7 +384,7 @@ public class AudioProcessorImpl
 				liferayConverter.convert();
 			}
 		}
-		catch (CancellationException ce) {
+		catch (CancellationException cancellationException) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
@@ -393,12 +393,12 @@ public class AudioProcessorImpl
 						fileVersion.getTitle()));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
 					"Unable to process ", fileVersion.getFileVersionId(), " ",
 					fileVersion.getTitle(), "."),
-				e);
+				exception);
 		}
 
 		addFileToStore(
@@ -423,8 +423,8 @@ public class AudioProcessorImpl
 					fileVersion, srcFile, destFiles[i], _PREVIEW_TYPES[i]);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -513,8 +513,8 @@ public class AudioProcessorImpl
 
 				liferayConverter.convert();
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (Exception exception) {
+				throw new ProcessException(exception);
 			}
 
 			return StringPool.BLANK;

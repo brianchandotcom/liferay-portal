@@ -234,8 +234,8 @@ public class AssetTagNamesMultiLanguageSearchTest {
 
 			return user.getUserId();
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

@@ -46,8 +46,8 @@ public class OutputBlob implements Blob {
 		try {
 			_inputStream.close();
 		}
-		catch (IOException ioe) {
-			throw new SQLException(ioe.getMessage());
+		catch (IOException ioException) {
+			throw new SQLException(ioException.getMessage());
 		}
 
 		_inputStream = null;
@@ -75,8 +75,8 @@ public class OutputBlob implements Blob {
 		try {
 			return new LimitedInputStream(_inputStream, offset, length);
 		}
-		catch (IOException ioe) {
-			throw new SQLException(ioe.getMessage());
+		catch (IOException ioException) {
+			throw new SQLException(ioException.getMessage());
 		}
 	}
 
@@ -112,8 +112,8 @@ public class OutputBlob implements Blob {
 				bytes = newBytes;
 			}
 		}
-		catch (IOException ioe) {
-			throw new SQLException(ioe.getMessage());
+		catch (IOException ioException) {
+			throw new SQLException(ioException.getMessage());
 		}
 
 		return bytes;

@@ -86,31 +86,31 @@ public class StagingGroupHelperTest {
 		try {
 			GroupLocalServiceUtil.deleteGroup(_localLiveGroup.getGroupId());
 		}
-		catch (NoSuchGroupException nsge) {
+		catch (NoSuchGroupException noSuchGroupException) {
 		}
 
 		try {
 			GroupLocalServiceUtil.deleteGroup(_localStagingGroup.getGroupId());
 		}
-		catch (NoSuchGroupException nsge) {
+		catch (NoSuchGroupException noSuchGroupException) {
 		}
 
 		try {
 			GroupLocalServiceUtil.deleteGroup(_regularGroup.getGroupId());
 		}
-		catch (NoSuchGroupException nsge) {
+		catch (NoSuchGroupException noSuchGroupException) {
 		}
 
 		try {
 			GroupLocalServiceUtil.deleteGroup(_remoteLiveGroup.getGroupId());
 		}
-		catch (NoSuchGroupException nsge) {
+		catch (NoSuchGroupException noSuchGroupException) {
 		}
 
 		try {
 			GroupLocalServiceUtil.deleteGroup(_remoteStagingGroup.getGroupId());
 		}
-		catch (NoSuchGroupException nsge) {
+		catch (NoSuchGroupException noSuchGroupException) {
 		}
 	}
 

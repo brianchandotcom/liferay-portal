@@ -45,12 +45,14 @@ public class MoreLikeThisQueryTest extends BaseMoreLikeThisQueryTestCase {
 
 			Assert.fail();
 		}
-		catch (ElasticsearchStatusException ese) {
-			Throwable[] throwables = ese.getSuppressed();
+		catch (ElasticsearchStatusException elasticsearchStatusException) {
+			Throwable[] throwables =
+				elasticsearchStatusException.getSuppressed();
 
-			ResponseException re = (ResponseException)throwables[0];
+			ResponseException responseException =
+				(ResponseException)throwables[0];
 
-			String message = re.getMessage();
+			String message = responseException.getMessage();
 
 			Assert.assertTrue(
 				message,

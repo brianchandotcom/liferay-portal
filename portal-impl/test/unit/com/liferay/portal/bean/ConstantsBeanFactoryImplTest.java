@@ -84,8 +84,8 @@ public class ConstantsBeanFactoryImplTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Throwable throwable = re.getCause();
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
 
 			Assert.assertSame(NullPointerException.class, throwable.getClass());
 		}
@@ -336,8 +336,8 @@ public class ConstantsBeanFactoryImplTest {
 		try {
 			urls = ClassPathUtil.getClassPathURLs(jvmClassPath);
 		}
-		catch (MalformedURLException murle) {
-			throw new RuntimeException(murle);
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
 		}
 
 		ClassLoader classLoader1 = new URLClassLoader(urls, null);

@@ -75,7 +75,7 @@ public class WikiPageAssetRendererFactory
 				try {
 					page = _wikiPageLocalService.getPage(classPK, Boolean.TRUE);
 				}
-				catch (NoSuchPageException nspe) {
+				catch (NoSuchPageException noSuchPageException) {
 					page = _wikiPageLocalService.getPage(
 						classPK, (Boolean)null);
 				}
@@ -127,7 +127,7 @@ public class WikiPageAssetRendererFactory
 		try {
 			liferayPortletURL.setWindowState(windowState);
 		}
-		catch (WindowStateException wse) {
+		catch (WindowStateException windowStateException) {
 		}
 
 		return liferayPortletURL;

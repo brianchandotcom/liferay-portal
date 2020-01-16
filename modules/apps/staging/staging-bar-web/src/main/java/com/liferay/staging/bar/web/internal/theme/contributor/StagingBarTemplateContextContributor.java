@@ -98,8 +98,8 @@ public class StagingBarTemplateContextContributor
 				contextObjects.put("bodyCssClass", sb.toString());
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		contextObjects.put("show_staging", themeDisplay.isShowStagingIcon());

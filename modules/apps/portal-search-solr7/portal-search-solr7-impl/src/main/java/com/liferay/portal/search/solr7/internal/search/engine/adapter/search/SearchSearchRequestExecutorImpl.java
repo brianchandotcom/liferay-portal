@@ -86,14 +86,14 @@ public class SearchSearchRequestExecutorImpl
 			return queryRequest.process(
 				_solrClientManager.getSolrClient(), indexNames[0]);
 		}
-		catch (Exception e) {
-			if (e instanceof SolrException) {
-				SolrException se = (SolrException)e;
+		catch (Exception exception) {
+			if (exception instanceof SolrException) {
+				SolrException solrException = (SolrException)exception;
 
-				throw se;
+				throw solrException;
 			}
 
-			throw new RuntimeException(e);
+			throw new RuntimeException(exception);
 		}
 	}
 

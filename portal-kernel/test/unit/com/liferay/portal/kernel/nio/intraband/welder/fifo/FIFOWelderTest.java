@@ -99,7 +99,7 @@ public class FIFOWelderTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 		finally {
 			System.setProperty("java.io.tmpdir", oldTempFolder);
@@ -168,10 +168,10 @@ public class FIFOWelderTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			Assert.assertEquals(
 				"Unable to weld a welder with state DESTROYED",
-				ise.getMessage());
+				illegalStateException.getMessage());
 		}
 		finally {
 			serverFifoWelder.inputFIFOFile.delete();
@@ -183,10 +183,10 @@ public class FIFOWelderTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			Assert.assertEquals(
 				"Unable to weld a welder with state DESTROYED",
-				ise.getMessage());
+				illegalStateException.getMessage());
 		}
 		finally {
 			serverFifoWelder.inputFIFOFile.delete();

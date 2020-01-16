@@ -57,14 +57,14 @@ public class EditPluginActionCommand extends BaseMVCActionCommand {
 		try {
 			updatePluginSetting(actionRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				sendRedirect(actionRequest, actionResponse, "/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

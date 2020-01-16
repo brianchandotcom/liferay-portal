@@ -111,7 +111,7 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 
 			Assert.fail();
 		}
-		catch (NoSuchLayoutException nsle) {
+		catch (NoSuchLayoutException noSuchLayoutException) {
 		}
 	}
 

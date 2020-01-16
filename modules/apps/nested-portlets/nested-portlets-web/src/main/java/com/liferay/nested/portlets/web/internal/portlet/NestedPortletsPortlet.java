@@ -102,9 +102,9 @@ public class NestedPortletsPortlet extends MVCPortlet {
 			layoutTemplateId =
 				nestedPortletsDisplayContext.getLayoutTemplateId();
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ce, ce);
+				_log.warn(configurationException, configurationException);
 			}
 		}
 
@@ -216,9 +216,9 @@ public class NestedPortletsPortlet extends MVCPortlet {
 					layout.getGroupId(), layout.isPrivateLayout(),
 					layout.getLayoutId(), layout.getTypeSettings());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}

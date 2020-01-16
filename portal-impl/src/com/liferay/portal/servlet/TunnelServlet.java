@@ -73,9 +73,9 @@ public class TunnelServlet extends HttpServlet {
 				httpServletRequest.getInputStream(),
 				thread.getContextClassLoader());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 
 			return;
@@ -103,11 +103,12 @@ public class TunnelServlet extends HttpServlet {
 				returnObj = methodHandler.invoke();
 			}
 		}
-		catch (InvocationTargetException ite) {
-			returnObj = ite.getCause();
+		catch (InvocationTargetException invocationTargetException) {
+			returnObj = invocationTargetException.getCause();
 
 			if (!(returnObj instanceof PortalException)) {
-				_log.error(ite, ite);
+				_log.error(
+					invocationTargetException, invocationTargetException);
 
 				if (returnObj != null) {
 					Throwable throwable = (Throwable)returnObj;
@@ -119,8 +120,8 @@ public class TunnelServlet extends HttpServlet {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 		finally {
 			AccessControlThreadLocal.setRemoteAccess(remoteAccess);
@@ -132,10 +133,10 @@ public class TunnelServlet extends HttpServlet {
 
 				oos.writeObject(returnObj);
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 
-				throw ioe;
+				throw ioException;
 			}
 		}
 	}

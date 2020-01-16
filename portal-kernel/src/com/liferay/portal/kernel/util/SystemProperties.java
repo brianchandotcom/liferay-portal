@@ -93,8 +93,8 @@ public class SystemProperties {
 				}
 			}
 		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
+		catch (IOException ioException) {
+			throw new ExceptionInInitializerError(ioException);
 		}
 
 		// system-ext.properties
@@ -115,8 +115,8 @@ public class SystemProperties {
 				}
 			}
 		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
+		catch (IOException ioException) {
+			throw new ExceptionInInitializerError(ioException);
 		}
 
 		// Set environment properties

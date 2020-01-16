@@ -95,9 +95,9 @@ public class SegmentsEntryDemoDataCreatorImpl
 			try {
 				_segmentsEntryLocalService.deleteSegmentsEntry(entryId);
 			}
-			catch (NoSuchEntryException nsee) {
+			catch (NoSuchEntryException noSuchEntryException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsee, nsee);
+					_log.warn(noSuchEntryException, noSuchEntryException);
 				}
 			}
 
@@ -129,7 +129,7 @@ public class SegmentsEntryDemoDataCreatorImpl
 
 			return CriteriaSerializer.serialize(criteria);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return StringPool.BLANK;
 		}
 	}

@@ -81,8 +81,9 @@ public class AutoClosePageContextRegistry {
 
 				_runnables = (Map<PageContext, List<Runnable>>)field.get(null);
 			}
-			catch (ReflectiveOperationException roe) {
-				throw new ExceptionInInitializerError(roe);
+			catch (ReflectiveOperationException reflectiveOperationException) {
+				throw new ExceptionInInitializerError(
+					reflectiveOperationException);
 			}
 		}
 	}

@@ -52,8 +52,8 @@ public final class JournalValidatorImpl implements JournalValidator {
 			charactersBlacklist =
 				journalServiceConfiguration.charactersblacklist();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		for (String blacklistChar : charactersBlacklist) {

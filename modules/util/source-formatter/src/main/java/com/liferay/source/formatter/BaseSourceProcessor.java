@@ -609,7 +609,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			charsetDecoder.decode(ByteBuffer.wrap(bytes));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			processMessage(fileName, "UTF-8");
 		}
 	}
@@ -736,7 +736,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return absolutePath.contains("/modules/");

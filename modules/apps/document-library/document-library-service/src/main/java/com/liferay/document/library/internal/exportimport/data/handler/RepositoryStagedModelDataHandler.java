@@ -203,14 +203,14 @@ public class RepositoryStagedModelDataHandler
 				importedRepository = existingRepository;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
 						"Unable to connect to repository {name=",
 						repository.getName(), ", typeSettings=",
 						repository.getTypeSettingsProperties(), "}"),
-					e);
+					exception);
 			}
 		}
 

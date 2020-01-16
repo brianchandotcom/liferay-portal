@@ -90,8 +90,8 @@ public class OrganizationExpandoColumnModelListener
 						_organizationEntityFields);
 				});
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 
@@ -137,8 +137,8 @@ public class OrganizationExpandoColumnModelListener
 			_serviceRegistration = _register(
 				_bundleContext, _organizationEntityFields);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 

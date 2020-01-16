@@ -732,7 +732,7 @@ public class JspServlet extends HttpServlet {
 
 				return _jspBundle.getResource(path);
 			}
-			catch (MalformedURLException murle) {
+			catch (MalformedURLException malformedURLException) {
 			}
 
 			return null;
@@ -749,7 +749,7 @@ public class JspServlet extends HttpServlet {
 			try {
 				return url.openStream();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				return null;
 			}
 		}

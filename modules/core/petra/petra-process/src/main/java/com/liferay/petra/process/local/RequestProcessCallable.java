@@ -51,8 +51,8 @@ class RequestProcessCallable<T extends Serializable>
 				LocalProcessLauncher.ProcessContext.writeProcessCallable(
 					new ResponseProcessCallable<>(_id, result, throwable));
 			}
-			catch (IOException ioe) {
-				throw new ProcessException(ioe);
+			catch (IOException ioException) {
+				throw new ProcessException(ioException);
 			}
 		}
 	}

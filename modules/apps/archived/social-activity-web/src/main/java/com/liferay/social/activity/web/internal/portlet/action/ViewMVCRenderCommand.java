@@ -67,14 +67,14 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				SocialActivityWebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP,
 				getActivitySettingsMap(themeDisplay));
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/view.jsp";

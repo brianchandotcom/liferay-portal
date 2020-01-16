@@ -185,8 +185,8 @@ public abstract class BasePortalWorkspace
 					buildProperties =
 						JenkinsResultsParserUtil.getBuildProperties();
 				}
-				catch (IOException ioe) {
-					throw new RuntimeException(ioe);
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
 				}
 
 				String databaseName = matcher.group("databaseName");

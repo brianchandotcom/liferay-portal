@@ -50,8 +50,8 @@ public class ArrayApplicationContext extends ClassPathXmlApplicationContext {
 			try {
 				reader.loadBeanDefinitions(configLocation);
 			}
-			catch (Exception e) {
-				Throwable cause = e.getCause();
+			catch (Exception exception) {
+				Throwable cause = exception.getCause();
 
 				if (cause instanceof FileNotFoundException) {
 					if (_log.isWarnEnabled()) {
@@ -59,7 +59,7 @@ public class ArrayApplicationContext extends ClassPathXmlApplicationContext {
 					}
 				}
 				else {
-					_log.error(e, e);
+					_log.error(exception, exception);
 				}
 			}
 		}

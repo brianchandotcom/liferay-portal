@@ -55,9 +55,9 @@ public class BaseDDMFormBuilderServlet extends HttpServlet {
 				PropsValues.SERVLET_SERVICE_EVENTS_PRE, httpServletRequest,
 				httpServletResponse);
 		}
-		catch (ActionException ae) {
+		catch (ActionException actionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ae, ae);
+				_log.debug(actionException, actionException);
 			}
 		}
 	}

@@ -129,8 +129,8 @@ public class PortletContainerImpl implements PortletContainer {
 		try {
 			_preparePortlet(httpServletRequest, portlet);
 		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
+		catch (Exception exception) {
+			throw new PortletContainerException(exception);
 		}
 	}
 
@@ -331,8 +331,8 @@ public class PortletContainerImpl implements PortletContainer {
 				return event;
 			}
 		}
-		catch (ClassNotFoundException cnfe) {
-			throw new RuntimeException(cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new RuntimeException(classNotFoundException);
 		}
 
 		byte[] serializedValue = SerializableUtil.serialize(value);
@@ -424,8 +424,8 @@ public class PortletContainerImpl implements PortletContainer {
 		try {
 			return unsafeSupplier.get();
 		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
+		catch (Exception exception) {
+			throw new PortletContainerException(exception);
 		}
 		finally {
 			if (themeDisplay != null) {

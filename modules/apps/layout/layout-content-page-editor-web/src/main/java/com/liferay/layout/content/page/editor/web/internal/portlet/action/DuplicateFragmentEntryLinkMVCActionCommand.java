@@ -242,15 +242,15 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 
 			SessionMessages.add(actionRequest, "fragmentEntryLinkDuplicated");
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			String errorMessage = "an-unexpected-error-occurred";
 
-			if (pe instanceof NoSuchEntryLinkException) {
+			if (portalException instanceof NoSuchEntryLinkException) {
 				errorMessage =
 					"the-section-could-not-be-duplicated-because-it-has-been-" +
 						"deleted";
 			}
-			else if (pe instanceof PortletIdException) {
+			else if (portalException instanceof PortletIdException) {
 				errorMessage = "uninstanceable-widget-cannot-be-duplicated";
 			}
 

@@ -120,9 +120,9 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 		try {
 			oAuthConsumer.sign(httpRequestBase);
 		}
-		catch (OAuthException oae) {
+		catch (OAuthException oAuthException) {
 			throw new JSONWebServiceTransportException.SigningFailure(
-				"Unable to sign HTTP request", oae);
+				"Unable to sign HTTP request", oAuthException);
 		}
 	}
 

@@ -74,8 +74,8 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 
 			return SessionErrors.isEmpty(actionRequest);
 		}
-		catch (WorkflowException we) {
-			Throwable rootThrowable = getRootThrowable(we);
+		catch (WorkflowException workflowException) {
+			Throwable rootThrowable = getRootThrowable(workflowException);
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(rootThrowable, rootThrowable);
@@ -93,20 +93,22 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 					actionRequest, rootThrowable.getClass(), rootThrowable);
 			}
 			else {
-				SessionErrors.add(actionRequest, we.getClass(), we);
+				SessionErrors.add(
+					actionRequest, workflowException.getClass(),
+					workflowException);
 			}
 
 			return false;
 		}
-		catch (PortletException pe) {
-			_log.error(pe, pe);
+		catch (PortletException portletException) {
+			_log.error(portletException, portletException);
 
-			throw pe;
+			throw portletException;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 	}
 

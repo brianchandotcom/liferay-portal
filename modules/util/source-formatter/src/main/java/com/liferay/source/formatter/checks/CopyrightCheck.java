@@ -110,7 +110,7 @@ public class CopyrightCheck extends BaseFileCheck {
 				classLoader.getResourceAsStream(
 					"dependencies/copyright-commercial.txt"));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_commercialCopyright = StringPool.BLANK;
 		}
 
@@ -142,7 +142,7 @@ public class CopyrightCheck extends BaseFileCheck {
 			_copyright = StringUtil.read(
 				classLoader.getResourceAsStream("dependencies/copyright.txt"));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_copyright = StringPool.BLANK;
 		}
 

@@ -144,8 +144,8 @@ public class RegistryImpl implements Registry {
 		try {
 			return new FilterWrapper(_bundleContext.createFilter(filterString));
 		}
-		catch (InvalidSyntaxException ise) {
-			throw new RuntimeException(ise);
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			throw new RuntimeException(invalidSyntaxException);
 		}
 	}
 

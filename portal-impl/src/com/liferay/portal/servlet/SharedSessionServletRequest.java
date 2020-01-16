@@ -70,7 +70,7 @@ public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 		try {
 			_portalSession.isNew();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			_portalSession = super.getSession(true);
 		}
 	}

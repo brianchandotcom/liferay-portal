@@ -405,7 +405,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			return LockManagerUtil.getLock(
 				DLFileEntry.class.getName(), fileEntryId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

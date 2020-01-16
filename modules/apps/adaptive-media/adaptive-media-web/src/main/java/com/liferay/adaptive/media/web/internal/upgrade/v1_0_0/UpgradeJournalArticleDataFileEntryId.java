@@ -56,8 +56,8 @@ public class UpgradeJournalArticleDataFileEntryId extends UpgradeProcess {
 
 			actionableDynamicQuery.performActions();
 		}
-		catch (PortalException pe) {
-			throw new UpgradeException(pe);
+		catch (PortalException portalException) {
+			throw new UpgradeException(portalException);
 		}
 	}
 
@@ -110,8 +110,8 @@ public class UpgradeJournalArticleDataFileEntryId extends UpgradeProcess {
 					journalArticle);
 			}
 		}
-		catch (DocumentException de) {
-			throw new UpgradeException(de);
+		catch (DocumentException documentException) {
+			throw new UpgradeException(documentException);
 		}
 	}
 

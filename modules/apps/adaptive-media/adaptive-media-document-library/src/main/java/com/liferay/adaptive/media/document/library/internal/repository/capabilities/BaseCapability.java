@@ -88,8 +88,8 @@ public abstract class BaseCapability
 					String.valueOf(fileVersion.getFileVersionId()));
 			}
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 
@@ -116,8 +116,8 @@ public abstract class BaseCapability
 				_wrap(latestFileVersion),
 				String.valueOf(latestFileVersion.getFileVersionId()));
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

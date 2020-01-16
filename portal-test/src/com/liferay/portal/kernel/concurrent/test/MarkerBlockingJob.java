@@ -66,7 +66,7 @@ public class MarkerBlockingJob implements Runnable {
 			try {
 				_blockingLatch.await();
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 				_interrupted = true;
 			}
 		}

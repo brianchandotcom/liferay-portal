@@ -58,7 +58,7 @@ public class StagedModelType {
 
 			return new StagedModelType(className, referrerClassName);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

@@ -501,8 +501,9 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 				ReindexPortalBackgroundTaskExecutor.class.getName(),
 				taskContextMap, new ServiceContext());
 		}
-		catch (PortalException pe) {
-			throw new SearchException("Unable to schedule portal reindex", pe);
+		catch (PortalException portalException) {
+			throw new SearchException(
+				"Unable to schedule portal reindex", portalException);
 		}
 	}
 
@@ -533,8 +534,9 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 				ReindexSingleIndexerBackgroundTaskExecutor.class.getName(),
 				taskContextMap, new ServiceContext());
 		}
-		catch (PortalException pe) {
-			throw new SearchException("Unable to schedule portal reindex", pe);
+		catch (PortalException portalException) {
+			throw new SearchException(
+				"Unable to schedule portal reindex", portalException);
 		}
 	}
 

@@ -139,8 +139,8 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 				unsubscribeCategory(actionRequest);
 			}
 		}
-		catch (NoSuchCategoryException | PrincipalException e) {
-			SessionErrors.add(actionRequest, e.getClass());
+		catch (NoSuchCategoryException | PrincipalException exception) {
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/message_boards/error.jsp");
@@ -151,9 +151,9 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 			   MailingListInUserNameException |
 			   MailingListOutEmailAddressException |
 			   MailingListOutServerNameException |
-			   MailingListOutUserNameException e) {
+			   MailingListOutUserNameException exception) {
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 		}
 	}
 
@@ -164,8 +164,8 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 			return _configurationProvider.getSystemConfiguration(
 				CaptchaConfiguration.class);
 		}
-		catch (Exception e) {
-			throw new CaptchaConfigurationException(e);
+		catch (Exception exception) {
+			throw new CaptchaConfigurationException(exception);
 		}
 	}
 

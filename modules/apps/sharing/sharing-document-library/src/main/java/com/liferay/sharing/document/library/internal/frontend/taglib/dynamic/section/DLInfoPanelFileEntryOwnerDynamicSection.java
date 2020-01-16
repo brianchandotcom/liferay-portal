@@ -74,8 +74,8 @@ public class DLInfoPanelFileEntryOwnerDynamicSection implements DynamicSection {
 
 			return new StringBundler(new String(outputStream.toByteArray()));
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

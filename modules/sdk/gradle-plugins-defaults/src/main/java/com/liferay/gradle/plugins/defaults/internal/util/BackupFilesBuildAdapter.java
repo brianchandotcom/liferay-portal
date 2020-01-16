@@ -41,8 +41,8 @@ public class BackupFilesBuildAdapter extends BuildAdapter {
 
 			_paths.add(path);
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 
@@ -60,8 +60,8 @@ public class BackupFilesBuildAdapter extends BuildAdapter {
 				}
 			}
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 

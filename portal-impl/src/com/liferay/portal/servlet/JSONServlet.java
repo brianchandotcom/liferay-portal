@@ -80,16 +80,16 @@ public class JSONServlet extends HttpServlet {
 				}
 			}
 		}
-		catch (IOException ioe) {
-			if (!ServletResponseUtil.isClientAbortException(ioe)) {
-				throw ioe;
+		catch (IOException ioException) {
+			if (!ServletResponseUtil.isClientAbortException(ioException)) {
+				throw ioException;
 			}
 		}
-		catch (SecurityException se) {
-			throw new ServletException(se);
+		catch (SecurityException securityException) {
+			throw new ServletException(securityException);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 		finally {
 			AccessControlThreadLocal.setRemoteAccess(remoteAccess);

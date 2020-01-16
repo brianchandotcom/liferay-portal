@@ -95,7 +95,7 @@ public class GreeterBundleActivator implements BundleActivator {
 		try {
 			_configAdminBundleActivator.stop(bundleContext);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		_serviceRegistration.unregister();

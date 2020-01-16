@@ -63,9 +63,10 @@ public class ThreadLocalDistributorTest {
 		try {
 			threadLocalDistributor.afterPropertiesSet();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"Thread local sources is null", iae.getMessage());
+				"Thread local sources is null",
+				illegalArgumentException.getMessage());
 		}
 
 		threadLocalDistributor.setClassLoader(getClassLoader());

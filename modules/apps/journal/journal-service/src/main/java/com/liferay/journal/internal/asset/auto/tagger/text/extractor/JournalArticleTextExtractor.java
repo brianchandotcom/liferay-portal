@@ -60,7 +60,7 @@ public class JournalArticleTextExtractor
 			ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
 				ddmStructure, fields);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 

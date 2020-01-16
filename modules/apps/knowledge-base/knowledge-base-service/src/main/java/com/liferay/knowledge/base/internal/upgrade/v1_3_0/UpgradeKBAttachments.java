@@ -151,9 +151,11 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 						versionLabel);
 				}
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to upgrade attachment " + attachment, pe);
+					_log.warn(
+						"Unable to upgrade attachment " + attachment,
+						portalException);
 				}
 			}
 		}

@@ -54,8 +54,8 @@ public class FinalizeManagerUtil {
 					}
 				}
 			}
-			catch (ReflectiveOperationException roe) {
-				ReflectionUtil.throwException(roe);
+			catch (ReflectiveOperationException reflectiveOperationException) {
+				ReflectionUtil.throwException(reflectiveOperationException);
 			}
 		}
 	}
@@ -72,8 +72,8 @@ public class FinalizeManagerUtil {
 
 			_identityKeyConstructor.setAccessible(true);
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new ExceptionInInitializerError(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new ExceptionInInitializerError(reflectiveOperationException);
 		}
 	}
 

@@ -210,9 +210,9 @@ public class DDMTemplateLocalServiceImpl
 			try {
 				smallImageBytes = FileUtil.getBytes(smallImageFile);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioe, ioe);
+					_log.debug(ioException, ioException);
 				}
 			}
 
@@ -1433,9 +1433,9 @@ public class DDMTemplateLocalServiceImpl
 			try {
 				smallImageBytes = FileUtil.getBytes(smallImageFile);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioe, ioe);
+					_log.debug(ioException, ioException);
 				}
 			}
 
@@ -1609,8 +1609,8 @@ public class DDMTemplateLocalServiceImpl
 			try {
 				script = _ddmXML.validateXML(script);
 			}
-			catch (PortalException pe) {
-				throw new TemplateScriptException(pe);
+			catch (PortalException portalException) {
+				throw new TemplateScriptException(portalException);
 			}
 
 			script = XMLUtil.formatXML(script);
@@ -1658,8 +1658,8 @@ public class DDMTemplateLocalServiceImpl
 				try {
 					FileUtil.write(smallImageFile, smallImage.getTextObj());
 				}
-				catch (IOException ioe) {
-					_log.error(ioe, ioe);
+				catch (IOException ioException) {
+					_log.error(ioException, ioException);
 				}
 			}
 		}
@@ -1678,8 +1678,8 @@ public class DDMTemplateLocalServiceImpl
 					imageLocalService.updateImage(
 						smallImageId, smallImageBytes);
 				}
-				catch (Exception e) {
-					throw new TemplateSmallImageContentException(e);
+				catch (Exception exception) {
+					throw new TemplateSmallImageContentException(exception);
 				}
 			}
 		}

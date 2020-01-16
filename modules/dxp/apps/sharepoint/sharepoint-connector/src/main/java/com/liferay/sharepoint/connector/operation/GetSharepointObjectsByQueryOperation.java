@@ -93,8 +93,8 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 				getListItemsViewFields, SharepointConstants.ROW_LIMIT_DEFAULT,
 				getListItemsQueryOptions, SharepointConstants.WEB_ID_DEFAULT);
 		}
-		catch (RemoteException re) {
-			RemoteExceptionUtil.handleRemoteException(re);
+		catch (RemoteException remoteException) {
+			RemoteExceptionUtil.handleRemoteException(remoteException);
 		}
 
 		log(query, queryOptionsList, getListItemsResponseGetListItemsResult);
@@ -285,12 +285,12 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 
 			return dateFormat.parse(dateString);
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to parse " + dateString +
 						" to a Sharepoint object date",
-					pe);
+					parseException);
 			}
 
 			return new Date(0);

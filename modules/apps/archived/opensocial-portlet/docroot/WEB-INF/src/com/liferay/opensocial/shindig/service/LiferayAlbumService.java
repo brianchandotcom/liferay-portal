@@ -65,14 +65,14 @@ public class LiferayAlbumService implements AlbumService {
 
 			return ImmediateFuture.newInstance(null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -86,14 +86,14 @@ public class LiferayAlbumService implements AlbumService {
 
 			return ImmediateFuture.newInstance(null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -108,14 +108,14 @@ public class LiferayAlbumService implements AlbumService {
 
 			return ImmediateFuture.newInstance(album);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -132,14 +132,14 @@ public class LiferayAlbumService implements AlbumService {
 
 			return ImmediateFuture.newInstance(albums);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -156,14 +156,14 @@ public class LiferayAlbumService implements AlbumService {
 
 			return ImmediateFuture.newInstance(albums);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -177,14 +177,14 @@ public class LiferayAlbumService implements AlbumService {
 
 			return ImmediateFuture.newInstance(null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 

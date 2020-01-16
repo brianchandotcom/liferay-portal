@@ -32,9 +32,10 @@ public class CryptoStartupAction extends SimpleAction {
 		try {
 			Mac.getInstance("HmacSHA1");
 		}
-		catch (NoSuchAlgorithmException nsae) {
+		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
 			_log.error(
-				"Unable to get Mac instance for algorithm HmacSHA1", nsae);
+				"Unable to get Mac instance for algorithm HmacSHA1",
+				noSuchAlgorithmException);
 		}
 	}
 

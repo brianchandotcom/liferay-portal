@@ -91,10 +91,10 @@ public abstract class BaseThemeFragmentBundleInstaller {
 
 						return null;
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						_log.error(
 							"Unable to generate fragment bundle for " + bundle,
-							e);
+							exception);
 					}
 
 					return null;
@@ -158,7 +158,7 @@ public abstract class BaseThemeFragmentBundleInstaller {
 							frameworkWiring.refreshBundles(
 								Collections.singleton(hostBundle));
 						}
-						catch (BundleException be) {
+						catch (BundleException bundleException) {
 							_log.error(
 								StringBundler.concat(
 									"Unable to uninstall fragment bundle ",

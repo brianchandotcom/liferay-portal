@@ -48,9 +48,9 @@ public class TestBundleActivator implements BundleActivator {
 		try (InputStream inputStream = url.openStream()) {
 			manifest.read(inputStream);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new IllegalArgumentException(
-				"Unable to read test manifest", ioe);
+				"Unable to read test manifest", ioException);
 		}
 
 		Attributes attributes = manifest.getMainAttributes();

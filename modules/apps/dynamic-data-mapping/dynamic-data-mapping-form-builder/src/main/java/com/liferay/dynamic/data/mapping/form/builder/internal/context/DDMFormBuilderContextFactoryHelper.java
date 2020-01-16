@@ -146,8 +146,8 @@ public class DDMFormBuilderContextFactoryHelper {
 		try {
 			return doCreateFormContext(ddmStructure);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to create form context", pe);
+		catch (PortalException portalException) {
+			_log.error("Unable to create form context", portalException);
 		}
 
 		return createEmptyStateContext();
@@ -159,8 +159,8 @@ public class DDMFormBuilderContextFactoryHelper {
 		try {
 			return doCreateFormContext(ddmStructureVersion);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to create form context", pe);
+		catch (PortalException portalException) {
+			_log.error("Unable to create form context", portalException);
 		}
 
 		return createEmptyStateContext();
@@ -412,9 +412,10 @@ public class DDMFormBuilderContextFactoryHelper {
 								doCreateDDMFormFieldSettingContext(
 									ddmFormFieldsMap.get(fieldName)));
 						}
-						catch (PortalException pe) {
+						catch (PortalException portalException) {
 							_log.error(
-								"Unable to create field settings context", pe);
+								"Unable to create field settings context",
+								portalException);
 						}
 					}
 

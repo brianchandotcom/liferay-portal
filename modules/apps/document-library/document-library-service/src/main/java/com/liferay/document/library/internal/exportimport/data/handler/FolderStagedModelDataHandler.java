@@ -133,11 +133,11 @@ public class FolderStagedModelDataHandler
 		try {
 			doRestoreStagedModel(portletDataContext, stagedModel);
 		}
-		catch (PortletDataException pde) {
-			throw pde;
+		catch (PortletDataException portletDataException) {
+			throw portletDataException;
 		}
-		catch (Exception e) {
-			throw new PortletDataException(e);
+		catch (Exception exception) {
+			throw new PortletDataException(exception);
 		}
 	}
 
@@ -479,15 +479,16 @@ public class FolderStagedModelDataHandler
 		if ((folder.getGroupId() != portletDataContext.getGroupId()) &&
 			(folder.getGroupId() != portletDataContext.getScopeGroupId())) {
 
-			PortletDataException pde = new PortletDataException(
-				PortletDataException.INVALID_GROUP);
+			PortletDataException portletDataException =
+				new PortletDataException(PortletDataException.INVALID_GROUP);
 
-			pde.setStagedModelDisplayName(folder.getName());
-			pde.setStagedModelClassName(folder.getModelClassName());
-			pde.setStagedModelClassPK(
+			portletDataException.setStagedModelDisplayName(folder.getName());
+			portletDataException.setStagedModelClassName(
+				folder.getModelClassName());
+			portletDataException.setStagedModelClassPK(
 				GetterUtil.getString(folder.getFolderId()));
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		if (folder instanceof LiferayFolder) {
@@ -496,15 +497,18 @@ public class FolderStagedModelDataHandler
 			DLFolder dlFolder = (DLFolder)liferayFolder.getModel();
 
 			if (dlFolder.isInTrash() || dlFolder.isInTrashContainer()) {
-				PortletDataException pde = new PortletDataException(
-					PortletDataException.STATUS_IN_TRASH);
+				PortletDataException portletDataException =
+					new PortletDataException(
+						PortletDataException.STATUS_IN_TRASH);
 
-				pde.setStagedModelDisplayName(folder.getName());
-				pde.setStagedModelClassName(folder.getModelClassName());
-				pde.setStagedModelClassPK(
+				portletDataException.setStagedModelDisplayName(
+					folder.getName());
+				portletDataException.setStagedModelClassName(
+					folder.getModelClassName());
+				portletDataException.setStagedModelClassPK(
 					GetterUtil.getString(folder.getFolderId()));
 
-				throw pde;
+				throw portletDataException;
 			}
 		}
 	}

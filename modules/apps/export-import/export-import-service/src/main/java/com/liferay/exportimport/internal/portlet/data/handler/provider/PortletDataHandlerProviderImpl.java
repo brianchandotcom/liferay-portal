@@ -68,7 +68,7 @@ public class PortletDataHandlerProviderImpl
 		try {
 			return portlet.getPortletDataHandlerInstance();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

@@ -65,7 +65,7 @@ public class MySubscriptionsUtil {
 		try {
 			return doGetAssetRenderer(className, classPK);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

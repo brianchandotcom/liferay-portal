@@ -75,8 +75,9 @@ public class ServletPathsTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Servlet context is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Servlet context is null", nullPointerException.getMessage());
 		}
 
 		try {
@@ -84,8 +85,9 @@ public class ServletPathsTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Resource path is null", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Resource path is null", illegalArgumentException.getMessage());
 		}
 
 		ServletContext servletContext = _prepareServletContext(
@@ -207,8 +209,9 @@ public class ServletPathsTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Resource path is null", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Resource path is null", illegalArgumentException.getMessage());
 		}
 
 		Assert.assertEquals(

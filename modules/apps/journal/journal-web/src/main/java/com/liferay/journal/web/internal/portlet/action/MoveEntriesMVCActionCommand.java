@@ -86,9 +86,9 @@ public class MoveEntriesMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getScopeGroupId(),
 					HtmlUtil.unescape(articleId), newFolderId, serviceContext);
 			}
-			catch (InvalidDDMStructureException iddmse) {
+			catch (InvalidDDMStructureException invalidDDMStructureException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(iddmse.getMessage());
+					_log.warn(invalidDDMStructureException.getMessage());
 				}
 
 				invalidArticleIds.add(articleId);

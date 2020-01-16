@@ -65,8 +65,8 @@ public class AssetCategoryKeywordQueryContributor
 			try {
 				booleanQuery.add(localizedQuery, BooleanClauseOccur.SHOULD);
 			}
-			catch (ParseException pe) {
-				throw new SystemException(pe);
+			catch (ParseException parseException) {
+				throw new SystemException(parseException);
 			}
 		}
 	}

@@ -98,7 +98,7 @@ public class PortalImplActualURLTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchLayoutException nsle) {
+		catch (NoSuchLayoutException noSuchLayoutException) {
 		}
 	}
 

@@ -132,7 +132,7 @@ public abstract class BaseConfigurationAction
 
 			return ShindigUtil.hasUserPrefs(userPrefs);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 	}

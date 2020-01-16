@@ -34,8 +34,8 @@ public class BuildUpgradeTableTask extends Task {
 			UpgradeTableBuilderInvoker.invoke(
 				project.getBaseDir(), _upgradeTableBuilderArgs);
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

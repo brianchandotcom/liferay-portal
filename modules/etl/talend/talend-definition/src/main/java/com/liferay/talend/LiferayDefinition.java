@@ -51,11 +51,11 @@ public abstract class LiferayDefinition extends AbstractComponentDefinition {
 			return new LiferayOASSource(
 				oasSource, oasSource.initialize(componentProperties));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return new LiferayOASSource(
 				null,
 				new ValidationResult(
-					ValidationResult.Result.ERROR, e.getMessage()));
+					ValidationResult.Result.ERROR, exception.getMessage()));
 		}
 	}
 

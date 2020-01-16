@@ -203,7 +203,7 @@ public class SystemEventTest {
 		try {
 			GroupLocalServiceUtil.deleteGroup(_stagingGroup);
 		}
-		catch (NoSuchGroupException nsge) {
+		catch (NoSuchGroupException noSuchGroupException) {
 		}
 	}
 

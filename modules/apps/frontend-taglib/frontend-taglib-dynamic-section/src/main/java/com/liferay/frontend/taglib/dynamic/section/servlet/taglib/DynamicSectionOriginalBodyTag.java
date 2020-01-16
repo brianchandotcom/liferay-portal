@@ -44,8 +44,8 @@ public class DynamicSectionOriginalBodyTag extends TagSupport {
 
 			return EVAL_PAGE;
 		}
-		catch (IOException ioe) {
-			throw new JspException(ioe);
+		catch (IOException ioException) {
+			throw new JspException(ioException);
 		}
 		finally {
 			_name = null;

@@ -149,18 +149,18 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 				sendPassword(actionRequest, actionResponse);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof CaptchaException ||
-				e instanceof UserEmailAddressException) {
+		catch (Exception exception) {
+			if (exception instanceof CaptchaException ||
+				exception instanceof UserEmailAddressException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof NoSuchUserException ||
-					 e instanceof RequiredReminderQueryException ||
-					 e instanceof SendPasswordException ||
-					 e instanceof UserActiveException ||
-					 e instanceof UserLockoutException ||
-					 e instanceof UserReminderQueryException) {
+			else if (exception instanceof NoSuchUserException ||
+					 exception instanceof RequiredReminderQueryException ||
+					 exception instanceof SendPasswordException ||
+					 exception instanceof UserActiveException ||
+					 exception instanceof UserLockoutException ||
+					 exception instanceof UserReminderQueryException) {
 
 				if (PropsValues.LOGIN_SECURE_FORGOT_PASSWORD) {
 					SessionMessages.add(
@@ -170,11 +170,12 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 					sendRedirect(actionRequest, actionResponse, null);
 				}
 				else {
-					SessionErrors.add(actionRequest, e.getClass(), e);
+					SessionErrors.add(
+						actionRequest, exception.getClass(), exception);
 				}
 			}
 			else {
-				_portal.sendError(e, actionRequest, actionResponse);
+				_portal.sendError(exception, actionRequest, actionResponse);
 			}
 		}
 	}
@@ -186,8 +187,8 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 			return _configurationProvider.getSystemConfiguration(
 				CaptchaConfiguration.class);
 		}
-		catch (Exception e) {
-			throw new CaptchaConfigurationException(e);
+		catch (Exception exception) {
+			throw new CaptchaConfigurationException(exception);
 		}
 	}
 

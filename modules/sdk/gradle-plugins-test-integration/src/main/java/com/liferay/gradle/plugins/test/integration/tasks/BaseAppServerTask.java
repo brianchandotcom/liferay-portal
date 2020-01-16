@@ -131,7 +131,7 @@ public abstract class BaseAppServerTask extends DefaultTask {
 				return true;
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		return false;
@@ -210,9 +210,9 @@ public abstract class BaseAppServerTask extends DefaultTask {
 			success = GradleUtil.waitFor(
 				callable, getCheckInterval(), getCheckTimeout());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new GradleException(
-				"Unable to wait for the application server", e);
+				"Unable to wait for the application server", exception);
 		}
 
 		if (!success) {

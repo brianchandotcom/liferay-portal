@@ -83,8 +83,8 @@ public class UpdateDocumentIndexWriterImpl
 		try {
 			indexWriter.updateDocument(searchContext, document);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -116,8 +116,8 @@ public class UpdateDocumentIndexWriterImpl
 		try {
 			indexWriter.partiallyUpdateDocument(searchContext, document);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -156,8 +156,8 @@ public class UpdateDocumentIndexWriterImpl
 		try {
 			indexWriter.updateDocuments(searchContext, documents);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -187,8 +187,8 @@ public class UpdateDocumentIndexWriterImpl
 		try {
 			indexWriter.partiallyUpdateDocuments(searchContext, documents);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 

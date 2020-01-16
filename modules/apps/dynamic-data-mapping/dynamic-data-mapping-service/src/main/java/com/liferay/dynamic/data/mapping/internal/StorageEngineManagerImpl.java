@@ -92,8 +92,8 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 			return primaryKey;
 		}
-		catch (PortalException pe) {
-			throw _translate(pe);
+		catch (PortalException portalException) {
+			throw _translate(portalException);
 		}
 	}
 
@@ -166,8 +166,8 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 			ddmStorageAdapter.save(ddmStorageAdapterSaveRequest);
 		}
-		catch (PortalException pe) {
-			throw _translate(pe);
+		catch (PortalException portalException) {
+			throw _translate(portalException);
 		}
 	}
 

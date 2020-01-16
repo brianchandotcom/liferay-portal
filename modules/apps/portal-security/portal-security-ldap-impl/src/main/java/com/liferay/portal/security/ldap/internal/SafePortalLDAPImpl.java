@@ -472,9 +472,9 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 			return new SafeLdapContextImpl(
 				new InitialLdapContext(environmentProperties, null));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to bind to the LDAP server", e);
+				_log.warn("Unable to bind to the LDAP server", exception);
 			}
 
 			return null;
@@ -806,13 +806,13 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 				return true;
 			}
 		}
-		catch (NameNotFoundException nnfe) {
+		catch (NameNotFoundException nameNotFoundException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
 						"Unable to determine if user DN ", userSafeLdapName,
 						" is a member of group DN ", groupSafeLdapName),
-					nnfe);
+					nameNotFoundException);
 			}
 		}
 		finally {
@@ -861,13 +861,13 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 				return true;
 			}
 		}
-		catch (NameNotFoundException nnfe) {
+		catch (NameNotFoundException nameNotFoundException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
 						"Unable to determine if group DN ", groupSafeLdapName,
 						" is a member of user DN ", userSafeLdapName),
-					nnfe);
+					nameNotFoundException);
 			}
 		}
 		finally {
@@ -930,7 +930,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 				return _getCookie(safeLdapContext.getResponseControls());
 			}
 		}
-		catch (OperationNotSupportedException onse) {
+		catch (OperationNotSupportedException operationNotSupportedException) {
 			if (enu != null) {
 				enu.close();
 			}

@@ -170,8 +170,8 @@ public class ServletResponseUtil {
 		try {
 			ranges = _getRanges(httpServletRequest, contentLength);
 		}
-		catch (IOException ioe) {
-			_log.error("Unable to get ranges", ioe);
+		catch (IOException ioException) {
+			_log.error("Unable to get ranges", ioException);
 
 			httpServletResponse.setHeader(
 				HttpHeaders.CONTENT_RANGE, "bytes */" + contentLength);
@@ -260,8 +260,8 @@ public class ServletResponseUtil {
 				}
 			}
 		}
-		catch (IOException ioe) {
-			_checkSocketException(ioe);
+		catch (IOException ioException) {
+			_checkSocketException(ioException);
 		}
 	}
 
@@ -292,8 +292,8 @@ public class ServletResponseUtil {
 				}
 			}
 		}
-		catch (IOException ioe) {
-			_checkSocketException(ioe);
+		catch (IOException ioException) {
+			_checkSocketException(ioException);
 		}
 	}
 
@@ -358,8 +358,8 @@ public class ServletResponseUtil {
 					0, contentLength,
 					Channels.newChannel(httpServletResponse.getOutputStream()));
 			}
-			catch (IOException ioe) {
-				_checkSocketException(ioe);
+			catch (IOException ioException) {
+				_checkSocketException(ioException);
 			}
 		}
 	}
@@ -381,9 +381,9 @@ public class ServletResponseUtil {
 				try {
 					inputStream.close();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(ioe, ioe);
+						_log.warn(ioException, ioException);
 					}
 				}
 			}
@@ -402,8 +402,8 @@ public class ServletResponseUtil {
 			StreamUtil.transfer(
 				inputStream, httpServletResponse.getOutputStream());
 		}
-		catch (IOException ioe) {
-			_checkSocketException(ioe);
+		catch (IOException ioException) {
+			_checkSocketException(ioException);
 		}
 	}
 
@@ -496,7 +496,7 @@ public class ServletResponseUtil {
 				mimeTypesContentDispositionInline = PropsUtil.getArray(
 					PropsKeys.MIME_TYPES_CONTENT_DISPOSITION_INLINE);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				mimeTypesContentDispositionInline = new String[0];
 			}
 
@@ -581,8 +581,8 @@ public class ServletResponseUtil {
 					byteArrayInputStream, outputStream, StreamUtil.BUFFER_SIZE,
 					false, length);
 			}
-			catch (IOException ioe) {
-				_checkSocketException(ioe);
+			catch (IOException ioException) {
+				_checkSocketException(ioException);
 			}
 
 			return byteArrayInputStream;
@@ -596,8 +596,8 @@ public class ServletResponseUtil {
 				fileChannel.transferTo(
 					start, length, Channels.newChannel(outputStream));
 			}
-			catch (IOException ioe) {
-				_checkSocketException(ioe);
+			catch (IOException ioException) {
+				_checkSocketException(ioException);
 			}
 
 			return fileInputStream;
@@ -613,8 +613,8 @@ public class ServletResponseUtil {
 					randomAccessInputStream, outputStream,
 					StreamUtil.BUFFER_SIZE, false, length);
 			}
-			catch (IOException ioe) {
-				_checkSocketException(ioe);
+			catch (IOException ioException) {
+				_checkSocketException(ioException);
 			}
 
 			return randomAccessInputStream;
@@ -627,8 +627,8 @@ public class ServletResponseUtil {
 				inputStream, outputStream, StreamUtil.BUFFER_SIZE, false,
 				length);
 		}
-		catch (IOException ioe) {
-			_checkSocketException(ioe);
+		catch (IOException ioException) {
+			_checkSocketException(ioException);
 		}
 
 		return inputStream;

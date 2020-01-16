@@ -80,7 +80,7 @@ public class SearchResultTranslatorImpl implements SearchResultTranslator {
 					searchResult, document, locale, portletRequest,
 					portletResponse);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					long entryClassPK = GetterUtil.getLong(
 						document.get(Field.ENTRY_CLASS_PK));
@@ -88,7 +88,7 @@ public class SearchResultTranslatorImpl implements SearchResultTranslator {
 					_log.warn(
 						"Search index is stale and contains entry {" +
 							entryClassPK + "}",
-						e);
+						exception);
 				}
 			}
 		}

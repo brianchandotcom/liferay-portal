@@ -37,10 +37,10 @@ public class PortalPullRequestTesterTopLevelBuild extends DefaultTopLevelBuild {
 				_stableJob = JobFactory.newJob(jobName, "stable", branchName);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			System.out.println("Unable to create stable job for " + jobName);
 
-			e.printStackTrace();
+			exception.printStackTrace();
 		}
 	}
 

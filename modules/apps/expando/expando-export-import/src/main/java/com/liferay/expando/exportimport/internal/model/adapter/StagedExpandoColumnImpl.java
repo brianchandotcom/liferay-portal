@@ -51,11 +51,11 @@ public class StagedExpandoColumnImpl implements StagedExpandoColumn {
 			expandoTable = ExpandoTableLocalServiceUtil.getExpandoTable(
 				expandoColumn.getTableId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new RuntimeException(
 				"Could not find expando table for tableId=" +
 					expandoColumn.getTableId(),
-				pe);
+				portalException);
 		}
 
 		_expandoTableClassName = expandoTable.getClassName();

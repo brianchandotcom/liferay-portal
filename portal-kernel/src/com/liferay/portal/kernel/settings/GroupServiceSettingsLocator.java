@@ -62,8 +62,8 @@ public class GroupServiceSettingsLocator implements SettingsLocator {
 
 			return group.getCompanyId();
 		}
-		catch (PortalException pe) {
-			throw new SettingsException(pe);
+		catch (PortalException portalException) {
+			throw new SettingsException(portalException);
 		}
 	}
 

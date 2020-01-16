@@ -336,7 +336,7 @@ public class Version implements Comparable<Version>, Serializable {
 
 				return false;
 			}
-			catch (NumberFormatException nfe) {
+			catch (NumberFormatException numberFormatException) {
 				return false;
 			}
 		}

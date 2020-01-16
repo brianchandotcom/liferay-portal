@@ -60,7 +60,7 @@ public class JaxWsApiHandlerBundleActivator implements BundleActivator {
 
 			binding.setHandlerChain(handlers);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			cleanUp(bundleContext);
 		}
 	}
@@ -74,7 +74,7 @@ public class JaxWsApiHandlerBundleActivator implements BundleActivator {
 		try {
 			_configurationAdminBundleActivator.stop(bundleContext);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if (_endpoint != null) {

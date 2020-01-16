@@ -309,7 +309,7 @@ public class PortalMessages {
 				session.setAttribute(WebKeys.PORTAL_MESSAGES, map);
 			}
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 
 			// Session is already invalidated, just return a null map
 

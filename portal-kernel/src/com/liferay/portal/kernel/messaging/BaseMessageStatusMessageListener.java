@@ -33,11 +33,12 @@ public abstract class BaseMessageStatusMessageListener
 		try {
 			doReceive(message, messageStatus);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
-				"Unable to process request " + message.getDestinationName(), e);
+				"Unable to process request " + message.getDestinationName(),
+				exception);
 
-			messageStatus.setException(e);
+			messageStatus.setException(exception);
 		}
 		finally {
 			messageStatus.stopTimer();

@@ -79,14 +79,14 @@ public class LiferayPersonService implements PersonService {
 
 			return ImmediateFuture.newInstance(people);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -99,14 +99,14 @@ public class LiferayPersonService implements PersonService {
 
 			return ImmediateFuture.newInstance(person);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new ProtocolException(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage(),
-				e);
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+				exception.getMessage(), exception);
 		}
 	}
 

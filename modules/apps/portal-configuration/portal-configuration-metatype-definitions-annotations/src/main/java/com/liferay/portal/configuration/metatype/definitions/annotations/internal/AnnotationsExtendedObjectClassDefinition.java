@@ -130,8 +130,9 @@ public class AnnotationsExtendedObjectClassDefinition
 			try (InputStream is = url.openStream()) {
 				return JSONFactoryUtil.createJSONObject(StringUtil.read(is));
 			}
-			catch (Exception e) {
-				_log.error("Unable to process resource " + resourcePath, e);
+			catch (Exception exception) {
+				_log.error(
+					"Unable to process resource " + resourcePath, exception);
 			}
 		}
 
@@ -147,7 +148,7 @@ public class AnnotationsExtendedObjectClassDefinition
 			_configurationBeanClass = classLoader.loadClass(
 				_objectClassDefinition.getID());
 		}
-		catch (ClassNotFoundException cnfe) {
+		catch (ClassNotFoundException classNotFoundException) {
 		}
 	}
 

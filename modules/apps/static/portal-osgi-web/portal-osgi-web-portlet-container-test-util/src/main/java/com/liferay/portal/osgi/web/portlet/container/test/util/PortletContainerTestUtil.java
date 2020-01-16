@@ -273,9 +273,9 @@ public class PortletContainerTestUtil {
 					closeableHttpResponse.close();
 				}
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(ioe, ioe);
+					_log.warn(ioException, ioException);
 				}
 			}
 		}
@@ -320,7 +320,7 @@ public class PortletContainerTestUtil {
 				httpURLConnection.getResponseCode(),
 				StringUtil.read(inputStream), headerFields.get("Set-Cookie"));
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			try (InputStream inputStream = httpURLConnection.getErrorStream()) {
 				if (inputStream != null) {
 					while (inputStream.read() != -1);

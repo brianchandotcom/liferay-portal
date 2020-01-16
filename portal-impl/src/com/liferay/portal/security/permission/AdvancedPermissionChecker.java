@@ -108,11 +108,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			PermissionCacheUtil.putUserGroupRoleIds(
 				defaultUserId, _guestGroupId, roleIds);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PermissionCacheUtil.removeUserGroupRoleIds(
 				defaultUserId, _guestGroupId);
 
-			throw e;
+			throw exception;
 		}
 
 		return roleIds;
@@ -124,9 +124,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return _applyRoleContributors(
 				doGetRoleIds(userId, groupId), groupId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			return PermissionChecker.DEFAULT_ROLE_IDS;
@@ -186,9 +186,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
 				ownerRoleId, actionId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -232,8 +232,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				groupId = group.getGroupId();
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		long[] roleIds = getRoleIds(getUserId(), groupId);
@@ -259,11 +259,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			PermissionCacheUtil.putPermission(
 				groupId, name, primKey, roleIds, actionId, value);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PermissionCacheUtil.removePermission(
 				groupId, name, primKey, roleIds, actionId);
 
-			throw e;
+			throw exception;
 		}
 
 		return value;
@@ -279,8 +279,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			_guestGroupId = guestGroup.getGroupId();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -296,8 +296,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		try {
 			return isCompanyAdminImpl(user.getCompanyId());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -308,8 +308,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		try {
 			return isCompanyAdminImpl(companyId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -320,8 +320,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		try {
 			return isContentReviewerImpl(companyId, groupId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -338,8 +338,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			return _isGroupAdminImpl(group);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -350,8 +350,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		try {
 			return isGroupMemberImpl(groupId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -362,8 +362,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		try {
 			return isGroupOwnerImpl(groupId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -374,8 +374,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		try {
 			return isOrganizationAdminImpl(organizationId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -386,8 +386,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		try {
 			return isOrganizationOwnerImpl(organizationId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -567,10 +567,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			return roleIds;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PermissionCacheUtil.removeUserGroupRoleIds(userId, groupId);
 
-			throw e;
+			throw exception;
 		}
 	}
 
@@ -752,11 +752,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					getUserId(), companyId, RoleConstants.ADMINISTRATOR, value);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PermissionCacheUtil.removeUserPrimaryKeyRole(
 				getUserId(), companyId, RoleConstants.ADMINISTRATOR);
 
-			throw e;
+			throw exception;
 		}
 
 		return value;
@@ -824,11 +824,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					value);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PermissionCacheUtil.removeUserPrimaryKeyRole(
 				getUserId(), groupId, RoleConstants.SITE_CONTENT_REVIEWER);
 
-			throw e;
+			throw exception;
 		}
 
 		return value;
@@ -1079,11 +1079,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					value);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PermissionCacheUtil.removeUserPrimaryKeyRole(
 				getUserId(), group.getGroupId(), RoleConstants.SITE_OWNER);
 
-			throw e;
+			throw exception;
 		}
 
 		return value;
@@ -1128,12 +1128,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					RoleConstants.ORGANIZATION_ADMINISTRATOR, value);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PermissionCacheUtil.removeUserPrimaryKeyRole(
 				getUserId(), organization.getOrganizationId(),
 				RoleConstants.ORGANIZATION_ADMINISTRATOR);
 
-			throw e;
+			throw exception;
 		}
 
 		return value;
@@ -1202,12 +1202,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					RoleConstants.ORGANIZATION_OWNER, value);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PermissionCacheUtil.removeUserPrimaryKeyRole(
 				getUserId(), organization.getOrganizationId(),
 				RoleConstants.ORGANIZATION_OWNER);
 
-			throw e;
+			throw exception;
 		}
 
 		return value;
@@ -1270,8 +1270,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 					return roleCollectionImpl.getRoleIds();
 				}
-				catch (PortalException pe) {
-					return ReflectionUtil.throwException(pe);
+				catch (PortalException portalException) {
+					return ReflectionUtil.throwException(portalException);
 				}
 			});
 	}
@@ -1330,14 +1330,16 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				defaultUserId, groupId, resources, actionId,
 				_applyRoleContributors(getGuestUserRoleIds(), groupId));
 		}
-		catch (NoSuchResourcePermissionException nsrpe) {
+		catch (NoSuchResourcePermissionException
+					noSuchResourcePermissionException) {
+
 			throw new IllegalArgumentException(
 				"Someone may be trying to circumvent the permission checker: " +
-					nsrpe.getMessage(),
-				nsrpe);
+					noSuchResourcePermissionException.getMessage(),
+				noSuchResourcePermissionException);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -1355,11 +1357,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return _hasUserPermissionImpl(
 				group, name, primKey, roleIds, actionId);
 		}
-		catch (IllegalArgumentException iae) {
-			throw iae;
+		catch (IllegalArgumentException illegalArgumentException) {
+			throw illegalArgumentException;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -1391,11 +1393,13 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				return true;
 			}
 		}
-		catch (NoSuchResourcePermissionException nsrpe) {
+		catch (NoSuchResourcePermissionException
+					noSuchResourcePermissionException) {
+
 			throw new IllegalArgumentException(
 				"Someone may be trying to circumvent the permission checker: " +
-					nsrpe.getMessage(),
-				nsrpe);
+					noSuchResourcePermissionException.getMessage(),
+				noSuchResourcePermissionException);
 		}
 
 		if (isOmniadmin()) {
@@ -1491,12 +1495,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					RoleConstants.SITE_ADMINISTRATOR, value);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PermissionCacheUtil.removeUserPrimaryKeyRole(
 				getUserId(), group.getGroupId(),
 				RoleConstants.SITE_ADMINISTRATOR);
 
-			throw e;
+			throw exception;
 		}
 
 		return value;

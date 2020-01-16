@@ -30,8 +30,8 @@ public class BuildThemeTask extends ThemeBuilderArgs {
 
 			themeBuilder.build();
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

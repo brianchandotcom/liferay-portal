@@ -257,11 +257,12 @@ public class RestrictedLiferayObjectWrapperTest
 			Assert.assertNull(
 				"Should throw TemplateModelException", exceptionMessage);
 		}
-		catch (Exception e) {
-			Assert.assertSame(TemplateModelException.class, e.getClass());
+		catch (Exception exception) {
+			Assert.assertSame(
+				TemplateModelException.class, exception.getClass());
 
 			TemplateModelException templateModelException =
-				(TemplateModelException)e;
+				(TemplateModelException)exception;
 
 			Assert.assertEquals(
 				exceptionMessage, templateModelException.getMessage());
@@ -276,14 +277,16 @@ public class RestrictedLiferayObjectWrapperTest
 
 			Assert.assertNull("Should throw TemplateModelException for " + key);
 		}
-		catch (TemplateModelException tme) {
-			Assert.assertSame(InvalidPropertyException.class, tme.getClass());
+		catch (TemplateModelException templateModelException) {
+			Assert.assertSame(
+				InvalidPropertyException.class,
+				templateModelException.getClass());
 
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Denied access to method or field ", key, " of ",
 					TestLiferayMethodObject.class.toString()),
-				tme.getMessage());
+				templateModelException.getMessage());
 		}
 	}
 

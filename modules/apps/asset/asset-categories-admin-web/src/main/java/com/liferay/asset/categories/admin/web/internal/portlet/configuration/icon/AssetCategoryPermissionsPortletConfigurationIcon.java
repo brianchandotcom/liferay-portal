@@ -85,7 +85,7 @@ public class AssetCategoryPermissionsPortletConfigurationIcon
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return url;
@@ -112,9 +112,9 @@ public class AssetCategoryPermissionsPortletConfigurationIcon
 			return assetCategoriesDisplayContext.hasPermission(
 				category, ActionKeys.PERMISSIONS);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

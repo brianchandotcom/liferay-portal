@@ -272,8 +272,8 @@ public class ServiceComponentLocalServiceTest {
 				_db.runSQL(
 					"create table " + _TEST_TABLE + " (name VARCHAR(20))");
 			}
-			catch (Exception e) {
-				throw new UpgradeException(e);
+			catch (Exception exception) {
+				throw new UpgradeException(exception);
 			}
 		}
 

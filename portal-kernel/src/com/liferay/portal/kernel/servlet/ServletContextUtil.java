@@ -149,8 +149,8 @@ public class ServletContextUtil {
 
 			servletContext.setAttribute(URI_ATTRIBUTE, rootURI);
 		}
-		catch (URISyntaxException urise) {
-			throw new MalformedURLException(urise.getMessage());
+		catch (URISyntaxException uriSyntaxException) {
+			throw new MalformedURLException(uriSyntaxException.getMessage());
 		}
 
 		return rootURI;
@@ -255,7 +255,7 @@ public class ServletContextUtil {
 							lastModified = curLastModified;
 						}
 					}
-					catch (IOException ioe) {
+					catch (IOException ioException) {
 					}
 				}
 

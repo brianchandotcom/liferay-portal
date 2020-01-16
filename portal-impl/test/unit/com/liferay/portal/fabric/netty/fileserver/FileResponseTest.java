@@ -50,7 +50,7 @@ public class FileResponseTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 
 		Assert.assertEquals(_path, _fileResponse.getPath());

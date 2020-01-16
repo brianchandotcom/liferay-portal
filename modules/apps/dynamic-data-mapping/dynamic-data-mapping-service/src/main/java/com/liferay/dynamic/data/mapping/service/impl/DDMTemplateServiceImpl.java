@@ -570,9 +570,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 				searchContext, DDMTemplate.class,
 				ddmTemplatePersistence::findByPrimaryKey);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -639,9 +639,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 				searchContext, DDMTemplate.class,
 				ddmTemplatePersistence::findByPrimaryKey);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -702,9 +702,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 				searchContext, DDMTemplate.class,
 				ddmTemplateLocalService::fetchTemplate);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -771,9 +771,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 				searchContext, DDMTemplate.class,
 				ddmTemplatePersistence::findByPrimaryKey);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -818,9 +818,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			return _ddmSearchHelper.doSearchCount(
 				searchContext, DDMTemplate.class);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -870,9 +870,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			return _ddmSearchHelper.doSearchCount(
 				searchContext, DDMTemplate.class);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -917,9 +917,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			return _ddmSearchHelper.doSearchCount(
 				searchContext, DDMTemplate.class);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -970,9 +970,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			return _ddmSearchHelper.doSearchCount(
 				searchContext, DDMTemplate.class);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 

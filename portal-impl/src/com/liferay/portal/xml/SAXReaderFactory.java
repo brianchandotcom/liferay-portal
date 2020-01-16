@@ -52,10 +52,11 @@ public class SAXReaderFactory {
 				saxReader.setFeature(_FEATURES_LOAD_EXTERNAL_DTD, validate);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"XSD validation is disabled because " + e.getMessage());
+					"XSD validation is disabled because " +
+						exception.getMessage());
 			}
 
 			saxReader = new SAXReader(xmlReader, false);
@@ -83,10 +84,11 @@ public class SAXReaderFactory {
 			saxReader.setProperty(
 				_PROPERTY_SCHEMA_SOURCE, xmlSchema.getSchemaSource());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"XSD validation is disabled because " + e.getMessage());
+					"XSD validation is disabled because " +
+						exception.getMessage());
 			}
 		}
 

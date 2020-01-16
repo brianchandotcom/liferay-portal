@@ -52,8 +52,8 @@ public class DigestUtil {
 		try {
 			bytes = Files.readAllBytes(digestFile.toPath());
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 
 		return new String(bytes, StandardCharsets.UTF_8);
@@ -67,8 +67,8 @@ public class DigestUtil {
 		try {
 			sortedFiles = _flattenAndSort(files);
 		}
-		catch (IOException ioe) {
-			throw new GradleException("Unable to flatten files", ioe);
+		catch (IOException ioException) {
+			throw new GradleException("Unable to flatten files", ioException);
 		}
 
 		for (File file : sortedFiles) {
@@ -82,7 +82,7 @@ public class DigestUtil {
 
 				sb.append(Integer.toHexString(lines.hashCode()));
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				HashValue hashValue = HashUtil.sha1(file);
 
 				sb.append(hashValue.asHexString());
@@ -167,10 +167,10 @@ public class DigestUtil {
 			try {
 				canonicalPath = file.getCanonicalPath();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				String message = "Unable to get canonical path of " + file;
 
-				throw new UncheckedIOException(message, ioe);
+				throw new UncheckedIOException(message, ioException);
 			}
 
 			if (File.separatorChar != '/') {

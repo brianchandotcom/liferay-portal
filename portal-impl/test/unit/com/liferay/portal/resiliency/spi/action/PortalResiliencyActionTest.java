@@ -287,8 +287,10 @@ public class PortalResiliencyActionTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Unkown lifecycle UNKNOWN", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Unkown lifecycle UNKNOWN",
+				illegalArgumentException.getMessage());
 		}
 	}
 

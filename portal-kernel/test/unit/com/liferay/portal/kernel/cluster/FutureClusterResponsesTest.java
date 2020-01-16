@@ -54,7 +54,7 @@ public class FutureClusterResponsesTest {
 
 			Assert.fail("Should have failed");
 		}
-		catch (TimeoutException te) {
+		catch (TimeoutException timeoutException) {
 		}
 	}
 
@@ -99,7 +99,7 @@ public class FutureClusterResponsesTest {
 
 			Assert.fail("Should have failed");
 		}
-		catch (TimeoutException te) {
+		catch (TimeoutException timeoutException) {
 		}
 	}
 

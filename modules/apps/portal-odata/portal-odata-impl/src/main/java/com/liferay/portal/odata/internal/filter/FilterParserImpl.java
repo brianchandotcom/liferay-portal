@@ -70,8 +70,9 @@ public class FilterParserImpl implements FilterParser {
 		try {
 			return expression.accept(new ExpressionVisitorImpl());
 		}
-		catch (Exception e) {
-			throw new ExpressionVisitException(e.getMessage(), e);
+		catch (Exception exception) {
+			throw new ExpressionVisitException(
+				exception.getMessage(), exception);
 		}
 	}
 
@@ -82,22 +83,24 @@ public class FilterParserImpl implements FilterParser {
 			return _parser.parseUri(
 				_path, "$filter=" + Encoder.encode(filterString), null, null);
 		}
-		catch (UriParserSemanticException upse) {
-			String message = upse.getMessage();
+		catch (UriParserSemanticException uriParserSemanticException) {
+			String message = uriParserSemanticException.getMessage();
 
 			if (UriParserSemanticException.MessageKeys.
 					EXPRESSION_PROPERTY_NOT_IN_TYPE.equals(
-						upse.getMessageKey())) {
+						uriParserSemanticException.getMessageKey())) {
 
 				message =
 					"A property used in the filter criteria is not " +
 						"supported: " + filterString;
 			}
 
-			throw new ExpressionVisitException(message, upse);
+			throw new ExpressionVisitException(
+				message, uriParserSemanticException);
 		}
-		catch (ODataException ode) {
-			throw new ExpressionVisitException(ode.getMessage(), ode);
+		catch (ODataException oDataException) {
+			throw new ExpressionVisitException(
+				oDataException.getMessage(), oDataException);
 		}
 	}
 

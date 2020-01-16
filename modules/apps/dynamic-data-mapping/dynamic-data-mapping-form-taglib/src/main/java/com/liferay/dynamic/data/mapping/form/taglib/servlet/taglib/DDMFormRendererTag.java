@@ -140,9 +140,9 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 
 			ddmForm = ddmStructureVersion.getDDMForm();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -163,9 +163,9 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 			ddmFormHTML = DDMFormTaglibUtil.renderForm(
 				ddmForm, ddmFormLayout, createDDMFormRenderingContext(ddmForm));
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -224,9 +224,9 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 
 			ddmFormLayout = ddmStructureVersion.getDDMFormLayout();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -265,9 +265,9 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 
 			return ddmFormInstanceSettings.redirectURL();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -326,9 +326,9 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 						themeDisplay.getPermissionChecker(), ddmFormInstance,
 						DDMActionKeys.ADD_FORM_INSTANCE_RECORD);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}
@@ -350,9 +350,9 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 						themeDisplay.getPermissionChecker(), ddmFormInstance,
 						ActionKeys.VIEW);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}
@@ -420,9 +420,9 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 				}
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

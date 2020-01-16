@@ -217,11 +217,11 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 
 			return _searchEngineAdapter.execute(suggestSearchRequest);
 		}
-		catch (RuntimeException re) {
-			String message = re.getMessage();
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
 
 			if (!message.contains("no mapping found for field")) {
-				Throwable throwable = re.getCause();
+				Throwable throwable = runtimeException.getCause();
 
 				if (throwable != null) {
 					message = throwable.getMessage();
@@ -230,13 +230,13 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 
 			if (message.contains("no mapping found for field")) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("No dictionary indexed", re);
+					_log.warn("No dictionary indexed", runtimeException);
 				}
 
 				return null;
 			}
 
-			throw re;
+			throw runtimeException;
 		}
 		finally {
 			if (_log.isInfoEnabled()) {

@@ -115,8 +115,10 @@ public class BufferedIncrementConfigurationTest {
 		try {
 			bufferedIncrementConfiguration.calculateStandbyTime(-1);
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Negative queue length -1", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Negative queue length -1",
+				illegalArgumentException.getMessage());
 		}
 
 		int standbyQueueThreshold =
@@ -200,8 +202,9 @@ public class BufferedIncrementConfigurationTest {
 		try {
 			bufferedIncrementConfiguration.calculateStandbyTime(0);
 		}
-		catch (IllegalStateException ise) {
-			Assert.assertEquals("Standby is disabled", ise.getMessage());
+		catch (IllegalStateException illegalStateException) {
+			Assert.assertEquals(
+				"Standby is disabled", illegalStateException.getMessage());
 		}
 
 		return captureHandler;

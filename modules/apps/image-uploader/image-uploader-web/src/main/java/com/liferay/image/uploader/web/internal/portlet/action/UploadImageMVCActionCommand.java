@@ -127,7 +127,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				UploadImageUtil.getTempImageFolderName(), fileName);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return TempFileEntryUtil.addTempFileEntry(
@@ -194,9 +194,9 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			handleUploadException(
-				actionRequest, actionResponse, cmd, maxFileSize, e);
+				actionRequest, actionResponse, cmd, maxFileSize, exception);
 		}
 	}
 
@@ -232,10 +232,11 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 				String errorMessage = StringPool.BLANK;
 
 				if (exception instanceof AntivirusScannerException) {
-					AntivirusScannerException ase =
+					AntivirusScannerException antivirusScannerException =
 						(AntivirusScannerException)exception;
 
-					errorMessage = themeDisplay.translate(ase.getMessageKey());
+					errorMessage = themeDisplay.translate(
+						antivirusScannerException.getMessageKey());
 				}
 				else if (exception instanceof FileExtensionException) {
 					errorMessage = themeDisplay.translate(
@@ -352,7 +353,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 						UploadImageUtil.getTempImageFolderName(),
 						getTempImageFileName(actionRequest));
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 
 				return TempFileEntryUtil.addTempFileEntry(
@@ -362,11 +363,11 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 					tempFileEntry.getMimeType());
 			}
 		}
-		catch (NoSuchFileEntryException nsfee) {
-			throw new UploadException(nsfee);
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
+			throw new UploadException(noSuchFileEntryException);
 		}
-		catch (NoSuchRepositoryException nsre) {
-			throw new UploadException(nsre);
+		catch (NoSuchRepositoryException noSuchRepositoryException) {
+			throw new UploadException(noSuchRepositoryException);
 		}
 	}
 

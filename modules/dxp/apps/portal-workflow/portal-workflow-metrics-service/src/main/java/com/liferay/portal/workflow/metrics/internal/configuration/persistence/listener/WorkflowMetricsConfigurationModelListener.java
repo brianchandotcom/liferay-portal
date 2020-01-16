@@ -54,10 +54,10 @@ public class WorkflowMetricsConfigurationModelListener
 
 			_validateCheckSLAJobInterval(checkSLAJobInterval);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
-				e.getMessage(), WorkflowMetricsConfiguration.class, getClass(),
-				properties);
+				exception.getMessage(), WorkflowMetricsConfiguration.class,
+				getClass(), properties);
 		}
 	}
 

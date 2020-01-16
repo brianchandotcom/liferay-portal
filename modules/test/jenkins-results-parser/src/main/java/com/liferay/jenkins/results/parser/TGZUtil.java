@@ -244,9 +244,9 @@ public class TGZUtil {
 		try {
 			return PosixFilePermissions.fromString(sb.toString());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new RuntimeException(
-				"Invalid POSIX integer value " + posixIntegerValue, e);
+				"Invalid POSIX integer value " + posixIntegerValue, exception);
 		}
 	}
 

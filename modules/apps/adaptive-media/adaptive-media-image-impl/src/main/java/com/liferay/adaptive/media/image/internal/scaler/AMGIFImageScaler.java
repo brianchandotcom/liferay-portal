@@ -88,9 +88,9 @@ public class AMGIFImageScaler implements AMImageScaler {
 				bytes, dimension.second, dimension.first);
 		}
 		catch (ExecutionException | InterruptedException | IOException |
-			   PortalException | ProcessException e) {
+			   PortalException | ProcessException exception) {
 
-			throw new AMRuntimeException.IOException(e);
+			throw new AMRuntimeException.IOException(exception);
 		}
 	}
 

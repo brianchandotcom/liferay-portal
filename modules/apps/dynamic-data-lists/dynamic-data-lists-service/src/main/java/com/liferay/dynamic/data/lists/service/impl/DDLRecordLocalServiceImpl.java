@@ -565,8 +565,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 			return indexer.search(searchContext);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -591,8 +591,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			return new BaseModelSearchResult<>(
 				getRecords(hits), hits.getLength());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -997,12 +997,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			try {
 				records.add(getRecord(recordId));
 			}
-			catch (NoSuchRecordException nsre) {
+			catch (NoSuchRecordException noSuchRecordException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"DDL record index is stale and contains record " +
 							recordId,
-						nsre);
+						noSuchRecordException);
 				}
 
 				long companyId = GetterUtil.getLong(

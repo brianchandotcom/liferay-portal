@@ -276,7 +276,7 @@ public class SelectAssetDisplayPageDisplayContext {
 			return HttpUtil.addParameter(
 				viewInContextURL, "p_l_mode", Constants.PREVIEW);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -340,7 +340,7 @@ public class SelectAssetDisplayPageDisplayContext {
 				return false;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return true;

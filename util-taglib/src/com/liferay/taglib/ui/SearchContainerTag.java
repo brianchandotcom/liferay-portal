@@ -182,8 +182,8 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 
 			return EVAL_BODY_INCLUDE;
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 	}
 

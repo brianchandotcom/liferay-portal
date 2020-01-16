@@ -96,8 +96,8 @@ public class PortalResiliencyPortletContainerWrapper
 			return (ActionResult)httpServletRequest.getAttribute(
 				WebKeys.SPI_AGENT_ACTION_RESULT);
 		}
-		catch (PortalResiliencyException pre) {
-			_log.error(pre, pre);
+		catch (PortalResiliencyException portalResiliencyException) {
+			_log.error(portalResiliencyException, portalResiliencyException);
 
 			return ActionResult.EMPTY_ACTION_RESULT;
 		}
@@ -140,8 +140,8 @@ public class PortalResiliencyPortletContainerWrapper
 			return (List<Event>)httpServletRequest.getAttribute(
 				WebKeys.SPI_AGENT_EVENT_RESULT);
 		}
-		catch (PortalResiliencyException pre) {
-			_log.error(pre, pre);
+		catch (PortalResiliencyException portalResiliencyException) {
+			_log.error(portalResiliencyException, portalResiliencyException);
 
 			return Collections.emptyList();
 		}
@@ -219,8 +219,8 @@ public class PortalResiliencyPortletContainerWrapper
 		try {
 			spiAgent.service(httpServletRequest, httpServletResponse);
 		}
-		catch (PortalResiliencyException pre) {
-			_log.error(pre, pre);
+		catch (PortalResiliencyException portalResiliencyException) {
+			_log.error(portalResiliencyException, portalResiliencyException);
 		}
 		finally {
 			restoreRequestAttibutes(
@@ -259,8 +259,8 @@ public class PortalResiliencyPortletContainerWrapper
 
 			return spi.getSPIAgent();
 		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
+		catch (Exception exception) {
+			throw new PortletContainerException(exception);
 		}
 	}
 
@@ -305,8 +305,8 @@ public class PortalResiliencyPortletContainerWrapper
 		try {
 			spiAgent.service(httpServletRequest, httpServletResponse);
 		}
-		catch (PortalResiliencyException pre) {
-			_log.error(pre, pre);
+		catch (PortalResiliencyException portalResiliencyException) {
+			_log.error(portalResiliencyException, portalResiliencyException);
 		}
 		finally {
 			restoreRequestAttibutes(

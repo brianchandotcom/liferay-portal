@@ -183,10 +183,10 @@ public class MethodKeyTest {
 
 			Assert.fail("IllegalArgumentException was not thrown");
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"object is not an instance of declaring class",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		Method transformedMethod = transformedMethodKey.getMethod();

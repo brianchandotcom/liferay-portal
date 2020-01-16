@@ -158,9 +158,9 @@ public class DDMFormFieldOptionsFactoryImpl
 					keyValuePair.getValue());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -188,7 +188,7 @@ public class DDMFormFieldOptionsFactoryImpl
 
 			return jsonArray.getString(0);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return value;
 		}
 	}

@@ -50,7 +50,7 @@ public class SolrIndexWriterLoggingTest extends BaseIndexingTestCase {
 				createSearchContext(),
 				Collections.singletonList(getTestDocument()));
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 

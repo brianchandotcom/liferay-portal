@@ -48,9 +48,10 @@ public class PortalClassPathWarmupFabricAgentListener
 			noticeableFuture.addFutureListener(
 				new FinishFutureListener(startTime));
 		}
-		catch (ProcessException pe) {
+		catch (ProcessException processException) {
 			_log.error(
-				"Unable to start portal class path warmup fabric worker", pe);
+				"Unable to start portal class path warmup fabric worker",
+				processException);
 		}
 	}
 

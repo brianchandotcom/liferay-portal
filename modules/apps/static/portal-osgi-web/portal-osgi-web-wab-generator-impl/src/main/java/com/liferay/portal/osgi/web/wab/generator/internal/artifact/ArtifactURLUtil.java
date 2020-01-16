@@ -59,8 +59,8 @@ public class ArtifactURLUtil {
 
 			contextName = _readServletContextName(jar);
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 
 		if (contextName == null) {

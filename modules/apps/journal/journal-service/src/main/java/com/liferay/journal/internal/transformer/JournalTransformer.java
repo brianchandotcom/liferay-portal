@@ -376,19 +376,21 @@ public class JournalTransformer {
 						() -> getErrorTemplateResource(langType));
 				}
 			}
-			catch (Exception e) {
-				if (e instanceof DocumentException) {
+			catch (Exception exception) {
+				if (exception instanceof DocumentException) {
 					throw new TransformException(
-						"Unable to read XML document", e);
+						"Unable to read XML document", exception);
 				}
-				else if (e instanceof IOException) {
-					throw new TransformException("Error reading template", e);
+				else if (exception instanceof IOException) {
+					throw new TransformException(
+						"Error reading template", exception);
 				}
-				else if (e instanceof TransformException) {
-					throw (TransformException)e;
+				else if (exception instanceof TransformException) {
+					throw (TransformException)exception;
 				}
 				else {
-					throw new TransformException("Unhandled exception", e);
+					throw new TransformException(
+						"Unhandled exception", exception);
 				}
 			}
 
@@ -467,7 +469,7 @@ public class JournalTransformer {
 
 			return new StringTemplateResource(langType, template);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

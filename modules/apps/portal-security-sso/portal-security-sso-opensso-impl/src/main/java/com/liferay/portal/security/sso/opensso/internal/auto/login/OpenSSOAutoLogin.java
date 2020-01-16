@@ -208,12 +208,12 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 						companyId, emailAddress, StringPool.BLANK);
 				}
 			}
-			catch (SystemException se) {
+			catch (SystemException systemException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(se, se);
+					_log.debug(systemException, systemException);
 				}
 			}
 		}
@@ -256,22 +256,23 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 					companyId, firstName, lastName, emailAddress, screenName,
 					locale);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
 							"Failed to import OpenSSO user '",
-							openSSOScreenName, "': ", pe.getMessage()),
-						pe);
+							openSSOScreenName, "': ",
+							portalException.getMessage()),
+						portalException);
 				}
 
-				if (pe instanceof ContactNameException) {
+				if (portalException instanceof ContactNameException) {
 					httpServletRequest.setAttribute(
 						OpenSSOWebKeys.OPEN_SSO_ERROR,
 						ContactNameException.class.getSimpleName());
 				}
 				else {
-					Class<?> clazz = pe.getClass();
+					Class<?> clazz = portalException.getClass();
 
 					httpServletRequest.setAttribute(
 						OpenSSOWebKeys.OPEN_SSO_ERROR, clazz.getSimpleName());

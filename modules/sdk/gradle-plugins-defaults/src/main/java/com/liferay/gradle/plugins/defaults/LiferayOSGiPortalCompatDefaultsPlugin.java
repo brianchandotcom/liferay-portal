@@ -249,8 +249,12 @@ public class LiferayOSGiPortalCompatDefaultsPlugin
 						try {
 							version = Version.parseVersion(dependencyVersion);
 						}
-						catch (IllegalArgumentException iae) {
-							throw new GradleException(iae.getMessage(), iae);
+						catch (IllegalArgumentException
+									illegalArgumentException) {
+
+							throw new GradleException(
+								illegalArgumentException.getMessage(),
+								illegalArgumentException);
 						}
 
 						if (version.isSnapshot()) {

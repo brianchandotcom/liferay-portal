@@ -135,8 +135,8 @@ public class GoogleDriveConnectedAppProvider implements ConnectedAppProvider {
 
 			return user.getEmailAddress();
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 
 			return null;
 		}

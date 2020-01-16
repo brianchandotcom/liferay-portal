@@ -63,8 +63,9 @@ public class PrimaryPortalWorkspaceGitRepository
 			AntUtil.callTarget(
 				getDirectory(), "build.xml", "setup-profile-dxp");
 		}
-		catch (AntException ae) {
-			throw new RuntimeException("Unable to set up DXP profile", ae);
+		catch (AntException antException) {
+			throw new RuntimeException(
+				"Unable to set up DXP profile", antException);
 		}
 	}
 

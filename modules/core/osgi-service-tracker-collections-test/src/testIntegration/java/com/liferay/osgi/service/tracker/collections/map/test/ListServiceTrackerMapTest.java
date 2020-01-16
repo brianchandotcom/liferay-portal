@@ -497,7 +497,7 @@ public class ListServiceTrackerMapTest {
 						try {
 							contentTrackedOnes.add(new TrackedOne("spurious"));
 						}
-						catch (Exception e) {
+						catch (Exception exception) {
 						}
 					}
 

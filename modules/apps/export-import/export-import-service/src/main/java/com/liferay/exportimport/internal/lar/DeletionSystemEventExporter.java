@@ -227,12 +227,12 @@ public class DeletionSystemEventExporter {
 				SystemEventLocalServiceUtil.deleteSystemEvent(
 					systemEvent.getSystemEventId());
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to delete system event. The events are being " +
 							"cleaned up reagularly by a scheduled process.",
-						pe);
+						portalException);
 				}
 			}
 		}

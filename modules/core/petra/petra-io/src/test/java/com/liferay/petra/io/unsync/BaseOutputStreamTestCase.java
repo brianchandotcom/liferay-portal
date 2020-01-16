@@ -41,7 +41,7 @@ public abstract class BaseOutputStreamTestCase {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 	}
 
@@ -54,7 +54,7 @@ public abstract class BaseOutputStreamTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -67,7 +67,7 @@ public abstract class BaseOutputStreamTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -80,7 +80,7 @@ public abstract class BaseOutputStreamTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -93,7 +93,7 @@ public abstract class BaseOutputStreamTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 
@@ -106,7 +106,7 @@ public abstract class BaseOutputStreamTestCase {
 
 			Assert.fail();
 		}
-		catch (IndexOutOfBoundsException ioobe) {
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 		}
 	}
 

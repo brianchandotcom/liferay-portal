@@ -122,7 +122,7 @@ public class DeliveryPortletConfigurationIcon
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException wse) {
+		catch (WindowStateException windowStateException) {
 		}
 
 		return portletURL;

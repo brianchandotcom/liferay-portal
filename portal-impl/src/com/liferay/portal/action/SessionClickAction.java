@@ -94,8 +94,9 @@ public class SessionClickAction implements Action {
 
 			return null;
 		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
+		catch (Exception exception) {
+			PortalUtil.sendError(
+				exception, httpServletRequest, httpServletResponse);
 
 			return null;
 		}

@@ -57,15 +57,15 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 		try {
 			return doInvoke(ddmDataProviderRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to invoke DDM Data Provider instance ID " +
 						ddmDataProviderRequest.getDDMDataProviderId(),
-					e);
+					exception);
 			}
 
-			return createDDMDataProviderErrorResponse(e);
+			return createDDMDataProviderErrorResponse(exception);
 		}
 	}
 

@@ -521,7 +521,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		try {
 			return DDMStructureLocalServiceUtil.getStructure(structureId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -530,7 +530,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		try {
 			return DDMStructureLocalServiceUtil.getStructureDDMForm(structure);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -539,7 +539,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		try {
 			return DDMTemplateLocalServiceUtil.getTemplate(templateId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

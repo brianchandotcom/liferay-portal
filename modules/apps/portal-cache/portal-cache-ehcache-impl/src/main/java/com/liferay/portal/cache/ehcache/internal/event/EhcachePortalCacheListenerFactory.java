@@ -90,11 +90,11 @@ public class EhcachePortalCacheListenerFactory
 
 			return new EhcachePortalCacheListenerAdapter<>(cacheEventListener);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SystemException(
 				"Unable to instantiate cache event listener factory " +
 					className,
-				e);
+				exception);
 		}
 	}
 

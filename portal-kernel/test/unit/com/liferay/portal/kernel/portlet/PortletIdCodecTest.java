@@ -54,9 +54,10 @@ public class PortletIdCodecTest {
 
 			Assert.fail();
 		}
-		catch (InvalidParameterException ipe) {
+		catch (InvalidParameterException invalidParameterException) {
 			Assert.assertEquals(
-				"User ID and instance ID are null", ipe.getMessage());
+				"User ID and instance ID are null",
+				invalidParameterException.getMessage());
 		}
 
 		// Test 2
@@ -70,9 +71,10 @@ public class PortletIdCodecTest {
 
 			Assert.fail();
 		}
-		catch (InvalidParameterException ipe) {
+		catch (InvalidParameterException invalidParameterException) {
 			Assert.assertEquals(
-				"User ID and instance ID are null", ipe.getMessage());
+				"User ID and instance ID are null",
+				invalidParameterException.getMessage());
 		}
 
 		// Test 3
@@ -134,9 +136,10 @@ public class PortletIdCodecTest {
 
 			Assert.fail();
 		}
-		catch (InvalidParameterException ipe) {
+		catch (InvalidParameterException invalidParameterException) {
 			Assert.assertEquals(
-				"User ID and instance ID contain slashes", ipe.getMessage());
+				"User ID and instance ID contain slashes",
+				invalidParameterException.getMessage());
 		}
 
 		// Test 8
@@ -153,10 +156,10 @@ public class PortletIdCodecTest {
 
 			Assert.fail();
 		}
-		catch (InvalidParameterException ipe) {
+		catch (InvalidParameterException invalidParameterException) {
 			Assert.assertEquals(
 				"User ID and instance ID has more than one underscore",
-				ipe.getMessage());
+				invalidParameterException.getMessage());
 		}
 
 		// Test 10
@@ -166,8 +169,10 @@ public class PortletIdCodecTest {
 
 			Assert.fail();
 		}
-		catch (InvalidParameterException ipe) {
-			Assert.assertEquals("User ID is not a number", ipe.getMessage());
+		catch (InvalidParameterException invalidParameterException) {
+			Assert.assertEquals(
+				"User ID is not a number",
+				invalidParameterException.getMessage());
 		}
 	}
 
@@ -315,11 +320,11 @@ public class PortletIdCodecTest {
 
 			Assert.fail();
 		}
-		catch (InvalidParameterException ipe) {
+		catch (InvalidParameterException invalidParameterException) {
 			Assert.assertEquals(
 				"The portlet name \"" + encodedPortletId +
 					"\" must not contain the keyword _INSTANCE_",
-				ipe.getMessage());
+				invalidParameterException.getMessage());
 		}
 
 		// Test 3
@@ -331,11 +336,11 @@ public class PortletIdCodecTest {
 
 			Assert.fail();
 		}
-		catch (InvalidParameterException ipe) {
+		catch (InvalidParameterException invalidParameterException) {
 			Assert.assertEquals(
 				"The portlet name \"" + encodedPortletId +
 					"\" must not contain the keyword _INSTANCE_",
-				ipe.getMessage());
+				invalidParameterException.getMessage());
 		}
 
 		// Test 4
@@ -347,11 +352,11 @@ public class PortletIdCodecTest {
 
 			Assert.fail();
 		}
-		catch (InvalidParameterException ipe) {
+		catch (InvalidParameterException invalidParameterException) {
 			Assert.assertEquals(
 				"The portlet name \"" + encodedPortletId +
 					"\" must not contain the keyword _USER_",
-				ipe.getMessage());
+				invalidParameterException.getMessage());
 		}
 
 		// Test 5
@@ -363,11 +368,11 @@ public class PortletIdCodecTest {
 
 			Assert.fail();
 		}
-		catch (InvalidParameterException ipe) {
+		catch (InvalidParameterException invalidParameterException) {
 			Assert.assertEquals(
 				"The portlet name \"" + encodedPortletId +
 					"\" must not contain the keyword _INSTANCE_",
-				ipe.getMessage());
+				invalidParameterException.getMessage());
 		}
 	}
 

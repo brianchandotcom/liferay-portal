@@ -54,7 +54,7 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		try {
 			delivery = announcementsDeliveryPersistence.update(delivery);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
@@ -66,7 +66,7 @@ public class AnnouncementsDeliveryLocalServiceImpl
 				userId, type, false);
 
 			if (delivery == null) {
-				throw se;
+				throw systemException;
 			}
 		}
 

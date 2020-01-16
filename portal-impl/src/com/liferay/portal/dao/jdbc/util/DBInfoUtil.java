@@ -54,8 +54,8 @@ public class DBInfoUtil {
 						databaseMetaData.getDatabaseMajorVersion(),
 						databaseMetaData.getDatabaseMinorVersion());
 				}
-				catch (SQLException sqle) {
-					return ReflectionUtil.throwException(sqle);
+				catch (SQLException sqlException) {
+					return ReflectionUtil.throwException(sqlException);
 				}
 			});
 	}

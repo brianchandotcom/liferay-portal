@@ -106,7 +106,7 @@ public class DefineObjectsTag extends TagSupport {
 				pageContext.setAttribute(
 					"portletSessionScope", portletSession.getAttributeMap());
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 			}
 		}
 

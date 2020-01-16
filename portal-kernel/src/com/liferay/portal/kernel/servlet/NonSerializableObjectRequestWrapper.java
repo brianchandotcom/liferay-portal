@@ -77,14 +77,14 @@ public class NonSerializableObjectRequestWrapper
 		try {
 			object = super.getAttribute(name);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 
 			// LPS-31885
 
-			String message = e.getMessage();
+			String message = exception.getMessage();
 
 			if ((message == null) || !message.contains("BEA-101362")) {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 
 			return null;
@@ -134,13 +134,13 @@ public class NonSerializableObjectRequestWrapper
 
 			isWebLogicClassLoaderField.set(attribute, false);
 		}
-		catch (NoSuchFieldException nsfe) {
+		catch (NoSuchFieldException noSuchFieldException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to get fields from a Weblogic servlet request");
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(

@@ -204,11 +204,13 @@ public class RoleStagedModelDataHandler
 				importResourcePermissions(
 					portletDataContext, importedRole, permission);
 			}
-			catch (NoSuchResourceActionException nsrae) {
+			catch (NoSuchResourceActionException
+						noSuchResourceActionException) {
+
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Skip importing individually scoped permissions",
-						nsrae);
+						noSuchResourceActionException);
 				}
 			}
 		}

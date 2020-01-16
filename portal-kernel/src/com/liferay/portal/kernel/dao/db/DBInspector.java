@@ -73,8 +73,8 @@ public class DBInspector {
 
 			return true;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -159,8 +159,8 @@ public class DBInspector {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -233,12 +233,12 @@ public class DBInspector {
 			try {
 				return Integer.parseInt(columnSize);
 			}
-			catch (NumberFormatException nfe) {
+			catch (NumberFormatException numberFormatException) {
 				throw new UpgradeException(
 					StringBundler.concat(
 						"Column type ", columnType,
 						" has an invalid column size ", columnSize),
-					nfe);
+					numberFormatException);
 			}
 		}
 

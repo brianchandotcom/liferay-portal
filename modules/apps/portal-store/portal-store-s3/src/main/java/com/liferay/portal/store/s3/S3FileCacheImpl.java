@@ -192,9 +192,10 @@ public class S3FileCacheImpl implements S3FileCache {
 
 				});
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			_log.error(
-				"Unable to clean up cache files for " + cacheDirPath, ioe);
+				"Unable to clean up cache files for " + cacheDirPath,
+				ioException);
 		}
 	}
 

@@ -71,9 +71,10 @@ public class DeleteUADApplicationsMVCActionCommand
 					try {
 						uadAnonymizer.delete(entity);
 					}
-					catch (NoSuchModelException nsme) {
+					catch (NoSuchModelException noSuchModelException) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(nsme, nsme);
+							_log.debug(
+								noSuchModelException, noSuchModelException);
 						}
 					}
 				}

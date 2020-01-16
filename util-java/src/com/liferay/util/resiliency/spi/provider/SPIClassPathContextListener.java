@@ -142,11 +142,11 @@ public class SPIClassPathContextListener implements ServletContextListener {
 				MPIHelperUtil.registerSPIProvider(spiProvider);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to create SPI provider with name " +
 					spiProviderClassName,
-				e);
+				exception);
 		}
 	}
 

@@ -27,11 +27,11 @@ public abstract class BaseCometSession implements CometSession {
 
 			_cometResponse.close();
 		}
-		catch (CometException ce) {
-			throw ce;
+		catch (CometException cometException) {
+			throw cometException;
 		}
-		catch (Exception e) {
-			throw new CometException(e);
+		catch (Exception exception) {
+			throw new CometException(exception);
 		}
 	}
 

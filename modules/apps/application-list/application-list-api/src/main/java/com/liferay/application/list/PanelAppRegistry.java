@@ -76,8 +76,8 @@ public class PanelAppRegistry {
 					return panelApp;
 				}
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 
@@ -123,8 +123,8 @@ public class PanelAppRegistry {
 				try {
 					return panelApp.isShow(permissionChecker, group);
 				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
 				}
 
 				return false;
@@ -147,8 +147,8 @@ public class PanelAppRegistry {
 					count += notificationsCount;
 				}
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 

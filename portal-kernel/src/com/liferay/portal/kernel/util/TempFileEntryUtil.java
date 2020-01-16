@@ -60,8 +60,8 @@ public class TempFileEntryUtil {
 			return addTempFileEntry(
 				groupId, userId, folderName, fileName, inputStream, mimeType);
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
 	}
 

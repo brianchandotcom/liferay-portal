@@ -94,8 +94,8 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 				return _postProcessMetadata(mimeType, future.get());
 			}
-			catch (Exception e) {
-				throw new SystemException(e);
+			catch (Exception exception) {
+				throw new SystemException(exception);
 			}
 		}
 
@@ -105,8 +105,8 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 				ExtractMetadataProcessCallable.extractMetadata(
 					file, metadata, _parser));
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -121,8 +121,8 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 
 			return extractMetadata(extension, mimeType, file);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			file.delete();
@@ -182,8 +182,8 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 			try {
 				return extractMetadata(_file, _metadata, _parser);
 			}
-			catch (IOException ioe) {
-				throw new ProcessException(ioe);
+			catch (IOException ioException) {
+				throw new ProcessException(ioException);
 			}
 		}
 
@@ -210,8 +210,8 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 				parser.parse(
 					inputStream, contentHandler, metadata, parseContext);
 			}
-			catch (Exception e) {
-				Throwable throwable = ExceptionUtils.getRootCause(e);
+			catch (Exception exception) {
+				Throwable throwable = ExceptionUtils.getRootCause(exception);
 
 				if (throwable instanceof EncryptedDocumentException ||
 					throwable instanceof UnsupportedZipFeatureException) {
@@ -222,16 +222,16 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 								"file");
 					}
 				}
-				else if (e instanceof TikaException) {
+				else if (exception instanceof TikaException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn("Unable to extract metadata");
 					}
 				}
 				else {
-					_log.error(e, e);
+					_log.error(exception, exception);
 				}
 
-				throw new IOException(e);
+				throw new IOException(exception);
 			}
 
 			// Remove potential security risks

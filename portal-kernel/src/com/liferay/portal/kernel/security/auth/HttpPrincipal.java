@@ -51,8 +51,8 @@ public class HttpPrincipal implements Serializable {
 			try {
 				_password = PasswordEncryptorUtil.encrypt(password);
 			}
-			catch (PwdEncryptorException pee) {
-				_log.error(pee, pee);
+			catch (PwdEncryptorException pwdEncryptorException) {
+				_log.error(pwdEncryptorException, pwdEncryptorException);
 			}
 		}
 	}

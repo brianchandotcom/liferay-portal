@@ -94,13 +94,13 @@ public class GitUpToDateTask extends Task implements Condition {
 
 				return false;
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				throw new BuildException(
-					"Unable to check cleanness for path " + _path, e);
+					"Unable to check cleanness for path " + _path, exception);
 			}
 		}
-		catch (IOException ioe) {
-			throw new BuildException(ioe);
+		catch (IOException ioException) {
+			throw new BuildException(ioException);
 		}
 	}
 

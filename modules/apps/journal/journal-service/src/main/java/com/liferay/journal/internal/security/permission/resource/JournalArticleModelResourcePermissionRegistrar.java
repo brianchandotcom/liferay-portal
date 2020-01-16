@@ -196,11 +196,11 @@ public class JournalArticleModelResourcePermissionRegistrar {
 					return true;
 				}
 			}
-			catch (ConfigurationException ce) {
+			catch (ConfigurationException configurationException) {
 				_log.error(
 					"Unable to get journal service configuration for company " +
 						permissionChecker.getCompanyId(),
-					ce);
+					configurationException);
 
 				return false;
 			}

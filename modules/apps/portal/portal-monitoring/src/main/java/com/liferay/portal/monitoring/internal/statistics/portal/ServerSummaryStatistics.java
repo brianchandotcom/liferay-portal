@@ -272,9 +272,10 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 
 			return companyStatistics.getRequestStatistics();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new MonitoringException(
-				"Unable to get company with company id " + companyId, e);
+				"Unable to get company with company id " + companyId,
+				exception);
 		}
 	}
 
@@ -287,9 +288,9 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 
 			return companyStatistics.getRequestStatistics();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new MonitoringException(
-				"Unable to get company with web id " + webId, e);
+				"Unable to get company with web id " + webId, exception);
 		}
 	}
 

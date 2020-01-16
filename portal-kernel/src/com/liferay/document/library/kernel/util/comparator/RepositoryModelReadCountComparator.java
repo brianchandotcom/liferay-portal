@@ -140,7 +140,7 @@ public class RepositoryModelReadCountComparator<T>
 
 			return dlFileEntry.getReadCount();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return 0;
 		}
 	}

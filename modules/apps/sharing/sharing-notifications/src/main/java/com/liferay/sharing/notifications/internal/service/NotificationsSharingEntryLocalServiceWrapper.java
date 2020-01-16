@@ -172,11 +172,11 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 			sharingNotificationSubcriptionSender.flushNotificationsAsync();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to send notification for sharing entry: " +
 					sharingEntry.getSharingEntryId(),
-				e);
+				exception);
 		}
 	}
 

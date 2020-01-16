@@ -87,8 +87,8 @@ public class ManagementService implements CacheManagerEventListener {
 				new net.sf.ehcache.management.CacheManager(_cacheManager),
 				_getObjectName("CacheManager", null, _cacheManager.getName()));
 		}
-		catch (Exception e) {
-			throw new CacheException(e);
+		catch (Exception exception) {
+			throw new CacheException(exception);
 		}
 
 		Map<String, CacheManagerPeerProvider> cacheManagerPeerProviders =
@@ -170,8 +170,8 @@ public class ManagementService implements CacheManagerEventListener {
 		try {
 			return new ObjectName(sb.toString());
 		}
-		catch (MalformedObjectNameException mone) {
-			return ReflectionUtil.throwException(mone);
+		catch (MalformedObjectNameException malformedObjectNameException) {
+			return ReflectionUtil.throwException(malformedObjectNameException);
 		}
 	}
 
@@ -204,14 +204,16 @@ public class ManagementService implements CacheManagerEventListener {
 					"CacheConfiguration", _cacheManager.getName(),
 					cacheConfigurationMBean.getName()));
 		}
-		catch (InstanceAlreadyExistsException iaee) {
+		catch (InstanceAlreadyExistsException instanceAlreadyExistsException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(iaee, iaee);
+				_log.debug(
+					instanceAlreadyExistsException,
+					instanceAlreadyExistsException);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 	}
@@ -223,9 +225,9 @@ public class ManagementService implements CacheManagerEventListener {
 					_mBeanServer.unregisterMBean(objectName);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}

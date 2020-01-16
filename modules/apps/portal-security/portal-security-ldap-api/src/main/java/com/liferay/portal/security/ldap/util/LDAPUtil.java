@@ -228,12 +228,12 @@ public class LDAPUtil {
 				},
 				ldapFilterValidator);
 		}
-		catch (LDAPFilterException ldapfe) {
+		catch (LDAPFilterException ldapFilterException) {
 			throw new LDAPFilterException(
 				"Invalid filter " +
 					LDAPServerConfiguration.class.getSimpleName() +
 						".authSearchFilter",
-				ldapfe);
+				ldapFilterException);
 		}
 	}
 
@@ -270,12 +270,12 @@ public class LDAPUtil {
 				ldapServerConfiguration.groupSearchFilter(),
 				ldapFilterValidator);
 		}
-		catch (LDAPFilterException ldapfe) {
+		catch (LDAPFilterException ldapFilterException) {
 			throw new LDAPFilterException(
 				"Invalid filter " +
 					LDAPServerConfiguration.class.getSimpleName() +
 						".groupSearchFilter",
-				ldapfe);
+				ldapFilterException);
 		}
 	}
 
@@ -301,12 +301,12 @@ public class LDAPUtil {
 				ldapServerConfiguration.userSearchFilter(),
 				ldapFilterValidator);
 		}
-		catch (LDAPFilterException ldapfe) {
+		catch (LDAPFilterException ldapFilterException) {
 			throw new LDAPFilterException(
 				"Invalid filter " +
 					LDAPServerConfiguration.class.getSimpleName() +
 						".userSearchFilter",
-				ldapfe);
+				ldapFilterException);
 		}
 	}
 

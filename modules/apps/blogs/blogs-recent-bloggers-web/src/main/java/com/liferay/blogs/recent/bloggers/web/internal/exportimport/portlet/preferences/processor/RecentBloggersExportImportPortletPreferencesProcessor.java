@@ -72,9 +72,10 @@ public class RecentBloggersExportImportPortletPreferencesProcessor
 				portletDataContext, portletDataContext.getPortletId(),
 				portletPreferences);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PortletDataException(
-				"Unable to update portlet preferences during export", e);
+				"Unable to update portlet preferences during export",
+				exception);
 		}
 	}
 
@@ -88,9 +89,10 @@ public class RecentBloggersExportImportPortletPreferencesProcessor
 			return updateImportPortletPreferences(
 				portletDataContext, portletPreferences);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PortletDataException(
-				"Unable to update portlet preferences during import", e);
+				"Unable to update portlet preferences during import",
+				exception);
 		}
 	}
 

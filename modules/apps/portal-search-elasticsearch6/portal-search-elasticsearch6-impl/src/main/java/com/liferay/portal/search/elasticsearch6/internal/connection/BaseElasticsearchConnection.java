@@ -92,8 +92,8 @@ public abstract class BaseElasticsearchConnection
 		try {
 			return future.get();
 		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
+		catch (Exception exception) {
+			throw new IllegalStateException(exception);
 		}
 	}
 

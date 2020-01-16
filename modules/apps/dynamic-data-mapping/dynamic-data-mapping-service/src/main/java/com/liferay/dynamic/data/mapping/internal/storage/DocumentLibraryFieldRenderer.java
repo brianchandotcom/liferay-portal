@@ -83,9 +83,9 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 		try {
 			jsonObject = _jsonFactory.createJSONObject(json);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse JSON", jsone);
+				_log.debug("Unable to parse JSON", jsonException);
 			}
 
 			return StringPool.BLANK;
@@ -100,9 +100,9 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 
 			return fileEntry.getTitle();
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchFileEntryException ||
+				exception instanceof PrincipalException) {
 
 				return _language.format(
 					locale, "is-temporarily-unavailable", "content");

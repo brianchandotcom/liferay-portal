@@ -142,9 +142,9 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 			portletURL = PortletURLUtil.clone(
 				portletURL, liferayPortletResponse);
 		}
-		catch (PortletException pe) {
+		catch (PortletException portletException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portletException, portletException);
 			}
 
 			portletURL = liferayPortletResponse.createRenderURL();

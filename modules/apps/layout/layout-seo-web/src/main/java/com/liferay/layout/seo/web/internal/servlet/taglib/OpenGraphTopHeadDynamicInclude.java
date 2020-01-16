@@ -239,11 +239,11 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 						keyValuePair.getKey(), keyValuePair.getValue()));
 			}
 		}
-		catch (RuntimeException re) {
-			throw re;
+		catch (RuntimeException runtimeException) {
+			throw runtimeException;
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 

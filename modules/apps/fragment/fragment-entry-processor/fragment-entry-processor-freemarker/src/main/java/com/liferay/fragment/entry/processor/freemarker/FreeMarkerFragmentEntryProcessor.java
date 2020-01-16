@@ -145,8 +145,9 @@ public class FreeMarkerFragmentEntryProcessor
 		try {
 			template.processTemplate(unsyncStringWriter);
 		}
-		catch (TemplateException te) {
-			throw new FragmentEntryContentException(_getMessage(te), te);
+		catch (TemplateException templateException) {
+			throw new FragmentEntryContentException(
+				_getMessage(templateException), templateException);
 		}
 
 		return unsyncStringWriter.toString();
@@ -215,8 +216,9 @@ public class FreeMarkerFragmentEntryProcessor
 				template.processTemplate(new UnsyncStringWriter());
 			}
 		}
-		catch (TemplateException te) {
-			throw new FragmentEntryContentException(_getMessage(te), te);
+		catch (TemplateException templateException) {
+			throw new FragmentEntryContentException(
+				_getMessage(templateException), templateException);
 		}
 	}
 

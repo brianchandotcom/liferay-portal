@@ -66,9 +66,10 @@ public class BlogsReadingTimeEditorConfigContributor
 				return;
 			}
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			_log.error(
-				"Unable to get blogs portlet instance configuration", ce);
+				"Unable to get blogs portlet instance configuration",
+				configurationException);
 		}
 
 		String extraPlugins = jsonObject.getString("extraPlugins");

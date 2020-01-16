@@ -43,8 +43,11 @@ public class OverrideBothEqualsAndHashcodeRule
 					try {
 						_implementsComparableField.set(this, true);
 					}
-					catch (ReflectiveOperationException roe) {
-						throw new RuntimeException(roe);
+					catch (ReflectiveOperationException
+								reflectiveOperationException) {
+
+						throw new RuntimeException(
+							reflectiveOperationException);
 					}
 
 					return data;
@@ -68,8 +71,8 @@ public class OverrideBothEqualsAndHashcodeRule
 
 			_implementsComparableField.setAccessible(true);
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

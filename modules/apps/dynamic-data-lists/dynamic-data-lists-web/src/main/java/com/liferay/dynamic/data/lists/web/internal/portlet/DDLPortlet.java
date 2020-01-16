@@ -121,17 +121,17 @@ public class DDLPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, ddlDisplayContext);
 		}
-		catch (NoSuchRecordException | NoSuchRecordSetException e) {
+		catch (NoSuchRecordException | NoSuchRecordSetException exception) {
 
 			// Let this slide because the user can manually input an record set
 			// key for a new record set that does not yet exist
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(renderRequest, pe.getClass());
+		catch (PortalException portalException) {
+			SessionErrors.add(renderRequest, portalException.getClass());
 		}
 
 		super.render(renderRequest, renderResponse);

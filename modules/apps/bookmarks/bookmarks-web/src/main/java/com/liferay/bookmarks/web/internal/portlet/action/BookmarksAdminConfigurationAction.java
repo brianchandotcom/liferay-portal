@@ -84,12 +84,12 @@ public class BookmarksAdminConfigurationAction
 			try {
 				_bookmarksFolderLocalService.getFolder(rootFolderId);
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsfe, nsfe);
+					_log.debug(noSuchFolderException, noSuchFolderException);
 				}
 
 				SessionErrors.add(actionRequest, "rootFolderIdInvalid");

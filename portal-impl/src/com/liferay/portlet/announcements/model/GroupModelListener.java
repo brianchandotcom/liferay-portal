@@ -45,8 +45,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

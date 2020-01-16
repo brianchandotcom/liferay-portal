@@ -406,10 +406,10 @@ public class RuntimePageImpl implements RuntimePage {
 		try {
 			template.processTemplate(httpServletResponse.getWriter());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw e;
+			throw exception;
 		}
 	}
 
@@ -444,10 +444,10 @@ public class RuntimePageImpl implements RuntimePage {
 		try {
 			template.processTemplate(unsyncStringWriter);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw e;
+			throw exception;
 		}
 
 		Map<Integer, List<PortletRenderer>> portletRenderersMap =
@@ -695,7 +695,7 @@ public class RuntimePageImpl implements RuntimePage {
 			try {
 				future = executorService.submit(renderCallable);
 			}
-			catch (RejectedExecutionException ree) {
+			catch (RejectedExecutionException rejectedExecutionException) {
 
 				// This should only happen when user configures an AbortPolicy
 				// (or some other customized RejectedExecutionHandler that
@@ -755,24 +755,24 @@ public class RuntimePageImpl implements RuntimePage {
 
 					continue;
 				}
-				catch (ExecutionException ee) {
-					throw ee;
+				catch (ExecutionException executionException) {
+					throw executionException;
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 
 					// On interruption, stop waiting, force all pending portlets
 					// to fall back to ajax loading or an error message.
 
 					waitTime = -1;
 				}
-				catch (TimeoutException te) {
+				catch (TimeoutException timeoutException) {
 
 					// On timeout, stop waiting, force all pending portlets to
 					// fall back to ajax loading or an error message.
 
 					waitTime = -1;
 				}
-				catch (CancellationException ce) {
+				catch (CancellationException cancellationException) {
 
 					// This should only happen on a concurrent shutdown of the
 					// thread pool. Simply stops the render process.
@@ -782,7 +782,7 @@ public class RuntimePageImpl implements RuntimePage {
 							"Asynchronized cancellation detected that should " +
 								"only be caused by a concurrent shutdown of " +
 									"the thread pool",
-							ce);
+							cancellationException);
 					}
 
 					return;

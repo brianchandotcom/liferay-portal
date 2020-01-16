@@ -52,12 +52,12 @@ public class OpenSocialHotDeployMessageListener
 					company.getCompanyId(), Layout.class.getName(),
 					ShindigUtil.getTableOpenSocial());
 			}
-			catch (NoSuchTableException nste) {
+			catch (NoSuchTableException noSuchTableException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nste, nste);
+					_log.debug(noSuchTableException, noSuchTableException);
 				}
 
 				ExpandoTableLocalServiceUtil.addTable(
@@ -70,12 +70,12 @@ public class OpenSocialHotDeployMessageListener
 					company.getCompanyId(), User.class.getName(),
 					ShindigUtil.getTableOpenSocial());
 			}
-			catch (NoSuchTableException nste) {
+			catch (NoSuchTableException noSuchTableException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nste, nste);
+					_log.debug(noSuchTableException, noSuchTableException);
 				}
 
 				ExpandoTableLocalServiceUtil.addTable(

@@ -135,8 +135,8 @@ public class GlobalShutdownAction extends SimpleAction {
 					PropsValues.PORTAL_FABRIC_SHUTDOWN_TIMEOUT,
 					TimeUnit.MILLISECONDS);
 			}
-			catch (Exception e) {
-				_log.error("Unable to stop fabric server", e);
+			catch (Exception exception) {
+				_log.error("Unable to stop fabric server", exception);
 			}
 		}
 	}
@@ -158,8 +158,8 @@ public class GlobalShutdownAction extends SimpleAction {
 
 				statement.executeUpdate("SHUTDOWN");
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 			finally {
 				DataAccess.cleanUp(connection, statement);
@@ -191,7 +191,7 @@ public class GlobalShutdownAction extends SimpleAction {
 		try {
 			LogFactoryUtil.setLogFactory(new Jdk14LogFactoryImpl());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		// Thread local registry
@@ -221,7 +221,7 @@ public class GlobalShutdownAction extends SimpleAction {
 				try {
 					thread.interrupt();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 			}
 

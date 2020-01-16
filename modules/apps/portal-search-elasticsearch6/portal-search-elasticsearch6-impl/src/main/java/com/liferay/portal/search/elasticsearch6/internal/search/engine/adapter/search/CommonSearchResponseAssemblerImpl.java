@@ -98,9 +98,9 @@ public class CommonSearchResponseAssemblerImpl
 
 					xContentBuilder.endObject();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(ioe, ioe);
+						_log.debug(ioException, ioException);
 					}
 				}
 			});
@@ -127,9 +127,9 @@ public class CommonSearchResponseAssemblerImpl
 						shardKey,
 						getProfileShardResultString(profileShardResult));
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					if (_log.isInfoEnabled()) {
-						_log.info(ioe, ioe);
+						_log.info(ioException, ioException);
 					}
 				}
 			});
@@ -191,12 +191,12 @@ public class CommonSearchResponseAssemblerImpl
 		try {
 			return searchRequestBuilder.toString();
 		}
-		catch (ElasticsearchException ee) {
+		catch (ElasticsearchException elasticsearchException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ee, ee);
+				_log.debug(elasticsearchException, elasticsearchException);
 			}
 
-			return ee.getMessage();
+			return elasticsearchException.getMessage();
 		}
 	}
 

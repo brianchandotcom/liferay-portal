@@ -557,7 +557,7 @@ public class ChainingCheck extends BaseCheck {
 				requiredChainingClassFileName,
 				StringUtil.read(url.openStream()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

@@ -101,11 +101,11 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			hideDefaultErrorMessage(actionRequest);
 
 			_assetListExceptionRequestHandler.handlePortalException(
-				actionRequest, actionResponse, pe);
+				actionRequest, actionResponse, portalException);
 		}
 	}
 

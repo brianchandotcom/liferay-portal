@@ -244,8 +244,8 @@ public class TLDUtil {
 				try {
 					return _scanNestedXSD(keyXSDFile);
 				}
-				catch (Exception e) {
-					throw new RuntimeException(e);
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
 				}
 			});
 

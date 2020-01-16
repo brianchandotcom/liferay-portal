@@ -63,11 +63,11 @@ public abstract class BaseReportFillManager implements ReportFillManager {
 		try {
 			connection = getConnection(reportRequest);
 		}
-		catch (JRException jre) {
-			throw jre;
+		catch (JRException jrException) {
+			throw jrException;
 		}
-		catch (Exception e) {
-			throw new JRException(e);
+		catch (Exception exception) {
+			throw new JRException(exception);
 		}
 
 		Map<String, Object> reportParameters = getReportParameters(
@@ -88,11 +88,11 @@ public abstract class BaseReportFillManager implements ReportFillManager {
 		try {
 			jrDataSource = getJRDataSource(reportRequest);
 		}
-		catch (JRException jre) {
-			throw jre;
+		catch (JRException jrException) {
+			throw jrException;
 		}
-		catch (Exception e) {
-			throw new JRException(e);
+		catch (Exception exception) {
+			throw new JRException(exception);
 		}
 
 		if (jrDataSource != null) {
@@ -177,7 +177,7 @@ public abstract class BaseReportFillManager implements ReportFillManager {
 				try {
 					value = dateFormat.parse(stringValue);
 				}
-				catch (ParseException pe) {
+				catch (ParseException parseException) {
 					_log.error(stringValue + " is not yyyy-MM-dd");
 				}
 			}

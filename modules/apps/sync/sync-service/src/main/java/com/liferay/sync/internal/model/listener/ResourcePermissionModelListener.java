@@ -106,8 +106,8 @@ public class ResourcePermissionModelListener
 							try {
 								updateSyncDLObject(syncDLObject);
 							}
-							catch (Exception e) {
-								throw new ModelListenerException(e);
+							catch (Exception exception) {
+								throw new ModelListenerException(exception);
 							}
 
 							return null;

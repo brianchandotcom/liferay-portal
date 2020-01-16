@@ -51,8 +51,8 @@ public class DDMTemplateResourceImpl extends BaseResourceImpl {
 			return new UnsyncByteArrayInputStream(
 				script.getBytes(StringPool.UTF8));
 		}
-		catch (Exception e) {
-			throw new WebDAVException(e);
+		catch (Exception exception) {
+			throw new WebDAVException(exception);
 		}
 	}
 

@@ -148,8 +148,8 @@ public class SpringHibernateThreadLocalUtil {
 			_resourcesThreadLocal =
 				(ThreadLocal<Map<Object, Object>>)resourcesThreadLocal;
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

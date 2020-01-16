@@ -167,7 +167,7 @@ public class SelectUsersDisplayContext {
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException wse) {
+		catch (WindowStateException windowStateException) {
 		}
 
 		return portletURL;
@@ -218,9 +218,9 @@ public class SelectUsersDisplayContext {
 						permissionChecker, user.getUserId(),
 						user.getOrganizationIds(), ActionKeys.IMPERSONATE);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(pe.getMessage());
+						_log.debug(portalException.getMessage());
 					}
 
 					return false;

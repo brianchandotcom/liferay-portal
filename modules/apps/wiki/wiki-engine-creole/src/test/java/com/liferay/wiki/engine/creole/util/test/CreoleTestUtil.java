@@ -69,10 +69,10 @@ public class CreoleTestUtil {
 
 			creole10Parser.wikipage();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException("File " + fileName + " does not exist");
 		}
-		catch (RecognitionException re) {
+		catch (RecognitionException recognitionException) {
 			throw new RuntimeException("Unable to parse " + fileName);
 		}
 

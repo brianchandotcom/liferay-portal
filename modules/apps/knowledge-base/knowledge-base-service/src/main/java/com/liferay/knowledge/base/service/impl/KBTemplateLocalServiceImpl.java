@@ -170,7 +170,7 @@ public class KBTemplateLocalServiceImpl extends KBTemplateLocalServiceBaseImpl {
 				kbTemplate = kbTemplatePersistence.findByPrimaryKey(
 					kbTemplateId);
 			}
-			catch (NoSuchTemplateException nste) {
+			catch (NoSuchTemplateException noSuchTemplateException) {
 				continue;
 			}
 

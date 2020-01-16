@@ -68,8 +68,9 @@ public class LocaleSerializer extends AbstractSerializer {
 
 				jsonObject.put("javaClass", javaClass.getName());
 			}
-			catch (Exception e) {
-				throw new MarshallException("Unable to put javaClass", e);
+			catch (Exception exception) {
+				throw new MarshallException(
+					"Unable to put javaClass", exception);
 			}
 		}
 
@@ -80,8 +81,8 @@ public class LocaleSerializer extends AbstractSerializer {
 
 			serializerState.push(object, localeJSONObject, "locale");
 		}
-		catch (Exception e) {
-			throw new MarshallException("Unable to put locale", e);
+		catch (Exception exception) {
+			throw new MarshallException("Unable to put locale", exception);
 		}
 
 		try {
@@ -91,9 +92,9 @@ public class LocaleSerializer extends AbstractSerializer {
 			localeJSONObject.put("language", locale.getLanguage());
 			localeJSONObject.put("variant", locale.getVariant());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new MarshallException(
-				"Unable to put country, language, and variant", e);
+				"Unable to put country, language, and variant", exception);
 		}
 		finally {
 			serializerState.pop();
@@ -134,7 +135,7 @@ public class LocaleSerializer extends AbstractSerializer {
 		try {
 			country = localeJSONObject.getString("country");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		String language = null;
@@ -142,8 +143,8 @@ public class LocaleSerializer extends AbstractSerializer {
 		try {
 			language = localeJSONObject.getString("language");
 		}
-		catch (Exception e) {
-			throw new UnmarshallException("language is undefined", e);
+		catch (Exception exception) {
+			throw new UnmarshallException("language is undefined", exception);
 		}
 
 		String variant = null;
@@ -151,7 +152,7 @@ public class LocaleSerializer extends AbstractSerializer {
 		try {
 			variant = localeJSONObject.getString("variant");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		Locale locale = null;
@@ -185,8 +186,8 @@ public class LocaleSerializer extends AbstractSerializer {
 		try {
 			javaClassName = jsonObject.getString("javaClass");
 		}
-		catch (Exception e) {
-			throw new UnmarshallException("Unable to get javaClass", e);
+		catch (Exception exception) {
+			throw new UnmarshallException("Unable to get javaClass", exception);
 		}
 
 		if (javaClassName == null) {
@@ -196,9 +197,9 @@ public class LocaleSerializer extends AbstractSerializer {
 		try {
 			Class.forName(javaClassName);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new UnmarshallException(
-				"Unable to load javaClass " + javaClassName, e);
+				"Unable to load javaClass " + javaClassName, exception);
 		}
 
 		JSONObject localeJSONObject = null;
@@ -206,8 +207,8 @@ public class LocaleSerializer extends AbstractSerializer {
 		try {
 			localeJSONObject = jsonObject.getJSONObject("locale");
 		}
-		catch (Exception e) {
-			throw new UnmarshallException("Unable to get locale", e);
+		catch (Exception exception) {
+			throw new UnmarshallException("Unable to get locale", exception);
 		}
 
 		if (localeJSONObject == null) {

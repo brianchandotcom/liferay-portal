@@ -203,8 +203,8 @@ public class URLCodecTest {
 
 			Assert.fail(encodedURLString);
 		}
-		catch (IllegalArgumentException iae) {
-			String message = iae.getMessage();
+		catch (IllegalArgumentException illegalArgumentException) {
+			String message = illegalArgumentException.getMessage();
 
 			if (invalidHexChar) {
 				Assert.assertTrue(
@@ -305,8 +305,8 @@ public class URLCodecTest {
 					_ENCODED_URLS[i], CharPool.PLUS, "%20");
 			}
 		}
-		catch (UnsupportedEncodingException uee) {
-			throw new ExceptionInInitializerError(uee);
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new ExceptionInInitializerError(unsupportedEncodingException);
 		}
 	}
 

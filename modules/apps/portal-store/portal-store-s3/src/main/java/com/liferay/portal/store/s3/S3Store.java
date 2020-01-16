@@ -113,8 +113,8 @@ public class S3Store implements Store {
 
 			putObject(companyId, repositoryId, fileName, versionLabel, file);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 		finally {
 			FileUtil.delete(file);
@@ -145,8 +145,8 @@ public class S3Store implements Store {
 
 			_amazonS3.deleteObject(deleteObjectRequest);
 		}
-		catch (AmazonClientException ace) {
-			throw transform(ace);
+		catch (AmazonClientException amazonClientException) {
+			throw transform(amazonClientException);
 		}
 	}
 
@@ -170,8 +170,8 @@ public class S3Store implements Store {
 
 			return new FileInputStream(file);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -281,19 +281,19 @@ public class S3Store implements Store {
 
 			return _amazonS3.doesObjectExist(_bucketName, key);
 		}
-		catch (AmazonClientException ace) {
-			if (isFileNotFound(ace)) {
+		catch (AmazonClientException amazonClientException) {
+			if (isFileNotFound(amazonClientException)) {
 				return false;
 			}
 
-			throw transform(ace);
+			throw transform(amazonClientException);
 		}
-		catch (NoSuchFileException nsfe) {
+		catch (NoSuchFileException noSuchFileException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfe, nsfe);
+				_log.debug(noSuchFileException, noSuchFileException);
 			}
 
 			return false;
@@ -316,14 +316,14 @@ public class S3Store implements Store {
 			_storageClass = StorageClass.fromValue(
 				_s3StoreConfiguration.s3StorageClass());
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			_storageClass = StorageClass.Standard;
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					_s3StoreConfiguration.s3StorageClass() +
 						" is not a valid value for the storage class",
-					iae);
+					illegalArgumentException);
 			}
 		}
 	}
@@ -453,8 +453,8 @@ public class S3Store implements Store {
 				_amazonS3.deleteObjects(deleteObjectsRequest);
 			}
 		}
-		catch (AmazonClientException ace) {
-			throw transform(ace);
+		catch (AmazonClientException amazonClientException) {
+			throw transform(amazonClientException);
 		}
 	}
 
@@ -565,13 +565,13 @@ public class S3Store implements Store {
 
 			return s3Object;
 		}
-		catch (AmazonClientException ace) {
-			if (isFileNotFound(ace)) {
+		catch (AmazonClientException amazonClientException) {
+			if (isFileNotFound(amazonClientException)) {
 				throw new NoSuchFileException(
 					companyId, repositoryId, fileName, versionLabel);
 			}
 
-			throw transform(ace);
+			throw transform(amazonClientException);
 		}
 	}
 
@@ -602,8 +602,8 @@ public class S3Store implements Store {
 
 			return s3ObjectSummaries;
 		}
-		catch (AmazonClientException ace) {
-			throw transform(ace);
+		catch (AmazonClientException amazonClientException) {
+			throw transform(amazonClientException);
 		}
 	}
 
@@ -675,10 +675,10 @@ public class S3Store implements Store {
 
 			upload.waitForCompletion();
 		}
-		catch (AmazonClientException ace) {
-			throw transform(ace);
+		catch (AmazonClientException amazonClientException) {
+			throw transform(amazonClientException);
 		}
-		catch (InterruptedException ie) {
+		catch (InterruptedException interruptedException) {
 			upload.abort();
 
 			Thread thread = Thread.currentThread();

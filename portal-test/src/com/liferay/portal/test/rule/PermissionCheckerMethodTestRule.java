@@ -105,8 +105,8 @@ public class PermissionCheckerMethodTestRule extends MethodTestRule<Void> {
 
 				return clazz.newInstance();
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 

@@ -41,8 +41,9 @@ public class DatagramRequestUtil {
 
 			datagramSocket.send(datagramPacket);
 		}
-		catch (IOException ioe) {
-			System.out.println("Unable to send payload:\n" + ioe.getMessage());
+		catch (IOException ioException) {
+			System.out.println(
+				"Unable to send payload:\n" + ioException.getMessage());
 		}
 	}
 

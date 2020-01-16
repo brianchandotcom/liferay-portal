@@ -58,7 +58,7 @@ public class ViewMembershipRequestsPendingUserCard extends BaseUserCard {
 			return viewMembershipRequetsPendingActionDropdownItemsProvider.
 				getActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

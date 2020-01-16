@@ -118,8 +118,9 @@ public class ServiceConfigurationInitializer {
 				_serviceComponentConfiguration, _classLoader, buildNamespace,
 				buildNumber, buildDate);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to initialize service component", pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to initialize service component", portalException);
 		}
 	}
 
@@ -147,11 +148,11 @@ public class ServiceConfigurationInitializer {
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to read resource actions config in " +
 					PropsKeys.RESOURCE_ACTIONS_CONFIGS,
-				e);
+				exception);
 		}
 	}
 

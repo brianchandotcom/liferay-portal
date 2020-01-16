@@ -31,15 +31,15 @@ public class DLPortletConfigurationIconUtil {
 		try {
 			return unsafeSupplier.get();
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 
 			return defaultValue;
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return defaultValue;
 		}

@@ -106,9 +106,9 @@ public class ElasticsearchEngineConfigurator
 		try {
 			futureTask.get();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new RuntimeException(
-				"Unable to initialize Elasticsearch engine", e);
+				"Unable to initialize Elasticsearch engine", exception);
 		}
 
 		super.initialize();

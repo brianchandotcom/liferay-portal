@@ -119,8 +119,8 @@ public class ServiceComponentLocalServiceImpl
 				classLoader,
 				serviceComponentConfiguration.getModelHintsInputStream());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 
 		try {
@@ -128,8 +128,8 @@ public class ServiceComponentLocalServiceImpl
 				classLoader,
 				serviceComponentConfiguration.getModelHintsExtInputStream());
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 
 		long previousBuildNumber = 0;
@@ -230,8 +230,8 @@ public class ServiceComponentLocalServiceImpl
 
 			return serviceComponent;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -294,8 +294,8 @@ public class ServiceComponentLocalServiceImpl
 
 				releaseLocalService.updateRelease(release);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 	}
@@ -316,7 +316,7 @@ public class ServiceComponentLocalServiceImpl
 
 			modelNames.addAll(getModelNames(xml));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"No optional file META-INF/portlet-model-hints-ext.xml " +
@@ -390,7 +390,7 @@ public class ServiceComponentLocalServiceImpl
 
 			return upgradeTableListener;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to instantiate " + upgradeTableListenerClassName);

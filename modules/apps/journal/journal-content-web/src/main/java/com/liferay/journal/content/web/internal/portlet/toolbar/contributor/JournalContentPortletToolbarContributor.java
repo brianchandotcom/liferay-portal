@@ -172,8 +172,8 @@ public class JournalContentPortletToolbarContributor
 			addPortletTitleAddJournalArticleMenuItems(
 				menuItems, themeDisplay, portletRequest);
 		}
-		catch (Exception e) {
-			_log.error("Unable to add folder menu item", e);
+		catch (Exception exception) {
+			_log.error("Unable to add folder menu item", exception);
 		}
 
 		return menuItems;
@@ -193,10 +193,11 @@ public class JournalContentPortletToolbarContributor
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 				portletDisplay.getId(), ActionKeys.CONFIGURATION);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to check Journal Content portlet permission", pe);
+					"Unable to check Journal Content portlet permission",
+					portalException);
 			}
 		}
 

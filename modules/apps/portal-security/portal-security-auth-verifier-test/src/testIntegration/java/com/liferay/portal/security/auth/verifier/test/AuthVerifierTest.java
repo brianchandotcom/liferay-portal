@@ -193,7 +193,7 @@ public class AuthVerifierTest {
 			try {
 				serviceRegistration.unregister();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 	}
@@ -211,8 +211,8 @@ public class AuthVerifierTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			String message = ioe.getMessage();
+		catch (IOException ioException) {
+			String message = ioException.getMessage();
 
 			Assert.assertTrue(
 				message.startsWith("Server returned HTTP response code: 403"));

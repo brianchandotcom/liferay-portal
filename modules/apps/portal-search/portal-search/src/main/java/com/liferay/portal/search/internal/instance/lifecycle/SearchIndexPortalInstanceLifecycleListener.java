@@ -36,9 +36,10 @@ public class SearchIndexPortalInstanceLifecycleListener
 		try {
 			_searchEngineHelper.initialize(company.getCompanyId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
-				"Unable to initialize search engine for company " + company, e);
+				"Unable to initialize search engine for company " + company,
+				exception);
 		}
 	}
 
@@ -47,9 +48,10 @@ public class SearchIndexPortalInstanceLifecycleListener
 		try {
 			_searchEngineHelper.removeCompany(company.getCompanyId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
-				"Unable to remove search engine for company " + company, e);
+				"Unable to remove search engine for company " + company,
+				exception);
 		}
 	}
 

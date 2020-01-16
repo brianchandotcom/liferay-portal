@@ -94,8 +94,8 @@ public class SearchSearchRequestExecutorImpl
 			return restHighLevelClient.search(
 				searchRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -126,8 +126,8 @@ public class SearchSearchRequestExecutorImpl
 		try {
 			return JSONUtil.getPrettyPrintedJSONString(searchSourceBuilder);
 		}
-		catch (Exception e) {
-			return e.getMessage();
+		catch (Exception exception) {
+			return exception.getMessage();
 		}
 	}
 

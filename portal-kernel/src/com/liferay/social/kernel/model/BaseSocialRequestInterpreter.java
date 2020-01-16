@@ -60,7 +60,7 @@ public abstract class BaseSocialRequestInterpreter
 				"<a href=\"", userDisplayURL, "\">", HtmlUtil.escape(userName),
 				"</a>");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}
@@ -81,7 +81,7 @@ public abstract class BaseSocialRequestInterpreter
 				"<a href=\"", userDisplayURL, "\">", HtmlUtil.escape(userName),
 				"</a>");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}
@@ -93,8 +93,8 @@ public abstract class BaseSocialRequestInterpreter
 		try {
 			return doInterpret(request, themeDisplay);
 		}
-		catch (Exception e) {
-			_log.error("Unable to interpret request", e);
+		catch (Exception exception) {
+			_log.error("Unable to interpret request", exception);
 		}
 
 		return null;
@@ -107,8 +107,8 @@ public abstract class BaseSocialRequestInterpreter
 		try {
 			return doProcessConfirmation(request, themeDisplay);
 		}
-		catch (Exception e) {
-			_log.error("Unable to process confirmation", e);
+		catch (Exception exception) {
+			_log.error("Unable to process confirmation", exception);
 		}
 
 		return false;
@@ -153,8 +153,8 @@ public abstract class BaseSocialRequestInterpreter
 		try {
 			return doProcessRejection(request, themeDisplay);
 		}
-		catch (Exception e) {
-			_log.error("Unable to process rejection", e);
+		catch (Exception exception) {
+			_log.error("Unable to process rejection", exception);
 		}
 
 		return false;

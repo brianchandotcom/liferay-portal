@@ -168,29 +168,29 @@ public abstract class BaseGenericSpellCheckIndexWriter
 								documents.clear();
 							}
 						}
-						catch (SearchException se) {
-							throw new RuntimeException(se);
+						catch (SearchException searchException) {
+							throw new RuntimeException(searchException);
 						}
 					});
 			}
-			catch (RuntimeException re) {
-				Throwable t = re.getCause();
+			catch (RuntimeException runtimeException) {
+				Throwable t = runtimeException.getCause();
 
 				if (t instanceof SearchException) {
 					throw (SearchException)t;
 				}
 
-				throw re;
+				throw runtimeException;
 			}
 
 			addDocuments(typeFieldValue, searchContext, documents);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to index dictionaries", e);
+				_log.warn("Unable to index dictionaries", exception);
 			}
 
-			throw e;
+			throw exception;
 		}
 	}
 

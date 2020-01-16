@@ -185,8 +185,8 @@ public class UADApplicationSummaryHelper {
 				try {
 					return (int)uadAnonymizer.count(userId);
 				}
-				catch (PortalException pe) {
-					throw new SystemException(pe);
+				catch (PortalException portalException) {
+					throw new SystemException(portalException);
 				}
 			}
 		).sum();

@@ -423,7 +423,7 @@ public class BaselinePlugin implements Plugin<Project> {
 				try {
 					newVersion = new Version(newJarTask.getVersion());
 				}
-				catch (IllegalArgumentException iae) {
+				catch (IllegalArgumentException illegalArgumentException) {
 					Logger logger = project.getLogger();
 
 					if (logger.isWarnEnabled()) {

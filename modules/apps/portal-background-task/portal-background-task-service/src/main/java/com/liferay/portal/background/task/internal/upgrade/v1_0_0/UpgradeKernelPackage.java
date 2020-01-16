@@ -30,8 +30,8 @@ public class UpgradeKernelPackage
 				"BackgroundTask", "taskContext", "backgroundTaskId",
 				_CLASS_NAMES, WildcardMode.SURROUND);
 		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
+		catch (Exception exception) {
+			throw new UpgradeException(exception);
 		}
 	}
 

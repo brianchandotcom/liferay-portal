@@ -241,12 +241,13 @@ public class TemplateManagerUtil {
 
 				_templateManagers.put(serviceReference, templateManager);
 			}
-			catch (TemplateException te) {
+			catch (TemplateException templateException) {
 				if (_log.isWarnEnabled()) {
 					String name = templateManager.getName();
 
 					_log.warn(
-						"unable to init " + name + " Template Manager ", te);
+						"unable to init " + name + " Template Manager ",
+						templateException);
 				}
 			}
 

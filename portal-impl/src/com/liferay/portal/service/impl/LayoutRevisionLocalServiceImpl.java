@@ -172,12 +172,15 @@ public class LayoutRevisionLocalServiceImpl
 				portletPreferencesLocalService.deletePortletPreferences(
 					portletPreferences.getPortletPreferencesId());
 			}
-			catch (NoSuchPortletPreferencesException nsppe) {
+			catch (NoSuchPortletPreferencesException
+						noSuchPortletPreferencesException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsppe, nsppe);
+					_log.debug(
+						noSuchPortletPreferencesException,
+						noSuchPortletPreferencesException);
 				}
 			}
 		}
@@ -247,12 +250,14 @@ public class LayoutRevisionLocalServiceImpl
 			return layoutRevisionPersistence.findByH_P_Last(
 				head, plid, new LayoutRevisionCreateDateComparator(true));
 		}
-		catch (NoSuchLayoutRevisionException nslre) {
+		catch (NoSuchLayoutRevisionException noSuchLayoutRevisionException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nslre, nslre);
+				_log.debug(
+					noSuchLayoutRevisionException,
+					noSuchLayoutRevisionException);
 			}
 
 			return null;

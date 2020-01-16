@@ -149,7 +149,7 @@ public class TestFileEntry implements FileEntry {
 		try {
 			return DLAppLocalServiceUtil.getFolder(_folderId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			return null;
 		}
 	}

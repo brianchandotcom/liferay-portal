@@ -43,8 +43,8 @@ public class LayoutDataConverter {
 		try {
 			inputDataJSONObject = JSONFactoryUtil.createJSONObject(data);
 		}
-		catch (JSONException jsone) {
-			throw new RuntimeException(jsone);
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
 		}
 
 		if (isLatestVersion(inputDataJSONObject)) {

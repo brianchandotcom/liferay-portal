@@ -83,9 +83,9 @@ public class WeavingClassLoader extends URLClassLoader {
 			try {
 				data = _urlWeavingAdapter.weaveClass(name, data, false);
 			}
-			catch (AbortException ae) {
+			catch (AbortException abortException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Abort weaving class " + name, ae);
+					_log.warn("Abort weaving class " + name, abortException);
 				}
 			}
 
@@ -121,8 +121,8 @@ public class WeavingClassLoader extends URLClassLoader {
 
 			return _generateClass(name, data);
 		}
-		catch (IOException ioe) {
-			throw new ClassNotFoundException(name, ioe);
+		catch (IOException ioException) {
+			throw new ClassNotFoundException(name, ioException);
 		}
 	}
 

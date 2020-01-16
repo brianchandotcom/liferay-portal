@@ -72,8 +72,8 @@ public class MulticastServerTool {
 				Thread.sleep(interval);
 			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 
 			System.err.println(
 				"Usage: java MulticastServerTool multicastAddress port " +

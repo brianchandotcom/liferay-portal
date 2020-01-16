@@ -282,17 +282,18 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 			return null;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Problem accessing LDAP server " + e.getMessage());
+				_log.warn(
+					"Problem accessing LDAP server " + exception.getMessage());
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			throw new SystemException(
-				"Problem accessing LDAP server " + e.getMessage());
+				"Problem accessing LDAP server " + exception.getMessage());
 		}
 		finally {
 			if (enu != null) {
@@ -426,9 +427,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				return;
 			}
 		}
-		catch (DuplicateLockException dle) {
+		catch (DuplicateLockException duplicateLockException) {
 			if (_log.isDebugEnabled()) {
-				Lock lock = dle.getLock();
+				Lock lock = duplicateLockException.getLock();
 
 				_log.debug(
 					StringBundler.concat(
@@ -534,8 +535,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				importFromLDAPByUser(ldapImportContext);
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to import LDAP users and groups", e);
+		catch (Exception exception) {
+			_log.error("Unable to import LDAP users and groups", exception);
 		}
 		finally {
 			safeLdapContext.close();
@@ -567,12 +568,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			role = _roleLocalService.getRole(
 				companyId, ldapGroup.getGroupName());
 		}
-		catch (NoSuchRoleException nsre) {
+		catch (NoSuchRoleException noSuchRoleException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsre, nsre);
+				_log.debug(noSuchRoleException, noSuchRoleException);
 			}
 
 			User defaultUser = _userLocalService.getDefaultUser(companyId);
@@ -834,8 +835,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 						ldapImportContext, userGroup.getUserGroupId(),
 						usersAttribute);
 				}
-				catch (Exception e) {
-					_log.error("Unable to import group " + searchResult, e);
+				catch (Exception exception) {
+					_log.error(
+						"Unable to import group " + searchResult, exception);
 				}
 			}
 		}
@@ -883,22 +885,24 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 					importGroups(ldapImportContext, userAttributes, user);
 				}
-				catch (GroupFriendlyURLException gfurle) {
-					int type = gfurle.getType();
+				catch (GroupFriendlyURLException groupFriendlyURLException) {
+					int type = groupFriendlyURLException.getType();
 
 					if (type == GroupFriendlyURLException.DUPLICATE) {
 						_log.error(
 							"Unable to import user " + fullUserDN +
 								" because of a duplicate group friendly URL",
-							gfurle);
+							groupFriendlyURLException);
 					}
 					else {
 						_log.error(
-							"Unable to import user " + fullUserDN, gfurle);
+							"Unable to import user " + fullUserDN,
+							groupFriendlyURLException);
 					}
 				}
-				catch (Exception e) {
-					_log.error("Unable to import user " + fullUserDN, e);
+				catch (Exception exception) {
+					_log.error(
+						"Unable to import user " + fullUserDN, exception);
 				}
 			}
 		}
@@ -954,11 +958,11 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					ldapImportContext.getSafeLdapContext(),
 					userGroupDNSafeLdapName);
 			}
-			catch (NameNotFoundException nnfe) {
+			catch (NameNotFoundException nameNotFoundException) {
 				_log.error(
 					"LDAP group not found with full group DN " +
 						userGroupDNSafeLdapName,
-					nnfe);
+					nameNotFoundException);
 			}
 
 			UserGroup userGroup = importUserGroup(
@@ -1170,22 +1174,24 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				ldapImportContext.addImportedUserId(
 					fullUserDN, user.getUserId());
 			}
-			catch (GroupFriendlyURLException gfurle) {
-				int type = gfurle.getType();
+			catch (GroupFriendlyURLException groupFriendlyURLException) {
+				int type = groupFriendlyURLException.getType();
 
 				if (type == GroupFriendlyURLException.DUPLICATE) {
 					_log.error(
 						"Unable to import user " + user.getUserId() +
 							" because of a duplicate group friendly URL",
-						gfurle);
+						groupFriendlyURLException);
 				}
 				else {
 					_log.error(
-						"Unable to import user " + user.getUserId(), gfurle);
+						"Unable to import user " + user.getUserId(),
+						groupFriendlyURLException);
 				}
 			}
-			catch (Exception e) {
-				_log.error("Unable to import user " + user.getUserId(), e);
+			catch (Exception exception) {
+				_log.error(
+					"Unable to import user " + user.getUserId(), exception);
 			}
 
 			return user;
@@ -1220,12 +1226,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					ldapGroup.getGroupName(), ldapGroup.getDescription(), null);
 			}
 		}
-		catch (NoSuchUserGroupException nsuge) {
+		catch (NoSuchUserGroupException noSuchUserGroupException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsuge, nsuge);
+				_log.debug(noSuchUserGroupException, noSuchUserGroupException);
 			}
 
 			StopWatch stopWatch = new StopWatch();
@@ -1253,7 +1259,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 							stopWatch.getTime(), "ms"));
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to create user group " +
@@ -1261,7 +1267,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				}
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 			}
 			finally {
@@ -1310,10 +1316,10 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 						ldapImportContext.getSafeLdapContext(),
 						SafeLdapNameFactory.from(usersLdapAttribute, i));
 				}
-				catch (NameNotFoundException nnfe) {
+				catch (NameNotFoundException nameNotFoundException) {
 					_log.error(
 						"LDAP user not found with fullUserDN " + fullUserDN,
-						nnfe);
+						nameNotFoundException);
 
 					continue;
 				}
@@ -1333,22 +1339,24 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 						newUserIds.add(user.getUserId());
 					}
 				}
-				catch (GroupFriendlyURLException gfurle) {
-					int type = gfurle.getType();
+				catch (GroupFriendlyURLException groupFriendlyURLException) {
+					int type = groupFriendlyURLException.getType();
 
 					if (type == GroupFriendlyURLException.DUPLICATE) {
 						_log.error(
 							"Unable to import user " + userAttributes +
 								" because of a duplicate group friendly URL",
-							gfurle);
+							groupFriendlyURLException);
 					}
 					else {
 						_log.error(
-							"Unable to import user " + userAttributes, gfurle);
+							"Unable to import user " + userAttributes,
+							groupFriendlyURLException);
 					}
 				}
-				catch (Exception e) {
-					_log.error("Unable to load user " + userAttributes, e);
+				catch (Exception exception) {
+					_log.error(
+						"Unable to load user " + userAttributes, exception);
 				}
 			}
 		}
@@ -1419,13 +1427,13 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				ExpandoTableConstants.DEFAULT_TABLE_NAME,
 				expandoBridge.getClassPK(), serializedExpandoAttributes);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to populate expando attributes");
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 	}
@@ -1608,11 +1616,11 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		try {
 			modifiedDate = LDAPUtil.parseDate(modifyTimestamp);
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to parse LDAP modify timestamp " + modifyTimestamp,
-					pe);
+					parseException);
 			}
 		}
 

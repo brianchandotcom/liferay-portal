@@ -133,14 +133,16 @@ public class MailManager {
 
 			return createJSONResult("success", "account-has-been-created");
 		}
-		catch (MailException me) {
-			if (me.getType() == MailException.ACCOUNT_ALREADY_EXISTS) {
+		catch (MailException mailException) {
+			if (mailException.getType() ==
+					MailException.ACCOUNT_ALREADY_EXISTS) {
+
 				return createJSONResult(
 					"failure",
 					"an-account-with-the-same-address-already-exists");
 			}
 
-			_log.error(me, me);
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-add-account");
 		}
@@ -168,13 +170,15 @@ public class MailManager {
 
 			return createJSONResult("success", "folder-has-been-created");
 		}
-		catch (MailException me) {
-			if (me.getType() == MailException.FOLDER_ALREADY_EXISTS) {
+		catch (MailException mailException) {
+			if (mailException.getType() ==
+					MailException.FOLDER_ALREADY_EXISTS) {
+
 				return createJSONResult(
 					"failure", "a-folder-with-the-same-name-already-exists");
 			}
 
-			_log.error(me, me);
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-create-folder");
 		}
@@ -196,7 +200,7 @@ public class MailManager {
 
 			return createJSONResult("success", StringPool.BLANK, "false");
 		}
-		catch (MailException me) {
+		catch (MailException mailException) {
 			return createJSONResult("failure", StringPool.BLANK);
 		}
 	}
@@ -213,8 +217,8 @@ public class MailManager {
 
 			return createJSONResult("success", "account-has-been-deleted");
 		}
-		catch (MailException me) {
-			_log.error(me, me);
+		catch (MailException mailException) {
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-delete-account");
 		}
@@ -236,8 +240,8 @@ public class MailManager {
 
 			return createJSONResult("success", "attachment-has-been-deleted");
 		}
-		catch (MailException me) {
-			_log.error(me, me);
+		catch (MailException mailException) {
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-delete-attachment");
 		}
@@ -256,19 +260,21 @@ public class MailManager {
 
 			return createJSONResult("success", "folder-has-been-deleted");
 		}
-		catch (MailException me) {
-			if (me.getType() == MailException.FOLDER_REQUIRED) {
+		catch (MailException mailException) {
+			if (mailException.getType() == MailException.FOLDER_REQUIRED) {
 				return createJSONResult(
 					"failure",
 					"this-is-a-required-folder-and-can-not-be-deleted");
 			}
-			else if (me.getType() == MailException.FOLDER_DELETE_FAILED) {
+			else if (mailException.getType() ==
+						MailException.FOLDER_DELETE_FAILED) {
+
 				return createJSONResult(
 					"failure",
 					"the-mail-server-will-not-allow-this-folder-to-be-deleted");
 			}
 
-			_log.error(me, me);
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-delete-folder");
 		}
@@ -303,8 +309,8 @@ public class MailManager {
 
 			return createJSONResult("success", "messages-have-been-deleted");
 		}
-		catch (MailException me) {
-			_log.error(me, me);
+		catch (MailException mailException) {
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-delete-messages");
 		}
@@ -329,13 +335,13 @@ public class MailManager {
 
 			return createJSONResult("success", "messages-have-been-flagged");
 		}
-		catch (MailException me) {
-			if (me.getType() == MailException.MESSAGE_INVALID_FLAG) {
+		catch (MailException mailException) {
+			if (mailException.getType() == MailException.MESSAGE_INVALID_FLAG) {
 				return createJSONResult(
 					"failure", "this-flag-is-not-supported");
 			}
 
-			_log.error(me, me);
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-flag-messages");
 		}
@@ -600,13 +606,15 @@ public class MailManager {
 
 			return createJSONResult("success", "messages-have-been-moved");
 		}
-		catch (MailException me) {
-			if (me.getType() == MailException.FOLDER_INVALID_DESTINATION) {
+		catch (MailException mailException) {
+			if (mailException.getType() ==
+					MailException.FOLDER_INVALID_DESTINATION) {
+
 				return createJSONResult(
 					"failure", "cannot-move-messages-to-this-folder");
 			}
 
-			_log.error(me, me);
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-move-messages");
 		}
@@ -627,17 +635,19 @@ public class MailManager {
 
 			return createJSONResult("success", "folder-renamed-successfully");
 		}
-		catch (MailException me) {
-			if (me.getType() == MailException.FOLDER_RENAME_FAILED) {
+		catch (MailException mailException) {
+			if (mailException.getType() == MailException.FOLDER_RENAME_FAILED) {
 				return createJSONResult(
 					"failure", "cannot-move-messages-to-this-folder");
 			}
-			else if (me.getType() == MailException.FOLDER_ALREADY_EXISTS) {
+			else if (mailException.getType() ==
+						MailException.FOLDER_ALREADY_EXISTS) {
+
 				return createJSONResult(
 					"failure", "a-folder-with-the-same-name-already-exists");
 			}
 
-			_log.error(me, me);
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-rename-folder");
 		}
@@ -660,20 +670,24 @@ public class MailManager {
 				"success", "saved-successfully",
 				String.valueOf(message.getMessageId()));
 		}
-		catch (MailException me) {
-			if (me.getType() == MailException.MESSAGE_HAS_NO_RECIPIENTS) {
+		catch (MailException mailException) {
+			if (mailException.getType() ==
+					MailException.MESSAGE_HAS_NO_RECIPIENTS) {
+
 				return createJSONResult(
 					"failure", "please-specify-at-least-one-recipient");
 			}
-			else if (me.getType() == MailException.MESSAGE_INVALID_ADDRESS) {
+			else if (mailException.getType() ==
+						MailException.MESSAGE_INVALID_ADDRESS) {
+
 				return createJSONResult(
 					"failure",
 					"please-make-sure-the-following-address-is-properly-" +
 						"formatted",
-					me.getValue());
+					mailException.getValue());
 			}
 
-			_log.error(me, me);
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-save-draft");
 		}
@@ -696,30 +710,34 @@ public class MailManager {
 
 			return createJSONResult("success", "sent-successfully");
 		}
-		catch (FileSizeException fse) {
+		catch (FileSizeException fileSizeException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(fse, fse);
+				_log.debug(fileSizeException, fileSizeException);
 			}
 
 			return createJSONResult("failure", "attachment-is-too-large");
 		}
-		catch (MailException me) {
-			if (me.getType() == MailException.MESSAGE_HAS_NO_RECIPIENTS) {
+		catch (MailException mailException) {
+			if (mailException.getType() ==
+					MailException.MESSAGE_HAS_NO_RECIPIENTS) {
+
 				return createJSONResult(
 					"failure", "please-specify-at-least-one-recipient");
 			}
-			else if (me.getType() == MailException.MESSAGE_INVALID_ADDRESS) {
+			else if (mailException.getType() ==
+						MailException.MESSAGE_INVALID_ADDRESS) {
+
 				return createJSONResult(
 					"failure",
 					"please-make-sure-the-following-address-is-properly-" +
 						"formatted",
-					HtmlUtil.escape(me.getValue()));
+					HtmlUtil.escape(mailException.getValue()));
 			}
 
-			_log.error(me, me);
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-send-message");
 		}
@@ -746,7 +764,7 @@ public class MailManager {
 
 				return createJSONResult("success", "logged-in-successfully");
 			}
-			catch (MailException me) {
+			catch (MailException mailException) {
 				return createJSONResult("failure", "incorrect-password");
 			}
 		}
@@ -832,20 +850,24 @@ public class MailManager {
 
 			return createJSONResult("success", "account-has-been-updated");
 		}
-		catch (MailException me) {
-			if (me.getType() == MailException.MESSAGE_HAS_NO_RECIPIENTS) {
+		catch (MailException mailException) {
+			if (mailException.getType() ==
+					MailException.MESSAGE_HAS_NO_RECIPIENTS) {
+
 				return createJSONResult(
 					"failure", "please-specify-at-least-one-recipient");
 			}
-			else if (me.getType() == MailException.MESSAGE_INVALID_ADDRESS) {
+			else if (mailException.getType() ==
+						MailException.MESSAGE_INVALID_ADDRESS) {
+
 				return createJSONResult(
 					"failure",
 					"please-make-sure-the-following-address-is-properly-" +
 						"formatted",
-					me.getValue());
+					mailException.getValue());
 			}
 
-			_log.error(me, me);
+			_log.error(mailException, mailException);
 
 			return createJSONResult("failure", "unable-to-update-account");
 		}

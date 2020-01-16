@@ -57,8 +57,8 @@ public class EditRuleGroupMVCRenderCommand implements MVCRenderCommand {
 
 			return "/edit_rule_group.jsp";
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(renderRequest, pe.getClass());
+		catch (PortalException portalException) {
+			SessionErrors.add(renderRequest, portalException.getClass());
 
 			return "/error.jsp";
 		}

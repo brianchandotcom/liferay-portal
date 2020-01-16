@@ -142,8 +142,8 @@ public class HtmlTopTagTest {
 								try {
 									jspWriter.write(sb.toString());
 								}
-								catch (IOException ioe) {
-									ReflectionUtil.throwException(ioe);
+								catch (IOException ioException) {
+									ReflectionUtil.throwException(ioException);
 								}
 							}
 

@@ -53,12 +53,12 @@ public class PortalImplTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertTrue(e instanceof RuntimeException);
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof RuntimeException);
 			Assert.assertEquals(
 				"Unable to unwrap the portlet request from " +
 					MockPortletRequest.class,
-				e.getMessage());
+				exception.getMessage());
 		}
 	}
 

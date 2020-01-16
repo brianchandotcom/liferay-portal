@@ -64,15 +64,15 @@ public class MultipleBlogsEntryBulkSelection
 		try {
 			return _blogsEntryService.getEntry(entryId);
 		}
-		catch (NoSuchEntryException nsee) {
+		catch (NoSuchEntryException noSuchEntryException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsee, nsee);
+				_log.warn(noSuchEntryException, noSuchEntryException);
 			}
 
 			return null;
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 

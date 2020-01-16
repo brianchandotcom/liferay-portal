@@ -100,8 +100,8 @@ public class SearchResultSummaryDisplayBuilder {
 
 			return build(className, classPK);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return buildTemporarilyUnavailable();
 		}
@@ -688,12 +688,12 @@ public class SearchResultSummaryDisplayBuilder {
 		try {
 			return assetRendererFactory.getAssetRenderer(classPK);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new IllegalStateException(
 				StringBundler.concat(
 					"Unable to get asset renderer for class ", className,
 					" with primary key ", classPK),
-				e);
+				exception);
 		}
 	}
 
@@ -889,9 +889,10 @@ public class SearchResultSummaryDisplayBuilder {
 		try {
 			return dateFormat.parse(dateStringFieldValue);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new IllegalArgumentException(
-				"Unable to parse date string: " + dateStringFieldValue, e);
+				"Unable to parse date string: " + dateStringFieldValue,
+				exception);
 		}
 	}
 

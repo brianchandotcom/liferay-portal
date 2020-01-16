@@ -97,8 +97,8 @@ public class QueryHelperImpl implements QueryHelper {
 			try {
 				query = searchQuery.addTerm(field, value, like);
 			}
-			catch (ParseException pe) {
-				throw new SystemException(pe);
+			catch (ParseException parseException) {
+				throw new SystemException(parseException);
 			}
 		}
 

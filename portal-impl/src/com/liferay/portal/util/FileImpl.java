@@ -194,7 +194,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			try {
 				oldContent = read(source);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				return;
 			}
 
@@ -203,7 +203,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			try {
 				newContent = read(destination);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 
 			if ((oldContent == null) || !oldContent.equals(newContent)) {
@@ -318,7 +318,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			try {
 				exists = file.exists();
 			}
-			catch (SecurityException se) {
+			catch (SecurityException securityException) {
 
 				// We may have the permission to delete a specific file without
 				// having the permission to check if the file exists
@@ -432,8 +432,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 								new ExtractTextProcessCallable(
 									getBytes(tikaInputStream)));
 						}
-						catch (Exception e) {
-							return ReflectionUtil.throwException(e);
+						catch (Exception exception) {
+							return ReflectionUtil.throwException(exception);
 						}
 					});
 
@@ -692,7 +692,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 	}
@@ -769,8 +769,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		try {
 			mkdirs(file);
 		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
 		}
 	}
 
@@ -790,7 +790,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 				FileUtils.moveFile(source, destination);
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return false;
 		}
 
@@ -905,7 +905,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 				list.add(line);
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		return list;
@@ -916,7 +916,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		try {
 			return toList(new FileReader(fileName));
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return new ArrayList<>();
 		}
 	}
@@ -928,7 +928,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		try {
 			properties.load(fis);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		return properties;
@@ -939,7 +939,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		try {
 			return toProperties(new FileInputStream(fileName));
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return new Properties();
 		}
 	}
@@ -1096,7 +1096,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		try {
 			mkdirs(parentFile);
 		}
-		catch (SecurityException se) {
+		catch (SecurityException securityException) {
 
 			// We may have the permission to write a specific file without
 			// having the permission to check if the parent file exists
@@ -1194,8 +1194,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 				return _parseToString(tika, TikaInputStream.get(is));
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (Exception exception) {
+				throw new ProcessException(exception);
 			}
 		}
 
@@ -1213,8 +1213,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			try {
 				_tikaConfig = new TikaConfig();
 			}
-			catch (Exception e) {
-				throw new ExceptionInInitializerError(e);
+			catch (Exception exception) {
+				throw new ExceptionInInitializerError(exception);
 			}
 		}
 

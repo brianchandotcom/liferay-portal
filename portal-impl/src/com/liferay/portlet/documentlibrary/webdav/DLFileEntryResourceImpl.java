@@ -53,8 +53,8 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 
 			return fileVersion.getContentStream(true);
 		}
-		catch (Exception e) {
-			throw new WebDAVException(e);
+		catch (Exception exception) {
+			throw new WebDAVException(exception);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 
 			return fileVersion.getMimeType();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return fileEntry.getMimeType();
 		}
 	}
@@ -93,7 +93,7 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 
 			return fileVersion.getSize();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return fileEntry.getSize();
 		}
 	}
@@ -110,7 +110,7 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 		try {
 			return fileEntry.hasLock();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

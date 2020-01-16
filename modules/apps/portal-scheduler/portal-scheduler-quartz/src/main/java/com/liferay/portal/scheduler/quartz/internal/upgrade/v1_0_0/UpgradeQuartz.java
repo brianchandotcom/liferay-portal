@@ -47,9 +47,9 @@ public class UpgradeQuartz extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(sqle, sqle);
+				_log.warn(sqlException, sqlException);
 			}
 		}
 	}

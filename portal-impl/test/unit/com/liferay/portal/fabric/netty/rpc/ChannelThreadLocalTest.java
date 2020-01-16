@@ -42,8 +42,9 @@ public class ChannelThreadLocalTest {
 		try {
 			ChannelThreadLocal.getChannel();
 		}
-		catch (IllegalStateException ise) {
-			Assert.assertEquals("Channel is null", ise.getMessage());
+		catch (IllegalStateException illegalStateException) {
+			Assert.assertEquals(
+				"Channel is null", illegalStateException.getMessage());
 		}
 
 		EmbeddedChannel embeddedChannel =
@@ -58,8 +59,9 @@ public class ChannelThreadLocalTest {
 		try {
 			ChannelThreadLocal.getChannel();
 		}
-		catch (IllegalStateException ise) {
-			Assert.assertEquals("Channel is null", ise.getMessage());
+		catch (IllegalStateException illegalStateException) {
+			Assert.assertEquals(
+				"Channel is null", illegalStateException.getMessage());
 		}
 	}
 

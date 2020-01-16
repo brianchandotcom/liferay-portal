@@ -71,8 +71,8 @@ public class EARBuilder {
 			FileUtil.write(
 				originalApplicationXML, document.formattedString(), true);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

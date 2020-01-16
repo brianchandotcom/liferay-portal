@@ -334,8 +334,8 @@ public class ChannelHubImpl implements ChannelHub {
 			UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
 				userId, notificationEvent);
 		}
-		catch (Exception e) {
-			throw new ChannelException("Unable to send event", e);
+		catch (Exception exception) {
+			throw new ChannelException("Unable to send event", exception);
 		}
 	}
 
@@ -369,8 +369,8 @@ public class ChannelHubImpl implements ChannelHub {
 			UserNotificationEventLocalServiceUtil.addUserNotificationEvents(
 				userId, persistedNotificationEvents);
 		}
-		catch (Exception e) {
-			throw new ChannelException("Unable to send events", e);
+		catch (Exception exception) {
+			throw new ChannelException("Unable to send events", exception);
 		}
 	}
 

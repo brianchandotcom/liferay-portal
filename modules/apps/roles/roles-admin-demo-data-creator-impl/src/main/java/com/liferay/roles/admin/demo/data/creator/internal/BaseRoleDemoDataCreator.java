@@ -60,8 +60,8 @@ public abstract class BaseRoleDemoDataCreator implements RoleDemoDataCreator {
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new PortalException(e);
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 
@@ -100,9 +100,9 @@ public abstract class BaseRoleDemoDataCreator implements RoleDemoDataCreator {
 				roleLocalService.deleteRole(roleId);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 	}

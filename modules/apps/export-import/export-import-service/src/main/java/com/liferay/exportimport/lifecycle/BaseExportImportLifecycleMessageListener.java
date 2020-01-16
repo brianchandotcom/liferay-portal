@@ -45,12 +45,12 @@ public abstract class BaseExportImportLifecycleMessageListener
 				exportImportLifecycleListener.onExportImportLifecycleEvent(
 					exportImportLifecycleEvent);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to call " +
 							exportImportLifecycleListener.getClass(),
-						e);
+						exception);
 				}
 			}
 		}

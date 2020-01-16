@@ -288,7 +288,7 @@ public class TrashPortlet extends MVCPortlet {
 					com.liferay.trash.kernel.model.TrashEntry.class, entry),
 				TrashEntryConstants.DEFAULT_CONTAINER_ID, newName);
 		}
-		catch (RestoreEntryException ree) {
+		catch (RestoreEntryException restoreEntryException) {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			LiferayPortletResponse liferayPortletResponse =
@@ -299,12 +299,16 @@ public class TrashPortlet extends MVCPortlet {
 			renderURL.setParameter("mvcPath", "/restore_entry.jsp");
 			renderURL.setParameter("redirect", redirect);
 			renderURL.setParameter(
-				"trashEntryId", String.valueOf(ree.getTrashEntryId()));
+				"trashEntryId",
+				String.valueOf(restoreEntryException.getTrashEntryId()));
 			renderURL.setParameter(
-				"duplicateEntryId", String.valueOf(ree.getDuplicateEntryId()));
-			renderURL.setParameter("oldName", ree.getOldName());
+				"duplicateEntryId",
+				String.valueOf(restoreEntryException.getDuplicateEntryId()));
 			renderURL.setParameter(
-				"overridable", String.valueOf(ree.isOverridable()));
+				"oldName", restoreEntryException.getOldName());
+			renderURL.setParameter(
+				"overridable",
+				String.valueOf(restoreEntryException.isOverridable()));
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
 
@@ -313,7 +317,8 @@ public class TrashPortlet extends MVCPortlet {
 			sendRedirect(actionRequest, actionResponse);
 
 			throw new com.liferay.trash.exception.RestoreEntryException(
-				ree.getType(), ree.getCause());
+				restoreEntryException.getType(),
+				restoreEntryException.getCause());
 		}
 	}
 

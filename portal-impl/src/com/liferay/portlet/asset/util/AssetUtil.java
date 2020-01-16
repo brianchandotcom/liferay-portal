@@ -518,7 +518,7 @@ public class AssetUtil {
 
 				assetEntries.add(assetEntry);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

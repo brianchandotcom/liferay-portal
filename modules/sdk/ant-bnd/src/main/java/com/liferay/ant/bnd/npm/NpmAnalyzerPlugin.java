@@ -367,7 +367,7 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 			try {
 				version = new Version(npmModule.version);
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 				String sanitizedQualifier = npmModule.version.replaceAll(
 					"[^-_\\da-zA-Z]", "");
 

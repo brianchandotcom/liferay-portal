@@ -91,8 +91,8 @@ public class TomcatRemoteSPI extends RemoteSPI {
 
 			context.addServletMappingDecoded(mappingPattern, servletClassName);
 		}
-		catch (Exception e) {
-			throw new RemoteException("Unable to add servlet", e);
+		catch (Exception exception) {
+			throw new RemoteException("Unable to add servlet", exception);
 		}
 	}
 
@@ -110,11 +110,11 @@ public class TomcatRemoteSPI extends RemoteSPI {
 					contextXMLFile = disableJARandResourceLocking(
 						contextXMLFile);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					throw new RemoteException(
 						"Unable to convert " + contextXMLFile +
 							" to disable JAR locking and resource locking",
-						e);
+						exception);
 				}
 
 				URI uri = contextXMLFile.toURI();
@@ -139,8 +139,9 @@ public class TomcatRemoteSPI extends RemoteSPI {
 
 			host.addChild(context);
 		}
-		catch (MalformedURLException murle) {
-			throw new RemoteException("Unable to add web application", murle);
+		catch (MalformedURLException malformedURLException) {
+			throw new RemoteException(
+				"Unable to add web application", malformedURLException);
 		}
 	}
 
@@ -154,8 +155,8 @@ public class TomcatRemoteSPI extends RemoteSPI {
 		try {
 			_tomcat.init();
 		}
-		catch (LifecycleException le) {
-			throw new RemoteException("Unable to init", le);
+		catch (LifecycleException lifecycleException) {
+			throw new RemoteException("Unable to init", lifecycleException);
 		}
 	}
 
@@ -164,8 +165,8 @@ public class TomcatRemoteSPI extends RemoteSPI {
 		try {
 			_tomcat.start();
 		}
-		catch (LifecycleException le) {
-			throw new RemoteException("Unable to start", le);
+		catch (LifecycleException lifecycleException) {
+			throw new RemoteException("Unable to start", lifecycleException);
 		}
 	}
 
@@ -174,8 +175,8 @@ public class TomcatRemoteSPI extends RemoteSPI {
 		try {
 			_tomcat.stop();
 		}
-		catch (LifecycleException le) {
-			throw new RemoteException("Unable to stop", le);
+		catch (LifecycleException lifecycleException) {
+			throw new RemoteException("Unable to stop", lifecycleException);
 		}
 	}
 
@@ -237,8 +238,8 @@ public class TomcatRemoteSPI extends RemoteSPI {
 		try {
 			_tomcat.destroy();
 		}
-		catch (LifecycleException le) {
-			throw new RemoteException("Unable to destroy", le);
+		catch (LifecycleException lifecycleException) {
+			throw new RemoteException("Unable to destroy", lifecycleException);
 		}
 	}
 

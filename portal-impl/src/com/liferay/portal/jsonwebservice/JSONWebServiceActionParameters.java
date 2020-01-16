@@ -55,7 +55,7 @@ public class JSONWebServiceActionParameters {
 			_serviceContext = ServiceContextFactory.getInstance(
 				httpServletRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		_addDefaultParameters();
@@ -238,12 +238,12 @@ public class JSONWebServiceActionParameters {
 						try {
 							FileUtil.write(file, fileItem.getInputStream());
 						}
-						catch (IOException ioe) {
+						catch (IOException ioException) {
 							if (_log.isWarnEnabled()) {
 								_log.warn(
 									"Unable to write temporary file " +
 										file.getAbsolutePath(),
-									ioe);
+									ioException);
 							}
 						}
 					}

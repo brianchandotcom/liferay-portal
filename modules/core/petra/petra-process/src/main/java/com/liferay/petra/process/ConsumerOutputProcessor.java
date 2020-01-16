@@ -50,8 +50,8 @@ public class ConsumerOutputProcessor implements OutputProcessor<Void, Void> {
 		try {
 			StreamUtil.transfer(inputStream, new DummyOutputStream());
 		}
-		catch (IOException ioe) {
-			throw new ProcessException(ioe);
+		catch (IOException ioException) {
+			throw new ProcessException(ioException);
 		}
 	}
 

@@ -107,8 +107,8 @@ public class WordsImpl implements Words {
 					dictionaryList.add(line);
 				}
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 
 			_dictionaryList = dictionaryList;
@@ -144,13 +144,13 @@ public class WordsImpl implements Words {
 						spellDictionaryHashMap.addDictionary(
 							unsyncBufferedReader);
 					}
-					catch (IOException ioe) {
-						_log.error(ioe, ioe);
+					catch (IOException ioException) {
+						_log.error(ioException, ioException);
 					}
 				}
 			}
-			catch (IOException ioe) {
-				_log.error("Unable to initialize dictionary", ioe);
+			catch (IOException ioException) {
+				_log.error("Unable to initialize dictionary", ioException);
 			}
 
 			_spellDictionaryHashMap = spellDictionaryHashMap;

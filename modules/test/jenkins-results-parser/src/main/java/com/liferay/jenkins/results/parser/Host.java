@@ -40,8 +40,8 @@ public interface Host {
 					JenkinsResultsParserUtil.readInputStream(
 						process.getInputStream()));
 			}
-			catch (IOException | TimeoutException e) {
-				throw new RuntimeException(e);
+			catch (IOException | TimeoutException exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 

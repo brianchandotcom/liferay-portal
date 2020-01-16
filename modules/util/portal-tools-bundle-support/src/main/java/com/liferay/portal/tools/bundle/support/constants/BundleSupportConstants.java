@@ -71,8 +71,8 @@ public class BundleSupportConstants {
 		try {
 			DEFAULT_BUNDLE_URL_OBJECT = new URL(DEFAULT_BUNDLE_URL);
 		}
-		catch (MalformedURLException murle) {
-			throw new ExceptionInInitializerError(murle);
+		catch (MalformedURLException malformedURLException) {
+			throw new ExceptionInInitializerError(malformedURLException);
 		}
 
 		DEFAULT_TOKEN_FILE = new File(

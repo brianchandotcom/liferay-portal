@@ -292,8 +292,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 				userGroupLocalService.search(
 					companyId, keywords, params, start, end, sort));
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -356,8 +356,8 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 					companyId, name, description, params, andOperator, start,
 					end, sort));
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

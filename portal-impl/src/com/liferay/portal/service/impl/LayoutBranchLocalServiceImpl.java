@@ -232,12 +232,13 @@ public class LayoutBranchLocalServiceImpl
 					LayoutBranchNameException.DUPLICATE);
 			}
 		}
-		catch (NoSuchLayoutBranchException nslbe) {
+		catch (NoSuchLayoutBranchException noSuchLayoutBranchException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nslbe, nslbe);
+				_log.debug(
+					noSuchLayoutBranchException, noSuchLayoutBranchException);
 			}
 		}
 	}

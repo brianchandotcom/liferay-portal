@@ -148,8 +148,10 @@ public class FilterParserImplTest {
 			_filterParserImpl.parse("collectionFieldExternal eq 'value'");
 			Assert.fail("Expected ExpressionVisitException was not thrown");
 		}
-		catch (ExpressionVisitException eve) {
-			Assert.assertEquals("Collection not allowed.", eve.getMessage());
+		catch (ExpressionVisitException expressionVisitException) {
+			Assert.assertEquals(
+				"Collection not allowed.",
+				expressionVisitException.getMessage());
 		}
 	}
 
@@ -533,9 +535,10 @@ public class FilterParserImplTest {
 			_filterParserImpl.parse("fieldExternal/any(f:contains(f,'alu'))");
 			Assert.fail("Expected ExpressionVisitException was not thrown");
 		}
-		catch (ExpressionVisitException eve) {
+		catch (ExpressionVisitException expressionVisitException) {
 			Assert.assertEquals(
-				"Expected token 'QualifiedName' not found.", eve.getMessage());
+				"Expected token 'QualifiedName' not found.",
+				expressionVisitException.getMessage());
 		}
 	}
 

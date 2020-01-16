@@ -40,7 +40,7 @@ public class RemoteFabricStatusTest extends BaseFabricStatusTestCase {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 	}
 

@@ -126,11 +126,11 @@ public class NotificationUtil {
 
 			transport.close();
 		}
-		catch (IOException | MessagingException e) {
+		catch (IOException | MessagingException exception) {
 			System.out.println("Unable to send email.");
-			System.out.println(e.getMessage());
+			System.out.println(exception.getMessage());
 
-			e.printStackTrace();
+			exception.printStackTrace();
 		}
 	}
 

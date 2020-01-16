@@ -274,7 +274,9 @@ public class QueryUtilTest {
 
 				Assert.assertFalse(unmodifiable);
 			}
-			catch (UnsupportedOperationException uoe) {
+			catch (UnsupportedOperationException
+						unsupportedOperationException) {
+
 				Assert.assertTrue(unmodifiable);
 			}
 

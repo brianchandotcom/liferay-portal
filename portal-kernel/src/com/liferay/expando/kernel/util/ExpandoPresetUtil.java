@@ -37,7 +37,7 @@ public class ExpandoPresetUtil {
 		try {
 			properties = expandoBridge.getAttributeProperties(name);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			properties = new UnicodeProperties();
 		}
 

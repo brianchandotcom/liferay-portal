@@ -212,7 +212,7 @@ public class JSONDataStorage implements DataStorage {
 				JSONFactoryUtil.createJSONArray(
 					localizedValue.getString(locale)));
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			return Collections.emptyList();
 		}
 	}

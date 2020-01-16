@@ -147,7 +147,7 @@ public class PortletDescriptorParser {
 					continue;
 				}
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 				_log.error("Unable to load filter-class " + filterClassName);
 
 				continue;
@@ -182,7 +182,7 @@ public class PortletDescriptorParser {
 			try {
 				portletClass = bundle.loadClass(portletClassName);
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 				_log.error("Unable to load portlet-class " + portletClassName);
 
 				continue;

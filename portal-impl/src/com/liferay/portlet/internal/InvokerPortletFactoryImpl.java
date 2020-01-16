@@ -46,8 +46,8 @@ public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 				invokerFilterContainer, checkAuthToken, facesPortlet,
 				headerPortlet);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -62,8 +62,8 @@ public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 			return new InvokerPortletImpl(
 				portletModel, portlet, portletContext, invokerFilterContainer);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

@@ -275,7 +275,7 @@ public class CXFEndpointPublisher {
 			try {
 				_busServiceRegistration.unregister();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to unregister CXF bus service registration " +
@@ -287,7 +287,7 @@ public class CXFEndpointPublisher {
 				try {
 					_remoteAccessFilterServiceRegistration.unregister();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to unregister RemoteAccessFilter " +
@@ -301,7 +301,7 @@ public class CXFEndpointPublisher {
 				try {
 					_authVerifierFilterServiceRegistration.unregister();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to unregister AuthVerifierFilter " +
@@ -314,7 +314,7 @@ public class CXFEndpointPublisher {
 			try {
 				_servletServiceRegistration.unregister();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to unregister servlet service registration " +
@@ -325,7 +325,7 @@ public class CXFEndpointPublisher {
 			try {
 				_servletContextHelperServiceRegistration.unregister();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to unregister servlet context helper service " +
@@ -370,8 +370,8 @@ public class CXFEndpointPublisher {
 
 					chain.doFilter(servletRequest, servletResponse);
 				}
-				catch (Exception e) {
-					throw new ServletException(e);
+				catch (Exception exception) {
+					throw new ServletException(exception);
 				}
 				finally {
 					AccessControlThreadLocal.setRemoteAccess(remoteAccess);

@@ -99,10 +99,10 @@ public class LDAPAuth implements Authenticator {
 			return authenticate(
 				companyId, emailAddress, StringPool.BLANK, 0, password);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new AuthException(e);
+			throw new AuthException(exception);
 		}
 	}
 
@@ -116,10 +116,10 @@ public class LDAPAuth implements Authenticator {
 			return authenticate(
 				companyId, StringPool.BLANK, screenName, 0, password);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new AuthException(e);
+			throw new AuthException(exception);
 		}
 	}
 
@@ -134,10 +134,10 @@ public class LDAPAuth implements Authenticator {
 				companyId, StringPool.BLANK, StringPool.BLANK, userId,
 				password);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new AuthException(e);
+			throw new AuthException(exception);
 		}
 	}
 
@@ -198,10 +198,10 @@ public class LDAPAuth implements Authenticator {
 				ldapAuthResult.setResponseControl(
 					initialLdapContext.getResponseControls());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				boolean authenticationException = false;
 
-				if (e instanceof AuthenticationException) {
+				if (exception instanceof AuthenticationException) {
 					authenticationException = true;
 				}
 
@@ -211,24 +211,24 @@ public class LDAPAuth implements Authenticator {
 							StringBundler.concat(
 								"Failed to bind to the LDAP server, wrong ",
 								"password provided for userDN ", userDN),
-							e);
+							exception);
 					}
 					else {
 						_log.debug(
 							"Failed to bind to the LDAP server with userDN " +
 								userDN,
-							e);
+							exception);
 					}
 				}
 				else if (_log.isWarnEnabled() && !authenticationException) {
 					_log.warn(
 						StringBundler.concat(
 							"Failed to bind to the LDAP server with userDN ",
-							userDN, " :", e.getMessage()));
+							userDN, " :", exception.getMessage()));
 				}
 
 				ldapAuthResult.setAuthenticated(false);
-				ldapAuthResult.setErrorMessage(e.getMessage());
+				ldapAuthResult.setErrorMessage(exception.getMessage());
 
 				setFailedLDAPAuthResult(env, ldapAuthResult);
 			}
@@ -445,14 +445,14 @@ public class LDAPAuth implements Authenticator {
 				_userLocalService.updatePasswordReset(user.getUserId(), true);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof PasswordExpiredException ||
-				e instanceof UserLockoutException) {
+		catch (Exception exception) {
+			if (exception instanceof PasswordExpiredException ||
+				exception instanceof UserLockoutException) {
 
-				throw e;
+				throw exception;
 			}
 
-			_log.error("Problem accessing LDAP server", e);
+			_log.error("Problem accessing LDAP server", exception);
 
 			return FAILURE;
 		}

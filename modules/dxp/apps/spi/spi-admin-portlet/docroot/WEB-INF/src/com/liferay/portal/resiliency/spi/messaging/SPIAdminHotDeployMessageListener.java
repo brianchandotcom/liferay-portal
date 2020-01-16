@@ -93,7 +93,7 @@ public class SPIAdminHotDeployMessageListener extends HotDeployMessageListener {
 						spiDefinition.getSpiDefinitionId());
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Unable to stop SPI " + spiDefinition.getName());
 				}

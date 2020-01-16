@@ -259,8 +259,8 @@ public class FragmentCollectionContributorTrackerImpl
 
 			return true;
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to validate fragment entry", pe);
+		catch (PortalException portalException) {
+			_log.error("Unable to validate fragment entry", portalException);
 		}
 
 		return false;

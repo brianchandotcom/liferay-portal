@@ -103,9 +103,9 @@ public class TemplateNotificationMessageGenerator
 
 			return stringWriter.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new NotificationMessageGenerationException(
-				"Unable to generate notification message", e);
+				"Unable to generate notification message", exception);
 		}
 	}
 

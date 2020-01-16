@@ -85,8 +85,9 @@ public class TagResourceHandler {
 
 			outputResource(Position.BOTTOM, StringUtil.read(url.openStream()));
 		}
-		catch (Exception e) {
-			_log.error("Unable to output NPM resource " + npmResourcePath, e);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to output NPM resource " + npmResourcePath, exception);
 		}
 	}
 
@@ -107,8 +108,9 @@ public class TagResourceHandler {
 
 			outputResource(Position.TOP, sb.toString());
 		}
-		catch (Exception e) {
-			_log.error("Unable to output NPM style sheet " + npmCssPath, e);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to output NPM style sheet " + npmCssPath, exception);
 		}
 	}
 
@@ -130,8 +132,8 @@ public class TagResourceHandler {
 
 				jspWriter.write(html);
 			}
-			catch (IOException ioe) {
-				_log.error("Unable to output resource", ioe);
+			catch (IOException ioException) {
+				_log.error("Unable to output resource", ioException);
 			}
 		}
 		else {

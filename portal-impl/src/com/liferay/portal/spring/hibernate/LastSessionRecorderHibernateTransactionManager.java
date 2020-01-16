@@ -139,8 +139,8 @@ public class LastSessionRecorderHibernateTransactionManager
 
 			loggerField.set(null, dummyLog);
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

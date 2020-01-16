@@ -103,9 +103,9 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			DLStoreUtil.deleteFile(
 				app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -282,11 +282,11 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 			BundleManagerUtil.installLPKG(file);
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 		finally {
 			clearInstalledAppsCache();
@@ -318,8 +318,8 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			try {
 				DeployManagerUtil.undeploy(module.getContextName());
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 	}
@@ -396,7 +396,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 					app.getCompanyId(), CompanyConstants.SYSTEM,
 					app.getFilePath());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 
 			DLStoreUtil.addFile(
@@ -454,7 +454,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 				return PropertiesUtil.load(propertiesString);
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return null;
 		}
 	}

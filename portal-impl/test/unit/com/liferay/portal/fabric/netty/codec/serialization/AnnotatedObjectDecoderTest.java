@@ -138,7 +138,7 @@ public class AnnotatedObjectDecoderTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchElementException nsee) {
+		catch (NoSuchElementException noSuchElementException) {
 		}
 
 		_assertChannelPipeline(_dateChannelHandler);
@@ -150,7 +150,7 @@ public class AnnotatedObjectDecoderTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchElementException nsee) {
+		catch (NoSuchElementException noSuchElementException) {
 		}
 
 		_assertChannelPipeline();
@@ -196,7 +196,7 @@ public class AnnotatedObjectDecoderTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchElementException nsee) {
+		catch (NoSuchElementException noSuchElementException) {
 		}
 
 		_assertChannelPipeline(_dateChannelHandler);
@@ -210,7 +210,7 @@ public class AnnotatedObjectDecoderTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchElementException nsee) {
+		catch (NoSuchElementException noSuchElementException) {
 		}
 
 		_assertChannelPipeline();

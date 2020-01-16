@@ -142,8 +142,9 @@ public class SessionTreeJSClickAction implements Action {
 
 			return null;
 		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
+		catch (Exception exception) {
+			PortalUtil.sendError(
+				exception, httpServletRequest, httpServletResponse);
 
 			return null;
 		}
@@ -191,7 +192,8 @@ public class SessionTreeJSClickAction implements Action {
 
 				return;
 			}
-			catch (ConcurrentModificationException cme) {
+			catch (ConcurrentModificationException
+						concurrentModificationException) {
 			}
 		}
 	}

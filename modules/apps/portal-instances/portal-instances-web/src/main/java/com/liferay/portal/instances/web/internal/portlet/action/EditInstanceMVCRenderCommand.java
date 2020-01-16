@@ -56,16 +56,16 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 		try {
 			getInstance(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchCompanyException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchCompanyException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/edit_instance.jsp";

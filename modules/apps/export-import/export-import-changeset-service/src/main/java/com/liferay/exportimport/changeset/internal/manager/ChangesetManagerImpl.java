@@ -151,9 +151,11 @@ public class ChangesetManagerImpl implements ChangesetManager {
 			return _staging.publishPortlet(
 				user.getUserId(), exportImportConfiguration);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to publish changeset: " + pe.getMessage());
+				_log.warn(
+					"Unable to publish changeset: " +
+						portalException.getMessage());
 			}
 
 			return 0;

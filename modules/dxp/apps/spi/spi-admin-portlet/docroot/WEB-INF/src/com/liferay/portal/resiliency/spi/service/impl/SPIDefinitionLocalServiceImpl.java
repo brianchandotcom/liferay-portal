@@ -285,9 +285,9 @@ public class SPIDefinitionLocalServiceImpl
 
 			SPIDefinitionMonitorUtil.register(spiDefinition);
 		}
-		catch (Exception re) {
+		catch (Exception exception) {
 			throw new PortalException(
-				"Unable to initialize SPI " + spiDefinitionId, re);
+				"Unable to initialize SPI " + spiDefinitionId, exception);
 		}
 	}
 
@@ -378,12 +378,14 @@ public class SPIDefinitionLocalServiceImpl
 
 			spiDefinition.setStatusMessage(null);
 		}
-		catch (RemoteException re) {
+		catch (RemoteException remoteException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to stop SPI " + spiDefinitionId, re);
+				_log.warn(
+					"Unable to stop SPI " + spiDefinitionId, remoteException);
 			}
 
-			spiDefinition.setStatusMessage(StackTraceUtil.getStackTrace(re));
+			spiDefinition.setStatusMessage(
+				StackTraceUtil.getStackTrace(remoteException));
 		}
 		finally {
 			spiDefinition.setStatus(SPIAdminConstants.STATUS_STOPPED);
@@ -540,8 +542,8 @@ public class SPIDefinitionLocalServiceImpl
 		try {
 			return spiProvider.createSPI(spiConfiguration);
 		}
-		catch (PortalResiliencyException pre) {
-			throw new PortalException(pre);
+		catch (PortalResiliencyException portalResiliencyException) {
+			throw new PortalException(portalResiliencyException);
 		}
 	}
 

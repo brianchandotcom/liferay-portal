@@ -40,12 +40,12 @@ public class BookmarksFolderImpl extends BookmarksFolderBaseImpl {
 
 				ancestorFolderIds.add(folder.getFolderId());
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 				if (folder.isInTrash()) {
 					break;
 				}
 
-				throw nsfe;
+				throw noSuchFolderException;
 			}
 		}
 
@@ -64,12 +64,12 @@ public class BookmarksFolderImpl extends BookmarksFolderBaseImpl {
 
 				ancestors.add(folder);
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 				if (folder.isInTrash()) {
 					break;
 				}
 
-				throw nsfe;
+				throw noSuchFolderException;
 			}
 		}
 

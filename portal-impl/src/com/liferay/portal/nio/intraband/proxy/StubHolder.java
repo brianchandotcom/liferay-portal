@@ -56,9 +56,10 @@ public class StubHolder<T> {
 			try {
 				startupFinished = future.get();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to detect SPI's startup status", e);
+					_log.warn(
+						"Unable to detect SPI's startup status", exception);
 				}
 			}
 
@@ -72,12 +73,13 @@ public class StubHolder<T> {
 
 				return _stub;
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to create stub", e);
+					_log.warn("Unable to create stub", exception);
 				}
 
-				return _stubCreator.onCreationFailure(_stubId, _originalT, e);
+				return _stubCreator.onCreationFailure(
+					_stubId, _originalT, exception);
 			}
 		}
 	}

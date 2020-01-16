@@ -77,8 +77,8 @@ public class SyncAdminPortlet extends BaseSyncPortlet {
 		try {
 			doUpdatePreferences(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

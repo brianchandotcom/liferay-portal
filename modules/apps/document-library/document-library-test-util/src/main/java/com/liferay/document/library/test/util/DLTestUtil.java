@@ -82,7 +82,7 @@ public class DLTestUtil {
 
 				DLFolderLocalServiceUtil.deleteFolder(folder.getFolderId());
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 			}
 		}
 

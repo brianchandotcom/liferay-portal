@@ -58,8 +58,8 @@ public class PluginsEnvironmentBuilder {
 
 			new PluginsEnvironmentBuilder(dir);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

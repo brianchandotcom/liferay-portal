@@ -173,15 +173,16 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 
 			_ddmFormValuesValidator.validate(ddmFormValues);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					String.format(
 						"Stale or invalid data for DDM content %d  and " +
 							"structure version %d causes: {%s}",
 						ddmContent.getContentId(),
-						ddmStructureVersion.getStructureId(), e.getMessage()),
-					e);
+						ddmStructureVersion.getStructureId(),
+						exception.getMessage()),
+					exception);
 			}
 		}
 	}
@@ -258,13 +259,14 @@ public class DDMServiceVerifyProcess extends VerifyProcess {
 					try {
 						verifyStructure(ddmStructure);
 					}
-					catch (PortalException pe) {
+					catch (PortalException portalException) {
 						_log.error(
 							String.format(
 								"Invalid data for DDM structure %d causes: " +
 									"{%s}",
-								ddmStructure.getStructureId(), pe.getMessage()),
-							pe);
+								ddmStructure.getStructureId(),
+								portalException.getMessage()),
+							portalException);
 					}
 				});
 

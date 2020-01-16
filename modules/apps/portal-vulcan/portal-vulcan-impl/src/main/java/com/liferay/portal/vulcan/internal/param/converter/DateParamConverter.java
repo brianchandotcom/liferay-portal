@@ -35,8 +35,8 @@ public class DateParamConverter implements ParamConverter<Date> {
 		try {
 			return simpleDateFormat.parse(string);
 		}
-		catch (ParseException pe) {
-			throw new WebApplicationException(pe);
+		catch (ParseException parseException) {
+			throw new WebApplicationException(parseException);
 		}
 	}
 

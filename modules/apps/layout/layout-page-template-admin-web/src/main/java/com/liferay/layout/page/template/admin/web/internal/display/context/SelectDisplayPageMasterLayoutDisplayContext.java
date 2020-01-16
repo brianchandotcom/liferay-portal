@@ -125,8 +125,8 @@ public class SelectDisplayPageMasterLayoutDisplayContext {
 				jsonArray.put(jsonObject);
 			}
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to get mapping subtypes", pe);
+		catch (PortalException portalException) {
+			_log.error("Unable to get mapping subtypes", portalException);
 		}
 
 		return jsonArray;

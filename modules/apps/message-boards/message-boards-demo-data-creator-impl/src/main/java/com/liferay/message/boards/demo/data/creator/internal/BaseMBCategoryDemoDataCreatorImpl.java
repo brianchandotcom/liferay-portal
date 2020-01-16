@@ -61,9 +61,9 @@ public abstract class BaseMBCategoryDemoDataCreatorImpl
 			try {
 				mbCategoryLocalService.deleteCategory(categoryId);
 			}
-			catch (NoSuchMessageException nsme) {
+			catch (NoSuchMessageException noSuchMessageException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsme, nsme);
+					_log.warn(noSuchMessageException, noSuchMessageException);
 				}
 			}
 

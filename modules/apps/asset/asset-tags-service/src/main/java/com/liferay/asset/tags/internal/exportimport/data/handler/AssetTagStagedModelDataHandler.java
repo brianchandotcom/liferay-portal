@@ -165,9 +165,9 @@ public class AssetTagStagedModelDataHandler
 					userId, portletDataContext.getScopeGroupId(),
 					assetTag.getName(), serviceContext);
 			}
-			catch (DuplicateTagException dte) {
+			catch (DuplicateTagException duplicateTagException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(dte, dte);
+					_log.debug(duplicateTagException, duplicateTagException);
 				}
 
 				importedAssetTag = _assetTagLocalService.addTag(
@@ -181,9 +181,9 @@ public class AssetTagStagedModelDataHandler
 					userId, existingAssetTag.getTagId(), assetTag.getName(),
 					serviceContext);
 			}
-			catch (DuplicateTagException dte) {
+			catch (DuplicateTagException duplicateTagException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(dte, dte);
+					_log.debug(duplicateTagException, duplicateTagException);
 				}
 
 				importedAssetTag = _assetTagLocalService.updateTag(

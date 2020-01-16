@@ -52,8 +52,8 @@ public class DRLActionExecutor implements ActionExecutor {
 		try {
 			doExecute(kaleoAction, executionContext);
 		}
-		catch (Exception e) {
-			throw new ActionExecutorException(e);
+		catch (Exception exception) {
+			throw new ActionExecutorException(exception);
 		}
 	}
 

@@ -137,10 +137,10 @@ public class StatusLocalServiceImpl extends StatusLocalServiceBaseImpl {
 					entryPersistence.update(entry);
 				}
 			}
-			catch (JSONException jsone) {
+			catch (JSONException jsonException) {
 				_log.error(
 					"Unable to create a JSON object from " + activePanelIds,
-					jsone);
+					jsonException);
 			}
 
 			status.setActivePanelIds(activePanelIds);
@@ -157,7 +157,7 @@ public class StatusLocalServiceImpl extends StatusLocalServiceBaseImpl {
 		try {
 			statusPersistence.update(status);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Add failed, fetch {userId=" + userId + "}");
 			}
@@ -165,7 +165,7 @@ public class StatusLocalServiceImpl extends StatusLocalServiceBaseImpl {
 			status = statusPersistence.fetchByUserId(userId);
 
 			if (status == null) {
-				throw se;
+				throw systemException;
 			}
 		}
 

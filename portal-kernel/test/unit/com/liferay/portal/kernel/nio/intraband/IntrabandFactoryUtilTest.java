@@ -57,11 +57,12 @@ public class IntrabandFactoryUtilTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			Assert.assertEquals(
-				"Unable to instantiate NoSuchClass", re.getMessage());
+				"Unable to instantiate NoSuchClass",
+				runtimeException.getMessage());
 
-			Throwable throwable = re.getCause();
+			Throwable throwable = runtimeException.getCause();
 
 			Assert.assertSame(
 				ClassNotFoundException.class, throwable.getClass());

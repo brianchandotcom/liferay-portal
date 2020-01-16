@@ -89,12 +89,12 @@ public class UserOrganizationSegmentsCriteriaContributor
 
 			newFilterString = sb.toString();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				StringBundler.concat(
 					"Unable to evaluate criteria ", criteria, " with filter ",
 					filterString, " and conjunction ", conjunction.getValue()),
-				pe);
+				portalException);
 		}
 
 		if (Validator.isNull(newFilterString)) {

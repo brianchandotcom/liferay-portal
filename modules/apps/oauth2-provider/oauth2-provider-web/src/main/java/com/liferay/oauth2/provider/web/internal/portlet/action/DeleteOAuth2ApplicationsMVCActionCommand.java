@@ -58,12 +58,12 @@ public class DeleteOAuth2ApplicationsMVCActionCommand
 					oAuth2ApplicationId);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
-			SessionErrors.add(actionRequest, pe.getClass());
+			SessionErrors.add(actionRequest, portalException.getClass());
 		}
 
 		return true;

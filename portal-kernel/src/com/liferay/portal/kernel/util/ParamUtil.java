@@ -2621,7 +2621,7 @@ public class ParamUtil {
 			try {
 				form = Normalizer.Form.valueOf(formString);
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 				form = null;
 			}
 

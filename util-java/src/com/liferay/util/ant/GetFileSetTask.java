@@ -202,8 +202,8 @@ public class GetFileSetTask extends Task {
 
 				});
 		}
-		catch (IOException ioe) {
-			throw new BuildException(ioe);
+		catch (IOException ioException) {
+			throw new BuildException(ioException);
 		}
 
 		return missingClassNames;

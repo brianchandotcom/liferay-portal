@@ -76,9 +76,9 @@ public class SoyBuilder {
 				command.execute();
 			}
 		}
-		catch (ParameterException pe) {
+		catch (ParameterException parameterException) {
 			if (!soyBuilderArgs.isHelp()) {
-				System.err.println(pe.getMessage());
+				System.err.println(parameterException.getMessage());
 			}
 
 			_printHelp(jCommander);

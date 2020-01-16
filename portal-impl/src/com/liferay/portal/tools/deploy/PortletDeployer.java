@@ -67,9 +67,9 @@ public class PortletDeployer extends BaseDeployer {
 		try (PortletDeployer portletDeployer = new PortletDeployer(
 				wars, jars)) {
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 		}
 	}

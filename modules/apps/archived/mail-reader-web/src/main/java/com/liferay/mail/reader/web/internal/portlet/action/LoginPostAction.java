@@ -50,8 +50,8 @@ public class LoginPostAction extends Action {
 		try {
 			initiateSynchronization(httpServletRequest);
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 	}
 

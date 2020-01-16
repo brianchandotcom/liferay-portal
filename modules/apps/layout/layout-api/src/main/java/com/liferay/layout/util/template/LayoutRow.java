@@ -33,8 +33,8 @@ public class LayoutRow {
 		try {
 			unsafeConsumer.accept(layoutRow);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		return layoutRow;

@@ -41,7 +41,7 @@ public class LocalGitRepositoryTest extends GitRepositoryTest {
 							FILE_PATH_REPOSITORY));
 			}
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			errorCollector.addError(
 				new Throwable(
 					"The repository directory should be " +

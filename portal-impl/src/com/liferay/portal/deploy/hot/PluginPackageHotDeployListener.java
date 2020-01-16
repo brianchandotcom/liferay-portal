@@ -208,7 +208,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 				ConfigurationFactoryUtil.getConfiguration(
 					classLoader, "service");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Unable to read service.properties");
 			}

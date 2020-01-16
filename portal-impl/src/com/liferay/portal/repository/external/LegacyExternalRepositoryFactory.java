@@ -81,11 +81,11 @@ public class LegacyExternalRepositoryFactory implements RepositoryFactory {
 			baseRepository = ExternalRepositoryFactoryUtil.getInstance(
 				repositoryImplClassName);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new RepositoryException(
 				"Unable to find a valid repository for class name ID " +
 					classNameId,
-				e);
+				exception);
 		}
 
 		setupRepository(repositoryId, repository, baseRepository);
@@ -94,8 +94,8 @@ public class LegacyExternalRepositoryFactory implements RepositoryFactory {
 			try {
 				baseRepository.initRepository();
 			}
-			catch (Exception e) {
-				throw new RepositoryException(e);
+			catch (Exception exception) {
+				throw new RepositoryException(exception);
 			}
 		}
 

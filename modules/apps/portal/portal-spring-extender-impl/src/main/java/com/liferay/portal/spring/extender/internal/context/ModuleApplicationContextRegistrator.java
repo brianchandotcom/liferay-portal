@@ -102,9 +102,10 @@ public class ModuleApplicationContextRegistrator {
 					_configurableApplicationContext,
 					_extendeeBundle.getBundleContext());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new Exception(
-				"Unable to start " + _extendeeBundle.getSymbolicName(), e);
+				"Unable to start " + _extendeeBundle.getSymbolicName(),
+				exception);
 		}
 		finally {
 			CachedIntrospectionResults.clearClassLoader(classLoader);

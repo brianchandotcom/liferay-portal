@@ -53,8 +53,8 @@ public class BatchOperation extends BaseOperation {
 					sharepointConnectionInfo.getLibraryName(),
 					updateListItemsUpdates);
 		}
-		catch (RemoteException re) {
-			RemoteExceptionUtil.handleRemoteException(re);
+		catch (RemoteException remoteException) {
+			RemoteExceptionUtil.handleRemoteException(remoteException);
 		}
 
 		parseUpdateListItemsResponseUpdateListItemsResult(

@@ -39,8 +39,8 @@ public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
 				super.upgrade();
 			}
 		}
-		catch (SQLException sqle) {
-			throw new UpgradeException(sqle);
+		catch (SQLException sqlException) {
+			throw new UpgradeException(sqlException);
 		}
 	}
 

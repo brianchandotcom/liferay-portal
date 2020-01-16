@@ -342,8 +342,8 @@ public class SerializerTest {
 
 			Assert.fail();
 		}
-		catch (InvocationTargetException ite) {
-			Throwable cause = ite.getCause();
+		catch (InvocationTargetException invocationTargetException) {
+			Throwable cause = invocationTargetException.getCause();
 
 			Assert.assertTrue(
 				cause.toString(), cause instanceof OutOfMemoryError);
@@ -828,14 +828,14 @@ public class SerializerTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			String message = re.getMessage();
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
 
 			Assert.assertTrue(
 				message.startsWith(
 					"Unable to write ordinary serializable object "));
 
-			Throwable throwable = re.getCause();
+			Throwable throwable = runtimeException.getCause();
 
 			Assert.assertTrue(throwable instanceof IOException);
 			Assert.assertEquals("Forced IOException", throwable.getMessage());
@@ -1046,8 +1046,8 @@ public class SerializerTest {
 				_bufferField = ReflectionTestUtil.getField(clazz, "_buffer");
 				_nextField = ReflectionTestUtil.getField(clazz, "_next");
 			}
-			catch (ClassNotFoundException cnfe) {
-				throw new ExceptionInInitializerError(cnfe);
+			catch (ClassNotFoundException classNotFoundException) {
+				throw new ExceptionInInitializerError(classNotFoundException);
 			}
 		}
 
@@ -1087,8 +1087,9 @@ public class SerializerTest {
 				_writeBytesMethod = ReflectionTestUtil.getMethod(
 					clazz, "write", byte[].class);
 			}
-			catch (ReflectiveOperationException roe) {
-				throw new ExceptionInInitializerError(roe);
+			catch (ReflectiveOperationException reflectiveOperationException) {
+				throw new ExceptionInInitializerError(
+					reflectiveOperationException);
 			}
 		}
 
@@ -1144,8 +1145,9 @@ public class SerializerTest {
 				_enqueueMethod = ReflectionTestUtil.getMethod(
 					clazz, "enqueue", byte[].class);
 			}
-			catch (ReflectiveOperationException roe) {
-				throw new ExceptionInInitializerError(roe);
+			catch (ReflectiveOperationException reflectiveOperationException) {
+				throw new ExceptionInInitializerError(
+					reflectiveOperationException);
 			}
 		}
 

@@ -624,8 +624,8 @@ public class UnsyncPrintWriterTest extends BaseWriterTestCase {
 
 			_writerField.setAccessible(true);
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

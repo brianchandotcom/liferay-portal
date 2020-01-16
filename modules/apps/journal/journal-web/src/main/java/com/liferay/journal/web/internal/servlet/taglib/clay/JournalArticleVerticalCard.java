@@ -81,7 +81,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 		try {
 			return articleActionDropdownItemsProvider.getActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -122,7 +122,7 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 
 			return editArticleURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

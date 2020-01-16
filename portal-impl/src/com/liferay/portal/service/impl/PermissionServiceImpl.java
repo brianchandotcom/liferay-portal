@@ -173,7 +173,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 						return;
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 			}
 

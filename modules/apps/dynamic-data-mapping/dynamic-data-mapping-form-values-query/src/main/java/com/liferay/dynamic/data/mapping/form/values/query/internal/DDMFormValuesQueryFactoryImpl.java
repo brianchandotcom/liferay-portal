@@ -55,8 +55,8 @@ public class DDMFormValuesQueryFactoryImpl
 				ddmFormValues,
 				ddmFormValuesQueryListener.getDDMFormValuesFilters());
 		}
-		catch (Exception e) {
-			throw new DDMFormValuesQuerySyntaxException(e);
+		catch (Exception exception) {
+			throw new DDMFormValuesQuerySyntaxException(exception);
 		}
 	}
 

@@ -290,7 +290,7 @@ public class CalendarDisplayContext {
 			try {
 				calendar = _calendarService.fetchCalendar(calendarId);
 			}
-			catch (PrincipalException pe) {
+			catch (PrincipalException principalException) {
 				if (_log.isInfoEnabled()) {
 					StringBundler sb = new StringBundler(4);
 
@@ -299,7 +299,7 @@ public class CalendarDisplayContext {
 					sb.append(" permission for user ");
 					sb.append(user.getUserId());
 
-					_log.info(sb.toString(), pe);
+					_log.info(sb.toString(), principalException);
 				}
 
 				continue;

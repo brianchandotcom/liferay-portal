@@ -100,8 +100,8 @@ public class OrganizationModelPreFilterContributor
 				try {
 					treePath = organization.buildTreePath();
 				}
-				catch (PortalException pe) {
-					throw new RuntimeException(pe);
+				catch (PortalException portalException) {
+					throw new RuntimeException(portalException);
 				}
 
 				if ((permissionChecker != null) &&

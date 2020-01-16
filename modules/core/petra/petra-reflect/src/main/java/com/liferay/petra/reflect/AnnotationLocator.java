@@ -74,7 +74,7 @@ public class AnnotationLocator {
 
 				_mergeAnnotations(specificMethod.getAnnotations(), indexMap);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 
 			try {
@@ -85,7 +85,7 @@ public class AnnotationLocator {
 
 				_mergeAnnotations(clazz.getAnnotations(), indexMap);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 
 			_queueSuperTypes(queue, clazz);
@@ -158,7 +158,7 @@ public class AnnotationLocator {
 					return annotation;
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 
 			try {
@@ -169,7 +169,7 @@ public class AnnotationLocator {
 
 				annotation = clazz.getAnnotation(annotationClass);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 
 			if (annotation == null) {

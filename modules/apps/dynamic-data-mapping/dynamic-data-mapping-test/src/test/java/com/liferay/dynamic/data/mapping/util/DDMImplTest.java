@@ -582,7 +582,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 		}
 	}
 

@@ -96,15 +96,16 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		try {
 			_keyStore = KeyStore.getInstance(samlKeyStoreType);
 		}
-		catch (KeyStoreException kse) {
+		catch (KeyStoreException keyStoreException) {
 			String message = StringBundler.concat(
 				"Unable instantiate keystore with type ", samlKeyStoreType,
-				": ", kse.getMessage());
+				": ", keyStoreException.getMessage());
 
-			_keyStoreException = new KeyStoreException(message, kse);
+			_keyStoreException = new KeyStoreException(
+				message, keyStoreException);
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, kse);
+				_log.debug(message, keyStoreException);
 			}
 			else {
 				_log.error(message);
@@ -125,11 +126,12 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		try {
 			_samlKeyStoreFileWatcher.close();
 		}
-		catch (Exception e) {
-			String message = "Unable to close file watcher: " + e.getMessage();
+		catch (Exception exception) {
+			String message =
+				"Unable to close file watcher: " + exception.getMessage();
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, e);
+				_log.debug(message, exception);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(message);
@@ -154,15 +156,15 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 			doLoadKeyStore();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String message = StringBundler.concat(
 				"Unable to load SAML keystore ", getSamlKeyStorePath(), ": ",
-				e.getMessage());
+				exception.getMessage());
 
-			_keyStoreException = new KeyStoreException(message, e);
+			_keyStoreException = new KeyStoreException(message, exception);
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(message, e);
+				_log.debug(message, exception);
 			}
 			else {
 				_log.error(message);

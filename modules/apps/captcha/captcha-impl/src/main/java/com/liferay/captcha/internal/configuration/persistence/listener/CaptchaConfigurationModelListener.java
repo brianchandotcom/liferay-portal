@@ -53,9 +53,10 @@ public class CaptchaConfigurationModelListener
 				validateReCaptchaKeys(properties);
 			}
 		}
-		catch (CaptchaConfigurationException cce) {
+		catch (CaptchaConfigurationException captchaConfigurationException) {
 			throw new ConfigurationModelListenerException(
-				cce.getMessage(), CaptchaConfiguration.class,
+				captchaConfigurationException.getMessage(),
+				CaptchaConfiguration.class,
 				CaptchaConfigurationModelListener.class, properties);
 		}
 	}

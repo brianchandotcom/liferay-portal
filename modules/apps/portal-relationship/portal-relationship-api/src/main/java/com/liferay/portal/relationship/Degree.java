@@ -48,7 +48,7 @@ public class Degree {
 
 			return new Degree(degree);
 		}
-		catch (NumberFormatException nfe) {
+		catch (NumberFormatException numberFormatException) {
 			return one();
 		}
 	}

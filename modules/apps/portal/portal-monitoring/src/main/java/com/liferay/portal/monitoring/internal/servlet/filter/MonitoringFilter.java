@@ -126,9 +126,10 @@ public class MonitoringFilter
 
 				groupId = layout.getGroupId();
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to retrieve layout " + plid, pe);
+					_log.debug(
+						"Unable to retrieve layout " + plid, portalException);
 				}
 			}
 		}
@@ -192,19 +193,20 @@ public class MonitoringFilter
 					httpServletResponse.getStatus());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (portalRequestDataSample != null) {
 				portalRequestDataSample.capture(RequestStatus.ERROR);
 			}
 
-			if (e instanceof IOException) {
-				throw (IOException)e;
+			if (exception instanceof IOException) {
+				throw (IOException)exception;
 			}
-			else if (e instanceof ServletException) {
-				throw (ServletException)e;
+			else if (exception instanceof ServletException) {
+				throw (ServletException)exception;
 			}
 			else {
-				throw new ServletException("Unable to execute request", e);
+				throw new ServletException(
+					"Unable to execute request", exception);
 			}
 		}
 		finally {

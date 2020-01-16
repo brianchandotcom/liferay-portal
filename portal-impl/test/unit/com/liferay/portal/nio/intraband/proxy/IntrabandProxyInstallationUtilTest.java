@@ -84,8 +84,8 @@ public class IntrabandProxyInstallationUtilTest {
 					serializer.writeObject(
 						new RPCResponse(processCallable.call()));
 				}
-				catch (Exception e) {
-					serializer.writeObject(new RPCResponse(e));
+				catch (Exception exception) {
+					serializer.writeObject(new RPCResponse(exception));
 				}
 
 				return Datagram.createResponseDatagram(
@@ -146,8 +146,8 @@ public class IntrabandProxyInstallationUtilTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Throwable throwable = re.getCause();
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
 
 			throwable = throwable.getCause();
 
@@ -164,12 +164,12 @@ public class IntrabandProxyInstallationUtilTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			Assert.assertEquals(
 				"Skeleton and stub proxy method signatures do not match. " +
 					"Skeleton is [doStuff-()Ljava/lang/Object;]. Stub is " +
 						"[doStuffX-()Ljava/lang/Object;].",
-				ise.getMessage());
+				illegalStateException.getMessage());
 		}
 	}
 
@@ -210,8 +210,8 @@ public class IntrabandProxyInstallationUtilTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Throwable throwable = ee.getCause();
+		catch (ExecutionException executionException) {
+			Throwable throwable = executionException.getCause();
 
 			throwable = throwable.getCause();
 			throwable = throwable.getCause();
@@ -237,12 +237,12 @@ public class IntrabandProxyInstallationUtilTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			Assert.assertEquals(
 				"Skeleton and stub proxy method signatures do not match. " +
 					"Skeleton is [doStuff-()Ljava/lang/Object;]. Stub is " +
 						"[doStuffX-()Ljava/lang/Object;].",
-				ise.getMessage());
+				illegalStateException.getMessage());
 		}
 	}
 

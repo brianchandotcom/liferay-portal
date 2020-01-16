@@ -109,13 +109,13 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 						updateIdpMetadata(company.getCompanyId());
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					String msg = StringBundler.concat(
 						"Unable to refresh metadata for company ",
-						company.getCompanyId(), ": ", e.getMessage());
+						company.getCompanyId(), ": ", exception.getMessage());
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(msg, e);
+						_log.debug(msg, exception);
 					}
 					else if (_log.isWarnEnabled()) {
 						_log.warn(msg);
@@ -148,14 +148,14 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 				_samlSpIdpConnectionLocalService.updateMetadata(
 					samlSpIdpConnection.getSamlSpIdpConnectionId());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				String message = StringBundler.concat(
 					"Unable to refresh IdP metadata for ",
 					samlSpIdpConnection.getSamlIdpEntityId(), ": ",
-					e.getMessage());
+					exception.getMessage());
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(message, e);
+					_log.debug(message, exception);
 				}
 				else if (_log.isWarnEnabled()) {
 					_log.warn(message);
@@ -179,14 +179,14 @@ public class SamlMetadataMessageListener extends SamlMessageListener {
 				_samlIdpSpConnectionLocalService.updateMetadata(
 					samlIdpSpConnection.getSamlIdpSpConnectionId());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				String message = StringBundler.concat(
 					"Unable to refresh SP metadata for ",
 					samlIdpSpConnection.getSamlSpEntityId(), ": ",
-					e.getMessage());
+					exception.getMessage());
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(message, e);
+					_log.debug(message, exception);
 				}
 				else if (_log.isWarnEnabled()) {
 					_log.warn(message);

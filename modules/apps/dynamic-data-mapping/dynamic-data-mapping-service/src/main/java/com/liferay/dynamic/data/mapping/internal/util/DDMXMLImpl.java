@@ -77,9 +77,9 @@ public class DDMXMLImpl implements DDMXML {
 		try {
 			document = _saxReader.read(xml);
 		}
-		catch (DocumentException de) {
+		catch (DocumentException documentException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(de.getMessage(), de);
+				_log.debug(documentException.getMessage(), documentException);
 			}
 
 			return null;
@@ -185,8 +185,8 @@ public class DDMXMLImpl implements DDMXML {
 
 			return document.formattedString();
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -218,18 +218,21 @@ public class DDMXMLImpl implements DDMXML {
 
 			return document.asXML();
 		}
-		catch (StructureDefinitionException sde) {
-			throw sde;
+		catch (StructureDefinitionException structureDefinitionException) {
+			throw structureDefinitionException;
 		}
-		catch (StructureDuplicateElementException sdee) {
-			throw sdee;
+		catch (StructureDuplicateElementException
+					structureDuplicateElementException) {
+
+			throw structureDuplicateElementException;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Invalid XML content " + e.getMessage(), e);
+				_log.debug(
+					"Invalid XML content " + exception.getMessage(), exception);
 			}
 
-			throw new StructureDefinitionException(e);
+			throw new StructureDefinitionException(exception);
 		}
 	}
 

@@ -83,7 +83,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			modifiedDirsList.addAll(
 				portalGitWorkingDirectory.getModifiedModuleDirsList());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			File workingDirectory =
 				portalGitWorkingDirectory.getWorkingDirectory();
 
@@ -91,7 +91,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				JenkinsResultsParserUtil.combine(
 					"Unable to get module directories in ",
 					workingDirectory.getPath()),
-				ioe);
+				ioException);
 		}
 
 		File modulesDir = new File(

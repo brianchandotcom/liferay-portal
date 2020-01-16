@@ -65,14 +65,14 @@ public abstract class BaseGadgetPortlet extends MVCPortlet {
 
 			super.render(renderRequest, renderResponse);
 		}
-		catch (IOException ioe) {
-			throw ioe;
+		catch (IOException ioException) {
+			throw ioException;
 		}
-		catch (PortletException pe) {
-			throw pe;
+		catch (PortletException portletException) {
+			throw portletException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -160,7 +160,7 @@ public abstract class BaseGadgetPortlet extends MVCPortlet {
 		try {
 			gadget = getGadget(renderRequest);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if (gadget != null) {

@@ -130,7 +130,7 @@ public class DDMFormInstanceFieldSettingsValidator {
 								availableLocale, valueString);
 						}
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 					}
 
 					return localizedValue;

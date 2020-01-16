@@ -68,8 +68,8 @@ public class ExportUtil {
 
 			return zipWriter.getFile();
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -84,9 +84,9 @@ public class ExportUtil {
 			return PortletFileRepositoryUtil.getPortletFileEntry(
 				layoutPageTemplateEntry.getPreviewFileEntryId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get file entry preview", pe);
+				_log.debug("Unable to get file entry preview", portalException);
 			}
 		}
 

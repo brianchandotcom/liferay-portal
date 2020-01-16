@@ -74,9 +74,10 @@ public class FragmentRendererControllerImpl
 			return _translateConfigurationFields(
 				jsonObject, fragmentRendererContext.getLocale());
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			_log.error(
-				"Unable to parse fragment entry link configuration", jsone);
+				"Unable to parse fragment entry link configuration",
+				jsonException);
 		}
 
 		return StringPool.BLANK;
@@ -97,12 +98,14 @@ public class FragmentRendererControllerImpl
 					fragmentEntryLink.getConfiguration());
 			}
 		}
-		catch (FragmentEntryConfigurationException fece) {
+		catch (FragmentEntryConfigurationException
+					fragmentEntryConfigurationException) {
+
 			SessionErrors.add(
 				httpServletRequest, "fragmentEntryContentInvalid");
 
 			return _getFragmentEntryConfigurationExceptionMessage(
-				httpServletRequest, fece);
+				httpServletRequest, fragmentEntryConfigurationException);
 		}
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -116,28 +119,28 @@ public class FragmentRendererControllerImpl
 				new PipingServletResponse(
 					httpServletResponse, unsyncStringWriter));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"Unable to render content of fragment entry ",
 						fragmentEntryLink.getFragmentEntryId(), ":",
-						e.getMessage()),
-					e);
+						exception.getMessage()),
+					exception);
 			}
 			else {
 				_log.error(
 					StringBundler.concat(
 						"Unable to render content of fragment entry ",
 						fragmentEntryLink.getFragmentEntryId(), ":",
-						e.getMessage()));
+						exception.getMessage()));
 			}
 
 			SessionErrors.add(
 				httpServletRequest, "fragmentEntryContentInvalid");
 
 			return _getFragmentEntryContentExceptionMessage(
-				e, httpServletRequest);
+				exception, httpServletRequest);
 		}
 
 		return unsyncStringWriter.toString();
@@ -190,10 +193,10 @@ public class FragmentRendererControllerImpl
 		Throwable throwable = exception.getCause();
 
 		if (throwable instanceof FragmentEntryContentException) {
-			FragmentEntryContentException fece =
+			FragmentEntryContentException fragmentEntryContentException =
 				(FragmentEntryContentException)throwable;
 
-			errorMessage = fece.getLocalizedMessage();
+			errorMessage = fragmentEntryContentException.getLocalizedMessage();
 		}
 
 		ThemeDisplay themeDisplay =

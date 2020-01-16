@@ -80,10 +80,11 @@ public class ClusterSerializationUtilTest {
 
 			Assert.fail("Should fail to read object " + object);
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			Assert.assertTrue(
-				String.valueOf(re.getCause()),
-				re.getCause() instanceof StreamCorruptedException);
+				String.valueOf(runtimeException.getCause()),
+				runtimeException.getCause() instanceof
+					StreamCorruptedException);
 		}
 
 		// Test 3, wrong type
@@ -101,9 +102,10 @@ public class ClusterSerializationUtilTest {
 
 			Assert.fail("Should fail to read object " + object);
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 			Assert.assertEquals(
-				"Unable to deserialize this type:3", ise.getMessage());
+				"Unable to deserialize this type:3",
+				illegalStateException.getMessage());
 		}
 	}
 
@@ -122,14 +124,14 @@ public class ClusterSerializationUtilTest {
 
 		// Test 2, failed
 
-		IOException ioe = new IOException("Forced IOException");
+		IOException ioException = new IOException("Forced IOException");
 
 		Serializable serializable = new Serializable() {
 
 			private void writeObject(ObjectOutputStream objectOutputStream)
 				throws IOException {
 
-				throw ioe;
+				throw ioException;
 			}
 
 		};
@@ -139,15 +141,15 @@ public class ClusterSerializationUtilTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			String message = re.getMessage();
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
 
 			Assert.assertTrue(
 				message,
 				message.startsWith(
 					"Unable to write ordinary serializable object "));
 
-			Assert.assertSame(ioe, re.getCause());
+			Assert.assertSame(ioException, runtimeException.getCause());
 		}
 	}
 

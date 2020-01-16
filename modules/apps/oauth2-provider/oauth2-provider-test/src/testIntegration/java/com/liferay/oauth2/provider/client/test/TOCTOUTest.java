@@ -105,8 +105,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 				"Expected request GET /annotated2 to fail through admin & " +
 					"end-user TOCTOU protection");
 		}
-		catch (ClientErrorException cee) {
-			Response response = cee.getResponse();
+		catch (ClientErrorException clientErrorException) {
+			Response response = clientErrorException.getResponse();
 
 			Assert.assertEquals(403, response.getStatus());
 		}
@@ -132,8 +132,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 				"Expected request GET /annotated2 to fail through admin " +
 					"TOCTOU protection");
 		}
-		catch (ClientErrorException cee) {
-			Response response = cee.getResponse();
+		catch (ClientErrorException clientErrorException) {
+			Response response = clientErrorException.getResponse();
 
 			Assert.assertEquals(403, response.getStatus());
 		}
@@ -155,8 +155,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 				"Expected request GET /annotated2 to fail through end-user " +
 					"TOCTOU protection");
 		}
-		catch (ClientErrorException cee) {
-			Response response = cee.getResponse();
+		catch (ClientErrorException clientErrorException) {
+			Response response = clientErrorException.getResponse();
 
 			Assert.assertEquals(403, response.getStatus());
 		}
@@ -239,8 +239,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 					try {
 						updateOAuth2ApplicationScopeAliases(oAuth2Application);
 					}
-					catch (PortalException pe) {
-						throw new RuntimeException(pe);
+					catch (PortalException portalException) {
+						throw new RuntimeException(portalException);
 					}
 				});
 

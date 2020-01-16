@@ -110,8 +110,9 @@ public class NettyRepositoryTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertEquals("Repository path is null", npe.getMessage());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertEquals(
+				"Repository path is null", nullPointerException.getMessage());
 		}
 
 		try {
@@ -119,7 +120,7 @@ public class NettyRepositoryTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 		}
 
 		NettyRepository nettyRepository = new NettyRepository(
@@ -608,8 +609,8 @@ public class NettyRepositoryTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertSame(exception, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertSame(exception, executionException.getCause());
 		}
 	}
 
@@ -648,8 +649,8 @@ public class NettyRepositoryTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertSame(exception, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertSame(exception, executionException.getCause());
 		}
 	}
 
@@ -758,8 +759,8 @@ public class NettyRepositoryTest {
 			try {
 				noticeableFuture.get();
 			}
-			catch (ExecutionException ee) {
-				Throwable throwable = ee.getCause();
+			catch (ExecutionException executionException) {
+				Throwable throwable = executionException.getCause();
 
 				if (!asyncBrokerFailure) {
 					Assert.assertEquals(

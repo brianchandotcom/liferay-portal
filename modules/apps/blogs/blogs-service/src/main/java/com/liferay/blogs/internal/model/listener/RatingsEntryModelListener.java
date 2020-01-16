@@ -81,8 +81,8 @@ public class RatingsEntryModelListener extends BaseModelListener<RatingsEntry> {
 					ratingsAverageScore);
 			}
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 
@@ -131,8 +131,8 @@ public class RatingsEntryModelListener extends BaseModelListener<RatingsEntry> {
 				blogsEntry.getGroupId(), blogsEntry.getUserId(),
 				ratingsTotalEntries, ratingsTotalScore, ratingsAverageScore);
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

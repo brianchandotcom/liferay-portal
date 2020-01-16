@@ -44,7 +44,7 @@ public class GroovyExecutorTest {
 
 			Assert.fail("Should throw RuntimeException");
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 		}
 	}
 
@@ -61,7 +61,7 @@ public class GroovyExecutorTest {
 
 			Assert.fail("Should throw UnsupportedOperationException");
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 	}
 

@@ -103,7 +103,7 @@ public class StoreProvider {
 			try {
 				_serviceRegistration.unregister();
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 			}
 		}
 

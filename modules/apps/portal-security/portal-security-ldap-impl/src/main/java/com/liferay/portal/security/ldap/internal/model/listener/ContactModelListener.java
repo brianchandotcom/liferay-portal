@@ -46,11 +46,11 @@ public class ContactModelListener extends BaseLDAPExportModelListener<Contact> {
 		try {
 			exportToLDAP(contact);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ModelListenerException(
 				"Unable to export contact with user ID " + contact.getUserId() +
 					" to LDAP on after create",
-				e);
+				exception);
 		}
 	}
 
@@ -59,11 +59,11 @@ public class ContactModelListener extends BaseLDAPExportModelListener<Contact> {
 		try {
 			exportToLDAP(contact);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ModelListenerException(
 				"Unable to export contact with user ID " + contact.getUserId() +
 					" to LDAP on after update",
-				e);
+				exception);
 		}
 	}
 
@@ -83,11 +83,11 @@ public class ContactModelListener extends BaseLDAPExportModelListener<Contact> {
 				try {
 					_userExporter.exportUser(contact, expandoBridgeAttributes);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					_log.error(
 						"Unable to export contact with user ID " +
 							contact.getUserId() + " to LDAP on after create",
-						e);
+						exception);
 				}
 			});
 

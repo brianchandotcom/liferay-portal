@@ -94,8 +94,8 @@ public class AnonymizeNonreviewableUADDataMVCRenderCommand
 			renderRequest.setAttribute(
 				WebKeys.SEARCH_CONTAINER, searchContainer);
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 
 		return "/anonymize_nonreviewable_uad_data.jsp";

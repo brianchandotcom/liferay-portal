@@ -88,8 +88,8 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 		try {
 			gadgetSpec = ShindigUtil.getGadgetSpec(url);
 		}
-		catch (Exception e) {
-			throw new GadgetURLException(e);
+		catch (Exception exception) {
+			throw new GadgetURLException(exception);
 		}
 
 		ModulePrefs modulePrefs = gadgetSpec.getModulePrefs();
@@ -169,11 +169,11 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 
 			PortletInstanceFactoryUtil.destroy(portlet);
 		}
-		catch (SystemException se) {
-			throw se;
+		catch (SystemException systemException) {
+			throw systemException;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -236,14 +236,14 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 			portletLocalService.deployRemotePortlet(
 				portlet, portletCategoryNamesArray);
 		}
-		catch (PortalException pe) {
-			throw pe;
+		catch (PortalException portalException) {
+			throw portalException;
 		}
-		catch (SystemException se) {
-			throw se;
+		catch (SystemException systemException) {
+			throw systemException;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

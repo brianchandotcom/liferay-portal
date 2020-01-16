@@ -595,11 +595,11 @@ public class LayoutPermissionImpl
 
 				return false;
 			}
-			catch (PortalException | RuntimeException e) {
-				throw e;
+			catch (PortalException | RuntimeException exception) {
+				throw exception;
 			}
-			catch (Exception e) {
-				throw new PortalException(e);
+			catch (Exception exception) {
+				throw new PortalException(exception);
 			}
 		}
 

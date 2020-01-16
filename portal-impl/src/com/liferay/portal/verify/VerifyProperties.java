@@ -60,9 +60,10 @@ public class VerifyProperties extends VerifyProcess {
 		try {
 			return classLoader.getResourceAsStream(resourceName);
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get resource " + resourceName, re);
+				_log.warn(
+					"Unable to get resource " + resourceName, runtimeException);
 			}
 
 			return null;
@@ -91,9 +92,10 @@ public class VerifyProperties extends VerifyProcess {
 					properties.load(inputStream);
 				}
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				_log.error(
-					"Unable to load property " + propertyResourceName, ioe);
+					"Unable to load property " + propertyResourceName,
+					ioException);
 			}
 		}
 

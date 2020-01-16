@@ -70,8 +70,8 @@ public class BeanFilterInvokerPortletFilter
 		try {
 			_invokeMethod(_destroyMethod);
 		}
-		catch (PortletException pe) {
-			_log.error(pe, pe);
+		catch (PortletException portletException) {
+			_log.error(portletException, portletException);
 		}
 	}
 
@@ -169,8 +169,8 @@ public class BeanFilterInvokerPortletFilter
 
 			method.invoke(beanInstance, args);
 		}
-		catch (InvocationTargetException ite) {
-			Throwable cause = ite.getCause();
+		catch (InvocationTargetException invocationTargetException) {
+			Throwable cause = invocationTargetException.getCause();
 
 			if (cause instanceof PortletException) {
 				throw (PortletException)cause;
@@ -178,8 +178,8 @@ public class BeanFilterInvokerPortletFilter
 
 			throw new PortletException(cause);
 		}
-		catch (IllegalAccessException iae) {
-			throw new PortletException(iae);
+		catch (IllegalAccessException illegalAccessException) {
+			throw new PortletException(illegalAccessException);
 		}
 	}
 
@@ -226,8 +226,8 @@ public class BeanFilterInvokerPortletFilter
 			_initMethod = PortletFilter.class.getMethod(
 				"init", FilterConfig.class);
 		}
-		catch (NoSuchMethodException nsme) {
-			throw new ExceptionInInitializerError(nsme);
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new ExceptionInInitializerError(noSuchMethodException);
 		}
 	}
 

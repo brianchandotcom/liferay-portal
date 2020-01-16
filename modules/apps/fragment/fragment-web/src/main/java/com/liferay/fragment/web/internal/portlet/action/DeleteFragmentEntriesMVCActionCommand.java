@@ -63,8 +63,9 @@ public class DeleteFragmentEntriesMVCActionCommand
 		try {
 			_fragmentEntryService.deleteFragmentEntries(deleteFragmentEntryIds);
 		}
-		catch (RequiredFragmentEntryException rfee) {
-			SessionErrors.add(actionRequest, rfee.getClass());
+		catch (RequiredFragmentEntryException requiredFragmentEntryException) {
+			SessionErrors.add(
+				actionRequest, requiredFragmentEntryException.getClass());
 
 			hideDefaultErrorMessage(actionRequest);
 

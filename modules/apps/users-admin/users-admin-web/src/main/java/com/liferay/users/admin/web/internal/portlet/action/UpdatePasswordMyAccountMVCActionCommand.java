@@ -116,16 +116,17 @@ public class UpdatePasswordMyAccountMVCActionCommand
 
 			_mvcActionCommand.processAction(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchUserException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchUserException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof UserPasswordException) {
-				SessionErrors.add(actionRequest, e.getClass(), e);
+			else if (exception instanceof UserPasswordException) {
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 
 				String redirect = _portal.escapeRedirect(
 					ParamUtil.getString(actionRequest, "redirect"));
@@ -135,7 +136,7 @@ public class UpdatePasswordMyAccountMVCActionCommand
 				}
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

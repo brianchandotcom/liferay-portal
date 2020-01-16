@@ -96,10 +96,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			try {
 				WaiterUtil.waitForFilter(bundleContext, _filterString, 10_000);
 			}
-			catch (TimeoutException te) {
+			catch (TimeoutException timeoutException) {
 				_cleanUp();
 
-				throw te;
+				throw timeoutException;
 			}
 		}
 		finally {
@@ -121,7 +121,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 		try {
 			_soapConfiguration.delete();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		try {
@@ -132,13 +132,13 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 				_jaxWsApiConfiguration.delete();
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		try {
 			_cxfConfiguration.delete();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 	}
 

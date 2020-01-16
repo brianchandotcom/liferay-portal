@@ -96,7 +96,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		try {
 			cmisFileEntry.setParentFolder(getParentFolder());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		cmisFileEntry.setPrimaryKey(getPrimaryKey());
@@ -150,8 +150,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 			DLAppHelperLocalServiceUtil.getFileAsStream(
 				PrincipalThreadLocal.getUserId(), this, true);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		if (contentStream == null) {
@@ -175,8 +175,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 					DLAppHelperLocalServiceUtil.getFileAsStream(
 						PrincipalThreadLocal.getUserId(), this, true);
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 				}
 
 				if (contentStream == null) {
@@ -259,8 +259,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 			return fileVersions;
 		}
-		catch (PortalException pe) {
-			throw new RepositoryException(pe);
+		catch (PortalException portalException) {
+			throw new RepositoryException(portalException);
 		}
 	}
 
@@ -271,8 +271,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 			return documents.size();
 		}
-		catch (PortalException pe) {
-			throw new RepositoryException(pe);
+		catch (PortalException portalException) {
+			throw new RepositoryException(portalException);
 		}
 	}
 
@@ -287,7 +287,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 				return parentFolder;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		try {
@@ -304,8 +304,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 			setParentFolder(parentFolder);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return parentFolder;
@@ -419,8 +419,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 				return MimeTypesUtil.getContentType(document.getName());
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return ContentTypes.APPLICATION_OCTET_STREAM;
@@ -474,9 +474,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 			return repository.getCapability(capabilityClass);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
-				"Unable to access repository " + getRepositoryId(), pe);
+				"Unable to access repository " + getRepositoryId(),
+				portalException);
 		}
 	}
 
@@ -529,7 +530,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		try {
 			return user.getUserUuid();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -621,9 +622,9 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 			return repositoryEntry.isManualCheckInRequired();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Unable to retrieve repository entry", e);
+				_log.info("Unable to retrieve repository entry", exception);
 			}
 
 			return false;
@@ -722,8 +723,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 			try {
 				_allVersions = _document.getAllVersions();
 			}
-			catch (CmisObjectNotFoundException confe) {
-				throw new NoSuchFileEntryException(confe);
+			catch (CmisObjectNotFoundException cmisObjectNotFoundException) {
+				throw new NoSuchFileEntryException(cmisObjectNotFoundException);
 			}
 		}
 
@@ -739,10 +740,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		try {
 			return RepositoryProviderUtil.getRepository(getRepositoryId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
 				"Unable to get repository for file entry " + getFileEntryId(),
-				pe);
+				portalException);
 		}
 	}
 

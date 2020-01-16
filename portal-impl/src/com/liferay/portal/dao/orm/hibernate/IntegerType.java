@@ -98,7 +98,7 @@ public class IntegerType implements CompositeUserType, Serializable {
 			value = StandardBasicTypes.INTEGER.nullSafeGet(
 				rs, names[0], session);
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 		}
 
 		if (value == null) {

@@ -61,7 +61,7 @@ public class UpToDateUtil {
 			try {
 				sinceRevCommit = revWalk.parseCommit(repository.resolve(since));
 			}
-			catch (MissingObjectException moe) {
+			catch (MissingObjectException missingObjectException) {
 				return true;
 			}
 

@@ -329,9 +329,10 @@ public class HttpClientSPIAgentTest {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			Assert.assertEquals(
-				"Error status line: " + wrongStatusLine, ioe.getMessage());
+				"Error status line: " + wrongStatusLine,
+				ioException.getMessage());
 		}
 
 		// Wrong ending
@@ -521,8 +522,8 @@ public class HttpClientSPIAgentTest {
 
 			Assert.fail();
 		}
-		catch (PortalResiliencyException pre) {
-			Throwable throwable = pre.getCause();
+		catch (PortalResiliencyException portalResiliencyException) {
+			Throwable throwable = portalResiliencyException.getCause();
 
 			Assert.assertSame(RuntimeException.class, throwable.getClass());
 		}
@@ -767,8 +768,8 @@ public class HttpClientSPIAgentTest {
 
 			Assert.fail();
 		}
-		catch (PortalResiliencyException pre) {
-			Throwable throwable = pre.getCause();
+		catch (PortalResiliencyException portalResiliencyException) {
+			Throwable throwable = portalResiliencyException.getCause();
 
 			Assert.assertSame(ConnectException.class, throwable.getClass());
 		}
@@ -812,8 +813,8 @@ public class HttpClientSPIAgentTest {
 
 			Assert.fail();
 		}
-		catch (PortalResiliencyException pre) {
-			Throwable throwable = pre.getCause();
+		catch (PortalResiliencyException portalResiliencyException) {
+			Throwable throwable = portalResiliencyException.getCause();
 
 			Assert.assertSame(IOException.class, throwable.getClass());
 
@@ -854,8 +855,8 @@ public class HttpClientSPIAgentTest {
 
 				Assert.fail();
 			}
-			catch (PortalResiliencyException pre) {
-				Throwable throwable = pre.getCause();
+			catch (PortalResiliencyException portalResiliencyException) {
+				Throwable throwable = portalResiliencyException.getCause();
 
 				Assert.assertSame(IOException.class, throwable.getClass());
 			}
@@ -889,8 +890,8 @@ public class HttpClientSPIAgentTest {
 
 				Assert.fail();
 			}
-			catch (PortalResiliencyException pre) {
-				Throwable throwable = pre.getCause();
+			catch (PortalResiliencyException portalResiliencyException) {
+				Throwable throwable = portalResiliencyException.getCause();
 
 				Assert.assertSame(IOException.class, throwable.getClass());
 			}
@@ -931,8 +932,8 @@ public class HttpClientSPIAgentTest {
 					return Datagram.createResponseDatagram(
 						datagram, ByteBuffer.wrap(receiptData));
 				}
-				catch (Exception e) {
-					throw new RuntimeException(e);
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
 				}
 			}
 

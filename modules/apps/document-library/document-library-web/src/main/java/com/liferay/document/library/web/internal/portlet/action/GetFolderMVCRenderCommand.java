@@ -58,13 +58,13 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 
 			return getPath();
 		}
-		catch (NoSuchFolderException | PrincipalException e) {
-			SessionErrors.add(renderRequest, e.getClass());
+		catch (NoSuchFolderException | PrincipalException exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
 
 			return "/document_library/error.jsp";
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 

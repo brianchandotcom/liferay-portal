@@ -42,9 +42,9 @@ public class KaleoDefinitionVersionViewPermissionPredicate
 			return KaleoDefinitionVersionPermission.hasViewPermission(
 				_permissionChecker, kaleoDefinitionVersion, _companyGroupId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

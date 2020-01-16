@@ -80,8 +80,8 @@ public class LegacyPortletPanelAppHotDeployListener
 				_serviceRegistrations.put(portletId, serviceRegistration);
 			}
 		}
-		catch (DocumentException | IOException e) {
-			throw new HotDeployException(e);
+		catch (DocumentException | IOException exception) {
+			throw new HotDeployException(exception);
 		}
 	}
 
@@ -104,8 +104,8 @@ public class LegacyPortletPanelAppHotDeployListener
 				}
 			}
 		}
-		catch (DocumentException | IOException e) {
-			throw new HotDeployException(e);
+		catch (DocumentException | IOException exception) {
+			throw new HotDeployException(exception);
 		}
 	}
 

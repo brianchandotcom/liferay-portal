@@ -28,7 +28,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.debug(msg);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -38,7 +38,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.debug(msg, t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -48,7 +48,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.debug(t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(t.getMessage());
 		}
 	}
@@ -58,7 +58,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.error(msg);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -68,7 +68,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.error(msg, t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -78,7 +78,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.error(t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(t.getMessage());
 		}
 	}
@@ -88,7 +88,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.fatal(msg);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -98,7 +98,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.fatal(msg, t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -108,7 +108,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.fatal(t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(t.getMessage());
 		}
 	}
@@ -122,7 +122,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.info(msg);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -132,7 +132,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.info(msg, t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -142,7 +142,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.info(t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(t.getMessage());
 		}
 	}
@@ -191,7 +191,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.trace(msg);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -201,7 +201,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.trace(msg, t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -211,7 +211,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.trace(t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(t.getMessage());
 		}
 	}
@@ -221,7 +221,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.warn(msg);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -231,7 +231,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.warn(msg, t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(msg);
 		}
 	}
@@ -241,7 +241,7 @@ public class LogWrapper implements Log {
 		try {
 			_log.warn(t);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			printMsg(t.getMessage());
 		}
 	}

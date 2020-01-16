@@ -87,9 +87,9 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 				try {
 					_tempFileOutputStream.close();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(ioe, ioe);
+						_log.warn(ioException, ioException);
 					}
 				}
 			}

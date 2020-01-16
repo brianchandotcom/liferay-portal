@@ -90,7 +90,7 @@ public class JenkinsPerformanceDataUtil {
 							url + "/testReport/api/json"),
 						false);
 				}
-				catch (FileNotFoundException fnfe) {
+				catch (FileNotFoundException fileNotFoundException) {
 					jsonObject = JenkinsResultsParserUtil.toJSONObject(
 						JenkinsResultsParserUtil.getLocalURL(url + "/api/json"),
 						false);
@@ -111,17 +111,18 @@ public class JenkinsPerformanceDataUtil {
 
 					break;
 				}
-				catch (IllegalArgumentException iae) {
+				catch (IllegalArgumentException illegalArgumentException) {
 					retryCount++;
 
 					if (retryCount > 5) {
 						System.out.println("Exceeded max retries");
 
-						throw iae;
+						throw illegalArgumentException;
 					}
 
 					System.out.println(
-						"Retry in 60 seconds: " + iae.getMessage());
+						"Retry in 60 seconds: " +
+							illegalArgumentException.getMessage());
 
 					Thread.sleep(60 * 1000);
 				}
@@ -131,10 +132,10 @@ public class JenkinsPerformanceDataUtil {
 
 			_truncate(_results, size);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			System.out.println("Unable to parse performance data.");
 
-			e.printStackTrace();
+			exception.printStackTrace();
 
 			_broken = true;
 		}

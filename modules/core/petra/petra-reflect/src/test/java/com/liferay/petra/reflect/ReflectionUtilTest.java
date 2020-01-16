@@ -57,9 +57,10 @@ public class ReflectionUtilTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
-				"Input object is not an array: " + object, iae.getMessage());
+				"Input object is not an array: " + object,
+				illegalArgumentException.getMessage());
 		}
 
 		object = new long[] {1, 2, 3};
@@ -79,8 +80,8 @@ public class ReflectionUtilTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
-			Assert.assertNull(npe.getCause());
+		catch (NullPointerException nullPointerException) {
+			Assert.assertNull(nullPointerException.getCause());
 		}
 	}
 

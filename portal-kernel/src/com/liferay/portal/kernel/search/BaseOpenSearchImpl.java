@@ -124,11 +124,11 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 				httpServletRequest, userId, keywords, startPage, itemsPerPage,
 				format);
 		}
-		catch (SearchException se) {
-			throw se;
+		catch (SearchException searchException) {
+			throw searchException;
 		}
-		catch (Exception e) {
-			throw new SearchException(e);
+		catch (Exception exception) {
+			throw new SearchException(exception);
 		}
 	}
 

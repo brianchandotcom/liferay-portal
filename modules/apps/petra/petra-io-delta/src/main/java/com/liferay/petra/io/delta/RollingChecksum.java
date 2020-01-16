@@ -114,8 +114,8 @@ public class RollingChecksum {
 
 			return messageDigest.digest();
 		}
-		catch (NoSuchAlgorithmException nsae) {
-			throw new ExceptionInInitializerError(nsae);
+		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+			throw new ExceptionInInitializerError(noSuchAlgorithmException);
 		}
 	}
 

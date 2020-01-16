@@ -214,8 +214,8 @@ public class CleanServiceBuilderCommand extends BaseCommand {
 					add(line);
 				}
 			}
-			catch (IOException ioe) {
-				throw new ExceptionInInitializerError(ioe);
+			catch (IOException ioException) {
+				throw new ExceptionInInitializerError(ioException);
 			}
 		}
 	};

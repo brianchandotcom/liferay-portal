@@ -44,12 +44,12 @@ public class OpenIdConnectImpl implements OpenIdConnect {
 
 			return openIdConfiguration.enabled();
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			_log.error(
 				StringBundler.concat(
 					"Unable to get OpenId configuration for company ",
-					companyId, ": ", ce.getMessage()),
-				ce);
+					companyId, ": ", configurationException.getMessage()),
+				configurationException);
 		}
 
 		return false;

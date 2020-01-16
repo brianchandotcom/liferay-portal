@@ -67,9 +67,9 @@ public class DDMFormFieldTypesJSONSerializer
 				jsonArray.put(toJSONObject(ddmFormFieldType));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -145,9 +145,9 @@ public class DDMFormFieldTypesJSONSerializer
 					"label", LanguageUtil.get(resourceBundle, label));
 			}
 		}
-		catch (MissingResourceException mre) {
+		catch (MissingResourceException missingResourceException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(mre, mre);
+				_log.warn(missingResourceException, missingResourceException);
 			}
 		}
 

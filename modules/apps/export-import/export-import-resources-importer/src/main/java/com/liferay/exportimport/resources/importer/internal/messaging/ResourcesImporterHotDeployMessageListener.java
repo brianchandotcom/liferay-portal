@@ -270,11 +270,11 @@ public class ResourcesImporterHotDeployMessageListener
 
 			_messageBus.sendMessage("liferay/resources_importer", message);
 		}
-		catch (ImporterException ie) {
+		catch (ImporterException importerException) {
 			Message message = new Message();
 
 			message.put("companyId", company.getCompanyId());
-			message.put("error", ie.getMessage());
+			message.put("error", importerException.getMessage());
 			message.put(
 				"servletContextName", servletContext.getServletContextName());
 			message.put(

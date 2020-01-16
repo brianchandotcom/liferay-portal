@@ -81,8 +81,8 @@ public class GeolocationDDMFormFieldValueRenderer
 				try {
 					return JSONFactoryUtil.createJSONObject(json);
 				}
-				catch (JSONException jsone) {
-					throw new ValueAccessorException(jsone);
+				catch (JSONException jsonException) {
+					throw new ValueAccessorException(jsonException);
 				}
 			}
 

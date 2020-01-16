@@ -72,9 +72,9 @@ public class VelocityEngineFactory {
 
 			return velocityEngine;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new RuntimeException(
-				"Unable to initialize Velocity engine", e);
+				"Unable to initialize Velocity engine", exception);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

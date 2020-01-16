@@ -37,16 +37,16 @@ public abstract class GetOrganizationMVCRenderCommand
 		try {
 			ActionUtil.getOrganization(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrganizationException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchOrganizationException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return getPath();

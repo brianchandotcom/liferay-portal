@@ -35,8 +35,8 @@ public class BuildLangMojo extends AbstractMojo {
 		try {
 			LangBuilderInvoker.invoke(baseDir, _langBuilderArgs);
 		}
-		catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+		catch (Exception exception) {
+			throw new MojoExecutionException(exception.getMessage(), exception);
 		}
 	}
 

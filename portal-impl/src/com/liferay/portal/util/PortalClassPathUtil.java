@@ -225,8 +225,9 @@ public class PortalClassPathUtil {
 
 				url = (URL)getLocalURLMethod.invoke(urlConnection);
 			}
-			catch (Exception e) {
-				_log.error("Unable to resolve local URL from bundle", e);
+			catch (Exception exception) {
+				_log.error(
+					"Unable to resolve local URL from bundle", exception);
 
 				return null;
 			}

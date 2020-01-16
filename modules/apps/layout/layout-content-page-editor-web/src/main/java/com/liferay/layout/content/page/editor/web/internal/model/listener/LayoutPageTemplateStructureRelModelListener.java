@@ -104,8 +104,8 @@ public class LayoutPageTemplateStructureRelModelListener
 					layoutPageTemplateStructure.getClassPK(), serviceContext);
 			}
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

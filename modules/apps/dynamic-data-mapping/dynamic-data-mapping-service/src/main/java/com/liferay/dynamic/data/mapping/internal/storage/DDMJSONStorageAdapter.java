@@ -62,8 +62,8 @@ public class DDMJSONStorageAdapter implements DDMStorageAdapter {
 
 			return builder.build();
 		}
-		catch (Exception e) {
-			throw new StorageException(e);
+		catch (Exception exception) {
+			throw new StorageException(exception);
 		}
 	}
 
@@ -84,8 +84,8 @@ public class DDMJSONStorageAdapter implements DDMStorageAdapter {
 
 			return builder.build();
 		}
-		catch (Exception e) {
-			throw new StorageException(e);
+		catch (Exception exception) {
+			throw new StorageException(exception);
 		}
 	}
 
@@ -140,8 +140,8 @@ public class DDMJSONStorageAdapter implements DDMStorageAdapter {
 
 			return builder.build();
 		}
-		catch (Exception e) {
-			throw new StorageException(e);
+		catch (Exception exception) {
+			throw new StorageException(exception);
 		}
 	}
 
@@ -181,8 +181,8 @@ public class DDMJSONStorageAdapter implements DDMStorageAdapter {
 
 			return builder.build();
 		}
-		catch (Exception e) {
-			throw new StorageException(e);
+		catch (Exception exception) {
+			throw new StorageException(exception);
 		}
 	}
 

@@ -61,11 +61,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			return doAddDefaultData(
 				portletDataContext, portletId, portletPreferences);
 		}
-		catch (PortletDataException pde) {
-			throw pde;
+		catch (PortletDataException portletDataException) {
+			throw portletDataException;
 		}
-		catch (Exception e) {
-			throw new PortletDataException(e);
+		catch (Exception exception) {
+			throw new PortletDataException(exception);
 		}
 		finally {
 			if (_log.isInfoEnabled()) {
@@ -96,9 +96,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			return doDeleteData(
 				portletDataContext, portletId, portletPreferences);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw _handleException(
-				e, PortletDataException.DELETE_PORTLET_DATA, portletId);
+				exception, PortletDataException.DELETE_PORTLET_DATA, portletId);
 		}
 		finally {
 			if (_log.isInfoEnabled()) {
@@ -141,9 +141,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			return doExportData(
 				portletDataContext, portletId, portletPreferences);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw _handleException(
-				e, PortletDataException.EXPORT_PORTLET_DATA, portletId);
+				exception, PortletDataException.EXPORT_PORTLET_DATA, portletId);
 		}
 		finally {
 			portletDataContext.setExportDataRootElement(rootElement);
@@ -385,9 +385,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			return doImportData(
 				portletDataContext, portletId, portletPreferences, data);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw _handleException(
-				e, PortletDataException.IMPORT_PORTLET_DATA, portletId);
+				exception, PortletDataException.IMPORT_PORTLET_DATA, portletId);
 		}
 		finally {
 			portletDataContext.setImportDataRootElement(rootElement);
@@ -470,9 +470,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		try {
 			doPrepareManifestSummary(portletDataContext, portletPreferences);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw _handleException(
-				e, PortletDataException.PREPARE_MANIFEST_SUMMARY,
+				exception, PortletDataException.PREPARE_MANIFEST_SUMMARY,
 				portletDataContext.getPortletId());
 		}
 	}
@@ -492,7 +492,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		try {
 			return doValidateSchemaVersion(schemaVersion);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 	}
@@ -662,7 +662,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 			return document.formattedString();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return StringPool.BLANK;
 		}
 	}
@@ -786,24 +786,25 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	private PortletDataException _handleException(
 		Exception exception, int type, String portletId) {
 
-		PortletDataException pde = null;
+		PortletDataException portletDataException = null;
 
 		if (exception instanceof PortletDataException) {
-			pde = (PortletDataException)exception;
+			portletDataException = (PortletDataException)exception;
 		}
 		else {
-			pde = new PortletDataException(exception.getMessage(), exception);
+			portletDataException = new PortletDataException(
+				exception.getMessage(), exception);
 		}
 
-		if (Validator.isNull(pde.getPortletId())) {
-			pde.setPortletId(portletId);
+		if (Validator.isNull(portletDataException.getPortletId())) {
+			portletDataException.setPortletId(portletId);
 		}
 
-		if (pde.getType() == PortletDataException.DEFAULT) {
-			pde.setType(type);
+		if (portletDataException.getType() == PortletDataException.DEFAULT) {
+			portletDataException.setType(type);
 		}
 
-		return pde;
+		return portletDataException;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

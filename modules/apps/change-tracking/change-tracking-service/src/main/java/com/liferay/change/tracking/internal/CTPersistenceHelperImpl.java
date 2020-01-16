@@ -78,8 +78,8 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 				_ctEntryLocalService.updateCTEntry(ctEntry);
 			}
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 
 		return false;
@@ -155,8 +155,8 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 				}
 			}
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 
 		return false;

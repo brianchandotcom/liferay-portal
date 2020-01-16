@@ -116,7 +116,9 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 
 					jsonObject.put("office365EditURL", office365EditURL);
 				}
-				catch (GraphServicePortalException gspe) {
+				catch (GraphServicePortalException
+							graphServicePortalException) {
+
 					jsonObject.put("error", true);
 				}
 			}

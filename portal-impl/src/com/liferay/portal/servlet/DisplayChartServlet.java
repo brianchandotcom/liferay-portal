@@ -38,9 +38,9 @@ public class DisplayChartServlet extends DisplayChart {
 		try {
 			super.service(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, e, httpServletRequest,
+				HttpServletResponse.SC_NOT_FOUND, exception, httpServletRequest,
 				httpServletResponse);
 		}
 	}

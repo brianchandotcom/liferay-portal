@@ -97,13 +97,13 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 							outputParameterName()));
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				String.format(
 					"Unable to get the output parameters for data provider " +
 						"instance with id '%d'",
 					dataProviderInstanceId),
-				e);
+				exception);
 		}
 
 		return builder.withOutput(

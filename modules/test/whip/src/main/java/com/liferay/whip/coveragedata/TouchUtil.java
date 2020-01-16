@@ -40,11 +40,11 @@ public class TouchUtil {
 		try {
 			_touchMethod.invoke(null, className, lineNumber);
 		}
-		catch (InvocationTargetException ite) {
-			ReflectionUtil.throwException(ite.getCause());
+		catch (InvocationTargetException invocationTargetException) {
+			ReflectionUtil.throwException(invocationTargetException.getCause());
 		}
-		catch (ReflectiveOperationException roe) {
-			ReflectionUtil.throwException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			ReflectionUtil.throwException(reflectiveOperationException);
 		}
 	}
 
@@ -67,11 +67,11 @@ public class TouchUtil {
 			_touchJumpMethod.invoke(
 				null, className, lineNumber, branchNumber, branch);
 		}
-		catch (InvocationTargetException ite) {
-			ReflectionUtil.throwException(ite.getCause());
+		catch (InvocationTargetException invocationTargetException) {
+			ReflectionUtil.throwException(invocationTargetException.getCause());
 		}
-		catch (ReflectiveOperationException roe) {
-			ReflectionUtil.throwException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			ReflectionUtil.throwException(reflectiveOperationException);
 		}
 	}
 
@@ -94,11 +94,11 @@ public class TouchUtil {
 			_touchSwitchMethod.invoke(
 				null, className, lineNumber, switchNumber, branch);
 		}
-		catch (InvocationTargetException ite) {
-			ReflectionUtil.throwException(ite.getCause());
+		catch (InvocationTargetException invocationTargetException) {
+			ReflectionUtil.throwException(invocationTargetException.getCause());
 		}
-		catch (ReflectiveOperationException roe) {
-			ReflectionUtil.throwException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			ReflectionUtil.throwException(reflectiveOperationException);
 		}
 	}
 
@@ -120,8 +120,8 @@ public class TouchUtil {
 			_touchSwitchMethod = touchUtilClass.getDeclaredMethod(
 				"touchSwitch", String.class, int.class, int.class, int.class);
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new ExceptionInInitializerError(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new ExceptionInInitializerError(reflectiveOperationException);
 		}
 	}
 

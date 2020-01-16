@@ -106,8 +106,9 @@ public class HttpAdapter {
 		try {
 			_httpServiceServlet.init(servletConfig);
 		}
-		catch (ServletException se) {
-			_servletContext.log(se.getMessage(), se);
+		catch (ServletException servletException) {
+			_servletContext.log(
+				servletException.getMessage(), servletException);
 
 			return;
 		}
@@ -213,8 +214,8 @@ public class HttpAdapter {
 			try {
 				return method.invoke(_servletContext, args);
 			}
-			catch (InvocationTargetException ite) {
-				throw ite.getCause();
+			catch (InvocationTargetException invocationTargetException) {
+				throw invocationTargetException.getCause();
 			}
 		}
 

@@ -282,8 +282,8 @@ public class PluginPackageUtil {
 
 				pluginPackages.addAll(repository.getPluginPackages());
 			}
-			catch (PluginPackageException ppe) {
-				String message = ppe.getMessage();
+			catch (PluginPackageException pluginPackageException) {
+				String message = pluginPackageException.getMessage();
 
 				if (message.startsWith("Unable to communicate")) {
 					if (_log.isWarnEnabled()) {
@@ -378,8 +378,10 @@ public class PluginPackageUtil {
 
 				return repository.findPluginByArtifactURL(url);
 			}
-			catch (PluginPackageException ppe) {
-				_log.error("Unable to load repository " + repositoryURL, ppe);
+			catch (PluginPackageException pluginPackageException) {
+				_log.error(
+					"Unable to load repository " + repositoryURL,
+					pluginPackageException);
 			}
 		}
 
@@ -406,9 +408,9 @@ public class PluginPackageUtil {
 
 			return ArrayUtil.append(trusted, untrusted);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PluginPackageException(
-				"Unable to read repository list", e);
+				"Unable to read repository list", exception);
 		}
 	}
 
@@ -520,9 +522,9 @@ public class PluginPackageUtil {
 
 			return false;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PluginPackageException(
-				"Unable to read repository list", e);
+				"Unable to read repository list", exception);
 		}
 	}
 
@@ -632,24 +634,25 @@ public class PluginPackageUtil {
 
 			throw new PluginPackageException("Download returned 0 bytes");
 		}
-		catch (MalformedURLException murle) {
+		catch (MalformedURLException malformedURLException) {
 			_repositoryCache.remove(repositoryURL);
 
 			throw new PluginPackageException(
-				"Invalid URL " + pluginsXmlURL, murle);
+				"Invalid URL " + pluginsXmlURL, malformedURLException);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			_repositoryCache.remove(repositoryURL);
 
 			throw new PluginPackageException(
-				"Unable to communicate with repository " + repositoryURL, ioe);
+				"Unable to communicate with repository " + repositoryURL,
+				ioException);
 		}
-		catch (DocumentException de) {
+		catch (DocumentException documentException) {
 			_repositoryCache.remove(repositoryURL);
 
 			throw new PluginPackageException(
 				"Unable to parse plugin list for repository " + repositoryURL,
-				de);
+				documentException);
 		}
 	}
 
@@ -726,7 +729,7 @@ public class PluginPackageUtil {
 			try {
 				return dateFormat.parse(text);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Unable to parse date " + text);
 				}
@@ -1230,13 +1233,14 @@ public class PluginPackageUtil {
 
 				repositoryReport.addSuccess(repositoryURL);
 			}
-			catch (PluginPackageException ppe) {
-				repositoryReport.addError(repositoryURL, ppe);
+			catch (PluginPackageException pluginPackageException) {
+				repositoryReport.addError(
+					repositoryURL, pluginPackageException);
 
 				_log.error(
 					StringBundler.concat(
 						"Unable to load repository ", repositoryURL, " ",
-						ppe.toString()));
+						pluginPackageException.toString()));
 			}
 		}
 
@@ -1280,9 +1284,9 @@ public class PluginPackageUtil {
 			try {
 				setUpdateAvailable();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage());
+					_log.warn(exception.getMessage());
 				}
 			}
 		}

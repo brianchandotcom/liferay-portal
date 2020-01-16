@@ -109,8 +109,8 @@ public class LangBuilder {
 				excludedLanguageIds, langDirName, langFileName,
 				titleCapitalization, translate, translateSubscriptionKey);
 		}
-		catch (Exception e) {
-			ArgumentsUtil.processMainException(arguments, e);
+		catch (Exception exception) {
+			ArgumentsUtil.processMainException(arguments, exception);
 		}
 	}
 
@@ -244,8 +244,8 @@ public class LangBuilder {
 					titleCapitalization, translate, translateSubscriptionKey);
 			}
 		}
-		catch (GitException ge) {
-			System.out.println(ge.getMessage());
+		catch (GitException gitException) {
+			System.out.println(gitException.getMessage());
 		}
 	}
 
@@ -742,8 +742,8 @@ public class LangBuilder {
 
 			toText = Translate.execute(fromText, fromLanguage, toLanguage);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 
 		// Keep trying

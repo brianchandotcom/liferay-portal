@@ -123,8 +123,8 @@ public class ConfigurationModelRetrieverImpl
 					companyId);
 			}
 		}
-		catch (InvalidSyntaxException | IOException e) {
-			ReflectionUtil.throwException(e);
+		catch (InvalidSyntaxException | IOException exception) {
+			ReflectionUtil.throwException(exception);
 		}
 
 		return null;
@@ -302,8 +302,8 @@ public class ConfigurationModelRetrieverImpl
 				configuration = factoryConfigurations[0];
 			}
 		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
 		}
 
 		return configuration;
@@ -382,8 +382,8 @@ public class ConfigurationModelRetrieverImpl
 			configurations = _configurationAdmin.listConfigurations(
 				filterString);
 		}
-		catch (InvalidSyntaxException ise) {
-			ReflectionUtil.throwException(ise);
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			ReflectionUtil.throwException(invalidSyntaxException);
 		}
 
 		return configurations;

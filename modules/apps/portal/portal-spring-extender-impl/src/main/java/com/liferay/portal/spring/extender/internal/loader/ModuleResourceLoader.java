@@ -85,8 +85,8 @@ public class ModuleResourceLoader implements ServiceComponentConfiguration {
 		try {
 			inputStream = url.openStream();
 		}
-		catch (IOException ioe) {
-			_log.error("Unable to read " + location, ioe);
+		catch (IOException ioException) {
+			_log.error("Unable to read " + location, ioException);
 		}
 
 		return inputStream;

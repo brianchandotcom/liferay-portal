@@ -111,8 +111,8 @@ public class JasperVersionDetector {
 				_jasperVersion = StringPool.BLANK;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -127,8 +127,8 @@ public class JasperVersionDetector {
 			_jspServletDependantsMap = Map.class.isAssignableFrom(
 				method.getReturnType());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

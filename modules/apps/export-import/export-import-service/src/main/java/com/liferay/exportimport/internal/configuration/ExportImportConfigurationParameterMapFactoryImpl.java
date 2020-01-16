@@ -628,8 +628,8 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 					ChangesetPortletKeys.CHANGESET,
 				new String[] {StringPool.TRUE});
 		}
-		catch (Exception e) {
-			throw new ExportImportRuntimeException(e);
+		catch (Exception exception) {
+			throw new ExportImportRuntimeException(exception);
 		}
 	}
 

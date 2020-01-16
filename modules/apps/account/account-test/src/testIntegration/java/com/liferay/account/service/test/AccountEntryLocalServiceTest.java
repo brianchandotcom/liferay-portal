@@ -188,7 +188,7 @@ public class AccountEntryLocalServiceTest {
 				Assert.fail(
 					"Created an account entry with invalid domain " + domain);
 			}
-			catch (AccountEntryDomainsException aede) {
+			catch (AccountEntryDomainsException accountEntryDomainsException) {
 			}
 		}
 	}

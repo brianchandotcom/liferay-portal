@@ -53,8 +53,8 @@ public class OAuth2Manager {
 
 			return accessToken;
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
 	}
 
@@ -87,8 +87,8 @@ public class OAuth2Manager {
 
 			return oAuth20Service.getAuthorizationUrl(state);
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
 	}
 
@@ -137,8 +137,9 @@ public class OAuth2Manager {
 
 			return oAuth20Service;
 		}
-		catch (Exception e) {
-			throw new PortalException("Unable to create OAuth20Service", e);
+		catch (Exception exception) {
+			throw new PortalException(
+				"Unable to create OAuth20Service", exception);
 		}
 	}
 
@@ -174,8 +175,10 @@ public class OAuth2Manager {
 
 			return Optional.of(newAccessToken);
 		}
-		catch (ExecutionException | InterruptedException | IOException e) {
-			throw new PortalException(e);
+		catch (ExecutionException | InterruptedException | IOException
+					exception) {
+
+			throw new PortalException(exception);
 		}
 	}
 

@@ -175,14 +175,14 @@ public abstract class BaseLocalGitRepository
 				"directory",
 				JenkinsResultsParserUtil.getCanonicalPath(directory));
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to find Git repository directory.\n",
 					"Please set this location in repository.dir[", getName(),
 					"][", getUpstreamBranchName(),
 					"] in repository.properties."),
-				re);
+				runtimeException);
 		}
 	}
 

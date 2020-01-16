@@ -58,10 +58,10 @@ public class ArquillianConnector {
 				bundleContext, _inetAddress, port, properties.get("passcode"),
 				logger);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			logger.error(
 				"Encountered a problem while using {}:{}. Shutting down now.",
-				_inetAddress.getHostAddress(), port, ioe);
+				_inetAddress.getHostAddress(), port, ioException);
 
 			System.exit(-10);
 		}

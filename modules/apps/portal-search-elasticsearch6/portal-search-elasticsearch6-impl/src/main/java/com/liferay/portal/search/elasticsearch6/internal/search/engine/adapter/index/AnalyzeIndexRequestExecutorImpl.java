@@ -139,18 +139,18 @@ public class AnalyzeIndexRequestExecutorImpl
 
 				outputStreamStreamOutput.flush();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioe, ioe);
+					_log.debug(ioException, ioException);
 				}
 			}
 			finally {
 				try {
 					outputStreamStreamOutput.close();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(ioe, ioe);
+						_log.debug(ioException, ioException);
 					}
 				}
 			}

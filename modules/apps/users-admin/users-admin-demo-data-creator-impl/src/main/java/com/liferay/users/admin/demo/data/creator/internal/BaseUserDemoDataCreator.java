@@ -99,9 +99,9 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 
 			portraitBytes = _getBytes(new URL(portraitURL));
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 
 			if (Validator.isNull(emailAddress)) {
@@ -140,9 +140,9 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 				userLocalService.deleteUser(userId);
 			}
 		}
-		catch (NoSuchUserException nsue) {
+		catch (NoSuchUserException noSuchUserException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsue, nsue);
+				_log.warn(noSuchUserException, noSuchUserException);
 			}
 		}
 	}
@@ -243,9 +243,9 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 
 			birthDate = dateFormat.parse(dob);
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(parseException, parseException);
 			}
 		}
 

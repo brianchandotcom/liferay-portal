@@ -40,8 +40,8 @@ public class AddressDisplayTag extends ParamAndPropertyAncestorTagImpl {
 				StringUtil.replace(
 					_getFormattedAddress(), CharPool.NEW_LINE, "<br />"));
 		}
-		catch (IOException ioe) {
-			throw new JspException(ioe);
+		catch (IOException ioException) {
+			throw new JspException(ioException);
 		}
 
 		return BodyTag.EVAL_BODY_BUFFERED;

@@ -49,11 +49,11 @@ public class SitemapServlet extends HttpServlet {
 
 			requestDispatcher.forward(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e,
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception,
 				httpServletRequest, httpServletResponse);
 		}
 	}

@@ -125,34 +125,38 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 		}
-		catch (DuplicateLockException dle) {
-			SessionErrors.add(actionRequest, dle.getClass(), dle.getLock());
+		catch (DuplicateLockException duplicateLockException) {
+			SessionErrors.add(
+				actionRequest, duplicateLockException.getClass(),
+				duplicateLockException.getLock());
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/document_library/error.jsp");
 		}
 		catch (NoSuchFileEntryException | NoSuchFolderException |
-			   PrincipalException e) {
+			   PrincipalException exception) {
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/document_library/error.jsp");
 		}
-		catch (DuplicateFileEntryException dfee) {
+		catch (DuplicateFileEntryException duplicateFileEntryException) {
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(actionResponse);
 
 			httpServletResponse.setStatus(
 				ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
 
-			SessionErrors.add(actionRequest, dfee.getClass(), dfee);
+			SessionErrors.add(
+				actionRequest, duplicateFileEntryException.getClass(),
+				duplicateFileEntryException);
 		}
 		catch (AssetCategoryException | AssetTagException |
 			   DuplicateFolderNameException | FileEntryLockException |
-			   InvalidFolderException | SourceFileNameException e) {
+			   InvalidFolderException | SourceFileNameException exception) {
 
-			SessionErrors.add(actionRequest, e.getClass(), e);
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
 		}
 	}
 
@@ -277,8 +281,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
 			}
 		}
-		catch (PortalException pe) {
-			ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -300,8 +304,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					fileShortcut.getFileShortcutId());
 			}
 		}
-		catch (PortalException pe) {
-			ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -325,8 +329,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				_dlAppService.deleteFolder(folder.getFolderId());
 			}
 		}
-		catch (PortalException pe) {
-			ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
 		}
 	}
 

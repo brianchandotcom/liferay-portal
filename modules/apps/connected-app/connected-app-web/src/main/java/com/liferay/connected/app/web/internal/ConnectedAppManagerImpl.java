@@ -61,8 +61,8 @@ public class ConnectedAppManagerImpl implements ConnectedAppManager {
 					connectedApps.add(connectedApp);
 				}
 			}
-			catch (PortalException pe) {
-				_log.error(pe, pe);
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 

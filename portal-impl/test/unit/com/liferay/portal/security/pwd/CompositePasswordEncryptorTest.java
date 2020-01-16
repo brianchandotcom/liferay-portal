@@ -251,7 +251,7 @@ public class CompositePasswordEncryptorTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 	}
 

@@ -37,9 +37,9 @@ public class FragmentEntryRendererTag extends IncludeTag {
 			_fragmentEntry = FragmentEntryServiceUtil.fetchFragmentEntry(
 				_fragmentEntryId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get fragment entry", pe);
+				_log.debug("Unable to get fragment entry", portalException);
 			}
 
 			return SKIP_BODY;

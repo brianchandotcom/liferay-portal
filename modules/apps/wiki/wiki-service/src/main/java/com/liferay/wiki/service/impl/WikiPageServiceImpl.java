@@ -839,14 +839,14 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 								latestPage, page, null, null,
 								attachmentURLPrefix);
 						}
-						catch (PortalException pe) {
-							throw pe;
+						catch (PortalException portalException) {
+							throw portalException;
 						}
-						catch (SystemException se) {
-							throw se;
+						catch (SystemException systemException) {
+							throw systemException;
 						}
-						catch (Exception e) {
-							throw new SystemException(e);
+						catch (Exception exception) {
+							throw new SystemException(exception);
 						}
 					}
 

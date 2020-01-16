@@ -164,9 +164,9 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 			return portletURL;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return _renderResponse.createRenderURL();

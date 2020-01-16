@@ -80,11 +80,11 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 				getSearchTitleLocalizationMap(),
 				getSearchDescriptionLocalizationMap());
 		}
-		catch (RuntimeException re) {
-			throw re;
+		catch (RuntimeException runtimeException) {
+			throw runtimeException;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -96,11 +96,11 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 			createSearchLayout(group, layoutPrototype, baseLayout);
 		}
-		catch (RuntimeException re) {
-			throw re;
+		catch (RuntimeException runtimeException) {
+			throw runtimeException;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

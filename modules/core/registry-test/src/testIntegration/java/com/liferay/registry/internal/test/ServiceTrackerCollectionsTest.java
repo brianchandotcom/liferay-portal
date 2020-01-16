@@ -124,7 +124,7 @@ public class ServiceTrackerCollectionsTest {
 
 				Assert.fail();
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 			}
 
 			Assert.assertEquals(
@@ -263,7 +263,7 @@ public class ServiceTrackerCollectionsTest {
 
 				Assert.fail();
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 			}
 
 			Assert.assertEquals(

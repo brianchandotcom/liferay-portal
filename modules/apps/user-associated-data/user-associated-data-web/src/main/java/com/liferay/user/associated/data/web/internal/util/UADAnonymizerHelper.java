@@ -65,7 +65,7 @@ public class UADAnonymizerHelper {
 
 			return false;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 	}

@@ -58,8 +58,8 @@ public class DLFileEntryModelListener extends BaseModelListener<DLFileEntry> {
 						fileEntry);
 			}
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

@@ -134,11 +134,11 @@ public class NPMResolvedPackageNameUtil {
 
 			return npmResolver.resolveModuleName(name);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				"Unable to read META-INF/resources/package.json in " +
 					bundle.getSymbolicName(),
-				e);
+				exception);
 		}
 
 		return null;

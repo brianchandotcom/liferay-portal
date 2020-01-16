@@ -158,16 +158,16 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 				try {
 					_write(new File(sourceMapFileName), results[1]);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					System.out.println("Unable to create source map");
 				}
 			}
 
 			return results[0];
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new RubySassCompilerException(
-				"Unable to parse " + inputFileName, e);
+				"Unable to parse " + inputFileName, exception);
 		}
 	}
 
@@ -249,8 +249,8 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 			return output;
 		}
-		catch (Exception e) {
-			throw new RubySassCompilerException(e);
+		catch (Exception exception) {
+			throw new RubySassCompilerException(exception);
 		}
 	}
 

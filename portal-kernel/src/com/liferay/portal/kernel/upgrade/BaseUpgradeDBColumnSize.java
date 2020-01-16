@@ -118,14 +118,14 @@ public abstract class BaseUpgradeDBColumnSize extends UpgradeProcess {
 							try {
 								upgradeColumn(tableName, columnName);
 							}
-							catch (SQLException sqle) {
+							catch (SQLException sqlException) {
 								if (_log.isWarnEnabled()) {
 									_log.warn(
 										StringBundler.concat(
 											"Unable to alter length of column ",
 											columnName, " for table ",
 											tableName),
-										sqle);
+										sqlException);
 								}
 							}
 						}

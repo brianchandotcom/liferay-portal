@@ -80,9 +80,9 @@ public abstract class BaseBlogsEntryDemoDataCreator
 			try {
 				blogsEntryLocalService.deleteEntry(entryId);
 			}
-			catch (NoSuchEntryException nsee) {
+			catch (NoSuchEntryException noSuchEntryException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsee, nsee);
+					_log.warn(noSuchEntryException, noSuchEntryException);
 				}
 			}
 

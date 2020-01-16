@@ -98,9 +98,9 @@ public class HttpClientSPIAgent implements SPIAgent {
 			try {
 				socket.close();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(ioe, ioe);
+					_log.warn(ioException, ioException);
 				}
 			}
 		}
@@ -115,8 +115,8 @@ public class HttpClientSPIAgent implements SPIAgent {
 				SPI_AGENT_CONTEXT_PATH, spiConfiguration.getBaseDir(),
 				MAPPING_PATTERN, AcceptorServlet.class.getName());
 		}
-		catch (Exception e) {
-			throw new PortalResiliencyException(e);
+		catch (Exception exception) {
+			throw new PortalResiliencyException(exception);
 		}
 	}
 
@@ -193,17 +193,17 @@ public class HttpClientSPIAgent implements SPIAgent {
 
 			socket = null;
 		}
-		catch (IOException ioe) {
-			throw new PortalResiliencyException(ioe);
+		catch (IOException ioException) {
+			throw new PortalResiliencyException(ioException);
 		}
 		finally {
 			if (socket != null) {
 				try {
 					socket.close();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(ioe, ioe);
+						_log.warn(ioException, ioException);
 					}
 				}
 			}
@@ -268,9 +268,9 @@ public class HttpClientSPIAgent implements SPIAgent {
 			try {
 				socket.close();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(ioe, ioe);
+					_log.warn(ioException, ioException);
 				}
 			}
 
@@ -334,9 +334,9 @@ public class HttpClientSPIAgent implements SPIAgent {
 			try {
 				socket.close();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(ioe, ioe);
+					_log.warn(ioException, ioException);
 				}
 			}
 		}

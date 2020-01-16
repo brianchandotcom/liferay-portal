@@ -80,8 +80,8 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 					WildcardMode.LEADING);
 			}
 		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
+		catch (Exception exception) {
+			throw new UpgradeException(exception);
 		}
 	}
 

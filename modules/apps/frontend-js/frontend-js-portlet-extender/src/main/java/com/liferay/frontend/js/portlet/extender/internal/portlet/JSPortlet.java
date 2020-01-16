@@ -92,8 +92,8 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 
 			printWriter.flush();
 		}
-		catch (IOException ioe) {
-			_log.error("Unable to render HTML output", ioe);
+		catch (IOException ioException) {
+			_log.error("Unable to render HTML output", ioException);
 		}
 	}
 
@@ -137,8 +137,8 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 
 			return StringUtil.read(inputStream);
 		}
-		catch (Exception e) {
-			_log.error("Unable to read template " + name, e);
+		catch (Exception exception) {
+			_log.error("Unable to read template " + name, exception);
 		}
 
 		return StringPool.BLANK;

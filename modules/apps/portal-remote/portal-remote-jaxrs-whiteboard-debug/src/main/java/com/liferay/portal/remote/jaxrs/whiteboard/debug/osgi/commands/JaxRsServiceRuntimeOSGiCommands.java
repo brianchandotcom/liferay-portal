@@ -155,8 +155,8 @@ public class JaxRsServiceRuntimeOSGiCommands {
 
 			return serviceReferences[0];
 		}
-		catch (InvalidSyntaxException ise) {
-			throw new IllegalArgumentException(ise);
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			throw new IllegalArgumentException(invalidSyntaxException);
 		}
 	}
 

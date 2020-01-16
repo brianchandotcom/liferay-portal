@@ -88,8 +88,8 @@ public class SearchResultPermissionFilterFactoryImpl
 		try {
 			return searchResultPermissionFilterSearcher.search(searchContext);
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 

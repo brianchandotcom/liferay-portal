@@ -106,8 +106,8 @@ public class WorkflowDefinitionManagerImpl
 			return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
 				name, true, serviceContext);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -141,8 +141,8 @@ public class WorkflowDefinitionManagerImpl
 				kaleoDefinitions.toArray(new KaleoDefinition[size]),
 				orderByComparator);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -173,11 +173,11 @@ public class WorkflowDefinitionManagerImpl
 				kaleoDefinitions.toArray(new KaleoDefinition[size]),
 				orderByComparator);
 		}
-		catch (WorkflowException we) {
-			throw we;
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -193,8 +193,8 @@ public class WorkflowDefinitionManagerImpl
 			return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
 				true, serviceContext);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -215,11 +215,11 @@ public class WorkflowDefinitionManagerImpl
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
 				kaleoDefinition);
 		}
-		catch (WorkflowException we) {
-			throw we;
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -247,8 +247,8 @@ public class WorkflowDefinitionManagerImpl
 				kaleoDefinitions.toArray(new KaleoDefinition[size]),
 				orderByComparator);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -264,8 +264,8 @@ public class WorkflowDefinitionManagerImpl
 			return _kaleoDefinitionLocalService.getKaleoDefinitionsCount(
 				serviceContext);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -282,11 +282,11 @@ public class WorkflowDefinitionManagerImpl
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
 				kaleoDefinitionVersion);
 		}
-		catch (WorkflowException we) {
-			throw we;
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -302,8 +302,8 @@ public class WorkflowDefinitionManagerImpl
 			return _kaleoDefinitionVersionLocalService.
 				getKaleoDefinitionVersionsCount(companyId);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -348,11 +348,11 @@ public class WorkflowDefinitionManagerImpl
 					new KaleoDefinitionVersion[size]),
 				orderByComparator);
 		}
-		catch (WorkflowException we) {
-			throw we;
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -374,11 +374,11 @@ public class WorkflowDefinitionManagerImpl
 					new KaleoDefinitionVersion[size]),
 				orderByComparator);
 		}
-		catch (WorkflowException we) {
-			throw we;
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -390,8 +390,8 @@ public class WorkflowDefinitionManagerImpl
 			return _kaleoDefinitionVersionLocalService.
 				getKaleoDefinitionVersionsCount(companyId, name);
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -438,11 +438,11 @@ public class WorkflowDefinitionManagerImpl
 			_workflowEngine.deleteWorkflowDefinition(
 				name, version, serviceContext);
 		}
-		catch (WorkflowException we) {
-			throw we;
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 		finally {
 			_lockLocalService.unlock(className, key);
@@ -481,11 +481,11 @@ public class WorkflowDefinitionManagerImpl
 
 			return getWorkflowDefinition(companyId, name, version);
 		}
-		catch (WorkflowException we) {
-			throw we;
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 
@@ -510,11 +510,11 @@ public class WorkflowDefinitionManagerImpl
 				title, name, new UnsyncByteArrayInputStream(content.getBytes()),
 				serviceContext);
 		}
-		catch (WorkflowException we) {
-			throw we;
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
 		}
 	}
 

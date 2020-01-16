@@ -47,8 +47,8 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 			_fileEntryModelResourcePermission.check(
 				getPermissionChecker(), toFileEntryId, ActionKeys.VIEW);
 		}
-		catch (PrincipalException pe) {
-			throw new FileShortcutPermissionException(pe);
+		catch (PrincipalException principalException) {
+			throw new FileShortcutPermissionException(principalException);
 		}
 
 		return dlFileShortcutLocalService.addFileShortcut(
@@ -87,8 +87,8 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 			_fileEntryModelResourcePermission.check(
 				getPermissionChecker(), toFileEntryId, ActionKeys.VIEW);
 		}
-		catch (PrincipalException pe) {
-			throw new FileShortcutPermissionException(pe);
+		catch (PrincipalException principalException) {
+			throw new FileShortcutPermissionException(principalException);
 		}
 
 		return dlFileShortcutLocalService.updateFileShortcut(
@@ -108,8 +108,8 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 			_fileEntryModelResourcePermission.check(
 				getPermissionChecker(), newToFileEntryId, ActionKeys.VIEW);
 		}
-		catch (PrincipalException pe) {
-			throw new FileShortcutPermissionException(pe);
+		catch (PrincipalException principalException) {
+			throw new FileShortcutPermissionException(principalException);
 		}
 
 		dlFileShortcutLocalService.updateFileShortcuts(

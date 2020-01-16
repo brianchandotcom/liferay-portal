@@ -91,14 +91,15 @@ public class SetupWizardAction implements Action {
 
 			return null;
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(httpServletRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(httpServletRequest, exception.getClass());
 
 				return actionMapping.getActionForward("portal.setup_wizard");
 			}
 
-			PortalUtil.sendError(e, httpServletRequest, httpServletResponse);
+			PortalUtil.sendError(
+				exception, httpServletRequest, httpServletResponse);
 
 			return null;
 		}
@@ -133,12 +134,13 @@ public class SetupWizardAction implements Action {
 				httpServletRequest, jsonObject,
 				"database-connection-was-established-successfully");
 		}
-		catch (ClassNotFoundException cnfe) {
+		catch (ClassNotFoundException classNotFoundException) {
 			putMessage(
 				httpServletRequest, jsonObject,
-				"database-driver-x-is-not-present", cnfe.getLocalizedMessage());
+				"database-driver-x-is-not-present",
+				classNotFoundException.getLocalizedMessage());
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			putMessage(
 				httpServletRequest, jsonObject,
 				"database-connection-could-not-be-established");

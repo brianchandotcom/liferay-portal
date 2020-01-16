@@ -172,12 +172,12 @@ public class RSSFeedEntry {
 				null, 0, ContentTypes.TEXT_HTML, Sanitizer.MODE_XSS, value,
 				null);
 		}
-		catch (SanitizerException se) {
+		catch (SanitizerException sanitizerException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(se, se);
+				_log.debug(sanitizerException, sanitizerException);
 			}
 		}
 

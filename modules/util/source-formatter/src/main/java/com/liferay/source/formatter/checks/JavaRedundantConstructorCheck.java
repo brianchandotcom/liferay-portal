@@ -83,7 +83,7 @@ public class JavaRedundantConstructorCheck extends BaseJavaTermCheck {
 		try {
 			javaProjectBuilder.addSource(new UnsyncStringReader(fileContent));
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			return constructorContent;
 		}
 

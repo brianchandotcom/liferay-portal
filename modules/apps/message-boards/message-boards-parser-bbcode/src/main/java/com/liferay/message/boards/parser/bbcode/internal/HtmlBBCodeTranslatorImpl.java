@@ -159,8 +159,8 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		try {
 			bbcode = parse(bbcode);
 		}
-		catch (Exception e) {
-			_log.error("Unable to parse: " + bbcode, e);
+		catch (Exception exception) {
+			_log.error("Unable to parse: " + bbcode, exception);
 
 			bbcode = HtmlUtil.escape(bbcode);
 		}

@@ -77,9 +77,9 @@ public class DateDDMFormFieldValueRenderer
 				DateUtil.parseDate("yyyy-MM-dd", value.toString(), locale),
 				pattern.replaceAll("\\byy\\b", "yyyy"), locale);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return LanguageUtil.format(

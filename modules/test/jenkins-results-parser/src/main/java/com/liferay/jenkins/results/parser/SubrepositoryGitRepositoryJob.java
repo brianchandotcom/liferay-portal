@@ -127,8 +127,9 @@ public class SubrepositoryGitRepositoryJob
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build properties", ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
 		}
 
 		jobPropertiesFiles.add(new File(gitRepositoryDir, "test.properties"));

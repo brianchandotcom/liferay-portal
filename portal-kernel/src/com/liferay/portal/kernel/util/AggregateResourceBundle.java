@@ -78,7 +78,7 @@ public class AggregateResourceBundle extends ResourceBundle {
 			try {
 				return resourceBundle.getObject(key);
 			}
-			catch (MissingResourceException mre) {
+			catch (MissingResourceException missingResourceException) {
 			}
 		}
 

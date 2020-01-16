@@ -55,14 +55,14 @@ public class DLOpenerOneDriveDLDisplayContextFactory
 				parentDLViewFileVersionDisplayContext, httpServletRequest,
 				httpServletResponse, fileShortcut.getFileVersion());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
 				StringBundler.concat(
 					"Unable to build ",
 					DLOpenerOneDriveDLViewFileVersionDisplayContext.class.
 						getSimpleName(),
 					" for shortcut ", fileShortcut.getPrimaryKey()),
-				pe);
+				portalException);
 		}
 	}
 

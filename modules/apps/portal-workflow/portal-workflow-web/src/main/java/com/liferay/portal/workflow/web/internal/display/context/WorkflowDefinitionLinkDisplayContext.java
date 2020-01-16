@@ -637,12 +637,15 @@ public class WorkflowDefinitionLinkDisplayContext {
 					_workflowDefinitionLinkRequestHelper.getCompanyId(),
 					getGroupId(), className, 0, 0, true);
 		}
-		catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+		catch (NoSuchWorkflowDefinitionLinkException
+					noSuchWorkflowDefinitionLinkException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nswdle, nswdle);
+				_log.debug(
+					noSuchWorkflowDefinitionLinkException,
+					noSuchWorkflowDefinitionLinkException);
 			}
 
 			return null;

@@ -68,8 +68,8 @@ public class LiferayResourceOwnerLoginHandler
 
 			return userSubject;
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return null;
 		}
@@ -102,8 +102,8 @@ public class LiferayResourceOwnerLoginHandler
 					Collections.emptyMap(), Collections.emptyMap(), resultsMap);
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
 			return null;
 		}

@@ -76,8 +76,8 @@ public class InvokerFilterHelper {
 			try {
 				filter.destroy();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -116,10 +116,10 @@ public class InvokerFilterHelper {
 
 			_serviceTracker.open();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new ServletException(e);
+			throw new ServletException(exception);
 		}
 	}
 
@@ -212,8 +212,8 @@ public class InvokerFilterHelper {
 			try {
 				filter.destroy();
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (Exception exception) {
+				_log.error(exception, exception);
 			}
 		}
 
@@ -323,8 +323,9 @@ public class InvokerFilterHelper {
 
 			return filter;
 		}
-		catch (Exception e) {
-			_log.error("Unable to initialize filter " + filterClassName, e);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to initialize filter " + filterClassName, exception);
 
 			return null;
 		}
@@ -490,8 +491,8 @@ public class InvokerFilterHelper {
 			try {
 				filter.init(filterConfig);
 			}
-			catch (ServletException se) {
-				_log.error(se, se);
+			catch (ServletException servletException) {
+				_log.error(servletException, servletException);
 
 				registry.ungetService(serviceReference);
 

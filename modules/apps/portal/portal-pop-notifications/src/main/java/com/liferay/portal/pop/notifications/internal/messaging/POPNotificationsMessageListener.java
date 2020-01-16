@@ -233,8 +233,9 @@ public class POPNotificationsMessageListener extends BaseMessageListener {
 						messageListener.deliver(from, recipient, message);
 					}
 				}
-				catch (MessageListenerException mle) {
-					_log.error(mle, mle);
+				catch (MessageListenerException messageListenerException) {
+					_log.error(
+						messageListenerException, messageListenerException);
 				}
 			}
 		}

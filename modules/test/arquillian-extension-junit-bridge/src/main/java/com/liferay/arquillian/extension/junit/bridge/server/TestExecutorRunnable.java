@@ -99,21 +99,21 @@ public class TestExecutorRunnable implements Runnable {
 				objectOutputStream.flush();
 			}
 		}
-		catch (EOFException eofe) {
+		catch (EOFException eofException) {
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			try {
 				_bundle.uninstall();
 			}
-			catch (BundleException be) {
-				e.addSuppressed(be);
+			catch (BundleException bundleException) {
+				exception.addSuppressed(bundleException);
 			}
 
 			_logger.log(
 				Level.SEVERE,
 				"Unable to report back to client. Uninstalled test bundle " +
 					"and abort test.",
-				e);
+				exception);
 		}
 	}
 
@@ -304,10 +304,10 @@ public class TestExecutorRunnable implements Runnable {
 			ObjectOutputStream objectOutputStream, Description description)
 		throws IOException {
 
-		Throwable assumptionViolatedException =
+		Throwable assumptionViolatedThrowable =
 			_findAssumptionViolatedException(throwable);
 
-		if (assumptionViolatedException != null) {
+		if (assumptionViolatedThrowable != null) {
 			if (classLevel) {
 				objectOutputStream.writeObject(
 					RunNotifierCommand.testStarted(description));
@@ -316,13 +316,16 @@ public class TestExecutorRunnable implements Runnable {
 			// To neutralize the nonserializable Matcher field inside
 			// AssumptionViolatedException
 
-			AssumptionViolatedException ave = new AssumptionViolatedException(
-				assumptionViolatedException.getMessage());
+			AssumptionViolatedException assumptionViolatedException =
+				new AssumptionViolatedException(
+					assumptionViolatedThrowable.getMessage());
 
-			ave.setStackTrace(assumptionViolatedException.getStackTrace());
+			assumptionViolatedException.setStackTrace(
+				assumptionViolatedThrowable.getStackTrace());
 
 			objectOutputStream.writeObject(
-				RunNotifierCommand.assumptionFailed(description, ave));
+				RunNotifierCommand.assumptionFailed(
+					description, assumptionViolatedException));
 
 			if (classLevel) {
 				objectOutputStream.writeObject(
@@ -330,9 +333,10 @@ public class TestExecutorRunnable implements Runnable {
 			}
 		}
 		else if (throwable instanceof MultipleFailureException) {
-			MultipleFailureException mfe = (MultipleFailureException)throwable;
+			MultipleFailureException multipleFailureException =
+				(MultipleFailureException)throwable;
 
-			for (Throwable t : mfe.getFailures()) {
+			for (Throwable t : multipleFailureException.getFailures()) {
 				_processThrowable(objectOutputStream, description, t);
 			}
 		}
@@ -352,20 +356,21 @@ public class TestExecutorRunnable implements Runnable {
 			objectOutputStream.writeObject(
 				RunNotifierCommand.testFailure(description, t));
 		}
-		catch (NotSerializableException nse) {
+		catch (NotSerializableException notSerializableException) {
 			objectOutputStream.reset();
 
 			Class<? extends Throwable> clazz = t.getClass();
 
-			Exception serializableException = new Exception(
+			Exception exception = new Exception(
 				clazz.getName() + ": " + t.getMessage());
 
-			serializableException.setStackTrace(t.getStackTrace());
+			exception.setStackTrace(t.getStackTrace());
 
-			nse.initCause(serializableException);
+			notSerializableException.initCause(exception);
 
 			objectOutputStream.writeObject(
-				RunNotifierCommand.testFailure(description, nse));
+				RunNotifierCommand.testFailure(
+					description, notSerializableException));
 		}
 	}
 

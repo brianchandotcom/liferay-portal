@@ -66,10 +66,11 @@ public abstract class BaseWorkflowedStagedModelDataHandlerTestCase
 				StagedModelDataHandlerUtil.exportStagedModel(
 					portletDataContext, stagedModel);
 			}
-			catch (PortletDataException pde) {
+			catch (PortletDataException portletDataException) {
 				Assert.assertEquals(
 					"An unexpected error occurred during the export",
-					PortletDataException.STATUS_UNAVAILABLE, pde.getType());
+					PortletDataException.STATUS_UNAVAILABLE,
+					portletDataException.getType());
 			}
 
 			validateWorkflowedExport(portletDataContext, stagedModel);

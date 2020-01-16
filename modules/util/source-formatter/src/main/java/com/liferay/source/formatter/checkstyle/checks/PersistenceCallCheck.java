@@ -73,7 +73,7 @@ public class PersistenceCallCheck extends BaseCheck {
 		try {
 			javaClass = JavaClassParser.parseJavaClass(absolutePath, content);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return;
 		}
 
@@ -218,7 +218,7 @@ public class PersistenceCallCheck extends BaseCheck {
 				extendedClassFileName,
 				FileUtil.read(new File(extendedClassFileName)));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}

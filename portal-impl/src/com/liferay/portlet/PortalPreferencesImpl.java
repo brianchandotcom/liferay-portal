@@ -227,8 +227,10 @@ public class PortalPreferencesImpl
 		try {
 			retryableStore(callable, key);
 		}
-		catch (ConcurrentModificationException cme) {
-			throw cme;
+		catch (ConcurrentModificationException
+					concurrentModificationException) {
+
+			throw concurrentModificationException;
 		}
 		catch (Throwable t) {
 			_log.error(t, t);
@@ -248,8 +250,10 @@ public class PortalPreferencesImpl
 				}
 			}
 		}
-		catch (ConcurrentModificationException cme) {
-			throw cme;
+		catch (ConcurrentModificationException
+					concurrentModificationException) {
+
+			throw concurrentModificationException;
 		}
 		catch (Throwable t) {
 			_log.error(t, t);
@@ -307,8 +311,10 @@ public class PortalPreferencesImpl
 				callable.call();
 			}
 		}
-		catch (ConcurrentModificationException cme) {
-			throw cme;
+		catch (ConcurrentModificationException
+					concurrentModificationException) {
+
+			throw concurrentModificationException;
 		}
 		catch (Throwable t) {
 			_log.error(t, t);
@@ -365,8 +371,10 @@ public class PortalPreferencesImpl
 				callable.call();
 			}
 		}
-		catch (ConcurrentModificationException cme) {
-			throw cme;
+		catch (ConcurrentModificationException
+					concurrentModificationException) {
+
+			throw concurrentModificationException;
 		}
 		catch (Throwable t) {
 			_log.error(t, t);
@@ -431,8 +439,8 @@ public class PortalPreferencesImpl
 
 				return;
 			}
-			catch (Exception e) {
-				if (isCausedByStaleObjectException(e)) {
+			catch (Exception exception) {
+				if (isCausedByStaleObjectException(exception)) {
 					com.liferay.portal.kernel.model.PortalPreferences
 						portalPreferences = _reload(
 							getOwnerId(), getOwnerType());
@@ -463,7 +471,7 @@ public class PortalPreferencesImpl
 					_portalPreferences = portalPreferences;
 				}
 				else {
-					throw e;
+					throw exception;
 				}
 			}
 		}

@@ -42,9 +42,10 @@ public class TransactionCommitCallbackUtil {
 					try {
 						callable.call();
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						_log.error(
-							"Unable to execute transaction commit callback", e);
+							"Unable to execute transaction commit callback",
+							exception);
 					}
 				}
 			}
@@ -79,8 +80,8 @@ public class TransactionCommitCallbackUtil {
 			try {
 				callable.call();
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 		else {

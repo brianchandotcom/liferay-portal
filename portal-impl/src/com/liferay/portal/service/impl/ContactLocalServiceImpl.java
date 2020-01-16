@@ -41,8 +41,8 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		try {
 			validateBirthday(contact.getBirthday());
 		}
-		catch (ContactBirthdayException cbe) {
-			throw new SystemException(cbe);
+		catch (ContactBirthdayException contactBirthdayException) {
+			throw new SystemException(contactBirthdayException);
 		}
 
 		return super.addContact(contact);
@@ -173,8 +173,8 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		try {
 			validateBirthday(contact.getBirthday());
 		}
-		catch (ContactBirthdayException cbe) {
-			throw new SystemException(cbe);
+		catch (ContactBirthdayException contactBirthdayException) {
+			throw new SystemException(contactBirthdayException);
 		}
 
 		return super.updateContact(contact);

@@ -98,14 +98,14 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 		try {
 			setWorkflowTaskRenderRequestAttribute(renderRequest);
 		}
-		catch (Exception e) {
-			if (isSessionErrorException(e)) {
+		catch (Exception exception) {
+			if (isSessionErrorException(exception)) {
 				hideDefaultErrorMessage(renderRequest);
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 			}
 			else {
-				throw new PortletException(e);
+				throw new PortletException(exception);
 			}
 		}
 

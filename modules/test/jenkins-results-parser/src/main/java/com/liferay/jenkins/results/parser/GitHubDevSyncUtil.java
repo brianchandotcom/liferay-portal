@@ -51,13 +51,13 @@ public class GitHubDevSyncUtil {
 			try {
 				GitUtil.clone(gitHubDevRemoteURL, workingDirectory);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				String message = JenkinsResultsParserUtil.combine(
 					"Unable to clone ", repositoryName, " from ",
 					gitHubDevRemoteURL, ".");
 
 				if (usedGitHubDevRemoteHostnames.size() == 3) {
-					throw new RuntimeException(message, e);
+					throw new RuntimeException(message, exception);
 				}
 
 				System.out.println("Retrying: " + message);
@@ -132,13 +132,13 @@ public class GitHubDevSyncUtil {
 
 					return cacheRemoteGitBranch;
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					String message = JenkinsResultsParserUtil.combine(
 						"Unable to fetch ", cacheBranchName, " from ",
 						gitHubDevGitRemote.getHostname());
 
 					if (retries == 10) {
-						throw new RuntimeException(message, e);
+						throw new RuntimeException(message, exception);
 					}
 
 					JenkinsResultsParserUtil.sleep(30000);
@@ -955,8 +955,8 @@ public class GitHubDevSyncUtil {
 						return gitWorkingDirectory.remoteGitBranchExists(
 							remoteGitBranchName, gitRemote);
 					}
-					catch (Exception e) {
-						e.printStackTrace();
+					catch (Exception exception) {
+						exception.printStackTrace();
 
 						return true;
 					}
@@ -1046,7 +1046,7 @@ public class GitHubDevSyncUtil {
 					cacheRemoteGitBranch = fetchCacheBranchFromGitHubDev(
 						gitWorkingDirectory, cacheBranchName);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					cacheRemoteGitBranch = null;
 
 					System.out.println(
@@ -1094,9 +1094,9 @@ public class GitHubDevSyncUtil {
 
 				return cacheBranchName;
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (retryCount == 1) {
-					throw e;
+					throw exception;
 				}
 
 				gitHubDevGitRemotes = null;
@@ -1105,7 +1105,7 @@ public class GitHubDevSyncUtil {
 				System.out.println(
 					"Synchronization with local-git failed. Retrying.");
 
-				e.printStackTrace();
+				exception.printStackTrace();
 
 				gitWorkingDirectory.checkoutLocalGitBranch(
 					currentLocalGitBranch);
@@ -1121,8 +1121,8 @@ public class GitHubDevSyncUtil {
 						gitWorkingDirectory.removeGitRemotes(
 							gitHubDevGitRemotes);
 					}
-					catch (Exception e) {
-						e.printStackTrace();
+					catch (Exception exception) {
+						exception.printStackTrace();
 					}
 				}
 
@@ -1145,8 +1145,8 @@ public class GitHubDevSyncUtil {
 				try {
 					gitWorkingDirectory.removeGitRemote(senderGitRemote);
 				}
-				catch (Exception e) {
-					e.printStackTrace();
+				catch (Exception exception) {
+					exception.printStackTrace();
 				}
 			}
 
@@ -1176,14 +1176,14 @@ public class GitHubDevSyncUtil {
 				cacheRemoteGitBranches = getCacheRemoteGitBranches(
 					gitHubDevGitRemote);
 			}
-			catch (Exception e) {
-				e.printStackTrace();
+			catch (Exception exception) {
+				exception.printStackTrace();
 
 				gitHubDevGitRemotes.remove(gitHubDevGitRemote);
 
 				if (gitHubDevGitRemotes.isEmpty()) {
 					throw new RuntimeException(
-						"No remote repositories could be reached", e);
+						"No remote repositories could be reached", exception);
 				}
 			}
 		}
@@ -1405,8 +1405,8 @@ public class GitHubDevSyncUtil {
 			try {
 				return safeCall();
 			}
-			catch (Exception e) {
-				e.printStackTrace();
+			catch (Exception exception) {
+				exception.printStackTrace();
 			}
 
 			return null;

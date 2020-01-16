@@ -102,7 +102,7 @@ public class DDMFormFactoryHelper {
 				resourceBundles.add(resourceBundle);
 			}
 		}
-		catch (MissingResourceException mre) {
+		catch (MissingResourceException missingResourceException) {
 		}
 	}
 

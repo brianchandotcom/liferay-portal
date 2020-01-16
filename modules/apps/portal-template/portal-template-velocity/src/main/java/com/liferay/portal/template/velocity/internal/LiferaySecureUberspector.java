@@ -76,10 +76,10 @@ public class LiferaySecureUberspector extends SecureUberspector {
 				_restrictedClasses.add(
 					aggregateClassLoader.loadClass(restrictedClassName));
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 				super.log.error(
 					"Unable to find restricted class " + restrictedClassName,
-					cnfe);
+					classNotFoundException);
 			}
 		}
 

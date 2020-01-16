@@ -233,9 +233,9 @@ public class PortalUpgradeProcessTest {
 		try {
 			portalServiceUpgrade.upgrade();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SQLException(
-				"No upgrade processes should have been executed", e);
+				"No upgrade processes should have been executed", exception);
 		}
 
 		try (Connection connection = DataAccess.getConnection()) {
@@ -255,12 +255,12 @@ public class PortalUpgradeProcessTest {
 		try {
 			portalServiceUpgrade.upgrade();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SQLException(
 				"The execution of the upgrade process failed after being " +
 					"reexecuted. Upgrade processes must be harmless if they " +
 						"were executed previously.",
-				e);
+				exception);
 		}
 
 		try (Connection connection = DataAccess.getConnection()) {

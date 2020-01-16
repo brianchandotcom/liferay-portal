@@ -148,8 +148,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 					oneDriveBackgroundTaskStatusURL
 				);
 			}
-			catch (PortalException | RuntimeException e) {
-				throw e;
+			catch (PortalException | RuntimeException exception) {
+				throw exception;
 			}
 			catch (Throwable throwable) {
 				throw new PortalException(throwable);

@@ -122,8 +122,8 @@ public class SampleDroolsConfigurationAction
 			try {
 				_rulesEngine.update(domainName, rulesResourceRetriever);
 			}
-			catch (RulesEngineException ree) {
-				_log.error(ree, ree);
+			catch (RulesEngineException rulesEngineException) {
+				_log.error(rulesEngineException, rulesEngineException);
 
 				SessionErrors.add(actionRequest, "rulesEngineException");
 			}

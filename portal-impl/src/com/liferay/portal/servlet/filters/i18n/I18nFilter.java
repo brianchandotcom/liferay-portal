@@ -258,9 +258,9 @@ public class I18nFilter extends BasePortalFilter {
 
 			return LocaleUtil.toLanguageId(siteDefaultLocale);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe.getMessage(), pe);
+				_log.debug(portalException.getMessage(), portalException);
 			}
 
 			return StringPool.BLANK;

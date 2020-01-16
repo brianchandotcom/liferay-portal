@@ -385,10 +385,10 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 			return EVAL_PAGE;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new JspException(e);
+			throw new JspException(exception);
 		}
 	}
 

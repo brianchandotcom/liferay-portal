@@ -146,8 +146,8 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 
 			setAxisTestClassGroups();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

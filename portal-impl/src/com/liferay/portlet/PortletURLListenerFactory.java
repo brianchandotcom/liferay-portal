@@ -135,8 +135,8 @@ public class PortletURLListenerFactory {
 						classLoader, portletURLListener.getListenerClass());
 			}
 		}
-		catch (Exception e) {
-			throw new UnavailableException(e.getMessage());
+		catch (Exception exception) {
+			throw new UnavailableException(exception.getMessage());
 		}
 
 		return portletURLGenerationListener;

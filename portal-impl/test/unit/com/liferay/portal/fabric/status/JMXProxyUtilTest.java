@@ -257,8 +257,8 @@ public class JMXProxyUtilTest {
 
 			Assert.fail();
 		}
-		catch (ProcessException pe) {
-			Throwable throwable = pe.getCause();
+		catch (ProcessException processException) {
+			Throwable throwable = processException.getCause();
 
 			Assert.assertSame(
 				InstanceNotFoundException.class, throwable.getClass());
@@ -287,8 +287,8 @@ public class JMXProxyUtilTest {
 
 			Assert.fail();
 		}
-		catch (ProcessException pe) {
-			Throwable throwable = pe.getCause();
+		catch (ProcessException processException) {
+			Throwable throwable = processException.getCause();
 
 			Assert.assertSame(
 				AttributeNotFoundException.class, throwable.getClass());
@@ -504,8 +504,8 @@ public class JMXProxyUtilTest {
 
 			Assert.fail();
 		}
-		catch (ProcessException pe) {
-			Throwable throwable = pe.getCause();
+		catch (ProcessException processException) {
+			Throwable throwable = processException.getCause();
 
 			Assert.assertSame(
 				InstanceNotFoundException.class, throwable.getClass());
@@ -534,8 +534,8 @@ public class JMXProxyUtilTest {
 
 			Assert.fail();
 		}
-		catch (ProcessException pe) {
-			Throwable throwable = pe.getCause();
+		catch (ProcessException processException) {
+			Throwable throwable = processException.getCause();
 
 			Assert.assertSame(
 				InstanceNotFoundException.class, throwable.getClass());
@@ -568,8 +568,8 @@ public class JMXProxyUtilTest {
 
 			Assert.fail();
 		}
-		catch (ProcessException pe) {
-			Throwable throwable = pe.getCause();
+		catch (ProcessException processException) {
+			Throwable throwable = processException.getCause();
 
 			Assert.assertSame(
 				AttributeNotFoundException.class, throwable.getClass());
@@ -698,8 +698,8 @@ public class JMXProxyUtilTest {
 		try {
 			return new ObjectName(name);
 		}
-		catch (MalformedObjectNameException mone) {
-			return ReflectionUtil.throwException(mone);
+		catch (MalformedObjectNameException malformedObjectNameException) {
+			return ReflectionUtil.throwException(malformedObjectNameException);
 		}
 	}
 
@@ -745,8 +745,8 @@ public class JMXProxyUtilTest {
 				try {
 					defaultNoticeableFuture.set(processCallable.call());
 				}
-				catch (ProcessException pe) {
-					defaultNoticeableFuture.setException(pe);
+				catch (ProcessException processException) {
+					defaultNoticeableFuture.setException(processException);
 				}
 
 				return defaultNoticeableFuture;

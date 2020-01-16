@@ -72,9 +72,10 @@ public class DefaultCompanyNameSwapper {
 				}
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to swap default company name", pe);
+				_log.warn(
+					"Unable to swap default company name", portalException);
 			}
 		}
 	}
@@ -100,10 +101,11 @@ public class DefaultCompanyNameSwapper {
 
 			_accountLocalService.updateAccount(account);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to swap default company name for " + company, pe);
+					"Unable to swap default company name for " + company,
+					portalException);
 			}
 		}
 	}

@@ -28,8 +28,8 @@ public class DBContext {
 		try {
 			return DataAccess.getConnection();
 		}
-		catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+		catch (SQLException sqlException) {
+			throw new RuntimeException(sqlException);
 		}
 	}
 
@@ -41,8 +41,8 @@ public class DBContext {
 		try {
 			return DataAccess.getConnection();
 		}
-		catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
+		catch (SQLException sqlException) {
+			throw new RuntimeException(sqlException);
 		}
 	}
 

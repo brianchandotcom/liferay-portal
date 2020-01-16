@@ -79,8 +79,8 @@ public abstract class BasePortalTestBatch
 				getPrimaryPortalWorkspaceDirectory(), "build-test.xml",
 				"merge-test-results");
 		}
-		catch (AntException ae) {
-			throw new RuntimeException(ae);
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
 		}
 
 		File sourceFile = new File(
@@ -100,12 +100,12 @@ public abstract class BasePortalTestBatch
 		try {
 			JenkinsResultsParserUtil.copy(sourceFile, targetFile);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to copy test results file from ",
 					sourceFile.getPath(), " to ", targetFile.getPath()),
-				ioe);
+				ioException);
 		}
 	}
 

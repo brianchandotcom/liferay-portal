@@ -64,8 +64,8 @@ public class GeneralTabDefaultViewDisplayContext {
 					null, X509CertificateStatus.Status.UNBOUND);
 			}
 		}
-		catch (Exception e) {
-			Throwable cause = _getCause(e, KeyStoreException.class);
+		catch (Exception exception) {
+			Throwable cause = _getCause(exception, KeyStoreException.class);
 			X509CertificateStatus.Status status;
 
 			if (cause != null) {
@@ -99,7 +99,7 @@ public class GeneralTabDefaultViewDisplayContext {
 				}
 			}
 			else {
-				cause = _getCause(e, UnrecoverableKeyException.class);
+				cause = _getCause(exception, UnrecoverableKeyException.class);
 
 				if (cause != null) {
 					if (_log.isDebugEnabled()) {
@@ -116,10 +116,10 @@ public class GeneralTabDefaultViewDisplayContext {
 				else {
 					String message =
 						"Unable to get local entity certificate: " +
-							e.getMessage();
+							exception.getMessage();
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(message, e);
+						_log.debug(message, exception);
 					}
 					else if (_log.isWarnEnabled()) {
 						_log.warn(message);

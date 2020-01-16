@@ -56,10 +56,10 @@ public class AnonymousUserConfigurationModelListener
 
 			_validateUniqueConfiguration(pid, companyId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
-				e.getMessage(), AnonymousUserConfiguration.class, getClass(),
-				properties);
+				exception.getMessage(), AnonymousUserConfiguration.class,
+				getClass(), properties);
 		}
 	}
 

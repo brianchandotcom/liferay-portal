@@ -103,8 +103,8 @@ public class FileUploadChannelHandler extends ChannelInboundHandlerAdapter {
 						try {
 							finish();
 						}
-						catch (IOException ioe) {
-							exceptionCaught(null, ioe);
+						catch (IOException ioException) {
+							exceptionCaught(null, ioException);
 						}
 
 						return null;

@@ -55,10 +55,11 @@ public class ElasticsearchConnectionConfigurationModelListener
 
 			_removeOriginalConnectionId(pid, connectionId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
-				e.getMessage(), ElasticsearchConnectionConfiguration.class,
-				getClass(), properties);
+				exception.getMessage(),
+				ElasticsearchConnectionConfiguration.class, getClass(),
+				properties);
 		}
 	}
 

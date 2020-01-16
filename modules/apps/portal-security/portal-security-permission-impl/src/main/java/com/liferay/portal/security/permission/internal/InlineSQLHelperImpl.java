@@ -400,13 +400,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 						return sql;
 					}
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							StringBundler.concat(
 								"Unable to get resource permissions for ",
 								className, " with group ", groupId),
-							pe);
+							portalException);
 					}
 				}
 			}
@@ -449,13 +449,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				return sql;
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"Unable to get resource permissions for ", className,
 						" with company ", companyId),
-					pe);
+					portalException);
 			}
 		}
 

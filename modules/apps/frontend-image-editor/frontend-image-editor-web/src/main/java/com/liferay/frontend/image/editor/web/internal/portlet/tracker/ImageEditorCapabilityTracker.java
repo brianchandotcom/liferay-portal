@@ -143,8 +143,8 @@ public class ImageEditorCapabilityTracker {
 							));
 					}
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 				}
 			}
 		}
@@ -185,7 +185,7 @@ public class ImageEditorCapabilityTracker {
 				return new ImageEditorCapabilityDescriptor(
 					imageEditorCapability, properties);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_bundleContext.ungetService(serviceReference);
 
 				return null;

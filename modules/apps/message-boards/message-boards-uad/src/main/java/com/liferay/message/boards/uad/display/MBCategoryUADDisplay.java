@@ -172,8 +172,8 @@ public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 						ancestorCategoryIds.indexOf(parentCategoryId) - 1));
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return null;

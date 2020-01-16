@@ -94,7 +94,7 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 			portletPreferences.setValue(
 				"resourceClassNameId", resourceClassName);
 		}
-		catch (ReadOnlyException roe) {
+		catch (ReadOnlyException readOnlyException) {
 			StringBundler sb = new StringBundler(7);
 
 			sb.append("Unable to save converted portlet preference ");
@@ -105,7 +105,7 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 			sb.append(" while exporting KB Display portlet ");
 			sb.append(portletDataContext.getPortletId());
 
-			throw new PortletDataException(sb.toString(), roe);
+			throw new PortletDataException(sb.toString(), readOnlyException);
 		}
 
 		if (resourceClassName.equals(KBArticleConstants.getClassName())) {
@@ -165,7 +165,7 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 				"resourceClassNameId",
 				String.valueOf(_portal.getClassNameId(resourceClassName)));
 		}
-		catch (ReadOnlyException roe) {
+		catch (ReadOnlyException readOnlyException) {
 			StringBundler sb = new StringBundler(7);
 
 			sb.append("Unable to save reconverted portlet preference ");
@@ -176,7 +176,7 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 			sb.append(" while importing KB Display portlet ");
 			sb.append(portletDataContext.getPortletId());
 
-			throw new PortletDataException(sb.toString(), roe);
+			throw new PortletDataException(sb.toString(), readOnlyException);
 		}
 
 		long resourcePrimKey = GetterUtil.getLong(
@@ -202,7 +202,7 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 			portletPreferences.setValue(
 				"resourcePrimKey", String.valueOf(resourcePrimKey));
 		}
-		catch (ReadOnlyException roe) {
+		catch (ReadOnlyException readOnlyException) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("Unable to save converted portlet preference ");
@@ -211,7 +211,7 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 			sb.append(" while importing KB Display portlet ");
 			sb.append(portletDataContext.getPortletId());
 
-			throw new PortletDataException(sb.toString(), roe);
+			throw new PortletDataException(sb.toString(), readOnlyException);
 		}
 
 		return portletPreferences;

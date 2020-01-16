@@ -112,8 +112,8 @@ public class NavTag extends BaseNavTag implements BodyTag {
 
 					sb.append("\">");
 				}
-				catch (Exception e) {
-					throw new JspException(e);
+				catch (Exception exception) {
+					throw new JspException(exception);
 				}
 			}
 			else {

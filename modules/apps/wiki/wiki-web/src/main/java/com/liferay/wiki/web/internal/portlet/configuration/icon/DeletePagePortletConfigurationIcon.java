@@ -110,7 +110,7 @@ public class DeletePagePortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -131,7 +131,7 @@ public class DeletePagePortletConfigurationIcon
 				themeDisplay.getPermissionChecker(),
 				ActionUtil.getPage(portletRequest), ActionKeys.DELETE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;
@@ -143,7 +143,7 @@ public class DeletePagePortletConfigurationIcon
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

@@ -113,7 +113,7 @@ public class PortletPreferencesLocalServiceImpl
 		try {
 			portletPreferencesPersistence.update(portletPreferences);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
@@ -126,7 +126,7 @@ public class PortletPreferencesLocalServiceImpl
 				ownerId, ownerType, plid, portletId, false);
 
 			if (portletPreferences == null) {
-				throw se;
+				throw systemException;
 			}
 		}
 
@@ -758,8 +758,8 @@ public class PortletPreferencesLocalServiceImpl
 				user, layoutRevision.getLayoutSetBranchId(),
 				layoutRevision.getPlid());
 		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -809,8 +809,8 @@ public class PortletPreferencesLocalServiceImpl
 				layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 				serviceContext);
 		}
-		catch (PortalException pe) {
-			ReflectionUtil.throwException(pe);
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
 		}
 
 		plid = layoutRevision.getLayoutRevisionId();

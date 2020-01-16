@@ -38,8 +38,8 @@ public class LoadMBeanInfoAction extends BaseJMXManageAction<MBean> {
 
 			return new MBean(objectName, mBeanServer.getMBeanInfo(objectName));
 		}
-		catch (Exception e) {
-			throw new ManageActionException(e);
+		catch (Exception exception) {
+			throw new ManageActionException(exception);
 		}
 	}
 

@@ -101,12 +101,12 @@ public class GitWorkingDirectoryFactory {
 
 			return gitWorkingDirectory;
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to create Git working directory for directory ",
 					gitRepositoryDir.getPath()),
-				ioe);
+				ioException);
 		}
 	}
 

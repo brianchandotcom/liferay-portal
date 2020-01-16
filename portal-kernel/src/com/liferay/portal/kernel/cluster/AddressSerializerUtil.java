@@ -33,9 +33,10 @@ public class AddressSerializerUtil {
 		try {
 			return deserializer.readObject();
 		}
-		catch (ClassNotFoundException cnfe) {
+		catch (ClassNotFoundException classNotFoundException) {
 			throw new RuntimeException(
-				"Unable to deserialize address " + serializedAddress, cnfe);
+				"Unable to deserialize address " + serializedAddress,
+				classNotFoundException);
 		}
 	}
 

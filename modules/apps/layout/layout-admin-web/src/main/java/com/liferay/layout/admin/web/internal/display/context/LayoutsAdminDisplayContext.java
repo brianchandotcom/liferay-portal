@@ -971,9 +971,9 @@ public class LayoutsAdminDisplayContext {
 				RobotsUtil.getRobots(
 					getSelLayoutSet(), _httpServletRequest.isSecure()));
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -1173,9 +1173,10 @@ public class LayoutsAdminDisplayContext {
 			layoutFullURL = HttpUtil.setParameter(
 				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
-				"Unable to generate view layout URL for " + layoutFullURL, e);
+				"Unable to generate view layout URL for " + layoutFullURL,
+				exception);
 		}
 
 		return layoutFullURL;
@@ -1206,9 +1207,9 @@ public class LayoutsAdminDisplayContext {
 					liveGroupLayoutSet);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -1763,9 +1764,9 @@ public class LayoutsAdminDisplayContext {
 			return PortalUtil.getCurrentAndAncestorSiteGroupIds(
 				_themeDisplay.getScopeGroupId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 

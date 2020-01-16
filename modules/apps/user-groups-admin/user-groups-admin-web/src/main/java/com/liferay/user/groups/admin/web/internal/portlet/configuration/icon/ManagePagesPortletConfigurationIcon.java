@@ -73,7 +73,7 @@ public class ManagePagesPortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -97,7 +97,7 @@ public class ManagePagesPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(), userGroup.getGroup(),
 				ActionKeys.PERMISSIONS);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

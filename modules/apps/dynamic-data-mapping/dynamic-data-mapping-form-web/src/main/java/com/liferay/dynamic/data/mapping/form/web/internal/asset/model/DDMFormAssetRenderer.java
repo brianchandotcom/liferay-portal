@@ -79,9 +79,9 @@ public class DDMFormAssetRenderer
 		try {
 			ddmFormInstance = _ddmFormInstanceRecordVersion.getFormInstance();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -183,8 +183,8 @@ public class DDMFormAssetRenderer
 			return _ddmFormInstanceModelResourcePermission.contains(
 				permissionChecker, _ddmFormInstance, ActionKeys.VIEW);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return false;

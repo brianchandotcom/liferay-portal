@@ -168,7 +168,7 @@ public class InitBundleTask extends JavaExec {
 			args.add("--url");
 			args.add(url.toString());
 		}
-		catch (MalformedURLException murle) {
+		catch (MalformedURLException malformedURLException) {
 			Logger logger = getLogger();
 
 			logger.error("Unable to construct URL for {}", getFile());

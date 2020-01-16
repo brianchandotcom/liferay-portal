@@ -95,10 +95,10 @@ public class FreeMarkerTemplate extends BaseTemplate {
 			}
 
 			if (exception instanceof ParseException) {
-				ParseException pe = (ParseException)exception;
+				ParseException parseException = (ParseException)exception;
 
-				put("column", pe.getColumnNumber());
-				put("line", pe.getLineNumber());
+				put("column", parseException.getColumnNumber());
+				put("line", parseException.getLineNumber());
 			}
 
 			try {

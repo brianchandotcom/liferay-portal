@@ -66,8 +66,8 @@ public abstract class BaseVerifyProcessTestCase {
 		try {
 			doVerify();
 		}
-		catch (VerifyException ve) {
-			exception = ve;
+		catch (VerifyException verifyException) {
+			exception = verifyException;
 		}
 		finally {
 			for (ObjectValuePair<Connection, Exception> objectValuePair :
@@ -125,8 +125,8 @@ public abstract class BaseVerifyProcessTestCase {
 
 				return result;
 			}
-			catch (InvocationTargetException ite) {
-				throw ite.getTargetException();
+			catch (InvocationTargetException invocationTargetException) {
+				throw invocationTargetException.getTargetException();
 			}
 		}
 

@@ -80,11 +80,11 @@ public abstract class BasePublisherMessageListener
 		try {
 			permissionChecker = PermissionCheckerFactoryUtil.create(user);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SystemException(
 				"Unable to initialize thread locals because an error occured " +
 					"when creating a permission checker for user " + userId,
-				e);
+				exception);
 		}
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);

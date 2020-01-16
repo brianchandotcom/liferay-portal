@@ -115,9 +115,9 @@ public class DocumentumQuery {
 				try {
 					idfSysObjects.add(idfSysObject);
 				}
-				catch (RepositoryException re) {
+				catch (RepositoryException repositoryException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(re, re);
+						_log.warn(repositoryException, repositoryException);
 					}
 				}
 			}
@@ -175,7 +175,7 @@ public class DocumentumQuery {
 			try {
 				idfCollection.close();
 			}
-			catch (DfException de) {
+			catch (DfException dfException) {
 			}
 		}
 	}

@@ -141,8 +141,8 @@ public class BuildThemeMojo extends AbstractMojo {
 
 			themeBuilder.build();
 		}
-		catch (Exception ioe) {
-			throw new MojoExecutionException(ioe.getMessage(), ioe);
+		catch (Exception exception) {
+			throw new MojoExecutionException(exception.getMessage(), exception);
 		}
 	}
 

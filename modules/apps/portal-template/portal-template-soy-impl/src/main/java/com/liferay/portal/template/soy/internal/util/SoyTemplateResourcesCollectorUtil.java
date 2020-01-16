@@ -67,13 +67,13 @@ public class SoyTemplateResourcesCollectorUtil {
 
 				templateResources.add(templateResource);
 			}
-			catch (IllegalStateException ise) {
+			catch (IllegalStateException illegalStateException) {
 				_log.error(
 					String.format(
 						"{providerBundle=%s, templateId=%s}",
 						bundle.getSymbolicName(), templateId));
 
-				throw ise;
+				throw illegalStateException;
 			}
 		}
 	}

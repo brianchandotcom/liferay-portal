@@ -471,7 +471,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 			return properties;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

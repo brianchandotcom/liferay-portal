@@ -636,8 +636,8 @@ public class ServiceContext implements Cloneable, Serializable {
 					PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 						_httpServletRequest, _portletId);
 			}
-			catch (PortalException pe) {
-				ReflectionUtil.throwException(pe);
+			catch (PortalException portalException) {
+				ReflectionUtil.throwException(portalException);
 			}
 		}
 
@@ -753,8 +753,8 @@ public class ServiceContext implements Cloneable, Serializable {
 			try {
 				_userDisplayURL = user.getDisplayURL(themeDisplay);
 			}
-			catch (PortalException pe) {
-				ReflectionUtil.throwException(pe);
+			catch (PortalException portalException) {
+				ReflectionUtil.throwException(portalException);
 			}
 		}
 
@@ -1543,11 +1543,11 @@ public class ServiceContext implements Cloneable, Serializable {
 			try {
 				throw clazz.newInstance();
 			}
-			catch (IllegalAccessException iae) {
-				throw new RuntimeException(iae);
+			catch (IllegalAccessException illegalAccessException) {
+				throw new RuntimeException(illegalAccessException);
 			}
-			catch (InstantiationException ie) {
-				throw new RuntimeException(ie);
+			catch (InstantiationException instantiationException) {
+				throw new RuntimeException(instantiationException);
 			}
 		}
 	}

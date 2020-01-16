@@ -85,8 +85,8 @@ public class DispatchTriggerSchedulerEntryTrackerImpl
 				String.valueOf(dispatchTriggerId),
 				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
 		}
-		catch (SchedulerException se) {
-			_log.error(se, se);
+		catch (SchedulerException schedulerException) {
+			_log.error(schedulerException, schedulerException);
 		}
 
 		return nextFireDate;
@@ -101,8 +101,8 @@ public class DispatchTriggerSchedulerEntryTrackerImpl
 				String.valueOf(dispatchTriggerId),
 				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
 		}
-		catch (SchedulerException se) {
-			_log.error(se, se);
+		catch (SchedulerException schedulerException) {
+			_log.error(schedulerException, schedulerException);
 		}
 
 		return nextFireDate;

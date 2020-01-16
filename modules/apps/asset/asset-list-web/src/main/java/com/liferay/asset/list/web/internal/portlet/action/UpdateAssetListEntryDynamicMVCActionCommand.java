@@ -94,12 +94,15 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 			_assetListEntryService.updateAssetListEntryTypeSettings(
 				assetListEntryId, segmentsEntryId, properties.toString());
 		}
-		catch (DuplicateQueryRuleException dqre) {
+		catch (DuplicateQueryRuleException duplicateQueryRuleException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(dqre, dqre);
+				_log.debug(
+					duplicateQueryRuleException, duplicateQueryRuleException);
 			}
 
-			SessionErrors.add(actionRequest, dqre.getClass(), dqre);
+			SessionErrors.add(
+				actionRequest, duplicateQueryRuleException.getClass(),
+				duplicateQueryRuleException);
 		}
 	}
 

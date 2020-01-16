@@ -182,8 +182,8 @@ public class ShindigUtil {
 		try {
 			gadgetSpec = getGadgetSpec(url);
 		}
-		catch (Exception e) {
-			throw new GadgetURLException(e);
+		catch (Exception exception) {
+			throw new GadgetURLException(exception);
 		}
 
 		ModulePrefs modulePrefs = gadgetSpec.getModulePrefs();
@@ -218,7 +218,7 @@ public class ShindigUtil {
 				repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				_GADGET_EDITOR_ROOT_FOLDER_NAME);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if (folder == null) {
@@ -282,10 +282,10 @@ public class ShindigUtil {
 
 			_ignoreGadgetSpecCache.remove(url);
 		}
-		catch (ProcessingException pe) {
+		catch (ProcessingException processingException) {
 			_ignoreGadgetSpecCache.add(url);
 
-			throw new GadgetURLException(pe);
+			throw new GadgetURLException(processingException);
 		}
 
 		return gadget.getSpec();
@@ -381,7 +381,7 @@ public class ShindigUtil {
 
 			return true;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

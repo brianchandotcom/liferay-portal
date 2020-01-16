@@ -35,7 +35,7 @@ public class ResourceActionRowChecker extends RowChecker {
 		try {
 			return doIsChecked(obj);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 	}

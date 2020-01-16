@@ -46,8 +46,8 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 
 			return _ddmGroupServiceConfiguration;
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 
@@ -60,8 +60,8 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 
 			return _ddmWebConfiguration;
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
 		}
 	}
 

@@ -97,7 +97,7 @@ public class SearchEngineInitializer implements Runnable {
 				Thread.sleep(Time.SECOND * delay);
 			}
 		}
-		catch (InterruptedException ie) {
+		catch (InterruptedException interruptedException) {
 		}
 
 		ExecutorService executorService =
@@ -171,8 +171,8 @@ public class SearchEngineInitializer implements Runnable {
 						(stopWatch.getTime() / Time.SECOND) + " seconds");
 			}
 		}
-		catch (Exception e) {
-			_log.error("Error encountered while reindexing", e);
+		catch (Exception exception) {
+			_log.error("Error encountered while reindexing", exception);
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Reindexing Lucene failed");

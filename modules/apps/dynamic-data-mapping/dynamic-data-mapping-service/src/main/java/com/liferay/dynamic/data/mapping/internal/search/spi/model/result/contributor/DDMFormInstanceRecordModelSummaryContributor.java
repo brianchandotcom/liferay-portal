@@ -83,8 +83,8 @@ public class DDMFormInstanceRecordModelSummaryContributor
 				getResourceBundle(locale), "form-record-for-form-x",
 				ddmFormInstanceName, false);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return StringPool.BLANK;

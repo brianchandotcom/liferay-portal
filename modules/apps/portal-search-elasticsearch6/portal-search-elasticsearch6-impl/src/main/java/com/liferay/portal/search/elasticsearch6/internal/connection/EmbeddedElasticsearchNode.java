@@ -52,9 +52,9 @@ public class EmbeddedElasticsearchNode extends Node {
 
 			LogConfigurator.configure(environment);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to find log4j2.properties", e);
+				_log.debug("Unable to find log4j2.properties", exception);
 			}
 		}
 
@@ -74,7 +74,7 @@ public class EmbeddedElasticsearchNode extends Node {
 		try {
 			LogConfigurator.setNodeName(nodeName);
 		}
-		catch (SetOnce.AlreadySetException soase) {
+		catch (SetOnce.AlreadySetException alreadySetException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Node name has already been set");
 			}

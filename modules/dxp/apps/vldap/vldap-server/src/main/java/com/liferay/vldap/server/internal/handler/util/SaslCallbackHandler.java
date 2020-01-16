@@ -49,14 +49,14 @@ public class SaslCallbackHandler implements CallbackHandler {
 			try {
 				handle(callback);
 			}
-			catch (IOException ioe) {
-				throw ioe;
+			catch (IOException ioException) {
+				throw ioException;
 			}
-			catch (UnsupportedCallbackException uce) {
-				throw uce;
+			catch (UnsupportedCallbackException unsupportedCallbackException) {
+				throw unsupportedCallbackException;
 			}
-			catch (Exception e) {
-				throw new IOException(e);
+			catch (Exception exception) {
+				throw new IOException(exception);
 			}
 		}
 	}

@@ -97,7 +97,7 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 
 			ps.executeUpdate();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 		}
 
 		_previousSchemaModuleBuildAutoUpgrade =
@@ -121,7 +121,7 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 
 			ps.executeUpdate();
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 		}
 
 		Release release = _releaseLocalService.fetchRelease(

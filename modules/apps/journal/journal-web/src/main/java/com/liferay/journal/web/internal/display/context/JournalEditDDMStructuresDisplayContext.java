@@ -101,7 +101,7 @@ public class JournalEditDDMStructuresDisplayContext {
 		try {
 			return DDMUtil.getDDMForm(getScript());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -239,8 +239,8 @@ public class JournalEditDDMStructuresDisplayContext {
 			storageType =
 				journalServiceConfiguration.journalArticleStorageType();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return storageType;

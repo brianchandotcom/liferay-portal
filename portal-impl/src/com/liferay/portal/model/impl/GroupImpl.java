@@ -297,8 +297,8 @@ public class GroupImpl extends GroupBaseImpl {
 					themeDisplay, groupFriendlyURL);
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return StringPool.BLANK;
@@ -406,8 +406,9 @@ public class GroupImpl extends GroupBaseImpl {
 
 			return _liveGroup;
 		}
-		catch (Exception e) {
-			_log.error("Error getting live group for " + getLiveGroupId(), e);
+		catch (Exception exception) {
+			_log.error(
+				"Error getting live group for " + getLiveGroupId(), exception);
 
 			return null;
 		}
@@ -495,7 +496,7 @@ public class GroupImpl extends GroupBaseImpl {
 				return liveGroup.getTypeSettingsProperties();
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return getTypeSettingsProperties();
@@ -524,8 +525,8 @@ public class GroupImpl extends GroupBaseImpl {
 			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				getGroupId(), true);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return layoutSet;
@@ -536,8 +537,8 @@ public class GroupImpl extends GroupBaseImpl {
 		try {
 			return LayoutLocalServiceUtil.getLayoutsCount(this, true);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return 0;
@@ -551,8 +552,8 @@ public class GroupImpl extends GroupBaseImpl {
 			layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				getGroupId(), false);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return layoutSet;
@@ -563,8 +564,8 @@ public class GroupImpl extends GroupBaseImpl {
 		try {
 			return LayoutLocalServiceUtil.getLayoutsCount(this, false);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return 0;
@@ -659,10 +660,11 @@ public class GroupImpl extends GroupBaseImpl {
 
 			return _stagingGroup;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to get staging group for group " + getGroupId(), e);
+					"Unable to get staging group for group " + getGroupId(),
+					exception);
 			}
 
 			return null;
@@ -691,8 +693,8 @@ public class GroupImpl extends GroupBaseImpl {
 			try {
 				_typeSettingsProperties.load(super.getTypeSettings());
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 
@@ -712,7 +714,7 @@ public class GroupImpl extends GroupBaseImpl {
 			return StringUtil.appendParentheticalSuffix(
 				name, getDescriptiveName(locale));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return name;
 		}
 	}
@@ -1074,9 +1076,9 @@ public class GroupImpl extends GroupBaseImpl {
 
 			return portletDataHandler.isStaged();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -1153,9 +1155,9 @@ public class GroupImpl extends GroupBaseImpl {
 				return firstLayout.getPlid();
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 		}
 

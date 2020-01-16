@@ -63,9 +63,9 @@ public class DDMStructureModelDocumentContributor
 			document.addKeyword(Field.STATUS, structureVersion.getStatus());
 			document.addKeyword(Field.VERSION, structureVersion.getVersion());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 
@@ -75,9 +75,9 @@ public class DDMStructureModelDocumentContributor
 				_ddmPermissionSupport.getStructureModelResourceName(
 					ddmStructure.getClassNameId()));
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

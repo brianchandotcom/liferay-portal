@@ -187,27 +187,28 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchEntryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchEntryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcPath", "/bookmarks/error.jsp");
 			}
-			else if (e instanceof EntryURLException ||
-					 e instanceof NoSuchFolderException) {
+			else if (exception instanceof EntryURLException ||
+					 exception instanceof NoSuchFolderException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
+			else if (exception instanceof AssetCategoryException ||
+					 exception instanceof AssetTagException) {
 
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

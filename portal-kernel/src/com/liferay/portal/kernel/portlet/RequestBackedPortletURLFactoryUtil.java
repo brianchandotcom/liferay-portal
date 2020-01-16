@@ -88,7 +88,7 @@ public class RequestBackedPortletURLFactoryUtil {
 		try {
 			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
 		}
-		catch (WindowStateException wse) {
+		catch (WindowStateException windowStateException) {
 		}
 
 		return liferayPortletURL;

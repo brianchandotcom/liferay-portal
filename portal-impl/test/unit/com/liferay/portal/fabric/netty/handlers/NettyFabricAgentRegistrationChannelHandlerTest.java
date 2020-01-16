@@ -65,9 +65,10 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 			Assert.assertEquals(
-				"Fabric agent registry is null", npe.getMessage());
+				"Fabric agent registry is null",
+				nullPointerException.getMessage());
 		}
 
 		try {
@@ -78,9 +79,10 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 			Assert.assertEquals(
-				"Repository parent path is null", npe.getMessage());
+				"Repository parent path is null",
+				nullPointerException.getMessage());
 		}
 
 		try {
@@ -91,9 +93,10 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			Assert.fail();
 		}
-		catch (NullPointerException npe) {
+		catch (NullPointerException nullPointerException) {
 			Assert.assertEquals(
-				"Event executor group is null", npe.getMessage());
+				"Event executor group is null",
+				nullPointerException.getMessage());
 		}
 
 		new NettyFabricAgentRegistrationChannelHandler(

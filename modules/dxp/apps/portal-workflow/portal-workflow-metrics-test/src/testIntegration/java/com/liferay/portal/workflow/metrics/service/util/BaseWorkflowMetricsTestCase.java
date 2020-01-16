@@ -90,7 +90,7 @@ public abstract class BaseWorkflowMetricsTestCase {
 					return _kaleoTaskLocalService.getKaleoNodeKaleoTask(
 						kaleoNode.getKaleoNodeId());
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 				}
 
 				return null;

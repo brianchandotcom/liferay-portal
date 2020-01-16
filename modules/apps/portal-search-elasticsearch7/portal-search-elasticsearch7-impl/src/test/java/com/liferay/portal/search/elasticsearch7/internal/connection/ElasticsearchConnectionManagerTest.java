@@ -93,7 +93,8 @@ public class ElasticsearchConnectionManagerTest {
 
 			Assert.fail();
 		}
-		catch (ElasticsearchConnectionNotInitializedException ecnie) {
+		catch (ElasticsearchConnectionNotInitializedException
+					elasticsearchConnectionNotInitializedException) {
 		}
 	}
 
@@ -130,8 +131,8 @@ public class ElasticsearchConnectionManagerTest {
 
 			Assert.fail();
 		}
-		catch (MissingOperationModeException mome) {
-			String message = mome.getMessage();
+		catch (MissingOperationModeException missingOperationModeException) {
+			String message = missingOperationModeException.getMessage();
 
 			Assert.assertTrue(
 				message,
@@ -215,7 +216,7 @@ public class ElasticsearchConnectionManagerTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 
 		Assert.assertSame(

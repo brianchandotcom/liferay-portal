@@ -906,10 +906,11 @@ public class ExpandoValueLocalServiceImpl
 			try {
 				expandoRowPersistence.remove(value.getRowId());
 			}
-			catch (NoSuchRowException nsre) {
+			catch (NoSuchRowException noSuchRowException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Row " + value.getRowId() + " does not exist", nsre);
+						"Row " + value.getRowId() + " does not exist",
+						noSuchRowException);
 				}
 			}
 		}

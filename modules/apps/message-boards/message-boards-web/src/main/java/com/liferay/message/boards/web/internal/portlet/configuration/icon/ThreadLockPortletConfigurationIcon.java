@@ -68,7 +68,7 @@ public class ThreadLockPortletConfigurationIcon
 			return LanguageUtil.get(
 				getResourceBundle(getLocale(portletRequest)), key);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 	}
@@ -101,7 +101,7 @@ public class ThreadLockPortletConfigurationIcon
 			portletURL.setParameter(
 				"threadId", String.valueOf(thread.getThreadId()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return null;
 		}
 
@@ -127,7 +127,7 @@ public class ThreadLockPortletConfigurationIcon
 				themeDisplay.getScopeGroupId(), message.getCategoryId(),
 				ActionKeys.LOCK_THREAD);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

@@ -62,7 +62,7 @@ public class PortalStartupMonitor {
 					try {
 						Thread.sleep(_SLEEP);
 					}
-					catch (InterruptedException ie) {
+					catch (InterruptedException interruptedException) {
 						break;
 					}
 

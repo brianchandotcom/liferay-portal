@@ -46,13 +46,15 @@ public class QueryServiceSoapResult {
 
 			parse(xmlReader, queryServiceSoapResultString);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new SharepointException(
-				"Unable to parse response from the Sharepoint server", ioe);
+				"Unable to parse response from the Sharepoint server",
+				ioException);
 		}
-		catch (SAXException saxe) {
+		catch (SAXException saxException) {
 			throw new SharepointException(
-				"Unable to parse response from the Sharepoint server", saxe);
+				"Unable to parse response from the Sharepoint server",
+				saxException);
 		}
 	}
 

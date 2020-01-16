@@ -163,7 +163,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 
 			jsonObject.put("deleted", Boolean.TRUE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			jsonObject.put("deleted", Boolean.FALSE);
 
 			String errorMessage = themeDisplay.translate(
@@ -234,15 +234,15 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (NoSuchNodeException | NoSuchPageException | PrincipalException
-					e) {
+					exception) {
 
-			SessionErrors.add(actionRequest, e.getClass());
+			SessionErrors.add(actionRequest, exception.getClass());
 
 			actionResponse.setRenderParameter("mvcPath", "/wiki/error.jsp");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			handleUploadException(
-				portletConfig, actionRequest, actionResponse, cmd, e);
+				portletConfig, actionRequest, actionResponse, cmd, exception);
 		}
 	}
 
@@ -324,10 +324,11 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 						WebKeys.THEME_DISPLAY);
 
 				if (exception instanceof AntivirusScannerException) {
-					AntivirusScannerException ase =
+					AntivirusScannerException antivirusScannerException =
 						(AntivirusScannerException)exception;
 
-					errorMessage = themeDisplay.translate(ase.getMessageKey());
+					errorMessage = themeDisplay.translate(
+						antivirusScannerException.getMessageKey());
 
 					errorType =
 						ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
@@ -387,9 +388,12 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				 exception instanceof PrincipalException) {
 
 			if (exception instanceof DuplicateLockException) {
-				DuplicateLockException dle = (DuplicateLockException)exception;
+				DuplicateLockException duplicateLockException =
+					(DuplicateLockException)exception;
 
-				SessionErrors.add(actionRequest, dle.getClass(), dle.getLock());
+				SessionErrors.add(
+					actionRequest, duplicateLockException.getClass(),
+					duplicateLockException.getLock());
 			}
 			else {
 				SessionErrors.add(actionRequest, exception.getClass());

@@ -177,8 +177,8 @@ public class CalendarBookingIndexerLocalizedContentTest
 			return calendarFixture.addCalendarBooking(
 				titleLocalizedValuesMap, calendar, serviceContext);
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

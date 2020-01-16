@@ -148,9 +148,10 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 
 				deleteAssetLink(assetLink);
 			}
-			catch (NoSuchLinkException nsle) {
+			catch (NoSuchLinkException noSuchLinkException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to delete asset link", nsle);
+					_log.warn(
+						"Unable to delete asset link", noSuchLinkException);
 				}
 			}
 		}
@@ -434,8 +435,8 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 				stagedAssetLink.getPrimaryKey(), stagedAssetLink.getUuid(),
 				null, SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

@@ -101,9 +101,9 @@ public class HttpClientFactory {
 			try {
 				_closeableHttpClient.close();
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(ioe, ioe);
+					_log.debug(ioException, ioException);
 				}
 			}
 		}
@@ -147,7 +147,7 @@ public class HttpClientFactory {
 			try {
 				Thread.sleep(500);
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 			}
 
 			retry++;

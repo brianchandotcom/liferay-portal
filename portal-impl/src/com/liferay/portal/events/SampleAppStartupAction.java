@@ -46,8 +46,8 @@ public class SampleAppStartupAction extends SimpleAction {
 
 			doRun(companyId);
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 	}
 

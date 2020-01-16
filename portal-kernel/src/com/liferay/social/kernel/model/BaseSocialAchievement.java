@@ -117,9 +117,9 @@ public class BaseSocialAchievement implements SocialAchievement {
 		try {
 			doProcessActivity(activity);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to process activity", e);
+				_log.warn("Unable to process activity", exception);
 			}
 		}
 	}

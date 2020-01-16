@@ -74,12 +74,12 @@ public class DLUploadResponseHandler implements UploadResponseHandler {
 				fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
 				StringPool.BLANK);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get URL for file entry " +
 						fileEntry.getFileEntryId(),
-					pe);
+					portalException);
 			}
 		}
 

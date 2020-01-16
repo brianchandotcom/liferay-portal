@@ -92,7 +92,7 @@ public class LiferayTemplateCache extends TemplateCache {
 				templateResource = _templateResourceLoader.getTemplateResource(
 					templateId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				templateResource = null;
 			}
 		}
@@ -125,8 +125,8 @@ public class LiferayTemplateCache extends TemplateCache {
 
 			return maybeMissingTemplate;
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new IOException(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new IOException(reflectiveOperationException);
 		}
 	}
 

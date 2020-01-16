@@ -200,10 +200,10 @@ public class MonitoringInvokerPortlet
 				dataSample.capture(RequestStatus.SUCCESS);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_processException(
 				_portletMonitoringControl.isMonitorPortletActionRequest(),
-				dataSample, e);
+				dataSample, exception);
 		}
 		finally {
 			if (dataSample != null) {
@@ -237,10 +237,10 @@ public class MonitoringInvokerPortlet
 				dataSample.capture(RequestStatus.SUCCESS);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_processException(
 				_portletMonitoringControl.isMonitorPortletEventRequest(),
-				dataSample, e);
+				dataSample, exception);
 		}
 		finally {
 			if (dataSample != null) {
@@ -297,10 +297,10 @@ public class MonitoringInvokerPortlet
 				dataSample.capture(RequestStatus.SUCCESS);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_processException(
 				_portletMonitoringControl.isMonitorPortletResourceRequest(),
-				dataSample, e);
+				dataSample, exception);
 		}
 		finally {
 			if (dataSample != null) {
@@ -369,11 +369,11 @@ public class MonitoringInvokerPortlet
 				dataSample.capture(RequestStatus.SUCCESS);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_processException(
 				_portletMonitoringControl.isMonitorPortletHeaderRequest() ||
 				_portletMonitoringControl.isMonitorPortletRenderRequest(),
-				dataSample, e);
+				dataSample, exception);
 		}
 		finally {
 			if (dataSample != null) {

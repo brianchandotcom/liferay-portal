@@ -58,8 +58,8 @@ public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 			try {
 				_settingsProperties.load(super.getSettings());
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 

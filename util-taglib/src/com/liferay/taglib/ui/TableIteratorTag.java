@@ -55,8 +55,8 @@ public class TableIteratorTag extends TagSupport {
 
 			return SKIP_BODY;
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 	}
 
@@ -69,8 +69,8 @@ public class TableIteratorTag extends TagSupport {
 
 			return EVAL_PAGE;
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 		finally {
 			_startPage = null;
@@ -118,8 +118,8 @@ public class TableIteratorTag extends TagSupport {
 
 			return SKIP_BODY;
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 	}
 

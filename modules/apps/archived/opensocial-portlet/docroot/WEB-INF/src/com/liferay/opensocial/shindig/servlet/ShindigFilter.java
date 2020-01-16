@@ -140,11 +140,11 @@ public class ShindigFilter extends InjectedFilter {
 			userUUID = GetterUtil.getString(
 				Encryptor.decrypt(company.getKeyObj(), userUUIDString));
 		}
-		catch (EncryptorException ee) {
+		catch (EncryptorException encryptorException) {
 			return false;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -168,8 +168,8 @@ public class ShindigFilter extends InjectedFilter {
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}

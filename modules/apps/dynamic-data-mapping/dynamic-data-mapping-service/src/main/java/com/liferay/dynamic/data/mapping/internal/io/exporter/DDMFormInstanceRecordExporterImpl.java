@@ -103,8 +103,8 @@ public class DDMFormInstanceRecordExporterImpl
 
 			builder = builder.withContent(content);
 		}
-		catch (Exception e) {
-			throw new FormInstanceRecordExporterException(e);
+		catch (Exception exception) {
+			throw new FormInstanceRecordExporterException(exception);
 		}
 
 		return builder.build();

@@ -88,8 +88,8 @@ public abstract class BaseCommandTestCase {
 
 			dependenciesDir = new File(url.toURI());
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

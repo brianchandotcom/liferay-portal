@@ -137,11 +137,11 @@ public class ResourceImporterExtender {
 
 				_messageBus.sendMessage(DestinationNames.HOT_DEPLOY, message);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to initialize bundle: " + bundleSymbolicName,
-						e);
+						exception);
 				}
 			}
 
@@ -174,11 +174,11 @@ public class ResourceImporterExtender {
 				PluginPackageUtil.unregisterInstalledPluginPackage(
 					getPluginPackage(bundle));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to unregister bundle: " + bundleSymbolicName,
-						e);
+						exception);
 				}
 			}
 		}

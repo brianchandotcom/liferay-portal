@@ -86,8 +86,8 @@ public class StandaloneAppDeployer implements AppDeployer {
 						_deployLayoutTypeAccessPolicy(portletName)
 					};
 				}
-				catch (PortalException pe) {
-					throw new IllegalStateException(pe);
+				catch (PortalException portalException) {
+					throw new IllegalStateException(portalException);
 				}
 			});
 

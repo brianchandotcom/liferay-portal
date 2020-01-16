@@ -109,8 +109,8 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 				PrincipalThreadLocal.getUserId(), getFileEntry(),
 				incrementCounter);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return inputStream;

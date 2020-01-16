@@ -166,8 +166,8 @@ public class PermissionsURLTag extends TagSupport {
 				jspWriter.write(portletURLToString);
 			}
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
 
 		return EVAL_PAGE;

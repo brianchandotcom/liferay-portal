@@ -103,8 +103,8 @@ public class PortletScannerUtil {
 							MethodType.RENDER));
 				}
 			}
-			catch (NoSuchMethodException nsme) {
-				_log.error(nsme, nsme);
+			catch (NoSuchMethodException noSuchMethodException) {
+				_log.error(noSuchMethodException, noSuchMethodException);
 			}
 		}
 
@@ -119,8 +119,8 @@ public class PortletScannerUtil {
 							beanManager, bean, eventMethod, MethodType.EVENT));
 				}
 			}
-			catch (NoSuchMethodException nsme) {
-				_log.error(nsme, nsme);
+			catch (NoSuchMethodException noSuchMethodException) {
+				_log.error(noSuchMethodException, noSuchMethodException);
 			}
 		}
 
@@ -138,8 +138,8 @@ public class PortletScannerUtil {
 							MethodType.HEADER));
 				}
 			}
-			catch (NoSuchMethodException nsme) {
-				_log.error(nsme, nsme);
+			catch (NoSuchMethodException noSuchMethodException) {
+				_log.error(noSuchMethodException, noSuchMethodException);
 			}
 		}
 
@@ -158,8 +158,8 @@ public class PortletScannerUtil {
 							MethodType.SERVE_RESOURCE));
 				}
 			}
-			catch (NoSuchMethodException nsme) {
-				_log.error(nsme, nsme);
+			catch (NoSuchMethodException noSuchMethodException) {
+				_log.error(noSuchMethodException, noSuchMethodException);
 			}
 		}
 	}

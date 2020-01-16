@@ -70,8 +70,8 @@ public class TestPropsValues {
 				TestPropsUtil.set("company.web.id", companyWebId);
 			}
 		}
-		catch (Exception e) {
-			throw new LoggedExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new LoggedExceptionInInitializerError(exception);
 		}
 
 		TestPropsUtil.printProperties();

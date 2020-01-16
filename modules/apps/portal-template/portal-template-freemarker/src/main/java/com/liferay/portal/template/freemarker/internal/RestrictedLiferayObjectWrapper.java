@@ -133,14 +133,14 @@ public class RestrictedLiferayObjectWrapper extends LiferayObjectWrapper {
 					_restrictedClasses.add(
 						aggregateClassLoader.loadClass(restrictedClassName));
 				}
-				catch (ClassNotFoundException cnfe) {
+				catch (ClassNotFoundException classNotFoundException) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							StringBundler.concat(
 								"Unable to find restricted class ",
 								restrictedClassName,
 								". Registering as a package."),
-							cnfe);
+							classNotFoundException);
 					}
 
 					_restrictedPackageNames.add(restrictedClassName);

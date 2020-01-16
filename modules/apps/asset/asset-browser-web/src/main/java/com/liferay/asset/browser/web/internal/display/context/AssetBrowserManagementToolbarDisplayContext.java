@@ -222,7 +222,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 					null, getPortletURL().toString());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 

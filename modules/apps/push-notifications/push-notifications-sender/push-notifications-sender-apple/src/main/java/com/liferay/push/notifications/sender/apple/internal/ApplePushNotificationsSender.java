@@ -110,9 +110,9 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 
 			appleServiceBuilder.withCert(inputStream, certificatePassword);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 		}
 
@@ -249,7 +249,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 		try {
 			return new FileInputStream(certificatePath);
 		}
-		catch (FileNotFoundException fnfe) {
+		catch (FileNotFoundException fileNotFoundException) {
 			ClassLoader classLoader =
 				ApplePushNotificationsSender.class.getClassLoader();
 

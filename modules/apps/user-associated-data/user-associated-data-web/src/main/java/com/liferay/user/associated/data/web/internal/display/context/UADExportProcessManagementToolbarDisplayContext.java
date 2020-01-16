@@ -124,9 +124,9 @@ public class UADExportProcessManagementToolbarDisplayContext
 		try {
 			return PortletURLUtil.clone(_currentURL, _liferayPortletResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return _liferayPortletResponse.createRenderURL();

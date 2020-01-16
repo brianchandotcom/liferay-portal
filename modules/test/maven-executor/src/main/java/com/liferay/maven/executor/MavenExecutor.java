@@ -161,8 +161,8 @@ public class MavenExecutor extends ExternalResource {
 			try {
 				FileUtil.deleteDirectory(_mavenHomeDirPath);
 			}
-			catch (IOException ioe) {
-				ioe.printStackTrace();
+			catch (IOException ioException) {
+				ioException.printStackTrace();
 			}
 		}
 	}

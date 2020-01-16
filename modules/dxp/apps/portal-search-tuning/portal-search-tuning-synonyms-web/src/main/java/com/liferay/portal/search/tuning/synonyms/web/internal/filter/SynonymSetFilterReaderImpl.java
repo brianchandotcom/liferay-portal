@@ -49,8 +49,8 @@ public class SynonymSetFilterReaderImpl implements SynonymSetFilterReader {
 			jsonObject = jsonFactory.createJSONObject(
 				settings.get(companyIndexName));
 		}
-		catch (JSONException jsone) {
-			throw new RuntimeException(jsone);
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
 		}
 
 		return JSONUtil.toStringArray(

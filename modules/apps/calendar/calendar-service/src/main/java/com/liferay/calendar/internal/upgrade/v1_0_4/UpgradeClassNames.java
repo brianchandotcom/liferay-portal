@@ -62,8 +62,8 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 				"delete from ResourcePermission where name like '" +
 					_CLASS_NAME_CAL_EVENT + "%'");
 		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
+		catch (Exception exception) {
+			throw new UpgradeException(exception);
 		}
 	}
 
@@ -96,8 +96,8 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 					runSQL(deleteSQL);
 				}
 			}
-			catch (Exception e) {
-				throw new UpgradeException(e);
+			catch (Exception exception) {
+				throw new UpgradeException(exception);
 			}
 		}
 	}
@@ -122,8 +122,8 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 							rs.getString(1), "' and name= '", oldName, "'"));
 				}
 			}
-			catch (Exception e) {
-				throw new UpgradeException(e);
+			catch (Exception exception) {
+				throw new UpgradeException(exception);
 			}
 		}
 	}
@@ -194,8 +194,8 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 				ps3.execute();
 			}
 		}
-		catch (SQLException sqle) {
-			throw new UpgradeException(sqle);
+		catch (SQLException sqlException) {
+			throw new UpgradeException(sqlException);
 		}
 	}
 

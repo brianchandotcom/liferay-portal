@@ -125,9 +125,9 @@ public class PortletRequestDataSample extends BaseDataSample {
 
 			setGroupId(groupId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to obtain scope group ID", pe);
+				_log.debug("Unable to obtain scope group ID", portalException);
 			}
 		}
 	}

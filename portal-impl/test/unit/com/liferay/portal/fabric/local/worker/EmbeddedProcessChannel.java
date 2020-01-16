@@ -47,8 +47,8 @@ public class EmbeddedProcessChannel<T extends Serializable>
 		try {
 			defaultNoticeableFuture.set(processCallable.call());
 		}
-		catch (ProcessException pe) {
-			defaultNoticeableFuture.setException(pe);
+		catch (ProcessException processException) {
+			defaultNoticeableFuture.setException(processException);
 		}
 
 		return defaultNoticeableFuture;

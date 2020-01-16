@@ -94,9 +94,9 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 
 			return adaptiveMediaStream.findFirst();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 
 			return Optional.empty();
@@ -192,8 +192,8 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 			return _amImageURLFactory.createFileEntryURL(
 				fileEntry.getFileVersion(), amImageConfigurationEntry);
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 
@@ -273,7 +273,7 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 
 			return Optional.of(height);
 		}
-		catch (NumberFormatException nfe) {
+		catch (NumberFormatException numberFormatException) {
 			return Optional.empty();
 		}
 	}

@@ -148,10 +148,10 @@ public class SubscriptionSender implements Serializable {
 						notifyPersistedSubscriber(
 							subscription, notifyImmediately);
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						_log.error(
 							"Unable to process subscription: " + subscription,
-							e);
+							exception);
 					}
 				}
 			}
@@ -499,7 +499,7 @@ public class SubscriptionSender implements Serializable {
 				groupId = scopeGroupId;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		this.scopeGroupId = scopeGroupId;
@@ -711,8 +711,8 @@ public class SubscriptionSender implements Serializable {
 				return;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return;
 		}

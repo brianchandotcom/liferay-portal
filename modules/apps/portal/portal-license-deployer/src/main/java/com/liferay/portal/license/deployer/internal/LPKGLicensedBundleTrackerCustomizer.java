@@ -98,8 +98,8 @@ public class LPKGLicensedBundleTrackerCustomizer
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to register license", e);
+		catch (Exception exception) {
+			_log.error("Unable to register license", exception);
 
 			return null;
 		}

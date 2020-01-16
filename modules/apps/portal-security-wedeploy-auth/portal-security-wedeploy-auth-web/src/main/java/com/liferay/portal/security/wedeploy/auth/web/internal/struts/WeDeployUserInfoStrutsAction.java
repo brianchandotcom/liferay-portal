@@ -78,8 +78,8 @@ public class WeDeployUserInfoStrutsAction implements StrutsAction {
 
 			jsonObject.put("info", userJSONObject);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			jsonObject.put(
 				"error_message",

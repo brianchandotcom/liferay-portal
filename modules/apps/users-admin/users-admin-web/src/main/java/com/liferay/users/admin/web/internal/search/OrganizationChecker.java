@@ -43,7 +43,7 @@ public class OrganizationChecker extends EmptyOnClickRowChecker {
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return super.isDisabled(obj);

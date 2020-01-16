@@ -113,15 +113,16 @@ public class ExportImportLifecycleEventTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchGroupException nsge) {
+		catch (NoSuchGroupException noSuchGroupException) {
 			Assert.assertEquals(
-				"No Group exists with the primary key 0", nsge.getMessage());
+				"No Group exists with the primary key 0",
+				noSuchGroupException.getMessage());
 		}
-		catch (NoSuchLayoutSetException nslse) {
+		catch (NoSuchLayoutSetException noSuchLayoutSetException) {
 			Assert.assertEquals(
 				"No LayoutSet exists with the key {groupId=0, " +
 					"privateLayout=false}",
-				nslse.getMessage());
+				noSuchLayoutSetException.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -150,9 +151,10 @@ public class ExportImportLifecycleEventTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchGroupException nsge) {
+		catch (NoSuchGroupException noSuchGroupException) {
 			Assert.assertEquals(
-				"No Group exists with the primary key 0", nsge.getMessage());
+				"No Group exists with the primary key 0",
+				noSuchGroupException.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -220,10 +222,10 @@ public class ExportImportLifecycleEventTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchLayoutException nsle) {
+		catch (NoSuchLayoutException noSuchLayoutException) {
 			Assert.assertEquals(
 				"No Layout exists with the primary key " + plid,
-				nsle.getMessage());
+				noSuchLayoutException.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -253,9 +255,10 @@ public class ExportImportLifecycleEventTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchLayoutException nsle) {
+		catch (NoSuchLayoutException noSuchLayoutException) {
 			Assert.assertEquals(
-				"No Layout exists with the primary key 0", nsle.getMessage());
+				"No Layout exists with the primary key 0",
+				noSuchLayoutException.getMessage());
 		}
 
 		Assert.assertTrue(

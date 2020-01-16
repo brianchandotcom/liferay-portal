@@ -80,8 +80,8 @@ public class WikiNavigationTreeMenuConfigurationAction
 		try {
 			_wikiNodeService.getNode(selNodeId);
 		}
-		catch (NoSuchNodeException nsne) {
-			SessionErrors.add(actionRequest, nsne.getClass());
+		catch (NoSuchNodeException noSuchNodeException) {
+			SessionErrors.add(actionRequest, noSuchNodeException.getClass());
 		}
 	}
 

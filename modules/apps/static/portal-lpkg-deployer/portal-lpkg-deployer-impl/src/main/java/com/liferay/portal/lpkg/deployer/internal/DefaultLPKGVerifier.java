@@ -73,11 +73,11 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 			try {
 				version = new Version(versionString);
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 				throw new LPKGVerifyException(
 					lpkgFile + " does not have a valid version: " +
 						versionString,
-					iae);
+					illegalArgumentException);
 			}
 
 			List<Bundle> oldBundles = new ArrayList<>();
@@ -110,8 +110,8 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 
 			return oldBundles;
 		}
-		catch (Exception e) {
-			throw new LPKGVerifyException(e);
+		catch (Exception exception) {
+			throw new LPKGVerifyException(exception);
 		}
 	}
 

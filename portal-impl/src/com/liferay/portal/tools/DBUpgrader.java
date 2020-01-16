@@ -137,8 +137,8 @@ public class DBUpgrader {
 				"Running modules upgrades. Connect to Gogo shell to check " +
 					"the status.");
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 
 			System.exit(1);
 		}
@@ -187,10 +187,10 @@ public class DBUpgrader {
 
 			StartupHelperUtil.upgradeProcess(buildNumber);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_updateReleaseState(ReleaseConstants.STATE_UPGRADE_FAILURE);
 
-			throw e;
+			throw exception;
 		}
 		finally {
 			if (PropsValues.UPGRADE_DATABASE_TRANSACTIONS_DISABLED) {
@@ -259,13 +259,14 @@ public class DBUpgrader {
 		try {
 			StartupHelperUtil.verifyProcess(release.isVerified());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_updateReleaseState(ReleaseConstants.STATE_VERIFY_FAILURE);
 
 			_log.error(
-				"Unable to execute verify process: " + e.getMessage(), e);
+				"Unable to execute verify process: " + exception.getMessage(),
+				exception);
 
-			throw e;
+			throw exception;
 		}
 		finally {
 			if (PropsValues.VERIFY_DATABASE_TRANSACTIONS_DISABLED) {
@@ -432,7 +433,7 @@ public class DBUpgrader {
 
 			return 0;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return 0;
 		}
 		finally {

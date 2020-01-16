@@ -63,14 +63,14 @@ public class EditUserMyAccountMVCRenderCommand implements MVCRenderCommand {
 
 			_portal.getSelectedUser(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/edit_user.jsp";

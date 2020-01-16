@@ -40,8 +40,8 @@ public class MockAlloyControllerImpl
 
 			themeDisplay = (ThemeDisplay)themeDisplay.clone();
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

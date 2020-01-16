@@ -96,7 +96,8 @@ public class AutoBatchPreparedStatementUtilTest {
 	public void testCINITFailure() throws ClassNotFoundException {
 		PropsTestUtil.setProps(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
 
-		final NoSuchMethodException nsme = new NoSuchMethodException();
+		final NoSuchMethodException noSuchMethodException =
+			new NoSuchMethodException();
 		final AtomicInteger counter = new AtomicInteger();
 
 		try (SwappableSecurityManager swappableSecurityManager =
@@ -107,7 +108,8 @@ public class AutoBatchPreparedStatementUtilTest {
 						if (pkg.equals("java.sql") &&
 							(counter.getAndIncrement() == 1)) {
 
-							ReflectionUtil.throwException(nsme);
+							ReflectionUtil.throwException(
+								noSuchMethodException);
 						}
 					}
 
@@ -118,7 +120,7 @@ public class AutoBatchPreparedStatementUtilTest {
 			Class.forName(AutoBatchPreparedStatementUtil.class.getName());
 		}
 		catch (ExceptionInInitializerError eiie) {
-			Assert.assertSame(nsme, eiie.getCause());
+			Assert.assertSame(noSuchMethodException, eiie.getCause());
 		}
 	}
 

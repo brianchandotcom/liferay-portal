@@ -83,9 +83,9 @@ public class UpgradeDDMDataProviderInstance extends UpgradeProcess {
 
 			return jsonArray.getLong(0);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return 0;
@@ -98,9 +98,9 @@ public class UpgradeDDMDataProviderInstance extends UpgradeProcess {
 
 			return jsonArray.getString(0);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return StringPool.BLANK;

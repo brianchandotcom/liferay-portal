@@ -81,8 +81,8 @@ public class CSSBuilder implements AutoCloseable {
 				}
 			}
 		}
-		catch (ParameterException pe) {
-			System.err.println(pe.getMessage());
+		catch (ParameterException parameterException) {
+			System.err.println(parameterException.getMessage());
 
 			_printHelp(jCommander);
 
@@ -260,10 +260,10 @@ public class CSSBuilder implements AutoCloseable {
 
 			rtlCss = _rtlCSSConverter.process(rtlCss);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			System.out.println(
 				"Unable to generate RTL version for " + fileName + ", " +
-					e.getMessage());
+					exception.getMessage());
 		}
 
 		return rtlCss;
@@ -327,7 +327,7 @@ public class CSSBuilder implements AutoCloseable {
 
 				System.out.println("Using Ruby Sass compiler");
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				System.out.println(
 					"Unable to load Ruby compiler, falling back to native");
 

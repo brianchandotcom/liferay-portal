@@ -93,8 +93,8 @@ public class RecentGroupManager {
 
 			return getRecentGroups(value, portletRequest);
 		}
-		catch (Exception e) {
-			_log.error("Unable to get recent groups", e);
+		catch (Exception exception) {
+			_log.error("Unable to get recent groups", exception);
 		}
 
 		return Collections.emptyList();

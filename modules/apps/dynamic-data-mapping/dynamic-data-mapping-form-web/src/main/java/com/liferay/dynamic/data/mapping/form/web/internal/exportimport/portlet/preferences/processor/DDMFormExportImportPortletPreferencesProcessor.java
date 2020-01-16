@@ -70,9 +70,9 @@ public class DDMFormExportImportPortletPreferencesProcessor
 			portletDataContext.addPortletPermissions(
 				DDMConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortletDataException(
-				"Unable to export portlet permissions", pe);
+				"Unable to export portlet permissions", portalException);
 		}
 
 		String portletId = portletDataContext.getPortletId();
@@ -111,9 +111,9 @@ public class DDMFormExportImportPortletPreferencesProcessor
 			portletDataContext.importPortletPermissions(
 				DDMConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortletDataException(
-				"Unable to export portlet permissions", pe);
+				"Unable to export portlet permissions", portalException);
 		}
 
 		long importedFormInstanceId = GetterUtil.getLong(
@@ -130,9 +130,10 @@ public class DDMFormExportImportPortletPreferencesProcessor
 			portletPreferences.setValue(
 				"formInstanceId", String.valueOf(formInstanceId));
 		}
-		catch (ReadOnlyException roe) {
+		catch (ReadOnlyException readOnlyException) {
 			throw new PortletDataException(
-				"Unable to update portlet preferences during import", roe);
+				"Unable to update portlet preferences during import",
+				readOnlyException);
 		}
 
 		return portletPreferences;

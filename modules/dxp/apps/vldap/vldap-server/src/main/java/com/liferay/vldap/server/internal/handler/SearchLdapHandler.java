@@ -70,18 +70,18 @@ public class SearchLdapHandler extends BaseLdapHandler {
 
 			responses.add(getResultResponse(searchRequest));
 		}
-		catch (SearchSizeLimitException ssle) {
+		catch (SearchSizeLimitException searchSizeLimitException) {
 			responses.add(
 				getResultResponse(
 					searchRequest, ResultCodeEnum.SIZE_LIMIT_EXCEEDED));
 		}
-		catch (SearchTimeLimitException stle) {
+		catch (SearchTimeLimitException searchTimeLimitException) {
 			responses.add(
 				getResultResponse(
 					searchRequest, ResultCodeEnum.TIME_LIMIT_EXCEEDED));
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return responses;

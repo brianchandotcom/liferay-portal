@@ -103,8 +103,8 @@ public class ResourcePermissionFinderImpl
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -165,8 +165,8 @@ public class ResourcePermissionFinderImpl
 
 			count = (Long)q.uniqueResult();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			if (count == null) {
@@ -214,8 +214,8 @@ public class ResourcePermissionFinderImpl
 			return (List<ResourcePermission>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -247,8 +247,8 @@ public class ResourcePermissionFinderImpl
 			return (List<ResourcePermission>)QueryUtil.list(
 				q, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

@@ -75,7 +75,7 @@ public class ImportPagesPortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -96,7 +96,7 @@ public class ImportPagesPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(),
 				ActionUtil.getNode(portletRequest), ActionKeys.IMPORT);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

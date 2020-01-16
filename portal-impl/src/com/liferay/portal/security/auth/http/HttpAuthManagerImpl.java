@@ -275,12 +275,12 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 			return AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
 				httpServletRequest, login, password, null);
 		}
-		catch (AuthException ae) {
+		catch (AuthException authException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(ae, ae);
+				_log.debug(authException, authException);
 			}
 		}
 

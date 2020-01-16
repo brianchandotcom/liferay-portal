@@ -56,10 +56,10 @@ public class TomcatSPIProvider extends BaseSPIProvider {
 			try {
 				urls.add(uri.toURL());
 			}
-			catch (MalformedURLException murle) {
+			catch (MalformedURLException malformedURLException) {
 				_log.error(
 					"Unable to create URL for file " + file.getAbsolutePath(),
-					murle);
+					malformedURLException);
 			}
 		}
 
@@ -76,8 +76,8 @@ public class TomcatSPIProvider extends BaseSPIProvider {
 
 			return constructor.newInstance(spiConfiguration);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

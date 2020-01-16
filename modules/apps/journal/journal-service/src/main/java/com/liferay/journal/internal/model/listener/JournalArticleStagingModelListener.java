@@ -120,12 +120,12 @@ public class JournalArticleStagingModelListener
 				journalArticleResourceClassNameId,
 				journalArticleResource.getPrimaryKey());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to process journal article resource for article " +
 						journalArticle.getArticleId(),
-					pe);
+					portalException);
 			}
 		}
 	}
@@ -181,12 +181,12 @@ public class JournalArticleStagingModelListener
 					journalArticle.getResourcePrimKey());
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to process journal article resource for article " +
 						journalArticle.getArticleId(),
-					pe);
+					portalException);
 			}
 		}
 	}

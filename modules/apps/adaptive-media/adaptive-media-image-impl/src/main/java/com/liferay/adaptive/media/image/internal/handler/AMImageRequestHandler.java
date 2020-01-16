@@ -118,8 +118,8 @@ public class AMImageRequestHandler
 				try {
 					return fileVersion.getContentStream(false);
 				}
-				catch (PortalException pe) {
-					throw new AMRuntimeException(pe);
+				catch (PortalException portalException) {
+					throw new AMRuntimeException(portalException);
 				}
 			},
 			AMImageAttributeMapping.fromProperties(properties), null);
@@ -164,8 +164,8 @@ public class AMImageRequestHandler
 
 			return Optional.of(_createRawAdaptiveMedia(fileVersion));
 		}
-		catch (PortalException pe) {
-			throw new AMRuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new AMRuntimeException(portalException);
 		}
 	}
 
@@ -199,8 +199,8 @@ public class AMImageRequestHandler
 				_getComparator(configurationWidth)
 			).findFirst();
 		}
-		catch (PortalException pe) {
-			throw new AMRuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new AMRuntimeException(portalException);
 		}
 	}
 
@@ -286,8 +286,8 @@ public class AMImageRequestHandler
 
 			return Optional.of(Tuple.of(fileVersion, amImageAttributeMapping));
 		}
-		catch (AMRuntimeException | NumberFormatException e) {
-			_log.error(e, e);
+		catch (AMRuntimeException | NumberFormatException exception) {
+			_log.error(exception, exception);
 
 			return Optional.empty();
 		}
@@ -318,11 +318,11 @@ public class AMImageRequestHandler
 			amAsyncProcessor.triggerProcess(
 				fileVersion, String.valueOf(fileVersion.getFileVersionId()));
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			_log.error(
 				"Unable to create lazy adaptive media for file version " +
 					fileVersion.getFileVersionId(),
-				pe);
+				portalException);
 		}
 	}
 

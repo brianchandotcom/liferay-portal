@@ -90,11 +90,11 @@ public class UpstreamFailureUtil {
 
 			return upstreamJobFailuresJSONObject.getString("SHA");
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			System.out.println(
 				"Unable to get upstream acceptance failure data");
 
-			jsone.printStackTrace();
+			jsonException.printStackTrace();
 
 			return "";
 		}
@@ -145,11 +145,11 @@ public class UpstreamFailureUtil {
 
 			return false;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			System.out.println(
 				"Unable to get upstream acceptance failure data.");
 
-			e.printStackTrace();
+			exception.printStackTrace();
 
 			return false;
 		}
@@ -185,11 +185,11 @@ public class UpstreamFailureUtil {
 
 			return false;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			System.out.println(
 				"Unable to get upstream acceptance failure data.");
 
-			e.printStackTrace();
+			exception.printStackTrace();
 
 			return false;
 		}
@@ -244,8 +244,8 @@ public class UpstreamFailureUtil {
 				"Using upstream failures at: " +
 					getUpstreamJobFailuresSHA(topLevelBuild));
 		}
-		catch (Exception e) {
-			System.out.println(e);
+		catch (Exception exception) {
+			System.out.println(exception);
 
 			System.out.println(
 				"Unable to load upstream acceptance failure data from URL: " +

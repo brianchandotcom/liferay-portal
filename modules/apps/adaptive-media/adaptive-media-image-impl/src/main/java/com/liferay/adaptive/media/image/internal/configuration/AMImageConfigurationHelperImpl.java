@@ -511,8 +511,9 @@ public class AMImageConfigurationHelperImpl
 
 			return amImageConfigurationEntries.stream();
 		}
-		catch (SettingsException se) {
-			throw new AMRuntimeException.InvalidConfiguration(se);
+		catch (SettingsException settingsException) {
+			throw new AMRuntimeException.InvalidConfiguration(
+				settingsException);
 		}
 	}
 
@@ -591,8 +592,8 @@ public class AMImageConfigurationHelperImpl
 				companyId,
 				amImageConfigurationEntryStream.collect(Collectors.toList()));
 		}
-		catch (SettingsException | ValidatorException e) {
-			throw new AMRuntimeException.InvalidConfiguration(e);
+		catch (SettingsException | ValidatorException exception) {
+			throw new AMRuntimeException.InvalidConfiguration(exception);
 		}
 	}
 

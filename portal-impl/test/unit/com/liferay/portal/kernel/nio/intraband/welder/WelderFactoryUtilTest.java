@@ -77,8 +77,9 @@ public class WelderFactoryUtilTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Assert.assertTrue(re.getCause() instanceof IllegalAccessException);
+		catch (RuntimeException runtimeException) {
+			Assert.assertTrue(
+				runtimeException.getCause() instanceof IllegalAccessException);
 		}
 		finally {
 			System.clearProperty(PropsKeys.INTRABAND_WELDER_IMPL);
@@ -94,8 +95,9 @@ public class WelderFactoryUtilTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
-			Assert.assertTrue(re.getCause() instanceof ClassNotFoundException);
+		catch (RuntimeException runtimeException) {
+			Assert.assertTrue(
+				runtimeException.getCause() instanceof ClassNotFoundException);
 		}
 		finally {
 			System.clearProperty(PropsKeys.INTRABAND_WELDER_IMPL);

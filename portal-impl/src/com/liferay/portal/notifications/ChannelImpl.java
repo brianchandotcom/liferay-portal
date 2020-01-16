@@ -91,9 +91,10 @@ public class ChannelImpl extends BaseChannelImpl {
 				unconfirmedNotificationEvents.remove(notificationEventUuid);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ChannelException(
-				"Unable to confirm delivery for user " + getUserId(), e);
+				"Unable to confirm delivery for user " + getUserId(),
+				exception);
 		}
 		finally {
 			lock.unlock();
@@ -132,9 +133,10 @@ public class ChannelImpl extends BaseChannelImpl {
 
 			unconfirmedNotificationEvents.remove(notificationEventUuid);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ChannelException(
-				"Unable to confirm delivery for " + notificationEventUuid, e);
+				"Unable to confirm delivery for " + notificationEventUuid,
+				exception);
 		}
 		finally {
 			lock.unlock();
@@ -156,9 +158,9 @@ public class ChannelImpl extends BaseChannelImpl {
 
 			unconfirmedNotificationEvents.remove(notificationEventUuid);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ChannelException(
-				"Unable to delete event " + notificationEventUuid, e);
+				"Unable to delete event " + notificationEventUuid, exception);
 		}
 		finally {
 			lock.unlock();
@@ -183,9 +185,9 @@ public class ChannelImpl extends BaseChannelImpl {
 				unconfirmedNotificationEvents.remove(notificationEventUuid);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ChannelException(
-				"Unable to delete events for user " + getUserId(), e);
+				"Unable to delete events for user " + getUserId(), exception);
 		}
 		finally {
 			lock.unlock();
@@ -239,11 +241,11 @@ public class ChannelImpl extends BaseChannelImpl {
 		try {
 			return doGetNotificationEvents(flush);
 		}
-		catch (ChannelException ce) {
-			throw ce;
+		catch (ChannelException channelException) {
+			throw channelException;
 		}
-		catch (Exception e) {
-			throw new ChannelException(e);
+		catch (Exception exception) {
+			throw new ChannelException(exception);
 		}
 		finally {
 			lock.unlock();
@@ -257,9 +259,9 @@ public class ChannelImpl extends BaseChannelImpl {
 		try {
 			doInit();
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			throw new ChannelException(
-				"Unable to init channel " + getUserId(), se);
+				"Unable to init channel " + getUserId(), systemException);
 		}
 		finally {
 			lock.unlock();
@@ -333,8 +335,8 @@ public class ChannelImpl extends BaseChannelImpl {
 
 			notifyChannelListeners();
 		}
-		catch (Exception e) {
-			throw new ChannelException("Unable to send event", e);
+		catch (Exception exception) {
+			throw new ChannelException("Unable to send event", exception);
 		}
 		finally {
 			lock.unlock();
@@ -373,8 +375,8 @@ public class ChannelImpl extends BaseChannelImpl {
 
 			notifyChannelListeners();
 		}
-		catch (Exception e) {
-			throw new ChannelException("Unable to send event", e);
+		catch (Exception exception) {
+			throw new ChannelException("Unable to send event", exception);
 		}
 		finally {
 			lock.unlock();
@@ -448,9 +450,9 @@ public class ChannelImpl extends BaseChannelImpl {
 						invalidNotificationEventUuids, getCompanyId());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ChannelException(
-				"Unable to clean up channel " + getUserId(), e);
+				"Unable to clean up channel " + getUserId(), exception);
 		}
 		finally {
 			lock.unlock();
@@ -568,8 +570,8 @@ public class ChannelImpl extends BaseChannelImpl {
 						notificationEvent.getUuid(), notificationEvent);
 				}
 			}
-			catch (JSONException jsone) {
-				_log.error(jsone, jsone);
+			catch (JSONException jsonException) {
+				_log.error(jsonException, jsonException);
 
 				invalidNotificationEventUuids.add(
 					persistedNotificationEvent.getUuid());

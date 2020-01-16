@@ -69,8 +69,8 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			_ctProcessLocalService.addCTProcess(
 				themeDisplay.getUserId(), ctCollectionId);
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass());
+		catch (PortalException portalException) {
+			SessionErrors.add(actionRequest, portalException.getClass());
 		}
 
 		hideDefaultSuccessMessage(actionRequest);

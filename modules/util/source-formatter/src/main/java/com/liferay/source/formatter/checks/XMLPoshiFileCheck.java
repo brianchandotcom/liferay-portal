@@ -160,7 +160,7 @@ public class XMLPoshiFileCheck extends BaseFileCheck {
 					new ElementComparator());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		content = _sortPoshiCommands(content);

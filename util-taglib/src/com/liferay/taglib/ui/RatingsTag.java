@@ -156,11 +156,11 @@ public class RatingsTag extends IncludeTag {
 					themeDisplay.getCompanyId(), group.getGroupId(),
 					_className);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				_log.error(
 					"Unable to get ratings type for group " +
 						group.getGroupId(),
-					pe);
+					portalException);
 			}
 		}
 

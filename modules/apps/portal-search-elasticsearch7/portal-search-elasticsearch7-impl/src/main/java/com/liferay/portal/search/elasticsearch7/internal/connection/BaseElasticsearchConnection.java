@@ -33,8 +33,8 @@ public abstract class BaseElasticsearchConnection
 		try {
 			_restHighLevelClient.close();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		_restHighLevelClient = null;

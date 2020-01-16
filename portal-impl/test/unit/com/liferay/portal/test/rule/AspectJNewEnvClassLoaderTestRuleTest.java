@@ -67,7 +67,7 @@ public class AspectJNewEnvClassLoaderTestRuleTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 	}
 

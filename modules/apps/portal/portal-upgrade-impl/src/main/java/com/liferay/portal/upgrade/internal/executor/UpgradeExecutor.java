@@ -220,10 +220,10 @@ public class UpgradeExecutor {
 					buildNumber = upgradeInfo.getBuildNumber();
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				state = ReleaseConstants.STATE_UPGRADE_FAILURE;
 
-				ReflectionUtil.throwException(e);
+				ReflectionUtil.throwException(exception);
 			}
 			finally {
 				Release release = _releaseLocalService.fetchRelease(
@@ -247,8 +247,8 @@ public class UpgradeExecutor {
 				try {
 					IndexUpdaterUtil.updateIndexes(bundle);
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 				}
 			}
 

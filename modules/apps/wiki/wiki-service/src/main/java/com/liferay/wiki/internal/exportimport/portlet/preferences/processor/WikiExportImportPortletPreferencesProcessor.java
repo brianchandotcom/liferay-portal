@@ -86,13 +86,15 @@ public class WikiExportImportPortletPreferencesProcessor
 			portletDataContext.addPortletPermissions(
 				WikiConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(WikiPortletKeys.WIKI);
-			pde.setType(PortletDataException.EXPORT_PORTLET_PERMISSIONS);
+			portletDataException.setPortletId(WikiPortletKeys.WIKI);
+			portletDataException.setType(
+				PortletDataException.EXPORT_PORTLET_PERMISSIONS);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		try {
@@ -120,13 +122,15 @@ public class WikiExportImportPortletPreferencesProcessor
 
 			pageActionableDynamicQuery.performActions();
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(WikiPortletKeys.WIKI);
-			pde.setType(PortletDataException.EXPORT_PORTLET_DATA);
+			portletDataException.setPortletId(WikiPortletKeys.WIKI);
+			portletDataException.setType(
+				PortletDataException.EXPORT_PORTLET_DATA);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		Group group = _groupLocalService.fetchGroup(
@@ -165,13 +169,15 @@ public class WikiExportImportPortletPreferencesProcessor
 			portletDataContext.importPortletPermissions(
 				WikiConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
-			PortletDataException pde = new PortletDataException(pe);
+		catch (PortalException portalException) {
+			PortletDataException portletDataException =
+				new PortletDataException(portalException);
 
-			pde.setPortletId(WikiPortletKeys.WIKI);
-			pde.setType(PortletDataException.IMPORT_PORTLET_PERMISSIONS);
+			portletDataException.setPortletId(WikiPortletKeys.WIKI);
+			portletDataException.setType(
+				PortletDataException.IMPORT_PORTLET_PERMISSIONS);
 
-			throw pde;
+			throw portletDataException;
 		}
 
 		Element nodesElement = portletDataContext.getImportDataGroupElement(

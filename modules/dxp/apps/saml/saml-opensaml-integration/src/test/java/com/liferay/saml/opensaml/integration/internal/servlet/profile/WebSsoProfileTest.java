@@ -59,9 +59,9 @@ public class WebSsoProfileTest extends BaseSamlTestCase {
 
 			Assert.fail("Date verification failed");
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 	}
@@ -96,9 +96,9 @@ public class WebSsoProfileTest extends BaseSamlTestCase {
 
 			Assert.fail("Date verification failed");
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 	}

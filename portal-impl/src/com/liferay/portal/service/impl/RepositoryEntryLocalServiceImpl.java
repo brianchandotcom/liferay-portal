@@ -68,12 +68,15 @@ public class RepositoryEntryLocalServiceImpl
 			try {
 				deleteRepositoryEntry(repositoryId, mappedId);
 			}
-			catch (NoSuchRepositoryEntryException nsree) {
+			catch (NoSuchRepositoryEntryException
+						noSuchRepositoryEntryException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsree, nsree);
+					_log.debug(
+						noSuchRepositoryEntryException,
+						noSuchRepositoryEntryException);
 				}
 			}
 		}

@@ -31,8 +31,8 @@ public class DataSourceProviderImpl implements DataSourceProvider {
 			return DataSourceFactoryUtil.initDataSource(
 				PropsUtil.getProperties("jdbc.test.", true));
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

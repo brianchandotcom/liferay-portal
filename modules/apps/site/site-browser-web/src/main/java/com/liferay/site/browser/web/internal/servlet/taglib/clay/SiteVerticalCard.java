@@ -70,7 +70,7 @@ public class SiteVerticalCard implements VerticalCard {
 				"url", _group.getDisplayURL(_themeDisplay)
 			).build();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -114,7 +114,7 @@ public class SiteVerticalCard implements VerticalCard {
 			return HtmlUtil.escape(
 				_group.getDescriptiveName(_themeDisplay.getLocale()));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return HtmlUtil.escape(_group.getName(_themeDisplay.getLocale()));

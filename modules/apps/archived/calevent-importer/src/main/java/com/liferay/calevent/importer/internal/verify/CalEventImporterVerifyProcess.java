@@ -515,7 +515,7 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 			tzsRecurrence = (TZSRecurrence)JSONFactoryUtil.deserialize(
 				originalRecurrence);
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 
 			// LPS-65972
 
@@ -627,12 +627,12 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		try {
 			user = _userLocalService.getUserById(companyId, userId);
 		}
-		catch (NoSuchUserException nsue) {
+		catch (NoSuchUserException noSuchUserException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsue, nsue);
+				_log.debug(noSuchUserException, noSuchUserException);
 			}
 
 			user = _userLocalService.getDefaultUser(companyId);
@@ -648,12 +648,13 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 			assetVocabulary = _assetVocabularyLocalService.getGroupVocabulary(
 				groupId, _ASSET_VOCABULARY_NAME);
 		}
-		catch (NoSuchVocabularyException nsve) {
+		catch (NoSuchVocabularyException noSuchVocabularyException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsve, nsve);
+				_log.debug(
+					noSuchVocabularyException, noSuchVocabularyException);
 			}
 
 			assetVocabulary = _assetVocabularyLocalService.addVocabulary(

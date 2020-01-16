@@ -91,18 +91,18 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchBackgroundTaskException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchBackgroundTaskException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}
@@ -140,8 +140,8 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 					themeDisplay.getUserId(), liveGroup, branchingPublic,
 					branchingPrivate, serviceContext);
 			}
-			catch (Exception e) {
-				SessionErrors.add(actionRequest, Exception.class, e);
+			catch (Exception exception) {
+				SessionErrors.add(actionRequest, Exception.class, exception);
 			}
 		}
 		else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
@@ -168,11 +168,11 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 					remotePathContext, secureConnection, remoteGroupId,
 					serviceContext);
 			}
-			catch (Exception e) {
-				SessionErrors.add(actionRequest, Exception.class, e);
+			catch (Exception exception) {
+				SessionErrors.add(actionRequest, Exception.class, exception);
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 			}
 		}

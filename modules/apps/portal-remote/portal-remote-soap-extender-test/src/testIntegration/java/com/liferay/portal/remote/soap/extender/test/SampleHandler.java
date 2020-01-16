@@ -69,8 +69,8 @@ public class SampleHandler implements LogicalHandler<LogicalMessageContext> {
 
 			return true;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

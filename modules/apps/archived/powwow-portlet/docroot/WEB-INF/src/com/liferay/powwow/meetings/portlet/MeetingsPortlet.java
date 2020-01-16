@@ -115,7 +115,7 @@ public class MeetingsPortlet extends MVCPortlet {
 
 			jsonObject.put("success", true);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			jsonObject.put(
 				"message",
 				translate(actionRequest, "the-meeting-could-not-be-deleted")
@@ -251,8 +251,8 @@ public class MeetingsPortlet extends MVCPortlet {
 				"success", Boolean.TRUE
 			);
 		}
-		catch (Exception e) {
-			jsonObject.putException(e);
+		catch (Exception exception) {
+			jsonObject.putException(exception);
 		}
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
@@ -418,8 +418,8 @@ public class MeetingsPortlet extends MVCPortlet {
 
 			outputStream.close();
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 
@@ -548,7 +548,7 @@ public class MeetingsPortlet extends MVCPortlet {
 				"success", Boolean.TRUE
 			);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			jsonObject.put(
 				"message",
 				translate(
@@ -663,8 +663,8 @@ public class MeetingsPortlet extends MVCPortlet {
 
 			writeJSON(resourceRequest, resourceResponse, jsonArray);
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 

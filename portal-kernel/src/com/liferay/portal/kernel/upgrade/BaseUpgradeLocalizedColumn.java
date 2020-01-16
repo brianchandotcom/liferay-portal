@@ -71,8 +71,8 @@ public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {
 					companyId);
 			}
 		}
-		catch (Exception e) {
-			throw new SQLException(e);
+		catch (Exception exception) {
+			throw new SQLException(exception);
 		}
 	}
 
@@ -133,8 +133,8 @@ public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {
 
 			ps.executeUpdate();
 		}
-		catch (SQLException sqle) {
-			throw new SystemException(sqle);
+		catch (SQLException sqlException) {
+			throw new SystemException(sqlException);
 		}
 	}
 

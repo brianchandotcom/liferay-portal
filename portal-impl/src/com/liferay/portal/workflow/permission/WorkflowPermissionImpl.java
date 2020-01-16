@@ -40,8 +40,8 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 			return doHasPermission(
 				permissionChecker, groupId, className, classPK, actionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return null;

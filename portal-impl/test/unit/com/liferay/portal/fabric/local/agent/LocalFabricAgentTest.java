@@ -56,7 +56,7 @@ public class LocalFabricAgentTest {
 
 			Assert.fail();
 		}
-		catch (UnsupportedOperationException uoe) {
+		catch (UnsupportedOperationException unsupportedOperationException) {
 		}
 	}
 
@@ -126,8 +126,8 @@ public class LocalFabricAgentTest {
 
 			Assert.fail();
 		}
-		catch (ExecutionException ee) {
-			Assert.assertSame(processException, ee.getCause());
+		catch (ExecutionException executionException) {
+			Assert.assertSame(processException, executionException.getCause());
 		}
 
 		Assert.assertTrue(fabricWorkers.toString(), fabricWorkers.isEmpty());

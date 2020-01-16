@@ -514,15 +514,15 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			return _webXMLDefinition;
 		}
-		catch (SAXParseException saxpe) {
-			String message = saxpe.getMessage();
+		catch (SAXParseException saxParseException) {
+			String message = saxParseException.getMessage();
 
 			if (message.contains("DOCTYPE is disallowed")) {
 				throw new Exception(
 					url + " must be updated to the Servlet 3.0 specification");
 			}
 
-			throw saxpe;
+			throw saxParseException;
 		}
 	}
 
@@ -936,7 +936,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		try {
 			webServlet = clazz.getAnnotation(WebServlet.class);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 
 			// See http://bugs.java.com/view_bug.do?bug_id=7183985 and LPS-69679
 
@@ -950,7 +950,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 				sb.append(" because a some dependency may not be present in ");
 				sb.append("the classpath");
 
-				_log.debug(sb.toString(), e);
+				_log.debug(sb.toString(), exception);
 			}
 
 			return;
@@ -1059,7 +1059,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			return filterClass.newInstance();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
 					"Bundle ", _bundle, " is unable to load filter ",
@@ -1078,7 +1078,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			return eventListenerClass.newInstance();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
 					"Bundle ", _bundle, " is unable to load listener ",
@@ -1097,9 +1097,10 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			return servletClass.newInstance();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
-				_bundle + " unable to load servlet " + servletClassName, e);
+				_bundle + " unable to load servlet " + servletClassName,
+				exception);
 
 			return null;
 		}

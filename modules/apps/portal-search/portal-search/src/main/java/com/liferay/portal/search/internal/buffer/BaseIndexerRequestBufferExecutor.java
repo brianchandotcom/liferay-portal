@@ -50,9 +50,10 @@ public abstract class BaseIndexerRequestBufferExecutor
 			try {
 				indexWriterHelper.commit(searchEngineId);
 			}
-			catch (SearchException se) {
+			catch (SearchException searchException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to commit search engine", se);
+					_log.warn(
+						"Unable to commit search engine", searchException);
 				}
 			}
 		}
@@ -66,10 +67,11 @@ public abstract class BaseIndexerRequestBufferExecutor
 
 			searchEngineIds.add(indexerRequest.getSearchEngineId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to execute index request " + indexerRequest, e);
+					"Unable to execute index request " + indexerRequest,
+					exception);
 			}
 		}
 	}

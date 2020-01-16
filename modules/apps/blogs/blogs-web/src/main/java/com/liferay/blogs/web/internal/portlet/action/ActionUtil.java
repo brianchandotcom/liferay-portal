@@ -54,7 +54,7 @@ public class ActionUtil {
 				entry = BlogsEntryServiceUtil.getEntry(
 					themeDisplay.getScopeGroupId(), urlTitle);
 			}
-			catch (NoSuchEntryException nsee) {
+			catch (NoSuchEntryException noSuchEntryException) {
 				if (urlTitle.indexOf(CharPool.UNDERLINE) != -1) {
 
 					// Check another URL title for backwards compatibility. See
@@ -67,7 +67,7 @@ public class ActionUtil {
 						themeDisplay.getScopeGroupId(), urlTitle);
 				}
 				else {
-					throw nsee;
+					throw noSuchEntryException;
 				}
 			}
 		}

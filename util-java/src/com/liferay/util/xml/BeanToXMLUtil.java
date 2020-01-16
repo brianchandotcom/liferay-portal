@@ -76,9 +76,9 @@ public class BeanToXMLUtil {
 						_add(parentEl, memberName, returnValue.toString());
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(e.getMessage());
+						_log.warn(exception.getMessage());
 					}
 				}
 			}

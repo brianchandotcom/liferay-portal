@@ -127,8 +127,8 @@ public class AssetMetadataTag extends IncludeTag {
 				"liferay-asset:asset-metadata:assetRenderer",
 				assetRendererFactory.getAssetRenderer(_classPK));
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		httpServletRequest.setAttribute(

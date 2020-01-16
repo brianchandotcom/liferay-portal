@@ -92,9 +92,10 @@ public class MicrosoftTranslatorAuthenticator {
 
 			_initTime = System.currentTimeMillis();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Unable to initialize authentication token", e);
+				_log.info(
+					"Unable to initialize authentication token", exception);
 			}
 		}
 	}

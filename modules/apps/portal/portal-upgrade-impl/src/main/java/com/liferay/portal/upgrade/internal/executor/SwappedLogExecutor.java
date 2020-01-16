@@ -51,8 +51,8 @@ public class SwappedLogExecutor {
 			_outputStreamContainerFactoryTracker.runWithSwappedLog(
 				runnable, outputStreamContainer.getDescription(), outputStream);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 		finally {
 			_outputStreamThreadLocal.remove();

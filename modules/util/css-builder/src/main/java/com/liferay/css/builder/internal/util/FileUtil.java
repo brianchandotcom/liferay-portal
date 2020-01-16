@@ -138,7 +138,7 @@ public class FileUtil {
 
 			return fileTime.toMillis();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return -1;
 		}
 	}

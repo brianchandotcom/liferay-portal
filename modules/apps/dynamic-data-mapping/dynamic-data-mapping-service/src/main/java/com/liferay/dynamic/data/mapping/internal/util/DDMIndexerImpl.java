@@ -107,9 +107,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 					addToDocument(document, field, name, value, indexType);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}
@@ -185,12 +185,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 						ddmStructure.getFieldProperty(
 							fieldName, "localizable"));
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					throw new IllegalArgumentException(
 						StringBundler.concat(
 							"Unable to obtain index tpe for field ", fieldName,
 							" and DDM structure ID ", ddmStructureId),
-						pe);
+						portalException);
 				}
 			}
 		}
@@ -274,9 +274,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 					}
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}
@@ -441,8 +441,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 			return _ddmFormValuesToFieldsConverter.convert(
 				ddmStructure, ddmFormValues);
 		}
-		catch (PortalException pe) {
-			_log.error("Unable to convert DDMFormValues to Fields", pe);
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to convert DDMFormValues to Fields", portalException);
 		}
 
 		return new Fields();

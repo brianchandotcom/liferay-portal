@@ -224,7 +224,7 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 			return byteArrayOutputStream.toByteArray();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return new byte[0];
 		}
 	}

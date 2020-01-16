@@ -111,15 +111,15 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 
 					bean = _layoutRevision;
 				}
-				catch (NoSuchMethodException nsme) {
-					_log.error(nsme, nsme);
+				catch (NoSuchMethodException noSuchMethodException) {
+					_log.error(noSuchMethodException, noSuchMethodException);
 				}
 			}
 
 			return method.invoke(bean, arguments);
 		}
-		catch (InvocationTargetException ite) {
-			throw ite.getTargetException();
+		catch (InvocationTargetException invocationTargetException) {
+			throw invocationTargetException.getTargetException();
 		}
 	}
 
@@ -133,10 +133,10 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		try {
 			_layoutRevision = _getLayoutRevision(layout, layoutRevision);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			throw new IllegalStateException(e);
+			throw new IllegalStateException(exception);
 		}
 	}
 

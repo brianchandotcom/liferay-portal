@@ -95,7 +95,7 @@ public class RestoreTrashPortletConfigurationIcon
 
 			return sb.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -144,7 +144,7 @@ public class RestoreTrashPortletConfigurationIcon
 					return false;
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				return false;
 			}
 		}

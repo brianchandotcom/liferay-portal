@@ -108,8 +108,8 @@ public class LayoutTemplateLocalServiceImpl
 		try {
 			return layoutTemplate.getUncachedContent();
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -264,8 +264,8 @@ public class LayoutTemplateLocalServiceImpl
 						pluginPackage));
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return new ArrayList<>(layoutTemplates);
@@ -357,12 +357,12 @@ public class LayoutTemplateLocalServiceImpl
 					servletContext.getResourceAsStream(
 						layoutTemplateModel.getTemplatePath()));
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					StringBundler.concat(
 						"Unable to get content at template path ",
 						layoutTemplateModel.getTemplatePath(), ": ",
-						e.getMessage()));
+						exception.getMessage()));
 			}
 
 			if (Validator.isNull(content)) {
@@ -443,9 +443,10 @@ public class LayoutTemplateLocalServiceImpl
 				_warCustom.remove(layoutTemplateId);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
-				"Unable to uninstall layout template " + layoutTemplateId, e);
+				"Unable to uninstall layout template " + layoutTemplateId,
+				exception);
 		}
 	}
 
@@ -467,11 +468,11 @@ public class LayoutTemplateLocalServiceImpl
 				TemplateResourceLoaderUtil.clearCache(
 					_getSupportedLangType(layoutTemplate), templateId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					"Unable to uninstall layout template " +
 						layoutTemplate.getLayoutTemplateId(),
-					e);
+					exception);
 			}
 		}
 
@@ -492,11 +493,11 @@ public class LayoutTemplateLocalServiceImpl
 				TemplateResourceLoaderUtil.clearCache(
 					_getSupportedLangType(layoutTemplate), templateId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					"Unable to uninstall layout template " +
 						layoutTemplate.getLayoutTemplateId(),
-					e);
+					exception);
 			}
 		}
 
@@ -519,8 +520,8 @@ public class LayoutTemplateLocalServiceImpl
 
 			return ListUtil.sort(processor.getColumns());
 		}
-		catch (Exception e) {
-			_log.error("Unable to get layout template columns", e);
+		catch (Exception exception) {
+			_log.error("Unable to get layout template columns", exception);
 
 			return new ArrayList<>();
 		}

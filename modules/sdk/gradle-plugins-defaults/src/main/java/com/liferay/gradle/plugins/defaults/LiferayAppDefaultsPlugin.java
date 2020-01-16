@@ -191,8 +191,8 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 							file.toPath(),
 							packageJSON.getBytes(StandardCharsets.UTF_8));
 					}
-					catch (IOException ioe) {
-						throw new UncheckedIOException(ioe);
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
 					}
 				}
 
@@ -465,8 +465,8 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 				"com/liferay/gradle/plugins/defaults/internal/dependencies" +
 					"/config-jsdoc.json");
 		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
+		catch (IOException ioException) {
+			throw new ExceptionInInitializerError(ioException);
 		}
 	}
 

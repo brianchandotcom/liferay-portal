@@ -56,7 +56,7 @@ public class UADHierarchyChecker extends EmptyOnClickRowChecker {
 					httpServletRequest, checked, disabled, name, value,
 					checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

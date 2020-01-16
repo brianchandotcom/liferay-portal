@@ -78,9 +78,9 @@ public abstract class BaseMBMessageDemoDataCreator
 			try {
 				mbMessageLocalService.deleteMessage(messageId);
 			}
-			catch (NoSuchMessageException nsme) {
+			catch (NoSuchMessageException noSuchMessageException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsme, nsme);
+					_log.warn(noSuchMessageException, noSuchMessageException);
 				}
 			}
 

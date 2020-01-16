@@ -136,7 +136,7 @@ public class SiteAdminManagementToolbarDisplayContext
 				}
 			};
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

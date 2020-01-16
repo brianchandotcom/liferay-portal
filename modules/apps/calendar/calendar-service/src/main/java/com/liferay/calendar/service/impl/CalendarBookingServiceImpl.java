@@ -367,9 +367,9 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 					return !_calendarLocalService.isStagingCalendar(
 						calendarBooking.getCalendar());
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(pe, pe);
+						_log.warn(portalException, portalException);
 					}
 
 					return true;

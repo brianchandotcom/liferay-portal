@@ -65,9 +65,9 @@ public class CalendarStagingModelListener extends BaseModelListener<Calendar> {
 				CalendarResourceUtil.fetchGuestCalendarResource(
 					calendar.getCompanyId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

@@ -76,11 +76,11 @@ public class StartupAction extends SimpleAction {
 		try {
 			doRun(ids);
 		}
-		catch (RuntimeException re) {
-			throw re;
+		catch (RuntimeException runtimeException) {
+			throw runtimeException;
 		}
-		catch (Exception e) {
-			throw new ActionException(e);
+		catch (Exception exception) {
+			throw new ActionException(exception);
 		}
 	}
 
@@ -252,9 +252,9 @@ public class StartupAction extends SimpleAction {
 					FabricServerUtil.start();
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				throw new IllegalStateException(
-					"Unable to initialize portal resiliency", e);
+					"Unable to initialize portal resiliency", exception);
 			}
 		}
 

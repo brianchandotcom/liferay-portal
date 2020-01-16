@@ -121,9 +121,9 @@ public class KaleoProcessAssetRenderer
 		try {
 			kaleoProcessName = _kaleoProcess.getName(locale);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 

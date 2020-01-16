@@ -98,8 +98,9 @@ public class GoogleLoginErrorMVCRenderCommand implements MVCRenderCommand {
 
 			requestDispatcher.forward(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			throw new PortletException("Unable to include error.jsp", e);
+		catch (Exception exception) {
+			throw new PortletException(
+				"Unable to include error.jsp", exception);
 		}
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

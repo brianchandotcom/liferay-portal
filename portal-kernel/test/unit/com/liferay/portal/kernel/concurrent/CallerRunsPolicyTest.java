@@ -106,7 +106,7 @@ public class CallerRunsPolicyTest {
 
 				Assert.fail();
 			}
-			catch (RuntimeException re) {
+			catch (RuntimeException runtimeException) {
 			}
 
 			Assert.assertTrue(markerBlockingJob.isStarted());

@@ -88,8 +88,8 @@ public class WebXMLBuilder {
 
 			FileUtil.write(mergedWebXML, mergedContent, true);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

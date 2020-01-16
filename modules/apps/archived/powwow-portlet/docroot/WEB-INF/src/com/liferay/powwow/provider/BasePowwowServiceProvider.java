@@ -270,12 +270,12 @@ public abstract class BasePowwowServiceProvider
 			try {
 				return HttpUtil.URLtoString(options);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				try {
 					Thread.sleep(
 						PortletPropsValues.POWWOW_PROVIDER_API_RETRY_INTERVAL);
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
 				}
 			}
 		}

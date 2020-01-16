@@ -171,8 +171,9 @@ public class EditImageConfigurationEntryMVCActionCommand
 				}
 			}
 		}
-		catch (AMImageConfigurationException amice) {
-			SessionErrors.add(actionRequest, amice.getClass());
+		catch (AMImageConfigurationException amImageConfigurationException) {
+			SessionErrors.add(
+				actionRequest, amImageConfigurationException.getClass());
 		}
 	}
 

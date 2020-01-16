@@ -29,11 +29,11 @@ public class PluginZipFactoryImpl implements PluginZipFactory {
 			return new PluginZipImpl(
 				ResourceUtil.getResourceAsTempFile(getClass(), resourceName));
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				"Unable to write temporary plugin zip file for resource " +
 					resourceName,
-				ioe);
+				ioException);
 		}
 	}
 

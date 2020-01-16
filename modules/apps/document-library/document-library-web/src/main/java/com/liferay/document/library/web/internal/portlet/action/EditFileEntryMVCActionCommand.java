@@ -208,7 +208,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 						portletConfig, actionRequest, actionResponse,
 						uploadPortletRequest);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (!cmd.equals(Constants.ADD_DYNAMIC) &&
 						Validator.isNotNull(sourceFileName)) {
 
@@ -216,7 +216,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 							actionRequest, RequiredFileException.class);
 					}
 
-					throw pe;
+					throw portalException;
 				}
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
@@ -322,8 +322,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, portletResource + "requestProcessed");
 			}
 		}
-		catch (Exception e) {
-			_handleUploadException(actionRequest, actionResponse, cmd, e);
+		catch (Exception exception) {
+			_handleUploadException(
+				actionRequest, actionResponse, cmd, exception);
 		}
 	}
 
@@ -429,9 +430,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			validFileNameKVPs.add(
 				new KeyValuePair(uniqueFileName, selectedFileName));
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String errorMessage = _getAddMultipleFileEntriesErrorMessage(
-				portletConfig, actionRequest, e);
+				portletConfig, actionRequest, exception);
 
 			invalidFileNameKVPs.add(
 				new KeyValuePair(selectedFileName, errorMessage));
@@ -649,7 +650,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			jsonObject.put("deleted", Boolean.TRUE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String errorMessage = themeDisplay.translate(
 				"an-unexpected-error-occurred-while-deleting-the-file");
 
@@ -675,15 +676,18 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		if (exception instanceof AntivirusScannerException) {
-			AntivirusScannerException ase =
+			AntivirusScannerException antivirusScannerException =
 				(AntivirusScannerException)exception;
 
-			errorMessage = themeDisplay.translate(ase.getMessageKey());
+			errorMessage = themeDisplay.translate(
+				antivirusScannerException.getMessageKey());
 		}
 		else if (exception instanceof AssetCategoryException) {
-			AssetCategoryException ace = (AssetCategoryException)exception;
+			AssetCategoryException assetCategoryException =
+				(AssetCategoryException)exception;
 
-			AssetVocabulary assetVocabulary = ace.getVocabulary();
+			AssetVocabulary assetVocabulary =
+				assetCategoryException.getVocabulary();
 
 			String vocabularyTitle = StringPool.BLANK;
 
@@ -692,12 +696,14 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getLocale());
 			}
 
-			if (ace.getType() == AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
+			if (assetCategoryException.getType() ==
+					AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
+
 				errorMessage = themeDisplay.translate(
 					"please-select-at-least-one-category-for-x",
 					vocabularyTitle);
 			}
-			else if (ace.getType() ==
+			else if (assetCategoryException.getType() ==
 						AssetCategoryException.TOO_MANY_CATEGORIES) {
 
 				errorMessage = themeDisplay.translate(
@@ -864,9 +870,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				 exception instanceof PrincipalException) {
 
 			if (exception instanceof DuplicateLockException) {
-				DuplicateLockException dle = (DuplicateLockException)exception;
+				DuplicateLockException duplicateLockException =
+					(DuplicateLockException)exception;
 
-				SessionErrors.add(actionRequest, dle.getClass(), dle.getLock());
+				SessionErrors.add(
+					actionRequest, duplicateLockException.getClass(),
+					duplicateLockException.getLock());
 			}
 			else {
 				SessionErrors.add(actionRequest, exception.getClass());

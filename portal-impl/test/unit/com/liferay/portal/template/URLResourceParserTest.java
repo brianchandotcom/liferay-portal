@@ -103,8 +103,10 @@ public class URLResourceParserTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Unable to parse path //", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Unable to parse path //",
+				illegalArgumentException.getMessage());
 		}
 
 		Assert.assertEquals(
@@ -117,8 +119,10 @@ public class URLResourceParserTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Unable to parse path ../", iae.getMessage());
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Unable to parse path ../",
+				illegalArgumentException.getMessage());
 		}
 
 		Assert.assertEquals(

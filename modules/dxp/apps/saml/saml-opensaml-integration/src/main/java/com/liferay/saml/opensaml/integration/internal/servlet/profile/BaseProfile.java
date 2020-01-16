@@ -455,7 +455,7 @@ public abstract class BaseProfile {
 		try {
 			session.invalidate();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 	}
 
@@ -492,7 +492,7 @@ public abstract class BaseProfile {
 						endpoint.getLocation(), " with binding ",
 						endpoint.getBinding()));
 			}
-			catch (MarshallingException me) {
+			catch (MarshallingException marshallingException) {
 			}
 		}
 
@@ -520,12 +520,12 @@ public abstract class BaseProfile {
 
 			httpServletResponseMessageEncoder.encode();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SamlException(
 				StringBundler.concat(
 					"Unable to send SAML message to ", endpoint.getLocation(),
 					" with binding ", endpoint.getBinding()),
-				e);
+				exception);
 		}
 	}
 

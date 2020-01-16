@@ -58,8 +58,8 @@ public class BndInvokerTask extends Task {
 
 			_invoke(stringWriter.toString(), project.getBaseDir(), _output);
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

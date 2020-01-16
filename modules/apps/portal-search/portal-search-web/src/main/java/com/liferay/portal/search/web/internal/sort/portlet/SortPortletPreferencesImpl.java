@@ -52,9 +52,10 @@ public class SortPortletPreferencesImpl implements SortPortletPreferences {
 		try {
 			return JSONFactoryUtil.createJSONArray(fieldsString);
 		}
-		catch (JSONException jsone) {
+		catch (JSONException jsonException) {
 			_log.error(
-				"Unable to create a JSON array from: " + fieldsString, jsone);
+				"Unable to create a JSON array from: " + fieldsString,
+				jsonException);
 
 			return getDefaultFieldsJSONArray();
 		}

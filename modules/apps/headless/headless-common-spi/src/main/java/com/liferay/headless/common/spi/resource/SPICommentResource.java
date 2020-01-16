@@ -158,8 +158,9 @@ public class SPICommentResource<T> {
 			return _transformUnsafeFunction.apply(
 				_commentManager.fetchComment(commentId));
 		}
-		catch (MessageSubjectException mse) {
-			throw new ClientErrorException("Comment text is null", 422, mse);
+		catch (MessageSubjectException messageSubjectException) {
+			throw new ClientErrorException(
+				"Comment text is null", 422, messageSubjectException);
 		}
 	}
 
@@ -239,16 +240,19 @@ public class SPICommentResource<T> {
 			return _transformUnsafeFunction.apply(
 				_commentManager.fetchComment(commentId));
 		}
-		catch (DiscussionMaxCommentsException dmce) {
+		catch (DiscussionMaxCommentsException discussionMaxCommentsException) {
 			throw new ClientErrorException(
-				"Maximum number of comments has been reached", 422, dmce);
+				"Maximum number of comments has been reached", 422,
+				discussionMaxCommentsException);
 		}
-		catch (DuplicateCommentException dce) {
+		catch (DuplicateCommentException duplicateCommentException) {
 			throw new ClientErrorException(
-				"A comment with the same text already exists", 409, dce);
+				"A comment with the same text already exists", 409,
+				duplicateCommentException);
 		}
-		catch (MessageSubjectException mse) {
-			throw new ClientErrorException("Comment text is null", 422, mse);
+		catch (MessageSubjectException messageSubjectException) {
+			throw new ClientErrorException(
+				"Comment text is null", 422, messageSubjectException);
 		}
 	}
 

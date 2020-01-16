@@ -95,9 +95,10 @@ public class EndpointWrapper extends Endpoint {
 
 				_serviceObjects.ungetService(_endpoint);
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				_logService.log(
-					LogService.LOG_ERROR, "Unable to close session", ioe);
+					LogService.LOG_ERROR, "Unable to close session",
+					ioException);
 			}
 		}
 	}

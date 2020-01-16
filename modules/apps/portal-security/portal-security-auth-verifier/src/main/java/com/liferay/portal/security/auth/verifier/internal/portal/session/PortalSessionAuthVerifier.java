@@ -75,12 +75,12 @@ public class PortalSessionAuthVerifier implements AuthVerifier {
 					AuthTokenUtil.checkCSRFToken(
 						originalHttpServletRequest, requestURI);
 				}
-				catch (PrincipalException pe) {
+				catch (PrincipalException principalException) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							StringBundler.concat(
 								"Unable to verify CSRF token for ", requestURI,
-								": ", pe.getMessage()));
+								": ", principalException.getMessage()));
 					}
 
 					return authVerifierResult;
@@ -93,11 +93,11 @@ public class PortalSessionAuthVerifier implements AuthVerifier {
 
 			return authVerifierResult;
 		}
-		catch (PortalException pe) {
-			throw new AuthException(pe);
+		catch (PortalException portalException) {
+			throw new AuthException(portalException);
 		}
-		catch (SystemException se) {
-			throw new AuthException(se);
+		catch (SystemException systemException) {
+			throw new AuthException(systemException);
 		}
 	}
 

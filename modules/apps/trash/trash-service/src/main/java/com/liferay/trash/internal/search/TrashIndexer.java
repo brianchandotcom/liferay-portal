@@ -102,11 +102,11 @@ public class TrashIndexer extends BaseIndexer<TrashEntry> {
 
 			return createFullQuery(fullQueryBooleanFilter, searchContext);
 		}
-		catch (SearchException se) {
-			throw se;
+		catch (SearchException searchException) {
+			throw searchException;
 		}
-		catch (Exception e) {
-			throw new SearchException(e);
+		catch (Exception exception) {
+			throw new SearchException(exception);
 		}
 	}
 

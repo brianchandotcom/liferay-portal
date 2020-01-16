@@ -291,8 +291,8 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 				Assert.fail();
 			}
-			catch (SystemException se) {
-				Throwable throwable = se.getCause();
+			catch (SystemException systemException) {
+				Throwable throwable = systemException.getCause();
 
 				Assert.assertSame(
 					NullPointerException.class, throwable.getClass());
@@ -343,11 +343,11 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 			Assert.fail();
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			Assert.assertEquals(
 				"Unable to execute on master " +
 					mockClusterExecutor.getLocalClusterNodeId(),
-				se.getMessage());
+				systemException.getMessage());
 		}
 	}
 
@@ -657,7 +657,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 				return _clusterNodeIdExchanger.exchange(
 					null, 1000, TimeUnit.MILLISECONDS);
 			}
-			catch (TimeoutException te) {
+			catch (TimeoutException timeoutException) {
 				return "null";
 			}
 		}

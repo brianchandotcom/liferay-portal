@@ -179,9 +179,9 @@ public class FilePropagator {
 				_mirrorSlaves.add(targetSlave);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new RuntimeException(
-				"Unable to copy from source. Executed: " + commands, e);
+				"Unable to copy from source. Executed: " + commands, exception);
 		}
 
 		System.out.println("Finished copying from source.");
@@ -282,7 +282,7 @@ public class FilePropagator {
 
 				_successful = value == 0;
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_successful = false;
 			}
 

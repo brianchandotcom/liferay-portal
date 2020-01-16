@@ -75,11 +75,11 @@ public class CompareVersionsMVCResourceCommand extends BaseMVCResourceCommand {
 				new PortletRequestModel(resourceRequest, resourceResponse),
 				themeDisplay);
 		}
-		catch (CompareVersionsException cve) {
+		catch (CompareVersionsException compareVersionsException) {
 			resourceRequest.setAttribute(
-				WebKeys.DIFF_VERSION, cve.getVersion());
+				WebKeys.DIFF_VERSION, compareVersionsException.getVersion());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(resourceRequest);
 
@@ -87,9 +87,10 @@ public class CompareVersionsMVCResourceCommand extends BaseMVCResourceCommand {
 				_portal.getHttpServletResponse(resourceResponse);
 
 			try {
-				_portal.sendError(e, httpServletRequest, httpServletResponse);
+				_portal.sendError(
+					exception, httpServletRequest, httpServletResponse);
 			}
-			catch (ServletException se) {
+			catch (ServletException servletException) {
 			}
 		}
 

@@ -82,8 +82,8 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 
 			return number.longValue();
 		}
-		catch (Exception e) {
-			throw _basePersistenceImpl.processException(e);
+		catch (Exception exception) {
+			throw _basePersistenceImpl.processException(exception);
 		}
 		finally {
 			_basePersistenceImpl.closeSession(session);
@@ -125,8 +125,8 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 
 			return number.longValue();
 		}
-		catch (Exception e) {
-			throw _basePersistenceImpl.processException(e);
+		catch (Exception exception) {
+			throw _basePersistenceImpl.processException(exception);
 		}
 		finally {
 			_basePersistenceImpl.closeSession(session);
@@ -172,8 +172,8 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 				sqlQuery, _basePersistenceImpl.getDialect(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw _basePersistenceImpl.processException(e);
+		catch (Exception exception) {
+			throw _basePersistenceImpl.processException(exception);
 		}
 		finally {
 			_basePersistenceImpl.closeSession(session);
@@ -219,8 +219,8 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 				sqlQuery, _basePersistenceImpl.getDialect(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 		}
-		catch (Exception e) {
-			throw _basePersistenceImpl.processException(e);
+		catch (Exception exception) {
+			throw _basePersistenceImpl.processException(exception);
 		}
 		finally {
 			_basePersistenceImpl.closeSession(session);
@@ -322,8 +322,8 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 
 			sqlQuery.executeUpdate();
 		}
-		catch (Exception e) {
-			throw _basePersistenceImpl.processException(e);
+		catch (Exception exception) {
+			throw _basePersistenceImpl.processException(exception);
 		}
 		finally {
 			_basePersistenceImpl.closeSession(session);
@@ -388,8 +388,8 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 
 			sqlQuery.executeUpdate();
 		}
-		catch (Exception e) {
-			throw _basePersistenceImpl.processException(e);
+		catch (Exception exception) {
+			throw _basePersistenceImpl.processException(exception);
 		}
 		finally {
 			_basePersistenceImpl.closeSession(session);
@@ -452,8 +452,8 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 
 			return 1;
 		}
-		catch (Exception e) {
-			throw _basePersistenceImpl.processException(e);
+		catch (Exception exception) {
+			throw _basePersistenceImpl.processException(exception);
 		}
 		finally {
 			_basePersistenceImpl.closeSession(session);

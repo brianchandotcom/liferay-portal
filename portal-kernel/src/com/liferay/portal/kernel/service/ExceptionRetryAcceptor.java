@@ -50,7 +50,7 @@ public class ExceptionRetryAcceptor implements RetryAcceptor {
 					return true;
 				}
 			}
-			catch (ClassNotFoundException cnfe) {
+			catch (ClassNotFoundException classNotFoundException) {
 			}
 
 			Throwable cause = t.getCause();

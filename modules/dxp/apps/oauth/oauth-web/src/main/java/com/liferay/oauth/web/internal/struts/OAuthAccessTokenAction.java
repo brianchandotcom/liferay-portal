@@ -88,9 +88,9 @@ public class OAuthAccessTokenAction implements StrutsAction {
 
 			outputStream.close();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_oAuth.handleException(
-				httpServletRequest, httpServletResponse, e, false);
+				httpServletRequest, httpServletResponse, exception, false);
 		}
 
 		return null;

@@ -75,9 +75,10 @@ public class TransactionInterceptorTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			Assert.assertEquals(
-				"MockPlatformTransactionManager", re.getMessage());
+				"MockPlatformTransactionManager",
+				runtimeException.getMessage());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

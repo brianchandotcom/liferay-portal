@@ -304,9 +304,9 @@ public class BlogPostingResourceImpl
 				fileEntry.getFileName(), fileEntry.getMimeType(),
 				"{\"height\": 0, \"width\": 0, \"x\": 0, \"y\": 0}");
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new BadRequestException(
-				"Unable to get file entry " + imageId, e);
+				"Unable to get file entry " + imageId, exception);
 		}
 	}
 

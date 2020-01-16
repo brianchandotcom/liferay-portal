@@ -81,8 +81,8 @@ public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				CTWebKeys.CT_ENTRY_DIFF_DISPLAY, ctEntryDiffDisplay);
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 
 		return "/change_lists/diff.jsp";

@@ -180,7 +180,7 @@ public class CoalescedPipe<E> {
 				_takeLock.unlock();
 			}
 		}
-		catch (InterruptedException ie) {
+		catch (InterruptedException interruptedException) {
 
 			// Continue to let the current element enter the pipe
 

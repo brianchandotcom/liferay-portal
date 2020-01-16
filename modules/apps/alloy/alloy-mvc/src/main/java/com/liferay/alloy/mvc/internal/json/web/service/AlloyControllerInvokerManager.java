@@ -126,11 +126,11 @@ public class AlloyControllerInvokerManager {
 
 			_alloyControllerInvokers.put(controller, alloyControllerInvoker);
 		}
-		catch (NoClassNecessaryException ncne) {
+		catch (NoClassNecessaryException noClassNecessaryException) {
 			return;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		for (Method method : alloyControllerInvokerClass.getDeclaredMethods()) {
@@ -203,8 +203,8 @@ public class AlloyControllerInvokerManager {
 
 								return uri.toURL();
 							}
-							catch (Exception e) {
-								throw new RuntimeException(e);
+							catch (Exception exception) {
+								throw new RuntimeException(exception);
 							}
 						}
 
@@ -221,11 +221,11 @@ public class AlloyControllerInvokerManager {
 
 				return alloyControllerInvokerClass;
 			}
-			catch (NoClassNecessaryException ncne) {
-				throw ncne;
+			catch (NoClassNecessaryException noClassNecessaryException) {
+				throw noClassNecessaryException;
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 	}

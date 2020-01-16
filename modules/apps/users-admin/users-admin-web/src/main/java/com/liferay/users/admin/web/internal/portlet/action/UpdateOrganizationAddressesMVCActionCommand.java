@@ -69,28 +69,29 @@ public class UpdateOrganizationAddressesMVCActionCommand
 		try {
 			updateAddresses(actionRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrganizationException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchOrganizationException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof AddressCityException ||
-					 e instanceof AddressStreetException ||
-					 e instanceof AddressZipException ||
-					 e instanceof NoSuchCountryException ||
-					 e instanceof NoSuchListTypeException ||
-					 e instanceof NoSuchRegionException) {
+			else if (exception instanceof AddressCityException ||
+					 exception instanceof AddressStreetException ||
+					 exception instanceof AddressZipException ||
+					 exception instanceof NoSuchCountryException ||
+					 exception instanceof NoSuchListTypeException ||
+					 exception instanceof NoSuchRegionException) {
 
-				SessionErrors.add(actionRequest, e.getClass(), e);
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 
 				actionResponse.setRenderParameter(
 					"mvcPath", "/edit_organization.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

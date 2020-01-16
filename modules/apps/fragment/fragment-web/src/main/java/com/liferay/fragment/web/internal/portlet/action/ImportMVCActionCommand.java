@@ -95,8 +95,8 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 
 			SessionMessages.add(actionRequest, "success");
 		}
-		catch (Exception e) {
-			SessionErrors.add(actionRequest, e.getClass(), e);
+		catch (Exception exception) {
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
 		}
 
 		sendRedirect(actionRequest, actionResponse);

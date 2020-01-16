@@ -86,8 +86,8 @@ public class SharingConfigurationFactoryImpl
 				group, sharingGroupConfiguration, sharingCompanyConfiguration,
 				_sharingSystemConfiguration);
 		}
-		catch (ConfigurationException ce) {
-			_log.error(ce, ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException, configurationException);
 
 			return new SharingConfigurationImpl(
 				null, null, null, _sharingSystemConfiguration);

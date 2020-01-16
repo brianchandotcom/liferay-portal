@@ -121,9 +121,10 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 			return configurationInvocationHandler.createProxy();
 		}
-		catch (ReflectiveOperationException | SettingsException e) {
+		catch (ReflectiveOperationException | SettingsException exception) {
 			throw new ConfigurationException(
-				"Unable to load configuration of type " + clazz.getName(), e);
+				"Unable to load configuration of type " + clazz.getName(),
+				exception);
 		}
 	}
 
@@ -232,9 +233,9 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 				configurations[0].delete();
 			}
 		}
-		catch (InvalidSyntaxException | IOException e) {
+		catch (InvalidSyntaxException | IOException exception) {
 			throw new ConfigurationException(
-				"Unable to delete configuration " + pid, e);
+				"Unable to delete configuration " + pid, exception);
 		}
 	}
 
@@ -253,10 +254,10 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 				configuration.delete();
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new ConfigurationException(
 				"Unable to delete factory configuration " + scopedFactoryPid,
-				ioe);
+				ioException);
 		}
 	}
 
@@ -289,9 +290,10 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 			return null;
 		}
-		catch (InvalidSyntaxException | IOException e) {
+		catch (InvalidSyntaxException | IOException exception) {
 			throw new ConfigurationException(
-				"Unable to retrieve factory configuration " + factoryPid, e);
+				"Unable to retrieve factory configuration " + factoryPid,
+				exception);
 		}
 	}
 
@@ -322,9 +324,9 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 			configuration.update(properties);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new ConfigurationException(
-				"Unable to save configuration " + pid, ioe);
+				"Unable to save configuration " + pid, ioException);
 		}
 	}
 
@@ -348,10 +350,10 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 			configuration.update(properties);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new ConfigurationException(
 				"Unable to save factory configuration " + scopedFactoryPid,
-				ioe);
+				ioException);
 		}
 	}
 

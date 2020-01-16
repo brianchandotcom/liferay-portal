@@ -81,8 +81,8 @@ public class AtomServlet extends AbderaServlet {
 
 			super.service(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			throw new ServletException(e);
+		catch (Exception exception) {
+			throw new ServletException(exception);
 		}
 		finally {
 			AccessControlThreadLocal.setRemoteAccess(remoteAccess);

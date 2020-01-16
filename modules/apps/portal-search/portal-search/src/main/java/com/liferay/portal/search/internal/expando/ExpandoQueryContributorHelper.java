@@ -166,8 +166,8 @@ public class ExpandoQueryContributorHelper {
 		try {
 			return booleanQuery.addTerm(fieldName, keywords, like);
 		}
-		catch (ParseException pe) {
-			throw new RuntimeException(pe);
+		catch (ParseException parseException) {
+			throw new RuntimeException(parseException);
 		}
 	}
 

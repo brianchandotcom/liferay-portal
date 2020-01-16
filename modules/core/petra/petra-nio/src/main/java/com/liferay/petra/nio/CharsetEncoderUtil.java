@@ -30,8 +30,8 @@ public class CharsetEncoderUtil {
 		try {
 			return encode(charsetName, CodingErrorAction.REPLACE, charBuffer);
 		}
-		catch (CharacterCodingException cce) {
-			throw new Error(cce);
+		catch (CharacterCodingException characterCodingException) {
+			throw new Error(characterCodingException);
 		}
 	}
 

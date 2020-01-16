@@ -382,8 +382,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 					classTypeReader.getClassType(
 						classTypePKs[i], themeDisplay.getLocale());
 				}
-				catch (NoSuchModelException nsme) {
-					throw new NoSuchClassTypeException(nsme);
+				catch (NoSuchModelException noSuchModelException) {
+					throw new NoSuchClassTypeException(noSuchModelException);
 				}
 			}
 

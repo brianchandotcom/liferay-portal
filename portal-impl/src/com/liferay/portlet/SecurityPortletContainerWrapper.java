@@ -93,15 +93,16 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			return _portletContainer.processAction(
 				httpServletRequest, httpServletResponse, portlet);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			return processActionException(
-				httpServletRequest, httpServletResponse, portlet, pe);
+				httpServletRequest, httpServletResponse, portlet,
+				principalException);
 		}
-		catch (PortletContainerException pce) {
-			throw pce;
+		catch (PortletContainerException portletContainerException) {
+			throw portletContainerException;
 		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
+		catch (Exception exception) {
+			throw new PortletContainerException(exception);
 		}
 	}
 
@@ -144,22 +145,22 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			_portletContainer.render(
 				httpServletRequest, httpServletResponse, portlet);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 
 			processRenderException(
 				httpServletRequest, httpServletResponse, portlet);
 		}
-		catch (PortletContainerException pce) {
-			throw pce;
+		catch (PortletContainerException portletContainerException) {
+			throw portletContainerException;
 		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
+		catch (Exception exception) {
+			throw new PortletContainerException(exception);
 		}
 	}
 
@@ -175,22 +176,22 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			_portletContainer.renderHeaders(
 				httpServletRequest, httpServletResponse, portlet);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 
 			processRenderException(
 				httpServletRequest, httpServletResponse, portlet);
 		}
-		catch (PortletContainerException pce) {
-			throw pce;
+		catch (PortletContainerException portletContainerException) {
+			throw portletContainerException;
 		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
+		catch (Exception exception) {
+			throw new PortletContainerException(exception);
 		}
 	}
 
@@ -209,15 +210,16 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			_portletContainer.serveResource(
 				httpServletRequest, httpServletResponse, portlet);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			processServeResourceException(
-				httpServletRequest, httpServletResponse, portlet, pe);
+				httpServletRequest, httpServletResponse, portlet,
+				principalException);
 		}
-		catch (PortletContainerException pce) {
-			throw pce;
+		catch (PortletContainerException portletContainerException) {
+			throw portletContainerException;
 		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
+		catch (Exception exception) {
+			throw new PortletContainerException(exception);
 		}
 	}
 
@@ -448,8 +450,8 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 					httpServletRequest, httpServletResponse);
 			}
 		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
+		catch (Exception exception) {
+			throw new PortletContainerException(exception);
 		}
 	}
 

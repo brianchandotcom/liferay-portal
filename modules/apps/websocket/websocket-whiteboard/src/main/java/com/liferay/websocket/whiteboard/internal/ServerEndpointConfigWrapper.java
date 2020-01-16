@@ -126,9 +126,10 @@ public class ServerEndpointConfigWrapper implements ServerEndpointConfig {
 						CloseReason.CloseCodes.GOING_AWAY,
 						"Service is gone away"));
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				_logService.log(
-					LogService.LOG_ERROR, "Unable to close session", ioe);
+					LogService.LOG_ERROR, "Unable to close session",
+					ioException);
 			}
 		}
 

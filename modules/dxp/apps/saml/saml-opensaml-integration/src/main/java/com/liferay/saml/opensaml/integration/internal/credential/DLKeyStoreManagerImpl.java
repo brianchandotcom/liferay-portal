@@ -59,34 +59,34 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 			keyStore.load(inputStream, samlKeyStorePassword.toCharArray());
 		}
-		catch (NoSuchFileException nsfe) {
+		catch (NoSuchFileException noSuchFileException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfe, nsfe);
+				_log.debug(noSuchFileException, noSuchFileException);
 			}
 
 			try {
 				keyStore.load(null, null);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				String message = "Unable to load blank keystore";
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(message, e);
+					_log.debug(message, exception);
 				}
 				else {
 					_log.error(message);
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new KeyStoreException(
 				StringBundler.concat(
 					"Unable to load keystore ", getCompanyId(), "/",
-					_SAML_KEYSTORE_PATH, ": ", e.getMessage()),
-				e);
+					_SAML_KEYSTORE_PATH, ": ", exception.getMessage()),
+				exception);
 		}
 
 		return keyStore;

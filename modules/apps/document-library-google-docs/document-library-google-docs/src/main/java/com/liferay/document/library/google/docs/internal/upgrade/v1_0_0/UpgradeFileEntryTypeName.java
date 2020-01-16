@@ -59,8 +59,8 @@ public class UpgradeFileEntryTypeName extends UpgradeProcess {
 
 			actionableDynamicQuery.performActions();
 		}
-		catch (PortalException pe) {
-			throw new UpgradeException(pe);
+		catch (PortalException portalException) {
+			throw new UpgradeException(portalException);
 		}
 	}
 
@@ -93,8 +93,8 @@ public class UpgradeFileEntryTypeName extends UpgradeProcess {
 					dlFileEntryType);
 			}
 		}
-		catch (SQLException sqle) {
-			throw new UpgradeException(sqle);
+		catch (SQLException sqlException) {
+			throw new UpgradeException(sqlException);
 		}
 	}
 

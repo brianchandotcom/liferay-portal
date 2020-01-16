@@ -84,8 +84,9 @@ public class CompileJSPTask extends JavaExec {
 			try {
 				byteArrayOutputStream.writeTo(taskErrorOutput);
 			}
-			catch (IOException ioe) {
-				throw new GradleException(ioe.getMessage(), ioe);
+			catch (IOException ioException) {
+				throw new GradleException(
+					ioException.getMessage(), ioException);
 			}
 
 			setErrorOutput(taskErrorOutput);

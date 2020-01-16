@@ -102,8 +102,8 @@ public class GoogleDocsDLFileEntryTypeHelper {
 				GoogleDocsDLFileEntryTypeHelper.class.getResourceAsStream(
 					"dependencies/ddm_structure_google_docs.xml"));
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
 
 		Locale locale = _company.getLocale();

@@ -98,8 +98,8 @@ public class MapType implements CompositeUserType, Serializable {
 		try {
 			return _jsonFactory.deserialize(json);
 		}
-		catch (Exception e) {
-			_log.error("Unable to process JSON " + json, e);
+		catch (Exception exception) {
+			_log.error("Unable to process JSON " + json, exception);
 
 			return Collections.emptyMap();
 		}

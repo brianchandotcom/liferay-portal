@@ -49,9 +49,10 @@ public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 			return typeSettingsProperties.getProperty(
 				_getUniqueKey(owner, key));
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
-				"Unable to read repository configuration property", pe);
+				"Unable to read repository configuration property",
+				portalException);
 		}
 	}
 
@@ -73,9 +74,10 @@ public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 
 			_repositoryServiceAdapter.updateRepository(repository);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
-				"Unable to set repository configuration property", pe);
+				"Unable to set repository configuration property",
+				portalException);
 		}
 	}
 

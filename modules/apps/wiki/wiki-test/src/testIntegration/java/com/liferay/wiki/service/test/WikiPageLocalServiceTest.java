@@ -141,7 +141,7 @@ public class WikiPageLocalServiceTest {
 					"Created a page with invalid character " +
 						invalidCharacter);
 			}
-			catch (PageTitleException pte) {
+			catch (PageTitleException pageTitleException) {
 			}
 		}
 	}
@@ -176,7 +176,7 @@ public class WikiPageLocalServiceTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				true, serviceContext);
 		}
-		catch (AssetCategoryException ace) {
+		catch (AssetCategoryException assetCategoryException) {
 			throw new AssetCategoryTestException();
 		}
 	}
@@ -413,7 +413,7 @@ public class WikiPageLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchPageResourceException nspre) {
+		catch (NoSuchPageResourceException noSuchPageResourceException) {
 			redirectPage = WikiPageLocalServiceUtil.getPage(
 				redirectPage.getResourcePrimKey());
 
@@ -438,7 +438,7 @@ public class WikiPageLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchPageResourceException nspre) {
+		catch (NoSuchPageResourceException noSuchPageResourceException) {
 			WikiPageLocalServiceUtil.getPage(redirectPage.getResourcePrimKey());
 		}
 	}
@@ -462,7 +462,7 @@ public class WikiPageLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchPageResourceException nspre) {
+		catch (NoSuchPageResourceException noSuchPageResourceException) {
 			childPage = WikiPageLocalServiceUtil.getPage(
 				childPage.getResourcePrimKey());
 
@@ -493,7 +493,7 @@ public class WikiPageLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchPageResourceException nspre) {
+		catch (NoSuchPageResourceException noSuchPageResourceException) {
 			redirectPage = WikiPageLocalServiceUtil.getPageByPageId(
 				redirectPage.getPageId());
 
@@ -520,7 +520,7 @@ public class WikiPageLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchPageResourceException nspre) {
+		catch (NoSuchPageResourceException noSuchPageResourceException) {
 			childPage = WikiPageLocalServiceUtil.getPageByPageId(
 				childPage.getPageId());
 
@@ -545,7 +545,7 @@ public class WikiPageLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchPageResourceException nspre) {
+		catch (NoSuchPageResourceException noSuchPageResourceException) {
 			WikiPageLocalServiceUtil.getPage(childPage.getResourcePrimKey());
 		}
 	}

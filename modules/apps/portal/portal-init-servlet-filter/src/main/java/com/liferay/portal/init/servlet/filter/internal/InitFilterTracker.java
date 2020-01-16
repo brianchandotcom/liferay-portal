@@ -54,7 +54,7 @@ public class InitFilterTracker {
 		try {
 			_serviceRegistration.unregister();
 		}
-		catch (IllegalStateException ise) {
+		catch (IllegalStateException illegalStateException) {
 		}
 	}
 

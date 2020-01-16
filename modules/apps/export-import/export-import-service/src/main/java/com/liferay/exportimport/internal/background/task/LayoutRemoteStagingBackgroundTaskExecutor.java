@@ -187,10 +187,11 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 					StagingServiceHttp.cleanUpStagingRequest(
 						httpPrincipal, stagingRequestId);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to clean up the remote live site", pe);
+							"Unable to clean up the remote live site",
+							portalException);
 					}
 				}
 			}
@@ -223,12 +224,13 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 						ExportImportHelperUtil.getLayoutOrCreateDummyRootLayout(
 							plid);
 				}
-				catch (NoSuchLayoutException nsle) {
+				catch (NoSuchLayoutException noSuchLayoutException) {
 
 					// See LPS-36174
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(nsle, nsle);
+						_log.debug(
+							noSuchLayoutException, noSuchLayoutException);
 					}
 
 					entrySet.remove(plid);

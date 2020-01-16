@@ -66,9 +66,9 @@ public class VersionUtil {
 					sb.append(labelNumber);
 				}
 			}
-			catch (NumberFormatException nfe) {
+			catch (NumberFormatException numberFormatException) {
 				throw new GradleException(
-					"Invalid version property value", nfe);
+					"Invalid version property value", numberFormatException);
 			}
 
 			normalizedTargetPlatformVersion = sb.toString();

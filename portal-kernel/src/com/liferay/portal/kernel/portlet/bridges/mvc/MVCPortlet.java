@@ -330,8 +330,8 @@ public class MVCPortlet extends LiferayPortlet {
 		try {
 			checkPermissions(actionRequest);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		String[] actionNames = ParamUtil.getParameterValues(
@@ -403,8 +403,8 @@ public class MVCPortlet extends LiferayPortlet {
 		try {
 			checkPermissions(resourceRequest);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 
 		String resourceID = GetterUtil.getString(

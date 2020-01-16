@@ -52,8 +52,8 @@ public class AMImageImgTag extends AttributesTagSupport implements BodyTag {
 
 			return EVAL_PAGE;
 		}
-		catch (IOException | PortalException e) {
-			throw new JspException(e);
+		catch (IOException | PortalException exception) {
+			throw new JspException(exception);
 		}
 	}
 

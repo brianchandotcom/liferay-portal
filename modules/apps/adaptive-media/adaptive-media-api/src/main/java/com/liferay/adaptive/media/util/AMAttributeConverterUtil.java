@@ -36,8 +36,9 @@ public class AMAttributeConverterUtil {
 		try {
 			return Integer.parseInt(value);
 		}
-		catch (NumberFormatException nfe) {
-			throw new AMRuntimeException.AMAttributeFormatException(nfe);
+		catch (NumberFormatException numberFormatException) {
+			throw new AMRuntimeException.AMAttributeFormatException(
+				numberFormatException);
 		}
 	}
 
@@ -47,8 +48,9 @@ public class AMAttributeConverterUtil {
 		try {
 			return Long.parseLong(value);
 		}
-		catch (NumberFormatException nfe) {
-			throw new AMRuntimeException.AMAttributeFormatException(nfe);
+		catch (NumberFormatException numberFormatException) {
+			throw new AMRuntimeException.AMAttributeFormatException(
+				numberFormatException);
 		}
 	}
 

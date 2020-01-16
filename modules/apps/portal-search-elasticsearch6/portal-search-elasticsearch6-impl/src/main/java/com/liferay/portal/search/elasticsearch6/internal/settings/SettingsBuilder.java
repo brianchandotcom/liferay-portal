@@ -45,7 +45,7 @@ public class SettingsBuilder {
 		try {
 			_builder.loadFromSource(source, XContentType.JSON);
 		}
-		catch (SettingsException se) {
+		catch (SettingsException settingsException) {
 			_builder.loadFromSource(source, XContentType.YAML);
 		}
 	}

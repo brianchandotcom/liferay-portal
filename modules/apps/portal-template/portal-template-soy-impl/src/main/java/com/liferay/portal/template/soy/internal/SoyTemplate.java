@@ -356,12 +356,12 @@ public class SoyTemplate extends BaseTemplate {
 
 				templateResourceBundles.add(templateResourceBundle);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to get language resource bundle for template " +
 							StringUtil.quote(templateResource.getTemplateId()),
-						e);
+						exception);
 				}
 			}
 		}

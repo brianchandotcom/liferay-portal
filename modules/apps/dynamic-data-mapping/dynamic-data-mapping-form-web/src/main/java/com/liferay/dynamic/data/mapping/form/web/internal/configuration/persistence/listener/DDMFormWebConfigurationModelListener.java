@@ -54,10 +54,10 @@ public class DDMFormWebConfigurationModelListener
 
 			_validateAutosaveInterval(autosaveInterval);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
-				e.getMessage(), DDMFormWebConfiguration.class, getClass(),
-				properties);
+				exception.getMessage(), DDMFormWebConfiguration.class,
+				getClass(), properties);
 		}
 	}
 

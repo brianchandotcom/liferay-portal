@@ -586,8 +586,8 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		try {
 			_indicesClient.create(createIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -598,8 +598,8 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		try {
 			_indicesClient.delete(deleteIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -612,8 +612,8 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		try {
 			return _restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -628,8 +628,8 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		try {
 			_restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

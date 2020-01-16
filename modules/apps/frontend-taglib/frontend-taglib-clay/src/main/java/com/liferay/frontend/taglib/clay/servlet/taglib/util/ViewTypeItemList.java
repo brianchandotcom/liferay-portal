@@ -45,8 +45,8 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		try {
 			unsafeConsumer.accept(viewTypeItem);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		add(viewTypeItem);
@@ -78,8 +78,8 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		try {
 			unsafeConsumer.accept(addCardViewTypeItem());
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -110,8 +110,8 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		try {
 			unsafeConsumer.accept(addListViewTypeItem());
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -141,8 +141,8 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		try {
 			unsafeConsumer.accept(addTableViewTypeItem());
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

@@ -100,14 +100,15 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 					actionRequest, "layoutPageTemplateAdded");
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			SessionErrors.add(
 				actionRequest, "layoutPageTemplateEntryNameInvalid");
 
 			hideDefaultErrorMessage(actionRequest);
 
 			_layoutPageTemplateEntryExceptionRequestHandler.
-				handlePortalException(actionRequest, actionResponse, pe);
+				handlePortalException(
+					actionRequest, actionResponse, portalException);
 		}
 	}
 

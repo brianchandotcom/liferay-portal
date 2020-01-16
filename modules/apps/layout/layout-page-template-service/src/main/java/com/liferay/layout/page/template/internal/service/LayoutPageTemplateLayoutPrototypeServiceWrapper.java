@@ -60,14 +60,14 @@ public class LayoutPageTemplateLayoutPrototypeServiceWrapper
 			return super.addLayoutPrototype(
 				nameMap, descriptionMap, active, serviceContext);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (!_portletResourcePermission.contains(
 					GuestOrUserUtil.getPermissionChecker(),
 					serviceContext.getScopeGroupId(),
 					LayoutPageTemplateActionKeys.
 						ADD_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
 
-				throw pe;
+				throw principalException;
 			}
 
 			User user = GuestOrUserUtil.getGuestOrUser();

@@ -77,12 +77,12 @@ public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
 				return layoutSet;
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
 			return layoutSet;
@@ -142,8 +142,8 @@ public class LayoutSetLocalServiceStagingAdvice implements BeanFactoryAware {
 
 				return returnValue;
 			}
-			catch (InvocationTargetException ite) {
-				throw ite.getCause();
+			catch (InvocationTargetException invocationTargetException) {
+				throw invocationTargetException.getCause();
 			}
 		}
 

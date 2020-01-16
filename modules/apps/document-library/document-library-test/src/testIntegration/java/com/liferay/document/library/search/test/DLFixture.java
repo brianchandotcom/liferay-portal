@@ -58,8 +58,8 @@ public class DLFixture {
 		try {
 			return TestPropsValues.getUserId();
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

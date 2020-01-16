@@ -405,8 +405,8 @@ public class SharepointServerResponseConverter {
 
 			return simpleDateFormat.parse(dateString);
 		}
-		catch (ParseException pe) {
-			throw new RuntimeException(pe);
+		catch (ParseException parseException) {
+			throw new RuntimeException(parseException);
 		}
 	}
 

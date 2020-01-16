@@ -110,17 +110,17 @@ public abstract class BaseSPIProvider implements SPIProvider {
 				"SPI synchronous queue waiting timeout. Forcibly cancelled " +
 					"SPI process launch.");
 		}
-		catch (InterruptedException ie) {
+		catch (InterruptedException interruptedException) {
 			throw new PortalResiliencyException(
 				"Interrupted on waiting SPI process, registering back RMI stub",
-				ie);
+				interruptedException);
 		}
-		catch (PortalResiliencyException pre) {
-			throw pre;
+		catch (PortalResiliencyException portalResiliencyException) {
+			throw portalResiliencyException;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new PortalResiliencyException(
-				"Unable to launch SPI process", e);
+				"Unable to launch SPI process", exception);
 		}
 		finally {
 			weldServerFutureTask.cancel(true);

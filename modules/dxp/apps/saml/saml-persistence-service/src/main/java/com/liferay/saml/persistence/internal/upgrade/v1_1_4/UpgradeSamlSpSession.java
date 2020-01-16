@@ -32,7 +32,7 @@ public class UpgradeSamlSpSession extends UpgradeProcess {
 				SamlSpSessionTable.class,
 				new AlterTableAddColumn("samlIdpEntityId VARCHAR(1024) null"));
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			upgradeTable(
 				SamlSpSessionTable.TABLE_NAME, SamlSpSessionTable.TABLE_COLUMNS,
 				SamlSpSessionTable.TABLE_SQL_CREATE,

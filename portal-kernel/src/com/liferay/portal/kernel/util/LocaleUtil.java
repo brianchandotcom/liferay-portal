@@ -268,7 +268,7 @@ public class LocaleUtil {
 
 			_locales.put(languageId, locale);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			locale = null;
 
 			if (_log.isWarnEnabled()) {

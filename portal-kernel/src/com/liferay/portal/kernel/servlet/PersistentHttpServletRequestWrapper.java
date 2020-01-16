@@ -34,8 +34,8 @@ public class PersistentHttpServletRequestWrapper
 		try {
 			return (PersistentHttpServletRequestWrapper)super.clone();
 		}
-		catch (CloneNotSupportedException cnse) {
-			throw new RuntimeException(cnse);
+		catch (CloneNotSupportedException cloneNotSupportedException) {
+			throw new RuntimeException(cloneNotSupportedException);
 		}
 	}
 

@@ -52,8 +52,8 @@ public class GetAttributesAction extends BaseJMXManageAction<AttributeList> {
 
 			return mBeanServer.getAttributes(objectName, attributeNames);
 		}
-		catch (Exception e) {
-			throw new ManageActionException(e);
+		catch (Exception exception) {
+			throw new ManageActionException(exception);
 		}
 	}
 

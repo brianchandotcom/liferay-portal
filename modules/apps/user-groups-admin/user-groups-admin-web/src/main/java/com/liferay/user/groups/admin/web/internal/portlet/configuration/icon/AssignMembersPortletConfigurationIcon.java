@@ -76,7 +76,7 @@ public class AssignMembersPortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -100,7 +100,7 @@ public class AssignMembersPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(), userGroup.getUserGroupId(),
 				ActionKeys.ASSIGN_MEMBERS);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

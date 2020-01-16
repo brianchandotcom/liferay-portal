@@ -91,8 +91,8 @@ public class AlloyServiceInvoker {
 			updateModelMethod = serviceClass.getMethod(
 				"update" + simpleClassName, new Class<?>[] {modelClass});
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

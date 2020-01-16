@@ -207,8 +207,8 @@ public class AopConfigurableApplicationContextConfigurator
 						(SessionFactoryImplementor)
 							portletHibernateConfiguration.buildSessionFactory();
 				}
-				catch (Exception e) {
-					return ReflectionUtil.throwException(e);
+				catch (Exception exception) {
+					return ReflectionUtil.throwException(exception);
 				}
 
 				DefaultSingletonBeanRegistry defaultSingletonBeanRegistry =

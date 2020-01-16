@@ -76,8 +76,8 @@ public class LDAPServerConfigurationProviderImpl
 			try {
 				configuration.delete();
 			}
-			catch (IOException ioe) {
-				throw new SystemException(ioe);
+			catch (IOException ioException) {
+				throw new SystemException(ioException);
 			}
 		}
 
@@ -108,8 +108,8 @@ public class LDAPServerConfigurationProviderImpl
 		try {
 			configuration.delete();
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 
 		return true;
@@ -263,7 +263,7 @@ public class LDAPServerConfigurationProviderImpl
 								properties.get(
 									LDAPConstants.AUTH_SERVER_PRIORITY));
 						}
-						catch (IllegalStateException ise) {
+						catch (IllegalStateException illegalStateException) {
 							return 0L;
 						}
 					}));
@@ -403,8 +403,9 @@ public class LDAPServerConfigurationProviderImpl
 
 			configuration.update(properties);
 		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to update configuration", ioe);
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to update configuration", ioException);
 		}
 	}
 

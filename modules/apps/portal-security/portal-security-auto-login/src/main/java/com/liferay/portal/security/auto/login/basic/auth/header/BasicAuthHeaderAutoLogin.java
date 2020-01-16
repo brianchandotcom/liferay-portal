@@ -117,8 +117,10 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 				new CompanyServiceSettingsLocator(
 					companyId, BasicAuthHeaderAutoLoginConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to get basic auth header configuration", ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(
+				"Unable to get basic auth header configuration",
+				configurationException);
 		}
 
 		return null;

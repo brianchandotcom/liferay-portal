@@ -174,7 +174,7 @@ public class JournalArticleAssetRendererFactory
 
 			return ddmStructure.getName(locale);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return super.getTypeName(locale, subtypeId);
 		}
 	}
@@ -215,7 +215,7 @@ public class JournalArticleAssetRendererFactory
 		try {
 			liferayPortletURL.setWindowState(windowState);
 		}
-		catch (WindowStateException wse) {
+		catch (WindowStateException windowStateException) {
 		}
 
 		return liferayPortletURL;

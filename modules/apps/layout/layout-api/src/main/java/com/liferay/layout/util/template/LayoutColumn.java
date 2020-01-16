@@ -46,8 +46,8 @@ public class LayoutColumn {
 		try {
 			unsafeConsumer.accept(layoutColumn);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		return layoutColumn;

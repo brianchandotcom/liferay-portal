@@ -71,14 +71,14 @@ public abstract class GetFileEntryMVCRenderCommand implements MVCRenderCommand {
 			return getPath();
 		}
 		catch (NoSuchFileEntryException | NoSuchFileVersionException |
-			   NoSuchRepositoryEntryException | PrincipalException e) {
+			   NoSuchRepositoryEntryException | PrincipalException exception) {
 
-			SessionErrors.add(renderRequest, e.getClass());
+			SessionErrors.add(renderRequest, exception.getClass());
 
 			return "/document_library/error.jsp";
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 

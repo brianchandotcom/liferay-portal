@@ -245,8 +245,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			try {
 				company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
 			}
-			catch (EncryptorException ee) {
-				throw new SystemException(ee);
+			catch (EncryptorException encryptorException) {
+				throw new SystemException(encryptorException);
 			}
 
 			company.setWebId(webId);
@@ -309,11 +309,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 					preferences.store();
 				}
-				catch (IOException ioe) {
-					throw new SystemException(ioe);
+				catch (IOException ioException) {
+					throw new SystemException(ioException);
 				}
-				catch (PortletException pe) {
-					throw new SystemException(pe);
+				catch (PortletException portletException) {
+					throw new SystemException(portletException);
 				}
 			}
 		}
@@ -494,8 +494,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		try {
 			company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
 		}
-		catch (EncryptorException ee) {
-			throw new SystemException(ee);
+		catch (EncryptorException encryptorException) {
+			throw new SystemException(encryptorException);
 		}
 
 		companyInfoPersistence.update(company.getCompanyInfo());
@@ -521,12 +521,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			return doDeleteCompany(companyId);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 
-			throw pe;
+			throw portalException;
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(currentCompanyId);
@@ -691,8 +691,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			return companyPersistence.findByPrimaryKey(
 				virtualHost.getCompanyId());
 		}
-		catch (NoSuchVirtualHostException nsvhe) {
-			throw new CompanyVirtualHostException(nsvhe);
+		catch (NoSuchVirtualHostException noSuchVirtualHostException) {
+			throw new CompanyVirtualHostException(noSuchVirtualHostException);
 		}
 	}
 
@@ -731,10 +731,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 				companyId = user.getCompanyId();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to get the company id for user " + userId, e);
+						"Unable to get the company id for user " + userId,
+						exception);
 				}
 			}
 		}
@@ -764,8 +765,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			preferences.store();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -825,8 +826,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		try {
 			return facetedSearcher.search(searchContext);
 		}
-		catch (SearchException se) {
-			throw new SystemException(se);
+		catch (SearchException searchException) {
+			throw new SystemException(searchException);
 		}
 	}
 
@@ -1178,11 +1179,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			portletPreferences.store();
 		}
-		catch (LocaleException le) {
-			throw le;
+		catch (LocaleException localeException) {
+			throw localeException;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 
 		_clearCompanyCache(companyId);
@@ -1235,8 +1236,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			preferences.store();
 		}
-		catch (IOException | PortletException e) {
-			throw new SystemException(e);
+		catch (IOException | PortletException exception) {
+			throw new SystemException(exception);
 		}
 
 		_clearCompanyCache(companyId);
@@ -1599,17 +1600,17 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		for (String languageId : languageIdsArray) {
 			if (!ArrayUtil.contains(PropsValues.LOCALES, languageId)) {
-				LocaleException le = new LocaleException(
+				LocaleException localeException = new LocaleException(
 					LocaleException.TYPE_DISPLAY_SETTINGS);
 
-				le.setSourceAvailableLocales(
+				localeException.setSourceAvailableLocales(
 					Arrays.asList(
 						LocaleUtil.fromLanguageIds(PropsValues.LOCALES)));
-				le.setTargetAvailableLocales(
+				localeException.setTargetAvailableLocales(
 					Arrays.asList(
 						LocaleUtil.fromLanguageIds(languageIdsArray)));
 
-				throw le;
+				throw localeException;
 			}
 		}
 	}
@@ -1669,12 +1670,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					throw new CompanyVirtualHostException();
 				}
 			}
-			catch (NoSuchVirtualHostException nsvhe) {
+			catch (NoSuchVirtualHostException noSuchVirtualHostException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsvhe, nsvhe);
+					_log.debug(
+						noSuchVirtualHostException, noSuchVirtualHostException);
 				}
 			}
 		}

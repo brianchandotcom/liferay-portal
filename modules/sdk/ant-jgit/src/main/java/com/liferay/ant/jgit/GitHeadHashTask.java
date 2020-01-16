@@ -117,9 +117,9 @@ public class GitHeadHashTask extends Task {
 
 			revWalk.dispose();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new BuildException(
-				"Unable to get head hash for path " + _path, e);
+				"Unable to get head hash for path " + _path, exception);
 		}
 	}
 

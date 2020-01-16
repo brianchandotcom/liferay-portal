@@ -1041,9 +1041,9 @@ public class ContentPageEditorDisplayContext {
 
 			return _fragmentEntryKeys;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get structure JSON array", e);
+				_log.debug("Unable to get structure JSON array", exception);
 			}
 		}
 
@@ -1482,9 +1482,9 @@ public class ContentPageEditorDisplayContext {
 
 			return _masterLayoutData;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get master layout data", e);
+				_log.debug("Unable to get master layout data", exception);
 			}
 		}
 
@@ -1612,11 +1612,11 @@ public class ContentPageEditorDisplayContext {
 						themeDisplay.getLayout(), portlet,
 						ActionKeys.ADD_TO_PAGE);
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					_log.error(
 						"Unable to check portlet permissions for " +
 							portlet.getPortletId(),
-						pe);
+						portalException);
 
 					return false;
 				}
@@ -1774,9 +1774,9 @@ public class ContentPageEditorDisplayContext {
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -1792,9 +1792,9 @@ public class ContentPageEditorDisplayContext {
 				return true;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -1839,9 +1839,9 @@ public class ContentPageEditorDisplayContext {
 
 			return _allowNewFragmentEntries;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get structure JSON array", e);
+				_log.debug("Unable to get structure JSON array", exception);
 			}
 		}
 

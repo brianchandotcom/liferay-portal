@@ -202,8 +202,9 @@ public class SocialBookmarksTag extends IncludeTag {
 					_urlImpl.toString(), themeDisplay,
 					themeDisplay.getLayout());
 			}
-			catch (PortalException pe) {
-				_log.error("Unable to get canonical URL " + _urlImpl, pe);
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to get canonical URL " + _urlImpl, portalException);
 			}
 		}
 

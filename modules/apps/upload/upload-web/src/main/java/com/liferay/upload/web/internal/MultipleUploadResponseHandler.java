@@ -78,10 +78,11 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 					WebKeys.THEME_DISPLAY);
 
 			if (portalException instanceof AntivirusScannerException) {
-				AntivirusScannerException ase =
+				AntivirusScannerException antivirusScannerException =
 					(AntivirusScannerException)portalException;
 
-				errorMessage = themeDisplay.translate(ase.getMessageKey());
+				errorMessage = themeDisplay.translate(
+					antivirusScannerException.getMessageKey());
 
 				errorType =
 					ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;

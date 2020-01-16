@@ -60,8 +60,9 @@ public class ClassLoaderProxy {
 
 			return _invoke(methodHandler);
 		}
-		catch (InvocationTargetException ite) {
-			throw translateThrowable(ite.getCause(), contextClassLoader);
+		catch (InvocationTargetException invocationTargetException) {
+			throw translateThrowable(
+				invocationTargetException.getCause(), contextClassLoader);
 		}
 		catch (Throwable t) {
 			_log.error(t, t);
@@ -111,7 +112,7 @@ public class ClassLoaderProxy {
 		try {
 			return methodHandler.invoke(_obj);
 		}
-		catch (NoSuchMethodException nsme) {
+		catch (NoSuchMethodException noSuchMethodException) {
 			MethodKey methodKey = methodHandler.getMethodKey();
 
 			String name = methodKey.getMethodName();
@@ -148,7 +149,7 @@ public class ClassLoaderProxy {
 				}
 			}
 
-			throw nsme;
+			throw noSuchMethodException;
 		}
 	}
 

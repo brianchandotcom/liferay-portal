@@ -91,8 +91,8 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 				address = addresses.get(0);
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to get address", e);
+		catch (Exception exception) {
+			_log.error("Unable to get address", exception);
 		}
 
 		if (address == null) {
@@ -174,8 +174,8 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 				return GroupLocalServiceUtil.getOrganizationGroup(
 					getCompanyId(), getOrganizationId());
 			}
-			catch (Exception e) {
-				_log.error("Unable to get organization group", e);
+			catch (Exception exception) {
+				_log.error("Unable to get organization group", exception);
 			}
 		}
 
@@ -240,8 +240,8 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 			return group.getPrivateLayoutsPageCount();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return 0;
@@ -258,8 +258,8 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 			return group.getPublicLayoutsPageCount();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return 0;

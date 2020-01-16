@@ -318,7 +318,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
 				ddmStructure, fields);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return;
 		}
 
@@ -655,7 +655,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
 				ddmStructure, fields);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 
@@ -769,9 +769,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				HighlightUtil.HIGHLIGHT_TAG_OPEN,
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 		}
 
@@ -800,8 +800,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 			return journalServiceConfiguration.indexAllArticleVersionsEnabled();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return false;
@@ -824,12 +824,12 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 						indexableActionableDynamicQuery.addDocuments(
 							getDocument(article));
 					}
-					catch (PortalException pe) {
+					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Unable to index journal article " +
 									article.getId(),
-								pe);
+								portalException);
 						}
 					}
 				});
@@ -857,12 +857,12 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 						indexableActionableDynamicQuery.addDocuments(
 							getDocument(latestIndexableArticle));
 					}
-					catch (PortalException pe) {
+					catch (PortalException portalException) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Unable to index journal article " +
 									latestIndexableArticle.getId(),
-								pe);
+								portalException);
 						}
 					}
 				});

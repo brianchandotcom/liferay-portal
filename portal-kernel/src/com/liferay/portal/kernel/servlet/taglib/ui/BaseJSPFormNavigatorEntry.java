@@ -51,10 +51,12 @@ public abstract class BaseJSPFormNavigatorEntry<T>
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + getJspPath(), se);
+		catch (ServletException servletException) {
+			_log.error(
+				"Unable to include JSP " + getJspPath(), servletException);
 
-			throw new IOException("Unable to include " + getJspPath(), se);
+			throw new IOException(
+				"Unable to include " + getJspPath(), servletException);
 		}
 	}
 

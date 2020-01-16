@@ -49,8 +49,8 @@ public class TranslatorWebCacheItem implements WebCacheItem {
 
 			translation.setToText(toText);
 		}
-		catch (Exception e) {
-			throw new WebCacheException(e);
+		catch (Exception exception) {
+			throw new WebCacheException(exception);
 		}
 
 		return translation;

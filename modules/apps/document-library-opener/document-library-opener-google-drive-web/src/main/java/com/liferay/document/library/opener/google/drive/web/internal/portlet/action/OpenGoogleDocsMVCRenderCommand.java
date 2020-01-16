@@ -90,8 +90,8 @@ public class OpenGoogleDocsMVCRenderCommand implements MVCRenderCommand {
 
 			return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 		}
-		catch (IOException | PortalException | ServletException e) {
-			throw new PortletException(e);
+		catch (IOException | PortalException | ServletException exception) {
+			throw new PortletException(exception);
 		}
 	}
 

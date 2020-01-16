@@ -34,8 +34,8 @@ public class BuildDeploymentHelperTask extends Task {
 			DeploymentHelperInvoker.invoke(
 				project.getBaseDir(), _deploymentHelperArgs);
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 

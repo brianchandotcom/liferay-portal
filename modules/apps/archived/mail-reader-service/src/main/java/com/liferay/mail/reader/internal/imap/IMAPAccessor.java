@@ -115,8 +115,8 @@ public class IMAPAccessor {
 
 			throw new MailException(MailException.FOLDER_CREATE_FAILED);
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 	}
 
@@ -134,8 +134,8 @@ public class IMAPAccessor {
 
 			jxFolder.close(expunge);
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 	}
 
@@ -153,8 +153,8 @@ public class IMAPAccessor {
 				throw new MailException(MailException.FOLDER_DELETE_FAILED);
 			}
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 	}
 
@@ -175,8 +175,8 @@ public class IMAPAccessor {
 				jxMessage.setFlag(Flags.Flag.DELETED, true);
 			}
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 		finally {
 			closeFolder(jxFolder, true);
@@ -203,8 +203,8 @@ public class IMAPAccessor {
 
 			return new IMAPAttachmentHandler(part.getInputStream(), jxFolder);
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 	}
 
@@ -220,8 +220,8 @@ public class IMAPAccessor {
 
 			return jxFolders;
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 	}
 
@@ -245,8 +245,8 @@ public class IMAPAccessor {
 
 			return remoteMessageIds;
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 	}
 
@@ -271,8 +271,8 @@ public class IMAPAccessor {
 
 			return getMessageUIDs(jxFolder, jxMessages);
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 		finally {
 			closeFolder(jxFolder, false);
@@ -303,8 +303,8 @@ public class IMAPAccessor {
 
 			return true;
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 		finally {
 			closeFolder(jxFolder, false);
@@ -339,8 +339,8 @@ public class IMAPAccessor {
 				jxMessage.setFlag(Flags.Flag.DELETED, true);
 			}
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 		finally {
 			closeFolder(sourceJxFolder, true);
@@ -358,8 +358,8 @@ public class IMAPAccessor {
 
 			return jxFolder;
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 	}
 
@@ -393,8 +393,8 @@ public class IMAPAccessor {
 
 			throw new MailException(MailException.FOLDER_RENAME_FAILED);
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 	}
 
@@ -427,11 +427,11 @@ public class IMAPAccessor {
 
 			jxFolder.appendMessages(new Message[] {jxMessage});
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
-		catch (UnsupportedEncodingException uee) {
-			throw new MailException(uee);
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new MailException(unsupportedEncodingException);
 		}
 		finally {
 			closeFolder(jxFolder, false);
@@ -503,8 +503,8 @@ public class IMAPAccessor {
 					message.getMessageId(), bodyHtmlSB.toString(), flags);
 			}
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 		finally {
 			closeFolder(jxFolder, false);
@@ -602,8 +602,8 @@ public class IMAPAccessor {
 
 			storeEnvelopes(folderId, jxFolder, jxMessages);
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 		finally {
 			closeFolder(jxFolder, false);
@@ -646,7 +646,7 @@ public class IMAPAccessor {
 					MessageLocalServiceUtil.getMessage(
 						folderId, remoteMessageId);
 				}
-				catch (NoSuchMessageException nsme) {
+				catch (NoSuchMessageException noSuchMessageException) {
 					MessageLocalServiceUtil.addMessage(
 						_user.getUserId(), folderId, sender, to, cc, bcc,
 						sentDate, subject, StringPool.BLANK, flags,
@@ -661,8 +661,8 @@ public class IMAPAccessor {
 				folderId, folder.getFullName(), folder.getDisplayName(),
 				jxFolder.getMessageCount());
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -688,8 +688,8 @@ public class IMAPAccessor {
 
 			storeEnvelopes(folderId, jxFolder, jxMessages);
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 		finally {
 			closeFolder(jxFolder, false);
@@ -721,8 +721,8 @@ public class IMAPAccessor {
 				}
 			}
 		}
-		catch (MessagingException me) {
-			throw new MailException(me);
+		catch (MessagingException messagingException) {
+			throw new MailException(messagingException);
 		}
 		finally {
 			closeFolder(jxFolder, true);
@@ -824,9 +824,10 @@ public class IMAPAccessor {
 					getFolders(allJxFolders, jxFolder.list());
 				}
 			}
-			catch (MessagingException me) {
+			catch (MessagingException messagingException) {
 				_log.error(
-					"Unable to get folder " + jxFolder.getFullName(), me);
+					"Unable to get folder " + jxFolder.getFullName(),
+					messagingException);
 			}
 		}
 	}
@@ -848,7 +849,7 @@ public class IMAPAccessor {
 			message = MessageLocalServiceUtil.getRemoteMessage(
 				folderId, oldest);
 		}
-		catch (NoSuchMessageException nsme) {
+		catch (NoSuchMessageException noSuchMessageException) {
 			return null;
 		}
 
@@ -940,8 +941,9 @@ public class IMAPAccessor {
 					ConfigurationProviderUtil.getCompanyConfiguration(
 						MailGroupServiceConfiguration.class, companyId);
 			}
-			catch (ConfigurationException ce) {
-				_log.error("Unable to get mail configuration", ce);
+			catch (ConfigurationException configurationException) {
+				_log.error(
+					"Unable to get mail configuration", configurationException);
 			}
 		}
 
@@ -1045,8 +1047,9 @@ public class IMAPAccessor {
 
 			return InternetAddress.parse(sb.toString(), true);
 		}
-		catch (AddressException ae) {
-			throw new MailException(MailException.MESSAGE_INVALID_ADDRESS, ae);
+		catch (AddressException addressException) {
+			throw new MailException(
+				MailException.MESSAGE_INVALID_ADDRESS, addressException);
 		}
 	}
 
@@ -1072,8 +1075,9 @@ public class IMAPAccessor {
 					"Invalid recipient type " + recipientType);
 			}
 		}
-		catch (AddressException ae) {
-			throw new MailException(MailException.MESSAGE_INVALID_ADDRESS, ae);
+		catch (AddressException addressException) {
+			throw new MailException(
+				MailException.MESSAGE_INVALID_ADDRESS, addressException);
 		}
 	}
 

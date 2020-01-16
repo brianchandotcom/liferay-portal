@@ -86,10 +86,10 @@ public class AssetCategoriesNavigationDisplayContext {
 			groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
 				themeDisplay.getScopeGroupId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			groupIds = new long[] {themeDisplay.getScopeGroupId()};
 
-			_log.error(pe, pe);
+			_log.error(portalException, portalException);
 		}
 
 		_assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
@@ -222,12 +222,12 @@ public class AssetCategoriesNavigationDisplayContext {
 					AssetVocabularyServiceUtil.fetchVocabulary(
 						assetVocabularyId));
 			}
-			catch (PrincipalException pe) {
+			catch (PrincipalException principalException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"User does not have permission to access asset " +
 							"vocabulary " + assetVocabularyId,
-						pe);
+						principalException);
 				}
 			}
 		}

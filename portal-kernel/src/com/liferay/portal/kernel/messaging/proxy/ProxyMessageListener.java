@@ -60,14 +60,14 @@ public class ProxyMessageListener implements MessageListener {
 				proxyResponse.setResult(result);
 			}
 		}
-		catch (Exception e) {
-			proxyResponse.setException(e);
+		catch (Exception exception) {
+			proxyResponse.setException(exception);
 		}
 		finally {
 			String responseDestinationName =
 				message.getResponseDestinationName();
 
-			Exception proxyResponseException = proxyResponse.getException();
+			Exception exception = proxyResponse.getException();
 
 			if (Validator.isNotNull(responseDestinationName)) {
 				Message responseMessage = MessageBusUtil.createResponseMessage(
@@ -75,18 +75,17 @@ public class ProxyMessageListener implements MessageListener {
 
 				responseMessage.setPayload(proxyResponse);
 
-				if (_log.isDebugEnabled() && (proxyResponseException != null)) {
-					_log.debug(proxyResponseException, proxyResponseException);
+				if (_log.isDebugEnabled() && (exception != null)) {
+					_log.debug(exception, exception);
 				}
 
 				_messageBus.sendMessage(
 					responseDestinationName, responseMessage);
 			}
 			else {
-				if (proxyResponseException != null) {
+				if (exception != null) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							proxyResponseException, proxyResponseException);
+						_log.warn(exception, exception);
 					}
 				}
 

@@ -30,11 +30,11 @@ public abstract class BaseCometHandler implements CometHandler {
 		try {
 			doDestroy();
 		}
-		catch (CometException ce) {
-			throw ce;
+		catch (CometException cometException) {
+			throw cometException;
 		}
-		catch (Exception e) {
-			throw new CometException(e);
+		catch (Exception exception) {
+			throw new CometException(exception);
 		}
 	}
 
@@ -56,11 +56,11 @@ public abstract class BaseCometHandler implements CometHandler {
 		try {
 			doInit(cometSession);
 		}
-		catch (CometException ce) {
-			throw ce;
+		catch (CometException cometException) {
+			throw cometException;
 		}
-		catch (Exception e) {
-			throw new CometException(e);
+		catch (Exception exception) {
+			throw new CometException(exception);
 		}
 	}
 

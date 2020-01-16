@@ -43,9 +43,11 @@ public class BlogsEntryModelVisibilityContributor
 
 			return _isVisible(entry.getStatus(), status);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to check visibility for blogs entry ", pe);
+				_log.warn(
+					"Unable to check visibility for blogs entry ",
+					portalException);
 			}
 
 			return false;

@@ -233,7 +233,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		try {
 			super.render(renderRequest, renderResponse);
 		}
-		catch (PortletException pe) {
+		catch (PortletException portletException) {
 			include("/error.jsp", renderRequest, renderResponse);
 		}
 	}
@@ -368,7 +368,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 
 						jsonArray.put(getAppJSONObject(app));
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						jsonObject.put("message", "failed");
 					}
 					finally {
@@ -409,8 +409,8 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 				return;
 			}
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 
 		renderRequest.setAttribute(

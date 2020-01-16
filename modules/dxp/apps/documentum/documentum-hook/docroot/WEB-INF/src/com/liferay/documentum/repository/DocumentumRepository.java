@@ -161,11 +161,11 @@ public class DocumentumRepository
 
 					idfDocument.save();
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					throw new RepositoryException(
 						"Unable to update external repository file entry " +
 							title,
-						ioe);
+						ioException);
 				}
 				finally {
 					file.delete();
@@ -235,8 +235,8 @@ public class DocumentumRepository
 
 			return idfSessionManager;
 		}
-		catch (DfException de) {
-			throw new RepositoryException(de);
+		catch (DfException dfException) {
+			throw new RepositoryException(dfException);
 		}
 	}
 
@@ -479,8 +479,8 @@ public class DocumentumRepository
 
 			return idfDocument.getContent();
 		}
-		catch (DfException de) {
-			throw new RepositoryException(de);
+		catch (DfException dfException) {
+			throw new RepositoryException(dfException);
 		}
 	}
 
@@ -803,13 +803,13 @@ public class DocumentumRepository
 
 			_rootFolderKey = idfFolderId.getId();
 		}
-		catch (DfAuthenticationException dae) {
+		catch (DfAuthenticationException dfAuthenticationException) {
 			throw new PrincipalException(
 				"Unable to login with user " + _credentialsProvider.getLogin(),
-				dae);
+				dfAuthenticationException);
 		}
-		catch (DfException de) {
-			throw new RepositoryException(de);
+		catch (DfException dfException) {
+			throw new RepositoryException(dfException);
 		}
 		finally {
 			releaseSession(idfSession);
@@ -1044,8 +1044,8 @@ public class DocumentumRepository
 						latestIDfDocument.saveLock();
 					}
 				}
-				catch (IOException ioe) {
-					throw new RepositoryException(ioe);
+				catch (IOException ioException) {
+					throw new RepositoryException(ioException);
 				}
 				finally {
 					file.delete();
@@ -1065,7 +1065,7 @@ public class DocumentumRepository
 			try {
 				idfCollection.close();
 			}
-			catch (DfException de) {
+			catch (DfException dfException) {
 			}
 		}
 	}
@@ -1241,8 +1241,9 @@ public class DocumentumRepository
 
 			return idfSessionManager.getSession(_repository);
 		}
-		catch (DfAuthenticationException dae) {
-			throw new AuthenticationRepositoryException(dae);
+		catch (DfAuthenticationException dfAuthenticationException) {
+			throw new AuthenticationRepositoryException(
+				dfAuthenticationException);
 		}
 	}
 
@@ -1353,13 +1354,13 @@ public class DocumentumRepository
 
 			return documentumAction.run(idfSession);
 		}
-		catch (DfAuthenticationException dae) {
+		catch (DfAuthenticationException dfAuthenticationException) {
 			throw new PrincipalException(
 				"Unable to login with user " + _credentialsProvider.getLogin(),
-				dae);
+				dfAuthenticationException);
 		}
-		catch (DfException de) {
-			throw new RepositoryException(de);
+		catch (DfException dfException) {
+			throw new RepositoryException(dfException);
 		}
 		finally {
 			releaseSession(idfSession);

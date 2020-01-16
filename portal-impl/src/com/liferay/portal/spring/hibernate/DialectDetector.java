@@ -131,8 +131,8 @@ public class DialectDetector {
 				}
 			}
 		}
-		catch (Exception e) {
-			String msg = GetterUtil.getString(e.getMessage());
+		catch (Exception exception) {
+			String msg = GetterUtil.getString(exception.getMessage());
 
 			if (msg.contains("explicitly set for database: DB2")) {
 				dialect = new DB2400Dialect();
@@ -145,7 +145,7 @@ public class DialectDetector {
 				}
 			}
 			else {
-				_log.error(e, e);
+				_log.error(exception, exception);
 			}
 		}
 

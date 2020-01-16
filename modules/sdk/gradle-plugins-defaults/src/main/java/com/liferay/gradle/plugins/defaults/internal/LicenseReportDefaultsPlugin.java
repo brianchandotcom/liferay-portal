@@ -163,12 +163,13 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 			try {
 				licenseReportExtension.configurations = addConfigurations();
 			}
-			catch (IOException ioe) {
-				throw new UncheckedIOException(ioe);
+			catch (IOException ioException) {
+				throw new UncheckedIOException(ioException);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				throw new GradleException(
-					"Unable to configure license report for " + project, e);
+					"Unable to configure license report for " + project,
+					exception);
 			}
 
 			licenseReportExtension.excludeOwnGroup = false;

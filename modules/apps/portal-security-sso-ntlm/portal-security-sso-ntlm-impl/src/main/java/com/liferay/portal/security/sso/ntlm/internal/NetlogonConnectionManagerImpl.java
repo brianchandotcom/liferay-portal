@@ -162,8 +162,9 @@ public class NetlogonConnectionManagerImpl
 					negotiateFlagsString.substring(2), 16);
 			}
 		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to get NTLM configuration", ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(
+				"Unable to get NTLM configuration", configurationException);
 		}
 
 		return negotiateFlags;

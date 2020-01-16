@@ -79,8 +79,8 @@ public class DeleteIndexRequestExecutorImpl
 			return indicesClient.delete(
 				elasticsearchDeleteIndexRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

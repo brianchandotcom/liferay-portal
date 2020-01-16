@@ -47,8 +47,8 @@ public class UserGroupRoleUserChecker extends RowChecker {
 			return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 				user.getUserId(), _group.getGroupId(), _role.getRoleId());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -76,8 +76,8 @@ public class UserGroupRoleUserChecker extends RowChecker {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return super.isDisabled(obj);

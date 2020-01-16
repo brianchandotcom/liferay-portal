@@ -63,8 +63,8 @@ public class UserModelListener extends BaseModelListener<User> {
 				_auditRouter.route(auditMessage);
 			}
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 
@@ -90,8 +90,8 @@ public class UserModelListener extends BaseModelListener<User> {
 
 			_auditRouter.route(auditMessage);
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 

@@ -111,12 +111,12 @@ public class DataLayoutTaglibUtil {
 
 			return dataLayout.getDataDefinitionId();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
-			e.printStackTrace();
+			exception.printStackTrace();
 		}
 
 		return 0L;
@@ -200,7 +200,7 @@ public class DataLayoutTaglibUtil {
 				Collectors.toSet()
 			);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return new HashSet() {
 				{
 					add(LocaleThreadLocal.getDefaultLocale());
@@ -274,9 +274,9 @@ public class DataLayoutTaglibUtil {
 
 			return dataLayoutDDMFormAdapter.toJSONObject();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+				_log.debug(exception, exception);
 			}
 
 			return _jsonFactory.createJSONObject();
@@ -354,7 +354,7 @@ public class DataLayoutTaglibUtil {
 
 			return fieldTypesJSONArray;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return fieldTypesJSONArray;
 		}
 	}

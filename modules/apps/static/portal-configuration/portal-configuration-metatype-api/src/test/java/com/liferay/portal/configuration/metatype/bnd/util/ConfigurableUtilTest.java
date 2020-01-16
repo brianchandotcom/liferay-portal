@@ -139,13 +139,13 @@ public class ConfigurableUtilTest {
 
 			Assert.fail();
 		}
-		catch (RuntimeException re) {
+		catch (RuntimeException runtimeException) {
 			Assert.assertEquals(
 				"Unable to create snapshot class for " +
 					TestConfiguration.class,
-				re.getMessage());
+				runtimeException.getMessage());
 
-			Throwable throwable = re.getCause();
+			Throwable throwable = runtimeException.getCause();
 
 			throwable = throwable.getCause();
 

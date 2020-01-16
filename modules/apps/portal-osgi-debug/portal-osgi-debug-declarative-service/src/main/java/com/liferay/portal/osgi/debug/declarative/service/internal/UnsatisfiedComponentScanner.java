@@ -113,7 +113,7 @@ public class UnsatisfiedComponentScanner {
 					_scanUnsatisfiedComponents(_serviceComponentRuntime);
 				}
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Stopped scanning for unsatisfied declarative " +

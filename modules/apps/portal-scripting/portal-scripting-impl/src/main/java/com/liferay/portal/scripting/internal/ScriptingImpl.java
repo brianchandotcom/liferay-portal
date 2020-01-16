@@ -87,8 +87,9 @@ public class ScriptingImpl implements Scripting {
 			return scriptingExecutor.eval(
 				allowedClasses, inputObjects, outputNames, script);
 		}
-		catch (Exception e) {
-			throw new ScriptingException(getErrorMessage(script, e), e);
+		catch (Exception exception) {
+			throw new ScriptingException(
+				getErrorMessage(script, exception), exception);
 		}
 		finally {
 			if (_log.isDebugEnabled()) {
@@ -136,7 +137,7 @@ public class ScriptingImpl implements Scripting {
 				sb.append(StringPool.NEW_LINE);
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			sb.setIndex(0);
 
 			sb.append(exception.getMessage());

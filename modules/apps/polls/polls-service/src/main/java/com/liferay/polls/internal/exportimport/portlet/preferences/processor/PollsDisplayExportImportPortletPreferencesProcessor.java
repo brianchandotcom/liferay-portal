@@ -88,9 +88,9 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 		try {
 			question = PollsQuestionUtil.findByPrimaryKey(questionId);
 		}
-		catch (NoSuchQuestionException nsqe) {
+		catch (NoSuchQuestionException noSuchQuestionException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsqe, nsqe);
+				_log.warn(noSuchQuestionException, noSuchQuestionException);
 			}
 
 			return portletPreferences;
@@ -100,9 +100,9 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 			portletDataContext.addPortletPermissions(
 				PollsConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortletDataException(
-				"Unable to export portlet permissions", pe);
+				"Unable to export portlet permissions", portalException);
 		}
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -121,9 +121,9 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 			portletDataContext.importPortletPermissions(
 				PollsConstants.RESOURCE_NAME);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new PortletDataException(
-				"Unable to import portlet permissions", pe);
+				"Unable to import portlet permissions", portalException);
 		}
 
 		long questionId = GetterUtil.getLong(
@@ -140,9 +140,10 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 				portletPreferences.setValue(
 					"questionId", String.valueOf(questionId));
 			}
-			catch (ReadOnlyException roe) {
+			catch (ReadOnlyException readOnlyException) {
 				throw new PortletDataException(
-					"Unable to update portlet preferences during import", roe);
+					"Unable to update portlet preferences during import",
+					readOnlyException);
 			}
 		}
 

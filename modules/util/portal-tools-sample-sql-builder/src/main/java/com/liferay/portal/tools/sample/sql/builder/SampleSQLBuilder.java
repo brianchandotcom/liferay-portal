@@ -71,16 +71,16 @@ public class SampleSQLBuilder {
 
 			new SampleSQLBuilder(properties, dataFactory);
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 		finally {
 			if (reader != null) {
 				try {
 					reader.close();
 				}
-				catch (IOException ioe) {
-					ioe.printStackTrace();
+				catch (IOException ioException) {
+					ioException.printStackTrace();
 				}
 			}
 		}
@@ -318,16 +318,16 @@ public class SampleSQLBuilder {
 					try {
 						_dataFactory.closeCSVWriters();
 					}
-					catch (IOException ioe) {
-						ioe.printStackTrace();
+					catch (IOException ioException) {
+						ioException.printStackTrace();
 					}
 
 					if (sampleSQLWriter != null) {
 						try {
 							sampleSQLWriter.close();
 						}
-						catch (IOException ioe) {
-							ioe.printStackTrace();
+						catch (IOException ioException) {
+							ioException.printStackTrace();
 						}
 					}
 

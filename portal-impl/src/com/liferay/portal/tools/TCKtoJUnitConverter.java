@@ -50,8 +50,8 @@ public class TCKtoJUnitConverter {
 		try {
 			_convert(new File(inputFile), new File(outputDir));
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 

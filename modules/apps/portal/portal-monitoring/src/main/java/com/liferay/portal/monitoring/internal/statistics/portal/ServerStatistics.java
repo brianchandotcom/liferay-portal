@@ -95,9 +95,10 @@ public class ServerStatistics
 
 				companyStatistics = register(company.getWebId());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				throw new IllegalStateException(
-					"Unable to get company with company id " + companyId, e);
+					"Unable to get company with company id " + companyId,
+					exception);
 			}
 		}
 

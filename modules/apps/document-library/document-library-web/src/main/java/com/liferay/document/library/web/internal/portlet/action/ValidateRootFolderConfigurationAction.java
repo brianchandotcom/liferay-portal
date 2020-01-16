@@ -68,7 +68,9 @@ public abstract class ValidateRootFolderConfigurationAction
 			try {
 				DLAppLocalServiceUtil.getFolder(rootFolderId);
 			}
-			catch (NoSuchFolderException | NoSuchRepositoryEntryException e) {
+			catch (NoSuchFolderException | NoSuchRepositoryEntryException
+						exception) {
+
 				SessionErrors.add(actionRequest, "rootFolderIdInvalid");
 			}
 		}

@@ -28,14 +28,14 @@ public class ClassResolverUtil {
 		try {
 			return Class.forName(className, false, classLoader);
 		}
-		catch (ClassNotFoundException cnfe) {
+		catch (ClassNotFoundException classNotFoundException) {
 			Class<?> clazz = _primitiveClasses.get(className);
 
 			if (clazz != null) {
 				return clazz;
 			}
 
-			throw cnfe;
+			throw classNotFoundException;
 		}
 	}
 

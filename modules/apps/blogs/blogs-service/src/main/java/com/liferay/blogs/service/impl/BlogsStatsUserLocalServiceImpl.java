@@ -200,9 +200,10 @@ public class BlogsStatsUserLocalServiceImpl
 			try {
 				blogsStatsUserPersistence.removeByG_U(groupId, userId);
 			}
-			catch (NoSuchStatsUserException nssue) {
+			catch (NoSuchStatsUserException noSuchStatsUserException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nssue, nssue);
+					_log.warn(
+						noSuchStatsUserException, noSuchStatsUserException);
 				}
 			}
 

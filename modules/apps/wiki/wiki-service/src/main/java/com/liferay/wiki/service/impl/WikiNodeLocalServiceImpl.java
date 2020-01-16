@@ -126,7 +126,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		try {
 			node = wikiNodePersistence.update(node);
 		}
-		catch (SystemException se) {
+		catch (SystemException systemException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
@@ -137,7 +137,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			node = wikiNodePersistence.fetchByG_N(groupId, name, false);
 
 			if (node == null) {
-				throw se;
+				throw systemException;
 			}
 
 			return node;

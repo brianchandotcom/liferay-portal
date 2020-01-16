@@ -88,9 +88,10 @@ public class ServicesDropDownMetaTypeProvider
 
 			_serviceTracker.open();
 		}
-		catch (InvalidSyntaxException ise) {
+		catch (InvalidSyntaxException invalidSyntaxException) {
 			throw new IllegalArgumentException(
-				className + " is an invalid class name", ise);
+				className + " is an invalid class name",
+				invalidSyntaxException);
 		}
 	}
 

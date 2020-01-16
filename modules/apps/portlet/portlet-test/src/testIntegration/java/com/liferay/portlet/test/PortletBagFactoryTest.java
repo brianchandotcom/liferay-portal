@@ -108,8 +108,9 @@ public class PortletBagFactoryTest {
 
 			Assert.fail();
 		}
-		catch (IllegalStateException ise) {
-			Assert.assertEquals(expectedMessage, ise.getMessage());
+		catch (IllegalStateException illegalStateException) {
+			Assert.assertEquals(
+				expectedMessage, illegalStateException.getMessage());
 		}
 	}
 

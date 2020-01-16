@@ -195,8 +195,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 				registry.registerUpgradeProcesses(_upgradeProcesses);
 			}
 		}
-		catch (ReflectiveOperationException roe) {
-			throw new ExceptionInInitializerError(roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new ExceptionInInitializerError(reflectiveOperationException);
 		}
 	}
 

@@ -124,8 +124,8 @@ public class ClassLoaderAggregatePropertiesUtil {
 
 			return charPoolChars;
 		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
 		}
 	}
 

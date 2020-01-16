@@ -55,14 +55,14 @@ public class DLOpenerGoogleDriveDLDisplayContextFactory
 				parentDLViewFileVersionDisplayContext, httpServletRequest,
 				httpServletResponse, fileShortcut.getFileVersion());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new SystemException(
 				StringBundler.concat(
 					"Unable to build ",
 					DLOpenerGoogleDriveDLViewFileVersionDisplayContext.class.
 						getSimpleName(),
 					" for shortcut ", fileShortcut.getPrimaryKey()),
-				pe);
+				portalException);
 		}
 	}
 

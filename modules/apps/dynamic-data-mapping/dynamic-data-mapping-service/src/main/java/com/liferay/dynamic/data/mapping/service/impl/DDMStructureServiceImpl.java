@@ -318,9 +318,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 				searchContext, DDMStructure.class,
 				ddmStructurePersistence::findByPrimaryKey);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -343,9 +343,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 				searchContext, DDMStructure.class,
 				ddmStructurePersistence::findByPrimaryKey);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -449,9 +449,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 				searchContext, DDMStructure.class,
 				ddmStructurePersistence::findByPrimaryKey);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -503,9 +503,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 				searchContext, DDMStructure.class,
 				ddmStructureLocalService::fetchStructure);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -564,9 +564,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 				searchContext, DDMStructure.class,
 				ddmStructurePersistence::findByPrimaryKey);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -601,9 +601,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			return _ddmSearchHelper.doSearchCount(
 				searchContext, DDMStructure.class);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -640,9 +640,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			return _ddmSearchHelper.doSearchCount(
 				searchContext, DDMStructure.class);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 
@@ -684,9 +684,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			return _ddmSearchHelper.doSearchCount(
 				searchContext, DDMStructure.class);
 		}
-		catch (PrincipalException pe) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(principalException, principalException);
 			}
 		}
 

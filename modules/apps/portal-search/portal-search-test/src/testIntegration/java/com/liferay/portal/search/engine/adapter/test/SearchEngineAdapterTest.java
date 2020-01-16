@@ -150,10 +150,10 @@ public class SearchEngineAdapterTest {
 
 			Assert.fail("Exception was not thrown");
 		}
-		catch (RuntimeException re) {
-			assertClientSideSafeToLoad(re);
+		catch (RuntimeException runtimeException) {
+			assertClientSideSafeToLoad(runtimeException);
 
-			String message = re.getMessage();
+			String message = runtimeException.getMessage();
 
 			if (isSearchEngine("Solr")) {
 				Assert.assertTrue(

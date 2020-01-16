@@ -189,8 +189,8 @@ public class JabberImpl implements Jabber {
 
 			return jabberBuddies;
 		}
-		catch (Exception e) {
-			_log.error("Unable to get Jabber buddies", e);
+		catch (Exception exception) {
+			_log.error("Unable to get Jabber buddies", exception);
 
 			return buddies;
 		}
@@ -238,13 +238,13 @@ public class JabberImpl implements Jabber {
 								"synchronized with Jabber"));
 					}
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -303,17 +303,17 @@ public class JabberImpl implements Jabber {
 				try {
 					chat.sendMessage(content);
 				}
-				catch (XMPPException xmppe) {
+				catch (XMPPException xmppException) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"User " + fromUserId + " could not send message",
-							xmppe);
+							xmppException);
 					}
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 
@@ -336,8 +336,9 @@ public class JabberImpl implements Jabber {
 
 			accountManager.changePassword(password);
 		}
-		catch (XMPPException xmppe) {
-			_log.error("Unable to update user " + userId + " password", xmppe);
+		catch (XMPPException xmppException) {
+			_log.error(
+				"Unable to update user " + userId + " password", xmppException);
 		}
 	}
 
@@ -512,8 +513,8 @@ public class JabberImpl implements Jabber {
 				_onlineUserIds.remove(userId);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

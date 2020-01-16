@@ -84,8 +84,8 @@ public class ItemSelectorUploadResponseHandlerImpl
 
 				fileJSONObject.put("resolvedValue", resolvedValue);
 			}
-			catch (Exception e) {
-				throw new PortalException(e);
+			catch (Exception exception) {
+				throw new PortalException(exception);
 			}
 		}
 

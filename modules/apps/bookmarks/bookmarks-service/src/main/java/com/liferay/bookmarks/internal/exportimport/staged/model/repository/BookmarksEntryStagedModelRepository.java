@@ -167,8 +167,8 @@ public class BookmarksEntryStagedModelRepository
 					userId, existingBookmarksEntry.getEntryId());
 			}
 		}
-		catch (PortalException pe) {
-			throw new PortletDataException(pe);
+		catch (PortalException portalException) {
+			throw new PortletDataException(portalException);
 		}
 	}
 

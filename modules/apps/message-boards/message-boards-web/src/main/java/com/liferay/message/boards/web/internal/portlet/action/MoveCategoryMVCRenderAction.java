@@ -51,14 +51,14 @@ public class MoveCategoryMVCRenderAction implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.MESSAGE_BOARDS_CATEGORY, category);
 		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass());
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/message_boards/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/message_boards/move_category.jsp";

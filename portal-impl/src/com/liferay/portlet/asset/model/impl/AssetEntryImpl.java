@@ -45,9 +45,9 @@ public class AssetEntryImpl extends AssetEntryBaseImpl {
 		try {
 			return assetRendererFactory.getAssetRenderer(getClassPK());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get asset renderer", e);
+				_log.warn("Unable to get asset renderer", exception);
 			}
 		}
 

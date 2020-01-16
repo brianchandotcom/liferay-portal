@@ -546,8 +546,8 @@ public class SPIAgentSerializableTest {
 					return Datagram.createResponseDatagram(
 						datagram, ByteBuffer.wrap(data));
 				}
-				catch (Exception e) {
-					throw new RuntimeException(e);
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
 				}
 			}
 
@@ -598,7 +598,7 @@ public class SPIAgentSerializableTest {
 
 			Assert.fail();
 		}
-		catch (EOFException eofe) {
+		catch (EOFException eofException) {
 		}
 
 		// No such receipt
@@ -613,10 +613,10 @@ public class SPIAgentSerializableTest {
 
 			Assert.fail();
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"No mail with receipt " + (actualReceipt + 1),
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 
 		// Class not found

@@ -75,7 +75,7 @@ public class DataRecordExporter {
 			return DataRecordValuesUtil.toJSON(
 				dataDefinition, dataRecord.getDataRecordValues());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}

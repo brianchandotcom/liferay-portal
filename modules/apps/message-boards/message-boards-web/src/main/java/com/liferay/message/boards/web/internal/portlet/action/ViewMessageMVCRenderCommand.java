@@ -55,16 +55,16 @@ public class ViewMessageMVCRenderCommand implements MVCRenderCommand {
 
 			return "/message_boards/view_message.jsp";
 		}
-		catch (NoSuchMessageException | PrincipalException e) {
-			SessionErrors.add(renderRequest, e.getClass());
+		catch (NoSuchMessageException | PrincipalException exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
 
 			return "/message_boards/error.jsp";
 		}
-		catch (RuntimeException re) {
-			throw re;
+		catch (RuntimeException runtimeException) {
+			throw runtimeException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

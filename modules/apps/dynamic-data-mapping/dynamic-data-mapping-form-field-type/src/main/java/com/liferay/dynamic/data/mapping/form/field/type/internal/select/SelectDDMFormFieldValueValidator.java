@@ -51,15 +51,17 @@ public class SelectDDMFormFieldValueValidator
 			try {
 				validateDDMFormFieldOptions(ddmFormField, value);
 			}
-			catch (DDMFormFieldValueValidationException ddmffvve) {
-				throw ddmffvve;
+			catch (DDMFormFieldValueValidationException
+						ddmFormFieldValueValidationException) {
+
+				throw ddmFormFieldValueValidationException;
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 
-				throw new DDMFormFieldValueValidationException(e);
+				throw new DDMFormFieldValueValidationException(exception);
 			}
 		}
 	}

@@ -572,8 +572,9 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			content = DynamicCSSUtil.replaceToken(
 				cssServletContext, httpServletRequest, content);
 		}
-		catch (Exception e) {
-			_log.error("Unable to replace tokens in CSS " + resourcePath, e);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to replace tokens in CSS " + resourcePath, exception);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(content);
@@ -653,8 +654,9 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				httpServletRequest, httpServletResponse, cssServletContext,
 				resourcePath, content);
 		}
-		catch (Exception e) {
-			_log.error("Unable to detect servlet context " + resourcePath, e);
+		catch (Exception exception) {
+			_log.error(
+				"Unable to detect servlet context " + resourcePath, exception);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(content);

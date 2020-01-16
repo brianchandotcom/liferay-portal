@@ -282,8 +282,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			return counts;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -357,8 +357,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			count = (Long)sqlQuery.uniqueResult();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			if (count == null) {
@@ -418,8 +418,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -459,8 +459,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -606,8 +606,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			return 0;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -669,8 +669,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			return q.list(true);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -692,8 +692,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			return q.list(true);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -743,8 +743,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			return (List<User>)QueryUtil.list(q, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -864,8 +864,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			return users;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -948,8 +948,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			return (List<Long>)QueryUtil.list(q, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

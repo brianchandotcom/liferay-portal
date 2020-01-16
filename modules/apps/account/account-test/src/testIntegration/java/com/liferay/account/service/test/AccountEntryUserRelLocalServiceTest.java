@@ -152,8 +152,8 @@ public class AccountEntryUserRelLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (NoSuchEntryException nsee) {
-			String message = nsee.getMessage();
+		catch (NoSuchEntryException noSuchEntryException) {
+			String message = noSuchEntryException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(
@@ -179,8 +179,10 @@ public class AccountEntryUserRelLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (UserEmailAddressException.MustValidate ueaemv) {
-			String message = ueaemv.getMessage();
+		catch (UserEmailAddressException.MustValidate
+					userEmailAddressException) {
+
+			String message = userEmailAddressException.getMessage();
 
 			Assert.assertTrue(
 				message.contains(

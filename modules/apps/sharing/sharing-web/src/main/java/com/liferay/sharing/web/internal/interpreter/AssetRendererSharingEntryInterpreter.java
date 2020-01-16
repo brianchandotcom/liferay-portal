@@ -93,8 +93,8 @@ public class AssetRendererSharingEntryInterpreter
 
 			return assetEntry.getTitle();
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return StringPool.BLANK;

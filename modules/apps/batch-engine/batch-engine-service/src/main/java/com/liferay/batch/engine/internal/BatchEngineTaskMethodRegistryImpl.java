@@ -202,8 +202,8 @@ public class BatchEngineTaskMethodRegistryImpl
 								resourceMethodArgNameTypeEntries,
 								serviceObjects, sortParserProvider, user));
 				}
-				catch (NoSuchMethodException nsme) {
-					throw new IllegalStateException(nsme);
+				catch (NoSuchMethodException noSuchMethodException) {
+					throw new IllegalStateException(noSuchMethodException);
 				}
 
 				if (creatorKeys == null) {

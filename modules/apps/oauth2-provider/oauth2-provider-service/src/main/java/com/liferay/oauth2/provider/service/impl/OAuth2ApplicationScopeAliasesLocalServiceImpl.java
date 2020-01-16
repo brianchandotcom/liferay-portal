@@ -243,8 +243,8 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 				oAuth2ApplicationScopeAliases.getOAuth2ApplicationId(),
 				liferayOAuth2ScopesScopeAliases);
 		}
-		catch (PortalException pe) {
-			throw new IllegalArgumentException(pe);
+		catch (PortalException portalException) {
+			throw new IllegalArgumentException(portalException);
 		}
 	}
 

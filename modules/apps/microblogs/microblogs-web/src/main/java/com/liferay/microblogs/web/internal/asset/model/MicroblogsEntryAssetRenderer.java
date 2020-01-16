@@ -76,7 +76,7 @@ public class MicroblogsEntryAssetRenderer
 
 			return group.getGroupId();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return 0;
@@ -136,7 +136,7 @@ public class MicroblogsEntryAssetRenderer
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -163,7 +163,7 @@ public class MicroblogsEntryAssetRenderer
 			return _microblogsEntryModelResourcePermission.contains(
 				permissionChecker, _entry, ActionKeys.VIEW);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

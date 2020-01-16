@@ -79,8 +79,8 @@ public class NetvibesPortletConfigurationIcon
 
 			return portletURL.toString();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return StringPool.BLANK;
 		}

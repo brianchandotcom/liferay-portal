@@ -65,7 +65,7 @@ public class JournalDDMTemplateVerticalCard extends BaseVerticalCard {
 			return ddmTemplateActionDropdownItemsProvider.
 				getActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -98,7 +98,7 @@ public class JournalDDMTemplateVerticalCard extends BaseVerticalCard {
 
 			return editDDMTemplateURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

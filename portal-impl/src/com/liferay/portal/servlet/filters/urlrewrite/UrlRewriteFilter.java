@@ -48,10 +48,10 @@ public class UrlRewriteFilter extends BasePortalFilter {
 		try {
 			_urlRewriteFilter.init(filterConfig);
 		}
-		catch (ServletException se) {
+		catch (ServletException servletException) {
 			_urlRewriteFilter = null;
 
-			_log.error(se, se);
+			_log.error(servletException, servletException);
 		}
 	}
 

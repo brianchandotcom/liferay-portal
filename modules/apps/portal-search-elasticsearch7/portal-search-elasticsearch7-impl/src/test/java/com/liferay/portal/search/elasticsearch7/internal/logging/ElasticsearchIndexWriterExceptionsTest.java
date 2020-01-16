@@ -70,7 +70,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		try {
 			indexWriter.addDocuments(createSearchContext(), documents);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -89,7 +89,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		try {
 			indexWriter.commit(searchContext);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -108,7 +108,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		try {
 			indexWriter.deleteDocument(searchContext, "1");
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -130,7 +130,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		try {
 			indexWriter.deleteDocuments(searchContext, uids);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -149,7 +149,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		try {
 			indexWriter.deleteEntityDocuments(searchContext, "test");
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -169,7 +169,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 			indexWriter.partiallyUpdateDocument(
 				createSearchContext(), document);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -192,7 +192,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 			indexWriter.partiallyUpdateDocuments(
 				createSearchContext(), documents);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -211,7 +211,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		try {
 			indexWriter.updateDocument(createSearchContext(), document);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 
@@ -234,7 +234,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		try {
 			indexWriter.updateDocuments(createSearchContext(), documents);
 		}
-		catch (SearchException se) {
+		catch (SearchException searchException) {
 		}
 	}
 

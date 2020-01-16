@@ -110,13 +110,13 @@ public class BaseSPIProviderTest {
 			try {
 				_testSPIProvider.createSPI(_spiConfiguration);
 			}
-			catch (PortalResiliencyException pre) {
+			catch (PortalResiliencyException portalResiliencyException) {
 				Assert.assertEquals(
 					"SPI synchronous queue waiting timeout. Forcibly " +
 						"cancelled SPI process launch.",
-					pre.getMessage());
+					portalResiliencyException.getMessage());
 
-				Assert.assertNull(pre.getCause());
+				Assert.assertNull(portalResiliencyException.getCause());
 			}
 
 			// Sucess
@@ -134,13 +134,13 @@ public class BaseSPIProviderTest {
 			try {
 				_testSPIProvider.createSPI(_spiConfiguration);
 			}
-			catch (PortalResiliencyException pre) {
+			catch (PortalResiliencyException portalResiliencyException) {
 				Assert.assertEquals(
 					"Unable to register SPI " + spi +
 						". Forcibly cancelled SPI process launch.",
-					pre.getMessage());
+					portalResiliencyException.getMessage());
 
-				Assert.assertNull(pre.getCause());
+				Assert.assertNull(portalResiliencyException.getCause());
 			}
 
 			// Interrupt
@@ -151,13 +151,13 @@ public class BaseSPIProviderTest {
 			try {
 				_testSPIProvider.createSPI(_spiConfiguration);
 			}
-			catch (PortalResiliencyException pre) {
+			catch (PortalResiliencyException portalResiliencyException) {
 				Assert.assertEquals(
 					"Interrupted on waiting SPI process, registering back " +
 						"RMI stub",
-					pre.getMessage());
+					portalResiliencyException.getMessage());
 
-				Throwable throwable = pre.getCause();
+				Throwable throwable = portalResiliencyException.getCause();
 
 				Assert.assertSame(
 					InterruptedException.class, throwable.getClass());
@@ -172,11 +172,12 @@ public class BaseSPIProviderTest {
 			try {
 				_testSPIProvider.createSPI(_spiConfiguration);
 			}
-			catch (PortalResiliencyException pre) {
+			catch (PortalResiliencyException portalResiliencyException) {
 				Assert.assertEquals(
-					"Unable to launch SPI process", pre.getMessage());
+					"Unable to launch SPI process",
+					portalResiliencyException.getMessage());
 
-				Throwable throwable = pre.getCause();
+				Throwable throwable = portalResiliencyException.getCause();
 
 				Assert.assertSame(ProcessException.class, throwable.getClass());
 				Assert.assertEquals("ProcessException", throwable.getMessage());
@@ -243,8 +244,8 @@ public class BaseSPIProviderTest {
 					new ObjectOutputStream(new DummyOutputStream()),
 					new AsyncBroker<Long, Serializable>());
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 		}
 

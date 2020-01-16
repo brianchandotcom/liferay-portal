@@ -84,8 +84,8 @@ public class DLStoreImpl implements DLStore {
 			store.addFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT, is);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -129,9 +129,9 @@ public class DLStoreImpl implements DLStore {
 						Store.VERSION_DEFAULT, fis);
 				}
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new SystemException(
-					"Unable to scan file " + fileName, ioe);
+					"Unable to scan file " + fileName, ioException);
 			}
 			finally {
 				if (tempFile != null) {
@@ -145,8 +145,8 @@ public class DLStoreImpl implements DLStore {
 					companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
 					is);
 			}
-			catch (AccessDeniedException ade) {
-				throw new PrincipalException(ade);
+			catch (AccessDeniedException accessDeniedException) {
+				throw new PrincipalException(accessDeniedException);
 			}
 		}
 	}
@@ -230,8 +230,8 @@ public class DLStoreImpl implements DLStore {
 		try {
 			store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 		}
-		catch (AccessDeniedException ade) {
-			throw new PrincipalException(ade);
+		catch (AccessDeniedException accessDeniedException) {
+			throw new PrincipalException(accessDeniedException);
 		}
 	}
 
@@ -249,8 +249,8 @@ public class DLStoreImpl implements DLStore {
 				store.getFileAsStream(
 					companyId, repositoryId, fileName, StringPool.BLANK));
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -269,8 +269,8 @@ public class DLStoreImpl implements DLStore {
 				store.getFileAsStream(
 					companyId, repositoryId, fileName, versionLabel));
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -373,8 +373,8 @@ public class DLStoreImpl implements DLStore {
 		try (InputStream is = new FileInputStream(file)) {
 			store.addFile(companyId, repositoryId, fileName, versionLabel, is);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -428,9 +428,9 @@ public class DLStoreImpl implements DLStore {
 						companyId, repositoryId, fileName, versionLabel, fis);
 				}
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 				throw new SystemException(
-					"Unable to scan file " + fileName, ioe);
+					"Unable to scan file " + fileName, ioException);
 			}
 			finally {
 				if (tempFile != null) {
@@ -443,8 +443,8 @@ public class DLStoreImpl implements DLStore {
 				store.addFile(
 					companyId, repositoryId, fileName, versionLabel, is);
 			}
-			catch (AccessDeniedException ade) {
-				throw new PrincipalException(ade);
+			catch (AccessDeniedException accessDeniedException) {
+				throw new PrincipalException(accessDeniedException);
 			}
 		}
 	}

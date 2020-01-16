@@ -67,9 +67,9 @@ public class DistBundleMojo extends InitBundleMojo {
 
 					deployCommand.execute();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					throw new MojoExecutionException(
-						"Unable to deploy " + outputFileName, e);
+						"Unable to deploy " + outputFileName, exception);
 				}
 			}
 			else if (!project.hasParent()) {
@@ -96,12 +96,12 @@ public class DistBundleMojo extends InitBundleMojo {
 				FileUtil.deleteDirectory(liferayHomeDir.toPath());
 			}
 		}
-		catch (MojoExecutionException mee) {
-			throw mee;
+		catch (MojoExecutionException mojoExecutionException) {
+			throw mojoExecutionException;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new MojoExecutionException(
-				"Unable to create distributable bundle", e);
+				"Unable to create distributable bundle", exception);
 		}
 	}
 

@@ -87,13 +87,15 @@ public class OpenIdConnectLoginRequestMVCRenderCommand
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
-					"Unable to include JSP ", _JSP_PATH, ": ", e.getMessage()),
-				e);
+					"Unable to include JSP ", _JSP_PATH, ": ",
+					exception.getMessage()),
+				exception);
 
-			throw new PortletException("Unable to include JSP " + _JSP_PATH, e);
+			throw new PortletException(
+				"Unable to include JSP " + _JSP_PATH, exception);
 		}
 
 		return "/navigation.jsp";

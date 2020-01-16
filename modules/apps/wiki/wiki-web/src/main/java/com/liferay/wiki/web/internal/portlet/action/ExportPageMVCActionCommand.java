@@ -120,10 +120,10 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 
 			actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
-			_portal.sendError(e, actionRequest, actionResponse);
+			_portal.sendError(exception, actionRequest, actionResponse);
 		}
 	}
 
@@ -145,12 +145,12 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			content = _wikiEngineRenderer.convert(
 				page, viewPageURL, editPageURL, attachmentURLPrefix);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
 					"Error formatting the wiki page ", page.getPageId(),
 					" with the format ", page.getFormat()),
-				e);
+				exception);
 		}
 
 		StringBundler sb = new StringBundler(17);

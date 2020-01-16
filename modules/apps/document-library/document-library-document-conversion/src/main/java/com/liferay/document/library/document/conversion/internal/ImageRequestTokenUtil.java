@@ -53,9 +53,9 @@ public class ImageRequestTokenUtil {
 		try {
 			signer = new HmacSHA256Signer(null, null, _SECRET);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to create signer", e);
+				_log.debug("Unable to create signer", exception);
 			}
 
 			return null;
@@ -75,9 +75,9 @@ public class ImageRequestTokenUtil {
 		try {
 			return jsonToken.serializeAndSign();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to sign payload", e);
+				_log.debug("Unable to sign payload", exception);
 			}
 
 			return null;
@@ -126,10 +126,11 @@ public class ImageRequestTokenUtil {
 
 			return userId;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to parse and verify token " + tokenString, e);
+					"Unable to parse and verify token " + tokenString,
+					exception);
 			}
 
 			return 0;

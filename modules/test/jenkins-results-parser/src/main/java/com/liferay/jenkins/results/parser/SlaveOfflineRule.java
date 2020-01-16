@@ -38,9 +38,9 @@ public class SlaveOfflineRule {
 		try {
 			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to load slave offline rules", ioe);
+				"Unable to load slave offline rules", ioException);
 		}
 
 		_slaveOfflineRules = new ArrayList<>();

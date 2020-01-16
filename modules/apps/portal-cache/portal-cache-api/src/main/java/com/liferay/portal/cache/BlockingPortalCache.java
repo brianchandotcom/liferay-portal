@@ -69,7 +69,7 @@ public class BlockingPortalCache<K extends Serializable, V>
 			try {
 				currentCompeteLatch.await();
 			}
-			catch (InterruptedException ie) {
+			catch (InterruptedException interruptedException) {
 			}
 
 			_competeLatch.set(null);

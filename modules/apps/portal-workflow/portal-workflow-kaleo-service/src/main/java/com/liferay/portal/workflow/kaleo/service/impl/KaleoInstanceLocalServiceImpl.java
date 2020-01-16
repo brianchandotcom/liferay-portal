@@ -213,7 +213,7 @@ public class KaleoInstanceLocalServiceImpl
 		try {
 			kaleoInstance = kaleoInstancePersistence.remove(kaleoInstanceId);
 		}
-		catch (NoSuchInstanceException nsie) {
+		catch (NoSuchInstanceException noSuchInstanceException) {
 			return null;
 		}
 
@@ -364,9 +364,9 @@ public class KaleoInstanceLocalServiceImpl
 
 			return kaleoInstances;
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(portalException, portalException);
 			}
 		}
 

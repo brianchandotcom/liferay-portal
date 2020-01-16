@@ -86,12 +86,12 @@ public class ThreadUtil {
 
 			return new String(entry.getKey());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to use jstack to get thread dump for process " +
 						HeapUtil.getProcessId(),
-					e);
+					exception);
 			}
 
 			return StringPool.BLANK;

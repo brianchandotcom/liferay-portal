@@ -953,12 +953,14 @@ public class DDLRecordSetLocalServiceImpl
 				groupId, recordSetKey);
 
 			if (recordSet != null) {
-				RecordSetDuplicateRecordSetKeyException rsdrske =
-					new RecordSetDuplicateRecordSetKeyException();
+				RecordSetDuplicateRecordSetKeyException
+					recordSetDuplicateRecordSetKeyException =
+						new RecordSetDuplicateRecordSetKeyException();
 
-				rsdrske.setRecordSetKey(recordSet.getRecordSetKey());
+				recordSetDuplicateRecordSetKeyException.setRecordSetKey(
+					recordSet.getRecordSetKey());
 
-				throw rsdrske;
+				throw recordSetDuplicateRecordSetKeyException;
 			}
 		}
 

@@ -43,11 +43,11 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 			return doCreate(
 				companyId, ddmStructureId, ddmFormValues, serviceContext);
 		}
-		catch (StorageException se) {
-			throw se;
+		catch (StorageException storageException) {
+			throw storageException;
 		}
-		catch (Exception e) {
-			throw new StorageException(e);
+		catch (Exception exception) {
+			throw new StorageException(exception);
 		}
 	}
 
@@ -56,11 +56,11 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 		try {
 			doDeleteByClass(classPK);
 		}
-		catch (StorageException se) {
-			throw se;
+		catch (StorageException storageException) {
+			throw storageException;
 		}
-		catch (Exception e) {
-			throw new StorageException(e);
+		catch (Exception exception) {
+			throw new StorageException(exception);
 		}
 	}
 
@@ -71,11 +71,11 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 		try {
 			doDeleteByDDMStructure(ddmStructureId);
 		}
-		catch (StorageException se) {
-			throw se;
+		catch (StorageException storageException) {
+			throw storageException;
 		}
-		catch (Exception e) {
-			throw new StorageException(e);
+		catch (Exception exception) {
+			throw new StorageException(exception);
 		}
 	}
 
@@ -86,11 +86,11 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 		try {
 			return doGetDDMFormValues(classPK);
 		}
-		catch (StorageException se) {
-			throw se;
+		catch (StorageException storageException) {
+			throw storageException;
 		}
-		catch (Exception e) {
-			throw new StorageException(e);
+		catch (Exception exception) {
+			throw new StorageException(exception);
 		}
 	}
 
@@ -105,11 +105,11 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 
 			doUpdate(classPK, ddmFormValues, serviceContext);
 		}
-		catch (StorageException se) {
-			throw se;
+		catch (StorageException storageException) {
+			throw storageException;
 		}
-		catch (Exception e) {
-			throw new StorageException(e);
+		catch (Exception exception) {
+			throw new StorageException(exception);
 		}
 	}
 

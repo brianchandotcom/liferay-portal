@@ -69,7 +69,7 @@ public class LayoutCustomFieldsFormNavigatorEntry
 					themeDisplay.getCompanyId(), Layout.class.getName(),
 					classPK, null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return hasCustomAttributesAvailable;

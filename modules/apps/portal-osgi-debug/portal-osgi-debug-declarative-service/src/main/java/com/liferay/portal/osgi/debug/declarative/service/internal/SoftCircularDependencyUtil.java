@@ -117,7 +117,7 @@ public class SoftCircularDependencyUtil {
 						serviceReferences = bundleContext.getServiceReferences(
 							referenceDTO.interfaceName, referenceDTO.target);
 					}
-					catch (InvalidSyntaxException ise) {
+					catch (InvalidSyntaxException invalidSyntaxException) {
 						String reference = referenceDTO.bind;
 
 						if (reference == null) {
@@ -130,7 +130,7 @@ public class SoftCircularDependencyUtil {
 								"\" from",
 								fromComponentDescriptionDTO.implementationClass,
 								"[", reference, "]"),
-							ise);
+							invalidSyntaxException);
 
 						continue;
 					}

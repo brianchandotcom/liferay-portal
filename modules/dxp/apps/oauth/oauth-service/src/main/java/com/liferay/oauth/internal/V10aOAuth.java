@@ -88,8 +88,8 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 		try {
 			return net.oauth.OAuth.addParameters(url, parameters);
 		}
-		catch (IOException ioe) {
-			throw new OAuthException(ioe);
+		catch (IOException ioException) {
+			throw new OAuthException(ioException);
 		}
 	}
 
@@ -127,8 +127,8 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 		try {
 			net.oauth.OAuth.formEncode(parameters, outputStream);
 		}
-		catch (IOException ioe) {
-			throw new OAuthException(ioe);
+		catch (IOException ioException) {
+			throw new OAuthException(ioException);
 		}
 	}
 
@@ -218,8 +218,8 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 		try {
 			token = oAuthMessage.getToken();
 		}
-		catch (IOException ioe) {
-			throw new OAuthException(ioe);
+		catch (IOException ioException) {
+			throw new OAuthException(ioException);
 		}
 
 		OAuthAccessor oAuthAccessor = (OAuthAccessor)_portalCache.get(token);
@@ -240,8 +240,8 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 		try {
 			consumerKey = requestMessage.getConsumerKey();
 		}
-		catch (IOException ioe) {
-			throw new OAuthException(ioe);
+		catch (IOException ioException) {
+			throw new OAuthException(ioException);
 		}
 
 		OAuthApplication oAuthApplication =
@@ -327,8 +327,8 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 		try {
 			return deserializer.readObject();
 		}
-		catch (ClassNotFoundException cnfe) {
-			cnfe.printStackTrace();
+		catch (ClassNotFoundException classNotFoundException) {
+			classNotFoundException.printStackTrace();
 		}
 
 		return null;
@@ -400,8 +400,8 @@ public class V10aOAuth implements IdentifiableOSGiService, OAuth {
 					_log.debug("Notified cluster");
 				}
 			}
-			catch (Exception se) {
-				_log.error("Unable to notify cluster", se);
+			catch (Exception exception) {
+				_log.error("Unable to notify cluster", exception);
 			}
 		}
 	}

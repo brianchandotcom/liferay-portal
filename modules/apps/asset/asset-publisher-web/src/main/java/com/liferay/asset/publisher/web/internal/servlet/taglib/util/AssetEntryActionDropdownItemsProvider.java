@@ -88,7 +88,7 @@ public class AssetEntryActionDropdownItemsProvider {
 								continue;
 							}
 						}
-						catch (Exception e) {
+						catch (Exception exception) {
 							continue;
 						}
 
@@ -147,7 +147,7 @@ public class AssetEntryActionDropdownItemsProvider {
 
 			return portletURL;
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;

@@ -106,9 +106,9 @@ public class MoveKBFolderPortletConfigurationIcon
 			return _kbFolderModelResourcePermission.contains(
 				permissionChecker, kbFolder, KBActionKeys.MOVE_KB_FOLDER);
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 

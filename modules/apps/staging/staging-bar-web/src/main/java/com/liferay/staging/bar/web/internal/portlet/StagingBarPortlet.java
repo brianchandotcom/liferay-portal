@@ -154,8 +154,8 @@ public class StagingBarPortlet extends MVCPortlet {
 			try {
 				selLayout = _layoutLocalService.getLayout(selPlid);
 			}
-			catch (PortalException pe) {
-				throw new PortletException(pe);
+			catch (PortalException portalException) {
+				throw new PortletException(portalException);
 			}
 		}
 
@@ -187,8 +187,8 @@ public class StagingBarPortlet extends MVCPortlet {
 
 					layoutBranch = layoutRevision.getLayoutBranch();
 				}
-				catch (PortalException pe) {
-					throw new PortletException(pe);
+				catch (PortalException portalException) {
+					throw new PortletException(portalException);
 				}
 			}
 		}
@@ -212,8 +212,8 @@ public class StagingBarPortlet extends MVCPortlet {
 						liveURL = _portal.getLayoutURL(
 							liveLayout, themeDisplay);
 					}
-					catch (PortalException pe) {
-						throw new PortletException(pe);
+					catch (PortalException portalException) {
+						throw new PortletException(portalException);
 					}
 				}
 				else if ((layout.isPrivateLayout() &&
@@ -237,8 +237,8 @@ public class StagingBarPortlet extends MVCPortlet {
 						stagingURL = _portal.getLayoutURL(
 							stagingLayout, themeDisplay);
 					}
-					catch (PortalException pe) {
-						throw new PortletException(pe);
+					catch (PortalException portalException) {
+						throw new PortletException(portalException);
 					}
 				}
 				else {
@@ -273,16 +273,16 @@ public class StagingBarPortlet extends MVCPortlet {
 					remoteSiteURL = _staging.getRemoteSiteURL(
 						group, layout.isPrivateLayout());
 				}
-				catch (AuthException ae) {
-					_log.error(ae.getMessage());
+				catch (AuthException authException) {
+					_log.error(authException.getMessage());
 
 					SessionErrors.add(renderRequest, AuthException.class);
 				}
-				catch (SystemException se) {
-					Throwable cause = se.getCause();
+				catch (SystemException systemException) {
+					Throwable cause = systemException.getCause();
 
 					if (!(cause instanceof ConnectException)) {
-						throw se;
+						throw systemException;
 					}
 
 					if (_log.isWarnEnabled()) {
@@ -294,8 +294,8 @@ public class StagingBarPortlet extends MVCPortlet {
 					SessionErrors.add(
 						renderRequest, RemoteExportException.class);
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 
 					SessionErrors.add(renderRequest, Exception.class);
 				}

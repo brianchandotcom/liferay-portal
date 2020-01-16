@@ -106,9 +106,9 @@ public class FragmentRendererUtil {
 
 			printWriter.write(sb.toString());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioe, ioe);
+				_log.debug(ioException, ioException);
 			}
 		}
 	}

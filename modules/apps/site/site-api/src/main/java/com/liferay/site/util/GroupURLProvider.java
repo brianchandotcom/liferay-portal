@@ -121,10 +121,10 @@ public class GroupURLProvider {
 					return getGroupURL(group.getStagingGroup(), portletRequest);
 				}
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				_log.error(
 					"Unable to check permission on group " + group.getGroupId(),
-					pe);
+					portalException);
 			}
 		}
 

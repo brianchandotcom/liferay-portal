@@ -121,12 +121,14 @@ public class BeanReferenceAnnotationBeanPostProcessor
 				try {
 					referencedBean = _beanFactory.getBean(referencedBeanName);
 				}
-				catch (NoSuchBeanDefinitionException nsbde) {
+				catch (NoSuchBeanDefinitionException
+							noSuchBeanDefinitionException) {
+
 					try {
 						referencedBean = PortalBeanLocatorUtil.locate(
 							referencedBeanName);
 					}
-					catch (BeanLocatorException ble) {
+					catch (BeanLocatorException beanLocatorException) {
 						StringWriter stringWriter = new StringWriter();
 
 						try (PrintWriter printWriter = new PrintWriter(
@@ -135,15 +137,17 @@ public class BeanReferenceAnnotationBeanPostProcessor
 							printWriter.print(
 								"BeanFactory could not find bean: ");
 
-							nsbde.printStackTrace(printWriter);
+							noSuchBeanDefinitionException.printStackTrace(
+								printWriter);
 
 							printWriter.print(
 								" and PortalBeanLocator failed with: ");
-							printWriter.append(ble.getMessage());
+							printWriter.append(
+								beanLocatorException.getMessage());
 						}
 
 						throw new BeanLocatorException(
-							stringWriter.toString(), ble);
+							stringWriter.toString(), beanLocatorException);
 					}
 				}
 

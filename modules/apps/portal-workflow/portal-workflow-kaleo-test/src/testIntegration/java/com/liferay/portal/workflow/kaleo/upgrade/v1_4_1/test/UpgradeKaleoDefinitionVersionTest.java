@@ -141,8 +141,8 @@ public class UpgradeKaleoDefinitionVersionTest {
 					"create index ", index, " on ", table, " (",
 					StringUtil.merge(columns), ");"));
 		}
-		catch (IOException | SQLException e) {
-			throw new AssertionError(e);
+		catch (IOException | SQLException exception) {
+			throw new AssertionError(exception);
 		}
 	}
 

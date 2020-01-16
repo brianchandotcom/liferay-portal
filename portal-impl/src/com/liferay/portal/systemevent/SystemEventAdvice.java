@@ -242,7 +242,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 			getUuidMethod = modelClass.getMethod("getUuid", new Class<?>[0]);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 

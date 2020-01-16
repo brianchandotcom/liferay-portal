@@ -136,8 +136,8 @@ public class WorkflowTaskPermissionChecker {
 				roleIds = ArrayUtil.append(roleIds, roleIdArray);
 			}
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return roleIds;
@@ -168,8 +168,8 @@ public class WorkflowTaskPermissionChecker {
 
 			return assetRenderer.hasViewPermission(permissionChecker);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		return false;

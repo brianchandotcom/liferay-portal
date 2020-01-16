@@ -76,9 +76,9 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		try {
 			runSQL("alter table JournalArticle drop column description");
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(sqle, sqle);
+				_log.debug(sqlException, sqlException);
 			}
 		}
 	}
@@ -87,9 +87,9 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		try {
 			runSQL("alter table JournalArticle drop column title");
 		}
-		catch (SQLException sqle) {
+		catch (SQLException sqlException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(sqle, sqle);
+				_log.debug(sqlException, sqlException);
 			}
 		}
 	}
@@ -300,10 +300,10 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 				runSQL(connection, sb.toString());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					"Unable to update default language ID for article " + _id,
-					e);
+					exception);
 
 				return false;
 			}
@@ -386,10 +386,10 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				try {
 					ps.executeBatch();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					_log.error(
 						"Unable to update localized fields for article " + _id,
-						e);
+						exception);
 
 					return false;
 				}

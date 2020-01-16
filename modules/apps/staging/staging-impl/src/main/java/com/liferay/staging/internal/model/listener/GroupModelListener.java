@@ -49,8 +49,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			_changesetCollectionLocalService.deleteChangesetCollection(
 				changesetCollection.getChangesetCollectionId());
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 	}
 

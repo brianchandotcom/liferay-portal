@@ -160,12 +160,12 @@ public class LogoSelectorTag extends IncludeTag {
 				_maxFileSize =
 					UploadServletRequestConfigurationHelperUtil.getMaxSize();
 			}
-			catch (SystemException se) {
+			catch (SystemException systemException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(se, se);
+					_log.debug(systemException, systemException);
 				}
 			}
 		}

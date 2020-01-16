@@ -70,11 +70,11 @@ public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			copyArticle(actionRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchArticleException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchArticleException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				PortletSession portletSession =
 					actionRequest.getPortletSession();
@@ -87,13 +87,13 @@ public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 
 				portletRequestDispatcher.include(actionRequest, actionResponse);
 			}
-			else if (e instanceof ArticleIdException ||
-					 e instanceof DuplicateArticleIdException) {
+			else if (exception instanceof ArticleIdException ||
+					 exception instanceof DuplicateArticleIdException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

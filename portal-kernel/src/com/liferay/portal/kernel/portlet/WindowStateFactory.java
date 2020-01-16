@@ -68,8 +68,9 @@ public class WindowStateFactory {
 						}
 					}
 				}
-				catch (IllegalAccessException iae) {
-					throw new ExceptionInInitializerError(iae);
+				catch (IllegalAccessException illegalAccessException) {
+					throw new ExceptionInInitializerError(
+						illegalAccessException);
 				}
 			}
 		};

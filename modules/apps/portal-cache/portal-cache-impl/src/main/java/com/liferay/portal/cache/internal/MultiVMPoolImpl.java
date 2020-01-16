@@ -176,8 +176,9 @@ public class MultiVMPoolImpl implements MultiVMPool {
 					_portalCacheManager.clearAll();
 				}
 			}
-			catch (Exception e) {
-				_log.error("Unable to create SPI portal cache manager", e);
+			catch (Exception exception) {
+				_log.error(
+					"Unable to create SPI portal cache manager", exception);
 			}
 
 			return spiPortalCacheManagerConfigurator;

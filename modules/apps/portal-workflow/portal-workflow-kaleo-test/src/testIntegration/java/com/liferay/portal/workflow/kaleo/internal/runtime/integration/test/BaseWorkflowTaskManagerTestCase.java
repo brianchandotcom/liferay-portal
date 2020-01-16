@@ -741,7 +741,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
 				adminUser.getCompanyId(), JOIN_XOR, 1);
 		}
-		catch (WorkflowException we) {
+		catch (WorkflowException workflowException) {
 			String content = _read("join-xor-definition.xml");
 
 			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
@@ -758,7 +758,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
 				adminUser.getCompanyId(), SCRIPTED_SINGLE_APPROVER, 1);
 		}
-		catch (WorkflowException we) {
+		catch (WorkflowException workflowException) {
 			String content = _read(
 				"single-approver-definition-scripted-assignment.xml");
 
@@ -777,7 +777,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
 				adminUser.getCompanyId(), SITE_MEMBER_SINGLE_APPROVER, 1);
 		}
-		catch (WorkflowException we) {
+		catch (WorkflowException workflowException) {
 			String content = _read(
 				"single-approver-definition-site-member.xml");
 

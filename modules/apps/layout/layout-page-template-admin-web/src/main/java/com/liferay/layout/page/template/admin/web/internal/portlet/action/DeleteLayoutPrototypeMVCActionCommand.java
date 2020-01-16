@@ -65,8 +65,11 @@ public class DeleteLayoutPrototypeMVCActionCommand
 				_layoutPrototypeService.deleteLayoutPrototype(
 					curLayoutPrototypeId);
 			}
-			catch (RequiredLayoutPrototypeException rlpe) {
-				SessionErrors.add(actionRequest, rlpe.getClass());
+			catch (RequiredLayoutPrototypeException
+						requiredLayoutPrototypeException) {
+
+				SessionErrors.add(
+					actionRequest, requiredLayoutPrototypeException.getClass());
 
 				hideDefaultErrorMessage(actionRequest);
 

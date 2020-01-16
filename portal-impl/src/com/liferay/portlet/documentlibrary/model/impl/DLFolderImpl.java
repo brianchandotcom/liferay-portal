@@ -49,12 +49,12 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 
 				ancestorFolderIds.add(folder.getFolderId());
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 				if (folder.isInTrash()) {
 					break;
 				}
 
-				throw nsfe;
+				throw noSuchFolderException;
 			}
 		}
 
@@ -73,12 +73,12 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 
 				ancestors.add(folder);
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException noSuchFolderException) {
 				if (folder.isInTrash()) {
 					break;
 				}
 
-				throw nsfe;
+				throw noSuchFolderException;
 			}
 		}
 
@@ -136,7 +136,7 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 		try {
 			return DLFolderServiceUtil.hasFolderLock(getFolderId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;
@@ -159,9 +159,9 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 
 			return dlFolder.isHidden();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 

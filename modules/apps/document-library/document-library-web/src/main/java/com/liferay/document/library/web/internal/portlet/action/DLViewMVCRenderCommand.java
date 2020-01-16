@@ -71,13 +71,14 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 			return super.render(renderRequest, renderResponse);
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(renderRequest, "repositoryPingFailed", pe);
+		catch (PortalException portalException) {
+			SessionErrors.add(
+				renderRequest, "repositoryPingFailed", portalException);
 
 			return "/document_library/error.jsp";
 		}
-		catch (IOException ioe) {
-			throw new PortletException(ioe);
+		catch (IOException ioException) {
+			throw new PortletException(ioException);
 		}
 	}
 

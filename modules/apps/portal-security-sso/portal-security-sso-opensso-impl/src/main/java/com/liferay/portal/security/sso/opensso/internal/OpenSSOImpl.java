@@ -125,18 +125,18 @@ public class OpenSSOImpl implements OpenSSO {
 				_log.debug("Attributes response code " + responseCode);
 			}
 		}
-		catch (MalformedURLException murle) {
-			_log.error(murle.getMessage());
+		catch (MalformedURLException malformedURLException) {
+			_log.error(malformedURLException.getMessage());
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(murle, murle);
+				_log.debug(malformedURLException, malformedURLException);
 			}
 		}
-		catch (IOException ioe) {
-			_log.error(ioe.getMessage());
+		catch (IOException ioException) {
+			_log.error(ioException.getMessage());
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioe, ioe);
+				_log.debug(ioException, ioException);
 			}
 		}
 
@@ -222,9 +222,9 @@ public class OpenSSOImpl implements OpenSSO {
 				}
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 		}
 
@@ -269,9 +269,9 @@ public class OpenSSOImpl implements OpenSSO {
 
 			version = openSSOConfiguration.version();
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ce, ce);
+				_log.warn(configurationException, configurationException);
 			}
 		}
 
@@ -301,8 +301,8 @@ public class OpenSSOImpl implements OpenSSO {
 						_log.debug("Invalid authentication: " + json);
 					}
 				}
-				catch (JSONException jsone) {
-					throw new IOException(jsone);
+				catch (JSONException jsonException) {
+					throw new IOException(jsonException);
 				}
 			}
 		}
@@ -397,9 +397,9 @@ public class OpenSSOImpl implements OpenSSO {
 						responseCode));
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 
 			return false;

@@ -108,16 +108,16 @@ public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchRuleGroupException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchRuleGroupException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

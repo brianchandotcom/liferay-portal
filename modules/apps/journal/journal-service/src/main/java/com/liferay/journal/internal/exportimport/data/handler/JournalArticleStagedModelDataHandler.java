@@ -219,9 +219,9 @@ public class JournalArticleStagedModelDataHandler
 
 			return sb.toString();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
+				_log.warn(portalException, portalException);
 			}
 		}
 
@@ -245,19 +245,20 @@ public class JournalArticleStagedModelDataHandler
 		try {
 			articleResourceUuid = article.getArticleResourceUuid();
 		}
-		catch (Exception e) {
-			ExportImportRuntimeException eire =
-				new ExportImportRuntimeException(StringPool.BLANK, e);
+		catch (Exception exception) {
+			ExportImportRuntimeException exportImportRuntimeException =
+				new ExportImportRuntimeException(StringPool.BLANK, exception);
 
-			eire.setMessageKey(
+			exportImportRuntimeException.setMessageKey(
 				"unable-to-find-article-resource-x-while-gathering-reference-" +
 					"attributes");
-			eire.setData(String.valueOf(article.getArticleId()));
+			exportImportRuntimeException.setData(
+				String.valueOf(article.getArticleId()));
 
-			eire.setClassName(
+			exportImportRuntimeException.setClassName(
 				JournalArticleStagedModelDataHandler.class.getName());
 
-			throw eire;
+			throw exportImportRuntimeException;
 		}
 
 		Map<String, String> referenceAttributes = HashMapBuilder.put(
@@ -272,9 +273,9 @@ public class JournalArticleStagedModelDataHandler
 			defaultUserId = _userLocalService.getDefaultUserId(
 				article.getCompanyId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			return referenceAttributes;
@@ -830,13 +831,13 @@ public class JournalArticleStagedModelDataHandler
 								inputStream = FileEntryUtil.getContentStream(
 									fileEntry);
 							}
-							catch (NoSuchFileException nsfe) {
+							catch (NoSuchFileException noSuchFileException) {
 								if (_log.isDebugEnabled()) {
 									_log.debug(
 										"Unable to import attachment for " +
 											"file entry " +
 												fileEntry.getFileEntryId(),
-										nsfe);
+										noSuchFileException);
 								}
 							}
 						}
@@ -1614,7 +1615,7 @@ public class JournalArticleStagedModelDataHandler
 						subscriptionSender.sendEmailNotification(
 							userNotificationEvent.getUserId());
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Unable to send email notification for " +
@@ -1626,7 +1627,7 @@ public class JournalArticleStagedModelDataHandler
 		try {
 			actionableDynamicQuery.performActions();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to send email notification for article " +

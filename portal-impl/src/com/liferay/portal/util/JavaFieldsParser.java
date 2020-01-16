@@ -70,8 +70,8 @@ public class JavaFieldsParser {
 			try {
 				clazz = classLoader.loadClass(className);
 			}
-			catch (Exception e) {
-				_log.error("Unable to load class " + className, e);
+			catch (Exception exception) {
+				_log.error("Unable to load class " + className, exception);
 
 				break;
 			}
@@ -97,8 +97,8 @@ public class JavaFieldsParser {
 					_log.debug("Field value " + fieldValue);
 				}
 			}
-			catch (Exception e) {
-				_log.error("Unable to load field " + fieldName, e);
+			catch (Exception exception) {
+				_log.error("Unable to load field " + fieldName, exception);
 
 				break;
 			}

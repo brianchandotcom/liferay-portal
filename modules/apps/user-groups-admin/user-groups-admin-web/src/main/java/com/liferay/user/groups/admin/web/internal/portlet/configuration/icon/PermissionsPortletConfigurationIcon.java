@@ -72,7 +72,7 @@ public class PermissionsPortletConfigurationIcon
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return url;
@@ -96,7 +96,7 @@ public class PermissionsPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(), userGroup.getUserGroupId(),
 				ActionKeys.PERMISSIONS);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return false;

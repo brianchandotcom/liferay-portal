@@ -83,7 +83,7 @@ public class DisplayPageVerticalCard
 			return displayPageActionDropdownItemsProvider.
 				getActionDropdownItems();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -113,7 +113,7 @@ public class DisplayPageVerticalCard
 			return HttpUtil.setParameter(
 				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return null;
@@ -167,7 +167,7 @@ public class DisplayPageVerticalCard
 		try {
 			subtypeLabel = _getSubtypeLabel();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if (Validator.isNull(subtypeLabel)) {

@@ -125,8 +125,8 @@ public class UnsyncCharArrayReaderTest extends BaseReaderTestCase {
 
 			Assert.fail();
 		}
-		catch (IOException ioe) {
-			Assert.assertEquals("Stream closed", ioe.getMessage());
+		catch (IOException ioException) {
+			Assert.assertEquals("Stream closed", ioException.getMessage());
 		}
 
 		testClose(unsyncCharArrayReader, "Stream closed");

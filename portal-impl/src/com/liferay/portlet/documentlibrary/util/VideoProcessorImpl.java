@@ -167,8 +167,8 @@ public class VideoProcessorImpl
 				_queueGeneration(null, fileVersion);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return hasVideo;
@@ -367,7 +367,7 @@ public class VideoProcessorImpl
 					liferayConverter.convert();
 				}
 			}
-			catch (CancellationException ce) {
+			catch (CancellationException cancellationException) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
@@ -376,12 +376,12 @@ public class VideoProcessorImpl
 							fileVersion.getTitle()));
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				_log.error(
 					StringBundler.concat(
 						"Unable to process ", fileVersion.getFileVersionId(),
 						" ", fileVersion.getTitle(), "."),
-					e);
+					exception);
 			}
 
 			storeThumbnailImages(fileVersion, thumbnailTempFile);
@@ -394,8 +394,8 @@ public class VideoProcessorImpl
 						" ms"));
 			}
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 		finally {
 			FileUtil.delete(thumbnailTempFile);
@@ -449,11 +449,11 @@ public class VideoProcessorImpl
 						destinationFileVersion, videoTempFile,
 						previewTempFiles);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					_fileVersionPreviewEventListener.onFailure(
 						destinationFileVersion);
 
-					_log.error(e, e);
+					_log.error(exception, exception);
 				}
 			}
 
@@ -464,14 +464,14 @@ public class VideoProcessorImpl
 						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT,
 						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH);
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 				}
 			}
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfee, nsfee);
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
 			}
 
 			_fileVersionPreviewEventListener.onFailure(destinationFileVersion);
@@ -543,12 +543,12 @@ public class VideoProcessorImpl
 				_fileVersionPreviewEventListener.onSuccess(fileVersion);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
 					"Unable to process ", fileVersion.getFileVersionId(), " ",
 					fileVersion.getTitle(), "."),
-				e);
+				exception);
 
 			_fileVersionPreviewEventListener.onFailure(fileVersion);
 		}
@@ -576,7 +576,7 @@ public class VideoProcessorImpl
 					_PREVIEW_TYPES[i]);
 			}
 		}
-		catch (CancellationException ce) {
+		catch (CancellationException cancellationException) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
@@ -587,8 +587,8 @@ public class VideoProcessorImpl
 
 			_fileVersionPreviewEventListener.onFailure(fileVersion);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			_fileVersionPreviewEventListener.onFailure(fileVersion);
 		}
@@ -698,8 +698,8 @@ public class VideoProcessorImpl
 
 				liferayConverter.convert();
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (Exception exception) {
+				throw new ProcessException(exception);
 			}
 			finally {
 				DestroyHangingThreadHelper._destroyHangingThread();
@@ -771,8 +771,8 @@ public class VideoProcessorImpl
 
 				liferayConverter.convert();
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (Exception exception) {
+				throw new ProcessException(exception);
 			}
 			finally {
 				DestroyHangingThreadHelper._destroyHangingThread();

@@ -60,9 +60,9 @@ public class ContentTransformerHandlerImpl
 				transformedContent = contentTransformer.transform(
 					transformedContent);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
+					_log.debug(exception, exception);
 				}
 			}
 		}

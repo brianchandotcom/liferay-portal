@@ -140,15 +140,15 @@ public class XmlRpcParser {
 
 			return new Tuple(methodName, arguments.toArray());
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 		finally {
 			if (xmlStreamReader != null) {
 				try {
 					xmlStreamReader.close();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 			}
 		}
@@ -248,15 +248,15 @@ public class XmlRpcParser {
 
 			return null;
 		}
-		catch (Exception e) {
-			throw new XmlRpcException(xml, e);
+		catch (Exception exception) {
+			throw new XmlRpcException(xml, exception);
 		}
 		finally {
 			if (xmlStreamReader != null) {
 				try {
 					xmlStreamReader.close();
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 				}
 			}
 		}

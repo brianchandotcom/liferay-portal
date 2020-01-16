@@ -322,8 +322,8 @@ public class ServiceProxyFactoryTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertSame(TestServiceImpl._exception, e);
+		catch (Exception exception) {
+			Assert.assertSame(TestServiceImpl._exception, exception);
 		}
 
 		Assert.assertFalse(ProxyUtil.isProxyClass(newTestService.getClass()));
@@ -390,8 +390,9 @@ public class ServiceProxyFactoryTest {
 
 						Assert.fail();
 					}
-					catch (Exception e) {
-						Assert.assertSame(TestServiceImpl._exception, e);
+					catch (Exception exception) {
+						Assert.assertSame(
+							TestServiceImpl._exception, exception);
 					}
 
 					TestService newTestService = TestServiceUtil.testService;
@@ -576,8 +577,8 @@ public class ServiceProxyFactoryTest {
 
 			Assert.fail();
 		}
-		catch (Exception e) {
-			Assert.assertSame(TestServiceImpl._exception, e);
+		catch (Exception exception) {
+			Assert.assertSame(TestServiceImpl._exception, exception);
 		}
 
 		Assert.assertFalse(ProxyUtil.isProxyClass(newTestService.getClass()));

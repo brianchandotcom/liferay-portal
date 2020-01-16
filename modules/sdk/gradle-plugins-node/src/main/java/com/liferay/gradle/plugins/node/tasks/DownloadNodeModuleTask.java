@@ -60,8 +60,9 @@ public class DownloadNodeModuleTask extends ExecutePackageManagerTask {
 
 						return true;
 					}
-					catch (Exception e) {
-						throw new GradleException(e.getMessage(), e);
+					catch (Exception exception) {
+						throw new GradleException(
+							exception.getMessage(), exception);
 					}
 				}
 

@@ -83,8 +83,8 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 				_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 			}
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass());
+		catch (PortalException portalException) {
+			SessionErrors.add(actionRequest, portalException.getClass());
 
 			_portal.copyRequestParameters(actionRequest, actionResponse);
 

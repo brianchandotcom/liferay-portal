@@ -153,12 +153,13 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 					displayURL = _http.removeDomain(displayURL);
 				}
 			}
-			catch (NoSuchLayoutSetException nslse) {
+			catch (NoSuchLayoutSetException noSuchLayoutSetException) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nslse, nslse);
+					_log.debug(
+						noSuchLayoutSetException, noSuchLayoutSetException);
 				}
 			}
 
@@ -247,12 +248,12 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 						"fromPortraitId", fromUser.getPortraitId()
 					);
 				}
-				catch (NoSuchUserException nsue) {
+				catch (NoSuchUserException noSuchUserException) {
 
 					// LPS-52675
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(nsue, nsue);
+						_log.debug(noSuchUserException, noSuchUserException);
 					}
 
 					continue;

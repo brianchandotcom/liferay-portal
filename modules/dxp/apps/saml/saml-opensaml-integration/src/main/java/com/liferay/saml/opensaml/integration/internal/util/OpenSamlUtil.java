@@ -846,8 +846,8 @@ public class OpenSamlUtil {
 
 			signatureSigningParameters.setSigningCredential(credential);
 		}
-		catch (ResolverException re) {
-			throw new PortalException(re);
+		catch (ResolverException resolverException) {
+			throw new PortalException(resolverException);
 		}
 	}
 
@@ -880,8 +880,8 @@ public class OpenSamlUtil {
 
 			Signer.signObject(signature);
 		}
-		catch (ResolverException re) {
-			throw new SignatureException(re);
+		catch (ResolverException resolverException) {
+			throw new SignatureException(resolverException);
 		}
 	}
 

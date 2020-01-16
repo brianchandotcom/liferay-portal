@@ -256,9 +256,9 @@ public class LiveUsers {
 					userTracker.getUserAgent(), userTracker.getPaths());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 		}
 
@@ -269,7 +269,7 @@ public class LiveUsers {
 				session.invalidate();
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		_removeUserTracker(companyId, userId, userTracker);

@@ -47,8 +47,8 @@ public class PasswordPolicyModelListener
 			sapEntryLocalService.checkSystemSAPEntries(
 				passwordPolicy.getCompanyId());
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 
@@ -70,8 +70,8 @@ public class PasswordPolicyModelListener
 				sapEntryLocalService.deleteSAPEntry(sapEntry);
 			}
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

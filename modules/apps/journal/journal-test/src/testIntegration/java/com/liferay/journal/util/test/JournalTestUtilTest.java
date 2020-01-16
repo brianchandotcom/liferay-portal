@@ -255,7 +255,7 @@ public class JournalTestUtilTest {
 					ddmStructure.getGroupId(), DDMStructure.class.getName(),
 					ddmStructure.getStructureId()));
 		}
-		catch (NoSuchArticleException nsae) {
+		catch (NoSuchArticleException noSuchArticleException) {
 		}
 	}
 

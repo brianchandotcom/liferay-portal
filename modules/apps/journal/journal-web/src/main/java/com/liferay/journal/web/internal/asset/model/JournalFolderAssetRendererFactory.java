@@ -98,7 +98,7 @@ public class JournalFolderAssetRendererFactory
 		try {
 			liferayPortletURL.setWindowState(windowState);
 		}
-		catch (WindowStateException wse) {
+		catch (WindowStateException windowStateException) {
 		}
 
 		return liferayPortletURL;

@@ -73,8 +73,10 @@ public abstract class BaseMessageBodyWriter<T> implements MessageBodyWriter<T> {
 			authorizeScreenURL = getAuthorizeScreenURL(
 				portal.getCompanyId(httpServletRequest));
 		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to get authorize screen configuration", ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(
+				"Unable to get authorize screen configuration",
+				configurationException);
 
 			throw new WebApplicationException(
 				Response.status(
@@ -98,8 +100,8 @@ public abstract class BaseMessageBodyWriter<T> implements MessageBodyWriter<T> {
 		try {
 			httpServletResponse.sendRedirect(authorizeScreenURL);
 		}
-		catch (IOException ioe) {
-			throw new WebApplicationException(ioe);
+		catch (IOException ioException) {
+			throw new WebApplicationException(ioException);
 		}
 	}
 

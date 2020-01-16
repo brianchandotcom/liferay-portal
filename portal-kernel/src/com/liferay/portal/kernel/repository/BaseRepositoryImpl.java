@@ -69,8 +69,8 @@ public abstract class BaseRepositoryImpl
 				userId, folderId, sourceFileName, mimeType, title, description,
 				changeLog, is, file.length(), serviceContext);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -402,8 +402,8 @@ public abstract class BaseRepositoryImpl
 				description, changeLog, dlVersionNumberIncrease, is,
 				file.length(), serviceContext);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 

@@ -80,8 +80,8 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 			GroupPermissionUtil.check(
 				themeDisplay.getPermissionChecker(), groupId, ActionKeys.VIEW);
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(renderRequest, pe.getClass());
+		catch (PortalException portalException) {
+			SessionErrors.add(renderRequest, portalException.getClass());
 		}
 
 		super.doDispatch(renderRequest, renderResponse);

@@ -54,8 +54,8 @@ public class SiteMembershipChecker extends RowChecker {
 			return UserLocalServiceUtil.hasGroupUser(
 				_group.getGroupId(), user.getUserId());
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}
@@ -84,8 +84,8 @@ public class SiteMembershipChecker extends RowChecker {
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return super.isDisabled(obj);

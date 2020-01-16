@@ -110,9 +110,9 @@ public class DDMTemplateResourceParser implements TemplateResourceParser {
 			return new DDMTemplateResource(
 				ddmTemplate.getTemplateKey(), ddmTemplate);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new TemplateException(
-				"Unable to find template " + templateId, e);
+				"Unable to find template " + templateId, exception);
 		}
 	}
 

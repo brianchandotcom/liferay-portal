@@ -299,8 +299,8 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 		try {
 			properties.load(new UnsyncStringReader(propertyLines));
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		return properties;

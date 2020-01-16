@@ -134,11 +134,11 @@ public class LegacyDataArchiveUtil {
 
 			buildProperties.load(fileInputStream);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to load ", buildPropertiesFile.getPath()),
-				ioe);
+				ioException);
 		}
 
 		return buildProperties;

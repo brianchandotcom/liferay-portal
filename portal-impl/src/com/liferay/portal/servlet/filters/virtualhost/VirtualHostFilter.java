@@ -114,12 +114,13 @@ public class VirtualHostFilter extends BasePortalFilter {
 					LayoutLocalServiceUtil.getFriendlyURLLayout(
 						groupId, false, friendlyURL);
 				}
-				catch (NoSuchLayoutException nsle) {
+				catch (NoSuchLayoutException noSuchLayoutException) {
 
 					// LPS-52675
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(nsle, nsle);
+						_log.debug(
+							noSuchLayoutException, noSuchLayoutException);
 					}
 
 					return true;
@@ -358,8 +359,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 			requestDispatcher.forward(httpServletRequest, httpServletResponse);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			processFilter(
 				VirtualHostFilter.class.getName(), httpServletRequest,

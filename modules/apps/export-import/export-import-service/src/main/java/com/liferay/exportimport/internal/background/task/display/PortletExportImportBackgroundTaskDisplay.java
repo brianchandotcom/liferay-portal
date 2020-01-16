@@ -65,8 +65,8 @@ public class PortletExportImportBackgroundTaskDisplay
 			portlet = PortletLocalServiceUtil.getPortletById(
 				backgroundTask.getName());
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

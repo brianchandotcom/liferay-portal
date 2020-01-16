@@ -56,15 +56,15 @@ public class IMAPMessageCountListener implements MessageCountListener {
 			_imapAccessor.storeEnvelopes(
 				folder.getFolderId(), jxFolder, jxMessages);
 		}
-		catch (Exception e) {
-			_log.error("Unable to add messages", e);
+		catch (Exception exception) {
+			_log.error("Unable to add messages", exception);
 		}
 		finally {
 			try {
 				_imapAccessor.closeFolder(jxFolder, false);
 			}
-			catch (MailException me) {
-				_log.error(me, me);
+			catch (MailException mailException) {
+				_log.error(mailException, mailException);
 			}
 		}
 	}
@@ -93,15 +93,15 @@ public class IMAPMessageCountListener implements MessageCountListener {
 				MessageLocalServiceUtil.deleteMessage(message.getMessageId());
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to delete messages", e);
+		catch (Exception exception) {
+			_log.error("Unable to delete messages", exception);
 		}
 		finally {
 			try {
 				_imapAccessor.closeFolder(jxFolder, false);
 			}
-			catch (MailException me) {
-				_log.error(me, me);
+			catch (MailException mailException) {
+				_log.error(mailException, mailException);
 			}
 		}
 	}

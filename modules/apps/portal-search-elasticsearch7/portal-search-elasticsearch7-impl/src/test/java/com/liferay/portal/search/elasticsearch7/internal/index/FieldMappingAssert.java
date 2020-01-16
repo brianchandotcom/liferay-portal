@@ -105,8 +105,8 @@ public class FieldMappingAssert {
 
 			return getFieldMappingsResponse.fieldMappings(index, type, field);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

@@ -49,8 +49,8 @@ public class KaleoDefinitionVersionModelListener
 			_resourceLocalService.addModelResources(
 				kaleoDefinitionVersion, getServiceContext());
 		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
 		}
 	}
 
@@ -62,8 +62,8 @@ public class KaleoDefinitionVersionModelListener
 			_resourceLocalService.deleteResource(
 				kaleoDefinitionVersion, ResourceConstants.SCOPE_COMPANY);
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
 		}
 	}
 

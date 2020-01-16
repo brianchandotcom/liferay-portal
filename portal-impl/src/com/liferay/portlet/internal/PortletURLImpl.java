@@ -185,7 +185,7 @@ public class PortletURLImpl
 					_layout = LayoutLocalServiceUtil.getLayout(_plid);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Layout cannot be found for " + _plid);
 				}
@@ -691,8 +691,8 @@ public class PortletURLImpl
 
 				newParams.put(key, value);
 			}
-			catch (ClassCastException cce) {
-				throw new IllegalArgumentException(cce);
+			catch (ClassCastException classCastException) {
+				throw new IllegalArgumentException(classCastException);
 			}
 		}
 
@@ -945,8 +945,8 @@ public class PortletURLImpl
 				}
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		StringBundler sb = new StringBundler(64);
@@ -1227,7 +1227,7 @@ public class PortletURLImpl
 		try {
 			return URLCodec.encodeURL(Encryptor.encrypt(key, value));
 		}
-		catch (EncryptorException ee) {
+		catch (EncryptorException encryptorException) {
 			return value;
 		}
 	}
@@ -1345,8 +1345,8 @@ public class PortletURLImpl
 					portletURLGenerationListener.filterResourceURL(this);
 				}
 			}
-			catch (PortletException pe) {
-				_log.error(pe, pe);
+			catch (PortletException portletException) {
+				_log.error(portletException, portletException);
 			}
 		}
 	}
@@ -1516,8 +1516,8 @@ public class PortletURLImpl
 				return company.getKeyObj();
 			}
 		}
-		catch (Exception e) {
-			_log.error("Unable to get company key", e);
+		catch (Exception exception) {
+			_log.error("Unable to get company key", exception);
 		}
 
 		return null;

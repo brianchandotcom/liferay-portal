@@ -79,16 +79,16 @@ public class XmlRpcServlet extends HttpServlet {
 
 			xmlRpcResponse = invokeMethod(companyId, token, methodName, args);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			xmlRpcResponse = XmlRpcUtil.createFault(
 				XmlRpcConstants.NOT_WELL_FORMED, "XML is not well formed");
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioe, ioe);
+				_log.debug(ioException, ioException);
 			}
 		}
-		catch (XmlRpcException xre) {
-			_log.error(xre, xre);
+		catch (XmlRpcException xmlRpcException) {
+			_log.error(xmlRpcException, xmlRpcException);
 		}
 
 		if (xmlRpcResponse == null) {
@@ -104,9 +104,9 @@ public class XmlRpcServlet extends HttpServlet {
 			ServletResponseUtil.write(
 				httpServletResponse, xmlRpcResponse.toXml());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 
 			httpServletResponse.setStatus(

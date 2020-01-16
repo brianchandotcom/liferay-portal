@@ -76,7 +76,7 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		try {
 			cmisFileVersion.setParentFolder(getParentFolder());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		cmisFileVersion.setPrimaryKey(getPrimaryKey());
@@ -115,8 +115,8 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 				PrincipalThreadLocal.getUserId(), getFileEntry(),
 				incrementCounter);
 		}
-		catch (Exception e) {
-			_log.error("Unable to get content stream", e);
+		catch (Exception exception) {
+			_log.error("Unable to get content stream", exception);
 		}
 
 		return contentStream.getStream();
@@ -162,8 +162,8 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 				document = allVersions.get(0);
 			}
 		}
-		catch (CmisObjectNotFoundException confe) {
-			throw new NoSuchFileEntryException(confe);
+		catch (CmisObjectNotFoundException cmisObjectNotFoundException) {
+			throw new NoSuchFileEntryException(cmisObjectNotFoundException);
 		}
 
 		_fileEntry = _cmisRepository.toFileEntry(document);
@@ -176,13 +176,13 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		try {
 			return getFileEntry().getFileEntryId();
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfee, nsfee);
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return 0;
@@ -306,7 +306,7 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		try {
 			return UserLocalServiceUtil.getDefaultUserId(getCompanyId());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return 0;
 		}
 	}
@@ -323,7 +323,7 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 
 			return user.getUserUuid();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return StringPool.BLANK;
 		}
 	}

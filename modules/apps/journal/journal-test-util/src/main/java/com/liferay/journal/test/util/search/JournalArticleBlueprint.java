@@ -58,8 +58,8 @@ public class JournalArticleBlueprint {
 		try {
 			return TestPropsValues.getUserId();
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

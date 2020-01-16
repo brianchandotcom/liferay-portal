@@ -58,7 +58,7 @@ public class TasksEntryImpl extends TasksEntryBaseImpl {
 
 			fullName = user.getFullName();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return fullName;

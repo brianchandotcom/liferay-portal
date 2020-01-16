@@ -47,8 +47,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 					layout.getLayoutId());
 			}
 		}
-		catch (NoSuchEntryException nsee) {
-			throw new ModelListenerException(nsee);
+		catch (NoSuchEntryException noSuchEntryException) {
+			throw new ModelListenerException(noSuchEntryException);
 		}
 	}
 

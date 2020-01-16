@@ -144,8 +144,8 @@ public class DLOpenerGoogleDriveManager
 					DLOpenerGoogleDriveConstants.GOOGLE_DRIVE_REFERENCE_TYPE,
 					fileEntry);
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
 	}
 
@@ -319,8 +319,8 @@ public class DLOpenerGoogleDriveManager
 				return FileUtil.createTempFile(is);
 			}
 		}
-		catch (IOException | PortalException e) {
-			throw new RuntimeException(e);
+		catch (IOException | PortalException exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
@@ -368,8 +368,8 @@ public class DLOpenerGoogleDriveManager
 
 			return file.getName();
 		}
-		catch (IOException | PortalException e) {
-			throw new RuntimeException(e);
+		catch (IOException | PortalException exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

@@ -172,8 +172,8 @@ public class AssetPublisherWebUtil {
 		try {
 			portletPreferences.store();
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (IOException ioException) {
+			throw new SystemException(ioException);
 		}
 	}
 
@@ -599,9 +599,9 @@ public class AssetPublisherWebUtil {
 
 			xml = document.formattedString(StringPool.BLANK);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
+				_log.warn(ioException, ioException);
 			}
 		}
 

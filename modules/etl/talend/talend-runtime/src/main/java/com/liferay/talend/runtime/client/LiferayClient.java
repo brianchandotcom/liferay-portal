@@ -373,10 +373,10 @@ public class LiferayClient {
 
 				currentResponse = builder.get();
 			}
-			catch (URISyntaxException urise) {
+			catch (URISyntaxException uriSyntaxException) {
 				throw new ConnectionClientException(
 					"Unable to redirect to location " + location,
-					response.getStatus(), urise);
+					response.getStatus(), uriSyntaxException);
 			}
 		}
 
@@ -429,7 +429,7 @@ public class LiferayClient {
 		try {
 			return new URI(_hostURL + targetURIString);
 		}
-		catch (URISyntaxException urise) {
+		catch (URISyntaxException uriSyntaxException) {
 			_logger.error(
 				"Unable to parse {} as a URI reference",
 				_hostURL + targetURIString);

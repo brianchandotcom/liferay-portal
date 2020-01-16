@@ -64,13 +64,14 @@ public class ZipReaderImpl implements ZipReader {
 		try {
 			File.umount(_zipFile);
 		}
-		catch (ArchiveBusyWarningException abwe) {
+		catch (ArchiveBusyWarningException archiveBusyWarningException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(abwe, abwe);
+				_log.warn(
+					archiveBusyWarningException, archiveBusyWarningException);
 			}
 		}
-		catch (ArchiveException ae) {
-			_log.error(ae, ae);
+		catch (ArchiveException archiveException) {
+			_log.error(archiveException, archiveException);
 		}
 	}
 
@@ -111,8 +112,8 @@ public class ZipReaderImpl implements ZipReader {
 				bytes = FileUtil.getBytes(is);
 			}
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 		}
 
 		return bytes;
@@ -138,8 +139,8 @@ public class ZipReaderImpl implements ZipReader {
 
 				return new FileInputStream(file);
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 

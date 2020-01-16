@@ -176,9 +176,10 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException ce) {
+		catch (ConfigurationException configurationException) {
 			throw new SystemException(
-				"Unable to get service access policy configuration", ce);
+				"Unable to get service access policy configuration",
+				configurationException);
 		}
 
 		if (!sapConfiguration.useSystemSAPEntries()) {
@@ -246,8 +247,8 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 				allowedServiceSignatures.addAll(
 					sapEntry.getAllowedServiceSignaturesList());
 			}
-			catch (PortalException pe) {
-				throw new SystemException(pe);
+			catch (PortalException portalException) {
+				throw new SystemException(portalException);
 			}
 		}
 

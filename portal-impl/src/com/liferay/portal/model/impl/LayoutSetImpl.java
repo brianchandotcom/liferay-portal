@@ -153,7 +153,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 				return logoId;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return logoId;
 		}
 
@@ -203,8 +203,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 			try {
 				_settingsProperties.load(super.getSettings());
 			}
-			catch (IOException ioe) {
-				_log.error(ioe, ioe);
+			catch (IOException ioException) {
+				_log.error(ioException, ioException);
 			}
 		}
 
@@ -289,8 +289,8 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 			virtualHosts = VirtualHostLocalServiceUtil.getVirtualHosts(
 				getCompanyId(), getLayoutSetId());
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		if ((virtualHosts == null) || virtualHosts.isEmpty()) {
@@ -388,7 +388,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 
 			controlPanel = group.isControlPanel();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		if (controlPanel) {

@@ -136,8 +136,8 @@ public class ReportsEngineConsoleUtil {
 
 			connection = dataSource.getConnection();
 		}
-		catch (Exception e) {
-			throw new SourceJDBCConnectionException(e);
+		catch (Exception exception) {
+			throw new SourceJDBCConnectionException(exception);
 		}
 		finally {
 			DataAccess.cleanUp(connection);

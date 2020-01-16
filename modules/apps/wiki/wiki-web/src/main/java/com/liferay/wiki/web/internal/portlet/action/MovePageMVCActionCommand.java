@@ -87,21 +87,21 @@ public class MovePageMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof NoSuchPageException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchNodeException ||
+				exception instanceof NoSuchPageException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
-			else if (e instanceof DuplicatePageException ||
-					 e instanceof PageContentException ||
-					 e instanceof PageTitleException) {
+			else if (exception instanceof DuplicatePageException ||
+					 exception instanceof PageContentException ||
+					 exception instanceof PageTitleException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
-				throw e;
+				throw exception;
 			}
 		}
 	}

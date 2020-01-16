@@ -155,7 +155,7 @@ public class PollsVoteStagedModelDataHandler
 			_pollsVoteLocalService.addVote(
 				vote.getUserId(), questionId, choiceId, serviceContext);
 		}
-		catch (DuplicateVoteException dve) {
+		catch (DuplicateVoteException duplicateVoteException) {
 		}
 	}
 

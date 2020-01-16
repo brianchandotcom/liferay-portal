@@ -123,7 +123,7 @@ public class AppServer {
 				return true;
 			}
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 		}
 
 		return false;

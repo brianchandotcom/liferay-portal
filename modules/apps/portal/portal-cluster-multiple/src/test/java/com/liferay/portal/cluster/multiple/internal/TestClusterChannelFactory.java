@@ -47,8 +47,8 @@ public class TestClusterChannelFactory implements ClusterChannelFactory {
 			return NetworkInterface.getByInetAddress(
 				InetAddress.getLoopbackAddress());
 		}
-		catch (SocketException se) {
-			throw new IllegalStateException(se);
+		catch (SocketException socketException) {
+			throw new IllegalStateException(socketException);
 		}
 	}
 

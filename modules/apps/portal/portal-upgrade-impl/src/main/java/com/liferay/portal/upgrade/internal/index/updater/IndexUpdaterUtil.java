@@ -67,8 +67,9 @@ public class IndexUpdaterUtil {
 		try (InputStream inputStream = resource.openStream()) {
 			return StringUtil.read(inputStream);
 		}
-		catch (IOException ioe) {
-			_log.error("Unable to read SQL template " + templateName, ioe);
+		catch (IOException ioException) {
+			_log.error(
+				"Unable to read SQL template " + templateName, ioException);
 
 			return null;
 		}

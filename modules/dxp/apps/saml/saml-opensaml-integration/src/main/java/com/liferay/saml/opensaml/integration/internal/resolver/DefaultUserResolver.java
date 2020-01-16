@@ -221,12 +221,12 @@ public class DefaultUserResolver implements UserResolver {
 				resolveBearerAssertionAttributesWithMapping(
 					userAttributeMappingsProperties);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage(), e);
+				_log.debug(exception.getMessage(), exception);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
+				_log.warn(exception.getMessage());
 			}
 		}
 
@@ -280,12 +280,12 @@ public class DefaultUserResolver implements UserResolver {
 					subjectNameIdentifier, companyId);
 			}
 		}
-		catch (NoSuchUserException nsue) {
+		catch (NoSuchUserException noSuchUserException) {
 
 			// LPS-52675
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsue, nsue);
+				_log.debug(noSuchUserException, noSuchUserException);
 			}
 		}
 

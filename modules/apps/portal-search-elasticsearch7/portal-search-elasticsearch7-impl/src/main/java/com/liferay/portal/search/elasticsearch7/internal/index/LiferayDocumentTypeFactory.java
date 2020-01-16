@@ -74,8 +74,8 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 
 			LogUtil.logActionResponse(_log, actionResponse);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -124,8 +124,8 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		try {
 			return _jsonFactory.createJSONObject(mappings);
 		}
-		catch (JSONException jsone) {
-			throw new RuntimeException(jsone);
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
 		}
 	}
 
@@ -141,8 +141,8 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 			getMappingsResponse = _indicesClient.getMapping(
 				getMappingsRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>>

@@ -45,8 +45,8 @@ public class FIFOWelder extends BaseWelder {
 			FIFOUtil.createFIFO(inputFIFOFile);
 			FIFOUtil.createFIFO(outputFIFOFile);
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 

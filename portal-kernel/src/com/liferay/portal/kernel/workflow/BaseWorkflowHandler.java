@@ -100,9 +100,9 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 					portletRequest, portletResponse);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -118,9 +118,9 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 				return assetRenderer.getTitle(locale);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -140,9 +140,9 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 					liferayPortletRequest, liferayPortletResponse);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -166,8 +166,8 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 
 			return portletURL.toString();
 		}
-		catch (WindowStateException wse) {
-			throw new PortalException(wse);
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
 		}
 	}
 
@@ -184,9 +184,9 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 					liferayPortletRequest, liferayPortletResponse);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -208,9 +208,9 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 					noSuchEntryRedirect);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -243,9 +243,9 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 					httpServletRequest, httpServletResponse, template);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 

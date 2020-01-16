@@ -79,8 +79,8 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 				return defaultNoticeableFuture;
 			}
-			catch (Exception e) {
-				throw new SystemException(e);
+			catch (Exception exception) {
+				throw new SystemException(exception);
 			}
 		}
 
@@ -106,9 +106,10 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 			};
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new SystemException(
-				"Unable to execute on master " + masterClusterNodeId, e);
+				"Unable to execute on master " + masterClusterNodeId,
+				exception);
 		}
 	}
 

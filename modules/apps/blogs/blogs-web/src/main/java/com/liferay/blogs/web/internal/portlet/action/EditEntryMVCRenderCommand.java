@@ -80,16 +80,16 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 				BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER,
 				_blogsItemSelectorHelper);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchEntryException ||
-				e instanceof PrincipalException) {
+		catch (Exception exception) {
+			if (exception instanceof NoSuchEntryException ||
+				exception instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, exception.getClass());
 
 				return "/blogs/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(exception);
 		}
 
 		return "/blogs/edit_entry.jsp";

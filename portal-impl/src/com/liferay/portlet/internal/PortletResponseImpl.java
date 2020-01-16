@@ -245,9 +245,10 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 				_document = documentBuilder.newDocument();
 			}
-			catch (ParserConfigurationException pce) {
+			catch (ParserConfigurationException parserConfigurationException) {
 				throw new DOMException(
-					DOMException.INVALID_STATE_ERR, pce.getMessage());
+					DOMException.INVALID_STATE_ERR,
+					parserConfigurationException.getMessage());
 			}
 		}
 
@@ -623,9 +624,9 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 				markupHeadElements.add(writer.toString());
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}

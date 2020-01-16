@@ -371,8 +371,8 @@ public class PortalCacheIndexerTest {
 			try {
 				return method.invoke(_instance, args);
 			}
-			catch (InvocationTargetException ite) {
-				throw ite.getTargetException();
+			catch (InvocationTargetException invocationTargetException) {
+				throw invocationTargetException.getTargetException();
 			}
 			finally {
 				Callable<?> afterCallable = null;

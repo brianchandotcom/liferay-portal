@@ -40,8 +40,8 @@ public class DocumentumFileEntry
 		try {
 			return _idfDocumentLastVersion.getLockOwner();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 
@@ -59,8 +59,8 @@ public class DocumentumFileEntry
 		try {
 			return _idfDocumentLastVersion.getObjectName();
 		}
-		catch (DfException de) {
-			throw new SystemException(de);
+		catch (DfException dfException) {
+			throw new SystemException(dfException);
 		}
 	}
 

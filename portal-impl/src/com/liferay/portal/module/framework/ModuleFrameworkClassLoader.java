@@ -48,7 +48,7 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 					try {
 						clazz = findClass(name);
 					}
-					catch (ClassNotFoundException cnfe) {
+					catch (ClassNotFoundException classNotFoundException) {
 						clazz = super.loadClass(name, resolve);
 					}
 				}
@@ -56,7 +56,7 @@ public class ModuleFrameworkClassLoader extends URLClassLoader {
 					try {
 						clazz = super.loadClass(name, resolve);
 					}
-					catch (ClassNotFoundException cnfe) {
+					catch (ClassNotFoundException classNotFoundException) {
 						clazz = findClass(name);
 					}
 				}

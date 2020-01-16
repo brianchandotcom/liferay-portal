@@ -232,10 +232,11 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 			try {
 				deleteScheduledTimer(kaleoTimerInstanceToken);
 			}
-			catch (PortalException pe) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to unschedule " + kaleoTimerInstanceToken, pe);
+						"Unable to unschedule " + kaleoTimerInstanceToken,
+						portalException);
 				}
 			}
 

@@ -250,14 +250,15 @@ public class AssetPublisherConfigurationAction
 				super.processAction(
 					portletConfig, actionRequest, actionResponse);
 			}
-			catch (Exception e) {
-				if (e instanceof AssetTagException ||
-					e instanceof DuplicateQueryRuleException) {
+			catch (Exception exception) {
+				if (exception instanceof AssetTagException ||
+					exception instanceof DuplicateQueryRuleException) {
 
-					SessionErrors.add(actionRequest, e.getClass(), e);
+					SessionErrors.add(
+						actionRequest, exception.getClass(), exception);
 				}
 				else {
-					throw e;
+					throw exception;
 				}
 			}
 		}

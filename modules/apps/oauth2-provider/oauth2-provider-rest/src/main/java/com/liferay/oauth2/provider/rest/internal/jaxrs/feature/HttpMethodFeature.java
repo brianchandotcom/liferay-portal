@@ -150,7 +150,7 @@ public class HttpMethodFeature implements Feature {
 			return clazz.getDeclaredMethod(
 				method.getName(), method.getParameterTypes());
 		}
-		catch (NoSuchMethodException nsme) {
+		catch (NoSuchMethodException noSuchMethodException) {
 			return null;
 		}
 	}

@@ -227,9 +227,9 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 			return transformedSQL;
 		}
-		catch (JSQLParserException jsqlpe) {
+		catch (JSQLParserException jsqlParserException) {
 			throw new RuntimeException(
-				"Failed to parse sql for " + sql, jsqlpe);
+				"Failed to parse sql for " + sql, jsqlParserException);
 		}
 	}
 

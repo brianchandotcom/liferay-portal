@@ -77,11 +77,11 @@ public class PwdAuthenticator {
 
 				return false;
 			}
-			catch (NoSuchAlgorithmException nsae) {
-				throw new SystemException(nsae);
+			catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+				throw new SystemException(noSuchAlgorithmException);
 			}
-			catch (UnsupportedEncodingException uee) {
-				throw new SystemException(uee);
+			catch (UnsupportedEncodingException unsupportedEncodingException) {
+				throw new SystemException(unsupportedEncodingException);
 			}
 		}
 

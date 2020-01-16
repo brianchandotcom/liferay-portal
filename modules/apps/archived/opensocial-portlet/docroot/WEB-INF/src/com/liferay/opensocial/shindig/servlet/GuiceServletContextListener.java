@@ -44,9 +44,10 @@ public class GuiceServletContextListener
 
 			field.set(_guiceServletContextListener, true);
 		}
-		catch (ReflectiveOperationException roe) {
+		catch (ReflectiveOperationException reflectiveOperationException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(roe, roe);
+				_log.warn(
+					reflectiveOperationException, reflectiveOperationException);
 			}
 		}
 	}

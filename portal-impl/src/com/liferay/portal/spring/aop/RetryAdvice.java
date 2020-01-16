@@ -65,8 +65,9 @@ public class RetryAdvice extends ChainableMethodAdvice {
 
 			return new RetryContext(retryAcceptor, properties, retries);
 		}
-		catch (ReflectiveOperationException roe) {
-			_log.error(roe, roe);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			_log.error(
+				reflectiveOperationException, reflectiveOperationException);
 
 			return null;
 		}

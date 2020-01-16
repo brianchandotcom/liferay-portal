@@ -541,9 +541,11 @@ public class PortletPermissionImpl implements PortletPermission {
 			return controlPanelEntry.hasAccessPermission(
 				permissionChecker, group, portlet);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Cannot process control panel access permission", e);
+				_log.warn(
+					"Cannot process control panel access permission",
+					exception);
 			}
 
 			return false;
@@ -575,8 +577,8 @@ public class PortletPermissionImpl implements PortletPermission {
 
 			return layoutManagerActions.contains(actionId);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 
 			return false;
 		}

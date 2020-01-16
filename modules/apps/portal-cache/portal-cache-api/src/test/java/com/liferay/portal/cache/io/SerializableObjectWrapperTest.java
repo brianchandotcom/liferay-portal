@@ -115,7 +115,8 @@ public class SerializableObjectWrapperTest {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ClassNotFoundException cnfe = new ClassNotFoundException();
+		ClassNotFoundException classNotFoundException =
+			new ClassNotFoundException();
 
 		currentThread.setContextClassLoader(
 			new ClassLoader() {
@@ -125,7 +126,7 @@ public class SerializableObjectWrapperTest {
 					throws ClassNotFoundException {
 
 					if (name.equals(TestSerializable.class.getName())) {
-						throw cnfe;
+						throw classNotFoundException;
 					}
 
 					return super.loadClass(name);
@@ -151,7 +152,7 @@ public class SerializableObjectWrapperTest {
 
 			Assert.assertEquals(
 				"Unable to deserialize object", logRecord.getMessage());
-			Assert.assertSame(cnfe, logRecord.getThrown());
+			Assert.assertSame(classNotFoundException, logRecord.getThrown());
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

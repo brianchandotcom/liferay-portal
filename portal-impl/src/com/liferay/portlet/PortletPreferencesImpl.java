@@ -126,9 +126,9 @@ public class PortletPreferencesImpl
 					PortletPreferencesLocalServiceUtil.getDefaultPreferences(
 						companyId, _portletId);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+					_log.warn(exception, exception);
 				}
 			}
 		}
@@ -176,8 +176,8 @@ public class PortletPreferencesImpl
 			PortletPreferencesLocalServiceUtil.updatePreferences(
 				getOwnerId(), getOwnerType(), _plid, _portletId, this);
 		}
-		catch (SystemException se) {
-			throw new IOException(se);
+		catch (SystemException systemException) {
+			throw new IOException(systemException);
 		}
 	}
 

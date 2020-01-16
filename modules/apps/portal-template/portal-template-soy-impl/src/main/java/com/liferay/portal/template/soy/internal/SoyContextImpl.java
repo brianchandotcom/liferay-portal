@@ -158,8 +158,8 @@ public class SoyContextImpl implements SoyContext {
 			try {
 				value = unsafeSupplier.get();
 			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 

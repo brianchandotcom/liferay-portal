@@ -92,7 +92,7 @@ public class MaintenanceUtil {
 				try {
 					session.invalidate();
 				}
-				catch (IllegalStateException ise) {
+				catch (IllegalStateException illegalStateException) {
 				}
 			}
 		}

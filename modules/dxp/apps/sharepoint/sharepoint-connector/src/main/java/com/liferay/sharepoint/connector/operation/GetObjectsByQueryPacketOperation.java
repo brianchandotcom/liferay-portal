@@ -97,8 +97,8 @@ public class GetObjectsByQueryPacketOperation extends BaseOperation {
 
 			return sharepointObjects;
 		}
-		catch (RemoteException re) {
-			RemoteExceptionUtil.handleRemoteException(re);
+		catch (RemoteException remoteException) {
+			RemoteExceptionUtil.handleRemoteException(remoteException);
 
 			throw new IllegalStateException();
 		}

@@ -88,9 +88,9 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 			PortletBeanLocatorUtil.setBeanLocator(
 				servletContext.getServletContextName(), null);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(exception, exception);
 			}
 		}
 
@@ -151,8 +151,8 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 			PortletBeanLocatorUtil.setBeanLocator(
 				servletContext.getServletContextName(), beanLocatorImpl);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		if (previousApplicationContext == null) {
@@ -231,10 +231,10 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 						_serviceRegistrations.add(serviceRegistration);
 					}
 				}
-				catch (BeanIsAbstractException biae) {
+				catch (BeanIsAbstractException beanIsAbstractException) {
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (Exception exception) {
+					_log.error(exception, exception);
 				}
 			});
 	}

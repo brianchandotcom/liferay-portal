@@ -100,8 +100,8 @@ public class GitUpToDateCacheTask extends Task {
 				}
 			}
 		}
-		catch (Exception e) {
-			throw new BuildException(e);
+		catch (Exception exception) {
+			throw new BuildException(exception);
 		}
 	}
 
@@ -160,8 +160,8 @@ public class GitUpToDateCacheTask extends Task {
 
 				});
 		}
-		catch (IOException ioe) {
-			throw new BuildException(ioe);
+		catch (IOException ioException) {
+			throw new BuildException(ioException);
 		}
 
 		return paths;

@@ -74,11 +74,11 @@ public class SegmentsExperimentModelListener
 					SegmentsExperienceConstants.ID_DEFAULT);
 			}
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			throw new ModelListenerException(
 				"Unable to update segments experiment " +
 					segmentsExperiment.getSegmentsExperimentId(),
-				pe);
+				portalException);
 		}
 	}
 

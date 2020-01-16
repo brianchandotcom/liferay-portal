@@ -142,8 +142,8 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 			_dynamicQueryCountMethod = clazz.getMethod(
 				"dynamicQueryCount", DynamicQuery.class, Projection.class);
 		}
-		catch (NoSuchMethodException nsme) {
-			throw new SystemException(nsme);
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new SystemException(noSuchMethodException);
 		}
 	}
 
@@ -348,8 +348,8 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 		try {
 			return dynamicQueryMethod.invoke(_baseLocalService, arguments);
 		}
-		catch (InvocationTargetException ite) {
-			Throwable throwable = ite.getCause();
+		catch (InvocationTargetException invocationTargetException) {
+			Throwable throwable = invocationTargetException.getCause();
 
 			if (throwable instanceof PortalException) {
 				throw (PortalException)throwable;
@@ -358,10 +358,10 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 				throw (SystemException)throwable;
 			}
 
-			throw new SystemException(ite);
+			throw new SystemException(invocationTargetException);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

@@ -57,11 +57,11 @@ public class SegmentsExperimentModelListener
 			_asahSegmentsExperimentProcessor.processUpdateSegmentsExperiment(
 				segmentsExperiment);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ModelListenerException(
 				"Unable to update segments experiment " +
 					segmentsExperiment.getSegmentsExperimentId(),
-				e);
+				exception);
 		}
 	}
 
@@ -80,11 +80,11 @@ public class SegmentsExperimentModelListener
 			_asahSegmentsExperimentProcessor.processAddSegmentsExperiment(
 				segmentsExperiment);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new ModelListenerException(
 				"Unable to add segments experiment " +
 					segmentsExperiment.getSegmentsExperimentId(),
-				e);
+				exception);
 		}
 	}
 
@@ -103,12 +103,12 @@ public class SegmentsExperimentModelListener
 			_asahSegmentsExperimentProcessor.processDeleteSegmentsExperiment(
 				segmentsExperiment);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to delete segments experiment " +
 						segmentsExperiment.getSegmentsExperimentId(),
-					e);
+					exception);
 			}
 		}
 	}

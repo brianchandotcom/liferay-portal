@@ -76,7 +76,7 @@ public class RestoreRootTrashPortletConfigurationIcon
 
 			return restoreURL.toString();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return StringPool.BLANK;
@@ -113,7 +113,7 @@ public class RestoreRootTrashPortletConfigurationIcon
 				return false;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 

@@ -78,7 +78,7 @@ public class CategoryPermissionsPortletConfigurationIcon
 				resourcePrimKey, LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return url;
@@ -111,7 +111,7 @@ public class CategoryPermissionsPortletConfigurationIcon
 				return false;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			return false;
 		}
 

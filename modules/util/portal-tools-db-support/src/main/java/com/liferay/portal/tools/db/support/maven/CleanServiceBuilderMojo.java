@@ -37,8 +37,8 @@ public class CleanServiceBuilderMojo extends AbstractMojo {
 		try {
 			_cleanServiceBuilderCommand.execute(_dbSupportArgs);
 		}
-		catch (Exception e) {
-			throw new MojoExecutionException(e.getMessage(), e);
+		catch (Exception exception) {
+			throw new MojoExecutionException(exception.getMessage(), exception);
 		}
 	}
 

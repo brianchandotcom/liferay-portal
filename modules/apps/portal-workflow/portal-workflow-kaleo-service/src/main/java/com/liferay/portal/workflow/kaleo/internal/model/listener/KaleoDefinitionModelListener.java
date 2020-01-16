@@ -76,8 +76,8 @@ public class KaleoDefinitionModelListener
 					_messageBus.sendMessage(
 						"liferay/kaleo_definition", message);
 				}
-				catch (Exception e) {
-					throw new ModelListenerException(e);
+				catch (Exception exception) {
+					throw new ModelListenerException(exception);
 				}
 
 				return null;

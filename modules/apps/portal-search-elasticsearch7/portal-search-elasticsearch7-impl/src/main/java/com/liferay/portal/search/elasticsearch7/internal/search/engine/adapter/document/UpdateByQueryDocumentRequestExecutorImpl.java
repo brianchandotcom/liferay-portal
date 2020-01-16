@@ -98,8 +98,8 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 			return restHighLevelClient.updateByQuery(
 				updateByQueryRequest, RequestOptions.DEFAULT);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

@@ -105,7 +105,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 				tempFile.renameTo(videoFile);
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to move MOOV atom to front of MP4 file");
 			}

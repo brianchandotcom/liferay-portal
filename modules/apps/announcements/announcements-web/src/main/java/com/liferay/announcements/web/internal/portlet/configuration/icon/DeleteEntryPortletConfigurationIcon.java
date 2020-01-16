@@ -79,8 +79,8 @@ public class DeleteEntryPortletConfigurationIcon
 		try {
 			entry = ActionUtil.getEntry(portletRequest);
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 
 		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
@@ -104,8 +104,8 @@ public class DeleteEntryPortletConfigurationIcon
 				themeDisplay.getPermissionChecker(),
 				ActionUtil.getEntry(portletRequest), ActionKeys.DELETE);
 		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

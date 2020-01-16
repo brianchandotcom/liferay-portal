@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE</td>
+	<td>xpath=(//div[@class='header'][span[contains(text(),'On Time')]]/following-sibling::div)[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DASHBOARD_TOTAL_OVERDUE_ITEMS_TITLE</td>
 	<td>//div[@class='header'][span[contains(text(),'Overdue')]]</td>
 	<td></td>
@@ -51,6 +56,11 @@
 <tr>
 	<td>DASHBOARD_TOTAL_UNTRACKED_ITEMS_TITLE</td>
 	<td>//div[@class='header'][span[contains(text(),'Untracked')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DASHBOARD_TOTAL_UNTRACKED_ITEMS_VALUE</td>
+	<td>xpath=(//div[@class='header'][span[contains(text(),'Untracked')]]/following-sibling::div)[1]</td>
 	<td></td>
 </tr>
 <tr>

@@ -22,8 +22,9 @@ import com.liferay.petra.sql.dsl.expressions.impl.Operand;
 import com.liferay.petra.sql.dsl.expressions.impl.PredicateImpl;
 import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
 import com.liferay.petra.sql.dsl.expressions.impl.ScalarList;
+import com.liferay.petra.sql.dsl.query.OrderByExpression;
 import com.liferay.petra.sql.dsl.query.Query;
-import com.liferay.petra.sql.dsl.query.impl.OrderByExpression;
+import com.liferay.petra.sql.dsl.query.impl.OrderByExpressionImpl;
 
 import java.util.function.Consumer;
 
@@ -37,11 +38,11 @@ public interface Expression<T> extends ASTNode {
 	}
 
 	public default OrderByExpression ascending() {
-		return new OrderByExpression(this, true);
+		return new OrderByExpressionImpl(this, true);
 	}
 
 	public default OrderByExpression descending() {
-		return new OrderByExpression(this, false);
+		return new OrderByExpressionImpl(this, false);
 	}
 
 	public default Predicate eq(Expression<T> expression) {

@@ -17,6 +17,7 @@ package com.liferay.petra.sql.dsl.query.impl;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.BaseASTNode;
 import com.liferay.petra.sql.dsl.expressions.Expression;
+import com.liferay.petra.sql.dsl.query.OrderByExpression;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -24,17 +25,20 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class OrderByExpression extends BaseASTNode {
+public class OrderByExpressionImpl
+	extends BaseASTNode implements OrderByExpression {
 
-	public OrderByExpression(Expression<?> expression, boolean ascending) {
+	public OrderByExpressionImpl(Expression<?> expression, boolean ascending) {
 		_expression = Objects.requireNonNull(expression);
 		_ascending = ascending;
 	}
 
+	@Override
 	public Expression<?> getExpression() {
 		return _expression;
 	}
 
+	@Override
 	public boolean isAscending() {
 		return _ascending;
 	}

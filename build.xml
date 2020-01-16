@@ -1204,24 +1204,6 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<echo>The "start" target is now deprecated. Please use the "compile" target instead.</echo>
 	</target>
 
-	<target name="start-elasticsearch-sidecar">
-		<gradle-execute setupbinariescache="false" task="startElasticsearch">
-			<arg value="--build-file=${project.dir}/modules/elasticsearch-sidecar.gradle" />
-			<arg value="-Pelasticsearch.sidecar.cluster.size=${elasticsearch.sidecar.cluster.size}" />
-			<arg value="-Pelasticsearch.sidecar.major.version=${elasticsearch.sidecar.major.version}" />
-			<arg value="-Pelasticsearch.sidecar.version=${elasticsearch.sidecar.version}" />
-		</gradle-execute>
-	</target>
-
-	<target name="stop-elasticsearch-sidecar">
-		<gradle-execute setupbinariescache="false" task="stopElasticsearch">
-			<arg value="--build-file=${project.dir}/modules/elasticsearch-sidecar.gradle" />
-			<arg value="-Pelasticsearch.sidecar.cluster.size=${elasticsearch.sidecar.cluster.size}" />
-			<arg value="-Pelasticsearch.sidecar.major.version=${elasticsearch.sidecar.major.version}" />
-			<arg value="-Pelasticsearch.sidecar.version=${elasticsearch.sidecar.version}" />
-		</gradle-execute>
-	</target>
-
 	<target name="test-package">
 		<ant antfile="build-test.xml" inheritAll="false" target="test-package" />
 	</target>

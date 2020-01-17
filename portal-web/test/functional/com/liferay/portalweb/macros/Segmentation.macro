@@ -67,7 +67,6 @@ definition {
 
 	macro selectTag {
 		Click(locator1 = "Segmentation#ADD_TAG_BUTTON");
-		Click(locator1 = "Segmentation#TAG_OPTION");
 	}
 
 	macro tearDown {

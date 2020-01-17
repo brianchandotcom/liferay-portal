@@ -131,10 +131,10 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.addCP(
-			userEmailAddress = "UserTag@liferay.com",
+			userEmailAddress = "Tag@liferay.com",
 			userFirstName = "UserTag",
-			userLastName = "UserTag",
-			userScreenName = "UserTag",
+			userLastName = "Tag",
+			userScreenName = "Tag",
 			userTag = "tagtest");
 
 		ProductMenu.gotoPortlet(

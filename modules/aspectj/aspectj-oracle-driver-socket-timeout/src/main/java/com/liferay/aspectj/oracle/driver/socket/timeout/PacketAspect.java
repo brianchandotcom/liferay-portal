@@ -30,7 +30,7 @@ public class PacketAspect {
 	@Before(
 		"handler(java.io.InterruptedIOException) &&" +
 			"withincode(void oracle.net.ns.Packet.receive()) &&" +
-				"args(interruptedIOException) && this(packet)"
+				"args(exception1) && this(packet)"
 	)
 	public void addSuppressedInterruptedIOException(
 			Object packet, Exception exception1)

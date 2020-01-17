@@ -30,6 +30,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -517,6 +518,31 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 		}
 	}
 
+	private void _populatePortletResourceNames(
+		Map<String, String[]> parameterMap, Portlet dataSiteLevelPortlet) {
+
+		PortletDataHandler portletDataHandler =
+			dataSiteLevelPortlet.getPortletDataHandlerInstance();
+
+		String resourceName = portletDataHandler.getResourceName();
+
+		if (resourceName == null) {
+			return;
+		}
+
+		if (!parameterMap.containsKey("portletResourceNames")) {
+			parameterMap.put("portletResourceNames", new String[0]);
+		}
+
+		String[] portletResourceNames = parameterMap.get(
+			"portletResourceNames");
+
+		portletResourceNames = ArrayUtil.append(
+			portletResourceNames, resourceName);
+
+		parameterMap.put("portletResourceNames", portletResourceNames);
+	}
+
 	private void _populateStagedModelTypes(
 		Map<String, String[]> parameterMap, Portlet dataSiteLevelPortlet) {
 
@@ -614,6 +640,9 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 				if (portletDataAll ||
 					((portletDataValues != null) &&
 					 GetterUtil.getBoolean(portletDataValues[0]))) {
+
+					_populatePortletResourceNames(
+						parameterMap, dataSiteLevelPortlet);
 
 					_populateStagedModelTypes(
 						parameterMap, dataSiteLevelPortlet);

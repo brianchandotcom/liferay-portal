@@ -343,6 +343,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
+	public String getResourceName() {
+		return null;
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return "1.0.0";
 	}

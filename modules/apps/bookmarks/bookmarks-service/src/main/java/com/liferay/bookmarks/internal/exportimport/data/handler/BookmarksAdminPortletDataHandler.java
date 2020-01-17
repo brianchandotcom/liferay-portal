@@ -76,6 +76,11 @@ public class BookmarksAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public String getResourceName() {
+		return BookmarksConstants.RESOURCE_NAME;
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}

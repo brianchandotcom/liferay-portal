@@ -81,6 +81,11 @@ public class WikiAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public String getResourceName() {
+		return WikiConstants.RESOURCE_NAME;
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}

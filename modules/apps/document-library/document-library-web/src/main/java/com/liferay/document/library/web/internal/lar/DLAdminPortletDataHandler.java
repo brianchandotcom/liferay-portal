@@ -87,6 +87,11 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public String getResourceName() {
+		return DLConstants.RESOURCE_NAME;
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}

@@ -135,6 +135,11 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public String getResourceName() {
+		return JournalConstants.RESOURCE_NAME;
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}

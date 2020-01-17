@@ -14,15 +14,15 @@
 
 package com.liferay.exportimport.internal.upgrade.v1_0_0;
 
+import com.liferay.exportimport.internal.upgrade.BaseUpgradeBackgroundTaskExecutorClassNames;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
  * @author Daniel Kocsis
  */
-public class UpgradeBackgroundTaskExecutorClassNames extends UpgradeProcess {
+public class UpgradeBackgroundTaskExecutorClassNames
+	extends BaseUpgradeBackgroundTaskExecutorClassNames {
 
 	protected void deleteBackgroundTasks() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -35,26 +35,12 @@ public class UpgradeBackgroundTaskExecutorClassNames extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String[][] renameTaskExecutorClassNamesArray =
-			getRenameTaskExecutorClassNames();
-
-		for (String[] renameTaskExecutorClassName :
-				renameTaskExecutorClassNamesArray) {
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("update BackgroundTask set taskExecutorClassName = '");
-			sb.append(renameTaskExecutorClassName[1]);
-			sb.append("' where taskExecutorClassName = '");
-			sb.append(renameTaskExecutorClassName[0]);
-			sb.append("'");
-
-			runSQL(sb.toString());
-		}
+		super.doUpgrade();
 
 		deleteBackgroundTasks();
 	}
 
+	@Override
 	protected String[][] getRenameTaskExecutorClassNames() {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			return new String[][] {

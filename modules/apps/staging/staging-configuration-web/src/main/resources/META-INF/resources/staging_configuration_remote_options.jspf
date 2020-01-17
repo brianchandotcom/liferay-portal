@@ -54,6 +54,7 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 
 			<%
 			boolean secureConnection = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("secureConnection"));
+			boolean setRemoteSiteURL = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("setRemoteSiteURL"));
 			%>
 
 			<liferay-staging:checkbox
@@ -61,6 +62,14 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 				label="use-a-secure-network-connection"
 				name="secureConnection"
 			/>
+
+			<liferay-staging:checkbox
+				checked="<%= setRemoteSiteURL %>"
+				label="manually-define-remote-site-url"
+				name="setRemoteSiteURL"
+			/>
 		</div>
+
+		<aui:input label="remote-site-url" name="remoteSiteURL" size="20" disabled="<%= !setRemoteSiteURL %>" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteSiteURL") %>' />
 	</div>
 </div>

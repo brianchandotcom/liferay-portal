@@ -250,7 +250,9 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		typeSettingsProperties.remove("remoteGroupId");
 		typeSettingsProperties.remove("remotePathContext");
 		typeSettingsProperties.remove("remotePort");
+		typeSettingsProperties.remove("remoteSiteURL");
 		typeSettingsProperties.remove("secureConnection");
+		typeSettingsProperties.remove("setRemoteSiteURL");
 		typeSettingsProperties.remove("staged");
 		typeSettingsProperties.remove("stagedRemotely");
 

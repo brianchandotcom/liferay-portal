@@ -31,8 +31,8 @@ public class SpringBeanFilterMethodFactory implements BeanFilterMethodFactory {
 	}
 
 	@Override
-	public BeanFilterMethod create(Method method, Class<?> beanType) {
-		return new SpringBeanFilterMethod(_beanFactory, method, beanType);
+	public BeanFilterMethod create(Method method, Class<?> beanClass) {
+		return new SpringBeanFilterMethod(_beanFactory, method, beanClass);
 	}
 
 	private final BeanFactory _beanFactory;

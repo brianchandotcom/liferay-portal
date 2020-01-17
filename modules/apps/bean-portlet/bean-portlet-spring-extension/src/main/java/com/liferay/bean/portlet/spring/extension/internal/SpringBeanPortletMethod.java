@@ -28,27 +28,27 @@ public class SpringBeanPortletMethod extends BaseBeanPortletMethod {
 
 	public SpringBeanPortletMethod(
 		Method method, BeanPortletMethodType beanPortletMethodType,
-		BeanFactory beanFactory, Class<?> beanType) {
+		BeanFactory beanFactory, Class<?> beanClass) {
 
 		super(method, beanPortletMethodType);
 
 		_beanFactory = beanFactory;
-		_beanType = beanType;
+		_beanClass = beanClass;
 	}
 
 	@Override
 	public Class<?> getBeanType() {
-		return _beanType;
+		return _beanClass;
 	}
 
 	@Override
 	public Object invoke(Object... args) throws ReflectiveOperationException {
 		Method method = getMethod();
 
-		return method.invoke(_beanFactory.getBean(_beanType), args);
+		return method.invoke(_beanFactory.getBean(_beanClass), args);
 	}
 
+	private final Class<?> _beanClass;
 	private final BeanFactory _beanFactory;
-	private final Class<?> _beanType;
 
 }

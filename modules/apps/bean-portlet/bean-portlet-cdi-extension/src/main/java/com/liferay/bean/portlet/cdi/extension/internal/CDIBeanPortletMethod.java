@@ -30,22 +30,22 @@ public class CDIBeanPortletMethod extends BaseBeanPortletMethod {
 
 	public CDIBeanPortletMethod(
 		Method method, BeanPortletMethodType beanPortletMethodType,
-		BeanManager beanManager, Class<?> beanType) {
+		BeanManager beanManager, Class<?> beanClass) {
 
 		super(method, beanPortletMethodType);
 
 		_beanManager = beanManager;
-		_beanType = beanType;
+		_beanClass = beanClass;
 	}
 
 	@Override
 	public Class<?> getBeanType() {
-		return _beanType;
+		return _beanClass;
 	}
 
 	@Override
 	public Object invoke(Object... args) throws ReflectiveOperationException {
-		Bean<?> bean = _beanManager.resolve(_beanManager.getBeans(_beanType));
+		Bean<?> bean = _beanManager.resolve(_beanManager.getBeans(_beanClass));
 
 		CreationalContext<?> creationalContext =
 			_beanManager.createCreationalContext(bean);
@@ -58,7 +58,7 @@ public class CDIBeanPortletMethod extends BaseBeanPortletMethod {
 		return method.invoke(beanInstance, args);
 	}
 
+	private final Class<?> _beanClass;
 	private final BeanManager _beanManager;
-	private final Class<?> _beanType;
 
 }

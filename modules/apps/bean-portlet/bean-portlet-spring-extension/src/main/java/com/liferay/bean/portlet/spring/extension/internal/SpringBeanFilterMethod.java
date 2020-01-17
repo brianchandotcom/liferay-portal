@@ -26,20 +26,20 @@ import org.springframework.beans.factory.BeanFactory;
 public class SpringBeanFilterMethod implements BeanFilterMethod {
 
 	public SpringBeanFilterMethod(
-		BeanFactory beanFactory, Method method, Class<?> beanType) {
+		BeanFactory beanFactory, Method method, Class<?> beanClass) {
 
 		_beanFactory = beanFactory;
 		_method = method;
-		_beanType = beanType;
+		_beanClass = beanClass;
 	}
 
 	@Override
 	public Object invoke(Object... args) throws ReflectiveOperationException {
-		return _method.invoke(_beanFactory.getBean(_beanType), args);
+		return _method.invoke(_beanFactory.getBean(_beanClass), args);
 	}
 
+	private final Class<?> _beanClass;
 	private final BeanFactory _beanFactory;
-	private final Class<?> _beanType;
 	private final Method _method;
 
 }

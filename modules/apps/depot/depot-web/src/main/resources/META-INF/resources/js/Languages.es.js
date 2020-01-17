@@ -22,9 +22,6 @@ import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const CUSTOM_OPTION = 'customOption';
-const DEFAULT_OPTION = 'defaultOption';
-
 /**
  * @class Languages
  */
@@ -38,33 +35,40 @@ const Languages = ({
 	translatedLanguages
 }) => {
 	const [selectedRadioGroupValue, setSelectedRadioGroupValue] = useState(
-		inheritLocales ? DEFAULT_OPTION : CUSTOM_OPTION
+		inheritLocales
 	);
 
-	const [customDefaultLocaleId, setCustomDefaultLocaleId] = useState(siteDefaultLocaleId);
+	const [customDefaultLocaleId, setCustomDefaultLocaleId] = useState(
+		siteDefaultLocaleId
+	);
 
 	const [languageWarning, setLanguageWarning] = useState(false);
-	const [languageTranslationWarning, setLanguageTranslationWarning] = useState(false);
+	const [
+		languageTranslationWarning,
+		setLanguageTranslationWarning
+	] = useState(false);
 
 	const form = document[`_${portletNamespace}_fm`];
 
 	const Language = ({displayName, isDefault, localeId, showActions}) => {
 		const [active, setActive] = useState(false);
 
-		const makeDefault = (event) => {
+		const makeDefault = event => {
 			setActive(false);
 			setCustomDefaultLocaleId(localeId);
 			setLanguageWarning(true);
-			setLanguageTranslationWarning(translatedLanguages && !translatedLanguages[localeId]);
+			setLanguageTranslationWarning(
+				translatedLanguages && !translatedLanguages[localeId]
+			);
 
 			Liferay.fire('inputLocalized:defaultLocaleChanged', {
 				item: event.currentTarget
 			});
 
 			Liferay.Util.setFormValues(form, {
-				'languageId': localeId
+				languageId: localeId
 			});
-		}
+		};
 
 		return (
 			<ClayTable.Row>
@@ -93,7 +97,11 @@ const Languages = ({
 							}
 						>
 							<ClayDropDown.ItemList>
-								<ClayDropDown.Item data-value={localeId} key={localeId} onClick={event => makeDefault(event)}>
+								<ClayDropDown.Item
+									data-value={localeId}
+									key={localeId}
+									onClick={event => makeDefault(event)}
+								>
 									{Liferay.Language.get('make-default')}
 								</ClayDropDown.Item>
 							</ClayDropDown.ItemList>
@@ -142,7 +150,7 @@ const Languages = ({
 	return (
 		<div className="mt-5">
 			<ClayRadioGroup
-				name="TypeSettingsProperties--inheritLocales--"
+				name={`_${portletNamespace}_TypeSettingsProperties--inheritLocales--`}
 				onSelectedValueChange={setSelectedRadioGroupValue}
 				selectedValue={selectedRadioGroupValue}
 			>
@@ -150,25 +158,25 @@ const Languages = ({
 					label={Liferay.Language.get(
 						'use-the-default-language-options'
 					)}
-					value={DEFAULT_OPTION}
+					value={true}
 				/>
 
 				<ClayRadio
 					label={Liferay.Language.get(
 						'define-a-custom-default-language-and-additional-available-languages-for-this-repository'
 					)}
-					value={CUSTOM_OPTION}
+					value={false}
 				/>
 			</ClayRadioGroup>
 
-			{selectedRadioGroupValue === DEFAULT_OPTION && (
+			{selectedRadioGroupValue && (
 				<LanguagesList
 					defaultLocaleId={defaultLocaleId}
 					locales={availableLocales}
 				/>
 			)}
 
-			{selectedRadioGroupValue === CUSTOM_OPTION && (
+			{!selectedRadioGroupValue && (
 				<LanguagesList
 					defaultLocaleId={customDefaultLocaleId}
 					locales={siteAvailableLocales}
@@ -178,27 +186,27 @@ const Languages = ({
 
 			{languageWarning && (
 				<ClayAlert
-  					displayType="warning"
-  					onClose={() => setLanguageWarning(false)}
-	  				title={Liferay.Language.get('warning')}
-	 			>
-	  				{Liferay.Language.get(
+					displayType="warning"
+					onClose={() => setLanguageWarning(false)}
+					title={Liferay.Language.get('warning')}
+				>
+					{Liferay.Language.get(
 						'this-change-will-only-affect-the-newly-created-localized-content'
 					)}
 				</ClayAlert>
- 			)}
+			)}
 
- 			{languageTranslationWarning && (
+			{languageTranslationWarning && (
 				<ClayAlert
-  					displayType="warning"
-  					onClose={() => setLanguageTranslationWarning(false)}
-	  				title={Liferay.Language.get('warning')}
-	 			>
-	  				{Liferay.Language.get(
+					displayType="warning"
+					onClose={() => setLanguageTranslationWarning(false)}
+					title={Liferay.Language.get('warning')}
+				>
+					{Liferay.Language.get(
 						'repository-name-will-display-a-generic-text-until-a-translation-is-added'
 					)}
 				</ClayAlert>
- 			)}
+			)}
 		</div>
 	);
 };

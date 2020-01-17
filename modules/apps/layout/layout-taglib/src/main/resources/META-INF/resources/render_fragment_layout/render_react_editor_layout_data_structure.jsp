@@ -61,10 +61,10 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 			<%
 			String backgroundColorCssClass = childItemConfigJSONObject.getString("backgroundColorCssClass");
 			String backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(childItemConfigJSONObject);
-			String containerType = childItemConfigJSONObject.getString("containerType");
-			long paddingBottom = childItemConfigJSONObject.getLong("paddingBottom", -1L);
-			long paddingHorizontal = childItemConfigJSONObject.getLong("paddingHorizontal", -1L);
-			long paddingTop = childItemConfigJSONObject.getLong("paddingTop", -1L);
+			String containerType = childItemConfigJSONObject.getString("containerType", "fluid");
+			long paddingBottom = childItemConfigJSONObject.getLong("paddingBottom", 3);
+			long paddingHorizontal = childItemConfigJSONObject.getLong("paddingHorizontal", 3);
+			long paddingTop = childItemConfigJSONObject.getLong("paddingTop", 3);
 
 			StringBundler cssClasses = new StringBundler();
 

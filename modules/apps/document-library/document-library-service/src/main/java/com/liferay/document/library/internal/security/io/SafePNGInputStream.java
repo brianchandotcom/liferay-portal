@@ -70,13 +70,7 @@ public class SafePNGInputStream extends InputStream {
 			 !Arrays.equals(_ITXT_CHUNK_ID, bytes) &&
 			 !Arrays.equals(_ICCP_CHUNK_ID, bytes))) {
 
-			_bufferedInputStream.reset();
-
-			_readForwardByteCount =
-				_CHUNK_LENGTH_SIZE + _CHUNK_ID_SIZE + chunkLength + _CRC_SIZE -
-					1;
-
-			return _bufferedInputStream.read();
+			return _readPreservedChunk(chunkLength);
 		}
 
 		if (Arrays.equals(_ITXT_CHUNK_ID, bytes)) {
@@ -85,13 +79,7 @@ public class SafePNGInputStream extends InputStream {
 			int count = _bufferedInputStream.read(data);
 
 			if ((count != 3) || (data[2] == 0)) {
-				_bufferedInputStream.reset();
-
-				_readForwardByteCount =
-					_CHUNK_LENGTH_SIZE + _CHUNK_ID_SIZE + chunkLength +
-						_CRC_SIZE - 1;
-
-				return _bufferedInputStream.read();
+				return _readPreservedChunk(chunkLength);
 			}
 
 			chunkLength -= 3;
@@ -143,6 +131,15 @@ public class SafePNGInputStream extends InputStream {
 		byteBuffer.order(ByteOrder.BIG_ENDIAN);
 
 		return byteBuffer.getLong();
+	}
+
+	private int _readPreservedChunk(long chunkLength) throws IOException {
+		_bufferedInputStream.reset();
+
+		_readForwardByteCount =
+			_CHUNK_LENGTH_SIZE + _CHUNK_ID_SIZE + chunkLength + _CRC_SIZE - 1;
+
+		return _bufferedInputStream.read();
 	}
 
 	private static final int _CHUNK_ID_SIZE = 4;

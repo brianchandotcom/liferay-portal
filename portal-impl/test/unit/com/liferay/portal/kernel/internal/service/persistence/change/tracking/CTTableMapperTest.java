@@ -1771,7 +1771,8 @@ public class CTTableMapperTest {
 
 		@Override
 		public int update(Object... params) {
-			Assert.assertEquals(5, params.length);
+			Assert.assertEquals(Arrays.toString(params), 5, params.length);
+
 			Assert.assertSame(Long.class, params[0].getClass());
 			Assert.assertSame(Long.class, params[1].getClass());
 			Assert.assertSame(Long.class, params[2].getClass());
@@ -1824,7 +1825,8 @@ public class CTTableMapperTest {
 
 		@Override
 		public int update(Object... params) {
-			Assert.assertEquals(3, params.length);
+			Assert.assertEquals(Arrays.toString(params), 3, params.length);
+
 			Assert.assertSame(Long.class, params[0].getClass());
 			Assert.assertSame(Long.class, params[1].getClass());
 			Assert.assertSame(Long.class, params[2].getClass());
@@ -1887,7 +1889,7 @@ public class CTTableMapperTest {
 
 		@Override
 		public List execute(Object... params) throws SQLException {
-			Assert.assertEquals(1, params.length);
+			Assert.assertEquals(Arrays.toString(params), 1, params.length);
 
 			PreparedStatement preparedStatement =
 				(PreparedStatement)ProxyUtil.newProxyInstance(
@@ -1935,7 +1937,8 @@ public class CTTableMapperTest {
 
 		@Override
 		public List<Integer> execute(Object... params) {
-			Assert.assertEquals(6, params.length);
+			Assert.assertEquals(Arrays.toString(params), 6, params.length);
+
 			Assert.assertSame(Long.class, params[0].getClass());
 			Assert.assertSame(Long.class, params[1].getClass());
 			Assert.assertSame(Long.class, params[2].getClass());
@@ -1995,7 +1998,8 @@ public class CTTableMapperTest {
 
 		@Override
 		public List<Integer> execute(Object... params) {
-			Assert.assertEquals(2, params.length);
+			Assert.assertEquals(Arrays.toString(params), 2, params.length);
+
 			Assert.assertSame(Long.class, params[0].getClass());
 			Assert.assertSame(Long.class, params[1].getClass());
 
@@ -2045,7 +2049,8 @@ public class CTTableMapperTest {
 
 		@Override
 		public int update(Object... params) {
-			Assert.assertEquals(1, params.length);
+			Assert.assertEquals(Arrays.toString(params), 1, params.length);
+
 			Assert.assertSame(Long.class, params[0].getClass());
 
 			Long leftPrimaryKey = (Long)params[0];
@@ -2086,7 +2091,8 @@ public class CTTableMapperTest {
 
 		@Override
 		public int update(Object... params) {
-			Assert.assertEquals(1, params.length);
+			Assert.assertEquals(Arrays.toString(params), 1, params.length);
+
 			Assert.assertSame(Long.class, params[0].getClass());
 
 			Long rightPrimaryKey = (Long)params[0];
@@ -2127,7 +2133,8 @@ public class CTTableMapperTest {
 
 		@Override
 		public int update(Object... params) {
-			Assert.assertEquals(2, params.length);
+			Assert.assertEquals(Arrays.toString(params), 2, params.length);
+
 			Assert.assertSame(Long.class, params[0].getClass());
 			Assert.assertSame(Long.class, params[1].getClass());
 
@@ -2166,7 +2173,8 @@ public class CTTableMapperTest {
 
 		@Override
 		public List<Long> execute(Object... params) {
-			Assert.assertEquals(4, params.length);
+			Assert.assertEquals(Arrays.toString(params), 4, params.length);
+
 			Assert.assertSame(Long.class, params[0].getClass());
 			Assert.assertSame(Long.class, params[1].getClass());
 			Assert.assertSame(Long.class, params[2].getClass());
@@ -2231,7 +2239,8 @@ public class CTTableMapperTest {
 
 		@Override
 		public List<Long> execute(Object... params) {
-			Assert.assertEquals(4, params.length);
+			Assert.assertEquals(Arrays.toString(params), 4, params.length);
+
 			Assert.assertSame(Long.class, params[0].getClass());
 			Assert.assertSame(Long.class, params[1].getClass());
 			Assert.assertSame(Long.class, params[2].getClass());
@@ -2292,7 +2301,8 @@ public class CTTableMapperTest {
 
 		@Override
 		public List<Long> execute(Object... params) {
-			Assert.assertEquals(1, params.length);
+			Assert.assertEquals(Arrays.toString(params), 1, params.length);
+
 			Assert.assertSame(Long.class, params[0].getClass());
 
 			Long rightPrimaryKey = (Long)params[0];
@@ -2331,7 +2341,8 @@ public class CTTableMapperTest {
 
 		@Override
 		public List<Long> execute(Object... params) {
-			Assert.assertEquals(1, params.length);
+			Assert.assertEquals(Arrays.toString(params), 1, params.length);
+
 			Assert.assertSame(Long.class, params[0].getClass());
 
 			Long leftPrimaryKey = (Long)params[0];
@@ -2518,15 +2529,17 @@ public class CTTableMapperTest {
 
 		@Override
 		public int update(Object... params) {
-			Assert.assertSame(Long.class, params[0].getClass());
+			Assert.assertEquals(Arrays.toString(params), 4, params.length);
+
+			Assert.assertSame(Boolean.class, params[0].getClass());
 			Assert.assertSame(Long.class, params[1].getClass());
 			Assert.assertSame(Long.class, params[2].getClass());
-			Assert.assertSame(Boolean.class, params[3].getClass());
+			Assert.assertSame(Long.class, params[3].getClass());
 
-			Long leftPrimaryKey = (Long)params[0];
-			Long rightPrimaryKey = (Long)params[1];
-			Long ctCollectionId = (Long)params[2];
-			Boolean ctChangeType = (Boolean)params[3];
+			Boolean ctChangeType = (Boolean)params[0];
+			Long leftPrimaryKey = (Long)params[1];
+			Long rightPrimaryKey = (Long)params[2];
+			Long ctCollectionId = (Long)params[3];
 
 			if (_mappingStore.containsKey(
 					leftPrimaryKey, rightPrimaryKey, ctCollectionId)) {

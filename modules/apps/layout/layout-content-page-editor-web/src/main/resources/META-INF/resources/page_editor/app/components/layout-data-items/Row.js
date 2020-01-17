@@ -19,10 +19,10 @@ import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/la
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 
 const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
-	const gutters =
-		item.config.gutters ||
-		LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.row]
-			.gutters;
+	const {gutters} = {
+		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.row],
+		...item.config
+	};
 
 	const parent = layoutData.items[item.parentId];
 

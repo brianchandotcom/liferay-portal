@@ -14,10 +14,11 @@
 
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import React, {useContext, useState} from 'react';
-import {DispatchContext} from '../reducers/index';
+
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
+import {DispatchContext} from '../reducers/index';
 import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
 import {StoreContext} from '../store/index';
 import updateItemConfig from '../thunks/updateItemConfig';

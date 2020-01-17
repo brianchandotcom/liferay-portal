@@ -38,12 +38,14 @@ const Languages = ({
 		inheritLocales ? DEFAULT_OPTION : CUSTOM_OPTION
 	);
 
+	const [customDefaultLocaleId, setCustomDefaultLocaleId] = useState(siteDefaultLocaleId);
+
 	const Language = ({displayName, isDefault, localeId, showActions}) => {
 		const [active, setActive] = useState(false);
 
 		const makeDefault = () => {
-			console.log('makeDefault: ' + localeId);
 			setActive(false);
+			setCustomDefaultLocaleId(localeId);
 		}
 
 		return (
@@ -61,7 +63,6 @@ const Languages = ({
 					<ClayTable.Cell align="center">
 						<ClayDropDown
 							active={active}
-							//data-localeid={localeId}
 							onActiveChange={setActive}
 							trigger={
 								<ClayButton
@@ -151,7 +152,7 @@ const Languages = ({
 
 			{selectedRadioGroupValue === CUSTOM_OPTION && (
 				<LanguagesList
-					defaultLocaleId={siteDefaultLocaleId}
+					defaultLocaleId={customDefaultLocaleId}
 					locales={siteAvailableLocales}
 					showActions
 				/>

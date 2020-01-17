@@ -132,7 +132,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 						</c:if>
 		</c:when>
 		<c:otherwise>
-			<ul class="mb-3 mb-lg-4 nav nav-<%= type %> <%= cssClass %>" data-tabs-namespace="<%= namespace + param %>">
+			<ul class="lfr-nav mb-3 mb-lg-4 nav nav-<%= type %> <%= cssClass %>" data-tabs-namespace="<%= namespace + param %>">
 		</c:otherwise>
 	</c:choose>
 

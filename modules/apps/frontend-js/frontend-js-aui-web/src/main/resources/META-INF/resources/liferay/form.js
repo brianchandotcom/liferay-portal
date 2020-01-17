@@ -239,12 +239,12 @@ AUI.add(
 					);
 
 					if (field) {
-						var fieldWrapper = field.ancestor('form > div');
+						var fieldWrapper = field.ancestor('form > fieldset > div');
 
 						var formTabs = formNode.one('.lfr-nav');
 
 						if (fieldWrapper && formTabs) {
-							var tabs = formTabs.all('.tab');
+							var tabs = formTabs.all('.nav-item');
 							var tabsNamespace = formTabs.getAttribute(
 								'data-tabs-namespace'
 							);

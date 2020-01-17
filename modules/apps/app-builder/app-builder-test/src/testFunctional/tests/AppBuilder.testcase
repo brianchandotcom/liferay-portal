@@ -1561,18 +1561,18 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Form View Title One",
 			tableViewName = "Table View Title One");
 
 		FormViewBuilder.switchToFormViewTab();
 
 		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Form View Title Two");
 
 		TableViewBuilder.addBasicTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			tableViewName = "Table View Title Two");
 
 		App.add(
@@ -1592,6 +1592,44 @@ definition {
 			deployOption = "Product Menu",
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
+		
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "Test App C");
+
+		AppBuilderAdmin.validateProductMenuApp(appName = "Test App C");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "App Builder Page");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		Portlet.addPG(
+			pageName = "App Builder Page",
+			portletName = "Test App A");
+
+		AppBuilderAdmin.validateWidgetApp(appName = "Test App A");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "Test App B");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AppBuilderAdmin.validateStandAloneApp();
+
+		Navigator.closeWindow();
 
 		AppBuilderAdmin.clickApp(appName = "Test App A");
 
@@ -1607,6 +1645,14 @@ definition {
 
 		App.validateDeployedAs(title = "Standalone");
 
+		AppBuilderAdmin.openStandAloneApp(itemName = "Changed Name");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AppBuilderAdmin.validateStandAloneApp();
+
+		Navigator.closeWindow();
+
 		AppBuilderAdmin.clickApp(appName = "Changed Name");
 
 		App.toggleUndeploy(deployOption = "Standalone");
@@ -1616,6 +1662,23 @@ definition {
 		App.saveApp();
 
 		App.validateDeployedAs(title = "Product Menu");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "Changed Name");
+
+		AppBuilderAdmin.validateProductMenuApp(appName = "Changed Name");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
 
 		AppBuilderAdmin.clickApp(appName = "Changed Name");
 

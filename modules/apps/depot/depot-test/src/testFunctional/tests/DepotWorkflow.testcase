@@ -41,6 +41,7 @@ definition {
 	}
 
 	@description = "This ensures that the approved image from a depot is available to use in its connected site."
+	@ignore = "true"
 	@priority = "5"
 	test ApproveImage {
 		DepotNavigator.openDepotAdmin();
@@ -127,6 +128,7 @@ definition {
 	}
 
 	@description = "This ensures that the approved WC article from a depot is available to use in its connected site."
+	@ignore = "true"
 	@priority = "5"
 	test ApproveWCArticle {
 		ProductMenu.gotoPortlet(
@@ -233,6 +235,7 @@ definition {
 	}
 
 	@description = "This ensures that the approved WC article in folder from a depot is available to use in its connected site."
+	@ignore = "true"
 	@priority = "5"
 	test ApproveWCInFolder {
 		DepotNavigator.openDepotAdmin();
@@ -347,6 +350,7 @@ definition {
 	}
 
 	@description = "This ensures that the resubmitted document from a depot is available to use in its connected site."
+	@ignore = "true"
 	@priority = "5"
 	test RejectAndResubmitDocument {
 		DepotNavigator.openDepotAdmin();
@@ -474,6 +478,7 @@ definition {
 	}
 
 	@description = "This ensures that the resubmitted WC article from a depot is available to use in its connected site."
+	@ignore = "true"
 	@priority = "5"
 	test RejectAndResubmitWC {
 		ProductMenu.gotoPortlet(

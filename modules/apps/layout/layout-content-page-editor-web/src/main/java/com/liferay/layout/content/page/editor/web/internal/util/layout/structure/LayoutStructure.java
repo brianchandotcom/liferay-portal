@@ -101,9 +101,13 @@ public class LayoutStructure {
 		LayoutStructureItem layoutStructureItem = addLayoutStructureItem(
 			LayoutDataItemTypeConstants.TYPE_ROW, parentItemId, newPosition);
 
-		_addColumnLayoutStructureItem(layoutStructureItem.getItemId(), 0, 4);
-		_addColumnLayoutStructureItem(layoutStructureItem.getItemId(), 1, 4);
-		_addColumnLayoutStructureItem(layoutStructureItem.getItemId(), 2, 4);
+		for (int i = 0; i < _DEFAULT_ROW_COLUMNS; i++) {
+			_addColumnLayoutStructureItem(
+				layoutStructureItem.getItemId(), i, 4);
+		}
+
+		layoutStructureItem.updateItemConfigJSONObject(
+			JSONUtil.put("numberOfColumns", _DEFAULT_ROW_COLUMNS));
 
 		return layoutStructureItem;
 	}
@@ -295,6 +299,8 @@ public class LayoutStructure {
 		{1, 1, 1, 1, 4, 1, 1, 1, 1}, {1, 1, 1, 1, 2, 2, 1, 1, 1, 1},
 		{1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
+
+	private static final int _DEFAULT_ROW_COLUMNS = 3;
 
 	private static final int _MAX_COLUMNS = 12;
 

@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.item.selector.web.internal.DLItemSelectorView;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
@@ -306,11 +305,13 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			long classNameId = _classNameLocalService.getClassNameId(
 				DLFileEntryConstants.getClassName());
 
+			long defaultFileEntryTypeId =
+				DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
+					getFolderId());
+
 			for (AssetVocabulary assetVocabulary : assetVocabularies) {
 				if (assetVocabulary.isRequired(
-						classNameId,
-						DLFileEntryTypeConstants.
-							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
+						classNameId, defaultFileEntryTypeId)) {
 
 					return null;
 				}

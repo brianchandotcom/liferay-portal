@@ -15,12 +15,18 @@
 package com.liferay.analytics.settings.internal.user;
 
 import com.liferay.analytics.settings.user.AnalyticsUsersManager;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -39,6 +45,33 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 
 	@Override
 	public int getCompanyUsersCount(long companyId) {
+		if (!_isIndexerEnabled()) {
+			Role analyticsAdministratorRole =
+				_fetchAnalyticsAdministratorRole();
+
+			int analyticsAdministratorsCount = 0;
+
+			if (analyticsAdministratorRole != null) {
+				try {
+					analyticsAdministratorsCount =
+						_userLocalService.getRoleUsersCount(
+							analyticsAdministratorRole.getRoleId(),
+							WorkflowConstants.STATUS_APPROVED);
+				}
+				catch (Exception e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to get analytics administrators count");
+					}
+				}
+			}
+
+			int activeUsersCount = _userLocalService.getUsersCount(
+				companyId, false, WorkflowConstants.STATUS_APPROVED);
+
+			return activeUsersCount - analyticsAdministratorsCount;
+		}
+
 		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder();
 
 		SearchRequest searchRequest = searchRequestBuilder.withSearchContext(
@@ -55,6 +88,11 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 	@Override
 	public int getOrganizationsAndUserGroupsUsersCount(
 		long[] organizationIds, long[] userGroupIds) {
+
+		if (!_isIndexerEnabled()) {
+			return _userLocalService.getOrganizationsAndUserGroupsUsersCount(
+				organizationIds, userGroupIds);
+		}
 
 		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder();
 
@@ -75,6 +113,20 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 
 	@Override
 	public int getOrganizationUsersCount(long organizationId) {
+		if (!_isIndexerEnabled()) {
+			try {
+				return _userLocalService.getOrganizationUsersCount(
+					organizationId, WorkflowConstants.STATUS_APPROVED);
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to get organization users count");
+				}
+
+				return 0;
+			}
+		}
+
 		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder();
 
 		SearchRequest searchRequest = searchRequestBuilder.withSearchContext(
@@ -92,6 +144,20 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 
 	@Override
 	public int getUserGroupUsersCount(long userGroupId) {
+		if (!_isIndexerEnabled()) {
+			try {
+				return _userLocalService.getUserGroupUsersCount(
+					userGroupId, WorkflowConstants.STATUS_APPROVED);
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to get user group users count");
+				}
+
+				return 0;
+			}
+		}
+
 		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder();
 
 		SearchRequest searchRequest = searchRequestBuilder.withSearchContext(
@@ -105,6 +171,12 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 		).build();
 
 		return _getUsersCount(searchRequest);
+	}
+
+	private Role _fetchAnalyticsAdministratorRole() {
+		return _roleLocalService.fetchRole(
+			CompanyThreadLocal.getCompanyId(),
+			RoleConstants.ANALYTICS_ADMINISTRATOR);
 	}
 
 	private SearchRequestBuilder _getSearchRequestBuilder() {
@@ -130,16 +202,23 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 		return totalHits.intValue();
 	}
 
+	private boolean _isIndexerEnabled() {
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
+
+		return indexer.isIndexerEnabled();
+	}
+
 	private void _populateSearchContext(SearchContext searchContext) {
-		Role role = _roleLocalService.fetchRole(
-			CompanyThreadLocal.getCompanyId(),
-			RoleConstants.ANALYTICS_ADMINISTRATOR);
+		Role role = _fetchAnalyticsAdministratorRole();
 
 		if (role != null) {
 			searchContext.setAttribute(
 				"excludedRoleIds", new long[] {role.getRoleId()});
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnalyticsUsersManagerImpl.class);
 
 	@Reference
 	private RoleLocalService _roleLocalService;
@@ -149,5 +228,8 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

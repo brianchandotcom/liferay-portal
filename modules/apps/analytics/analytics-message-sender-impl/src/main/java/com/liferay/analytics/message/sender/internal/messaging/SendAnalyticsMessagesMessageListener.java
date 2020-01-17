@@ -85,7 +85,7 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 
 		if ((analyticsMessagesProcessorCommand != null) &&
 			(analyticsMessagesProcessorCommand !=
-				AnalyticsMessagesProcessorCommand.ADD)) {
+				AnalyticsMessagesProcessorCommand.SEND)) {
 
 			return;
 		}

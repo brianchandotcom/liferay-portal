@@ -104,6 +104,32 @@ $product-menu-pages-administration-link-height: 72px;
 			.tree-node .tree-node-content {
 				align-items: center;
 				display: flex;
+
+				&.tree-drag-insert-above {
+					border-top: none;
+
+					.autofit-row {
+						box-shadow: 0 -2px 0 0 #80acff;
+					}
+				}
+
+				&.tree-drag-insert-below {
+					border-bottom: none;
+
+					.autofit-row {
+						box-shadow: 0 2px 0 0 #80acff;
+					}
+				}
+
+				&.tree-drag-insert-append .tree-label {
+					background: transparent;
+					border: none;
+
+					.autofit-row {
+						border-radius: 4px;
+						box-shadow: 0 0 0 2px #80acff;
+					}
+				}
 			}
 		}
 
@@ -180,6 +206,34 @@ $product-menu-pages-administration-link-height: 72px;
 			margin-bottom: calc(
 				#{$product-menu-pages-administration-link-height} + #{$spacer}
 			);
+		}
+	}
+}
+
+.tree-drag-helper {
+	.tree-drag-helper-content {
+		background: #80acff;
+		border: none;
+		border-radius: 4px;
+		box-shadow: none;
+
+		.layout-tree {
+			color: white;
+			display: inline-block;
+			font-size: 12px;
+			font-weight: bold;
+			max-width: 16ch;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.autofit-col {
+			display: none;
+		}
+
+		.autofit-col:fist-child {
+			display: block;
 		}
 	}
 }

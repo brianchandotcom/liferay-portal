@@ -60,11 +60,11 @@ public class DDMFormInstanceRecordModelPreFilterContributor
 			booleanFilter.addRequiredTerm(Field.STATUS, status);
 		}
 
-		long ddmFormInstanceId = GetterUtil.getLong(
+		long formInstanceId = GetterUtil.getLong(
 			searchContext.getAttribute("formInstanceId"));
 
-		if (ddmFormInstanceId > 0) {
-			booleanFilter.addRequiredTerm("formInstanceId", ddmFormInstanceId);
+		if (formInstanceId > 0) {
+			booleanFilter.addRequiredTerm("formInstanceId", formInstanceId);
 		}
 
 		addSearchClassTypeIds(booleanFilter, searchContext);

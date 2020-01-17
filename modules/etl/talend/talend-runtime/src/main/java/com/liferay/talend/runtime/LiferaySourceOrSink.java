@@ -310,7 +310,7 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 				"Request did not succeed", response.getStatus(), null);
 		}
 
-		if ((response.getLength() <= 0) || !response.hasEntity() ||
+		if (((response.getLength() <= 0) && !response.hasEntity()) ||
 			!_responseHandler.isApplicationJsonContentType(response)) {
 
 			return Optional.empty();

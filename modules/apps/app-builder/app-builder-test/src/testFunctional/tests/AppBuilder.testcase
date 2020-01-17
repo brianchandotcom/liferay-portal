@@ -212,7 +212,7 @@ definition {
 	@description = "Add a Form View with a Text Field"
 	@priority = "5"
 	test AddSimpleFormViewWithTextField {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -242,7 +242,7 @@ definition {
 	@description = "Add a Table View"
 	@priority = "5"
 	test AddSimpleTableView {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1401,7 +1401,7 @@ definition {
 	@description = "Publish my app as a widget and submit entry"
 	@priority = "5"
 	test PublishAppAsWidgetAndSubmitEntry {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -42,7 +41,7 @@ public class ValidatorIsNullCheck extends BaseCheck {
 	private void _checkMethod(
 		DetailAST detailAST, String className, String methodName) {
 
-		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = getMethodCalls(
 			detailAST, className, methodName);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
@@ -66,7 +65,7 @@ public class ValidatorIsNullCheck extends BaseCheck {
 				continue;
 			}
 
-			DetailAST typeDetailAST = DetailASTUtil.getVariableTypeDetailAST(
+			DetailAST typeDetailAST = getVariableTypeDetailAST(
 				methodCallDetailAST, childDetailAST.getText());
 
 			if (typeDetailAST == null) {
@@ -85,7 +84,7 @@ public class ValidatorIsNullCheck extends BaseCheck {
 				continue;
 			}
 
-			String typeName = DetailASTUtil.getTypeName(typeDetailAST, true);
+			String typeName = getTypeName(typeDetailAST, true);
 
 			if (Validator.isNotNull(typeName) && !typeName.equals("Long") &&
 				!typeName.equals("Object") &&

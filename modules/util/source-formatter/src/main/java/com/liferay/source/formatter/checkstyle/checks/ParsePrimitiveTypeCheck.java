@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -76,9 +75,8 @@ public class ParsePrimitiveTypeCheck extends BaseCheck {
 			DetailAST typeDetailAST =
 				parameterDefinitionDetailAST.findFirstToken(TokenTypes.TYPE);
 
-			List<DetailAST> identDetailASTList =
-				DetailASTUtil.getAllChildTokens(
-					typeDetailAST, true, TokenTypes.IDENT);
+			List<DetailAST> identDetailASTList = getAllChildTokens(
+				typeDetailAST, true, TokenTypes.IDENT);
 
 			for (DetailAST identDetailAST : identDetailASTList) {
 				if (ArrayUtil.contains(
@@ -94,14 +92,14 @@ public class ParsePrimitiveTypeCheck extends BaseCheck {
 		DetailAST detailAST, String className, String methodName,
 		String getterUtilMethodName) {
 
-		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = getMethodCalls(
 			detailAST, className, methodName);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
 				TokenTypes.ELIST);
 
-			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+			List<DetailAST> exprDetailASTList = getAllChildTokens(
 				elistDetailAST, false, TokenTypes.EXPR);
 
 			if ((exprDetailASTList.size() == 1) &&

@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -80,7 +79,7 @@ public abstract class MessageCheck extends BaseCheck {
 			return null;
 		}
 
-		String methodName = DetailASTUtil.getMethodName(firstChildDetailAST);
+		String methodName = getMethodName(firstChildDetailAST);
 
 		if (!methodName.equals("concat")) {
 			return null;
@@ -89,7 +88,7 @@ public abstract class MessageCheck extends BaseCheck {
 		DetailAST elistDetailAST = firstChildDetailAST.findFirstToken(
 			TokenTypes.ELIST);
 
-		List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> exprDetailASTList = getAllChildTokens(
 			elistDetailAST, false, TokenTypes.EXPR);
 
 		for (DetailAST curExprDetailAST : exprDetailASTList) {

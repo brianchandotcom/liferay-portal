@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -60,9 +59,8 @@ public class InstanceofOrderCheck extends BaseCheck {
 		NaturalOrderStringComparator comparator =
 			new NaturalOrderStringComparator();
 
-		String typeName1 = DetailASTUtil.getTypeName(detailAST, false);
-		String typeName2 = DetailASTUtil.getTypeName(
-			nextConditionDetailAST, false);
+		String typeName1 = getTypeName(detailAST, false);
+		String typeName2 = getTypeName(nextConditionDetailAST, false);
 
 		if (comparator.compare(typeName1, typeName2) > 0) {
 			log(

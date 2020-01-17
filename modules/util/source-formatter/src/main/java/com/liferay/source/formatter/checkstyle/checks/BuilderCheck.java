@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -109,11 +108,11 @@ public class BuilderCheck extends ChainedMethodCheck {
 			return;
 		}
 
-		List<DetailAST> childDetailASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, DetailASTUtil.ALL_TYPES);
+		List<DetailAST> childDetailASTList = getAllChildTokens(
+			detailAST, true, ALL_TYPES);
 
 		for (DetailAST childDetailAST : childDetailASTList) {
-			if (DetailASTUtil.getHiddenBefore(childDetailAST) != null) {
+			if (getHiddenBefore(childDetailAST) != null) {
 				return;
 			}
 		}
@@ -125,9 +124,8 @@ public class BuilderCheck extends ChainedMethodCheck {
 			return;
 		}
 
-		List<DetailAST> methodCallDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.METHOD_CALL);
+		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_CALL);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			parentDetailAST = methodCallDetailAST.getParent();
@@ -169,7 +167,7 @@ public class BuilderCheck extends ChainedMethodCheck {
 					childDetailAST = childDetailAST.getNextSibling();
 				}
 
-				parentDetailAST = DetailASTUtil.getParentWithTokenType(
+				parentDetailAST = getParentWithTokenType(
 					methodCallDetailAST, TokenTypes.DO_WHILE, TokenTypes.LAMBDA,
 					TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
 
@@ -618,7 +616,7 @@ public class BuilderCheck extends ChainedMethodCheck {
 
 		List<String> variableNames = new ArrayList<>();
 
-		List<DetailAST> identDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> identDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.IDENT);
 
 		for (DetailAST identDetailAST : identDetailASTList) {

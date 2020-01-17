@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -71,7 +70,7 @@ public class FactoryCheck extends BaseCheck {
 		else if ((firstChildDetailAST.getType() == TokenTypes.IDENT) &&
 				 className.endsWith("." + firstChildDetailAST.getText())) {
 
-			List<String> importNames = DetailASTUtil.getImportNames(detailAST);
+			List<String> importNames = getImportNames(detailAST);
 
 			if (importNames.contains(className)) {
 				log(detailAST, _MSG_USE_FACTORY, classNames[1], className);

@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -33,19 +31,19 @@ public class StringCastCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = getMethodCalls(
 			detailAST, "toString");
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
 				TokenTypes.DOT);
 
-			List<DetailAST> nameDetailASTList = DetailASTUtil.getAllChildTokens(
+			List<DetailAST> nameDetailASTList = getAllChildTokens(
 				dotDetailAST, false, TokenTypes.IDENT);
 
 			DetailAST variableNameDetailAST = nameDetailASTList.get(0);
 
-			String variableTypeName = DetailASTUtil.getVariableTypeName(
+			String variableTypeName = getVariableTypeName(
 				methodCallDetailAST, variableNameDetailAST.getText(), false);
 
 			if (variableTypeName.equals("String")) {

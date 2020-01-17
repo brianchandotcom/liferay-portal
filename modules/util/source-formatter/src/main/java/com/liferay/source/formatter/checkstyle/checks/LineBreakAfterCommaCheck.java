@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -34,16 +33,14 @@ public class LineBreakAfterCommaCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		String line = getLine(detailAST.getLineNo() - 1);
 
-		if (DetailASTUtil.isAtLineEnd(detailAST, line)) {
+		if (isAtLineEnd(detailAST, line)) {
 			return;
 		}
 
 		int lineNo = detailAST.getLineNo();
 
-		if ((lineNo != DetailASTUtil.getStartLineNumber(
-				detailAST.getPreviousSibling())) ||
-			(lineNo != DetailASTUtil.getEndLineNumber(
-				detailAST.getNextSibling()))) {
+		if ((lineNo != getStartLineNumber(detailAST.getPreviousSibling())) ||
+			(lineNo != getEndLineNumber(detailAST.getNextSibling()))) {
 
 			String s = StringUtil.trim(
 				line.substring(0, detailAST.getColumnNo() + 1));

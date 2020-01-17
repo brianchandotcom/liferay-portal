@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 
@@ -39,9 +38,9 @@ public class EnumConstantDividerCheck extends BaseEnumConstantCheck {
 		DetailAST enumConstantDefinitionDetailAST1,
 		DetailAST enumConstantDefinitionDetailAST2) {
 
-		int endLineNumberConstant1 = DetailASTUtil.getEndLineNumber(
+		int endLineNumberConstant1 = getEndLineNumber(
 			enumConstantDefinitionDetailAST1);
-		int startLineNumberConstant2 = DetailASTUtil.getStartLineNumber(
+		int startLineNumberConstant2 = getStartLineNumber(
 			enumConstantDefinitionDetailAST2);
 
 		if (endLineNumberConstant1 == startLineNumberConstant2) {

@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -33,14 +31,14 @@ public class AssertEqualsCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = getMethodCalls(
 			detailAST, "Assert", "assertEquals");
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
 				TokenTypes.ELIST);
 
-			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+			List<DetailAST> exprDetailASTList = getAllChildTokens(
 				elistDetailAST, false, TokenTypes.EXPR);
 
 			if (exprDetailASTList.size() != 2) {
@@ -55,9 +53,8 @@ public class AssertEqualsCheck extends BaseCheck {
 				firstChildDetailAST, "getLength");
 
 			if (variableName != null) {
-				DetailAST typeDetailAST =
-					DetailASTUtil.getVariableTypeDetailAST(
-						methodCallDetailAST, variableName);
+				DetailAST typeDetailAST = getVariableTypeDetailAST(
+					methodCallDetailAST, variableName);
 
 				if ((typeDetailAST != null) && _isHits(typeDetailAST)) {
 					log(
@@ -72,13 +69,10 @@ public class AssertEqualsCheck extends BaseCheck {
 				firstChildDetailAST, "length");
 
 			if (variableName != null) {
-				DetailAST typeDetailAST =
-					DetailASTUtil.getVariableTypeDetailAST(
-						methodCallDetailAST, variableName);
+				DetailAST typeDetailAST = getVariableTypeDetailAST(
+					methodCallDetailAST, variableName);
 
-				if ((typeDetailAST != null) &&
-					DetailASTUtil.isArray(typeDetailAST)) {
-
+				if ((typeDetailAST != null) && isArray(typeDetailAST)) {
 					log(
 						methodCallDetailAST, _MSG_ASSERT_ADD_INFORMATION,
 						"Arrays.toString(" + variableName + ")");
@@ -91,13 +85,10 @@ public class AssertEqualsCheck extends BaseCheck {
 				firstChildDetailAST, "size");
 
 			if (variableName != null) {
-				DetailAST typeDetailAST =
-					DetailASTUtil.getVariableTypeDetailAST(
-						methodCallDetailAST, variableName);
+				DetailAST typeDetailAST = getVariableTypeDetailAST(
+					methodCallDetailAST, variableName);
 
-				if ((typeDetailAST != null) &&
-					DetailASTUtil.isCollection(typeDetailAST)) {
-
+				if ((typeDetailAST != null) && isCollection(typeDetailAST)) {
 					log(
 						methodCallDetailAST, _MSG_ASSERT_ADD_INFORMATION,
 						variableName + ".toString()");
@@ -113,7 +104,7 @@ public class AssertEqualsCheck extends BaseCheck {
 			return null;
 		}
 
-		List<DetailAST> nameDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> nameDetailASTList = getAllChildTokens(
 			detailAST, false, TokenTypes.IDENT);
 
 		if (nameDetailASTList.size() != 2) {

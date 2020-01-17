@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -40,8 +38,7 @@ public class ConstructorMissingEmptyLineCheck extends BaseCheck {
 			return;
 		}
 
-		List<String> parameterNames = DetailASTUtil.getParameterNames(
-			detailAST);
+		List<String> parameterNames = getParameterNames(detailAST);
 
 		if (parameterNames.isEmpty()) {
 			return;
@@ -55,8 +52,7 @@ public class ConstructorMissingEmptyLineCheck extends BaseCheck {
 			return;
 		}
 
-		int endLineNumber = DetailASTUtil.getEndLineNumber(
-			nextExpressionDetailAST);
+		int endLineNumber = getEndLineNumber(nextExpressionDetailAST);
 
 		while (true) {
 			nextExpressionDetailAST = nextExpressionDetailAST.getNextSibling();
@@ -72,7 +68,7 @@ public class ConstructorMissingEmptyLineCheck extends BaseCheck {
 			if (!_isExpressionAssignsParameter(
 					nextExpressionDetailAST, parameterNames)) {
 
-				int startLineNumber = DetailASTUtil.getStartLineNumber(
+				int startLineNumber = getStartLineNumber(
 					nextExpressionDetailAST);
 
 				if ((endLineNumber + 1) != startLineNumber) {
@@ -84,8 +80,7 @@ public class ConstructorMissingEmptyLineCheck extends BaseCheck {
 				return;
 			}
 
-			endLineNumber = DetailASTUtil.getEndLineNumber(
-				nextExpressionDetailAST);
+			endLineNumber = getEndLineNumber(nextExpressionDetailAST);
 		}
 	}
 

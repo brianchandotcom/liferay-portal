@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -36,8 +34,7 @@ public class ThreadLocalUtilCheck extends BaseCheck {
 		String absolutePath = getAbsolutePath();
 
 		if (!absolutePath.contains("/util-taglib/") ||
-			!Objects.equals(
-				DetailASTUtil.getTypeName(detailAST, false), "ThreadLocal")) {
+			!Objects.equals(getTypeName(detailAST, false), "ThreadLocal")) {
 
 			return;
 		}

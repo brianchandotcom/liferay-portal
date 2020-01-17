@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -57,9 +56,8 @@ public class MethodNamingCheck extends BaseCheck {
 
 		DetailAST parentDetailAST = detailAST.getParent();
 
-		List<DetailAST> methodDefinitionDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				parentDetailAST, false, TokenTypes.METHOD_DEF);
+		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
+			parentDetailAST, false, TokenTypes.METHOD_DEF);
 
 		for (DetailAST methodDefinitionDetailAST :
 				methodDefinitionDetailASTList) {
@@ -69,8 +67,8 @@ public class MethodNamingCheck extends BaseCheck {
 			if (curMethodName.equals(noUnderscoreName) ||
 				(curMethodName.equals(noDoName) &&
 				 Objects.equals(
-					 DetailASTUtil.getSignature(detailAST),
-					 DetailASTUtil.getSignature(methodDefinitionDetailAST)))) {
+					 getSignature(detailAST),
+					 getSignature(methodDefinitionDetailAST)))) {
 
 				return;
 			}

@@ -110,8 +110,8 @@ public class JavaParser {
 				curlyExpecedIndent, StringPool.BLANK, _maxLineLength);
 
 			parsedJavaClass.addJavaTerm(
-				content, DetailASTUtil.getStartPosition(rcurlyDetailAST),
-				DetailASTUtil.getEndPosition(rcurlyDetailAST, fileContents),
+				content, getStartPosition(rcurlyDetailAST),
+				getEndPosition(rcurlyDetailAST, fileContents),
 				className);
 		}
 
@@ -316,7 +316,7 @@ public class JavaParser {
 
 		String className = clazz.getName();
 
-		DetailAST closingDetailAST = DetailASTUtil.getClosingDetailAST(
+		DetailAST closingDetailAST = getClosingDetailAST(
 			detailAST);
 
 		if (closingDetailAST != null) {
@@ -324,7 +324,7 @@ public class JavaParser {
 				parsedJavaClass, closingDetailAST, fileContents, className);
 		}
 
-		Position startPosition = DetailASTUtil.getStartPosition(detailAST);
+		Position startPosition = getStartPosition(detailAST);
 
 		String expectedIndent = _getExpectedIndent(detailAST, fileContents);
 
@@ -346,12 +346,12 @@ public class JavaParser {
 		Position endPosition = null;
 
 		if (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
-			endPosition = DetailASTUtil.getEndPosition(
+			endPosition = getEndPosition(
 				_getLastEnumConstantDefinitionDetailAST(detailAST),
 				fileContents);
 		}
 		else {
-			endPosition = DetailASTUtil.getEndPosition(detailAST, fileContents);
+			endPosition = getEndPosition(detailAST, fileContents);
 		}
 
 		parsedJavaClass.addJavaTerm(
@@ -437,7 +437,7 @@ public class JavaParser {
 
 		sb.setIndex(sb.index() - 1);
 
-		Position partEndPosition = DetailASTUtil.getEndPosition(
+		Position partEndPosition = getEndPosition(
 			detailAST, fileContents);
 		Position partStartPosition = curlyBracePositionList.get(
 			(count * 2) - 1);
@@ -1023,7 +1023,7 @@ public class JavaParser {
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_SWITCH) {
 			List<DetailAST> caseGroupDetailASTList =
-				DetailASTUtil.getAllChildTokens(
+				getAllChildTokens(
 					detailAST, false, TokenTypes.CASE_GROUP);
 
 			for (DetailAST caseGroupDetailAST : caseGroupDetailASTList) {
@@ -1033,7 +1033,7 @@ public class JavaParser {
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_TRY) {
 			List<DetailAST> literalCatchDetailASTList =
-				DetailASTUtil.getAllChildTokens(
+				getAllChildTokens(
 					detailAST, false, TokenTypes.LITERAL_CATCH);
 
 			for (DetailAST literalCatchDetailAST : literalCatchDetailASTList) {
@@ -1144,12 +1144,12 @@ public class JavaParser {
 		}
 
 		CommonHiddenStreamToken commonHiddenStreamToken =
-			DetailASTUtil.getHiddenBefore(detailAST);
+			getHiddenBefore(detailAST);
 
 		if (commonHiddenStreamToken != null) {
 			parsedJavaClass.addPrecedingCommentToken(
 				commonHiddenStreamToken,
-				DetailASTUtil.getStartPosition(detailAST));
+				getStartPosition(detailAST));
 		}
 
 		parsedJavaClass = _walk(

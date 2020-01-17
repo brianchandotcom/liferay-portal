@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -34,7 +32,7 @@ public class AnnotationParameterOrderCheck extends BaseCheck {
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		List<DetailAST> annotationMemberValuePairDetailASTList =
-			DetailASTUtil.getAllChildTokens(
+			getAllChildTokens(
 				detailAST, false, TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
 
 		String previousName = null;

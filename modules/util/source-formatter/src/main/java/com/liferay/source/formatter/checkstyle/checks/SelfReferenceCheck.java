@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -40,9 +39,8 @@ public class SelfReferenceCheck extends BaseCheck {
 
 		String className = nameDetailAST.getText();
 
-		List<DetailAST> methodCallDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.METHOD_CALL);
+		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_CALL);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
@@ -66,7 +64,7 @@ public class SelfReferenceCheck extends BaseCheck {
 				(methodClassName.equals(className) &&
 				 !_isInsideAnonymousClass(methodCallDetailAST) &&
 				 !_isInsideInnerClass(methodCallDetailAST, className) &&
-				 !DetailASTUtil.hasParentWithTokenType(
+				 !hasParentWithTokenType(
 					 methodCallDetailAST, TokenTypes.INSTANCE_INIT))) {
 
 				DetailAST secondChildDetailAST =

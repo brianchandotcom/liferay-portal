@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -34,7 +33,7 @@ public class SizeIsZeroCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = getMethodCalls(
 			detailAST, "size");
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
@@ -75,10 +74,8 @@ public class SizeIsZeroCheck extends BaseCheck {
 
 		String variableName = nameDetailAST.getText();
 
-		List<DetailAST> definitionDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.PARAMETER_DEF,
-				TokenTypes.VARIABLE_DEF);
+		List<DetailAST> definitionDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.PARAMETER_DEF, TokenTypes.VARIABLE_DEF);
 
 		for (DetailAST definitionDetailAST : definitionDetailASTList) {
 			DetailAST definitionNameDetailAST =

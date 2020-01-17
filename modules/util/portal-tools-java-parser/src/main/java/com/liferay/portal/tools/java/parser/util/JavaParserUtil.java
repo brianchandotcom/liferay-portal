@@ -253,7 +253,7 @@ public class JavaParserUtil {
 		}
 
 		List<DetailAST> arrayDeclaratorDetailASTList =
-			DetailASTUtil.getAllChildTokens(
+			getAllChildTokens(
 				typeInfoDetailAST, true, TokenTypes.ARRAY_DECLARATOR);
 
 		for (DetailAST arrayDeclaratorDetailAST :
@@ -327,7 +327,7 @@ public class JavaParserUtil {
 	}
 
 	private static String _getSuffix(DetailAST detailAST) {
-		DetailAST closingDetailAST = DetailASTUtil.getClosingDetailAST(
+		DetailAST closingDetailAST = getClosingDetailAST(
 			detailAST);
 
 		if (closingDetailAST == null) {
@@ -507,7 +507,7 @@ public class JavaParserUtil {
 		DetailAST detailAST, int genericBoundType) {
 
 		List<DetailAST> typeGenericBoundsDetailASTList =
-			DetailASTUtil.getAllChildTokens(detailAST, true, genericBoundType);
+			getAllChildTokens(detailAST, true, genericBoundType);
 
 		int arrayDimension = 0;
 		DetailAST typeGenericBoundsDetailAST = null;
@@ -520,7 +520,7 @@ public class JavaParserUtil {
 				curTypeGenericBoundsDetailAST.getParent();
 
 			while (true) {
-				if (DetailASTUtil.equals(detailAST, parentDetailAST)) {
+				if (equals(detailAST, parentDetailAST)) {
 					typeGenericBoundsDetailAST = curTypeGenericBoundsDetailAST;
 
 					break outerLoop;
@@ -569,7 +569,7 @@ public class JavaParserUtil {
 
 		List<JavaType> genericJavaTypes = new ArrayList<>();
 
-		List<DetailAST> detailAstList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> detailAstList = getAllChildTokens(
 			groupDetailAST, false, type);
 
 		for (DetailAST currentDetailAST : detailAstList) {
@@ -663,7 +663,7 @@ public class JavaParserUtil {
 			new ArrayList<>();
 
 		List<DetailAST> annotationMemberValuePairDetailASTList =
-			DetailASTUtil.getAllChildTokens(
+			getAllChildTokens(
 				annotationDetailAST, false,
 				TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
 
@@ -684,7 +684,7 @@ public class JavaParserUtil {
 		List<JavaAnnotation> javaAnnotations = new ArrayList<>();
 
 		List<DetailAST> annotationDetailASTList =
-			DetailASTUtil.getAllChildTokens(
+			getAllChildTokens(
 				detailAST, false, TokenTypes.ANNOTATION);
 
 		for (DetailAST annotationDetailAST : annotationDetailASTList) {
@@ -849,7 +849,7 @@ public class JavaParserUtil {
 			_parseParameterValueJavaExpressions(
 				literalNewDetailAST.findFirstToken(TokenTypes.ELIST)));
 
-		boolean statementCondition = DetailASTUtil.hasParentWithTokenType(
+		boolean statementCondition = hasParentWithTokenType(
 			literalNewDetailAST, TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_IF,
 			TokenTypes.LITERAL_WHILE);
 
@@ -1216,7 +1216,7 @@ public class JavaParserUtil {
 		if (firstChildDetailAST != null) {
 			if (firstChildDetailAST.getType() == TokenTypes.ELIST) {
 				List<DetailAST> exprDetailASTList =
-					DetailASTUtil.getAllChildTokens(
+					getAllChildTokens(
 						firstChildDetailAST, false, TokenTypes.EXPR);
 
 				for (DetailAST exprDetailAST : exprDetailASTList) {
@@ -1252,7 +1252,7 @@ public class JavaParserUtil {
 			TokenTypes.ELIST);
 
 		if (elistDetailAST != null) {
-			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+			List<DetailAST> exprDetailASTList = getAllChildTokens(
 				elistDetailAST, false, TokenTypes.EXPR);
 
 			for (DetailAST curExprDetailAST : exprDetailASTList) {
@@ -1349,7 +1349,7 @@ public class JavaParserUtil {
 		List<JavaLambdaParameter> javaLambdaParameters = new ArrayList<>();
 
 		List<DetailAST> parameterDefinitionDetailASTList =
-			DetailASTUtil.getAllChildTokens(
+			getAllChildTokens(
 				parametersDetailAST, false, TokenTypes.PARAMETER_DEF);
 
 		for (DetailAST parameterDefinitionDetailAST :
@@ -1422,13 +1422,13 @@ public class JavaParserUtil {
 			_parseParameterValueJavaExpressions(
 				methodCallDetailAST.findFirstToken(TokenTypes.ELIST)));
 
-		boolean statementCondition = DetailASTUtil.hasParentWithTokenType(
+		boolean statementCondition = hasParentWithTokenType(
 			methodCallDetailAST, TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_IF,
 			TokenTypes.LITERAL_WHILE);
 
 		javaMethodCall.setStatementCondition(statementCondition);
 
-		boolean insideConstructorCall = DetailASTUtil.hasParentWithTokenType(
+		boolean insideConstructorCall = hasParentWithTokenType(
 			methodCallDetailAST, TokenTypes.CTOR_CALL,
 			TokenTypes.SUPER_CTOR_CALL);
 
@@ -1574,7 +1574,7 @@ public class JavaParserUtil {
 		}
 
 		List<DetailAST> parameterDefinitionDetailASTList =
-			DetailASTUtil.getAllChildTokens(
+			getAllChildTokens(
 				detailAST, false, TokenTypes.PARAMETER_DEF);
 
 		for (DetailAST parameterDefinitionDetailAST :
@@ -1639,7 +1639,7 @@ public class JavaParserUtil {
 		}
 
 		List<DetailAST> literalCaseDetailASTList =
-			DetailASTUtil.getAllChildTokens(
+			getAllChildTokens(
 				caseGroupDetailAST, false, TokenTypes.LITERAL_CASE);
 
 		for (DetailAST literalCaseDetailAST : literalCaseDetailASTList) {
@@ -1712,7 +1712,7 @@ public class JavaParserUtil {
 		DetailAST resourcesDetailAST = firstChildDetailAST.findFirstToken(
 			TokenTypes.RESOURCES);
 
-		List<DetailAST> resourceDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> resourceDetailASTList = getAllChildTokens(
 			resourcesDetailAST, false, TokenTypes.RESOURCE);
 
 		for (DetailAST resourceDetailAST : resourceDetailASTList) {

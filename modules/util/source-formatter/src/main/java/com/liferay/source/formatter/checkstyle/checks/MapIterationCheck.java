@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -36,9 +35,8 @@ public class MapIterationCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		List<DetailAST> forEachClauseDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.FOR_EACH_CLAUSE);
+		List<DetailAST> forEachClauseDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.FOR_EACH_CLAUSE);
 
 		for (DetailAST forEachClauseDetailAST : forEachClauseDetailASTList) {
 			_checkKeySetIteration(forEachClauseDetailAST);
@@ -54,8 +52,8 @@ public class MapIterationCheck extends BaseCheck {
 
 		String keyName = identDetailAST.getText();
 
-		List<DetailAST> keySetMethodCallDetailASTList =
-			DetailASTUtil.getMethodCalls(forEachClauseDetailAST, "keySet");
+		List<DetailAST> keySetMethodCallDetailASTList = getMethodCalls(
+			forEachClauseDetailAST, "keySet");
 
 		for (DetailAST keySetMethodCallDetailAST :
 				keySetMethodCallDetailASTList) {
@@ -72,15 +70,12 @@ public class MapIterationCheck extends BaseCheck {
 				continue;
 			}
 
-			DetailAST typeDetailAST = DetailASTUtil.getVariableTypeDetailAST(
+			DetailAST typeDetailAST = getVariableTypeDetailAST(
 				keySetMethodCallDetailAST, mapName);
 
-			if ((typeDetailAST != null) &&
-				DetailASTUtil.isCollection(typeDetailAST)) {
-
-				List<DetailAST> wildcardTypeDetailASTList =
-					DetailASTUtil.getAllChildTokens(
-						typeDetailAST, true, TokenTypes.WILDCARD_TYPE);
+			if ((typeDetailAST != null) && isCollection(typeDetailAST)) {
+				List<DetailAST> wildcardTypeDetailASTList = getAllChildTokens(
+					typeDetailAST, true, TokenTypes.WILDCARD_TYPE);
 
 				if (wildcardTypeDetailASTList.isEmpty()) {
 					log(forEachClauseDetailAST, _MSG_USE_ENTRY_SET);
@@ -92,8 +87,8 @@ public class MapIterationCheck extends BaseCheck {
 	private boolean _containsGetMethod(
 		DetailAST forDetailAST, String keyName, String mapName) {
 
-		List<DetailAST> getMethodCallDetailASTList =
-			DetailASTUtil.getMethodCalls(forDetailAST, mapName, "get");
+		List<DetailAST> getMethodCallDetailASTList = getMethodCalls(
+			forDetailAST, mapName, "get");
 
 		for (DetailAST getMethodCallDetailAST : getMethodCallDetailASTList) {
 			DetailAST eListDetailAST = getMethodCallDetailAST.findFirstToken(

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaConstructor;
@@ -84,7 +83,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 		String directoryPath = absolutePath.substring(0, x + 1);
 
-		List<String> importNames = DetailASTUtil.getImportNames(detailAST);
+		List<String> importNames = getImportNames(detailAST);
 		String packageName = _getPackageName(detailAST);
 
 		_checkDeprecatedConstructorsUsage(
@@ -163,9 +162,8 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		List<String> allowedFullyQualifiedClassNames = getAttributeValues(
 			_ALLOWED_FULLY_QUALIFIED_CLASS_NAMES_KEY);
 
-		List<DetailAST> literalNewDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.LITERAL_NEW);
+		List<DetailAST> literalNewDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.LITERAL_NEW);
 
 		for (DetailAST literalNewDetailAST : literalNewDetailASTList) {
 			if (_hasDeprecatedParent(literalNewDetailAST) ||
@@ -252,7 +250,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		List<String> allowedFullyQualifiedClassNames = getAttributeValues(
 			_ALLOWED_FULLY_QUALIFIED_CLASS_NAMES_KEY);
 
-		List<DetailAST> dotDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> dotDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.DOT);
 
 		for (DetailAST dotDetailAST : dotDetailASTList) {
@@ -330,9 +328,8 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		List<String> allowedFullyQualifiedClassNames = getAttributeValues(
 			_ALLOWED_FULLY_QUALIFIED_CLASS_NAMES_KEY);
 
-		List<DetailAST> methodCallDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.METHOD_CALL);
+		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_CALL);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			if (_hasDeprecatedParent(methodCallDetailAST) ||
@@ -360,8 +357,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 				continue;
 			}
 
-			String methodName = DetailASTUtil.getMethodName(
-				methodCallDetailAST);
+			String methodName = getMethodName(methodCallDetailAST);
 
 			if (classInfo.isDeprecatedClass()) {
 				log(
@@ -398,7 +394,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		DetailAST detailAST, String packageName, List<String> importNames,
 		String directoryPath) {
 
-		List<DetailAST> detailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> detailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.EXTENDS_CLAUSE,
 			TokenTypes.IMPLEMENTS_CLAUSE, TokenTypes.TYPE,
 			TokenTypes.TYPE_ARGUMENT);
@@ -408,7 +404,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 				curDetailAST, packageName, importNames, directoryPath);
 		}
 
-		detailASTList = DetailASTUtil.getAllChildTokens(
+		detailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.LITERAL_CLASS, TokenTypes.LITERAL_THIS);
 
 		for (DetailAST curDetailAST : detailASTList) {
@@ -821,8 +817,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 		String s = firstChildDetailAST.getText();
 
 		if (s.matches("_?[a-z].*")) {
-			s = DetailASTUtil.getVariableTypeName(
-				methodCallDetailAST, s, false);
+			s = getVariableTypeName(methodCallDetailAST, s, false);
 
 			if (Validator.isNull(s)) {
 				return null;
@@ -936,7 +931,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 		DetailAST elistDetailAST = detailAST.findFirstToken(TokenTypes.ELIST);
 
-		List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> exprDetailASTList = getAllChildTokens(
 			elistDetailAST, false, TokenTypes.EXPR);
 
 		for (DetailAST exprDetailAST : exprDetailASTList) {
@@ -945,7 +940,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 			if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
 				String parameterName = firstChildDetailAST.getText();
 
-				String parameterTypeName = DetailASTUtil.getVariableTypeName(
+				String parameterTypeName = getVariableTypeName(
 					detailAST, parameterName, false);
 
 				if (Validator.isNotNull(parameterTypeName)) {
@@ -1033,7 +1028,7 @@ public class DeprecatedUsageCheck extends BaseCheck {
 
 				if (annotationDetailAST != null) {
 					List<DetailAST> literalStringDetailASTList =
-						DetailASTUtil.getAllChildTokens(
+						getAllChildTokens(
 							annotationDetailAST, true,
 							TokenTypes.STRING_LITERAL);
 

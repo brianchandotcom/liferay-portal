@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -86,7 +85,7 @@ public class MissingDiamondOperatorCheck extends BaseCheck {
 			log(detailAST, _MSG_MISSING_DIAMOND_OPERATOR, className);
 		}
 		else {
-			String typeName = DetailASTUtil.getTypeName(typeDetailAST, true);
+			String typeName = getTypeName(typeDetailAST, true);
 
 			log(
 				detailAST, _MSG_MISSING_GENERIC_TYPES,

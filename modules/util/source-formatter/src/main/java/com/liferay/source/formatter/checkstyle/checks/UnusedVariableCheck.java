@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -43,9 +41,8 @@ public class UnusedVariableCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> variableDefinitionDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.VARIABLE_DEF);
+		List<DetailAST> variableDefinitionDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.VARIABLE_DEF);
 
 		if (variableDefinitionDetailASTList.isEmpty()) {
 			return;
@@ -90,7 +87,7 @@ public class UnusedVariableCheck extends BaseCheck {
 	private List<String> _getTokenNames(DetailAST detailAST) {
 		List<String> tokenNames = new ArrayList<>();
 
-		List<DetailAST> nameDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> nameDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.IDENT);
 
 		for (DetailAST nameDetailAST : nameDetailASTList) {

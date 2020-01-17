@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -67,7 +68,8 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 			"Liferay.Sharing.share(",
 			_classNameLocalService.getClassNameId(className), ", ", classPK,
 			", '",
-			_getSharingDialogTitle(className, classPK, httpServletRequest),
+			HtmlUtil.escapeJS(
+				_getSharingDialogTitle(className, classPK, httpServletRequest)),
 			"')");
 	}
 
@@ -121,7 +123,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 		if (Validator.isNotNull(title)) {
 			return _language.format(
-				resourceBundle, "share-x", _html.escapeJS(title));
+				resourceBundle, "share-x", title);
 		}
 
 		return _language.get(resourceBundle, "share");

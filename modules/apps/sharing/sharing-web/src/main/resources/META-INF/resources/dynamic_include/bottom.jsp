@@ -39,7 +39,7 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 				width: 600
 			},
 			id: 'sharingDialog',
-			title: title,
+			title: Liferay.Util.escapeHTML(title),
 			uri: uri
 		});
 	}

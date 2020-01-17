@@ -419,8 +419,8 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 				"UPDATE ", tableName, " SET ctChangeType = ? WHERE ",
 				leftColumnName, " = ? AND ", rightColumnName,
 				" = ? AND ctCollectionId = ?"),
-			ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
-			_booleanParamSetter);
+			_booleanParamSetter, ParamSetter.BIGINT, ParamSetter.BIGINT,
+			ParamSetter.BIGINT);
 	}
 
 	private static <T extends BaseModel<T>> List<T> _getBaseModels(
@@ -520,7 +520,7 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		try {
 			int count = _updateCTTableMappingSqlUpdate.update(
-				leftPrimaryKey, rightPrimaryKey, ctCollectionId, ctChangeType);
+				ctChangeType, leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 
 			if (count == 0) {
 				_addCTTableMappingSqlUpdate.update(

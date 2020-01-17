@@ -1,7 +1,6 @@
 {
 	"dependencies": {
 		"frontend-js-web": "*",
-		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",
 		"metal-path-parser": "1.0.4",
 		"metal-router": "3.6.3",

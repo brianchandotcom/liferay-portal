@@ -5,16 +5,9 @@ Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.sharing.lang),(bundle.symbolic.name=com.liferay.sharing.web)";\
 		resource.bundle.base.name="content.Language";\
-		service.ranking=1,\
-	soy;\
-		type="sharing-web";\
-		version:Version="${Bundle-Version}"
+		service.ranking=1
 Require-Capability:\
 	liferay.resource.bundle;\
-		filter:="(bundle.symbolic.name=com.liferay.sharing.lang)",\
-	soy;\
-		filter:="(type=clay-taglib)",\
-	soy;\
-		filter:="(type=frontend-js-web)"
+		filter:="(bundle.symbolic.name=com.liferay.sharing.lang)"
 Web-ContextPath: /sharing-web
 -dsannotations-options: inherit

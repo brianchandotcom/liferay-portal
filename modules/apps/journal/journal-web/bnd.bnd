@@ -12,8 +12,6 @@ Provide-Capability:\
 		version:Version="${Bundle-Version}"
 Require-Capability:\
 	liferay.resource.bundle;\
-		filter:="(bundle.symbolic.name=com.liferay.journal.lang)",\
-	osgi.extender;\
-		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
+		filter:="(bundle.symbolic.name=com.liferay.journal.lang)"
 Web-ContextPath: /journal-web
 -dsannotations-options: inherit

@@ -5,7 +5,4 @@ Provide-Capability:\
 	soy;\
 		type="image-editor-capability";\
 		version:Version="${Bundle-Version}"
-Require-Capability:\
-	soy;\
-		filter:="(type=metal)"
 Web-ContextPath: /frontend-image-editor-capability-contrast

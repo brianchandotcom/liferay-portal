@@ -6,12 +6,8 @@
 		"@clayui/icon": "3.0.2",
 		"@clayui/multi-select": "3.3.0",
 		"classnames": "2.2.6",
-		"clay-multi-select": "2.20.0",
 		"frontend-js-react-web": "*",
-		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",
-		"metal-soy": "2.16.8",
-		"metal-state": "2.16.8",
 		"prop-types": "15.7.2",
 		"react": "16.9.0"
 	},

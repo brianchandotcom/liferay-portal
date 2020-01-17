@@ -14,9 +14,6 @@
 		"clipboard": "2.0.4",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
-		"metal-component": "2.16.8",
-		"metal-soy": "2.16.8",
-		"metal-state": "2.16.8",
 		"prop-types": "15.7.2",
 		"react": "16.9.0",
 		"react-dom": "16.9.0"

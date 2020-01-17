@@ -14,8 +14,6 @@
 
 package com.liferay.talend;
 
-import javax.inject.Inject;
-
 import org.talend.components.api.component.ComponentDefinition;
 import org.talend.components.api.service.common.DefinitionRegistry;
 import org.talend.components.api.test.AbstractComponentTest2;
@@ -47,7 +45,6 @@ public abstract class LiferayAbstractComponentTestCase
 			ComponentDefinition.class, name, componentClass);
 	}
 
-	@Inject
 	private DefinitionRegistry _definitionRegistry;
 
 }

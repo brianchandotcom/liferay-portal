@@ -42,6 +42,94 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-103454. Content author having permission to update blog entry could see edit icon in the content page displaying the blog and could edit blog in editmode. "
+	@priority = "4"
+	test EditBlogsEntryWitheBlogEntryUpdatePermission {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			newPassword = "test",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addSiteRole(
+			roleKey = "Roles Siterole Name",
+			roleTitle = "Roles Siterole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.blogs.model.BlogsEntry",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		User.openUsersAdmin();
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Roles Siterole Name",
+			userScreenName = "usersn");
+
+		Navigator.openSiteURL(siteName = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blog Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "Blogs Entry Title",
+			assetType = "Blogs Entry",
+			contentPage = "true");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.gotoTab(tabName = "Contents");
+
+		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Blogs Entry Title");
+
+		AssertTextEquals(
+			locator1 = "ControlMenu#HEADING",
+			value1 = "Blogs Entry Title");
+	}
+
 	@description = "This is a test for LPS-96795. Content author having permissions to create and update web content could see edit icon in the content page displaying the web contents and could edit web content in edit mode."
 	@priority = "5"
 	test EditContentWithCreateAndUpdateWebContentPermissions {

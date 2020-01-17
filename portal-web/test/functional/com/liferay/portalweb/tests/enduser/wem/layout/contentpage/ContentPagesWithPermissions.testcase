@@ -145,6 +145,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
+			newPassword = "test",
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
@@ -313,6 +314,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
+			newPassword = "test",
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
@@ -434,6 +436,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
+			newPassword = "test",
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
@@ -584,6 +587,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
+			newPassword = "test",
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
@@ -690,6 +694,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
+			newPassword = "test",
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 

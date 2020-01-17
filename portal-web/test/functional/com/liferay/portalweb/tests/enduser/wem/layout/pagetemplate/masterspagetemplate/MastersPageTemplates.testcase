@@ -39,9 +39,9 @@ definition {
 	@priority = "5"
 	test AddPageBasedOnCustomMastersAndInheritElementsFromCustomMasters {
 		task ("Add a custom masters with Button fragment") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Custom Masters Page Template");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -68,27 +68,17 @@ definition {
 	@description = "This is a test for LPS-102208. As a master pages administrator I can duplicate a masters template"
 	@priority = "5"
 	test CanDuplicateMastersPageTemplate {
-		MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-		MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Masters Template Page Name");
-
-		PageEditor.clickPublish();
-
 		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 			item = "Make a Copy",
-			masterLayoutName = "Masters Template Page Name");
+			masterLayoutName = "Custom Masters Page Template");
 
-		MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Masters Template Page Name (Copy)");
+		MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template (Copy)");
 	}
 
 	@description = "This is for LPS-103687. Validate if the Blank page template can not be deleted."
 	@priority = "5"
 	test CannotDeleteBlankPageTemplate {
 		task ("Assert the Blank page template exist") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			Navigator.gotoNavTab(navTab = "Masters");
-
 			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Blank");
 		}
 
@@ -109,10 +99,6 @@ definition {
 	@priority = "5"
 	test CannotEditBlankPageTemplate {
 		task ("Assert the Blank page template exist") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			Navigator.gotoNavTab(navTab = "Masters");
-
 			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Blank");
 		}
 
@@ -126,15 +112,9 @@ definition {
 	@description = "This is for LPS-102200. Can edit master page template elements from  "Look and Feel" of page editor."
 	@priority = "5"
 	test EditMasterPageTemplateViaPageEditorLookAndFeel {
-		MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-		MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Masters Template Page Name");
-
-		PageEditor.clickPublish();
-
 		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 			item = "Edit",
-			masterLayoutName = "Masters Template Page Name");
+			masterLayoutName = "Custom Masters Page Template");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -147,7 +127,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(
-			masterLayoutName = "Masters Template Page Name",
+			masterLayoutName = "Custom Masters Page Template",
 			pageName = "Test Content Page Name");
 
 		PageEditor.gotoTab(tabName = "Look and Feel");
@@ -173,8 +153,6 @@ definition {
 	@priority = "3"
 	test OnlyAddElementsInDropZoneOfPageAndElementsInheritedAreChangeless {
 		task ("Add a custom master with Heading fragment and Asset Publisher portlet") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
 				masterLayoutName = "Custom Masters Page Template");
@@ -245,14 +223,6 @@ definition {
 	@description = "This is a test for LPS-102566. Master page can be used in page, page template and display page, changes in master page will be propagated to page, page template and display page"
 	@priority = "5"
 	test PropagateChangesFromCustomMastersToAllBasedOnCustomMasters {
-		task ("Add a custom masters without elements") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
-
-			PageEditor.clickPublish();
-		}
-
 		task ("Add a page based on custom masters") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -346,10 +316,6 @@ definition {
 	@priority = "5"
 	test ViewBlankPageTemplateExistInMastersTabInNewSite {
 		task ("Assert the Blank page template exist in the Masters tab") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			Navigator.gotoNavTab(navTab = "Masters");
-
 			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Blank");
 		}
 	}

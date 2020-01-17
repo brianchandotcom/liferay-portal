@@ -417,6 +417,11 @@
 	<td>//section[contains(@class,'container')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SECTION_CONTAINER</td>
+	<td>//section[@tabindex='0'][${key_position}]/div[contains(@class,'container py-3')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

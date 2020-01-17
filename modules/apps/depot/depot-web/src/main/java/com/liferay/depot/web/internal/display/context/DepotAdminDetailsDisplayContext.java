@@ -16,11 +16,12 @@ package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.application.DepotApplication;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -51,29 +52,28 @@ public class DepotAdminDetailsDisplayContext {
 		return depotEntry.getDepotEntryId();
 	}
 
-	public String getDepotName(Locale locale) {
+	public String getDepotName(Locale locale) throws PortalException {
 		Group group = getGroup();
 
 		return group.getName(locale);
 	}
 
-	public Group getGroup() {
+	public Group getGroup() throws PortalException {
 		if (_group == null) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+			DepotEntry depotEntry = DepotEntryServiceUtil.getDepotEntry(
+				getDepotEntryId());
 
-			_group = themeDisplay.getScopeGroup();
+			_group = GroupLocalServiceUtil.getGroup(depotEntry.getGroupId());
 		}
 
 		return _group;
 	}
 
-	public boolean isEnabled(String portletId) {
+	public boolean isEnabled(String portletId) throws PortalException {
 		return _depotApplicationController.isEnabled(portletId, _getGroupId());
 	}
 
-	private long _getGroupId() {
+	private long _getGroupId() throws PortalException {
 		Group group = getGroup();
 
 		return group.getGroupId();

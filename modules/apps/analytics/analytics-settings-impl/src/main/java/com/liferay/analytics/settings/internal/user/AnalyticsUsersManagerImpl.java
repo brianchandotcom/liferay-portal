@@ -15,14 +15,12 @@
 package com.liferay.analytics.settings.internal.user;
 
 import com.liferay.analytics.settings.user.AnalyticsUsersManager;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -41,8 +39,7 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 
 	@Override
 	public int getCompanyUsersCount(long companyId) {
-		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder();
 
 		SearchRequest searchRequest = searchRequestBuilder.withSearchContext(
 			searchContext -> {
@@ -59,8 +56,7 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 	public int getOrganizationsAndUserGroupsUsersCount(
 		long[] organizationIds, long[] userGroupIds) {
 
-		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder();
 
 		SearchRequest searchRequest = searchRequestBuilder.withSearchContext(
 			searchContext -> {
@@ -79,8 +75,7 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 
 	@Override
 	public int getOrganizationUsersCount(long organizationId) {
-		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder();
 
 		SearchRequest searchRequest = searchRequestBuilder.withSearchContext(
 			searchContext -> {
@@ -97,8 +92,7 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 
 	@Override
 	public int getUserGroupUsersCount(long userGroupId) {
-		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder();
 
 		SearchRequest searchRequest = searchRequestBuilder.withSearchContext(
 			searchContext -> {
@@ -113,14 +107,9 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 		return _getUsersCount(searchRequest);
 	}
 
-	private SearchRequestBuilder _getSearchRequestBuilder(int start, int end) {
+	private SearchRequestBuilder _getSearchRequestBuilder() {
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder();
-
-		if ((start != QueryUtil.ALL_POS) && (end != QueryUtil.ALL_POS)) {
-			searchRequestBuilder.from(start);
-			searchRequestBuilder.size(end - start);
-		}
 
 		return searchRequestBuilder.entryClassNames(
 			User.class.getName()
@@ -160,8 +149,5 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

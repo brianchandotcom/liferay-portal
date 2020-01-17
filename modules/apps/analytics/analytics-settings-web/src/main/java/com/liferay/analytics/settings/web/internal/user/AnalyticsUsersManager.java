@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -85,6 +86,12 @@ public class AnalyticsUsersManager {
 
 	public int getOrganizationsAndUserGroupsUsersCount(
 		long[] organizationIds, long[] userGroupIds) {
+
+		if (ArrayUtil.isEmpty(organizationIds) &&
+			ArrayUtil.isEmpty(userGroupIds)) {
+
+			return 0;
+		}
 
 		if (!_isIndexerEnabled()) {
 			return _userLocalService.getOrganizationsAndUserGroupsUsersCount(

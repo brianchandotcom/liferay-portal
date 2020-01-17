@@ -49,14 +49,8 @@ downloadElasticsearch {
 		project.copy {
 			fileMode = 0777
 
+			from zipTree(file("${project.'liferay.home'}/${zipName}"))
 			into project.properties["liferay.home"]
-
-			if (zipName.endsWith(".zip")) {
-				from zipTree(file("${project.'liferay.home'}/${zipName}"))
-			}
-			else {
-				from tarTree(file("${project.'liferay.home'}/${zipName}"))
-			}
 		}
 	}
 }

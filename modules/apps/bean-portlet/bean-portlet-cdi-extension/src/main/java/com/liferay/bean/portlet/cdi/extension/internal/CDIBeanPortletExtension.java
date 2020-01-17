@@ -368,203 +368,9 @@ public class CDIBeanPortletExtension implements Extension {
 					throws PortletException {
 
 					for (BeanPortletMethod beanMethod : beanMethods) {
-						try {
-
-							// MVC
-
-							Bean<?> bean = beanManager.resolve(
-								beanManager.getBeans(
-									BeanPortletMethodDecorator.class));
-
-							if (bean != null) {
-								BeanPortletMethodDecorator
-									beanPortletMethodDecorator =
-										(BeanPortletMethodDecorator)
-											beanManager.getReference(
-												bean,
-												BeanPortletMethodDecorator.
-													class,
-												beanManager.
-													createCreationalContext(
-														bean));
-
-								beanMethod =
-									beanPortletMethodDecorator.getBeanMethod(
-										beanMethod, portletConfig,
-										portletRequest, portletResponse);
-							}
-
-							String include = null;
-							Method method = beanMethod.getMethod();
-
-							BeanPortletMethodType beanPortletMethodType =
-								beanMethod.getMethodType();
-
-							if (beanPortletMethodType ==
-									BeanPortletMethodType.ACTION) {
-
-								ActionRequest actionRequest =
-									(ActionRequest)portletRequest;
-
-								ActionParameters actionParameters =
-									actionRequest.getActionParameters();
-
-								String actionName = actionParameters.getValue(
-									ActionRequest.ACTION_NAME);
-
-								String beanMethodActionName =
-									beanMethod.getActionName();
-
-								if (Validator.isNull(beanMethodActionName) ||
-									beanMethodActionName.equals(actionName)) {
-
-									beanMethod.invoke(
-										portletRequest, portletResponse);
-								}
-							}
-							else if ((beanPortletMethodType ==
-										BeanPortletMethodType.HEADER) ||
-									 (beanPortletMethodType ==
-										 BeanPortletMethodType.RENDER)) {
-
-								PortletMode portletMode =
-									portletRequest.getPortletMode();
-
-								PortletMode beanMethodPortletMode =
-									beanMethod.getPortletMode();
-
-								if ((beanMethodPortletMode == null) ||
-									portletMode.equals(beanMethodPortletMode)) {
-
-									if (method.getParameterCount() == 0) {
-										String markup =
-											(String)beanMethod.invoke();
-
-										if (markup != null) {
-											MimeResponse mimeResponse =
-												(MimeResponse)portletResponse;
-
-											PrintWriter printWriter =
-												mimeResponse.getWriter();
-
-											printWriter.write(markup);
-										}
-									}
-									else {
-										beanMethod.invoke(
-											portletRequest, portletResponse);
-									}
-
-									include = beanPortletMethodType.getInclude(
-										method);
-								}
-							}
-							else if (beanPortletMethodType ==
-										BeanPortletMethodType.SERVE_RESOURCE) {
-
-								ResourceRequest resourceRequest =
-									(ResourceRequest)portletRequest;
-
-								String resourceID =
-									resourceRequest.getResourceID();
-
-								String beanMethodResourceID =
-									beanMethod.getResourceID();
-
-								if (Validator.isNull(beanMethodResourceID) ||
-									beanMethodResourceID.equals(resourceID)) {
-
-									ResourceResponse resourceResponse =
-										(ResourceResponse)portletResponse;
-
-									String contentType =
-										beanPortletMethodType.getContentType(
-											method);
-
-									if (Validator.isNotNull(contentType) &&
-										!Objects.equals(contentType, "*/*")) {
-
-										resourceResponse.setContentType(
-											contentType);
-									}
-
-									String characterEncoding =
-										beanPortletMethodType.
-											getCharacterEncoding(method);
-
-									if (Validator.isNotNull(
-											characterEncoding)) {
-
-										resourceResponse.setCharacterEncoding(
-											characterEncoding);
-									}
-
-									if (method.getParameterCount() == 0) {
-										String markup =
-											(String)beanMethod.invoke();
-
-										if (Validator.isNotNull(markup)) {
-											PrintWriter printWriter =
-												resourceResponse.getWriter();
-
-											printWriter.write(markup);
-										}
-									}
-									else {
-										beanMethod.invoke(
-											resourceRequest, resourceResponse);
-									}
-
-									include = beanPortletMethodType.getInclude(
-										method);
-								}
-							}
-							else {
-								beanMethod.invoke(
-									portletRequest, portletResponse);
-							}
-
-							PortletMode beanMethodPortletMode =
-								beanMethod.getPortletMode();
-
-							if (Validator.isNotNull(include) &&
-								((beanMethodPortletMode == null) ||
-								 beanMethodPortletMode.equals(
-									 portletRequest.getPortletMode()))) {
-
-								PortletContext portletContext =
-									portletConfig.getPortletContext();
-
-								PortletRequestDispatcher requestDispatcher =
-									portletContext.getRequestDispatcher(
-										include);
-
-								if (requestDispatcher == null) {
-									_log.error(
-										"Unable to acquire dispatcher to " +
-											"include=" + include);
-								}
-								else {
-									requestDispatcher.include(
-										portletRequest, portletResponse);
-								}
-							}
-						}
-						catch (InvocationTargetException ite) {
-							Throwable cause = ite.getCause();
-
-							if (cause instanceof PortletException) {
-								throw (PortletException)cause;
-							}
-
-							throw new PortletException(cause);
-						}
-						catch (PortletException pe) {
-							throw pe;
-						}
-						catch (Exception exception) {
-							throw new PortletException(exception);
-						}
+						_invokeBeanPortletMethod(
+							beanManager, beanMethod, portletConfig,
+							portletRequest, portletResponse);
 					}
 
 					// MVC
@@ -656,6 +462,174 @@ public class CDIBeanPortletExtension implements Extension {
 			_serviceRegistrations, (ServletContext)contextObject);
 
 		_serviceRegistrations.clear();
+	}
+
+	private void _invokeBeanPortletMethod(
+			BeanManager beanManager, BeanPortletMethod beanMethod,
+			PortletConfig portletConfig, PortletRequest portletRequest,
+			PortletResponse portletResponse)
+		throws PortletException {
+
+		try {
+
+			// MVC
+
+			Bean<?> bean = beanManager.resolve(
+				beanManager.getBeans(BeanPortletMethodDecorator.class));
+
+			if (bean != null) {
+				BeanPortletMethodDecorator beanPortletMethodDecorator =
+					(BeanPortletMethodDecorator)beanManager.getReference(
+						bean, BeanPortletMethodDecorator.class,
+						beanManager.createCreationalContext(bean));
+
+				beanMethod = beanPortletMethodDecorator.getBeanMethod(
+					beanMethod, portletConfig, portletRequest, portletResponse);
+			}
+
+			String include = null;
+			Method method = beanMethod.getMethod();
+
+			BeanPortletMethodType beanPortletMethodType =
+				beanMethod.getMethodType();
+
+			if (beanPortletMethodType == BeanPortletMethodType.ACTION) {
+				ActionRequest actionRequest = (ActionRequest)portletRequest;
+
+				ActionParameters actionParameters =
+					actionRequest.getActionParameters();
+
+				String actionName = actionParameters.getValue(
+					ActionRequest.ACTION_NAME);
+
+				String beanMethodActionName = beanMethod.getActionName();
+
+				if (Validator.isNull(beanMethodActionName) ||
+					beanMethodActionName.equals(actionName)) {
+
+					beanMethod.invoke(portletRequest, portletResponse);
+				}
+			}
+			else if ((beanPortletMethodType == BeanPortletMethodType.HEADER) ||
+					 (beanPortletMethodType == BeanPortletMethodType.RENDER)) {
+
+				PortletMode portletMode = portletRequest.getPortletMode();
+
+				PortletMode beanMethodPortletMode = beanMethod.getPortletMode();
+
+				if ((beanMethodPortletMode == null) ||
+					portletMode.equals(beanMethodPortletMode)) {
+
+					if (method.getParameterCount() == 0) {
+						String markup = (String)beanMethod.invoke();
+
+						if (markup != null) {
+							MimeResponse mimeResponse =
+								(MimeResponse)portletResponse;
+
+							PrintWriter printWriter = mimeResponse.getWriter();
+
+							printWriter.write(markup);
+						}
+					}
+					else {
+						beanMethod.invoke(portletRequest, portletResponse);
+					}
+
+					include = beanPortletMethodType.getInclude(method);
+				}
+			}
+			else if (beanPortletMethodType ==
+						BeanPortletMethodType.SERVE_RESOURCE) {
+
+				ResourceRequest resourceRequest =
+					(ResourceRequest)portletRequest;
+
+				String resourceID = resourceRequest.getResourceID();
+
+				String beanMethodResourceID = beanMethod.getResourceID();
+
+				if (Validator.isNull(beanMethodResourceID) ||
+					beanMethodResourceID.equals(resourceID)) {
+
+					ResourceResponse resourceResponse =
+						(ResourceResponse)portletResponse;
+
+					String contentType = beanPortletMethodType.getContentType(
+						method);
+
+					if (Validator.isNotNull(contentType) &&
+						!Objects.equals(contentType, "*/*")) {
+
+						resourceResponse.setContentType(contentType);
+					}
+
+					String characterEncoding =
+						beanPortletMethodType.getCharacterEncoding(method);
+
+					if (Validator.isNotNull(characterEncoding)) {
+						resourceResponse.setCharacterEncoding(
+							characterEncoding);
+					}
+
+					if (method.getParameterCount() == 0) {
+						String markup = (String)beanMethod.invoke();
+
+						if (Validator.isNotNull(markup)) {
+							PrintWriter printWriter =
+								resourceResponse.getWriter();
+
+							printWriter.write(markup);
+						}
+					}
+					else {
+						beanMethod.invoke(resourceRequest, resourceResponse);
+					}
+
+					include = beanPortletMethodType.getInclude(method);
+				}
+			}
+			else {
+				beanMethod.invoke(portletRequest, portletResponse);
+			}
+
+			PortletMode beanMethodPortletMode = beanMethod.getPortletMode();
+
+			if (Validator.isNotNull(include) &&
+				((beanMethodPortletMode == null) ||
+				 beanMethodPortletMode.equals(
+					 portletRequest.getPortletMode()))) {
+
+				PortletContext portletContext =
+					portletConfig.getPortletContext();
+
+				PortletRequestDispatcher requestDispatcher =
+					portletContext.getRequestDispatcher(include);
+
+				if (requestDispatcher == null) {
+					_log.error(
+						"Unable to acquire dispatcher to include=" + include);
+				}
+				else {
+					requestDispatcher.include(portletRequest, portletResponse);
+				}
+			}
+		}
+		catch (InvocationTargetException ite) {
+			Throwable cause = ite.getCause();
+
+			if (cause instanceof PortletException) {
+				throw (PortletException)cause;
+			}
+
+			throw new PortletException(cause);
+		}
+		catch (PortletException pe) {
+			throw pe;
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
 	}
 
 	private static final String _ENGLISH_EN = LocaleUtil.ENGLISH.getLanguage();

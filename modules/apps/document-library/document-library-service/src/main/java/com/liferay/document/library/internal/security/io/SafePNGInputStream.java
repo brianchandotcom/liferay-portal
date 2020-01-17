@@ -65,7 +65,10 @@ public class SafePNGInputStream extends InputStream {
 
 		int n = _bufferedInputStream.read(bytes);
 
-		if ((n != _CHUNK_ID_SIZE) || !Arrays.equals(_ZTXT_CHUNK_ID, bytes)) {
+		if ((n != _CHUNK_ID_SIZE) ||
+			(!Arrays.equals(_ZTXT_CHUNK_ID, bytes) &&
+			 !Arrays.equals(_ITXT_CHUNK_ID, bytes))) {
+
 			_bufferedInputStream.reset();
 
 			_readForwardByteCount =
@@ -73,6 +76,24 @@ public class SafePNGInputStream extends InputStream {
 					1;
 
 			return _bufferedInputStream.read();
+		}
+
+		if (Arrays.equals(_ITXT_CHUNK_ID, bytes)) {
+			byte[] data = new byte[3];
+
+			int count = _bufferedInputStream.read(data);
+
+			if ((count != 3) || (data[2] == 0)) {
+				_bufferedInputStream.reset();
+
+				_readForwardByteCount =
+					_CHUNK_LENGTH_SIZE + _CHUNK_ID_SIZE + chunkLength +
+						_CRC_SIZE - 1;
+
+				return _bufferedInputStream.read();
+			}
+
+			chunkLength -= 3;
 		}
 
 		long bytesToSkip = chunkLength + _CRC_SIZE;
@@ -128,6 +149,8 @@ public class SafePNGInputStream extends InputStream {
 	private static final int _CHUNK_LENGTH_SIZE = 4;
 
 	private static final int _CRC_SIZE = 4;
+
+	private static final byte[] _ITXT_CHUNK_ID = {105, 84, 88, 116};
 
 	private static final byte[] _PNG_SIGNATURE = {
 		-119, 80, 78, 71, 13, 10, 26, 10

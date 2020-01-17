@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
@@ -40,12 +41,15 @@ const Languages = ({
 
 	const [customDefaultLocaleId, setCustomDefaultLocaleId] = useState(siteDefaultLocaleId);
 
+	const [languageWarning, setLanguageWarning] = useState(false);
+
 	const Language = ({displayName, isDefault, localeId, showActions}) => {
 		const [active, setActive] = useState(false);
 
 		const makeDefault = () => {
 			setActive(false);
 			setCustomDefaultLocaleId(localeId);
+			setLanguageWarning(true);
 		}
 
 		return (
@@ -157,6 +161,18 @@ const Languages = ({
 					showActions
 				/>
 			)}
+
+			{languageWarning && (
+				<ClayAlert
+  					displayType="warning"
+  					onClose={() => setLanguageWarning(false)}
+	  				title={Liferay.Language.get('warning')}
+	 			>
+	  				{Liferay.Language.get(
+						'this-change-will-only-affect-the-newly-created-localized-content'
+					)}
+				</ClayAlert>
+ 			)}
 		</div>
 	);
 };

@@ -50,8 +50,8 @@ public class AnalyticsSettingsUtil {
 					String.format(
 						"%s/%s", getAsahFaroBackendURL(companyId), path)));
 		}
-		catch (IOException ioException) {
-			throw new PortalException(ioException);
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
 		}
 	}
 
@@ -66,8 +66,8 @@ public class AnalyticsSettingsUtil {
 					String.format(
 						"%s/%s", getAsahFaroBackendURL(companyId), path)));
 		}
-		catch (IOException ioException) {
-			throw new PortalException(ioException);
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
 		}
 	}
 

@@ -106,8 +106,8 @@ public abstract class BaseAnalyticsMVCActionCommand
 
 			saveCompanyConfiguration(actionRequest, themeDisplay);
 		}
-		catch (PrincipalException principalException) {
-			SessionErrors.add(actionRequest, principalException.getClass());
+		catch (PrincipalException pe) {
+			SessionErrors.add(actionRequest, pe.getClass());
 
 			MutableRenderParameters mutableRenderParameters =
 				actionResponse.getRenderParameters();

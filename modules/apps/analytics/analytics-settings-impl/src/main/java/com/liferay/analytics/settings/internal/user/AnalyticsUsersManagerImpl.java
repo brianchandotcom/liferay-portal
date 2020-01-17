@@ -46,10 +46,13 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 	@Override
 	public int getCompanyUsersCount(long companyId) {
 		if (!_isIndexerEnabled()) {
-			Role analyticsAdministratorRole =
-				_fetchAnalyticsAdministratorRole();
+			int activeUsersCount = _userLocalService.getUsersCount(
+				companyId, false, WorkflowConstants.STATUS_APPROVED);
 
 			int analyticsAdministratorsCount = 0;
+
+			Role analyticsAdministratorRole =
+				_fetchAnalyticsAdministratorRole();
 
 			if (analyticsAdministratorRole != null) {
 				try {
@@ -65,9 +68,6 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 					}
 				}
 			}
-
-			int activeUsersCount = _userLocalService.getUsersCount(
-				companyId, false, WorkflowConstants.STATUS_APPROVED);
 
 			return activeUsersCount - analyticsAdministratorsCount;
 		}

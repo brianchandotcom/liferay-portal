@@ -14,9 +14,8 @@
 
 package com.liferay.portal.workflow.metrics.util.comparator;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 
 /**
@@ -40,35 +39,12 @@ public class WorkflowMetricsSLADefinitionVersionComparator
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion2) {
 
-		int value = 0;
+		Version version1 = Version.parseVersion(
+			workflowMetricsSLADefinitionVersion1.getVersion());
+		Version version2 = Version.parseVersion(
+			workflowMetricsSLADefinitionVersion2.getVersion());
 
-		String version1 = workflowMetricsSLADefinitionVersion1.getVersion();
-		String version2 = workflowMetricsSLADefinitionVersion2.getVersion();
-
-		int[] versionParts1 = StringUtil.split(version1, StringPool.PERIOD, 0);
-		int[] versionParts2 = StringUtil.split(version2, StringPool.PERIOD, 0);
-
-		if ((versionParts1.length != 2) && (versionParts2.length != 2)) {
-			value = 0;
-		}
-		else if (versionParts1.length != 2) {
-			value = -1;
-		}
-		else if (versionParts2.length != 2) {
-			value = 1;
-		}
-		else if (versionParts1[0] > versionParts2[0]) {
-			value = 1;
-		}
-		else if (versionParts1[0] < versionParts2[0]) {
-			value = -1;
-		}
-		else if (versionParts1[1] > versionParts2[1]) {
-			value = 1;
-		}
-		else if (versionParts1[1] < versionParts2[1]) {
-			value = -1;
-		}
+		int value = version1.compareTo(version2);
 
 		if (_ascending) {
 			return value;

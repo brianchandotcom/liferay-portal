@@ -67,7 +67,8 @@ public class SafePNGInputStream extends InputStream {
 
 		if ((n != _CHUNK_ID_SIZE) ||
 			(!Arrays.equals(_ZTXT_CHUNK_ID, bytes) &&
-			 !Arrays.equals(_ITXT_CHUNK_ID, bytes))) {
+			 !Arrays.equals(_ITXT_CHUNK_ID, bytes) &&
+			 !Arrays.equals(_ICCP_CHUNK_ID, bytes))) {
 
 			_bufferedInputStream.reset();
 
@@ -149,6 +150,8 @@ public class SafePNGInputStream extends InputStream {
 	private static final int _CHUNK_LENGTH_SIZE = 4;
 
 	private static final int _CRC_SIZE = 4;
+
+	private static final byte[] _ICCP_CHUNK_ID = {105, 67, 67, 80};
 
 	private static final byte[] _ITXT_CHUNK_ID = {105, 84, 88, 116};
 

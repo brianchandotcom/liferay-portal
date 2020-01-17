@@ -16,7 +16,7 @@ package com.liferay.analytics.settings.web.internal.portlet.action;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWebKeys;
-import com.liferay.analytics.settings.web.internal.user.AnalyticsUsersManager;
+import com.liferay.analytics.settings.web.internal.user.AnalyticsUsersUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -86,12 +86,11 @@ public abstract class BaseAnalyticsMVCRenderCommand
 				AnalyticsConfiguration.class, themeDisplay.getCompanyId()));
 
 		httpServletRequest.setAttribute(
-			AnalyticsSettingsWebKeys.ANALYTICS_USERS_MANAGER,
-			analyticsUsersManager);
+			AnalyticsSettingsWebKeys.ANALYTICS_USERS_UTIL, analyticsUsersUtil);
 	}
 
 	@Reference
-	protected AnalyticsUsersManager analyticsUsersManager;
+	protected AnalyticsUsersUtil analyticsUsersUtil;
 
 	@Reference
 	protected ConfigurationProvider configurationProvider;

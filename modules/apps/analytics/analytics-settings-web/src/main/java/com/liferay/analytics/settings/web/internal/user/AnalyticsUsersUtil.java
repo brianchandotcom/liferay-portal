@@ -40,8 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(immediate = true, service = AnalyticsUsersManager.class)
-public class AnalyticsUsersManager {
+@Component(immediate = true, service = AnalyticsUsersUtil.class)
+public class AnalyticsUsersUtil {
 
 	public int getCompanyUsersCount(long companyId) {
 		if (!_isIndexerEnabled()) {
@@ -220,7 +220,7 @@ public class AnalyticsUsersManager {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsUsersManager.class);
+		AnalyticsUsersUtil.class);
 
 	@Reference
 	private RoleLocalService _roleLocalService;

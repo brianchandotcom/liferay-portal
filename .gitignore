@@ -149,6 +149,7 @@
 /test-results
 /test.*.properties
 /tmp
+/tools/elasticsearch-sidecar.zip
 /tools/gradle-*-bin.zip
 /tools/maven/*.asc
 /tools/node*

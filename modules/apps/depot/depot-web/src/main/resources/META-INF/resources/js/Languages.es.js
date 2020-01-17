@@ -48,10 +48,15 @@ const Languages = ({
 	const Language = ({displayName, isDefault, localeId, showActions}) => {
 		const [active, setActive] = useState(false);
 
-		const makeDefault = () => {
+		const makeDefault = (event) => {
 			setActive(false);
 			setCustomDefaultLocaleId(localeId);
 			setLanguageWarning(true);
+
+			Liferay.fire('inputLocalized:defaultLocaleChanged', {
+				item: event.currentTarget
+			});
+
 			setLanguageTranslationWarning(translatedLanguages && !translatedLanguages[localeId]);
 		}
 
@@ -82,7 +87,7 @@ const Languages = ({
 							}
 						>
 							<ClayDropDown.ItemList>
-								<ClayDropDown.Item key={localeId} onClick={makeDefault}>
+								<ClayDropDown.Item data-value={localeId} key={localeId} onClick={event => makeDefault(event)}>
 									{Liferay.Language.get('make-default')}
 								</ClayDropDown.Item>
 							</ClayDropDown.ItemList>

@@ -14,8 +14,9 @@
 
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import React, {useContext, useState} from 'react';
-
-import {DispatchContext} from '../../app/reducers/index';
+import {DispatchContext} from '../reducers/index';
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
 import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
 import {StoreContext} from '../store/index';
@@ -51,9 +52,14 @@ export const RowConfigurationPanel = ({item}) => {
 		useContext(StoreContext)
 	);
 
+	const rowConfig = {
+		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.row],
+		...item.config
+	};
+
 	const handleConfigurationValueChanged = (identifier, value) => {
 		if (identifier === ROW_CONFIGURATION_IDENTIFIERS.numberOfColumns) {
-			const currentNumberOfColumns = item.config.numberOfColumns;
+			const currentNumberOfColumns = rowConfig.numberOfColumns;
 			const newNumberOfColumns = value;
 
 			const columnsToBeModified = Math.abs(
@@ -109,14 +115,14 @@ export const RowConfigurationPanel = ({item}) => {
 						label: value,
 						value
 					}))}
-					value={String(item.config.numberOfColumns)}
+					value={String(rowConfig.numberOfColumns)}
 				/>
 			</ClayForm.Group>
-			{item.config.numberOfColumns > 1 && (
+			{rowConfig.numberOfColumns > 1 && (
 				<ClayForm.Group small>
 					<ClayCheckboxWithState
 						aria-label={Liferay.Language.get('columns-gutter')}
-						checked={item.config.gutters}
+						checked={rowConfig.gutters}
 						label={Liferay.Language.get('columns-gutter')}
 						onValueChange={value =>
 							handleConfigurationValueChanged(

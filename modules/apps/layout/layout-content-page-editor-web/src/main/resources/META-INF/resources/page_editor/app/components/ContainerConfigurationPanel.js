@@ -14,6 +14,8 @@
 
 import React, {useContext} from 'react';
 
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
@@ -34,6 +36,13 @@ export const ContainerConfigurationPanel = ({item}) => {
 		useContext(StoreContext)
 	);
 
+	const containerConfig = {
+		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
+			LAYOUT_DATA_ITEM_TYPES.container
+		],
+		...item.config
+	};
+
 	const handleConfigurationValueChanged = itemConfig => {
 		dispatch(
 			updateItemConfig({
@@ -51,30 +60,30 @@ export const ContainerConfigurationPanel = ({item}) => {
 				{Liferay.Language.get('layout')}
 			</p>
 			<ContainerTypeConfiguration
-				containerType={item.config.type}
+				containerType={containerConfig.type}
 				onValueChange={handleConfigurationValueChanged}
 			/>
 			<ContainerPaddingVerticalConfiguration
 				onValueChange={handleConfigurationValueChanged}
-				paddingBottom={item.config.paddingBottom}
-				paddingTop={item.config.paddingTop}
+				paddingBottom={containerConfig.paddingBottom}
+				paddingTop={containerConfig.paddingTop}
 			/>
 			<ContainerPaddingHorizontalConfiguration
 				onValueChange={handleConfigurationValueChanged}
-				paddingHorizontal={item.config.paddingHorizontal}
+				paddingHorizontal={containerConfig.paddingHorizontal}
 			/>
 			<p className="mb-3 sheet-subtitle">
 				{Liferay.Language.get('background-color')}
 			</p>
 			<ContainerBackgroundColorConfiguration
-				backgroundColor={item.config.backgroundColorCssClass}
+				backgroundColor={containerConfig.backgroundColorCssClass}
 				onValueChange={handleConfigurationValueChanged}
 			/>
 			<p className="mb-3 sheet-subtitle">
 				{Liferay.Language.get('background-image')}
 			</p>
 			<ContainerBackgroundImageConfiguration
-				backgroundImageTitle={item.config.backgroundImageTitle}
+				backgroundImageTitle={containerConfig.backgroundImageTitle}
 				onValueChange={handleConfigurationValueChanged}
 			/>
 		</>

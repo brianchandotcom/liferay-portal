@@ -59,7 +59,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test HSQLtoOracle {
 		property database.types = "oracle";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracle";

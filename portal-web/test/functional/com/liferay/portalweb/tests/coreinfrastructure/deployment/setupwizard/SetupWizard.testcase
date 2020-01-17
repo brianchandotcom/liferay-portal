@@ -6,10 +6,9 @@ definition {
 	property test.prepare.bundle.properties = "false";
 	property testray.main.component.name = "Setup Wizard";
 
-	@priority = "5"
+	@priority = "4"
 	test HypersonicToMySQL {
 		property database.types = "mysql";
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SetupWizard#HypersonicToMySQL";
 
 		SetupWizard.configurePG(
@@ -27,7 +26,7 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "4"
+	@priority = "3"
 	test HypersonicWithSpecialContent {
 		property database.types = "hypersonic";
 		property test.name.skip.portal.instance = "SetupWizard#HypersonicWithSpecialContent";

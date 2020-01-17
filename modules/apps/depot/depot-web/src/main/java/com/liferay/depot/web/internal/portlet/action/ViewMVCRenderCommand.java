@@ -17,7 +17,6 @@ package com.liferay.depot.web.internal.portlet.action;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
-import com.liferay.depot.web.internal.util.DepotAdminGroupSearchProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.site.util.GroupURLProvider;
 
@@ -44,9 +43,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		renderRequest.setAttribute(
-			DepotAdminWebKeys.DEPOT_ADMIN_GROUP_SEARCH_PROVIDER,
-			_depotAdminGroupSearchProvider);
-		renderRequest.setAttribute(
 			DepotAdminWebKeys.DEPOT_ADMIN_GROUP_URL_PROVIDER,
 			_groupURLProvider);
 		renderRequest.setAttribute(
@@ -54,9 +50,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		return "/view.jsp";
 	}
-
-	@Reference
-	private DepotAdminGroupSearchProvider _depotAdminGroupSearchProvider;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

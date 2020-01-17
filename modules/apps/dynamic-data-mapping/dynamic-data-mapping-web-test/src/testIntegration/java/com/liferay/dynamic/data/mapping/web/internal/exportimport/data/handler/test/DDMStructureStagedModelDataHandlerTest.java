@@ -262,7 +262,7 @@ public class DDMStructureStagedModelDataHandlerTest
 
 		childGroup = GroupTestUtil.deleteGroup(childGroup);
 
-		parentGroup = GroupTestUtil.deleteGroup(parentGroup);
+		GroupTestUtil.deleteGroup(parentGroup);
 
 		Group newChildGroup = GroupTestUtil.addGroup(
 			newParentGroup.getGroupId());

@@ -168,7 +168,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		assetEntry = fetchAssetEntry(stagedModel, stagingGroup);
 
-		assetEntry = AssetEntryLocalServiceUtil.updateEntry(
+		AssetEntryLocalServiceUtil.updateEntry(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			assetEntry.getCreateDate(), assetEntry.getModifiedDate(),
 			assetEntry.getClassName(), assetEntry.getClassPK(),

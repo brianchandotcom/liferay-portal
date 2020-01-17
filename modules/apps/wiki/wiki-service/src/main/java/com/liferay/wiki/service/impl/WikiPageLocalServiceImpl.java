@@ -2792,7 +2792,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			pageVersion.setTitle(originalTitle);
 			pageVersion.setParentTitle(newParentTitle);
 
-			pageVersion = wikiPagePersistence.update(pageVersion);
+			wikiPagePersistence.update(pageVersion);
 		}
 
 		WikiPageResource pageResource =

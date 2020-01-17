@@ -56,7 +56,7 @@ public class UpgradeAssetCategoryTest {
 
 		category = _createCategory(category.getCategoryId());
 
-		category = _createCategory(category.getCategoryId());
+		_createCategory(category.getCategoryId());
 	}
 
 	@Test

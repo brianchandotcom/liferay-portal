@@ -119,7 +119,7 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 				getClientCredentialsResponseBiFunction(StringPool.BLANK),
 				this::parseTokenString));
 
-		response = invocationBuilder.get();
+		invocationBuilder.get();
 
 		Assert.assertEquals("no-scope", invocationBuilder.get(String.class));
 	}
@@ -151,7 +151,7 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 				getClientCredentialsResponseBiFunction("everything.read"),
 				this::parseTokenString));
 
-		response = invocationBuilder.get();
+		invocationBuilder.get();
 
 		Assert.assertEquals(
 			"everything.read", invocationBuilder.get(String.class));

@@ -166,7 +166,7 @@ public class LayoutCTTest {
 
 			layout.setTitle(RandomTestUtil.randomString());
 
-			layout = _layoutLocalService.updateLayout(layout);
+			_layoutLocalService.updateLayout(layout);
 		}
 
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
@@ -223,7 +223,7 @@ public class LayoutCTTest {
 
 			layout.setTitle(RandomTestUtil.randomString());
 
-			layout = _layoutLocalService.updateLayout(layout);
+			_layoutLocalService.updateLayout(layout);
 		}
 
 		_ctProcessLocalService.addCTProcess(
@@ -427,7 +427,7 @@ public class LayoutCTTest {
 
 			modifiedLayout.setFriendlyURL("/testModifyLayout");
 
-			modifiedLayout = _layoutLocalService.updateLayout(modifiedLayout);
+			_layoutLocalService.updateLayout(modifiedLayout);
 		}
 
 		_ctProcessLocalService.addCTProcess(

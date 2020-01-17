@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR</td>
+	<td>//div[contains(@class,'floating-toolbar')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION</td>
 	<td>//button[@data-title='Fragment Configuration']</td>
 	<td></td>

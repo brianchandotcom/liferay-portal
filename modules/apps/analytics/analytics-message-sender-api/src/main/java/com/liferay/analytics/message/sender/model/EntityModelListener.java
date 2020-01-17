@@ -24,8 +24,7 @@ import java.util.List;
 public interface EntityModelListener<T extends BaseModel<T>> {
 
 	public void addAnalyticsMessage(
-		boolean checkExclusions, String eventType,
-		List<String> includeAttributeNames, T model);
+		String eventType, List<String> includeAttributeNames, T model);
 
 	public List<String> getAttributeNames();
 

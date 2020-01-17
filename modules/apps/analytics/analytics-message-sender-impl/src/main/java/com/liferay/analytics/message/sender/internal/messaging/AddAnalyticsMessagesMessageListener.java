@@ -54,8 +54,7 @@ public class AddAnalyticsMessagesMessageListener extends BaseMessageListener {
 				(List<? extends BaseModel>)message.getPayload()) {
 
 			entityModelListener.addAnalyticsMessage(
-				false, "update", entityModelListener.getAttributeNames(),
-				baseModel);
+				"update", entityModelListener.getAttributeNames(), baseModel);
 		}
 	}
 

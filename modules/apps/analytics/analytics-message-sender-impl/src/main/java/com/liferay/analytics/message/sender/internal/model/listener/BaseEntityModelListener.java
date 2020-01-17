@@ -58,10 +58,9 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	@Override
 	public void addAnalyticsMessage(
-		boolean checkExclusions, String eventType,
-		List<String> includeAttributeNames, T model) {
+		String eventType, List<String> includeAttributeNames, T model) {
 
-		if (checkExclusions && isExcluded(model)) {
+		if (isExcluded(model)) {
 			return;
 		}
 
@@ -96,12 +95,12 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	@Override
 	public void onAfterCreate(T model) throws ModelListenerException {
-		addAnalyticsMessage(true, "add", getAttributeNames(), model);
+		addAnalyticsMessage("add", getAttributeNames(), model);
 	}
 
 	@Override
 	public void onBeforeRemove(T model) throws ModelListenerException {
-		addAnalyticsMessage(true, "delete", new ArrayList<>(), model);
+		addAnalyticsMessage("delete", new ArrayList<>(), model);
 	}
 
 	@Override
@@ -114,7 +113,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 				return;
 			}
 
-			addAnalyticsMessage(true, "update", getAttributeNames(), model);
+			addAnalyticsMessage("update", getAttributeNames(), model);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

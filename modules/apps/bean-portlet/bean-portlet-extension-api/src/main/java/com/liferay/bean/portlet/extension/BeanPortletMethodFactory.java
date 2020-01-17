@@ -25,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface BeanPortletMethodFactory {
 
 	public BeanPortletMethod create(
-		Method method, BeanPortletMethodType beanPortletMethodType,
-		Class<?> beanClass);
+		Class<?> beanClass, BeanPortletMethodType beanPortletMethodType,
+		Method method);
 
 }

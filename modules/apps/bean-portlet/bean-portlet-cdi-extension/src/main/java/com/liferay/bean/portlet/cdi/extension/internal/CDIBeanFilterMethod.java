@@ -28,11 +28,11 @@ import javax.enterprise.inject.spi.BeanManager;
 public class CDIBeanFilterMethod implements BeanFilterMethod {
 
 	public CDIBeanFilterMethod(
-		BeanManager beanManager, Method method, Class<?> beanClass) {
+		Class<?> beanClass, BeanManager beanManager, Method method) {
 
+		_beanClass = beanClass;
 		_beanManager = beanManager;
 		_method = method;
-		_beanClass = beanClass;
 	}
 
 	@Override

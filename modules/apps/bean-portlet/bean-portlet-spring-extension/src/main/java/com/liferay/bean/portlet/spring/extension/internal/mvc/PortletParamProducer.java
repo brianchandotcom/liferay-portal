@@ -476,7 +476,7 @@ public class PortletParamProducer implements ApplicationContextAware {
 		else {
 			mutableBindingResult.addBindingError(
 				new BindingErrorImpl(
-					_getParamName(fieldAnnotations), message, value));
+					message, _getParamName(fieldAnnotations), value));
 		}
 	}
 

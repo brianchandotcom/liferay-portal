@@ -40,12 +40,12 @@ import javax.portlet.annotations.RenderStateScoped;
 public class SpringScopedBeanManager {
 
 	public SpringScopedBeanManager(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		PortletConfig portletConfig) {
+		PortletConfig portletConfig, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
 
+		_portletConfig = portletConfig;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
-		_portletConfig = portletConfig;
 	}
 
 	public void destroyScopedBeans() {

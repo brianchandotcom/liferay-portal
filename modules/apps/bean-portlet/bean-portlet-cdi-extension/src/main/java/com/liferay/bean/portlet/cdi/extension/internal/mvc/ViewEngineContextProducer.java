@@ -35,12 +35,12 @@ public class ViewEngineContextProducer {
 	@Dependent
 	@Produces
 	public ViewEngineContext getViewEngineContext(
-		Configuration configuration, PortletRequest portletRequest,
-		MimeResponse mimeResponse, Models models) {
+		Configuration configuration, MimeResponse mimeResponse, Models models,
+		PortletRequest portletRequest) {
 
 		return new ViewEngineContextImpl(
-			configuration, portletRequest, mimeResponse, models,
-			portletRequest.getLocale());
+			configuration, portletRequest.getLocale(), mimeResponse, models,
+			portletRequest);
 	}
 
 }

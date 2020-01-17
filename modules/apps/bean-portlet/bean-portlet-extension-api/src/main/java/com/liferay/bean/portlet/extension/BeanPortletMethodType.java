@@ -49,38 +49,50 @@ import javax.portlet.annotations.ServeResourceMethod;
 public enum BeanPortletMethodType {
 
 	ACTION(
-		ActionMethod.class,
-		new Class<?>[] {ActionRequest.class, ActionResponse.class}, false, true,
-		null, annotation -> null, annotation -> null,
+		ActionMethod.class, null, annotation -> null, true, annotation -> null,
+		annotation -> 0,
+		new Class<?>[] {ActionRequest.class, ActionResponse.class},
+		annotation -> null,
 		annotation -> {
 			ActionMethod actionMethod = ActionMethod.class.cast(annotation);
 
 			return new String[] {actionMethod.portletName()};
 		},
-		annotation -> 0, annotation -> null),
+		false),
 	DESTROY(
-		DestroyMethod.class, new Class<?>[0], false, false, null,
-		annotation -> null, annotation -> null,
+		DestroyMethod.class, null, annotation -> null, false,
+		annotation -> null, annotation -> 0, new Class<?>[0],
+		annotation -> null,
 		annotation -> {
 			DestroyMethod destroyMethod = DestroyMethod.class.cast(annotation);
 
 			return new String[] {destroyMethod.value()};
 		},
-		annotation -> 0, annotation -> null),
+		false),
 	EVENT(
-		EventMethod.class,
-		new Class<?>[] {EventRequest.class, EventResponse.class}, false, false,
-		null, annotation -> null, annotation -> null,
+		EventMethod.class, null, annotation -> null, false, annotation -> null,
+		annotation -> 0,
+		new Class<?>[] {EventRequest.class, EventResponse.class},
+		annotation -> null,
 		annotation -> {
 			EventMethod eventMethod = EventMethod.class.cast(annotation);
 
 			return new String[] {eventMethod.portletName()};
 		},
-		annotation -> 0, annotation -> null),
+		false),
 	HEADER(
-		HeaderMethod.class,
-		new Class<?>[] {HeaderRequest.class, HeaderResponse.class}, true, false,
-		annotation -> null, annotation -> null,
+		HeaderMethod.class, annotation -> null, annotation -> null, false,
+		annotation -> {
+			HeaderMethod headerMethod = HeaderMethod.class.cast(annotation);
+
+			return headerMethod.include();
+		},
+		annotation -> {
+			HeaderMethod headerMethod = HeaderMethod.class.cast(annotation);
+
+			return headerMethod.ordinal();
+		},
+		new Class<?>[] {HeaderRequest.class, HeaderResponse.class},
 		annotation -> {
 			HeaderMethod headerMethod = HeaderMethod.class.cast(annotation);
 
@@ -91,29 +103,30 @@ public enum BeanPortletMethodType {
 
 			return headerMethod.portletNames();
 		},
-		annotation -> {
-			HeaderMethod headerMethod = HeaderMethod.class.cast(annotation);
-
-			return headerMethod.ordinal();
-		},
-		annotation -> {
-			HeaderMethod headerMethod = HeaderMethod.class.cast(annotation);
-
-			return headerMethod.include();
-		}),
+		true),
 	INIT(
-		InitMethod.class, new Class<?>[] {PortletConfig.class}, false, false,
-		null, annotation -> null, annotation -> null,
+		InitMethod.class, null, annotation -> null, false, annotation -> null,
+		annotation -> 0, new Class<?>[] {PortletConfig.class},
+		annotation -> null,
 		annotation -> {
 			InitMethod initMethod = InitMethod.class.cast(annotation);
 
 			return new String[] {initMethod.value()};
 		},
-		annotation -> 0, annotation -> null),
+		false),
 	RENDER(
-		RenderMethod.class,
-		new Class<?>[] {RenderRequest.class, RenderResponse.class}, true, true,
-		annotation -> null, annotation -> null,
+		RenderMethod.class, annotation -> null, annotation -> null, true,
+		annotation -> {
+			RenderMethod renderMethod = RenderMethod.class.cast(annotation);
+
+			return renderMethod.include();
+		},
+		annotation -> {
+			RenderMethod renderMethod = RenderMethod.class.cast(annotation);
+
+			return renderMethod.ordinal();
+		},
+		new Class<?>[] {RenderRequest.class, RenderResponse.class},
 		annotation -> {
 			RenderMethod renderMethod = RenderMethod.class.cast(annotation);
 
@@ -124,20 +137,9 @@ public enum BeanPortletMethodType {
 
 			return renderMethod.portletNames();
 		},
-		annotation -> {
-			RenderMethod renderMethod = RenderMethod.class.cast(annotation);
-
-			return renderMethod.ordinal();
-		},
-		annotation -> {
-			RenderMethod renderMethod = RenderMethod.class.cast(annotation);
-
-			return renderMethod.include();
-		}),
+		true),
 	SERVE_RESOURCE(
 		ServeResourceMethod.class,
-		new Class<?>[] {ResourceRequest.class, ResourceResponse.class}, true,
-		true,
 		annotation -> {
 			ServeResourceMethod serveResourceMethod =
 				ServeResourceMethod.class.cast(annotation);
@@ -150,12 +152,12 @@ public enum BeanPortletMethodType {
 
 			return serveResourceMethod.contentType();
 		},
-		annotation -> PortletMode.VIEW,
+		true,
 		annotation -> {
 			ServeResourceMethod serveResourceMethod =
 				ServeResourceMethod.class.cast(annotation);
 
-			return serveResourceMethod.portletNames();
+			return serveResourceMethod.include();
 		},
 		annotation -> {
 			ServeResourceMethod serveResourceMethod =
@@ -163,12 +165,15 @@ public enum BeanPortletMethodType {
 
 			return serveResourceMethod.ordinal();
 		},
+		new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
+		annotation -> PortletMode.VIEW,
 		annotation -> {
 			ServeResourceMethod serveResourceMethod =
 				ServeResourceMethod.class.cast(annotation);
 
-			return serveResourceMethod.include();
-		});
+			return serveResourceMethod.portletNames();
+		},
+		true);
 
 	public String getCharacterEncoding(Method method) {
 		Annotation annotation = method.getAnnotation(_annotation);
@@ -271,25 +276,25 @@ public enum BeanPortletMethodType {
 	}
 
 	private BeanPortletMethodType(
-		Class<? extends Annotation> annotation, Class<?>[] parameterTypes,
-		boolean variant, boolean controller,
+		Class<? extends Annotation> annotation,
 		Function<Annotation, String> characterEncodingFunction,
-		Function<Annotation, String> contentTypeFunction,
-		Function<Annotation, PortletMode> portletModeFunction,
-		Function<Annotation, String[]> portletNamesFunction,
+		Function<Annotation, String> contentTypeFunction, boolean controller,
+		Function<Annotation, String> includeFunction,
 		Function<Annotation, Integer> ordinalFunction,
-		Function<Annotation, String> includeFunction) {
+		Class<?>[] parameterTypes,
+		Function<Annotation, PortletMode> portletModeFunction,
+		Function<Annotation, String[]> portletNamesFunction, boolean variant) {
 
 		_annotation = annotation;
-		_parameterTypes = parameterTypes;
-		_variant = variant;
-		_controller = controller;
 		_characterEncodingFunction = characterEncodingFunction;
 		_contentTypeFunction = contentTypeFunction;
+		_controller = controller;
+		_includeFunction = includeFunction;
+		_ordinalFunction = ordinalFunction;
+		_parameterTypes = parameterTypes;
 		_portletModeFunction = portletModeFunction;
 		_portletNamesFunction = portletNamesFunction;
-		_ordinalFunction = ordinalFunction;
-		_includeFunction = includeFunction;
+		_variant = variant;
 	}
 
 	private boolean _isAssignableFrom(Class<?>[] parameterTypes) {

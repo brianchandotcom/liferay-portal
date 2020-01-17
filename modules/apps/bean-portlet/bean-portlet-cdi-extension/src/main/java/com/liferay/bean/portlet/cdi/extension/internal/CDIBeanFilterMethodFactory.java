@@ -31,8 +31,8 @@ public class CDIBeanFilterMethodFactory implements BeanFilterMethodFactory {
 	}
 
 	@Override
-	public BeanFilterMethod create(Method method, Class<?> beanClass) {
-		return new CDIBeanFilterMethod(_beanManager, method, beanClass);
+	public BeanFilterMethod create(Class<?> beanClass, Method method) {
+		return new CDIBeanFilterMethod(beanClass, _beanManager, method);
 	}
 
 	private final BeanManager _beanManager;

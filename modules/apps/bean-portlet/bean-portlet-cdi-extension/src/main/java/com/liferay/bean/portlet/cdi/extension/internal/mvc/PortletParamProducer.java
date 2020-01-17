@@ -61,9 +61,9 @@ public class PortletParamProducer {
 	@PortletParam
 	@Produces
 	public Boolean getBooleanParam(
-		PortletRequest portletRequest, InjectionPoint injectionPoint) {
+		InjectionPoint injectionPoint, PortletRequest portletRequest) {
 
-		String value = getStringParam(portletRequest, injectionPoint);
+		String value = getStringParam(injectionPoint, portletRequest);
 
 		if (value == null) {
 			return null;
@@ -74,7 +74,7 @@ public class PortletParamProducer {
 		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
 
 		ParamConverter<Boolean> paramConverter = _getParamConverter(
-			Boolean.class, field.getBaseType(), fieldAnnotations);
+			fieldAnnotations, field.getBaseType(), Boolean.class);
 
 		if (paramConverter != null) {
 			try {
@@ -99,9 +99,9 @@ public class PortletParamProducer {
 	@PortletParam
 	@Produces
 	public Date getDateParam(
-		PortletRequest portletRequest, InjectionPoint injectionPoint) {
+		InjectionPoint injectionPoint, PortletRequest portletRequest) {
 
-		String value = getStringParam(portletRequest, injectionPoint);
+		String value = getStringParam(injectionPoint, portletRequest);
 
 		if (value == null) {
 			return null;
@@ -112,7 +112,7 @@ public class PortletParamProducer {
 		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
 
 		ParamConverter<Date> paramConverter = _getParamConverter(
-			Date.class, field.getBaseType(), fieldAnnotations);
+			fieldAnnotations, field.getBaseType(), Date.class);
 
 		if (paramConverter != null) {
 			try {
@@ -136,9 +136,9 @@ public class PortletParamProducer {
 	@PortletParam
 	@Produces
 	public Double getDoubleParam(
-		PortletRequest portletRequest, InjectionPoint injectionPoint) {
+		InjectionPoint injectionPoint, PortletRequest portletRequest) {
 
-		String value = getStringParam(portletRequest, injectionPoint);
+		String value = getStringParam(injectionPoint, portletRequest);
 
 		if (value == null) {
 			return null;
@@ -149,7 +149,7 @@ public class PortletParamProducer {
 		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
 
 		ParamConverter<Double> paramConverter = _getParamConverter(
-			Double.class, field.getBaseType(), fieldAnnotations);
+			fieldAnnotations, field.getBaseType(), Double.class);
 
 		if (paramConverter != null) {
 			try {
@@ -174,9 +174,9 @@ public class PortletParamProducer {
 	@PortletParam
 	@Produces
 	public Float getFloatParam(
-		PortletRequest portletRequest, InjectionPoint injectionPoint) {
+		InjectionPoint injectionPoint, PortletRequest portletRequest) {
 
-		String value = getStringParam(portletRequest, injectionPoint);
+		String value = getStringParam(injectionPoint, portletRequest);
 
 		if (value == null) {
 			return null;
@@ -187,7 +187,7 @@ public class PortletParamProducer {
 		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
 
 		ParamConverter<Float> paramConverter = _getParamConverter(
-			Float.class, field.getBaseType(), fieldAnnotations);
+			fieldAnnotations, field.getBaseType(), Float.class);
 
 		if (paramConverter != null) {
 			try {
@@ -211,9 +211,9 @@ public class PortletParamProducer {
 	@PortletParam
 	@Produces
 	public Integer getIntegerParam(
-		PortletRequest portletRequest, InjectionPoint injectionPoint) {
+		InjectionPoint injectionPoint, PortletRequest portletRequest) {
 
-		String value = getStringParam(portletRequest, injectionPoint);
+		String value = getStringParam(injectionPoint, portletRequest);
 
 		if (value == null) {
 			return null;
@@ -224,7 +224,7 @@ public class PortletParamProducer {
 		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
 
 		ParamConverter<Integer> paramConverter = _getParamConverter(
-			Integer.class, field.getBaseType(), fieldAnnotations);
+			fieldAnnotations, field.getBaseType(), Integer.class);
 
 		if (paramConverter != null) {
 			try {
@@ -249,9 +249,9 @@ public class PortletParamProducer {
 	@PortletParam
 	@Produces
 	public Long getLongParam(
-		PortletRequest portletRequest, InjectionPoint injectionPoint) {
+		InjectionPoint injectionPoint, PortletRequest portletRequest) {
 
-		String value = getStringParam(portletRequest, injectionPoint);
+		String value = getStringParam(injectionPoint, portletRequest);
 
 		if (value == null) {
 			return null;
@@ -262,7 +262,7 @@ public class PortletParamProducer {
 		Annotation[] fieldAnnotations = _getFieldAnnotations(field);
 
 		ParamConverter<Long> paramConverter = _getParamConverter(
-			Long.class, field.getBaseType(), fieldAnnotations);
+			fieldAnnotations, field.getBaseType(), Long.class);
 
 		if (paramConverter != null) {
 			try {
@@ -286,7 +286,7 @@ public class PortletParamProducer {
 	@PortletParam
 	@Produces
 	public String getStringParam(
-		PortletRequest portletRequest, InjectionPoint injectionPoint) {
+		InjectionPoint injectionPoint, PortletRequest portletRequest) {
 
 		Annotated field = injectionPoint.getAnnotated();
 
@@ -479,7 +479,7 @@ public class PortletParamProducer {
 		else {
 			mutableBindingResult.addBindingError(
 				new BindingErrorImpl(
-					_getParamName(fieldAnnotations), message, value));
+					message, _getParamName(fieldAnnotations), value));
 		}
 	}
 
@@ -490,7 +490,7 @@ public class PortletParamProducer {
 	}
 
 	private <T> ParamConverter<T> _getParamConverter(
-		Class<T> rawType, Type baseType, Annotation[] annotations) {
+		Annotation[] annotations, Type baseType, Class<T> rawType) {
 
 		for (ParamConverterProvider paramConverterProvider :
 				_paramConverterProviders) {

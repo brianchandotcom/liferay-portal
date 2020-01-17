@@ -28,10 +28,10 @@ public class ControllerRedirectEventImpl
 	extends BaseControllerEventImpl implements ControllerRedirectEvent {
 
 	public ControllerRedirectEventImpl(
-		Object source, ResourceInfo resourceInfo, UriInfo uriInfo,
-		URI location) {
+		URI location, ResourceInfo resourceInfo, Object source,
+		UriInfo uriInfo) {
 
-		super(source, resourceInfo, uriInfo);
+		super(resourceInfo, source, uriInfo);
 
 		_location = location;
 	}

@@ -48,10 +48,11 @@ import org.osgi.framework.ServiceRegistration;
 public class RegistrationUtil {
 
 	public static void registerBeanFilter(
-		List<ServiceRegistration<?>> registrations, BundleContext bundleContext,
-		String portletName, Set<String> allPortletNames, BeanFilter beanFilter,
+		Set<String> allPortletNames, BeanFilter beanFilter,
 		BeanFilterMethodFactory beanFilterMethodFactory,
 		BeanFilterMethodInvoker beanFilterMethodInvoker,
+		BundleContext bundleContext, String portletName,
+		List<ServiceRegistration<?>> registrations,
 		ServletContext servletContext) {
 
 		if (Objects.equals(portletName, "*")) {
@@ -61,8 +62,8 @@ public class RegistrationUtil {
 
 				registrations.add(
 					_registerBeanFilter(
-						bundleContext, portletId, beanFilter,
-						beanFilterMethodFactory, beanFilterMethodInvoker));
+						beanFilter, beanFilterMethodFactory,
+						beanFilterMethodInvoker, bundleContext, portletId));
 			}
 		}
 		else {
@@ -79,8 +80,8 @@ public class RegistrationUtil {
 
 				registrations.add(
 					_registerBeanFilter(
-						bundleContext, portletId, beanFilter,
-						beanFilterMethodFactory, beanFilterMethodInvoker));
+						beanFilter, beanFilterMethodFactory,
+						beanFilterMethodInvoker, bundleContext, portletId));
 			}
 		}
 
@@ -100,9 +101,9 @@ public class RegistrationUtil {
 	}
 
 	public static ServiceRegistration<Portlet> registerBeanPortlet(
-		BundleContext bundleContext, BeanApp beanApp, BeanPortlet beanPortlet,
+		BeanApp beanApp, BeanPortlet beanPortlet, List<String> beanPortletIds,
 		BeanPortletMethodInvoker beanPortletMethodInvoker,
-		ServletContext servletContext, List<String> beanPortletIds) {
+		BundleContext bundleContext, ServletContext servletContext) {
 
 		try {
 			String portletId = _getPortletId(
@@ -138,7 +139,7 @@ public class RegistrationUtil {
 
 	public static ServiceRegistration<ResourceBundleLoader>
 		registerResourceBundleLoader(
-			BundleContext bundleContext, BeanPortlet beanPortlet,
+			BeanPortlet beanPortlet, BundleContext bundleContext,
 			ServletContext servletContext) {
 
 		String resourceBundle = beanPortlet.getResourceBundle();
@@ -177,9 +178,9 @@ public class RegistrationUtil {
 	}
 
 	private static ServiceRegistration<PortletFilter> _registerBeanFilter(
-		BundleContext bundleContext, String portletId, BeanFilter beanFilter,
-		BeanFilterMethodFactory beanFilterMethodFactory,
-		BeanFilterMethodInvoker beanFilterMethodInvoker) {
+		BeanFilter beanFilter, BeanFilterMethodFactory beanFilterMethodFactory,
+		BeanFilterMethodInvoker beanFilterMethodInvoker,
+		BundleContext bundleContext, String portletId) {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -195,8 +196,8 @@ public class RegistrationUtil {
 		return bundleContext.registerService(
 			PortletFilter.class,
 			new BeanFilterInvokerPortletFilter(
-				beanFilter.getFilterClass(), beanFilterMethodFactory,
-				beanFilterMethodInvoker),
+				beanFilterMethodFactory, beanFilterMethodInvoker,
+				beanFilter.getFilterClass()),
 			dictionary);
 	}
 

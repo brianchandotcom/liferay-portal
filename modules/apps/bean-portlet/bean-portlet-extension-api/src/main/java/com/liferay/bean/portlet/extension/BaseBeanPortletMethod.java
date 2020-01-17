@@ -42,10 +42,10 @@ import org.osgi.annotation.versioning.ProviderType;
 public abstract class BaseBeanPortletMethod implements BeanPortletMethod {
 
 	public BaseBeanPortletMethod(
-		Method method, BeanPortletMethodType beanPortletMethodType) {
+		BeanPortletMethodType beanPortletMethodType, Method method) {
 
-		_method = method;
 		_beanPortletMethodType = beanPortletMethodType;
+		_method = method;
 
 		_ordinal = beanPortletMethodType.getOrdinal(method);
 	}

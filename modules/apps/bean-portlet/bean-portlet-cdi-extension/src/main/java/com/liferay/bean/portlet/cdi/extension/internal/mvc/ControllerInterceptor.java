@@ -206,9 +206,10 @@ public class ControllerInterceptor implements Serializable {
 
 				_mvcEvent.fire(
 					new ControllerRedirectEventImpl(
+						location,
 						new ResourceInfoImpl(
 							target.getClass(), invocationContextMethod),
-						new UriInfoImpl(), location));
+						new UriInfoImpl()));
 			}
 			catch (URISyntaxException urise) {
 				_log.error(urise, urise);

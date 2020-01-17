@@ -24,19 +24,19 @@ import java.util.Set;
 public class BeanAppImpl implements BeanApp {
 
 	public BeanAppImpl(
-		String specVersion, String defaultNamespace, List<Event> events,
-		Map<String, PublicRenderParameter> publicRenderParameters,
 		Map<String, List<String>> containerRuntimeOptions,
-		Set<String> customPortletModes,
-		List<Map.Entry<Integer, String>> portletListeners) {
+		Set<String> customPortletModes, String defaultNamespace,
+		List<Event> events, List<Map.Entry<Integer, String>> portletListeners,
+		Map<String, PublicRenderParameter> publicRenderParameters,
+		String specVersion) {
 
-		_specVersion = specVersion;
-		_defaultNamespace = defaultNamespace;
-		_events = events;
-		_publicRenderParameters = publicRenderParameters;
 		_containerRuntimeOptions = containerRuntimeOptions;
 		_customPortletModes = customPortletModes;
+		_defaultNamespace = defaultNamespace;
+		_events = events;
 		_portletListeners = portletListeners;
+		_publicRenderParameters = publicRenderParameters;
+		_specVersion = specVersion;
 	}
 
 	@Override

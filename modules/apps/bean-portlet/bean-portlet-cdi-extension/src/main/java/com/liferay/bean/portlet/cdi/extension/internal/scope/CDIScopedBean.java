@@ -30,12 +30,12 @@ import javax.enterprise.context.spi.CreationalContext;
 public class CDIScopedBean<T> implements ScopedBean<T>, Serializable {
 
 	public CDIScopedBean(
-		String name, Contextual<T> bean, CreationalContext<T> creationalContext,
+		Contextual<T> bean, CreationalContext<T> creationalContext, String name,
 		String scopeName) {
 
-		_name = name;
 		_bean = bean;
 		_creationalContext = creationalContext;
+		_name = name;
 		_scopeName = scopeName;
 
 		_containerCreatedInstance = bean.create(creationalContext);

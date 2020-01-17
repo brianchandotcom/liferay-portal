@@ -51,76 +51,76 @@ import javax.xml.namespace.QName;
 public class BeanPortletImpl implements BeanPortlet {
 
 	public BeanPortletImpl(
-		String portletName,
+		boolean asyncSupported,
 		Map<BeanPortletMethodType, List<BeanPortletMethod>> beanMethodMap,
-		Map<String, String> displayNames, String portletClassName,
-		Map<String, String> initParams, int expirationCache,
-		Map<String, Set<String>> supportedPortletModes,
-		Map<String, Set<String>> supportedWindowStates,
-		Set<String> supportedLocales, String resourceBundle,
-		Map<String, String> titles, Map<String, String> shortTitles,
-		Map<String, String> keywords, Map<String, String> descriptions,
-		Map<String, Preference> preferences, String preferencesValidator,
-		Map<String, String> securityRoleRefs,
-		Set<QName> supportedProcessingEvents,
-		Set<QName> supportedPublishingEvents,
-		Set<String> supportedPublicRenderParameters,
 		Map<String, List<String>> containerRuntimeOptions,
-		Set<PortletDependency> portletDependencies, boolean asyncSupported,
-		MultipartConfig multipartConfig, String displayCategory,
-		Map<String, Set<String>> liferayConfiguration) {
+		Map<String, String> descriptions, String displayCategory,
+		Map<String, String> displayNames, int expirationCache,
+		Map<String, String> initParams, Map<String, String> keywords,
+		Map<String, Set<String>> liferayConfiguration,
+		MultipartConfig multipartConfig, String portletClassName,
+		Set<PortletDependency> portletDependencies, String portletName,
+		Map<String, Preference> preferences, String preferencesValidator,
+		String resourceBundle, Map<String, String> securityRoleRefs,
+		Map<String, String> shortTitles, Set<String> supportedLocales,
+		Map<String, Set<String>> supportedPortletModes,
+		Set<QName> supportedProcessingEvents,
+		Set<String> supportedPublicRenderParameters,
+		Set<QName> supportedPublishingEvents,
+		Map<String, Set<String>> supportedWindowStates,
+		Map<String, String> titles) {
 
-		_portletName = portletName;
+		_asyncSupported = asyncSupported || _isAsyncSupported(beanMethodMap);
 		_beanMethodMap = beanMethodMap;
-		_displayNames = displayNames;
-		_portletClassName = portletClassName;
-		_initParams = initParams;
-		_expirationCache = expirationCache;
-		_supportedPortletModes = supportedPortletModes;
-		_supportedWindowStates = supportedWindowStates;
-		_supportedLocales = supportedLocales;
-		_resourceBundle = resourceBundle;
-		_titles = titles;
-		_shortTitles = shortTitles;
-		_keywords = keywords;
+		_containerRuntimeOptions = containerRuntimeOptions;
 		_descriptions = descriptions;
+		_displayCategory = displayCategory;
+		_displayNames = displayNames;
+		_expirationCache = expirationCache;
+		_initParams = initParams;
+		_keywords = keywords;
+		_liferayConfiguration = liferayConfiguration;
+		_multipartConfig = multipartConfig;
+		_portletClassName = portletClassName;
+		_portletDependencies = portletDependencies;
+		_portletName = portletName;
 		_preferences = preferences;
 		_preferencesValidator = preferencesValidator;
+		_resourceBundle = resourceBundle;
 		_securityRoleRefs = securityRoleRefs;
+		_shortTitles = shortTitles;
+		_supportedLocales = supportedLocales;
+		_supportedPortletModes = supportedPortletModes;
 		_supportedProcessingEvents = supportedProcessingEvents;
-		_supportedPublishingEvents = supportedPublishingEvents;
 		_supportedPublicRenderParameters = supportedPublicRenderParameters;
-		_containerRuntimeOptions = containerRuntimeOptions;
-		_portletDependencies = portletDependencies;
-		_asyncSupported = asyncSupported || _isAsyncSupported(beanMethodMap);
-		_multipartConfig = multipartConfig;
-		_displayCategory = displayCategory;
-		_liferayConfiguration = liferayConfiguration;
+		_supportedPublishingEvents = supportedPublishingEvents;
+		_supportedWindowStates = supportedWindowStates;
+		_titles = titles;
 	}
 
 	public BeanPortletImpl(
-		String portletName,
 		Map<BeanPortletMethodType, List<BeanPortletMethod>> beanMethodMap,
-		Set<QName> supportedProcessingEvents,
-		Set<QName> supportedPublishingEvents, String displayCategory,
-		Map<String, Set<String>> liferayConfiguration) {
+		String displayCategory, Map<String, Set<String>> liferayConfiguration,
+		String portletName, Set<QName> supportedProcessingEvents,
+		Set<QName> supportedPublishingEvents) {
 
 		this(
-			portletName, beanMethodMap, Collections.emptyMap(), null,
-			Collections.emptyMap(), 0,
+			false, beanMethodMap, Collections.emptyMap(),
+			Collections.emptyMap(), displayCategory, Collections.emptyMap(), 0,
+			Collections.emptyMap(), Collections.emptyMap(),
+			liferayConfiguration, MultipartConfig.UNSUPPORTED, null,
+			Collections.emptySet(), portletName, Collections.emptyMap(), null,
+			null, Collections.emptyMap(), Collections.emptyMap(),
+			Collections.emptySet(),
 			Collections.singletonMap(
 				"text/html", Collections.singleton("view")),
+			supportedProcessingEvents, Collections.emptySet(),
+			supportedPublishingEvents,
 			Collections.singletonMap(
 				"text/html",
 				new LinkedHashSet<>(
 					Arrays.asList("normal", "minimized", "maximized"))),
-			Collections.emptySet(), null, Collections.emptyMap(),
-			Collections.emptyMap(), Collections.emptyMap(),
-			Collections.emptyMap(), Collections.emptyMap(), null,
-			Collections.emptyMap(), supportedProcessingEvents,
-			supportedPublishingEvents, Collections.emptySet(),
-			Collections.emptyMap(), Collections.emptySet(), false,
-			MultipartConfig.UNSUPPORTED, displayCategory, liferayConfiguration);
+			Collections.emptyMap());
 	}
 
 	@Override
@@ -378,22 +378,22 @@ public class BeanPortletImpl implements BeanPortlet {
 		// javax.portlet.description
 
 		_putEnglishText(
-			dictionary, "javax.portlet.description", getDescriptions());
+			getDescriptions(), dictionary, "javax.portlet.description");
 
 		// javax.portlet.display-name
 
 		_putEnglishText(
-			dictionary, "javax.portlet.display-name", getDisplayNames());
+			getDisplayNames(), dictionary, "javax.portlet.display-name");
 
 		// javax.portlet.info.keywords
 
 		_putEnglishText(
-			dictionary, "javax.portlet.info.keywords", getKeywords());
+			getKeywords(), dictionary, "javax.portlet.info.keywords");
 
 		// javax.portlet.info.short-title
 
 		_putEnglishText(
-			dictionary, "javax.portlet.info.short-title", getShortTitles());
+			getShortTitles(), dictionary, "javax.portlet.info.short-title");
 
 		// javax.portlet.info.title
 
@@ -404,8 +404,8 @@ public class BeanPortletImpl implements BeanPortlet {
 		}
 		else {
 			_putEnglishText(
-				dictionary, "javax.portlet.info.title", titles,
-				getPortletName());
+				titles, getPortletName(), dictionary,
+				"javax.portlet.info.title");
 		}
 
 		// javax.portlet.multipart
@@ -684,15 +684,15 @@ public class BeanPortletImpl implements BeanPortlet {
 		};
 
 	private static void _putEnglishText(
-		Dictionary<String, Object> dictionary, String key,
-		Map<String, String> descriptions) {
+		Map<String, String> descriptions, Dictionary<String, Object> dictionary,
+		String key) {
 
-		_putEnglishText(dictionary, key, descriptions, null);
+		_putEnglishText(descriptions, null, dictionary, key);
 	}
 
 	private static void _putEnglishText(
-		Dictionary<String, Object> dictionary, String key,
-		Map<String, String> descriptions, String defaultValue) {
+		Map<String, String> descriptions, String defaultValue,
+		Dictionary<String, Object> dictionary, String key) {
 
 		for (Map.Entry<String, String> entry : descriptions.entrySet()) {
 			String locale = entry.getKey();

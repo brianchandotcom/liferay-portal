@@ -28,16 +28,16 @@ import javax.portlet.filter.PortletFilter;
 public class BeanFilterImpl implements BeanFilter {
 
 	public BeanFilterImpl(
-		String filterName, Class<? extends PortletFilter> filterClass,
-		int ordinal, Set<String> portletNames, Set<String> lifecycles,
-		Map<String, String> initParams) {
+		Class<? extends PortletFilter> filterClass, String filterName,
+		Map<String, String> initParams, Set<String> lifecycles, int ordinal,
+		Set<String> portletNames) {
 
-		_filterName = filterName;
 		_filterClass = filterClass;
+		_filterName = filterName;
+		_initParams = initParams;
+		_lifecycles = lifecycles;
 		_ordinal = ordinal;
 		_portletNames = portletNames;
-		_lifecycles = lifecycles;
-		_initParams = initParams;
 	}
 
 	@Override

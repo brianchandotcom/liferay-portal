@@ -189,18 +189,18 @@ public class SpringBeanPortletExtension {
 
 				@Override
 				public void invokeWithActiveScopes(
-						BeanFilterMethod beanFilterMethod,
+						BeanFilterMethod beanFilterMethod, Object filterChain,
 						PortletRequest portletRequest,
-						PortletResponse portletResponse, Object filterChain)
+						PortletResponse portletResponse)
 					throws PortletException {
 
 					SpringScopedBeanManagerThreadLocal.
 						invokeWithScopedBeanManager(
+							() -> new SpringScopedBeanManager(
+								null, portletRequest, portletResponse),
 							() -> _invokePortletFilterMethod(
 								beanFilterMethod, portletRequest,
-								portletResponse, filterChain),
-							() -> new SpringScopedBeanManager(
-								portletRequest, portletResponse, null));
+								portletResponse, filterChain));
 				}
 
 				private void _invokePortletFilterMethod(
@@ -235,18 +235,17 @@ public class SpringBeanPortletExtension {
 				@Override
 				public void invokeWithActiveScopes(
 						List<BeanPortletMethod> beanMethods,
+						PortletConfig portletConfig,
 						PortletRequest portletRequest,
-						PortletResponse portletResponse,
-						PortletConfig portletConfig)
+						PortletResponse portletResponse)
 					throws PortletException {
 
 					SpringScopedBeanManagerThreadLocal.
 						invokeWithScopedBeanManager(
+							() -> new SpringScopedBeanManager(
+								portletConfig, portletRequest, portletResponse),
 							() -> _invokePortletBeanMethods(
 								beanMethods, portletRequest, portletResponse,
-								portletConfig),
-							() -> new SpringScopedBeanManager(
-								portletRequest, portletResponse,
 								portletConfig));
 				}
 
@@ -271,8 +270,8 @@ public class SpringBeanPortletExtension {
 
 							beanMethod =
 								beanPortletMethodDecorator.getBeanMethod(
-									portletRequest, portletResponse,
-									portletConfig, beanMethod);
+									beanMethod, portletConfig, portletRequest,
+									portletResponse);
 
 							String include = null;
 							Method method = beanMethod.getMethod();
@@ -465,11 +464,10 @@ public class SpringBeanPortletExtension {
 
 		_serviceRegistrations.addAll(
 			_beanPortletRegistrar.register(
-				_annotatedClasses, servletContext,
 				new SpringBeanFilterMethodFactory(_configurableBeanFactory),
 				beanFilterMethodInvoker,
 				new SpringBeanPortletMethodFactory(_configurableBeanFactory),
-				beanPortletMethodInvoker));
+				beanPortletMethodInvoker, _annotatedClasses, servletContext));
 	}
 
 	public void step4SessionScopeBeforeDestroyed(HttpSession httpSession) {

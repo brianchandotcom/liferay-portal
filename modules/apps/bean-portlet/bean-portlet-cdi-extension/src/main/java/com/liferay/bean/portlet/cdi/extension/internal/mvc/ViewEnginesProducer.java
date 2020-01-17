@@ -37,8 +37,8 @@ public class ViewEnginesProducer {
 	@Produces
 	@ViewEngines
 	public List<ViewEngine> getViewEngines(
-		BeanManager beanManager, PortletContext portletContext,
-		Configuration configuration) {
+		BeanManager beanManager, Configuration configuration,
+		PortletContext portletContext) {
 
 		List<ViewEngine> viewEngines = BeanUtil.getBeanInstances(
 			beanManager, ViewEngine.class);

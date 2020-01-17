@@ -53,8 +53,9 @@ import javax.portlet.annotations.ServeResourceMethod;
 public class PortletScannerUtil {
 
 	public static void scanNonannotatedBeanMethods(
+		Class<?> beanPortletClass,
 		BeanPortletMethodFactory beanPortletMethodFactory,
-		Class<?> beanPortletClass, Set<BeanPortletMethod> beanPortletMethods) {
+		Set<BeanPortletMethod> beanPortletMethods) {
 
 		if (Portlet.class.isAssignableFrom(beanPortletClass)) {
 			try {
@@ -66,8 +67,8 @@ public class PortletScannerUtil {
 
 					beanPortletMethods.add(
 						beanPortletMethodFactory.create(
-							processActionMethod, BeanPortletMethodType.ACTION,
-							beanPortletClass));
+							beanPortletClass, BeanPortletMethodType.ACTION,
+							processActionMethod));
 				}
 
 				Method destroyMethod = beanPortletClass.getMethod("destroy");
@@ -75,8 +76,8 @@ public class PortletScannerUtil {
 				if (!destroyMethod.isAnnotationPresent(DestroyMethod.class)) {
 					beanPortletMethods.add(
 						beanPortletMethodFactory.create(
-							destroyMethod, BeanPortletMethodType.DESTROY,
-							beanPortletClass));
+							beanPortletClass, BeanPortletMethodType.DESTROY,
+							destroyMethod));
 				}
 
 				Method initMethod = beanPortletClass.getMethod(
@@ -85,8 +86,8 @@ public class PortletScannerUtil {
 				if (!initMethod.isAnnotationPresent(InitMethod.class)) {
 					beanPortletMethods.add(
 						beanPortletMethodFactory.create(
-							initMethod, BeanPortletMethodType.INIT,
-							beanPortletClass));
+							beanPortletClass, BeanPortletMethodType.INIT,
+							initMethod));
 				}
 
 				Method renderMethod = beanPortletClass.getMethod(
@@ -95,8 +96,8 @@ public class PortletScannerUtil {
 				if (!renderMethod.isAnnotationPresent(RenderMethod.class)) {
 					beanPortletMethods.add(
 						beanPortletMethodFactory.create(
-							renderMethod, BeanPortletMethodType.RENDER,
-							beanPortletClass));
+							beanPortletClass, BeanPortletMethodType.RENDER,
+							renderMethod));
 				}
 			}
 			catch (NoSuchMethodException noSuchMethodException) {
@@ -112,8 +113,8 @@ public class PortletScannerUtil {
 				if (!eventMethod.isAnnotationPresent(EventMethod.class)) {
 					beanPortletMethods.add(
 						beanPortletMethodFactory.create(
-							eventMethod, BeanPortletMethodType.EVENT,
-							beanPortletClass));
+							beanPortletClass, BeanPortletMethodType.EVENT,
+							eventMethod));
 				}
 			}
 			catch (NoSuchMethodException noSuchMethodException) {
@@ -131,8 +132,8 @@ public class PortletScannerUtil {
 
 					beanPortletMethods.add(
 						beanPortletMethodFactory.create(
-							renderHeadersMethod, BeanPortletMethodType.HEADER,
-							beanPortletClass));
+							beanPortletClass, BeanPortletMethodType.HEADER,
+							renderHeadersMethod));
 				}
 			}
 			catch (NoSuchMethodException noSuchMethodException) {
@@ -151,9 +152,9 @@ public class PortletScannerUtil {
 
 					beanPortletMethods.add(
 						beanPortletMethodFactory.create(
-							serveResourceMethod,
+							beanPortletClass,
 							BeanPortletMethodType.SERVE_RESOURCE,
-							beanPortletClass));
+							serveResourceMethod));
 				}
 			}
 			catch (NoSuchMethodException noSuchMethodException) {

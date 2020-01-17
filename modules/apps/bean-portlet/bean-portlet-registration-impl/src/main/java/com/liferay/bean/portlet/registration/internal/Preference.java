@@ -21,9 +21,9 @@ import java.util.List;
  */
 public class Preference {
 
-	public Preference(List<String> values, boolean readOnly) {
-		_values = values;
+	public Preference(boolean readOnly, List<String> values) {
 		_readOnly = readOnly;
+		_values = values;
 	}
 
 	public List<String> getValues() {

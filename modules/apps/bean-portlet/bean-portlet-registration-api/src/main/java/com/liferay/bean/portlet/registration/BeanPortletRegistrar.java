@@ -34,11 +34,11 @@ import org.osgi.framework.ServiceRegistration;
 public interface BeanPortletRegistrar {
 
 	public List<ServiceRegistration<?>> register(
-		Set<Class<?>> discoveredClasses, ServletContext servletContext,
 		BeanFilterMethodFactory beanFilterMethodFactory,
 		BeanFilterMethodInvoker beanFilterMethodInvoker,
 		BeanPortletMethodFactory beanPortletMethodFactory,
-		BeanPortletMethodInvoker beanPortletMethodInvoker);
+		BeanPortletMethodInvoker beanPortletMethodInvoker,
+		Set<Class<?>> discoveredClasses, ServletContext servletContext);
 
 	public void unregister(
 		List<ServiceRegistration<?>> serviceRegistrations,

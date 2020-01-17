@@ -23,7 +23,7 @@ import org.springframework.beans.factory.config.DependencyDescriptor;
 public class JSR330DependencyDescriptor extends DependencyDescriptor {
 
 	public JSR330DependencyDescriptor(
-		DependencyDescriptor original, String beanName, Class<?> requiredType) {
+		String beanName, DependencyDescriptor original, Class<?> requiredType) {
 
 		super(original);
 

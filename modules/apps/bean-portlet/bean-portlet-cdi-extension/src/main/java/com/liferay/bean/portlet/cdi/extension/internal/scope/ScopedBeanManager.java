@@ -43,12 +43,12 @@ import javax.portlet.annotations.RenderStateScoped;
 public class ScopedBeanManager {
 
 	public ScopedBeanManager(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		PortletConfig portletConfig) {
+		PortletConfig portletConfig, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
 
+		_portletConfig = portletConfig;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
-		_portletConfig = portletConfig;
 	}
 
 	public void destroyScopedBeans() {
@@ -175,7 +175,7 @@ public class ScopedBeanManager {
 			}
 
 			scopedBean = new CDIScopedBean<>(
-				name, bean, creationalContext,
+				bean, creationalContext, name,
 				PortletRequestScoped.class.getSimpleName());
 
 			_portletRequest.setAttribute(name, scopedBean);
@@ -205,7 +205,7 @@ public class ScopedBeanManager {
 			}
 
 			scopedBean = new CDIScopedBean<>(
-				name, bean, creationalContext,
+				bean, creationalContext, name,
 				PortletSessionScoped.class.getSimpleName());
 
 			portletSession.setAttribute(name, scopedBean, subscope);
@@ -231,7 +231,7 @@ public class ScopedBeanManager {
 			}
 
 			scopedBean = new CDIScopedBean<>(
-				name, bean, creationalContext,
+				bean, creationalContext, name,
 				RedirectScoped.class.getSimpleName());
 
 			portletSession.setAttribute(name, scopedBean);
@@ -255,7 +255,7 @@ public class ScopedBeanManager {
 			}
 
 			scopedBean = new CDIScopedBean<>(
-				name, bean, creationalContext,
+				bean, creationalContext, name,
 				RenderStateScoped.class.getSimpleName());
 
 			PortletSerializable portletSerializable =

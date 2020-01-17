@@ -28,7 +28,7 @@ public class BeforeControllerEventImpl
 	public BeforeControllerEventImpl(
 		Object source, ResourceInfo resourceInfo, UriInfo uriInfo) {
 
-		super(source, resourceInfo, uriInfo);
+		super(resourceInfo, source, uriInfo);
 	}
 
 }

@@ -34,11 +34,11 @@ public class SpringBeanPortletMethodFactory
 
 	@Override
 	public BeanPortletMethod create(
-		Method method, BeanPortletMethodType beanPortletMethodType,
-		Class<?> beanClass) {
+		Class<?> beanClass, BeanPortletMethodType beanPortletMethodType,
+		Method method) {
 
 		return new SpringBeanPortletMethod(
-			method, beanPortletMethodType, _beanFactory, beanClass);
+			beanClass, _beanFactory, beanPortletMethodType, method);
 	}
 
 	private final BeanFactory _beanFactory;

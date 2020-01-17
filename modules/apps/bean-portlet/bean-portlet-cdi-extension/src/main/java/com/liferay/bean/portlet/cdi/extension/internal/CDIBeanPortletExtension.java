@@ -135,7 +135,7 @@ public class CDIBeanPortletExtension implements Extension {
 
 		// MVC
 
-		MvcExtension.step1BeforeBeanDiscovery(beforeBeanDiscovery, beanManager);
+		MvcExtension.step1BeforeBeanDiscovery(beanManager, beforeBeanDiscovery);
 	}
 
 	public <T> void step2ProcessAnnotatedType(
@@ -302,17 +302,17 @@ public class CDIBeanPortletExtension implements Extension {
 
 				@Override
 				public void invokeWithActiveScopes(
-						BeanFilterMethod beanFilterMethod,
+						BeanFilterMethod beanFilterMethod, Object filterChain,
 						PortletRequest portletRequest,
-						PortletResponse portletResponse, Object filterChain)
+						PortletResponse portletResponse)
 					throws PortletException {
 
 					ScopedBeanManagerThreadLocal.invokeWithScopedBeanManager(
+						() -> new ScopedBeanManager(
+							null, portletRequest, portletResponse),
 						() -> _invokePortletFilterMethod(
 							beanFilterMethod, portletRequest, portletResponse,
-							filterChain),
-						() -> new ScopedBeanManager(
-							portletRequest, portletResponse, null));
+							filterChain));
 				}
 
 				private void _invokePortletFilterMethod(
@@ -347,17 +347,17 @@ public class CDIBeanPortletExtension implements Extension {
 				@Override
 				public void invokeWithActiveScopes(
 						List<BeanPortletMethod> beanMethods,
+						PortletConfig portletConfig,
 						PortletRequest portletRequest,
-						PortletResponse portletResponse,
-						PortletConfig portletConfig)
+						PortletResponse portletResponse)
 					throws PortletException {
 
 					ScopedBeanManagerThreadLocal.invokeWithScopedBeanManager(
+						() -> new ScopedBeanManager(
+							portletConfig, portletRequest, portletResponse),
 						() -> _invokePortletBeanMethods(
 							beanMethods, portletRequest, portletResponse,
-							portletConfig),
-						() -> new ScopedBeanManager(
-							portletRequest, portletResponse, portletConfig));
+							portletConfig));
 				}
 
 				private void _invokePortletBeanMethods(
@@ -390,8 +390,8 @@ public class CDIBeanPortletExtension implements Extension {
 
 								beanMethod =
 									beanPortletMethodDecorator.getBeanMethod(
-										portletRequest, portletResponse,
-										portletConfig, beanMethod);
+										beanMethod, portletConfig,
+										portletRequest, portletResponse);
 							}
 
 							String include = null;
@@ -582,11 +582,10 @@ public class CDIBeanPortletExtension implements Extension {
 
 		_serviceRegistrations.addAll(
 			_beanPortletRegistrar.register(
-				_discoveredClasses, servletContext,
 				new CDIBeanFilterMethodFactory(beanManager),
 				beanFilterMethodInvoker,
 				new CDIBeanPortletMethodFactory(beanManager),
-				beanPortletMethodInvoker));
+				beanPortletMethodInvoker, _discoveredClasses, servletContext));
 
 		// MVC
 
@@ -613,7 +612,7 @@ public class CDIBeanPortletExtension implements Extension {
 			}
 
 			_viewRenderer = new ViewRendererMvcImpl(
-				beanManager, importsMvcPackage, importsMvcBindingPackage);
+				beanManager, importsMvcBindingPackage, importsMvcPackage);
 		}
 		else {
 			_viewRenderer = (ViewRenderer)beanManager.getReference(

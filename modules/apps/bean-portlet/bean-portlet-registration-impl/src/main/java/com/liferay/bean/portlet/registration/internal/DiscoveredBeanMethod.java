@@ -24,12 +24,12 @@ import java.lang.reflect.Method;
 public class DiscoveredBeanMethod {
 
 	public DiscoveredBeanMethod(
-		Class<?> beanClass, Method method,
-		BeanPortletMethodType beanPortletMethodType) {
+		Class<?> beanClass, BeanPortletMethodType beanPortletMethodType,
+		Method method) {
 
 		_beanClass = beanClass;
-		_method = method;
 		_beanPortletMethodType = beanPortletMethodType;
+		_method = method;
 	}
 
 	public Class<?> getBeanType() {

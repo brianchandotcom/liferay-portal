@@ -55,7 +55,7 @@ public class SpringPortletAsyncScopeManager
 
 		_closeable = SpringScopedBeanManagerThreadLocal.install(
 			new SpringScopedBeanManager(
-				resourceRequest, resourceResponse, portletConfig));
+				portletConfig, resourceRequest, resourceResponse));
 	}
 
 	@Override

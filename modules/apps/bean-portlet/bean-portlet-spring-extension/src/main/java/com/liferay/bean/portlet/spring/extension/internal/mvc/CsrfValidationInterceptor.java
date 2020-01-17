@@ -38,8 +38,8 @@ import javax.ws.rs.core.Configuration;
 public class CsrfValidationInterceptor extends BeanPortletMethodInterceptor {
 
 	public CsrfValidationInterceptor(
-		BeanPortletMethod beanPortletMethod, boolean controller,
-		Configuration configuration) {
+		BeanPortletMethod beanPortletMethod, Configuration configuration,
+		boolean controller) {
 
 		super(beanPortletMethod, controller);
 

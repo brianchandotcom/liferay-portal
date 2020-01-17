@@ -28,8 +28,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface BeanFilterMethodInvoker {
 
 	public void invokeWithActiveScopes(
-			BeanFilterMethod beanFilterMethod, PortletRequest portletRequest,
-			PortletResponse portletResponse, Object filterChain)
+			BeanFilterMethod beanFilterMethod, Object filterChain,
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortletException;
 
 }

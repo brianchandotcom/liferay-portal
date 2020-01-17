@@ -46,12 +46,12 @@ public class MvcContextProducer {
 	@PortletRequestScoped
 	@Produces
 	public MvcContext getMvcContext(
-		PortletRequest portletRequest, PortletContext portletContext,
-		Configuration configuration, Encoders encoders) {
+		Configuration configuration, Encoders encoders,
+		PortletContext portletContext, PortletRequest portletRequest) {
 
 		return new MvcContextImpl(
-			portletRequest, portletContext, configuration, encoders,
-			_localeResolvers);
+			configuration, encoders, _localeResolvers, portletContext,
+			portletRequest);
 	}
 
 	@PostConstruct

@@ -25,10 +25,10 @@ public class ValidationErrorImpl
 	extends ParamErrorImpl implements ValidationError {
 
 	public ValidationErrorImpl(
-		String paramName, String message,
-		ConstraintViolation<?> constraintViolation) {
+		ConstraintViolation<?> constraintViolation, String message,
+		String paramName) {
 
-		super(paramName, message);
+		super(message, paramName);
 
 		_constraintViolation = constraintViolation;
 	}

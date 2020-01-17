@@ -41,14 +41,14 @@ import javax.ws.rs.core.UriInfo;
 public class ViewEngineContextImpl implements ViewEngineContext {
 
 	public ViewEngineContextImpl(
-		Configuration configuration, PortletRequest portletRequest,
-		MimeResponse mimeResponse, Models models, Locale locale) {
+		Configuration configuration, Locale locale, MimeResponse mimeResponse,
+		Models models, PortletRequest portletRequest) {
 
 		_configuration = configuration;
-		_portletRequest = portletRequest;
+		_locale = locale;
 		_mimeResponse = mimeResponse;
 		_models = models;
-		_locale = locale;
+		_portletRequest = portletRequest;
 	}
 
 	@Override

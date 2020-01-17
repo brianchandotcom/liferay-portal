@@ -27,13 +27,13 @@ import org.springframework.beans.factory.BeanFactory;
 public class SpringBeanPortletMethod extends BaseBeanPortletMethod {
 
 	public SpringBeanPortletMethod(
-		Method method, BeanPortletMethodType beanPortletMethodType,
-		BeanFactory beanFactory, Class<?> beanClass) {
+		Class<?> beanClass, BeanFactory beanFactory,
+		BeanPortletMethodType beanPortletMethodType, Method method) {
 
-		super(method, beanPortletMethodType);
+		super(beanPortletMethodType, method);
 
-		_beanFactory = beanFactory;
 		_beanClass = beanClass;
+		_beanFactory = beanFactory;
 	}
 
 	@Override

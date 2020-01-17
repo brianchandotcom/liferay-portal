@@ -253,8 +253,8 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 		}
 
 		_beanPortletMethodInvoker.invokeWithActiveScopes(
-			beanPortletMethods, portletRequest, portletResponse,
-			_portletConfig);
+			beanPortletMethods, _portletConfig, portletRequest,
+			portletResponse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

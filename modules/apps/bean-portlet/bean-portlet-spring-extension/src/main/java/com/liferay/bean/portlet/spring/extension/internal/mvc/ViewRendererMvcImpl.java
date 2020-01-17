@@ -56,7 +56,7 @@ public class ViewRendererMvcImpl
 	@Override
 	public void render(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
-			PortletConfig portletConfig1)
+			PortletConfig portletConfig)
 		throws PortletException {
 
 		Map<String, Object> modelMap = _models.asMap();
@@ -129,7 +129,7 @@ public class ViewRendererMvcImpl
 
 				supportingViewEngine.processView(
 					new ViewEngineContextImpl(
-						portletRequest, mimeResponse, _configuration, _models));
+						_configuration, mimeResponse, _models, portletRequest));
 
 				_applicationEventPublisher.publishEvent(
 					new AfterProcessViewEventImpl(

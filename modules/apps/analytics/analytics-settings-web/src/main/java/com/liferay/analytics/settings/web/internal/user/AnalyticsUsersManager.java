@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.analytics.settings.internal.user;
+package com.liferay.analytics.settings.web.internal.user;
 
-import com.liferay.analytics.settings.user.AnalyticsUsersManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -41,9 +40,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rachael Koestartyo
  */
 @Component(immediate = true, service = AnalyticsUsersManager.class)
-public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
+public class AnalyticsUsersManager {
 
-	@Override
 	public int getCompanyUsersCount(long companyId) {
 		if (!_isIndexerEnabled()) {
 			int activeUsersCount = _userLocalService.getUsersCount(
@@ -85,7 +83,6 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 		return _getUsersCount(searchRequest);
 	}
 
-	@Override
 	public int getOrganizationsAndUserGroupsUsersCount(
 		long[] organizationIds, long[] userGroupIds) {
 
@@ -111,7 +108,6 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 		return _getUsersCount(searchRequest);
 	}
 
-	@Override
 	public int getOrganizationUsersCount(long organizationId) {
 		if (!_isIndexerEnabled()) {
 			try {
@@ -142,7 +138,6 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 		return _getUsersCount(searchRequest);
 	}
 
-	@Override
 	public int getUserGroupUsersCount(long userGroupId) {
 		if (!_isIndexerEnabled()) {
 			try {
@@ -218,7 +213,7 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsUsersManagerImpl.class);
+		AnalyticsUsersManager.class);
 
 	@Reference
 	private RoleLocalService _roleLocalService;

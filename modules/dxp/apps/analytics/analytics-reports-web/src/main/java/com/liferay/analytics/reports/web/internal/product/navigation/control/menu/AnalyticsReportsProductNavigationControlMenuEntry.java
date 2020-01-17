@@ -1,0 +1,283 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+
+package com.liferay.analytics.reports.web.internal.product.navigation.control.menu;
+
+import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+import com.liferay.taglib.aui.IconTag;
+import com.liferay.taglib.portletext.RuntimeTag;
+import com.liferay.taglib.util.BodyBottomTag;
+
+import java.io.IOException;
+import java.io.Writer;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.WindowStateException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Sarai Díaz
+ */
+@Component(
+	immediate = true,
+	property = {
+		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
+		"product.navigation.control.menu.entry.order:Integer=500"
+	},
+	service = ProductNavigationControlMenuEntry.class
+)
+public class AnalyticsReportsProductNavigationControlMenuEntry
+	extends BaseProductNavigationControlMenuEntry {
+
+	@Override
+	public String getLabel(Locale locale) {
+		return null;
+	}
+
+	@Override
+	public String getURL(HttpServletRequest httpServletRequest) {
+		return null;
+	}
+
+	@Override
+	public boolean includeBody(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		BodyBottomTag bodyBottomTag = new BodyBottomTag();
+
+		bodyBottomTag.setOutputKey("segmentsExperimentPanel");
+
+		try {
+			bodyBottomTag.doBodyTag(
+				httpServletRequest, httpServletResponse,
+				this::_processBodyBottomTagBody);
+		}
+		catch (JspException jspException) {
+			throw new IOException(jspException);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean includeIcon(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		Map<String, String> values = new HashMap<>();
+
+		if (isPanelStateOpen(httpServletRequest)) {
+			values.put("analyticsReportsPanelURL", StringPool.BLANK);
+			values.put("cssClass", "active");
+		}
+		else {
+			values.put("cssClass", StringPool.BLANK);
+
+			PortletURL portletURL = _portletURLFactory.create(
+				httpServletRequest,
+				AnalyticsReportsPortletKeys.ANALYTICS_REPORTS,
+				RenderRequest.RENDER_PHASE);
+
+			portletURL.setParameter("mvcPath", "/analytics_reports_panel.jsp");
+
+			try {
+				portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+			}
+			catch (WindowStateException wse) {
+				ReflectionUtil.throwException(wse);
+			}
+
+			values.put("analyticsReportsPanelURL", portletURL.toString());
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_portal.getLocale(httpServletRequest), getClass());
+
+		values.put(
+			"title",
+			_html.escape(_language.get(resourceBundle, "content-performance")));
+
+		IconTag iconTag = new IconTag();
+
+		iconTag.setCssClass("icon-monospaced");
+		iconTag.setImage("analytics");
+		iconTag.setMarkupView("lexicon");
+
+		try {
+			values.put(
+				"iconTag",
+				iconTag.doTagAsString(httpServletRequest, httpServletResponse));
+		}
+		catch (JspException je) {
+			ReflectionUtil.throwException(je);
+		}
+
+		values.put("portletNamespace", _portletNamespace);
+
+		Writer writer = httpServletResponse.getWriter();
+
+		writer.write(StringUtil.replace(_ICON_TMPL_CONTENT, "${", "}", values));
+
+		return true;
+	}
+
+	public boolean isPanelStateOpen(HttpServletRequest httpServletRequest) {
+		String analyticsReportsPanelState = SessionClicks.get(
+			httpServletRequest, "com.liferay.analytics.reports.web_panelState",
+			"closed");
+
+		if (Objects.equals(analyticsReportsPanelState, "open")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (!LayoutConstants.TYPE_ASSET_DISPLAY.equals(layout.getType())) {
+			return false;
+		}
+
+		if (isEmbeddedPersonalApplicationLayout(layout)) {
+			return false;
+		}
+
+		String layoutMode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.EDIT)) {
+			return false;
+		}
+
+		return super.isShow(httpServletRequest);
+	}
+
+	@Activate
+	protected void activate() {
+		_portletNamespace = _portal.getPortletNamespace(
+			AnalyticsReportsPortletKeys.ANALYTICS_REPORTS);
+	}
+
+	private void _processBodyBottomTagBody(PageContext pageContext) {
+		try {
+			HttpServletRequest httpServletRequest =
+				(HttpServletRequest)pageContext.getRequest();
+
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				_portal.getLocale(httpServletRequest), getClass());
+
+			pageContext.setAttribute("resourceBundle", resourceBundle);
+
+			JspWriter jspWriter = pageContext.getOut();
+
+			jspWriter.write("<div class=\"");
+
+			if (isPanelStateOpen(httpServletRequest)) {
+				jspWriter.write(
+					"lfr-has-analytics-reports-panel open-admin-panel ");
+			}
+
+			jspWriter.write(
+				StringBundler.concat(
+					"hidden-print lfr-admin-panel lfr-product-menu-panel ",
+					"lfr-analytics-reports-panel sidenav-fixed ",
+					"sidenav-menu-slider sidenav-right\" id=\""));
+
+			jspWriter.write(_portletNamespace);
+
+			jspWriter.write("analyticsReportsPanelId\">");
+			jspWriter.write(
+				"<div class=\"sidebar sidebar-default sidenav-menu " +
+					"sidebar-sm\">");
+
+			RuntimeTag runtimeTag = new RuntimeTag();
+
+			runtimeTag.setPortletName(
+				AnalyticsReportsPortletKeys.ANALYTICS_REPORTS);
+
+			runtimeTag.doTag(pageContext);
+
+			jspWriter.write("</div></div>");
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
+	}
+
+	private static final String _ICON_TMPL_CONTENT = StringUtil.read(
+		AnalyticsReportsProductNavigationControlMenuEntry.class, "icon.tmpl");
+
+	@Reference
+	private Html _html;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
+
+	private String _portletNamespace;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
+
+}

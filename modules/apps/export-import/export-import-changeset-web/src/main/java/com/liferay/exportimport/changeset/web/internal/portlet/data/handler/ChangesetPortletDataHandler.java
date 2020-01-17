@@ -126,17 +126,7 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext);
 
 		for (String portletResourceName : portletResourceNames) {
-			try {
-				portletDataContext.addPortletPermissions(portletResourceName);
-			}
-			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to add portlet permissions for portlet: " +
-							portletResourceName,
-						pe);
-				}
-			}
+			portletDataContext.addPortletPermissions(portletResourceName);
 		}
 
 		Element rootElement = addExportDataRootElement(portletDataContext);

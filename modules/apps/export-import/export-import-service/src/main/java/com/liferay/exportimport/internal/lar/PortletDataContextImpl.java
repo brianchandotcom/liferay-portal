@@ -373,23 +373,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public void addPortletPermissions(String resourceName)
-		throws PortalException {
-
-		long groupId = getGroupId();
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (group.isStagingGroup()) {
-			if (group.isStagedRemotely()) {
-				groupId = group.getLiveGroupId();
-			}
-			else {
-				return;
-			}
-		}
-
-		addPermissions(resourceName, groupId);
+	public void addPortletPermissions(String resourceName) {
+		addPermissions(resourceName, getGroupId());
 	}
 
 	@Override

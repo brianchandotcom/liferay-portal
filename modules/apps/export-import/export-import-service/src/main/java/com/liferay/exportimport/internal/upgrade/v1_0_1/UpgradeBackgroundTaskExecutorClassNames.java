@@ -16,7 +16,6 @@ package com.liferay.exportimport.internal.upgrade.v1_0_1;
 
 import com.liferay.exportimport.internal.upgrade.BaseUpgradeBackgroundTaskExecutorClassNames;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
-import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
  * @author Jonathan McCann
@@ -26,16 +25,14 @@ public class UpgradeBackgroundTaskExecutorClassNames
 
 	@Override
 	protected String[][] getRenameTaskExecutorClassNames() {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			return new String[][] {
-				{
-					"com.liferay.dynamic.data.mapping.background.task." +
-						"DDMStructureIndexerBackgroundTaskExecutor",
-					BackgroundTaskExecutorNames.
-						DDM_STRUCTURE_INDEXER_BACKGROUND_TASK_EXECUTOR
-				}
-			};
-		}
+		return new String[][] {
+			{
+				"com.liferay.dynamic.data.mapping.background.task." +
+					"DDMStructureIndexerBackgroundTaskExecutor",
+				BackgroundTaskExecutorNames.
+					DDM_STRUCTURE_INDEXER_BACKGROUND_TASK_EXECUTOR
+			}
+		};
 	}
 
 }

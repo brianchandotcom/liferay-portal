@@ -16,6 +16,7 @@ package com.liferay.exportimport.internal.upgrade;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
  * @author Jonathan McCann
@@ -25,21 +26,24 @@ public abstract class BaseUpgradeBackgroundTaskExecutorClassNames
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String[][] renameTaskExecutorClassNamesArray =
-			getRenameTaskExecutorClassNames();
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			String[][] renameTaskExecutorClassNamesArray =
+				getRenameTaskExecutorClassNames();
 
-		for (String[] renameTaskExecutorClassName :
-				renameTaskExecutorClassNamesArray) {
+			for (String[] renameTaskExecutorClassName :
+					renameTaskExecutorClassNamesArray) {
 
-			StringBundler sb = new StringBundler(5);
+				StringBundler sb = new StringBundler(5);
 
-			sb.append("update BackgroundTask set taskExecutorClassName = '");
-			sb.append(renameTaskExecutorClassName[1]);
-			sb.append("' where taskExecutorClassName = '");
-			sb.append(renameTaskExecutorClassName[0]);
-			sb.append("'");
+				sb.append(
+					"update BackgroundTask set taskExecutorClassName = '");
+				sb.append(renameTaskExecutorClassName[1]);
+				sb.append("' where taskExecutorClassName = '");
+				sb.append(renameTaskExecutorClassName[0]);
+				sb.append("'");
 
-			runSQL(sb.toString());
+				runSQL(sb.toString());
+			}
 		}
 	}
 

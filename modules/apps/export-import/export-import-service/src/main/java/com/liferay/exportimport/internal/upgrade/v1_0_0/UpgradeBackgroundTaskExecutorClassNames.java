@@ -42,52 +42,50 @@ public class UpgradeBackgroundTaskExecutorClassNames
 
 	@Override
 	protected String[][] getRenameTaskExecutorClassNames() {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			return new String[][] {
-				{
-					"com.liferay.portal.lar.backgroundtask." +
-						"LayoutExportBackgroundTaskExecutor",
-					BackgroundTaskExecutorNames.
-						LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR
-				},
-				{
-					"com.liferay.portal.lar.backgroundtask." +
-						"LayoutImportBackgroundTaskExecutor",
-					BackgroundTaskExecutorNames.
-						LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR
-				},
-				{
-					"com.liferay.portal.lar.backgroundtask." +
-						"LayoutRemoteStagingBackgroundTaskExecutor",
-					BackgroundTaskExecutorNames.
-						LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR
-				},
-				{
-					"com.liferay.portal.lar.backgroundtask." +
-						"LayoutStagingBackgroundTaskExecutor",
-					BackgroundTaskExecutorNames.
-						LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR
-				},
-				{
-					"com.liferay.portal.lar.backgroundtask." +
-						"PortletExportBackgroundTaskExecutor",
-					BackgroundTaskExecutorNames.
-						PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR
-				},
-				{
-					"com.liferay.portal.lar.backgroundtask." +
-						"PortletImportBackgroundTaskExecutor",
-					BackgroundTaskExecutorNames.
-						PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR
-				},
-				{
-					"com.liferay.portal.lar.backgroundtask." +
-						"PortletStagingBackgroundTaskExecutor",
-					BackgroundTaskExecutorNames.
-						PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR
-				}
-			};
-		}
+		return new String[][] {
+			{
+				"com.liferay.portal.lar.backgroundtask." +
+					"LayoutExportBackgroundTaskExecutor",
+				BackgroundTaskExecutorNames.
+					LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR
+			},
+			{
+				"com.liferay.portal.lar.backgroundtask." +
+					"LayoutImportBackgroundTaskExecutor",
+				BackgroundTaskExecutorNames.
+					LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR
+			},
+			{
+				"com.liferay.portal.lar.backgroundtask." +
+					"LayoutRemoteStagingBackgroundTaskExecutor",
+				BackgroundTaskExecutorNames.
+					LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR
+			},
+			{
+				"com.liferay.portal.lar.backgroundtask." +
+					"LayoutStagingBackgroundTaskExecutor",
+				BackgroundTaskExecutorNames.
+					LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR
+			},
+			{
+				"com.liferay.portal.lar.backgroundtask." +
+					"PortletExportBackgroundTaskExecutor",
+				BackgroundTaskExecutorNames.
+					PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR
+			},
+			{
+				"com.liferay.portal.lar.backgroundtask." +
+					"PortletImportBackgroundTaskExecutor",
+				BackgroundTaskExecutorNames.
+					PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR
+			},
+			{
+				"com.liferay.portal.lar.backgroundtask." +
+					"PortletStagingBackgroundTaskExecutor",
+				BackgroundTaskExecutorNames.
+					PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR
+			}
+		};
 	}
 
 }

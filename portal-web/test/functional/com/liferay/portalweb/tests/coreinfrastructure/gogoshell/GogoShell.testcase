@@ -26,6 +26,7 @@ definition {
 
 	@priority = "5"
 	test AccessGogoShellCommandViaPortlet {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "GogoShell#AccessGogoShellCommandViaPortlet";
 
 		ProductMenu.gotoPortlet(

@@ -26,6 +26,7 @@ definition {
 
 	@priority = "5"
 	test ChangesToInstanceTimeZoneDoNotPropagateToExistingUsers {
+		property portal.acceptance = "true";
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 
 		User.firstLoginPG();
@@ -94,6 +95,8 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test GuestUserViewSiteChangedLocalePersistsFriendlyURL {
+		property portal.acceptance = "true";
+
 		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(
@@ -154,6 +157,7 @@ definition {
 
 	@priority = "5"
 	test RestrictDefaultLocale {
+		property portal.acceptance = "true";
 		property custom.properties = "company.default.locale=es_ES";
 
 		User.firstLoginPG(
@@ -297,6 +301,8 @@ definition {
 
 	@priority = "5"
 	test ViewSiteLocaleWithoutUserPreferredLocale {
+		property portal.acceptance = "true";
+
 		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(
@@ -322,6 +328,8 @@ definition {
 
 	@priority = "5"
 	test ViewUserPreferredLocale {
+		property portal.acceptance = "true";
+
 		User.firstLoginPG();
 
 		ProductMenu.gotoPortlet(
@@ -400,6 +408,8 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewUserPreferredLocalePersistsFriendlyURL {
+		property portal.acceptance = "true";
+
 		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(

@@ -1,7 +1,6 @@
 @component-name = "portal-deployment-hypersonic-ee"
 definition {
 
-	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property setup.wizard.enabled = "true";
@@ -62,6 +61,7 @@ definition {
 	@priority = "5"
 	test HSQLtoOracle {
 		property database.types = "oracle";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoOracle";
 
 		SetupWizard.configurePG(

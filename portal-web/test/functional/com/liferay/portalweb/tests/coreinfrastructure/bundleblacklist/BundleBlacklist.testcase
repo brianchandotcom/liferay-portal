@@ -42,6 +42,7 @@ definition {
 
 	@priority = "5"
 	test BlacklistModuleJar {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleJar";
 
 		ProductMenu.gotoPortlet(
@@ -73,6 +74,7 @@ definition {
 	@priority = "5"
 	test BlacklistModuleLPKG {
 		property osgi.app.includes = "gogo-shell";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleLPKG";
 
 		ProductMenu.gotoPortlet(
@@ -156,6 +158,7 @@ definition {
 
 	@priority = "5"
 	test RemoveModuleFromBlacklist {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BundleBlacklist#RemoveModuleFromBlacklist";
 
 		ProductMenu.gotoPortlet(

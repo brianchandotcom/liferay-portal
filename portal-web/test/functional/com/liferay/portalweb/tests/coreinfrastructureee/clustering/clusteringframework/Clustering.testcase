@@ -277,6 +277,7 @@ definition {
 	@priority = "5"
 	test ValidateLiveUsers {
 		property custom.properties = "live.users.enabled=true";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Clustering#ValidateLiveUsers";
 
 		Clustering.viewClusterStatusInConsole();

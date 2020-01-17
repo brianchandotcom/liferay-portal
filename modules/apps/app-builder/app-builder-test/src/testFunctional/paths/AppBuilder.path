@@ -137,7 +137,7 @@
 
 <tr>
 	<td>DEPLOY_APP_TOGGLE</td>
-	<td>//div[contains(@class,'autofit-row ')][descendant::h3[contains(.,'${key_deployOption}')]]//input[contains(@class,'toggle-switch-check')]</td>
+	<td>//div[contains(@class,'autofit-row')][descendant::h3[contains(.,'${key_deployOption}')]]//input[contains(@class,'toggle-switch-check')]</td>
 	<td></td>
 </tr>
 

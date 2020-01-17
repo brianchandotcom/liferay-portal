@@ -49,6 +49,7 @@ public class DepotEntryWrapper
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 
@@ -91,6 +92,12 @@ public class DepotEntryWrapper
 
 		if (userId != null) {
 			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -184,6 +191,16 @@ public class DepotEntryWrapper
 	@Override
 	public long getUserId() {
 		return model.getUserId();
+	}
+
+	/**
+	 * Returns the user name of this depot entry.
+	 *
+	 * @return the user name of this depot entry
+	 */
+	@Override
+	public String getUserName() {
+		return model.getUserName();
 	}
 
 	/**
@@ -289,6 +306,16 @@ public class DepotEntryWrapper
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user name of this depot entry.
+	 *
+	 * @param userName the user name of this depot entry
+	 */
+	@Override
+	public void setUserName(String userName) {
+		model.setUserName(userName);
 	}
 
 	/**

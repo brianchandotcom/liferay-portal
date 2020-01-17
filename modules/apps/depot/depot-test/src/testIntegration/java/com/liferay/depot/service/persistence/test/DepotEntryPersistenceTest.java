@@ -134,6 +134,8 @@ public class DepotEntryPersistenceTest {
 
 		newDepotEntry.setUserId(RandomTestUtil.nextLong());
 
+		newDepotEntry.setUserName(RandomTestUtil.randomString());
+
 		newDepotEntry.setCreateDate(RandomTestUtil.nextDate());
 
 		newDepotEntry.setModifiedDate(RandomTestUtil.nextDate());
@@ -157,6 +159,8 @@ public class DepotEntryPersistenceTest {
 			existingDepotEntry.getCompanyId(), newDepotEntry.getCompanyId());
 		Assert.assertEquals(
 			existingDepotEntry.getUserId(), newDepotEntry.getUserId());
+		Assert.assertEquals(
+			existingDepotEntry.getUserName(), newDepotEntry.getUserName());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingDepotEntry.getCreateDate()),
 			Time.getShortTimestamp(newDepotEntry.getCreateDate()));
@@ -226,7 +230,7 @@ public class DepotEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"DepotEntry", "mvccVersion", true, "uuid", true, "depotEntryId",
 			true, "groupId", true, "companyId", true, "userId", true,
-			"createDate", true, "modifiedDate", true);
+			"userName", true, "createDate", true, "modifiedDate", true);
 	}
 
 	@Test
@@ -477,6 +481,8 @@ public class DepotEntryPersistenceTest {
 		depotEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		depotEntry.setUserId(RandomTestUtil.nextLong());
+
+		depotEntry.setUserName(RandomTestUtil.randomString());
 
 		depotEntry.setCreateDate(RandomTestUtil.nextDate());
 

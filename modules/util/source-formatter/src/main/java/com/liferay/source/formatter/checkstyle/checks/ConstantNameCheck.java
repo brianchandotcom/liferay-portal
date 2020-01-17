@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -62,14 +61,13 @@ public class ConstantNameCheck extends BaseCheck {
 
 		String regex = null;
 
-		String typeName = DetailASTUtil.getTypeName(detailAST, false);
+		String typeName = getTypeName(detailAST, false);
 
 		List<String> camelCaseTypeNames = getAttributeValues(
 			_CAMEL_CASE_TYPE_NAMES_KEY);
 
 		if (camelCaseTypeNames.contains(typeName) ||
-			DetailASTUtil.isCollection(
-				detailAST.findFirstToken(TokenTypes.TYPE))) {
+			isCollection(detailAST.findFirstToken(TokenTypes.TYPE))) {
 
 			regex = _CAMEL_CASE_REGEX;
 		}

@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -37,9 +36,8 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		List<DetailAST> variableDefinitionDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.VARIABLE_DEF);
+		List<DetailAST> variableDefinitionDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.VARIABLE_DEF);
 
 		if (variableDefinitionDetailASTList.isEmpty()) {
 			return;
@@ -57,7 +55,7 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 		List<String> identValues = _getIdentValues(variableDefinitionDetailAST);
 
-		if (DetailASTUtil.hasParentWithTokenType(
+		if (hasParentWithTokenType(
 				variableDefinitionDetailAST, TokenTypes.FOR_EACH_CLAUSE,
 				TokenTypes.FOR_INIT) ||
 			_containsMethodName(
@@ -88,8 +86,7 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 			return;
 		}
 
-		int endLineNumber = DetailASTUtil.getEndLineNumber(
-			variableDefinitionDetailAST);
+		int endLineNumber = getEndLineNumber(variableDefinitionDetailAST);
 
 		DetailAST lastBranchingStatementDetailAST =
 			_getLastBranchingStatementDetailAST(
@@ -194,7 +191,7 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST parentDetailAST = DetailASTUtil.getParentWithTokenType(
+		DetailAST parentDetailAST = getParentWithTokenType(
 			identDetailAST, TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE,
 			TokenTypes.LITERAL_TRY, TokenTypes.LITERAL_SYNCHRONIZED,
 			TokenTypes.LAMBDA);
@@ -227,13 +224,11 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 	private boolean _containsMethodName(
 		DetailAST variableDefinitionDetailAST, String... methodNameRegexArray) {
 
-		List<DetailAST> methodCallDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				variableDefinitionDetailAST, true, TokenTypes.METHOD_CALL);
+		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+			variableDefinitionDetailAST, true, TokenTypes.METHOD_CALL);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
-			String methodName = DetailASTUtil.getMethodName(
-				methodCallDetailAST);
+			String methodName = getMethodName(methodCallDetailAST);
 
 			for (String methodNameRegex : methodNameRegexArray) {
 				if (methodName.matches(methodNameRegex)) {
@@ -252,7 +247,7 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		for (String name : identValues) {
 			if (ArrayUtil.contains(
 					variableTypeNames,
-					DetailASTUtil.getVariableTypeName(
+					getVariableTypeName(
 						variableDefinitionDetailAST, name, false))) {
 
 				return true;
@@ -373,7 +368,7 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 			}
 
 			identDetailASTList.addAll(
-				DetailASTUtil.getAllChildTokens(
+				getAllChildTokens(
 					nextSiblingDetailAST, true, TokenTypes.IDENT));
 
 			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
@@ -385,7 +380,7 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 		List<String> identValues = new ArrayList<>();
 
-		List<DetailAST> identDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> identDetailASTList = getAllChildTokens(
 			variableDefinitionDetailAST, true, TokenTypes.IDENT);
 
 		for (DetailAST identDetailAST : identDetailASTList) {
@@ -404,16 +399,14 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 		DetailAST lastBranchingStatementDetailAST = null;
 
-		List<DetailAST> branchingStatementDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.LITERAL_BREAK,
-				TokenTypes.LITERAL_CONTINUE, TokenTypes.LITERAL_RETURN);
+		List<DetailAST> branchingStatementDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.LITERAL_BREAK,
+			TokenTypes.LITERAL_CONTINUE, TokenTypes.LITERAL_RETURN);
 
 		for (DetailAST branchingStatementDetailAST :
 				branchingStatementDetailASTList) {
 
-			int lineNumber = DetailASTUtil.getEndLineNumber(
-				branchingStatementDetailAST);
+			int lineNumber = getEndLineNumber(branchingStatementDetailAST);
 
 			if ((start >= lineNumber) || (end <= lineNumber)) {
 				continue;
@@ -426,16 +419,14 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 				(branchingStatementDetailAST.getType() ==
 					TokenTypes.LITERAL_CONTINUE)) {
 
-				branchedStatementDetailAST =
-					DetailASTUtil.getParentWithTokenType(
-						branchingStatementDetailAST, TokenTypes.LITERAL_DO,
-						TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
+				branchedStatementDetailAST = getParentWithTokenType(
+					branchingStatementDetailAST, TokenTypes.LITERAL_DO,
+					TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
 			}
 			else {
-				branchedStatementDetailAST =
-					DetailASTUtil.getParentWithTokenType(
-						branchingStatementDetailAST, TokenTypes.CTOR_DEF,
-						TokenTypes.LAMBDA, TokenTypes.METHOD_DEF);
+				branchedStatementDetailAST = getParentWithTokenType(
+					branchingStatementDetailAST, TokenTypes.CTOR_DEF,
+					TokenTypes.LAMBDA, TokenTypes.METHOD_DEF);
 			}
 
 			if ((branchedStatementDetailAST != null) &&

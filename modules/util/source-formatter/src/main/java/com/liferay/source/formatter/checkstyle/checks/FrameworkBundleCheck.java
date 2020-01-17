@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -39,13 +37,13 @@ public class FrameworkBundleCheck extends BaseCheck {
 			return;
 		}
 
-		List<String> importNames = DetailASTUtil.getImportNames(detailAST);
+		List<String> importNames = getImportNames(detailAST);
 
 		if (!importNames.contains("org.osgi.framework.Bundle")) {
 			return;
 		}
 
-		List<DetailAST> detailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> detailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF);
 
 		for (DetailAST curDetailAST : detailASTList) {
@@ -54,23 +52,23 @@ public class FrameworkBundleCheck extends BaseCheck {
 	}
 
 	private void _checkGetHeadersMethodCall(DetailAST detailAST) {
-		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = getMethodCalls(
 			detailAST, "getHeaders");
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
 				TokenTypes.ELIST);
 
-			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+			List<DetailAST> exprDetailASTList = getAllChildTokens(
 				elistDetailAST, false, TokenTypes.EXPR);
 
 			if (!exprDetailASTList.isEmpty()) {
 				continue;
 			}
 
-			String variableTypeName = DetailASTUtil.getVariableTypeName(
-				methodCallDetailAST,
-				DetailASTUtil.getVariableName(methodCallDetailAST), false);
+			String variableTypeName = getVariableTypeName(
+				methodCallDetailAST, getVariableName(methodCallDetailAST),
+				false);
 
 			if (variableTypeName.equals("Bundle")) {
 				log(methodCallDetailAST, _MSG_USE_BUNDLE_GET_HEADERS);

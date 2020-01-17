@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaMethod;
@@ -124,7 +123,7 @@ public class ChainingCheck extends BaseCheck {
 
 		String variableName = variableNameDetailAST.getText();
 
-		String variableTypeName = DetailASTUtil.getVariableTypeName(
+		String variableTypeName = getVariableTypeName(
 			methodCallDetailAST, variableName, false);
 
 		if (!classOrVariableName.equals(variableTypeName)) {
@@ -147,14 +146,13 @@ public class ChainingCheck extends BaseCheck {
 				methodCallDetailAST, _MSG_ALLOWED_CHAINING,
 				StringBundler.concat(
 					classOrVariableName, StringPool.PERIOD,
-					DetailASTUtil.getMethodName(methodCallDetailAST)));
+					getMethodName(methodCallDetailAST)));
 		}
 	}
 
 	private void _checkChainingOnMethodCalls(DetailAST detailAST) {
-		List<DetailAST> methodCallDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.METHOD_CALL);
+		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_CALL);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
@@ -162,7 +160,7 @@ public class ChainingCheck extends BaseCheck {
 
 			if (dotDetailAST != null) {
 				List<DetailAST> childMethodCallDetailASTList =
-					DetailASTUtil.getAllChildTokens(
+					getAllChildTokens(
 						dotDetailAST, false, TokenTypes.METHOD_CALL);
 
 				// Only check the method that is first in the chain
@@ -231,14 +229,13 @@ public class ChainingCheck extends BaseCheck {
 
 			log(
 				methodCallDetailAST, _MSG_AVOID_METHOD_CHAINING,
-				DetailASTUtil.getMethodName(methodCallDetailAST));
+				getMethodName(methodCallDetailAST));
 		}
 	}
 
 	private void _checkChainingOnTypeCast(DetailAST detailAST) {
 		if (_isInsideConstructorThisCall(detailAST) ||
-			DetailASTUtil.hasParentWithTokenType(
-				detailAST, TokenTypes.SUPER_CTOR_CALL)) {
+			hasParentWithTokenType(detailAST, TokenTypes.SUPER_CTOR_CALL)) {
 
 			return;
 		}
@@ -283,7 +280,7 @@ public class ChainingCheck extends BaseCheck {
 
 		if (firstMethodName.equals(methodName) &&
 			!_isInsideConstructorThisCall(methodCallDetailAST) &&
-			!DetailASTUtil.hasParentWithTokenType(
+			!hasParentWithTokenType(
 				methodCallDetailAST, TokenTypes.SUPER_CTOR_CALL)) {
 
 			log(methodCallDetailAST, _MSG_AVOID_METHOD_CHAINING, methodName);
@@ -300,14 +297,12 @@ public class ChainingCheck extends BaseCheck {
 			return;
 		}
 
-		String variableTypeName = DetailASTUtil.getVariableTypeName(
+		String variableTypeName = getVariableTypeName(
 			methodCallDetailAST, classOrVariableName, false);
 
 		String fullyQualifiedClassName = variableTypeName;
 
-		for (String importName :
-				DetailASTUtil.getImportNames(methodCallDetailAST)) {
-
+		for (String importName : getImportNames(methodCallDetailAST)) {
 			if (importName.endsWith("." + variableTypeName)) {
 				fullyQualifiedClassName = importName;
 
@@ -395,9 +390,7 @@ public class ChainingCheck extends BaseCheck {
 
 		if (classOrVariableName.equals(
 				_getClassOrVariableName(nextMethodCallDetailAST)) &&
-			!Objects.equals(
-				DetailASTUtil.getMethodName(nextMethodCallDetailAST),
-				"remove")) {
+			!Objects.equals(getMethodName(nextMethodCallDetailAST), "remove")) {
 
 			log(
 				methodCallDetailAST, _MSG_REQUIRED_CHAINING,
@@ -424,8 +417,7 @@ public class ChainingCheck extends BaseCheck {
 	private List<String> _getChainedMethodNames(DetailAST methodCallDetailAST) {
 		List<String> chainedMethodNames = new ArrayList<>();
 
-		chainedMethodNames.add(
-			DetailASTUtil.getMethodName(methodCallDetailAST));
+		chainedMethodNames.add(getMethodName(methodCallDetailAST));
 
 		while (true) {
 			DetailAST parentDetailAST = methodCallDetailAST.getParent();
@@ -449,8 +441,7 @@ public class ChainingCheck extends BaseCheck {
 
 			methodCallDetailAST = grandParentDetailAST;
 
-			chainedMethodNames.add(
-				DetailASTUtil.getMethodName(methodCallDetailAST));
+			chainedMethodNames.add(getMethodName(methodCallDetailAST));
 		}
 	}
 
@@ -518,8 +509,7 @@ public class ChainingCheck extends BaseCheck {
 		List<DetailAST> identDetailASTList = new ArrayList<>();
 
 		for (DetailAST identDetailAST :
-				DetailASTUtil.getAllChildTokens(
-					detailAST, true, TokenTypes.IDENT)) {
+				getAllChildTokens(detailAST, true, TokenTypes.IDENT)) {
 
 			if (name.equals(identDetailAST.getText())) {
 				identDetailASTList.add(identDetailAST);
@@ -672,9 +662,8 @@ public class ChainingCheck extends BaseCheck {
 	private String _getReturnType(
 		String methodName, DetailAST classDefinitionDetailAST) {
 
-		List<DetailAST> methodDefinitionDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				classDefinitionDetailAST, true, TokenTypes.METHOD_DEF);
+		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
+			classDefinitionDetailAST, true, TokenTypes.METHOD_DEF);
 
 		for (DetailAST methodDefinitionDetailAST :
 				methodDefinitionDetailASTList) {
@@ -683,8 +672,7 @@ public class ChainingCheck extends BaseCheck {
 				TokenTypes.IDENT);
 
 			if (methodName.equals(nameDetailAST.getText())) {
-				return DetailASTUtil.getTypeName(
-					methodDefinitionDetailAST, false);
+				return getTypeName(methodDefinitionDetailAST, false);
 			}
 		}
 
@@ -707,7 +695,7 @@ public class ChainingCheck extends BaseCheck {
 		}
 
 		if (_isInsideConstructorThisCall(methodCallDetailAST) ||
-			DetailASTUtil.hasParentWithTokenType(
+			hasParentWithTokenType(
 				methodCallDetailAST, TokenTypes.SUPER_CTOR_CALL)) {
 
 			return true;
@@ -792,7 +780,7 @@ public class ChainingCheck extends BaseCheck {
 				}
 			}
 
-			String variableTypeName = DetailASTUtil.getVariableTypeName(
+			String variableTypeName = getVariableTypeName(
 				methodCallDetailAST, classOrVariableName, false);
 
 			if (Validator.isNotNull(variableTypeName)) {
@@ -843,7 +831,7 @@ public class ChainingCheck extends BaseCheck {
 		DetailAST globalVariableDefinitonDetailAST,
 		DetailAST outerClassDefinitionDetailAST) {
 
-		DetailAST detailAST = DetailASTUtil.getParentWithTokenType(
+		DetailAST detailAST = getParentWithTokenType(
 			globalVariableDefinitonDetailAST, TokenTypes.CLASS_DEF,
 			TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF,
 			TokenTypes.LITERAL_NEW);

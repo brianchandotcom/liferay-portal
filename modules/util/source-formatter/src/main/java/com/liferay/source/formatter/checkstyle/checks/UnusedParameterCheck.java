@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -41,9 +39,8 @@ public class UnusedParameterCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> constructorsAndMethodsASTList =
-			DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF);
+		List<DetailAST> constructorsAndMethodsASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF);
 
 		for (DetailAST constructorOrMethodDetailAST :
 				constructorsAndMethodsASTList) {
@@ -70,8 +67,7 @@ public class UnusedParameterCheck extends BaseCheck {
 			return;
 		}
 
-		List<String> parameterNames = DetailASTUtil.getParameterNames(
-			detailAST);
+		List<String> parameterNames = getParameterNames(detailAST);
 
 		if (parameterNames.isEmpty()) {
 			return;
@@ -80,13 +76,11 @@ public class UnusedParameterCheck extends BaseCheck {
 		DetailAST statementsDetailAST = detailAST.findFirstToken(
 			TokenTypes.SLIST);
 
-		List<DetailAST> allIdentsAST = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> allIdentsAST = getAllChildTokens(
 			statementsDetailAST, true, TokenTypes.IDENT);
 
 		parameterNameLoop:
-		for (String parameterName :
-				DetailASTUtil.getParameterNames(detailAST)) {
-
+		for (String parameterName : getParameterNames(detailAST)) {
 			for (DetailAST identDetailAST : allIdentsAST) {
 				if (parameterName.equals(identDetailAST.getText())) {
 					continue parameterNameLoop;
@@ -102,9 +96,8 @@ public class UnusedParameterCheck extends BaseCheck {
 	private boolean _isReferencedMethod(
 		DetailAST classDetailAST, DetailAST detailAST) {
 
-		List<DetailAST> methodReferenceDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				classDetailAST, true, TokenTypes.METHOD_REF);
+		List<DetailAST> methodReferenceDetailASTList = getAllChildTokens(
+			classDetailAST, true, TokenTypes.METHOD_REF);
 
 		if (methodReferenceDetailASTList.isEmpty()) {
 			return false;
@@ -118,7 +111,7 @@ public class UnusedParameterCheck extends BaseCheck {
 				methodReferenceDetailASTList) {
 
 			for (DetailAST identDetailAST :
-					DetailASTUtil.getAllChildTokens(
+					getAllChildTokens(
 						methodReferenceDetailAST, true, TokenTypes.IDENT)) {
 
 				if (name.equals(identDetailAST.getText())) {

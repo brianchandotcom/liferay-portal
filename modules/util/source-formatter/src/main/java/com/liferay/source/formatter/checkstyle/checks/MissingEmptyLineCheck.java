@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -69,15 +68,13 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		_checkMissingEmptyLineAfterReferencingVariable(
-			parentDetailAST, variableName,
-			DetailASTUtil.getEndLineNumber(detailAST));
+			parentDetailAST, variableName, getEndLineNumber(detailAST));
 		_checkMissingEmptyLineBetweenAssigningAndUsingVariable(
-			parentDetailAST, variableName,
-			DetailASTUtil.getEndLineNumber(detailAST));
+			parentDetailAST, variableName, getEndLineNumber(detailAST));
 	}
 
 	private void _checkMissingEmptyLineAfterMethodCall(DetailAST detailAST) {
-		String variableName = DetailASTUtil.getVariableName(detailAST);
+		String variableName = getVariableName(detailAST);
 
 		if (variableName == null) {
 			return;
@@ -103,9 +100,9 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return;
 		}
 
-		int endLineNumber = DetailASTUtil.getEndLineNumber(detailAST);
+		int endLineNumber = getEndLineNumber(detailAST);
 
-		int nextExpressionStartLineNumber = DetailASTUtil.getStartLineNumber(
+		int nextExpressionStartLineNumber = getStartLineNumber(
 			nextSiblingDetailAST);
 
 		if ((endLineNumber + 1) != nextExpressionStartLineNumber) {
@@ -117,8 +114,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				nextSiblingDetailAST.getFirstChild();
 
 			if ((firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) &&
-				variableName.equals(
-					DetailASTUtil.getVariableName(firstChildDetailAST))) {
+				variableName.equals(getVariableName(firstChildDetailAST))) {
 
 				return;
 			}
@@ -161,8 +157,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					return;
 				}
 
-				int nextExpressionStartLineNumber =
-					DetailASTUtil.getStartLineNumber(nextSiblingDetailAST);
+				int nextExpressionStartLineNumber = getStartLineNumber(
+					nextSiblingDetailAST);
 
 				if ((endLineNumber + 1) != nextExpressionStartLineNumber) {
 					return;
@@ -192,9 +188,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				return;
 			}
 
-			List<DetailAST> assignDetailASTList =
-				DetailASTUtil.getAllChildTokens(
-					nextSiblingDetailAST, false, TokenTypes.ASSIGN);
+			List<DetailAST> assignDetailASTList = getAllChildTokens(
+				nextSiblingDetailAST, false, TokenTypes.ASSIGN);
 
 			if (assignDetailASTList.size() == 1) {
 				lastAssignedVariableName = _getVariableName(
@@ -203,8 +198,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 			referenced = true;
 
-			endLineNumber = DetailASTUtil.getEndLineNumber(
-				nextSiblingDetailAST);
+			endLineNumber = getEndLineNumber(nextSiblingDetailAST);
 
 			previousDetailAST = nextSiblingDetailAST;
 
@@ -222,11 +216,11 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		if (variableTypeName.equals(
-				DetailASTUtil.getVariableTypeName(
+				getVariableTypeName(
 					detailAST, identDetailAST.getText(), false))) {
 
 			String nextLine = StringUtil.trim(
-				getLine(DetailASTUtil.getEndLineNumber(detailAST)));
+				getLine(getEndLineNumber(detailAST)));
 
 			if (Validator.isNotNull(nextLine) && !nextLine.startsWith("}")) {
 				log(
@@ -323,14 +317,14 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return;
 		}
 
-		int nextExpressionStartLineNumber = DetailASTUtil.getStartLineNumber(
+		int nextExpressionStartLineNumber = getStartLineNumber(
 			nextSiblingDetailAST);
 
 		if ((endLineNumber + 1) != nextExpressionStartLineNumber) {
 			return;
 		}
 
-		List<DetailAST> identDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> identDetailASTList = getAllChildTokens(
 			nextSiblingDetailAST, true, TokenTypes.IDENT);
 
 		boolean nextVariableUsesVariable = false;
@@ -363,7 +357,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	private boolean _containsVariableName(
 		DetailAST detailAST, String variableName) {
 
-		List<DetailAST> identDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> identDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.IDENT);
 
 		return _containsVariableName(identDetailASTList, variableName);
@@ -429,7 +423,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	private DetailAST _getFollowingStatementDetailAST(
 		DetailAST detailAST, boolean allowDividingEmptyLine) {
 
-		int endLineNumber = DetailASTUtil.getEndLineNumber(detailAST);
+		int endLineNumber = getEndLineNumber(detailAST);
 
 		DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
 
@@ -438,8 +432,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				return null;
 			}
 
-			int nextStartLineNumber = DetailASTUtil.getStartLineNumber(
-				nextSiblingDetailAST);
+			int nextStartLineNumber = getStartLineNumber(nextSiblingDetailAST);
 
 			if (nextStartLineNumber <= endLineNumber) {
 				nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
@@ -467,7 +460,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 		while (followingStatementDetailAST != null) {
 			identDetailASTList.addAll(
-				DetailASTUtil.getAllChildTokens(
+				getAllChildTokens(
 					followingStatementDetailAST, true, TokenTypes.IDENT));
 
 			followingStatementDetailAST = _getFollowingStatementDetailAST(
@@ -545,8 +538,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return false;
 		}
 
-		int endLineNumber = DetailASTUtil.getEndLineNumber(detailAST);
-		int nextExpressionStartLineNumber = DetailASTUtil.getStartLineNumber(
+		int endLineNumber = getEndLineNumber(detailAST);
+		int nextExpressionStartLineNumber = getStartLineNumber(
 			nextSiblingDetailAST);
 
 		if ((endLineNumber + 1) != nextExpressionStartLineNumber) {
@@ -587,8 +580,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return false;
 		}
 
-		if ((DetailASTUtil.getEndLineNumber(previousSiblingDetailAST) + 1) ==
-				DetailASTUtil.getStartLineNumber(variableDefinitionDetailAST)) {
+		if ((getEndLineNumber(previousSiblingDetailAST) + 1) ==
+				getStartLineNumber(variableDefinitionDetailAST)) {
 
 			return true;
 		}

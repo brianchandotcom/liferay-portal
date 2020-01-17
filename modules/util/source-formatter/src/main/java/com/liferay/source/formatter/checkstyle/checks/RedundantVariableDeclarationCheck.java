@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -50,7 +48,7 @@ public class RedundantVariableDeclarationCheck extends BaseCheck {
 
 		if ((nextSiblingDetailAST == null) ||
 			(nextSiblingDetailAST.getType() != TokenTypes.LITERAL_RETURN) ||
-			(DetailASTUtil.getHiddenBefore(nextSiblingDetailAST) != null)) {
+			(getHiddenBefore(nextSiblingDetailAST) != null)) {
 
 			return;
 		}

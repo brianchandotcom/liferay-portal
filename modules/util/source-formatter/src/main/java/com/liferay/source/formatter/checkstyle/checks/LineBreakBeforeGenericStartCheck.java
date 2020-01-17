@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -32,9 +31,8 @@ public class LineBreakBeforeGenericStartCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (DetailASTUtil.isAtLineStart(
-				detailAST,
-				getLine(DetailASTUtil.getStartLineNumber(detailAST) - 1))) {
+		if (isAtLineStart(
+				detailAST, getLine(getStartLineNumber(detailAST) - 1))) {
 
 			return;
 		}

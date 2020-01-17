@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -32,7 +31,7 @@ public class WhitespaceAroundGenericsCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (!DetailASTUtil.hasParentWithTokenType(detailAST, TokenTypes.TYPE)) {
+		if (!hasParentWithTokenType(detailAST, TokenTypes.TYPE)) {
 			return;
 		}
 
@@ -52,7 +51,7 @@ public class WhitespaceAroundGenericsCheck extends BaseCheck {
 				log(detailAST, _MSG_MISSING_WHITESPACE, detailAST.getText());
 			}
 		}
-		else if (!DetailASTUtil.isAtLineStart(detailAST, line)) {
+		else if (!isAtLineStart(detailAST, line)) {
 			char c = line.charAt(detailAST.getColumnNo() - 1);
 
 			if (c == CharPool.SPACE) {

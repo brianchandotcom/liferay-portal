@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -34,7 +32,7 @@ public class AnonymousClassCheck extends BaseCheck {
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		List<DetailAST> addBackgroundTaskMethodCallDetailASTList =
-			DetailASTUtil.getMethodCalls(detailAST, "addBackgroundTask");
+			getMethodCalls(detailAST, "addBackgroundTask");
 
 		for (DetailAST addBackgroundTaskMethodCallDetailAST :
 				addBackgroundTaskMethodCallDetailASTList) {
@@ -61,7 +59,7 @@ public class AnonymousClassCheck extends BaseCheck {
 
 		String variableName = firstChildDetailAST.getText();
 
-		String typeName = DetailASTUtil.getVariableTypeName(
+		String typeName = getVariableTypeName(
 			methodCallDetailAST, variableName, false);
 
 		if ((typeName == null) || !typeName.equals("BackgroundTaskManager")) {
@@ -71,7 +69,7 @@ public class AnonymousClassCheck extends BaseCheck {
 		DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
 			TokenTypes.ELIST);
 
-		List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> exprDetailASTList = getAllChildTokens(
 			elistDetailAST, false, TokenTypes.EXPR);
 
 		if (exprDetailASTList.size() != 6) {
@@ -88,7 +86,7 @@ public class AnonymousClassCheck extends BaseCheck {
 
 		String mapVariableName = firstChildDetailAST.getText();
 
-		DetailAST typeDetailAST = DetailASTUtil.getVariableTypeDetailAST(
+		DetailAST typeDetailAST = getVariableTypeDetailAST(
 			methodCallDetailAST, mapVariableName);
 
 		if (typeDetailAST == null) {

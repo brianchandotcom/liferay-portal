@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -43,7 +42,7 @@ public class JSONNamingCheck extends BaseCheck {
 			return;
 		}
 
-		String typeName = DetailASTUtil.getTypeName(detailAST, false);
+		String typeName = getTypeName(detailAST, false);
 
 		if (typeName.equals("boolean") || typeName.equals("void")) {
 			return;

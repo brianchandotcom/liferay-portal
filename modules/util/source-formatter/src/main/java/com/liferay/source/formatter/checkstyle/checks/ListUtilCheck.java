@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -51,8 +50,7 @@ public class ListUtilCheck extends BaseCheck {
 			return;
 		}
 
-		if (!Objects.equals(
-				DetailASTUtil.getTypeName(detailAST, false), "List") ||
+		if (!Objects.equals(getTypeName(detailAST, false), "List") ||
 			!_isAssignNewArrayList(detailAST)) {
 
 			return;
@@ -147,7 +145,7 @@ public class ListUtilCheck extends BaseCheck {
 		DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
 			TokenTypes.ELIST);
 
-		List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> exprDetailASTList = getAllChildTokens(
 			elistDetailAST, false, TokenTypes.EXPR);
 
 		if (exprDetailASTList.size() != 1) {
@@ -214,7 +212,7 @@ public class ListUtilCheck extends BaseCheck {
 
 		List<DetailAST> identDetailASTList = new ArrayList<>();
 
-		List<DetailAST> childDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> childDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.IDENT);
 
 		for (DetailAST childDetailAST : childDetailASTList) {

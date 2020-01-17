@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -53,9 +52,7 @@ public class OperatorOperandCheck extends BaseCheck {
 			return;
 		}
 
-		if (DetailASTUtil.isAtLineEnd(
-				detailAST, getLine(detailAST.getLineNo() - 1))) {
-
+		if (isAtLineEnd(detailAST, getLine(detailAST.getLineNo() - 1))) {
 			log(
 				detailAST, _MSG_IMPROVE_READABILITY, side,
 				operatorDetailAST.getText());
@@ -66,7 +63,7 @@ public class OperatorOperandCheck extends BaseCheck {
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
 		if ((firstChildDetailAST.getType() == TokenTypes.DOT) &&
-			DetailASTUtil.isAtLineEnd(
+			isAtLineEnd(
 				firstChildDetailAST,
 				getLine(firstChildDetailAST.getLineNo() - 1))) {
 

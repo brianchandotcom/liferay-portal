@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -57,9 +55,8 @@ public class FilterStringWhitespaceCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> literalStringDetailASTList =
-			DetailASTUtil.getAllChildTokens(
-				assignDetailAST, true, TokenTypes.STRING_LITERAL);
+		List<DetailAST> literalStringDetailASTList = getAllChildTokens(
+			assignDetailAST, true, TokenTypes.STRING_LITERAL);
 
 		for (DetailAST literalStringDetailAST : literalStringDetailASTList) {
 			String literalStringValue = literalStringDetailAST.getText();
@@ -75,7 +72,7 @@ public class FilterStringWhitespaceCheck extends BaseCheck {
 	private void _checkMethod(
 		DetailAST detailAST, String className, String methodName) {
 
-		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = getMethodCalls(
 			detailAST, className, methodName);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
@@ -86,9 +83,8 @@ public class FilterStringWhitespaceCheck extends BaseCheck {
 				continue;
 			}
 
-			List<DetailAST> assignDetailASTList =
-				DetailASTUtil.getAllChildTokens(
-					detailAST, true, TokenTypes.ASSIGN);
+			List<DetailAST> assignDetailASTList = getAllChildTokens(
+				detailAST, true, TokenTypes.ASSIGN);
 
 			for (DetailAST assignDetailAST : assignDetailASTList) {
 				_checkFilterStringAssign(
@@ -101,7 +97,7 @@ public class FilterStringWhitespaceCheck extends BaseCheck {
 		DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
 			TokenTypes.ELIST);
 
-		List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> exprDetailASTList = getAllChildTokens(
 			elistDetailAST, false, TokenTypes.EXPR);
 
 		if (exprDetailASTList.size() < 2) {

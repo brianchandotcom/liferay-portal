@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -52,7 +50,7 @@ public class IfStatementCheck extends BaseCheck {
 		DetailAST firstChildDetailAST = lastChildDetailAST.getFirstChild();
 
 		if ((firstChildDetailAST.getType() != TokenTypes.LITERAL_IF) ||
-			(DetailASTUtil.getHiddenBefore(firstChildDetailAST) != null)) {
+			(getHiddenBefore(firstChildDetailAST) != null)) {
 
 			return;
 		}
@@ -64,7 +62,7 @@ public class IfStatementCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> identDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> identDetailASTList = getAllChildTokens(
 			exprDetailAST, true, TokenTypes.IDENT);
 
 		for (DetailAST identDetailAST : identDetailASTList) {

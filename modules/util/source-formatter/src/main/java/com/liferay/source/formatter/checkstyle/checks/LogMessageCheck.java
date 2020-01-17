@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -43,14 +41,14 @@ public class LogMessageCheck extends MessageCheck {
 	private void _checkMethod(
 		DetailAST detailAST, String variableName, String methodName) {
 
-		List<DetailAST> methodCallDetailASTList = DetailASTUtil.getMethodCalls(
+		List<DetailAST> methodCallDetailASTList = getMethodCalls(
 			detailAST, variableName, methodName);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
 				TokenTypes.ELIST);
 
-			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+			List<DetailAST> exprDetailASTList = getAllChildTokens(
 				elistDetailAST, false, TokenTypes.EXPR);
 
 			for (DetailAST exprDetailAST : exprDetailASTList) {

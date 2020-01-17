@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -74,7 +73,7 @@ public class VariableNameCheck extends BaseCheck {
 			_checkTypo(detailAST, name, typeName);
 		}
 
-		DetailAST parentDetailAST = DetailASTUtil.getParentWithTokenType(
+		DetailAST parentDetailAST = getParentWithTokenType(
 			detailAST, TokenTypes.CLASS_DEF, TokenTypes.CTOR_DEF,
 			TokenTypes.METHOD_DEF);
 
@@ -82,7 +81,7 @@ public class VariableNameCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> assignDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> assignDetailASTList = getAllChildTokens(
 			parentDetailAST, true, TokenTypes.ASSIGN);
 
 		for (DetailAST assignDetailAST : assignDetailASTList) {
@@ -94,7 +93,7 @@ public class VariableNameCheck extends BaseCheck {
 
 			String methodName = StringPool.BLANK;
 
-			if (DetailASTUtil.equals(assignDetailAST.getParent(), detailAST)) {
+			if (equals(assignDetailAST.getParent(), detailAST)) {
 				if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
 					continue;
 				}
@@ -102,8 +101,7 @@ public class VariableNameCheck extends BaseCheck {
 				firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
 				if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
-					methodName = DetailASTUtil.getMethodName(
-						firstChildDetailAST);
+					methodName = getMethodName(firstChildDetailAST);
 				}
 			}
 			else if ((firstChildDetailAST.getType() == TokenTypes.IDENT) &&
@@ -113,8 +111,7 @@ public class VariableNameCheck extends BaseCheck {
 					firstChildDetailAST.getNextSibling();
 
 				if (nextSiblingDetailAST.getType() == TokenTypes.METHOD_CALL) {
-					methodName = DetailASTUtil.getMethodName(
-						nextSiblingDetailAST);
+					methodName = getMethodName(nextSiblingDetailAST);
 				}
 			}
 
@@ -213,7 +210,7 @@ public class VariableNameCheck extends BaseCheck {
 				typeName, "_", "");
 
 			List<DetailAST> variableDeclarationDetailASTList =
-				DetailASTUtil.getAllChildTokens(
+				getAllChildTokens(
 					parentDetailAST, true, TokenTypes.VARIABLE_DEF);
 
 			for (DetailAST variableDeclarationDetailAST :
@@ -413,7 +410,7 @@ public class VariableNameCheck extends BaseCheck {
 
 			if (parentDetailAST.getType() == TokenTypes.METHOD_DEF) {
 				definitionDetailASTList.addAll(
-					DetailASTUtil.getAllChildTokens(
+					getAllChildTokens(
 						parentDetailAST, true, TokenTypes.PARAMETER_DEF,
 						TokenTypes.VARIABLE_DEF));
 			}
@@ -423,7 +420,7 @@ public class VariableNameCheck extends BaseCheck {
 					TokenTypes.OBJBLOCK);
 
 				definitionDetailASTList.addAll(
-					DetailASTUtil.getAllChildTokens(
+					getAllChildTokens(
 						objBlockDetailAST, false, TokenTypes.VARIABLE_DEF));
 			}
 

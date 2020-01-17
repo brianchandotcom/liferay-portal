@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -42,7 +40,7 @@ public class FullyQualifiedNameCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> nameDetailASTList = DetailASTUtil.getAllChildTokens(
+		List<DetailAST> nameDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.IDENT);
 
 		for (DetailAST nameDetailAST : nameDetailASTList) {

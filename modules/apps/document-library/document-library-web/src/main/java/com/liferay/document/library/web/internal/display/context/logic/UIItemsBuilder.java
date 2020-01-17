@@ -190,8 +190,8 @@ public class UIItemsBuilder {
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKIN,
 			LanguageUtil.get(_resourceBundle, "checkin"),
 			StringBundler.concat(
-				getNamespace(), "showVersionDetailsDialog('", portletURL,
-				"');"));
+				getNamespace(), "showVersionDetailsDialog('",
+				HtmlUtil.escapeJS(portletURL.toString()), "');"));
 
 		String javaScript =
 			"/com/liferay/document/library/web/display/context/dependencies" +
@@ -290,7 +290,7 @@ public class UIItemsBuilder {
 
 		sb.append(jsNamespace);
 		sb.append("compareVersionDialog('");
-		sb.append(selectFileVersionURL.toString());
+		sb.append(HtmlUtil.escapeJS(selectFileVersionURL.toString()));
 		sb.append("');");
 
 		JavaScriptMenuItem javaScriptMenuItem = _addJavaScriptUIItem(
@@ -645,7 +645,8 @@ public class UIItemsBuilder {
 			true);
 
 		String onClick = StringBundler.concat(
-			getNamespace(), "openDocument('", webDavURL, "');");
+			getNamespace(), "openDocument('", HtmlUtil.escapeJS(webDavURL),
+			"');");
 
 		JavaScriptMenuItem javaScriptMenuItem = _addJavaScriptUIItem(
 			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.OPEN_IN_MS_OFFICE,
@@ -694,7 +695,7 @@ public class UIItemsBuilder {
 
 		sb.append(getNamespace());
 		sb.append("openDocument('");
-		sb.append(webDavURL);
+		sb.append(HtmlUtil.escapeJS(webDavURL));
 		sb.append("');");
 
 		_addJavaScriptUIItem(
@@ -776,7 +777,7 @@ public class UIItemsBuilder {
 		sb.append("'dialog-with-footer'}, title: '");
 		sb.append(UnicodeLanguageUtil.get(_resourceBundle, "permissions"));
 		sb.append("', uri: '");
-		sb.append(permissionsURL);
+		sb.append(HtmlUtil.escapeJS(permissionsURL));
 		sb.append("'});");
 
 		_addJavaScriptUIItem(
@@ -945,8 +946,8 @@ public class UIItemsBuilder {
 		javaScriptMenuItem.setLabel("checkin");
 		javaScriptMenuItem.setOnClick(
 			StringBundler.concat(
-				getNamespace(), "showVersionDetailsDialog('", portletURL,
-				"');"));
+				getNamespace(), "showVersionDetailsDialog('",
+				HtmlUtil.escapeJS(portletURL.toString()), "');"));
 
 		String javaScript =
 			"/com/liferay/document/library/web/display/context/dependencies" +
@@ -1007,7 +1008,7 @@ public class UIItemsBuilder {
 			sb.append("fm.");
 			sb.append(getNamespace());
 			sb.append("redirect.value = '");
-			sb.append(redirect);
+			sb.append(HtmlUtil.escapeJS(redirect));
 			sb.append("';");
 		}
 

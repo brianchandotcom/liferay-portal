@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -347,14 +348,14 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 					if (_isCheckingInNewFile()) {
 						javaScriptUIItem.setOnClick(
 							StringBundler.concat(
-								"window.location.href = '", _getCheckInURL(),
-								"'"));
+								"window.location.href = '",
+								HtmlUtil.escapeJS(_getCheckInURL()), "'"));
 					}
 					else {
 						javaScriptUIItem.setOnClick(
 							StringBundler.concat(
 								_getNamespace(), "showVersionDetailsDialog('",
-								_getCheckInURL(), "');"));
+								HtmlUtil.escapeJS(_getCheckInURL()), "');"));
 					}
 				}
 			}
@@ -388,14 +389,14 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 					if (_isCheckingInNewFile()) {
 						javaScriptUIItem.setOnClick(
 							StringBundler.concat(
-								"window.location.href = '", _getCheckInURL(),
-								"'"));
+								"window.location.href = '",
+								HtmlUtil.escapeJS(_getCheckInURL()), "'"));
 					}
 					else {
 						javaScriptUIItem.setOnClick(
 							StringBundler.concat(
 								_getNamespace(), "showVersionDetailsDialog('",
-								_getCheckInURL(), "');"));
+								HtmlUtil.escapeJS(_getCheckInURL()), "');"));
 					}
 				}
 			}

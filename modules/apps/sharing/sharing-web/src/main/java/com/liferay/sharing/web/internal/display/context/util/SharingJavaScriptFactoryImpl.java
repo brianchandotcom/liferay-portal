@@ -122,8 +122,7 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		String title = _getAssetTitle(className, classPK, locale);
 
 		if (Validator.isNotNull(title)) {
-			return _language.format(
-				resourceBundle, "share-x", title);
+			return _language.format(resourceBundle, "share-x", title);
 		}
 
 		return _language.get(resourceBundle, "share");

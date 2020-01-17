@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -241,15 +242,15 @@ public class ImageEditorDLDisplayContextHelper {
 
 		sb.append(liferayPortletResponse.getNamespace());
 		sb.append("editWithImageEditor('");
-		sb.append(imageEditorURL.toString());
+		sb.append(HtmlUtil.escapeJS(imageEditorURL.toString()));
 		sb.append("', '");
-		sb.append(editURL.toString());
+		sb.append(HtmlUtil.escapeJS(editURL.toString()));
 		sb.append("', '");
-		sb.append(_fileEntry.getFileName());
+		sb.append(HtmlUtil.escapeJS(_fileEntry.getFileName()));
 		sb.append("', '");
-		sb.append(fileEntryPreviewURL);
+		sb.append(HtmlUtil.escapeJS(fileEntryPreviewURL));
 		sb.append("', '");
-		sb.append(_fileEntry.getMimeType());
+		sb.append(HtmlUtil.escapeJS(_fileEntry.getMimeType()));
 		sb.append("');");
 
 		return sb.toString();

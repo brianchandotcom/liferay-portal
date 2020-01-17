@@ -699,7 +699,7 @@ public class DefaultWikiListPagesDisplayContext
 			portletURL.setParameter("viewMode", Constants.PRINT);
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-			sb.append(portletURL.toString());
+			sb.append(HtmlUtil.escapeJS(portletURL.toString()));
 
 			sb.append("', '', 'directories=0,height=480,left=80,location=1,");
 			sb.append("menubar=1,resizable=1,scrollbars=yes,status=0,");

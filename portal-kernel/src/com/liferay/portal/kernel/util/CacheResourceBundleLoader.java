@@ -36,10 +36,12 @@ public class CacheResourceBundleLoader implements ResourceBundleLoader {
 		for (CacheResourceBundleLoader cacheResourceBundleLoader :
 				_cacheResourceBundleLoaders) {
 
-			Map<Locale, ResourceBundle> resourceBundles =
-				cacheResourceBundleLoader._resourceBundles;
+			if (cacheResourceBundleLoader != null) {
+				Map<Locale, ResourceBundle> resourceBundles =
+					cacheResourceBundleLoader._resourceBundles;
 
-			resourceBundles.clear();
+				resourceBundles.clear();
+			}
 		}
 	}
 

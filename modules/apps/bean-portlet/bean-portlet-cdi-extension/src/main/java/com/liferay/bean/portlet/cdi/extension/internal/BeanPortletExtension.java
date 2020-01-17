@@ -1073,13 +1073,11 @@ public class BeanPortletExtension implements Extension {
 		}
 
 		BeanPortlet mergedBeanPortlet = new BeanPortletImpl(
-			portletConfiguration.portletName(), beanMethodMap, displayNames,
-			beanPortletClass.getName(), initParams,
-			portletConfiguration.cacheExpirationTime(), supportedPortletModes,
-			supportedWindowStates, supportedLocales,
-			portletConfiguration.resourceBundle(), titles, shortTitles,
-			keywords, descriptions, preferences, preferencesValidator,
-			securityRoleRefs, supportedProcessingEvents,
+			portletName, beanMethodMap, displayNames, portletClassName,
+			initParams, expirationCache, supportedPortletModes,
+			supportedWindowStates, supportedLocales, resourceBundle, titles,
+			shortTitles, keywords, descriptions, preferences,
+			preferencesValidator, securityRoleRefs, supportedProcessingEvents,
 			supportedPublishingEvents, supportedPublicRenderParameters,
 			containerRuntimeOptions, portletDependencies, asyncSupport,
 			multipartConfig, displayCategory, liferayConfiguration);

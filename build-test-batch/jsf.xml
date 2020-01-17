@@ -76,7 +76,17 @@
 							<fileset
 								dir="${liferay.faces.portal.dir}"
 								excludes="**/target/com.liferay.faces.test.setup.hook*.war"
-								includes="**/configs/*.config,**/target/*.war"
+								includes="**/target/*.war"
+							/>
+						</copy>
+
+						<copy
+							flatten="true"
+							todir="${liferay.home}/osgi/configs"
+						>
+							<fileset
+								dir="${liferay.faces.portal.dir}"
+								includes="**/configs/*.config"
 							/>
 						</copy>
 

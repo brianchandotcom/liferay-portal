@@ -439,7 +439,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.getCompanyId(), 0, 0, Group.class.getName(),
 			group.getGroupId(), false, false, false);
 
-		if ((classNameId == groupClassNameId) && !user.isDefaultUser()) {
+		if (((classNameId == groupClassNameId) ||
+			 (type == GroupConstants.TYPE_DEPOT)) &&
+			!user.isDefaultUser()) {
 
 			// Site roles
 
@@ -456,7 +458,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			// Asset
 
-			if (serviceContext != null) {
+			if ((type != GroupConstants.TYPE_DEPOT) &&
+				(serviceContext != null)) {
+
 				updateAsset(
 					userId, group, serviceContext.getAssetCategoryIds(),
 					serviceContext.getAssetTagNames());

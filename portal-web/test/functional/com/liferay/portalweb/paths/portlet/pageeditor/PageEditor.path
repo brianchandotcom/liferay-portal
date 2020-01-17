@@ -403,11 +403,6 @@
 </tr>
 <!--BASED_ON_CUSTOM_MASTERS-->
 <tr>
-	<td>FRAGMENT_CHANGELESS</td>
-	<td>//div[@data-onclick='null' and //*[contains(@class,'component-${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS</td>
 	<td>//div[@data-onclick='null']//*[contains(@class,'component-${key_fragmentName}')]</td>
 	<td></td>

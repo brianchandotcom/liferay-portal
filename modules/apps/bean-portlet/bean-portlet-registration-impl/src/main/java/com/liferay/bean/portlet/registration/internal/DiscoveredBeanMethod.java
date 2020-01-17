@@ -24,16 +24,16 @@ import java.lang.reflect.Method;
 public class DiscoveredBeanMethod {
 
 	public DiscoveredBeanMethod(
-		Class<?> beanType, Method method,
+		Class<?> beanClass, Method method,
 		BeanPortletMethodType beanPortletMethodType) {
 
-		_beanType = beanType;
+		_beanClass = beanClass;
 		_method = method;
 		_beanPortletMethodType = beanPortletMethodType;
 	}
 
 	public Class<?> getBeanType() {
-		return _beanType;
+		return _beanClass;
 	}
 
 	public Method getMethod() {
@@ -48,8 +48,8 @@ public class DiscoveredBeanMethod {
 		return _beanPortletMethodType.getPortletNames(_method);
 	}
 
+	private final Class<?> _beanClass;
 	private final BeanPortletMethodType _beanPortletMethodType;
-	private final Class<?> _beanType;
 	private final Method _method;
 
 }

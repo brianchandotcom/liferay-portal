@@ -26,6 +26,6 @@ public interface BeanPortletMethodFactory {
 
 	public BeanPortletMethod create(
 		Method method, BeanPortletMethodType beanPortletMethodType,
-		Class<?> beanType);
+		Class<?> beanClass);
 
 }

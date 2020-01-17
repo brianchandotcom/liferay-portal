@@ -76,8 +76,8 @@ public class BeanPortletMethodDecoratorMvcImpl
 		_applicationContext = applicationContext;
 	}
 
-	private Object _getTarget(Class<?> beanType) {
-		Object target = _applicationContext.getBean(beanType);
+	private Object _getTarget(Class<?> beanClass) {
+		Object target = _applicationContext.getBean(beanClass);
 
 		try {
 			BeanInfo beanInfo = Introspector.getBeanInfo(target.getClass());

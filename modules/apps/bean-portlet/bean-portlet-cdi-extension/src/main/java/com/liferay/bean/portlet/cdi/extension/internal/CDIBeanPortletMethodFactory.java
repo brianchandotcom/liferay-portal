@@ -34,10 +34,10 @@ public class CDIBeanPortletMethodFactory implements BeanPortletMethodFactory {
 	@Override
 	public BeanPortletMethod create(
 		Method method, BeanPortletMethodType beanPortletMethodType,
-		Class<?> beanType) {
+		Class<?> beanClass) {
 
 		return new CDIBeanPortletMethod(
-			method, beanPortletMethodType, _beanManager, beanType);
+			method, beanPortletMethodType, _beanManager, beanClass);
 	}
 
 	private final BeanManager _beanManager;

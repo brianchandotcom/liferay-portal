@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_FLOATING_MENU</td>
+	<td>//div[contains(@class,'lfr-icon-menu-open')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_FLOATING_MENU_ITEM</td>
 	<td>//div[contains(@class,'lfr-icon-menu-open')]//*[normalize-space(text())='${key_menuItem}']</td>
 	<td></td>

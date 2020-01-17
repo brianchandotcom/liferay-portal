@@ -18,7 +18,7 @@
 
 <%
 AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
-AnalyticsUsersManager analyticsUsersManager = (AnalyticsUsersManager)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_USERS_MANAGER);
+AnalyticsUsersUtil analyticsUsersUtil = (AnalyticsUsersUtil)request.getAttribute(AnalyticsSettingsWebKeys.ANALYTICS_USERS_UTIL);
 
 boolean connected = false;
 
@@ -63,7 +63,7 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 					<span class="toggle-switch-handle" />
 				</span>
 				<span class="toggle-switch-text toggle-switch-text-right">
-					<liferay-ui:message arguments="<%= analyticsUsersManager.getCompanyUsersCount(themeDisplay.getCompanyId()) %>" key="sync-all-x-contacts" />
+					<liferay-ui:message arguments="<%= analyticsUsersUtil.getCompanyUsersCount(themeDisplay.getCompanyId()) %>" key="sync-all-x-contacts" />
 				</span>
 			</label>
 		</fieldset>

@@ -120,21 +120,18 @@ public class CDIBeanPortletExtension implements Extension {
 			_log.debug("Scanning for bean portlets and bean filters");
 		}
 
+		beforeBeanDiscovery.addAnnotatedType(
+			beanManager.createAnnotatedType(JSR362CDIBeanProducer.class), null);
+		beforeBeanDiscovery.addAnnotatedType(
+			beanManager.createAnnotatedType(ServletContextProducer.class),
+			null);
 		beforeBeanDiscovery.addQualifier(ContextPath.class);
 		beforeBeanDiscovery.addQualifier(Namespace.class);
 		beforeBeanDiscovery.addQualifier(PortletName.class);
 		beforeBeanDiscovery.addQualifier(WindowId.class);
-
 		beforeBeanDiscovery.addScope(PortletRequestScoped.class, true, false);
 		beforeBeanDiscovery.addScope(PortletSessionScoped.class, true, true);
 		beforeBeanDiscovery.addScope(RenderStateScoped.class, true, false);
-
-		beforeBeanDiscovery.addAnnotatedType(
-			beanManager.createAnnotatedType(JSR362CDIBeanProducer.class), null);
-
-		beforeBeanDiscovery.addAnnotatedType(
-			beanManager.createAnnotatedType(ServletContextProducer.class),
-			null);
 
 		// MVC
 

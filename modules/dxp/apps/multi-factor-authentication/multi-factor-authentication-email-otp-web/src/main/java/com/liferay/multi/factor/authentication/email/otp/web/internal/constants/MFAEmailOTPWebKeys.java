@@ -21,6 +21,9 @@ public class MFAEmailOTPWebKeys {
 
 	public static final String MFA_EMAIL_OTP = "MFA_EMAIL_OTP";
 
+	public static final String MFA_EMAIL_OTP_BODY_LOCALIZED_VALUES_MAP =
+		"MFA_EMAIL_OTP_BODY_LOCALIZED_VALUES_MAP";
+
 	public static final String MFA_EMAIL_OTP_CONFIGURATION =
 		"MFA_EMAIL_OTP_CONFIGURATION";
 
@@ -31,6 +34,9 @@ public class MFAEmailOTPWebKeys {
 
 	public static final String MFA_EMAIL_OTP_SET_AT_TIME =
 		"MFA_EMAIL_OTP_SET_AT_TIME";
+
+	public static final String MFA_EMAIL_OTP_SUBJECT_LOCALIZED_VALUES_MAP =
+		"MFA_EMAIL_OTP_SUBJECT_LOCALIZED_VALUES_MAP";
 
 	public static final String MFA_EMAIL_OTP_USER_ID = "MFA_EMAIL_OTP_USER_ID";
 

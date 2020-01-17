@@ -15,6 +15,7 @@
 package com.liferay.multi.factor.authentication.email.otp.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.multi.factor.authentication.email.otp.web.internal.configuration.MFAEmailOTPConfiguration;
+import com.liferay.multi.factor.authentication.email.otp.web.internal.constants.MFAEmailOTPWebKeys;
 import com.liferay.multi.factor.authentication.email.otp.web.internal.settings.MFAEmailOTPConfigurationLocalizedValuesMap;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -103,12 +104,12 @@ public class MFAEmailOTPPortalSettingsConfigurationScreenContributor
 		}
 
 		httpServletRequest.setAttribute(
-			"bodyLocalizedValuesMap",
+			MFAEmailOTPWebKeys.MFA_EMAIL_OTP_BODY_LOCALIZED_VALUES_MAP,
 			_getEmailOTPTemplate(
 				MFAEmailOTPConfiguration.DEFAULT_EMAIL_OTP_BODY,
 				mfaEmailOTPConfiguration.emailTemplateBody()));
 		httpServletRequest.setAttribute(
-			"subjectLocalizedValuesMap",
+			MFAEmailOTPWebKeys.MFA_EMAIL_OTP_SUBJECT_LOCALIZED_VALUES_MAP,
 			_getEmailOTPTemplate(
 				MFAEmailOTPConfiguration.DEFAULT_EMAIL_OTP_SUBJECT,
 				mfaEmailOTPConfiguration.emailTemplateSubject()));

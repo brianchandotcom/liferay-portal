@@ -86,6 +86,8 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	syncActiveItemId() {
+		this._setEditableAttributes();
+
 		if (
 			this.hasUpdatePermissions &&
 			this.activeItemId === this._getItemId() &&
@@ -305,20 +307,26 @@ class FragmentEditableBackgroundImage extends Component {
 	 * @review
 	 */
 	_setEditableAttributes() {
-		this.element.setAttribute(
-			'data-fragments-editor-item-id',
-			this._getItemId()
-		);
+		if (this.activeItemId === this.fragmentEntryLinkId) {
+			this.element.setAttribute(
+				'data-fragments-editor-item-id',
+				this._getItemId()
+			);
 
-		this.element.setAttribute(
-			'data-fragments-editor-item-type',
-			FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
-		);
+			this.element.setAttribute(
+				'data-fragments-editor-item-type',
+				FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
+			);
 
-		this.element.setAttribute(
-			'data-fragment-entry-link-id',
-			this.fragmentEntryLinkId
-		);
+			this.element.setAttribute(
+				'data-fragment-entry-link-id',
+				this.fragmentEntryLinkId
+			);
+		} else if (this.activeItemId !== this._getItemId()) {
+			this.element.removeAttribute('data-fragment-entry-link-id');
+			this.element.removeAttribute('data-fragments-editor-item-id');
+			this.element.removeAttribute('data-fragments-editor-item-type');
+		}
 	}
 
 	/**

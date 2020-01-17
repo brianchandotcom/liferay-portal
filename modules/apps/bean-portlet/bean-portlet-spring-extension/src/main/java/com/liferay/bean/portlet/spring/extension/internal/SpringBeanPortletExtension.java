@@ -250,15 +250,17 @@ public class SpringBeanPortletExtension {
 				}
 
 				private void _invokePortletBeanMethods(
-						List<BeanPortletMethod> beanMethods,
+						List<BeanPortletMethod> beanPortletMethods,
 						PortletRequest portletRequest,
 						PortletResponse portletResponse,
 						PortletConfig portletConfig)
 					throws PortletException {
 
-					for (BeanPortletMethod beanMethod : beanMethods) {
+					for (BeanPortletMethod beanPortletMethod :
+							beanPortletMethods) {
+
 						_invokeBeanPortletMethod(
-							beanMethod, portletConfig, portletRequest,
+							beanPortletMethod, portletConfig, portletRequest,
 							portletResponse);
 					}
 
@@ -311,7 +313,7 @@ public class SpringBeanPortletExtension {
 	}
 
 	private void _invokeBeanPortletMethod(
-			BeanPortletMethod beanMethod, PortletConfig portletConfig,
+			BeanPortletMethod beanPortletMethod, PortletConfig portletConfig,
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortletException {
 
@@ -325,14 +327,15 @@ public class SpringBeanPortletExtension {
 					"beanPortletMethodDecorator",
 					BeanPortletMethodDecorator.class);
 
-			beanMethod = beanPortletMethodDecorator.getBeanMethod(
-				beanMethod, portletConfig, portletRequest, portletResponse);
+			beanPortletMethod = beanPortletMethodDecorator.getBeanMethod(
+				beanPortletMethod, portletConfig, portletRequest,
+				portletResponse);
 
 			String include = null;
-			Method method = beanMethod.getMethod();
+			Method method = beanPortletMethod.getMethod();
 
 			BeanPortletMethodType beanPortletMethodType =
-				beanMethod.getMethodType();
+				beanPortletMethod.getMethodType();
 
 			if (beanPortletMethodType == BeanPortletMethodType.ACTION) {
 				ActionRequest actionRequest = (ActionRequest)portletRequest;
@@ -343,12 +346,12 @@ public class SpringBeanPortletExtension {
 				String actionName = actionParameters.getValue(
 					ActionRequest.ACTION_NAME);
 
-				String beanMethodActionName = beanMethod.getActionName();
+				String beanMethodActionName = beanPortletMethod.getActionName();
 
 				if (Validator.isNull(beanMethodActionName) ||
 					beanMethodActionName.equals(actionName)) {
 
-					beanMethod.invoke(portletRequest, portletResponse);
+					beanPortletMethod.invoke(portletRequest, portletResponse);
 				}
 			}
 			else if ((beanPortletMethodType == BeanPortletMethodType.HEADER) ||
@@ -356,13 +359,14 @@ public class SpringBeanPortletExtension {
 
 				PortletMode portletMode = portletRequest.getPortletMode();
 
-				PortletMode beanMethodPortletMode = beanMethod.getPortletMode();
+				PortletMode beanMethodPortletMode =
+					beanPortletMethod.getPortletMode();
 
 				if ((beanMethodPortletMode == null) ||
 					portletMode.equals(beanMethodPortletMode)) {
 
 					if (method.getParameterCount() == 0) {
-						String markup = (String)beanMethod.invoke();
+						String markup = (String)beanPortletMethod.invoke();
 
 						if (markup != null) {
 							MimeResponse mimeResponse =
@@ -374,7 +378,8 @@ public class SpringBeanPortletExtension {
 						}
 					}
 					else {
-						beanMethod.invoke(portletRequest, portletResponse);
+						beanPortletMethod.invoke(
+							portletRequest, portletResponse);
 					}
 
 					include = beanPortletMethodType.getInclude(method);
@@ -388,7 +393,7 @@ public class SpringBeanPortletExtension {
 
 				String resourceID = resourceRequest.getResourceID();
 
-				String beanMethodResourceID = beanMethod.getResourceID();
+				String beanMethodResourceID = beanPortletMethod.getResourceID();
 
 				if (Validator.isNull(beanMethodResourceID) ||
 					beanMethodResourceID.equals(resourceID)) {
@@ -414,7 +419,7 @@ public class SpringBeanPortletExtension {
 					}
 
 					if (method.getParameterCount() == 0) {
-						String markup = (String)beanMethod.invoke();
+						String markup = (String)beanPortletMethod.invoke();
 
 						if (Validator.isNotNull(markup)) {
 							PrintWriter printWriter =
@@ -424,17 +429,19 @@ public class SpringBeanPortletExtension {
 						}
 					}
 					else {
-						beanMethod.invoke(resourceRequest, resourceResponse);
+						beanPortletMethod.invoke(
+							resourceRequest, resourceResponse);
 					}
 
 					include = beanPortletMethodType.getInclude(method);
 				}
 			}
 			else {
-				beanMethod.invoke(portletRequest, portletResponse);
+				beanPortletMethod.invoke(portletRequest, portletResponse);
 			}
 
-			PortletMode beanMethodPortletMode = beanMethod.getPortletMode();
+			PortletMode beanMethodPortletMode =
+				beanPortletMethod.getPortletMode();
 
 			if (Validator.isNotNull(include) &&
 				((beanMethodPortletMode == null) ||

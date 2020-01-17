@@ -481,10 +481,10 @@ public class BeanPortletRegistrarImpl implements BeanPortletRegistrar {
 		for (EventDefinition eventDefinition : portletApplication.events()) {
 			String valueType = null;
 
-			Class<?> payloadType = eventDefinition.payloadType();
+			Class<?> payloadClass = eventDefinition.payloadType();
 
-			if (payloadType != null) {
-				valueType = payloadType.getName();
+			if (payloadClass != null) {
+				valueType = payloadClass.getName();
 			}
 
 			List<QName> aliasQNames = new ArrayList<>();

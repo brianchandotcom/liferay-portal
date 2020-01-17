@@ -361,15 +361,17 @@ public class CDIBeanPortletExtension implements Extension {
 				}
 
 				private void _invokePortletBeanMethods(
-						List<BeanPortletMethod> beanMethods,
+						List<BeanPortletMethod> beanPortletMethods,
 						PortletRequest portletRequest,
 						PortletResponse portletResponse,
 						PortletConfig portletConfig)
 					throws PortletException {
 
-					for (BeanPortletMethod beanMethod : beanMethods) {
+					for (BeanPortletMethod beanPortletMethod :
+							beanPortletMethods) {
+
 						_invokeBeanPortletMethod(
-							beanManager, beanMethod, portletConfig,
+							beanManager, beanPortletMethod, portletConfig,
 							portletRequest, portletResponse);
 					}
 
@@ -465,7 +467,7 @@ public class CDIBeanPortletExtension implements Extension {
 	}
 
 	private void _invokeBeanPortletMethod(
-			BeanManager beanManager, BeanPortletMethod beanMethod,
+			BeanManager beanManager, BeanPortletMethod beanPortletMethod,
 			PortletConfig portletConfig, PortletRequest portletRequest,
 			PortletResponse portletResponse)
 		throws PortletException {
@@ -483,15 +485,16 @@ public class CDIBeanPortletExtension implements Extension {
 						bean, BeanPortletMethodDecorator.class,
 						beanManager.createCreationalContext(bean));
 
-				beanMethod = beanPortletMethodDecorator.getBeanMethod(
-					beanMethod, portletConfig, portletRequest, portletResponse);
+				beanPortletMethod = beanPortletMethodDecorator.getBeanMethod(
+					beanPortletMethod, portletConfig, portletRequest,
+					portletResponse);
 			}
 
 			String include = null;
-			Method method = beanMethod.getMethod();
+			Method method = beanPortletMethod.getMethod();
 
 			BeanPortletMethodType beanPortletMethodType =
-				beanMethod.getMethodType();
+				beanPortletMethod.getMethodType();
 
 			if (beanPortletMethodType == BeanPortletMethodType.ACTION) {
 				ActionRequest actionRequest = (ActionRequest)portletRequest;
@@ -502,12 +505,12 @@ public class CDIBeanPortletExtension implements Extension {
 				String actionName = actionParameters.getValue(
 					ActionRequest.ACTION_NAME);
 
-				String beanMethodActionName = beanMethod.getActionName();
+				String beanMethodActionName = beanPortletMethod.getActionName();
 
 				if (Validator.isNull(beanMethodActionName) ||
 					beanMethodActionName.equals(actionName)) {
 
-					beanMethod.invoke(portletRequest, portletResponse);
+					beanPortletMethod.invoke(portletRequest, portletResponse);
 				}
 			}
 			else if ((beanPortletMethodType == BeanPortletMethodType.HEADER) ||
@@ -515,13 +518,14 @@ public class CDIBeanPortletExtension implements Extension {
 
 				PortletMode portletMode = portletRequest.getPortletMode();
 
-				PortletMode beanMethodPortletMode = beanMethod.getPortletMode();
+				PortletMode beanMethodPortletMode =
+					beanPortletMethod.getPortletMode();
 
 				if ((beanMethodPortletMode == null) ||
 					portletMode.equals(beanMethodPortletMode)) {
 
 					if (method.getParameterCount() == 0) {
-						String markup = (String)beanMethod.invoke();
+						String markup = (String)beanPortletMethod.invoke();
 
 						if (markup != null) {
 							MimeResponse mimeResponse =
@@ -533,7 +537,8 @@ public class CDIBeanPortletExtension implements Extension {
 						}
 					}
 					else {
-						beanMethod.invoke(portletRequest, portletResponse);
+						beanPortletMethod.invoke(
+							portletRequest, portletResponse);
 					}
 
 					include = beanPortletMethodType.getInclude(method);
@@ -547,7 +552,7 @@ public class CDIBeanPortletExtension implements Extension {
 
 				String resourceID = resourceRequest.getResourceID();
 
-				String beanMethodResourceID = beanMethod.getResourceID();
+				String beanMethodResourceID = beanPortletMethod.getResourceID();
 
 				if (Validator.isNull(beanMethodResourceID) ||
 					beanMethodResourceID.equals(resourceID)) {
@@ -573,7 +578,7 @@ public class CDIBeanPortletExtension implements Extension {
 					}
 
 					if (method.getParameterCount() == 0) {
-						String markup = (String)beanMethod.invoke();
+						String markup = (String)beanPortletMethod.invoke();
 
 						if (Validator.isNotNull(markup)) {
 							PrintWriter printWriter =
@@ -583,17 +588,19 @@ public class CDIBeanPortletExtension implements Extension {
 						}
 					}
 					else {
-						beanMethod.invoke(resourceRequest, resourceResponse);
+						beanPortletMethod.invoke(
+							resourceRequest, resourceResponse);
 					}
 
 					include = beanPortletMethodType.getInclude(method);
 				}
 			}
 			else {
-				beanMethod.invoke(portletRequest, portletResponse);
+				beanPortletMethod.invoke(portletRequest, portletResponse);
 			}
 
-			PortletMode beanMethodPortletMode = beanMethod.getPortletMode();
+			PortletMode beanMethodPortletMode =
+				beanPortletMethod.getPortletMode();
 
 			if (Validator.isNotNull(include) &&
 				((beanMethodPortletMode == null) ||

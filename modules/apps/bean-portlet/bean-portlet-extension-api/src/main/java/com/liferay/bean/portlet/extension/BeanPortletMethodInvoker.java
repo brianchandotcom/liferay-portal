@@ -32,8 +32,8 @@ public interface BeanPortletMethodInvoker {
 
 	public void invokeWithActiveScopes(
 			List<BeanPortletMethod> beanPortletMethods,
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			PortletConfig portletConfig)
+			PortletConfig portletConfig, PortletRequest portletRequest,
+			PortletResponse portletResponse)
 		throws PortletException;
 
 }

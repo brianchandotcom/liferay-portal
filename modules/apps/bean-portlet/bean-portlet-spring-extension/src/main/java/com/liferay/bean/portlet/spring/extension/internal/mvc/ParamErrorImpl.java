@@ -21,9 +21,9 @@ import javax.mvc.binding.ParamError;
  */
 public class ParamErrorImpl implements ParamError {
 
-	public ParamErrorImpl(String paramName, String message) {
-		_paramName = paramName;
+	public ParamErrorImpl(String message, String paramName) {
 		_message = message;
+		_paramName = paramName;
 	}
 
 	@Override

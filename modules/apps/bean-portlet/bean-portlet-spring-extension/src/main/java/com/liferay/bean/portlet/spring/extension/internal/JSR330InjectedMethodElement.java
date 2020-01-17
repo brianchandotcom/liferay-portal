@@ -43,13 +43,14 @@ public class JSR330InjectedMethodElement
 	extends InjectionMetadata.InjectedElement {
 
 	public JSR330InjectedMethodElement(
-		Method method, boolean required, PropertyDescriptor propertyDescriptor,
-		ConfigurableListableBeanFactory configurableListableBeanFactory) {
+		ConfigurableListableBeanFactory configurableListableBeanFactory,
+		Method method, PropertyDescriptor propertyDescriptor,
+		boolean required) {
 
 		super(method, propertyDescriptor);
 
-		_required = required;
 		_configurableListableBeanFactory = configurableListableBeanFactory;
+		_required = required;
 	}
 
 	@Override
@@ -128,8 +129,8 @@ public class JSR330InjectedMethodElement
 							dependencies.length);
 
 						AutowiredUtil.registerBeans(
-							_configurableListableBeanFactory, beanName,
-							jsr330Beans);
+							beanName, jsr330Beans,
+							_configurableListableBeanFactory);
 
 						if (jsr330Beans.size() == parameterTypes.length) {
 							Iterator<String> it = jsr330Beans.iterator();
@@ -146,8 +147,8 @@ public class JSR330InjectedMethodElement
 
 									cachedDependencies[i] =
 										new JSR330DependencyDescriptor(
-											dependencyDescriptors[i],
 											autowiredBeanName,
+											dependencyDescriptors[i],
 											parameterTypes[i]);
 								}
 							}

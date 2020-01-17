@@ -23,10 +23,10 @@ import javax.xml.namespace.QName;
  */
 public class EventImpl implements Event {
 
-	public EventImpl(QName qName, String valueType, List<QName> aliasQNames) {
+	public EventImpl(List<QName> aliasQNames, QName qName, String valueType) {
+		_aliasQNames = aliasQNames;
 		_qName = qName;
 		_valueType = valueType;
-		_aliasQNames = aliasQNames;
 	}
 
 	@Override

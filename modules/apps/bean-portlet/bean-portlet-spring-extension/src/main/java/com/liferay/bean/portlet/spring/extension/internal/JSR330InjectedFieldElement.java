@@ -39,13 +39,13 @@ public class JSR330InjectedFieldElement
 	extends InjectionMetadata.InjectedElement {
 
 	public JSR330InjectedFieldElement(
-		Field field, boolean required,
-		ConfigurableListableBeanFactory configurableListableBeanFactory) {
+		ConfigurableListableBeanFactory configurableListableBeanFactory,
+		Field field, boolean required) {
 
 		super(field, null);
 
-		_required = required;
 		_configurableListableBeanFactory = configurableListableBeanFactory;
+		_required = required;
 	}
 
 	@Override
@@ -116,8 +116,8 @@ public class JSR330InjectedFieldElement
 					if ((value != null) || _required) {
 						_cachedFieldValue = dependencyDescriptor;
 						AutowiredUtil.registerBeans(
-							_configurableListableBeanFactory, beanName,
-							autowiredBeanNames);
+							beanName, autowiredBeanNames,
+							_configurableListableBeanFactory);
 
 						if (autowiredBeanNames.size() == 1) {
 							Iterator<String> iterator =
@@ -132,7 +132,7 @@ public class JSR330InjectedFieldElement
 
 								_cachedFieldValue =
 									new JSR330DependencyDescriptor(
-										dependencyDescriptor, autowiredBeanName,
+										autowiredBeanName, dependencyDescriptor,
 										field.getType());
 							}
 						}

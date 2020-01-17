@@ -26,11 +26,11 @@ import org.springframework.beans.factory.BeanFactory;
 public class SpringBeanFilterMethod implements BeanFilterMethod {
 
 	public SpringBeanFilterMethod(
-		BeanFactory beanFactory, Method method, Class<?> beanClass) {
+		Class<?> beanClass, BeanFactory beanFactory, Method method) {
 
+		_beanClass = beanClass;
 		_beanFactory = beanFactory;
 		_method = method;
-		_beanClass = beanClass;
 	}
 
 	@Override

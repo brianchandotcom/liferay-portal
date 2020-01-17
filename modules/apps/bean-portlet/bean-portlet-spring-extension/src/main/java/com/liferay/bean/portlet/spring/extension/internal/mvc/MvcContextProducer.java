@@ -45,8 +45,8 @@ public class MvcContextProducer implements ApplicationContextAware {
 	@Scope("portletRequest")
 	public MvcContext getMvcContext() {
 		return new MvcContextImpl(
-			_portletRequest, _portletContext, _configuration, _encoders,
-			_localeResolvers);
+			_configuration, _encoders, _localeResolvers, _portletContext,
+			_portletRequest);
 	}
 
 	@PostConstruct

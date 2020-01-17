@@ -155,7 +155,7 @@ public class BeanValidationInterceptor implements Serializable {
 
 				mutableBindingResult.addValidationError(
 					new ValidationErrorImpl(
-						paramName, interpolatedMessage, constraintViolation));
+						constraintViolation, interpolatedMessage, paramName));
 			}
 		}
 

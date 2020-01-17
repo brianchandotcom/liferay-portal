@@ -55,13 +55,13 @@ public class BeanFilterInvokerPortletFilter
 			   ResourceFilter {
 
 	public BeanFilterInvokerPortletFilter(
-		Class<? extends PortletFilter> filterClass,
 		BeanFilterMethodFactory beanFilterMethodFactory,
-		BeanFilterMethodInvoker beanFilterMethodInvoker) {
+		BeanFilterMethodInvoker beanFilterMethodInvoker,
+		Class<? extends PortletFilter> filterClass) {
 
-		_filterClass = filterClass;
 		_beanFilterMethodFactory = beanFilterMethodFactory;
 		_beanFilterMethodInvoker = beanFilterMethodInvoker;
+		_filterClass = filterClass;
 	}
 
 	@Override
@@ -162,7 +162,7 @@ public class BeanFilterInvokerPortletFilter
 		throws PortletException {
 
 		BeanFilterMethod beanFilterMethod = _beanFilterMethodFactory.create(
-			method, _filterClass);
+			_filterClass, method);
 
 		try {
 			beanFilterMethod.invoke(args);
@@ -184,10 +184,10 @@ public class BeanFilterInvokerPortletFilter
 		throws PortletException {
 
 		BeanFilterMethod beanFilterMethod = _beanFilterMethodFactory.create(
-			method, _filterClass);
+			_filterClass, method);
 
 		_beanFilterMethodInvoker.invokeWithActiveScopes(
-			beanFilterMethod, portletRequest, portletResponse, filterChain);
+			beanFilterMethod, filterChain, portletRequest, portletResponse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

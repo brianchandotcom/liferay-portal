@@ -27,13 +27,13 @@ import javax.ws.rs.core.Configuration;
 public class ViewEngineContextImpl extends BaseViewEngineContext {
 
 	public ViewEngineContextImpl(
-		PortletRequest portletRequest, MimeResponse mimeResponse,
-		Configuration configuration, Models models) {
+		Configuration configuration, MimeResponse mimeResponse, Models models,
+		PortletRequest portletRequest) {
 
-		_portletRequest = portletRequest;
-		_mimeResponse = mimeResponse;
 		_configuration = configuration;
+		_mimeResponse = mimeResponse;
 		_models = models;
+		_portletRequest = portletRequest;
 	}
 
 	@Override

@@ -66,8 +66,8 @@ public class ScopedBeanManagerThreadLocal {
 	}
 
 	public static <T extends Throwable> void invokeWithScopedBeanManager(
-			UnsafeRunnable<T> unsafeRunnable,
-			Supplier<ScopedBeanManager> supplier)
+			Supplier<ScopedBeanManager> supplier,
+			UnsafeRunnable<T> unsafeRunnable)
 		throws T {
 
 		Deque<ScopedBeanManager> scopedBeanManagers = _threadLocal.get();

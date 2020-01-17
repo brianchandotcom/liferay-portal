@@ -54,21 +54,22 @@ public class BeanPortletMethodDecoratorMvcImpl
 
 	@Override
 	public BeanPortletMethod getBeanMethod(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		PortletConfig portletConfig, BeanPortletMethod beanPortletMethod) {
+		BeanPortletMethod beanPortletMethod, PortletConfig portletConfig,
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		boolean controller = _isController(beanPortletMethod);
 
 		Object target = _getTarget(beanPortletMethod.getBeanType());
 
 		return new ControllerInterceptor(
-			portletRequest, portletResponse,
+			_applicationEventPublisher,
 			new BeanValidationInterceptor(
 				new CsrfValidationInterceptor(
-					beanPortletMethod, controller, _configuration),
-				controller, _mvcContext, _messageInterpolator, _validator,
-				(MutableBindingResult)_bindingResult, target),
-			controller, _applicationEventPublisher, target);
+					beanPortletMethod, _configuration, controller),
+				controller, _messageInterpolator,
+				(MutableBindingResult)_bindingResult, _mvcContext, target,
+				_validator),
+			controller, portletRequest, portletResponse, target);
 	}
 
 	@Override

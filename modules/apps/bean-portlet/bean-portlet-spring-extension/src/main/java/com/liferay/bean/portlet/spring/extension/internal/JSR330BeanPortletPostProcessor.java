@@ -73,7 +73,7 @@ public class JSR330BeanPortletPostProcessor
 		PropertyValues propertyValues, Object beanInstance, String beanName) {
 
 		InjectionMetadata injectionMetadata = _getInjectionMetadata(
-			beanName, beanInstance.getClass(), propertyValues);
+			beanInstance.getClass(), beanName, propertyValues);
 
 		try {
 			injectionMetadata.inject(beanInstance, beanName, propertyValues);
@@ -95,7 +95,7 @@ public class JSR330BeanPortletPostProcessor
 		Class<?> beanClass = beanInstance.getClass();
 
 		InjectionMetadata injectionMetadata = _getInjectionMetadata(
-			beanClass.getName(), beanClass, null);
+			beanClass, beanClass.getName(), null);
 
 		try {
 			injectionMetadata.inject(beanInstance, null, null);
@@ -191,7 +191,7 @@ public class JSR330BeanPortletPostProcessor
 
 					injectionElements.add(
 						new JSR330InjectedFieldElement(
-							field, required, _configurableListableBeanFactory));
+							_configurableListableBeanFactory, field, required));
 				}
 			}
 
@@ -226,8 +226,8 @@ public class JSR330BeanPortletPostProcessor
 
 					injectionElements.add(
 						new JSR330InjectedMethodElement(
-							method, required, propertyDescriptor,
-							_configurableListableBeanFactory));
+							_configurableListableBeanFactory, method,
+							propertyDescriptor, required));
 				}
 			}
 
@@ -240,7 +240,7 @@ public class JSR330BeanPortletPostProcessor
 	}
 
 	private InjectionMetadata _getInjectionMetadata(
-		String beanName, Class<?> beanClass, PropertyValues propertyValues) {
+		Class<?> beanClass, String beanName, PropertyValues propertyValues) {
 
 		String key = beanName;
 

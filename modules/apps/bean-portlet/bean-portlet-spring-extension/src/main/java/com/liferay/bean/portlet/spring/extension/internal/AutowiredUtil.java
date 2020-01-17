@@ -27,8 +27,8 @@ import org.springframework.util.Assert;
 public class AutowiredUtil {
 
 	public static void registerBeans(
-		ConfigurableBeanFactory configurableBeanFactory, String beanName,
-		Set<String> beanNames) {
+		String beanName, Set<String> beanNames,
+		ConfigurableBeanFactory configurableBeanFactory) {
 
 		if (beanName != null) {
 			for (String curBeanName : beanNames) {

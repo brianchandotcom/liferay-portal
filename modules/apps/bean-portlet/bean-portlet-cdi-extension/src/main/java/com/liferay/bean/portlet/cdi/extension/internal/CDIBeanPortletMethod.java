@@ -29,13 +29,13 @@ import javax.enterprise.inject.spi.BeanManager;
 public class CDIBeanPortletMethod extends BaseBeanPortletMethod {
 
 	public CDIBeanPortletMethod(
-		Method method, BeanPortletMethodType beanPortletMethodType,
-		BeanManager beanManager, Class<?> beanClass) {
+		Class<?> beanClass, BeanManager beanManager,
+		BeanPortletMethodType beanPortletMethodType, Method method) {
 
-		super(method, beanPortletMethodType);
+		super(beanPortletMethodType, method);
 
-		_beanManager = beanManager;
 		_beanClass = beanClass;
+		_beanManager = beanManager;
 	}
 
 	@Override

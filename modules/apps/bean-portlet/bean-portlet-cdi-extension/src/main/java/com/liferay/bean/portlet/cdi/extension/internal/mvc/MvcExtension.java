@@ -58,7 +58,7 @@ import javax.ws.rs.QueryParam;
 public class MvcExtension {
 
 	public static void step1BeforeBeanDiscovery(
-		BeforeBeanDiscovery beforeBeanDiscovery, BeanManager beanManager) {
+		BeanManager beanManager, BeforeBeanDiscovery beforeBeanDiscovery) {
 
 		beforeBeanDiscovery.addInterceptorBinding(
 			BeanValidationInterceptorBinding.class);

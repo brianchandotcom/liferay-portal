@@ -54,15 +54,16 @@ import org.springframework.context.ApplicationEventPublisher;
 public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 
 	public ControllerInterceptor(
-		PortletRequest portletRequest, PortletResponse portletResponse,
+		ApplicationEventPublisher applicationEventPublisher,
 		BeanPortletMethod beanPortletMethod, boolean controller,
-		ApplicationEventPublisher applicationEventPublisher, Object target) {
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		Object target) {
 
 		super(beanPortletMethod, controller);
 
+		_applicationEventPublisher = applicationEventPublisher;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
-		_applicationEventPublisher = applicationEventPublisher;
 		_target = target;
 	}
 
@@ -207,11 +208,10 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 
 		_applicationEventPublisher.publishEvent(
 			new AfterControllerEventImpl(
-				_target,
 				new ResourceInfoImpl(
 					beanPortletMethod.getBeanType(),
 					beanPortletMethod.getMethod()),
-				new UriInfoImpl()));
+				_target, new UriInfoImpl()));
 
 		if (redirectURL != null) {
 			try {
@@ -219,11 +219,11 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 
 				_applicationEventPublisher.publishEvent(
 					new ControllerRedirectEventImpl(
-						_target,
+						location,
 						new ResourceInfoImpl(
 							beanPortletMethod.getBeanType(),
 							beanPortletMethod.getMethod()),
-						new UriInfoImpl(), location));
+						_target, new UriInfoImpl()));
 			}
 			catch (URISyntaxException urise) {
 				_log.error(urise, urise);

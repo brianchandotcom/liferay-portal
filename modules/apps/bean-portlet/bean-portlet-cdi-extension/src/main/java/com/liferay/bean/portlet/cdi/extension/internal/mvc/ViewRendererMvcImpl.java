@@ -50,12 +50,12 @@ import javax.ws.rs.core.Configuration;
 public class ViewRendererMvcImpl implements ViewRenderer {
 
 	public ViewRendererMvcImpl(
-		BeanManager beanManager, boolean importsMvcPackage,
-		boolean importsMvcBindingPackage) {
+		BeanManager beanManager, boolean importsMvcBindingPackage,
+		boolean importsMvcPackage) {
 
 		_beanManager = beanManager;
-		_importsMvcPackage = importsMvcPackage;
 		_importsMvcBindingPackage = importsMvcBindingPackage;
+		_importsMvcPackage = importsMvcPackage;
 	}
 
 	@Override
@@ -135,8 +135,8 @@ public class ViewRendererMvcImpl implements ViewRenderer {
 
 				supportingViewEngine.processView(
 					new ViewEngineContextImpl(
-						configuration, portletRequest, mimeResponse, models,
-						portletRequest.getLocale()));
+						configuration, portletRequest.getLocale(), mimeResponse,
+						models, portletRequest));
 
 				_beanManager.fireEvent(
 					new AfterProcessViewEventImpl(

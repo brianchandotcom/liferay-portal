@@ -26,9 +26,9 @@ public class AfterControllerEventImpl
 	extends BaseControllerEventImpl implements AfterControllerEvent {
 
 	public AfterControllerEventImpl(
-		Object source, ResourceInfo resourceInfo, UriInfo uriInfo) {
+		ResourceInfo resourceInfo, Object source, UriInfo uriInfo) {
 
-		super(source, resourceInfo, uriInfo);
+		super(resourceInfo, source, uriInfo);
 	}
 
 }

@@ -22,9 +22,9 @@ import javax.mvc.binding.BindingError;
 public class BindingErrorImpl extends ParamErrorImpl implements BindingError {
 
 	public BindingErrorImpl(
-		String paramName, String message, String submittedValue) {
+		String message, String paramName, String submittedValue) {
 
-		super(paramName, message);
+		super(message, paramName);
 
 		_submittedValue = submittedValue;
 	}

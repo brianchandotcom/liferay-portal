@@ -24,6 +24,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface BeanFilterMethodFactory {
 
-	public BeanFilterMethod create(Method method, Class<?> beanClass);
+	public BeanFilterMethod create(Class<?> beanClass, Method method);
 
 }

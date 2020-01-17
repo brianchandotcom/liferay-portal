@@ -25,7 +25,7 @@ import javax.portlet.annotations.PortletQName;
 public class PortletQNameUtil {
 
 	public static javax.xml.namespace.QName getQName(
-		Element qNameEl, Element nameEl, String defaultNamespace) {
+		String defaultNamespace, Element qNameEl, Element nameEl) {
 
 		QName qName =
 			com.liferay.portal.kernel.portlet.PortletQNameUtil.getQName(

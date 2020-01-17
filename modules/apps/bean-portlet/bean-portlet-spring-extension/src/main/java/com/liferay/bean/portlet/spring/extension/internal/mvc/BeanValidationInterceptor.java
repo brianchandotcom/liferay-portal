@@ -41,17 +41,17 @@ public class BeanValidationInterceptor extends BeanPortletMethodInterceptor {
 
 	public BeanValidationInterceptor(
 		BeanPortletMethod beanPortletMethod, boolean controller,
-		MvcContext mvcContext, MessageInterpolator messageInterpolator,
-		Validator validator, MutableBindingResult mutableBindingResult,
-		Object target) {
+		MessageInterpolator messageInterpolator,
+		MutableBindingResult mutableBindingResult, MvcContext mvcContext,
+		Object target, Validator validator) {
 
 		super(beanPortletMethod, controller);
 
-		_mvcContext = mvcContext;
 		_messageInterpolator = messageInterpolator;
-		_validator = validator;
 		_mutableBindingResult = mutableBindingResult;
+		_mvcContext = mvcContext;
 		_target = target;
+		_validator = validator;
 	}
 
 	@Override
@@ -128,7 +128,7 @@ public class BeanValidationInterceptor extends BeanPortletMethodInterceptor {
 
 				_mutableBindingResult.addValidationError(
 					new ValidationErrorImpl(
-						paramName, interpolatedMessage, constraintViolation));
+						constraintViolation, interpolatedMessage, paramName));
 			}
 		}
 

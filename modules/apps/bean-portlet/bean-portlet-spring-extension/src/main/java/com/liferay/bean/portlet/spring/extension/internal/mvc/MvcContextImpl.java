@@ -49,14 +49,15 @@ import javax.ws.rs.core.UriBuilder;
 public class MvcContextImpl implements MvcContext {
 
 	public MvcContextImpl(
-		PortletRequest portletRequest, PortletContext portletContext,
 		Configuration configuration, Encoders encoders,
-		List<LocaleResolver> localeResolvers) {
+		List<LocaleResolver> localeResolvers, PortletContext portletContext,
+		PortletRequest portletRequest) {
 
-		_portletRequest = portletRequest;
-		_portletContext = portletContext;
 		_configuration = configuration;
 		_encoders = encoders;
+		_portletContext = portletContext;
+
+		_portletRequest = portletRequest;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

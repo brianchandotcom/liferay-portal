@@ -66,8 +66,8 @@ public class SpringScopedBeanManagerThreadLocal {
 	}
 
 	public static <T extends Throwable> void invokeWithScopedBeanManager(
-			UnsafeRunnable<T> unsafeRunnable,
-			Supplier<SpringScopedBeanManager> supplier)
+			Supplier<SpringScopedBeanManager> supplier,
+			UnsafeRunnable<T> unsafeRunnable)
 		throws T {
 
 		Deque<SpringScopedBeanManager> scopedBeanManagers = _instance.get();

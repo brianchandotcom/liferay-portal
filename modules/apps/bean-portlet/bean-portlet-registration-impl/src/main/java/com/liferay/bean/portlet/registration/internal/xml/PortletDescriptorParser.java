@@ -75,13 +75,13 @@ public class PortletDescriptorParser {
 
 	public static BeanApp parse(
 			Map<String, BeanFilter> beanFilters,
-			Map<String, BeanPortlet> beanPortlets, Bundle bundle,
-			URL portletDescriptorURL,
 			BeanPortletMethodFactory beanPortletMethodFactory,
-			Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction,
-			Function<String, String> preferencesValidatorFunction,
+			Map<String, BeanPortlet> beanPortlets, Bundle bundle,
 			Map<String, String> displayDescriptorCategories,
-			Map<String, Map<String, Set<String>>> liferayConfigurations)
+			Map<String, Map<String, Set<String>>> liferayConfigurations,
+			URL portletDescriptorURL,
+			Function<String, Set<BeanPortletMethod>> portletBeanMethodsFunction,
+			Function<String, String> preferencesValidatorFunction)
 		throws DocumentException {
 
 		Document document = UnsecureSAXReaderUtil.read(
@@ -194,7 +194,7 @@ public class PortletDescriptorParser {
 				portletBeanMethodsFunction.apply(portletName));
 
 			PortletScannerUtil.scanNonannotatedBeanMethods(
-				beanPortletMethodFactory, portletClass, beanPortletMethods);
+				portletClass, beanPortletMethodFactory, beanPortletMethods);
 
 			Map<BeanPortletMethodType, List<BeanPortletMethod>> beanMethodMap =
 				BeanMethodIndexUtil.indexBeanMethods(beanPortletMethods);
@@ -231,7 +231,7 @@ public class PortletDescriptorParser {
 			Element nameElement = eventDefinitionElement.element("name");
 
 			QName qName = PortletQNameUtil.getQName(
-				qNameElement, nameElement, defaultNamespace);
+				defaultNamespace, qNameElement, nameElement);
 
 			String valueType = eventDefinitionElement.elementText("value-type");
 
@@ -241,10 +241,10 @@ public class PortletDescriptorParser {
 
 			for (Element alias : aliases) {
 				aliasQNames.add(
-					PortletQNameUtil.getQName(alias, null, defaultNamespace));
+					PortletQNameUtil.getQName(defaultNamespace, alias, null));
 			}
 
-			events.add(new EventImpl(qName, valueType, aliasQNames));
+			events.add(new EventImpl(aliasQNames, qName, valueType));
 		}
 
 		Map<String, PublicRenderParameter> publicRenderParameters =
@@ -261,7 +261,7 @@ public class PortletDescriptorParser {
 			Element nameElement = publicRenderParameterElement.element("name");
 
 			QName qName = PortletQNameUtil.getQName(
-				qNameElement, nameElement, defaultNamespace);
+				defaultNamespace, qNameElement, nameElement);
 
 			PublicRenderParameter publicRenderParameter =
 				new PublicRenderParameterImpl(identifier, qName);
@@ -321,8 +321,8 @@ public class PortletDescriptorParser {
 		}
 
 		return new BeanAppImpl(
-			specVersion, defaultNamespace, events, publicRenderParameters,
-			containerRuntimeOptions, validCustomPortletModes, portletListeners);
+			containerRuntimeOptions, validCustomPortletModes, defaultNamespace,
+			events, portletListeners, publicRenderParameters, specVersion);
 	}
 
 	private static BeanFilter _readBeanFilter(
@@ -347,8 +347,8 @@ public class PortletDescriptorParser {
 		}
 
 		return new BeanFilterImpl(
-			filterName, filterClass, ordinal, portletNames, lifecycles,
-			initParams);
+			filterClass, filterName, initParams, lifecycles, ordinal,
+			portletNames);
 	}
 
 	private static BeanPortlet _readBeanPortlet(
@@ -485,9 +485,9 @@ public class PortletDescriptorParser {
 				preferences.put(
 					name,
 					new Preference(
-						values,
 						GetterUtil.getBoolean(
-							preferenceElement.elementText("read-only"))));
+							preferenceElement.elementText("read-only")),
+						values));
 			}
 
 			String xmlPreferencesValidator =
@@ -519,7 +519,7 @@ public class PortletDescriptorParser {
 				"name");
 
 			QName qName = PortletQNameUtil.getQName(
-				qNameElement, nameElement, beanApp.getDefaultNamespace());
+				beanApp.getDefaultNamespace(), qNameElement, nameElement);
 
 			supportedProcessingEvents.add(qName);
 		}
@@ -535,7 +535,7 @@ public class PortletDescriptorParser {
 				"name");
 
 			QName qName = PortletQNameUtil.getQName(
-				qNameElement, nameElement, beanApp.getDefaultNamespace());
+				beanApp.getDefaultNamespace(), qNameElement, nameElement);
 
 			supportedPublishingEvents.add(qName);
 		}
@@ -625,14 +625,14 @@ public class PortletDescriptorParser {
 		}
 
 		return new BeanPortletImpl(
-			portletName, beanMethodMap, displayNames, portletClassName,
-			initParams, expirationCache, supportedPortletModes,
-			supportedWindowStates, supportedLocales, resourceBundle, titles,
-			shortTitles, keywords, descriptions, preferences,
-			preferencesValidator, securityRoleRefs, supportedProcessingEvents,
-			supportedPublishingEvents, supportedPublicRenderParameters,
-			containerRuntimeOptions, portletDependencies, asyncSupported,
-			multipartConfig, categoryName, liferayConfiguration);
+			asyncSupported, beanMethodMap, containerRuntimeOptions,
+			descriptions, categoryName, displayNames, expirationCache,
+			initParams, keywords, liferayConfiguration, multipartConfig,
+			portletClassName, portletDependencies, portletName, preferences,
+			preferencesValidator, resourceBundle, securityRoleRefs, shortTitles,
+			supportedLocales, supportedPortletModes, supportedProcessingEvents,
+			supportedPublicRenderParameters, supportedPublishingEvents,
+			supportedWindowStates, titles);
 	}
 
 	private static Map<String, String> _toLocaleMap(List<Element> elements) {

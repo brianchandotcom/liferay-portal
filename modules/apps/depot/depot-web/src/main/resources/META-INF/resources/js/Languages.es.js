@@ -32,6 +32,7 @@ const Languages = ({
 	availableLocales,
 	defaultLocaleId,
 	inheritLocales = false,
+	portletNamespace,
 	siteAvailableLocales,
 	siteDefaultLocaleId,
 	translatedLanguages
@@ -45,6 +46,8 @@ const Languages = ({
 	const [languageWarning, setLanguageWarning] = useState(false);
 	const [languageTranslationWarning, setLanguageTranslationWarning] = useState(false);
 
+	const form = document[`_${portletNamespace}_fm`];
+
 	const Language = ({displayName, isDefault, localeId, showActions}) => {
 		const [active, setActive] = useState(false);
 
@@ -52,12 +55,15 @@ const Languages = ({
 			setActive(false);
 			setCustomDefaultLocaleId(localeId);
 			setLanguageWarning(true);
+			setLanguageTranslationWarning(translatedLanguages && !translatedLanguages[localeId]);
 
 			Liferay.fire('inputLocalized:defaultLocaleChanged', {
 				item: event.currentTarget
 			});
 
-			setLanguageTranslationWarning(translatedLanguages && !translatedLanguages[localeId]);
+			Liferay.Util.setFormValues(form, {
+				'languageId': localeId
+			});
 		}
 
 		return (
@@ -206,6 +212,7 @@ Languages.propTypes = {
 	).isRequired,
 	defaultLocaleId: PropTypes.string.isRequired,
 	inheritLocales: PropTypes.bool,
+	portletNamespace: PropTypes.string.isRequired,
 	siteAvailableLocales: PropTypes.arrayOf(
 		PropTypes.shape({
 			displayName: PropTypes.string,

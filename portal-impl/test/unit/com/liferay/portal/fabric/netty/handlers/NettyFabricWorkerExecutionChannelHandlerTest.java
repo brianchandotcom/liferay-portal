@@ -950,10 +950,6 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 		defaultPromise.setSuccess(fabricWorker);
 
-		nettyFabricWorkerStub = installNettyFabricWorkerStub();
-
-		noticeableFuture = nettyFabricWorkerStub.getProcessNoticeableFuture();
-
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
 					NettyFabricWorkerExecutionChannelHandler.class.getName(),

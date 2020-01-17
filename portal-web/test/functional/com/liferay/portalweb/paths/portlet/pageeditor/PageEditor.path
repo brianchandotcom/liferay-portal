@@ -418,6 +418,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_INHERITED_FROM_CUSTOM_MASTERS</td>
+	<td>//div[@data-onclick='null'and contains(.,'${key_portletName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SECTION_CONTAINER</td>
 	<td>//section[@tabindex='0'][${key_position}]/div[contains(@class,'container py-3')]</td>
 	<td></td>

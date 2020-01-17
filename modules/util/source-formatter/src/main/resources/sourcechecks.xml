@@ -157,7 +157,9 @@
 		<check name="JavaElseStatementCheck" />
 		<check name="JavaEmptyLineAfterSuperCallCheck" />
 		<check name="JavaEmptyLinesCheck" />
-		<check name="JavaExceptionCheck" />
+		<check name="JavaExceptionCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaForLoopCheck" />
 		<check name="JavaHibernateSQLCheck" />
 		<check name="JavaImportsCheck" />

@@ -68,6 +68,20 @@ public class SafePNGInputStreamTest {
 	}
 
 	@Test
+	public void testICCPChunksAreFilteredOut() throws Exception {
+		InputStream inputStream = _createInputStream(
+			_PNG_SIGNATURE, _ICCP_CHUNK);
+
+		byte[] bytes = new byte[_PNG_SIGNATURE.length];
+
+		inputStream.read(bytes);
+
+		Assert.assertArrayEquals(_PNG_SIGNATURE, bytes);
+
+		Assert.assertEquals(-1, inputStream.read());
+	}
+
+	@Test
 	public void testPNGFile() throws Exception {
 		Assert.assertArrayEquals(
 			_getBytes("filtered.png"),
@@ -91,7 +105,7 @@ public class SafePNGInputStreamTest {
 	public void testRemainingChunksOrderIsPreserved() throws Exception {
 		InputStream inputStream = _createInputStream(
 			_PNG_SIGNATURE, _MISC_CHUNK1, _ZTXT_CHUNK, _COMPRESSED_ITXT_CHUNK,
-			_MISC_CHUNK2);
+			_MISC_CHUNK2, _ICCP_CHUNK);
 
 		byte[] bytes = new byte
 			[_PNG_SIGNATURE.length + _MISC_CHUNK1.length + _MISC_CHUNK2.length];
@@ -172,6 +186,10 @@ public class SafePNGInputStreamTest {
 
 	private static final byte[] _COMPRESSED_ITXT_CHUNK = {
 		0, 0, 0, 9, 105, 84, 88, 116, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	};
+
+	private static final byte[] _ICCP_CHUNK = {
+		0, 0, 0, 4, 105, 67, 67, 80, 0, 0, 0, 0, 0, 0, 0, 0
 	};
 
 	private static final byte[] _MISC_CHUNK1 = {

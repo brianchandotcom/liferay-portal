@@ -16,6 +16,12 @@ definition {
 		task ("Add a site via JSON") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
+
+		task ("Add a custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+		}
 	}
 
 	tearDown {
@@ -199,37 +205,70 @@ definition {
 		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
 	}
 
-	@description = "This is a test for LPS-102566. The new fragments can only be add into Drop Zone in a page based on custom master and the fragments inherited from the custom master are not editable."
+	@description = "This is a test for LPS-102566. The new elements can only be added into Drop Zone in a page based on custom master and the elements inherited from the custom master are changless."
 	@priority = "3"
-	test OnlyAddFragmentsInDropZoneOfPageAndFragmentsInheritedAreChangeless {
-		task ("Add a custom masters with Button fragment") {
+	test OnlyAddElementsInDropZoneOfPageAndElementsInheritedAreChangeless {
+		task ("Add a custom master with Heading fragment and Asset Publisher portlet") {
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
-			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Custom Masters Page Template");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "Button");
+				fragmentName = "Heading");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
 
 			PageEditor.clickPublish();
 		}
 
-		task ("Assert Button fragment inherited from custom masters is changeless in page") {
+		task ("Assert elements inherited from custom masters are changeless") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 			ContentPages.addPage(
 				masterLayoutName = "Custom Masters Page Template",
 				pageName = "Test Page Name");
 
-			AssertElementPresent(
-				key_fragmentName = "button",
-				locator1 = "PageEditor#FRAGMENT_CHANGELESS");
+			Click(
+				key_position = "2",
+				locator1 = "PageEditor#SECTION_CONTAINER");
+
+			AssertElementNotPresent(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR");
+
+			Click(
+				key_fragmentName = "heading",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+
+			AssertElementNotPresent(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR");
+
+			Click(
+				key_fragmentName = "Heading",
+				key_id = "element-text",
+				locator1 = "Fragment#EDITABLE_FIELD");
+
+			AssertElementNotPresent(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR");
+
+			Click(
+				key_position = "3",
+				locator1 = "PageEditor#SECTION_CONTAINER");
+
+			AssertElementNotPresent(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR");
+
+			Click(
+				key_portletName = "Asset Publisher",
+				locator1 = "PageEditor#PORTLET_INHERITED_FROM_CUSTOM_MASTERS");
+
+			AssertElementNotPresent(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR");
+
+			AssertElementNotPresent(locator1 = "Fragment#FRAGMENT_FLOATING_MENU");
 		}
 
-		task ("Add a Heading fragment to drop zone") {
+		task ("Add a Button fragment to drop zone") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "Heading");
+				fragmentName = "Button");
 		}
 
 		task ("Assert can not add a Paragraph fragment to outside of drop zone") {

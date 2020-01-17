@@ -28,29 +28,29 @@ import javax.enterprise.inject.spi.BeanManager;
 public class CDIBeanFilterMethod implements BeanFilterMethod {
 
 	public CDIBeanFilterMethod(
-		BeanManager beanManager, Method method, Class<?> beanType) {
+		BeanManager beanManager, Method method, Class<?> beanClass) {
 
 		_beanManager = beanManager;
 		_method = method;
-		_beanType = beanType;
+		_beanClass = beanClass;
 	}
 
 	@Override
 	public Object invoke(Object... args) throws ReflectiveOperationException {
 		Bean<?> resolvedBean = _beanManager.resolve(
-			_beanManager.getBeans(_beanType));
+			_beanManager.getBeans(_beanClass));
 
 		CreationalContext<?> creationalContext =
 			_beanManager.createCreationalContext(resolvedBean);
 
 		Object beanInstance = _beanManager.getReference(
-			resolvedBean, _beanType, creationalContext);
+			resolvedBean, _beanClass, creationalContext);
 
 		return _method.invoke(beanInstance, args);
 	}
 
+	private final Class<?> _beanClass;
 	private final BeanManager _beanManager;
-	private final Class<?> _beanType;
 	private final Method _method;
 
 }

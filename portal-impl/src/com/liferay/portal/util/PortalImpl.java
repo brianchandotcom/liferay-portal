@@ -1396,7 +1396,7 @@ public class PortalImpl implements Portal {
 		if ((!layout.isFirstParent() || Validator.isNotNull(parametersURL)) &&
 			(groupFriendlyURL.contains(
 				themeDisplay.getLayoutFriendlyURL(layout)) ||
-			 groupFriendlyURL.contains(
+			 groupFriendlyURL.endsWith(
 				 StringPool.SLASH + layout.getLayoutId()))) {
 
 			canonicalLayoutFriendlyURL = defaultLayoutFriendlyURL;

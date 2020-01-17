@@ -154,6 +154,10 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 				actionRequest, "secureConnection");
 			long remoteGroupId = ParamUtil.getLong(
 				actionRequest, "remoteGroupId");
+			boolean setRemoteSiteURL = ParamUtil.getBoolean(
+				actionRequest, "setRemoteSiteURL");
+			String remoteSiteURL = ParamUtil.getString(
+				actionRequest, "remoteSiteURL");
 
 			stagedGroup = liveGroup.isStagedRemotely();
 
@@ -167,6 +171,9 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 					branchingPrivate, remoteAddress, remotePort,
 					remotePathContext, secureConnection, remoteGroupId,
 					serviceContext);
+
+				_staging.setRemoteSiteURL(
+					liveGroup, setRemoteSiteURL, remoteSiteURL);
 			}
 			catch (Exception exception) {
 				SessionErrors.add(actionRequest, Exception.class, exception);

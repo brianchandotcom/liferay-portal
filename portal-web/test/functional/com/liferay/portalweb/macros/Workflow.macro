@@ -8,6 +8,30 @@ definition {
 		MenuItem.click(menuItem = "Pending");
 	}
 
+	macro _tearDownBlog {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		if (IsElementPresent.isVisible(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX")) {
+			Click(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX");
+
+			Click(locator1 = "WorkflowConfiguration#BLOGS_MOVE_TO_RECYCLE_BIN");
+		}
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Recycle Bin",
+			panel = "Site Administration",
+			portlet = "Recycle Bin");
+
+		RecycleBin.emptyCP();
+	}
+
 	macro _tearDownWorkflow {
 		var noWorkflow = "No Workflow";
 
@@ -37,30 +61,6 @@ definition {
 
 			Button.clickSave();
 		}
-	}
-
-	macro _tearDownBlog {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
-
-		if (IsElementPresent.isVisible(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX")) {
-			Click(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX");
-
-			Click(locator1 = "WorkflowConfiguration#BLOGS_MOVE_TO_RECYCLE_BIN");
-		}
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Recycle Bin",
-			panel = "Site Administration",
-			portlet = "Recycle Bin");
-
-		RecycleBin.emptyCP();
 	}
 
 	macro _viewActivities {

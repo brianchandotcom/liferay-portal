@@ -77,7 +77,8 @@ public class DepotEntryModelImpl
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"depotEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -90,12 +91,13 @@ public class DepotEntryModelImpl
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DepotEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null)";
+		"create table DepotEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntry";
 
@@ -146,6 +148,7 @@ public class DepotEntryModelImpl
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 
@@ -318,6 +321,10 @@ public class DepotEntryModelImpl
 		attributeGetterFunctions.put("userId", DepotEntry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId", (BiConsumer<DepotEntry, Long>)DepotEntry::setUserId);
+		attributeGetterFunctions.put("userName", DepotEntry::getUserName);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<DepotEntry, String>)DepotEntry::setUserName);
 		attributeGetterFunctions.put("createDate", DepotEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
@@ -457,6 +464,22 @@ public class DepotEntryModelImpl
 
 	@JSON
 	@Override
+	public String getUserName() {
+		if (_userName == null) {
+			return "";
+		}
+		else {
+			return _userName;
+		}
+	}
+
+	@Override
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -531,6 +554,7 @@ public class DepotEntryModelImpl
 		depotEntryImpl.setGroupId(getGroupId());
 		depotEntryImpl.setCompanyId(getCompanyId());
 		depotEntryImpl.setUserId(getUserId());
+		depotEntryImpl.setUserName(getUserName());
 		depotEntryImpl.setCreateDate(getCreateDate());
 		depotEntryImpl.setModifiedDate(getModifiedDate());
 
@@ -631,6 +655,14 @@ public class DepotEntryModelImpl
 		depotEntryCacheModel.companyId = getCompanyId();
 
 		depotEntryCacheModel.userId = getUserId();
+
+		depotEntryCacheModel.userName = getUserName();
+
+		String userName = depotEntryCacheModel.userName;
+
+		if ((userName != null) && (userName.length() == 0)) {
+			depotEntryCacheModel.userName = null;
+		}
 
 		Date createDate = getCreateDate();
 
@@ -737,6 +769,7 @@ public class DepotEntryModelImpl
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
+	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;

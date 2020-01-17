@@ -16,9 +16,10 @@ package com.liferay.depot.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 
 import java.util.Date;
 
@@ -37,7 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DepotEntryModel
-	extends BaseModel<DepotEntry>, MVCCModel, ShardedModel, StagedModel {
+	extends BaseModel<DepotEntry>, GroupedModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -111,6 +113,7 @@ public interface DepotEntryModel
 	 *
 	 * @return the group ID of this depot entry
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -118,6 +121,7 @@ public interface DepotEntryModel
 	 *
 	 * @param groupId the group ID of this depot entry
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -141,6 +145,7 @@ public interface DepotEntryModel
 	 *
 	 * @return the user ID of this depot entry
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -148,6 +153,7 @@ public interface DepotEntryModel
 	 *
 	 * @param userId the user ID of this depot entry
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
@@ -155,6 +161,7 @@ public interface DepotEntryModel
 	 *
 	 * @return the user uuid of this depot entry
 	 */
+	@Override
 	public String getUserUuid();
 
 	/**
@@ -162,7 +169,25 @@ public interface DepotEntryModel
 	 *
 	 * @param userUuid the user uuid of this depot entry
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this depot entry.
+	 *
+	 * @return the user name of this depot entry
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this depot entry.
+	 *
+	 * @param userName the user name of this depot entry
+	 */
+	@Override
+	public void setUserName(String userName);
 
 	/**
 	 * Returns the create date of this depot entry.

@@ -76,7 +76,7 @@ public class DepotEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -90,6 +90,8 @@ public class DepotEntryCacheModel
 		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -116,6 +118,13 @@ public class DepotEntryCacheModel
 		depotEntryImpl.setGroupId(groupId);
 		depotEntryImpl.setCompanyId(companyId);
 		depotEntryImpl.setUserId(userId);
+
+		if (userName == null) {
+			depotEntryImpl.setUserName("");
+		}
+		else {
+			depotEntryImpl.setUserName(userName);
+		}
 
 		if (createDate == Long.MIN_VALUE) {
 			depotEntryImpl.setCreateDate(null);
@@ -148,6 +157,7 @@ public class DepotEntryCacheModel
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 	}
@@ -170,6 +180,14 @@ public class DepotEntryCacheModel
 		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 	}
@@ -180,6 +198,7 @@ public class DepotEntryCacheModel
 	public long groupId;
 	public long companyId;
 	public long userId;
+	public String userName;
 	public long createDate;
 	public long modifiedDate;
 

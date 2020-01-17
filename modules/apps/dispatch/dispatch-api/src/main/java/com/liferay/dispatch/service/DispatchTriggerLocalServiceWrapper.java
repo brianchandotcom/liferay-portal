@@ -294,6 +294,13 @@ public class DispatchTriggerLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.Optional<java.util.Date> getNextFireDate(
+		long dispatchTriggerId) {
+
+		return _dispatchTriggerLocalService.getNextFireDate(dispatchTriggerId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -310,6 +317,14 @@ public class DispatchTriggerLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dispatchTriggerLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.Optional<java.util.Date> getPreviousFireDate(
+		long dispatchTriggerId) {
+
+		return _dispatchTriggerLocalService.getPreviousFireDate(
+			dispatchTriggerId);
 	}
 
 	/**

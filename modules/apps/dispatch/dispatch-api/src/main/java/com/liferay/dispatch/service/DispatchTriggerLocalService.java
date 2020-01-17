@@ -36,7 +36,9 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -236,6 +238,9 @@ public interface DispatchTriggerLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Optional<Date> getNextFireDate(long dispatchTriggerId);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -247,6 +252,9 @@ public interface DispatchTriggerLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Optional<Date> getPreviousFireDate(long dispatchTriggerId);
 
 	/**
 	 * Updates the dispatch trigger in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

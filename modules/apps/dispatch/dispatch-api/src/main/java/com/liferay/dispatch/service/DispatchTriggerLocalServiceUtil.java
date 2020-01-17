@@ -272,6 +272,12 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static java.util.Optional<java.util.Date> getNextFireDate(
+		long dispatchTriggerId) {
+
+		return getService().getNextFireDate(dispatchTriggerId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -286,6 +292,12 @@ public class DispatchTriggerLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.Optional<java.util.Date> getPreviousFireDate(
+		long dispatchTriggerId) {
+
+		return getService().getPreviousFireDate(dispatchTriggerId);
 	}
 
 	/**

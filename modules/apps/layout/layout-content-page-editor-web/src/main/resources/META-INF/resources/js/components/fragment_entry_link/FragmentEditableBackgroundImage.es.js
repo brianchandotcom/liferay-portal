@@ -170,6 +170,14 @@ class FragmentEditableBackgroundImage extends Component {
 	}
 
 	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	syncLanguageId() {
+		this._renderBackgroundImage();
+	}
+
+	/**
 	 * Creates tooltip instance
 	 * @private
 	 * @review

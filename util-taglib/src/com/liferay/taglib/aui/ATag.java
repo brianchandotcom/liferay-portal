@@ -143,7 +143,7 @@ public class ATag extends BaseATag {
 
 		if (Validator.isNotNull(onClick)) {
 			jspWriter.write("onClick=\"");
-			jspWriter.write(onClick);
+			jspWriter.write(HtmlUtil.escapeAttribute(onClick));
 			jspWriter.write("\" ");
 		}
 

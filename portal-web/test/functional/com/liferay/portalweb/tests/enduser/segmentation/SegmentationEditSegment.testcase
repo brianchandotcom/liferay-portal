@@ -20,8 +20,11 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Segmentation.addProperties(propertyOption = "Email Address");
+
 		Segmentation.fillTitle(titleField = "EditSegment Test");
+
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+
 		Segmentation.fillProperty(PropertyField = "liferay");
 
 		Button.clickSave();
@@ -53,9 +56,13 @@ definition {
 		}
 
 		Segmentation.fillTitle(titleField = "EditSegmentUserByCountryAndRegion Test");
+
 		Segmentation.deleteProperties();
+
 		Segmentation.selectOrganization();
+
 		Segmentation.addProperties(propertyOption = "Country");
+
 		Segmentation.addProperties(propertyOption = "Region");
 
 		Button.clickSave();
@@ -69,9 +76,13 @@ definition {
 		}
 
 		Segmentation.fillTitle(titleField = "EditSegmentUserBySessionHostname Test");
+
 		Segmentation.deleteProperties();
+
 		Segmentation.selectSession();
+
 		Segmentation.addProperties(propertyOption = "Hostname");
+
 		Segmentation.fillProperty(PropertyField = "Liferay");
 
 		Button.clickSave();
@@ -85,9 +96,13 @@ definition {
 		}
 
 		Segmentation.fillTitle(titleField = "EditSegmentUserBySessionURL Test");
+
 		Segmentation.deleteProperties();
+
 		Segmentation.selectSession();
+
 		Segmentation.addProperties(propertyOption = "URL");
+
 		Segmentation.fillProperty(PropertyField = "www.liferay.com");
 
 		Button.clickSave();
@@ -101,6 +116,7 @@ definition {
 		}
 
 		Segmentation.fillTitle(titleField = "EditSegmentUserEmailAddressContainsToEquals Test");
+
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
 
 		Button.clickSave();

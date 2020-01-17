@@ -30,8 +30,11 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Segmentation.addProperties(propertyOption = "Email Address");
+
 		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressContains Test");
+
 		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+
 		Segmentation.fillProperty(PropertyField = "liferay");
 
 		Button.clickSave();

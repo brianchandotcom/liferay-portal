@@ -19,21 +19,16 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,22 +38,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = AnalyticsUsersManager.class)
 public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
-
-	@Override
-	public List<User> getCompanyUsers(long companyId, int start, int end) {
-		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
-			start, end);
-
-		SearchRequest searchRequest = searchRequestBuilder.withSearchContext(
-			searchContext -> {
-				searchContext.setCompanyId(companyId);
-
-				_populateSearchContext(searchContext);
-			}
-		).build();
-
-		return _getUsers(searchRequest);
-	}
 
 	@Override
 	public int getCompanyUsersCount(long companyId) {
@@ -99,26 +78,6 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 	}
 
 	@Override
-	public List<User> getOrganizationUsers(
-		long organizationId, int start, int end) {
-
-		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
-			start, end);
-
-		SearchRequest searchRequest = searchRequestBuilder.withSearchContext(
-			searchContext -> {
-				searchContext.setAttribute(
-					"selectedOrganizationIds", new long[] {organizationId});
-				searchContext.setCompanyId(CompanyThreadLocal.getCompanyId());
-
-				_populateSearchContext(searchContext);
-			}
-		).build();
-
-		return _getUsers(searchRequest);
-	}
-
-	@Override
 	public int getOrganizationUsersCount(long organizationId) {
 		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -134,24 +93,6 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 		).build();
 
 		return _getUsersCount(searchRequest);
-	}
-
-	@Override
-	public List<User> getUserGroupUsers(long userGroupId, int start, int end) {
-		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
-			start, end);
-
-		SearchRequest searchRequest = searchRequestBuilder.withSearchContext(
-			searchContext -> {
-				searchContext.setAttribute(
-					"selectedUserGroupIds", new long[] {userGroupId});
-				searchContext.setCompanyId(CompanyThreadLocal.getCompanyId());
-
-				_populateSearchContext(searchContext);
-			}
-		).build();
-
-		return _getUsers(searchRequest);
 	}
 
 	@Override
@@ -188,27 +129,6 @@ public class AnalyticsUsersManagerImpl implements AnalyticsUsersManager {
 		).highlightEnabled(
 			false
 		);
-	}
-
-	private List<User> _getUsers(SearchRequest searchRequest) {
-		SearchResponse searchResponse = _searcher.search(searchRequest);
-
-		SearchHits searchHits = searchResponse.getSearchHits();
-
-		List<User> users = TransformUtil.transform(
-			searchHits.getSearchHits(),
-			searchHit -> {
-				Document document = searchHit.getDocument();
-
-				long userId = document.getLong("userId");
-
-				return _userLocalService.getUser(userId);
-			});
-
-		BaseModelSearchResult<User> baseModelSearchResult =
-			new BaseModelSearchResult<>(users, searchResponse.getTotalHits());
-
-		return baseModelSearchResult.getBaseModels();
 	}
 
 	private int _getUsersCount(SearchRequest searchRequest) {

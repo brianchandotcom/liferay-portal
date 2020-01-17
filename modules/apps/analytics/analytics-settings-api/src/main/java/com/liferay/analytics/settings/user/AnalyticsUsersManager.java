@@ -14,28 +14,17 @@
 
 package com.liferay.analytics.settings.user;
 
-import com.liferay.portal.kernel.model.User;
-
-import java.util.List;
-
 /**
  * @author Rachael Koestartyo
  */
 public interface AnalyticsUsersManager {
-
-	public List<User> getCompanyUsers(long companyId, int start, int end);
 
 	public int getCompanyUsersCount(long companyId);
 
 	public int getOrganizationsAndUserGroupsUsersCount(
 		long[] organizationIds, long[] userGroupIds);
 
-	public List<User> getOrganizationUsers(
-		long organizationId, int start, int end);
-
 	public int getOrganizationUsersCount(long organizationId);
-
-	public List<User> getUserGroupUsers(long userGroupId, int start, int end);
 
 	public int getUserGroupUsersCount(long userGroupId);
 

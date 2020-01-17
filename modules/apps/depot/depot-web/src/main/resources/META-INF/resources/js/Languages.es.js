@@ -33,7 +33,8 @@ const Languages = ({
 	defaultLocaleId,
 	inheritLocales = false,
 	siteAvailableLocales,
-	siteDefaultLocaleId
+	siteDefaultLocaleId,
+	translatedLanguages
 }) => {
 	const [selectedRadioGroupValue, setSelectedRadioGroupValue] = useState(
 		inheritLocales ? DEFAULT_OPTION : CUSTOM_OPTION
@@ -42,6 +43,7 @@ const Languages = ({
 	const [customDefaultLocaleId, setCustomDefaultLocaleId] = useState(siteDefaultLocaleId);
 
 	const [languageWarning, setLanguageWarning] = useState(false);
+	const [languageTranslationWarning, setLanguageTranslationWarning] = useState(false);
 
 	const Language = ({displayName, isDefault, localeId, showActions}) => {
 		const [active, setActive] = useState(false);
@@ -50,6 +52,7 @@ const Languages = ({
 			setActive(false);
 			setCustomDefaultLocaleId(localeId);
 			setLanguageWarning(true);
+			setLanguageTranslationWarning(translatedLanguages && !translatedLanguages[localeId]);
 		}
 
 		return (
@@ -173,6 +176,18 @@ const Languages = ({
 					)}
 				</ClayAlert>
  			)}
+
+ 			{languageTranslationWarning && (
+				<ClayAlert
+  					displayType="warning"
+  					onClose={() => setLanguageTranslationWarning(false)}
+	  				title={Liferay.Language.get('warning')}
+	 			>
+	  				{Liferay.Language.get(
+						'repository-name-will-display-a-generic-text-until-a-translation-is-added'
+					)}
+				</ClayAlert>
+ 			)}
 		</div>
 	);
 };
@@ -192,7 +207,8 @@ Languages.propTypes = {
 			localeId: PropTypes.string
 		})
 	).isRequired,
-	siteDefaultLocaleId: PropTypes.string.isRequired
+	siteDefaultLocaleId: PropTypes.string.isRequired,
+	translatedLanguages: PropTypes.object
 };
 
 export default function(props) {

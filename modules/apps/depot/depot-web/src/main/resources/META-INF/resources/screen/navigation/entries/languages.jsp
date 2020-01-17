@@ -176,6 +176,8 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 		"siteAvailableLocales", DepotLanguageUtil.getDepotAvailableLocalesJSONArray(group, locale)
 	).put(
 		"siteDefaultLocaleId", LocaleUtil.toLanguageId(PortalUtil.getSiteDefaultLocale(group.getGroupId()))
+	).put(
+		"translatedLanguages", group.getNameMap()
 	).build();
 	%>
 

@@ -138,12 +138,6 @@ public class AMImageUpdateConfigurationTest
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
 
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
-
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", StringPool.BLANK, "1",
 			amImageConfigurationEntry1.getProperties());
@@ -351,12 +345,6 @@ public class AMImageUpdateConfigurationTest
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
 
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
-
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", StringPool.BLANK, "desc", "1",
 			amImageConfigurationEntry1.getProperties());
@@ -373,12 +361,6 @@ public class AMImageUpdateConfigurationTest
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "two", "desc",

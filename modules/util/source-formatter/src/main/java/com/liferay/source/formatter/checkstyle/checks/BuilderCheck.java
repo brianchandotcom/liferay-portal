@@ -275,8 +275,6 @@ public class BuilderCheck extends ChainedMethodCheck {
 			return;
 		}
 
-		firstChildDetailAST = assignValueDetailAST.getFirstChild();
-
 		List<String> variableNames = _getVariableNames(
 			parentDetailAST, "get.*");
 

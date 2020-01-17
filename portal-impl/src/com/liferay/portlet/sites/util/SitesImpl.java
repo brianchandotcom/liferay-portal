@@ -517,9 +517,6 @@ public class SitesImpl implements Sites {
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 						sourceLayout, sourcePortletId);
 
-				sourcePortletPreferencesImpl =
-					(PortletPreferencesImpl)sourcePreferences;
-
 				targetPreferences =
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 						targetLayout, sourcePortletId);

@@ -758,7 +758,17 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 						task.getProject(), GitRepo.GIT_REPO_FILE_NAME);
 
 					if (gitRepoDir != null) {
-						return false;
+						File file = new File(
+							gitRepoDir, GitRepo.GIT_REPO_FILE_NAME);
+
+						try {
+							if (!FileUtil.contains(file, "mode = push")) {
+								return false;
+							}
+						}
+						catch (IOException ioe) {
+							throw new UncheckedIOException(ioe);
+						}
 					}
 
 					File relengIgnoreDir = GradleUtil.getRootDir(

@@ -244,8 +244,8 @@ public class LangBuilder {
 					titleCapitalization, translate, translateSubscriptionKey);
 			}
 		}
-		catch (GitException gitException) {
-			System.out.println(gitException.getMessage());
+		catch (GitException ge) {
+			System.out.println(ge.getMessage());
 		}
 	}
 

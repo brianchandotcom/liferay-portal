@@ -123,42 +123,6 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-102200. Can't edit master page template elements from page editor directly."
-	@priority = "5"
-	test CannotEditMasterPageTemplateViaPageEditor {
-		MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-		MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Masters Template Page Name");
-
-		PageEditor.clickPublish();
-
-		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
-			item = "Edit",
-			masterLayoutName = "Masters Template Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Button");
-
-		PageEditor.addWidget(portletName = "Asset Publisher");
-
-		PageEditor.clickPublish();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(
-			masterLayoutName = "Masters Template Page Name",
-			pageName = "Test Content Page Name");
-
-		AssertElementNotPresent(
-			key_fragmentName = "Button",
-			locator1 = "Fragment#FRAGMENT_HEADER");
-
-		AssertElementNotPresent(
-			key_fragmentName = "Asset Publisher",
-			locator1 = "Fragment#FRAGMENT_HEADER");
-	}
-
 	@description = "This is for LPS-102200. Can edit master page template elements from  "Look and Feel" of page editor."
 	@priority = "5"
 	test EditMasterPageTemplateViaPageEditorLookAndFeel {

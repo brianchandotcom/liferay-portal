@@ -122,6 +122,23 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		String[] portletResourceNames = _getPortletResourceNames(
+			portletDataContext);
+
+		for (String portletResourceName : portletResourceNames) {
+			try {
+				portletDataContext.addPortletPermissions(portletResourceName);
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to add portlet permissions for portlet: " +
+							portletResourceName,
+						pe);
+				}
+			}
+		}
+
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		rootElement.addAttribute(
@@ -216,6 +233,15 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, entityElement);
 			}
+		}
+
+		String[] portletResourceNames = _getPortletResourceNames(
+			portletDataContext);
+
+		for (String portletResourceName : portletResourceNames) {
+			portletDataContext.importPermissions(
+				portletResourceName, portletDataContext.getSourceGroupId(),
+				portletDataContext.getGroupId());
 		}
 
 		return portletPreferences;
@@ -314,6 +340,15 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext, stagedModel);
 
 		return true;
+	}
+
+	private String[] _getPortletResourceNames(
+		PortletDataContext portletDataContext) {
+
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		return parameterMap.getOrDefault("portletResourceNames", new String[0]);
 	}
 
 	private boolean _isExportModel(

@@ -1,0 +1,79 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.StringUtil
+
+buildscript {
+	apply from: file("build-buildscript.gradle"), to: buildscript
+}
+
+task buildElasticsearch
+task deployDistribution(type: Zip)
+
+buildElasticsearch {
+	doLast {
+		String url = project.properties["elasticsearch.sidecar.url"]
+
+		File file = file("${buildDir}/${url.drop(url.lastIndexOf('/') + 1)}")
+
+		FileUtil.get(project, url, file, false, true)
+
+		delete new File(buildDir, "elasticsearch-${project.'elasticsearch.sidecar.version'}")
+
+		project.copy {
+			fileMode = 0777
+
+			exclude "elasticsearch-${project.'elasticsearch.sidecar.version'}/modules/ingest-geoip/**"
+			into buildDir
+			from tarTree(file)
+		}
+	}
+}
+
+deployDistribution {
+	dependsOn buildElasticsearch
+
+	baseName = "elasticsearch-sidecar"
+	destinationDir = rootProject.file("../tools")
+
+	from {
+		file("${buildDir}/elasticsearch-${project.'elasticsearch.sidecar.version'}")
+	}
+
+	outputs.upToDateWhen {
+		false
+	}
+}
+
+_createPluginTasks()
+
+private void _createPluginTasks() {
+	project.properties.each {
+		name, value ->
+
+		if (name.startsWith("elasticsearch.plugins.") && name.endsWith(".zip.name")) {
+			String url = project.properties[name.substring(0, name.length() - 4) + "url"]
+
+			if (url != null) {
+				String suffix = value.replaceAll(/[\.-](\w)/) {
+					return it[1].toUpperCase()
+				}
+
+				Task installPluginTask = tasks.create(name: "installPlugin" + StringUtil.capitalize(suffix)) {
+					doLast {
+						FileUtil.get(project, url, new File(project.buildDir, value), false, true)
+
+						String dirName = value.take(value.lastIndexOf("-${project.'elasticsearch.sidecar.version'}"))
+
+						project.copy {
+							fileMode = 0777
+
+							into new File(buildDir, "elasticsearch-${project.'elasticsearch.sidecar.version'}/plugins/${dirName}")
+							from zipTree(new File(project.buildDir, value))
+						}
+					}
+				}
+
+				buildElasticsearch.finalizedBy installPluginTask
+			}
+		}
+	}
+}

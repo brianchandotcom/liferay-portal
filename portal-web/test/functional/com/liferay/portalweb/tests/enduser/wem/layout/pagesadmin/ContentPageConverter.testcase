@@ -41,7 +41,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page",
+			menuItem = "Convert to Content Page and Preview",
 			pageName = "Test Page Name");
 
 		Button.clickPublish();
@@ -242,7 +242,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page",
+			menuItem = "Convert to Content Page and Preview",
 			pageName = "Test Page Name");
 
 		Button.clickPublish();
@@ -373,7 +373,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page",
+			menuItem = "Convert to Content Page and Preview",
 			pageName = "Test Page Name");
 
 		Button.clickPublish();
@@ -499,7 +499,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to Content Page",
+			menuItem = "Convert to Content Page and Preview",
 			pageName = "Test Page Name");
 
 		var key_text = "Discard Conversion Draft";

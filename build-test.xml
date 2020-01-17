@@ -10475,7 +10475,18 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 								echo "db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing"
 
-								db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing
+								output=$(db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing)
+
+								exit_code=$?
+
+								if [[ ($exit_code != "0") && ($output == *"SQL2555I"*) ]]
+								then
+									echo "$output"
+									exit 0
+								else
+									echo "$output"
+									exit $exit_code
+								fi
 							]]>
 						</echo>
 

@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -144,33 +143,31 @@ public class DispatchTriggerLocalServiceImpl
 	}
 
 	@Override
-	public Optional<Date> getNextFireDate(long dispatchTriggerId) {
+	public Date getNextFireDate(long dispatchTriggerId) {
 		try {
-			return Optional.ofNullable(
-				_schedulerEngineHelper.getNextFireTime(
-					_getJobName(dispatchTriggerId),
-					_getGroupName(dispatchTriggerId), StorageType.PERSISTED));
+			return _schedulerEngineHelper.getNextFireTime(
+				_getJobName(dispatchTriggerId),
+				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
 		}
 		catch (SchedulerException se) {
 			_log.error(se, se);
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	@Override
-	public Optional<Date> getPreviousFireDate(long dispatchTriggerId) {
+	public Date getPreviousFireDate(long dispatchTriggerId) {
 		try {
-			return Optional.ofNullable(
-				_schedulerEngineHelper.getPreviousFireTime(
-					_getJobName(dispatchTriggerId),
-					_getGroupName(dispatchTriggerId), StorageType.PERSISTED));
+			return _schedulerEngineHelper.getPreviousFireTime(
+				_getJobName(dispatchTriggerId),
+				_getGroupName(dispatchTriggerId), StorageType.PERSISTED);
 		}
 		catch (SchedulerException se) {
 			_log.error(se, se);
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	@Override

@@ -81,16 +81,16 @@ public class UpgradeCTModel extends UpgradeProcess {
 
 			if (rs.next()) {
 				primaryKeyColumnName1 = rs.getString("COLUMN_NAME");
-			}
 
-			if (rs.next()) {
-				primaryKeyColumnName2 = rs.getString("COLUMN_NAME");
-			}
+				if (rs.next()) {
+					primaryKeyColumnName2 = rs.getString("COLUMN_NAME");
 
-			if (rs.next()) {
-				throw new UpgradeException(
-					"Too many primary key columns to upgrade " +
-						normalizedTableName);
+					if (rs.next()) {
+						throw new UpgradeException(
+							"Too many primary key columns to upgrade " +
+								normalizedTableName);
+					}
+				}
 			}
 		}
 

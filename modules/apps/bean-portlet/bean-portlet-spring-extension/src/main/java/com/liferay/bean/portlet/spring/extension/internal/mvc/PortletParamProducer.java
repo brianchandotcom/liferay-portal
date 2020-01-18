@@ -81,8 +81,10 @@ public class PortletParamProducer implements ApplicationContextAware {
 			try {
 				return paramConverter.fromString(value);
 			}
-			catch (IllegalArgumentException iae) {
-				_addBindingError(fieldAnnotations, iae.getMessage(), value);
+			catch (IllegalArgumentException illegalArgumentException) {
+				_addBindingError(
+					fieldAnnotations, illegalArgumentException.getMessage(),
+					value);
 
 				return null;
 			}
@@ -117,8 +119,10 @@ public class PortletParamProducer implements ApplicationContextAware {
 			try {
 				return paramConverter.fromString(value);
 			}
-			catch (IllegalArgumentException iae) {
-				_addBindingError(fieldAnnotations, iae.getMessage(), value);
+			catch (IllegalArgumentException illegalArgumentException) {
+				_addBindingError(
+					fieldAnnotations, illegalArgumentException.getMessage(),
+					value);
 
 				return null;
 			}
@@ -152,8 +156,10 @@ public class PortletParamProducer implements ApplicationContextAware {
 			try {
 				return paramConverter.fromString(value);
 			}
-			catch (IllegalArgumentException iae) {
-				_addBindingError(fieldAnnotations, iae.getMessage(), value);
+			catch (IllegalArgumentException illegalArgumentException) {
+				_addBindingError(
+					fieldAnnotations, illegalArgumentException.getMessage(),
+					value);
 
 				return null;
 			}
@@ -188,8 +194,10 @@ public class PortletParamProducer implements ApplicationContextAware {
 			try {
 				return paramConverter.fromString(value);
 			}
-			catch (IllegalArgumentException iae) {
-				_addBindingError(fieldAnnotations, iae.getMessage(), value);
+			catch (IllegalArgumentException illegalArgumentException) {
+				_addBindingError(
+					fieldAnnotations, illegalArgumentException.getMessage(),
+					value);
 
 				return null;
 			}
@@ -223,8 +231,10 @@ public class PortletParamProducer implements ApplicationContextAware {
 			try {
 				return paramConverter.fromString(value);
 			}
-			catch (IllegalArgumentException iae) {
-				_addBindingError(fieldAnnotations, iae.getMessage(), value);
+			catch (IllegalArgumentException illegalArgumentException) {
+				_addBindingError(
+					fieldAnnotations, illegalArgumentException.getMessage(),
+					value);
 
 				return null;
 			}
@@ -259,8 +269,10 @@ public class PortletParamProducer implements ApplicationContextAware {
 			try {
 				return paramConverter.fromString(value);
 			}
-			catch (IllegalArgumentException iae) {
-				_addBindingError(fieldAnnotations, iae.getMessage(), value);
+			catch (IllegalArgumentException illegalArgumentException) {
+				_addBindingError(
+					fieldAnnotations, illegalArgumentException.getMessage(),
+					value);
 
 				return null;
 			}

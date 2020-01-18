@@ -131,8 +131,8 @@ public class SpringBeanPortletExtension {
 				_annotatedClasses.add(clazz);
 			}
 		}
-		catch (ClassNotFoundException cnfe) {
-			_log.error(cnfe, cnfe);
+		catch (ClassNotFoundException classNotFoundException) {
+			_log.error(classNotFoundException, classNotFoundException);
 		}
 	}
 
@@ -173,11 +173,11 @@ public class SpringBeanPortletExtension {
 						try {
 							return clazz.cast(bean);
 						}
-						catch (Exception e) {
+						catch (Exception exception) {
 							throw new PortletException(
 								"Unable to create an instance of " +
 									clazz.getName(),
-								e);
+								exception);
 						}
 					}
 
@@ -213,11 +213,14 @@ public class SpringBeanPortletExtension {
 						beanFilterMethod.invoke(
 							portletRequest, portletResponse, filterChain);
 					}
-					catch (IllegalAccessException iae) {
-						throw new PortletException(iae);
+					catch (IllegalAccessException illegalAccessException) {
+						throw new PortletException(illegalAccessException);
 					}
-					catch (ReflectiveOperationException roe) {
-						Throwable cause = roe.getCause();
+					catch (ReflectiveOperationException
+								reflectiveOperationException) {
+
+						Throwable cause =
+							reflectiveOperationException.getCause();
 
 						if (cause instanceof PortletException) {
 							throw (PortletException)cause;
@@ -463,8 +466,8 @@ public class SpringBeanPortletExtension {
 				}
 			}
 		}
-		catch (InvocationTargetException ite) {
-			Throwable cause = ite.getCause();
+		catch (InvocationTargetException invocationTargetException) {
+			Throwable cause = invocationTargetException.getCause();
 
 			if (cause instanceof PortletException) {
 				throw (PortletException)cause;
@@ -472,11 +475,11 @@ public class SpringBeanPortletExtension {
 
 			throw new PortletException(cause);
 		}
-		catch (PortletException pe) {
-			throw pe;
+		catch (PortletException portletException) {
+			throw portletException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 
@@ -499,7 +502,7 @@ public class SpringBeanPortletExtension {
 		try {
 			methods = clazz.getMethods();
 		}
-		catch (Throwable t) {
+		catch (Throwable throwable) {
 			String className = clazz.getName();
 
 			if (!className.startsWith("org.springframework")) {

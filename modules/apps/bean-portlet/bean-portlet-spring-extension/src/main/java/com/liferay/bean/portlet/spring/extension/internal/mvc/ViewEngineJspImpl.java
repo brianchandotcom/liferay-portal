@@ -65,8 +65,8 @@ public class ViewEngineJspImpl implements ViewEngine {
 				viewEngineContext.getRequest(PortletRequest.class),
 				viewEngineContext.getResponse(PortletResponse.class));
 		}
-		catch (Exception e) {
-			throw new ViewEngineException(e);
+		catch (Exception exception) {
+			throw new ViewEngineException(exception);
 		}
 	}
 

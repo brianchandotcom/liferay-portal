@@ -325,11 +325,14 @@ public class CDIBeanPortletExtension implements Extension {
 						beanFilterMethod.invoke(
 							portletRequest, portletResponse, filterChain);
 					}
-					catch (IllegalAccessException iae) {
-						throw new PortletException(iae);
+					catch (IllegalAccessException illegalAccessException) {
+						throw new PortletException(illegalAccessException);
 					}
-					catch (ReflectiveOperationException roe) {
-						Throwable cause = roe.getCause();
+					catch (ReflectiveOperationException
+								reflectiveOperationException) {
+
+						Throwable cause =
+							reflectiveOperationException.getCause();
 
 						if (cause instanceof PortletException) {
 							throw (PortletException)cause;
@@ -622,8 +625,8 @@ public class CDIBeanPortletExtension implements Extension {
 				}
 			}
 		}
-		catch (InvocationTargetException ite) {
-			Throwable cause = ite.getCause();
+		catch (InvocationTargetException invocationTargetException) {
+			Throwable cause = invocationTargetException.getCause();
 
 			if (cause instanceof PortletException) {
 				throw (PortletException)cause;
@@ -631,11 +634,11 @@ public class CDIBeanPortletExtension implements Extension {
 
 			throw new PortletException(cause);
 		}
-		catch (PortletException pe) {
-			throw pe;
+		catch (PortletException portletException) {
+			throw portletException;
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (Exception exception) {
+			throw new PortletException(exception);
 		}
 	}
 

@@ -67,8 +67,10 @@ public class CsrfValidationInterceptor implements Serializable {
 					csrfOptions = Csrf.CsrfOptions.valueOf(
 						csrfProtection.toString());
 				}
-				catch (IllegalArgumentException iae) {
-					_log.error(iae.getMessage(), iae);
+				catch (IllegalArgumentException illegalArgumentException) {
+					_log.error(
+						illegalArgumentException.getMessage(),
+						illegalArgumentException);
 				}
 			}
 		}
@@ -109,8 +111,8 @@ public class CsrfValidationInterceptor implements Serializable {
 
 						proceed = true;
 					}
-					catch (PrincipalException pe) {
-						_log.error("Invalid CSRF token", pe);
+					catch (PrincipalException principalException) {
+						_log.error("Invalid CSRF token", principalException);
 					}
 				}
 				else {

@@ -176,8 +176,8 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 					try {
 						actionResponse.sendRedirect(redirectURL.toString());
 					}
-					catch (IOException ioe) {
-						_log.error(ioe, ioe);
+					catch (IOException ioException) {
+						_log.error(ioException, ioException);
 					}
 				}
 			}
@@ -225,8 +225,8 @@ public class ControllerInterceptor extends BeanPortletMethodInterceptor {
 							beanPortletMethod.getMethod()),
 						_target, new UriInfoImpl()));
 			}
-			catch (URISyntaxException urise) {
-				_log.error(urise, urise);
+			catch (URISyntaxException uriSyntaxException) {
+				_log.error(uriSyntaxException, uriSyntaxException);
 			}
 		}
 

@@ -135,8 +135,8 @@ public class ViewRendererMvcImpl
 					new AfterProcessViewEventImpl(
 						this, viewName, supportingViewEngine.getClass()));
 			}
-			catch (ViewEngineException vee) {
-				throw new PortletException(vee);
+			catch (ViewEngineException viewEngineException) {
+				throw new PortletException(viewEngineException);
 			}
 		}
 

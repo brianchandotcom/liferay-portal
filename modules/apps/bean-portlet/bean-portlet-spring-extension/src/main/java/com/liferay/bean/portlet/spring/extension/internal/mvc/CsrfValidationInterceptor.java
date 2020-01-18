@@ -67,8 +67,10 @@ public class CsrfValidationInterceptor extends BeanPortletMethodInterceptor {
 					csrfOptions = Csrf.CsrfOptions.valueOf(
 						csrfProtection.toString());
 				}
-				catch (IllegalArgumentException iae) {
-					_log.error(iae.getMessage(), iae);
+				catch (IllegalArgumentException illegalArgumentException) {
+					_log.error(
+						illegalArgumentException.getMessage(),
+						illegalArgumentException);
 				}
 			}
 		}
@@ -105,8 +107,8 @@ public class CsrfValidationInterceptor extends BeanPortletMethodInterceptor {
 
 						proceed = true;
 					}
-					catch (PrincipalException pe) {
-						_log.error("Invalid CSRF token", pe);
+					catch (PrincipalException principalException) {
+						_log.error("Invalid CSRF token", principalException);
 					}
 				}
 				else {

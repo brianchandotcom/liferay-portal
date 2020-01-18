@@ -137,8 +137,9 @@ public class SpringPostProcessor
 								scopedProxy, beanDefinitionRegistry);
 						}
 					}
-					catch (ClassNotFoundException cnfe) {
-						_log.error(cnfe, cnfe);
+					catch (ClassNotFoundException classNotFoundException) {
+						_log.error(
+							classNotFoundException, classNotFoundException);
 					}
 				}
 			}

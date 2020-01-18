@@ -101,13 +101,14 @@ public class JSR330InjectedFieldElement
 					dependencyDescriptor, beanName, autowiredBeanNames,
 					typeConverter);
 			}
-			catch (BeansException be) {
+			catch (BeansException beansException) {
 				if (nullInjectionPermitted) {
 					value = null;
 				}
 				else {
 					throw new UnsatisfiedDependencyException(
-						null, beanName, new InjectionPoint(field), be);
+						null, beanName, new InjectionPoint(field),
+						beansException);
 				}
 			}
 

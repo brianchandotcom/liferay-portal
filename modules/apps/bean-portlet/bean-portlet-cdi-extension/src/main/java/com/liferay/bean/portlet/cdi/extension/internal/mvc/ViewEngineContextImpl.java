@@ -98,8 +98,8 @@ public class ViewEngineContextImpl implements ViewEngineContext {
 		try {
 			return _mimeResponse.getPortletOutputStream();
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 
 			return null;
 		}

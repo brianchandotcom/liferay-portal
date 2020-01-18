@@ -202,13 +202,12 @@ public class DispatchTriggerLocalServiceImpl
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
+		_deleteSchedulerConfiguration(dispatchTriggerId);
+
 		if (active) {
 			_addSchedulerConfiguration(
 				dispatchTriggerId, cronExpression,
 				dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate());
-		}
-		else {
-			_deleteSchedulerConfiguration(dispatchTriggerId);
 		}
 
 		return dispatchTrigger;
@@ -262,8 +261,6 @@ public class DispatchTriggerLocalServiceImpl
 	private void _addSchedulerConfiguration(
 		long dispatchTriggerId, String cronExpression, Date startDate,
 		Date endDate) {
-
-		_deleteSchedulerConfiguration(dispatchTriggerId);
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			_getJobName(dispatchTriggerId), _getGroupName(dispatchTriggerId),

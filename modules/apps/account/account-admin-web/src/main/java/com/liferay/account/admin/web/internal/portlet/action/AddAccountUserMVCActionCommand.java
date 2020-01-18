@@ -73,18 +73,17 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 				emailAddress, LocaleUtil.fromLanguageId(languageId), firstName,
 				middleName, lastName, prefixId, suffixId);
 		}
-		catch (PortalException portalException) {
-			if (portalException instanceof UserEmailAddressException ||
-				portalException instanceof UserScreenNameException) {
+		catch (PortalException pe) {
+			if (pe instanceof UserEmailAddressException ||
+				pe instanceof UserScreenNameException) {
 
-				SessionErrors.add(
-					actionRequest, portalException.getClass(), portalException);
+				SessionErrors.add(actionRequest, pe.getClass(), pe);
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "/account_admin/add_account_user");
 			}
 			else {
-				throw portalException;
+				throw pe;
 			}
 		}
 	}

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -264,12 +263,7 @@ public class DispatchTriggerLocalServiceImpl
 		long dispatchTriggerId, String cronExpression, Date startDate,
 		Date endDate) {
 
-		Optional<SchedulerResponse> schedulerResponseOptional =
-			_getSchedulerResponse(dispatchTriggerId);
-
-		if (schedulerResponseOptional.isPresent()) {
-			_deleteSchedulerConfiguration(dispatchTriggerId);
-		}
+		_deleteSchedulerConfiguration(dispatchTriggerId);
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			_getJobName(dispatchTriggerId), _getGroupName(dispatchTriggerId),
@@ -319,25 +313,6 @@ public class DispatchTriggerLocalServiceImpl
 
 	private String _getPayload(long dispatchTriggerId) {
 		return String.format("{\"dispatchTriggerId\"= %d}", dispatchTriggerId);
-	}
-
-	private Optional<SchedulerResponse> _getSchedulerResponse(
-		long dispatchTriggerId) {
-
-		try {
-			return Optional.ofNullable(
-				_schedulerEngineHelper.getScheduledJob(
-					_getJobName(dispatchTriggerId),
-					_getGroupName(dispatchTriggerId), StorageType.PERSISTED));
-		}
-		catch (SchedulerException se) {
-			_log.error(
-				"Unable to get scheduler entry for dispatch trigger ID " +
-					dispatchTriggerId,
-				se);
-		}
-
-		return Optional.empty();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

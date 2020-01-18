@@ -272,9 +272,7 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static java.util.Optional<java.util.Date> getNextFireDate(
-		long dispatchTriggerId) {
-
+	public static java.util.Date getNextFireDate(long dispatchTriggerId) {
 		return getService().getNextFireDate(dispatchTriggerId);
 	}
 
@@ -294,9 +292,7 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.Optional<java.util.Date> getPreviousFireDate(
-		long dispatchTriggerId) {
-
+	public static java.util.Date getPreviousFireDate(long dispatchTriggerId) {
 		return getService().getPreviousFireDate(dispatchTriggerId);
 	}
 

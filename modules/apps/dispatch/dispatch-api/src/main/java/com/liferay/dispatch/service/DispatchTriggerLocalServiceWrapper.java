@@ -295,9 +295,7 @@ public class DispatchTriggerLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Optional<java.util.Date> getNextFireDate(
-		long dispatchTriggerId) {
-
+	public java.util.Date getNextFireDate(long dispatchTriggerId) {
 		return _dispatchTriggerLocalService.getNextFireDate(dispatchTriggerId);
 	}
 
@@ -320,9 +318,7 @@ public class DispatchTriggerLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Optional<java.util.Date> getPreviousFireDate(
-		long dispatchTriggerId) {
-
+	public java.util.Date getPreviousFireDate(long dispatchTriggerId) {
 		return _dispatchTriggerLocalService.getPreviousFireDate(
 			dispatchTriggerId);
 	}

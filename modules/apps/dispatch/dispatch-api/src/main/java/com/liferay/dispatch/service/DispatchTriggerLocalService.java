@@ -38,7 +38,6 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -239,7 +238,7 @@ public interface DispatchTriggerLocalService
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Optional<Date> getNextFireDate(long dispatchTriggerId);
+	public Date getNextFireDate(long dispatchTriggerId);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -254,7 +253,7 @@ public interface DispatchTriggerLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Optional<Date> getPreviousFireDate(long dispatchTriggerId);
+	public Date getPreviousFireDate(long dispatchTriggerId);
 
 	/**
 	 * Updates the dispatch trigger in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

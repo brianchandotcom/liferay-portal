@@ -456,7 +456,7 @@ public class InvokerFilterHelper {
 			String servletContextName = GetterUtil.getString(
 				serviceReference.getProperty("servlet-context-name"));
 
-			if (Validator.isNull(servletContextName)) {
+			if (Validator.isBlank(servletContextName)) {
 				servletContextName = PortalUtil.getServletContextName();
 			}
 

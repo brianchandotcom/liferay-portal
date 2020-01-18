@@ -312,12 +312,4 @@ definition {
 		}
 	}
 
-	@description = "This is for LPS-103687. Validate if there is a page template entry called Blank in Masters tab."
-	@priority = "5"
-	test ViewBlankPageTemplateExistInMastersTabInNewSite {
-		task ("Assert the Blank page template exist in the Masters tab") {
-			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Blank");
-		}
-	}
-
 }

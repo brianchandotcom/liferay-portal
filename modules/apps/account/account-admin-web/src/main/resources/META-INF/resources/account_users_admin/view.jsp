@@ -39,26 +39,35 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 				keyProperty="userId"
 				modelVar="accountUserDisplay"
 			>
+				<portlet:renderURL var="rowURL">
+					<portlet:param name="p_u_i_d" value="<%= String.valueOf(accountUserDisplay.getUserId()) %>" />
+					<portlet:param name="mvcPath" value="/account_users_admin/edit_account_user.jsp" />
+				</portlet:renderURL>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="name"
 					property="name"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="email"
 					property="emailAddress"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="job-title"
 					property="jobTitle"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass='<%= "table-cell-expand-small table-cell-minw-150 " + accountUserDisplay.getAccountNamesStyle() %>'
+					href="<%= rowURL %>"
 					name="accounts"
 					value="<%= accountUserDisplay.getAccountNames(request) %>"
 				/>

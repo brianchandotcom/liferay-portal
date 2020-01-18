@@ -36,7 +36,7 @@ deployDistribution {
 	dependsOn buildElasticsearch
 
 	baseName = "elasticsearch-sidecar"
-	destinationDir = rootProject.file("../tools")
+	destinationDir = file("${project.'liferay.home'}/tools")
 
 	from {
 		file("${buildDir}/elasticsearch-${project.'elasticsearch.sidecar.version'}")

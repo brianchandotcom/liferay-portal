@@ -20,8 +20,12 @@ buildElasticsearch {
 
 		project.copy {
 			fileMode = 0777
+			includeEmptyDirs = false
 
 			exclude "elasticsearch-${project.'elasticsearch.sidecar.version'}/modules/ingest-geoip/**"
+			include "elasticsearch-${project.'elasticsearch.sidecar.version'}/lib/**"
+			include "elasticsearch-${project.'elasticsearch.sidecar.version'}/modules/**"
+
 			into buildDir
 			from tarTree(file)
 		}
@@ -65,6 +69,7 @@ private void _createPluginTasks() {
 
 						project.copy {
 							fileMode = 0777
+							includeEmptyDirs = false
 
 							into new File(buildDir, "elasticsearch-${project.'elasticsearch.sidecar.version'}/plugins/${dirName}")
 							from zipTree(new File(project.buildDir, value))

@@ -619,7 +619,7 @@ message.
 	</target>
 
 	<target name="deploy-elasticsearch-sidecar">
-		<gradle-execute setupbinariescache="false" task="deployDistribution">
+		<gradle-execute setupbinariescache="false" task="deploy">
 			<arg value="--build-file=${project.dir}/modules/elasticsearch-sidecar.gradle" />
 			<arg value="-Pelasticsearch.plugins.analysis-icu.zip.name=${elasticsearch.plugins.analysis-icu.zip.name}" />
 			<arg value="-Pelasticsearch.plugins.analysis-icu.zip.url=${elasticsearch.plugins.analysis-icu.zip.url}" />

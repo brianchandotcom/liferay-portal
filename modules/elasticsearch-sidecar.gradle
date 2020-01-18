@@ -5,10 +5,13 @@ buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
 }
 
-task buildElasticsearch
-task deployDistribution(type: Zip)
+task build
+task deploy(type: Zip)
 
-buildElasticsearch {
+build {
+	description = "Assembles the Elasticsearch sidecar."
+	group = "build"
+
 	doLast {
 		String url = project.properties["elasticsearch.sidecar.url"]
 
@@ -32,8 +35,11 @@ buildElasticsearch {
 	}
 }
 
-deployDistribution {
-	dependsOn buildElasticsearch
+deploy {
+	dependsOn build
+
+	description = "Assembles the Elasticsearch sidecar and deploys it to Liferay."
+	group = "build"
 
 	baseName = "elasticsearch-sidecar"
 	destinationDir = file("${project.'liferay.home'}/tools")
@@ -77,7 +83,7 @@ private void _createPluginTasks() {
 					}
 				}
 
-				buildElasticsearch.finalizedBy installPluginTask
+				build.finalizedBy installPluginTask
 			}
 		}
 	}

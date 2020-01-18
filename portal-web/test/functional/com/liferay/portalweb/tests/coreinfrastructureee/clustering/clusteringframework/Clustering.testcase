@@ -274,10 +274,9 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = "5"
+	@priority = "4"
 	test ValidateLiveUsers {
 		property custom.properties = "live.users.enabled=true";
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Clustering#ValidateLiveUsers";
 
 		Clustering.viewClusterStatusInConsole();

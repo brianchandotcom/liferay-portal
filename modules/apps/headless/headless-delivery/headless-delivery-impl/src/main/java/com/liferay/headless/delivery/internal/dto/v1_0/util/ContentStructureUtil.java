@@ -108,6 +108,8 @@ public class ContentStructureUtil {
 
 		return new ContentStructureField() {
 			{
+				dataType = toDataType(ddmFormField);
+				inputControl = toInputControl(ddmFormField);
 				label = _toString(ddmFormField.getLabel(), locale);
 				localizable = ddmFormField.isLocalizable();
 				multiple = ddmFormField.isMultiple();
@@ -123,12 +125,6 @@ public class ContentStructureUtil {
 				required = ddmFormField.isRequired();
 				showLabel = ddmFormField.isShowLabel();
 
-				setDataType(toDataType(ddmFormField));
-				setInputControl(toInputControl(ddmFormField));
-				setLabel(_toString(ddmFormField.getLabel(), locale));
-				setLocalizable(ddmFormField.isLocalizable());
-				setMultiple(ddmFormField.isMultiple());
-				setName(ddmFormField.getName());
 				setOptions(
 					() -> Optional.ofNullable(
 						ddmFormField.getDDMFormFieldOptions()

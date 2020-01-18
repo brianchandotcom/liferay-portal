@@ -5275,6 +5275,8 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/NavigationMenu"
+                    description:
+                        ""
             tags: ["NavigationMenu"]
     "/sites/{siteId}/blog-posting-images":
         get:
@@ -6217,6 +6219,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/NavigationMenu"
                                 type: array
+                    description:
+                        ""
             tags: ["NavigationMenu"]
     "/sites/{siteId}/structured-content-folders":
         get:

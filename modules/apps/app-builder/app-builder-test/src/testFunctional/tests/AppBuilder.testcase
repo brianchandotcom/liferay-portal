@@ -1692,6 +1692,27 @@ definition {
 
 		App.validateDeployedAs(title = "Widget and Standalone");
 
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		AppBuilderAdmin.validateWidgetApp(appName = "Changed Name");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "Changed Name");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AppBuilderAdmin.validateStandAloneApp();
+
+		Navigator.closeWindow();
+
 		AppBuilderAdmin.clickApp(appName = "Test App B");
 
 		App.selectFormView(formViewName = "Form View Title Two");

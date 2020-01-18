@@ -106,7 +106,7 @@ public class DispatchTriggerLocalServiceImpl
 		resourceLocalService.deleteResource(
 			dispatchTrigger, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		_deleteSchedulerConfiguration(dispatchTrigger.getDispatchTriggerId());
+		_deleteSchedulerJob(dispatchTrigger.getDispatchTriggerId());
 
 		return dispatchTrigger;
 	}
@@ -202,10 +202,10 @@ public class DispatchTriggerLocalServiceImpl
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
-		_deleteSchedulerConfiguration(dispatchTriggerId);
+		_deleteSchedulerJob(dispatchTriggerId);
 
 		if (active) {
-			_addSchedulerConfiguration(
+			_addSchedulerJob(
 				dispatchTriggerId, cronExpression,
 				dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate());
 		}
@@ -258,7 +258,7 @@ public class DispatchTriggerLocalServiceImpl
 				String.valueOf(companyId)));
 	}
 
-	private void _addSchedulerConfiguration(
+	private void _addSchedulerJob(
 		long dispatchTriggerId, String cronExpression, Date startDate,
 		Date endDate) {
 
@@ -286,7 +286,7 @@ public class DispatchTriggerLocalServiceImpl
 		}
 	}
 
-	private void _deleteSchedulerConfiguration(long dispatchTriggerId) {
+	private void _deleteSchedulerJob(long dispatchTriggerId) {
 		try {
 			_schedulerEngineHelper.delete(
 				_getJobName(dispatchTriggerId),

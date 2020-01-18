@@ -62,7 +62,7 @@ public class JSR330BeanPortletPostProcessor
 
 			_autowiredAnnotationTypes.add(injectAnnotation);
 		}
-		catch (ClassNotFoundException cnfe) {
+		catch (ClassNotFoundException classNotFoundException) {
 		}
 
 		_autowiredAnnotationTypes.add(Value.class);
@@ -78,13 +78,13 @@ public class JSR330BeanPortletPostProcessor
 		try {
 			injectionMetadata.inject(beanInstance, beanName, propertyValues);
 		}
-		catch (Throwable t) {
-			if (t instanceof BeanCreationException) {
-				throw (RuntimeException)t;
+		catch (Throwable throwable) {
+			if (throwable instanceof BeanCreationException) {
+				throw (RuntimeException)throwable;
 			}
 
 			throw new BeanCreationException(
-				beanName, "Unable to @Inject dependencies", t);
+				beanName, "Unable to @Inject dependencies", throwable);
 		}
 
 		return propertyValues;
@@ -100,9 +100,9 @@ public class JSR330BeanPortletPostProcessor
 		try {
 			injectionMetadata.inject(beanInstance, null, null);
 		}
-		catch (Throwable t) {
-			if (t instanceof BeanCreationException) {
-				throw (RuntimeException)t;
+		catch (Throwable throwable) {
+			if (throwable instanceof BeanCreationException) {
+				throw (RuntimeException)throwable;
 			}
 
 			throw new BeanCreationException("Unable to @Inject dependencies");

@@ -111,10 +111,10 @@ public class JSR330InjectedMethodElement
 
 					dependencies[i] = dependency;
 				}
-				catch (BeansException be) {
+				catch (BeansException beansException) {
 					throw new UnsatisfiedDependencyException(
 						null, beanName, new InjectionPoint(methodParameter),
-						be);
+						beansException);
 				}
 			}
 
@@ -170,8 +170,8 @@ public class JSR330InjectedMethodElement
 				ReflectionUtils.makeAccessible(method);
 				method.invoke(beanInstance, dependencies);
 			}
-			catch (InvocationTargetException ite) {
-				throw ite.getTargetException();
+			catch (InvocationTargetException invocationTargetException) {
+				throw invocationTargetException.getTargetException();
 			}
 		}
 	}

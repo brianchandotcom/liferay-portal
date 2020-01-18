@@ -81,8 +81,8 @@ public abstract class BaseViewEngineContext implements ViewEngineContext {
 
 			return mimeResponse.getPortletOutputStream();
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 
 			return null;
 		}

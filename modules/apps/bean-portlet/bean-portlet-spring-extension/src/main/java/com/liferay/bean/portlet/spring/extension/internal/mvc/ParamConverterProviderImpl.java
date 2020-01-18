@@ -119,8 +119,8 @@ public class ParamConverterProviderImpl implements ParamConverterProvider {
 
 						return rawType.cast(getNumberFunction.apply(number));
 					}
-					catch (ParseException pe) {
-						throw new IllegalArgumentException(pe);
+					catch (ParseException parseException) {
+						throw new IllegalArgumentException(parseException);
 					}
 				}
 

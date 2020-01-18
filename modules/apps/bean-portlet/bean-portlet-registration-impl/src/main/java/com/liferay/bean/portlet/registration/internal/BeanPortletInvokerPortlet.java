@@ -87,8 +87,8 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 		try {
 			_invokeBeanMethods(_beanMethods.get(BeanPortletMethodType.DESTROY));
 		}
-		catch (PortletException pe) {
-			_log.error(pe, pe);
+		catch (PortletException portletException) {
+			_log.error(portletException, portletException);
 		}
 	}
 
@@ -231,8 +231,8 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 			try {
 				beanPortletMethod.invoke(args);
 			}
-			catch (ReflectiveOperationException roe) {
-				Throwable cause = roe.getCause();
+			catch (ReflectiveOperationException reflectiveOperationException) {
+				Throwable cause = reflectiveOperationException.getCause();
 
 				if (cause instanceof PortletException) {
 					throw (PortletException)cause;

@@ -150,6 +150,7 @@ public class RESTBuilder {
 			_createClientHttpInvokerFile(context);
 			_createClientPageFile(context);
 			_createClientPaginationFile(context);
+			_createClientPermissions(context);
 			_createClientUnsafeSupplierFile(context);
 		}
 
@@ -490,6 +491,27 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFile, "client_http_invoker", context));
+	}
+
+	private void _createClientPermissions(Map<String, Object> context)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getClientDir());
+		sb.append("/");
+		sb.append(
+			StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'));
+		sb.append("/client/permission/Permissions.java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFile, "client_permissions", context));
 	}
 
 	private void _createClientPageFile(Map<String, Object> context)

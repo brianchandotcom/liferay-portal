@@ -103,6 +103,11 @@ public interface StructuredContentResource {
 			Long structuredContentId, Rating rating)
 		throws Exception;
 
+	public void putStructuredContentPermission(
+			com.liferay.portal.vulcan.permissions.Permissions[] permissions,
+			Long structuredContentId)
+		throws Exception;
+
 	public String getStructuredContentRenderedContentTemplate(
 			Long structuredContentId, Long templateId)
 		throws Exception;

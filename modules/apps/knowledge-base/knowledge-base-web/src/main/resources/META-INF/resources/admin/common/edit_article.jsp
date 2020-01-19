@@ -160,7 +160,7 @@ if (portletTitleBasedNavigation) {
 					<div class="kb-entity-body">
 
 						<%
-						Map<String, String> fileBrowserParams = new HashMap();
+						Map<String, String> fileBrowserParams = new HashMap<>();
 
 						if (kbArticle != null) {
 							fileBrowserParams.put("resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));

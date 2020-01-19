@@ -28,7 +28,7 @@ Editor editor = InputEditorTag.getEditor(request, PropsUtil.get("editor.wysiwyg.
 
 String editorName = editor.getName();
 
-Map<String, String> fileBrowserParams = new HashMap();
+Map<String, String> fileBrowserParams = new HashMap<>();
 
 fileBrowserParams.put("categoryId", String.valueOf(categoryId));
 %>

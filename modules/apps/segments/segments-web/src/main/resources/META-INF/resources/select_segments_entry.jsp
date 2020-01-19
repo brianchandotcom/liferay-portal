@@ -51,7 +51,7 @@ SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSeg
 					<c:when test="<%= !ArrayUtil.contains(selectSegmentsEntryDisplayContext.getSelectedSegmentsEntryIds(), segmentsEntry.getSegmentsEntryId()) %>">
 
 						<%
-						Map<String, Object> data = new HashMap();
+						Map<String, Object> data = new HashMap<>();
 
 						data.put("entityid", segmentsEntry.getSegmentsEntryId());
 						data.put("entityname", segmentsEntry.getName(locale));

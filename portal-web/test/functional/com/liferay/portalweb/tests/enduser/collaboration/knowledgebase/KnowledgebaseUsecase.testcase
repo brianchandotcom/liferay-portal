@@ -605,7 +605,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Knowledge Base");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetSummary = "Knowledge Base Article&apos;s Content",
+			searchAssetSummary = "Knowledge Base Article",
 			searchAssetTitle = "Knowledge Base Article",
 			searchAssetType = "Knowledge Base Article");
 	}

@@ -100,7 +100,9 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Button#ADD_WIKI");
 
-		AssertElementNotPresent(locator1 = "Button#PERMISSIONS");
+		LexiconEntry.openEntryMenu(rowEntry = "Main");
+
+		MenuItem.viewNotPresent(menuItem = "Permissions");
 	}
 
 }

@@ -87,6 +87,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				membershipType = group.getTypeLabel();
 				name = group.getName(
 					contextAcceptLanguage.getPreferredLocale());
+				parentSiteId = group.getParentGroupId();
 				sites = transformToArray(
 					_groupService.getGroups(
 						group.getCompanyId(), group.getGroupId(), true),

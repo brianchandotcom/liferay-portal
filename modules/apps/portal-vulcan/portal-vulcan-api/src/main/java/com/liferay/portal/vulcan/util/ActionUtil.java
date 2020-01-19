@@ -100,7 +100,7 @@ public class ActionUtil {
 				siteId, permissionName, id, actionName) ||
 			(OAuth2ProviderScopeLiferayAccessControlContext.
 				isOAuth2AuthVerified() &&
-			 !scopeChecker.checkScope(methodName))) {
+			 (scopeChecker != null) && !scopeChecker.checkScope(methodName))) {
 
 			return null;
 		}

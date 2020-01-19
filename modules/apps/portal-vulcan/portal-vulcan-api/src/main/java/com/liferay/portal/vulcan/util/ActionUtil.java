@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.util;
 
+import com.liferay.oauth2.provider.scope.ScopeChecker;
+import com.liferay.oauth2.provider.scope.liferay.OAuth2ProviderScopeLiferayAccessControlContext;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -38,7 +40,7 @@ public class ActionUtil {
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, GroupedModel groupedModel,
-		String methodName, UriInfo uriInfo) {
+		ScopeChecker scopeChecker, String methodName, UriInfo uriInfo) {
 
 		Class<? extends GroupedModel> groupedModelClass =
 			groupedModel.getClass();
@@ -49,18 +51,19 @@ public class ActionUtil {
 
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
-			methodName, interfaceClasses[0].getName(),
+			scopeChecker, methodName, interfaceClasses[0].getName(),
 			groupedModel.getGroupId(), uriInfo);
 	}
 
 	public static Map<String, String> addAction(
-		String actionName, Class clazz, Long id, String methodName,
-		String permissionName, Long siteId, UriInfo uriInfo) {
+		String actionName, Class clazz, Long id, ScopeChecker scopeChecker,
+		String methodName, String permissionName, Long siteId,
+		UriInfo uriInfo) {
 
 		try {
 			return _addAction(
-				actionName, clazz, id, methodName, permissionName, siteId,
-				uriInfo);
+				actionName, clazz, id, scopeChecker, methodName, permissionName,
+				siteId, uriInfo);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -68,8 +71,9 @@ public class ActionUtil {
 	}
 
 	private static Map<String, String> _addAction(
-			String actionName, Class clazz, Long id, String methodName,
-			String permissionName, Long siteId, UriInfo uriInfo)
+			String actionName, Class clazz, Long id, ScopeChecker scopeChecker,
+			String methodName, String permissionName, Long siteId,
+			UriInfo uriInfo)
 		throws Exception {
 
 		MultivaluedMap<String, String> queryParameters =
@@ -93,7 +97,10 @@ public class ActionUtil {
 
 		if (!modelResourceActions.contains(actionName) ||
 			!permissionChecker.hasPermission(
-				siteId, permissionName, id, actionName)) {
+				siteId, permissionName, id, actionName) ||
+			(OAuth2ProviderScopeLiferayAccessControlContext.
+				isOAuth2AuthVerified() &&
+			 !scopeChecker.checkScope(methodName))) {
 
 			return null;
 		}

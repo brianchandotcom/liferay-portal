@@ -149,6 +149,8 @@ definition {
 
 		Depot.connectSite(siteList = "Site Name");
 
+		Navigator.openSiteURL(siteName = "Site Name");
+
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");

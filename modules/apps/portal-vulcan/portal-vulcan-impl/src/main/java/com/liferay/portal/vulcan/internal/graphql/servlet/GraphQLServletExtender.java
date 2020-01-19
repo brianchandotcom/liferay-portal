@@ -1652,7 +1652,9 @@ public class GraphQLServletExtender {
 						return _getExtendedGraphQLError(
 							graphQLError, Response.Status.UNAUTHORIZED);
 					}
-					else if (!isClientError(graphQLError)) {
+					else if (!isClientError(graphQLError) &&
+							 !message.contains("ClientErrorException")) {
+
 						return _getExtendedGraphQLError(
 							graphQLError,
 							Response.Status.INTERNAL_SERVER_ERROR);

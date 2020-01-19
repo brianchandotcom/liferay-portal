@@ -510,6 +510,9 @@ components:
                     type: string
                 name:
                     type: string
+                parentSiteId:
+                    format: int64
+                    type: integer
                 sites:
                     items:
                         $ref: "#/components/schemas/Site"

@@ -38,8 +38,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedMap;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -58,7 +56,6 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		throws Exception {
 
 		return _toNavigationMenu(
-			true,
 			_siteNavigationMenuService.fetchSiteNavigationMenu(
 				navigationMenuId));
 	}
@@ -67,20 +64,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	public Page<NavigationMenu> getSiteNavigationMenusPage(
 		Long siteId, Pagination pagination) {
 
-		MultivaluedMap<String, String> queryParameters =
-			contextUriInfo.getQueryParameters();
-
-		String nestedFields = queryParameters.getFirst("nestedFields");
-
 		return Page.of(
 			transform(
 				_siteNavigationMenuService.getSiteNavigationMenus(
 					siteId, pagination.getStartPosition(),
 					pagination.getEndPosition(), null),
-				siteNavigationMenu -> _toNavigationMenu(
-					(nestedFields != null) &&
-					nestedFields.contains("navigationMenuItems"),
-					siteNavigationMenu)),
+				this::_toNavigationMenu),
 			pagination,
 			_siteNavigationMenuService.getSiteNavigationMenusCount(siteId));
 	}
@@ -144,7 +133,6 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private NavigationMenu _toNavigationMenu(
-			boolean nestNavigationMenuItems,
 			SiteNavigationMenu siteNavigationMenu)
 		throws PortalException {
 
@@ -164,28 +152,18 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				dateModified = siteNavigationMenu.getModifiedDate();
 				id = siteNavigationMenu.getSiteNavigationMenuId();
 				name = siteNavigationMenu.getName();
+				navigationMenuItems = transformToArray(
+					siteNavigationMenuItemsMap.getOrDefault(
+						0L, new ArrayList<>()),
+					siteNavigationMenuItem -> _toNavigationMenuItem(
+						siteNavigationMenuItem, siteNavigationMenuItemsMap),
+					NavigationMenuItem.class);
 				siteId = siteNavigationMenu.getGroupId();
-
-				setNavigationMenuItems(
-					() -> {
-						if (!nestNavigationMenuItems) {
-							return null;
-						}
-
-						return transformToArray(
-							siteNavigationMenuItemsMap.getOrDefault(
-								0L, new ArrayList<>()),
-							siteNavigationMenuItem -> _toNavigationMenuItem(
-								nestNavigationMenuItems, siteNavigationMenuItem,
-								siteNavigationMenuItemsMap),
-							NavigationMenuItem.class);
-					});
 			}
 		};
 	}
 
 	private NavigationMenuItem _toNavigationMenuItem(
-			boolean nestNavigationMenuItems,
 			SiteNavigationMenuItem siteNavigationMenuItem,
 			Map<Long, List<SiteNavigationMenuItem>> siteNavigationMenuItemsMap)
 		throws PortalException {
@@ -206,17 +184,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				dateCreated = siteNavigationMenuItem.getCreateDate();
 				dateModified = siteNavigationMenuItem.getModifiedDate();
 				id = siteNavigationMenuItem.getSiteNavigationMenuId();
-				name = typeSettingsProperties.getProperty(
-					"name_" + contextAcceptLanguage.getPreferredLanguageId(),
-					typeSettingsProperties.getProperty(
-						LocaleUtil.toLanguageId(LocaleUtil.getDefault())));
 				navigationMenuItems = transformToArray(
 					siteNavigationMenuItemsMap.getOrDefault(
 						siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 						new ArrayList<>()),
 					item -> _toNavigationMenuItem(
-						nestNavigationMenuItems, item,
-						siteNavigationMenuItemsMap),
+						item, siteNavigationMenuItemsMap),
 					NavigationMenuItem.class);
 				type = _toType(siteNavigationMenuItem.getType());
 				url = typeSettingsProperties.getProperty("url");
@@ -232,7 +205,15 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				setName(
 					() -> {
 						if (layout == null) {
-							return null;
+							String preferredLanguageId =
+								contextAcceptLanguage.getPreferredLanguageId();
+							String defaultLanguageId = LocaleUtil.toLanguageId(
+								LocaleUtil.getDefault());
+
+							return typeSettingsProperties.getProperty(
+								"name_" + preferredLanguageId,
+								typeSettingsProperties.getProperty(
+									"name_" + defaultLanguageId));
 						}
 
 						return layout.getName(
@@ -247,7 +228,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			return "page";
 		}
 		else if (siteNavigationMenuItem.equals("node")) {
-			return "navigationMenuItem";
+			return "navigationMenu";
 		}
 
 		return siteNavigationMenuItem;

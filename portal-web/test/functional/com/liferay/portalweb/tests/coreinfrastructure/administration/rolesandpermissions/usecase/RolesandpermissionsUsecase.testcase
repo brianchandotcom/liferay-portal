@@ -1592,8 +1592,6 @@ definition {
 
 		AssertElementNotPresent(locator1 = "MessageBoards#ADD_CATEGORY_BUTTON");
 
-		AssertElementNotPresent(locator1 = "Button#PERMISSIONS");
-
 		Blogs.addViaAP(
 			entryContent = "This is a movie blog by usersn2",
 			entryTitle = "Movie Blog");

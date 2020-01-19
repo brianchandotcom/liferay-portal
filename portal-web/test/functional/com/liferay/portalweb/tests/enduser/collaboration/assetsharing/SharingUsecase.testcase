@@ -253,11 +253,11 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
-		var key_assetType = "Documents";
+		var key_assetType = "Document";
 
 		AssertClick(
 			locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE",
-			value1 = "Documents");
+			value1 = "Document");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -280,11 +280,11 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
-		var key_assetType = "Blogs";
+		var key_assetType = "Blogs Entry";
 
 		AssertClick(
 			locator1 = "Sharing#SHARED_CONTENT_ASSET_TYPE",
-			value1 = "Blogs");
+			value1 = "Blogs Entry");
 
 		SelectFrame(value1 = "relative=top");
 

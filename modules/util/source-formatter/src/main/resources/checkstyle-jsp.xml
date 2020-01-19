@@ -156,5 +156,10 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNamingCheck">
 			<message key="method.rename" value="Rename method ''{0}'' to ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.MissingDiamondOperatorCheck">
+			<property name="enforceDiamondOperatorClassNames" value="" />
+			<message key="diamond.operator.missing" value="Missing diamond operator ''&lt;&gt;'' for type ''{0}''" />
+			<message key="generic.types.missing" value="Missing generic types ''{0}'' for type ''{1}''" />
+		</module>
 	</module>
 </module>

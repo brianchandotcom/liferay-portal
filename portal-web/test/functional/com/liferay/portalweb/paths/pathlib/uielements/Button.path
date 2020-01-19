@@ -435,7 +435,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//a[contains(.,'Permissions') and contains(@class,'btn')] | //button[contains(.,'Permissions')]</td>
+	<td>//a[contains(.,'Permissions') and contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 <tr>

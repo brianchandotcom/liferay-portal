@@ -82,6 +82,15 @@ public class StructuredContentFolderDTOConverter
 					journalFolder.getCompanyId(),
 					dtoConverterContext.getUserId(),
 					JournalFolder.class.getName(), journalFolder.getFolderId());
+
+				setParentStructuredContentFolderId(
+					() -> {
+						if (journalFolder.getParentFolderId() == 0L) {
+							return null;
+						}
+
+						return journalFolder.getParentFolderId();
+					});
 			}
 		};
 	}

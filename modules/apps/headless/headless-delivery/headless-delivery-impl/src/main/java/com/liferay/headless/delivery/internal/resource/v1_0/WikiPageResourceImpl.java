@@ -334,6 +334,20 @@ public class WikiPageResourceImpl
 						}
 					},
 					TaxonomyCategory.class);
+
+				setParentWikiPageId(
+					() -> {
+						com.liferay.wiki.model.WikiPage parentWikiPage =
+							wikiPage.getParentPage();
+
+						if ((parentWikiPage == null) ||
+							(parentWikiPage.getPageId() == 0L)) {
+
+							return null;
+						}
+
+						return parentWikiPage.getPageId();
+					});
 			}
 		};
 	}

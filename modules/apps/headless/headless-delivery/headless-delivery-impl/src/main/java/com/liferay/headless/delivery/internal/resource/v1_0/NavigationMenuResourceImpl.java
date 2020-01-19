@@ -238,6 +238,18 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						return layout.getName(
 							contextAcceptLanguage.getPreferredLocale());
 					});
+				setParentNavigationMenuId(
+					() -> {
+						long parentSiteNavigationMenuItemId =
+							siteNavigationMenuItem.
+								getParentSiteNavigationMenuItemId();
+
+						if (parentSiteNavigationMenuItemId == 0L) {
+							return null;
+						}
+
+						return parentSiteNavigationMenuItemId;
+					});
 			}
 		};
 	}

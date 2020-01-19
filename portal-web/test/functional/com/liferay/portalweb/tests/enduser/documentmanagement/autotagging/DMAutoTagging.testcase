@@ -260,17 +260,6 @@ definition {
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Documents and Media Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",

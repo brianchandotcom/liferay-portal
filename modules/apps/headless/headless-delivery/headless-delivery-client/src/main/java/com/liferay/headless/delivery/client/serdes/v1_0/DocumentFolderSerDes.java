@@ -193,6 +193,16 @@ public class DocumentFolderSerDes {
 			sb.append(documentFolder.getNumberOfDocuments());
 		}
 
+		if (documentFolder.getParentDocumentFolderId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentDocumentFolderId\": ");
+
+			sb.append(documentFolder.getParentDocumentFolderId());
+		}
+
 		if (documentFolder.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -320,6 +330,15 @@ public class DocumentFolderSerDes {
 				String.valueOf(documentFolder.getNumberOfDocuments()));
 		}
 
+		if (documentFolder.getParentDocumentFolderId() == null) {
+			map.put("parentDocumentFolderId", null);
+		}
+		else {
+			map.put(
+				"parentDocumentFolderId",
+				String.valueOf(documentFolder.getParentDocumentFolderId()));
+		}
+
 		if (documentFolder.getSiteId() == null) {
 			map.put("siteId", null);
 		}
@@ -429,6 +448,14 @@ public class DocumentFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					documentFolder.setNumberOfDocuments(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "parentDocumentFolderId")) {
+
+				if (jsonParserFieldValue != null) {
+					documentFolder.setParentDocumentFolderId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

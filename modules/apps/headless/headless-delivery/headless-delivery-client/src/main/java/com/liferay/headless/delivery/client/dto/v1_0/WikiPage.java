@@ -354,6 +354,27 @@ public class WikiPage {
 
 	protected Integer numberOfWikiPages;
 
+	public Long getParentWikiPageId() {
+		return parentWikiPageId;
+	}
+
+	public void setParentWikiPageId(Long parentWikiPageId) {
+		this.parentWikiPageId = parentWikiPageId;
+	}
+
+	public void setParentWikiPageId(
+		UnsafeSupplier<Long, Exception> parentWikiPageIdUnsafeSupplier) {
+
+		try {
+			parentWikiPageId = parentWikiPageIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long parentWikiPageId;
+
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
 	}

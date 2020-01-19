@@ -168,6 +168,16 @@ public class SiteSerDes {
 			sb.append("\"");
 		}
 
+		if (site.getParentSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentSiteId\": ");
+
+			sb.append(site.getParentSiteId());
+		}
+
 		if (site.getSites() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -265,6 +275,13 @@ public class SiteSerDes {
 			map.put("name", String.valueOf(site.getName()));
 		}
 
+		if (site.getParentSiteId() == null) {
+			map.put("parentSiteId", null);
+		}
+		else {
+			map.put("parentSiteId", String.valueOf(site.getParentSiteId()));
+		}
+
 		if (site.getSites() == null) {
 			map.put("sites", null);
 		}
@@ -332,6 +349,12 @@ public class SiteSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					site.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "parentSiteId")) {
+				if (jsonParserFieldValue != null) {
+					site.setParentSiteId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sites")) {

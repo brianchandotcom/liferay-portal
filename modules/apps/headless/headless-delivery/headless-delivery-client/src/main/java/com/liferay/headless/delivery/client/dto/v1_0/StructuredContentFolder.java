@@ -276,6 +276,31 @@ public class StructuredContentFolder {
 
 	protected Integer numberOfStructuredContents;
 
+	public Long getParentStructuredContentFolderId() {
+		return parentStructuredContentFolderId;
+	}
+
+	public void setParentStructuredContentFolderId(
+		Long parentStructuredContentFolderId) {
+
+		this.parentStructuredContentFolderId = parentStructuredContentFolderId;
+	}
+
+	public void setParentStructuredContentFolderId(
+		UnsafeSupplier<Long, Exception>
+			parentStructuredContentFolderIdUnsafeSupplier) {
+
+		try {
+			parentStructuredContentFolderId =
+				parentStructuredContentFolderIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long parentStructuredContentFolderId;
+
 	public Long getSiteId() {
 		return siteId;
 	}

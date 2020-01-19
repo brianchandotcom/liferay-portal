@@ -182,6 +182,16 @@ public class MessageBoardSectionSerDes {
 			sb.append(messageBoardSection.getNumberOfMessageBoardThreads());
 		}
 
+		if (messageBoardSection.getParentMessageBoardSectionId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentMessageBoardSectionId\": ");
+
+			sb.append(messageBoardSection.getParentMessageBoardSectionId());
+		}
+
 		if (messageBoardSection.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -325,6 +335,16 @@ public class MessageBoardSectionSerDes {
 					messageBoardSection.getNumberOfMessageBoardThreads()));
 		}
 
+		if (messageBoardSection.getParentMessageBoardSectionId() == null) {
+			map.put("parentMessageBoardSectionId", null);
+		}
+		else {
+			map.put(
+				"parentMessageBoardSectionId",
+				String.valueOf(
+					messageBoardSection.getParentMessageBoardSectionId()));
+		}
+
 		if (messageBoardSection.getSiteId() == null) {
 			map.put("siteId", null);
 		}
@@ -441,6 +461,14 @@ public class MessageBoardSectionSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardSection.setNumberOfMessageBoardThreads(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "parentMessageBoardSectionId")) {
+
+				if (jsonParserFieldValue != null) {
+					messageBoardSection.setParentMessageBoardSectionId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

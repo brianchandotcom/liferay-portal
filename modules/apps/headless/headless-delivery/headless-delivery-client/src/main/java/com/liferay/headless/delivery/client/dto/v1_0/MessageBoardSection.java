@@ -256,6 +256,31 @@ public class MessageBoardSection {
 
 	protected Integer numberOfMessageBoardThreads;
 
+	public Long getParentMessageBoardSectionId() {
+		return parentMessageBoardSectionId;
+	}
+
+	public void setParentMessageBoardSectionId(
+		Long parentMessageBoardSectionId) {
+
+		this.parentMessageBoardSectionId = parentMessageBoardSectionId;
+	}
+
+	public void setParentMessageBoardSectionId(
+		UnsafeSupplier<Long, Exception>
+			parentMessageBoardSectionIdUnsafeSupplier) {
+
+		try {
+			parentMessageBoardSectionId =
+				parentMessageBoardSectionIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long parentMessageBoardSectionId;
+
 	public Long getSiteId() {
 		return siteId;
 	}

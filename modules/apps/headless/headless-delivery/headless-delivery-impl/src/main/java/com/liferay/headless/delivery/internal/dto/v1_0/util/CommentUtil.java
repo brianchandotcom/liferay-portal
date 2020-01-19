@@ -41,6 +41,7 @@ public class CommentUtil {
 				id = comment.getCommentId();
 				numberOfComments = commentManager.getChildCommentsCount(
 					comment.getCommentId(), WorkflowConstants.STATUS_APPROVED);
+				parentCommentId = comment.getParentCommentId();
 				text = comment.getBody();
 			}
 		};

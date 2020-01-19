@@ -932,6 +932,14 @@ public abstract class BaseWikiPageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("parentWikiPageId", additionalAssertFieldName)) {
+				if (wikiPage.getParentWikiPageId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
 				if (wikiPage.getRelatedContents() == null) {
 					valid = false;
@@ -1183,6 +1191,17 @@ public abstract class BaseWikiPageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("parentWikiPageId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getParentWikiPageId(),
+						wikiPage2.getParentWikiPageId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						wikiPage1.getRelatedContents(),
@@ -1321,6 +1340,17 @@ public abstract class BaseWikiPageResourceTestCase {
 				if (!Objects.deepEquals(
 						wikiPage.getNumberOfWikiPages(),
 						jsonObject.getInt("numberOfWikiPages"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("parentWikiPageId", fieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage.getParentWikiPageId(),
+						jsonObject.getLong("parentWikiPageId"))) {
 
 					return false;
 				}
@@ -1530,6 +1560,11 @@ public abstract class BaseWikiPageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("parentWikiPageId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("relatedContents")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1593,6 +1628,7 @@ public abstract class BaseWikiPageResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				numberOfAttachments = RandomTestUtil.randomInt();
 				numberOfWikiPages = RandomTestUtil.randomInt();
+				parentWikiPageId = RandomTestUtil.randomLong();
 				siteId = testGroup.getGroupId();
 				subscribed = RandomTestUtil.randomBoolean();
 			}

@@ -246,6 +246,34 @@ public class NavigationMenuItem {
 	protected NavigationMenuItem[] navigationMenuItems;
 
 	@Schema
+	public Long getParentNavigationMenuId() {
+		return parentNavigationMenuId;
+	}
+
+	public void setParentNavigationMenuId(Long parentNavigationMenuId) {
+		this.parentNavigationMenuId = parentNavigationMenuId;
+	}
+
+	@JsonIgnore
+	public void setParentNavigationMenuId(
+		UnsafeSupplier<Long, Exception> parentNavigationMenuIdUnsafeSupplier) {
+
+		try {
+			parentNavigationMenuId = parentNavigationMenuIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long parentNavigationMenuId;
+
+	@Schema
 	public String getType() {
 		return type;
 	}
@@ -421,6 +449,16 @@ public class NavigationMenuItem {
 			}
 
 			sb.append("]");
+		}
+
+		if (parentNavigationMenuId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentNavigationMenuId\": ");
+
+			sb.append(parentNavigationMenuId);
 		}
 
 		if (type != null) {

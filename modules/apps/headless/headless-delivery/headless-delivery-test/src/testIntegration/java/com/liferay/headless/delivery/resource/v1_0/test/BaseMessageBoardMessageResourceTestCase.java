@@ -1855,6 +1855,18 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"parentMessageBoardMessageId", additionalAssertFieldName)) {
+
+				if (messageBoardMessage.getParentMessageBoardMessageId() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
 				if (messageBoardMessage.getRelatedContents() == null) {
 					valid = false;
@@ -2197,6 +2209,20 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"parentMessageBoardMessageId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						messageBoardMessage1.getParentMessageBoardMessageId(),
+						messageBoardMessage2.
+							getParentMessageBoardMessageId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardMessage1.getRelatedContents(),
@@ -2436,6 +2462,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("parentMessageBoardMessageId", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage.getParentMessageBoardMessageId(),
+						jsonObject.getLong("parentMessageBoardMessageId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("showAsAnswer", fieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardMessage.getShowAsAnswer(),
@@ -2658,6 +2695,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("parentMessageBoardMessageId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("relatedContents")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2717,6 +2759,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				messageBoardThreadId = RandomTestUtil.randomLong();
 				numberOfMessageBoardAttachments = RandomTestUtil.randomInt();
 				numberOfMessageBoardMessages = RandomTestUtil.randomInt();
+				parentMessageBoardMessageId = RandomTestUtil.randomLong();
 				showAsAnswer = RandomTestUtil.randomBoolean();
 				siteId = testGroup.getGroupId();
 				subscribed = RandomTestUtil.randomBoolean();

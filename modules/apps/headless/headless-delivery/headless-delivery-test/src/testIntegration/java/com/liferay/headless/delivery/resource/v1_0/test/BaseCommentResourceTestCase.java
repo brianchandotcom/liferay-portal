@@ -1591,6 +1591,14 @@ public abstract class BaseCommentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("parentCommentId", additionalAssertFieldName)) {
+				if (comment.getParentCommentId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("text", additionalAssertFieldName)) {
 				if (comment.getText() == null) {
 					valid = false;
@@ -1712,6 +1720,17 @@ public abstract class BaseCommentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("parentCommentId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						comment1.getParentCommentId(),
+						comment2.getParentCommentId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("text", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						comment1.getText(), comment2.getText())) {
@@ -1746,6 +1765,17 @@ public abstract class BaseCommentResourceTestCase {
 				if (!Objects.deepEquals(
 						comment.getNumberOfComments(),
 						jsonObject.getInt("numberOfComments"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("parentCommentId", fieldName)) {
+				if (!Objects.deepEquals(
+						comment.getParentCommentId(),
+						jsonObject.getLong("parentCommentId"))) {
 
 					return false;
 				}
@@ -1902,6 +1932,11 @@ public abstract class BaseCommentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("parentCommentId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("text")) {
 			sb.append("'");
 			sb.append(String.valueOf(comment.getText()));
@@ -1938,6 +1973,7 @@ public abstract class BaseCommentResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				numberOfComments = RandomTestUtil.randomInt();
+				parentCommentId = RandomTestUtil.randomLong();
 				text = RandomTestUtil.randomString();
 			}
 		};

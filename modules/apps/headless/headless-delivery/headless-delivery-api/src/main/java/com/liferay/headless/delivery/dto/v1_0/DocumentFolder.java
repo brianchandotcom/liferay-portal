@@ -370,6 +370,34 @@ public class DocumentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfDocuments;
 
+	@Schema
+	public Long getParentDocumentFolderId() {
+		return parentDocumentFolderId;
+	}
+
+	public void setParentDocumentFolderId(Long parentDocumentFolderId) {
+		this.parentDocumentFolderId = parentDocumentFolderId;
+	}
+
+	@JsonIgnore
+	public void setParentDocumentFolderId(
+		UnsafeSupplier<Long, Exception> parentDocumentFolderIdUnsafeSupplier) {
+
+		try {
+			parentDocumentFolderId = parentDocumentFolderIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long parentDocumentFolderId;
+
 	@Schema(description = "The ID of the site to which this folder is scoped.")
 	public Long getSiteId() {
 		return siteId;
@@ -624,6 +652,16 @@ public class DocumentFolder {
 			sb.append("\"numberOfDocuments\": ");
 
 			sb.append(numberOfDocuments);
+		}
+
+		if (parentDocumentFolderId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentDocumentFolderId\": ");
+
+			sb.append(parentDocumentFolderId);
 		}
 
 		if (siteId != null) {

@@ -173,6 +173,27 @@ public class NavigationMenuItem {
 
 	protected NavigationMenuItem[] navigationMenuItems;
 
+	public Long getParentNavigationMenuId() {
+		return parentNavigationMenuId;
+	}
+
+	public void setParentNavigationMenuId(Long parentNavigationMenuId) {
+		this.parentNavigationMenuId = parentNavigationMenuId;
+	}
+
+	public void setParentNavigationMenuId(
+		UnsafeSupplier<Long, Exception> parentNavigationMenuIdUnsafeSupplier) {
+
+		try {
+			parentNavigationMenuId = parentNavigationMenuIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long parentNavigationMenuId;
+
 	public String getType() {
 		return type;
 	}

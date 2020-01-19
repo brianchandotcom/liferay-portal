@@ -387,6 +387,38 @@ public class StructuredContentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer numberOfStructuredContents;
 
+	@Schema
+	public Long getParentStructuredContentFolderId() {
+		return parentStructuredContentFolderId;
+	}
+
+	public void setParentStructuredContentFolderId(
+		Long parentStructuredContentFolderId) {
+
+		this.parentStructuredContentFolderId = parentStructuredContentFolderId;
+	}
+
+	@JsonIgnore
+	public void setParentStructuredContentFolderId(
+		UnsafeSupplier<Long, Exception>
+			parentStructuredContentFolderIdUnsafeSupplier) {
+
+		try {
+			parentStructuredContentFolderId =
+				parentStructuredContentFolderIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long parentStructuredContentFolderId;
+
 	@Schema(description = "The ID of the site to which this folder is scoped.")
 	public Long getSiteId() {
 		return siteId;
@@ -642,6 +674,16 @@ public class StructuredContentFolder {
 			sb.append("\"numberOfStructuredContents\": ");
 
 			sb.append(numberOfStructuredContents);
+		}
+
+		if (parentStructuredContentFolderId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentStructuredContentFolderId\": ");
+
+			sb.append(parentStructuredContentFolderId);
 		}
 
 		if (siteId != null) {

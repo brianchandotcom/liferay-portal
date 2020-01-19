@@ -253,6 +253,16 @@ public class WikiPageSerDes {
 			sb.append(wikiPage.getNumberOfWikiPages());
 		}
 
+		if (wikiPage.getParentWikiPageId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentWikiPageId\": ");
+
+			sb.append(wikiPage.getParentWikiPageId());
+		}
+
 		if (wikiPage.getRelatedContents() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -467,6 +477,15 @@ public class WikiPageSerDes {
 				String.valueOf(wikiPage.getNumberOfWikiPages()));
 		}
 
+		if (wikiPage.getParentWikiPageId() == null) {
+			map.put("parentWikiPageId", null);
+		}
+		else {
+			map.put(
+				"parentWikiPageId",
+				String.valueOf(wikiPage.getParentWikiPageId()));
+		}
+
 		if (wikiPage.getRelatedContents() == null) {
 			map.put("relatedContents", null);
 		}
@@ -622,6 +641,12 @@ public class WikiPageSerDes {
 				if (jsonParserFieldValue != null) {
 					wikiPage.setNumberOfWikiPages(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "parentWikiPageId")) {
+				if (jsonParserFieldValue != null) {
+					wikiPage.setParentWikiPageId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {

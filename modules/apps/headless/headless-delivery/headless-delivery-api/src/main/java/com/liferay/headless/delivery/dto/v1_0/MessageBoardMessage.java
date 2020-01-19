@@ -534,6 +534,38 @@ public class MessageBoardMessage {
 	protected Integer numberOfMessageBoardMessages;
 
 	@Schema
+	public Long getParentMessageBoardMessageId() {
+		return parentMessageBoardMessageId;
+	}
+
+	public void setParentMessageBoardMessageId(
+		Long parentMessageBoardMessageId) {
+
+		this.parentMessageBoardMessageId = parentMessageBoardMessageId;
+	}
+
+	@JsonIgnore
+	public void setParentMessageBoardMessageId(
+		UnsafeSupplier<Long, Exception>
+			parentMessageBoardMessageIdUnsafeSupplier) {
+
+		try {
+			parentMessageBoardMessageId =
+				parentMessageBoardMessageIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long parentMessageBoardMessageId;
+
+	@Schema
 	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
@@ -917,6 +949,16 @@ public class MessageBoardMessage {
 			sb.append("\"numberOfMessageBoardMessages\": ");
 
 			sb.append(numberOfMessageBoardMessages);
+		}
+
+		if (parentMessageBoardMessageId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentMessageBoardMessageId\": ");
+
+			sb.append(parentMessageBoardMessageId);
 		}
 
 		if (relatedContents != null) {

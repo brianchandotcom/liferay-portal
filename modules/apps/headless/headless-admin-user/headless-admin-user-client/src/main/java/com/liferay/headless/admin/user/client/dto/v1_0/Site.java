@@ -190,6 +190,27 @@ public class Site {
 
 	protected String name;
 
+	public Long getParentSiteId() {
+		return parentSiteId;
+	}
+
+	public void setParentSiteId(Long parentSiteId) {
+		this.parentSiteId = parentSiteId;
+	}
+
+	public void setParentSiteId(
+		UnsafeSupplier<Long, Exception> parentSiteIdUnsafeSupplier) {
+
+		try {
+			parentSiteId = parentSiteIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long parentSiteId;
+
 	public Site[] getSites() {
 		return sites;
 	}

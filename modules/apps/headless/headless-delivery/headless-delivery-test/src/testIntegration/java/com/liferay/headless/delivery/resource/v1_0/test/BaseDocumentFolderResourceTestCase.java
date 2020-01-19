@@ -1261,6 +1261,26 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals(
+					"parentDocumentFolderId", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = documentFolder.getParentDocumentFolderId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1487,6 +1507,16 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"parentDocumentFolderId", additionalAssertFieldName)) {
+
+				if (documentFolder.getParentDocumentFolderId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("subscribed", additionalAssertFieldName)) {
 				if (documentFolder.getSubscribed() == null) {
 					valid = false;
@@ -1676,6 +1706,19 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"parentDocumentFolderId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						documentFolder1.getParentDocumentFolderId(),
+						documentFolder2.getParentDocumentFolderId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("subscribed", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						documentFolder1.getSubscribed(),
@@ -1757,6 +1800,17 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						documentFolder.getNumberOfDocuments(),
 						jsonObject.getInt("numberOfDocuments"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("parentDocumentFolderId", fieldName)) {
+				if (!Objects.deepEquals(
+						documentFolder.getParentDocumentFolderId(),
+						jsonObject.getLong("parentDocumentFolderId"))) {
 
 					return false;
 				}
@@ -1945,6 +1999,11 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("parentDocumentFolderId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("siteId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1991,6 +2050,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				name = RandomTestUtil.randomString();
 				numberOfDocumentFolders = RandomTestUtil.randomInt();
 				numberOfDocuments = RandomTestUtil.randomInt();
+				parentDocumentFolderId = RandomTestUtil.randomLong();
 				siteId = testGroup.getGroupId();
 				subscribed = RandomTestUtil.randomBoolean();
 			}

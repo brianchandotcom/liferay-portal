@@ -128,6 +128,16 @@ public class CommentSerDes {
 			sb.append(comment.getNumberOfComments());
 		}
 
+		if (comment.getParentCommentId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentCommentId\": ");
+
+			sb.append(comment.getParentCommentId());
+		}
+
 		if (comment.getText() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -201,6 +211,15 @@ public class CommentSerDes {
 				String.valueOf(comment.getNumberOfComments()));
 		}
 
+		if (comment.getParentCommentId() == null) {
+			map.put("parentCommentId", null);
+		}
+		else {
+			map.put(
+				"parentCommentId",
+				String.valueOf(comment.getParentCommentId()));
+		}
+
 		if (comment.getText() == null) {
 			map.put("text", null);
 		}
@@ -261,6 +280,12 @@ public class CommentSerDes {
 				if (jsonParserFieldValue != null) {
 					comment.setNumberOfComments(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "parentCommentId")) {
+				if (jsonParserFieldValue != null) {
+					comment.setParentCommentId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "text")) {

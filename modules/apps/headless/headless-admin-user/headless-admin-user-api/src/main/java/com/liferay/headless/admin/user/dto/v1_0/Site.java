@@ -266,6 +266,34 @@ public class Site {
 	protected String name;
 
 	@Schema
+	public Long getParentSiteId() {
+		return parentSiteId;
+	}
+
+	public void setParentSiteId(Long parentSiteId) {
+		this.parentSiteId = parentSiteId;
+	}
+
+	@JsonIgnore
+	public void setParentSiteId(
+		UnsafeSupplier<Long, Exception> parentSiteIdUnsafeSupplier) {
+
+		try {
+			parentSiteId = parentSiteIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long parentSiteId;
+
+	@Schema
 	@Valid
 	public Site[] getSites() {
 		return sites;
@@ -433,6 +461,16 @@ public class Site {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (parentSiteId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentSiteId\": ");
+
+			sb.append(parentSiteId);
 		}
 
 		if (sites != null) {

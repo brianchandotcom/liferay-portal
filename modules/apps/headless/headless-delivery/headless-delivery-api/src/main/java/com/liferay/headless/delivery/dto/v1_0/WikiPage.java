@@ -496,6 +496,34 @@ public class WikiPage {
 	protected Integer numberOfWikiPages;
 
 	@Schema
+	public Long getParentWikiPageId() {
+		return parentWikiPageId;
+	}
+
+	public void setParentWikiPageId(Long parentWikiPageId) {
+		this.parentWikiPageId = parentWikiPageId;
+	}
+
+	@JsonIgnore
+	public void setParentWikiPageId(
+		UnsafeSupplier<Long, Exception> parentWikiPageIdUnsafeSupplier) {
+
+		try {
+			parentWikiPageId = parentWikiPageIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long parentWikiPageId;
+
+	@Schema
 	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
@@ -907,6 +935,16 @@ public class WikiPage {
 			sb.append("\"numberOfWikiPages\": ");
 
 			sb.append(numberOfWikiPages);
+		}
+
+		if (parentWikiPageId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentWikiPageId\": ");
+
+			sb.append(parentWikiPageId);
 		}
 
 		if (relatedContents != null) {

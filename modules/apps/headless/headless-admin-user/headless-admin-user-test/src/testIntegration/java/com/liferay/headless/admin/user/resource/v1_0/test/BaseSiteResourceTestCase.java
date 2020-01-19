@@ -418,6 +418,14 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("parentSiteId", additionalAssertFieldName)) {
+				if (site.getParentSiteId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("sites", additionalAssertFieldName)) {
 				if (site.getSites() == null) {
 					valid = false;
@@ -557,6 +565,16 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("parentSiteId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						site1.getParentSiteId(), site2.getParentSiteId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("sites", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(site1.getSites(), site2.getSites())) {
 					return false;
@@ -631,6 +649,17 @@ public abstract class BaseSiteResourceTestCase {
 			if (Objects.equals("name", fieldName)) {
 				if (!Objects.deepEquals(
 						site.getName(), jsonObject.getString("name"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("parentSiteId", fieldName)) {
+				if (!Objects.deepEquals(
+						site.getParentSiteId(),
+						jsonObject.getLong("parentSiteId"))) {
 
 					return false;
 				}
@@ -750,6 +779,11 @@ public abstract class BaseSiteResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("parentSiteId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("sites")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -785,6 +819,7 @@ public abstract class BaseSiteResourceTestCase {
 				key = RandomTestUtil.randomString();
 				membershipType = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
+				parentSiteId = RandomTestUtil.randomLong();
 			}
 		};
 	}

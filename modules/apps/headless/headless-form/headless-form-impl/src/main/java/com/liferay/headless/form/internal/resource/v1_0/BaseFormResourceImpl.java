@@ -18,6 +18,7 @@ import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.headless.form.dto.v1_0.FormContext;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.resource.v1_0.FormResource;
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -180,7 +181,8 @@ public abstract class BaseFormResourceImpl implements FormResource {
 		String actionName, GroupedModel groupedModel, String methodName) {
 
 		return ActionUtil.addAction(
-			actionName, getClass(), groupedModel, methodName, contextUriInfo);
+			actionName, getClass(), groupedModel, methodName,
+			contextScopeChecker, contextUriInfo);
 	}
 
 	protected Map<String, String> addAction(
@@ -188,8 +190,8 @@ public abstract class BaseFormResourceImpl implements FormResource {
 		Long siteId) {
 
 		return ActionUtil.addAction(
-			actionName, getClass(), id, methodName, permissionName, siteId,
-			contextUriInfo);
+			actionName, getClass(), id, methodName, permissionName,
+			contextScopeChecker, siteId, contextUriInfo);
 	}
 
 	protected Map<String, String> addAction(
@@ -236,6 +238,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	protected com.liferay.portal.kernel.model.User contextUser;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
+	protected ScopeChecker contextScopeChecker;
 	protected UriInfo contextUriInfo;
 
 }

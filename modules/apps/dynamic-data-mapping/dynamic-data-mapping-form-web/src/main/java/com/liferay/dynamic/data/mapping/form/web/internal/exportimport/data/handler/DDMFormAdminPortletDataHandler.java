@@ -113,6 +113,17 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "ddm-data-provider")) {
+
+			ActionableDynamicQuery
+				ddmDataProviderInstanceActionableDynamicQuery =
+					_ddmDataProviderInstanceStagedModelRepository.
+						getExportActionableDynamicQuery(portletDataContext);
+
+			ddmDataProviderInstanceActionableDynamicQuery.performActions();
+		}
+
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "forms")) {
 			ActionableDynamicQuery formInstanceActionableDynamicQuery =
 				_formInstanceStagedModelRepository.
@@ -140,6 +151,24 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 
 		portletDataContext.importPortletPermissions(DDMConstants.RESOURCE_NAME);
 
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "ddm-data-provider")) {
+
+			Element dataProviderInstancesElement =
+				portletDataContext.getImportDataGroupElement(
+					DDMDataProviderInstance.class);
+
+			List<Element> dataProviderInstanceElements =
+				dataProviderInstancesElement.elements();
+
+			for (Element dataProviderInstanceElement :
+					dataProviderInstanceElements) {
+
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, dataProviderInstanceElement);
+			}
+		}
+
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "forms")) {
 			Element formInstancesElement =
 				portletDataContext.getImportDataGroupElement(
@@ -162,20 +191,6 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 			for (Element structureElement : structureElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, structureElement);
-			}
-
-			Element dataProviderInstancesElement =
-				portletDataContext.getImportDataGroupElement(
-					DDMDataProviderInstance.class);
-
-			List<Element> dataProviderInstanceElements =
-				dataProviderInstancesElement.elements();
-
-			for (Element dataProviderInstanceElement :
-					dataProviderInstanceElements) {
-
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, dataProviderInstanceElement);
 			}
 		}
 
@@ -231,6 +246,18 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance)",
+		unbind = "-"
+	)
+	protected void setDDMDataProviderInstanceStagedModelRepository(
+		StagedModelRepository<DDMDataProviderInstance>
+			ddmDataProviderInstanceStagedModelRepository) {
+
+		_ddmDataProviderInstanceStagedModelRepository =
+			ddmDataProviderInstanceStagedModelRepository;
+	}
+
+	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)",
 		unbind = "-"
 	)
@@ -258,6 +285,8 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	private StagedModelRepository<DDMDataProviderInstance>
+		_ddmDataProviderInstanceStagedModelRepository;
 	private StagedModelRepository<DDMFormInstanceRecord>
 		_formInstanceRecordStagedModelRepository;
 	private StagedModelRepository<DDMFormInstance>

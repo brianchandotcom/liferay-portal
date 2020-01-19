@@ -30,6 +30,19 @@ definition {
 		return "${JSON}";
 	}
 
+	macro _addGroupId {
+		Variables.assertDefined(parameterList = "${groupName},${JSON}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		var JSON = JSONUtil2._addJSONObject(
+			JSON = "${JSON}",
+			key = "scopeGroupId",
+			value = "${groupId}");
+
+		return "${JSON}";
+	}
+
 	macro _addGuestPermissions {
 		Variables.assertDefined(parameterList = "${JSON},${addGuestPermissions}");
 
@@ -85,6 +98,12 @@ definition {
 		if (isSet(addGuestPermissions)) {
 			var serviceContext = JSONServiceContextUtil._addGuestPermissions(
 				addGuestPermissions = "${addGuestPermissions}",
+				JSON = "${serviceContext}");
+		}
+
+		if (isSet(groupName)) {
+			var serviceContext = JSONServiceContextUtil._addGroupId(
+				groupName = "${groupName}",
 				JSON = "${serviceContext}");
 		}
 

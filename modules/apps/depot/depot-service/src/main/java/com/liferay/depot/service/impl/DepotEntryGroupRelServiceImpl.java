@@ -14,17 +14,23 @@
 
 package com.liferay.depot.service.impl;
 
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.base.DepotEntryGroupRelServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -41,7 +47,11 @@ public class DepotEntryGroupRelServiceImpl
 
 	@Override
 	public DepotEntryGroupRel addDepotEntryGroupRel(
-		long depotEntryId, long toGroupId) {
+			long depotEntryId, long toGroupId)
+		throws PortalException {
+
+		_depotEntryModelResourcePermission.check(
+			getPermissionChecker(), depotEntryId, ActionKeys.UPDATE);
 
 		return depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			depotEntryId, toGroupId);
@@ -51,6 +61,14 @@ public class DepotEntryGroupRelServiceImpl
 	public DepotEntryGroupRel deleteDepotEntryGroupRel(
 			long depotEntryGroupRelId)
 		throws PortalException {
+
+		DepotEntryGroupRel depotEntryGroupRel =
+			depotEntryGroupRelLocalService.getDepotEntryGroupRel(
+				depotEntryGroupRelId);
+
+		_depotEntryModelResourcePermission.check(
+			getPermissionChecker(), depotEntryGroupRel.getDepotEntryId(),
+			ActionKeys.UPDATE);
 
 		return depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
 			depotEntryGroupRelId);
@@ -84,11 +102,34 @@ public class DepotEntryGroupRelServiceImpl
 			long depotEntryGroupRelId, boolean searchable)
 		throws PortalException {
 
+		DepotEntryGroupRel depotEntryGroupRel =
+			depotEntryGroupRelLocalService.getDepotEntryGroupRel(
+				depotEntryGroupRelId);
+
+		_depotEntryModelResourcePermission.check(
+			getPermissionChecker(), depotEntryGroupRel.getDepotEntryId(),
+			ActionKeys.UPDATE);
+
 		return depotEntryGroupRelLocalService.updateSearchable(
 			depotEntryGroupRelId, searchable);
 	}
 
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.depot.model.DepotEntry)"
+	)
+	private volatile ModelResourcePermission<DepotEntry>
+		_depotEntryModelResourcePermission;
+
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(resource.name=" + DepotConstants.RESOURCE_NAME + ")"
+	)
+	private volatile PortletResourcePermission _portletResourcePermission;
 
 }

@@ -219,14 +219,17 @@ definition {
 	}
 
 	macro uploadFile {
-		var key_navTab = "${navTab}";
 		var key_uploadFileName = "${uploadFileName}";
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		AssertClick(
-			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
-			value1 = "${navTab}");
+		if (IsElementPresent(locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB")) {
+			var key_navTab = "${navTab}";
+
+			AssertClick(
+				locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+				value1 = "${navTab}");
+		}
 
 		AssertElementPresent(locator1 = "ItemSelector#SELECT_FILE_UPLOAD_IMAGE");
 

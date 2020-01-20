@@ -15,7 +15,6 @@
 package com.liferay.depot.service.impl;
 
 import com.liferay.depot.exception.DepotEntryNameException;
-import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
@@ -153,21 +152,8 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		for (Map.Entry<String, Boolean> entry :
 				depotAppCustomizationMap.entrySet()) {
 
-			String portletId = entry.getKey();
-
-			DepotAppCustomization depotAppCustomization =
-				_depotAppCustomizationLocalService.fetchDepotAppCustomization(
-					depotEntryId, portletId);
-
-			if (depotAppCustomization != null) {
-				depotAppCustomization.setEnabled(entry.getValue());
-
-				_depotAppCustomizationLocalService.updateDepotAppCustomization(
-					depotAppCustomization);
-			}
-
-			_depotAppCustomizationLocalService.addDepotAppCustomization(
-				depotEntryId, portletId, entry.getValue());
+			_depotAppCustomizationLocalService.updateDepotAppCustomization(
+				depotEntryId, entry.getKey(), entry.getValue());
 		}
 
 		return depotEntryPersistence.update(depotEntry);

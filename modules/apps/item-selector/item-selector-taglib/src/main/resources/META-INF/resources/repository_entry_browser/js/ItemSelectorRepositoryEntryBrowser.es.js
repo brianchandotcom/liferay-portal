@@ -169,7 +169,9 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				}),
 				itemSelectorUploader.after(
 					'itemUploadError',
-					this._onItemUploadError
+					(event) => {
+						this._onItemUploadError(event);
+					}
 				),
 				rootNode.addEventListener(STR_DRAG_OVER, event =>
 					this._ddEventHandler(event)

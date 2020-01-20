@@ -2958,25 +2958,53 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_serviceOutputPath, "/model/", entity.getName(), "Table.java"));
 
-		if (!entity.isModelTable()) {
-			if (modelTableFile.exists()) {
-				System.out.println("Removing " + modelTableFile);
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"apiPackagePath", _apiPackagePath
+		).put(
+			"author", _author
+		).put(
+			"columns",
+			() -> {
+				List<Map<String, String>> columns = new ArrayList<>();
 
-				modelTableFile.delete();
+				for (EntityColumn entityColumn :
+						entity.getDatabaseRegularEntityColumns()) {
+
+					String sqlType = getSqlType(
+						entity.getName(), entityColumn.getName(),
+						entityColumn.getType());
+
+					Map<String, String> column = HashMapBuilder.put(
+						"dbName", entityColumn.getDBName()
+					).put(
+						"javaType",
+						() -> {
+							if (entityColumn.isPrimitiveType()) {
+								return getPrimitiveObj(entityColumn.getType());
+							}
+
+							if (Objects.equals("CLOB", sqlType)) {
+								return "Clob";
+							}
+
+							return entityColumn.getGenericizedType();
+						}
+					).put(
+						"name", entityColumn.getName()
+					).put(
+						"sqlType", sqlType
+					).build();
+
+					columns.add(column);
+				}
+
+				return columns;
 			}
-
-			return;
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		JavaClass modelImplJavaClass = _getJavaClass(
-			StringBundler.concat(
-				_outputPath, "/model/impl/", entity.getName(), "Impl.java"));
-
-		_putDeprecatedKeys(context, modelImplJavaClass);
+		).put(
+			"name", entity.getName()
+		).put(
+			"table", entity.getTable()
+		).build();
 
 		String content = _processTemplate(_tplModelTable, context);
 

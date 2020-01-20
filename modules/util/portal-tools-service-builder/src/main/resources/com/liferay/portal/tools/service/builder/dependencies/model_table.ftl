@@ -16,34 +16,21 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * The table class for the ${entity.name}.
+ * The table class for the ${name}.
  *
  * @author ${author}
-<#if classDeprecated>
- * @deprecated ${classDeprecatedComment}
-</#if>
  * @generated
  */
-public class ${entity.name}Table extends Table<${entity.name}Table> {
+public class ${name}Table extends Table<${name}Table> {
 
-	public static final ${entity.name}Table INSTANCE = new ${entity.name}Table();
+	public static final ${name}Table INSTANCE = new ${name}Table();
 
-	<#list entity.databaseRegularEntityColumns as entityColumn>
-		<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) />
-
-		<#if entityColumn.isPrimitiveType()>
-			<#assign entityColumnType = serviceBuilder.getPrimitiveObj(entityColumn.type) />
-		<#elseif stringUtil.equals(sqlType, "CLOB")>
-			<#assign entityColumnType = "Clob" />
-		<#else>
-			<#assign entityColumnType = entityColumn.genericizedType />
-		</#if>
-
-		public final Column<${entity.name}Table, ${entityColumnType}> ${entityColumn.name} = createColumn("${entityColumn.DBName}", ${entityColumnType}.class, Types.${sqlType});
+	<#list columns as column>
+		public final Column<${name}Table, ${column.javaType}> ${column.name} = createColumn("${column.dbName}", ${column.javaType}.class, Types.${column.sqlType});
 	</#list>
 
-	private ${entity.name}Table() {
-		super("${entity.table}", ${entity.name}Table::new);
+	private ${name}Table() {
+		super("${table}", ${name}Table::new);
 	}
 
 }

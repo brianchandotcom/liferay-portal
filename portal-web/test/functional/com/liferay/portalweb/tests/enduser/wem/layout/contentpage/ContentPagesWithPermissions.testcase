@@ -757,4 +757,117 @@ definition {
 			locator1 = "Fragment#FRAGMENT");
 	}
 
+	@description = "This is a test for LPS-103454. When one WC displayed in multiple fields in a content page, there should be one WC entry in Contents Panel list."
+	@priority = "4"
+	test ViewContentViaContentPanelWithWebContentAticleUpdatePermission {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			newPassword = "test",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addSiteRole(
+			roleKey = "Roles Siterole Name",
+			roleTitle = "Roles Siterole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.journal.model.JournalArticle",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		User.openUsersAdmin();
+
+		User.assignSiteRoleCP(
+			siteRoleName = "Roles Siterole Name",
+			userScreenName = "usersn");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.addArticleCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "WC WebContent Title",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
+
+		SelectFrame(value1 = "relative=top");
+
+		PageEditor.waitForAutoSave();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addWidget(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(
+			contentPage = "true",
+			webContentTitle = "WC WebContent Title");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addWidget(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WC WebContent Title",
+			assetType = "Basic Web Content",
+			contentPage = "true");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.gotoTab(tabName = "Contents");
+
+		AssertElementNotPresent(
+			key_rowNumber = "2",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_ENTRY_N");
+	}
+
 }

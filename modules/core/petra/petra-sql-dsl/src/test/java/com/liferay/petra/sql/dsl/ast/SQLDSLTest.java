@@ -56,6 +56,7 @@ import com.liferay.petra.sql.dsl.query.impl.Where;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Arrays;
@@ -363,10 +364,9 @@ public class SQLDSLTest {
 			String.valueOf(
 				FunctionUtil.bitAnd(MainExampleTable.TABLE.mainExampleId, 2L)));
 		Assert.assertEquals(
-			"CAST_CLOB_TEXT(MainExample.mainExampleId)",
+			"CAST_CLOB_TEXT(MainExample.description)",
 			String.valueOf(
-				FunctionUtil.castClobText(
-					MainExampleTable.TABLE.mainExampleId)));
+				FunctionUtil.castClobText(MainExampleTable.TABLE.description)));
 		Assert.assertEquals(
 			"CAST_LONG(MainExample.name)",
 			String.valueOf(FunctionUtil.castLong(MainExampleTable.TABLE.name)));
@@ -465,8 +465,8 @@ public class SQLDSLTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"select count(distinct MainExample.name) from MainExample ",
-				"inner join ReferenceExample on ",
+				"select count(distinct MainExample.name) COUNT_VALUE from ",
+				"MainExample inner join ReferenceExample on ",
 				"ReferenceExample.mainExampleId = MainExample.mainExampleId ",
 				"where MainExample.name != ?"),
 			query.toString());
@@ -908,11 +908,12 @@ public class SQLDSLTest {
 		Collection<Column<MainExampleTable, ?>> columns =
 			MainExampleTable.TABLE.getColumns();
 
-		Assert.assertEquals(columns.toString(), 3, columns.size());
+		Assert.assertEquals(columns.toString(), 4, columns.size());
 
 		Assert.assertTrue(
 			columns.contains(MainExampleTable.TABLE.mainExampleId));
 		Assert.assertTrue(columns.contains(MainExampleTable.TABLE.name));
+		Assert.assertTrue(columns.contains(MainExampleTable.TABLE.description));
 		Assert.assertTrue(columns.contains(MainExampleTable.TABLE.flag));
 
 		try {
@@ -993,6 +994,8 @@ public class SQLDSLTest {
 
 		public static final MainExampleTable TABLE = new MainExampleTable();
 
+		public final Column<MainExampleTable, Clob> description = createColumn(
+			"description", Clob.class, Types.CLOB);
 		public final Column<MainExampleTable, Integer> flag = createColumn(
 			"flag", Integer.class, Types.INTEGER);
 		public final Column<MainExampleTable, Long> mainExampleId =

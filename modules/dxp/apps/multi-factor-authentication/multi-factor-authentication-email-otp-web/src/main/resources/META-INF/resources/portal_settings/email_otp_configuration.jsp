@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-MFAEmailOTPConfiguration mfaEmailOTPConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(MFAEmailOTPConfiguration.class, themeDisplay.getCompanyId());
-%>
-
 <aui:fieldset>
 	<aui:input name="enabled" type="toggle-switch" value="<%= mfaEmailOTPConfiguration.enabled() %>" />
 

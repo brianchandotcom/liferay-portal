@@ -30,4 +30,9 @@ public class AssetListDepotApplication implements DepotApplication {
 		return AssetListPortletKeys.ASSET_LIST;
 	}
 
+	@Override
+	public boolean isCustomizable() {
+		return true;
+	}
+
 }

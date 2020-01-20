@@ -16,11 +16,9 @@ package com.liferay.depot.service.impl;
 
 import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.service.base.DepotAppCustomizationLocalServiceBaseImpl;
-import com.liferay.depot.service.persistence.DepotAppCustomizationPersistence;
 import com.liferay.portal.aop.AopService;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia García
@@ -32,37 +30,43 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotAppCustomizationLocalServiceImpl
 	extends DepotAppCustomizationLocalServiceBaseImpl {
 
-	@Override
-	public DepotAppCustomization addDepotAppCustomization(
+	private DepotAppCustomization _addDepotAppCustomization(
 		long depotEntryId, String portletId, boolean enabled) {
 
 		DepotAppCustomization depotAppCustomization =
-			_depotAppCustomizationPersistence.fetchByD_PI(
-				depotEntryId, portletId);
-
-		if (depotAppCustomization != null) {
-			return depotAppCustomization;
-		}
-
-		depotAppCustomization = _depotAppCustomizationPersistence.create(
-			counterLocalService.increment());
+			depotAppCustomizationPersistence.create(
+				counterLocalService.increment());
 
 		depotAppCustomization.setDepotEntryId(depotEntryId);
 		depotAppCustomization.setEnabled(enabled);
 		depotAppCustomization.setPortletId(portletId);
 
-		return _depotAppCustomizationPersistence.update(depotAppCustomization);
+		return depotAppCustomizationPersistence.update(depotAppCustomization);
+	}
+
+	@Override
+	public DepotAppCustomization updateDepotAppCustomization(
+		long depotEntryId, String portletId, boolean enabled) {
+
+		DepotAppCustomization depotAppCustomization =
+			depotAppCustomizationPersistence.fetchByD_PI(
+				depotEntryId, portletId);
+
+		if (depotAppCustomization == null) {
+			return _addDepotAppCustomization(depotEntryId, portletId, enabled);
+		}
+
+		depotAppCustomization.setEnabled(enabled);
+
+		return depotAppCustomizationPersistence.update(depotAppCustomization);
 	}
 
 	@Override
 	public DepotAppCustomization fetchDepotAppCustomization(
 		long depotEntryId, String portletId) {
 
-		return _depotAppCustomizationPersistence.fetchByD_PI(
+		return depotAppCustomizationPersistence.fetchByD_PI(
 			depotEntryId, portletId);
 	}
-
-	@Reference
-	private DepotAppCustomizationPersistence _depotAppCustomizationPersistence;
 
 }

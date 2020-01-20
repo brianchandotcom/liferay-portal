@@ -379,8 +379,8 @@ definition {
 				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT");
 
 			Click(
-				key_fragmentName = "Asset Publisher",
-				locator1 = "Fragment#FRAGMENT_ELLIPSIS_ICON");
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 
 			Click(
 				key_menuItem = "Configuration",

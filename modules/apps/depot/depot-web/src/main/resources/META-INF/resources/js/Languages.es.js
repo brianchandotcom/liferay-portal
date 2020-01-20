@@ -22,6 +22,8 @@ import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {ItemSelectorDialog} from 'frontend-js-web';
+
 /**
  * @class Languages
  */
@@ -29,6 +31,7 @@ const Languages = ({
 	availableLocales,
 	defaultLocaleId,
 	inheritLocales = false,
+	manageCustomLanguagesURL,
 	portletNamespace,
 	siteAvailableLocales,
 	siteDefaultLocaleId,
@@ -49,6 +52,29 @@ const Languages = ({
 	] = useState(false);
 
 	const form = document[`_${portletNamespace}_fm`];
+
+	const handleAddClick = () => {
+		var url = Liferay.Util.PortletURL.createPortletURL(
+			manageCustomLanguagesURL,
+			{
+				customDefaultLocaleId,
+			}
+		);
+
+		const itemSelectorDialog = new ItemSelectorDialog({
+			buttonAddLabel: Liferay.Language.get('done'),
+			eventName: `_${portletNamespace}_manageLanguages`,
+			title: Liferay.Language.get('language-selection'),
+			url: url.toString()
+		});
+
+		itemSelectorDialog.open();
+
+		itemSelectorDialog.on('selectedItemChange', event => {
+			const selectedLanguages = event.selectedItem;
+			console.log(selectedLanguages);
+		});
+	};
 
 	const Language = ({displayName, isDefault, localeId, showActions}) => {
 		const [active, setActive] = useState(false);
@@ -123,7 +149,7 @@ const Languages = ({
 
 						{showActions && (
 							<ClayTable.Cell align="center">
-								<ClayButton displayType="secondary" small>
+								<ClayButton displayType="secondary" onClick={handleAddClick} small>
 									{Liferay.Language.get('add')}
 								</ClayButton>
 							</ClayTable.Cell>
@@ -220,6 +246,7 @@ Languages.propTypes = {
 	).isRequired,
 	defaultLocaleId: PropTypes.string.isRequired,
 	inheritLocales: PropTypes.bool,
+	manageCustomLanguagesURL: PropTypes.string,
 	portletNamespace: PropTypes.string.isRequired,
 	siteAvailableLocales: PropTypes.arrayOf(
 		PropTypes.shape({

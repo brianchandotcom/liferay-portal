@@ -79,8 +79,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
@@ -336,19 +334,9 @@ public class WorkflowTaskDisplayContext {
 	public List<User> getPooledUsers(WorkflowTask workflowTask)
 		throws PortalException {
 
-		return Stream.of(
-			WorkflowTaskManagerUtil.getPooledActors(
-				_workflowTaskRequestHelper.getCompanyId(),
-				workflowTask.getWorkflowTaskId())
-		).flatMap(
-			List::stream
-		).filter(
-			pooledActor ->
-				pooledActor.getUserId() !=
-					_workflowTaskRequestHelper.getUserId()
-		).collect(
-			Collectors.toList()
-		);
+		return WorkflowTaskManagerUtil.getAssignableUsers(
+			_workflowTaskRequestHelper.getCompanyId(),
+			workflowTask.getWorkflowTaskId());
 	}
 
 	public String getPortletResource() {

@@ -60,7 +60,7 @@ public class WorkflowTaskAssignableUsersResourceImpl
 
 						for (Long workflowTaskId : workflowTaskIds) {
 							List<User> users =
-								_workflowTaskManager.getPooledActors(
+								_workflowTaskManager.getAssignableUsers(
 									contextUser.getCompanyId(), workflowTaskId);
 
 							if (commonUsers == null) {

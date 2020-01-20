@@ -43,6 +43,16 @@ public class AccountEntryTestUtil {
 	}
 
 	public static AccountEntry addAccountEntry(
+			AccountEntryLocalService accountEntryLocalService, String name,
+			String description)
+		throws Exception {
+
+		return accountEntryLocalService.addAccountEntry(
+			TestPropsValues.getUserId(), 0L, name, description, null, null,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	public static AccountEntry addAccountEntry(
 			AccountEntryLocalService accountEntryLocalService, String[] domains)
 		throws Exception {
 

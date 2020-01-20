@@ -294,6 +294,8 @@ class SidebarPageStructurePanel extends Component {
 	 * @review
 	 */
 	_handleElementRemoveButtonClick(event) {
+		event.stopPropagation();
+
 		const itemId = event.delegateTarget.dataset.elementId;
 		const itemType = event.delegateTarget.dataset.elementType;
 

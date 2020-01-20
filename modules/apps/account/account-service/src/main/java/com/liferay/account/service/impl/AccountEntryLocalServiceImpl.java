@@ -14,25 +14,46 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.SortFieldBuilder;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.commons.validator.routines.DomainValidator;
@@ -200,6 +221,32 @@ public class AccountEntryLocalServiceImpl
 	}
 
 	@Override
+	public BaseModelSearchResult<AccountEntry> search(
+		long companyId, String keywords, LinkedHashMap<String, Object> params,
+		int cur, int delta, String orderByField, boolean reverse) {
+
+		SearchResponse searchResponse = _searcher.search(
+			_getSearchRequest(
+				companyId, keywords, params, cur, delta, orderByField,
+				reverse));
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		List<AccountEntry> accountEntries = TransformUtil.transform(
+			searchHits.getSearchHits(),
+			searchHit -> {
+				Document document = searchHit.getDocument();
+
+				long accountEntryId = document.getLong(Field.ENTRY_CLASS_PK);
+
+				return getAccountEntry(accountEntryId);
+			});
+
+		return new BaseModelSearchResult<>(
+			accountEntries, searchResponse.getTotalHits());
+	}
+
+	@Override
 	public AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, String[] domains,
@@ -235,6 +282,47 @@ public class AccountEntryLocalServiceImpl
 		return updateAccountEntry(accountEntry);
 	}
 
+	private SearchRequest _getSearchRequest(
+		long companyId, String keywords, LinkedHashMap<String, Object> params,
+		int cur, int delta, String orderByField, boolean reverse) {
+
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder();
+
+		searchRequestBuilder.entryClassNames(
+			AccountEntry.class.getName()
+		).emptySearchEnabled(
+			true
+		).highlightEnabled(
+			false
+		).withSearchContext(
+			searchContext -> _populateSearchContext(
+				searchContext, companyId, keywords, params)
+		);
+
+		if (cur != QueryUtil.ALL_POS) {
+			searchRequestBuilder.from(cur);
+			searchRequestBuilder.size(delta);
+		}
+
+		if (Validator.isNotNull(orderByField)) {
+			SortOrder sortOrder = SortOrder.ASC;
+
+			if (reverse) {
+				sortOrder = SortOrder.DESC;
+			}
+
+			FieldSort sort = _sorts.field(
+				_sortFieldBuilder.getSortField(
+					AccountEntry.class.getName(), orderByField),
+				sortOrder);
+
+			searchRequestBuilder.sorts(sort);
+		}
+
+		return searchRequestBuilder.build();
+	}
+
 	private void _performActions(
 			long[] accountEntryIds,
 			ActionableDynamicQuery.PerformActionMethod<AccountEntry>
@@ -251,6 +339,45 @@ public class AccountEntryLocalServiceImpl
 		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
 
 		actionableDynamicQuery.performActions();
+	}
+
+	private void _populateSearchContext(
+		SearchContext searchContext, long companyId, String keywords,
+		LinkedHashMap<String, Object> params) {
+
+		searchContext.setCompanyId(companyId);
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		if (MapUtil.isNotEmpty(params)) {
+			long[] accountUserIds = (long[])params.get("accountUserIds");
+
+			if (ArrayUtil.isNotEmpty(accountUserIds)) {
+				searchContext.setAttribute("accountUserIds", accountUserIds);
+			}
+
+			String[] domains = (String[])params.get("domains");
+
+			if (ArrayUtil.isNotEmpty(domains)) {
+				searchContext.setAttribute("domains", domains);
+			}
+
+			long parentAccountEntryId = GetterUtil.getLong(
+				params.get("parentAccountEntryId"),
+				AccountConstants.ACCOUNT_ENTRY_ID_ANY);
+
+			if (parentAccountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) {
+				searchContext.setAttribute(
+					"parentAccountEntryId", parentAccountEntryId);
+			}
+
+			int status = GetterUtil.getInteger(
+				params.get("status"), WorkflowConstants.STATUS_APPROVED);
+
+			searchContext.setAttribute("status", status);
+		}
 	}
 
 	private String[] _validateDomains(String[] domains) throws PortalException {
@@ -271,6 +398,18 @@ public class AccountEntryLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Searcher _searcher;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private SortFieldBuilder _sortFieldBuilder;
+
+	@Reference
+	private Sorts _sorts;
 
 	@Reference
 	private UserFileUploadsSettings _userFileUploadsSettings;

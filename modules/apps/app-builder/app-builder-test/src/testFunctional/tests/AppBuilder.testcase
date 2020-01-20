@@ -2090,6 +2090,54 @@ definition {
 			title = "First App");
 	}
 
+	@description = "Reuse my object's existing fields when creating a new form view"
+	@priority = "5"
+	test ReuseExistingFormViewFields {
+		property portal.acceptance = "false";
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Full name");
+		FormViewBuilder.setFieldRequired();
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Nickname");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Number of children");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Occupation");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Select${number}",
+				optionValue = "Select ${number}",
+				rowNumber = "${number}");
+		}
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Date of birth");
+		FormViewBuilder.setFieldRequired();
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Multiple${number}",
+				optionValue = "Multiple ${number}",
+				rowNumber = "${number}");
+		}
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.setName(formViewName = "Registration Form");
+
+		FormViewBuilder.save();
+	}
+
 	@description = "Search for an object in the object list"
 	@priority = "5"
 	test SearchForObject {

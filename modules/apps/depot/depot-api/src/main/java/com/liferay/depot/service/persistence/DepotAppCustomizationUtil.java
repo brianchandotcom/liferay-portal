@@ -309,11 +309,11 @@ public class DepotAppCustomizationUtil {
 	 * @return the matching depot app customization
 	 * @throws NoSuchAppCustomizationException if a matching depot app customization could not be found
 	 */
-	public static DepotAppCustomization findByD_PI(
+	public static DepotAppCustomization findByD_P(
 			long depotEntryId, String portletId)
 		throws com.liferay.depot.exception.NoSuchAppCustomizationException {
 
-		return getPersistence().findByD_PI(depotEntryId, portletId);
+		return getPersistence().findByD_P(depotEntryId, portletId);
 	}
 
 	/**
@@ -323,10 +323,10 @@ public class DepotAppCustomizationUtil {
 	 * @param portletId the portlet ID
 	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
 	 */
-	public static DepotAppCustomization fetchByD_PI(
+	public static DepotAppCustomization fetchByD_P(
 		long depotEntryId, String portletId) {
 
-		return getPersistence().fetchByD_PI(depotEntryId, portletId);
+		return getPersistence().fetchByD_P(depotEntryId, portletId);
 	}
 
 	/**
@@ -337,10 +337,10 @@ public class DepotAppCustomizationUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
 	 */
-	public static DepotAppCustomization fetchByD_PI(
+	public static DepotAppCustomization fetchByD_P(
 		long depotEntryId, String portletId, boolean useFinderCache) {
 
-		return getPersistence().fetchByD_PI(
+		return getPersistence().fetchByD_P(
 			depotEntryId, portletId, useFinderCache);
 	}
 
@@ -351,11 +351,11 @@ public class DepotAppCustomizationUtil {
 	 * @param portletId the portlet ID
 	 * @return the depot app customization that was removed
 	 */
-	public static DepotAppCustomization removeByD_PI(
+	public static DepotAppCustomization removeByD_P(
 			long depotEntryId, String portletId)
 		throws com.liferay.depot.exception.NoSuchAppCustomizationException {
 
-		return getPersistence().removeByD_PI(depotEntryId, portletId);
+		return getPersistence().removeByD_P(depotEntryId, portletId);
 	}
 
 	/**
@@ -365,8 +365,8 @@ public class DepotAppCustomizationUtil {
 	 * @param portletId the portlet ID
 	 * @return the number of matching depot app customizations
 	 */
-	public static int countByD_PI(long depotEntryId, String portletId) {
-		return getPersistence().countByD_PI(depotEntryId, portletId);
+	public static int countByD_P(long depotEntryId, String portletId) {
+		return getPersistence().countByD_P(depotEntryId, portletId);
 	}
 
 	/**

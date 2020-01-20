@@ -601,8 +601,8 @@ public class DepotAppCustomizationPersistenceImpl
 	private static final String _FINDER_COLUMN_DEPOTENTRYID_DEPOTENTRYID_2 =
 		"depotAppCustomization.depotEntryId = ?";
 
-	private FinderPath _finderPathFetchByD_PI;
-	private FinderPath _finderPathCountByD_PI;
+	private FinderPath _finderPathFetchByD_P;
+	private FinderPath _finderPathCountByD_P;
 
 	/**
 	 * Returns the depot app customization where depotEntryId = &#63; and portletId = &#63; or throws a <code>NoSuchAppCustomizationException</code> if it could not be found.
@@ -613,10 +613,10 @@ public class DepotAppCustomizationPersistenceImpl
 	 * @throws NoSuchAppCustomizationException if a matching depot app customization could not be found
 	 */
 	@Override
-	public DepotAppCustomization findByD_PI(long depotEntryId, String portletId)
+	public DepotAppCustomization findByD_P(long depotEntryId, String portletId)
 		throws NoSuchAppCustomizationException {
 
-		DepotAppCustomization depotAppCustomization = fetchByD_PI(
+		DepotAppCustomization depotAppCustomization = fetchByD_P(
 			depotEntryId, portletId);
 
 		if (depotAppCustomization == null) {
@@ -650,10 +650,10 @@ public class DepotAppCustomizationPersistenceImpl
 	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
 	 */
 	@Override
-	public DepotAppCustomization fetchByD_PI(
+	public DepotAppCustomization fetchByD_P(
 		long depotEntryId, String portletId) {
 
-		return fetchByD_PI(depotEntryId, portletId, true);
+		return fetchByD_P(depotEntryId, portletId, true);
 	}
 
 	/**
@@ -665,7 +665,7 @@ public class DepotAppCustomizationPersistenceImpl
 	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
 	 */
 	@Override
-	public DepotAppCustomization fetchByD_PI(
+	public DepotAppCustomization fetchByD_P(
 		long depotEntryId, String portletId, boolean useFinderCache) {
 
 		portletId = Objects.toString(portletId, "");
@@ -680,7 +680,7 @@ public class DepotAppCustomizationPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByD_PI, finderArgs, this);
+				_finderPathFetchByD_P, finderArgs, this);
 		}
 
 		if (result instanceof DepotAppCustomization) {
@@ -700,17 +700,17 @@ public class DepotAppCustomizationPersistenceImpl
 
 			query.append(_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE);
 
-			query.append(_FINDER_COLUMN_D_PI_DEPOTENTRYID_2);
+			query.append(_FINDER_COLUMN_D_P_DEPOTENTRYID_2);
 
 			boolean bindPortletId = false;
 
 			if (portletId.isEmpty()) {
-				query.append(_FINDER_COLUMN_D_PI_PORTLETID_3);
+				query.append(_FINDER_COLUMN_D_P_PORTLETID_3);
 			}
 			else {
 				bindPortletId = true;
 
-				query.append(_FINDER_COLUMN_D_PI_PORTLETID_2);
+				query.append(_FINDER_COLUMN_D_P_PORTLETID_2);
 			}
 
 			String sql = query.toString();
@@ -735,7 +735,7 @@ public class DepotAppCustomizationPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByD_PI, finderArgs, list);
+							_finderPathFetchByD_P, finderArgs, list);
 					}
 				}
 				else {
@@ -748,8 +748,7 @@ public class DepotAppCustomizationPersistenceImpl
 			}
 			catch (Exception e) {
 				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByD_PI, finderArgs);
+					finderCache.removeResult(_finderPathFetchByD_P, finderArgs);
 				}
 
 				throw processException(e);
@@ -775,11 +774,11 @@ public class DepotAppCustomizationPersistenceImpl
 	 * @return the depot app customization that was removed
 	 */
 	@Override
-	public DepotAppCustomization removeByD_PI(
+	public DepotAppCustomization removeByD_P(
 			long depotEntryId, String portletId)
 		throws NoSuchAppCustomizationException {
 
-		DepotAppCustomization depotAppCustomization = findByD_PI(
+		DepotAppCustomization depotAppCustomization = findByD_P(
 			depotEntryId, portletId);
 
 		return remove(depotAppCustomization);
@@ -793,10 +792,10 @@ public class DepotAppCustomizationPersistenceImpl
 	 * @return the number of matching depot app customizations
 	 */
 	@Override
-	public int countByD_PI(long depotEntryId, String portletId) {
+	public int countByD_P(long depotEntryId, String portletId) {
 		portletId = Objects.toString(portletId, "");
 
-		FinderPath finderPath = _finderPathCountByD_PI;
+		FinderPath finderPath = _finderPathCountByD_P;
 
 		Object[] finderArgs = new Object[] {depotEntryId, portletId};
 
@@ -807,17 +806,17 @@ public class DepotAppCustomizationPersistenceImpl
 
 			query.append(_SQL_COUNT_DEPOTAPPCUSTOMIZATION_WHERE);
 
-			query.append(_FINDER_COLUMN_D_PI_DEPOTENTRYID_2);
+			query.append(_FINDER_COLUMN_D_P_DEPOTENTRYID_2);
 
 			boolean bindPortletId = false;
 
 			if (portletId.isEmpty()) {
-				query.append(_FINDER_COLUMN_D_PI_PORTLETID_3);
+				query.append(_FINDER_COLUMN_D_P_PORTLETID_3);
 			}
 			else {
 				bindPortletId = true;
 
-				query.append(_FINDER_COLUMN_D_PI_PORTLETID_2);
+				query.append(_FINDER_COLUMN_D_P_PORTLETID_2);
 			}
 
 			String sql = query.toString();
@@ -854,13 +853,13 @@ public class DepotAppCustomizationPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_D_PI_DEPOTENTRYID_2 =
+	private static final String _FINDER_COLUMN_D_P_DEPOTENTRYID_2 =
 		"depotAppCustomization.depotEntryId = ? AND ";
 
-	private static final String _FINDER_COLUMN_D_PI_PORTLETID_2 =
+	private static final String _FINDER_COLUMN_D_P_PORTLETID_2 =
 		"depotAppCustomization.portletId = ?";
 
-	private static final String _FINDER_COLUMN_D_PI_PORTLETID_3 =
+	private static final String _FINDER_COLUMN_D_P_PORTLETID_3 =
 		"(depotAppCustomization.portletId IS NULL OR depotAppCustomization.portletId = '')";
 
 	public DepotAppCustomizationPersistenceImpl() {
@@ -882,7 +881,7 @@ public class DepotAppCustomizationPersistenceImpl
 			depotAppCustomization.getPrimaryKey(), depotAppCustomization);
 
 		finderCache.putResult(
-			_finderPathFetchByD_PI,
+			_finderPathFetchByD_P,
 			new Object[] {
 				depotAppCustomization.getDepotEntryId(),
 				depotAppCustomization.getPortletId()
@@ -991,10 +990,9 @@ public class DepotAppCustomizationPersistenceImpl
 		};
 
 		finderCache.putResult(
-			_finderPathCountByD_PI, args, Long.valueOf(1), false);
+			_finderPathCountByD_P, args, Long.valueOf(1), false);
 		finderCache.putResult(
-			_finderPathFetchByD_PI, args, depotAppCustomizationModelImpl,
-			false);
+			_finderPathFetchByD_P, args, depotAppCustomizationModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -1007,20 +1005,20 @@ public class DepotAppCustomizationPersistenceImpl
 				depotAppCustomizationModelImpl.getPortletId()
 			};
 
-			finderCache.removeResult(_finderPathCountByD_PI, args);
-			finderCache.removeResult(_finderPathFetchByD_PI, args);
+			finderCache.removeResult(_finderPathCountByD_P, args);
+			finderCache.removeResult(_finderPathFetchByD_P, args);
 		}
 
 		if ((depotAppCustomizationModelImpl.getColumnBitmask() &
-			 _finderPathFetchByD_PI.getColumnBitmask()) != 0) {
+			 _finderPathFetchByD_P.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				depotAppCustomizationModelImpl.getOriginalDepotEntryId(),
 				depotAppCustomizationModelImpl.getOriginalPortletId()
 			};
 
-			finderCache.removeResult(_finderPathCountByD_PI, args);
-			finderCache.removeResult(_finderPathFetchByD_PI, args);
+			finderCache.removeResult(_finderPathCountByD_P, args);
+			finderCache.removeResult(_finderPathFetchByD_P, args);
 		}
 	}
 
@@ -1544,17 +1542,17 @@ public class DepotAppCustomizationPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDepotEntryId",
 			new String[] {Long.class.getName()});
 
-		_finderPathFetchByD_PI = new FinderPath(
+		_finderPathFetchByD_P = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			DepotAppCustomizationImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByD_PI",
+			"fetchByD_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			DepotAppCustomizationModelImpl.DEPOTENTRYID_COLUMN_BITMASK |
 			DepotAppCustomizationModelImpl.PORTLETID_COLUMN_BITMASK);
 
-		_finderPathCountByD_PI = new FinderPath(
+		_finderPathCountByD_P = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_PI",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_P",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 

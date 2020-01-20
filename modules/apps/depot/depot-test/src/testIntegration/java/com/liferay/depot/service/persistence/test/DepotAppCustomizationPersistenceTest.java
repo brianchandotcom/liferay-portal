@@ -172,12 +172,12 @@ public class DepotAppCustomizationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByD_PI() throws Exception {
-		_persistence.countByD_PI(RandomTestUtil.nextLong(), "");
+	public void testCountByD_P() throws Exception {
+		_persistence.countByD_P(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByD_PI(0L, "null");
+		_persistence.countByD_P(0L, "null");
 
-		_persistence.countByD_PI(0L, (String)null);
+		_persistence.countByD_P(0L, (String)null);
 	}
 
 	@Test

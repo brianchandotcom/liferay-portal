@@ -193,7 +193,7 @@ public interface DepotAppCustomizationPersistence
 	 * @return the matching depot app customization
 	 * @throws NoSuchAppCustomizationException if a matching depot app customization could not be found
 	 */
-	public DepotAppCustomization findByD_PI(long depotEntryId, String portletId)
+	public DepotAppCustomization findByD_P(long depotEntryId, String portletId)
 		throws NoSuchAppCustomizationException;
 
 	/**
@@ -203,7 +203,7 @@ public interface DepotAppCustomizationPersistence
 	 * @param portletId the portlet ID
 	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
 	 */
-	public DepotAppCustomization fetchByD_PI(
+	public DepotAppCustomization fetchByD_P(
 		long depotEntryId, String portletId);
 
 	/**
@@ -214,7 +214,7 @@ public interface DepotAppCustomizationPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
 	 */
-	public DepotAppCustomization fetchByD_PI(
+	public DepotAppCustomization fetchByD_P(
 		long depotEntryId, String portletId, boolean useFinderCache);
 
 	/**
@@ -224,7 +224,7 @@ public interface DepotAppCustomizationPersistence
 	 * @param portletId the portlet ID
 	 * @return the depot app customization that was removed
 	 */
-	public DepotAppCustomization removeByD_PI(
+	public DepotAppCustomization removeByD_P(
 			long depotEntryId, String portletId)
 		throws NoSuchAppCustomizationException;
 
@@ -235,7 +235,7 @@ public interface DepotAppCustomizationPersistence
 	 * @param portletId the portlet ID
 	 * @return the number of matching depot app customizations
 	 */
-	public int countByD_PI(long depotEntryId, String portletId);
+	public int countByD_P(long depotEntryId, String portletId);
 
 	/**
 	 * Caches the depot app customization in the entity cache if it is enabled.

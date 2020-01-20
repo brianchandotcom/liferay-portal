@@ -198,6 +198,9 @@ public interface DepotEntryLocalService
 		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DepotEntry fetchGroupDepotEntry(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

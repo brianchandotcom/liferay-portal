@@ -16,12 +16,10 @@ package com.liferay.depot.model.impl;
 
 import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.model.DepotAppCustomizationModel;
-import com.liferay.depot.model.DepotAppCustomizationSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,11 +34,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -56,7 +52,6 @@ import java.util.function.Function;
  * @see DepotAppCustomizationImpl
  * @generated
  */
-@JSON(strict = true)
 public class DepotAppCustomizationModelImpl
 	extends BaseModelImpl<DepotAppCustomization>
 	implements DepotAppCustomizationModel {
@@ -117,55 +112,6 @@ public class DepotAppCustomizationModelImpl
 
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
 		_finderCacheEnabled = finderCacheEnabled;
-	}
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static DepotAppCustomization toModel(
-		DepotAppCustomizationSoap soapModel) {
-
-		if (soapModel == null) {
-			return null;
-		}
-
-		DepotAppCustomization model = new DepotAppCustomizationImpl();
-
-		model.setMvccVersion(soapModel.getMvccVersion());
-		model.setDepotAppCustomizationId(
-			soapModel.getDepotAppCustomizationId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setDepotEntryId(soapModel.getDepotEntryId());
-		model.setEnabled(soapModel.isEnabled());
-		model.setPortletId(soapModel.getPortletId());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<DepotAppCustomization> toModels(
-		DepotAppCustomizationSoap[] soapModels) {
-
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<DepotAppCustomization> models =
-			new ArrayList<DepotAppCustomization>(soapModels.length);
-
-		for (DepotAppCustomizationSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
 	}
 
 	public DepotAppCustomizationModelImpl() {
@@ -342,7 +288,6 @@ public class DepotAppCustomizationModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
-	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -353,7 +298,6 @@ public class DepotAppCustomizationModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
-	@JSON
 	@Override
 	public long getDepotAppCustomizationId() {
 		return _depotAppCustomizationId;
@@ -364,7 +308,6 @@ public class DepotAppCustomizationModelImpl
 		_depotAppCustomizationId = depotAppCustomizationId;
 	}
 
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -375,7 +318,6 @@ public class DepotAppCustomizationModelImpl
 		_companyId = companyId;
 	}
 
-	@JSON
 	@Override
 	public long getDepotEntryId() {
 		return _depotEntryId;
@@ -398,13 +340,11 @@ public class DepotAppCustomizationModelImpl
 		return _originalDepotEntryId;
 	}
 
-	@JSON
 	@Override
 	public boolean getEnabled() {
 		return _enabled;
 	}
 
-	@JSON
 	@Override
 	public boolean isEnabled() {
 		return _enabled;
@@ -415,7 +355,6 @@ public class DepotAppCustomizationModelImpl
 		_enabled = enabled;
 	}
 
-	@JSON
 	@Override
 	public String getPortletId() {
 		if (_portletId == null) {

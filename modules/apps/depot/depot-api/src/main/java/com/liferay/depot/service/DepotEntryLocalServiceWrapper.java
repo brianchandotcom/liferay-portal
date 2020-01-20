@@ -221,6 +221,13 @@ public class DepotEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.depot.model.DepotEntry fetchGroupDepotEntry(
+		long groupId) {
+
+		return _depotEntryLocalService.fetchGroupDepotEntry(groupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

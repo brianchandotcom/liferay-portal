@@ -92,6 +92,11 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public DepotEntry fetchGroupDepotEntry(long groupId) {
+		return depotEntryPersistence.fetchByGroupId(groupId);
+	}
+
+	@Override
 	public DepotEntry getGroupDepotEntry(long groupId) throws PortalException {
 		return depotEntryPersistence.findByGroupId(groupId);
 	}

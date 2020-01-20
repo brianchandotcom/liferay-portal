@@ -3,6 +3,7 @@
 	"htmlPath": "index.html",
 	"jsPath": "index.js",
 	"name": "Title",
+	"readOnly": "true",
 	"thumbnailPath": "thumbnail.png",
 	"type": "section"
 }

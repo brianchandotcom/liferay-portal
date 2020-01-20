@@ -330,26 +330,28 @@ export default function Topper({
 						{getName(item, fragmentEntryLinks) ||
 							Liferay.Language.get('element')}
 					</TopperListItem>
-					<TopperListItem>
-						<ClayButton
-							displayType="unstyled"
-							small
-							title={Liferay.Language.get('comments')}
-						>
-							<ClayIcon
-								className="page-editor-topper__icon"
-								onClick={() => {
-									dispatch(
-										switchSidebarPanel({
-											sidebarOpen: true,
-											sidebarPanelId: commentsPanelId
-										})
-									);
-								}}
-								symbol="comments"
-							/>
-						</ClayButton>
-					</TopperListItem>
+					{item.type === LAYOUT_DATA_ITEM_TYPES.fragment && (
+						<TopperListItem>
+							<ClayButton
+								displayType="unstyled"
+								small
+								title={Liferay.Language.get('comments')}
+							>
+								<ClayIcon
+									className="page-editor-topper__icon"
+									onClick={() => {
+										dispatch(
+											switchSidebarPanel({
+												sidebarOpen: true,
+												sidebarPanelId: commentsPanelId
+											})
+										);
+									}}
+									symbol="comments"
+								/>
+							</ClayButton>
+						</TopperListItem>
+					)}
 					<TopperListItem>
 						<ClayButton
 							displayType="unstyled"

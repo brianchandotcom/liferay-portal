@@ -616,8 +616,8 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	protected boolean hasOtherAssignees(User user) throws Exception {
 		WorkflowTask workflowTask = getWorkflowTask(user, null, false, null, 0);
 
-		return WorkflowTaskManagerUtil.hasOtherAssignees(
-			workflowTask.getWorkflowTaskId(), user.getUserId());
+		return WorkflowTaskManagerUtil.hasAssignableUsers(
+			user.getCompanyId(), workflowTask.getWorkflowTaskId());
 	}
 
 	protected int searchCount(String keywords) throws Exception {

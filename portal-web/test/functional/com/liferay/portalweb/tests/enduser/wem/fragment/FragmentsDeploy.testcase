@@ -29,6 +29,8 @@ definition {
 	@description = "This is a test for LPS-106253. Can delete read-only deployed fragments of site-scoped in that site."
 	@priority = "5"
 	test CanDeleteSiteScopedReadOnlyDeployedFragmentInThatSite {
+		property test.name.skip.portal.instance = "FragmentsDeploy#CanDeleteSiteScopedReadOnlyDeployedFragmentInThatSite";
+
 		task ("Deploy fragments zip to Test Site Name") {
 			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "card.zip");
 		}
@@ -290,6 +292,7 @@ definition {
 	@priority = "5"
 	test DeployFragmentsToSpecificVirtualInstance {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property test.name.skip.portal.instance = "FragmentsDeploy#DeployFragmentsToSpecificVirtualInstance";
 
 		task ("Add a new Virtual Instance") {
 			ProductMenu.gotoPortlet(

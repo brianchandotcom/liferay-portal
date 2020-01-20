@@ -636,7 +636,7 @@ public abstract class BaseStructuredContentResourceImpl
 			contextCompany.getCompanyId(), 0, resourceName,
 			String.valueOf(structuredContentId),
 			ModelPermissionsUtil.toModelPermissions(
-				contextCompany.getCompanyId(), permission, structuredContentId,
+				contextCompany.getCompanyId(), permissions, structuredContentId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
 	}

@@ -102,10 +102,7 @@ export default function Topper({
 				);
 			}
 		},
-		item: {
-			...item,
-			type: LAYOUT_DATA_ITEM_TYPES[item.type]
-		}
+		item
 	});
 
 	const [{canDrop, isOver}, drop] = useDrop({

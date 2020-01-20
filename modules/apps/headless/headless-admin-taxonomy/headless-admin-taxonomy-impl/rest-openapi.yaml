@@ -148,6 +148,10 @@ components:
                     description:
                         The category's text description.
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 externalReferenceCode:
                     type: string
                 id:
@@ -159,6 +163,10 @@ components:
                     description:
                         The category's name.
                     type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 numberOfTaxonomyCategories:
                     description:
                         The number of times this category has been used in other assets.
@@ -235,6 +243,10 @@ components:
                     description:
                         The vocabulary's text description.
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 id:
                     description:
                         The vocabulary's ID.
@@ -245,6 +257,10 @@ components:
                     description:
                         The vocabulary's name.
                     type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 numberOfTaxonomyCategories:
                     description:
                         The number of categories that directly depend on this vocabulary.

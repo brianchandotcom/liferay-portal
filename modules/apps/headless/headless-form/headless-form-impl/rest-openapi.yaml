@@ -51,6 +51,10 @@ components:
                     type: string
                 description:
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 formRecords:
                     items:
                         $ref: "#/components/schemas/FormRecord"
@@ -67,6 +71,10 @@ components:
                     type: integer
                 name:
                     type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 siteId:
                     format: int64
                     type: integer
@@ -210,6 +218,10 @@ components:
                         type: string
                     label:
                         type: string
+                    label_i18n:
+                        additionalProperties:
+                            type: string
+                        type: object
                     localizable:
                         type: boolean
                     multiple:
@@ -220,6 +232,10 @@ components:
                         type: string
                     predefinedValue:
                         type: string
+                    predefinedValue_i18n:
+                        additionalProperties:
+                            type: string
+                        type: object
                     readOnly:
                         type: boolean
                     repeatable:
@@ -234,6 +250,10 @@ components:
                         type: string
                     text:
                         type: string
+                    text_i18n:
+                        additionalProperties:
+                            type: string
+                        type: object
                     tooltip:
                         type: string
                     validation:
@@ -242,6 +262,10 @@ components:
                         properties:
                             errorMessage:
                                 type: string
+                            errorMessage_i18n:
+                                additionalProperties:
+                                    type: string
+                                type: object
                             expression:
                                 type: string
                             id:
@@ -260,6 +284,10 @@ components:
                         type: integer
                     label:
                         type: string
+                    label_i18n:
+                        additionalProperties:
+                            type: string
+                        type: object
                     value:
                         type: string
                 type: object
@@ -338,6 +366,10 @@ components:
                     type: string
                 description:
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 formPages:
                     description:
                         https://www.schema.org/FormPage
@@ -349,11 +381,19 @@ components:
                                 type: array
                             headline:
                                 type: string
+                            headline_i18n:
+                                additionalProperties:
+                                    type: string
+                                type: object
                             id:
                                 format: int64
                                 type: integer
                             text:
                                 type: string
+                            text_i18n:
+                                additionalProperties:
+                                    type: string
+                                type: object
                         type: object
                     type: array
                 formSuccessPage:
@@ -362,8 +402,16 @@ components:
                     properties:
                         description:
                             type: string
+                        description_i18n:
+                            additionalProperties:
+                                type: string
+                            type: object
                         headline:
                             type: string
+                        headline_i18n:
+                            additionalProperties:
+                                type: string
+                            type: object
                         id:
                             format: int64
                             type: integer
@@ -373,6 +421,10 @@ components:
                     type: integer
                 name:
                     type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 siteId:
                     format: int64
                     type: integer

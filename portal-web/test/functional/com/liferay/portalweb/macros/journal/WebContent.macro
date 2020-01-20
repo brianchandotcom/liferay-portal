@@ -332,7 +332,10 @@ definition {
 		Pause(locator1 = "1000");
 
 		if (isSet(siteName)) {
-			Click(locator1 = "ItemSelector#SITES_NAVIGATION");
+			AssertClick(
+				key_breadcrumbName = "sites",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "sites");
 
 			AssertClick(
 				key_siteName = "${siteName}",

@@ -13,6 +13,7 @@
  */
 
 import ClayLabel from '@clayui/label';
+import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
@@ -20,13 +21,16 @@ import React, {useState} from 'react';
 const ManageLanguages = ({
 	availableLocales,
 	customDefaultLocaleId,
-	customLocales
+	customLocalesIds
 }) => {
 	const Language = ({displayName, isDefault, localeId}) => {
 		return (
 			<ClayTable.Row>
 				<ClayTable.Cell align="center">
-					checkbox
+					<ClayCheckbox
+						checked={customLocalesIds.indexOf(localeId) != -1}
+						disabled={isDefault}
+					/>
 				</ClayTable.Cell>
 
 				<ClayTable.Cell expanded>
@@ -44,12 +48,10 @@ const ManageLanguages = ({
 
 	return(
 		<>
-			<h1> Manage languages </h1>
-
 			<ClayTable borderless headVerticalAlignment="middle">
 				<ClayTable.Head>
 					<ClayTable.Row>
-						<ClayTable.Cell expanded headingCell headingTitle>
+						<ClayTable.Cell headingCell headingTitle>
 							{Liferay.Language.get('language')}
 						</ClayTable.Cell>
 					</ClayTable.Row>
@@ -79,12 +81,7 @@ ManageLanguages.propTypes = {
 		})
 	).isRequired,
 	customDefaultLocaleId: PropTypes.string.isRequired,
-	customLocales: PropTypes.arrayOf(
-		PropTypes.shape({
-			displayName: PropTypes.string,
-			localeId: PropTypes.string
-		})
-	).isRequired,
+	customLocalesIds: PropTypes.array.isRequired,
 }
 
 export default function(props) {

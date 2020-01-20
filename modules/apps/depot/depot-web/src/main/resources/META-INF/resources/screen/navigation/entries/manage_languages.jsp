@@ -20,9 +20,9 @@
 HashMap<String, Object> data = HashMapBuilder.<String, Object>put(
 	"availableLocales", DepotLanguageUtil.getAvailableLocalesJSONArray(locale)
 ).put(
-	"customDefaultLocaleId", request.getParameter("customDefaultLocaleId")
+	"customDefaultLocaleId", ParamUtil.getString(request, "customDefaultLocaleId")
 ).put(
-	"customLocales", request.getParameter("customLocales")
+	"customLocalesIds", ParamUtil.getStringValues(request, "customLocalesIds")
 ).build();
 %>
 

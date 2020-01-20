@@ -60,7 +60,7 @@ const Languages = ({
 			manageCustomLanguagesURL,
 			{
 				customDefaultLocaleId,
-				customLocales
+				customLocalesIds: customLocales.map(({localeId}) => localeId)
 			}
 		);
 

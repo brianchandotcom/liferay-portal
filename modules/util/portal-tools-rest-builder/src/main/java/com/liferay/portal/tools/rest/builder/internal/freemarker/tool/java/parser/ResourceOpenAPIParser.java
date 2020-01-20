@@ -285,16 +285,6 @@ public class ResourceOpenAPIParser {
 
 		List<JavaMethodParameter> javaMethodParameters = new ArrayList<>();
 
-		String operationId = operation.getOperationId();
-
-		if ((operationId != null) && operationId.endsWith("Permission") &&
-			requestBodyMediaTypes.isEmpty()) {
-
-			javaMethodParameters.add(
-				new JavaMethodParameter(
-					"permissions", Permission[].class.getName()));
-		}
-
 		List<Parameter> parameters = operation.getParameters();
 
 		Set<String> parameterNames = new HashSet<>();
@@ -326,6 +316,16 @@ public class ResourceOpenAPIParser {
 					CamelCaseUtil.toCamelCase(parameterName),
 					OpenAPIParserUtil.getJavaDataType(
 						javaDataTypeMap, parameter.getSchema())));
+		}
+
+		String operationId = operation.getOperationId();
+
+		if ((operationId != null) && operationId.endsWith("Permission") &&
+			requestBodyMediaTypes.isEmpty()) {
+
+			javaMethodParameters.add(
+				new JavaMethodParameter(
+					"permissions", Permission[].class.getName()));
 		}
 
 		if (parameterNames.contains("filter")) {

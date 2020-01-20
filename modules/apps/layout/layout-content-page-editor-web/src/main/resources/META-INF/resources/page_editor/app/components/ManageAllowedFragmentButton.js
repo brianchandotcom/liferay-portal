@@ -19,7 +19,7 @@ import React, {useState} from 'react';
 
 import ManageAllowedFragmentModal from './ManageAllowedFragmentModal';
 
-const ManageAllowedFragmentButton = () => {
+const ManageAllowedFragmentButton = ({item}) => {
 	const isMounted = useIsMounted();
 
 	const [openModal, setOpenModal] = useState(false);
@@ -40,6 +40,7 @@ const ManageAllowedFragmentButton = () => {
 		<>
 			{openModal && (
 				<ManageAllowedFragmentModal
+					item={item}
 					observer={observer}
 					onClose={onClose}
 				/>

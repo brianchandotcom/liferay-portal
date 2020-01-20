@@ -37,7 +37,7 @@ const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
 						)}
 					</p>
 
-					<ManageAllowedFragmentButton />
+					<ManageAllowedFragmentButton item={item} />
 				</div>
 			)}
 		</Topper>

@@ -17,8 +17,8 @@ import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useState, useEffect, useMemo, useContext} from 'react';
 
-import {ConfigContext} from '../../config/index';
-import {StoreContext} from '../../store/index';
+import {ConfigContext} from '../config/index';
+import {StoreContext} from '../store/index';
 import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
 
 const getSelectedNodeIds = (

@@ -15,11 +15,17 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useContext} from 'react';
 
+import {ConfigContext} from '../config/index';
+import {DispatchContext} from '../reducers/index';
+import updateItemConfig from '../thunks/updateItemConfig';
 import AllowedFragmentSelector from './AllowedFragmentSelector';
 
-const ManageAllowedFragmentModal = ({observer, onClose}) => {
+const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
+	const dispatch = useContext(DispatchContext);
+	const config = useContext(ConfigContext);
+
 	const [allowNewFragmentEntries, setAllowNewFragmentEntries] = useState(
 		true
 	);
@@ -29,7 +35,20 @@ const ManageAllowedFragmentModal = ({observer, onClose}) => {
 	const handleSaveClick = () => {
 		setLoading(true);
 
-		// TODO: Call thunk
+		dispatch(
+			updateItemConfig({
+				config,
+				itemConfig: {
+					allowNewFragmentEntries,
+					fragmentEntryKeys: [...selectedFragments]
+				},
+				itemId: item.itemId,
+				segmentsExperienceId: 0
+			})
+		).then(() => {
+			setLoading(false);
+			onClose();
+		});
 	};
 
 	const onSelectedFragment = useCallback(

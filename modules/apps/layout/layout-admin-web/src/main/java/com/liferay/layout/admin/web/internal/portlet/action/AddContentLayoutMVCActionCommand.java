@@ -47,7 +47,6 @@ import com.liferay.sites.kernel.util.SitesUtil;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -155,9 +154,7 @@ public class AddContentLayoutMVCActionCommand
 			String redirectURL = getRedirectURL(
 				actionRequest, actionResponse, layout);
 
-			if (Objects.equals(
-					layout.getType(), LayoutConstants.TYPE_CONTENT)) {
-
+			if (layout.isTypeContent()) {
 				redirectURL = getContentRedirectURL(actionRequest, layout);
 			}
 

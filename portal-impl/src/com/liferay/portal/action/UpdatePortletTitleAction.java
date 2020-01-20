@@ -16,7 +16,6 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -27,8 +26,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portlet.InvokerPortletUtil;
-
-import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -78,7 +75,7 @@ public class UpdatePortletTitleAction extends JSONAction {
 
 		portletSetup.store();
 
-		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+		if (layout.isTypeContent()) {
 			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
 				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
 

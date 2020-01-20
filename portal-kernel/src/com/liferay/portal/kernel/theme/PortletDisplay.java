@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu;
@@ -37,8 +36,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
-
-import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -488,8 +485,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 		Layout layout = _themeDisplay.getLayout();
 
 		if (Validator.isNull(portletSetupPortletDecoratorId) &&
-			(layout.isTypeAssetDisplay() ||
-			 Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT))) {
+			(layout.isTypeAssetDisplay() || layout.isTypeContent())) {
 
 			return false;
 		}
@@ -509,8 +505,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 			httpServletRequest.getAttribute(WebKeys.SHOW_PORTLET_TOPPER));
 
 		if (layoutMode.equals(Constants.VIEW) &&
-			(layout.isTypeAssetDisplay() ||
-			 Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) &&
+			(layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
 			showPortletTopper) {
 
 			return false;

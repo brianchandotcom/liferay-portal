@@ -31,7 +31,6 @@ import com.liferay.layout.seo.web.internal.display.context.LayoutsSEODisplayCont
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -95,8 +93,7 @@ public abstract class BaseLayoutScreenNavigationEntry
 		Layout draftLayout = layoutLocalService.fetchLayout(
 			portal.getClassNameId(Layout.class), layout.getPlid());
 
-		if ((layout.isTypeAssetDisplay() ||
-			 Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) &&
+		if ((layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
 			(draftLayout == null)) {
 
 			return false;

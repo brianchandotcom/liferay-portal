@@ -16,7 +16,6 @@ package com.liferay.layout.type.controller.content.internal.product.navigation.c
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -65,9 +64,7 @@ public class LayoutEditorToolbarProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!layout.isTypeAssetDisplay() &&
-			!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
-
+		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
 			return false;
 		}
 

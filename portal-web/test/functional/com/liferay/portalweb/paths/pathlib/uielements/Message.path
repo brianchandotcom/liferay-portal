@@ -264,11 +264,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NO_PAGES</td>
-	<td>//h1[contains(.,'No Pages yet')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PORTAL_LOCALIZATION</td>
 	<td>//div[contains(@class,'portal-message') and contains(@class,'alert-info')]</td>
 	<td></td>

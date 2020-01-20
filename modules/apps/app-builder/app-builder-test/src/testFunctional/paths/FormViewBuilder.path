@@ -200,6 +200,17 @@
 </tr>
 >>>>>>> LRQA-54502 Added text field from object field
 
+<tr>
+	<td>OBJECT_FIELD_PLUS</td>
+	<td>//*[@class='lexicon-icon lexicon-icon-plus']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>OBJECT_FIELD_BUTTON_DROPDOWN</td>
+	<td>//button[@class='dropdown-item' and contains(text(), '${key_fieldName}')]</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>

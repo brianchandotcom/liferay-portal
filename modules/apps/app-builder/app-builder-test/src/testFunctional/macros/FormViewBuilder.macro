@@ -23,6 +23,18 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
 	}
 
+	macro addFieldToObject { 
+		Click(locator1 = "FormViewBuilder#OBJECT_FIELD_PLUS");
+
+		Click(
+			key_fieldName = "Add Field to Object",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+	}
+
 	macro addFormView {
 
 		if (IsElementPresent(locator1 = "AppBuilder#NAVBAR")) {

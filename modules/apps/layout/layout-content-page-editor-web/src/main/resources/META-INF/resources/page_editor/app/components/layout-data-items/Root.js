@@ -49,7 +49,7 @@ const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 			{({canDrop, isOver}) => (
 				<div
 					className={classNames('page-editor__root', {
-						'page-editor__root--active': isOver && canDrop
+						'page-editor__root--active': isOver && canDrop && !React.Children.count(children)
 					})}
 					ref={ref}
 				>

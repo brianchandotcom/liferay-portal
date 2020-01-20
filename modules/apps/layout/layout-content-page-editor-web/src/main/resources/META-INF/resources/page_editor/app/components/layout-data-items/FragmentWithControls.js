@@ -75,7 +75,10 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 
 	return (
 		<Topper
-			acceptDrop={[LAYOUT_DATA_ITEM_TYPES.fragment]}
+			acceptDrop={[
+				LAYOUT_DATA_ITEM_TYPES.container,
+				LAYOUT_DATA_ITEM_TYPES.fragment
+			]}
 			active
 			item={item}
 			layoutData={layoutData}

@@ -328,6 +328,16 @@ public class AccountEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountEntry> search(
+			long companyId, String keywords,
+			java.util.LinkedHashMap<String, Object> params, int cur, int delta,
+			String orderByField, boolean reverse) {
+
+		return getService().search(
+			companyId, keywords, params, cur, delta, orderByField, reverse);
+	}
+
 	/**
 	 * Updates the account entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -258,6 +260,11 @@ public interface AccountEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<AccountEntry> search(
+		long companyId, String keywords, LinkedHashMap<String, Object> params,
+		int cur, int delta, String orderByField, boolean reverse);
 
 	/**
 	 * Updates the account entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -18,16 +18,16 @@ import {useRouter} from '../../hooks/useRouter.es';
 import {pushToHistory} from '../filter/util/filterUtil.es';
 import {parse, stringify} from '../router/queryString.es';
 
-const SearchField = props => {
+const SearchField = ({
+	disabled,
+	placeholder = Liferay.Language.get('search-for')
+}) => {
 	const routerProps = useRouter();
 
 	const query = parse(routerProps.location.search);
 	const {search = null} = query;
 
-	const {disabled, placeholder = Liferay.Language.get('search-for')} = props;
-
 	const [searchValue, setSearchValue] = useState(null);
-	const [redirect, setRedirect] = useState(false);
 
 	useEffect(() => {
 		setSearchValue(search);
@@ -39,19 +39,15 @@ const SearchField = props => {
 
 	const handleSubmit = event => {
 		event.preventDefault();
-		setRedirect(true);
-	};
-
-	if (redirect) {
-		setRedirect(false);
 
 		query.search = searchValue;
 
 		pushToHistory(stringify(query), routerProps);
-	}
+	};
 
 	return (
 		<ClayManagementToolbar.Search
+			data-testid="searchFieldForm"
 			method="GET"
 			onSubmit={handleSubmit}
 			showMobile={true}
@@ -61,6 +57,7 @@ const SearchField = props => {
 					<ClayInput
 						aria-label="Search"
 						className="form-control input-group-inset input-group-inset-after"
+						data-testid="searchField"
 						disabled={disabled}
 						onChange={handleChange}
 						placeholder={placeholder}

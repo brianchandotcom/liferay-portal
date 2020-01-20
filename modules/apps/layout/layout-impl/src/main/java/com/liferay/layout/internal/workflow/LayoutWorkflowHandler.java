@@ -20,7 +20,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -37,7 +36,6 @@ import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Activate;
@@ -75,9 +73,7 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 
 		Layout layout = _layoutLocalService.getLayout(classPK);
 
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) ||
-			layout.isHidden() || layout.isSystem()) {
-
+		if (!layout.isTypeContent() || layout.isHidden() || layout.isSystem()) {
 			return null;
 		}
 

@@ -16,7 +16,6 @@ package com.liferay.product.navigation.control.menu.web.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-
-import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -69,9 +66,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 
 		if (!(themeDisplay.isShowLayoutTemplatesIcon() ||
 			  themeDisplay.isShowPageSettingsIcon() ||
-			  ((Objects.equals(
-				  layout.getType(), LayoutConstants.TYPE_CONTENT) ||
-				layout.isTypeAssetDisplay()) &&
+			  ((layout.isTypeContent() || layout.isTypeAssetDisplay()) &&
 			   LayoutPermissionUtil.contains(
 				   themeDisplay.getPermissionChecker(),
 				   themeDisplay.getLayout(),

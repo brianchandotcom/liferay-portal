@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -129,10 +128,6 @@ public class RadioDDMFormFieldTemplateContextContributor
 		String predefinedValueString = GetterUtil.getString(
 			predefinedValue.getString(ddmFormFieldRenderingContext.getLocale()),
 			"[]");
-
-		if (ddmFormFieldRenderingContext.isViewMode()) {
-			predefinedValueString = HtmlUtil.extractText(predefinedValueString);
-		}
 
 		return getValue(predefinedValueString);
 	}

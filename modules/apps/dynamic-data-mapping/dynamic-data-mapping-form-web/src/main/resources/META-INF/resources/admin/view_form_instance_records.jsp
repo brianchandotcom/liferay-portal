@@ -73,7 +73,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 				%>
 
 					<liferay-ui:search-container-column-text
-						name="<%= HtmlUtil.escape(ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField)) %>"
+						name="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField) %>"
 						truncate="<%= true %>"
 						value="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
 					/>

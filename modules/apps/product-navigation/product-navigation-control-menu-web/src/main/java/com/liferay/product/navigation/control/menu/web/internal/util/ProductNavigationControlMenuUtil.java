@@ -51,8 +51,7 @@ public class ProductNavigationControlMenuUtil {
 			return false;
 		}
 
-		if (Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+		if (layout.isTypeAssetDisplay() ||
 			Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
 
 			return false;

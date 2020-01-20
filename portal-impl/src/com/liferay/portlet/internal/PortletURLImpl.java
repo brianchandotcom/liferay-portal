@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletURLListener;
@@ -71,7 +70,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
@@ -1085,9 +1083,7 @@ public class PortletURLImpl
 		if (layoutAssetEntry instanceof AssetEntry) {
 			AssetEntry assetEntry = (AssetEntry)layoutAssetEntry;
 
-			if ((_layout != null) &&
-				Objects.equals(
-					_layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) &&
+			if ((_layout != null) && _layout.isTypeAssetDisplay() &&
 				(assetEntry != null)) {
 
 				sb.append("assetEntryId=");

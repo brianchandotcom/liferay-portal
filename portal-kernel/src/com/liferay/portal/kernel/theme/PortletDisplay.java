@@ -488,8 +488,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 		Layout layout = _themeDisplay.getLayout();
 
 		if (Validator.isNull(portletSetupPortletDecoratorId) &&
-			(Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+			(layout.isTypeAssetDisplay() ||
 			 Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT))) {
 
 			return false;
@@ -510,8 +509,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 			httpServletRequest.getAttribute(WebKeys.SHOW_PORTLET_TOPPER));
 
 		if (layoutMode.equals(Constants.VIEW) &&
-			(Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+			(layout.isTypeAssetDisplay() ||
 			 Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) &&
 			showPortletTopper) {
 

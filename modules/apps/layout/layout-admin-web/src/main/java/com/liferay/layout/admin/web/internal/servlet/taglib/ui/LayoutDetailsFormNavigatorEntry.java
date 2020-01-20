@@ -53,8 +53,7 @@ public class LayoutDetailsFormNavigatorEntry
 		Layout draftLayout = layoutLocalService.fetchLayout(
 			portal.getClassNameId(Layout.class), layout.getPlid());
 
-		if (Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+		if (layout.isTypeAssetDisplay() ||
 			(Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
 			 (draftLayout == null))) {
 

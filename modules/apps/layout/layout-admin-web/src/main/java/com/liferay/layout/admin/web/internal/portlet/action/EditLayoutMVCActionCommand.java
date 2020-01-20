@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -127,9 +126,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		String currentType = layout.getType();
 
-		if (StringUtil.equals(
-				currentType, LayoutConstants.TYPE_ASSET_DISPLAY)) {
-
+		if (layout.isTypeAssetDisplay()) {
 			serviceContext.setAttribute(
 				"layout.instanceable.allowed", Boolean.TRUE);
 		}

@@ -78,6 +78,10 @@ public class LayoutStructureItem {
 		return _parentItemId;
 	}
 
+	public void setParentItemId(String parentItemId) {
+		_parentItemId = parentItemId;
+	}
+
 	public JSONObject toJSONObject() {
 		return JSONUtil.put(
 			"children", JSONFactoryUtil.createJSONArray(getChildrenItemIds())
@@ -106,6 +110,6 @@ public class LayoutStructureItem {
 	private final JSONObject _itemConfigJSONObject;
 	private final String _itemId;
 	private final String _itemType;
-	private final String _parentItemId;
+	private String _parentItemId;
 
 }

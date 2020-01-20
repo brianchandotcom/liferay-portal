@@ -179,6 +179,8 @@ public class LayoutStructure {
 
 		newParentLayoutStructureItem.addChildrenItem(position, itemId);
 
+		layoutStructureItem.setParentItemId(parentItemId);
+
 		return layoutStructureItem;
 	}
 

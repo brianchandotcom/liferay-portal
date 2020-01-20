@@ -61,4 +61,11 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 
 		</aui:fieldset>
 	</liferay-frontend:fieldset>
+
+	<liferay-frontend:fieldset
+		collapsible="true"
+		label='<%= LanguageUtil.get(request, "sharing") %>'
+	>
+		<liferay-util:include page="/screen/navigation/entries/sharing.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:fieldset>
 </liferay-frontend:fieldset-group>

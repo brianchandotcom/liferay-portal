@@ -174,7 +174,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			DepotEntry depotEntry, UnicodeProperties typeSettingsProperties)
 		throws LocaleException {
 
-		if (typeSettingsProperties.isEmpty()) {
+		if (!typeSettingsProperties.containsKey("inheritLocales")) {
 			return;
 		}
 

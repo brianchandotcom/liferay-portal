@@ -33,6 +33,7 @@ page import="com.liferay.depot.model.DepotEntryGroupRel" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotAdminWebKeys" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotPortletKeys" %><%@
 page import="com.liferay.depot.web.internal.constants.DepotScreenNavigationEntryConstants" %><%@
+page import="com.liferay.depot.web.internal.constants.SharingWebKeys" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminDetailsDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminManagementToolbarDisplayContext" %><%@
@@ -61,7 +62,8 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.sharing.configuration.SharingConfiguration" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@

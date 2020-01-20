@@ -104,7 +104,7 @@ public interface StructuredContentResource {
 		throws Exception;
 
 	public void putStructuredContentPermission(
-			com.liferay.portal.vulcan.permission.Permission[] permission,
+			com.liferay.portal.vulcan.permission.Permission[] permissions,
 			Long structuredContentId)
 		throws Exception;
 

@@ -1689,8 +1689,8 @@ public class Mutation {
 
 	@GraphQLField
 	public boolean updateStructuredContentPermission(
-			@GraphQLName("permission")
-				com.liferay.portal.vulcan.permission.Permission[] permission,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions,
 			@GraphQLName("structuredContentId") Long structuredContentId)
 		throws Exception {
 
@@ -1699,7 +1699,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			structuredContentResource ->
 				structuredContentResource.putStructuredContentPermission(
-					permission, structuredContentId));
+					permissions, structuredContentId));
 
 		return true;
 	}

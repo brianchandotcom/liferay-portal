@@ -175,11 +175,11 @@ public interface StructuredContentResource {
 		throws Exception;
 
 	public void putStructuredContentPermission(
-			Permission[] permission, Long structuredContentId)
+			Permission[] permissions, Long structuredContentId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putStructuredContentPermissionHttpResponse(
-			Permission[] permission, Long structuredContentId)
+			Permission[] permissions, Long structuredContentId)
 		throws Exception;
 
 	public String getStructuredContentRenderedContentTemplate(
@@ -1292,12 +1292,12 @@ public interface StructuredContentResource {
 		}
 
 		public void putStructuredContentPermission(
-				Permission[] permission, Long structuredContentId)
+				Permission[] permissions, Long structuredContentId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putStructuredContentPermissionHttpResponse(
-					permission, structuredContentId);
+					permissions, structuredContentId);
 
 			String content = httpResponse.getContent();
 
@@ -1310,7 +1310,7 @@ public interface StructuredContentResource {
 
 		public HttpInvoker.HttpResponse
 				putStructuredContentPermissionHttpResponse(
-					Permission[] permission, Long structuredContentId)
+					Permission[] permissions, Long structuredContentId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

@@ -20,7 +20,7 @@ import com.liferay.petra.sql.dsl.query.impl.From;
 /**
  * @author Preston Crary
  */
-public interface FromStep extends Query {
+public interface FromStep extends DSLQuery {
 
 	public default JoinStep from(Table<?> table) {
 		return new From(this, table);

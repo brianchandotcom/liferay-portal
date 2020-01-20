@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+
 import java.io.Serializable;
 
 import java.sql.Connection;
@@ -176,8 +178,7 @@ public class ClassLoaderSession implements Session {
 	}
 
 	@Override
-	public SQLQuery createSynchronizedSQLQuery(
-			com.liferay.petra.sql.dsl.query.Query query)
+	public SQLQuery createSynchronizedSQLQuery(DSLQuery dslQuery)
 		throws ORMException {
 
 		Thread currentThread = Thread.currentThread();
@@ -189,7 +190,7 @@ public class ClassLoaderSession implements Session {
 				currentThread.setContextClassLoader(_classLoader);
 			}
 
-			return _session.createSynchronizedSQLQuery(query);
+			return _session.createSynchronizedSQLQuery(dslQuery);
 		}
 		finally {
 			if (contextClassLoader != _classLoader) {

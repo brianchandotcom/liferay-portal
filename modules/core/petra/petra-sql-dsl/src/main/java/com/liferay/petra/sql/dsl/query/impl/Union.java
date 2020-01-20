@@ -16,7 +16,7 @@ package com.liferay.petra.sql.dsl.query.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
-import com.liferay.petra.sql.dsl.query.Query;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -24,20 +24,20 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class Union extends BaseASTNode implements Query {
+public class Union extends BaseASTNode implements DSLQuery {
 
-	public Union(Query leftQuery, boolean all, Query rightQuery) {
-		_leftQuery = Objects.requireNonNull(leftQuery);
+	public Union(DSLQuery leftDSLQuery, boolean all, DSLQuery rightDSLQuery) {
+		_leftDSLQuery = Objects.requireNonNull(leftDSLQuery);
 		_all = all;
-		_rightQuery = Objects.requireNonNull(rightQuery);
+		_rightDSLQuery = Objects.requireNonNull(rightDSLQuery);
 	}
 
-	public Query getLeftQuery() {
-		return _leftQuery;
+	public DSLQuery getLeftDSLQuery() {
+		return _leftDSLQuery;
 	}
 
-	public Query getRightQuery() {
-		return _rightQuery;
+	public DSLQuery getRightDSLQuery() {
+		return _rightDSLQuery;
 	}
 
 	public boolean isAll() {
@@ -48,7 +48,7 @@ public class Union extends BaseASTNode implements Query {
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		_leftQuery.toSQL(consumer, astNodeListener);
+		_leftDSLQuery.toSQL(consumer, astNodeListener);
 
 		if (_all) {
 			consumer.accept(" union all ");
@@ -57,11 +57,11 @@ public class Union extends BaseASTNode implements Query {
 			consumer.accept(" union ");
 		}
 
-		_rightQuery.toSQL(consumer, astNodeListener);
+		_rightDSLQuery.toSQL(consumer, astNodeListener);
 	}
 
 	private final boolean _all;
-	private final Query _leftQuery;
-	private final Query _rightQuery;
+	private final DSLQuery _leftDSLQuery;
+	private final DSLQuery _rightDSLQuery;
 
 }

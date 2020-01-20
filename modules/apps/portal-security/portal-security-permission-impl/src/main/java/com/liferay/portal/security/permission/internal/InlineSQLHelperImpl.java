@@ -18,13 +18,13 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.sql.dsl.Column;
-import com.liferay.petra.sql.dsl.QueryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
 import com.liferay.petra.sql.dsl.expressions.Expression;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
-import com.liferay.petra.sql.dsl.query.Query;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.WhereStep;
 import com.liferay.petra.sql.dsl.query.impl.Where;
 import com.liferay.petra.string.CharPool;
@@ -141,8 +141,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	@Override
-	public <T extends Table<T>> Query replacePermissionCheck(
-		Query query, Class<?> modelClass, Column<T, Long> classPKColumn,
+	public <T extends Table<T>> DSLQuery replacePermissionCheck(
+		DSLQuery dslQuery, Class<?> modelClass, Column<T, Long> classPKColumn,
 		long... groupIds) {
 
 		PermissionChecker permissionChecker =
@@ -153,21 +153,21 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		if (_skipReplace(
-				query, permissionChecker, modelClass.getName(), classPKColumn,
-				groupIds)) {
+				dslQuery, permissionChecker, modelClass.getName(),
+				classPKColumn, groupIds)) {
 
-			return query;
+			return dslQuery;
 		}
 
 		T table = classPKColumn.getTable();
 
 		Column<T, Long> userIdColumn = table.getColumn("userId", Long.class);
 
-		Query resourcePermissionQuery = _getResourcePermissionQuery(
+		DSLQuery resourcePermissionDSLQuery = _getResourcePermissionQuery(
 			permissionChecker, modelClass.getName(), userIdColumn, groupIds);
 
 		return _insertResourcePermissionQuery(
-			query, classPKColumn, groupIds, resourcePermissionQuery);
+			dslQuery, classPKColumn, groupIds, resourcePermissionDSLQuery);
 	}
 
 	@Override
@@ -428,10 +428,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	private <T extends Table<T>> Predicate _getPermissionPredicate(
 		Column<T, Long> classPKColumn, long[] groupIds,
-		Query resourcePermissionQuery) {
+		DSLQuery resourcePermissionDSLQuery) {
 
 		Predicate permissionPredicate = classPKColumn.in(
-			resourcePermissionQuery);
+			resourcePermissionDSLQuery);
 
 		Set<Long> groupIdSet = null;
 
@@ -463,7 +463,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return permissionPredicate;
 	}
 
-	private Query _getResourcePermissionQuery(
+	private DSLQuery _getResourcePermissionQuery(
 		PermissionChecker permissionChecker, String className,
 		Column<?, Long> userIdColumn, long[] groupIds) {
 
@@ -512,7 +512,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				roleIdsOrOwnerIdsPredicate.withParentheses());
 		}
 
-		return QueryUtil.selectDistinct(
+		return DSLQueryUtil.selectDistinct(
 			ResourcePermission.TABLE.primKeyId
 		).from(
 			ResourcePermission.TABLE
@@ -587,16 +587,16 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return resourcePermissionSQL;
 	}
 
-	private <T extends Table<T>> Query _insertResourcePermissionQuery(
-		Query query, Column<T, Long> classPKColumn, long[] groupIds,
-		Query resourcePermissionQuery) {
+	private <T extends Table<T>> DSLQuery _insertResourcePermissionQuery(
+		DSLQuery dslQuery, Column<T, Long> classPKColumn, long[] groupIds,
+		DSLQuery resourcePermissionDSLQuery) {
 
-		if (query instanceof WhereStep) {
-			WhereStep whereStep = (WhereStep)query;
+		if (dslQuery instanceof WhereStep) {
+			WhereStep whereStep = (WhereStep)dslQuery;
 
 			return whereStep.where(
 				_getPermissionPredicate(
-					classPKColumn, groupIds, resourcePermissionQuery));
+					classPKColumn, groupIds, resourcePermissionDSLQuery));
 		}
 
 		WhereStep whereStep = null;
@@ -605,7 +605,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		Deque<BaseASTNode> baseASTNodes = new LinkedList<>();
 
-		ASTNode astNode = query;
+		ASTNode astNode = dslQuery;
 
 		while (astNode instanceof BaseASTNode) {
 			BaseASTNode baseASTNode = (BaseASTNode)astNode;
@@ -629,13 +629,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		if (whereStep == null) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Unable to replace permission check for \"", query,
+					"Unable to replace permission check for \"", dslQuery,
 					"\", if this is a union pass in the left or right queries ",
 					"separately"));
 		}
 
 		Predicate permissionPredicate = _getPermissionPredicate(
-			classPKColumn, groupIds, resourcePermissionQuery);
+			classPKColumn, groupIds, resourcePermissionDSLQuery);
 
 		ASTNode child = null;
 
@@ -654,7 +654,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			child = baseASTNode.withNewChild(child);
 		}
 
-		return (Query)child;
+		return (DSLQuery)child;
 	}
 
 	private String _insertResourcePermissionSQL(

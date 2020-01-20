@@ -22,8 +22,8 @@ import com.liferay.petra.sql.dsl.expressions.impl.Operand;
 import com.liferay.petra.sql.dsl.expressions.impl.PredicateImpl;
 import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
 import com.liferay.petra.sql.dsl.expressions.impl.ScalarList;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.OrderByExpression;
-import com.liferay.petra.sql.dsl.query.Query;
 import com.liferay.petra.sql.dsl.query.impl.OrderByExpressionImpl;
 
 import java.util.function.Consumer;
@@ -70,7 +70,7 @@ public interface Expression<T> extends ASTNode {
 		return gte(new Scalar<>(value));
 	}
 
-	public default Predicate in(Query query) {
+	public default Predicate in(DSLQuery dslQuery) {
 		return new PredicateImpl(
 			this, Operand.IN,
 			new Expression<Object>() {
@@ -82,7 +82,7 @@ public interface Expression<T> extends ASTNode {
 
 					consumer.accept("(");
 
-					query.toSQL(consumer, astNodeListener);
+					dslQuery.toSQL(consumer, astNodeListener);
 
 					consumer.accept(")");
 				}

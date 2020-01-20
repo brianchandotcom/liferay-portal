@@ -19,41 +19,45 @@ import java.util.Objects;
 /**
  * @author Preston Crary
  */
-public class FunctionType {
+public class DSLFunctionType {
 
-	public static final FunctionType ADDITION = new FunctionType(" + ");
+	public static final DSLFunctionType ADDITION = new DSLFunctionType(" + ");
 
-	public static final FunctionType BITWISE_AND = new FunctionType(
+	public static final DSLFunctionType BITWISE_AND = new DSLFunctionType(
 		"BITAND(", ")");
 
-	public static final FunctionType CAST_CLOB_TEXT = new FunctionType(
+	public static final DSLFunctionType CAST_CLOB_TEXT = new DSLFunctionType(
 		"CAST_CLOB_TEXT(", ")");
 
-	public static final FunctionType CAST_LONG = new FunctionType(
+	public static final DSLFunctionType CAST_LONG = new DSLFunctionType(
 		"CAST_LONG(", ")");
 
-	public static final FunctionType CAST_TEXT = new FunctionType(
+	public static final DSLFunctionType CAST_TEXT = new DSLFunctionType(
 		"CAST_TEXT(", ")");
 
-	public static final FunctionType CONCAT = new FunctionType("CONCAT(", ")");
+	public static final DSLFunctionType CONCAT = new DSLFunctionType(
+		"CONCAT(", ")");
 
-	public static final FunctionType DIVISION = new FunctionType(" / ");
+	public static final DSLFunctionType DIVISION = new DSLFunctionType(" / ");
 
-	public static final FunctionType LOWER = new FunctionType("LOWER(", ")");
+	public static final DSLFunctionType LOWER = new DSLFunctionType(
+		"LOWER(", ")");
 
-	public static final FunctionType MULTIPLICATION = new FunctionType(" * ");
+	public static final DSLFunctionType MULTIPLICATION = new DSLFunctionType(
+		" * ");
 
-	public static final FunctionType SUBTRACTION = new FunctionType(" - ");
+	public static final DSLFunctionType SUBTRACTION = new DSLFunctionType(
+		" - ");
 
-	public FunctionType(String delimiter) {
+	public DSLFunctionType(String delimiter) {
 		this("", delimiter, "");
 	}
 
-	public FunctionType(String prefix, String postfix) {
+	public DSLFunctionType(String prefix, String postfix) {
 		this(prefix, ", ", postfix);
 	}
 
-	public FunctionType(String prefix, String delimiter, String postfix) {
+	public DSLFunctionType(String prefix, String delimiter, String postfix) {
 		_prefix = Objects.requireNonNull(prefix);
 		_delimiter = Objects.requireNonNull(delimiter);
 		_postfix = Objects.requireNonNull(postfix);

@@ -22,18 +22,18 @@ import com.liferay.petra.sql.dsl.query.impl.Union;
 /**
  * @author Preston Crary
  */
-public interface Query extends ASTNode {
+public interface DSLQuery extends ASTNode {
 
 	public default Table<?> as(String name) {
 		return new QueryTable(name, this);
 	}
 
-	public default Query union(Query query) {
-		return new Union(this, false, query);
+	public default DSLQuery union(DSLQuery dslQuery) {
+		return new Union(this, false, dslQuery);
 	}
 
-	public default Query unionAll(Query query) {
-		return new Union(this, true, query);
+	public default DSLQuery unionAll(DSLQuery dslQuery) {
+		return new Union(this, true, dslQuery);
 	}
 
 }

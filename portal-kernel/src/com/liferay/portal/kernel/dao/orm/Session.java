@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+
 import java.io.Serializable;
 
 import java.sql.Connection;
@@ -43,8 +45,7 @@ public interface Session {
 	public SQLQuery createSQLQuery(String queryString, boolean strictName)
 		throws ORMException;
 
-	public SQLQuery createSynchronizedSQLQuery(
-			com.liferay.petra.sql.dsl.query.Query query)
+	public SQLQuery createSynchronizedSQLQuery(DSLQuery dslQuery)
 		throws ORMException;
 
 	public SQLQuery createSynchronizedSQLQuery(String queryString)

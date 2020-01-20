@@ -29,29 +29,27 @@
 import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import Topper from '../Topper';
+import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
 
 const ColumnWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
 		return (
-			<Topper
+			<TopperEmpty
 				acceptDrop={[
 					LAYOUT_DATA_ITEM_TYPES.dropZone,
 					LAYOUT_DATA_ITEM_TYPES.fragment,
 					LAYOUT_DATA_ITEM_TYPES.row
 				]}
-				active={false}
 				item={item}
 				layoutData={layoutData}
-				name={Liferay.Language.get('column')}
 			>
 				{() => (
 					<Column className="page-editor__col" item={item} ref={ref}>
 						{children}
 					</Column>
 				)}
-			</Topper>
+			</TopperEmpty>
 		);
 	}
 );

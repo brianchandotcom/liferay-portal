@@ -425,8 +425,8 @@ public class WikiPageIndexer
 				getSearchEngineId(), wikiPage.getCompanyId(),
 				uidFactory.getUID(wikiPage), isCommitImmediately());
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 

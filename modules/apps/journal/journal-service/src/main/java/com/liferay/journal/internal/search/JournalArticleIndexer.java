@@ -927,8 +927,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				getSearchEngineId(), article.getCompanyId(),
 				uidFactory.getUID(article), isCommitImmediately());
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 
@@ -936,8 +936,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		try {
 			return getDocument(journalArticle);
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 
@@ -1004,8 +1004,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				getSearchEngineId(), article.getCompanyId(),
 				_getDocument(article), isCommitImmediately());
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 
@@ -1015,8 +1015,8 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				getSearchEngineId(), companyId, documents,
 				isCommitImmediately());
 		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
 		}
 	}
 

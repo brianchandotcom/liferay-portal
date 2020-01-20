@@ -309,8 +309,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 					buildData.getPortalUpstreamBranchName(), "][", testSuite,
 					"]"));
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

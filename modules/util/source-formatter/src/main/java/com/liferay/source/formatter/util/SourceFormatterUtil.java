@@ -197,7 +197,7 @@ public class SourceFormatterUtil {
 		try {
 			return StringUtil.read(url.openStream());
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			return null;
 		}
 	}
@@ -460,8 +460,8 @@ public class SourceFormatterUtil {
 
 			return canonicalFile.toPath();
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

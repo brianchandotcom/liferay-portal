@@ -200,9 +200,9 @@ public class TokenWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 								"completionDate",
 								document.getDate("completionDate"));
 						}
-						catch (ParseException pe) {
+						catch (ParseException parseException) {
 							if (_log.isDebugEnabled()) {
-								_log.debug(pe, pe);
+								_log.debug(parseException, parseException);
 							}
 						}
 					}

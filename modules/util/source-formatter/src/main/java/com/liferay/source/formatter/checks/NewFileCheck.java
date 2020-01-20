@@ -60,12 +60,12 @@ public class NewFileCheck extends BaseFileCheck {
 
 				url.openStream();
 			}
-			catch (FileNotFoundException fnfe) {
+			catch (FileNotFoundException fileNotFoundException) {
 				addMessage(
 					fileName,
 					"Do not add new files to '" + forbiddenDirName + "'");
 			}
-			catch (IOException ioe) {
+			catch (IOException ioException) {
 			}
 		}
 

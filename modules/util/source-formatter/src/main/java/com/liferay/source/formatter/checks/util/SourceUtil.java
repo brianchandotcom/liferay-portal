@@ -230,7 +230,7 @@ public class SourceUtil {
 
 			return true;
 		}
-		catch (DocumentException de) {
+		catch (DocumentException documentException) {
 			return false;
 		}
 	}

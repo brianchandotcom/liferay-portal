@@ -46,8 +46,8 @@ public class MirrorsGetTask extends Task {
 		try {
 			doExecute();
 		}
-		catch (IOException ioe) {
-			throw new BuildException(ioe);
+		catch (IOException ioException) {
+			throw new BuildException(ioException);
 		}
 	}
 
@@ -219,7 +219,7 @@ public class MirrorsGetTask extends Task {
 				try {
 					downloadFile(sourceURL, localCacheFile, _retries);
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					URL defaultURL = new URL(_src);
 
 					System.out.println(
@@ -258,7 +258,7 @@ public class MirrorsGetTask extends Task {
 
 					return;
 				}
-				catch (IOException ioe) {
+				catch (IOException ioException) {
 					System.out.println(
 						"Unable to connect to " + sourceURL +
 							", will retry in 30 seconds.");
@@ -266,8 +266,8 @@ public class MirrorsGetTask extends Task {
 					try {
 						Thread.sleep(30000);
 					}
-					catch (InterruptedException ie) {
-						ie.printStackTrace();
+					catch (InterruptedException interruptedException) {
+						interruptedException.printStackTrace();
 					}
 				}
 			}
@@ -314,7 +314,7 @@ public class MirrorsGetTask extends Task {
 		try {
 			remoteMD5 = toString(url);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_verbose) {
 				System.out.println("Unable to access MD5 file");
 			}
@@ -369,7 +369,7 @@ public class MirrorsGetTask extends Task {
 
 			return true;
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			System.out.println(file.getPath() + " is an invalid zip file.");
 
 			return false;
@@ -434,12 +434,12 @@ public class MirrorsGetTask extends Task {
 		try {
 			return toOutputStream(url, outputStream);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			if (file.exists()) {
 				file.delete();
 			}
 
-			throw ioe;
+			throw ioException;
 		}
 		finally {
 			if (outputStream != null) {
@@ -520,14 +520,14 @@ public class MirrorsGetTask extends Task {
 		try {
 			size = toFile(sourceURL, targetFile);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			targetFile.delete();
 
 			if (!_ignoreErrors) {
-				throw ioe;
+				throw ioException;
 			}
 
-			ioe.printStackTrace();
+			ioException.printStackTrace();
 		}
 
 		if (_verbose) {

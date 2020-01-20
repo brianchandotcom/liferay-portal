@@ -287,8 +287,8 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 					return null;
 				});
 		}
-		catch (WorkflowException we) {
-			throw we;
+		catch (WorkflowException workflowException) {
+			throw workflowException;
 		}
 		catch (Throwable t) {
 			_log.error(t, t);

@@ -6414,9 +6414,9 @@ public class PortalImpl implements Portal {
 			return false;
 		}
 
-		int maxDecodingLimit = 10;
+		int urlDecodeCount = _PORTLET_RESOURCE_ID_URL_DECODE_COUNT;
 
-		while ((maxDecodingLimit > 0) && resourceId.contains("%")) {
+		while ((urlDecodeCount > 0) && resourceId.contains("%")) {
 			resourceId = HttpUtil.decodePath(resourceId);
 
 			matcher = _bannedResourceIdPattern.matcher(resourceId);
@@ -6425,9 +6425,9 @@ public class PortalImpl implements Portal {
 				return false;
 			}
 
-			maxDecodingLimit--;
+			urlDecodeCount--;
 
-			if (maxDecodingLimit == 0) {
+			if (urlDecodeCount == 0) {
 				return false;
 			}
 		}
@@ -8654,6 +8654,10 @@ public class PortalImpl implements Portal {
 	private static final String _LOCALHOST = "localhost";
 
 	private static final Locale _NULL_LOCALE;
+
+	private static final int _PORTLET_RESOURCE_ID_URL_DECODE_COUNT =
+		GetterUtil.getInteger(
+			PropsUtil.get("portlet.resource.id.url.decode.count"), 10);
 
 	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING;

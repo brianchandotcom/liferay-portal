@@ -180,7 +180,7 @@ public class CustomizationSettingsProductNavigationControlMenuEntry
 			return false;
 		}
 
-		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+		if (layout.isTypeContent()) {
 			return false;
 		}
 

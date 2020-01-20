@@ -924,6 +924,10 @@ public class ServiceBuilder {
 					}
 				}
 
+				for (EntityMapping entityMapping : _entityMappings.values()) {
+					_createEntityMappingTable(entityMapping);
+				}
+
 				_createHbmXml();
 				_createModelHintsXml();
 				_createSpringXml();
@@ -2317,6 +2321,65 @@ public class ServiceBuilder {
 		_write(file, content, _modifiedFileNames);
 	}
 
+	private void _createDSLTable(
+			List<EntityColumn> entityColumns, String name, String tableName)
+		throws Exception {
+
+		File modelTableFile = new File(
+			StringBundler.concat(
+				_serviceOutputPath, "/model/", name, "Table.java"));
+
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"apiPackagePath", _apiPackagePath
+		).put(
+			"author", _author
+		).put(
+			"columns",
+			() -> {
+				List<Map<String, String>> columns = new ArrayList<>(
+					entityColumns.size());
+
+				for (EntityColumn entityColumn : entityColumns) {
+					String sqlType = getSqlType(
+						name, entityColumn.getName(), entityColumn.getType());
+
+					Map<String, String> column = HashMapBuilder.put(
+						"dbName", entityColumn.getDBName()
+					).put(
+						"javaType",
+						() -> {
+							if (entityColumn.isPrimitiveType()) {
+								return getPrimitiveObj(entityColumn.getType());
+							}
+
+							if (Objects.equals("CLOB", sqlType)) {
+								return "Clob";
+							}
+
+							return entityColumn.getGenericizedType();
+						}
+					).put(
+						"name", entityColumn.getName()
+					).put(
+						"sqlType", sqlType
+					).build();
+
+					columns.add(column);
+				}
+
+				return columns;
+			}
+		).put(
+			"name", name
+		).put(
+			"table", tableName
+		).build();
+
+		String content = _processTemplate(_tplModelTable, context);
+
+		_write(modelTableFile, content, _modifiedFileNames);
+	}
+
 	private void _createEJBPK(Entity entity) throws Exception {
 		List<EntityColumn> pkEntityColumns = entity.getPKEntityColumns();
 
@@ -2336,6 +2399,22 @@ public class ServiceBuilder {
 				entity.getPKClassName(), ".java"));
 
 		_write(file, content, _modifiedFileNames);
+	}
+
+	private void _createEntityMappingTable(EntityMapping entityMapping)
+		throws Exception {
+
+		List<EntityColumn> entityColumns = new ArrayList<>();
+
+		for (int i = 0; i < 3; i++) {
+			Entity entity = getEntity(entityMapping.getEntityName(i));
+
+			entityColumns.addAll(entity.getPKEntityColumns());
+		}
+
+		String name = entityMapping.getTableName();
+
+		_createDSLTable(entityColumns, name, name);
 	}
 
 	private void _createExceptions(List<String> exceptions) throws Exception {
@@ -2954,61 +3033,9 @@ public class ServiceBuilder {
 	}
 
 	private void _createModelTable(Entity entity) throws Exception {
-		File modelTableFile = new File(
-			StringBundler.concat(
-				_serviceOutputPath, "/model/", entity.getName(), "Table.java"));
-
-		Map<String, Object> context = HashMapBuilder.<String, Object>put(
-			"apiPackagePath", _apiPackagePath
-		).put(
-			"author", _author
-		).put(
-			"columns",
-			() -> {
-				List<Map<String, String>> columns = new ArrayList<>();
-
-				for (EntityColumn entityColumn :
-						entity.getDatabaseRegularEntityColumns()) {
-
-					String sqlType = getSqlType(
-						entity.getName(), entityColumn.getName(),
-						entityColumn.getType());
-
-					Map<String, String> column = HashMapBuilder.put(
-						"dbName", entityColumn.getDBName()
-					).put(
-						"javaType",
-						() -> {
-							if (entityColumn.isPrimitiveType()) {
-								return getPrimitiveObj(entityColumn.getType());
-							}
-
-							if (Objects.equals("CLOB", sqlType)) {
-								return "Clob";
-							}
-
-							return entityColumn.getGenericizedType();
-						}
-					).put(
-						"name", entityColumn.getName()
-					).put(
-						"sqlType", sqlType
-					).build();
-
-					columns.add(column);
-				}
-
-				return columns;
-			}
-		).put(
-			"name", entity.getName()
-		).put(
-			"table", entity.getTable()
-		).build();
-
-		String content = _processTemplate(_tplModelTable, context);
-
-		_write(modelTableFile, content, _modifiedFileNames);
+		_createDSLTable(
+			entity.getDatabaseRegularEntityColumns(), entity.getName(),
+			entity.getTable());
 	}
 
 	private void _createModelWrapper(Entity entity) throws Exception {

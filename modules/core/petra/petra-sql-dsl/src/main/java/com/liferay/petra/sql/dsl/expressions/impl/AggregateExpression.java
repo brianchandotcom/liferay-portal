@@ -27,10 +27,6 @@ import java.util.function.Consumer;
 public class AggregateExpression<T>
 	extends BaseASTNode implements Expression<T> {
 
-	public static final Expression<Long> COUNT_STAR_COUNT_VALUE =
-		new AliasImpl<>(
-			new AggregateExpression<>(false, null, "count"), "COUNT_VALUE");
-
 	public AggregateExpression(
 		boolean distinct, Expression<?> expression, String name) {
 

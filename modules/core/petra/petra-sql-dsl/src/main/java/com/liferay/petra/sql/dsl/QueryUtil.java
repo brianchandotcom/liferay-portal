@@ -16,6 +16,7 @@ package com.liferay.petra.sql.dsl;
 
 import com.liferay.petra.sql.dsl.expressions.Expression;
 import com.liferay.petra.sql.dsl.expressions.impl.AggregateExpression;
+import com.liferay.petra.sql.dsl.expressions.impl.AliasImpl;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.impl.Select;
 
@@ -30,7 +31,10 @@ public class QueryUtil {
 
 	public static FromStep countDistinct(Expression<?> expression) {
 		return new Select(
-			false, new AggregateExpression<>(true, expression, "count"));
+			false,
+			new AliasImpl<>(
+				new AggregateExpression<>(true, expression, "count"),
+				"COUNT_VALUE"));
 	}
 
 	public static FromStep select() {
@@ -46,7 +50,9 @@ public class QueryUtil {
 	}
 
 	private static final FromStep _SELECT_COUNT_STAR_COUNT_VALUE = new Select(
-		false, AggregateExpression.COUNT_STAR_COUNT_VALUE);
+		false,
+		new AliasImpl<>(
+			new AggregateExpression<>(false, null, "count"), "COUNT_VALUE"));
 
 	private static final FromStep _SELECT_STAR = new Select(false);
 

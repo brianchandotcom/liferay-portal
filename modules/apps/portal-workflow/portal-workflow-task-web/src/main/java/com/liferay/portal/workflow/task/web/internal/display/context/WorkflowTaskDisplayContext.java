@@ -695,9 +695,9 @@ public class WorkflowTaskDisplayContext {
 			return false;
 		}
 
-		return WorkflowTaskManagerUtil.hasOtherAssignees(
-			workflowTask.getWorkflowTaskId(),
-			_workflowTaskRequestHelper.getUserId());
+		return WorkflowTaskManagerUtil.hasAssignableUsers(
+			_workflowTaskRequestHelper.getCompanyId(),
+			workflowTask.getWorkflowTaskId());
 	}
 
 	public boolean hasViewDiffsPortletURL(WorkflowTask workflowTask)

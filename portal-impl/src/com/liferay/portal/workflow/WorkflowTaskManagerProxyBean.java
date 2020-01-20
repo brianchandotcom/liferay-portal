@@ -195,6 +195,16 @@ public class WorkflowTaskManagerProxyBean
 	}
 
 	@Override
+	public boolean hasAssignableUsers(long companyId, long workflowTaskId) {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #hasAssignableUsers(long, long)}
+	 */
+	@Deprecated
+	@Override
 	public boolean hasOtherAssignees(long workflowTaskId, long userId) {
 		throw new UnsupportedOperationException();
 	}

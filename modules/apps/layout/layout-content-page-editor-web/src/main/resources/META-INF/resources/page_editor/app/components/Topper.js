@@ -127,7 +127,6 @@ export default function Topper({
 		},
 		hover(_item, _monitor) {
 			const dragId = _item.itemId;
-			const dragParentId = _item.parentId;
 			const hoverId = item.itemId;
 
 			// Don't replace items with themselves
@@ -150,10 +149,16 @@ export default function Topper({
 			// Get pixels to the top
 			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-			if (dragParentId) {
-				const parentChildren = layoutData.items[dragParentId].children;
+			const hoverItem = layoutData.items[hoverId];
 
-				const dragIndex = parentChildren.findIndex(
+			const hoverParentOrItemId = hoverItem.parentId !== '' ? hoverItem.parentId : hoverId;
+
+			const parentOrItemChildren = layoutData.items[hoverParentOrItemId].children;
+
+			if (parentOrItemChildren.includes(dragId)) {
+				// Get the index of the draggable element in the children if the drag is
+				// happening inside the segment.
+				const dragIndex = parentOrItemChildren.findIndex(
 					child => child === dragId
 				);
 
@@ -161,7 +166,8 @@ export default function Topper({
 				// When dragging upwards, only move when the cursor is above 50%
 				// Dragging downwards
 				if (
-					parentChildren[dragIndex + 1] !== hoverId &&
+					parentOrItemChildren[dragIndex] !== parentOrItemChildren[0] &&
+					parentOrItemChildren[dragIndex + 1] !== hoverId &&
 					hoverClientY < hoverMiddleY
 				) {
 					setEdge(EDGE.TOP);
@@ -170,7 +176,8 @@ export default function Topper({
 
 				// Dragging upwards
 				if (
-					parentChildren[dragIndex - 1] !== hoverId &&
+					parentOrItemChildren[dragIndex] !== parentOrItemChildren[parentOrItemChildren.length - 1] &&
+					parentOrItemChildren[dragIndex - 1] !== hoverId &&
 					hoverClientY > hoverMiddleY
 				) {
 					setEdge(EDGE.BOTTOM);
@@ -203,8 +210,8 @@ export default function Topper({
 
 	const styles = {
 		active: isSelected(item.itemId),
-		'drag-over-bottom': edge === 1 && isOver,
-		'drag-over-top': edge === 0 && isOver,
+		'drag-over-bottom': edge === EDGE.BOTTOM && isOver,
+		'drag-over-top': edge === EDGE.TOP && isOver,
 		dragged: isDragging,
 		hovered: isHovered(item.itemId),
 		'page-editor-topper': true

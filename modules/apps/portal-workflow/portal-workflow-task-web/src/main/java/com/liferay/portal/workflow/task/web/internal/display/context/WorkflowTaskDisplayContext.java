@@ -676,6 +676,14 @@ public class WorkflowTaskDisplayContext {
 			_workflowTaskRequestHelper.getRequest(), "nobody");
 	}
 
+	public boolean hasAssignableUsers(WorkflowTask workflowTask)
+		throws PortalException {
+
+		return WorkflowTaskManagerUtil.hasAssignableUsers(
+			_workflowTaskRequestHelper.getCompanyId(),
+			workflowTask.getWorkflowTaskId());
+	}
+
 	public boolean hasEditPortletURL(WorkflowTask workflowTask)
 		throws PortalException {
 
@@ -686,18 +694,6 @@ public class WorkflowTaskDisplayContext {
 		}
 
 		return false;
-	}
-
-	public boolean hasOtherAssignees(WorkflowTask workflowTask)
-		throws PortalException {
-
-		if (workflowTask.isCompleted()) {
-			return false;
-		}
-
-		return WorkflowTaskManagerUtil.hasAssignableUsers(
-			_workflowTaskRequestHelper.getCompanyId(),
-			workflowTask.getWorkflowTaskId());
 	}
 
 	public boolean hasViewDiffsPortletURL(WorkflowTask workflowTask)

@@ -1504,9 +1504,9 @@ paths:
                     description:
                         ""
             tags: ["WorkflowTask"]
-    "/workflow-tasks/{workflowTaskId}/has-other-assignable-users":
+    "/workflow-tasks/{workflowTaskId}/has-assignable-users":
         get:
-            operationId: getWorkflowTaskHasOtherAssignableUsers
+            operationId: getWorkflowTaskHasAssignableUsers
             parameters:
                 - in: path
                   name: workflowTaskId

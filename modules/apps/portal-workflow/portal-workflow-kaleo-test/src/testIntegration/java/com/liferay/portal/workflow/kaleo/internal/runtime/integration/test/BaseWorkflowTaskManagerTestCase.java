@@ -613,7 +613,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 		return workflowTasks.get(0);
 	}
 
-	protected boolean hasOtherAssignees(User user) throws Exception {
+	protected boolean hasAssignableUsers(User user) throws Exception {
 		WorkflowTask workflowTask = getWorkflowTask(user, null, false, null, 0);
 
 		return WorkflowTaskManagerUtil.hasAssignableUsers(

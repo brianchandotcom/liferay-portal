@@ -87,7 +87,7 @@ function DropZoneContainer() {
 }
 
 function Root({children}) {
-	return <div>{children}</div>;
+	return <div className="pt-4">{children}</div>;
 }
 
 function Fragment({fragmentEntryLinks, item}) {

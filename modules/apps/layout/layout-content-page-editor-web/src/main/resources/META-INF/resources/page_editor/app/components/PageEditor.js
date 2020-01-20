@@ -53,7 +53,8 @@ export default function PageEditor({withinMasterPage = false}) {
 			className={classNames('page-editor', {
 				'page-editor--with-sidebar': !withinMasterPage,
 				'page-editor--with-sidebar-open':
-					sidebarPanelId && sidebarOpen && !withinMasterPage
+					sidebarPanelId && sidebarOpen && !withinMasterPage,
+				'pt-4': !withinMasterPage
 			})}
 			id="page-editor"
 		>

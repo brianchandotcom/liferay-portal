@@ -204,7 +204,9 @@ definition {
 
 			AssertElementNotPresent(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR");
 
-			AssertElementNotPresent(locator1 = "Fragment#FRAGMENT_FLOATING_MENU");
+			AssertNotVisible(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 		}
 
 		task ("Add a Button fragment to drop zone") {

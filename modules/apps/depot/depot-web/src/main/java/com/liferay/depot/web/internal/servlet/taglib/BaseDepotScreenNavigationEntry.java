@@ -17,13 +17,17 @@ package com.liferay.depot.web.internal.servlet.taglib;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.constants.DepotScreenNavigationEntryConstants;
+import com.liferay.depot.web.internal.constants.SharingWebKeys;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 
 import java.io.IOException;
 
@@ -79,6 +83,15 @@ public abstract class BaseDepotScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			DepotAdminWebKeys.SHOW_CONTROLS, isShowControls());
 
+		DepotEntry depotEntry = (DepotEntry)httpServletRequest.getAttribute(
+			DepotAdminWebKeys.DEPOT_ENTRY);
+
+		Group group = groupLocalService.fetchGroup(depotEntry.getGroupId());
+
+		httpServletRequest.setAttribute(
+			SharingWebKeys.GROUP_SHARING_CONFIGURATION,
+			sharingConfigurationFactory.getGroupSharingConfiguration(group));
+
 		jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
 			"/screen/navigation/edit_depot_entry_navigation.jsp");
@@ -101,9 +114,15 @@ public abstract class BaseDepotScreenNavigationEntry
 	}
 
 	@Reference
+	protected GroupLocalService groupLocalService;
+
+	@Reference
 	protected JSPRenderer jspRenderer;
 
 	@Reference
 	protected Portal portal;
+
+	@Reference
+	protected SharingConfigurationFactory sharingConfigurationFactory;
 
 }

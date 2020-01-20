@@ -9,36 +9,76 @@
  * distribution rights of the Software.
  */
 
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
-import renderer from 'react-test-renderer';
 
 import SearchField from '../../../../src/main/resources/META-INF/resources/js/shared/components/search-field/SearchField.es';
-import {MockRouter as Router} from '../../../mock/MockRouter.es';
+import {MockRouter} from '../../../mock/MockRouter.es';
 
-test('Should render component', () => {
-	const component = renderer.create(
-		<Router>
-			<SearchField disabled />
-		</Router>
-	);
+describe('The SearchField component should', () => {
+	afterEach(cleanup);
 
-	const tree = component.toJSON();
+	test('Be render with empty value', () => {
+		const {getByTestId} = render(
+			<MockRouter>
+				<SearchField />
+			</MockRouter>
+		);
 
-	expect(tree).toMatchSnapshot();
-});
-
-test('Should change search value', () => {
-	const component = mount(
-		<Router>
-			<SearchField />
-		</Router>
-	);
-
-	component.find('input').simulate('keyPress', {
-		target: {value: 'test'}
+		const searchInput = getByTestId('searchField');
+		expect(searchInput.value).toBe('');
 	});
-	component.find('form').simulate('submit', {
-		preventDefault: () => {}
+
+	test('Be render with "test" value', () => {
+		const {getByTestId} = render(
+			<MockRouter query="?search=test">
+				<SearchField />
+			</MockRouter>
+		);
+
+		const searchInput = getByTestId('searchField');
+		expect(searchInput.value).toBe('test');
 	});
-	expect(component).toMatchSnapshot();
+
+	test('Be render with empty value, change for "test" and submit', () => {
+		const {getByTestId} = render(
+			<MockRouter>
+				<SearchField />
+			</MockRouter>
+		);
+
+		const searchInput = getByTestId('searchField');
+		const searchForm = getByTestId('searchFieldForm');
+
+		expect(searchInput.value).toBe('');
+
+		fireEvent.change(searchInput, {target: {value: 'test'}});
+
+		expect(searchInput.value).toBe('test');
+
+		fireEvent.submit(searchForm);
+
+		//@TODO: waiting for mock router improve implamentation to expect the correct search router value
+	});
+
+	test('Be render with "test" value, change for "testing" and submit', () => {
+		const {getByTestId} = render(
+			<MockRouter query="?search=test">
+				<SearchField />
+			</MockRouter>
+		);
+
+		const searchInput = getByTestId('searchField');
+		const searchForm = getByTestId('searchFieldForm');
+
+		expect(searchInput.value).toBe('test');
+
+		fireEvent.change(searchInput, {target: {value: 'testing'}});
+
+		expect(searchInput.value).toBe('testing');
+
+		fireEvent.submit(searchForm);
+
+		//@TODO: waiting for mock router improve implamentation to expect the correct search router value
+	});
 });

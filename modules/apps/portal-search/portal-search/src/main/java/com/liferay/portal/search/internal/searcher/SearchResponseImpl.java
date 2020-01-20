@@ -24,6 +24,9 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.groupby.GroupByResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.hits.SearchHitsBuilder;
+import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
+import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.searcher.FacetContextImpl;
 import com.liferay.portal.search.searcher.FacetContext;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -140,6 +143,13 @@ public class SearchResponseImpl implements SearchResponse, Serializable {
 
 	@Override
 	public SearchHits getSearchHits() {
+		if (_searchHits == null) {
+			SearchHitsBuilder searchHitsBuilder =
+				_searchHitsBuilderFactory.getSearchHitsBuilder();
+
+			return searchHitsBuilder.build();
+		}
+
 		return _searchHits;
 	}
 
@@ -252,6 +262,8 @@ public class SearchResponseImpl implements SearchResponse, Serializable {
 	private String _responseString = StringPool.BLANK;
 	private final SearchContext _searchContext;
 	private SearchHits _searchHits;
+	private SearchHitsBuilderFactory _searchHitsBuilderFactory =
+		new SearchHitsBuilderFactoryImpl();
 	private SearchRequest _searchRequest;
 	private final Map<String, StatsResponse> _statsResponseMap =
 		new LinkedHashMap<>();

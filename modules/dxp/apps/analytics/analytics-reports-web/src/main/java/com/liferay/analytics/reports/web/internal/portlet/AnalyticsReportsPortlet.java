@@ -15,6 +15,8 @@
 package com.liferay.analytics.reports.web.internal.portlet;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
+import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
+import com.liferay.analytics.reports.web.internal.display.context.AnalyticsReportsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -69,6 +71,13 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 		if (layoutMode.equals(Constants.PREVIEW)) {
 			return;
 		}
+
+		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
+			new AnalyticsReportsDisplayContext();
+
+		renderRequest.setAttribute(
+			AnalyticsReportsWebKeys.ANALYTICS_REPORTS_DISPLAY_CONTEXT,
+			analyticsReportsDisplayContext);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

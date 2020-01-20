@@ -157,12 +157,6 @@ public class StructuredContentResourceTest
 	public void testGraphQLGetSiteStructuredContentByUuid() {
 	}
 
-	@JsonIgnore
-	@Override
-	@Test
-	public void testPutStructuredContentPermission() {
-	}
-
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"contentStructureId", "description", "title"};

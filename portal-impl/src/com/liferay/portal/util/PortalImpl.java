@@ -6414,12 +6414,20 @@ public class PortalImpl implements Portal {
 			return false;
 		}
 
-		while (resourceId.contains("%")) {
+		int maxDecodingLimit = 10;
+
+		while ((maxDecodingLimit > 0) && resourceId.contains("%")) {
 			resourceId = HttpUtil.decodePath(resourceId);
 
 			matcher = _bannedResourceIdPattern.matcher(resourceId);
 
 			if (matcher.matches()) {
+				return false;
+			}
+
+			maxDecodingLimit--;
+
+			if (maxDecodingLimit == 0) {
 				return false;
 			}
 		}

@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<div id="<%= renderResponse.getNamespace() + "-analytics-reports-root" %>">
+<div id="<portlet:namespace />-analytics-reports-root">
 	<div class="inline-item my-5 p-5 w-100">
 		<span aria-hidden="true" class="loading-animation"></span>
 	</div>

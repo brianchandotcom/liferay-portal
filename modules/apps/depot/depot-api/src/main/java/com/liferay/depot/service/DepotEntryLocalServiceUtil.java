@@ -213,6 +213,12 @@ public class DepotEntryLocalServiceUtil {
 		return getService().fetchDepotEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.depot.model.DepotEntry fetchGroupDepotEntry(
+		long groupId) {
+
+		return getService().fetchGroupDepotEntry(groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

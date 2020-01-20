@@ -217,20 +217,25 @@ function FragmentContent({fragmentEntryLink}, ref) {
 
 				const {editableValues} = fragmentEntryLink;
 				const editableValue = editableValues[processorType][id];
-				const segmentsExperienceId = selectPrefixedSegmentsExperienceId(
+				const prefixedSegmentsExperienceId = selectPrefixedSegmentsExperienceId(
 					state
 				);
 
-				editableValue[segmentsExperienceId] = {
-					[state.languageId]: value
-				};
+				if (state.segmentsExperienceId) {
+					editableValue[prefixedSegmentsExperienceId] = {
+						...editableValue[prefixedSegmentsExperienceId],
+						[state.languageId]: value
+					};
+				} else {
+					editableValue[state.languageId] = value;
+				}
 
 				dispatch(
 					updateEditableValues({
 						config,
 						editableValues,
 						fragmentEntryLinkId,
-						segmentsExperienceId
+						segmentsExperienceId: state.segmentsExperienceId
 					})
 				);
 			},

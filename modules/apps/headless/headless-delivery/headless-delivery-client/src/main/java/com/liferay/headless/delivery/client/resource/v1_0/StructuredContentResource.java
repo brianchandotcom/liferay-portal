@@ -26,6 +26,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -175,11 +177,11 @@ public interface StructuredContentResource {
 		throws Exception;
 
 	public void putStructuredContentPermission(
-			Permission[] permissions, Long structuredContentId)
+			Long structuredContentId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putStructuredContentPermissionHttpResponse(
-			Permission[] permissions, Long structuredContentId)
+			Long structuredContentId, Permission[] permissions)
 		throws Exception;
 
 	public String getStructuredContentRenderedContentTemplate(
@@ -1292,12 +1294,12 @@ public interface StructuredContentResource {
 		}
 
 		public void putStructuredContentPermission(
-				Permission[] permissions, Long structuredContentId)
+				Long structuredContentId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putStructuredContentPermissionHttpResponse(
-					permissions, structuredContentId);
+					structuredContentId, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -1310,13 +1312,20 @@ public interface StructuredContentResource {
 
 		public HttpInvoker.HttpResponse
 				putStructuredContentPermissionHttpResponse(
-					Permission[] permissions, Long structuredContentId)
+					Long structuredContentId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(
-				structuredContentId.toString(), "application/json");
+				Stream.of(
+					permissions
+				).map(
+					value -> String.valueOf(value)
+				).collect(
+					Collectors.toList()
+				).toString(),
+				"application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(

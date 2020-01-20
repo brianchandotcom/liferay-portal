@@ -616,9 +616,9 @@ public abstract class BaseStructuredContentResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
 	public void putStructuredContentPermission(
-			com.liferay.portal.vulcan.permission.Permission[] permissions,
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
-				Long structuredContentId)
+				Long structuredContentId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		PermissionChecker permissionChecker =

@@ -43,6 +43,43 @@ public class Permission {
 		this._roleName = roleName;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("{");
+
+		if (_actionIds != null) {
+			sb.append("\"actionIds\": [");
+
+			for (int i = 0; i < _actionIds.length; i++) {
+				sb.append("\"");
+				sb.append(_actionIds[i]);
+				sb.append("\"");
+
+				if ((i + 1) < _actionIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (_roleName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleName\": \"");
+			sb.append(_roleName);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	private String[] _actionIds;
 	private String _roleName;
 

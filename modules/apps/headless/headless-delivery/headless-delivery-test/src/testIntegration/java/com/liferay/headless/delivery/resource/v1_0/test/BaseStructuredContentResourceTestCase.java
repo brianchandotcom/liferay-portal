@@ -27,6 +27,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.StructuredContentSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -1620,12 +1621,29 @@ public abstract class BaseStructuredContentResourceTestCase {
 			204,
 			structuredContentResource.
 				putStructuredContentPermissionHttpResponse(
-					null, structuredContent.getId()));
+					structuredContent.getId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"VIEW"});
+								setRoleName("Guest");
+							}
+						}
+					}));
 
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentResource.
-				putStructuredContentPermissionHttpResponse(null, 0L));
+				putStructuredContentPermissionHttpResponse(
+					0L,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
 	}
 
 	protected StructuredContent

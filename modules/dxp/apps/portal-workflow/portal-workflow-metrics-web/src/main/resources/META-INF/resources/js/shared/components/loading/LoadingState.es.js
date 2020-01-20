@@ -11,29 +11,22 @@
 
 import React from 'react';
 
-/**
- * LoadingState.
- * @extends React.Component
- */
-export default class LoadingState extends React.Component {
-	render() {
-		const {
-			className = 'border-1 pb-6 pt-6 sheet',
-			message,
-			messageClassName = ''
-		} = this.props;
+const LoadingState = ({
+	className = 'border-1 pb-6 pt-6 sheet',
+	message,
+	messageClassName = ''
+}) => (
+	<div className={className} data-testid="loadingState">
+		<span aria-hidden="true" className="loading-animation" />
+		{message && (
+			<span
+				className={`text-center text-truncate ${messageClassName}`}
+				data-testid="loadingStateMsg"
+			>
+				{message}
+			</span>
+		)}
+	</div>
+);
 
-		return (
-			<div className={className} data-testid="loadingState">
-				<span aria-hidden="true" className="loading-animation" />
-				{message && (
-					<span
-						className={`text-center text-truncate ${messageClassName}`}
-					>
-						{message}
-					</span>
-				)}
-			</div>
-		);
-	}
-}
+export default LoadingState;

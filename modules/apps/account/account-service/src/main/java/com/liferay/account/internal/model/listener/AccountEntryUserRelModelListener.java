@@ -15,6 +15,7 @@
 package com.liferay.account.internal.model.listener;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.persistence.AccountEntryUserRelPersistence;
@@ -46,6 +47,7 @@ public class AccountEntryUserRelModelListener
 
 		_updateDefaultAccountEntry(accountEntryUserRel.getAccountUserId());
 
+		_reindexAccountEntry(accountEntryUserRel.getAccountEntryId());
 		_reindexUser(accountEntryUserRel.getAccountUserId());
 	}
 
@@ -55,7 +57,20 @@ public class AccountEntryUserRelModelListener
 
 		_updateDefaultAccountEntry(accountEntryUserRel.getAccountUserId());
 
+		_reindexAccountEntry(accountEntryUserRel.getAccountEntryId());
 		_reindexUser(accountEntryUserRel.getAccountUserId());
+	}
+
+	private void _reindexAccountEntry(long accountEntryId) {
+		try {
+			Indexer<AccountEntry> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(AccountEntry.class);
+
+			indexer.reindex(AccountEntry.class.getName(), accountEntryId);
+		}
+		catch (SearchException searchException) {
+			throw new ModelListenerException(searchException);
+		}
 	}
 
 	private void _reindexUser(long accountUserId) {

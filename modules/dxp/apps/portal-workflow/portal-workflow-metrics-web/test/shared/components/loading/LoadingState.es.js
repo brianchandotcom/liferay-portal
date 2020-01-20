@@ -9,12 +9,34 @@
  * distribution rights of the Software.
  */
 
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import LoadingState from '../../../../src/main/resources/META-INF/resources/js/shared/components/loading/LoadingState.es';
 
-test('Should test component render', () => {
-	const component = shallow(<LoadingState />);
+import '@testing-library/jest-dom/extend-expect';
 
-	expect(component).toMatchSnapshot();
+describe('The LoadingState component should', () => {
+	afterEach(cleanup);
+
+	test('Be render with default props', () => {
+		const {getByTestId} = render(<LoadingState />);
+
+		const loading = getByTestId('loadingState');
+
+		expect(loading.children.length).toEqual(1);
+		expect(loading.children[0].className).toBe('loading-animation');
+	});
+
+	test('Be render with loading message', () => {
+		const {getByTestId} = render(
+			<LoadingState message="fetching data..." />
+		);
+
+		const loading = getByTestId('loadingState');
+		const loadingMsg = getByTestId('loadingStateMsg');
+
+		expect(loading.children.length).toEqual(2);
+		expect(loadingMsg).toHaveTextContent('fetching data...');
+	});
 });

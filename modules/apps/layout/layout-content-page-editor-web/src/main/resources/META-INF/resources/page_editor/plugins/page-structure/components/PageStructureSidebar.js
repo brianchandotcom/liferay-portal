@@ -33,15 +33,13 @@ export default function PageStructureSidebar() {
 			name = Liferay.Language.get('container');
 		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
 			name = Liferay.Language.get('column');
+		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
+			name = Liferay.Language.get('drop-zone');
 		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
 			name = Liferay.Language.get('row');
 		}
 
 		return name;
-	};
-
-	const isRemovable = item => {
-		return item.type === LAYOUT_DATA_ITEM_TYPES.column ? false : true;
 	};
 
 	const visit = (item, items) => {
@@ -74,7 +72,7 @@ export default function PageStructureSidebar() {
 			children,
 			id: item.itemId,
 			name: getName(item, fragmentEntryLinks),
-			removable: isRemovable(item)
+			removable: isRemovable(item, layoutData)
 		};
 	};
 
@@ -94,4 +92,25 @@ export default function PageStructureSidebar() {
 			</div>
 		</>
 	);
+}
+
+function isRemovable(item, layoutData) {
+	function hasDropZoneChildren(item, layoutData) {
+		return item.children.some(childId => {
+			const child = layoutData.items[childId];
+
+			return child.type === LAYOUT_DATA_ITEM_TYPES.dropZone
+				? true
+				: hasDropZoneChildren(child, layoutData);
+		});
+	}
+
+	if (
+		item.type === LAYOUT_DATA_ITEM_TYPES.dropZone ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.column
+	) {
+		return false;
+	}
+
+	return !hasDropZoneChildren(item, layoutData);
 }

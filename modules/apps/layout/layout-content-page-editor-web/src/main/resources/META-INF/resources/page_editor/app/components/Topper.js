@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useContext, useRef, useState, useEffect} from 'react';
+import React, {useContext, useRef, useState, useEffect, useMemo} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
@@ -210,6 +210,11 @@ export default function Topper({
 		}
 	);
 
+	const showDeleteButton = useMemo(() => isRemovable(item, layoutData), [
+		item,
+		layoutData
+	]);
+
 	const styles = {
 		active: isSelected(item.itemId),
 		'drag-over-bottom': edge === 1 && isOver,
@@ -352,28 +357,30 @@ export default function Topper({
 							</ClayButton>
 						</TopperListItem>
 					)}
-					<TopperListItem>
-						<ClayButton
-							displayType="unstyled"
-							onClick={event => {
-								event.stopPropagation();
-								dispatch(
-									deleteItem({
-										config,
-										itemId: item.itemId,
-										store
-									})
-								);
-							}}
-							small
-							title={Liferay.Language.get('remove')}
-						>
-							<ClayIcon
-								className="page-editor-topper__icon"
-								symbol="times-circle"
-							/>
-						</ClayButton>
-					</TopperListItem>
+					{showDeleteButton && (
+						<TopperListItem>
+							<ClayButton
+								displayType="unstyled"
+								onClick={event => {
+									event.stopPropagation();
+									dispatch(
+										deleteItem({
+											config,
+											itemId: item.itemId,
+											store
+										})
+									);
+								}}
+								small
+								title={Liferay.Language.get('remove')}
+							>
+								<ClayIcon
+									className="page-editor-topper__icon"
+									symbol="times-circle"
+								/>
+							</ClayButton>
+						</TopperListItem>
+					)}
 				</ul>
 			</div>
 
@@ -415,4 +422,25 @@ function getParentItemIdAndPositon({edge, item, items, siblingOrParentId}) {
 
 function isNestingSupported(itemType, parentType) {
 	return LAYOUT_DATA_ALLOWED_PARENT_TYPES[itemType].includes(parentType);
+}
+
+function isRemovable(item, layoutData) {
+	function hasDropZoneChildren(item, layoutData) {
+		return item.children.some(childrenId => {
+			const children = layoutData.items[childrenId];
+
+			return children.type === LAYOUT_DATA_ITEM_TYPES.dropZone
+				? true
+				: hasDropZoneChildren(children, layoutData);
+		});
+	}
+
+	if (
+		item.type === LAYOUT_DATA_ITEM_TYPES.dropZone ||
+		item.type === LAYOUT_DATA_ITEM_TYPES.column
+	) {
+		return false;
+	}
+
+	return !hasDropZoneChildren(item, layoutData);
 }

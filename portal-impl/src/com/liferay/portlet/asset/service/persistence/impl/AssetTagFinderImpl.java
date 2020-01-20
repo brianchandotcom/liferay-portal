@@ -14,9 +14,16 @@
 
 package com.liferay.portlet.asset.service.persistence.impl;
 
+import com.liferay.asset.kernel.model.AssetEntries_AssetTagsTable;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.persistence.AssetTagFinder;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.petra.sql.dsl.DSLFunctionUtil;
+import com.liferay.petra.sql.dsl.DSLQueryUtil;
+import com.liferay.petra.sql.dsl.expressions.Predicate;
+import com.liferay.petra.sql.dsl.expressions.impl.AggregateExpression;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -26,7 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
-import com.liferay.util.dao.orm.CustomSQLUtil;
+import com.liferay.social.kernel.model.SocialActivityCounter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -39,18 +46,6 @@ import java.util.List;
 public class AssetTagFinderImpl
 	extends AssetTagFinderBaseImpl implements AssetTagFinder {
 
-	public static final String COUNT_BY_G_N =
-		AssetTagFinder.class.getName() + ".countByG_N";
-
-	public static final String COUNT_BY_G_C_N =
-		AssetTagFinder.class.getName() + ".countByG_C_N";
-
-	public static final String FIND_BY_G_C_N =
-		AssetTagFinder.class.getName() + ".findByG_C_N";
-
-	public static final String FIND_BY_G_N_S_E =
-		AssetTagFinder.class.getName() + ".findByG_N_S_E";
-
 	@Override
 	public int countByG_N(long groupId, String name) {
 		Session session = null;
@@ -58,19 +53,34 @@ public class AssetTagFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_N);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(
+				DSLQueryUtil.countDistinct(
+					AssetEntries_AssetTagsTable.INSTANCE.entryId
+				).from(
+					AssetTag.TABLE
+				).innerJoinON(
+					AssetEntries_AssetTagsTable.INSTANCE,
+					AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
+						AssetTag.TABLE.tagId)
+				).where(
+					AssetEntries_AssetTagsTable.INSTANCE.entryId.in(
+						DSLQueryUtil.select(
+							AssetEntry.TABLE.entryId
+						).from(
+							AssetEntry.TABLE
+						).where(
+							AssetEntry.TABLE.groupId.eq(
+								groupId
+							).and(
+								AssetEntry.TABLE.visible.eq(true)
+							)
+						)
+					).and(
+						AssetTag.TABLE.name.like(StringUtil.toLowerCase(name))
+					)
+				));
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			String lowerCaseName = StringUtil.toLowerCase(name);
-
-			qPos.add(lowerCaseName);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -94,26 +104,45 @@ public class AssetTagFinderImpl
 
 	@Override
 	public int countByG_C_N(long groupId, long classNameId, String name) {
+		Predicate predicate = AssetEntries_AssetTagsTable.INSTANCE.entryId.in(
+			DSLQueryUtil.select(
+				AssetEntry.TABLE.entryId
+			).from(
+				AssetEntry.TABLE
+			).where(
+				AssetEntry.TABLE.groupId.eq(
+					groupId
+				).and(
+					AssetEntry.TABLE.classNameId.eq(classNameId)
+				).and(
+					AssetEntry.TABLE.visible.eq(true)
+				)
+			));
+
+		if (name != null) {
+			predicate = predicate.and(
+				AssetTag.TABLE.name.like(StringUtil.toLowerCase(name)));
+		}
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_G_C_N);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(
+				DSLQueryUtil.countDistinct(
+					AssetEntries_AssetTagsTable.INSTANCE.entryId
+				).from(
+					AssetTag.TABLE
+				).innerJoinON(
+					AssetEntries_AssetTagsTable.INSTANCE,
+					AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
+						AssetTag.TABLE.tagId)
+				).where(
+					predicate
+				));
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(classNameId);
-
-			String lowerCaseName = StringUtil.toLowerCase(name);
-
-			qPos.add(lowerCaseName);
-			qPos.add(lowerCaseName);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -140,28 +169,55 @@ public class AssetTagFinderImpl
 		long groupId, long classNameId, String name, int start, int end,
 		OrderByComparator<AssetTag> obc) {
 
+		Predicate predicate = AssetEntries_AssetTagsTable.INSTANCE.entryId.in(
+			DSLQueryUtil.select(
+				AssetEntry.TABLE.entryId
+			).from(
+				AssetEntry.TABLE
+			).where(
+				AssetEntry.TABLE.groupId.eq(
+					groupId
+				).and(
+					AssetEntry.TABLE.classNameId.eq(classNameId)
+				).and(
+					AssetEntry.TABLE.visible.eq(true)
+				)
+			));
+
+		if (name != null) {
+			predicate = predicate.and(
+				AssetTag.TABLE.name.like(StringUtil.toLowerCase(name)));
+		}
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_C_N);
+			OrderByStep orderByStep = DSLQueryUtil.selectDistinct(
+				AssetTag.TABLE
+			).from(
+				AssetTag.TABLE
+			).innerJoinON(
+				AssetEntries_AssetTagsTable.INSTANCE,
+				AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
+					AssetTag.TABLE.tagId)
+			).where(
+				predicate
+			);
 
-			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+			DSLQuery dslQuery = null;
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+			if (obc == null) {
+				dslQuery = orderByStep.orderBy(AssetTag.TABLE.name.ascending());
+			}
+			else {
+				dslQuery = orderByStep.orderBy(AssetTag.TABLE, obc);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(dslQuery);
 
 			q.addEntity("AssetTag", AssetTagImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(classNameId);
-
-			String lowerCaseName = StringUtil.toLowerCase(name);
-
-			qPos.add(lowerCaseName);
-			qPos.add(lowerCaseName);
 
 			return (List<AssetTag>)QueryUtil.list(q, getDialect(), start, end);
 		}
@@ -183,18 +239,45 @@ public class AssetTagFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_N_S_E);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(name);
-			qPos.add(startPeriod);
-			qPos.add(endPeriod);
-			qPos.add(periodLength);
-			qPos.add(endPeriod);
+			SQLQuery q = session.createSynchronizedSQLQuery(
+				DSLQueryUtil.select(
+					AssetTag.TABLE.tagId, AssetTag.TABLE.name,
+					new AggregateExpression<>(
+						false, SocialActivityCounter.TABLE.currentValue, "sum")
+				).from(
+					AssetTag.TABLE
+				).innerJoinON(
+					AssetEntries_AssetTagsTable.INSTANCE,
+					AssetEntries_AssetTagsTable.INSTANCE.tagId.eq(
+						AssetTag.TABLE.tagId)
+				).innerJoinON(
+					SocialActivityCounter.TABLE,
+					SocialActivityCounter.TABLE.classNameId.eq(
+						AssetEntry.TABLE.classNameId
+					).and(
+						SocialActivityCounter.TABLE.classPK.eq(
+							AssetEntry.TABLE.classPK)
+					)
+				).where(
+					SocialActivityCounter.TABLE.groupId.eq(
+						groupId
+					).and(
+						SocialActivityCounter.TABLE.name.eq(name)
+					).and(
+						SocialActivityCounter.TABLE.startPeriod.gte(startPeriod)
+					).and(
+						SocialActivityCounter.TABLE.startPeriod.lte(endPeriod)
+					).and(
+						DSLFunctionUtil.add(
+							SocialActivityCounter.TABLE.startPeriod,
+							periodLength
+						).lte(
+							endPeriod
+						)
+					)
+				).groupBy(
+					AssetTag.TABLE.tagId, AssetTag.TABLE.name
+				));
 
 			List<AssetTag> assetTags = new ArrayList<>();
 

@@ -2136,7 +2136,13 @@ definition {
 		FormViewBuilder.setName(formViewName = "Registration Form");
 
 		FormViewBuilder.save();
-	}
+
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.addFormViewAndValidateFieldLabel(
+			fieldType = "Text",
+			formViewName = "My Form View");
+}
 
 	@description = "Search for an object in the object list"
 	@priority = "5"

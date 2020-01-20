@@ -515,13 +515,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				try {
 					return constructor.newInstance(invocationHandler);
 				}
-				catch (ReflectiveOperationException roe) {
-					throw new InternalError(roe);
+				catch (ReflectiveOperationException reflectiveOperationException) {
+					throw new InternalError(reflectiveOperationException);
 				}
 			};
 		}
-		catch (NoSuchMethodException nsme) {
-			throw new InternalError(nsme);
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
 		}
 	}
 
@@ -767,7 +767,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 						try {
 							_${entityColumn.name}BlobModel = ${entity.name}LocalServiceUtil.get${entityColumn.methodName}BlobModel(getPrimaryKey());
 						}
-						catch (Exception e) {
+						catch (Exception exception) {
 						}
 					}
 
@@ -954,7 +954,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 					return user.getUuid();
 				}
-				catch (PortalException pe) {
+				catch (PortalException portalException) {
 					return "";
 				}
 			}
@@ -1123,7 +1123,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				try {
 					containerModel = trashHandler.getParentContainerModel(this);
 				}
-				catch (NoSuchModelException nsme) {
+				catch (NoSuchModelException noSuchModelException) {
 					return null;
 				}
 
@@ -1190,7 +1190,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					return ((TrashedModel)containerModel).isInTrash();
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 
 			return false;

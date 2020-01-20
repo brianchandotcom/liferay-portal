@@ -112,7 +112,7 @@ public int countBy${entityFinder.name}(
 				${finderCache}.putResult(finderPath, finderArgs, count);
 			</#if>
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			<#if entity.isChangeTrackingEnabled()>
 				if (productionMode) {
 					${finderCache}.removeResult(finderPath, finderArgs);
@@ -121,7 +121,7 @@ public int countBy${entityFinder.name}(
 				${finderCache}.removeResult(finderPath, finderArgs);
 			</#if>
 
-			throw processException(e);
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -268,7 +268,7 @@ public int countBy${entityFinder.name}(
 					${finderCache}.putResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, count);
 				</#if>
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				<#if entity.isChangeTrackingEnabled()>
 					if (productionMode) {
 						${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
@@ -277,7 +277,7 @@ public int countBy${entityFinder.name}(
 					${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
 				</#if>
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -454,7 +454,7 @@ public int countBy${entityFinder.name}(
 						${finderCache}.putResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, count);
 					</#if>
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				<#if entity.isChangeTrackingEnabled()>
 					if (productionMode) {
 						${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
@@ -463,7 +463,7 @@ public int countBy${entityFinder.name}(
 					${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
 				</#if>
 
-				throw processException(e);
+				throw processException(exception);
 			}
 		}
 
@@ -506,8 +506,8 @@ public int countBy${entityFinder.name}(
 
 			count = (Long)q.uniqueResult();
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -585,8 +585,8 @@ public int countBy${entityFinder.name}(
 
 				return count.intValue();
 			}
-			catch (Exception e) {
-				throw processException(e);
+			catch (Exception exception) {
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -621,8 +621,8 @@ public int countBy${entityFinder.name}(
 
 				return count.intValue();
 			}
-			catch (Exception e) {
-				throw processException(e);
+			catch (Exception exception) {
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -754,8 +754,8 @@ public int countBy${entityFinder.name}(
 
 					return count.intValue();
 				}
-				catch (Exception e) {
-					throw processException(e);
+				catch (Exception exception) {
+					throw processException(exception);
 				}
 				finally {
 					closeSession(session);
@@ -800,8 +800,8 @@ public int countBy${entityFinder.name}(
 
 					return count.intValue();
 				}
-				catch (Exception e) {
-					throw processException(e);
+				catch (Exception exception) {
+					throw processException(exception);
 				}
 				finally {
 					closeSession(session);

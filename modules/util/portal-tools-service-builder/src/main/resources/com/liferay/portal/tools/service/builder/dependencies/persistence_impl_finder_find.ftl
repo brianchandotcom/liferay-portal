@@ -298,12 +298,12 @@ that may or may not be enforced with a unique index at the database level. Case
 					${finderCache}.putResult(finderPath, finderArgs, list);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (${useCache}) {
 					${finderCache}.removeResult(finderPath, finderArgs);
 				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -544,8 +544,8 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				return array;
 			}
-			catch (Exception e) {
-				throw processException(e);
+			catch (Exception exception) {
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -716,8 +716,8 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
 				}
-				catch (Exception e) {
-					throw processException(e);
+				catch (Exception exception) {
+					throw processException(exception);
 				}
 				finally {
 					closeSession(session);
@@ -788,8 +788,8 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
 				}
-				catch (Exception e) {
-					throw processException(e);
+				catch (Exception exception) {
+					throw processException(exception);
 				}
 				finally {
 					closeSession(session);
@@ -873,8 +873,8 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					return array;
 				}
-				catch (Exception e) {
-					throw processException(e);
+				catch (Exception exception) {
+					throw processException(exception);
 				}
 				finally {
 					closeSession(session);
@@ -1258,8 +1258,8 @@ that may or may not be enforced with a unique index at the database level. Case
 
 						return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
 					}
-					catch (Exception e) {
-						throw processException(e);
+					catch (Exception exception) {
+						throw processException(exception);
 					}
 					finally {
 						closeSession(session);
@@ -1333,8 +1333,8 @@ that may or may not be enforced with a unique index at the database level. Case
 
 						return (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
 					}
-					catch (Exception e) {
-						throw processException(e);
+					catch (Exception exception) {
+						throw processException(exception);
 					}
 					finally {
 						closeSession(session);
@@ -1704,12 +1704,12 @@ that may or may not be enforced with a unique index at the database level. Case
 					${finderCache}.putResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, list);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (${useCache}) {
 					${finderCache}.removeResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs);
 				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -2089,12 +2089,12 @@ that may or may not be enforced with a unique index at the database level. Case
 					${finderCache}.putResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, list);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (${useCache}) {
 					${finderCache}.removeResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs);
 				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 		}
 
@@ -2133,8 +2133,8 @@ that may or may not be enforced with a unique index at the database level. Case
 
 			list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -2380,12 +2380,12 @@ that may or may not be enforced with a unique index at the database level. Case
 					cacheResult(${entity.varName});
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (${useCache}) {
 					${finderCache}.removeResult(_finderPathFetchBy${entityFinder.name}, finderArgs);
 				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);

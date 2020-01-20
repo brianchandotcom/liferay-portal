@@ -244,9 +244,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					field.set(this, dbColumnNames);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(e, e);
+						_log.debug(exception, exception);
 					}
 				}
 			<#else>
@@ -544,11 +544,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			return remove(${entity.varName});
 		}
-		catch (${noSuchEntity}Exception nsee) {
-			throw nsee;
+		catch (${noSuchEntity}Exception noSuchEntityException) {
+			throw noSuchEntityException;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -598,8 +598,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				session.delete(${entity.varName});
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -719,8 +719,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						${entity.varName}.set${colMethodName}(SanitizerUtil.sanitize(companyId, groupId, userId, ${apiPackagePath}.model.${entity.name}.class.getName(), ${entity.PKVarName}, ${contentType}, ${modes}, ${entity.varName}.get${colMethodName}(), null));
 					</#list>
 				}
-				catch (SanitizerException se) {
-					throw new SystemException(se);
+				catch (SanitizerException sanitizerException) {
+					throw new SystemException(sanitizerException);
 				}
 			}
 		</#if>
@@ -785,8 +785,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				session.clear();
 			</#if>
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -980,10 +980,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						${entityCache}.putResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey, nullModel);
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey);
 
-					throw processException(e);
+					throw processException(exception);
 				}
 				finally {
 					closeSession(session);
@@ -1018,8 +1018,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					cacheResult(${entity.varName});
 				}
 			}
-			catch (Exception e) {
-				throw processException(e);
+			catch (Exception exception) {
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1148,8 +1148,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						${entityCache}.putResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey, nullModel);
 					}
 				}
-				catch (Exception e) {
-					throw processException(e);
+				catch (Exception exception) {
+					throw processException(exception);
 				}
 				finally {
 					closeSession(session);
@@ -1217,8 +1217,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					cacheResult(${entity.varName});
 				}
 			}
-			catch (Exception e) {
-				throw processException(e);
+			catch (Exception exception) {
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1344,12 +1344,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.putResult(finderPath, finderArgs, list);
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (${useCache}) {
 					${finderCache}.removeResult(finderPath, finderArgs);
 				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1407,7 +1407,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 				</#if>
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				<#if entity.isChangeTrackingEnabled()>
 					if (productionMode) {
 						${finderCache}.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
@@ -1416,7 +1416,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 				</#if>
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1756,8 +1756,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 						set${referenceEntity.names}(pk, ${referenceEntity.varName}PKs);
 					}
-					catch (Exception e) {
-						throw processException(e);
+					catch (Exception exception) {
+						throw processException(exception);
 					}
 				}
 			</#if>
@@ -1884,10 +1884,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					${finderCache}.putResult(_finderPathWithPaginationCountAncestors, finderArgs, count);
 				}
-				catch (SystemException se) {
+				catch (SystemException systemException) {
 					${finderCache}.removeResult(_finderPathWithPaginationCountAncestors, finderArgs);
 
-					throw se;
+					throw systemException;
 				}
 			}
 
@@ -1906,10 +1906,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					${finderCache}.putResult(_finderPathWithPaginationCountDescendants, finderArgs, count);
 				}
-				catch (SystemException se) {
+				catch (SystemException systemException) {
 					${finderCache}.removeResult(_finderPathWithPaginationCountDescendants, finderArgs);
 
-					throw se;
+					throw systemException;
 				}
 			}
 
@@ -1940,10 +1940,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					${finderCache}.putResult(_finderPathWithPaginationGetAncestors, finderArgs, list);
 				}
-				catch (SystemException se) {
+				catch (SystemException systemException) {
 					${finderCache}.removeResult(_finderPathWithPaginationGetAncestors, finderArgs);
 
-					throw se;
+					throw systemException;
 				}
 			}
 
@@ -1974,10 +1974,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					${finderCache}.putResult(_finderPathWithPaginationGetDescendants, finderArgs, list);
 				}
-				catch (SystemException se) {
+				catch (SystemException systemException) {
 					${finderCache}.removeResult(_finderPathWithPaginationGetDescendants, finderArgs);
 
-					throw se;
+					throw systemException;
 				}
 			}
 
@@ -2018,8 +2018,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					rebuildTree(session, selectQuery, updateQuery, ${scopeEntityColumn.name}, 0, 0);
 				}
-				catch (Exception e) {
-					throw processException(e);
+				catch (Exception exception) {
+					throw processException(exception);
 				}
 				finally {
 					closeSession(session);
@@ -2050,8 +2050,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				return (Long)q.uniqueResult();
 			}
-			catch (Exception e) {
-				throw processException(e);
+			catch (Exception exception) {
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -2483,8 +2483,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			try {
 				Class.forName(${portletShortName}PersistenceConstants.class.getName());
 			}
-			catch (ClassNotFoundException cnfe) {
-				throw new ExceptionInInitializerError(cnfe);
+			catch (ClassNotFoundException classNotFoundException) {
+				throw new ExceptionInInitializerError(classNotFoundException);
 			}
 		}
 	</#if>

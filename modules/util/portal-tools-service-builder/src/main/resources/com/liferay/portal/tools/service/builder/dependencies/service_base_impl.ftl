@@ -283,8 +283,8 @@ import org.osgi.service.component.annotations.Reference;
 
 				<#if !serviceBaseExceptions?seq_contains("PortalException")>
 					}
-					catch (PortalException pe) {
-						throw new SystemException(pe);
+					catch (PortalException portalException) {
+						throw new SystemException(portalException);
 					}
 				</#if>
 			<#else>
@@ -317,8 +317,8 @@ import org.osgi.service.component.annotations.Reference;
 
 				<#if !serviceBaseExceptions?seq_contains("PortalException")>
 					}
-					catch (PortalException pe) {
-						throw new SystemException(pe);
+					catch (PortalException portalException) {
+						throw new SystemException(portalException);
 					}
 				</#if>
 			<#else>
@@ -1424,8 +1424,8 @@ import org.osgi.service.component.annotations.Reference;
 
 						return (${apiPackagePath}.model.${entity.name}${entityColumn.methodName}BlobModel)session.get(${entity.name}${entityColumn.methodName}BlobModel.class, primaryKey);
 					}
-					catch (Exception e) {
-						throw ${entity.varName}Persistence.processException(e);
+					catch (Exception exception) {
+						throw ${entity.varName}Persistence.processException(exception);
 					}
 					finally {
 						${entity.varName}Persistence.closeSession(session);
@@ -1455,8 +1455,8 @@ import org.osgi.service.component.annotations.Reference;
 
 						return inputStream;
 					}
-					catch (Exception e) {
-						throw new SystemException(e);
+					catch (Exception exception) {
+						throw new SystemException(exception);
 					}
 				}
 			</#if>
@@ -1913,8 +1913,8 @@ import org.osgi.service.component.annotations.Reference;
 
 				sqlUpdate.update();
 			}
-			catch (Exception e) {
-				throw new SystemException(e);
+			catch (Exception exception) {
+				throw new SystemException(exception);
 			}
 		}
 	</#if>

@@ -53,8 +53,8 @@ public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl imp
 					try {
 						${entity.name}LocalServiceUtil.update${entity.name}(this);
 					}
-					catch (PortalException pe) {
-						throw new SystemException(pe);
+					catch (PortalException portalException) {
+						throw new SystemException(portalException);
 					}
 				<#else>
 					${entity.name}LocalServiceUtil.update${entity.name}(this);
@@ -104,8 +104,8 @@ public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl imp
 					try {
 						${entity.name}LocalServiceUtil.update${entity.name}(${entity.varName});
 					}
-					catch (PortalException pe) {
-						throw new SystemException(pe);
+					catch (PortalException portalException) {
+						throw new SystemException(portalException);
 					}
 				<#else>
 					${entity.name}LocalServiceUtil.update${entity.name}(${entity.varName});

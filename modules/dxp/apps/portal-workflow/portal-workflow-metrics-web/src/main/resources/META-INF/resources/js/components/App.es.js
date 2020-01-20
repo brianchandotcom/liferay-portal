@@ -12,7 +12,7 @@
 import React from 'react';
 import {Route, HashRouter as Router, Switch} from 'react-router-dom';
 
-import HeaderController from '../shared/components/header-controller/HeaderController.es';
+import HeaderController from '../shared/components/header/HeaderController.es';
 import {withParams} from '../shared/components/router/routerUtil.es';
 import {AppContextProvider} from './AppContext.es';
 import InstanceListPage from './instance-list-page/InstanceListPage.es';

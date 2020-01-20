@@ -2142,6 +2142,10 @@ definition {
 		FormViewBuilder.addFormViewAndValidateFieldLabel(
 			fieldType = "Text",
 			formViewName = "My Form View");
+		
+		AppBuilderAdmin.openItem(itemName = "My Form View");
+
+		FormViewBuilder.addFromObjectField(fieldName = "Full name");
 }
 
 	@description = "Search for an object in the object list"

@@ -52,6 +52,14 @@ definition {
 		AppBuilderAdmin.gotoBack();
 	}
 
+	macro addFromObjectField {
+		var key_fieldName = "${fieldName}";
+
+		DoubleClick(locator1 = "FormViewBuilder#OBJECT_FIELD_NAME");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldName}");
+	}
+
 	macro checkSwitcher {
 		Check.checkToggleSwitch(
 			key_switcherOption = "${propertyName}",

@@ -28,4 +28,8 @@ public interface AcceptLanguage {
 
 	public Locale getPreferredLocale();
 
+	public default boolean isAcceptAllLanguages() {
+		return false;
+	}
+
 }

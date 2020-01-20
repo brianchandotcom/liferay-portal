@@ -1,0 +1,9 @@
+{
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "Link",
+	"readOnly": "true",
+	"thumbnailPath": "thumbnail.png",
+	"type": "component"
+}

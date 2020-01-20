@@ -23,6 +23,8 @@ public class LayoutDataItemTypeConstants {
 
 	public static final String TYPE_CONTAINER = "container";
 
+	public static final String TYPE_DROP_ZONE = "drop-zone";
+
 	public static final String TYPE_FRAGMENT = "fragment";
 
 	public static final String TYPE_ROOT = "root";

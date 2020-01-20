@@ -15,10 +15,14 @@
 package com.liferay.depot.service.impl;
 
 import com.liferay.depot.model.DepotAppCustomization;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.base.DepotAppCustomizationLocalServiceBaseImpl;
+import com.liferay.depot.service.persistence.DepotEntryPersistence;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia García
@@ -40,7 +44,8 @@ public class DepotAppCustomizationLocalServiceImpl
 
 	@Override
 	public DepotAppCustomization updateDepotAppCustomization(
-		long depotEntryId, String portletId, boolean enabled) {
+			long depotEntryId, String portletId, boolean enabled)
+		throws PortalException {
 
 		DepotAppCustomization depotAppCustomization =
 			depotAppCustomizationPersistence.fetchByD_P(
@@ -56,11 +61,17 @@ public class DepotAppCustomizationLocalServiceImpl
 	}
 
 	private DepotAppCustomization _addDepotAppCustomization(
-		long depotEntryId, String portletId, boolean enabled) {
+			long depotEntryId, String portletId, boolean enabled)
+		throws PortalException {
 
 		DepotAppCustomization depotAppCustomization =
 			depotAppCustomizationPersistence.create(
 				counterLocalService.increment());
+
+		DepotEntry depotEntry = _depotEntryPersistence.findByPrimaryKey(
+			depotEntryId);
+
+		depotAppCustomization.setCompanyId(depotEntry.getCompanyId());
 
 		depotAppCustomization.setDepotEntryId(depotEntryId);
 		depotAppCustomization.setEnabled(enabled);
@@ -68,5 +79,8 @@ public class DepotAppCustomizationLocalServiceImpl
 
 		return depotAppCustomizationPersistence.update(depotAppCustomization);
 	}
+
+	@Reference
+	private DepotEntryPersistence _depotEntryPersistence;
 
 }

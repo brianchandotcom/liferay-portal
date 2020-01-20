@@ -16,8 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReportsDisplayContext)request.getAttribute(AnalyticsReportsWebKeys.ANALYTICS_REPORTS_DISPLAY_CONTEXT);
+%>
+
 <div id="<portlet:namespace />-analytics-reports-root">
 	<div class="inline-item my-5 p-5 w-100">
 		<span aria-hidden="true" class="loading-animation"></span>
+
+		<react:component
+			data="<%= analyticsReportsDisplayContext.getData() %>"
+			module="js/AnalyticsReportsApp.es"
+		/>
 	</div>
 </div>

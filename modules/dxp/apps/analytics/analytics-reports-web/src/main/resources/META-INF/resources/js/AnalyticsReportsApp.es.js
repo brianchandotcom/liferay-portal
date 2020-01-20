@@ -7,36 +7,10 @@
  * contacting Liferay, Inc. See the License for the specific language governing
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
- *
- *
- *
  */
 
-package com.liferay.analytics.reports.web.internal.display.context;
+import React from 'react';
 
-import com.liferay.portal.kernel.util.HashMapBuilder;
-
-import java.util.Map;
-
-/**
- * @author Sarai Díaz
- */
-public class AnalyticsReportsDisplayContext {
-
-	public Map<String, Object> getData() {
-		if (_data != null) {
-			return _data;
-		}
-
-		_data = HashMapBuilder.<String, Object>put(
-			"context", ""
-		).put(
-			"props", ""
-		).build();
-
-		return _data;
-	}
-
-	private Map<String, Object> _data;
-
+export default function() {
+	return <></>;
 }

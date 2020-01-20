@@ -19,7 +19,7 @@
 <%
 WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
-boolean hasOtherAssignees = workflowTaskDisplayContext.hasOtherAssignees(workflowTask);
+boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workflowTask);
 
 long assigneeUserId = ParamUtil.getLong(renderRequest, "assigneeUserId");
 
@@ -38,7 +38,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 					<aui:input name="assigneeUserId" type="hidden" value="<%= String.valueOf(assigneeUserId) %>" />
 				</c:when>
 				<c:otherwise>
-					<aui:select disabled="<%= !hasOtherAssignees %>" label="assign-to" name="assigneeUserId">
+					<aui:select disabled="<%= !hasAssignableUsers %>" label="assign-to" name="assigneeUserId">
 
 						<%
 						for (User pooledUsers : workflowTaskDisplayContext.getPooledUsers(workflowTask)) {
@@ -54,7 +54,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				</c:otherwise>
 			</c:choose>
 
-			<aui:input cols="55" cssClass="task-action-comment" disabled="<%= !hasOtherAssignees && (assigneeUserId <= 0) %>" name="comment" placeholder="comment" rows="1" type="textarea" />
+			<aui:input cols="55" cssClass="task-action-comment" disabled="<%= !hasAssignableUsers && (assigneeUserId <= 0) %>" name="comment" placeholder="comment" rows="1" type="textarea" />
 		</div>
 
 		<div class="modal-footer">
@@ -64,7 +64,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				</div>
 
 				<div class="btn-group-item">
-					<aui:button disabled="<%= !hasOtherAssignees && (assigneeUserId <= 0) %>" name="done" primary="<%= true %>" value="done" />
+					<aui:button disabled="<%= !hasAssignableUsers && (assigneeUserId <= 0) %>" name="done" primary="<%= true %>" value="done" />
 				</div>
 			</div>
 		</div>

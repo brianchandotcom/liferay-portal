@@ -590,7 +590,7 @@ public class WorkflowTaskManagerImplTest
 
 		checkUserNotificationEventsByUsers(siteMemberUser);
 
-		Assert.assertTrue(hasOtherAssignees(adminUser));
+		Assert.assertTrue(hasAssignableUsers(adminUser));
 
 		assignWorkflowTaskToUser(adminUser, siteMemberUser);
 

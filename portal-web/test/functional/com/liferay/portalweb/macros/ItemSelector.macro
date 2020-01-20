@@ -43,9 +43,9 @@ definition {
 		}
 
 		AssertClick(
-			key_breadcrumbName = "Workspaces",
+			key_breadcrumbName = "sites",
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-			value1 = "Workspaces");
+			value1 = "sites");
 
 		AssertClick(
 			key_groupTab = "${workspacesType}",

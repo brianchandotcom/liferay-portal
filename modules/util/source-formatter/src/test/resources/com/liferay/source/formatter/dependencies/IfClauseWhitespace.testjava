@@ -82,12 +82,12 @@ public class IfClauseWhitespace {
 		try {
 			testString = "Hello";
 		}
-		catch (Exception e) {
-			if (e instanceof PortalException) {
+		catch (Exception exception) {
+			if (exception instanceof PortalException) {
 				testString = "World";
 			}
-			else if (e instanceof SystemException ||
-					 e instanceof
+			else if (exception instanceof SystemException ||
+					 exception instanceof
 						UnavailableProductVersionDirectDownloadURLException) {
 
 				return;

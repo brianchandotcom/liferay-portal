@@ -60,7 +60,7 @@ public class ProxyUsage implements Closeable {
 			try {
 				serviceTracker.close();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 
@@ -146,12 +146,12 @@ public class ProxyUsage implements Closeable {
 		try {
 			injectionPoint.reset();
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new RuntimeException(
 				StringBundler.concat(
 					"Unable to unset ", injectionPoint.getName(), " on ",
 					target),
-				e);
+				exception);
 		}
 
 		ServiceTracker<?, ?> serviceTracker =
@@ -175,12 +175,12 @@ public class ProxyUsage implements Closeable {
 						try {
 							injectionPoint.inject(service);
 						}
-						catch (Exception e) {
+						catch (Exception exception) {
 							throw new RuntimeException(
 								StringBundler.concat(
 									"Unable to set service reference using ",
 									injectionPoint.getName(), " on ", target),
-								e);
+								exception);
 						}
 					}
 
@@ -201,12 +201,12 @@ public class ProxyUsage implements Closeable {
 					try {
 						injectionPoint.inject(currentService);
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						throw new RuntimeException(
 							StringBundler.concat(
 								"Unable to set injection point ",
 								injectionPoint.getName(), " on ", target),
-							e);
+							exception);
 					}
 				}
 
@@ -230,14 +230,14 @@ public class ProxyUsage implements Closeable {
 							injectionPoint.inject(currentService);
 						}
 					}
-					catch (IllegalStateException ise) {
+					catch (IllegalStateException illegalStateException) {
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						throw new RuntimeException(
 							StringBundler.concat(
 								"Unable to set injection point ",
 								injectionPoint.getName(), " on ", target),
-							e);
+							exception);
 					}
 				}
 

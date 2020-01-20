@@ -36,12 +36,12 @@ public class ElseStatement1 {
 		try {
 			return Integer.valueOf(s);
 		}
-		catch (Exception e) {
-			if (e instanceof NumberFormatException) {
+		catch (Exception exception) {
+			if (exception instanceof NumberFormatException) {
 				return -1;
 			}
 			else {
-				throw new Exception(e);
+				throw new Exception(exception);
 			}
 		}
 	}

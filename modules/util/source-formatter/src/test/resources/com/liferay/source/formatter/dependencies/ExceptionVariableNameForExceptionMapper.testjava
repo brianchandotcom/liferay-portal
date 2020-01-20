@@ -37,12 +37,13 @@ public class ExceptionVariableNameForExceptionMapper
 	implements ExceptionMapper<NoSuchStructureException> {
 
 	@Override
-	public Response toResponse(NoSuchStructureException exception) {
+	public Response toResponse(
+		NoSuchStructureException noSuchStructureException) {
 
 		try {
 			String testString = "Hello";
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 		}
 
 		return Response.status(

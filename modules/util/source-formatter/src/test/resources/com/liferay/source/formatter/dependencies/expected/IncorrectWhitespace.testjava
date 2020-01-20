@@ -83,7 +83,7 @@ public class IncorrectWhitespace {
 					s3 = s1;
 				}
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 			}
 		}
 

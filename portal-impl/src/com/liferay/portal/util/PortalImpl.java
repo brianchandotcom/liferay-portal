@@ -6408,16 +6408,20 @@ public class PortalImpl implements Portal {
 			return true;
 		}
 
-		if (resourceId.contains("%") &&
-			!isValidResourceId(HttpUtil.decodePath(resourceId))) {
-
-			return false;
-		}
-
 		Matcher matcher = _bannedResourceIdPattern.matcher(resourceId);
 
 		if (matcher.matches()) {
 			return false;
+		}
+
+		while (resourceId.contains("%")) {
+			resourceId = HttpUtil.decodePath(resourceId);
+
+			matcher = _bannedResourceIdPattern.matcher(resourceId);
+
+			if (matcher.matches()) {
+				return false;
+			}
 		}
 
 		return true;

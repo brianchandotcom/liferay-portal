@@ -969,11 +969,33 @@ xpack.monitoring.collection.enabled: true</echo>
 			</then>
 		</if>
 
-		<antcall target="configure-elasticsearch-cluster-properties" />
+		<get-testcase-property property.name="elasticsearch.ccr.enabled" />
 
-		<antcall target="prepare-additional-elasticsearch-dirs" />
+		<if>
+			<equals arg1="${elastic.ccr.enabled}" arg2="true" />
+			<then>
+				<antcall target="configure-elasticsearch-cluster-properties">
+					<param name="remote.elasticsearch.cluster.size" value="2" />
+				</antcall>
 
-		<antcall target="start-elasticsearch-node" />
+				<antcall target="prepare-additional-elasticsearch-dirs">
+					<param name="remote.elasticsearch.cluster.size" value="2" />
+				</antcall>
+
+				<configure-follower-elasticsearch-properties />
+
+				<antcall target="start-elasticsearch-node">
+					<param name="remote.elasticsearch.cluster.size" value="2" />
+				</antcall>
+			</then>
+			<else>
+				<antcall target="configure-elasticsearch-cluster-properties" />
+
+				<antcall target="prepare-additional-elasticsearch-dirs" />
+
+				<antcall target="start-elasticsearch-node" />
+			</else>
+		</if>
 
 		<if>
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
@@ -1009,10 +1031,24 @@ xpack.monitoring.collection.enabled: true</echo>
 					/>
 
 					<print-file file.name="${elasticsearch.dir}-${elasticsearch.node.number}/logs/LiferayElasticsearchCluster.log" />
+
+					<if>
+						<equals arg1="${remote.elasticsearch.ccr.enabled}" arg2="true" />
+						<then>
+							<print-file file.name="${elasticsearch.dir}-2/logs/LiferayElasticsearchClusterTwo.log" />
+						</then>
+					</if>
 				</antelope:repeat>
 
 				<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
 			</else>
+		</if>
+
+		<if>
+			<equals arg1="${remote.elasticsearch.ccr.enabled}" arg2="true" />
+			<then>
+				<start-ccr-trial />
+			</then>
 		</if>
 	</target>
 

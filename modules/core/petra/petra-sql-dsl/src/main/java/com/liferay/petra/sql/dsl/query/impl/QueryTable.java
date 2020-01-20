@@ -16,7 +16,7 @@ package com.liferay.petra.sql.dsl.query.impl;
 
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.query.Query;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -26,12 +26,12 @@ import java.util.function.Consumer;
  */
 public class QueryTable extends Table<QueryTable> {
 
-	public QueryTable(String name, Query query) {
-		super(null, () -> new QueryTable(name, query));
+	public QueryTable(String name, DSLQuery dslQuery) {
+		super(null, () -> new QueryTable(name, dslQuery));
 
 		setAlias(Objects.requireNonNull(name));
 
-		_query = Objects.requireNonNull(query);
+		_dslQuery = Objects.requireNonNull(dslQuery);
 	}
 
 	@Override
@@ -40,13 +40,13 @@ public class QueryTable extends Table<QueryTable> {
 
 		consumer.accept("(");
 
-		_query.toSQL(consumer, astNodeListener);
+		_dslQuery.toSQL(consumer, astNodeListener);
 
 		consumer.accept(") ");
 
 		consumer.accept(getAlias());
 	}
 
-	private final Query _query;
+	private final DSLQuery _dslQuery;
 
 }

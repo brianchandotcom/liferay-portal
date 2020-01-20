@@ -18,8 +18,8 @@ import com.liferay.petra.sql.dsl.expressions.Expression;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
 import com.liferay.petra.sql.dsl.expressions.WhenThenStep;
 import com.liferay.petra.sql.dsl.expressions.impl.CaseWhenThen;
-import com.liferay.petra.sql.dsl.expressions.impl.Function;
-import com.liferay.petra.sql.dsl.expressions.impl.FunctionType;
+import com.liferay.petra.sql.dsl.expressions.impl.DSLFunction;
+import com.liferay.petra.sql.dsl.expressions.impl.DSLFunctionType;
 import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
 
 import java.sql.Clob;
@@ -27,12 +27,13 @@ import java.sql.Clob;
 /**
  * @author Preston Crary
  */
-public class FunctionUtil {
+public class DSLFunctionUtil {
 
 	public static <N extends Number> Expression<N> add(
 		Expression<N> expression1, Expression<N> expression2) {
 
-		return new Function<>(FunctionType.ADDITION, expression1, expression2);
+		return new DSLFunction<>(
+			DSLFunctionType.ADDITION, expression1, expression2);
 	}
 
 	public static <N extends Number> Expression<N> add(
@@ -44,8 +45,8 @@ public class FunctionUtil {
 	public static Expression<Long> bitAnd(
 		Expression<Long> expression1, Expression<Long> expression2) {
 
-		return new Function<>(
-			FunctionType.BITWISE_AND, expression1, expression2);
+		return new DSLFunction<>(
+			DSLFunctionType.BITWISE_AND, expression1, expression2);
 	}
 
 	public static Expression<Long> bitAnd(
@@ -67,26 +68,27 @@ public class FunctionUtil {
 	}
 
 	public static Expression<String> castClobText(Expression<Clob> expression) {
-		return new Function<>(FunctionType.CAST_CLOB_TEXT, expression);
+		return new DSLFunction<>(DSLFunctionType.CAST_CLOB_TEXT, expression);
 	}
 
 	public static Expression<Long> castLong(Expression<?> expression) {
-		return new Function<>(FunctionType.CAST_LONG, expression);
+		return new DSLFunction<>(DSLFunctionType.CAST_LONG, expression);
 	}
 
 	public static Expression<String> castText(Expression<?> expression) {
-		return new Function<>(FunctionType.CAST_TEXT, expression);
+		return new DSLFunction<>(DSLFunctionType.CAST_TEXT, expression);
 	}
 
 	@SafeVarargs
 	public static Expression<String> concat(Expression<String>... expressions) {
-		return new Function<>(FunctionType.CONCAT, expressions);
+		return new DSLFunction<>(DSLFunctionType.CONCAT, expressions);
 	}
 
 	public static <N extends Number> Expression<N> divide(
 		Expression<N> expression1, Expression<N> expression2) {
 
-		return new Function<>(FunctionType.DIVISION, expression1, expression2);
+		return new DSLFunction<>(
+			DSLFunctionType.DIVISION, expression1, expression2);
 	}
 
 	public static <N extends Number> Expression<N> divide(
@@ -96,14 +98,14 @@ public class FunctionUtil {
 	}
 
 	public static Expression<String> lower(Expression<String> expression) {
-		return new Function<>(FunctionType.LOWER, expression);
+		return new DSLFunction<>(DSLFunctionType.LOWER, expression);
 	}
 
 	public static <N extends Number> Expression<N> multiply(
 		Expression<N> expression1, Expression<N> expression2) {
 
-		return new Function<>(
-			FunctionType.MULTIPLICATION, expression1, expression2);
+		return new DSLFunction<>(
+			DSLFunctionType.MULTIPLICATION, expression1, expression2);
 	}
 
 	public static <N extends Number> Expression<N> multiply(
@@ -115,8 +117,8 @@ public class FunctionUtil {
 	public static <N extends Number> Expression<N> subtract(
 		Expression<N> expression1, Expression<N> expression2) {
 
-		return new Function<>(
-			FunctionType.SUBTRACTION, expression1, expression2);
+		return new DSLFunction<>(
+			DSLFunctionType.SUBTRACTION, expression1, expression2);
 	}
 
 	public static <N extends Number> Expression<N> subtract(

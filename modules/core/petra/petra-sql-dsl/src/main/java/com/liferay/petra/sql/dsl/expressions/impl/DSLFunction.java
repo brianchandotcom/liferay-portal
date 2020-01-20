@@ -24,10 +24,12 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class Function<T> extends BaseASTNode implements Expression<T> {
+public class DSLFunction<T> extends BaseASTNode implements Expression<T> {
 
-	public Function(FunctionType functionType, Expression<?>... expressions) {
-		_functionType = Objects.requireNonNull(functionType);
+	public DSLFunction(
+		DSLFunctionType dslFunctionType, Expression<?>... expressions) {
+
+		_dslFunctionType = Objects.requireNonNull(dslFunctionType);
 
 		if (expressions.length == 0) {
 			throw new IllegalArgumentException();
@@ -36,32 +38,32 @@ public class Function<T> extends BaseASTNode implements Expression<T> {
 		_expressions = expressions;
 	}
 
-	public Expression<?>[] getExpressions() {
-		return _expressions;
+	public DSLFunctionType getDslFunctionType() {
+		return _dslFunctionType;
 	}
 
-	public FunctionType getFunctionType() {
-		return _functionType;
+	public Expression<?>[] getExpressions() {
+		return _expressions;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept(_functionType.getPrefix());
+		consumer.accept(_dslFunctionType.getPrefix());
 
 		for (int i = 0; i < _expressions.length; i++) {
 			_expressions[i].toSQL(consumer, astNodeListener);
 
 			if (i < (_expressions.length - 1)) {
-				consumer.accept(_functionType.getDelimiter());
+				consumer.accept(_dslFunctionType.getDelimiter());
 			}
 		}
 
-		consumer.accept(_functionType.getPostfix());
+		consumer.accept(_dslFunctionType.getPostfix());
 	}
 
+	private final DSLFunctionType _dslFunctionType;
 	private final Expression<?>[] _expressions;
-	private final FunctionType _functionType;
 
 }

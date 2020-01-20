@@ -17,10 +17,10 @@ package com.liferay.petra.sql.dsl.query.impl;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
 import com.liferay.petra.sql.dsl.expressions.Expression;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.LimitStep;
 import com.liferay.petra.sql.dsl.query.OrderByStep;
-import com.liferay.petra.sql.dsl.query.Query;
 
 import java.util.function.Consumer;
 
@@ -28,7 +28,7 @@ import java.util.function.Consumer;
  * @author Preston Crary
  */
 public class GroupBy
-	extends BaseASTNode implements LimitStep, OrderByStep, Query {
+	extends BaseASTNode implements DSLQuery, LimitStep, OrderByStep {
 
 	public GroupBy(GroupByStep groupByStep, Expression<?>... expressions) {
 		super(groupByStep);

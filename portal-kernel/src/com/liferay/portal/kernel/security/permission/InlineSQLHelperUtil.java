@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.sql.dsl.query.Query;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -41,12 +41,12 @@ public class InlineSQLHelperUtil {
 		return _inlineSQLPermission.isEnabled(groupIds);
 	}
 
-	public static <T extends Table<T>> Query replacePermissionCheck(
-		Query query, Class<?> modelClass, Column<T, Long> classPKColumn,
+	public static <T extends Table<T>> DSLQuery replacePermissionCheck(
+		DSLQuery dslQuery, Class<?> modelClass, Column<T, Long> classPKColumn,
 		long... groupIds) {
 
 		return _inlineSQLPermission.replacePermissionCheck(
-			query, modelClass, classPKColumn, groupIds);
+			dslQuery, modelClass, classPKColumn, groupIds);
 	}
 
 	public static String replacePermissionCheck(

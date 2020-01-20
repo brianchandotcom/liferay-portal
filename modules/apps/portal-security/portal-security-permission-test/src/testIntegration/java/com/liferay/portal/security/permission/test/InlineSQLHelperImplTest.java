@@ -15,10 +15,10 @@
 package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.sql.dsl.QueryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
-import com.liferay.petra.sql.dsl.query.Query;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Company;
@@ -290,12 +290,12 @@ public class InlineSQLHelperImplTest {
 
 		_setPermissionChecker();
 
-		JoinStep joinStep = QueryUtil.select(
+		JoinStep joinStep = DSLQueryUtil.select(
 		).from(
 			Layout.TABLE
 		);
 
-		Query query = _inlineSQLHelper.replacePermissionCheck(
+		DSLQuery dslQuery = _inlineSQLHelper.replacePermissionCheck(
 			joinStep, Layout.class, Layout.TABLE.plid, _groupIds);
 
 		Assert.assertEquals(
@@ -307,7 +307,7 @@ public class InlineSQLHelperImplTest {
 				"ResourcePermission.viewActionId = ? and ",
 				"(ResourcePermission.roleId in (?, ?, ?, ?) or Layout.userId ",
 				"= ?)) or Layout.groupId in (?)"),
-			query.toString());
+			dslQuery.toString());
 
 		GroupByStep groupByStep = joinStep.innerJoinON(
 			PortletPreferences.TABLE,
@@ -316,7 +316,7 @@ public class InlineSQLHelperImplTest {
 			Layout.TABLE.companyId.eq(0L)
 		);
 
-		query = _inlineSQLHelper.replacePermissionCheck(
+		dslQuery = _inlineSQLHelper.replacePermissionCheck(
 			groupByStep, Layout.class, Layout.TABLE.plid, _groupIds);
 
 		Assert.assertEquals(
@@ -330,9 +330,9 @@ public class InlineSQLHelperImplTest {
 				"ResourcePermission.viewActionId = ? and ",
 				"(ResourcePermission.roleId in (?, ?, ?, ?) or Layout.userId ",
 				"= ?)) or Layout.groupId in (?))"),
-			query.toString());
+			dslQuery.toString());
 
-		query = _inlineSQLHelper.replacePermissionCheck(
+		dslQuery = _inlineSQLHelper.replacePermissionCheck(
 			groupByStep, Layout.class, Layout.TABLE.plid);
 
 		Assert.assertEquals(
@@ -345,7 +345,7 @@ public class InlineSQLHelperImplTest {
 				"= ? and ResourcePermission.scope = ? and ",
 				"ResourcePermission.viewActionId = ? and ",
 				"(ResourcePermission.roleId in (?, ?) or Layout.userId = ?)))"),
-			query.toString());
+			dslQuery.toString());
 	}
 
 	@Test

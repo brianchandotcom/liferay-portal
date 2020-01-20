@@ -14,10 +14,10 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.sql.dsl.FunctionUtil;
-import com.liferay.petra.sql.dsl.QueryUtil;
+import com.liferay.petra.sql.dsl.DSLFunctionUtil;
+import com.liferay.petra.sql.dsl.DSLQueryUtil;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
-import com.liferay.petra.sql.dsl.query.Query;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -52,7 +52,7 @@ public class LayoutFinderImpl
 			session = openSession();
 
 			SQLQuery q = session.createSynchronizedSQLQuery(
-				QueryUtil.select(
+				DSLQueryUtil.select(
 				).from(
 					Layout.TABLE
 				).where(
@@ -102,7 +102,7 @@ public class LayoutFinderImpl
 		try {
 			session = openSession();
 
-			Query query = QueryUtil.selectDistinct(
+			DSLQuery dslQuery = DSLQueryUtil.selectDistinct(
 				Layout.TABLE.plid.as("layoutPlid"),
 				PortletPreferences.TABLE.portletId.as("preferencesPortletId")
 			).from(
@@ -121,7 +121,7 @@ public class LayoutFinderImpl
 							portletId.concat("_INSTANCE_%"))
 					).withParentheses()
 				).and(
-					FunctionUtil.castClobText(
+					DSLFunctionUtil.castClobText(
 						PortletPreferences.TABLE.preferences
 					).like(
 						StringBundler.concat(
@@ -131,7 +131,7 @@ public class LayoutFinderImpl
 				)
 			);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(query);
+			SQLQuery q = session.createSynchronizedSQLQuery(dslQuery);
 
 			q.addScalar("layoutPlid", Type.LONG);
 			q.addScalar("preferencesPortletId", Type.STRING);
@@ -172,7 +172,7 @@ public class LayoutFinderImpl
 		try {
 			session = openSession();
 
-			Query query = QueryUtil.select(
+			DSLQuery dslQuery = DSLQueryUtil.select(
 			).from(
 				Layout.TABLE
 			).innerJoinON(
@@ -190,11 +190,11 @@ public class LayoutFinderImpl
 			);
 
 			if (inlineSQLHelper) {
-				query = InlineSQLHelperUtil.replacePermissionCheck(
-					query, Layout.class, Layout.TABLE.plid, groupId);
+				dslQuery = InlineSQLHelperUtil.replacePermissionCheck(
+					dslQuery, Layout.class, Layout.TABLE.plid, groupId);
 			}
 
-			SQLQuery q = session.createSynchronizedSQLQuery(query);
+			SQLQuery q = session.createSynchronizedSQLQuery(dslQuery);
 
 			q.addEntity("Layout", LayoutImpl.class);
 

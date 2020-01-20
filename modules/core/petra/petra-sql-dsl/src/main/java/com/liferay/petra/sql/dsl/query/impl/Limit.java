@@ -16,15 +16,15 @@ package com.liferay.petra.sql.dsl.query.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.LimitStep;
-import com.liferay.petra.sql.dsl.query.Query;
 
 import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class Limit extends BaseASTNode implements Query {
+public class Limit extends BaseASTNode implements DSLQuery {
 
 	public Limit(LimitStep limitStep, int start, int end) {
 		super(limitStep);

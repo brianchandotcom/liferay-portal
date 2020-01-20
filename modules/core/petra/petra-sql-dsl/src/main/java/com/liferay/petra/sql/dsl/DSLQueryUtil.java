@@ -23,7 +23,7 @@ import com.liferay.petra.sql.dsl.query.impl.Select;
 /**
  * @author Preston Crary
  */
-public class QueryUtil {
+public class DSLQueryUtil {
 
 	public static FromStep count() {
 		return _SELECT_COUNT_STAR_COUNT_VALUE;

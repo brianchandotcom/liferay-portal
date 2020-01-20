@@ -1427,8 +1427,7 @@ public class LayoutStagedModelDataHandler
 		throws Exception {
 
 		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
-			!Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
+			!layout.isTypeAssetDisplay()) {
 
 			return;
 		}
@@ -2108,8 +2107,7 @@ public class LayoutStagedModelDataHandler
 		throws PortletDataException {
 
 		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
-			!Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
+			!layout.isTypeAssetDisplay()) {
 
 			return;
 		}

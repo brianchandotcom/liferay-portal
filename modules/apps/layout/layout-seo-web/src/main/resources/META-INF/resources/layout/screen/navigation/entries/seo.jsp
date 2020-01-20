@@ -60,11 +60,11 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 			<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-			<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
+			<c:if test="<%= !selLayout.isTypeAssetDisplay() %>">
 				<aui:input helpMessage="html-title-help" id="title" label="html-title" name="title" placeholder="title" />
 				<aui:input helpMessage="description-help" id="descriptionSEO" name="description" placeholder="description" />
 
-				<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
+				<c:if test="<%= !selLayout.isTypeAssetDisplay() %>">
 
 					<%
 					LayoutSEOEntry selLayoutSEOEntry = layoutsSEODisplayContext.getSelLayoutSEOEntry();

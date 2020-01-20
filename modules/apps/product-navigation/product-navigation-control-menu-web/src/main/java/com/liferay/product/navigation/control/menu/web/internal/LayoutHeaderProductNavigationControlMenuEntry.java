@@ -71,8 +71,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			  themeDisplay.isShowPageSettingsIcon() ||
 			  ((Objects.equals(
 				  layout.getType(), LayoutConstants.TYPE_CONTENT) ||
-				Objects.equals(
-					layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) &&
+				layout.isTypeAssetDisplay()) &&
 			   LayoutPermissionUtil.contains(
 				   themeDisplay.getPermissionChecker(),
 				   themeDisplay.getLayout(),

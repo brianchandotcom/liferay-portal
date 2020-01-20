@@ -268,9 +268,11 @@ class SidebarPageStructurePanel extends Component {
 			const nodeKeyIndex = this._expandedNodes.indexOf(nodeKey);
 
 			if (nodeKeyIndex === -1) {
-				this._expandedNodes.push(nodeKey);
+				this._expandedNodes = [...this._expandedNodes, nodeKey];
 			} else {
-				this._expandedNodes.splice(nodeKeyIndex, 1);
+				this._expandedNodes = this._expandedNodes.filter(
+					node => node != nodeKey
+				);
 			}
 		}
 

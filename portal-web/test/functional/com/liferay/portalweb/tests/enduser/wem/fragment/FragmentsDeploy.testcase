@@ -135,6 +135,122 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-106253. Can not delete read-only deployed fragments of virtual instance-scoped and system-scoped in normal site."
+	@priority = "3"
+	test CannotDeleteSystemAndVirtualInstanceScopedReadOnlyDeployedFragmentInNormalSite {
+		property test.name.skip.portal.instance = "FragmentsDeploy#CannotDeleteSystemAndVirtualInstanceScopedReadOnlyDeployedFragmentInNormalSite";
+
+		task ("Deploy fragments zip are available in Liferay.com intance") {
+			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "link.zip");
+		}
+
+		task ("Deploy fragments zip are available in System wide") {
+			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "image.zip");
+		}
+
+		task ("Assert can not delete virtual instance read-only scoped deployed fragment in normal site") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Global");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Link");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "Link",
+				locator1 = "LexiconCard#CARD_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Delete");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Global");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Delete");
+		}
+
+		task ("Assert can not delete system scoped read-only deployed fragment in normal site") {
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Default");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Image");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "Image",
+				locator1 = "LexiconCard#CARD_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Delete");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Default");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Delete");
+		}
+	}
+
+	@description = "This is a test for LPS-106253. Can not delete read-only deployed fragments of system-scoped in other virtual instances."
+	@priority = "3"
+	test CannotDeleteSystemScopedReadOnlyDeployedFragmentInOtherVirtualInstance {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property test.name.skip.portal.instance = "FragmentsDeploy#CannotDeleteSystemScopedReadOnlyDeployedFragmentInOtherVirtualInstance";
+
+		task ("Add a new Virtual Instance") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			PortalInstances.viewCP(virtualHost = "www.able.com");
+		}
+
+		task ("Deploy fragments zip are available in System wide") {
+			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "image.zip");
+		}
+
+		task ("Assert can not delete system scoped read-only deployed fragment in Global site") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "global");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Default");
+
+			FragmentsAdmin.viewEntryPresent(entry = "Image");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "Image",
+				locator1 = "LexiconCard#CARD_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Delete");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Default");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Delete");
+		}
+	}
+
 	@description = "This is a test for LPS-105110. A system administrator can deploy a zip file of fragments in the deploy folder to a specific site. Fragments deployed to a specific site are not available in other sites."
 	@priority = "5"
 	test DeployFragmentsToSpecificSite {

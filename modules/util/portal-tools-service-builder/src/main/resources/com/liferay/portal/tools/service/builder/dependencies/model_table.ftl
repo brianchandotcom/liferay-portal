@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import java.sql.Blob;
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -28,15 +29,15 @@ public class ${entity.name}Table extends Table<${entity.name}Table> {
 	public static final ${entity.name}Table INSTANCE = new ${entity.name}Table();
 
 	<#list entity.databaseRegularEntityColumns as entityColumn>
+		<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) />
+
 		<#if entityColumn.isPrimitiveType()>
 			<#assign entityColumnType = serviceBuilder.getPrimitiveObj(entityColumn.type) />
-		<#elseif stringUtil.equals(entityColumn.type, "Map")>
-			<#assign entityColumnType = "String" />
+		<#elseif stringUtil.equals(sqlType, "CLOB")>
+			<#assign entityColumnType = "Clob" />
 		<#else>
 			<#assign entityColumnType = entityColumn.genericizedType />
 		</#if>
-
-		<#assign sqlType = serviceBuilder.getSqlType(entity.getName(), entityColumn.getName(), entityColumn.getType()) />
 
 		public final Column<${entity.name}Table, ${entityColumnType}> ${entityColumn.name} = createColumn("${entityColumn.DBName}", ${entityColumnType}.class, Types.${sqlType});
 	</#list>

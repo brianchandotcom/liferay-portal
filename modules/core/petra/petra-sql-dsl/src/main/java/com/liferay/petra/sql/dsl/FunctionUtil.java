@@ -22,6 +22,8 @@ import com.liferay.petra.sql.dsl.expressions.impl.Function;
 import com.liferay.petra.sql.dsl.expressions.impl.FunctionType;
 import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
 
+import java.sql.Clob;
+
 /**
  * @author Preston Crary
  */
@@ -64,7 +66,7 @@ public class FunctionUtil {
 		return casesWhenThen(predicate, new Scalar<>(value));
 	}
 
-	public static Expression<String> castClobText(Expression<?> expression) {
+	public static Expression<String> castClobText(Expression<Clob> expression) {
 		return new Function<>(FunctionType.CAST_CLOB_TEXT, expression);
 	}
 

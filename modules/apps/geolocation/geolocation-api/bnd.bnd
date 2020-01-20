@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Geolocation API
-Bundle-SymbolicName: com.liferay.geolocation.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.geolocation.exception,\
-	com.liferay.geolocation.model,\
-	com.liferay.geolocation.provider

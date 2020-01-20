@@ -38,7 +38,7 @@
 			{/param}
 		{/call}
 
-		<nav class="pb-3 pr-3">
+		<nav class="pb-3 pl-3 pr-3">
 			<div class="collapse show">
 				{if $spritemap and $structure}
 					{call .treeNode}
@@ -79,9 +79,6 @@
 			{let $itemClasses kind="text"}
 				d-flex
 				{sp}fragments-editor-sidebar-section__structure-panel__item
-				{sp}justify-content-between
-				{sp}my-1
-				{sp}p-1
 
 				{if $node.active or $node.selected}
 					{sp}active
@@ -92,15 +89,47 @@
 				{/if}
 			{/let}
 
-			<div class="{$itemClasses}">
+			{let $itemAttributes kind="attributes"}
+				class="{$itemClasses}"
+				data-onclick="{$handleElementClick}"
+
+				{if $node.elementId and $node.elementType}
+					data-element-id="{$node.elementId}"
+					data-element-type="{$node.elementType}"
+					data-fragments-editor-item-id="{$node.elementId}"
+					data-fragments-editor-item-type="{$node.elementType}"
+				{/if}
+
+				{if $node.parentId}
+					data-fragment-entry-link-id="{$node.parentId}"
+				{/if}
+
+				{if $node.children and length($node.children) > 0}
+					aria-controls="{$node.key}"
+					data-node-key="{$node.key}"
+				{/if}
+
+				{if $node.expanded}
+					aria-expanded="true"
+				{else}
+					aria-expanded="false"
+				{/if}
+			{/let}
+
+			<div {$itemAttributes}>
+				{if $node.children and length($node.children) > 0}
+					{call .collapseButton}
+						{param node: $node /}
+						{param spritemap: $spritemap /}
+					{/call}
+				{/if}
+
 				{call .itemName}
-					{param handleElementClick: $handleElementClick /}
 					{param node: $node /}
-					{param spritemap: $spritemap /}
 				{/call}
 
 				{if $node.removable}
-					{call .removeIcon}
+					{call .removeButton}
 						{param handleClick: $handleElementRemoveButtonClick /}
 						{param node: $node /}
 						{param spritemap: $spritemap /}
@@ -137,13 +166,13 @@
 /**
  * Collapse Icon
  */
-{template .collapseIcon}
+{template .collapseButton}
 	{@param node: [
 		expanded: bool
 	]}
 	{@param? spritemap: string}
 
-	<span class="btn btn-sm btn-unstyled py-1">
+	<button class="btn btn-monospaced btn-sm">
 		{let $angleDirection kind="text"}
 			{if $node.expanded}
 				down
@@ -155,7 +184,7 @@
 		<svg class="lexicon-icon lexicon-icon-angle-{$angleDirection}">
 			<use xlink:href="{$spritemap ?: ''}#angle-{$angleDirection}"></use>
 		</svg>
-	</span>
+	</button>
 {/template}
 
 {template .itemName}
@@ -168,77 +197,38 @@
 		label: string,
 		parentId: string
 	]}
-	{@param? handleElementClick: any}
-	{@param? spritemap: string}
 
 	{let $itemNameClasses kind="text"}
-		btn
-		{sp}btn-unstyled
-		{sp}flex-grow-1
+		page-structure__title
 		{sp}text-truncate
 
-		{if (not $node.children) or (length($node.children) == 0)}
-			{sp}fragments-editor-sidebar-section__structure-panel__item-name--padded
+		{if not ($node.children and length($node.children) > 0)}
+			{sp}page-structure__title--padded
 		{/if}
 	{/let}
 
-	{let $itemNameButtonAttributes kind="attributes"}
-		class="{$itemNameClasses}"
-		data-onclick="{$handleElementClick}"
-		type="button"
-
-		{if $node.elementId and $node.elementType}
-			data-element-id="{$node.elementId}"
-			data-element-type="{$node.elementType}"
-			data-fragments-editor-item-id="{$node.elementId}"
-			data-fragments-editor-item-type="{$node.elementType}"
-		{/if}
-
-		{if $node.parentId}
-			data-fragment-entry-link-id="{$node.parentId}"
-		{/if}
-
-		{if $node.children and length($node.children) > 0}
-			aria-controls="{$node.key}"
-			data-node-key="{$node.key}"
-
-			{if $node.expanded}
-				aria-expanded="true"
-			{else}
-				aria-expanded="false"
-			{/if}
-		{/if}
-	{/let}
-
-	<button {$itemNameButtonAttributes}>
-		{if $node.children and length($node.children) > 0}
-			{call .collapseIcon}
-				{param node: $node /}
-				{param spritemap: $spritemap /}
-			{/call}
-		{/if}
-
+	<div class="{$itemNameClasses}">
 		{$node.label}
-	</button>
+	</div>
 {/template}
 
 /**
  * Remove icon
  */
-{template .removeIcon}
+{template .removeButton}
 	{@param handleClick: any}
 	{@param node: [
 		elementId: string,
-		elementType: string
+		elementType: string,
+		key: string
 	]}
 	{@param spritemap: string}
 
 	{let $removeButtonClasses kind="text"}
 		btn
+		{sp}btn-monospaced
 		{sp}btn-sm
-		{sp}btn-unstyled
 		{sp}fragments-editor-sidebar-section__structure-panel__item-remove-btn
-		{sp}py-1
 	{/let}
 
 	<button
@@ -246,6 +236,7 @@
 		data-onclick="{$handleClick}"
 		data-element-id="{$node.elementId}"
 		data-element-type="{$node.elementType}"
+		data-node-key="{$node.key}"
 		type="button"
 	>
 		<svg class="lexicon-icon lexicon-icon-times-circle">

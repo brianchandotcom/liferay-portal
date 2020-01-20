@@ -78,8 +78,15 @@
 	}
 
 	&__structure-panel {
+		& ul li {
+			margin: 0.5rem 0;
+		}
+
 		&__item {
-			border-radius: 8px;
+			align-items: center;
+			border-radius: 6px;
+			cursor: pointer;
+			min-height: 32px;
 			position: relative;
 			transition: background-color ease 0.2s, color ease 0.2s;
 			will-change: background-color, color;
@@ -95,8 +102,13 @@
 				width: 10px;
 			}
 
-			&-name--padded {
-				padding-left: 36px;
+			& .page-structure__title {
+				flex-grow: 1;
+				padding: 0 1rem;
+
+				&--padded {
+					margin-left: 32px;
+				}
 			}
 
 			&-remove-btn {
@@ -108,13 +120,6 @@
 
 			&.active {
 				font-weight: 600;
-			}
-
-			&.active,
-			&.active:hover,
-			&.active.hovered {
-				background-color: $topperBackgroundColor;
-				color: $topperColor;
 			}
 
 			&:hover,

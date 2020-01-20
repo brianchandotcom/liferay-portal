@@ -125,6 +125,11 @@ components:
                         The role's description.
                     readOnly: true
                     type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
                 id:
                     description:
                         The role's ID.
@@ -136,6 +141,11 @@ components:
                         The role's name.
                     readOnly: true
                     type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
                 roleType:
                     description:
                         The role's type.

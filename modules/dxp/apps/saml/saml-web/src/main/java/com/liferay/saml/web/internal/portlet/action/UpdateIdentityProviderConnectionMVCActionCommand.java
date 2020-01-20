@@ -64,12 +64,12 @@ public class UpdateIdentityProviderConnectionMVCActionCommand
 			uploadPortletRequest, "assertionSignatureRequired");
 		long clockSkew = ParamUtil.getLong(uploadPortletRequest, "clockSkew");
 		boolean enabled = ParamUtil.getBoolean(uploadPortletRequest, "enabled");
-		boolean unknownUsersAreStrangers = ParamUtil.getBoolean(
-			uploadPortletRequest, "unknownUsersAreStrangers");
 		boolean forceAuthn = ParamUtil.getBoolean(
 			uploadPortletRequest, "forceAuthn");
 		boolean ldapImportEnabled = ParamUtil.getBoolean(
 			uploadPortletRequest, "ldapImportEnabled");
+		boolean unknownUsersAreStrangers = ParamUtil.getBoolean(
+			uploadPortletRequest, "unknownUsersAreStrangers");
 		String metadataUrl = ParamUtil.getString(
 			uploadPortletRequest, "metadataUrl");
 		InputStream metadataXmlInputStream =

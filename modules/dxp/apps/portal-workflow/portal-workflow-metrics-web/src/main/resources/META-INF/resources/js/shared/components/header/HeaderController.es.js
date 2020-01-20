@@ -12,7 +12,7 @@
 import React, {useContext, useMemo} from 'react';
 
 import {AppContext} from '../../../components/AppContext.es';
-import HeaderMenuBackItem from './HeaderMenuBackItem.es';
+import HeaderBackButton from './HeaderBackButton.es';
 import HeaderTitle from './HeaderTitle.es';
 
 const HeaderController = ({basePath}) => {
@@ -39,7 +39,7 @@ const HeaderController = ({basePath}) => {
 
 	return (
 		<>
-			<HeaderMenuBackItem
+			<HeaderBackButton
 				basePath={basePath}
 				container={container.button}
 			/>

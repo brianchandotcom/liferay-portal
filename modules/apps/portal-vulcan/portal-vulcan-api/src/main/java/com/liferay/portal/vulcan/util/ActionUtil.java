@@ -56,6 +56,23 @@ public class ActionUtil {
 	}
 
 	public static Map<String, String> addAction(
+		String actionName, Class clazz, GroupedModel groupedModel,
+		String methodName, UriInfo uriInfo) {
+
+		return addAction(
+			actionName, clazz, groupedModel, methodName, null, uriInfo);
+	}
+
+	public static Map<String, String> addAction(
+		String actionName, Class clazz, Long id, String methodName,
+		String permissionName, Long siteId, UriInfo uriInfo) {
+
+		return addAction(
+			actionName, clazz, id, methodName, permissionName, null, siteId,
+			uriInfo);
+	}
+
+	public static Map<String, String> addAction(
 		String actionName, Class clazz, Long id, String methodName,
 		String permissionName, ScopeChecker scopeChecker, Long siteId,
 		UriInfo uriInfo) {

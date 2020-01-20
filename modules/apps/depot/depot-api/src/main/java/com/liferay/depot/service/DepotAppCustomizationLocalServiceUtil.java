@@ -52,14 +52,6 @@ public class DepotAppCustomizationLocalServiceUtil {
 		return getService().addDepotAppCustomization(depotAppCustomization);
 	}
 
-	public static com.liferay.depot.model.DepotAppCustomization
-		addDepotAppCustomization(
-			long depotEntryId, String portletId, boolean enabled) {
-
-		return getService().addDepotAppCustomization(
-			depotEntryId, portletId, enabled);
-	}
-
 	/**
 	 * Creates a new depot app customization with the primary key. Does not add the depot app customization to the database.
 	 *
@@ -291,6 +283,15 @@ public class DepotAppCustomizationLocalServiceUtil {
 				depotAppCustomization) {
 
 		return getService().updateDepotAppCustomization(depotAppCustomization);
+	}
+
+	public static com.liferay.depot.model.DepotAppCustomization
+			updateDepotAppCustomization(
+				long depotEntryId, String portletId, boolean enabled)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateDepotAppCustomization(
+			depotEntryId, portletId, enabled);
 	}
 
 	public static DepotAppCustomizationLocalService getService() {

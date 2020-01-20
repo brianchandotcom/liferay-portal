@@ -50,14 +50,34 @@ public class DepotApplicationController {
 		return depotApplications;
 	}
 
-	public boolean isEnabled(String portletId, long groupId)
-		throws PortalException {
-
-		DepotEntry groupDepotEntry = _depotEntryLocalService.getGroupDepotEntry(
+	public boolean isEnabled(String portletId, long groupId) {
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
 			groupId);
 
-		return _depotApplicationEnabled(
-			groupDepotEntry.getDepotEntryId(), portletId);
+		if (depotEntry == null) {
+			return false;
+		}
+
+		DepotApplication depotApplication = _serviceTrackerMap.getService(
+			portletId);
+
+		if (depotApplication == null) {
+			return false;
+		}
+
+		if (!depotApplication.isCustomizable()) {
+			return true;
+		}
+
+		DepotAppCustomization depotApplicationCustomization =
+			_depotAppCustomizationLocalService.fetchDepotAppCustomization(
+				depotEntry.getDepotEntryId(), depotApplication.getPortletId());
+
+		if (depotApplicationCustomization == null) {
+			return true;
+		}
+
+		return depotApplicationCustomization.isEnabled();
 	}
 
 	@Activate
@@ -77,35 +97,6 @@ public class DepotApplicationController {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
-	}
-
-	private boolean _depotApplicationEnabled(
-		long depotEntryId, String portletId) {
-
-		if (depotEntryId <= 0) {
-			return false;
-		}
-
-		DepotApplication depotApplication = _serviceTrackerMap.getService(
-			portletId);
-
-		if (depotApplication == null) {
-			return false;
-		}
-
-		if (!depotApplication.isCustomizable()) {
-			return true;
-		}
-
-		DepotAppCustomization depotApplicationCustomization =
-			_depotAppCustomizationLocalService.fetchDepotAppCustomization(
-				depotEntryId, depotApplication.getPortletId());
-
-		if (depotApplicationCustomization == null) {
-			return true;
-		}
-
-		return depotApplicationCustomization.isEnabled();
 	}
 
 	@Reference

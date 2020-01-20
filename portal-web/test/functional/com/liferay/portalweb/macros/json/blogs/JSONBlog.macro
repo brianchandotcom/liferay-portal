@@ -12,6 +12,13 @@ definition {
 			var entrySubtitle = "";
 		}
 
+		if (isSet(groupName)) {
+			var serviceContext = JSONBlogSetter.setServiceContext(groupName = "${groupName}");
+		}
+		else {
+			var serviceContext = JSONBlogSetter.setServiceContext(groupName = "Guest");
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/blogs.blogsentry/add-entry \
 			-u test@liferay.com:test \
@@ -29,7 +36,8 @@ definition {
 			-d trackbacks= \
 			-d coverImageCaption='' \
 			-d -coverImageImageSelector= \
-			-d -smallImageImageSelector=
+			-d -smallImageImageSelector= \
+			-d serviceContext=${serviceContext}
 		''';
 
 		echo("## Adding a 'Blog' with the following info using JSONWS:");

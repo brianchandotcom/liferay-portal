@@ -11,8 +11,8 @@
 
 import React from 'react';
 
+import EmptyState from '../empty-state/EmptyState.es';
 import LoadingState from '../loading/LoadingState.es';
-import EmptyState from './EmptyState.es';
 
 /**
  * ListView.

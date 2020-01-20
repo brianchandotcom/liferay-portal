@@ -11,7 +11,7 @@
 
 import React from 'react';
 
-import EmptyState from '../../shared/components/list/EmptyState.es';
+import EmptyState from '../../shared/components/empty-state/EmptyState.es';
 import ReloadButton from '../../shared/components/list/ReloadButton.es';
 import LoadingState from '../../shared/components/loading/LoadingState.es';
 import PaginationBar from '../../shared/components/pagination-bar/PaginationBar.es';

@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.PortletConfigurationIconComparator;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.theme.PortletDisplayFactory;
 import com.liferay.portlet.ActionRequestFactory;
@@ -345,7 +346,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 	private boolean _isPublishedContentPage(Layout layout) {
 		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
-			(layout.getClassNameId() == 0)) {
+			(layout.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
 
 			return true;
 		}

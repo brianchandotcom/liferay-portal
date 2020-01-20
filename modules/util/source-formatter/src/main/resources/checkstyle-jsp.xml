@@ -168,5 +168,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.NumberSuffixCheck">
 			<message key="suffix.incorrect" value="Use uppercase ''{0}'' as suffix for the type ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.OperatorOperandCheck">
+			<property name="enabled" value="false" />
+			<message key="readability.improve" value="Create a new variable for the {0} hand side operand of the ''{1}'' operator for better readability" />
+		</module>
 	</module>
 </module>

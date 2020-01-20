@@ -99,6 +99,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>destroyOnNavigate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>module</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

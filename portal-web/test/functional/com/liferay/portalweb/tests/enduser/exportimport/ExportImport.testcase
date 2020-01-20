@@ -1807,9 +1807,9 @@ definition {
 
 		LAR.downloadLar();
 
-		JSONGroup.deleteGroupByName(groupName = "Site Name A");
+		JSONGroup.deleteGroupByName(groupName = "Site A");
 
-		JSONGroup.deleteGroupByName(groupName = "Site Name B");
+		JSONGroup.deleteGroupByName(groupName = "Site B");
 
 		JSONGroup.addGroup(groupName = "Site C");
 

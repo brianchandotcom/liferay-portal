@@ -45,6 +45,8 @@ const Languages = ({
 		siteDefaultLocaleId
 	);
 
+	const [customLocales, setCustomLocales] = useState(siteAvailableLocales);
+
 	const [languageWarning, setLanguageWarning] = useState(false);
 	const [
 		languageTranslationWarning,
@@ -58,6 +60,7 @@ const Languages = ({
 			manageCustomLanguagesURL,
 			{
 				customDefaultLocaleId,
+				customLocales
 			}
 		);
 
@@ -205,7 +208,7 @@ const Languages = ({
 			{!selectedRadioGroupValue && (
 				<LanguagesList
 					defaultLocaleId={customDefaultLocaleId}
-					locales={siteAvailableLocales}
+					locales={customLocales}
 					showActions
 				/>
 			)}

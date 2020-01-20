@@ -48,6 +48,7 @@ const ContainerWithControls = React.forwardRef(
 			<Topper
 				acceptDrop={[
 					LAYOUT_DATA_ITEM_TYPES.dropZone,
+					LAYOUT_DATA_ITEM_TYPES.container,
 					LAYOUT_DATA_ITEM_TYPES.fragment,
 					LAYOUT_DATA_ITEM_TYPES.row
 				]}

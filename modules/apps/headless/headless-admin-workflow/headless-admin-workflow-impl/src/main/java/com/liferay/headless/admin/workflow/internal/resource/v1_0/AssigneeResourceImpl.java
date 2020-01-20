@@ -44,8 +44,8 @@ public class AssigneeResourceImpl extends BaseAssigneeResourceImpl {
 			Long workflowTaskId, Pagination pagination)
 		throws Exception {
 
-		List<User> users = _workflowTaskManager.getPooledActors(
-			contextUser.getCompanyId(), workflowTaskId);
+		List<User> users = _workflowTaskManager.getAssignableUsers(
+			contextCompany.getCompanyId(), workflowTaskId);
 
 		return Page.of(
 			transform(

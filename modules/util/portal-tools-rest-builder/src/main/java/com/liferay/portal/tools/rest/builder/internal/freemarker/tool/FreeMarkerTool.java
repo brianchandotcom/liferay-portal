@@ -778,6 +778,7 @@ public class FreeMarkerTool {
 			String schemaName = javaMethodSignature.getSchemaName();
 
 			if ((returnType.endsWith(schemaName) &&
+				 !parameterName.equals("id") &&
 				 parameterName.equals(
 					 javaMethodParameter.getParameterName())) ||
 				parameterName.equals("parent" + propertyName)) {

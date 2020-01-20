@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cache.key;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -26,6 +26,16 @@ public class HashCodeHexStringCacheKeyGenerator extends BaseCacheKeyGenerator {
 	@Override
 	public CacheKeyGenerator clone() {
 		return new HashCodeHexStringCacheKeyGenerator();
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *			 #getCacheKey(StringBundler)}
+	 */
+	@Deprecated
+	@Override
+	public String getCacheKey(com.liferay.portal.kernel.util.StringBundler sb) {
+		return getCacheKey(sb.getStrings());
 	}
 
 	@Override

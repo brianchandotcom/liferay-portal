@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cache.key;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -23,6 +23,20 @@ import java.io.Serializable;
  * @author Shuyang Zhou
  */
 public abstract class BaseCacheKeyGenerator implements CacheKeyGenerator {
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *			 #append(StringBundler)}
+	 */
+	@Deprecated
+	@Override
+	public CacheKeyGenerator append(
+		com.liferay.portal.kernel.util.StringBundler sb) {
+
+		keyBundler.append(sb.getStrings());
+
+		return this;
+	}
 
 	@Override
 	public CacheKeyGenerator append(String key) {

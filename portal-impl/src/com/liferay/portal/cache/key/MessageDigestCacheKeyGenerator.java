@@ -15,10 +15,10 @@
 package com.liferay.portal.cache.key;
 
 import com.liferay.petra.nio.CharsetEncoderUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
@@ -60,6 +60,18 @@ public class MessageDigestCacheKeyGenerator extends BaseCacheKeyGenerator {
 		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
 			throw new IllegalStateException(noSuchAlgorithmException);
 		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *			 #getCacheKey(StringBundler)}
+	 */
+	@Deprecated
+	@Override
+	public Serializable getCacheKey(
+		com.liferay.portal.kernel.util.StringBundler sb) {
+
+		return getCacheKey(sb.getStrings(), sb.index());
 	}
 
 	@Override

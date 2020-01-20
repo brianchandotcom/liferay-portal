@@ -227,7 +227,7 @@ definition {
 
 		AssertTextEquals(
 			key_listEntry = "${webContentTitle}",
-			locator1 = "LexiconList#LIST_ENTRY_TITLE",
+			locator1 = "Link#WEB_CONTENT_ARTICLE",
 			value1 = "${webContentTitle}");
 
 		if ("${addSearchedContent}" == "true") {
@@ -270,7 +270,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_listEntry = "${webContentTitle}",
-			locator1 = "LexiconList#LIST_ENTRY_TITLE");
+			locator1 = "Link#WEB_CONTENT_ARTICLE");
 
 		SelectFrame(value1 = "relative=top");
 	}

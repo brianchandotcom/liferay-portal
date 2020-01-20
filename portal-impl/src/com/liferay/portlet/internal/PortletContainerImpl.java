@@ -345,7 +345,9 @@ public class PortletContainerImpl implements PortletContainer {
 
 	private boolean _isPublishedContentPage(Layout layout) {
 		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
-			(layout.getClassNameId() == 0)) {
+			((layout.getClassNameId() == 0) ||
+			 (PortalUtil.getClassNameId(Layout.class.getName()) !=
+				 layout.getClassNameId()))) {
 
 			return true;
 		}

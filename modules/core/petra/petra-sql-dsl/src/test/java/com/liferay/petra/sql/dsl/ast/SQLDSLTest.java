@@ -656,6 +656,16 @@ public class SQLDSLTest {
 	}
 
 	@Test
+	public void testSelectDistinctTable() {
+		FromStep fromStep = DSLQueryUtil.selectDistinct(MainExampleTable.TABLE);
+
+		Assert.assertEquals(
+			"select distinct MainExample.description, MainExample.flag, " +
+				"MainExample.mainExampleId, MainExample.name",
+			fromStep.toString());
+	}
+
+	@Test
 	public void testSelectDistinctWhereInWithAlias() {
 		MainExampleTable mainTable = MainExampleTable.TABLE.as("mainTable");
 

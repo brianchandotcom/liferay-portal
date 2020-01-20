@@ -20,6 +20,8 @@ import com.liferay.petra.sql.dsl.expressions.impl.AliasImpl;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.impl.Select;
 
+import java.util.Collection;
+
 /**
  * @author Preston Crary
  */
@@ -47,6 +49,12 @@ public class DSLQueryUtil {
 
 	public static FromStep selectDistinct(Expression<?>... expressions) {
 		return new Select(true, expressions);
+	}
+
+	public static <T extends Table<T>> FromStep selectDistinct(T table) {
+		Collection<Column<T, ?>> columns = table.getColumns();
+
+		return new Select(true, columns.toArray(new Column[0]));
 	}
 
 	private static final FromStep _SELECT_COUNT_STAR_COUNT_VALUE = new Select(

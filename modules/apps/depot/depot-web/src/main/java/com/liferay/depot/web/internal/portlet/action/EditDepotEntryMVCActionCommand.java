@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -60,26 +59,18 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long depotEntryId = ParamUtil.getLong(actionRequest, "depotEntryId");
-
-		DepotEntry depotEntry = _depotEntryService.getDepotEntry(depotEntryId);
-
-		Group group = _groupService.getGroup(depotEntry.getGroupId());
-
 		try {
+			long depotEntryId = ParamUtil.getLong(
+				actionRequest, "depotEntryId");
+
+			DepotEntry depotEntry = _depotEntryService.getDepotEntry(
+				depotEntryId);
+
+			Group group = _groupService.getGroup(depotEntry.getGroupId());
+
 			UnicodeProperties depotAppCustomizationProperties =
 				PropertiesParamUtil.getProperties(
 					actionRequest, "DepotAppCustomization--");
-
-			Map<String, Boolean> depotAppCustomizationMap = new HashMap<>();
-
-			for (String portletId : depotAppCustomizationProperties.keySet()) {
-				depotAppCustomizationMap.put(
-					portletId,
-					GetterUtil.getBoolean(
-						depotAppCustomizationProperties.getProperty(
-							portletId)));
-			}
 
 			_depotEntryService.updateDepotEntry(
 				depotEntryId,
@@ -87,7 +78,7 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, "name", group.getNameMap()),
 				LocalizationUtil.getLocalizationMap(
 					actionRequest, "description", group.getDescriptionMap()),
-				depotAppCustomizationMap,
+				_toStringBooleanMap(depotAppCustomizationProperties),
 				PropertiesParamUtil.getProperties(
 					actionRequest, "TypeSettingsProperties--"),
 				ServiceContextFactory.getInstance(
@@ -104,6 +95,18 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private Map<String, Boolean> _toStringBooleanMap(
+		UnicodeProperties unicodeProperties) {
+
+		Map<String, Boolean> map = new HashMap<>();
+
+		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
+			map.put(entry.getKey(), GetterUtil.getBoolean(entry.getValue()));
+		}
+
+		return map;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditDepotEntryMVCActionCommand.class);
 
@@ -112,8 +115,5 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private GroupService _groupService;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -340,6 +340,35 @@ paths:
                     description:
                         ""
             tags: ["DataDefinition"]
+    "/data-definitions/by-content-type/{contentType}/data-layout":
+        post:
+            operationId: postDataDefinitionByContentTypeDataLayout
+            parameters:
+                - in: path
+                  name: contentType
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataDefinitionLayout"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataDefinitionLayout"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataDefinitionLayout"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataDefinitionLayout"
+                    description:
+                        ""
+            tags: ["DataDefinition"]
     "/data-definitions/data-definition-fields/field-types":
         get:
             operationId: getDataDefinitionDataDefinitionFieldFieldTypes
@@ -1449,6 +1478,41 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/DataDefinition"
+                    description:
+                        ""
+            tags: ["DataDefinition"]
+    "/sites/{siteId}/data-definitions/by-content-type/{contentType}/data-layout":
+        post:
+            operationId: postSiteDataDefinitionByContentTypeDataLayout
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: contentType
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataDefinitionLayout"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataDefinitionLayout"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataDefinitionLayout"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataDefinitionLayout"
                     description:
                         ""
             tags: ["DataDefinition"]

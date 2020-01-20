@@ -88,6 +88,11 @@
 	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][${key_editorNumber}]//div[contains(@class,'ace-editor')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>READ_ONLY_VIEW</td>
+	<td>//span[contains(@class,'text-info')]//*[contains(.,'Read Only View')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

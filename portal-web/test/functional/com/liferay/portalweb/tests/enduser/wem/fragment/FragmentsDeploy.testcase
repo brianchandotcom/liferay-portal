@@ -26,6 +26,115 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-106253. Can delete read-only deployed fragments of site-scoped in that site."
+	@priority = "5"
+	test CanDeleteSiteScopedReadOnlyDeployedFragmentInThatSite {
+		task ("Deploy fragments zip to Test Site Name") {
+			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "card.zip");
+		}
+
+		task ("Assert deployed fragment is read-only") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Test Site Name");
+
+			LexiconCard.clickCardTitle(card = "Card");
+
+			AssertElementPresent(locator1 = "FragmentEditor#READ_ONLY_VIEW");
+
+			Navigator.gotoBack();
+		}
+
+		task ("Delete the deployed collection") {
+			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		}
+
+		task ("Assert the deployed collection is not present") {
+			AssertElementNotPresent(
+				collectionName = "imported",
+				locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
+				scope = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-106253. Can delete read-only deployed fragments of system-scoped in Global site of the default virtual instance."
+	@priority = "5"
+	test CanDeleteSystemScopedReadOnlyDeployedFragmentInGlobalSiteOfDefaultInstance {
+		property test.name.skip.portal.instance = "FragmentsDeploy#CanDeleteSystemScopedReadOnlyDeployedFragmentInGlobalSiteOfDefaultInstance";
+
+		task ("Deploy fragments zip are available in System wide") {
+			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "image.zip");
+		}
+
+		task ("Assert deployed fragment is read-only") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Default");
+
+			LexiconCard.clickCardTitle(card = "Image");
+
+			AssertElementPresent(locator1 = "FragmentEditor#READ_ONLY_VIEW");
+
+			Navigator.gotoBack();
+		}
+
+		task ("Delete the deployed collection") {
+			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		}
+
+		task ("Assert the deployed collection is not present") {
+			AssertElementNotPresent(
+				collectionName = "imported",
+				locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
+				scope = "Default");
+		}
+	}
+
+	@description = "This is a test for LPS-106253. Can delete read-only deployed fragments of virtual instance-scoped in Global site of that virtual instance."
+	@priority = "5"
+	test CanDeleteVirtualInstanceScopedReadOnlyDeployedFragmentInGlobalSiteOfThatInstance {
+		property test.name.skip.portal.instance = "FragmentsDeploy#CanDeleteVirtualInstanceScopedReadOnlyDeployedFragmentInGlobalSiteOfThatInstance";
+
+		task ("Deploy fragments zip are available in Liferay.com intance") {
+			FragmentsDeploy.deployZipOnLiferayPortal(fragmentsZip = "link.zip");
+		}
+
+		task ("Assert deployed fragment is read-only") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+			FragmentsAdminNavigator.gotoSpecificScopeCollection(
+				collectionName = "imported",
+				scope = "Global");
+
+			LexiconCard.clickCardTitle(card = "Link");
+
+			AssertElementPresent(locator1 = "FragmentEditor#READ_ONLY_VIEW");
+
+			Navigator.gotoBack();
+		}
+
+		task ("Delete the deployed collection") {
+			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		}
+
+		task ("Assert the deployed collection is not present") {
+			AssertElementNotPresent(
+				collectionName = "imported",
+				locator1 = "FragmentAdmin#FRAGMENT_COLLECTION_SPECIFIC_SCOPE",
+				scope = "Global");
+		}
+	}
+
 	@description = "This is a test for LPS-105110. A system administrator can deploy a zip file of fragments in the deploy folder to a specific site. Fragments deployed to a specific site are not available in other sites."
 	@priority = "5"
 	test DeployFragmentsToSpecificSite {

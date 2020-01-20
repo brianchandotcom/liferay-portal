@@ -78,7 +78,6 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 				LAYOUT_DATA_ITEM_TYPES.container,
 				LAYOUT_DATA_ITEM_TYPES.fragment
 			]}
-			active
 			item={item}
 			layoutData={layoutData}
 			name={fragmentEntryLink.name}

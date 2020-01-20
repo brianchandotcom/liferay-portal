@@ -30,21 +30,19 @@ import classNames from 'classnames';
 import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import Topper from '../Topper';
+import TopperEmpty from '../TopperEmpty';
 
 const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 	return (
-		<Topper
+		<TopperEmpty
 			acceptDrop={[
 				LAYOUT_DATA_ITEM_TYPES.container,
 				LAYOUT_DATA_ITEM_TYPES.dropZone,
 				LAYOUT_DATA_ITEM_TYPES.fragment,
 				LAYOUT_DATA_ITEM_TYPES.row
 			]}
-			active={false}
 			item={item}
 			layoutData={layoutData}
-			name={Liferay.Language.get('root')}
 		>
 			{({canDrop, isOver}) => (
 				<div className={classNames('page-editor__root')} ref={ref}>
@@ -69,7 +67,7 @@ const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 					)}
 				</div>
 			)}
-		</Topper>
+		</TopperEmpty>
 	);
 });
 

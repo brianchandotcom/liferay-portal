@@ -39,7 +39,6 @@ const RowWithControls = React.forwardRef(
 		return (
 			<Topper
 				acceptDrop={[LAYOUT_DATA_ITEM_TYPES.column]}
-				active
 				item={item}
 				layoutData={layoutData}
 				name={Liferay.Language.get('row')}

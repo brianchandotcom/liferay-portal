@@ -263,6 +263,8 @@ export default function Topper({
 			name = Liferay.Language.get('container');
 		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
 			name = Liferay.Language.get('column');
+		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
+			name = Liferay.Language.get('drop-zone');
 		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
 			name = Liferay.Language.get('row');
 		}

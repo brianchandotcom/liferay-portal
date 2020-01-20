@@ -29,6 +29,4 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%@ include file="/init-ext.jsp" %>

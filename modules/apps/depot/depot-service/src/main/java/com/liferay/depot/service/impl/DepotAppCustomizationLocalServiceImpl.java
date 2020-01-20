@@ -30,18 +30,12 @@ import org.osgi.service.component.annotations.Component;
 public class DepotAppCustomizationLocalServiceImpl
 	extends DepotAppCustomizationLocalServiceBaseImpl {
 
-	private DepotAppCustomization _addDepotAppCustomization(
-		long depotEntryId, String portletId, boolean enabled) {
+	@Override
+	public DepotAppCustomization fetchDepotAppCustomization(
+		long depotEntryId, String portletId) {
 
-		DepotAppCustomization depotAppCustomization =
-			depotAppCustomizationPersistence.create(
-				counterLocalService.increment());
-
-		depotAppCustomization.setDepotEntryId(depotEntryId);
-		depotAppCustomization.setEnabled(enabled);
-		depotAppCustomization.setPortletId(portletId);
-
-		return depotAppCustomizationPersistence.update(depotAppCustomization);
+		return depotAppCustomizationPersistence.fetchByD_PI(
+			depotEntryId, portletId);
 	}
 
 	@Override
@@ -61,12 +55,18 @@ public class DepotAppCustomizationLocalServiceImpl
 		return depotAppCustomizationPersistence.update(depotAppCustomization);
 	}
 
-	@Override
-	public DepotAppCustomization fetchDepotAppCustomization(
-		long depotEntryId, String portletId) {
+	private DepotAppCustomization _addDepotAppCustomization(
+		long depotEntryId, String portletId, boolean enabled) {
 
-		return depotAppCustomizationPersistence.fetchByD_PI(
-			depotEntryId, portletId);
+		DepotAppCustomization depotAppCustomization =
+			depotAppCustomizationPersistence.create(
+				counterLocalService.increment());
+
+		depotAppCustomization.setDepotEntryId(depotEntryId);
+		depotAppCustomization.setEnabled(enabled);
+		depotAppCustomization.setPortletId(portletId);
+
+		return depotAppCustomizationPersistence.update(depotAppCustomization);
 	}
 
 }

@@ -34,7 +34,7 @@ public class DepotAppCustomizationLocalServiceImpl
 	public DepotAppCustomization fetchDepotAppCustomization(
 		long depotEntryId, String portletId) {
 
-		return depotAppCustomizationPersistence.fetchByD_PI(
+		return depotAppCustomizationPersistence.fetchByD_P(
 			depotEntryId, portletId);
 	}
 
@@ -43,7 +43,7 @@ public class DepotAppCustomizationLocalServiceImpl
 		long depotEntryId, String portletId, boolean enabled) {
 
 		DepotAppCustomization depotAppCustomization =
-			depotAppCustomizationPersistence.fetchByD_PI(
+			depotAppCustomizationPersistence.fetchByD_P(
 				depotEntryId, portletId);
 
 		if (depotAppCustomization == null) {

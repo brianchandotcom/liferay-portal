@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -220,15 +221,39 @@ public class LayoutDataConverter {
 
 		itemsJSONObject.put(mainUUID.toString(), mainJSONObject);
 
+		JSONObject rootItemsJSONObject = JSONUtil.put(
+			"main", mainUUID.toString());
+
+		String dropZoneId = getDropZoneId(itemsJSONObject);
+
+		if (Validator.isNotNull(dropZoneId)) {
+			rootItemsJSONObject.put("drop-zone", dropZoneId);
+		}
+
 		JSONObject outputDataJSONObject = JSONUtil.put(
 			"items", itemsJSONObject
 		).put(
-			"rootItems", JSONUtil.put("main", mainUUID.toString())
+			"rootItems", rootItemsJSONObject
 		).put(
 			"version", LATEST_VERSION
 		);
 
 		return outputDataJSONObject.toJSONString();
+	}
+
+	public static String getDropZoneId(JSONObject itemsJSONObject) {
+		for (String key : itemsJSONObject.keySet()) {
+			JSONObject jsonObject = itemsJSONObject.getJSONObject(key);
+
+			if (Objects.equals(
+					jsonObject.get("type"),
+					LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
+
+				return key;
+			}
+		}
+
+		return null;
 	}
 
 	public static boolean isLatestVersion(JSONObject dataJSONObject) {

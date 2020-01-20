@@ -19,7 +19,7 @@ import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -151,7 +151,7 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 	}
 
 	private String _alias;
-	private final Map<String, Column<T, ?>> _columnMap = new HashMap<>();
+	private final Map<String, Column<T, ?>> _columnMap = new LinkedHashMap<>();
 	private final String _tableName;
 	private final Supplier<T> _tableSupplier;
 

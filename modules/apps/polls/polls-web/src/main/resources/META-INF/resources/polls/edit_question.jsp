@@ -60,7 +60,7 @@ else if (StringUtil.equals(choicesAction, "deleteChoice")) {
 }
 
 if (showHeader) {
-	renderResponse.setTitle(question == null ? LanguageUtil.get(request, "new-poll") : question.getTitle(locale));
+	renderResponse.setTitle((question == null) ? LanguageUtil.get(request, "new-poll") : question.getTitle(locale));
 }
 
 portletDisplay.setShowBackIcon(true);

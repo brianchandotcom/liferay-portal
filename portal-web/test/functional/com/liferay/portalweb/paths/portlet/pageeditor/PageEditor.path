@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_ENTRY_N</td>
+	<td>xpath=(//div[contains(@class,'fragments-editor-sidebar')]//li[contains(@data-fragments-editor-item-type,'fragments-editor-mapped-item')])[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_ELLIPSIS</td>
 	<td>//div[contains(@class,'sidebar')]//button[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>

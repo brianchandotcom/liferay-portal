@@ -16,6 +16,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import React, {useContext, useEffect, useState, useRef} from 'react';
 
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ConfigContext} from '../../config/index';
 import Processors from '../../processors/index';
@@ -29,16 +30,28 @@ import {useSelectItem} from '../Controls';
 import UnsafeHTML from '../UnsafeHTML';
 import {showFloatingToolbar} from '../showFloatingToolbar';
 
-const resolveEditableValue = (state, config, fragmentEntryLinkId, editableId) =>
+const resolveEditableValue = (
+	state,
+	config,
+	fragmentEntryLinkId,
+	editableId,
+	processorType
+) =>
 	new Promise(resolve => {
 		resolve([
 			selectEditableValueContent(
 				state,
 				config,
 				fragmentEntryLinkId,
-				editableId
+				editableId,
+				processorType
 			),
-			selectEditableValueConfig(state, fragmentEntryLinkId, editableId)
+			selectEditableValueConfig(
+				state,
+				fragmentEntryLinkId,
+				editableId,
+				processorType
+			)
 		]);
 	});
 
@@ -67,13 +80,30 @@ function FragmentContent({fragmentEntryLink}, ref) {
 			}
 		}, 50);
 
+		Array.from(
+			element.querySelectorAll('[data-lfr-background-image-id]')
+		).map(editable => {
+			resolveEditableValue(
+				state,
+				config,
+				fragmentEntryLinkId,
+				editable.dataset.lfrBackgroundImageId,
+				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+			).then(([value, _editableConfig]) => {
+				const processor = Processors['background-image'];
+
+				processor.render(editable, value);
+			});
+		});
+
 		Array.from(element.querySelectorAll('lfr-editable')).forEach(
 			editable => {
 				resolveEditableValue(
 					state,
 					config,
 					fragmentEntryLinkId,
-					editable.getAttribute('id')
+					editable.getAttribute('id'),
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 				).then(([value, editableConfig]) => {
 					if (element) {
 						const processor =
@@ -95,6 +125,9 @@ function FragmentContent({fragmentEntryLink}, ref) {
 
 	const onDoubleClick = event => {
 		const editable = event.target.closest('lfr-editable');
+		const backgroundImageEditable = event.target.closest(
+			'[data-lfr-background-image-id]'
+		);
 
 		if (editable) {
 			const editableId = `${fragmentEntryLinkId}-${editable.getAttribute(
@@ -115,13 +148,38 @@ function FragmentContent({fragmentEntryLink}, ref) {
 				editableConfig: selectEditableValueConfig(
 					state,
 					fragmentEntryLinkId,
-					editable.getAttribute('id')
+					editable.getAttribute('id'),
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 				),
 				editableType: editable.getAttribute('type'),
-				element: editable
+				element: editable,
+				processorType: EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 			});
 
 			selectItem(editableId);
+			setHasEditableActive(true);
+		} else if (backgroundImageEditable) {
+			if (activeEditable.current) {
+				destroyProcessor(activeEditable.current, 'background-image');
+			}
+
+			activeEditable.current = backgroundImageEditable;
+
+			initProcessor({
+				config,
+				editableConfig: selectEditableValueConfig(
+					state,
+					fragmentEntryLinkId,
+					backgroundImageEditable.dataset.lfrBackgroundImageId,
+					BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+				),
+				editableType: 'background-image',
+				element: backgroundImageEditable,
+				processorType: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+			});
+
+			selectItem(backgroundImageEditable.dataset.lfrBackgroundImageId);
+
 			setHasEditableActive(true);
 		} else {
 			if (activeEditable.current) {
@@ -138,8 +196,19 @@ function FragmentContent({fragmentEntryLink}, ref) {
 		}
 	};
 
-	const initProcessor = ({config, editableConfig, editableType, element}) => {
+	const initProcessor = ({
+		config,
+		editableConfig,
+		editableType,
+		element,
+		processorType
+	}) => {
 		const processor = Processors[editableType] || Processors.fallback;
+
+		const id =
+			processorType === EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+				? element.id
+				: element.dataset.lfrBackgroundImageId;
 
 		processor.createEditor(
 			element,
@@ -147,10 +216,7 @@ function FragmentContent({fragmentEntryLink}, ref) {
 				processor.render(element, value, editableConfig);
 
 				const {editableValues} = fragmentEntryLink;
-				const editableValue =
-					editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
-						element.id
-					];
+				const editableValue = editableValues[processorType][id];
 				const segmentsExperienceId = selectPrefixedSegmentsExperienceId(
 					state
 				);

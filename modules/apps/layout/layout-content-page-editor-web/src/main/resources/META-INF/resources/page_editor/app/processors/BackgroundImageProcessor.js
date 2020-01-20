@@ -12,20 +12,27 @@
  * details.
  */
 
-import BackgroundImageProcessor from './BackgroundImageProcessor';
-import FallbackProcessor from './FallbackProcessor';
-import HTMLProcessor from './HTMLProcessor';
-import ImageProcessor from './ImageProcessor';
-import LinkProcessor from './LinkProcessor';
-import RichTextProcessor from './RichTextProcessor';
-import TextProcessor from './TextProcessor';
+import {openImageSelector} from '../../core/openImageSelector';
+
+function createEditor(element, changeCallback, destroyCallback, config) {
+	openImageSelector(
+		config,
+		image => changeCallback(image && image.url ? image.url : ''),
+		destroyCallback
+	);
+}
+
+function destroyEditor(_element) {}
+
+function render(element, value) {
+	element.style.backgroundImage = value
+		? `url("${value.url ? value.url : value}")`
+		: '';
+	element.style.backgroundSize = 'cover';
+}
 
 export default {
-	'background-image': BackgroundImageProcessor,
-	fallback: FallbackProcessor,
-	html: HTMLProcessor,
-	image: ImageProcessor,
-	link: LinkProcessor,
-	'rich-text': RichTextProcessor,
-	text: TextProcessor
+	createEditor,
+	destroyEditor,
+	render
 };

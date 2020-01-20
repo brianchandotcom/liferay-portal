@@ -17,9 +17,15 @@ import selectEditableValue from './selectEditableValue';
 export default function selectEditableValueConfig(
 	state,
 	fragmentEntryLinkId,
-	editableId
+	editableId,
+	processorType
 ) {
 	return (
-		selectEditableValue(state, fragmentEntryLinkId, editableId).config || {}
+		selectEditableValue(
+			state,
+			fragmentEntryLinkId,
+			editableId,
+			processorType
+		).config || {}
 	);
 }

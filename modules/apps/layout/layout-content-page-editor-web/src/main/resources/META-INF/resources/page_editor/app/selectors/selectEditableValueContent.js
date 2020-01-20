@@ -20,7 +20,8 @@ export default function selectEditableValueContent(
 	state,
 	config,
 	fragmentEntryLinkId,
-	editableId
+	editableId,
+	processorType
 ) {
 	const {defaultLanguageId} = config;
 	const defaultSegmentsExperienceId = selectPrefixedDefaultSegmentsExperienceId(
@@ -29,7 +30,12 @@ export default function selectEditableValueContent(
 	const {languageId} = state;
 	const segmentsExperienceId = selectPrefixedSegmentsExperienceId(state);
 
-	const data = selectEditableValue(state, fragmentEntryLinkId, editableId);
+	const data = selectEditableValue(
+		state,
+		fragmentEntryLinkId,
+		editableId,
+		processorType
+	);
 
 	let content = data;
 

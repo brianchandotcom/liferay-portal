@@ -17,9 +17,10 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFra
 export default function selectEditableValue(
 	state,
 	fragmentEntryLinkId,
-	editableId
+	editableId,
+	processorType = EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 ) {
 	return state.fragmentEntryLinks[fragmentEntryLinkId].editableValues[
-		EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+		processorType
 	][editableId];
 }

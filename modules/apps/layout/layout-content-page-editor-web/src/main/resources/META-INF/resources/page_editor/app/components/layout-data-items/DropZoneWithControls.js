@@ -15,6 +15,7 @@
 import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import ManageAllowedFragmentButton from '../ManageAllowedFragmentButton';
 import Topper from '../Topper';
 
 const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
@@ -35,6 +36,8 @@ const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
 							'fragments-and-widgets-for-pages-based-on-this-master-will-be-placed-here'
 						)}
 					</p>
+
+					<ManageAllowedFragmentButton />
 				</div>
 			)}
 		</Topper>

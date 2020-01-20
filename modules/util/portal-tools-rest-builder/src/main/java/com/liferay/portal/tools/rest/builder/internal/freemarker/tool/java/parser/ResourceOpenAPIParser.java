@@ -292,7 +292,7 @@ public class ResourceOpenAPIParser {
 
 			javaMethodParameters.add(
 				new JavaMethodParameter(
-					"permission", Permission[].class.getName()));
+					"permissions", Permission[].class.getName()));
 		}
 
 		List<Parameter> parameters = operation.getParameters();

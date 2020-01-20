@@ -241,9 +241,9 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long organizationId =
+		String organizationId =
 			testGetOrganizationEmailAddressesPage_getOrganizationId();
-		Long irrelevantOrganizationId =
+		String irrelevantOrganizationId =
 			testGetOrganizationEmailAddressesPage_getIrrelevantOrganizationId();
 
 		if ((irrelevantOrganizationId != null)) {
@@ -283,21 +283,21 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 	protected EmailAddress
 			testGetOrganizationEmailAddressesPage_addEmailAddress(
-				Long organizationId, EmailAddress emailAddress)
+				String organizationId, EmailAddress emailAddress)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetOrganizationEmailAddressesPage_getOrganizationId()
+	protected String testGetOrganizationEmailAddressesPage_getOrganizationId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long
+	protected String
 			testGetOrganizationEmailAddressesPage_getIrrelevantOrganizationId()
 		throws Exception {
 

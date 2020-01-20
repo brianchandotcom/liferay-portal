@@ -56,42 +56,42 @@ public interface OrganizationResource {
 			Organization organization)
 		throws Exception;
 
-	public void deleteOrganization(Long organizationId) throws Exception;
+	public void deleteOrganization(String organizationId) throws Exception;
 
 	public HttpInvoker.HttpResponse deleteOrganizationHttpResponse(
-			Long organizationId)
+			String organizationId)
 		throws Exception;
 
-	public Organization getOrganization(Long organizationId) throws Exception;
+	public Organization getOrganization(String organizationId) throws Exception;
 
 	public HttpInvoker.HttpResponse getOrganizationHttpResponse(
-			Long organizationId)
+			String organizationId)
 		throws Exception;
 
 	public Organization patchOrganization(
-			Long organizationId, Organization organization)
+			String organizationId, Organization organization)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse patchOrganizationHttpResponse(
-			Long organizationId, Organization organization)
+			String organizationId, Organization organization)
 		throws Exception;
 
 	public Organization putOrganization(
-			Long organizationId, Organization organization)
+			String organizationId, Organization organization)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putOrganizationHttpResponse(
-			Long organizationId, Organization organization)
+			String organizationId, Organization organization)
 		throws Exception;
 
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long parentOrganizationId, Boolean flatten, String search,
+			String parentOrganizationId, Boolean flatten, String search,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getOrganizationOrganizationsPageHttpResponse(
-				Long parentOrganizationId, Boolean flatten, String search,
+				String parentOrganizationId, Boolean flatten, String search,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
@@ -295,7 +295,7 @@ public interface OrganizationResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteOrganization(Long organizationId) throws Exception {
+		public void deleteOrganization(String organizationId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
 				deleteOrganizationHttpResponse(organizationId);
 
@@ -309,7 +309,7 @@ public interface OrganizationResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteOrganizationHttpResponse(
-				Long organizationId)
+				String organizationId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -345,7 +345,7 @@ public interface OrganizationResource {
 			return httpInvoker.invoke();
 		}
 
-		public Organization getOrganization(Long organizationId)
+		public Organization getOrganization(String organizationId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getOrganizationHttpResponse(
@@ -372,7 +372,7 @@ public interface OrganizationResource {
 		}
 
 		public HttpInvoker.HttpResponse getOrganizationHttpResponse(
-				Long organizationId)
+				String organizationId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -409,7 +409,7 @@ public interface OrganizationResource {
 		}
 
 		public Organization patchOrganization(
-				Long organizationId, Organization organization)
+				String organizationId, Organization organization)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -436,7 +436,7 @@ public interface OrganizationResource {
 		}
 
 		public HttpInvoker.HttpResponse patchOrganizationHttpResponse(
-				Long organizationId, Organization organization)
+				String organizationId, Organization organization)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -475,7 +475,7 @@ public interface OrganizationResource {
 		}
 
 		public Organization putOrganization(
-				Long organizationId, Organization organization)
+				String organizationId, Organization organization)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = putOrganizationHttpResponse(
@@ -502,7 +502,7 @@ public interface OrganizationResource {
 		}
 
 		public HttpInvoker.HttpResponse putOrganizationHttpResponse(
-				Long organizationId, Organization organization)
+				String organizationId, Organization organization)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -541,7 +541,7 @@ public interface OrganizationResource {
 		}
 
 		public Page<Organization> getOrganizationOrganizationsPage(
-				Long parentOrganizationId, Boolean flatten, String search,
+				String parentOrganizationId, Boolean flatten, String search,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -563,7 +563,7 @@ public interface OrganizationResource {
 
 		public HttpInvoker.HttpResponse
 				getOrganizationOrganizationsPageHttpResponse(
-					Long parentOrganizationId, Boolean flatten, String search,
+					String parentOrganizationId, Boolean flatten, String search,
 					String filterString, Pagination pagination,
 					String sortString)
 			throws Exception {

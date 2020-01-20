@@ -187,6 +187,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		Organization organization = randomOrganization();
 
 		organization.setComment(regex);
+		organization.setId(regex);
 		organization.setImage(regex);
 		organization.setName(regex);
 
@@ -197,6 +198,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		organization = OrganizationSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, organization.getComment());
+		Assert.assertEquals(regex, organization.getId());
 		Assert.assertEquals(regex, organization.getImage());
 		Assert.assertEquals(regex, organization.getName());
 	}
@@ -515,7 +517,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				organization.getId()));
 
 		assertHttpResponseStatusCode(
-			404, organizationResource.getOrganizationHttpResponse(0L));
+			404, organizationResource.getOrganizationHttpResponse("-"));
 	}
 
 	protected Organization testDeleteOrganization_addOrganization()
@@ -535,7 +537,9 @@ public abstract class BaseOrganizationResourceTestCase {
 				"deleteOrganization",
 				new HashMap<String, Object>() {
 					{
-						put("organizationId", organization.getId());
+						put(
+							"organizationId",
+							"\"" + organization.getId() + "\"");
 					}
 				}));
 
@@ -557,7 +561,9 @@ public abstract class BaseOrganizationResourceTestCase {
 					"organization",
 					new HashMap<String, Object>() {
 						{
-							put("organizationId", organization.getId());
+							put(
+								"organizationId",
+								"\"" + organization.getId() + "\"");
 						}
 					},
 					new GraphQLField("id")));
@@ -601,7 +607,9 @@ public abstract class BaseOrganizationResourceTestCase {
 				"organization",
 				new HashMap<String, Object>() {
 					{
-						put("organizationId", organization.getId());
+						put(
+							"organizationId",
+							"\"" + organization.getId() + "\"");
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -681,9 +689,9 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long parentOrganizationId =
+		String parentOrganizationId =
 			testGetOrganizationOrganizationsPage_getParentOrganizationId();
-		Long irrelevantParentOrganizationId =
+		String irrelevantParentOrganizationId =
 			testGetOrganizationOrganizationsPage_getIrrelevantParentOrganizationId();
 
 		if ((irrelevantParentOrganizationId != null)) {
@@ -738,7 +746,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			return;
 		}
 
-		Long parentOrganizationId =
+		String parentOrganizationId =
 			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 
 		Organization organization1 = randomOrganization();
@@ -770,7 +778,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			return;
 		}
 
-		Long parentOrganizationId =
+		String parentOrganizationId =
 			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 
 		Organization organization1 =
@@ -799,7 +807,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	public void testGetOrganizationOrganizationsPageWithPagination()
 		throws Exception {
 
-		Long parentOrganizationId =
+		String parentOrganizationId =
 			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 
 		Organization organization1 =
@@ -918,7 +926,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			return;
 		}
 
-		Long parentOrganizationId =
+		String parentOrganizationId =
 			testGetOrganizationOrganizationsPage_getParentOrganizationId();
 
 		Organization organization1 = randomOrganization();
@@ -956,14 +964,14 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected Organization testGetOrganizationOrganizationsPage_addOrganization(
-			Long parentOrganizationId, Organization organization)
+			String parentOrganizationId, Organization organization)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long
+	protected String
 			testGetOrganizationOrganizationsPage_getParentOrganizationId()
 		throws Exception {
 
@@ -971,7 +979,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Long
+	protected String
 			testGetOrganizationOrganizationsPage_getIrrelevantParentOrganizationId()
 		throws Exception {
 
@@ -1387,7 +1395,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 			if (Objects.equals("id", fieldName)) {
 				if (!Objects.deepEquals(
-						organization.getId(), jsonObject.getLong("id"))) {
+						organization.getId(), jsonObject.getString("id"))) {
 
 					return false;
 				}
@@ -1564,8 +1572,11 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append("'");
+			sb.append(String.valueOf(organization.getId()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("image")) {
@@ -1641,7 +1652,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				comment = RandomTestUtil.randomString();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
-				id = RandomTestUtil.randomLong();
+				id = RandomTestUtil.randomString();
 				image = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 				numberOfOrganizations = RandomTestUtil.randomInt();

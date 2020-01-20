@@ -40,7 +40,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface PostalAddressResource {
 
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
-			Long organizationId)
+			String organizationId)
 		throws Exception;
 
 	public PostalAddress getPostalAddress(Long postalAddressId)

@@ -38,11 +38,11 @@ public interface WebUrlResource {
 		return new Builder();
 	}
 
-	public Page<WebUrl> getOrganizationWebUrlsPage(Long organizationId)
+	public Page<WebUrl> getOrganizationWebUrlsPage(String organizationId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getOrganizationWebUrlsPageHttpResponse(
-			Long organizationId)
+			String organizationId)
 		throws Exception;
 
 	public Page<WebUrl> getUserAccountWebUrlsPage(Long userAccountId)
@@ -112,7 +112,7 @@ public interface WebUrlResource {
 
 	public static class WebUrlResourceImpl implements WebUrlResource {
 
-		public Page<WebUrl> getOrganizationWebUrlsPage(Long organizationId)
+		public Page<WebUrl> getOrganizationWebUrlsPage(String organizationId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -130,7 +130,7 @@ public interface WebUrlResource {
 		}
 
 		public HttpInvoker.HttpResponse getOrganizationWebUrlsPageHttpResponse(
-				Long organizationId)
+				String organizationId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

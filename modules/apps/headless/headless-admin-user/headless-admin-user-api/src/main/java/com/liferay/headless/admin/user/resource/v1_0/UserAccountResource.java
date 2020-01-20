@@ -45,7 +45,7 @@ public interface UserAccountResource {
 	public UserAccount getMyUserAccount() throws Exception;
 
 	public Page<UserAccount> getOrganizationUserAccountsPage(
-			Long organizationId, String search, Filter filter,
+			String organizationId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 

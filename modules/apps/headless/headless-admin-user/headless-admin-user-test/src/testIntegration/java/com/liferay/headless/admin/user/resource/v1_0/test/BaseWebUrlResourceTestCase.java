@@ -195,9 +195,9 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long organizationId =
+		String organizationId =
 			testGetOrganizationWebUrlsPage_getOrganizationId();
-		Long irrelevantOrganizationId =
+		String irrelevantOrganizationId =
 			testGetOrganizationWebUrlsPage_getIrrelevantOrganizationId();
 
 		if ((irrelevantOrganizationId != null)) {
@@ -230,21 +230,22 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	protected WebUrl testGetOrganizationWebUrlsPage_addWebUrl(
-			Long organizationId, WebUrl webUrl)
+			String organizationId, WebUrl webUrl)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetOrganizationWebUrlsPage_getOrganizationId()
+	protected String testGetOrganizationWebUrlsPage_getOrganizationId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetOrganizationWebUrlsPage_getIrrelevantOrganizationId()
+	protected String
+			testGetOrganizationWebUrlsPage_getIrrelevantOrganizationId()
 		throws Exception {
 
 		return null;

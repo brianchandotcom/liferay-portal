@@ -45,12 +45,12 @@ public interface UserAccountResource {
 		throws Exception;
 
 	public Page<UserAccount> getOrganizationUserAccountsPage(
-			Long organizationId, String search, String filterString,
+			String organizationId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getOrganizationUserAccountsPageHttpResponse(
-			Long organizationId, String search, String filterString,
+			String organizationId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
@@ -195,7 +195,7 @@ public interface UserAccountResource {
 		}
 
 		public Page<UserAccount> getOrganizationUserAccountsPage(
-				Long organizationId, String search, String filterString,
+				String organizationId, String search, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
 
@@ -217,7 +217,7 @@ public interface UserAccountResource {
 
 		public HttpInvoker.HttpResponse
 				getOrganizationUserAccountsPageHttpResponse(
-					Long organizationId, String search, String filterString,
+					String organizationId, String search, String filterString,
 					Pagination pagination, String sortString)
 			throws Exception {
 

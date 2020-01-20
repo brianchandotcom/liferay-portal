@@ -208,9 +208,9 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long organizationId =
+		String organizationId =
 			testGetOrganizationPostalAddressesPage_getOrganizationId();
-		Long irrelevantOrganizationId =
+		String irrelevantOrganizationId =
 			testGetOrganizationPostalAddressesPage_getIrrelevantOrganizationId();
 
 		if ((irrelevantOrganizationId != null)) {
@@ -250,21 +250,21 @@ public abstract class BasePostalAddressResourceTestCase {
 
 	protected PostalAddress
 			testGetOrganizationPostalAddressesPage_addPostalAddress(
-				Long organizationId, PostalAddress postalAddress)
+				String organizationId, PostalAddress postalAddress)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetOrganizationPostalAddressesPage_getOrganizationId()
+	protected String testGetOrganizationPostalAddressesPage_getOrganizationId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long
+	protected String
 			testGetOrganizationPostalAddressesPage_getIrrelevantOrganizationId()
 		throws Exception {
 

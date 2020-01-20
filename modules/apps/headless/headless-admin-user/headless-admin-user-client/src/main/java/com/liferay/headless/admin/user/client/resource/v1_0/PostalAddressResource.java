@@ -39,11 +39,12 @@ public interface PostalAddressResource {
 	}
 
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
-			Long organizationId)
+			String organizationId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getOrganizationPostalAddressesPageHttpResponse(Long organizationId)
+			getOrganizationPostalAddressesPageHttpResponse(
+				String organizationId)
 		throws Exception;
 
 	public PostalAddress getPostalAddress(Long postalAddressId)
@@ -118,7 +119,7 @@ public interface PostalAddressResource {
 		implements PostalAddressResource {
 
 		public Page<PostalAddress> getOrganizationPostalAddressesPage(
-				Long organizationId)
+				String organizationId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -137,7 +138,7 @@ public interface PostalAddressResource {
 
 		public HttpInvoker.HttpResponse
 				getOrganizationPostalAddressesPageHttpResponse(
-					Long organizationId)
+					String organizationId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

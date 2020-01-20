@@ -106,8 +106,8 @@ public abstract class BaseUserAccountResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "UserAccount")})
 	public Page<UserAccount> getOrganizationUserAccountsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
-				organizationId,
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId")
+				String organizationId,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)

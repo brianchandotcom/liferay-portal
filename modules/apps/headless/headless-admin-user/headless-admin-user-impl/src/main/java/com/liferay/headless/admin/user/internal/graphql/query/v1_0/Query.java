@@ -180,7 +180,7 @@ public class Query {
 	 */
 	@GraphQLField(description = "Retrieves the organization's email addresses.")
 	public EmailAddressPage organizationEmailAddresses(
-			@GraphQLName("organizationId") Long organizationId)
+			@GraphQLName("organizationId") String organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -245,7 +245,7 @@ public class Query {
 	 */
 	@GraphQLField(description = "Retrieves the organization.")
 	public Organization organization(
-			@GraphQLName("organizationId") Long organizationId)
+			@GraphQLName("organizationId") String organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -264,7 +264,7 @@ public class Query {
 		description = "Retrieves the parent organization's child organizations. Results can be paginated, filtered, searched, and sorted."
 	)
 	public OrganizationPage organizationOrganizations(
-			@GraphQLName("parentOrganizationId") Long parentOrganizationId,
+			@GraphQLName("parentOrganizationId") String parentOrganizationId,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -292,7 +292,7 @@ public class Query {
 	 */
 	@GraphQLField(description = "Retrieves the organization's phone numbers.")
 	public PhonePage organizationPhones(
-			@GraphQLName("organizationId") Long organizationId)
+			@GraphQLName("organizationId") String organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -341,7 +341,7 @@ public class Query {
 		description = "Retrieves the organization's postal addresses."
 	)
 	public PostalAddressPage organizationPostalAddresses(
-			@GraphQLName("organizationId") Long organizationId)
+			@GraphQLName("organizationId") String organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -594,7 +594,7 @@ public class Query {
 		description = "Retrieves the organization's members (users). Results can be paginated, filtered, searched, and sorted."
 	)
 	public UserAccountPage organizationUserAccounts(
-			@GraphQLName("organizationId") Long organizationId,
+			@GraphQLName("organizationId") String organizationId,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -692,7 +692,7 @@ public class Query {
 	 */
 	@GraphQLField(description = "Retrieves the organization's URLs.")
 	public WebUrlPage organizationWebUrls(
-			@GraphQLName("organizationId") Long organizationId)
+			@GraphQLName("organizationId") String organizationId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(

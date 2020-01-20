@@ -75,8 +75,8 @@ public abstract class BasePostalAddressResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PostalAddress")})
 	public Page<PostalAddress> getOrganizationPostalAddressesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
-				organizationId)
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId")
+				String organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

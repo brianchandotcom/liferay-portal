@@ -97,8 +97,8 @@ public abstract class BaseEmailAddressResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "EmailAddress")})
 	public Page<EmailAddress> getOrganizationEmailAddressesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
-				organizationId)
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId")
+				String organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

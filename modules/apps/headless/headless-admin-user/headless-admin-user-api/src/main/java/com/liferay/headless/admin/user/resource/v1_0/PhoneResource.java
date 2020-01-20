@@ -39,7 +39,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PhoneResource {
 
-	public Page<Phone> getOrganizationPhonesPage(Long organizationId)
+	public Page<Phone> getOrganizationPhonesPage(String organizationId)
 		throws Exception;
 
 	public Phone getPhone(Long phoneId) throws Exception;

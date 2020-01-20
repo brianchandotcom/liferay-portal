@@ -69,7 +69,7 @@ public class Mutation {
 
 	@GraphQLField(description = "Deletes an organization.")
 	public boolean deleteOrganization(
-			@GraphQLName("organizationId") Long organizationId)
+			@GraphQLName("organizationId") String organizationId)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -85,7 +85,7 @@ public class Mutation {
 		description = "Updates the organization with the information sent in the request body. Fields not present in the request body are left unchanged."
 	)
 	public Organization patchOrganization(
-			@GraphQLName("organizationId") Long organizationId,
+			@GraphQLName("organizationId") String organizationId,
 			@GraphQLName("organization") Organization organization)
 		throws Exception {
 
@@ -100,7 +100,7 @@ public class Mutation {
 		description = "Replaces the organization with information sent in the request body. Any missing fields are deleted unless they are required."
 	)
 	public Organization updateOrganization(
-			@GraphQLName("organizationId") Long organizationId,
+			@GraphQLName("organizationId") String organizationId,
 			@GraphQLName("organization") Organization organization)
 		throws Exception {
 

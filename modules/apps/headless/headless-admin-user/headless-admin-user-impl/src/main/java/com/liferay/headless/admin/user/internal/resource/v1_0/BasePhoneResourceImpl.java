@@ -74,8 +74,8 @@ public abstract class BasePhoneResourceImpl implements PhoneResource {
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Phone")})
 	public Page<Phone> getOrganizationPhonesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("organizationId") Long
-				organizationId)
+			@NotNull @Parameter(hidden = true) @PathParam("organizationId")
+				String organizationId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

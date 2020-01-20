@@ -197,8 +197,9 @@ public abstract class BasePhoneResourceTestCase {
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long organizationId = testGetOrganizationPhonesPage_getOrganizationId();
-		Long irrelevantOrganizationId =
+		String organizationId =
+			testGetOrganizationPhonesPage_getOrganizationId();
+		String irrelevantOrganizationId =
 			testGetOrganizationPhonesPage_getIrrelevantOrganizationId();
 
 		if ((irrelevantOrganizationId != null)) {
@@ -231,21 +232,21 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	protected Phone testGetOrganizationPhonesPage_addPhone(
-			Long organizationId, Phone phone)
+			String organizationId, Phone phone)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetOrganizationPhonesPage_getOrganizationId()
+	protected String testGetOrganizationPhonesPage_getOrganizationId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetOrganizationPhonesPage_getIrrelevantOrganizationId()
+	protected String testGetOrganizationPhonesPage_getIrrelevantOrganizationId()
 		throws Exception {
 
 		return null;

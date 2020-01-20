@@ -111,6 +111,8 @@ definition {
 
 			Pause(locator1 = "5000");
 
+			Refresh();
+
 			AssertTextEquals(
 				locator1 = "Staging#PROCESS_RESULT",
 				value1 = "SUCCESSFUL");

@@ -94,7 +94,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 		BodyBottomTag bodyBottomTag = new BodyBottomTag();
 
-		bodyBottomTag.setOutputKey("segmentsExperimentPanel");
+		bodyBottomTag.setOutputKey("analyticsReportsPanel");
 
 		try {
 			bodyBottomTag.doBodyTag(

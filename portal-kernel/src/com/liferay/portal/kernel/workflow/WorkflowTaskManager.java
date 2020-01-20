@@ -140,6 +140,14 @@ public interface WorkflowTaskManager {
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException;
 
+	public boolean hasAssignableUsers(long companyId, long workflowTaskId)
+		throws WorkflowException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #hasAssignableUsers(long, long)}
+	 */
+	@Deprecated
 	public boolean hasOtherAssignees(long workflowTaskId, long userId)
 		throws WorkflowException;
 

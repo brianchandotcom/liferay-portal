@@ -226,6 +226,19 @@ public class WorkflowTaskManagerUtil {
 			orderByComparator);
 	}
 
+	public static boolean hasAssignableUsers(
+			long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().hasAssignableUsers(
+			companyId, workflowTaskId);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #hasAssignableUsers(long, long)}
+	 */
+	@Deprecated
 	public static boolean hasOtherAssignees(long workflowTaskId, long userId)
 		throws WorkflowException {
 

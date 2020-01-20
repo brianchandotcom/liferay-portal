@@ -193,7 +193,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!LayoutConstants.TYPE_ASSET_DISPLAY.equals(layout.getType())) {
+		if (!layout.isTypeAssetDisplay()) {
 			return false;
 		}
 

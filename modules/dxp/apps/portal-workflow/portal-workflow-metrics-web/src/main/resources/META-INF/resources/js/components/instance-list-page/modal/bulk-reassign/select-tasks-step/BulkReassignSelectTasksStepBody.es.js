@@ -12,7 +12,7 @@
 import ClayModal from '@clayui/modal';
 import React from 'react';
 
-import EmptyState from '../../../../../shared/components/list/EmptyState.es';
+import EmptyState from '../../../../../shared/components/empty-state/EmptyState.es';
 import RetryButton from '../../../../../shared/components/list/RetryButton.es';
 import LoadingState from '../../../../../shared/components/loading/LoadingState.es';
 import PaginationBar from '../../../../../shared/components/pagination-bar/PaginationBar.es';

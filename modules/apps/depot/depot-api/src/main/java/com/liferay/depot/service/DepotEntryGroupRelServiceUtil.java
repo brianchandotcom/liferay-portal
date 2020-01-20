@@ -38,7 +38,8 @@ public class DepotEntryGroupRelServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.depot.service.impl.DepotEntryGroupRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.depot.model.DepotEntryGroupRel
-		addDepotEntryGroupRel(long depotEntryId, long toGroupId) {
+			addDepotEntryGroupRel(long depotEntryId, long toGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addDepotEntryGroupRel(depotEntryId, toGroupId);
 	}

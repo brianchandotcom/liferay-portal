@@ -35,7 +35,8 @@ public class DepotEntryGroupRelServiceWrapper
 
 	@Override
 	public com.liferay.depot.model.DepotEntryGroupRel addDepotEntryGroupRel(
-		long depotEntryId, long toGroupId) {
+			long depotEntryId, long toGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _depotEntryGroupRelService.addDepotEntryGroupRel(
 			depotEntryId, toGroupId);

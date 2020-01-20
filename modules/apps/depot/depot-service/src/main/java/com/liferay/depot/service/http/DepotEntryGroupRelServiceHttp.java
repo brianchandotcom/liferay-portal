@@ -52,8 +52,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class DepotEntryGroupRelServiceHttp {
 
 	public static com.liferay.depot.model.DepotEntryGroupRel
-		addDepotEntryGroupRel(
-			HttpPrincipal httpPrincipal, long depotEntryId, long toGroupId) {
+			addDepotEntryGroupRel(
+				HttpPrincipal httpPrincipal, long depotEntryId, long toGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -69,6 +70,13 @@ public class DepotEntryGroupRelServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					e);
 			}

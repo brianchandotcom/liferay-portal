@@ -214,13 +214,21 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 
 		assetListEntryAssetEntryRel.setPosition(-1);
 
-		assetListEntryAssetEntryRelPersistence.update(
-			assetListEntryAssetEntryRel);
+		assetListEntryAssetEntryRel =
+			assetListEntryAssetEntryRelPersistence.update(
+				assetListEntryAssetEntryRel);
+
+		long assetListEntryAssetEntryRelId =
+			assetListEntryAssetEntryRel.getAssetListEntryAssetEntryRelId();
 
 		swapAssetListEntryAssetEntryRel.setPosition(-2);
 
-		assetListEntryAssetEntryRelPersistence.update(
-			swapAssetListEntryAssetEntryRel);
+		swapAssetListEntryAssetEntryRel =
+			assetListEntryAssetEntryRelPersistence.update(
+				swapAssetListEntryAssetEntryRel);
+
+		long swapAssetListEntryAssetEntryRelId =
+			swapAssetListEntryAssetEntryRel.getAssetListEntryAssetEntryRelId();
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
@@ -228,8 +236,7 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 					callbackAssetListEntryAssetEntryRel =
 						assetListEntryAssetEntryRelLocalService.
 							fetchAssetListEntryAssetEntryRel(
-								assetListEntryAssetEntryRel.
-									getAssetListEntryAssetEntryRelId());
+								assetListEntryAssetEntryRelId);
 
 				callbackAssetListEntryAssetEntryRel.setPosition(newPosition);
 
@@ -240,8 +247,7 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 				callbackAssetListEntryAssetEntryRel =
 					assetListEntryAssetEntryRelLocalService.
 						fetchAssetListEntryAssetEntryRel(
-							swapAssetListEntryAssetEntryRel.
-								getAssetListEntryAssetEntryRelId());
+							swapAssetListEntryAssetEntryRelId);
 
 				callbackAssetListEntryAssetEntryRel.setPosition(position);
 

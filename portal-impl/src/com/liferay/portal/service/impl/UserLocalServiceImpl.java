@@ -1053,7 +1053,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setStatus(WorkflowConstants.STATUS_DRAFT);
 		user.setExpandoBridgeAttributes(serviceContext);
 
-		userPersistence.update(user, serviceContext);
+		user = userPersistence.update(user, serviceContext);
 
 		// Contact
 
@@ -4462,7 +4462,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		user.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-		userPersistence.update(user, serviceContext);
+		user = userPersistence.update(user, serviceContext);
 
 		// Workflow
 

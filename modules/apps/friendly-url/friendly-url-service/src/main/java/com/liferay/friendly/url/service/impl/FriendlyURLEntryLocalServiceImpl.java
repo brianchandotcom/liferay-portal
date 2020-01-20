@@ -125,7 +125,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		friendlyURLEntryMappingPersistence.update(friendlyURLEntryMapping);
 
-		friendlyURLEntryPersistence.update(friendlyURLEntry);
+		friendlyURLEntry = friendlyURLEntryPersistence.update(friendlyURLEntry);
 
 		_updateFriendlyURLEntryLocalizations(
 			friendlyURLEntry, classNameId, classPK, urlTitleMap);

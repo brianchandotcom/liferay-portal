@@ -23,6 +23,7 @@ import DragPreview from './DragPreview';
 import {
 	ColumnWithControls,
 	ContainerWithControls,
+	DropZoneWithControls,
 	FragmentWithControls,
 	Root,
 	RowWithControls
@@ -31,6 +32,7 @@ import {
 const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.column]: ColumnWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.container]: ContainerWithControls,
+	[LAYOUT_DATA_ITEM_TYPES.dropZone]: DropZoneWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: FragmentWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
 	[LAYOUT_DATA_ITEM_TYPES.row]: RowWithControls

@@ -23,6 +23,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot can be accessed from a connected site to create shortcut."
+	@ignore = "true"
 	@priority = "5"
 	test AccessViaShortcut {
 		JSONGroup.addGroup(groupName = "Site Name");

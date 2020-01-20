@@ -33,6 +33,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be used through Blogs on a connected site."
+	@ignore = "true"
 	@priority = "5"
 	test AddImageViaBlogs {
 		DepotNavigator.openDepotAdmin();
@@ -86,6 +87,7 @@ definition {
 	}
 
 	@description = "This ensures that a depot image can be used through page creation on a connected site."
+	@ignore = "true"
 	@priority = "5"
 	test AddImageViaContentPage {
 		DepotNavigator.openDepotAdmin();
@@ -127,6 +129,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-105401. It ensures that a depot image can be used on a connected staging site."
+	@ignore = "true"
 	@priority = "5"
 	test AddImageViaStagedSite {
 		JSONLayout.addPublicLayout(

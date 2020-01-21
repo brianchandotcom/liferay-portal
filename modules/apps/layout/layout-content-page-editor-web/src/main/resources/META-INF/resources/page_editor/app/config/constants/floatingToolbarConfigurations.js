@@ -16,14 +16,16 @@ import {ContainerConfigurationPanel} from '../../../app/components/ContainerConf
 import {FragmentConfigurationPanel} from '../../../app/components/FragmentConfigurationPanel';
 import {MapConfigurationPanel} from '../../../app/components/MapConfigurationPanel';
 import {RowConfigurationPanel} from '../../../app/components/RowConfigurationPanel';
+import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from './editableFloatingToolbarButtons';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from './layoutDataFloatingToolbarButtons';
 
 const {
 	containerConfiguration,
 	fragmentConfiguration,
-	map,
 	rowConfiguration
 } = LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS;
+
+const {map} = EDITABLE_FLOATING_TOOLBAR_BUTTONS;
 
 export const FLOATING_TOOLBAR_CONFIGURATIONS = {
 	[containerConfiguration.panelId]: ContainerConfigurationPanel,

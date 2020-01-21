@@ -214,6 +214,9 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 						return 0;
 					}
 
+					definition1Key = definition1Key.replaceAll("(?s):\n.*", "");
+					definition2Key = definition2Key.replaceAll("(?s):\n.*", "");
+
 					return definition1Key.compareTo(definition2Key);
 				}
 

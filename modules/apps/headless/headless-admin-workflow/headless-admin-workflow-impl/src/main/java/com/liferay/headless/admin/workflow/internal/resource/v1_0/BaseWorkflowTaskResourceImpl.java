@@ -502,17 +502,17 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-other-assignable-users'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-assignable-users'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "workflowTaskId")}
 	)
-	@Path("/workflow-tasks/{workflowTaskId}/has-other-assignable-users")
+	@Path("/workflow-tasks/{workflowTaskId}/has-assignable-users")
 	@Produces("text/plain")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
-	public String getWorkflowTaskHasOtherAssignableUsers(
+	public String getWorkflowTaskHasAssignableUsers(
 			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId") Long
 				workflowTaskId)
 		throws Exception {

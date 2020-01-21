@@ -321,6 +321,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.SemiColonCheck">
 			<message key="semi.colon.unnecessary" value="Unnecessary semi colon" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.SingleStatementClauseCheck">
+			<message key="braces.missing" value="Use braces around {0}-statement clause" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.SizeIsZeroCheck">
 			<message key="method.use" value="Use method ''{0}'' instead" />
 		</module>

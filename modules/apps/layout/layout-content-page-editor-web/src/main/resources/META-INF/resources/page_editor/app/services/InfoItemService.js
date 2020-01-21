@@ -44,13 +44,13 @@ export default {
 	},
 
 	/**
-	 * Get available mapping fields
+	 * Get available structure mapping fields
 	 * @param {object} options
 	 * @param {object} options.config Application config
 	 * @param {string} options.classNameId Asset's className
 	 * @param {string} options.classTypeId Asset's classTypeId
 	 */
-	getAvailableMappingFields({
+	getAvailableStructureMappingFields({
 		classNameId,
 		classTypeId,
 		config,

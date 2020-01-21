@@ -167,12 +167,9 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						});
 					});
 				}),
-				itemSelectorUploader.after(
-					'itemUploadError',
-					(event) => {
-						this._onItemUploadError(event);
-					}
-				),
+				itemSelectorUploader.after('itemUploadError', event => {
+					this._onItemUploadError(event);
+				}),
 				rootNode.addEventListener(STR_DRAG_OVER, event =>
 					this._ddEventHandler(event)
 				),

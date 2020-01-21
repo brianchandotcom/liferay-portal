@@ -68,4 +68,11 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 	>
 		<liferay-util:include page="/screen/navigation/entries/sharing.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:fieldset>
+
+	<liferay-frontend:fieldset
+		collapsible="true"
+		label='<%= LanguageUtil.get(request, "asset-auto-tagging") %>'
+	>
+		<liferay-util:include page="/screen/navigation/entries/asset_auto_tagger.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:fieldset>
 </liferay-frontend:fieldset-group>

@@ -15,8 +15,8 @@
 package com.liferay.bean.portlet.cdi.extension.internal;
 
 import com.liferay.bean.portlet.cdi.extension.internal.annotated.type.ModifiedAnnotatedType;
-import com.liferay.bean.portlet.cdi.extension.internal.mvc.MvcExtension;
-import com.liferay.bean.portlet.cdi.extension.internal.mvc.ViewRendererMvcImpl;
+import com.liferay.bean.portlet.cdi.extension.internal.mvc.MVCExtension;
+import com.liferay.bean.portlet.cdi.extension.internal.mvc.ViewRendererMVCImpl;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.JSR362CDIBeanProducer;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletRequestBeanContext;
 import com.liferay.bean.portlet.cdi.extension.internal.scope.PortletSessionBeanContext;
@@ -135,7 +135,7 @@ public class CDIBeanPortletExtension implements Extension {
 
 		// MVC
 
-		MvcExtension.step1BeforeBeanDiscovery(beanManager, beforeBeanDiscovery);
+		MVCExtension.step1BeforeBeanDiscovery(beanManager, beforeBeanDiscovery);
 	}
 
 	public <T> void step2ProcessAnnotatedType(
@@ -231,7 +231,7 @@ public class CDIBeanPortletExtension implements Extension {
 
 		// MVC
 
-		MvcExtension.step2ProcessAnnotatedType(processAnnotatedType);
+		MVCExtension.step2ProcessAnnotatedType(processAnnotatedType);
 	}
 
 	public void step3AfterBeanDiscovery(
@@ -243,7 +243,7 @@ public class CDIBeanPortletExtension implements Extension {
 
 		// MVC
 
-		MvcExtension.step3AfterBeanDiscovery(afterBeanDiscovery);
+		MVCExtension.step3AfterBeanDiscovery(afterBeanDiscovery);
 	}
 
 	@SuppressWarnings({"serial", "unchecked"})
@@ -422,7 +422,7 @@ public class CDIBeanPortletExtension implements Extension {
 				importsMvcBindingPackage = true;
 			}
 
-			_viewRenderer = new ViewRendererMvcImpl(
+			_viewRenderer = new ViewRendererMVCImpl(
 				beanManager, importsMvcBindingPackage, importsMvcPackage);
 		}
 		else {

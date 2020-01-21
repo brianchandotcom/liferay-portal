@@ -49,7 +49,7 @@ import org.springframework.context.ApplicationEventPublisher;
  * @author Neil Griffin
  */
 @ManagedBean("beanPortletMethodDecorator")
-public class BeanPortletMethodDecoratorMvcImpl
+public class BeanPortletMethodDecoratorMVCImpl
 	implements ApplicationContextAware, BeanPortletMethodDecorator {
 
 	@Override
@@ -122,7 +122,7 @@ public class BeanPortletMethodDecoratorMvcImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BeanPortletMethodDecoratorMvcImpl.class);
+		BeanPortletMethodDecoratorMVCImpl.class);
 
 	private ApplicationContext _applicationContext;
 

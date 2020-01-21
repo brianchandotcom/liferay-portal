@@ -47,9 +47,9 @@ import javax.ws.rs.core.Configuration;
 /**
  * @author Neil Griffin
  */
-public class ViewRendererMvcImpl implements ViewRenderer {
+public class ViewRendererMVCImpl implements ViewRenderer {
 
-	public ViewRendererMvcImpl(
+	public ViewRendererMVCImpl(
 		BeanManager beanManager, boolean importsMvcBindingPackage,
 		boolean importsMvcPackage) {
 
@@ -213,7 +213,7 @@ public class ViewRendererMvcImpl implements ViewRenderer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewRendererMvcImpl.class);
+		ViewRendererMVCImpl.class);
 
 	private static final Annotation _viewEngines = new ViewEngines() {
 

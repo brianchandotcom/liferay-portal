@@ -40,7 +40,7 @@ import javax.ws.rs.core.Configuration;
  * @author Neil Griffin
  */
 @ApplicationScoped
-public class MvcContextProducer {
+public class MVCContextProducer {
 
 	@Named("mvc")
 	@PortletRequestScoped
@@ -49,7 +49,7 @@ public class MvcContextProducer {
 		Configuration configuration, Encoders encoders,
 		PortletContext portletContext, PortletRequest portletRequest) {
 
-		return new MvcContextImpl(
+		return new MVCContextImpl(
 			configuration, encoders, _localeResolvers, portletContext,
 			portletRequest);
 	}

@@ -50,7 +50,7 @@ import org.springframework.context.ApplicationEventPublisher;
  * @author Neil Griffin
  */
 @ManagedBean("viewRenderer")
-public class ViewRendererMvcImpl
+public class ViewRendererMVCImpl
 	implements ApplicationContextAware, ViewRenderer {
 
 	@Override
@@ -166,7 +166,7 @@ public class ViewRendererMvcImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewRendererMvcImpl.class);
+		ViewRendererMVCImpl.class);
 
 	private ApplicationContext _applicationContext;
 

@@ -46,9 +46,9 @@ import javax.ws.rs.core.UriBuilder;
 /**
  * @author  Neil Griffin
  */
-public class MvcContextImpl implements MvcContext {
+public class MVCContextImpl implements MvcContext {
 
-	public MvcContextImpl(
+	public MVCContextImpl(
 		Configuration configuration, Encoders encoders,
 		List<LocaleResolver> localeResolvers, PortletContext portletContext,
 		PortletRequest portletRequest) {

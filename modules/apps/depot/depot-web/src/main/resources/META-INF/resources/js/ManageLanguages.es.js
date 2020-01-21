@@ -23,13 +23,27 @@ const ManageLanguages = ({
 	customDefaultLocaleId,
 	customLocalesIds
 }) => {
+	const [selectedLocalesIds, setSelectedLocalesIds] = useState(customLocalesIds);
+
+	const onChangeLocale = (checked, localeId) => {
+		if (checked) {
+			setSelectedLocalesIds(selectedLocalesIds.concat(localeId));
+		} else {
+			setSelectedLocalesIds(selectedLocalesIds.filter(id => (id != localeId)));
+		}
+		//TODO fire event name
+	}
+
 	const Language = ({displayName, isDefault, localeId}) => {
+		const checked = selectedLocalesIds.indexOf(localeId) != -1;
+
 		return (
 			<ClayTable.Row>
-				<ClayTable.Cell align="center">
+				<ClayTable.Cell>
 					<ClayCheckbox
-						checked={customLocalesIds.indexOf(localeId) != -1}
+						checked={checked}
 						disabled={isDefault}
+						onChange={() => {onChangeLocale(!checked, localeId)}}
 					/>
 				</ClayTable.Cell>
 
@@ -47,7 +61,7 @@ const ManageLanguages = ({
 	};
 
 	return(
-		<>
+		<div className="container">
 			<ClayTable borderless headVerticalAlignment="middle">
 				<ClayTable.Head>
 					<ClayTable.Row>
@@ -69,7 +83,7 @@ const ManageLanguages = ({
 					})}
 				</ClayTable.Body>
 			</ClayTable>
-		</>
+		</div>
 	);
 }
 

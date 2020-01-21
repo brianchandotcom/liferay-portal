@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -61,6 +60,8 @@ public class LayoutDataConverter {
 
 		JSONObject itemsJSONObject = JSONFactoryUtil.createJSONObject();
 		JSONArray mainChildrenJSONArray = JSONFactoryUtil.createJSONArray();
+
+		UUID dropZoneUUID = null;
 		UUID mainUUID = UUID.randomUUID();
 
 		for (int i = 0; i < structureJSONArray.length(); i++) {
@@ -114,10 +115,12 @@ public class LayoutDataConverter {
 						if (fragmentEntryLinkId.equals(
 								LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
 
+							dropZoneUUID = fragmentUUID;
+
 							fragmentJSONObject = _getItemJSONObject(
 								JSONFactoryUtil.createJSONArray(),
 								JSONFactoryUtil.createJSONObject(),
-								fragmentUUID.toString(), columnUUID.toString(),
+								dropZoneUUID.toString(), columnUUID.toString(),
 								LayoutDataItemTypeConstants.TYPE_DROP_ZONE);
 						}
 						else {
@@ -224,10 +227,8 @@ public class LayoutDataConverter {
 		JSONObject rootItemsJSONObject = JSONUtil.put(
 			"main", mainUUID.toString());
 
-		String dropZoneId = getDropZoneId(itemsJSONObject);
-
-		if (Validator.isNotNull(dropZoneId)) {
-			rootItemsJSONObject.put("drop-zone", dropZoneId);
+		if (dropZoneUUID != null) {
+			rootItemsJSONObject.put("dropZone", dropZoneUUID.toString());
 		}
 
 		JSONObject outputDataJSONObject = JSONUtil.put(
@@ -239,21 +240,6 @@ public class LayoutDataConverter {
 		);
 
 		return outputDataJSONObject.toJSONString();
-	}
-
-	public static String getDropZoneId(JSONObject itemsJSONObject) {
-		for (String key : itemsJSONObject.keySet()) {
-			JSONObject jsonObject = itemsJSONObject.getJSONObject(key);
-
-			if (Objects.equals(
-					jsonObject.get("type"),
-					LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
-
-				return key;
-			}
-		}
-
-		return null;
 	}
 
 	public static boolean isLatestVersion(JSONObject dataJSONObject) {

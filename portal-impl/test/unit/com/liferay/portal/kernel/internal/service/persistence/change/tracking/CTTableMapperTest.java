@@ -356,8 +356,8 @@ public class CTTableMapperTest {
 		ParamSetter booleanParamSetter = ReflectionTestUtil.getFieldValue(
 			_ctTableMapper, "_booleanParamSetter");
 
-		MappingSqlQuery mappingSqlQuery = new MockBooleanParamSetterSqlQuery(
-			booleanParamSetter);
+		MappingSqlQuery<Void> mappingSqlQuery =
+			new MockBooleanParamSetterSqlQuery(booleanParamSetter);
 
 		mappingSqlQuery.execute(true);
 	}
@@ -2524,10 +2524,11 @@ public class CTTableMapperTest {
 
 	}
 
-	private class MockBooleanParamSetterSqlQuery implements MappingSqlQuery {
+	private class MockBooleanParamSetterSqlQuery
+		implements MappingSqlQuery<Void> {
 
 		@Override
-		public List execute(Object... params) throws SQLException {
+		public List<Void> execute(Object... params) throws SQLException {
 			Assert.assertEquals(Arrays.toString(params), 1, params.length);
 
 			PreparedStatement preparedStatement =

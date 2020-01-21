@@ -1,16 +1,6 @@
 body.open-admin-panel {
-	&,
-	.control-menu,
-	.affix {
-		@include media-breakpoint-up(sm) {
-			padding-right: $admin-panel-width;
-		}
-	}
-
-	.control-menu-level-2 {
-		@include media-breakpoint-up(sm) {
-			right: $admin-panel-width;
-		}
+	@include media-breakpoint-up(sm) {
+		padding-right: $admin-panel-width;
 	}
 }
 

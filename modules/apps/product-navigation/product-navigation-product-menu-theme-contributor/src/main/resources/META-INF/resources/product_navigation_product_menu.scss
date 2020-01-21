@@ -3,16 +3,11 @@
 @import 'variables';
 
 body {
-	&.open #wrapper {
+	&.open {
 		@include media-breakpoint-up(sm) {
 			padding-left: $product-menu-width;
-		}
-	}
 
-	&.open .control-menu,
-	&.open .affix {
-		@include media-breakpoint-up(sm) {
-			left: $product-menu-width;
+			@include transition(padding 0.5s ease);
 		}
 	}
 
@@ -21,10 +16,6 @@ body {
 		@include media-breakpoint-up(sm) {
 			overflow-x: hidden;
 		}
-	}
-
-	&.sidenav-transition #wrapper {
-		@include transition(padding 0.5s ease);
 	}
 }
 

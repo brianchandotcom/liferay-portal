@@ -66,7 +66,15 @@ export default function useDragAndDrop({
 			};
 		},
 		drop(_item, _monitor) {
-			if (!_monitor.didDrop()) {
+			if (
+				!_monitor.didDrop() &&
+				isValidMove({
+					edge,
+					item: _item,
+					items: layoutData.items,
+					siblingOrParent: item
+				})
+			) {
 				const {parentId, position} = getParentItemIdAndPositon({
 					edge,
 					item: _item,
@@ -83,13 +91,9 @@ export default function useDragAndDrop({
 			}
 		},
 		hover(_item, _monitor) {
-			const dragId = _item.itemId;
-			const hoverId = item.itemId;
+			setEdge(null);
 
-			// Don't replace items with themselves
-			if (dragId === hoverId) {
-				setEdge(null);
-
+			if (_item.itemId === item.itemId || rootVoid(item)) {
 				return;
 			}
 
@@ -106,57 +110,18 @@ export default function useDragAndDrop({
 			// Get pixels to the top
 			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-			const hoverItem = layoutData.items[hoverId];
+			const newEdge = getEdge(hoverClientY, hoverMiddleY);
 
-			const hoverParentOrItemId =
-				hoverItem.parentId !== '' ? hoverItem.parentId : hoverId;
-
-			const parentOrItemChildren =
-				layoutData.items[hoverParentOrItemId].children;
-
-			if (parentOrItemChildren.includes(dragId)) {
-				// Get the index of the draggable element in the children if the drag is
-				// happening inside the segment.
-				const dragIndex = parentOrItemChildren.findIndex(
-					child => child === dragId
-				);
-
-				// When dragging downwards, only move when the cursor is below 50%
-				// When dragging upwards, only move when the cursor is above 50%
-				// Dragging downwards
-				if (
-					parentOrItemChildren[dragIndex] !==
-						parentOrItemChildren[0] &&
-					parentOrItemChildren[dragIndex + 1] !== hoverId &&
-					hoverClientY < hoverMiddleY
-				) {
-					setEdge(EDGE.TOP);
-					return;
-				}
-
-				// Dragging upwards
-				if (
-					parentOrItemChildren[dragIndex] !==
-						parentOrItemChildren[parentOrItemChildren.length - 1] &&
-					parentOrItemChildren[dragIndex - 1] !== hoverId &&
-					hoverClientY > hoverMiddleY
-				) {
-					setEdge(EDGE.BOTTOM);
-					return;
-				}
-			} else {
-				if (hoverClientY < hoverMiddleY) {
-					setEdge(EDGE.TOP);
-					return;
-				}
-
-				if (hoverClientY > hoverMiddleY) {
-					setEdge(EDGE.BOTTOM);
-					return;
-				}
+			if (
+				isValidMove({
+					edge: newEdge,
+					item: _item,
+					items: layoutData.items,
+					siblingOrParent: item
+				})
+			) {
+				setEdge(newEdge);
 			}
-
-			setEdge(null);
 		}
 	});
 
@@ -171,6 +136,62 @@ export default function useDragAndDrop({
 		drop,
 		edge
 	};
+}
+
+function isValidMove({edge, item, items, siblingOrParent}) {
+	const {children} = items[
+		siblingOrParent.parentId !== ''
+			? siblingOrParent.parentId
+			: siblingOrParent.itemId
+	];
+
+	if (typeof edge !== 'number' && !rootVoid(siblingOrParent)) {
+		return false;
+	}
+
+	if (children.includes(item.itemId)) {
+		return !(
+			isSibling(children, item, edge, siblingOrParent.itemId) ||
+			(isFirstItem(children, item) && edge === EDGE.TOP) ||
+			(isLastItem(children, item) && edge === EDGE.BOTTOM)
+		);
+	}
+
+	return true;
+}
+
+/**
+ * When dragging downwards, only move when the cursor is below 50%
+ * When dragging upwards, only move when the cursor is above 50%
+ */
+function getEdge(hoverClientY, hoverMiddleY) {
+	if (hoverClientY < hoverMiddleY) {
+		return EDGE.TOP;
+	} else if (hoverClientY > hoverMiddleY) {
+		return EDGE.BOTTOM;
+	}
+}
+
+function isSibling(children, item, edge, hoverId) {
+	const itemIndex = children.findIndex(id => id === item.itemId);
+	return (
+		(children[itemIndex + 1] === hoverId && edge === EDGE.TOP) ||
+		(children[itemIndex - 1] === hoverId && edge === EDGE.BOTTOM)
+	);
+}
+
+function isLastItem(children, item) {
+	return item.itemId === children[children.length - 1];
+}
+
+function isFirstItem(children, item) {
+	return item.itemId === children[0];
+}
+
+function rootVoid(item) {
+	return (
+		item.type === LAYOUT_DATA_ITEM_TYPES.root && item.children.length === 0
+	);
 }
 
 function getParentItemIdAndPositon({edge, item, items, siblingOrParentId}) {

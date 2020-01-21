@@ -237,8 +237,8 @@ public class CTTableMapperTest {
 			_ctTableMapper.addTableMapping(
 				companyId, leftPrimaryKey, rightPrimaryKey);
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 
@@ -396,8 +396,8 @@ public class CTTableMapperTest {
 
 			Assert.fail();
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 
@@ -436,8 +436,8 @@ public class CTTableMapperTest {
 			_ctTableMapper.addTableMapping(
 				companyId, leftPrimaryKey, rightPrimaryKey);
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 
@@ -469,8 +469,8 @@ public class CTTableMapperTest {
 				_ctTableMapper.addTableMapping(
 					companyId, leftPrimaryKey, rightPrimaryKey));
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 
@@ -1212,8 +1212,8 @@ public class CTTableMapperTest {
 			_ctTableMapper.getLeftBaseModels(
 				rightPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(NoSuchModelException.class, cause.getClass());
 
@@ -1312,8 +1312,8 @@ public class CTTableMapperTest {
 
 			_ctTableMapper.getLeftPrimaryKeys(rightPrimaryKey);
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 
@@ -1486,8 +1486,8 @@ public class CTTableMapperTest {
 			_ctTableMapper.getRightBaseModels(
 				leftPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(NoSuchModelException.class, cause.getClass());
 
@@ -1586,8 +1586,8 @@ public class CTTableMapperTest {
 
 			_ctTableMapper.getRightPrimaryKeys(leftPrimaryKey);
 		}
-		catch (SystemException se) {
-			Throwable cause = se.getCause();
+		catch (SystemException systemException) {
+			Throwable cause = systemException.getCause();
 
 			Assert.assertSame(RuntimeException.class, cause.getClass());
 

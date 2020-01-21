@@ -11,6 +11,18 @@
 
 import React from 'react';
 
-export default function() {
-	return <></>;
+import BasicInformation from './components/BasicInformation.es';
+
+export default function({props}) {
+	const {authorName, publishDate, title} = props;
+
+	return (
+		<div className="p-3">
+			<BasicInformation
+				authorName={authorName}
+				publishDate={publishDate}
+				title={title}
+			/>
+		</div>
+	);
 }

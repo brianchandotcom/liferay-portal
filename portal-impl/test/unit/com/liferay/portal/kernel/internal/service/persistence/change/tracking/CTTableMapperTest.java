@@ -60,6 +60,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -1874,21 +1875,16 @@ public class CTTableMapperTest {
 
 			Long leftPrimaryKey = (Long)params[0];
 
-			List<MappingKey> removeMappingKeys = new ArrayList<>();
+			Set<MappingKey> mappingKeys = _mappingStore.keySet();
 
-			for (MappingKey mappingKey : _mappingStore.keySet()) {
-				if ((leftPrimaryKey == mappingKey._leftPrimaryKey) &&
-					(mappingKey._ctCollectionId == 0)) {
+			int size = mappingKeys.size();
 
-					removeMappingKeys.add(mappingKey);
-				}
-			}
+			mappingKeys.removeIf(
+				mappingKey ->
+					(leftPrimaryKey == mappingKey._leftPrimaryKey) &&
+					(mappingKey._ctCollectionId == 0));
 
-			for (MappingKey mappingKey : removeMappingKeys) {
-				_mappingStore.remove(mappingKey);
-			}
-
-			return removeMappingKeys.size();
+			return size - mappingKeys.size();
 		}
 
 		private MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
@@ -1912,21 +1908,16 @@ public class CTTableMapperTest {
 
 			Long rightPrimaryKey = (Long)params[0];
 
-			List<MappingKey> mappingKeys = new ArrayList<>();
+			Set<MappingKey> mappingKeys = _mappingStore.keySet();
 
-			for (MappingKey mappingKey : _mappingStore.keySet()) {
-				if ((rightPrimaryKey == mappingKey._rightPrimaryKey) &&
-					(mappingKey._ctCollectionId == 0)) {
+			int size = mappingKeys.size();
 
-					mappingKeys.add(mappingKey);
-				}
-			}
+			mappingKeys.removeIf(
+				mappingKey ->
+					(rightPrimaryKey == mappingKey._rightPrimaryKey) &&
+					(mappingKey._ctCollectionId == 0));
 
-			for (MappingKey mappingKey : mappingKeys) {
-				_mappingStore.remove(mappingKey);
-			}
-
-			return mappingKeys.size();
+			return size - mappingKeys.size();
 		}
 
 		private MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(

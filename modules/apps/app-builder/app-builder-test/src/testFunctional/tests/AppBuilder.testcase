@@ -46,10 +46,6 @@ definition {
 		}
 	}
 
-	macro backButton {
-		Click(locator1 = "DetailsView#BACK_BUTTON");
-	}
-
 	@description = "Add a Custom Object with valid name"
 	@priority = "5"
 	test AddCustomObjectWithValidName {

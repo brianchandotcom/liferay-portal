@@ -32,13 +32,6 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel'
 	},
 
-	edit: {
-		icon: 'pencil',
-		id: 'edit',
-		title: Liferay.Language.get('edit'),
-		type: 'editor'
-	},
-
 	fragmentBackgroundImage: {
 		icon: 'pencil',
 		id: 'fragment_background_image',
@@ -52,30 +45,6 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		id: 'fragment_configuration',
 		panelId: 'fragment_configuration',
 		title: Liferay.Language.get('fragment-configuration'),
-		type: 'panel'
-	},
-
-	imageProperties: {
-		icon: 'pencil',
-		id: 'image_properties',
-		panelId: 'image_properties',
-		title: Liferay.Language.get('image-properties'),
-		type: 'panel'
-	},
-
-	link: {
-		icon: 'link',
-		id: 'link',
-		panelId: 'link',
-		title: Liferay.Language.get('link'),
-		type: 'panel'
-	},
-
-	map: {
-		icon: 'bolt',
-		id: 'mapping',
-		panelId: 'mapping',
-		title: Liferay.Language.get('map'),
 		type: 'panel'
 	},
 

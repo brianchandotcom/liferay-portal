@@ -1626,10 +1626,6 @@ public class CTTableMapperTest {
 
 	private static class MockAddCTTableMappingSqlUpdate implements SqlUpdate {
 
-		public MockAddCTTableMappingSqlUpdate(DataSource dataSource) {
-			Assert.assertSame(_dataSource, dataSource);
-		}
-
 		public void setDatabaseError(boolean databaseError) {
 			_databaseError = databaseError;
 		}
@@ -1671,22 +1667,15 @@ public class CTTableMapperTest {
 			return 1;
 		}
 
+		private MockAddCTTableMappingSqlUpdate(DataSource dataSource) {
+			Assert.assertSame(_dataSource, dataSource);
+		}
+
 		private boolean _databaseError;
 
 	}
 
 	private static class MockAddTableMappingSqlUpdate implements SqlUpdate {
-
-		public MockAddTableMappingSqlUpdate(
-			DataSource dataSource, ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {
-					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT
-				},
-				paramSetters);
-		}
 
 		@Override
 		public int update(Object... params) {
@@ -1714,24 +1703,21 @@ public class CTTableMapperTest {
 			return 1;
 		}
 
-	}
-
-	private static class MockContainsCTTableMappingSQLQuery
-		implements MappingSqlQuery<Integer> {
-
-		public MockContainsCTTableMappingSQLQuery(
-			DataSource dataSource, RowMapper<Integer> rowMapper,
-			ParamSetter... paramSetters) {
+		private MockAddTableMappingSqlUpdate(
+			DataSource dataSource, ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertArrayEquals(
 				new ParamSetter[] {
-					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
 					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT
 				},
 				paramSetters);
-			Assert.assertSame(RowMapper.COUNT, rowMapper);
 		}
+
+	}
+
+	private static class MockContainsCTTableMappingSQLQuery
+		implements MappingSqlQuery<Integer> {
 
 		@Override
 		public List<Integer> execute(Object... params) {
@@ -1777,6 +1763,20 @@ public class CTTableMapperTest {
 			_emptyResultSet = emptyResultSet;
 		}
 
+		private MockContainsCTTableMappingSQLQuery(
+			DataSource dataSource, RowMapper<Integer> rowMapper,
+			ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {
+					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
+					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT
+				},
+				paramSetters);
+			Assert.assertSame(RowMapper.COUNT, rowMapper);
+		}
+
 		private boolean _databaseError;
 		private boolean _emptyResultSet;
 
@@ -1784,15 +1784,6 @@ public class CTTableMapperTest {
 
 	private static class MockContainsTableMappingSQLQuery
 		implements MappingSqlQuery<Integer> {
-
-		public MockContainsTableMappingSQLQuery(
-			DataSource dataSource, ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {ParamSetter.BIGINT, ParamSetter.BIGINT},
-				paramSetters);
-		}
 
 		@Override
 		public List<Integer> execute(Object... params) {
@@ -1829,6 +1820,15 @@ public class CTTableMapperTest {
 			_emptyResultSet = emptyResultSet;
 		}
 
+		private MockContainsTableMappingSQLQuery(
+			DataSource dataSource, ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT, ParamSetter.BIGINT},
+				paramSetters);
+		}
+
 		private boolean _databaseError;
 		private boolean _emptyResultSet;
 
@@ -1836,14 +1836,6 @@ public class CTTableMapperTest {
 
 	private static class MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate
 		implements SqlUpdate {
-
-		public MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
-			DataSource dataSource, ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
-		}
 
 		@Override
 		public int update(Object... params) {
@@ -1874,18 +1866,18 @@ public class CTTableMapperTest {
 			return removeKeys.size();
 		}
 
-	}
-
-	private static class MockDeleteRightPrimaryKeyTableMappingsSqlUpdate
-		implements SqlUpdate {
-
-		public MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
+		private MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
 			DataSource dataSource, ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertArrayEquals(
 				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 		}
+
+	}
+
+	private static class MockDeleteRightPrimaryKeyTableMappingsSqlUpdate
+		implements SqlUpdate {
 
 		@Override
 		public int update(Object... params) {
@@ -1916,18 +1908,17 @@ public class CTTableMapperTest {
 			return removeKeys.size();
 		}
 
-	}
-
-	private static class MockDeleteTableMappingSqlUpdate implements SqlUpdate {
-
-		public MockDeleteTableMappingSqlUpdate(
+		private MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
 			DataSource dataSource, ParamSetter... paramSetters) {
 
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertArrayEquals(
-				new ParamSetter[] {ParamSetter.BIGINT, ParamSetter.BIGINT},
-				paramSetters);
+				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 		}
+
+	}
+
+	private static class MockDeleteTableMappingSqlUpdate implements SqlUpdate {
 
 		@Override
 		public int update(Object... params) {
@@ -1950,24 +1941,19 @@ public class CTTableMapperTest {
 			return 0;
 		}
 
+		private MockDeleteTableMappingSqlUpdate(
+			DataSource dataSource, ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT, ParamSetter.BIGINT},
+				paramSetters);
+		}
+
 	}
 
 	private static class MockGetCTLeftPrimaryKeysSqlQuery
 		implements MappingSqlQuery<Long> {
-
-		public MockGetCTLeftPrimaryKeysSqlQuery(
-			DataSource dataSource, RowMapper<Long> rowMapper,
-			ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {
-					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
-					ParamSetter.BIGINT
-				},
-				paramSetters);
-			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
-		}
 
 		@Override
 		public List<Long> execute(Object... params) {
@@ -2014,14 +2000,7 @@ public class CTTableMapperTest {
 			_databaseError = databaseError;
 		}
 
-		private boolean _databaseError;
-
-	}
-
-	private static class MockGetCTRightPrimaryKeysSqlQuery
-		implements MappingSqlQuery<Long> {
-
-		public MockGetCTRightPrimaryKeysSqlQuery(
+		private MockGetCTLeftPrimaryKeysSqlQuery(
 			DataSource dataSource, RowMapper<Long> rowMapper,
 			ParamSetter... paramSetters) {
 
@@ -2034,6 +2013,13 @@ public class CTTableMapperTest {
 				paramSetters);
 			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
 		}
+
+		private boolean _databaseError;
+
+	}
+
+	private static class MockGetCTRightPrimaryKeysSqlQuery
+		implements MappingSqlQuery<Long> {
 
 		@Override
 		public List<Long> execute(Object... params) {
@@ -2080,22 +2066,26 @@ public class CTTableMapperTest {
 			_databaseError = databaseError;
 		}
 
+		private MockGetCTRightPrimaryKeysSqlQuery(
+			DataSource dataSource, RowMapper<Long> rowMapper,
+			ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {
+					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
+					ParamSetter.BIGINT
+				},
+				paramSetters);
+			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
+		}
+
 		private boolean _databaseError;
 
 	}
 
 	private static class MockGetLeftPrimaryKeysSqlQuery
 		implements MappingSqlQuery<Long> {
-
-		public MockGetLeftPrimaryKeysSqlQuery(
-			DataSource dataSource, RowMapper<Long> rowMapper,
-			ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
-			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
-		}
 
 		@Override
 		public List<Long> execute(Object... params) {
@@ -2122,12 +2112,7 @@ public class CTTableMapperTest {
 			return leftPrimaryKeysList;
 		}
 
-	}
-
-	private static class MockGetRightPrimaryKeysSqlQuery
-		implements MappingSqlQuery<Long> {
-
-		public MockGetRightPrimaryKeysSqlQuery(
+		private MockGetLeftPrimaryKeysSqlQuery(
 			DataSource dataSource, RowMapper<Long> rowMapper,
 			ParamSetter... paramSetters) {
 
@@ -2136,6 +2121,11 @@ public class CTTableMapperTest {
 				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
 			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
 		}
+
+	}
+
+	private static class MockGetRightPrimaryKeysSqlQuery
+		implements MappingSqlQuery<Long> {
 
 		@Override
 		public List<Long> execute(Object... params) {
@@ -2160,6 +2150,16 @@ public class CTTableMapperTest {
 			}
 
 			return rightPrimaryKeysList;
+		}
+
+		private MockGetRightPrimaryKeysSqlQuery(
+			DataSource dataSource, RowMapper<Long> rowMapper,
+			ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
+			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
 		}
 
 	}
@@ -2323,10 +2323,6 @@ public class CTTableMapperTest {
 	private static class MockUpdateCTTableMappingSqlUpdate
 		implements SqlUpdate {
 
-		public MockUpdateCTTableMappingSqlUpdate(DataSource dataSource) {
-			Assert.assertSame(_dataSource, dataSource);
-		}
-
 		@Override
 		public int update(Object... params) {
 			Assert.assertEquals(Arrays.toString(params), 4, params.length);
@@ -2357,6 +2353,10 @@ public class CTTableMapperTest {
 			}
 
 			return 0;
+		}
+
+		private MockUpdateCTTableMappingSqlUpdate(DataSource dataSource) {
+			Assert.assertSame(_dataSource, dataSource);
 		}
 
 	}
@@ -2469,10 +2469,6 @@ public class CTTableMapperTest {
 	private class GetPrimaryKeyObjInvocationHandler
 		implements InvocationHandler {
 
-		public GetPrimaryKeyObjInvocationHandler(Serializable primaryKey) {
-			_primaryKey = primaryKey;
-		}
-
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) {
 			String methodName = method.getName();
@@ -2488,6 +2484,10 @@ public class CTTableMapperTest {
 			throw new UnsupportedOperationException();
 		}
 
+		private GetPrimaryKeyObjInvocationHandler(Serializable primaryKey) {
+			_primaryKey = primaryKey;
+		}
+
 		private final Serializable _primaryKey;
 
 	}
@@ -2500,10 +2500,6 @@ public class CTTableMapperTest {
 
 	private class MockBasePersistence<T extends BaseModel<T>>
 		extends BasePersistenceImpl<T> {
-
-		public MockBasePersistence(Class<T> clazz) {
-			setModelClass(clazz);
-		}
 
 		@Override
 		public T findByPrimaryKey(Serializable primaryKey)
@@ -2524,15 +2520,15 @@ public class CTTableMapperTest {
 			_noSuchModelException = noSuchModelException;
 		}
 
+		private MockBasePersistence(Class<T> clazz) {
+			setModelClass(clazz);
+		}
+
 		private boolean _noSuchModelException;
 
 	}
 
 	private class MockBooleanParamSetterSqlQuery implements MappingSqlQuery {
-
-		public MockBooleanParamSetterSqlQuery(ParamSetter... paramSetters) {
-			_paramSetters = paramSetters;
-		}
 
 		@Override
 		public List execute(Object... params) throws SQLException {
@@ -2559,6 +2555,10 @@ public class CTTableMapperTest {
 			paramSetter.set(preparedStatement, 1, params[0]);
 
 			return null;
+		}
+
+		private MockBooleanParamSetterSqlQuery(ParamSetter... paramSetters) {
+			_paramSetters = paramSetters;
 		}
 
 		private final ParamSetter[] _paramSetters;

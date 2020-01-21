@@ -32,3 +32,5 @@ if (Validator.isNotNull(velocityTemplateContent)) {
 	RuntimePageUtil.processTemplate(request, response, ppid, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
 }
 %>
+
+<liferay-ui:layout-common />

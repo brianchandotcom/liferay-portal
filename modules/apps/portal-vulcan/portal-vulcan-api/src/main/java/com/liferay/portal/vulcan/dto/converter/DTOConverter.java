@@ -31,11 +31,17 @@ public interface DTOConverter<E, D> {
 
 		E object = getObject(String.valueOf(dtoConverterContext.getId()));
 
-		return toDTO(object);
+		return toDTO(dtoConverterContext, object);
+	}
+
+	public default D toDTO(DTOConverterContext dtoConverterContext, E object)
+		throws Exception {
+
+		return null;
 	}
 
 	public default D toDTO(E object) throws Exception {
-		return null;
+		return toDTO(null, object);
 	}
 
 }

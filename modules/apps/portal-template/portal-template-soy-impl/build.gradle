@@ -7,7 +7,7 @@ configurations {
 }
 
 dependencies {
-	asmCommons group: "com.liferay", name: "asm-commons", version: "7.0.LIFERAY-PATCHED-1"
+	asmCommons group: "com.liferay", name: "asm.commons", version: "7.0.LIFERAY-PATCHED-1"
 
 	compileInclude group: "aopalliance", name: "aopalliance", version: "1.0"
 	compileInclude group: "args4j", name: "args4j", version: "2.0.23"

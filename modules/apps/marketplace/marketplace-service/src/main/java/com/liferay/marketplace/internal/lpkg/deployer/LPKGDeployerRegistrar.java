@@ -209,7 +209,11 @@ public class LPKGDeployerRegistrar {
 		}
 
 		for (Tuple tuple : oldTuples) {
-			_moduleLocalService.deleteModule(tuple._moduleId);
+			Module module = _moduleLocalService.fetchModule(tuple._moduleId);
+
+			if (module != null) {
+				_moduleLocalService.deleteModule(tuple._moduleId);
+			}
 		}
 
 		for (Tuple tuple : newTuples) {

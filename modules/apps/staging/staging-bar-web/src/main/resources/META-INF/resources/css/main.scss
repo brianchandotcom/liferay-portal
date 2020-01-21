@@ -17,16 +17,6 @@
 	}
 }
 
-.control-menu-nav {
-	.staging-bar {
-		position: absolute;
-
-		@include media-breakpoint-up(sm) {
-			position: static;
-		}
-	}
-}
-
 .custom-info-alert {
 	background: #fff;
 	border: none;
@@ -112,13 +102,6 @@
 	color: #2e5aac;
 }
 
-.staging-ready {
-	padding-top: 69px;
-}
-.staging-ready-level-3 {
-	padding-top: 126px;
-}
-
 .staging-layout-revision-details-list {
 	justify-content: space-between;
 
@@ -177,6 +160,11 @@
 
 .staging-bar-level-2-nav {
 	display: flex;
+
+	.control-menu-nav-item {
+		margin-left: 1rem;
+		margin-right: 1rem;
+	}
 
 	.staging-bar-level-2-nav-item {
 		display: flex;

@@ -23,13 +23,10 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -109,13 +106,9 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		viewGroupSelectorURL.setParameter(
 			"showGroupSelector", Boolean.TRUE.toString());
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			PortalUtil.getLocale(httpServletRequest), getClass());
-
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		breadcrumbEntry.setTitle(
-			LanguageUtil.get(resourceBundle, "workspaces"));
+		breadcrumbEntry.setTitle(LanguageUtil.get(httpServletRequest, "sites"));
 		breadcrumbEntry.setURL(viewGroupSelectorURL.toString());
 
 		return breadcrumbEntry;

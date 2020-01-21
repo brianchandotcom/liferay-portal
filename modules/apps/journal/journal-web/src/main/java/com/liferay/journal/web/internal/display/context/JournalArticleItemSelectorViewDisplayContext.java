@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -63,7 +62,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -525,11 +523,8 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	private BreadcrumbEntry _getSiteBreadcrumb() throws PortletException {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			_themeDisplay.getLocale(), getClass());
-
 		breadcrumbEntry.setTitle(
-			LanguageUtil.get(resourceBundle, "workspaces"));
+			LanguageUtil.get(_httpServletRequest, "sites"));
 
 		PortletURL portletURL = getPortletURL();
 

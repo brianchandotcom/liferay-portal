@@ -9,12 +9,9 @@
 	<div class="input-group ${searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()?then("search-bar-scope","search-bar-simple")}">
 		<#if searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope()>
 			<div class="input-group-item input-group-item-shrink input-group-prepend">
-				<@clay.button
-					ariaLabel=languageUtil.get(locale, "submit")
-					icon="search"
-					style="secondary"
-					type="submit"
-				/>
+				<button ariaLabel="${languageUtil.get(locale, 'submit')}" class="btn btn-secondary" type="submit">
+					<@clay.icon symbol="search" />
+				</button>
 			</div>
 
 			<@liferay_aui.select
@@ -64,12 +61,9 @@
 				id="${namespace + stringUtil.randomId()}" name="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywordsParameterName())}" placeholder="${searchBarPortletDisplayContext.getInputPlaceholder()}" title="${languageUtil.get(locale, 'search')}" type="text" value="${htmlUtil.escape(searchBarPortletDisplayContext.getKeywords())}" />
 
 				<div class="input-group-inset-item input-group-inset-item-before">
-					<@clay.button
-						ariaLabel=languageUtil.get(locale, "submit")
-						icon="search"
-						style="unstyled"
-						type="submit"
-					/>
+					<button ariaLabel="${languageUtil.get(locale, 'submit')}" class="btn" type="submit">
+						<@clay.icon symbol="search" />
+					</button>
 				</div>
 
 				<@liferay_aui.input

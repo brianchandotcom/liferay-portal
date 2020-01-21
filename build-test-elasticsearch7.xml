@@ -880,6 +880,66 @@ xpack.monitoring.collection.enabled: true</echo>
 		<echo></echo>
 	</target>
 
+	<target name="replicate-indices">
+		<exec executable="curl" outputproperty="companyId">
+			<arg value="http://localhost:8080/api/jsonws/company/get-company-by-virtual-host/virtual-host/localhost" />
+			<arg value="-u" />
+			<arg value="test@liferay.com:test" />
+		</exec>
+
+		<propertyregex
+			input="${companyId}"
+			override="true"
+			property="companyId"
+			regexp="(?&lt;=companyId&quot;:&quot;)(.*)(?=&quot;,&quot;home)"
+			select="\1"
+		/>
+
+		<exec executable="curl" outputproperty="curl.output">
+			<arg line="-X PUT &quot;localhost:9202/_cluster/settings&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;persistent&quot;:{&quot;cluster&quot;:{&quot;remote&quot;:{&quot;leader&quot;:{&quot;seeds&quot;:[&quot;127.0.0.1:9300&quot;]}}}}}&apos;" />
+		</exec>
+
+		<echo>${curl.output}</echo>
+
+		<exec executable="curl" outputproperty="curl.output">
+			<arg line="-X PUT &quot;localhost:9202/liferay-${companyId}/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-${companyId}&quot;}&apos;" />
+		</exec>
+
+		<echo>${curl.output}</echo>
+
+		<exec executable="curl" outputproperty="curl.output">
+			<arg line="-X PUT &quot;localhost:9202/liferay-search-tuning-rankings/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-search-tuning-rankings&quot;}&apos;" />
+		</exec>
+
+		<echo>${curl.output}</echo>
+
+		<exec executable="curl" outputproperty="curl.output">
+			<arg line="-X PUT &quot;localhost:9202/liferay-search-tuning-synonyms-liferay-${companyId}/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-search-tuning-synonyms-liferay-${companyId}&quot;}&apos;" />
+		</exec>
+
+		<echo>${curl.output}</echo>
+
+		<exec executable="curl" outputproperty="curl.output.indices">
+			<arg line="-X GET &quot;localhost:9202/_cat/indices&quot;" />
+		</exec>
+
+		<echo>${curl.output.indices}</echo>
+
+		<if>
+			<and>
+				<contains string="${curl.output.indices}" substring="liferay-${companyId}" />
+				<contains string="${curl.output.indices}" substring="liferay-search-tuning-rankings" />
+				<contains string="${curl.output.indices}" substring="liferay-search-tuning-synonyms-liferay-${companyId}" />
+			</and>
+			<then>
+				<echo>Elasticsearch indices replicate sucessfully.</echo>
+			</then>
+			<else>
+				<fail>Elasticsearch indices Fail to replicate.</fail>
+			</else>
+		</if>
+	</target>
+
 	<target name="restore-backup">
 		<exec executable="curl" outputproperty="curl.output">
 			<arg line="-X PUT &quot;localhost:${elasticsearch.port}/_snapshot/my_backup&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;type&quot;: &quot;fs&quot;,&quot;settings&quot;: {&quot;location&quot;: &quot;${liferay.home}/data/elasticsearch7/repo&quot;}}&apos;" />

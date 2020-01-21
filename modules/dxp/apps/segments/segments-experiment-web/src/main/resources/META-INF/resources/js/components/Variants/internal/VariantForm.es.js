@@ -54,7 +54,9 @@ export default function VariantForm({
 
 					<ValidatedInput
 						autofocus
-						errorMessage={Liferay.Language.get('required')}
+						errorMessage={Liferay.Language.get(
+							'variant-name-is-required'
+						)}
 						label={Liferay.Language.get('name')}
 						onChange={event => setInputName(event.target.value)}
 						onValidationChange={setInvalidForm}

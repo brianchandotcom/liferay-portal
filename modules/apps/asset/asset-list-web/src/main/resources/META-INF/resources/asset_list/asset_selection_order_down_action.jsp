@@ -25,7 +25,7 @@ AssetListEntryAssetEntryRel assetListEntryAssetEntryRel = (AssetListEntryAssetEn
 
 int position = assetListEntryAssetEntryRel.getPosition();
 
-boolean last = (position == (searchContainer.getTotal() - 1));
+boolean last = position == (searchContainer.getTotal() - 1);
 %>
 
 <c:choose>

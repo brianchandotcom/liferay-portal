@@ -190,7 +190,7 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 			<c:if test="<%= TasksEntryPermission.contains(permissionChecker, tasksEntry, ActionKeys.UPDATE) %>">
 
 				<%
-				boolean resolved = (tasksEntry.getStatus() == TasksEntryConstants.STATUS_RESOLVED);
+				boolean resolved = tasksEntry.getStatus() == TasksEntryConstants.STATUS_RESOLVED;
 				%>
 
 				<portlet:actionURL name="updateTasksEntryStatus" var="updateTasksEntryStatusURL">

@@ -128,7 +128,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 						boolean portletUsed = layoutTypePortlet.hasPortletId(portlet.getPortletId());
 
-						boolean portletLocked = (!portletInstanceable && portletUsed);
+						boolean portletLocked = !portletInstanceable && portletUsed;
 
 						if (portletInstanceable && layout.isTypePanel()) {
 							continue;

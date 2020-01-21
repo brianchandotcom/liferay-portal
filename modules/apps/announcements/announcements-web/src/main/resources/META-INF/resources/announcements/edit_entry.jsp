@@ -28,7 +28,7 @@ String content = BeanParamUtil.getString(entry, request, "content");
 
 boolean alert = BeanParamUtil.getBoolean(entry, request, "alert");
 
-boolean displayImmediately = ParamUtil.getBoolean(request, "displayImmediately", (entry == null));
+boolean displayImmediately = ParamUtil.getBoolean(request, "displayImmediately", entry == null);
 
 String headerTitle = null;
 

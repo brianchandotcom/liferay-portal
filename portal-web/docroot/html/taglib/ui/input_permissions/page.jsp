@@ -71,7 +71,7 @@ boolean reverse = GetterUtil.getBoolean(request.getAttribute("liferay-ui:input-p
 		List guestDefaultActions = (List)request.getAttribute("liferay-ui:input-permissions:guestDefaultActions");
 		List guestUnsupportedActions = (List)request.getAttribute("liferay-ui:input-permissions:guestUnsupportedActions");
 
-		boolean submitted = (request.getParameter(groupPermissionsName) != null);
+		boolean submitted = request.getParameter(groupPermissionsName) != null;
 
 		boolean inputPermissionsShowOptions = ParamUtil.getBoolean(request, "inputPermissionsShowOptions");
 

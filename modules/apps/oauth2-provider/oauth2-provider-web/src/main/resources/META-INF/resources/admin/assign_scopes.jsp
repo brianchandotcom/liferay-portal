@@ -28,7 +28,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 	<liferay-ui:error exception="<%= OAuth2ApplicationClientCredentialUserIdException.class %>">
 
 		<%
-		OAuth2ApplicationClientCredentialUserIdException oAuth2ApplicationClientCredentialUserIdException = ((OAuth2ApplicationClientCredentialUserIdException)errorException);
+		OAuth2ApplicationClientCredentialUserIdException oAuth2ApplicationClientCredentialUserIdException = (OAuth2ApplicationClientCredentialUserIdException)errorException;
 		%>
 
 		<c:choose>

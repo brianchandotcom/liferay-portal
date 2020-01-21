@@ -55,7 +55,7 @@ if (Validator.isNotNull(useDefaultNotificationOptionsString)) {
 
 int defaultMaxRestartAttempts = PrefsParamUtil.getInteger(portletPreferences, request, "maxRestartAttempts");
 
-boolean useDefaultRestartOptions = (maxRestartAttempts <= 0);
+boolean useDefaultRestartOptions = maxRestartAttempts <= 0;
 
 String useDefaultRestartOptionsString = typeSettingsProperties.getProperty("use-default-restart-options");
 

@@ -104,7 +104,7 @@ if (!inTrash) {
 								message = LanguageUtil.get(resourceBundle, "ratings-are-disabled-in-staging");
 							}
 							else if (i == 1) {
-								message = LanguageUtil.format(request, ((formattedAverageScore == 1.0) ? "the-average-rating-is-x-star-out-of-x" : "the-average-rating-is-x-stars-out-of-x"), new Object[] {formattedAverageScore, numberOfStars}, false);
+								message = LanguageUtil.format(request, (formattedAverageScore == 1.0) ? "the-average-rating-is-x-star-out-of-x" : "the-average-rating-is-x-stars-out-of-x", new Object[] {formattedAverageScore, numberOfStars}, false);
 							}
 						%>
 
@@ -228,7 +228,7 @@ if (!inTrash) {
 								message = LanguageUtil.get(resourceBundle, "ratings-are-disabled-in-staging");
 							}
 							else if (i == 1) {
-								message = LanguageUtil.format(request, ((formattedAverageScore == 1.0) ? "the-average-rating-is-x-star-out-of-x" : "the-average-rating-is-x-stars-out-of-x"), new Object[] {formattedAverageScore, numberOfStars}, false);
+								message = LanguageUtil.format(request, (formattedAverageScore == 1.0) ? "the-average-rating-is-x-star-out-of-x" : "the-average-rating-is-x-stars-out-of-x", new Object[] {formattedAverageScore, numberOfStars}, false);
 							}
 						%>
 

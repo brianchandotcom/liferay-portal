@@ -82,5 +82,5 @@ renderResponse.setTitle((node == null) ? LanguageUtil.get(request, "new-wiki-nod
 </aui:script>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((node == null) ? "add-wiki" : "edit")), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, (node == null) ? "add-wiki" : "edit"), currentURL);
 %>

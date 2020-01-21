@@ -27,7 +27,7 @@ long ruleGroupId = BeanParamUtil.getLong(ruleGroup, request, "ruleGroupId");
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(((ruleGroup == null) ? LanguageUtil.get(resourceBundle, "new-device-family") : ruleGroup.getName(locale)));
+renderResponse.setTitle((ruleGroup == null) ? LanguageUtil.get(resourceBundle, "new-device-family") : ruleGroup.getName(locale));
 %>
 
 <portlet:actionURL name="/mobile_device_rules/edit_rule_group" var="editRuleGroupURL">

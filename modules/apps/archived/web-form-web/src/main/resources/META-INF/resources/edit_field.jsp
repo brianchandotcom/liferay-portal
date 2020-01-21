@@ -40,7 +40,7 @@ String fieldParagraph = LocalizationUtil.getLocalization(fieldParagraphXml, them
 String fieldValidationScript = PrefsParamUtil.getString(portletPreferences, request, "fieldValidationScript" + formFieldsIndex);
 String fieldValidationErrorMessage = PrefsParamUtil.getString(portletPreferences, request, "fieldValidationErrorMessage" + formFieldsIndex);
 
-boolean ignoreRequestValue = (index != formFieldsIndex);
+boolean ignoreRequestValue = index != formFieldsIndex;
 %>
 
 <liferay-ui:error key='<%= "fieldSizeInvalid" + formFieldsIndex %>' message="please-enter-no-more-than-75-characters" />

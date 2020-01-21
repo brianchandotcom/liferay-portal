@@ -74,7 +74,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 					<liferay-ui:error exception="<%= OAuth2ApplicationClientCredentialUserIdException.class %>">
 
 						<%
-						OAuth2ApplicationClientCredentialUserIdException oAuth2ApplicationClientCredentialUserIdException = ((OAuth2ApplicationClientCredentialUserIdException)errorException);
+						OAuth2ApplicationClientCredentialUserIdException oAuth2ApplicationClientCredentialUserIdException = (OAuth2ApplicationClientCredentialUserIdException)errorException;
 						%>
 
 						<c:choose>

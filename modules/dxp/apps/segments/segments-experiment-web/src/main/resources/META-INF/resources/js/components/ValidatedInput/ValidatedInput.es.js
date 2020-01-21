@@ -68,7 +68,13 @@ function ValidatedInput(props) {
 			/>
 			{invalid && errorMessage && (
 				<div className="form-feedback-group">
-					<div className="form-feedback-item">{errorMessage}</div>
+					<div className="form-feedback-item">
+						<ClayIcon
+							className="mr-1 text-danger"
+							symbol="info-circle"
+						/>
+						{errorMessage}
+					</div>
 				</div>
 			)}
 		</label>

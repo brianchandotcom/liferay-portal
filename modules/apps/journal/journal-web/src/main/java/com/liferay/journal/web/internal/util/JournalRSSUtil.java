@@ -682,55 +682,13 @@ public class JournalRSSUtil {
 		return url;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setImageLocalService(ImageLocalService imageLocalService) {
-		_imageLocalService = imageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContent(JournalContent journalContent) {
-		_journalContent = journalContent;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContentSearchLocalService(
-		JournalContentSearchLocalService journalContentSearchLocalService) {
-
-		_journalContentSearchLocalService = journalContentSearchLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalFeedLocalService(
-		JournalFeedLocalService journalFeedLocalService) {
-
-		_journalFeedLocalService = journalFeedLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
 	private static final String _XML_REQUUEST =
 		"<request><parameters><parameter><name>rss</name><value>true</value>" +
 			"</parameter></parameters></request>";
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
@@ -739,11 +697,22 @@ public class JournalRSSUtil {
 	@Reference
 	private Http _http;
 
+	@Reference
 	private ImageLocalService _imageLocalService;
+
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
 	private JournalContent _journalContent;
+
+	@Reference
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
+
+	@Reference
 	private JournalFeedLocalService _journalFeedLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference

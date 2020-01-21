@@ -31,7 +31,7 @@ if (Validator.isNotNull(backURL)) {
 
 DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT_ENTRY);
 
-Group group = GroupServiceUtil.getGroup(depotEntry.getGroupId());
+Group group = GroupLocalServiceUtil.getGroup(depotEntry.getGroupId());
 
 renderResponse.setTitle(group.getDescriptiveName(locale));
 %>

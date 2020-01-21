@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -219,6 +220,14 @@ public class PostgreSQLDB extends BaseDB {
 						"alter table @table@ alter @old-column@ type @type@ " +
 							"using @old-column@::@type@;",
 						REWORD_TEMPLATE, template);
+
+					if (Validator.isNotNull(template[template.length - 1])) {
+						line = line.concat(
+							StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ set @nullable@;",
+								REWORD_TEMPLATE, template));
+					}
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
 					String[] template = buildTableNameTokens(line);

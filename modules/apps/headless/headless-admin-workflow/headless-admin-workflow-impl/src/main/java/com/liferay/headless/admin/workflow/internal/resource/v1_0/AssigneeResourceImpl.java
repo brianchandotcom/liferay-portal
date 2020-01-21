@@ -44,16 +44,17 @@ public class AssigneeResourceImpl extends BaseAssigneeResourceImpl {
 			Long workflowTaskId, Pagination pagination)
 		throws Exception {
 
-		List<User> users = _workflowTaskManager.getAssignableUsers(
+		List<User> assignableUsers = _workflowTaskManager.getAssignableUsers(
 			contextCompany.getCompanyId(), workflowTaskId);
 
 		return Page.of(
 			transform(
 				ListUtil.subList(
-					users, pagination.getStartPosition(),
+					assignableUsers, pagination.getStartPosition(),
 					pagination.getEndPosition()),
-				user -> AssigneeUtil.toAssignee(_portal, user)),
-			pagination, users.size());
+				assignableUser -> AssigneeUtil.toAssignee(
+					_portal, assignableUser)),
+			pagination, assignableUsers.size());
 	}
 
 	@Reference

@@ -175,6 +175,14 @@ public class WorkflowTaskDisplayContext {
 		return workflowHandler.getType(getTaskContentLocale());
 	}
 
+	public List<User> getAssignableUsers(WorkflowTask workflowTask)
+		throws PortalException {
+
+		return WorkflowTaskManagerUtil.getAssignableUsers(
+			_workflowTaskRequestHelper.getCompanyId(),
+			workflowTask.getWorkflowTaskId());
+	}
+
 	public String getAssignedTheTaskMessageKey(WorkflowLog workflowLog)
 		throws PortalException {
 
@@ -329,14 +337,6 @@ public class WorkflowTaskDisplayContext {
 		}
 
 		return _orderByType;
-	}
-
-	public List<User> getPooledUsers(WorkflowTask workflowTask)
-		throws PortalException {
-
-		return WorkflowTaskManagerUtil.getAssignableUsers(
-			_workflowTaskRequestHelper.getCompanyId(),
-			workflowTask.getWorkflowTaskId());
 	}
 
 	public String getPortletResource() {

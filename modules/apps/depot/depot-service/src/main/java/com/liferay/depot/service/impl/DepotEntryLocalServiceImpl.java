@@ -83,12 +83,14 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		depotEntry.setCompanyId(serviceContext.getCompanyId());
 		depotEntry.setUserId(serviceContext.getUserId());
 
+		depotEntry = depotEntryPersistence.update(depotEntry);
+
 		resourceLocalService.addResources(
 			serviceContext.getCompanyId(), 0, serviceContext.getUserId(),
 			DepotEntry.class.getName(), depotEntry.getDepotEntryId(), false,
 			false, false);
 
-		return depotEntryPersistence.update(depotEntry);
+		return depotEntry;
 	}
 
 	@Override
@@ -110,7 +112,8 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DepotEntry depotEntry = getDepotEntry(depotEntryId);
+		DepotEntry depotEntry = depotEntryPersistence.update(
+			getDepotEntry(depotEntryId));
 
 		_validateTypeSettingsProperties(depotEntry, typeSettingsProperties);
 
@@ -161,7 +164,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 				depotEntryId, entry.getKey(), entry.getValue());
 		}
 
-		return depotEntryPersistence.update(depotEntry);
+		return depotEntry;
 	}
 
 	private Optional<String> _getDefaultNameOptional(

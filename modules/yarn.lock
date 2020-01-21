@@ -4131,6 +4131,11 @@ batch@0.6.1:
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
   integrity sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
 
+bbcode-to-react@^0.2.9:
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/bbcode-to-react/-/bbcode-to-react-0.2.9.tgz#75ec5358c78e9c2a486a62274bb5f4695fb99e60"
+  integrity sha512-ZuqVg44xi0nqMbZJMB/j1WxVvDnpfQYHLGFdZW8FQfW7uoCMyF48iEUVbYontcdrD5uZTcqMs3qbGeIa/bCi+g==
+
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.2.tgz#a4301d389b6a43f9b67ff3ca11a3f6637e360e9e"
@@ -4837,6 +4842,14 @@ circular-json@^0.5.5:
   version "0.5.9"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.5.9.tgz#932763ae88f4f7dead7a0d09c8a51a4743a53b1d"
   integrity sha512-4ivwqHpIFJZBuhN3g/pEcdbnGUywkBblloGbkglyloVjjR3uT6tieI89MVOfbP2tHX5sgb01FuLgAOzebNlJNQ==
+
+ckeditor4-react@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ckeditor4-react/-/ckeditor4-react-1.0.1.tgz#4c626ab31a4bda8b4e50e064ca1072f5ccaca5a0"
+  integrity sha512-Y27p/FZsUhkYBJ0aWzD1MMCu/U26iFiMryCMyQyMx9OTzo0045PYzrmoxgAtminEzW80y5Aln8asYL+QTe/5sg==
+  dependencies:
+    load-script "^1.0.0"
+    prop-types "^15.6.2"
 
 class-utils@^0.3.5:
   version "0.3.6"
@@ -11988,6 +12001,11 @@ load-json-file@^4.0.0:
     parse-json "^4.0.0"
     pify "^3.0.0"
     strip-bom "^3.0.0"
+
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
+  integrity sha1-BJGTngvuVkPuSUp+PaPSuscMbKQ=
 
 loader-runner@^2.4.0:
   version "2.4.0"

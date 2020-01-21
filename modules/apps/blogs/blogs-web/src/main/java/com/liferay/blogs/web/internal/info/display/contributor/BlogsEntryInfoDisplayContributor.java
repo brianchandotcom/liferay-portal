@@ -92,7 +92,7 @@ public class BlogsEntryInfoDisplayContributor
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(classPK);
 
-		if (blogsEntry.isInTrash()) {
+		if (blogsEntry.isDraft() || blogsEntry.isInTrash()) {
 			return null;
 		}
 

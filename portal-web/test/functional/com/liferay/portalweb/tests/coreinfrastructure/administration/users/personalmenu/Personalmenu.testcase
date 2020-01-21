@@ -333,10 +333,6 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Organizations");
 
-		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
-			value1 = "My Organizations");
-
 		AssertElementPresent.assertElementPresent(locator1 = "UsersAndOrganizations#MY_ORGANIZATION_PORTLET");
 
 		LexiconEntry.viewEntryName(rowEntry = "Organization1 Name");

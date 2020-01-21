@@ -4,26 +4,7 @@
 	background-color: #fff;
 	border-bottom: $toolbarBorderWidth solid $toolbarBorderColor;
 	color: #6b6c7e;
-	height: $managementBarHeight;
-	left: 0;
-	position: fixed;
-	top: $controlMenuHeight;
-	transition: left ease $productMenuTransitionDuration,
-		right ease $productMenuTransitionDuration,
-		width ease $productMenuTransitionDuration;
-	width: 100%;
-	will-change: left, right, width;
-	z-index: $managementBarZIndex;
-
-	body.open & {
-		left: $sidebarWidth;
-		width: calc(100% - #{$sidebarWidth});
-
-		@media (max-width: 768px) {
-			left: 0;
-			width: 100%;
-		}
-	}
+	margin-bottom: 0;
 
 	button {
 		color: #6b6c7e;
@@ -42,25 +23,28 @@
 
 	& > .container-fluid {
 		flex-direction: column;
-		height: $managementBarHeight;
-		padding: 0;
-		white-space: nowrap;
 
-		@media (max-width: 768px) {
-			> .navbar-nav:first-child {
-				align-self: flex-start;
-				flex-grow: 1;
-				order: 1;
-				padding-left: 12px;
+		@media (min-width: 768px) {
+			flex-flow: row nowrap;
+		}
+
+		> .navbar-nav {
+			&:first-child {
+				@media (max-width: 768px) {
+					align-self: flex-start;
+					flex-grow: 1;
+					order: 1;
+					padding-bottom: 0.5rem;
+					padding-top: 0.5rem;
+				}
 			}
 
-			> .navbar-nav:last-child {
-				border-bottom: $toolbarBorderWidth solid $toolbarBorderColor;
-				justify-content: flex-end;
-				order: 0;
-				padding-left: 4px;
-				padding-right: 12px;
-				width: 100%;
+			&:last-child {
+				@media (max-width: 768px) {
+					border-bottom: $toolbarBorderWidth solid $toolbarBorderColor;
+					justify-content: flex-end;
+					width: 100%;
+				}
 			}
 		}
 	}
@@ -124,16 +108,6 @@
 				border-color: #33a766;
 				color: #33a766;
 			}
-		}
-	}
-
-	@media (min-width: 768px) {
-		height: $desktopManagementBarHeight;
-		top: $desktopControlMenuHeight;
-
-		& > .container-fluid {
-			flex-flow: row nowrap;
-			padding: 10px 1.25rem;
 		}
 	}
 }

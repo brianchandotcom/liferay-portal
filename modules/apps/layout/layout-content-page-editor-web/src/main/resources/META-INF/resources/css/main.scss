@@ -71,20 +71,6 @@
 	display: none;
 }
 
-.has-control-menu.has-edit-mode-menu #wrapper {
-	height: calc(100vh - #{$controlMenuHeight + $managementBarHeight});
-	margin-top: $controlMenuHeight + $managementBarHeight;
-	overflow-y: auto;
-	position: static;
-
-	@media (min-width: 768px) {
-		height: calc(
-			100vh - #{$desktopControlMenuHeight + $desktopManagementBarHeight}
-		);
-		margin-top: $desktopControlMenuHeight + $desktopManagementBarHeight;
-	}
-}
-
 .fragment-entry-link-list-wrapper {
 	margin-right: $sidebarButtonsWidth;
 	overflow: hidden;

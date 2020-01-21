@@ -110,7 +110,6 @@ definition {
 	@priority = "5"
 	test ClearImageAtPageLevel {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "OpenGraphImages#ClearImageAtPageLevel";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -166,7 +165,6 @@ definition {
 	@description = "This makes sure that it will apply the OG image of the page when images are set at both the site level and the page level."
 	@priority = "5"
 	test ClearImageAtSiteLevel {
-		property test.name.skip.portal.instance = "OpenGraphImages#ClearImageAtSiteLevel";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -284,7 +282,6 @@ definition {
 	@description = "This makes sure that it will apply the OG image of the page when images are set at both the site level and the page level."
 	@priority = "5"
 	test ConfigurePageSpecificImage {
-		property test.name.skip.portal.instance = "OpenGraphImages#ConfigurePageSpecificImage";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -391,7 +388,6 @@ definition {
 	@description = "This ensures that users can introduce an alternative text for the image."
 	@priority = "5"
 	test EditAltDescription {
-		property test.name.skip.portal.instance = "OpenGraphImages#EditAltDescription";
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");

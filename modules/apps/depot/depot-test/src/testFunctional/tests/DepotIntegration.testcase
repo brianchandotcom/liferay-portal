@@ -679,7 +679,6 @@ definition {
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DepotIntegration#Smoke";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

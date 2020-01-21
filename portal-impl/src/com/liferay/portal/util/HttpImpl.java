@@ -471,10 +471,6 @@ public class HttpImpl implements Http {
 
 		url = url.trim();
 
-		if (_getProtocolDelimiterIndex(url) < 0) {
-			url = Http.HTTPS_WITH_SLASH + url;
-		}
-
 		try {
 			URI uri = new URI(url);
 
@@ -556,20 +552,22 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		if (url.startsWith(Http.HTTP)) {
-			int pos = url.indexOf(
-				CharPool.SLASH, Http.HTTPS_WITH_SLASH.length());
+		url = url.trim();
 
-			url = url.substring(pos);
+		try {
+			URI uri = new URI(url);
+
+			String path = uri.getPath();
+
+			if (path == null) {
+				return StringPool.BLANK;
+			}
+
+			return path;
 		}
-
-		int pos = url.indexOf(CharPool.QUESTION);
-
-		if (pos == -1) {
-			return url;
+		catch (URISyntaxException uriSyntaxException) {
+			return StringPool.BLANK;
 		}
-
-		return url.substring(0, pos);
 	}
 
 	@Override
@@ -598,15 +596,26 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String getProtocol(String url) {
-		url = url.trim();
-
-		int index = _getProtocolDelimiterIndex(url);
-
-		if (index > 0) {
-			return url.substring(0, index);
+		if (Validator.isNull(url)) {
+			return url;
 		}
 
-		return StringPool.BLANK;
+		url = url.trim();
+
+		try {
+			URI uri = new URI(url);
+
+			String scheme = uri.getScheme();
+
+			if (scheme == null) {
+				return StringPool.BLANK;
+			}
+
+			return scheme;
+		}
+		catch (URISyntaxException uriSyntaxException) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
@@ -615,13 +624,22 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		int pos = url.indexOf(CharPool.QUESTION);
+		url = url.trim();
 
-		if (pos == -1) {
+		try {
+			URI uri = new URI(url);
+
+			String query = uri.getQuery();
+
+			if (query == null) {
+				return StringPool.BLANK;
+			}
+
+			return query;
+		}
+		catch (URISyntaxException uriSyntaxException) {
 			return StringPool.BLANK;
 		}
-
-		return url.substring(pos + 1);
 	}
 
 	@Override
@@ -640,11 +658,11 @@ public class HttpImpl implements Http {
 
 	@Override
 	public boolean hasProtocol(String url) {
-		if (_getProtocolDelimiterIndex(url) > 0) {
-			return true;
+		if (Validator.isNull(url)) {
+			return false;
 		}
 
-		return false;
+		return Validator.isNotNull(getProtocol(url));
 	}
 
 	@Override
@@ -1044,10 +1062,19 @@ public class HttpImpl implements Http {
 	public String removeProtocol(String url) {
 		url = url.trim();
 
-		int index = _getProtocolDelimiterIndex(url);
+		String protocol = getProtocol(url);
 
-		if (index > 0) {
-			return url.substring(index + PROTOCOL_DELIMITER.length());
+		if (Validator.isNotNull(protocol)) {
+			String delimiter = url.substring(
+				protocol.length(),
+				protocol.length() + PROTOCOL_DELIMITER.length());
+
+			if (delimiter.equals(PROTOCOL_DELIMITER)) {
+				return url.substring(
+					protocol.length() + PROTOCOL_DELIMITER.length());
+			}
+
+			return url.substring(protocol.length() + StringPool.COLON.length());
 		}
 
 		return url;
@@ -1870,34 +1897,6 @@ public class HttpImpl implements Http {
 				_log.error(exception, exception);
 			}
 		}
-	}
-
-	private int _getProtocolDelimiterIndex(String url) {
-		if (Validator.isNull(url)) {
-			return -1;
-		}
-
-		// Define protocol as "[a-zA-Z][a-zA-Z0-9]*://"
-
-		int pos = url.indexOf(Http.PROTOCOL_DELIMITER);
-
-		if (pos <= 0) {
-			return -1;
-		}
-
-		if (!Validator.isChar(url.charAt(0))) {
-			return -1;
-		}
-
-		for (int i = 1; i < pos; ++i) {
-			if (!Validator.isChar(url.charAt(i)) &&
-				!Validator.isDigit(url.charAt(i))) {
-
-				return -1;
-			}
-		}
-
-		return pos;
 	}
 
 	private String _shortenURL(

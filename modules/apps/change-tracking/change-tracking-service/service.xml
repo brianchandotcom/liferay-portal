@@ -3,6 +3,37 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.change.tracking">
 	<namespace>CT</namespace>
+	<entity local-service="false" name="CTAutoResolutionInfo" remote-service="false" trash-enabled="false" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="ctAutoResolutionInfoId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="ctCollectionId" type="long" />
+		<column name="modelClassNameId" type="long" />
+		<column name="sourceModelClassPK" type="long" />
+		<column name="targetModelClassPK" type="long" />
+		<column name="conflictIdentifier" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CTCollectionId" return-type="Collection">
+			<finder-column name="ctCollectionId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CTCollection" remote-service="false" trash-enabled="false" uuid="false">
 
 		<!-- PK fields -->

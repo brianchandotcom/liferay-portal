@@ -13,7 +13,8 @@
  */
 
 import {useEventListener} from 'frontend-js-react-web';
-import React, {useMemo, useState} from 'react';
+import {openToast} from 'frontend-js-web';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 
@@ -44,6 +45,16 @@ const NetworkStatusBar = ({lastFetch, status}) => {
 			)
 		);
 	}, [lastFetch]);
+
+	useEffect(() => {
+		if (status === SERVICE_NETWORK_STATUS_TYPES.Error) {
+			openToast({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				title: Liferay.Language.get('error'),
+				type: 'danger'
+			});
+		}
+	}, [status]);
 
 	useEventListener('online', () => setIsOnline(true), true, window);
 

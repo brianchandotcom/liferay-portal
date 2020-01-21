@@ -268,6 +268,10 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
 					workflowTaskId);
 
+			if (kaleoTaskInstanceToken.isCompleted()) {
+				return Collections.emptyList();
+			}
+
 
 			Set<User> users = new TreeSet<>(new UserFirstNameComparator(true));
 
@@ -647,6 +651,10 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			KaleoTaskInstanceToken kaleoTaskInstanceToken =
 				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
 					workflowTaskId);
+
+			if (kaleoTaskInstanceToken.isCompleted()) {
+				return false;
+			}
 
 			ExecutionContext executionContext = _createExecutionContext(
 				kaleoTaskInstanceToken);

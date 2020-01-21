@@ -93,7 +93,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 						return;
 					}
 
-					resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), 0, resourceName, String.valueOf(structuredContentId), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, structuredContentId, resourceName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
+					resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), 0, resourceName, String.valueOf(${schemaVarName}Id), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${schemaVarName}Id, resourceName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
 				}
 
 				protected String getPermissionCheckerResourceName() {

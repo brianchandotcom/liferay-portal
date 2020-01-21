@@ -664,7 +664,7 @@ public abstract class BaseDB implements DB {
 		String nullable = "";
 
 		if (words.length == 6) {
-			nullable = "not null;";
+			nullable = "not null";
 		}
 		else if (words.length == 5) {
 			nullable = words[4];

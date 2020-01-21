@@ -202,7 +202,8 @@ public class OracleDB extends BaseDB {
 					String[] template = buildColumnTypeTokens(line);
 
 					line = StringUtil.replace(
-						"alter table @table@ modify @old-column@ @type@;",
+						"alter table @table@ modify @old-column@ @type@ " +
+							"@nullable@;",
 						REWORD_TEMPLATE, template);
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {

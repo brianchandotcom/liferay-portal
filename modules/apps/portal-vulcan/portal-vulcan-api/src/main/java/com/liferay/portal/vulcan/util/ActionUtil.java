@@ -40,7 +40,7 @@ public class ActionUtil {
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, GroupedModel groupedModel,
-		String methodName, ScopeChecker scopeChecker, UriInfo uriInfo) {
+		String methodName, Object scopeChecker, UriInfo uriInfo) {
 
 		Class<? extends GroupedModel> groupedModelClass =
 			groupedModel.getClass();
@@ -51,13 +51,13 @@ public class ActionUtil {
 
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
-			methodName, interfaceClasses[0].getName(), scopeChecker,
-			groupedModel.getGroupId(), uriInfo);
+			methodName, interfaceClasses[0].getName(),
+			(ScopeChecker)scopeChecker, groupedModel.getGroupId(), uriInfo);
 	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addAction(String, Class, GroupedModel, String, ScopeChecker,
+	 *             #addAction(String, Class, GroupedModel, String, Object,
 	 *             UriInfo)}
 	 */
 	@Deprecated
@@ -71,7 +71,7 @@ public class ActionUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addAction(String, Class, Long, String, String, ScopeChecker,
+	 *             #addAction(String, Class, Long, String, String, Object,
 	 *             Long, UriInfo)}
 	 */
 	@Deprecated
@@ -86,13 +86,13 @@ public class ActionUtil {
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, Long id, String methodName,
-		String permissionName, ScopeChecker scopeChecker, Long siteId,
+		String permissionName, Object scopeChecker, Long siteId,
 		UriInfo uriInfo) {
 
 		try {
 			return _addAction(
-				actionName, clazz, id, methodName, permissionName, scopeChecker,
-				siteId, uriInfo);
+				actionName, clazz, id, methodName, permissionName,
+				(ScopeChecker)scopeChecker, siteId, uriInfo);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

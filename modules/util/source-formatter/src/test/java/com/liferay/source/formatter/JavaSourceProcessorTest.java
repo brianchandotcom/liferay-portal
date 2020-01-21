@@ -104,15 +104,20 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testExceptionVariableName() throws Exception {
-		//test("ExceptionVariableName.testjava");
-	}
-
-	@Test
-	public void testExceptionVariableNameForExceptionMapper() throws Exception {
-		//test(
-		//	"ExceptionVariableNameForExceptionMapper.testjava",
-		//	"Rename variable 'exception' to 'noSuchStructureException'",
-		//	40);
+		test(
+			"ExceptionVariableName.testjava",
+			new String[] {
+				"Rename exception variable 'e' to 'configurationException'",
+				"Rename exception variable 'e' to 'configurationException'",
+				"Rename exception variable 're' to 'exception'",
+				"Rename exception variable 'ioe' to 'ioException1'",
+				"Rename exception variable 'oie' to 'ioException2'",
+				"Rename exception variable 'ioe1' to 'ioException1'",
+				"Rename exception variable 'ioe2' to 'ioException2'",
+				"Rename exception variable 'ioe1' to 'ioException'",
+				"Rename exception variable 'ioe2' to 'ioException'"
+			},
+			new Integer[] {37, 50, 61, 66, 70, 81, 85, 96, 102});
 	}
 
 	@Test

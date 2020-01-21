@@ -63,7 +63,7 @@ public class ExceptionVariableName {
 		}
 	}
 
-	public String readFile(String fileName) throws Exception {
+	public String readFile(String fileName, IOException ioe) throws Exception {
 		try {
 			return FileUtil.read(fileName);
 		}
@@ -87,6 +87,20 @@ public class ExceptionVariableName {
 		}
 
 		return s;
+	}
+
+	public void readFiles(String fileName1, String fileName2) {
+		try {
+			FileUtil.read(fileName1);
+		}
+		catch (IOException ioe1) {
+		}
+
+		try {
+			FileUtil.read(fileName2);
+		}
+		catch (IOException ioe2) {
+		}
 	}
 
 }

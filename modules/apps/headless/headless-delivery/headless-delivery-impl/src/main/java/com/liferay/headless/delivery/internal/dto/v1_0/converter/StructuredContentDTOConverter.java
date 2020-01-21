@@ -124,6 +124,7 @@ public class StructuredContentDTOConverter
 					_portal,
 					_userLocalService.getUserById(journalArticle.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
 					JournalArticle.class.getName(), journalArticle.getId(),
 					journalArticle.getCompanyId(),
 					dtoConverterContext.getLocale());

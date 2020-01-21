@@ -83,6 +83,7 @@ public class KnowledgeBaseArticleDTOConverter
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbArticle.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
 					KBArticle.class.getName(), kbArticle.getKbArticleId(),
 					kbArticle.getCompanyId(), dtoConverterContext.getLocale());
 				dateCreated = kbArticle.getCreateDate();

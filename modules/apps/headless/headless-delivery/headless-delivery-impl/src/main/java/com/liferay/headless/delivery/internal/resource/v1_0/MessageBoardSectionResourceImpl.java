@@ -252,6 +252,7 @@ public class MessageBoardSectionResourceImpl
 					_portal,
 					_userLocalService.getUserById(mbCategory.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
+					contextAcceptLanguage.isAcceptAllLanguages(),
 					MBCategory.class.getName(), mbCategory.getCategoryId(),
 					mbCategory.getCompanyId(),
 					contextAcceptLanguage.getPreferredLocale());

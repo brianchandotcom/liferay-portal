@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import javax.validation.ValidationException;
 
@@ -72,6 +73,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	private Site _toSite(Group group) throws Exception {
+		boolean acceptAllLanguages =
+			contextAcceptLanguage.isAcceptAllLanguages();
+
 		return new Site() {
 			{
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
@@ -81,12 +85,16 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					_userLocalService.getUserById(group.getCreatorUserId()));
 				description = group.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
+				description_i18n = LocalizedMapUtil.getLocalizedMap(
+					acceptAllLanguages, group.getDescriptionMap());
 				friendlyUrlPath = group.getFriendlyURL();
 				id = group.getGroupId();
 				key = group.getGroupKey();
 				membershipType = group.getTypeLabel();
 				name = group.getName(
 					contextAcceptLanguage.getPreferredLocale());
+				name_i18n = LocalizedMapUtil.getLocalizedMap(
+					acceptAllLanguages, group.getNameMap());
 				parentSiteId = group.getParentGroupId();
 				sites = transformToArray(
 					_groupService.getGroups(

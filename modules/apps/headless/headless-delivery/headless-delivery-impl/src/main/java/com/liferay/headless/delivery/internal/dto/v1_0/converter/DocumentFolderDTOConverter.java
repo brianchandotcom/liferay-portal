@@ -56,6 +56,7 @@ public class DocumentFolderDTOConverter
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(folder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
 					DLFolder.class.getName(), folder.getFolderId(),
 					folder.getCompanyId(), dtoConverterContext.getLocale());
 				dateCreated = folder.getCreateDate();

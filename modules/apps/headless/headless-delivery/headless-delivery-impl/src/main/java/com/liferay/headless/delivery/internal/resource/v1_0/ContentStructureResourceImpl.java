@@ -90,8 +90,9 @@ public class ContentStructureResourceImpl
 		throws Exception {
 
 		return ContentStructureUtil.toContentStructure(
-			ddmStructure, contextAcceptLanguage.getPreferredLocale(), _portal,
-			_userLocalService);
+			contextAcceptLanguage.isAcceptAllLanguages(),
+			contextAcceptLanguage.getPreferredLocale(), _portal,
+			_userLocalService, ddmStructure);
 	}
 
 	private static final EntityModel _entityModel =

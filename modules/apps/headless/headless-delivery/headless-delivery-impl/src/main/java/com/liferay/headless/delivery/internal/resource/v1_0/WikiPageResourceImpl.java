@@ -292,6 +292,7 @@ public class WikiPageResourceImpl
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(wikiPage.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
+					contextAcceptLanguage.isAcceptAllLanguages(),
 					com.liferay.wiki.model.WikiPage.class.getName(),
 					wikiPage.getPageId(), wikiPage.getCompanyId(),
 					contextAcceptLanguage.getPreferredLocale());

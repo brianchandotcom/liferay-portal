@@ -27,6 +27,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 
@@ -151,6 +152,9 @@ public class ContentSetElementResourceImpl
 				id = assetEntry.getClassPK();
 				title = assetEntry.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
+				title_i18n = LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					assetEntry.getTitleMap());
 
 				setContent(
 					() -> {

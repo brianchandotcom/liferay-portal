@@ -22,6 +22,7 @@ import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToRole;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.ObjectReviewedUtil;
+import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.RoleUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
@@ -389,22 +389,10 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)
 		throws PortalException {
 
-		return new Role() {
-			{
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					role.getAvailableLanguageIds());
-				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.getUserById(role.getUserId()));
-				dateCreated = role.getCreateDate();
-				dateModified = role.getModifiedDate();
-				description = role.getDescription(
-					contextAcceptLanguage.getPreferredLocale());
-				id = role.getRoleId();
-				name = role.getTitle(
-					contextAcceptLanguage.getPreferredLocale());
-				roleType = role.getTypeLabel();
-			}
-		};
+		return RoleUtil.toRole(
+			contextAcceptLanguage.isAcceptAllLanguages(),
+			contextAcceptLanguage.getPreferredLocale(), _portal, role,
+			_userLocalService.getUserById(role.getUserId()));
 	}
 
 	private WorkflowTask _toWorkflowTask(

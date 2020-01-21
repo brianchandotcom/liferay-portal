@@ -105,6 +105,10 @@ definition {
 			administratorFirstName = "User",
 			administratorLastName = "User");
 
+		SetupWizard.configurePortalNamePG(portalName = "Custom");
+
+		SetupWizard.configureDefaultLanguagePG(defaultLanguage = "español (España)");
+
 		SetupWizard.configureDatabasePG(
 			databasePassword = PropsUtil.get("database.mysql.password"),
 			databaseType = "MySQL",
@@ -114,7 +118,7 @@ definition {
 
 		SetupWizard.finishConfigurationPG();
 
-		SetupWizard.viewConfigurationSavedPG();
+		SetupWizard.viewConfigurationSavedPG(localization = "ES");
 
 		Portlet.shutdownServer();
 
@@ -125,13 +129,21 @@ definition {
 		SetupWizard.viewConfiguredDatabaseInConsole(databaseType = "${databaseType}");
 
 		User.firstLoginPG(
+			localization = "ES",
+			localizedAgree = "Acepto",
+			localizedAnswer = "Respuesta",
+			localizedSaveButton = "Guardar",
 			password = "test",
 			userEmailAddress = "user@liferay.com");
+
+		AssertTextEquals(
+			locator1 = "Home#SITE_NAME",
+			value1 = "Custom");
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var fileContent = FileUtil.read("${liferayHome}/portal-setup-wizard.properties");
 
-		if ((contains("${fileContent}", "admin.email.from.address=user@liferay.com")) && (contains("${fileContent}", "admin.email.from.name=User User")) && (contains("${fileContent}", "default.admin.email.address.prefix=user")) && (contains("${fileContent}", "default.admin.first.name=User")) && (contains("${fileContent}", "default.admin.last.name=User"))) {
+		if ((contains("${fileContent}", "admin.email.from.address=user@liferay.com")) && (contains("${fileContent}", "admin.email.from.name=User User")) && (contains("${fileContent}", "default.admin.email.address.prefix=user")) && (contains("${fileContent}", "default.admin.first.name=User")) && (contains("${fileContent}", "default.admin.last.name=User")) && (contains("${fileContent}", "company.default.locale=es_ES")) && (contains("${fileContent}", "company.default.name=Custom"))) {
 			echo("The configuration was saved successfully in portal-setup-wizard.properties!");
 		}
 		else {

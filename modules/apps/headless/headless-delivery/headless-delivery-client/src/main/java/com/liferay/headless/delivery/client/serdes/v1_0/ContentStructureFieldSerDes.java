@@ -99,6 +99,16 @@ public class ContentStructureFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (contentStructureField.getLabel_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label_i18n\": ");
+
+			sb.append(_toJSON(contentStructureField.getLabel_i18n()));
+		}
+
 		if (contentStructureField.getLocalizable() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -199,6 +209,16 @@ public class ContentStructureFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (contentStructureField.getPredefinedValue_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"predefinedValue_i18n\": ");
+
+			sb.append(_toJSON(contentStructureField.getPredefinedValue_i18n()));
+		}
+
 		if (contentStructureField.getRepeatable() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -275,6 +295,15 @@ public class ContentStructureFieldSerDes {
 			map.put("label", String.valueOf(contentStructureField.getLabel()));
 		}
 
+		if (contentStructureField.getLabel_i18n() == null) {
+			map.put("label_i18n", null);
+		}
+		else {
+			map.put(
+				"label_i18n",
+				String.valueOf(contentStructureField.getLabel_i18n()));
+		}
+
 		if (contentStructureField.getLocalizable() == null) {
 			map.put("localizable", null);
 		}
@@ -325,6 +354,16 @@ public class ContentStructureFieldSerDes {
 			map.put(
 				"predefinedValue",
 				String.valueOf(contentStructureField.getPredefinedValue()));
+		}
+
+		if (contentStructureField.getPredefinedValue_i18n() == null) {
+			map.put("predefinedValue_i18n", null);
+		}
+		else {
+			map.put(
+				"predefinedValue_i18n",
+				String.valueOf(
+					contentStructureField.getPredefinedValue_i18n()));
 		}
 
 		if (contentStructureField.getRepeatable() == null) {
@@ -393,6 +432,13 @@ public class ContentStructureFieldSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "label_i18n")) {
+				if (jsonParserFieldValue != null) {
+					contentStructureField.setLabel_i18n(
+						(Map)ContentStructureFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "localizable")) {
 				if (jsonParserFieldValue != null) {
 					contentStructureField.setLocalizable(
@@ -441,6 +487,15 @@ public class ContentStructureFieldSerDes {
 				if (jsonParserFieldValue != null) {
 					contentStructureField.setPredefinedValue(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "predefinedValue_i18n")) {
+
+				if (jsonParserFieldValue != null) {
+					contentStructureField.setPredefinedValue_i18n(
+						(Map)ContentStructureFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "repeatable")) {

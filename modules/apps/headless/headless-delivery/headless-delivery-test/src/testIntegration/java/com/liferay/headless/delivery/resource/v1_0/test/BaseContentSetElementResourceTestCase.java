@@ -738,6 +738,14 @@ public abstract class BaseContentSetElementResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
+				if (contentSetElement.getTitle_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -832,6 +840,17 @@ public abstract class BaseContentSetElementResourceTestCase {
 				if (!Objects.deepEquals(
 						contentSetElement1.getTitle(),
 						contentSetElement2.getTitle())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						contentSetElement1.getTitle_i18n(),
+						contentSetElement2.getTitle_i18n())) {
 
 					return false;
 				}
@@ -965,6 +984,11 @@ public abstract class BaseContentSetElementResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("title_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(

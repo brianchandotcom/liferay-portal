@@ -47,6 +47,27 @@ public class CustomValue {
 
 	protected Object data;
 
+	public Object getData_i18n() {
+		return data_i18n;
+	}
+
+	public void setData_i18n(Object data_i18n) {
+		this.data_i18n = data_i18n;
+	}
+
+	public void setData_i18n(
+		UnsafeSupplier<Object, Exception> data_i18nUnsafeSupplier) {
+
+		try {
+			data_i18n = data_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object data_i18n;
+
 	public Geo getGeo() {
 		return geo;
 	}

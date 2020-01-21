@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -71,6 +73,36 @@ public class Option {
 	@GraphQLField(description = "The option's label.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
+
+	@Schema
+	@Valid
+	public Map<String, String> getLabel_i18n() {
+		return label_i18n;
+	}
+
+	public void setLabel_i18n(Map<String, String> label_i18n) {
+		this.label_i18n = label_i18n;
+	}
+
+	@JsonIgnore
+	public void setLabel_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			label_i18nUnsafeSupplier) {
+
+		try {
+			label_i18n = label_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> label_i18n;
 
 	@Schema(description = "The internal value of the field option.")
 	public String getValue() {
@@ -139,6 +171,16 @@ public class Option {
 			sb.append(_escape(label));
 
 			sb.append("\"");
+		}
+
+		if (label_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label_i18n\": ");
+
+			sb.append(_toJSON(label_i18n));
 		}
 
 		if (value != null) {

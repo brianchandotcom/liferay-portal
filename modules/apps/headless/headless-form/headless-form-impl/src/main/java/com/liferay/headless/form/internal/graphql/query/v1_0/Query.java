@@ -90,7 +90,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {form(formId: ___){availableLanguages, creator, dateCreated, dateModified, datePublished, defaultLanguage, description, formRecords, formRecordsIds, id, name, siteId, structure, structureId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {form(formId: ___){availableLanguages, creator, dateCreated, dateModified, datePublished, defaultLanguage, description, description_i18n, formRecords, formRecordsIds, id, name, name_i18n, siteId, structure, structureId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Form form(@GraphQLName("formId") Long formId) throws Exception {
@@ -193,7 +193,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {formStructure(formStructureId: ___){availableLanguages, creator, dateCreated, dateModified, description, formPages, formSuccessPage, id, name, siteId}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {formStructure(formStructureId: ___){availableLanguages, creator, dateCreated, dateModified, description, description_i18n, formPages, formSuccessPage, id, name, name_i18n, siteId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public FormStructure formStructure(

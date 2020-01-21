@@ -741,8 +741,24 @@ public abstract class BaseContentStructureResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
+				if (contentStructure.getDescription_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (contentStructure.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
+				if (contentStructure.getName_i18n() == null) {
 					valid = false;
 				}
 
@@ -882,6 +898,17 @@ public abstract class BaseContentStructureResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						contentStructure1.getDescription_i18n(),
+						contentStructure2.getDescription_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						contentStructure1.getId(), contentStructure2.getId())) {
@@ -896,6 +923,17 @@ public abstract class BaseContentStructureResourceTestCase {
 				if (!Objects.deepEquals(
 						contentStructure1.getName(),
 						contentStructure2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						contentStructure1.getName_i18n(),
+						contentStructure2.getName_i18n())) {
 
 					return false;
 				}
@@ -1096,6 +1134,11 @@ public abstract class BaseContentStructureResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1107,6 +1150,11 @@ public abstract class BaseContentStructureResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("name_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("siteId")) {

@@ -171,6 +171,16 @@ public class ContentStructureSerDes {
 			sb.append("\"");
 		}
 
+		if (contentStructure.getDescription_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(contentStructure.getDescription_i18n()));
+		}
+
 		if (contentStructure.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -193,6 +203,16 @@ public class ContentStructureSerDes {
 			sb.append(_escape(contentStructure.getName()));
 
 			sb.append("\"");
+		}
+
+		if (contentStructure.getName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(contentStructure.getName_i18n()));
 		}
 
 		if (contentStructure.getSiteId() != null) {
@@ -269,6 +289,15 @@ public class ContentStructureSerDes {
 				String.valueOf(contentStructure.getDescription()));
 		}
 
+		if (contentStructure.getDescription_i18n() == null) {
+			map.put("description_i18n", null);
+		}
+		else {
+			map.put(
+				"description_i18n",
+				String.valueOf(contentStructure.getDescription_i18n()));
+		}
+
 		if (contentStructure.getId() == null) {
 			map.put("id", null);
 		}
@@ -281,6 +310,14 @@ public class ContentStructureSerDes {
 		}
 		else {
 			map.put("name", String.valueOf(contentStructure.getName()));
+		}
+
+		if (contentStructure.getName_i18n() == null) {
+			map.put("name_i18n", null);
+		}
+		else {
+			map.put(
+				"name_i18n", String.valueOf(contentStructure.getName_i18n()));
 		}
 
 		if (contentStructure.getSiteId() == null) {
@@ -356,6 +393,13 @@ public class ContentStructureSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				if (jsonParserFieldValue != null) {
+					contentStructure.setDescription_i18n(
+						(Map)ContentStructureSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					contentStructure.setId(
@@ -365,6 +409,13 @@ public class ContentStructureSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					contentStructure.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
+				if (jsonParserFieldValue != null) {
+					contentStructure.setName_i18n(
+						(Map)ContentStructureSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

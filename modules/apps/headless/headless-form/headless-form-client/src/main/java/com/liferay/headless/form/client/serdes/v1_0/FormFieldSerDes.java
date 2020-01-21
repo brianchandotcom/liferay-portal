@@ -205,6 +205,16 @@ public class FormFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (formField.getLabel_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label_i18n\": ");
+
+			sb.append(_toJSON(formField.getLabel_i18n()));
+		}
+
 		if (formField.getLocalizable() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -265,6 +275,16 @@ public class FormFieldSerDes {
 			sb.append(_escape(formField.getPredefinedValue()));
 
 			sb.append("\"");
+		}
+
+		if (formField.getPredefinedValue_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"predefinedValue_i18n\": ");
+
+			sb.append(_toJSON(formField.getPredefinedValue_i18n()));
 		}
 
 		if (formField.getReadOnly() != null) {
@@ -343,6 +363,16 @@ public class FormFieldSerDes {
 			sb.append(_escape(formField.getText()));
 
 			sb.append("\"");
+		}
+
+		if (formField.getText_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"text_i18n\": ");
+
+			sb.append(_toJSON(formField.getText_i18n()));
 		}
 
 		if (formField.getTooltip() != null) {
@@ -479,6 +509,13 @@ public class FormFieldSerDes {
 			map.put("label", String.valueOf(formField.getLabel()));
 		}
 
+		if (formField.getLabel_i18n() == null) {
+			map.put("label_i18n", null);
+		}
+		else {
+			map.put("label_i18n", String.valueOf(formField.getLabel_i18n()));
+		}
+
 		if (formField.getLocalizable() == null) {
 			map.put("localizable", null);
 		}
@@ -514,6 +551,15 @@ public class FormFieldSerDes {
 			map.put(
 				"predefinedValue",
 				String.valueOf(formField.getPredefinedValue()));
+		}
+
+		if (formField.getPredefinedValue_i18n() == null) {
+			map.put("predefinedValue_i18n", null);
+		}
+		else {
+			map.put(
+				"predefinedValue_i18n",
+				String.valueOf(formField.getPredefinedValue_i18n()));
 		}
 
 		if (formField.getReadOnly() == null) {
@@ -565,6 +611,13 @@ public class FormFieldSerDes {
 		}
 		else {
 			map.put("text", String.valueOf(formField.getText()));
+		}
+
+		if (formField.getText_i18n() == null) {
+			map.put("text_i18n", null);
+		}
+		else {
+			map.put("text_i18n", String.valueOf(formField.getText_i18n()));
 		}
 
 		if (formField.getTooltip() == null) {
@@ -670,6 +723,13 @@ public class FormFieldSerDes {
 					formField.setLabel((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "label_i18n")) {
+				if (jsonParserFieldValue != null) {
+					formField.setLabel_i18n(
+						(Map)FormFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "localizable")) {
 				if (jsonParserFieldValue != null) {
 					formField.setLocalizable((Boolean)jsonParserFieldValue);
@@ -693,6 +753,15 @@ public class FormFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "predefinedValue")) {
 				if (jsonParserFieldValue != null) {
 					formField.setPredefinedValue((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "predefinedValue_i18n")) {
+
+				if (jsonParserFieldValue != null) {
+					formField.setPredefinedValue_i18n(
+						(Map)FormFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "readOnly")) {
@@ -728,6 +797,13 @@ public class FormFieldSerDes {
 			else if (Objects.equals(jsonParserFieldName, "text")) {
 				if (jsonParserFieldValue != null) {
 					formField.setText((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "text_i18n")) {
+				if (jsonParserFieldValue != null) {
+					formField.setText_i18n(
+						(Map)FormFieldSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "tooltip")) {

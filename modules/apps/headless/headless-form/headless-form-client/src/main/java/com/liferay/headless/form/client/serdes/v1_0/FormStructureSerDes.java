@@ -144,6 +144,16 @@ public class FormStructureSerDes {
 			sb.append("\"");
 		}
 
+		if (formStructure.getDescription_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(formStructure.getDescription_i18n()));
+		}
+
 		if (formStructure.getFormPages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -196,6 +206,16 @@ public class FormStructureSerDes {
 			sb.append(_escape(formStructure.getName()));
 
 			sb.append("\"");
+		}
+
+		if (formStructure.getName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(formStructure.getName_i18n()));
 		}
 
 		if (formStructure.getSiteId() != null) {
@@ -262,6 +282,15 @@ public class FormStructureSerDes {
 				"description", String.valueOf(formStructure.getDescription()));
 		}
 
+		if (formStructure.getDescription_i18n() == null) {
+			map.put("description_i18n", null);
+		}
+		else {
+			map.put(
+				"description_i18n",
+				String.valueOf(formStructure.getDescription_i18n()));
+		}
+
 		if (formStructure.getFormPages() == null) {
 			map.put("formPages", null);
 		}
@@ -290,6 +319,13 @@ public class FormStructureSerDes {
 		}
 		else {
 			map.put("name", String.valueOf(formStructure.getName()));
+		}
+
+		if (formStructure.getName_i18n() == null) {
+			map.put("name_i18n", null);
+		}
+		else {
+			map.put("name_i18n", String.valueOf(formStructure.getName_i18n()));
 		}
 
 		if (formStructure.getSiteId() == null) {
@@ -349,6 +385,13 @@ public class FormStructureSerDes {
 					formStructure.setDescription((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				if (jsonParserFieldValue != null) {
+					formStructure.setDescription_i18n(
+						(Map)FormStructureSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "formPages")) {
 				if (jsonParserFieldValue != null) {
 					formStructure.setFormPages(
@@ -377,6 +420,13 @@ public class FormStructureSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					formStructure.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
+				if (jsonParserFieldValue != null) {
+					formStructure.setName_i18n(
+						(Map)FormStructureSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

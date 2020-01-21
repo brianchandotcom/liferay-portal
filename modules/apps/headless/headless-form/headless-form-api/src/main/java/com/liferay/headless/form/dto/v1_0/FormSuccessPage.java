@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -73,6 +75,36 @@ public class FormSuccessPage {
 	protected String description;
 
 	@Schema
+	@Valid
+	public Map<String, String> getDescription_i18n() {
+		return description_i18n;
+	}
+
+	public void setDescription_i18n(Map<String, String> description_i18n) {
+		this.description_i18n = description_i18n;
+	}
+
+	@JsonIgnore
+	public void setDescription_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			description_i18nUnsafeSupplier) {
+
+		try {
+			description_i18n = description_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> description_i18n;
+
+	@Schema
 	public String getHeadline() {
 		return headline;
 	}
@@ -99,6 +131,36 @@ public class FormSuccessPage {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String headline;
+
+	@Schema
+	@Valid
+	public Map<String, String> getHeadline_i18n() {
+		return headline_i18n;
+	}
+
+	public void setHeadline_i18n(Map<String, String> headline_i18n) {
+		this.headline_i18n = headline_i18n;
+	}
+
+	@JsonIgnore
+	public void setHeadline_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			headline_i18nUnsafeSupplier) {
+
+		try {
+			headline_i18n = headline_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> headline_i18n;
 
 	@Schema
 	public Long getId() {
@@ -167,6 +229,16 @@ public class FormSuccessPage {
 			sb.append("\"");
 		}
 
+		if (description_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(description_i18n));
+		}
+
 		if (headline != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -179,6 +251,16 @@ public class FormSuccessPage {
 			sb.append(_escape(headline));
 
 			sb.append("\"");
+		}
+
+		if (headline_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"headline_i18n\": ");
+
+			sb.append(_toJSON(headline_i18n));
 		}
 
 		if (id != null) {

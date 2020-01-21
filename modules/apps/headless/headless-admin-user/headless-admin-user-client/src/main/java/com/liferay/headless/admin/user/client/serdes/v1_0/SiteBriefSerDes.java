@@ -77,6 +77,16 @@ public class SiteBriefSerDes {
 			sb.append("\"");
 		}
 
+		if (siteBrief.getName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(siteBrief.getName_i18n()));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -109,6 +119,13 @@ public class SiteBriefSerDes {
 			map.put("name", String.valueOf(siteBrief.getName()));
 		}
 
+		if (siteBrief.getName_i18n() == null) {
+			map.put("name_i18n", null);
+		}
+		else {
+			map.put("name_i18n", String.valueOf(siteBrief.getName_i18n()));
+		}
+
 		return map;
 	}
 
@@ -137,6 +154,13 @@ public class SiteBriefSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					siteBrief.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
+				if (jsonParserFieldValue != null) {
+					siteBrief.setName_i18n(
+						(Map)SiteBriefSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

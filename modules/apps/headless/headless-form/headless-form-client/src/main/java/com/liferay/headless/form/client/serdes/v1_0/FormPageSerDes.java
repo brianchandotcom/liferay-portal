@@ -89,6 +89,16 @@ public class FormPageSerDes {
 			sb.append("\"");
 		}
 
+		if (formPage.getHeadline_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"headline_i18n\": ");
+
+			sb.append(_toJSON(formPage.getHeadline_i18n()));
+		}
+
 		if (formPage.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -111,6 +121,16 @@ public class FormPageSerDes {
 			sb.append(_escape(formPage.getText()));
 
 			sb.append("\"");
+		}
+
+		if (formPage.getText_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"text_i18n\": ");
+
+			sb.append(_toJSON(formPage.getText_i18n()));
 		}
 
 		sb.append("}");
@@ -145,6 +165,14 @@ public class FormPageSerDes {
 			map.put("headline", String.valueOf(formPage.getHeadline()));
 		}
 
+		if (formPage.getHeadline_i18n() == null) {
+			map.put("headline_i18n", null);
+		}
+		else {
+			map.put(
+				"headline_i18n", String.valueOf(formPage.getHeadline_i18n()));
+		}
+
 		if (formPage.getId() == null) {
 			map.put("id", null);
 		}
@@ -157,6 +185,13 @@ public class FormPageSerDes {
 		}
 		else {
 			map.put("text", String.valueOf(formPage.getText()));
+		}
+
+		if (formPage.getText_i18n() == null) {
+			map.put("text_i18n", null);
+		}
+		else {
+			map.put("text_i18n", String.valueOf(formPage.getText_i18n()));
 		}
 
 		return map;
@@ -196,6 +231,13 @@ public class FormPageSerDes {
 					formPage.setHeadline((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "headline_i18n")) {
+				if (jsonParserFieldValue != null) {
+					formPage.setHeadline_i18n(
+						(Map)FormPageSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					formPage.setId(Long.valueOf((String)jsonParserFieldValue));
@@ -204,6 +246,13 @@ public class FormPageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "text")) {
 				if (jsonParserFieldValue != null) {
 					formPage.setText((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "text_i18n")) {
+				if (jsonParserFieldValue != null) {
+					formPage.setText_i18n(
+						(Map)FormPageSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

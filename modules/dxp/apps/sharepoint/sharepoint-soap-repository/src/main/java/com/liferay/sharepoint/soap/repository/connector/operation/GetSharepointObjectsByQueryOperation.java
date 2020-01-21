@@ -26,7 +26,7 @@ import com.liferay.sharepoint.soap.repository.connector.schema.query.QueryField;
 import com.liferay.sharepoint.soap.repository.connector.schema.query.QueryFieldsList;
 import com.liferay.sharepoint.soap.repository.connector.schema.query.QueryOptionsList;
 import com.liferay.sharepoint.soap.repository.connector.schema.query.option.ExpandUserFieldQueryOption;
-import com.liferay.sharepoint.soap.repository.connector.util.RemoteExceptionUtil;
+import com.liferay.sharepoint.soap.repository.connector.util.RemoteExceptionSharepointExceptionMapper;
 
 import com.microsoft.schemas.sharepoint.soap.GetListItemsQuery;
 import com.microsoft.schemas.sharepoint.soap.GetListItemsQueryOptions;
@@ -94,7 +94,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 				getListItemsQueryOptions, SharepointConstants.WEB_ID_DEFAULT);
 		}
 		catch (RemoteException remoteException) {
-			RemoteExceptionUtil.handleRemoteException(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
 
 		log(query, queryOptionsList, getListItemsResponseGetListItemsResult);

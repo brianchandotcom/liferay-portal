@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.sharepoint.soap.repository.connector.SharepointConnection;
 import com.liferay.sharepoint.soap.repository.connector.SharepointException;
 import com.liferay.sharepoint.soap.repository.connector.SharepointResultException;
-import com.liferay.sharepoint.soap.repository.connector.util.RemoteExceptionUtil;
+import com.liferay.sharepoint.soap.repository.connector.util.RemoteExceptionSharepointExceptionMapper;
 
 import com.microsoft.schemas.sharepoint.soap.CopyErrorCode;
 import com.microsoft.schemas.sharepoint.soap.CopyResult;
@@ -60,7 +60,7 @@ public class AddOrUpdateFileOperation extends BaseOperation {
 				new UnsignedIntHolder(), copyResultCollectionHolder);
 		}
 		catch (RemoteException remoteException) {
-			RemoteExceptionUtil.handleRemoteException(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
 
 		CopyResult copyResult = copyResultCollectionHolder.value[0];

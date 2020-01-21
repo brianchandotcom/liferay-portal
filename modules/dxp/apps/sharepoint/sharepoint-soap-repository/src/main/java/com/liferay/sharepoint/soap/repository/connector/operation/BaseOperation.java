@@ -20,9 +20,9 @@ import com.liferay.sharepoint.soap.repository.connector.SharepointConnectionInfo
 import com.liferay.sharepoint.soap.repository.connector.SharepointObject;
 import com.liferay.sharepoint.soap.repository.connector.schema.XMLHelper;
 
-import com.microsoft.schemas.sharepoint.soap.CopySoap;
-import com.microsoft.schemas.sharepoint.soap.ListsSoap;
-import com.microsoft.schemas.sharepoint.soap.VersionsSoap;
+import com.microsoft.schemas.sharepoint.soap.CopyStub;
+import com.microsoft.schemas.sharepoint.soap.ListsStub;
+import com.microsoft.schemas.sharepoint.soap.VersionsStub;
 
 import java.net.URL;
 
@@ -39,13 +39,13 @@ public abstract class BaseOperation implements Operation {
 	}
 
 	@Override
-	public void setCopySoap(CopySoap copySoap) {
-		this.copySoap = copySoap;
+	public void setCopyStub(CopyStub copyStub) {
+		this.copyStub = copyStub;
 	}
 
 	@Override
-	public void setListsSoap(ListsSoap listsSoap) {
-		this.listsSoap = listsSoap;
+	public void setListStub(ListsStub listsStub) {
+		this.listsStub = listsStub;
 	}
 
 	@Override
@@ -61,8 +61,8 @@ public abstract class BaseOperation implements Operation {
 	}
 
 	@Override
-	public void setVersionsSoap(VersionsSoap versionsSoap) {
-		this.versionsSoap = versionsSoap;
+	public void setVersionsStub(VersionsStub versionsStub) {
+		this.versionsStub = versionsStub;
 	}
 
 	public URL toURL(String path) {
@@ -109,10 +109,10 @@ public abstract class BaseOperation implements Operation {
 	protected static URLHelper urlHelper = new URLHelper();
 	protected static XMLHelper xmlHelper = new XMLHelper();
 
-	protected CopySoap copySoap;
-	protected ListsSoap listsSoap;
+	protected CopyStub copyStub;
+	protected ListsStub listsStub;
 	protected SharepointConnectionInfo sharepointConnectionInfo;
-	protected VersionsSoap versionsSoap;
+	protected VersionsStub versionsStub;
 
 	private Map<Class<?>, Operation> _operations;
 

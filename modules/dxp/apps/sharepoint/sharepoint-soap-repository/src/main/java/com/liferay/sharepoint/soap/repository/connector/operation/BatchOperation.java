@@ -20,14 +20,14 @@ import com.liferay.sharepoint.soap.repository.connector.SharepointResultExceptio
 import com.liferay.sharepoint.soap.repository.connector.schema.batch.Batch;
 import com.liferay.sharepoint.soap.repository.connector.util.RemoteExceptionSharepointExceptionMapper;
 
-import com.microsoft.schemas.sharepoint.soap.UpdateListItemsResponseUpdateListItemsResult;
-import com.microsoft.schemas.sharepoint.soap.UpdateListItemsUpdates;
+import com.microsoft.schemas.sharepoint.soap.UpdateListItemsDocument;
+import com.microsoft.schemas.sharepoint.soap.UpdateListItemsResponseDocument;
 
 import java.rmi.RemoteException;
 
-import org.apache.axis.message.MessageElement;
+import java.util.Objects;
 
-import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * @author Iván Zaera
@@ -35,53 +35,71 @@ import org.w3c.dom.Element;
 public class BatchOperation extends BaseOperation {
 
 	public void execute(Batch batch) throws SharepointException {
-		UpdateListItemsUpdates updateListItemsUpdates =
-			new UpdateListItemsUpdates();
-
-		Element element = xmlHelper.toElement(batch);
-
-		MessageElement messageElement = new MessageElement(element);
-
-		updateListItemsUpdates.set_any(new MessageElement[] {messageElement});
-
-		UpdateListItemsResponseUpdateListItemsResult
-			updateListItemsResponseUpdateListItemsResult = null;
+		UpdateListItemsResponseDocument updateListItemsResponseDocument = null;
 
 		try {
-			updateListItemsResponseUpdateListItemsResult =
-				listsSoap.updateListItems(
-					sharepointConnectionInfo.getLibraryName(),
-					updateListItemsUpdates);
+			updateListItemsResponseDocument = listsStub.updateListItems(
+				getUpdateListItemsDocument(batch));
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
 
-		parseUpdateListItemsResponseUpdateListItemsResult(
-			updateListItemsResponseUpdateListItemsResult);
+		processUpdateListItemsResponseDocument(updateListItemsResponseDocument);
 	}
 
-	protected void parseUpdateListItemsResponseUpdateListItemsResult(
-			UpdateListItemsResponseUpdateListItemsResult
-				updateListItemsResponseUpdateListItemsResult)
+	protected UpdateListItemsDocument getUpdateListItemsDocument(Batch batch) {
+		UpdateListItemsDocument updateListItemsDocument =
+			UpdateListItemsDocument.Factory.newInstance();
+
+		UpdateListItemsDocument.UpdateListItems updateListItems =
+			updateListItemsDocument.addNewUpdateListItems();
+
+		updateListItems.setListName(sharepointConnectionInfo.getLibraryName());
+
+		UpdateListItemsDocument.UpdateListItems.Updates updates =
+			updateListItems.addNewUpdates();
+
+		Node node = updates.getDomNode();
+
+		for (Node childNode :
+				xmlHelper.toNodes(node.getOwnerDocument(), batch)) {
+
+			node.appendChild(childNode);
+		}
+
+		return updateListItemsDocument;
+	}
+
+	protected void processUpdateListItemsResponseDocument(
+			UpdateListItemsResponseDocument updateListItemsResponseDocument)
 		throws SharepointException {
 
-		Element updateListItemsResponseUpdateListItemsResultElement =
-			xmlHelper.getElement(updateListItemsResponseUpdateListItemsResult);
+		UpdateListItemsResponseDocument.UpdateListItemsResponse
+			updateListItemsResponse =
+				updateListItemsResponseDocument.getUpdateListItemsResponse();
 
-		Element resultElement = xmlHelper.getElement(
-			"Result", updateListItemsResponseUpdateListItemsResultElement);
+		UpdateListItemsResponseDocument.UpdateListItemsResponse.
+			UpdateListItemsResult updateListItemsResult =
+				updateListItemsResponse.getUpdateListItemsResult();
 
-		Element errorCodeElement = xmlHelper.getElement(
-			"ErrorCode", resultElement);
+		Node node = updateListItemsResult.getDomNode();
 
-		String errorCode = errorCodeElement.getTextContent();
+		Node resultsNode = node.getFirstChild();
 
-		if (!errorCode.equals(SharepointConstants.NUMERIC_STATUS_SUCCESS)) {
-			Element errorTextElement = xmlHelper.getElement(
-				"ErrorText", resultElement);
+		Node resultNode = resultsNode.getFirstChild();
 
-			String errorText = errorTextElement.getTextContent();
+		Node errorCodeNode = xmlHelper.getNode("ErrorCode", resultNode);
+
+		String errorCode = xmlHelper.toString(errorCodeNode.getFirstChild());
+
+		if (!Objects.equals(
+				errorCode, SharepointConstants.NUMERIC_STATUS_SUCCESS)) {
+
+			Node errorTextNode = xmlHelper.getNode("ErrorText", resultNode);
+
+			String errorText = xmlHelper.toString(
+				errorTextNode.getFirstChild());
 
 			errorText = errorText.replaceAll(
 				StringPool.NEW_LINE, StringPool.PIPE);

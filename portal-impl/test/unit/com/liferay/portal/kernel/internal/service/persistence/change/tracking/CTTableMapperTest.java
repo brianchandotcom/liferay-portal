@@ -2339,7 +2339,7 @@ public class CTTableMapperTest {
 				Boolean currentChangeType = _get(
 					leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 
-				if (currentChangeType != ctChangeType) {
+				if (!ctChangeType.equals(currentChangeType)) {
 					_put(
 						leftPrimaryKey, rightPrimaryKey, ctCollectionId,
 						ctChangeType);

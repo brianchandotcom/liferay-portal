@@ -84,19 +84,8 @@ public class GetInputStreamOperation extends BaseOperation {
 			int status = httpClient.executeMethod(getMethod);
 
 			if (status == HttpStatus.SC_OK) {
-				InputStream inputStream = getMethod.getResponseBodyAsStream();
-
-				byte[] bytes = null;
-
-				try {
-					bytes = FileUtil.getBytes(inputStream);
-				}
-				catch (IOException ioException) {
-					throw new SharepointException(
-						"Unable to read input stream", ioException);
-				}
-
-				return new ByteArrayInputStream(bytes);
+				return new ByteArrayInputStream(
+					_getBytes(getMethod.getResponseBodyAsStream()));
 			}
 
 			throw new SharepointException(
@@ -110,6 +99,18 @@ public class GetInputStreamOperation extends BaseOperation {
 		}
 		finally {
 			getMethod.releaseConnection();
+		}
+	}
+
+	private byte[] _getBytes(InputStream inputStream)
+		throws SharepointException {
+
+		try {
+			return FileUtil.getBytes(inputStream);
+		}
+		catch (IOException ioException) {
+			throw new SharepointException(
+				"Unable to read input stream", ioException);
 		}
 	}
 

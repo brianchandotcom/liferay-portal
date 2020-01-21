@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.internal.service.persistence.change.tracking;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -56,12 +57,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
-
-import org.apache.commons.collections.keyvalue.MultiKey;
-import org.apache.commons.collections.map.MultiKeyMap;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -141,7 +141,7 @@ public class CTTableMapperTest {
 
 		long ctCollectionId = 3;
 
-		_mappingStore.put(leftPrimaryKey, rightPrimaryKey, 0L, null);
+		_put(leftPrimaryKey, rightPrimaryKey, 0L, null);
 
 		try (SafeClosable safeClosable1 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -151,7 +151,7 @@ public class CTTableMapperTest {
 					companyId, leftPrimaryKey, rightPrimaryKey));
 		}
 
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, 0L);
+		_remove(leftPrimaryKey, rightPrimaryKey, 0L);
 
 		// Success
 
@@ -171,9 +171,8 @@ public class CTTableMapperTest {
 
 		// Success, previously deleted
 
-		_mappingStore.put(leftPrimaryKey, rightPrimaryKey, 0L, null);
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey, ctCollectionId, false);
+		_put(leftPrimaryKey, rightPrimaryKey, 0L, null);
+		_put(leftPrimaryKey, rightPrimaryKey, ctCollectionId, false);
 
 		try (SafeClosable safeClosable3 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -183,8 +182,8 @@ public class CTTableMapperTest {
 					companyId, leftPrimaryKey, rightPrimaryKey));
 		}
 
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, 0L);
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, ctCollectionId);
+		_remove(leftPrimaryKey, rightPrimaryKey, 0L);
+		_remove(leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 
 		// Success, with model listener
 
@@ -221,7 +220,7 @@ public class CTTableMapperTest {
 		ModelListenerRegistrationUtil.unregister(leftModelListener);
 		ModelListenerRegistrationUtil.unregister(rightModelListener);
 
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, ctCollectionId);
+		_remove(leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 
 		// Database error
 
@@ -378,7 +377,7 @@ public class CTTableMapperTest {
 
 		// Contains table mapping (production)
 
-		_mappingStore.put(leftPrimaryKey, rightPrimaryKey, 0L, null);
+		_put(leftPrimaryKey, rightPrimaryKey, 0L, null);
 
 		Assert.assertTrue(
 			_ctTableMapper.containsTableMapping(
@@ -449,8 +448,7 @@ public class CTTableMapperTest {
 
 		// Empty results
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable2 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -506,7 +504,7 @@ public class CTTableMapperTest {
 
 		leftToRightPortalCache.remove(leftPrimaryKey);
 
-		_mappingStore.put(leftPrimaryKey, rightPrimaryKey, 0L, null);
+		_put(leftPrimaryKey, rightPrimaryKey, 0L, null);
 
 		Assert.assertTrue(
 			_ctTableMapper.containsTableMapping(
@@ -528,13 +526,13 @@ public class CTTableMapperTest {
 
 		long rightPrimaryKey1 = 2;
 
-		_mappingStore.put(leftPrimaryKey, rightPrimaryKey1, 0L, null);
+		_put(leftPrimaryKey, rightPrimaryKey1, 0L, null);
 
 		Assert.assertEquals(
 			1,
 			_ctTableMapper.deleteLeftPrimaryKeyTableMappings(leftPrimaryKey));
 
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey1, 0L);
+		_remove(leftPrimaryKey, rightPrimaryKey1, 0L);
 
 		// Delete 0 entry
 
@@ -551,8 +549,7 @@ public class CTTableMapperTest {
 
 		// Delete 1 entry
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
 
 		try (SafeClosable safeClosable2 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -567,10 +564,8 @@ public class CTTableMapperTest {
 
 		long rightPrimaryKey2 = 3;
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey2, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey2, ctCollectionId, true);
 
 		try (SafeClosable safeClosable3 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -635,8 +630,7 @@ public class CTTableMapperTest {
 
 		ModelListenerRegistrationUtil.register(leftModelListener);
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
 
 		try (SafeClosable safeClosable6 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -661,8 +655,7 @@ public class CTTableMapperTest {
 
 		ModelListenerRegistrationUtil.register(rightModelListener);
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
 
 		try (SafeClosable safeClosable7 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -697,13 +690,13 @@ public class CTTableMapperTest {
 
 		long leftPrimaryKey1 = 2;
 
-		_mappingStore.put(leftPrimaryKey1, rightPrimaryKey, 0L, null);
+		_put(leftPrimaryKey1, rightPrimaryKey, 0L, null);
 
 		Assert.assertEquals(
 			1,
 			_ctTableMapper.deleteRightPrimaryKeyTableMappings(rightPrimaryKey));
 
-		_mappingStore.remove(leftPrimaryKey1, rightPrimaryKey, 0L);
+		_remove(leftPrimaryKey1, rightPrimaryKey, 0L);
 
 		// Delete 0 entry
 
@@ -720,8 +713,7 @@ public class CTTableMapperTest {
 
 		// Delete 1 entry
 
-		_mappingStore.put(
-			leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable2 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -736,10 +728,8 @@ public class CTTableMapperTest {
 
 		long leftPrimaryKey2 = 3;
 
-		_mappingStore.put(
-			leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
-		_mappingStore.put(
-			leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable3 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -804,8 +794,7 @@ public class CTTableMapperTest {
 
 		ModelListenerRegistrationUtil.register(leftModelListener);
 
-		_mappingStore.put(
-			leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable6 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -830,8 +819,7 @@ public class CTTableMapperTest {
 
 		ModelListenerRegistrationUtil.register(rightModelListener);
 
-		_mappingStore.put(
-			leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable7 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -864,7 +852,7 @@ public class CTTableMapperTest {
 
 		// Success (production)
 
-		_mappingStore.put(leftPrimaryKey, rightPrimaryKey, 0L, null);
+		_put(leftPrimaryKey, rightPrimaryKey, 0L, null);
 
 		Assert.assertTrue(
 			_ctTableMapper.deleteTableMapping(leftPrimaryKey, rightPrimaryKey));
@@ -872,7 +860,7 @@ public class CTTableMapperTest {
 		Assert.assertFalse(
 			_ctTableMapper.deleteTableMapping(leftPrimaryKey, rightPrimaryKey));
 
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, 0L);
+		_remove(leftPrimaryKey, rightPrimaryKey, 0L);
 
 		// No such table mapping
 
@@ -888,8 +876,7 @@ public class CTTableMapperTest {
 
 		// Success
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable2 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -899,11 +886,11 @@ public class CTTableMapperTest {
 					leftPrimaryKey, rightPrimaryKey));
 		}
 
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, ctCollectionId);
+		_remove(leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 
 		// Success, delete from production
 
-		_mappingStore.put(leftPrimaryKey, rightPrimaryKey, 0L, null);
+		_put(leftPrimaryKey, rightPrimaryKey, 0L, null);
 
 		try (SafeClosable safeClosable2 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -923,7 +910,7 @@ public class CTTableMapperTest {
 					leftPrimaryKey, rightPrimaryKey));
 		}
 
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, ctCollectionId);
+		_remove(leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 
 		// Success, with model listener
 
@@ -937,8 +924,7 @@ public class CTTableMapperTest {
 
 		_rightBasePersistence.registerListener(rightModelListener);
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable4 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -964,7 +950,7 @@ public class CTTableMapperTest {
 
 		_rightBasePersistence.unregisterListener(rightModelListener);
 
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, ctCollectionId);
+		_remove(leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 	}
 
 	@Test
@@ -1075,7 +1061,7 @@ public class CTTableMapperTest {
 
 		long leftPrimaryKey1 = 2;
 
-		_mappingStore.put(leftPrimaryKey1, rightPrimaryKey, 0L, null);
+		_put(leftPrimaryKey1, rightPrimaryKey, 0L, null);
 
 		lefts = _ctTableMapper.getLeftBaseModels(
 			rightPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -1088,7 +1074,7 @@ public class CTTableMapperTest {
 
 		rightToLeftPortalCache.remove(rightPrimaryKey);
 
-		_mappingStore.remove(leftPrimaryKey1, rightPrimaryKey, 0L);
+		_remove(leftPrimaryKey1, rightPrimaryKey, 0L);
 
 		// Get 0 result
 
@@ -1105,8 +1091,7 @@ public class CTTableMapperTest {
 
 		// Get 1 result
 
-		_mappingStore.put(
-			leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -1125,10 +1110,8 @@ public class CTTableMapperTest {
 
 		long leftPrimaryKey2 = 3;
 
-		_mappingStore.put(
-			leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
-		_mappingStore.put(
-			leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -1147,10 +1130,8 @@ public class CTTableMapperTest {
 
 		// Get 2 results, sorted
 
-		_mappingStore.put(
-			leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
-		_mappingStore.put(
-			leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -1182,12 +1163,9 @@ public class CTTableMapperTest {
 
 		long leftPrimaryKey3 = 4;
 
-		_mappingStore.put(
-			leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
-		_mappingStore.put(
-			leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
-		_mappingStore.put(
-			leftPrimaryKey3, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey3, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -1255,16 +1233,16 @@ public class CTTableMapperTest {
 
 		rightToLeftPortalCache.remove(rightPrimaryKey);
 
-		_mappingStore.put(leftPrimaryKey1, rightPrimaryKey, 0L, null);
-		_mappingStore.put(leftPrimaryKey2, rightPrimaryKey, 0L, null);
+		_put(leftPrimaryKey1, rightPrimaryKey, 0L, null);
+		_put(leftPrimaryKey2, rightPrimaryKey, 0L, null);
 
 		leftPrimaryKeys = _ctTableMapper.getLeftPrimaryKeys(rightPrimaryKey);
 
 		Assert.assertArrayEquals(
 			new long[] {leftPrimaryKey2, leftPrimaryKey1}, leftPrimaryKeys);
 
-		_mappingStore.remove(leftPrimaryKey1, rightPrimaryKey, 0L);
-		_mappingStore.remove(leftPrimaryKey2, rightPrimaryKey, 0L);
+		_remove(leftPrimaryKey1, rightPrimaryKey, 0L);
+		_remove(leftPrimaryKey2, rightPrimaryKey, 0L);
 
 		// Get 0 result
 
@@ -1282,10 +1260,8 @@ public class CTTableMapperTest {
 
 		// Get 2 results, ensure ordered
 
-		_mappingStore.put(
-			leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
-		_mappingStore.put(
-			leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey1, rightPrimaryKey, ctCollectionId, true);
+		_put(leftPrimaryKey2, rightPrimaryKey, ctCollectionId, true);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -1347,7 +1323,7 @@ public class CTTableMapperTest {
 
 		long rightPrimaryKey1 = 2;
 
-		_mappingStore.put(leftPrimaryKey, rightPrimaryKey1, 0L, null);
+		_put(leftPrimaryKey, rightPrimaryKey1, 0L, null);
 
 		rights = _ctTableMapper.getRightBaseModels(
 			leftPrimaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -1360,7 +1336,7 @@ public class CTTableMapperTest {
 
 		leftToRightPortalCache.remove(leftPrimaryKey);
 
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey1, 0L);
+		_remove(leftPrimaryKey, rightPrimaryKey1, 0L);
 
 		// Get 0 result
 
@@ -1377,8 +1353,7 @@ public class CTTableMapperTest {
 
 		// Get 1 result
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -1397,11 +1372,9 @@ public class CTTableMapperTest {
 
 		long rightPrimaryKey2 = 3;
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey2, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey2, ctCollectionId, true);
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -1420,10 +1393,8 @@ public class CTTableMapperTest {
 
 		// Get 2 results, sorted
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey2, ctCollectionId, true);
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey2, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -1455,13 +1426,10 @@ public class CTTableMapperTest {
 
 		long rightPrimaryKey3 = 4;
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey3, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey3, ctCollectionId, true);
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey2, ctCollectionId, true);
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey2, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -1529,16 +1497,16 @@ public class CTTableMapperTest {
 
 		leftToRightPortalCache.remove(leftPrimaryKey);
 
-		_mappingStore.put(leftPrimaryKey, rightPrimaryKey1, 0L, null);
-		_mappingStore.put(leftPrimaryKey, rightPrimaryKey2, 0L, null);
+		_put(leftPrimaryKey, rightPrimaryKey1, 0L, null);
+		_put(leftPrimaryKey, rightPrimaryKey2, 0L, null);
 
 		rightPrimaryKeys = _ctTableMapper.getRightPrimaryKeys(leftPrimaryKey);
 
 		Assert.assertArrayEquals(
 			new long[] {rightPrimaryKey2, rightPrimaryKey1}, rightPrimaryKeys);
 
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey1, 0L);
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey2, 0L);
+		_remove(leftPrimaryKey, rightPrimaryKey1, 0L);
+		_remove(leftPrimaryKey, rightPrimaryKey2, 0L);
 
 		// Get 0 result
 
@@ -1556,10 +1524,8 @@ public class CTTableMapperTest {
 
 		// Get 2 results, ensure ordered
 
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
-		_mappingStore.put(
-			leftPrimaryKey, rightPrimaryKey2, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey1, ctCollectionId, true);
+		_put(leftPrimaryKey, rightPrimaryKey2, ctCollectionId, true);
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
@@ -1599,6 +1565,36 @@ public class CTTableMapperTest {
 		}
 	}
 
+	private static boolean _containsKey(
+		long leftPrimaryKey, long rightPrimaryKey, long ctCollectionId) {
+
+		return _mappingStore.containsKey(
+			new MappingKey(leftPrimaryKey, rightPrimaryKey, ctCollectionId));
+	}
+
+	private static Boolean _get(
+		long leftPrimaryKey, long rightPrimaryKey, long ctCollectionId) {
+
+		return _mappingStore.get(
+			new MappingKey(leftPrimaryKey, rightPrimaryKey, ctCollectionId));
+	}
+
+	private static void _put(
+		long leftPrimaryKey, long rightPrimaryKey, long ctCollectionId,
+		Boolean value) {
+
+		_mappingStore.put(
+			new MappingKey(leftPrimaryKey, rightPrimaryKey, ctCollectionId),
+			value);
+	}
+
+	private static void _remove(
+		long leftPrimaryKey, long rightPrimaryKey, long ctCollectionId) {
+
+		_mappingStore.remove(
+			new MappingKey(leftPrimaryKey, rightPrimaryKey, ctCollectionId));
+	}
+
 	private static final String _COMPANY_COLUMN_NAME = "companyId";
 
 	private static final String _LEFT_COLUMN_NAME = "leftId";
@@ -1614,7 +1610,8 @@ public class CTTableMapperTest {
 			(proxy, method, args) -> {
 				throw new UnsupportedOperationException();
 			});
-	private static final MultiKeyMap _mappingStore = new MultiKeyMap();
+	private static final Map<MappingKey, Boolean> _mappingStore =
+		new HashMap<>();
 
 	private CTTableMapper<Left, Right> _ctTableMapper;
 	private MockBasePersistence<Left> _leftBasePersistence;
@@ -1622,6 +1619,45 @@ public class CTTableMapperTest {
 
 	private static class LeftRecorderModelListener
 		extends RecorderModelListener<Left> {
+	}
+
+	private static class MappingKey {
+
+		@Override
+		public boolean equals(Object obj) {
+			MappingKey mappingKey = (MappingKey)obj;
+
+			if ((_leftPrimaryKey == mappingKey._leftPrimaryKey) &&
+				(_rightPrimaryKey == mappingKey._rightPrimaryKey) &&
+				(_ctCollectionId == mappingKey._ctCollectionId)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _leftPrimaryKey);
+
+			hashCode = HashUtil.hash(hashCode, _rightPrimaryKey);
+
+			return HashUtil.hash(hashCode, _ctCollectionId);
+		}
+
+		private MappingKey(
+			long leftPrimaryKey, long rightPrimaryKey, long ctCollectionId) {
+
+			_leftPrimaryKey = leftPrimaryKey;
+			_rightPrimaryKey = rightPrimaryKey;
+			_ctCollectionId = ctCollectionId;
+		}
+
+		private final long _ctCollectionId;
+		private final long _leftPrimaryKey;
+		private final long _rightPrimaryKey;
+
 	}
 
 	private static class MockAddCTTableMappingSqlUpdate implements SqlUpdate {
@@ -1648,9 +1684,7 @@ public class CTTableMapperTest {
 			Long rightPrimaryKey = (Long)params[2];
 			Long ctCollectionId = (Long)params[3];
 
-			if (_mappingStore.containsKey(
-					leftPrimaryKey, rightPrimaryKey, ctCollectionId)) {
-
+			if (_containsKey(leftPrimaryKey, rightPrimaryKey, ctCollectionId)) {
 				throw new RuntimeException(
 					StringBundler.concat(
 						"Unique key violation for left primary key ",
@@ -1661,8 +1695,7 @@ public class CTTableMapperTest {
 
 			Boolean ctChangeType = (Boolean)params[4];
 
-			_mappingStore.put(
-				leftPrimaryKey, rightPrimaryKey, ctCollectionId, ctChangeType);
+			_put(leftPrimaryKey, rightPrimaryKey, ctCollectionId, ctChangeType);
 
 			return 1;
 		}
@@ -1688,9 +1721,7 @@ public class CTTableMapperTest {
 			Long leftPrimaryKey = (Long)params[1];
 			Long rightPrimaryKey = (Long)params[2];
 
-			if (_mappingStore.containsKey(
-					leftPrimaryKey, rightPrimaryKey, 0L)) {
-
+			if (_containsKey(leftPrimaryKey, rightPrimaryKey, 0L)) {
 				throw new RuntimeException(
 					StringBundler.concat(
 						"Unique key violation for left primary key ",
@@ -1698,7 +1729,7 @@ public class CTTableMapperTest {
 						rightPrimaryKey, "and ctcollectionId 0"));
 			}
 
-			_mappingStore.put(leftPrimaryKey, rightPrimaryKey, 0L, null);
+			_put(leftPrimaryKey, rightPrimaryKey, 0L, null);
 
 			return 1;
 		}
@@ -1740,10 +1771,10 @@ public class CTTableMapperTest {
 
 			Long ctCollectionId = (Long)params[2];
 
-			Boolean ctChangeType = (Boolean)_mappingStore.get(
+			Boolean ctChangeType = _get(
 				leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 
-			boolean inProduction = _mappingStore.containsKey(
+			boolean inProduction = _containsKey(
 				leftPrimaryKey, rightPrimaryKey, 0L);
 
 			if (((ctChangeType != null) && ctChangeType) ||
@@ -1803,9 +1834,7 @@ public class CTTableMapperTest {
 			Long leftPrimaryKey = (Long)params[0];
 			Long rightPrimaryKey = (Long)params[1];
 
-			if (_mappingStore.containsKey(
-					leftPrimaryKey, rightPrimaryKey, 0L)) {
-
+			if (_containsKey(leftPrimaryKey, rightPrimaryKey, 0L)) {
 				return Collections.singletonList(1);
 			}
 
@@ -1845,25 +1874,21 @@ public class CTTableMapperTest {
 
 			Long leftPrimaryKey = (Long)params[0];
 
-			List<MultiKey> removeKeys = new ArrayList<>();
+			List<MappingKey> removeMappingKeys = new ArrayList<>();
 
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
+			for (MappingKey mappingKey : _mappingStore.keySet()) {
+				if ((leftPrimaryKey == mappingKey._leftPrimaryKey) &&
+					(mappingKey._ctCollectionId == 0)) {
 
-				Long ctCollectionId = (Long)multiKey.getKey(2);
-
-				if (leftPrimaryKey.equals(multiKey.getKey(0)) &&
-					ctCollectionId.equals(0L)) {
-
-					removeKeys.add(multiKey);
+					removeMappingKeys.add(mappingKey);
 				}
 			}
 
-			for (MultiKey removeKey : removeKeys) {
-				_mappingStore.remove(removeKey);
+			for (MappingKey mappingKey : removeMappingKeys) {
+				_mappingStore.remove(mappingKey);
 			}
 
-			return removeKeys.size();
+			return removeMappingKeys.size();
 		}
 
 		private MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
@@ -1887,25 +1912,21 @@ public class CTTableMapperTest {
 
 			Long rightPrimaryKey = (Long)params[0];
 
-			List<MultiKey> removeKeys = new ArrayList<>();
+			List<MappingKey> mappingKeys = new ArrayList<>();
 
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
+			for (MappingKey mappingKey : _mappingStore.keySet()) {
+				if ((rightPrimaryKey == mappingKey._rightPrimaryKey) &&
+					(mappingKey._ctCollectionId == 0)) {
 
-				Long ctCollectionId = (Long)multiKey.getKey(2);
-
-				if (rightPrimaryKey.equals(multiKey.getKey(1)) &&
-					ctCollectionId.equals(0L)) {
-
-					removeKeys.add(multiKey);
+					mappingKeys.add(mappingKey);
 				}
 			}
 
-			for (MultiKey removeKey : removeKeys) {
-				_mappingStore.remove(removeKey);
+			for (MappingKey mappingKey : mappingKeys) {
+				_mappingStore.remove(mappingKey);
 			}
 
-			return removeKeys.size();
+			return mappingKeys.size();
 		}
 
 		private MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
@@ -1930,10 +1951,8 @@ public class CTTableMapperTest {
 			Long leftPrimaryKey = (Long)params[0];
 			Long rightPrimaryKey = (Long)params[1];
 
-			if (_mappingStore.containsKey(
-					leftPrimaryKey, rightPrimaryKey, 0L)) {
-
-				_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, 0L);
+			if (_containsKey(leftPrimaryKey, rightPrimaryKey, 0L)) {
+				_remove(leftPrimaryKey, rightPrimaryKey, 0L);
 
 				return 1;
 			}
@@ -1973,15 +1992,13 @@ public class CTTableMapperTest {
 
 			List<Long> leftPrimaryKeysList = new ArrayList<>();
 
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
+			for (MappingKey mappingKey : _mappingStore.keySet()) {
+				if (rightPrimaryKey == mappingKey._rightPrimaryKey) {
+					long leftPrimaryKey = mappingKey._leftPrimaryKey;
 
-				if (rightPrimaryKey.equals(multiKey.getKey(1))) {
-					Long leftPrimaryKey = (Long)multiKey.getKey(0);
-
-					Boolean ctChangeType = (Boolean)_mappingStore.get(
+					Boolean ctChangeType = _get(
 						leftPrimaryKey, rightPrimaryKey, ctCollectionId);
-					boolean inProduction = _mappingStore.containsKey(
+					boolean inProduction = _containsKey(
 						leftPrimaryKey, rightPrimaryKey, 0L);
 
 					if ((((ctChangeType != null) && ctChangeType) ||
@@ -2039,15 +2056,13 @@ public class CTTableMapperTest {
 
 			List<Long> rightPrimaryKeysList = new ArrayList<>();
 
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
+			for (MappingKey mappingKey : _mappingStore.keySet()) {
+				if (leftPrimaryKey == mappingKey._leftPrimaryKey) {
+					long rightPrimaryKey = mappingKey._rightPrimaryKey;
 
-				if (leftPrimaryKey.equals(multiKey.getKey(0))) {
-					Long rightPrimaryKey = (Long)multiKey.getKey(1);
-
-					Boolean ctChangeType = (Boolean)_mappingStore.get(
+					Boolean ctChangeType = _get(
 						leftPrimaryKey, rightPrimaryKey, ctCollectionId);
-					boolean inProduction = _mappingStore.containsKey(
+					boolean inProduction = _containsKey(
 						leftPrimaryKey, rightPrimaryKey, 0L);
 
 					if ((((ctChangeType != null) && ctChangeType) ||
@@ -2097,15 +2112,11 @@ public class CTTableMapperTest {
 
 			List<Long> leftPrimaryKeysList = new ArrayList<>();
 
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
+			for (MappingKey mappingKey : _mappingStore.keySet()) {
+				if ((rightPrimaryKey == mappingKey._rightPrimaryKey) &&
+					(mappingKey._ctCollectionId == 0)) {
 
-				Long ctCollectionId = (Long)multiKey.getKey(2);
-
-				if (rightPrimaryKey.equals(multiKey.getKey(1)) &&
-					ctCollectionId.equals(0L)) {
-
-					leftPrimaryKeysList.add((Long)multiKey.getKey(0));
+					leftPrimaryKeysList.add(mappingKey._leftPrimaryKey);
 				}
 			}
 
@@ -2137,15 +2148,11 @@ public class CTTableMapperTest {
 
 			List<Long> rightPrimaryKeysList = new ArrayList<>();
 
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
+			for (MappingKey mappingKey : _mappingStore.keySet()) {
+				if ((leftPrimaryKey == mappingKey._leftPrimaryKey) &&
+					(mappingKey._ctCollectionId == 0)) {
 
-				Long ctCollectionId = (Long)multiKey.getKey(2);
-
-				if (leftPrimaryKey.equals(multiKey.getKey(0)) &&
-					ctCollectionId.equals(0L)) {
-
-					rightPrimaryKeysList.add((Long)multiKey.getKey(1));
+					rightPrimaryKeysList.add(mappingKey._rightPrimaryKey);
 				}
 			}
 
@@ -2337,14 +2344,12 @@ public class CTTableMapperTest {
 			Long rightPrimaryKey = (Long)params[2];
 			Long ctCollectionId = (Long)params[3];
 
-			if (_mappingStore.containsKey(
-					leftPrimaryKey, rightPrimaryKey, ctCollectionId)) {
-
-				Boolean currentChangeType = (Boolean)_mappingStore.get(
+			if (_containsKey(leftPrimaryKey, rightPrimaryKey, ctCollectionId)) {
+				Boolean currentChangeType = _get(
 					leftPrimaryKey, rightPrimaryKey, ctCollectionId);
 
 				if (currentChangeType != ctChangeType) {
-					_mappingStore.put(
+					_put(
 						leftPrimaryKey, rightPrimaryKey, ctCollectionId,
 						ctChangeType);
 

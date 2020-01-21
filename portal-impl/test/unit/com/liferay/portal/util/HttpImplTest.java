@@ -177,13 +177,11 @@ public class HttpImplTest {
 	@Test
 	public void testGetDomainWithRelativeURLs() {
 		Assert.assertEquals("", _httpImpl.getDomain("/a/b?key1=value1#anchor"));
+		Assert.assertEquals("", _httpImpl.getDomain("foo.com"));
 	}
 
 	@Test
 	public void testGetDomainWithValidURLs() {
-		Assert.assertEquals("foo.com", _httpImpl.getDomain("foo.com"));
-		Assert.assertEquals("foo.com", _httpImpl.getDomain(" foo.com"));
-		Assert.assertEquals("foo.com", _httpImpl.getDomain("foo.com "));
 		Assert.assertEquals("foo.com", _httpImpl.getDomain("https://foo.com"));
 		Assert.assertEquals(
 			"www.foo.com", _httpImpl.getDomain("https://www.foo.com"));
@@ -438,7 +436,7 @@ public class HttpImplTest {
 		Assert.assertEquals(
 			"a:b@foo.com", _httpImpl.removeProtocol(" http://a:b@foo.com"));
 		Assert.assertEquals(
-			"a:b@foo.com", _httpImpl.removeProtocol("a:b@foo.com"));
+			"b@foo.com", _httpImpl.removeProtocol("a:b@foo.com"));
 		Assert.assertEquals(
 			":@foo.com", _httpImpl.removeProtocol("http://:@foo.com"));
 		Assert.assertEquals(":@foo.com", _httpImpl.removeProtocol(":@foo.com"));

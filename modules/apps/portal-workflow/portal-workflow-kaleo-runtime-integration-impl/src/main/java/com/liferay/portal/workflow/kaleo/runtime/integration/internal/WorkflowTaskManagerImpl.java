@@ -51,6 +51,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -60,6 +61,7 @@ import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelect
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoTaskInstanceTokenOrderByComparator;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 
@@ -276,6 +278,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			Set<User> assignableUsers = new TreeSet<>(
 				new UserFirstNameComparator(true));
+
+			long assignedUserId = _getAssignedUserId(workflowTaskId);
 
 			for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
 					_getCalculatedKaleoTaskAssignments(
@@ -658,6 +662,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				return false;
 			}
 
+			long assignedUserId = _getAssignedUserId(workflowTaskId);
+
 			ExecutionContext executionContext = _createExecutionContext(
 				kaleoTaskInstanceToken);
 
@@ -677,7 +683,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 					if (_hasAssignableUsers(
 							calculatedKaleoTaskAssignment,
-							kaleoTaskInstanceToken, userId)) {
+							kaleoTaskInstanceToken, assignedUserId)) {
 
 						return true;
 					}
@@ -963,6 +969,31 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		}
 
 		return new String[] {assetType};
+	}
+
+	private long _getAssignedUserId(long kaleoTaskInstanceTokenId) {
+		return Stream.of(
+			_kaleoTaskAssignmentInstanceLocalService.
+				getKaleoTaskAssignmentInstances(kaleoTaskInstanceTokenId)
+		).flatMap(
+			List::parallelStream
+		).filter(
+			kaleoTaskAssignmentInstance -> {
+				String assigneeClassName =
+					kaleoTaskAssignmentInstance.getAssigneeClassName();
+
+				if (assigneeClassName.equals(User.class.getName())) {
+					return true;
+				}
+
+				return false;
+			}
+		).map(
+			KaleoTaskAssignmentInstance::getAssigneeClassPK
+		).findFirst(
+		).orElseGet(
+			() -> 0L
+		);
 	}
 
 	private List<KaleoTaskAssignment> _getCalculatedKaleoTaskAssignments(

@@ -29,7 +29,7 @@
 <div id="<portlet:namespace />messageContainer"></div>
 
 <div id="<portlet:namespace />phaseTwo">
-	<aui:input label="please-enter-the-one-time-password-from-the-email" name="otp" showRequiredLabel="yes" />
+	<aui:input label="please-enter-the-otp-from-the-email" name="otp" showRequiredLabel="yes" />
 </div>
 
 <aui:script use="aui-base,aui-io-request">
@@ -90,7 +90,7 @@
 						'#<portlet:namespace />messageContainer'
 					);
 					messageContainer.html(
-						'<span class="alert alert-success"><liferay-ui:message key="email-sent-please-check-the-received-code" /></span>'
+						'<span class="alert alert-success"><liferay-ui:message key="your-otp-has-been-sent-by-email" /></span>'
 					);
 
 					var phaseTwo = A.one('#<portlet:namespace />phaseTwo');

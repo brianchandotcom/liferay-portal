@@ -25,7 +25,6 @@ import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -203,10 +202,6 @@ public class JournalEditDDMTemplateDisplayContext {
 		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		return _redirect;
-	}
-
-	public String getSaveButtonLabel() throws PortalException {
-		return "save";
 	}
 
 	public String getScript() {

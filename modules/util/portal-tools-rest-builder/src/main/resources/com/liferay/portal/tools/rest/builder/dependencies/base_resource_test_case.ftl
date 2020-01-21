@@ -1128,7 +1128,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 							"delete${schemaName}",
 							new HashMap<String, Object>() {
 								{
-									put("${schemaVarName}Id", ${schemaVarName}.getId());
+									put(
+										"${schemaVarName}Id",
+										<#if stringUtil.equals(properties.id, "String")>
+											"\"" + ${schemaVarName}.getId() + "\""
+										<#else>
+											${schemaVarName}.getId()
+										</#if>
+									);
 								}
 							}));
 
@@ -1145,7 +1152,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 								"${schemaVarName}",
 								new HashMap<String, Object>() {
 									{
-										put("${schemaVarName}Id", ${schemaVarName}.getId());
+										put(
+											"${schemaVarName}Id",
+											<#if stringUtil.equals(properties.id, "String")>
+												"\"" + ${schemaVarName}.getId() + "\""
+											<#else>
+												${schemaVarName}.getId()
+											</#if>
+										);
 									}
 								},
 								new GraphQLField("id")));
@@ -1230,15 +1244,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 								{
 									<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 										<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-											put("${javaMethodParameter.parameterName}", ${schemaVarName}.
-
-											<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-												getId
-											<#else>
-												get${javaMethodParameter.parameterName?cap_first}
-											</#if>
-
-											());
+											put("${javaMethodParameter.parameterName}",
+												<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+													<#if stringUtil.equals(properties.id, "String")>
+														"\"" + ${schemaVarName}.getId() + "\""
+													<#else>
+														${schemaVarName}.getId()
+													</#if>
+												<#else>
+													${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+												</#if>
+											);
 										</#if>
 									</#list>
 								}

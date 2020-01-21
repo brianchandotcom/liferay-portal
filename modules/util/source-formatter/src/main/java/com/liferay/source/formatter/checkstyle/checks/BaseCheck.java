@@ -465,6 +465,13 @@ public abstract class BaseCheck extends AbstractCheck {
 
 			parentDetailAST = nameDetailAST.getParent();
 
+			if ((parentDetailAST.getType() == TokenTypes.METHOD_CALL) ||
+				(parentDetailAST.getType() == TokenTypes.PARAMETER_DEF) ||
+				(parentDetailAST.getType() == TokenTypes.VARIABLE_DEF)) {
+
+				continue;
+			}
+
 			if (parentDetailAST.getType() == TokenTypes.DOT) {
 				DetailAST previousSiblingDetailAST =
 					nameDetailAST.getPreviousSibling();
@@ -472,9 +479,6 @@ public abstract class BaseCheck extends AbstractCheck {
 				if (previousSiblingDetailAST != null) {
 					continue;
 				}
-			}
-			else if (parentDetailAST.getType() == TokenTypes.METHOD_CALL) {
-				continue;
 			}
 
 			variableCallerDetailASTList.add(nameDetailAST);

@@ -60,15 +60,15 @@ public class StagingGroupServiceTunnelUtil {
 		try {
 			return TunnelUtil.invoke(httpPrincipal, methodHandler);
 		}
-		catch (PortalException pe) {
-			throw pe;
+		catch (PortalException portalException) {
+			throw portalException;
 		}
-		catch (Exception e) {
-			if (!(e instanceof ConnectException)) {
-				_log.error(e, e);
+		catch (Exception exception) {
+			if (!(exception instanceof ConnectException)) {
+				_log.error(exception, exception);
 			}
 
-			throw new SystemException(e);
+			throw new SystemException(exception);
 		}
 	}
 

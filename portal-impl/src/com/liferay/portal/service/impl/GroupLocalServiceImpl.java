@@ -5124,28 +5124,29 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				try {
 					TunnelUtil.invoke(httpPrincipal, methodHandler);
 				}
-				catch (Exception e) {
-					if (e instanceof PortalException) {
-						throw (PortalException)e;
+				catch (Exception exception) {
+					if (exception instanceof PortalException) {
+						throw (PortalException)exception;
 					}
 
-					throw new SystemException(e);
+					throw new SystemException(exception);
 				}
 			}
-			catch (SystemException se) {
-				if (se.getCause() instanceof ConnectException) {
+			catch (SystemException systemException) {
+				if (systemException.getCause() instanceof ConnectException) {
 					_log.error(
-						"Unable to connect to remote live: " + se.getMessage());
+						"Unable to connect to remote live: " +
+							systemException.getMessage());
 
 					if (_log.isDebugEnabled()) {
-						_log.debug(se, se);
+						_log.debug(systemException, systemException);
 					}
 				}
 				else {
-					_log.error(se, se);
+					_log.error(systemException, systemException);
 				}
 
-				throw se;
+				throw systemException;
 			}
 
 			// Ensure that the local group and the remote group are not the same

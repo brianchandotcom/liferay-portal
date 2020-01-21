@@ -13,6 +13,7 @@
  */
 
 import Component from 'metal-component';
+import {match} from 'metal-dom';
 import {Config} from 'metal-state';
 
 import DisabledAreaPopover from './DisabledAreaPopover.es';
@@ -53,7 +54,8 @@ class DisabledAreaMask extends Component {
 	 */
 	static _elementMatchesSelector(element, selector) {
 		const childMatchesSelector = element.querySelector(selector);
-		const matchesSelector = element.matches(selector);
+
+		const matchesSelector = match(element, selector);
 
 		return matchesSelector || childMatchesSelector;
 	}

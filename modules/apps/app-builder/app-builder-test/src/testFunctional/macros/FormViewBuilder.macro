@@ -23,7 +23,7 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
 	}
 
-	macro addFieldToObject { 
+	macro addFieldToObject {
 		Click(locator1 = "FormViewBuilder#OBJECT_FIELD_PLUS");
 
 		Click(

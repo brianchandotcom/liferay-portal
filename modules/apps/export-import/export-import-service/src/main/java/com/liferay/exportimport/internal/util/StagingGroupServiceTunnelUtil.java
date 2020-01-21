@@ -60,23 +60,16 @@ public class StagingGroupServiceTunnelUtil {
 		try {
 			return TunnelUtil.invoke(httpPrincipal, methodHandler);
 		}
-		catch (ConnectException ce) {
-			_log.error("Connection error: " + ce.getMessage());
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(ce, ce);
-			}
-		}
 		catch (PortalException pe) {
 			throw pe;
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (!(e instanceof ConnectException)) {
+				_log.error(e, e);
+			}
 
 			throw new SystemException(e);
 		}
-
-		return null;
 	}
 
 	private StagingGroupServiceTunnelUtil() {

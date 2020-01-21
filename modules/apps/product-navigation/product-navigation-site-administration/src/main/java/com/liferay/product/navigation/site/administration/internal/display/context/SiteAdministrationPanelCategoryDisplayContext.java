@@ -196,10 +196,11 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 					throw systemException;
 				}
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to connect to remote live: " +
-							cause.getMessage());
+				_log.error(
+					"Connection error: " + systemException.getMessage());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(systemException, systemException);
 				}
 
 				throw new RemoteExportException(

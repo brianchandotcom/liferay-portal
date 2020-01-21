@@ -19,7 +19,7 @@ import com.liferay.sharepoint.soap.repository.connector.SharepointException;
 
 import java.rmi.RemoteException;
 
-import org.apache.axis.AxisFault;
+import org.apache.axis2.AxisFault;
 
 /**
  * @author Adolfo Pérez
@@ -30,9 +30,9 @@ public class RemoteExceptionSharepointExceptionMapper {
 		if (remoteException instanceof AxisFault) {
 			AxisFault axisFault = (AxisFault)remoteException;
 
-			String faultString = axisFault.getFaultString();
+			String faultMessage = axisFault.getMessage();
 
-			if (faultString.startsWith("(401)Unauthorized")) {
+			if (faultMessage.endsWith("401 Error: Unauthorized")) {
 				throw new AuthenticationRepositoryException(remoteException);
 			}
 		}

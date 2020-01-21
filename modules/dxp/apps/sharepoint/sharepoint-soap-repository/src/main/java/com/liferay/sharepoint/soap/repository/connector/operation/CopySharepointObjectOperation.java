@@ -23,14 +23,15 @@ import com.liferay.sharepoint.soap.repository.connector.SharepointResultExceptio
 import com.liferay.sharepoint.soap.repository.connector.util.RemoteExceptionSharepointExceptionMapper;
 
 import com.microsoft.schemas.sharepoint.soap.CopyErrorCode;
+import com.microsoft.schemas.sharepoint.soap.CopyIntoItemsLocalDocument;
+import com.microsoft.schemas.sharepoint.soap.CopyIntoItemsLocalResponseDocument;
 import com.microsoft.schemas.sharepoint.soap.CopyResult;
-import com.microsoft.schemas.sharepoint.soap.holders.CopyResultCollectionHolder;
+import com.microsoft.schemas.sharepoint.soap.CopyResultCollection;
+import com.microsoft.schemas.sharepoint.soap.DestinationUrlCollection;
 
 import java.rmi.RemoteException;
 
 import java.util.List;
-
-import org.apache.axis.holders.UnsignedIntHolder;
 
 /**
  * @author Iván Zaera
@@ -68,27 +69,19 @@ public class CopySharepointObjectOperation extends BaseOperation {
 	protected void copyFile(String path, String newPath)
 		throws SharepointException {
 
-		CopyResultCollectionHolder copyResultCollectionHolder =
-			new CopyResultCollectionHolder();
+		CopyIntoItemsLocalResponseDocument copyIntoItemsLocalResponseDocument =
+			null;
 
 		try {
-			copySoap.copyIntoItemsLocal(
-				String.valueOf(toURL(path)),
-				new String[] {String.valueOf(toURL(newPath))},
-				new UnsignedIntHolder(), copyResultCollectionHolder);
+			copyIntoItemsLocalResponseDocument = copyStub.copyIntoItemsLocal(
+				getCopyIntoItemsLocalDocument(path, newPath));
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
 
-		CopyResult copyResult = copyResultCollectionHolder.value[0];
-
-		CopyErrorCode copyErrorCode = copyResult.getErrorCode();
-
-		if (copyErrorCode != CopyErrorCode.Success) {
-			throw new SharepointResultException(
-				copyErrorCode.toString(), copyResult.getErrorMessage());
-		}
+		processCopyIntoItemsLocalResponseDocument(
+			copyIntoItemsLocalResponseDocument);
 	}
 
 	protected void copyFolder(String path, String newPath)
@@ -131,6 +124,48 @@ public class CopySharepointObjectOperation extends BaseOperation {
 					"Unable to create folder at " + folderPath,
 					sharepointException);
 			}
+		}
+	}
+
+	protected CopyIntoItemsLocalDocument getCopyIntoItemsLocalDocument(
+		String path, String newPath) {
+
+		CopyIntoItemsLocalDocument copyIntoItemsLocalDocument =
+			CopyIntoItemsLocalDocument.Factory.newInstance();
+
+		CopyIntoItemsLocalDocument.CopyIntoItemsLocal copyIntoItemsLocal =
+			copyIntoItemsLocalDocument.addNewCopyIntoItemsLocal();
+
+		DestinationUrlCollection destinationUrlCollection =
+			DestinationUrlCollection.Factory.newInstance();
+
+		destinationUrlCollection.addString(String.valueOf(toURL(newPath)));
+
+		copyIntoItemsLocal.setDestinationUrls(destinationUrlCollection);
+
+		copyIntoItemsLocal.setSourceUrl(String.valueOf(toURL(path)));
+
+		return copyIntoItemsLocalDocument;
+	}
+
+	protected void processCopyIntoItemsLocalResponseDocument(
+			CopyIntoItemsLocalResponseDocument
+				copyIntoItemsLocalResponseDocument)
+		throws SharepointException {
+
+		CopyIntoItemsLocalResponseDocument.CopyIntoItemsLocalResponse
+			copyIntoItemsLocalResponse =
+				copyIntoItemsLocalResponseDocument.
+					getCopyIntoItemsLocalResponse();
+
+		CopyResultCollection results = copyIntoItemsLocalResponse.getResults();
+
+		CopyResult copyResult = results.getCopyResultArray(0);
+
+		if (copyResult.getErrorCode() != CopyErrorCode.SUCCESS) {
+			throw new SharepointResultException(
+				String.valueOf(copyResult.getErrorCode()),
+				copyResult.getErrorMessage());
 		}
 	}
 

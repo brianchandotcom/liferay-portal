@@ -86,7 +86,7 @@ public class SharepointWSRepositoryDefiner extends BaseRepositoryDefiner {
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return ResourceBundleLoaderUtil.
 			getResourceBundleLoaderByBundleSymbolicName(
-				"com.liferay.sharepoint.repository.soap");
+				"com.liferay.sharepoint.soap.repository");
 	}
 
 	@Reference

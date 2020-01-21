@@ -22,7 +22,8 @@ import com.liferay.sharepoint.soap.repository.connector.SharepointObject;
 import com.liferay.sharepoint.soap.repository.connector.SharepointVersion;
 import com.liferay.sharepoint.soap.repository.connector.util.RemoteExceptionSharepointExceptionMapper;
 
-import com.microsoft.schemas.sharepoint.soap.GetVersionsResponseGetVersionsResult;
+import com.microsoft.schemas.sharepoint.soap.GetVersionsDocument;
+import com.microsoft.schemas.sharepoint.soap.GetVersionsResponseDocument;
 
 import java.rmi.RemoteException;
 
@@ -35,7 +36,6 @@ import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
 
-import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -54,37 +54,44 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 	public List<SharepointVersion> execute(String filePath)
 		throws SharepointException {
 
+		SharepointObject sharepointObject =
+			_getSharepointObjectByPathOperation.execute(filePath);
+
+		if (sharepointObject == null) {
+			throw new SharepointException(
+				"Unable to find Sharepoint object at " + filePath);
+		}
+
+		GetVersionsResponseDocument getVersionsResponseDocument = null;
+
 		try {
-			SharepointObject sharepointObject =
-				_getSharepointObjectByPathOperation.execute(filePath);
-
-			if (sharepointObject == null) {
-				throw new SharepointException(
-					"Unable to find Sharepoint object at " + filePath);
-			}
-
-			String fileFullPath = toFullPath(filePath);
-
-			GetVersionsResponseGetVersionsResult
-				getVersionsResponseGetVersionsResult = versionsSoap.getVersions(
-					fileFullPath);
-
-			Element getVersionsResponseGetVersionsResultElement =
-				xmlHelper.getElement(getVersionsResponseGetVersionsResult);
-
-			return getSharepointVersions(
-				sharepointObject.getSharepointObjectId(),
-				getVersionsResponseGetVersionsResultElement);
+			getVersionsResponseDocument = versionsStub.getVersions(
+				getGetVersionsDocument(filePath));
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
+
+		return getSharepointVersions(
+			sharepointObject, getVersionsResponseDocument);
 	}
 
 	protected Date getDate(String dateString) {
 		Calendar calendar = DatatypeConverter.parseDateTime(dateString);
 
 		return calendar.getTime();
+	}
+
+	protected GetVersionsDocument getGetVersionsDocument(String filePath) {
+		GetVersionsDocument getVersionsDocument =
+			GetVersionsDocument.Factory.newInstance();
+
+		GetVersionsDocument.GetVersions getVersions =
+			getVersionsDocument.addNewGetVersions();
+
+		getVersions.setFileName(toFullPath(filePath));
+
+		return getVersionsDocument;
 	}
 
 	protected String getSharepointVersionId(
@@ -94,13 +101,22 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 	}
 
 	protected List<SharepointVersion> getSharepointVersions(
-		long sharepointObjectId,
-		Element getVersionsResponseGetVersionsResultElement) {
+		SharepointObject sharepointObject,
+		GetVersionsResponseDocument getVersionsResponseDocument) {
+
+		GetVersionsResponseDocument.GetVersionsResponse getVersionsResponse =
+			getVersionsResponseDocument.getGetVersionsResponse();
+
+		GetVersionsResponseDocument.GetVersionsResponse.GetVersionsResult
+			getVersionsResult = getVersionsResponse.getGetVersionsResult();
+
+		Node getVersionsResultNode = getVersionsResult.getDomNode();
+
+		Node resultNode = getVersionsResultNode.getFirstChild();
 
 		List<SharepointVersion> sharepointVersions = new ArrayList<>();
 
-		NodeList nodeList =
-			getVersionsResponseGetVersionsResultElement.getChildNodes();
+		NodeList nodeList = resultNode.getChildNodes();
 
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
@@ -126,7 +142,8 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 				commentsNode.getNodeValue(), createdByNode.getNodeValue(),
 				getDate(createdRawNode.getNodeValue()),
 				getSharepointVersionId(
-					sharepointObjectId, versionNode.getNodeValue()),
+					sharepointObject.getSharepointObjectId(),
+					versionNode.getNodeValue()),
 				GetterUtil.getLong(sizeNode.getNodeValue()),
 				urlHelper.toURL(urlNode.getNodeValue()),
 				getVersion(versionNode.getNodeValue()));

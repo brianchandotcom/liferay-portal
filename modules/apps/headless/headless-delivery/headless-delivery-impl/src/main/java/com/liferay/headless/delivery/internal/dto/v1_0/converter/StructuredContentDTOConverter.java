@@ -372,8 +372,10 @@ public class StructuredContentDTOConverter
 						for (Map.Entry<Locale, String> entry :
 								ddmValueValues.entrySet()) {
 
+							Locale locale = entry.getKey();
+
 							map.put(
-								String.valueOf(entry.getKey()),
+								locale.toLanguageTag(),
 								_getValue(
 									ddmFormField, dlAppService, dlURLHelper,
 									journalArticleService, layoutLocalService,

@@ -36,7 +36,9 @@ public class LocalizedMapUtil {
 		Map<String, String> map = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry : localizedMap.entrySet()) {
-			map.put(String.valueOf(entry.getKey()), entry.getValue());
+			Locale locale = entry.getKey();
+
+			map.put(locale.toLanguageTag(), entry.getValue());
 		}
 
 		return map;

@@ -83,12 +83,6 @@ public class CTTableMapperTest {
 		ToolDependencies.wireBasic();
 
 		DBManagerUtil.setDB(DBType.HYPERSONIC, null);
-	}
-
-	@Before
-	public void setUp() {
-		PortalCacheHelperUtil.clearPortalCaches(
-			PortalCacheManagerNames.MULTI_VM);
 
 		MappingSqlQueryFactoryUtil mappingSqlQueryFactoryUtil =
 			new MappingSqlQueryFactoryUtil();
@@ -101,13 +95,14 @@ public class CTTableMapperTest {
 		SqlUpdateFactoryUtil sqlUpdateFactoryUtil = new SqlUpdateFactoryUtil();
 
 		sqlUpdateFactoryUtil.setSqlUpdateFactory(new MockSqlUpdateFactory());
+	}
 
-		_dataSource = (DataSource)ProxyUtil.newProxyInstance(
-			CTTableMapperTest.class.getClassLoader(),
-			new Class<?>[] {DataSource.class},
-			(proxy, method, args) -> {
-				throw new UnsupportedOperationException();
-			});
+	@Before
+	public void setUp() {
+		_mappingStore.clear();
+
+		PortalCacheHelperUtil.clearPortalCaches(
+			PortalCacheManagerNames.MULTI_VM);
 
 		_leftBasePersistence = new MockBasePersistence<>(Left.class);
 
@@ -1612,14 +1607,758 @@ public class CTTableMapperTest {
 
 	private static final String _TABLE_NAME = "Lefts_Rights";
 
+	private static final DataSource _dataSource =
+		(DataSource)ProxyUtil.newProxyInstance(
+			CTTableMapperTest.class.getClassLoader(),
+			new Class<?>[] {DataSource.class},
+			(proxy, method, args) -> {
+				throw new UnsupportedOperationException();
+			});
+	private static final MultiKeyMap _mappingStore = new MultiKeyMap();
+
 	private CTTableMapper<Left, Right> _ctTableMapper;
-	private DataSource _dataSource;
 	private MockBasePersistence<Left> _leftBasePersistence;
-	private final MultiKeyMap _mappingStore = new MultiKeyMap();
 	private MockBasePersistence<Right> _rightBasePersistence;
 
 	private static class LeftRecorderModelListener
 		extends RecorderModelListener<Left> {
+	}
+
+	private static class MockAddCTTableMappingSqlUpdate implements SqlUpdate {
+
+		public MockAddCTTableMappingSqlUpdate(DataSource dataSource) {
+			Assert.assertSame(_dataSource, dataSource);
+		}
+
+		public void setDatabaseError(boolean databaseError) {
+			_databaseError = databaseError;
+		}
+
+		@Override
+		public int update(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 5, params.length);
+
+			Assert.assertSame(Long.class, params[0].getClass());
+			Assert.assertSame(Long.class, params[1].getClass());
+			Assert.assertSame(Long.class, params[2].getClass());
+			Assert.assertSame(Long.class, params[3].getClass());
+			Assert.assertSame(Boolean.class, params[4].getClass());
+
+			if (_databaseError) {
+				throw new RuntimeException("Database error");
+			}
+
+			Long leftPrimaryKey = (Long)params[1];
+			Long rightPrimaryKey = (Long)params[2];
+			Long ctCollectionId = (Long)params[3];
+
+			if (_mappingStore.containsKey(
+					leftPrimaryKey, rightPrimaryKey, ctCollectionId)) {
+
+				throw new RuntimeException(
+					StringBundler.concat(
+						"Unique key violation for left primary key ",
+						leftPrimaryKey, " and right primary key ",
+						rightPrimaryKey, " and ctcollectionId ",
+						ctCollectionId));
+			}
+
+			Boolean ctChangeType = (Boolean)params[4];
+
+			_mappingStore.put(
+				leftPrimaryKey, rightPrimaryKey, ctCollectionId, ctChangeType);
+
+			return 1;
+		}
+
+		private boolean _databaseError;
+
+	}
+
+	private static class MockAddTableMappingSqlUpdate implements SqlUpdate {
+
+		public MockAddTableMappingSqlUpdate(
+			DataSource dataSource, ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {
+					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT
+				},
+				paramSetters);
+		}
+
+		@Override
+		public int update(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 3, params.length);
+
+			Assert.assertSame(Long.class, params[0].getClass());
+			Assert.assertSame(Long.class, params[1].getClass());
+			Assert.assertSame(Long.class, params[2].getClass());
+
+			Long leftPrimaryKey = (Long)params[1];
+			Long rightPrimaryKey = (Long)params[2];
+
+			if (_mappingStore.containsKey(
+					leftPrimaryKey, rightPrimaryKey, 0L)) {
+
+				throw new RuntimeException(
+					StringBundler.concat(
+						"Unique key violation for left primary key ",
+						leftPrimaryKey, " and right primary key ",
+						rightPrimaryKey, "and ctcollectionId 0"));
+			}
+
+			_mappingStore.put(leftPrimaryKey, rightPrimaryKey, 0L, null);
+
+			return 1;
+		}
+
+	}
+
+	private static class MockContainsCTTableMappingSQLQuery
+		implements MappingSqlQuery<Integer> {
+
+		public MockContainsCTTableMappingSQLQuery(
+			DataSource dataSource, RowMapper<Integer> rowMapper,
+			ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {
+					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
+					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT
+				},
+				paramSetters);
+			Assert.assertSame(RowMapper.COUNT, rowMapper);
+		}
+
+		@Override
+		public List<Integer> execute(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 6, params.length);
+
+			Assert.assertSame(Long.class, params[0].getClass());
+			Assert.assertSame(Long.class, params[1].getClass());
+			Assert.assertSame(Long.class, params[2].getClass());
+
+			if (_databaseError) {
+				throw new RuntimeException("Database error");
+			}
+
+			if (_emptyResultSet) {
+				return Collections.emptyList();
+			}
+
+			Long leftPrimaryKey = (Long)params[0];
+			Long rightPrimaryKey = (Long)params[1];
+
+			Long ctCollectionId = (Long)params[2];
+
+			Boolean ctChangeType = (Boolean)_mappingStore.get(
+				leftPrimaryKey, rightPrimaryKey, ctCollectionId);
+
+			boolean inProduction = _mappingStore.containsKey(
+				leftPrimaryKey, rightPrimaryKey, 0L);
+
+			if (((ctChangeType != null) && ctChangeType) ||
+				(inProduction && (ctChangeType == null))) {
+
+				return Collections.singletonList(1);
+			}
+
+			return Collections.singletonList(0);
+		}
+
+		public void setDatabaseError(boolean databaseError) {
+			_databaseError = databaseError;
+		}
+
+		public void setEmptyResultSet(boolean emptyResultSet) {
+			_emptyResultSet = emptyResultSet;
+		}
+
+		private boolean _databaseError;
+		private boolean _emptyResultSet;
+
+	}
+
+	private static class MockContainsTableMappingSQLQuery
+		implements MappingSqlQuery<Integer> {
+
+		public MockContainsTableMappingSQLQuery(
+			DataSource dataSource, ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT, ParamSetter.BIGINT},
+				paramSetters);
+		}
+
+		@Override
+		public List<Integer> execute(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 2, params.length);
+
+			Assert.assertSame(Long.class, params[0].getClass());
+			Assert.assertSame(Long.class, params[1].getClass());
+
+			if (_databaseError) {
+				throw new RuntimeException("Database error");
+			}
+
+			if (_emptyResultSet) {
+				return Collections.emptyList();
+			}
+
+			Long leftPrimaryKey = (Long)params[0];
+			Long rightPrimaryKey = (Long)params[1];
+
+			if (_mappingStore.containsKey(
+					leftPrimaryKey, rightPrimaryKey, 0L)) {
+
+				return Collections.singletonList(1);
+			}
+
+			return Collections.singletonList(0);
+		}
+
+		public void setDatabaseError(boolean databaseError) {
+			_databaseError = databaseError;
+		}
+
+		public void setEmptyResultSet(boolean emptyResultSet) {
+			_emptyResultSet = emptyResultSet;
+		}
+
+		private boolean _databaseError;
+		private boolean _emptyResultSet;
+
+	}
+
+	private static class MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate
+		implements SqlUpdate {
+
+		public MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
+			DataSource dataSource, ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
+		}
+
+		@Override
+		public int update(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 1, params.length);
+
+			Assert.assertSame(Long.class, params[0].getClass());
+
+			Long leftPrimaryKey = (Long)params[0];
+
+			List<MultiKey> removeKeys = new ArrayList<>();
+
+			for (Object object : _mappingStore.keySet()) {
+				MultiKey multiKey = (MultiKey)object;
+
+				Long ctCollectionId = (Long)multiKey.getKey(2);
+
+				if (leftPrimaryKey.equals(multiKey.getKey(0)) &&
+					ctCollectionId.equals(0L)) {
+
+					removeKeys.add(multiKey);
+				}
+			}
+
+			for (MultiKey removeKey : removeKeys) {
+				_mappingStore.remove(removeKey);
+			}
+
+			return removeKeys.size();
+		}
+
+	}
+
+	private static class MockDeleteRightPrimaryKeyTableMappingsSqlUpdate
+		implements SqlUpdate {
+
+		public MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
+			DataSource dataSource, ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
+		}
+
+		@Override
+		public int update(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 1, params.length);
+
+			Assert.assertSame(Long.class, params[0].getClass());
+
+			Long rightPrimaryKey = (Long)params[0];
+
+			List<MultiKey> removeKeys = new ArrayList<>();
+
+			for (Object object : _mappingStore.keySet()) {
+				MultiKey multiKey = (MultiKey)object;
+
+				Long ctCollectionId = (Long)multiKey.getKey(2);
+
+				if (rightPrimaryKey.equals(multiKey.getKey(1)) &&
+					ctCollectionId.equals(0L)) {
+
+					removeKeys.add(multiKey);
+				}
+			}
+
+			for (MultiKey removeKey : removeKeys) {
+				_mappingStore.remove(removeKey);
+			}
+
+			return removeKeys.size();
+		}
+
+	}
+
+	private static class MockDeleteTableMappingSqlUpdate implements SqlUpdate {
+
+		public MockDeleteTableMappingSqlUpdate(
+			DataSource dataSource, ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT, ParamSetter.BIGINT},
+				paramSetters);
+		}
+
+		@Override
+		public int update(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 2, params.length);
+
+			Assert.assertSame(Long.class, params[0].getClass());
+			Assert.assertSame(Long.class, params[1].getClass());
+
+			Long leftPrimaryKey = (Long)params[0];
+			Long rightPrimaryKey = (Long)params[1];
+
+			if (_mappingStore.containsKey(
+					leftPrimaryKey, rightPrimaryKey, 0L)) {
+
+				_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, 0L);
+
+				return 1;
+			}
+
+			return 0;
+		}
+
+	}
+
+	private static class MockGetCTLeftPrimaryKeysSqlQuery
+		implements MappingSqlQuery<Long> {
+
+		public MockGetCTLeftPrimaryKeysSqlQuery(
+			DataSource dataSource, RowMapper<Long> rowMapper,
+			ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {
+					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
+					ParamSetter.BIGINT
+				},
+				paramSetters);
+			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
+		}
+
+		@Override
+		public List<Long> execute(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 4, params.length);
+
+			Assert.assertSame(Long.class, params[0].getClass());
+			Assert.assertSame(Long.class, params[1].getClass());
+			Assert.assertSame(Long.class, params[2].getClass());
+			Assert.assertSame(Long.class, params[3].getClass());
+
+			if (_databaseError) {
+				throw new RuntimeException("Database error");
+			}
+
+			Long rightPrimaryKey = (Long)params[0];
+			Long ctCollectionId = (Long)params[2];
+
+			List<Long> leftPrimaryKeysList = new ArrayList<>();
+
+			for (Object object : _mappingStore.keySet()) {
+				MultiKey multiKey = (MultiKey)object;
+
+				if (rightPrimaryKey.equals(multiKey.getKey(1))) {
+					Long leftPrimaryKey = (Long)multiKey.getKey(0);
+
+					Boolean ctChangeType = (Boolean)_mappingStore.get(
+						leftPrimaryKey, rightPrimaryKey, ctCollectionId);
+					boolean inProduction = _mappingStore.containsKey(
+						leftPrimaryKey, rightPrimaryKey, 0L);
+
+					if ((((ctChangeType != null) && ctChangeType) ||
+						 (inProduction && (ctChangeType == null))) &&
+						!leftPrimaryKeysList.contains(leftPrimaryKey)) {
+
+						leftPrimaryKeysList.add(leftPrimaryKey);
+					}
+				}
+			}
+
+			return leftPrimaryKeysList;
+		}
+
+		public void setDatabaseError(boolean databaseError) {
+			_databaseError = databaseError;
+		}
+
+		private boolean _databaseError;
+
+	}
+
+	private static class MockGetCTRightPrimaryKeysSqlQuery
+		implements MappingSqlQuery<Long> {
+
+		public MockGetCTRightPrimaryKeysSqlQuery(
+			DataSource dataSource, RowMapper<Long> rowMapper,
+			ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {
+					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
+					ParamSetter.BIGINT
+				},
+				paramSetters);
+			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
+		}
+
+		@Override
+		public List<Long> execute(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 4, params.length);
+
+			Assert.assertSame(Long.class, params[0].getClass());
+			Assert.assertSame(Long.class, params[1].getClass());
+			Assert.assertSame(Long.class, params[2].getClass());
+			Assert.assertSame(Long.class, params[3].getClass());
+
+			if (_databaseError) {
+				throw new RuntimeException("Database error");
+			}
+
+			Long leftPrimaryKey = (Long)params[0];
+			Long ctCollectionId = (Long)params[2];
+
+			List<Long> rightPrimaryKeysList = new ArrayList<>();
+
+			for (Object object : _mappingStore.keySet()) {
+				MultiKey multiKey = (MultiKey)object;
+
+				if (leftPrimaryKey.equals(multiKey.getKey(0))) {
+					Long rightPrimaryKey = (Long)multiKey.getKey(1);
+
+					Boolean ctChangeType = (Boolean)_mappingStore.get(
+						leftPrimaryKey, rightPrimaryKey, ctCollectionId);
+					boolean inProduction = _mappingStore.containsKey(
+						leftPrimaryKey, rightPrimaryKey, 0L);
+
+					if ((((ctChangeType != null) && ctChangeType) ||
+						 (inProduction && (ctChangeType == null))) &&
+						!rightPrimaryKeysList.contains(rightPrimaryKey)) {
+
+						rightPrimaryKeysList.add(rightPrimaryKey);
+					}
+				}
+			}
+
+			return rightPrimaryKeysList;
+		}
+
+		public void setDatabaseError(boolean databaseError) {
+			_databaseError = databaseError;
+		}
+
+		private boolean _databaseError;
+
+	}
+
+	private static class MockGetLeftPrimaryKeysSqlQuery
+		implements MappingSqlQuery<Long> {
+
+		public MockGetLeftPrimaryKeysSqlQuery(
+			DataSource dataSource, RowMapper<Long> rowMapper,
+			ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
+			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
+		}
+
+		@Override
+		public List<Long> execute(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 1, params.length);
+
+			Assert.assertSame(Long.class, params[0].getClass());
+
+			Long rightPrimaryKey = (Long)params[0];
+
+			List<Long> leftPrimaryKeysList = new ArrayList<>();
+
+			for (Object object : _mappingStore.keySet()) {
+				MultiKey multiKey = (MultiKey)object;
+
+				Long ctCollectionId = (Long)multiKey.getKey(2);
+
+				if (rightPrimaryKey.equals(multiKey.getKey(1)) &&
+					ctCollectionId.equals(0L)) {
+
+					leftPrimaryKeysList.add((Long)multiKey.getKey(0));
+				}
+			}
+
+			return leftPrimaryKeysList;
+		}
+
+	}
+
+	private static class MockGetRightPrimaryKeysSqlQuery
+		implements MappingSqlQuery<Long> {
+
+		public MockGetRightPrimaryKeysSqlQuery(
+			DataSource dataSource, RowMapper<Long> rowMapper,
+			ParamSetter... paramSetters) {
+
+			Assert.assertSame(_dataSource, dataSource);
+			Assert.assertArrayEquals(
+				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
+			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
+		}
+
+		@Override
+		public List<Long> execute(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 1, params.length);
+
+			Assert.assertSame(Long.class, params[0].getClass());
+
+			Long leftPrimaryKey = (Long)params[0];
+
+			List<Long> rightPrimaryKeysList = new ArrayList<>();
+
+			for (Object object : _mappingStore.keySet()) {
+				MultiKey multiKey = (MultiKey)object;
+
+				Long ctCollectionId = (Long)multiKey.getKey(2);
+
+				if (leftPrimaryKey.equals(multiKey.getKey(0)) &&
+					ctCollectionId.equals(0L)) {
+
+					rightPrimaryKeysList.add((Long)multiKey.getKey(1));
+				}
+			}
+
+			return rightPrimaryKeysList;
+		}
+
+	}
+
+	private static class MockMappingSqlQueryFactory
+		implements MappingSqlQueryFactory {
+
+		@Override
+		public <T> MappingSqlQuery<T> getMappingSqlQuery(
+			DataSource dataSource, String sql, RowMapper<T> rowMapper,
+			ParamSetter... paramSetters) {
+
+			if (sql.equals(
+					StringBundler.concat(
+						"SELECT ", _LEFT_COLUMN_NAME, " FROM ", _TABLE_NAME,
+						" WHERE ", _RIGHT_COLUMN_NAME, " = ? AND ",
+						"ctCollectionId = 0"))) {
+
+				return (MappingSqlQuery<T>)new MockGetLeftPrimaryKeysSqlQuery(
+					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
+			}
+
+			if (sql.equals(
+					StringBundler.concat(
+						"SELECT ", _RIGHT_COLUMN_NAME, " FROM ", _TABLE_NAME,
+						" WHERE ", _LEFT_COLUMN_NAME, " = ? AND ",
+						"ctCollectionId = 0"))) {
+
+				return (MappingSqlQuery<T>)new MockGetRightPrimaryKeysSqlQuery(
+					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
+			}
+
+			if (sql.equals(
+					StringBundler.concat(
+						"SELECT * FROM ", _TABLE_NAME, " WHERE ",
+						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
+						" = ? AND ctCollectionId = 0"))) {
+
+				return (MappingSqlQuery<T>)new MockContainsTableMappingSQLQuery(
+					dataSource, paramSetters);
+			}
+
+			if (sql.equals(
+					StringBundler.concat(
+						"SELECT * FROM ", _TABLE_NAME, " WHERE ",
+						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
+						" = ? AND (ctCollectionId = 0 OR ctCollectionId = ?) ",
+						"AND (ctChangeType is NULL or ctChangeType = true) ",
+						"AND NOT EXISTS (SELECT * FROM ", _TABLE_NAME,
+						" WHERE ", _LEFT_COLUMN_NAME, " = ? AND ",
+						_RIGHT_COLUMN_NAME, " = ? AND ctCollectionId = ? AND ",
+						"ctChangeType = false)"))) {
+
+				return (MappingSqlQuery<T>)
+					new MockContainsCTTableMappingSQLQuery(
+						dataSource, RowMapper.COUNT, paramSetters);
+			}
+
+			if (sql.equals(
+					StringBundler.concat(
+						"SELECT DISTINCT (", _LEFT_COLUMN_NAME, ") FROM ",
+						_TABLE_NAME, " WHERE (", _RIGHT_COLUMN_NAME,
+						" = ? AND ", _LEFT_COLUMN_NAME, " NOT IN (SELECT ",
+						_LEFT_COLUMN_NAME, " FROM ", _TABLE_NAME, " WHERE ",
+						_RIGHT_COLUMN_NAME, " = ? AND ctCollectionId = ? AND ",
+						"ctChangeType = false) AND ctCollectionId = 0) OR ",
+						"(ctCollectionId = ? AND ctChangeType = true)"))) {
+
+				return (MappingSqlQuery<T>)new MockGetCTLeftPrimaryKeysSqlQuery(
+					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
+			}
+
+			if (sql.equals(
+					StringBundler.concat(
+						"SELECT DISTINCT (", _RIGHT_COLUMN_NAME, ") FROM ",
+						_TABLE_NAME, " WHERE (", _LEFT_COLUMN_NAME, " = ? AND ",
+						_RIGHT_COLUMN_NAME, " NOT IN (SELECT ",
+						_RIGHT_COLUMN_NAME, " FROM ", _TABLE_NAME, " WHERE ",
+						_LEFT_COLUMN_NAME, " = ? AND ctCollectionId = ? AND ",
+						"ctChangeType = false) AND ctCollectionId = 0) OR ",
+						"(ctCollectionId = ? AND ctChangeType = true)"))) {
+
+				return (MappingSqlQuery<T>)
+					new MockGetCTRightPrimaryKeysSqlQuery(
+						dataSource, RowMapper.PRIMARY_KEY, paramSetters);
+			}
+
+			throw new UnsupportedOperationException(sql);
+		}
+
+	}
+
+	private static class MockSqlUpdateFactory implements SqlUpdateFactory {
+
+		@Override
+		public SqlUpdate getSqlUpdate(
+			DataSource dataSource, String sql, ParamSetter... paramSetters) {
+
+			if (sql.equals(
+					StringBundler.concat(
+						"INSERT INTO ", _TABLE_NAME, " (", _COMPANY_COLUMN_NAME,
+						", ", _LEFT_COLUMN_NAME, ", ", _RIGHT_COLUMN_NAME,
+						", ctCollectionId, ctChangeType) VALUES (?, ?, ?, ?, ",
+						"?)"))) {
+
+				return new MockAddCTTableMappingSqlUpdate(dataSource);
+			}
+
+			if (sql.equals(
+					StringBundler.concat(
+						"INSERT INTO ", _TABLE_NAME, " (", _COMPANY_COLUMN_NAME,
+						", ", _LEFT_COLUMN_NAME, ", ", _RIGHT_COLUMN_NAME,
+						", ctCollectionId) VALUES (?, ?, ?, 0)"))) {
+
+				return new MockAddTableMappingSqlUpdate(
+					dataSource, paramSetters);
+			}
+
+			if (sql.equals(
+					StringBundler.concat(
+						"DELETE FROM ", _TABLE_NAME, " WHERE ",
+						_LEFT_COLUMN_NAME, " = ? AND ctCollectionId = 0"))) {
+
+				return new MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
+					dataSource, paramSetters);
+			}
+
+			if (sql.equals(
+					StringBundler.concat(
+						"DELETE FROM ", _TABLE_NAME, " WHERE ",
+						_RIGHT_COLUMN_NAME, " = ? AND ctCollectionId = 0"))) {
+
+				return new MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
+					dataSource, paramSetters);
+			}
+
+			if (sql.equals(
+					StringBundler.concat(
+						"DELETE FROM ", _TABLE_NAME, " WHERE ",
+						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
+						" = ? AND ctCollectionId = 0"))) {
+
+				return new MockDeleteTableMappingSqlUpdate(
+					dataSource, paramSetters);
+			}
+
+			if (sql.equals(
+					StringBundler.concat(
+						"UPDATE ", _TABLE_NAME, " SET ctChangeType = ? WHERE ",
+						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
+						" = ? AND ctCollectionId = ?"))) {
+
+				return new MockUpdateCTTableMappingSqlUpdate(dataSource);
+			}
+
+			throw new UnsupportedOperationException(sql);
+		}
+
+	}
+
+	private static class MockUpdateCTTableMappingSqlUpdate
+		implements SqlUpdate {
+
+		public MockUpdateCTTableMappingSqlUpdate(DataSource dataSource) {
+			Assert.assertSame(_dataSource, dataSource);
+		}
+
+		@Override
+		public int update(Object... params) {
+			Assert.assertEquals(Arrays.toString(params), 4, params.length);
+
+			Assert.assertSame(Boolean.class, params[0].getClass());
+			Assert.assertSame(Long.class, params[1].getClass());
+			Assert.assertSame(Long.class, params[2].getClass());
+			Assert.assertSame(Long.class, params[3].getClass());
+
+			Boolean ctChangeType = (Boolean)params[0];
+			Long leftPrimaryKey = (Long)params[1];
+			Long rightPrimaryKey = (Long)params[2];
+			Long ctCollectionId = (Long)params[3];
+
+			if (_mappingStore.containsKey(
+					leftPrimaryKey, rightPrimaryKey, ctCollectionId)) {
+
+				Boolean currentChangeType = (Boolean)_mappingStore.get(
+					leftPrimaryKey, rightPrimaryKey, ctCollectionId);
+
+				if (currentChangeType != ctChangeType) {
+					_mappingStore.put(
+						leftPrimaryKey, rightPrimaryKey, ctCollectionId,
+						ctChangeType);
+
+					return 1;
+				}
+			}
+
+			return 0;
+		}
+
 	}
 
 	private static class RecorderModelListener<T extends BaseModel<T>>
@@ -1759,98 +2498,6 @@ public class CTTableMapperTest {
 	private interface LeftModel extends BaseModel<Left> {
 	}
 
-	private class MockAddCTTableMappingSqlUpdate implements SqlUpdate {
-
-		public MockAddCTTableMappingSqlUpdate(DataSource dataSource) {
-			Assert.assertSame(_dataSource, dataSource);
-		}
-
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
-		@Override
-		public int update(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 5, params.length);
-
-			Assert.assertSame(Long.class, params[0].getClass());
-			Assert.assertSame(Long.class, params[1].getClass());
-			Assert.assertSame(Long.class, params[2].getClass());
-			Assert.assertSame(Long.class, params[3].getClass());
-			Assert.assertSame(Boolean.class, params[4].getClass());
-
-			if (_databaseError) {
-				throw new RuntimeException("Database error");
-			}
-
-			Long leftPrimaryKey = (Long)params[1];
-			Long rightPrimaryKey = (Long)params[2];
-			Long ctCollectionId = (Long)params[3];
-
-			if (_mappingStore.containsKey(
-					leftPrimaryKey, rightPrimaryKey, ctCollectionId)) {
-
-				throw new RuntimeException(
-					StringBundler.concat(
-						"Unique key violation for left primary key ",
-						leftPrimaryKey, " and right primary key ",
-						rightPrimaryKey, " and ctcollectionId ",
-						ctCollectionId));
-			}
-
-			Boolean ctChangeType = (Boolean)params[4];
-
-			_mappingStore.put(
-				leftPrimaryKey, rightPrimaryKey, ctCollectionId, ctChangeType);
-
-			return 1;
-		}
-
-		private boolean _databaseError;
-
-	}
-
-	private class MockAddTableMappingSqlUpdate implements SqlUpdate {
-
-		public MockAddTableMappingSqlUpdate(
-			DataSource dataSource, ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {
-					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT
-				},
-				paramSetters);
-		}
-
-		@Override
-		public int update(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 3, params.length);
-
-			Assert.assertSame(Long.class, params[0].getClass());
-			Assert.assertSame(Long.class, params[1].getClass());
-			Assert.assertSame(Long.class, params[2].getClass());
-
-			Long leftPrimaryKey = (Long)params[1];
-			Long rightPrimaryKey = (Long)params[2];
-
-			if (_mappingStore.containsKey(
-					leftPrimaryKey, rightPrimaryKey, 0L)) {
-
-				throw new RuntimeException(
-					StringBundler.concat(
-						"Unique key violation for left primary key ",
-						leftPrimaryKey, " and right primary key ",
-						rightPrimaryKey, "and ctcollectionId 0"));
-			}
-
-			_mappingStore.put(leftPrimaryKey, rightPrimaryKey, 0L, null);
-
-			return 1;
-		}
-
-	}
-
 	private class MockBasePersistence<T extends BaseModel<T>>
 		extends BasePersistenceImpl<T> {
 
@@ -1915,649 +2562,6 @@ public class CTTableMapperTest {
 		}
 
 		private final ParamSetter[] _paramSetters;
-
-	}
-
-	private class MockContainsCTTableMappingSQLQuery
-		implements MappingSqlQuery<Integer> {
-
-		public MockContainsCTTableMappingSQLQuery(
-			DataSource dataSource, RowMapper<Integer> rowMapper,
-			ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {
-					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
-					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT
-				},
-				paramSetters);
-			Assert.assertSame(RowMapper.COUNT, rowMapper);
-		}
-
-		@Override
-		public List<Integer> execute(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 6, params.length);
-
-			Assert.assertSame(Long.class, params[0].getClass());
-			Assert.assertSame(Long.class, params[1].getClass());
-			Assert.assertSame(Long.class, params[2].getClass());
-
-			if (_databaseError) {
-				throw new RuntimeException("Database error");
-			}
-
-			if (_emptyResultSet) {
-				return Collections.emptyList();
-			}
-
-			Long leftPrimaryKey = (Long)params[0];
-			Long rightPrimaryKey = (Long)params[1];
-
-			Long ctCollectionId = (Long)params[2];
-
-			Boolean ctChangeType = (Boolean)_mappingStore.get(
-				leftPrimaryKey, rightPrimaryKey, ctCollectionId);
-
-			boolean inProduction = _mappingStore.containsKey(
-				leftPrimaryKey, rightPrimaryKey, 0L);
-
-			if (((ctChangeType != null) && ctChangeType) ||
-				(inProduction && (ctChangeType == null))) {
-
-				return Collections.singletonList(1);
-			}
-
-			return Collections.singletonList(0);
-		}
-
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
-		public void setEmptyResultSet(boolean emptyResultSet) {
-			_emptyResultSet = emptyResultSet;
-		}
-
-		private boolean _databaseError;
-		private boolean _emptyResultSet;
-
-	}
-
-	private class MockContainsTableMappingSQLQuery
-		implements MappingSqlQuery<Integer> {
-
-		public MockContainsTableMappingSQLQuery(
-			DataSource dataSource, ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {ParamSetter.BIGINT, ParamSetter.BIGINT},
-				paramSetters);
-		}
-
-		@Override
-		public List<Integer> execute(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 2, params.length);
-
-			Assert.assertSame(Long.class, params[0].getClass());
-			Assert.assertSame(Long.class, params[1].getClass());
-
-			if (_databaseError) {
-				throw new RuntimeException("Database error");
-			}
-
-			if (_emptyResultSet) {
-				return Collections.emptyList();
-			}
-
-			Long leftPrimaryKey = (Long)params[0];
-			Long rightPrimaryKey = (Long)params[1];
-
-			if (_mappingStore.containsKey(
-					leftPrimaryKey, rightPrimaryKey, 0L)) {
-
-				return Collections.singletonList(1);
-			}
-
-			return Collections.singletonList(0);
-		}
-
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
-		public void setEmptyResultSet(boolean emptyResultSet) {
-			_emptyResultSet = emptyResultSet;
-		}
-
-		private boolean _databaseError;
-		private boolean _emptyResultSet;
-
-	}
-
-	private class MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate
-		implements SqlUpdate {
-
-		public MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
-			DataSource dataSource, ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
-		}
-
-		@Override
-		public int update(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 1, params.length);
-
-			Assert.assertSame(Long.class, params[0].getClass());
-
-			Long leftPrimaryKey = (Long)params[0];
-
-			List<MultiKey> removeKeys = new ArrayList<>();
-
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
-
-				Long ctCollectionId = (Long)multiKey.getKey(2);
-
-				if (leftPrimaryKey.equals(multiKey.getKey(0)) &&
-					ctCollectionId.equals(0L)) {
-
-					removeKeys.add(multiKey);
-				}
-			}
-
-			for (MultiKey removeKey : removeKeys) {
-				_mappingStore.remove(removeKey);
-			}
-
-			return removeKeys.size();
-		}
-
-	}
-
-	private class MockDeleteRightPrimaryKeyTableMappingsSqlUpdate
-		implements SqlUpdate {
-
-		public MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
-			DataSource dataSource, ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
-		}
-
-		@Override
-		public int update(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 1, params.length);
-
-			Assert.assertSame(Long.class, params[0].getClass());
-
-			Long rightPrimaryKey = (Long)params[0];
-
-			List<MultiKey> removeKeys = new ArrayList<>();
-
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
-
-				Long ctCollectionId = (Long)multiKey.getKey(2);
-
-				if (rightPrimaryKey.equals(multiKey.getKey(1)) &&
-					ctCollectionId.equals(0L)) {
-
-					removeKeys.add(multiKey);
-				}
-			}
-
-			for (MultiKey removeKey : removeKeys) {
-				_mappingStore.remove(removeKey);
-			}
-
-			return removeKeys.size();
-		}
-
-	}
-
-	private class MockDeleteTableMappingSqlUpdate implements SqlUpdate {
-
-		public MockDeleteTableMappingSqlUpdate(
-			DataSource dataSource, ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {ParamSetter.BIGINT, ParamSetter.BIGINT},
-				paramSetters);
-		}
-
-		@Override
-		public int update(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 2, params.length);
-
-			Assert.assertSame(Long.class, params[0].getClass());
-			Assert.assertSame(Long.class, params[1].getClass());
-
-			Long leftPrimaryKey = (Long)params[0];
-			Long rightPrimaryKey = (Long)params[1];
-
-			if (_mappingStore.containsKey(
-					leftPrimaryKey, rightPrimaryKey, 0L)) {
-
-				_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, 0L);
-
-				return 1;
-			}
-
-			return 0;
-		}
-
-	}
-
-	private class MockGetCTLeftPrimaryKeysSqlQuery
-		implements MappingSqlQuery<Long> {
-
-		public MockGetCTLeftPrimaryKeysSqlQuery(
-			DataSource dataSource, RowMapper<Long> rowMapper,
-			ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {
-					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
-					ParamSetter.BIGINT
-				},
-				paramSetters);
-			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
-		}
-
-		@Override
-		public List<Long> execute(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 4, params.length);
-
-			Assert.assertSame(Long.class, params[0].getClass());
-			Assert.assertSame(Long.class, params[1].getClass());
-			Assert.assertSame(Long.class, params[2].getClass());
-			Assert.assertSame(Long.class, params[3].getClass());
-
-			if (_databaseError) {
-				throw new RuntimeException("Database error");
-			}
-
-			Long rightPrimaryKey = (Long)params[0];
-			Long ctCollectionId = (Long)params[2];
-
-			List<Long> leftPrimaryKeysList = new ArrayList<>();
-
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
-
-				if (rightPrimaryKey.equals(multiKey.getKey(1))) {
-					Long leftPrimaryKey = (Long)multiKey.getKey(0);
-
-					Boolean ctChangeType = (Boolean)_mappingStore.get(
-						leftPrimaryKey, rightPrimaryKey, ctCollectionId);
-					boolean inProduction = _mappingStore.containsKey(
-						leftPrimaryKey, rightPrimaryKey, 0L);
-
-					if ((((ctChangeType != null) && ctChangeType) ||
-						 (inProduction && (ctChangeType == null))) &&
-						!leftPrimaryKeysList.contains(leftPrimaryKey)) {
-
-						leftPrimaryKeysList.add(leftPrimaryKey);
-					}
-				}
-			}
-
-			return leftPrimaryKeysList;
-		}
-
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
-		private boolean _databaseError;
-
-	}
-
-	private class MockGetCTRightPrimaryKeysSqlQuery
-		implements MappingSqlQuery<Long> {
-
-		public MockGetCTRightPrimaryKeysSqlQuery(
-			DataSource dataSource, RowMapper<Long> rowMapper,
-			ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {
-					ParamSetter.BIGINT, ParamSetter.BIGINT, ParamSetter.BIGINT,
-					ParamSetter.BIGINT
-				},
-				paramSetters);
-			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
-		}
-
-		@Override
-		public List<Long> execute(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 4, params.length);
-
-			Assert.assertSame(Long.class, params[0].getClass());
-			Assert.assertSame(Long.class, params[1].getClass());
-			Assert.assertSame(Long.class, params[2].getClass());
-			Assert.assertSame(Long.class, params[3].getClass());
-
-			if (_databaseError) {
-				throw new RuntimeException("Database error");
-			}
-
-			Long leftPrimaryKey = (Long)params[0];
-			Long ctCollectionId = (Long)params[2];
-
-			List<Long> rightPrimaryKeysList = new ArrayList<>();
-
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
-
-				if (leftPrimaryKey.equals(multiKey.getKey(0))) {
-					Long rightPrimaryKey = (Long)multiKey.getKey(1);
-
-					Boolean ctChangeType = (Boolean)_mappingStore.get(
-						leftPrimaryKey, rightPrimaryKey, ctCollectionId);
-					boolean inProduction = _mappingStore.containsKey(
-						leftPrimaryKey, rightPrimaryKey, 0L);
-
-					if ((((ctChangeType != null) && ctChangeType) ||
-						 (inProduction && (ctChangeType == null))) &&
-						!rightPrimaryKeysList.contains(rightPrimaryKey)) {
-
-						rightPrimaryKeysList.add(rightPrimaryKey);
-					}
-				}
-			}
-
-			return rightPrimaryKeysList;
-		}
-
-		public void setDatabaseError(boolean databaseError) {
-			_databaseError = databaseError;
-		}
-
-		private boolean _databaseError;
-
-	}
-
-	private class MockGetLeftPrimaryKeysSqlQuery
-		implements MappingSqlQuery<Long> {
-
-		public MockGetLeftPrimaryKeysSqlQuery(
-			DataSource dataSource, RowMapper<Long> rowMapper,
-			ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
-			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
-		}
-
-		@Override
-		public List<Long> execute(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 1, params.length);
-
-			Assert.assertSame(Long.class, params[0].getClass());
-
-			Long rightPrimaryKey = (Long)params[0];
-
-			List<Long> leftPrimaryKeysList = new ArrayList<>();
-
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
-
-				Long ctCollectionId = (Long)multiKey.getKey(2);
-
-				if (rightPrimaryKey.equals(multiKey.getKey(1)) &&
-					ctCollectionId.equals(0L)) {
-
-					leftPrimaryKeysList.add((Long)multiKey.getKey(0));
-				}
-			}
-
-			return leftPrimaryKeysList;
-		}
-
-	}
-
-	private class MockGetRightPrimaryKeysSqlQuery
-		implements MappingSqlQuery<Long> {
-
-		public MockGetRightPrimaryKeysSqlQuery(
-			DataSource dataSource, RowMapper<Long> rowMapper,
-			ParamSetter... paramSetters) {
-
-			Assert.assertSame(_dataSource, dataSource);
-			Assert.assertArrayEquals(
-				new ParamSetter[] {ParamSetter.BIGINT}, paramSetters);
-			Assert.assertSame(RowMapper.PRIMARY_KEY, rowMapper);
-		}
-
-		@Override
-		public List<Long> execute(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 1, params.length);
-
-			Assert.assertSame(Long.class, params[0].getClass());
-
-			Long leftPrimaryKey = (Long)params[0];
-
-			List<Long> rightPrimaryKeysList = new ArrayList<>();
-
-			for (Object object : _mappingStore.keySet()) {
-				MultiKey multiKey = (MultiKey)object;
-
-				Long ctCollectionId = (Long)multiKey.getKey(2);
-
-				if (leftPrimaryKey.equals(multiKey.getKey(0)) &&
-					ctCollectionId.equals(0L)) {
-
-					rightPrimaryKeysList.add((Long)multiKey.getKey(1));
-				}
-			}
-
-			return rightPrimaryKeysList;
-		}
-
-	}
-
-	private class MockMappingSqlQueryFactory implements MappingSqlQueryFactory {
-
-		@Override
-		public <T> MappingSqlQuery<T> getMappingSqlQuery(
-			DataSource dataSource, String sql, RowMapper<T> rowMapper,
-			ParamSetter... paramSetters) {
-
-			if (sql.equals(
-					StringBundler.concat(
-						"SELECT ", _LEFT_COLUMN_NAME, " FROM ", _TABLE_NAME,
-						" WHERE ", _RIGHT_COLUMN_NAME, " = ? AND ",
-						"ctCollectionId = 0"))) {
-
-				return (MappingSqlQuery<T>)new MockGetLeftPrimaryKeysSqlQuery(
-					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"SELECT ", _RIGHT_COLUMN_NAME, " FROM ", _TABLE_NAME,
-						" WHERE ", _LEFT_COLUMN_NAME, " = ? AND ",
-						"ctCollectionId = 0"))) {
-
-				return (MappingSqlQuery<T>)new MockGetRightPrimaryKeysSqlQuery(
-					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"SELECT * FROM ", _TABLE_NAME, " WHERE ",
-						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
-						" = ? AND ctCollectionId = 0"))) {
-
-				return (MappingSqlQuery<T>)new MockContainsTableMappingSQLQuery(
-					dataSource, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"SELECT * FROM ", _TABLE_NAME, " WHERE ",
-						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
-						" = ? AND (ctCollectionId = 0 OR ctCollectionId = ?) ",
-						"AND (ctChangeType is NULL or ctChangeType = true) ",
-						"AND NOT EXISTS (SELECT * FROM ", _TABLE_NAME,
-						" WHERE ", _LEFT_COLUMN_NAME, " = ? AND ",
-						_RIGHT_COLUMN_NAME, " = ? AND ctCollectionId = ? AND ",
-						"ctChangeType = false)"))) {
-
-				return (MappingSqlQuery<T>)
-					new MockContainsCTTableMappingSQLQuery(
-						dataSource, RowMapper.COUNT, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"SELECT DISTINCT (", _LEFT_COLUMN_NAME, ") FROM ",
-						_TABLE_NAME, " WHERE (", _RIGHT_COLUMN_NAME,
-						" = ? AND ", _LEFT_COLUMN_NAME, " NOT IN (SELECT ",
-						_LEFT_COLUMN_NAME, " FROM ", _TABLE_NAME, " WHERE ",
-						_RIGHT_COLUMN_NAME, " = ? AND ctCollectionId = ? AND ",
-						"ctChangeType = false) AND ctCollectionId = 0) OR ",
-						"(ctCollectionId = ? AND ctChangeType = true)"))) {
-
-				return (MappingSqlQuery<T>)new MockGetCTLeftPrimaryKeysSqlQuery(
-					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"SELECT DISTINCT (", _RIGHT_COLUMN_NAME, ") FROM ",
-						_TABLE_NAME, " WHERE (", _LEFT_COLUMN_NAME, " = ? AND ",
-						_RIGHT_COLUMN_NAME, " NOT IN (SELECT ",
-						_RIGHT_COLUMN_NAME, " FROM ", _TABLE_NAME, " WHERE ",
-						_LEFT_COLUMN_NAME, " = ? AND ctCollectionId = ? AND ",
-						"ctChangeType = false) AND ctCollectionId = 0) OR ",
-						"(ctCollectionId = ? AND ctChangeType = true)"))) {
-
-				return (MappingSqlQuery<T>)
-					new MockGetCTRightPrimaryKeysSqlQuery(
-						dataSource, RowMapper.PRIMARY_KEY, paramSetters);
-			}
-
-			throw new UnsupportedOperationException(sql);
-		}
-
-	}
-
-	private class MockSqlUpdateFactory implements SqlUpdateFactory {
-
-		@Override
-		public SqlUpdate getSqlUpdate(
-			DataSource dataSource, String sql, ParamSetter... paramSetters) {
-
-			if (sql.equals(
-					StringBundler.concat(
-						"INSERT INTO ", _TABLE_NAME, " (", _COMPANY_COLUMN_NAME,
-						", ", _LEFT_COLUMN_NAME, ", ", _RIGHT_COLUMN_NAME,
-						", ctCollectionId, ctChangeType) VALUES (?, ?, ?, ?, ",
-						"?)"))) {
-
-				return new MockAddCTTableMappingSqlUpdate(dataSource);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"INSERT INTO ", _TABLE_NAME, " (", _COMPANY_COLUMN_NAME,
-						", ", _LEFT_COLUMN_NAME, ", ", _RIGHT_COLUMN_NAME,
-						", ctCollectionId) VALUES (?, ?, ?, 0)"))) {
-
-				return new MockAddTableMappingSqlUpdate(
-					dataSource, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"DELETE FROM ", _TABLE_NAME, " WHERE ",
-						_LEFT_COLUMN_NAME, " = ? AND ctCollectionId = 0"))) {
-
-				return new MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
-					dataSource, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"DELETE FROM ", _TABLE_NAME, " WHERE ",
-						_RIGHT_COLUMN_NAME, " = ? AND ctCollectionId = 0"))) {
-
-				return new MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
-					dataSource, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"DELETE FROM ", _TABLE_NAME, " WHERE ",
-						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
-						" = ? AND ctCollectionId = 0"))) {
-
-				return new MockDeleteTableMappingSqlUpdate(
-					dataSource, paramSetters);
-			}
-
-			if (sql.equals(
-					StringBundler.concat(
-						"UPDATE ", _TABLE_NAME, " SET ctChangeType = ? WHERE ",
-						_LEFT_COLUMN_NAME, " = ? AND ", _RIGHT_COLUMN_NAME,
-						" = ? AND ctCollectionId = ?"))) {
-
-				return new MockUpdateCTTableMappingSqlUpdate(dataSource);
-			}
-
-			throw new UnsupportedOperationException(sql);
-		}
-
-	}
-
-	private class MockUpdateCTTableMappingSqlUpdate implements SqlUpdate {
-
-		public MockUpdateCTTableMappingSqlUpdate(DataSource dataSource) {
-			Assert.assertSame(_dataSource, dataSource);
-		}
-
-		@Override
-		public int update(Object... params) {
-			Assert.assertEquals(Arrays.toString(params), 4, params.length);
-
-			Assert.assertSame(Boolean.class, params[0].getClass());
-			Assert.assertSame(Long.class, params[1].getClass());
-			Assert.assertSame(Long.class, params[2].getClass());
-			Assert.assertSame(Long.class, params[3].getClass());
-
-			Boolean ctChangeType = (Boolean)params[0];
-			Long leftPrimaryKey = (Long)params[1];
-			Long rightPrimaryKey = (Long)params[2];
-			Long ctCollectionId = (Long)params[3];
-
-			if (_mappingStore.containsKey(
-					leftPrimaryKey, rightPrimaryKey, ctCollectionId)) {
-
-				Boolean currentChangeType = (Boolean)_mappingStore.get(
-					leftPrimaryKey, rightPrimaryKey, ctCollectionId);
-
-				if (currentChangeType != ctChangeType) {
-					_mappingStore.put(
-						leftPrimaryKey, rightPrimaryKey, ctCollectionId,
-						ctChangeType);
-
-					return 1;
-				}
-			}
-
-			return 0;
-		}
 
 	}
 

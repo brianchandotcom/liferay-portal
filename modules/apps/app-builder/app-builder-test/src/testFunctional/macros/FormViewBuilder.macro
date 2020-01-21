@@ -149,6 +149,14 @@ definition {
 		AppBuilderAdmin.save();
 	}
 
+	macro searchObjectField {
+		Click(locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_BUTTON");
+
+		Type(
+			locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_BOX",
+			value1 = "${fieldValue}");
+	}
+
 	macro selectRadioOption {
 		Click(
 			key_fieldName = "${fieldName}",

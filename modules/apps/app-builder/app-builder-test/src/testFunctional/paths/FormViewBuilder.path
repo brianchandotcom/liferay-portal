@@ -207,6 +207,18 @@
 </tr>
 
 <tr>
+	<td>OBJECT_FIELD_SEARCH_BUTTON</td>
+	<td>//div[@class='autofit-col']//*[@class='lexicon-icon lexicon-icon-search']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>OBJECT_FIELD_SEARCH_BOX</td>
+	<td>//div[@class='autofit-row autofit-row-center']//input[@placeholder='Search...']</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>OBJECT_FIELD_BUTTON_DROPDOWN</td>
 	<td>//button[@class='dropdown-item' and contains(text(), '${key_fieldName}')]</td>
 	<td></td>

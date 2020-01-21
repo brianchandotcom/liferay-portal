@@ -2150,6 +2150,10 @@ definition {
 		FormViewBuilder.addFieldToObject(fieldName = "Text");
 
 		FormViewBuilder.addFieldToObject(fieldName = "Select from List");
+
+		FormViewBuilder.setFieldLabel(fieldLabel = "Testing Select List");
+
+		FormViewBuilder.searchObjectField(fieldValue = "Date of Birth");
 }
 
 	@description = "Search for an object in the object list"

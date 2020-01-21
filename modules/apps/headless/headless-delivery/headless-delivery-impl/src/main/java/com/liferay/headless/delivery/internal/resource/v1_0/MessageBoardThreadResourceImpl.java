@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -338,6 +339,16 @@ public class MessageBoardThreadResourceImpl
 		return _toMessageBoardThread(mbMessage);
 	}
 
+	private Map<String, Map<String, String>> _getActions(MBMessage mbMessage) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete", addAction("DELETE", mbMessage, "deleteMessageBoardThread")
+		).put(
+			"get", addAction("VIEW", mbMessage, "getMessageBoardThread")
+		).put(
+			"replace", addAction("UPDATE", mbMessage, "putMessageBoardThread")
+		).build();
+	}
+
 	private DynamicQuery _getDynamicQuery(
 		Date dateCreated, Date dateModified, Pagination pagination,
 		Sort[] sorts) {
@@ -399,6 +410,20 @@ public class MessageBoardThreadResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
+	private Map<String, Map<String, String>> _getListActions(long groupId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_MESSAGE", "postMessageBoardSectionMessageBoardThread",
+				"com.liferay.message.boards", groupId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getSiteMessageBoardThreadsPage",
+				"com.liferay.message.boards", groupId)
+		).build();
+	}
+
 	private Page<MessageBoardThread> _getSiteMessageBoardThreadsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
@@ -417,7 +442,7 @@ public class MessageBoardThreadResourceImpl
 			document -> _toMessageBoardThread(
 				_mbMessageService.getMessage(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+			sorts, (Map)_getListActions(siteId));
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
@@ -442,6 +467,7 @@ public class MessageBoardThreadResourceImpl
 
 		return new MessageBoardThread() {
 			{
+				actions = (Map)_getActions(mbMessage);
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						MBMessage.class.getName(), mbMessage.getMessageId()));

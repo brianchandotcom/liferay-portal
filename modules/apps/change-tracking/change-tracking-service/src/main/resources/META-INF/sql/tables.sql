@@ -1,3 +1,15 @@
+create table CTAutoResolutionInfo (
+	mvccVersion LONG default 0 not null,
+	ctAutoResolutionInfoId LONG not null primary key,
+	companyId LONG,
+	createDate DATE null,
+	ctCollectionId LONG,
+	modelClassNameId LONG,
+	sourceModelClassPK LONG,
+	targetModelClassPK LONG,
+	conflictIdentifier VARCHAR(500) null
+);
+
 create table CTCollection (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG not null primary key,

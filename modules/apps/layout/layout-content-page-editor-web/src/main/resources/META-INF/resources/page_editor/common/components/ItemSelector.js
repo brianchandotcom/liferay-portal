@@ -20,7 +20,7 @@ import React, {useContext} from 'react';
 import {ConfigContext} from '../../app/config/index';
 import {openInfoItemSelector} from '../../core/openInfoItemSelector';
 
-export default function ItemSelector({label, onItemSelect, selectedItem}) {
+export default function ItemSelector({label, onItemSelect, selectedItemTitle}) {
 	const config = useContext(ConfigContext);
 
 	return (
@@ -34,7 +34,7 @@ export default function ItemSelector({label, onItemSelect, selectedItem}) {
 					readOnly
 					sizing="sm"
 					type="text"
-					value={selectedItem.title || ''}
+					value={selectedItemTitle || ''}
 				/>
 
 				<ClayButton.Group>

@@ -32,7 +32,7 @@ export const ItemSelectorField = ({field, onValueSelect, value}) => {
 					onItemSelect={item => {
 						onValueSelect(field.name, item);
 					}}
-					selectedItem={value}
+					selectedItemTitle={value.title}
 				/>
 			</ClayForm.Group>
 

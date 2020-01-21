@@ -133,8 +133,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			try {
 				portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 			}
-			catch (WindowStateException wse) {
-				ReflectionUtil.throwException(wse);
+			catch (WindowStateException windowStateException) {
+				ReflectionUtil.throwException(windowStateException);
 			}
 
 			values.put("analyticsReportsPanelURL", portletURL.toString());
@@ -158,8 +158,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 				"iconTag",
 				iconTag.doTagAsString(httpServletRequest, httpServletResponse));
 		}
-		catch (JspException je) {
-			ReflectionUtil.throwException(je);
+		catch (JspException jspException) {
+			ReflectionUtil.throwException(jspException);
 		}
 
 		values.put("portletNamespace", _portletNamespace);
@@ -258,8 +258,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 			jspWriter.write("</div></div>");
 		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 	}
 

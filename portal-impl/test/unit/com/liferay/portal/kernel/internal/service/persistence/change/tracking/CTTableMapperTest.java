@@ -872,7 +872,7 @@ public class CTTableMapperTest {
 		Assert.assertFalse(
 			_ctTableMapper.deleteTableMapping(leftPrimaryKey, rightPrimaryKey));
 
-		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, 0L, null);
+		_mappingStore.remove(leftPrimaryKey, rightPrimaryKey, 0L);
 
 		// No such table mapping
 

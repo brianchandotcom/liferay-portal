@@ -388,6 +388,18 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSingleStatementClause() throws Exception {
+		test(
+			"SingleStatementClause.testjava",
+			new String[] {
+				"Use braces around if-statement clause",
+				"Use braces around while-statement clause",
+				"Use braces around for-statement clause"
+			},
+			new Integer[] {23, 28, 31});
+	}
+
+	@Test
 	public void testSortAnnotationParameters() throws Exception {
 		test("SortAnnotationParameters.testjava");
 	}

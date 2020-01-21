@@ -248,22 +248,21 @@ definition {
 			PageEditor.gotoSelectPanel(fragmentName = "Documents and Media");
 		}
 
-		task ("Assert only Documents and Media tab exist") {
+		task ("Assert only Documents and Media entry shown") {
 			AssertElementPresent(
-				key_navItem = "Documents and Media",
-				locator1 = "NavBar#NAV_ITEM_LINK");
+				key_card = "DM Document Title",
+				locator1 = "LexiconCard#CARD");
 
 			AssertElementNotPresent(
 				key_navItem = "Web Content",
 				locator1 = "NavBar#NAV_ITEM_LINK");
+
 			AssertElementNotPresent(
 				key_navItem = "Blogs",
 				locator1 = "NavBar#NAV_ITEM_LINK");
 		}
 
 		task ("Assert fragment display correctly") {
-			NavItem.click(navItem = "Documents and Media");
-
 			LexiconCard.clickCard(card = "DM Document Title");
 
 			AssertTextEquals(
@@ -369,8 +368,6 @@ definition {
 		}
 
 		task ("Assert only WC with text field shown in popup") {
-			NavItem.click(navItem = "Web Content");
-
 			AssertElementNotPresent(
 				key_listEntry = "Basic Web Content Title",
 				locator1 = "LexiconList#LIST_ENTRY_TITLE");
@@ -438,22 +435,21 @@ definition {
 			PageEditor.gotoSelectPanel(fragmentName = "Web Content");
 		}
 
-		task ("Assert only Web Content tab exist") {
+		task ("Assert only Web Content entry shown") {
 			AssertElementPresent(
-				key_navItem = "Web Content",
-				locator1 = "NavBar#NAV_ITEM_LINK");
+				key_listEntry = "Web Content Title",
+				locator1 = "LexiconList#LIST_ENTRY_TITLE");
 
 			AssertElementNotPresent(
 				key_navItem = "Documents and Media",
 				locator1 = "NavBar#NAV_ITEM_LINK");
+
 			AssertElementNotPresent(
 				key_navItem = "Blogs",
 				locator1 = "NavBar#NAV_ITEM_LINK");
 		}
 
 		task ("Assert fragment display correctly") {
-			NavItem.click(navItem = "Web Content");
-
 			AssertClick(
 				key_listEntry = "Web Content Title",
 				locator1 = "LexiconList#LIST_ENTRY_TITLE",

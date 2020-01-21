@@ -25,9 +25,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
@@ -36,7 +38,11 @@ import com.liferay.site.navigation.service.SiteNavigationMenuService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,6 +94,27 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
 	}
 
+	private Locale _getLocaleFromProperty(Map.Entry<String, String> property) {
+		return LocaleUtil.fromLanguageId(
+			StringUtil.replace(property.getKey(), "name_", ""));
+	}
+
+	private Map<Locale, String> _getLocalizedNamesFromProperties(
+		UnicodeProperties typeSettingsProperties) {
+
+		Set<Map.Entry<String, String>> properties =
+			typeSettingsProperties.entrySet();
+
+		Stream<Map.Entry<String, String>> propertiesStream =
+			properties.stream();
+
+		return propertiesStream.filter(
+			this::_isNameProperty
+		).collect(
+			Collectors.toMap(this::_getLocaleFromProperty, Map.Entry::getValue)
+		);
+	}
+
 	private Map<Long, List<SiteNavigationMenuItem>>
 		_getSiteNavigationMenuItemsMap(
 			List<SiteNavigationMenuItem> siteNavigationMenuItems) {
@@ -130,6 +157,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		}
 
 		return siteNavigationMenuItemsMap;
+	}
+
+	private boolean _isNameProperty(Map.Entry<String, String> property) {
+		String propertyKey = property.getKey();
+
+		return propertyKey.startsWith("name_");
 	}
 
 	private NavigationMenu _toNavigationMenu(
@@ -218,6 +251,19 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 						return layout.getName(
 							contextAcceptLanguage.getPreferredLocale());
+					});
+				setName_i18n(
+					() -> {
+						if (contextAcceptLanguage.isAcceptAllLanguages()) {
+							Map<Locale, String> localizedNames =
+								_getLocalizedNamesFromProperties(
+									typeSettingsProperties);
+
+							return LocalizedMapUtil.getLocalizedMap(
+								true, localizedNames);
+						}
+
+						return null;
 					});
 				setParentNavigationMenuId(
 					() -> {

@@ -99,7 +99,7 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 
 			ServletContext themeClassicServletContext =
 				PortalWebResourcesUtil.getServletContext(
-					PortalWebResourceConstants.RESOURCE_TYPE_THEME_CLASSIC);
+					PortalWebResourceConstants.RESOURCE_TYPE_THEME_CHAMAELEON);
 
 			url = themeClassicServletContext.getResource(
 				"/classic/templates/init_custom.ftl");

@@ -1,0 +1,69 @@
+.sidebar-default {
+	.sidebar-header {
+		@include media-breakpoint-up(sm) {
+			padding-top: 0;
+		}
+
+		.sidebar-title {
+			font-size: 1rem;
+			font-weight: 600;
+			padding-top: 0.5rem;
+		}
+
+		.sidebar-subtitle {
+			font-size: 0.875rem;
+			font-weight: 600;
+		}
+
+		h4 {
+			padding-top: 8px;
+		}
+
+		.text-default {
+			color: $secondary;
+			font-size: 0.875rem;
+			font-weight: 400;
+		}
+
+		.icon-monospaced {
+			color: $secondary;
+		}
+	}
+
+	.navbar-default {
+		@include media-breakpoint-up(sm) {
+			background-color: transparent;
+
+			.navbar-nav {
+				border-bottom: 1px solid #cdced9;
+				width: 100%;
+			}
+		}
+
+		.active > a {
+			font-weight: 600;
+			padding: 13px 16px;
+
+			&:after {
+				content: '';
+				height: 4px;
+				left: 0;
+				right: 0;
+			}
+		}
+	}
+
+	.navbar-collapse {
+		border-bottom: 1px solid #cdced9;
+	}
+
+	.navigation-bar-light,
+	.sidebar-block > .list-group-item,
+	.panel,
+	.panel-group .panel {
+		@include media-breakpoint-up(sm) {
+			background-color: transparent;
+			border-color: transparent;
+		}
+	}
+}

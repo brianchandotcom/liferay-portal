@@ -288,6 +288,7 @@ definition {
 	@priority = "3"
 	test ViewDefaultNotificationsPortletDeliveryOptions {
 		property osgi.app.includes = "bookmarks";
+		property portal.release = "false";
 
 		Navigator.openURL();
 

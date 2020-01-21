@@ -1256,6 +1256,8 @@ definition {
 			locator1 = "ItemSelector#ADD_BUTTON",
 			value1 = "Add");
 
+		BlogsEntry.viewInlineImage(uploadFileName = '''Document_2+%281%29.jpg''');
+
 		AssertClick(
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");

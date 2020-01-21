@@ -1029,10 +1029,10 @@ xpack.monitoring.collection.enabled: true</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="elasticsearch.ccr.enabled" />
+		<get-testcase-property property.name="remote.elasticsearch.ccr.enabled" />
 
 		<if>
-			<equals arg1="${elastic.ccr.enabled}" arg2="true" />
+			<equals arg1="${remote.elasticsearch.ccr.enabled}" arg2="true" />
 			<then>
 				<antcall target="configure-elasticsearch-cluster-properties">
 					<param name="remote.elasticsearch.cluster.size" value="2" />

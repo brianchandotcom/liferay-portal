@@ -1,0 +1,25 @@
+{
+	"author": "Marcos Castro <marcos.castro@liferay.com> (https://github.com/marcoscv-work)",
+	"bugs": {
+		"url": "https://issues.liferay.com/"
+	},
+	"keywords": [
+		"liferay-theme"
+	],
+	"license": "LGPL",
+	"liferayTheme": {
+		"baseTheme": "styled",
+		"distName": "chamaeleon-theme",
+		"rubySass": false,
+		"version": "7.1"
+	},
+	"main": "package.json",
+	"name": "liferay-chamaeleon-theme",
+	"repository": "liferay/liferay-portal",
+	"scripts": {
+		"build": "liferay-npm-scripts theme build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

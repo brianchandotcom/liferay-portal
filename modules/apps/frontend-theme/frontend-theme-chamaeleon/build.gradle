@@ -1,0 +1,11 @@
+assemble {
+	dependsOn packageRunBuild
+}
+
+gulpBuild {
+	enabled = false
+}
+
+publishNodeModule {
+	enabled = false
+}

@@ -427,6 +427,58 @@ public abstract class BaseCheck extends AbstractCheck {
 		return sb.toString();
 	}
 
+	protected List<DetailAST> getVariableCallerDetailASTList(
+		DetailAST variableDefinitionDetailAST, String variableName) {
+
+		List<DetailAST> variableCallerDetailASTList = new ArrayList<>();
+
+		DetailAST parentDetailAST = variableDefinitionDetailAST.getParent();
+
+		DetailAST slistDetailAST = null;
+
+		if (parentDetailAST.getType() == TokenTypes.SLIST) {
+			slistDetailAST = parentDetailAST;
+		}
+		else {
+			if (parentDetailAST.getType() != TokenTypes.LITERAL_CATCH) {
+				parentDetailAST = parentDetailAST.getParent();
+			}
+
+			slistDetailAST = parentDetailAST.getLastChild();
+		}
+
+		if (slistDetailAST.getType() != TokenTypes.SLIST) {
+			return variableCallerDetailASTList;
+		}
+
+		List<DetailAST> nameDetailASTList = getAllChildTokens(
+			slistDetailAST, true, TokenTypes.IDENT);
+
+		for (DetailAST nameDetailAST : nameDetailASTList) {
+			if (!variableName.equals(nameDetailAST.getText())) {
+				continue;
+			}
+
+			parentDetailAST = nameDetailAST.getParent();
+
+			if (parentDetailAST.getType() == TokenTypes.DOT) {
+				DetailAST previousSiblingDetailAST =
+					nameDetailAST.getPreviousSibling();
+
+				if (previousSiblingDetailAST != null) {
+					continue;
+				}
+			}
+			else if (parentDetailAST.getType() == TokenTypes.METHOD_CALL) {
+				continue;
+			}
+
+			variableCallerDetailASTList.add(nameDetailAST);
+		}
+
+		return variableCallerDetailASTList;
+	}
+
 	protected String getVariableName(DetailAST methodCallDetailAST) {
 		DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
 			TokenTypes.DOT);

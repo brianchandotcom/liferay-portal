@@ -20,7 +20,6 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -100,7 +99,7 @@ public class PersistenceUpdateCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> list = _getVariableCallerDetailASTList(
+		List<DetailAST> list = getVariableCallerDetailASTList(
 			typeDetailAST.getParent(), variableName);
 
 		if (!equals(nameDetailAST, list.get(list.size() - 1))) {
@@ -110,58 +109,6 @@ public class PersistenceUpdateCheck extends BaseCheck {
 
 			log(detailAST, _MSG_REASSIGN_UPDATE_CALL, variableName);
 		}
-	}
-
-	private List<DetailAST> _getVariableCallerDetailASTList(
-		DetailAST variableDefinitionDetailAST, String variableName) {
-
-		List<DetailAST> variableCallerDetailASTList = new ArrayList<>();
-
-		DetailAST parentDetailAST = variableDefinitionDetailAST.getParent();
-
-		DetailAST slistDetailAST = null;
-
-		if (parentDetailAST.getType() == TokenTypes.SLIST) {
-			slistDetailAST = parentDetailAST;
-		}
-		else {
-			if (parentDetailAST.getType() != TokenTypes.LITERAL_CATCH) {
-				parentDetailAST = parentDetailAST.getParent();
-			}
-
-			slistDetailAST = parentDetailAST.getLastChild();
-		}
-
-		if (slistDetailAST.getType() != TokenTypes.SLIST) {
-			return variableCallerDetailASTList;
-		}
-
-		List<DetailAST> nameDetailASTList = getAllChildTokens(
-			slistDetailAST, true, TokenTypes.IDENT);
-
-		for (DetailAST nameDetailAST : nameDetailASTList) {
-			if (!variableName.equals(nameDetailAST.getText())) {
-				continue;
-			}
-
-			parentDetailAST = nameDetailAST.getParent();
-
-			if (parentDetailAST.getType() == TokenTypes.DOT) {
-				DetailAST previousSiblingDetailAST =
-					nameDetailAST.getPreviousSibling();
-
-				if (previousSiblingDetailAST != null) {
-					continue;
-				}
-			}
-			else if (parentDetailAST.getType() == TokenTypes.METHOD_CALL) {
-				continue;
-			}
-
-			variableCallerDetailASTList.add(nameDetailAST);
-		}
-
-		return variableCallerDetailASTList;
 	}
 
 	private static final String _MSG_REASSIGN_UPDATE_CALL =

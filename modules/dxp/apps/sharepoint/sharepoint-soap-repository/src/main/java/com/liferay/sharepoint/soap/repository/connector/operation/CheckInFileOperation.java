@@ -16,7 +16,7 @@ package com.liferay.sharepoint.soap.repository.connector.operation;
 
 import com.liferay.sharepoint.soap.repository.connector.SharepointConnection;
 import com.liferay.sharepoint.soap.repository.connector.SharepointException;
-import com.liferay.sharepoint.soap.repository.connector.util.RemoteExceptionUtil;
+import com.liferay.sharepoint.soap.repository.connector.util.RemoteExceptionSharepointExceptionMapper;
 
 import java.rmi.RemoteException;
 
@@ -36,9 +36,7 @@ public class CheckInFileOperation extends BaseOperation {
 				String.valueOf(checkInType.getProtocolValue()));
 		}
 		catch (RemoteException remoteException) {
-			RemoteExceptionUtil.handleRemoteException(remoteException);
-
-			throw new IllegalStateException();
+			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
 	}
 

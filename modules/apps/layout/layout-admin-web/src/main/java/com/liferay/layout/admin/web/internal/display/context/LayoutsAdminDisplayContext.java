@@ -400,7 +400,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getEditLayoutURL(Layout layout) throws Exception {
-		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+		if (layout.isTypeContent()) {
 			return _getDraftLayoutURL(layout);
 		}
 
@@ -649,9 +649,7 @@ public class LayoutsAdminDisplayContext {
 					_httpServletRequest, layoutTypeResourceBundle,
 					"layout.types." + layout.getType()));
 
-			if (Objects.equals(
-					layout.getType(), LayoutConstants.TYPE_CONTENT)) {
-
+			if (layout.isTypeContent()) {
 				Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
 					PortalUtil.getClassNameId(Layout.class), layout.getPlid());
 
@@ -1291,8 +1289,7 @@ public class LayoutsAdminDisplayContext {
 			LayoutPageTemplateEntryLocalServiceUtil.
 				fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
 
-		if (StringUtil.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+		if (layout.isTypeAssetDisplay() ||
 			((layoutPageTemplateEntry != null) && layout.isSystem())) {
 
 			return true;

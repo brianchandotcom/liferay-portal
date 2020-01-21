@@ -412,6 +412,10 @@ public interface Layout extends LayoutModel, PersistedModel {
 	 */
 	public boolean isSupportsEmbeddedPortlets();
 
+	public boolean isTypeAssetDisplay();
+
+	public boolean isTypeContent();
+
 	public boolean isTypeControlPanel();
 
 	public boolean isTypeEmbedded();

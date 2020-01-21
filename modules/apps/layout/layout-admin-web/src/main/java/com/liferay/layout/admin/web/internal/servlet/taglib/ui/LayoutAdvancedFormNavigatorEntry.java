@@ -18,11 +18,9 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Objects;
 
@@ -53,9 +51,7 @@ public class LayoutAdvancedFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		if (StringUtil.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
-
+		if (layout.isTypeAssetDisplay()) {
 			return false;
 		}
 

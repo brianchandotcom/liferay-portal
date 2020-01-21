@@ -269,11 +269,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			return;
 		}
 
-		if (!(Objects.equals(
-				sourceLayout.getType(), LayoutConstants.TYPE_CONTENT) ||
-			  Objects.equals(
-				  sourceLayout.getType(),
-				  LayoutConstants.TYPE_ASSET_DISPLAY))) {
+		if (!(sourceLayout.isTypeContent() ||
+			  sourceLayout.isTypeAssetDisplay())) {
 
 			return;
 		}

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
@@ -94,7 +93,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.Event;
 import javax.portlet.MimeResponse;
@@ -344,7 +342,7 @@ public class PortletContainerImpl implements PortletContainer {
 	}
 
 	private boolean _isPublishedContentPage(Layout layout) {
-		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
+		if (layout.isTypeContent() &&
 			((layout.getClassNameId() == 0) ||
 			 (PortalUtil.getClassNameId(Layout.class.getName()) !=
 				 layout.getClassNameId()))) {

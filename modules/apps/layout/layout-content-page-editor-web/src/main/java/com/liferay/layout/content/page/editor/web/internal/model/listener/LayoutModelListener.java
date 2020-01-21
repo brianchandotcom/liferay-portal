@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,7 +50,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterCreate(Layout layout) throws ModelListenerException {
-		if (!_isContentLayout(layout)) {
+		if (!layout.isTypeContent()) {
 			return;
 		}
 
@@ -74,7 +72,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterUpdate(Layout layout) throws ModelListenerException {
-		if (!_isContentLayout(layout)) {
+		if (!layout.isTypeContent()) {
 			return;
 		}
 
@@ -83,7 +81,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
-		if (!_isContentLayout(layout)) {
+		if (!layout.isTypeContent()) {
 			return;
 		}
 
@@ -163,14 +161,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 		return _layoutPageTemplateEntryLocalService.
 			fetchLayoutPageTemplateEntry(layout.getClassPK());
-	}
-
-	private boolean _isContentLayout(Layout layout) {
-		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _reindexLayout(Layout layout) {

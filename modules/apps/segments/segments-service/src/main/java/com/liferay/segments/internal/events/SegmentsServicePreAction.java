@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -41,7 +40,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.simulator.SegmentsEntrySimulator;
 
 import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -127,7 +125,7 @@ public class SegmentsServicePreAction extends Action {
 		httpServletRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_ENTRY_IDS, segmentsEntryIds);
 
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+		if (!layout.isTypeContent()) {
 			return;
 		}
 

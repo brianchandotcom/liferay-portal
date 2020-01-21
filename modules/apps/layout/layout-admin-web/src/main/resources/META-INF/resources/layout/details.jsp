@@ -157,7 +157,7 @@ String friendlyURLBase = StringPool.BLANK;
 	</liferay-util:include>
 </div>
 
-<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
+<c:if test="<%= !selLayout.isTypeAssetDisplay() %>">
 	<div class="sheet-section">
 		<h3 class="sheet-subtitle"><liferay-ui:message key="categorization" /></h3>
 

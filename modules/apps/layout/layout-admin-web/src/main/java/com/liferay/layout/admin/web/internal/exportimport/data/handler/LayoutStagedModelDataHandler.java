@@ -373,8 +373,7 @@ public class LayoutStagedModelDataHandler
 		}
 		else if (Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_PORTLET) ||
-				 Objects.equals(
-					 layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+				 layout.isTypeContent()) {
 
 			exportLayoutPortlets(portletDataContext, layout, layoutElement);
 		}
@@ -851,7 +850,7 @@ public class LayoutStagedModelDataHandler
 
 		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||
-			Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+			layout.isTypeContent()) {
 
 			importLayoutPortlets(
 				portletDataContext, importedLayout, layoutElement);
@@ -1426,10 +1425,7 @@ public class LayoutStagedModelDataHandler
 			Layout importedLayout)
 		throws Exception {
 
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
-			!Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
-
+		if (!layout.isTypeContent() && !layout.isTypeAssetDisplay()) {
 			return;
 		}
 
@@ -2107,10 +2103,7 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext portletDataContext, Layout layout)
 		throws PortletDataException {
 
-		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
-			!Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
-
+		if (!layout.isTypeContent() && !layout.isTypeAssetDisplay()) {
 			return;
 		}
 

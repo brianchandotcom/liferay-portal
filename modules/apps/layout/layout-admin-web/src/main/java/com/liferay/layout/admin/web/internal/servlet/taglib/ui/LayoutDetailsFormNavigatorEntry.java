@@ -16,12 +16,9 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-
-import java.util.Objects;
 
 import javax.servlet.ServletContext;
 
@@ -53,10 +50,8 @@ public class LayoutDetailsFormNavigatorEntry
 		Layout draftLayout = layoutLocalService.fetchLayout(
 			portal.getClassNameId(Layout.class), layout.getPlid());
 
-		if (Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
-			(Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT) &&
-			 (draftLayout == null))) {
+		if (layout.isTypeAssetDisplay() ||
+			(layout.isTypeContent() && (draftLayout == null))) {
 
 			return false;
 		}

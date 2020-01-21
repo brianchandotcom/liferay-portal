@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -92,7 +90,7 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 		sb.append(":</strong> ");
 		sb.append(_layout.getHTMLTitle(locale));
 
-		if (Objects.equals(_layout.getType(), LayoutConstants.TYPE_CONTENT) &&
+		if (_layout.isTypeContent() &&
 			(_layout.getStatus() == WorkflowConstants.STATUS_PENDING)) {
 
 			return HtmlUtil.stripHtml(sb.toString());
@@ -164,7 +162,7 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 
 	@Override
 	public boolean isPreviewInContext() {
-		if (Objects.equals(_layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+		if (_layout.isTypeContent()) {
 			return true;
 		}
 

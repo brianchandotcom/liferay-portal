@@ -1761,6 +1761,16 @@ public class LayoutWrapper
 	}
 
 	@Override
+	public boolean isTypeAssetDisplay() {
+		return model.isTypeAssetDisplay();
+	}
+
+	@Override
+	public boolean isTypeContent() {
+		return model.isTypeContent();
+	}
+
+	@Override
 	public boolean isTypeControlPanel() {
 		return model.isTypeControlPanel();
 	}

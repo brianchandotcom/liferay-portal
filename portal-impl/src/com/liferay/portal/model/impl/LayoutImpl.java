@@ -1148,6 +1148,31 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public boolean isTypeAssetDisplay() {
+		if (Objects.equals(getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+			Objects.equals(
+				_getLayoutTypeControllerType(),
+				LayoutConstants.TYPE_ASSET_DISPLAY)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isTypeContent() {
+		if (Objects.equals(getType(), LayoutConstants.TYPE_CONTENT) ||
+			Objects.equals(
+				_getLayoutTypeControllerType(), LayoutConstants.TYPE_CONTENT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isTypeControlPanel() {
 		if (Objects.equals(getType(), LayoutConstants.TYPE_CONTROL_PANEL) ||
 			Objects.equals(

@@ -27,6 +27,7 @@ definition {
 	@priority = "4"
 	test AddCustomFieldsSmoke {
 		property osgi.app.includes = "bookmarks";
+		property portal.release = "false";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

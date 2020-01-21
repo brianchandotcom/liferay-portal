@@ -22,7 +22,12 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoriesSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoryPermissionChecker;
 
@@ -30,10 +35,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -52,6 +63,8 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		).when(
 			_facet
 		).getFacetCollector();
+
+		setUpPortalUtil();
 	}
 
 	@Test
@@ -369,9 +382,11 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 	protected AssetCategoriesSearchFacetDisplayContext createDisplayContext(
 		String parameterValue) {
 
+		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
+
 		AssetCategoriesSearchFacetDisplayBuilder
 			assetCategoriesSearchFacetDisplayBuilder =
-				new AssetCategoriesSearchFacetDisplayBuilder();
+				new AssetCategoriesSearchFacetDisplayBuilder(renderRequest);
 
 		assetCategoriesSearchFacetDisplayBuilder.setAssetCategoryLocalService(
 			_assetCategoryLocalService);
@@ -427,6 +442,33 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		return termCollector;
 	}
 
+	protected HttpServletRequest getHttpServletRequest() {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		Mockito.when(
+			(ThemeDisplay)httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+
+		return httpServletRequest;
+	}
+
+	protected ThemeDisplay getThemeDisplay() {
+		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			themeDisplay.getPortletDisplay()
+		).thenReturn(
+			portletDisplay
+		);
+
+		return themeDisplay;
+	}
+
 	protected void setUpAssetCategory(long assetCategoryId, long groupId) {
 		AssetCategory assetCategory = createAssetCategory(
 			assetCategoryId, groupId);
@@ -459,6 +501,22 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		).when(
 			_facetCollector
 		).getTermCollectors();
+	}
+
+	protected void setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = Mockito.mock(Portal.class);
+
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
+
+		Mockito.when(
+			portal.getHttpServletRequest(Matchers.any(PortletRequest.class))
+		).thenReturn(
+			httpServletRequest
+		);
+
+		portalUtil.setPortal(portal);
 	}
 
 	@Mock

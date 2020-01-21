@@ -197,7 +197,8 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 				}
 
 				_log.error(
-					"Connection error: " + systemException.getMessage());
+					"Unable to connect to remote live: " +
+						systemException.getMessage());
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(systemException, systemException);

@@ -17,6 +17,7 @@ package com.liferay.journal.web.internal.util;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -32,6 +33,8 @@ import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -608,7 +611,26 @@ public class JournalRSSUtil {
 			if (elType.equals("document_library")) {
 				String url = element.elementText("dynamic-content");
 
-				url = processURL(feed, url, themeDisplay, syndEntry);
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(url);
+
+				String uuid = jsonObject.getString("uuid");
+				long groupId = jsonObject.getLong("groupId");
+
+				if (Validator.isNotNull(uuid) && (groupId > 0)) {
+					FileEntry fileEntry =
+						_dlAppLocalService.getFileEntryByUuidAndGroupId(
+							uuid, groupId);
+
+					url = _dlURLHelper.getPreviewURL(
+						fileEntry, fileEntry.getFileVersion(), null,
+						StringPool.BLANK, false, true);
+
+					url = processURL(feed, url, themeDisplay, syndEntry);
+
+					content = StringBundler.concat(
+						content, "<br /><br /><a href='",
+						themeDisplay.getURLPortal(), url, "' />");
+				}
 			}
 			else if (elType.equals("image") || elType.equals("image_gallery")) {
 				String url = element.elementText("dynamic-content");
@@ -710,6 +732,9 @@ public class JournalRSSUtil {
 	private static final Log _log = LogFactoryUtil.getLog(JournalRSSUtil.class);
 
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private Http _http;

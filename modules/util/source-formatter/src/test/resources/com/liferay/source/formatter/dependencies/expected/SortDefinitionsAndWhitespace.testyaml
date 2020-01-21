@@ -44,7 +44,7 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/addresses":
+    /addresses:
         get:
             parameters:
                 - in: path
@@ -71,7 +71,7 @@ paths:
                     description:
                         ""
             tags: ["PostalAddress"]
-    "/addresses/{address-id}":
+    /addresses/{address-id}:
         get:
             parameters:
                 - in: path

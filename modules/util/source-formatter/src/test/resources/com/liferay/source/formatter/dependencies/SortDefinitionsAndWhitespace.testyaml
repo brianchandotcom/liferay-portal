@@ -48,7 +48,7 @@ info:
   description: ""
 openapi: 3.0.1
 paths:
-  "/addresses/{address-id}":
+  /addresses/{address-id}:
     get:
       parameters:
         - in: path
@@ -65,7 +65,7 @@ paths:
                 $ref: "#/components/schemas/PostalAddress"
           description: ""
       tags: ["PostalAddress"]
-  "/addresses":
+  /addresses:
     get:
       responses:
         200:

@@ -55,7 +55,7 @@ import javax.ws.rs.QueryParam;
 /**
  * @author  Neil Griffin
  */
-public class MvcExtension {
+public class MVCExtension {
 
 	public static void step1BeforeBeanDiscovery(
 		BeanManager beanManager, BeforeBeanDiscovery beforeBeanDiscovery) {
@@ -86,7 +86,7 @@ public class MvcExtension {
 			BindingResultProducer.class, ConfigurationProducer.class,
 			ControllerInterceptor.class, CsrfValidationInterceptor.class,
 			EncodersProducer.class, ModelsProducer.class,
-			MvcContextProducer.class, ParamConverterProvidersProducer.class,
+			MVCContextProducer.class, ParamConverterProvidersProducer.class,
 			PortletParamProducer.class, ViewEngineContextProducer.class,
 			ViewEnginesProducer.class
 		};
@@ -249,7 +249,7 @@ public class MvcExtension {
 	private static final Class<?>[] _UNSUPPORTED_ANNOTATION_CLASSES =
 		new Class<?>[] {MatrixParam.class, PathParam.class};
 
-	private static final Log _log = LogFactoryUtil.getLog(MvcExtension.class);
+	private static final Log _log = LogFactoryUtil.getLog(MVCExtension.class);
 
 	private static final Annotation _beanValidationInterceptorBinding =
 		new BeanValidationInterceptorBinding() {

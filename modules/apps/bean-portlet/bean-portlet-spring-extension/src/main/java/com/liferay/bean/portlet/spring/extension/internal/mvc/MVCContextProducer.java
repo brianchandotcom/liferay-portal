@@ -39,12 +39,12 @@ import org.springframework.context.annotation.Scope;
  * @author Neil Griffin
  */
 @Configuration
-public class MvcContextProducer implements ApplicationContextAware {
+public class MVCContextProducer implements ApplicationContextAware {
 
 	@Bean("mvc")
 	@Scope("portletRequest")
 	public MvcContext getMvcContext() {
-		return new MvcContextImpl(
+		return new MVCContextImpl(
 			_configuration, _encoders, _localeResolvers, _portletContext,
 			_portletRequest);
 	}

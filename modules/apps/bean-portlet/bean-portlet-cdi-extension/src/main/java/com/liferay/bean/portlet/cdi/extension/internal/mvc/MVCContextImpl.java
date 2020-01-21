@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bean.portlet.spring.extension.internal.mvc;
+package com.liferay.bean.portlet.cdi.extension.internal.mvc;
 
 import com.liferay.bean.portlet.extension.CSRFLiferayPortletURL;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
@@ -46,9 +46,9 @@ import javax.ws.rs.core.UriBuilder;
 /**
  * @author  Neil Griffin
  */
-public class MvcContextImpl implements MvcContext {
+public class MVCContextImpl implements MvcContext {
 
-	public MvcContextImpl(
+	public MVCContextImpl(
 		Configuration configuration, Encoders encoders,
 		List<LocaleResolver> localeResolvers, PortletContext portletContext,
 		PortletRequest portletRequest) {

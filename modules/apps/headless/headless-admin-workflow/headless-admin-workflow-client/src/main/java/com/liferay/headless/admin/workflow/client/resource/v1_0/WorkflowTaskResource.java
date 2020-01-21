@@ -212,12 +212,11 @@ public interface WorkflowTaskResource {
 					ChangeTransition changeTransition)
 		throws Exception;
 
-	public String getWorkflowTaskHasOtherAssignableUsers(Long workflowTaskId)
+	public String getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getWorkflowTaskHasOtherAssignableUsersHttpResponse(
-				Long workflowTaskId)
+			getWorkflowTaskHasAssignableUsersHttpResponse(Long workflowTaskId)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskUpdateDueDate(
@@ -1463,13 +1462,11 @@ public interface WorkflowTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public String getWorkflowTaskHasOtherAssignableUsers(
-				Long workflowTaskId)
+		public String getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowTaskHasOtherAssignableUsersHttpResponse(
-					workflowTaskId);
+				getWorkflowTaskHasAssignableUsersHttpResponse(workflowTaskId);
 
 			String content = httpResponse.getContent();
 
@@ -1483,7 +1480,7 @@ public interface WorkflowTaskResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getWorkflowTaskHasOtherAssignableUsersHttpResponse(
+				getWorkflowTaskHasAssignableUsersHttpResponse(
 					Long workflowTaskId)
 			throws Exception {
 
@@ -1511,7 +1508,7 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-other-assignable-users",
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-assignable-users",
 				workflowTaskId);
 
 			httpInvoker.userNameAndPassword(

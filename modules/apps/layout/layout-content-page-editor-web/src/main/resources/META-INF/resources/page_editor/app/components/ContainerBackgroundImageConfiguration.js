@@ -13,10 +13,13 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import addMappedInfoItem from '../actions/addMappedInfoItem';
+import {EDITABLE_TYPES} from '../config/constants/editableTypes';
+import {DispatchContext} from '../reducers/index';
 import {ImageSelector} from './../../common/components/ImageSelector';
-import InfoItemSelectionPanel from './InfoItemSelectionPanel';
+import MappingSelector from './MappingSelector';
 
 const IMAGE_SOURCE = {
 	contentMapping: 'content_mapping',
@@ -27,9 +30,19 @@ export const ContainerBackgroundImageConfiguration = ({
 	backgroundImage,
 	onValueChange
 }) => {
+	const dispatch = useContext(DispatchContext);
+
 	const [imageSource, setImageSource] = useState(
 		IMAGE_SOURCE.manualSelection
 	);
+
+	useEffect(() => {
+		setImageSource(
+			backgroundImage.fieldId || backgroundImage.mappedField
+				? IMAGE_SOURCE.contentMapping
+				: IMAGE_SOURCE.manualSelection
+		);
+	}, [backgroundImage]);
 
 	return (
 		<>
@@ -76,7 +89,17 @@ export const ContainerBackgroundImageConfiguration = ({
 					}
 				/>
 			) : (
-				<InfoItemSelectionPanel />
+				<MappingSelector
+					fieldType={EDITABLE_TYPES.image}
+					mappedItem={backgroundImage}
+					onMappingSelect={mappedItem => {
+						onValueChange({
+							backgroundImage: mappedItem
+						});
+
+						dispatch(addMappedInfoItem(mappedItem));
+					}}
+				/>
 			)}
 		</>
 	);

@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Headless Batch Engine Implementation
 Bundle-SymbolicName: com.liferay.headless.batch.engine.impl
 Bundle-Version: 3.0.2
+Import-Package:\
+	com.liferay.oauth2.provider.scope.*;resolution:=optional,\
+	\
+	*

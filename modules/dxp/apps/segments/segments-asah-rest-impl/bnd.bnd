@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Segments Asah REST Implementation
 Bundle-SymbolicName: com.liferay.segments.asah.rest.impl
 Bundle-Version: 2.0.1
+Import-Package:\
+	com.liferay.oauth2.provider.scope.*;resolution:=optional,\
+	\
+	*

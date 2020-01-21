@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Headless Admin Workflow Implementation
 Bundle-SymbolicName: com.liferay.headless.admin.workflow.impl
 Bundle-Version: 4.0.2
+Import-Package:\
+	com.liferay.oauth2.provider.scope.*;resolution:=optional,\
+	\
+	*

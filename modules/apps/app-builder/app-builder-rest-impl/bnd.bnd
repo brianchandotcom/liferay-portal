@@ -1,3 +1,7 @@
 Bundle-Name: Liferay App Builder REST Implementation
 Bundle-SymbolicName: com.liferay.app.builder.rest.impl
 Bundle-Version: 1.0.4
+Import-Package:\
+	com.liferay.oauth2.provider.scope.*;resolution:=optional,\
+	\
+	*

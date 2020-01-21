@@ -8,6 +8,8 @@ Import-Package:\
 	\
 	!org.apache.tapestry5.json.*,\
 	\
+	com.liferay.oauth2.provider.scope.*;resolution:=optional,\
+	\
 	*
 Provide-Capability:\
 	liferay.resource.bundle;\

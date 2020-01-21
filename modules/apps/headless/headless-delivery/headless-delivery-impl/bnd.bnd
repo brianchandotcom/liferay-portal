@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Headless Delivery Implementation
 Bundle-SymbolicName: com.liferay.headless.delivery.impl
 Bundle-Version: 4.0.3
+Import-Package:\
+	com.liferay.oauth2.provider.scope.*;resolution:=optional,\
+	\
+	*

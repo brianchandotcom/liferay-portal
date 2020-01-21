@@ -26,7 +26,8 @@ Import-Package:\
 	\
 	!graphql.schema.*,\
 	\
-	com.liferay.oauth2.provider.scope;resolution:=optional,\
+	com.liferay.oauth2.provider.scope.liferay.*;resolution:=optional,\
+	com.liferay.oauth2.provider.scope.*;resolution:=optional,\
 	\
 	*
 -includeresource: @graphql-java-annotations-[0-9.]*.jar!/graphql/annotations/annotationTypes/*

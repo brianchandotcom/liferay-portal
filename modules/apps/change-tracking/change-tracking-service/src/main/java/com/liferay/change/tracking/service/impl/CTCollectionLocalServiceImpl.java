@@ -173,8 +173,8 @@ public class CTCollectionLocalServiceImpl
 				ctTableMapperHelper.delete(ctCollection.getCtCollectionId());
 			}
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 
 		List<CTEntry> ctEntries = ctEntryPersistence.findByCTCollectionId(

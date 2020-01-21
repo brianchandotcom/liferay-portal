@@ -443,8 +443,8 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 					slaveBasePersistence.findByPrimaryKey(slavePrimaryKey));
 			}
 		}
-		catch (NoSuchModelException nsme) {
-			throw new SystemException(nsme);
+		catch (NoSuchModelException noSuchModelException) {
+			throw new SystemException(noSuchModelException);
 		}
 
 		if (obc != null) {
@@ -465,8 +465,8 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 				masterPrimaryKey, masterPrimaryKey, ctCollectionId,
 				ctCollectionId);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 
 		long[] primaryKeys = new long[primaryKeysList.size()];
@@ -528,8 +528,8 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 					ctChangeType);
 			}
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -543,8 +543,8 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 				leftPrimaryKey, rightPrimaryKey, ctCollectionId, leftPrimaryKey,
 				rightPrimaryKey, ctCollectionId);
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 
 		if (counts.isEmpty()) {

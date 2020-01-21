@@ -76,6 +76,7 @@ public class BlogPostingDTOConverter
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(blogsEntry.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
 					BlogsEntry.class.getName(), blogsEntry.getEntryId(),
 					blogsEntry.getCompanyId(), dtoConverterContext.getLocale());
 				dateCreated = blogsEntry.getCreateDate();

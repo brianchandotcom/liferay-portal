@@ -450,6 +450,7 @@ public class MessageBoardThreadResourceImpl
 					_portal,
 					_userLocalService.getUserById(mbThread.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
+					contextAcceptLanguage.isAcceptAllLanguages(),
 					MBMessage.class.getName(), mbMessage.getMessageId(),
 					mbThread.getCompanyId(),
 					contextAcceptLanguage.getPreferredLocale());

@@ -242,6 +242,7 @@ public class UserAccountResourceImpl
 				alternateName = user.getScreenName();
 				birthDate = user.getBirthday();
 				customFields = CustomFieldsUtil.toCustomFields(
+					contextAcceptLanguage.isAcceptAllLanguages(),
 					User.class.getName(), user.getUserId(), user.getCompanyId(),
 					contextAcceptLanguage.getPreferredLocale());
 				dateCreated = user.getCreateDate();

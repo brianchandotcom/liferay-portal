@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,6 +66,9 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)
 		throws Exception {
 
+		boolean acceptAllLanguages =
+			contextAcceptLanguage.isAcceptAllLanguages();
+
 		return new Role() {
 			{
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
@@ -75,9 +79,13 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				dateModified = role.getModifiedDate();
 				description = role.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
+				description_i18n = LocalizedMapUtil.getLocalizedMap(
+					acceptAllLanguages, role.getDescriptionMap());
 				id = role.getRoleId();
 				name = role.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
+				name_i18n = LocalizedMapUtil.getLocalizedMap(
+					acceptAllLanguages, role.getTitleMap());
 				roleType = role.getTypeLabel();
 			}
 		};

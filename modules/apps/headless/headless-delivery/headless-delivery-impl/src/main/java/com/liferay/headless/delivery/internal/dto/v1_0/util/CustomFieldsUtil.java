@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
@@ -52,7 +53,8 @@ import java.util.stream.Stream;
 public class CustomFieldsUtil {
 
 	public static CustomField[] toCustomFields(
-		String className, long classPK, long companyId, Locale locale) {
+		boolean acceptAllLanguages, String className, long classPK,
+		long companyId, Locale locale) {
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			companyId, className, classPK);
@@ -74,7 +76,8 @@ public class CustomFieldsUtil {
 						ExpandoColumnConstants.PROPERTY_HIDDEN));
 			}
 		).map(
-			entry -> _toCustomField(entry, expandoBridge, locale)
+			entry -> _toCustomField(
+				acceptAllLanguages, entry, expandoBridge, locale)
 		).toArray(
 			CustomField[]::new
 		);
@@ -157,6 +160,18 @@ public class CustomFieldsUtil {
 		);
 	}
 
+	private static Object _getLocalizedValues(
+		boolean acceptAllLanguages, int attributeType, Object value) {
+
+		if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
+			Map<Locale, String> map = (Map<Locale, String>)value;
+
+			return LocalizedMapUtil.getLocalizedMap(acceptAllLanguages, map);
+		}
+
+		return value;
+	}
+
 	private static Object _getValue(
 		int attributeType, Locale locale, Object value) {
 
@@ -210,8 +225,8 @@ public class CustomFieldsUtil {
 	}
 
 	private static CustomField _toCustomField(
-		Map.Entry<String, Serializable> entry, ExpandoBridge expandoBridge,
-		Locale locale) {
+		boolean acceptAllLanguages, Map.Entry<String, Serializable> entry,
+		ExpandoBridge expandoBridge, Locale locale) {
 
 		String key = entry.getKey();
 
@@ -257,6 +272,8 @@ public class CustomFieldsUtil {
 						}
 
 						data = _getValue(attributeType, locale, value);
+						data_i18n = _getLocalizedValues(
+							acceptAllLanguages, attributeType, value);
 					}
 				};
 				dataType = ExpandoColumnConstants.getDataType(attributeType);

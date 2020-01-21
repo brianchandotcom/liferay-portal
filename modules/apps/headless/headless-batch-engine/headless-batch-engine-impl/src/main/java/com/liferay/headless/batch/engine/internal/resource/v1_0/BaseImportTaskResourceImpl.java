@@ -16,7 +16,6 @@ package com.liferay.headless.batch.engine.internal.resource.v1_0;
 
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -381,7 +380,7 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
-	protected ScopeChecker contextScopeChecker;
+	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
 
 }

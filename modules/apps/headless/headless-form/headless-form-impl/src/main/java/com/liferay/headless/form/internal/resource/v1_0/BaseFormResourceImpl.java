@@ -18,7 +18,6 @@ import com.liferay.headless.form.dto.v1_0.Form;
 import com.liferay.headless.form.dto.v1_0.FormContext;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.resource.v1_0.FormResource;
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -244,7 +243,7 @@ public abstract class BaseFormResourceImpl implements FormResource {
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
-	protected ScopeChecker contextScopeChecker;
+	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
 
 }

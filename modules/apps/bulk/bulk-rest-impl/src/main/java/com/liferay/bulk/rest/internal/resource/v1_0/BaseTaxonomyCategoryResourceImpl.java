@@ -17,7 +17,6 @@ package com.liferay.bulk.rest.internal.resource.v1_0;
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategory;
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkSelection;
 import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -181,7 +180,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
-	protected ScopeChecker contextScopeChecker;
+	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
 
 }

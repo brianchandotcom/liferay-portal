@@ -16,7 +16,6 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -337,7 +336,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
-	protected ScopeChecker contextScopeChecker;
+	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
 
 }

@@ -107,12 +107,12 @@ Create exposes all endpoints that are manipulated by HTTP POST.
 The SwaggerHub UI shows all available path parameters, request body
 structures, and all possible responses.
 
-image::../images/swaggerhub_products_post.png[The "/products" endpoint creates a new product using HTTP POST.]
+image::/images/swaggerhub_products_post.png[The "/products" endpoint creates a new product using HTTP POST.]
 
 Once you select desired endpoint from the Endpoint selector the connector
 dynamically generates related Metadata.
 
-image::../images/anypoint_studio_products_create.png[The same endpoint is used in a flow that imports products from Salesforce into Liferay Commerce. ]
+image::/images/anypoint_studio_products_create.png[The same endpoint is used in a flow that imports products from Salesforce into Liferay Commerce. ]
 
 Next, you define input parameters. Input parameters support all Liferay RESTful
 web services and need not be used with every endpoint:

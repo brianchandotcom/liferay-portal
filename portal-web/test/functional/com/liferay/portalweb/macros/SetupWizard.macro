@@ -48,6 +48,12 @@ definition {
 			value1 = "${databasePassword}");
 	}
 
+	macro configureDefaultLanguagePG {
+		Select(
+			locator1 = "SetupWizard#DEFAULT_LANGUAGE",
+			value1 = "${defaultLanguage}");
+	}
+
 	macro configureDefaultPG {
 		SetupWizard.viewDefaultPortalNamePG();
 
@@ -176,17 +182,32 @@ definition {
 	}
 
 	macro viewConfigurationSavedPG {
-		Alert.viewSuccessMessageText(successMessage = "Your configuration was saved successfully.");
+		if ((isSet(localization)) && ("${localization}" == "ES")) {
+			Alert.viewSuccessMessageText(successMessage = "La configuración fue guardada con éxito.");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SetupWizard#CONFIGURATION_SAVE_MESSAGE",
-			value1 = "The configuration was saved in");
+			AssertTextEquals.assertPartialText(
+				locator1 = "SetupWizard#CONFIGURATION_SAVE_MESSAGE",
+				value1 = "Se ha guardado la configuración en");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SetupWizard#CONFIGURATION_SAVE_LOCATION",
-			value1 = "portal-setup-wizard.properties");
+			AssertTextEquals.assertPartialText(
+				locator1 = "SetupWizard#CONFIGURATION_SAVE_LOCATION",
+				value1 = "portal-setup-wizard.properties");
 
-		Alert.viewInfoMessageSpecific(infoMessage = "Changes will take effect once the portal is restarted. Please restart the portal now.");
+			Alert.viewInfoMessageSpecific(infoMessage = "Los cambios surtirán efecto en cuanto el portal sea reiniciado. Por favor, reinicie el portal ahora.");
+		}
+		else {
+			Alert.viewSuccessMessageText(successMessage = "Your configuration was saved successfully.");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SetupWizard#CONFIGURATION_SAVE_MESSAGE",
+				value1 = "The configuration was saved in");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SetupWizard#CONFIGURATION_SAVE_LOCATION",
+				value1 = "portal-setup-wizard.properties");
+
+			Alert.viewInfoMessageSpecific(infoMessage = "Changes will take effect once the portal is restarted. Please restart the portal now.");
+		}
 	}
 
 	macro viewConfiguredDatabaseInConsole {

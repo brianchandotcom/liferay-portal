@@ -505,6 +505,42 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-ccr-trial">
+		<sequential>
+			<exec executable="curl" outputproperty="curl.output.trial">
+				<arg line="-X POST &quot;http://localhost:9200/_license/start_trial?acknowledge=true&quot; -H &apos;Content-Type:application/json&apos;" />
+			</exec>
+
+			<echo>${curl.output.trial}</echo>
+
+			<if>
+				<contains string="${curl.output.trial}" substring="&quot;trial_was_started&quot;:true" />
+				<then>
+					<echo>Leader Elasticsearch started with trial.</echo>
+				</then>
+				<else>
+					<fail>Leader Elasticsearch failed to start with trial.</fail>
+				</else>
+			</if>
+
+			<exec executable="curl" outputproperty="curl.output.trial">
+				<arg line="-X POST &quot;http://localhost:9202/_license/start_trial?acknowledge=true&quot; -H &apos;Content-Type:application/json&apos;" />
+			</exec>
+
+			<echo>${curl.output.trial}</echo>
+
+			<if>
+				<contains string="${curl.output.trial}" substring="&quot;trial_was_started&quot;:true" />
+				<then>
+					<echo>Follower Elasticsearch started with trial.</echo>
+				</then>
+				<else>
+					<fail>Follower Elasticsearch failed to start with trial.</fail>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-x-pack-trial">
 		<sequential>
 			<exec executable="curl" outputproperty="curl.output.trial">

@@ -174,7 +174,8 @@ public class AccountEntryLocalServiceImpl
 	public void deleteAccountEntries(long[] accountEntryIds)
 		throws PortalException {
 
-		_performActions(accountEntryIds, this::deleteAccountEntry);
+		_performActions(
+			accountEntryIds, accountEntryLocalService::deleteAccountEntry);
 	}
 
 	@Override

@@ -1630,6 +1630,10 @@ components:
                     type: string
                 name:
                     type: string
+                name_i18n:
+                    additionalProperty:
+                        type: string
+                    type: object
                 navigationMenuItems:
                     items:
                         $ref: "#/components/schemas/NavigationMenuItem"

@@ -61,6 +61,7 @@ import org.slf4j.LoggerFactory;
 @Throws(LiferayResponseErrorProvider.class)
 public class LiferayOperations {
 
+	@DisplayName("Delete Record")
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = DELETEEndpointOutputTypeResolver.class)
 	public Result<String, Void> delete(
@@ -90,6 +91,7 @@ public class LiferayOperations {
 		).build();
 	}
 
+	@DisplayName("Get Records")
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = GETEndpointOutputTypeResolver.class)
 	public Result<String, Void> get(
@@ -118,13 +120,13 @@ public class LiferayOperations {
 		).build();
 	}
 
-	@DisplayName("Update")
+	@DisplayName("Update Record")
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = PATCHEndpointOutputTypeResolver.class)
 	public Result<String, Void> patch(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(PATCHEndpointTypeKeysResolver.class) String endpoint,
-			@Content @DisplayName("Records")
+			@Content @DisplayName("Record")
 			@TypeResolver(value = PATCHEndpointInputTypeResolver.class)
 				InputStream inputStream,
 			@DisplayName("Path Parameters") @NullSafe @Optional
@@ -148,13 +150,13 @@ public class LiferayOperations {
 		).build();
 	}
 
-	@DisplayName("Create")
+	@DisplayName("Create Record")
 	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = POSTEndpointOutputTypeResolver.class)
 	public Result<String, Void> post(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(POSTEndpointTypeKeysResolver.class) String endpoint,
-			@Content @DisplayName("Records")
+			@Content @DisplayName("Record")
 			@TypeResolver(value = POSTEndpointInputTypeResolver.class)
 				InputStream inputStream,
 			@DisplayName("Path Parameters") @NullSafe @Optional

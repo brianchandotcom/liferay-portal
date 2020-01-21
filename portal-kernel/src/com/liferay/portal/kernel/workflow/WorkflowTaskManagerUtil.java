@@ -73,6 +73,14 @@ public class WorkflowTaskManagerUtil {
 			companyId, workflowTaskId);
 	}
 
+	public static List<User> getAssignableUsers(
+			long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().getAssignableUsers(
+			companyId, workflowTaskId);
+	}
+
 	public static List<String> getNextTransitionNames(
 			long companyId, long userId, long workflowTaskId)
 		throws WorkflowException {
@@ -81,6 +89,11 @@ public class WorkflowTaskManagerUtil {
 			companyId, userId, workflowTaskId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getAssignableUsers(long, long)}
+	 */
+	@Deprecated
 	public static List<User> getPooledActors(
 			long companyId, long workflowTaskId)
 		throws WorkflowException {
@@ -91,7 +104,7 @@ public class WorkflowTaskManagerUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getPooledActors(long, long)}
+	 *             #getAssignableUsers(long, long)}
 	 */
 	@Deprecated
 	public static long[] getPooledActorsIds(long companyId, long workflowTaskId)

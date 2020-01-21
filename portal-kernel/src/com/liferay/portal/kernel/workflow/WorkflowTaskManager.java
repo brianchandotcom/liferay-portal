@@ -58,10 +58,22 @@ public interface WorkflowTaskManager {
 	public WorkflowTask fetchWorkflowTask(long companyId, long workflowTaskId)
 		throws WorkflowException;
 
+	public default List<User> getAssignableUsers(
+			long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public List<String> getNextTransitionNames(
 			long companyId, long userId, long workflowTaskId)
 		throws WorkflowException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getAssignableUsers(long, long)}
+	 */
+	@Deprecated
 	public default List<User> getPooledActors(
 			long companyId, long workflowTaskId)
 		throws WorkflowException {
@@ -71,7 +83,7 @@ public interface WorkflowTaskManager {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getPooledActors(long, long)}
+	 *             #getAssignableUsers(long, long)}
 	 */
 	@Deprecated
 	public long[] getPooledActorsIds(long companyId, long workflowTaskId)

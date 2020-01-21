@@ -31,6 +31,13 @@ public class ConstraintResolverKey {
 		_uniqueIndexNames = uniqueIndexNames;
 	}
 
+	public ConstraintResolverKey(
+		String modelClassName, String[] uniqueIndexNames) {
+
+		_modelClassName = modelClassName;
+		_uniqueIndexNames = uniqueIndexNames;
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		ConstraintResolverKey constraintResolverKey =

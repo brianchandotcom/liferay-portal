@@ -42,6 +42,10 @@ public class ConstraintResolverConflictInfo implements ConflictInfo {
 			resourceBundle, _constraintResolver.getConflictDescriptionKey());
 	}
 
+	public ConstraintResolver<?> getConstraintResolver() {
+		return _constraintResolver;
+	}
+
 	@Override
 	public String getResolutionDescription(ResourceBundle resourceBundle) {
 		return ResourceBundleUtil.getString(

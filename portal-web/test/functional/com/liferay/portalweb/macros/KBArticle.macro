@@ -903,6 +903,8 @@ definition {
 		Check(
 			key_kbArticleTitle = "${kbArticleTitle}",
 			locator1 = "KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX");
+
+		AssertElementPresent.pauseAssertVisible(locator1 = "Icon#DELETE");
 	}
 
 	macro selectAttachmentCP {

@@ -43,6 +43,7 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 		throws Exception {
 
 		return StructureUtil.toFormStructure(
+			contextAcceptLanguage.isAcceptAllLanguages(),
 			_ddmStructureLocalService.getStructure(formStructureId),
 			contextAcceptLanguage.getPreferredLocale(), _portal,
 			_userLocalService);
@@ -59,8 +60,9 @@ public class FormStructureResourceImpl extends BaseFormStructureResourceImpl {
 					siteId, _getClassNameId(), pagination.getStartPosition(),
 					pagination.getEndPosition(), null),
 				ddmStructure -> StructureUtil.toFormStructure(
-					ddmStructure, contextAcceptLanguage.getPreferredLocale(),
-					_portal, _userLocalService)),
+					contextAcceptLanguage.isAcceptAllLanguages(), ddmStructure,
+					contextAcceptLanguage.getPreferredLocale(), _portal,
+					_userLocalService)),
 			pagination,
 			_ddmStructureLocalService.getStructuresCount(
 				siteId, _getClassNameId()));

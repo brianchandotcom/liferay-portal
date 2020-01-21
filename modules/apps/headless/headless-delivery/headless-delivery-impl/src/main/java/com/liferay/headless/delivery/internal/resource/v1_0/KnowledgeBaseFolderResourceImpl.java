@@ -177,6 +177,7 @@ public class KnowledgeBaseFolderResourceImpl
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.getUser(kbFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
+					contextAcceptLanguage.isAcceptAllLanguages(),
 					KBFolder.class.getName(), kbFolder.getKbFolderId(),
 					kbFolder.getCompanyId(),
 					contextAcceptLanguage.getPreferredLocale());

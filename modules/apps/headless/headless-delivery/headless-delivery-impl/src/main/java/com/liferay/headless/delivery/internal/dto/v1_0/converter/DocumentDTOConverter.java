@@ -91,6 +91,7 @@ public class DocumentDTOConverter
 					fileEntry, fileVersion, null, "");
 				creator = CreatorUtil.toCreator(_portal, user);
 				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
 					DLFileEntry.class.getName(), fileVersion.getFileVersionId(),
 					fileEntry.getCompanyId(), dtoConverterContext.getLocale());
 				dateCreated = fileEntry.getCreateDate();

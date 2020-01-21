@@ -70,6 +70,7 @@ public class MessageBoardMessageDTOConverter
 				anonymous = mbMessage.isAnonymous();
 				articleBody = mbMessage.getBody();
 				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
 					MBMessage.class.getName(), mbMessage.getMessageId(),
 					mbMessage.getCompanyId(), dtoConverterContext.getLocale());
 				dateCreated = mbMessage.getCreateDate();

@@ -7,6 +7,11 @@
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.js"
+		]
+	},
 	"name": "analytics-reports-web",
 	"private": true,
 	"scripts": {

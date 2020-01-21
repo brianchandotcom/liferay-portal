@@ -16,7 +16,6 @@ package com.liferay.app.builder.rest.internal.resource.v1_0;
 
 import com.liferay.app.builder.rest.dto.v1_0.AppModelPermission;
 import com.liferay.app.builder.rest.resource.v1_0.AppModelPermissionResource;
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -195,7 +194,7 @@ public abstract class BaseAppModelPermissionResourceImpl
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
-	protected ScopeChecker contextScopeChecker;
+	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
 
 }

@@ -16,7 +16,6 @@ package com.liferay.app.builder.rest.internal.resource.v1_0;
 
 import com.liferay.app.builder.rest.dto.v1_0.App;
 import com.liferay.app.builder.rest.resource.v1_0.AppResource;
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -324,7 +323,7 @@ public abstract class BaseAppResourceImpl implements AppResource {
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
-	protected ScopeChecker contextScopeChecker;
+	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
 
 }

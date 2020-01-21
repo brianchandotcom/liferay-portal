@@ -220,7 +220,7 @@ public abstract class BaseExperimentResourceTestCase {
 				"deleteExperiment",
 				new HashMap<String, Object>() {
 					{
-						put("experimentId", experiment.getId());
+						put("experimentId", "\"" + experiment.getId() + "\"");
 					}
 				}));
 
@@ -242,7 +242,9 @@ public abstract class BaseExperimentResourceTestCase {
 					"experiment",
 					new HashMap<String, Object>() {
 						{
-							put("experimentId", experiment.getId());
+							put(
+								"experimentId",
+								"\"" + experiment.getId() + "\"");
 						}
 					},
 					new GraphQLField("id")));

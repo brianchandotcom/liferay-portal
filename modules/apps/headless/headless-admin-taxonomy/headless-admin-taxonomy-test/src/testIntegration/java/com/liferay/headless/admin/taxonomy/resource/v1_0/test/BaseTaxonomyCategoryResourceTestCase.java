@@ -591,7 +591,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				"deleteTaxonomyCategory",
 				new HashMap<String, Object>() {
 					{
-						put("taxonomyCategoryId", taxonomyCategory.getId());
+						put(
+							"taxonomyCategoryId",
+							"\"" + taxonomyCategory.getId() + "\"");
 					}
 				}));
 
@@ -613,7 +615,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 					"taxonomyCategory",
 					new HashMap<String, Object>() {
 						{
-							put("taxonomyCategoryId", taxonomyCategory.getId());
+							put(
+								"taxonomyCategoryId",
+								"\"" + taxonomyCategory.getId() + "\"");
 						}
 					},
 					new GraphQLField("id")));
@@ -660,7 +664,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				"taxonomyCategory",
 				new HashMap<String, Object>() {
 					{
-						put("taxonomyCategoryId", taxonomyCategory.getId());
+						put(
+							"taxonomyCategoryId",
+							"\"" + taxonomyCategory.getId() + "\"");
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));

@@ -434,25 +434,29 @@ public abstract class BaseCheck extends AbstractCheck {
 
 		DetailAST parentDetailAST = variableDefinitionDetailAST.getParent();
 
-		DetailAST slistDetailAST = null;
+		DetailAST rangeDetailAST = null;
 
-		if (parentDetailAST.getType() == TokenTypes.SLIST) {
-			slistDetailAST = parentDetailAST;
+		if ((parentDetailAST.getType() == TokenTypes.OBJBLOCK) ||
+			(parentDetailAST.getType() == TokenTypes.SLIST)) {
+
+			rangeDetailAST = parentDetailAST;
 		}
 		else {
 			if (parentDetailAST.getType() != TokenTypes.LITERAL_CATCH) {
 				parentDetailAST = parentDetailAST.getParent();
 			}
 
-			slistDetailAST = parentDetailAST.getLastChild();
+			rangeDetailAST = parentDetailAST.getLastChild();
 		}
 
-		if (slistDetailAST.getType() != TokenTypes.SLIST) {
+		if ((rangeDetailAST.getType() != TokenTypes.OBJBLOCK) &&
+			(rangeDetailAST.getType() != TokenTypes.SLIST)) {
+
 			return variableCallerDetailASTList;
 		}
 
 		List<DetailAST> nameDetailASTList = getAllChildTokens(
-			slistDetailAST, true, TokenTypes.IDENT);
+			rangeDetailAST, true, TokenTypes.IDENT);
 
 		for (DetailAST nameDetailAST : nameDetailASTList) {
 			if (!variableName.equals(nameDetailAST.getText())) {

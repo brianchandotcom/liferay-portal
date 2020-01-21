@@ -17,8 +17,6 @@ package com.liferay.sharepoint.soap.repository.connector.operation;
 import com.liferay.sharepoint.soap.repository.connector.SharepointException;
 import com.liferay.sharepoint.soap.repository.connector.util.RemoteExceptionUtil;
 
-import java.net.URL;
-
 import java.rmi.RemoteException;
 
 /**
@@ -28,9 +26,7 @@ public class CancelCheckOutFileOperation extends BaseOperation {
 
 	public boolean execute(String filePath) throws SharepointException {
 		try {
-			URL filePathURL = toURL(filePath);
-
-			return listsSoap.undoCheckOut(filePathURL.toString());
+			return listsSoap.undoCheckOut(String.valueOf(toURL(filePath)));
 		}
 		catch (RemoteException remoteException) {
 			RemoteExceptionUtil.handleRemoteException(remoteException);

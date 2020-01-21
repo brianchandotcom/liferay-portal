@@ -297,6 +297,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"fragments", editorSoyContext.get("elements")
 			).put(
+				"getAssetFieldValueURL",
+				editorSoyContext.get("getAssetFieldValueURL")
+			).put(
 				"getAssetMappingFieldsURL",
 				editorSoyContext.get("getAssetMappingFieldsURL")
 			).put(
@@ -322,9 +325,13 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"lookAndFeelURL", _getLookAndFeelURL()
 			).put(
+				"mappingFieldsURL", editorSoyContext.get("mappingFieldsURL")
+			).put(
 				"moveItemURL",
 				getFragmentEntryActionURL(
 					"/content_layout/move_fragment_entry_link_react")
+			).put(
+				"pageType", editorSoyContext.get("pageType")
 			).put(
 				"pluginsRootPath",
 				npmResolvedPackageName + "/page_editor/plugins"

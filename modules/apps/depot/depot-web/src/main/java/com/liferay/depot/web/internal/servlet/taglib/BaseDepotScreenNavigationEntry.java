@@ -14,6 +14,8 @@
 
 package com.liferay.depot.web.internal.servlet.taglib;
 
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.constants.DepotScreenNavigationEntryConstants;
@@ -70,6 +72,16 @@ public abstract class BaseDepotScreenNavigationEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		DepotEntry depotEntry = (DepotEntry)httpServletRequest.getAttribute(
+			DepotAdminWebKeys.DEPOT_ENTRY);
+
+		Group group = groupLocalService.fetchGroup(depotEntry.getGroupId());
+
+		httpServletRequest.setAttribute(
+			AssetAutoTaggerConfiguration.class.getName(),
+			assetAutoTaggerConfigurationFactory.
+				getGroupAssetAutoTaggerConfiguration(group));
+
 		httpServletRequest.setAttribute(
 			DepotAdminWebKeys.ACTION_COMMAND_NAME, getActionCommandName());
 		httpServletRequest.setAttribute(
@@ -82,11 +94,6 @@ public abstract class BaseDepotScreenNavigationEntry
 			DepotAdminWebKeys.JSP_PATH, getJspPath());
 		httpServletRequest.setAttribute(
 			DepotAdminWebKeys.SHOW_CONTROLS, isShowControls());
-
-		DepotEntry depotEntry = (DepotEntry)httpServletRequest.getAttribute(
-			DepotAdminWebKeys.DEPOT_ENTRY);
-
-		Group group = groupLocalService.fetchGroup(depotEntry.getGroupId());
 
 		httpServletRequest.setAttribute(
 			SharingWebKeys.GROUP_SHARING_CONFIGURATION,
@@ -112,6 +119,10 @@ public abstract class BaseDepotScreenNavigationEntry
 	protected boolean isShowControls() {
 		return true;
 	}
+
+	@Reference
+	protected AssetAutoTaggerConfigurationFactory
+		assetAutoTaggerConfigurationFactory;
 
 	@Reference
 	protected GroupLocalService groupLocalService;

@@ -455,7 +455,7 @@ class CriteriaRow extends Component {
 				) : (
 					<>
 						<ClayButton
-							className="btn-outline-borderless btn-sm"
+							className="btn-outline-borderless btn-sm mr-1"
 							displayType="secondary"
 							monospaced
 							onClick={this._handleDuplicate}

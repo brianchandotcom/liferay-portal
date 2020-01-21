@@ -216,7 +216,8 @@ definition {
 
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title");
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
 		}
 
 		task ("Add a document with an image") {
@@ -405,7 +406,8 @@ definition {
 
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title");
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
 		}
 
 		task ("Add a document") {

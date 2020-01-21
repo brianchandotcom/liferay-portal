@@ -125,11 +125,4 @@ public class DepotEntryGroupRelServiceImpl
 	@Reference
 	private GroupPermission _groupPermission;
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(resource.name=" + DepotConstants.RESOURCE_NAME + ")"
-	)
-	private volatile PortletResourcePermission _portletResourcePermission;
-
 }

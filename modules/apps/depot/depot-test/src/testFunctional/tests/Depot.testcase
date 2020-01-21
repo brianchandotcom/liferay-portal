@@ -99,6 +99,7 @@ definition {
 	}
 
 	@description = "This ensures that users cannot create the same name as another translated repository name."
+	@ignore = "true"
 	@priority = "4"
 	test AddNameThatDuplicatesTranslation {
 		JSONDepot.addDepot(

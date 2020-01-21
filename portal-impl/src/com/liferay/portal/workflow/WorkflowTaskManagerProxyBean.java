@@ -71,12 +71,22 @@ public class WorkflowTaskManagerProxyBean
 	}
 
 	@Override
+	public List<User> getAssignableUsers(long companyId, long workflowTaskId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public List<String> getNextTransitionNames(
 		long companyId, long userId, long workflowTaskId) {
 
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getAssignableUsers(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public List<User> getPooledActors(long companyId, long workflowTaskId) {
 		throw new UnsupportedOperationException();
@@ -84,7 +94,7 @@ public class WorkflowTaskManagerProxyBean
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getPooledActors(long, long)}
+	 *             #getAssignableUsers(long, long)}
 	 */
 	@Deprecated
 	@Override

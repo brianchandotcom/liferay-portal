@@ -260,7 +260,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	@Override
-	public List<User> getPooledActors(long companyId, long workflowTaskId)
+	public List<User> getAssignableUsers(long companyId, long workflowTaskId)
 		throws WorkflowException {
 
 		try {
@@ -290,14 +290,26 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getPooledActors(long, long)}
+	 *             #getAssignableUsers(long, long)}
+	 */
+	@Deprecated
+	@Override
+	public List<User> getPooledActors(long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		return getAssignableUsers(companyId, workflowTaskId);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getAssignableUsers(long, long)}
 	 */
 	@Deprecated
 	@Override
 	public long[] getPooledActorsIds(long companyId, long workflowTaskId)
 		throws WorkflowException {
 
-		List<User> users = getPooledActors(companyId, workflowTaskId);
+		List<User> users = getAssignableUsers(companyId, workflowTaskId);
 
 		Stream<User> stream = users.stream();
 

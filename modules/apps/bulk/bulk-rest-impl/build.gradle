@@ -11,7 +11,6 @@ dependencies {
 	compileOnly project(":apps:bulk:bulk-rest-api")
 	compileOnly project(":apps:bulk:bulk-selection-api")
 	compileOnly project(":apps:document-library:document-library-api")
-	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")

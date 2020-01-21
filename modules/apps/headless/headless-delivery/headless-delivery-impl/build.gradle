@@ -24,7 +24,6 @@ dependencies {
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:knowledge-base:knowledge-base-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
-	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:segments:segments-api")

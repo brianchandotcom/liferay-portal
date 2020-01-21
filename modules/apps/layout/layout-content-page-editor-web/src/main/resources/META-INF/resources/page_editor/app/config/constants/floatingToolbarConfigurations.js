@@ -14,6 +14,7 @@
 
 import {ContainerConfigurationPanel} from '../../../app/components/ContainerConfigurationPanel';
 import {FragmentConfigurationPanel} from '../../../app/components/FragmentConfigurationPanel';
+import LinkConfigurationPanel from '../../../app/components/LinkConfigurationPanel';
 import {MapConfigurationPanel} from '../../../app/components/MapConfigurationPanel';
 import {RowConfigurationPanel} from '../../../app/components/RowConfigurationPanel';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from './editableFloatingToolbarButtons';
@@ -25,11 +26,12 @@ const {
 	rowConfiguration
 } = LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS;
 
-const {map} = EDITABLE_FLOATING_TOOLBAR_BUTTONS;
+const {link, map} = EDITABLE_FLOATING_TOOLBAR_BUTTONS;
 
 export const FLOATING_TOOLBAR_CONFIGURATIONS = {
 	[containerConfiguration.panelId]: ContainerConfigurationPanel,
 	[fragmentConfiguration.panelId]: FragmentConfigurationPanel,
+	[link.panelId]: LinkConfigurationPanel,
 	[map.panelId]: MapConfigurationPanel,
 	[rowConfiguration.panelId]: RowConfigurationPanel
 };

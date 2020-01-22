@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -41,7 +42,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -587,7 +590,8 @@ public class FriendlyURLEntryLocalServiceImpl
 			prefix = _getURLEncodedSubstring(
 				urlTitle, prefix, maxLength - suffix.length());
 
-			curUrlTitle = prefix + suffix;
+			curUrlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+				prefix + suffix);
 		}
 
 		return curUrlTitle;
@@ -642,10 +646,33 @@ public class FriendlyURLEntryLocalServiceImpl
 		return map;
 	}
 
+	private Map<String, String> _sortUrlTitleMapByGroupLocaleSettings(
+		long groupId, Map<String, String> urlTitleMap) {
+
+		Map<String, String> sortedUrlTitleMap = new LinkedHashMap<>();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			String value = urlTitleMap.get(languageId);
+
+			if (value == null) {
+				continue;
+			}
+
+			sortedUrlTitleMap.put(languageId, value);
+		}
+
+		return sortedUrlTitleMap;
+	}
+
 	private void _updateFriendlyURLEntryLocalizations(
 			FriendlyURLEntry friendlyURLEntry, long classNameId, long classPK,
 			Map<String, String> urlTitleMap)
 		throws PortalException {
+
+		urlTitleMap = _sortUrlTitleMapByGroupLocaleSettings(
+			friendlyURLEntry.getGroupId(), urlTitleMap);
 
 		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
 			String normalizedUrlTitle =

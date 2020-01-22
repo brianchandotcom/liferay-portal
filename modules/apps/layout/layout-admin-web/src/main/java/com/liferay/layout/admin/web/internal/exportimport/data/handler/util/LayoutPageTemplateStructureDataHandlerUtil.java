@@ -102,10 +102,8 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 	}
 
 	private void _importLayoutPageTemplateStructureRel(
-			PortletDataContext portletDataContext,
-			LayoutPageTemplateStructureRel
-				existingLayoutPageTemplateStructureRel)
-		throws Exception {
+		PortletDataContext portletDataContext,
+		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel) {
 
 		String data = existingLayoutPageTemplateStructureRel.getData();
 

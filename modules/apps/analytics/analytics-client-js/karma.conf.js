@@ -16,9 +16,19 @@ const path = require('path');
 
 const webpack = require('./webpack.config.test');
 
+const TIMEOUT = 10000;
+
 module.exports = function(config) {
 	config.set({
+		browserDisconnectTimeout: TIMEOUT,
+
 		browsers: ['ChromeHeadless'],
+
+		client: {
+			mocha: {
+				timeout: TIMEOUT
+			}
+		},
 
 		coverageIstanbulReporter: {
 			dir: path.join(__dirname, 'test-coverage'),

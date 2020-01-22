@@ -15,6 +15,8 @@
 var liferayKarmaAlloyConfig = require('liferay-karma-alloy-config');
 var liferayKarmaConfig = require('liferay-karma-config');
 
+const TIMEOUT = 10000;
+
 module.exports = function(config) {
 	liferayKarmaConfig(config);
 
@@ -28,6 +30,12 @@ module.exports = function(config) {
 		format: '%b %T: %m',
 		level: 'log',
 		terminal: true
+	};
+
+	config.browserDisconnectTimeout = TIMEOUT;
+
+	config.client.mocha = {
+		timeout: TIMEOUT
 	};
 
 	config.singleRun = true;

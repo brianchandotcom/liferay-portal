@@ -9,8 +9,10 @@
  * distribution rights of the Software.
  */
 
-var liferayKarmaAlloyConfig = require('liferay-karma-alloy-config');
-var liferayKarmaConfig = require('liferay-karma-config');
+const liferayKarmaAlloyConfig = require('liferay-karma-alloy-config');
+const liferayKarmaConfig = require('liferay-karma-config');
+
+const TIMEOUT = 10000;
 
 module.exports = function(config) {
 	liferayKarmaConfig(config);
@@ -25,14 +27,15 @@ module.exports = function(config) {
 		level: 'log',
 		terminal: false
 	};
+	config.browserDisconnectTimeout = TIMEOUT;
 	config.client.mocha = {
-		timeout: 10000
+		timeout: TIMEOUT
 	};
 	config.singleRun = true;
 
-	var resourcesPath = 'src/main/resources/META-INF/resources/';
-	var resourcesTestPath = 'src/test/resources/';
-	var testPath = 'src/test/testJS/';
+	const resourcesPath = 'src/main/resources/META-INF/resources/';
+	const resourcesTestPath = 'src/test/resources/';
+	const testPath = 'src/test/testJS/';
 
 	config.files.push(
 		{

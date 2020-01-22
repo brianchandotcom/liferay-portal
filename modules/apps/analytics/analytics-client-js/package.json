@@ -45,7 +45,7 @@
 		"build": "liferay-npm-scripts webpack",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "karma start karma.conf.js"
+		"test": "karma start"
 	},
 	"version": "1.0.0"
 }

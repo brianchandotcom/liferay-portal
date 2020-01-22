@@ -15,6 +15,8 @@
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -36,6 +38,18 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 
 	public void setSize(int size) {
 		_size = size;
+	}
+
+	@Override
+	public void updateItemConfig(JSONObject itemConfigJSONObject) {
+		if (itemConfigJSONObject.has("size")) {
+			setSize(itemConfigJSONObject.getInt("size"));
+		}
+	}
+
+	@Override
+	protected JSONObject getItemConfigJSONObject() {
+		return JSONUtil.put("size", _size);
 	}
 
 	private int _size;

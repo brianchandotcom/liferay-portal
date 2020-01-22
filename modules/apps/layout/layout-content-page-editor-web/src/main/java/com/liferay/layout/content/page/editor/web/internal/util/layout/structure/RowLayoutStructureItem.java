@@ -15,6 +15,8 @@
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -44,6 +46,26 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 
 	public void setNumberOfColumns(int numberOfColumns) {
 		_numberOfColumns = numberOfColumns;
+	}
+
+	@Override
+	public void updateItemConfig(JSONObject itemConfigJSONObject) {
+		if (itemConfigJSONObject.has("gutters")) {
+			setGutters(itemConfigJSONObject.getBoolean("gutters"));
+		}
+
+		if (itemConfigJSONObject.has("numberOfColumns")) {
+			setNumberOfColumns(itemConfigJSONObject.getInt("numberOfColumns"));
+		}
+	}
+
+	@Override
+	protected JSONObject getItemConfigJSONObject() {
+		return JSONUtil.put(
+			"gutters", _gutters
+		).put(
+			"numberOfColumns", _numberOfColumns
+		);
 	}
 
 	private boolean _gutters;

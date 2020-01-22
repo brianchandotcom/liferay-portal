@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.portal.kernel.json.JSONObject;
 
 /**
  * @author Eudaldo Alonso
@@ -28,6 +29,15 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_DROP_ZONE;
+	}
+
+	@Override
+	public void updateItemConfig(JSONObject itemConfigJSONObject) {
+	}
+
+	@Override
+	protected JSONObject getItemConfigJSONObject() {
+		return null;
 	}
 
 }

@@ -15,6 +15,8 @@
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -76,6 +78,53 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 	public void setPaddingTop(long paddingTop) {
 		_paddingTop = paddingTop;
+	}
+
+	@Override
+	public void updateItemConfig(JSONObject itemConfigJSONObject) {
+		if (itemConfigJSONObject.has("backgroundColorCssClass")) {
+			setBackgroundColorCssClass(
+				itemConfigJSONObject.getString("backgroundColorCssClass"));
+		}
+
+		if (itemConfigJSONObject.has("backgroundImage")) {
+			setBackgroundImage(
+				itemConfigJSONObject.getString("backgroundImage"));
+		}
+
+		if (itemConfigJSONObject.has("containerType")) {
+			setContainerType(itemConfigJSONObject.getString("containerType"));
+		}
+
+		if (itemConfigJSONObject.has("paddingBottom")) {
+			setPaddingBottom(itemConfigJSONObject.getInt("paddingBottom"));
+		}
+
+		if (itemConfigJSONObject.has("paddingHorizontal")) {
+			setPaddingHorizontal(
+				itemConfigJSONObject.getInt("paddingHorizontal"));
+		}
+
+		if (itemConfigJSONObject.has("paddingTop")) {
+			setPaddingTop(itemConfigJSONObject.getInt("paddingTop"));
+		}
+	}
+
+	@Override
+	protected JSONObject getItemConfigJSONObject() {
+		return JSONUtil.put(
+			"backgroundColorCssClass", _backgroundColorCssClass
+		).put(
+			"backgroundImage", _backgroundImage
+		).put(
+			"containerType", _containerType
+		).put(
+			"paddingBottom", _paddingBottom
+		).put(
+			"paddingHorizontal", _paddingHorizontal
+		).put(
+			"paddingTop", _paddingTop
+		);
 	}
 
 	private String _backgroundColorCssClass;

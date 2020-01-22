@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.util.layout.structur
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 
 /**
  * @author Eudaldo Alonso
@@ -29,6 +30,15 @@ public class RootLayoutStructureItem extends LayoutStructureItem {
 	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_ROOT;
+	}
+
+	@Override
+	public void updateItemConfig(JSONObject itemConfigJSONObject) {
+	}
+
+	@Override
+	protected JSONObject getItemConfigJSONObject() {
+		return null;
 	}
 
 }

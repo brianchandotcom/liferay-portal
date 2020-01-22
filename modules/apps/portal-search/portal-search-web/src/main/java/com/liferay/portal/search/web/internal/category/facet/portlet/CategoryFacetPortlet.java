@@ -157,6 +157,8 @@ public class CategoryFacetPortlet extends MVCPortlet {
 				parameterName, renderRequest),
 			assetCategoriesSearchFacetDisplayBuilder::setParameterValues);
 
+		assetCategoriesSearchFacetDisplayBuilder.setPortal(portal);
+
 		return assetCategoriesSearchFacetDisplayBuilder.build();
 	}
 

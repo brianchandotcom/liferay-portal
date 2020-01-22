@@ -29,6 +29,7 @@ assetCategoriesSearchFacetDisplayBuilder.setLocale(locale);
 assetCategoriesSearchFacetDisplayBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms", 10));
 assetCategoriesSearchFacetDisplayBuilder.setParameterName(facet.getFieldId());
 assetCategoriesSearchFacetDisplayBuilder.setParameterValue(fieldParam);
+assetCategoriesSearchFacetDisplayBuilder.setPortal(PortalUtil.getPortal());
 
 AssetCategoriesSearchFacetDisplayContext assetCategoriesSearchFacetDisplayContext = assetCategoriesSearchFacetDisplayBuilder.build();
 %>

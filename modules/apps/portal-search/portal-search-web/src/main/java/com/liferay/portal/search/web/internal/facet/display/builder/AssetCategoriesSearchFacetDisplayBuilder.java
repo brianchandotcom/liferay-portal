@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext;
@@ -137,6 +137,10 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	public void setPortal(Portal portal) {
+		_portal = portal;
 	}
 
 	protected AssetCategoriesSearchFacetTermDisplayContext
@@ -265,7 +269,7 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 
 		try {
 			return new AssetCategoriesSearchFacetDisplayContext(
-				PortalUtil.getHttpServletRequest(_renderRequest));
+				_portal.getHttpServletRequest(_renderRequest));
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);
@@ -404,6 +408,7 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 	private Locale _locale;
 	private int _maxTerms;
 	private String _parameterName;
+	private Portal _portal;
 	private final RenderRequest _renderRequest;
 	private List<Long> _selectedCategoryIds = Collections.emptyList();
 

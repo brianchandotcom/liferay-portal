@@ -46,16 +46,16 @@ public abstract class LayoutStructureItem {
 		layoutStructureItem.setChildrenItemIds(childrenItemIds);
 
 		layoutStructureItem.setItemId(jsonObject.getString("itemId"));
-        layoutStructureItem.setItemConfigJSONObject(
-            jsonObject.getJSONObject("config"));
 		layoutStructureItem.setParentItemId(parentId);
+
+		layoutStructureItem.updateItemConfig(
+			jsonObject.getJSONObject("config"));
 
 		return layoutStructureItem;
 	}
 
 	public LayoutStructureItem() {
 		_childrenItemIds = new ArrayList<>();
-		_itemConfigJSONObject = JSONFactoryUtil.createJSONObject();
 	}
 
 	public LayoutStructureItem(String parentItemId) {
@@ -63,7 +63,6 @@ public abstract class LayoutStructureItem {
 
 		_itemId = String.valueOf(UUID.randomUUID());
 		_childrenItemIds = new ArrayList<>();
-		_itemConfigJSONObject = JSONFactoryUtil.createJSONObject();
 	}
 
 	public void addChildrenItem(int position, String itemId) {
@@ -82,10 +81,6 @@ public abstract class LayoutStructureItem {
 		return _childrenItemIds;
 	}
 
-	public JSONObject getItemConfigJSONObject() {
-		return _itemConfigJSONObject;
-	}
-
 	public String getItemId() {
 		return _itemId;
 	}
@@ -98,10 +93,6 @@ public abstract class LayoutStructureItem {
 
 	public void setChildrenItemIds(List<String> childrenItemIds) {
 		_childrenItemIds = childrenItemIds;
-	}
-
-	public void setItemConfigJSONObject(JSONObject itemConfigJSONObject) {
-		_itemConfigJSONObject = itemConfigJSONObject;
 	}
 
 	public void setItemId(String itemId) {
@@ -126,18 +117,11 @@ public abstract class LayoutStructureItem {
 		);
 	}
 
-	public void updateItemConfigJSONObject(JSONObject itemConfigJSONObject) {
-		for (String key : itemConfigJSONObject.keySet()) {
-			if (_itemConfigJSONObject.has(key)) {
-				_itemConfigJSONObject.remove(key);
-			}
+	public abstract void updateItemConfig(JSONObject itemConfigJSONObject);
 
-			_itemConfigJSONObject.put(key, itemConfigJSONObject.get(key));
-		}
-	}
+	protected abstract JSONObject getItemConfigJSONObject();
 
 	private List<String> _childrenItemIds;
-	private JSONObject _itemConfigJSONObject;
 	private String _itemId;
 	private String _parentItemId;
 

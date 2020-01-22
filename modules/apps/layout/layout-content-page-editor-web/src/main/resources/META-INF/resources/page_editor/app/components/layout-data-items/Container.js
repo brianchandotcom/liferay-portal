@@ -13,10 +13,13 @@
  */
 
 import classNames from 'classnames';
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {ConfigContext} from '../../config/index';
+import {DispatchContext} from '../../reducers/index';
+import InfoItemService from '../../services/InfoItemService';
 
 const Container = React.forwardRef(({children, className, item}, ref) => {
 	const {
@@ -33,6 +36,33 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 		...item.config
 	};
 
+	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
+
+	const [backgroundImageValue, setBackgroundImageValue] = useState('');
+
+	useEffect(() => {
+		if (typeof backgroundImage.url === 'string') {
+			setBackgroundImageValue(backgroundImage.url);
+		} else if (backgroundImage.fieldId) {
+			InfoItemService.getAssetFieldValue({
+				classNameId: backgroundImage.classNameId,
+				classPK: backgroundImage.classPK,
+				config,
+				fieldId: backgroundImage.fieldId,
+				onNetworkStatus: dispatch
+			}).then(response => {
+				const {fieldValue} = response;
+
+				if (fieldValue && fieldValue.url !== backgroundImageValue) {
+					setBackgroundImageValue(fieldValue.url);
+				}
+			});
+		} else {
+			setBackgroundImageValue('');
+		}
+	}, [backgroundImage, backgroundImageValue, config, dispatch, item]);
+
 	return (
 		<div
 			className={classNames(
@@ -45,9 +75,9 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 			)}
 			ref={ref}
 			style={
-				backgroundImage
+				backgroundImageValue
 					? {
-							backgroundImage: `url(${backgroundImage})`,
+							backgroundImage: `url(${backgroundImageValue})`,
 							backgroundPosition: '50% 50%',
 							backgroundRepeat: 'no-repeat',
 							backgroundSize: 'cover'

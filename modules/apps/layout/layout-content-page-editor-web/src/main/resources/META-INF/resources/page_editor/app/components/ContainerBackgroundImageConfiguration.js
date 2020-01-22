@@ -39,7 +39,6 @@ export const ContainerBackgroundImageConfiguration = ({
 				</label>
 				<ClaySelectWithOption
 					aria-label={Liferay.Language.get('image-source')}
-					defaultValue={IMAGE_SOURCE.manualSelection}
 					id="containerBackgroundImage"
 					onChange={({target: {value}}) => setImageSource(value)}
 					options={[
@@ -52,6 +51,7 @@ export const ContainerBackgroundImageConfiguration = ({
 							value: IMAGE_SOURCE.contentMapping
 						}
 					]}
+					value={imageSource}
 				/>
 			</ClayForm.Group>
 			{imageSource === IMAGE_SOURCE.manualSelection ? (

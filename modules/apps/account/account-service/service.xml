@@ -48,6 +48,36 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="AccountEntryOrganizationRel">
+
+		<!-- PK fields -->
+
+		<column name="accountEntryOrganizationRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="accountEntryId" type="long" />
+		<column name="organizationId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="AccountEntryId" return-type="Collection">
+			<finder-column name="accountEntryId" />
+		</finder>
+		<finder name="A_O" return-type="AccountEntryOrganizationRel">
+			<finder-column name="accountEntryId" />
+			<finder-column name="organizationId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="AccountEntry" package-path="com.liferay.account" />
+		<reference entity="Organization" package-path="com.liferay.portal" />
+	</entity>
 	<entity local-service="true" name="AccountEntryUserRel">
 
 		<!-- PK fields -->
@@ -118,6 +148,7 @@
 	<exceptions>
 		<exception>AccountEntryDomains</exception>
 		<exception>AccountEntryName</exception>
+		<exception>DuplicateAccountEntryOrganizationRel</exception>
 		<exception>DuplicateAccountEntryUserRel</exception>
 	</exceptions>
 </service-builder>

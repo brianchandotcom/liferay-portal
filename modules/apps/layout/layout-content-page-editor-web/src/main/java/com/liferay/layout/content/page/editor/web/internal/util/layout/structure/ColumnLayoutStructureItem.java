@@ -24,9 +24,12 @@ import java.util.UUID;
 public class ColumnLayoutStructureItem extends LayoutStructureItem {
 
 	public ColumnLayoutStructureItem(String parentItemId) {
-		super(
-			String.valueOf(UUID.randomUUID()), parentItemId,
-			LayoutDataItemTypeConstants.TYPE_COLUMN);
+		super(String.valueOf(UUID.randomUUID()), parentItemId);
+	}
+
+	@Override
+	public String getItemType() {
+		return LayoutDataItemTypeConstants.TYPE_COLUMN;
 	}
 
 }

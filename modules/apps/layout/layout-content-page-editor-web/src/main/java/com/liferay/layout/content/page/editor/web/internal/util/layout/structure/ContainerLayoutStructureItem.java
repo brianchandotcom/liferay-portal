@@ -24,9 +24,12 @@ import java.util.UUID;
 public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 	public ContainerLayoutStructureItem(String parentItemId) {
-		super(
-			String.valueOf(UUID.randomUUID()), parentItemId,
-			LayoutDataItemTypeConstants.TYPE_CONTAINER);
+		super(String.valueOf(UUID.randomUUID()), parentItemId);
+	}
+
+	@Override
+	public String getItemType() {
+		return LayoutDataItemTypeConstants.TYPE_CONTAINER;
 	}
 
 }

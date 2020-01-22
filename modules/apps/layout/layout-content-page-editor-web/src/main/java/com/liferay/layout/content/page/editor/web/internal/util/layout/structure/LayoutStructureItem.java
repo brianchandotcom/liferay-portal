@@ -91,9 +91,7 @@ public abstract class LayoutStructureItem {
 		return _itemId;
 	}
 
-	public String getItemType() {
-		return _itemType;
-	}
+	public abstract String getItemType();
 
 	public String getParentItemId() {
 		return _parentItemId;

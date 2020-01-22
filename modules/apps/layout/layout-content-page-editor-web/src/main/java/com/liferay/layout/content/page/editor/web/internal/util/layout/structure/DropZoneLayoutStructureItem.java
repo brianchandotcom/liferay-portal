@@ -24,9 +24,12 @@ import java.util.UUID;
 public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 
 	public DropZoneLayoutStructureItem(String parentItemId) {
-		super(
-			String.valueOf(UUID.randomUUID()), parentItemId,
-			LayoutDataItemTypeConstants.TYPE_DROP_ZONE);
+		super(String.valueOf(UUID.randomUUID()), parentItemId);
+	}
+
+	@Override
+	public String getItemType() {
+		return LayoutDataItemTypeConstants.TYPE_DROP_ZONE;
 	}
 
 }

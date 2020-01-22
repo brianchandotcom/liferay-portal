@@ -24,9 +24,12 @@ import java.util.UUID;
 public class RowLayoutStructureItem extends LayoutStructureItem {
 
 	public RowLayoutStructureItem(String parentItemId) {
-		super(
-			String.valueOf(UUID.randomUUID()), parentItemId,
-			LayoutDataItemTypeConstants.TYPE_ROW);
+		super(String.valueOf(UUID.randomUUID()), parentItemId);
+	}
+
+	@Override
+	public String getItemType() {
+		return LayoutDataItemTypeConstants.TYPE_ROW;
 	}
 
 }

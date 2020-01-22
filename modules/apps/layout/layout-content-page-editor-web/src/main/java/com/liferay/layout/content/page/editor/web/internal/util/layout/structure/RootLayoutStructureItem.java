@@ -25,9 +25,12 @@ import java.util.UUID;
 public class RootLayoutStructureItem extends LayoutStructureItem {
 
 	public RootLayoutStructureItem() {
-		super(
-			String.valueOf(UUID.randomUUID()), StringPool.BLANK,
-			LayoutDataItemTypeConstants.TYPE_ROOT);
+		super(String.valueOf(UUID.randomUUID()), StringPool.BLANK);
+	}
+
+	@Override
+	public String getItemType() {
+		return LayoutDataItemTypeConstants.TYPE_ROOT;
 	}
 
 }

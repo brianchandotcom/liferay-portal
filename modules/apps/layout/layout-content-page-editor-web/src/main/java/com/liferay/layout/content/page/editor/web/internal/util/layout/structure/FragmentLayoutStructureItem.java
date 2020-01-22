@@ -24,9 +24,12 @@ import java.util.UUID;
 public class FragmentLayoutStructureItem extends LayoutStructureItem {
 
 	public FragmentLayoutStructureItem(String parentItemId) {
-		super(
-			String.valueOf(UUID.randomUUID()), parentItemId,
-			LayoutDataItemTypeConstants.TYPE_FRAGMENT);
+		super(String.valueOf(UUID.randomUUID()), parentItemId);
+	}
+
+	@Override
+	public String getItemType() {
+		return LayoutDataItemTypeConstants.TYPE_FRAGMENT;
 	}
 
 }

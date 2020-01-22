@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.upgrade.v2_0_0;
+package com.liferay.change.tracking.internal.upgrade.v2_1_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Gergely Mathe
+ * @author Preston Crary
  */
 public class UpgradeSchema extends UpgradeProcess {
 
@@ -27,7 +27,7 @@ public class UpgradeSchema extends UpgradeProcess {
 		String template = StringUtil.read(
 			UpgradeSchema.class.getResourceAsStream("dependencies/update.sql"));
 
-		runSQLTemplateString(template, true);
+		runSQLTemplateString(template, false, true);
 	}
 
 }

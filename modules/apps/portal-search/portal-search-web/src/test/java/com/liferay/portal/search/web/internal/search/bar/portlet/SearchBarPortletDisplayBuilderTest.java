@@ -18,17 +18,25 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
 
 import java.util.Optional;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,10 +57,11 @@ public class SearchBarPortletDisplayBuilderTest {
 
 		setUpHttp();
 		setUpThemeDisplay();
+		setUpPortal();
 	}
 
 	@Test
-	public void testDestinationBlank() {
+	public void testDestinationBlank() throws PortletException {
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
 			createSearchBarPortletDisplayBuilder();
 
@@ -66,7 +75,7 @@ public class SearchBarPortletDisplayBuilderTest {
 	}
 
 	@Test
-	public void testDestinationNull() {
+	public void testDestinationNull() throws PortletException {
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
 			createSearchBarPortletDisplayBuilder();
 
@@ -80,7 +89,7 @@ public class SearchBarPortletDisplayBuilderTest {
 	}
 
 	@Test
-	public void testDestinationUnreachable() {
+	public void testDestinationUnreachable() throws PortletException {
 		String destination = RandomTestUtil.randomString();
 
 		whenLayoutLocalServiceFetchLayoutByFriendlyURL(destination, null);
@@ -153,7 +162,7 @@ public class SearchBarPortletDisplayBuilderTest {
 	}
 
 	@Test
-	public void testSamePageNoDestination() {
+	public void testSamePageNoDestination() throws PortletException {
 		Mockito.doReturn(
 			"http://example.com/web/guest/home?param=arg"
 		).when(
@@ -186,18 +195,46 @@ public class SearchBarPortletDisplayBuilderTest {
 			searchBarPortletDisplayBuilder.getSearchScope());
 	}
 
+	protected LiferayPortletRequest createLiferayPortletRequest() {
+		LiferayPortletRequest liferayPortletRequest = Mockito.mock(
+			LiferayPortletRequest.class);
+
+		Mockito.doReturn(
+			getHttpServletRequest()
+		).when(
+			liferayPortletRequest
+		).getHttpServletRequest();
+
+		return liferayPortletRequest;
+	}
+
 	protected SearchBarPortletDisplayBuilder
 		createSearchBarPortletDisplayBuilder() {
 
+		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
+
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
 			new SearchBarPortletDisplayBuilder(
-				_http, _layoutLocalService, _portal);
+				_http, _layoutLocalService, _portal, renderRequest);
 
 		searchBarPortletDisplayBuilder.setSearchScopePreference(
 			SearchScopePreference.getSearchScopePreference("everything"));
 		searchBarPortletDisplayBuilder.setThemeDisplay(_themeDisplay);
 
 		return searchBarPortletDisplayBuilder;
+	}
+
+	protected HttpServletRequest getHttpServletRequest() {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.when(
+			(ThemeDisplay)httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			_themeDisplay
+		);
+
+		return httpServletRequest;
 	}
 
 	protected String getPath(String url) {
@@ -231,12 +268,28 @@ public class SearchBarPortletDisplayBuilderTest {
 		);
 	}
 
+	protected void setUpPortal() {
+		Mockito.doReturn(
+			createLiferayPortletRequest()
+		).when(
+			_portal
+		).getLiferayPortletRequest(
+			Mockito.anyObject()
+		);
+	}
+
 	protected void setUpThemeDisplay() {
 		Mockito.when(
 			_themeDisplay.getScopeGroup()
 		).thenReturn(
 			_group
 		);
+
+		Mockito.doReturn(
+			Mockito.mock(PortletDisplay.class)
+		).when(
+			_themeDisplay
+		).getPortletDisplay();
 	}
 
 	protected void whenLayoutLocalServiceFetchLayoutByFriendlyURL(

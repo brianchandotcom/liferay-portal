@@ -16,14 +16,11 @@ import React from 'react';
 import {DragDropContextProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import useThunk from '../core/hooks/useThunk';
 import App from './components/App';
 import {ControlsProvider} from './components/Controls';
 import {ConfigContext, getConfig} from './config/index';
-import {DispatchContext, reducer} from './reducers/index';
-import {StoreContext, getInitialState} from './store/index';
-
-const {useReducer} = React;
+import {reducer} from './reducers/index';
+import {StoreContextProvider} from './store/index';
 
 /**
  * Container component that sets up context that is global to the entire app.
@@ -34,19 +31,16 @@ const {useReducer} = React;
  * function that returns a component).
  */
 function Container({config, state}) {
-	const [store, dispatch] = useThunk(
-		useReducer(reducer, [state, config], getInitialState)
-	);
-
 	return (
 		<ConfigContext.Provider value={config}>
-			<StoreContext.Provider value={store}>
-				<DispatchContext.Provider value={dispatch}>
-					<ControlsProvider>
-						<App />
-					</ControlsProvider>
-				</DispatchContext.Provider>
-			</StoreContext.Provider>
+			<StoreContextProvider
+				initialState={[state, config]}
+				reducer={reducer}
+			>
+				<ControlsProvider>
+					<App />
+				</ControlsProvider>
+			</StoreContextProvider>
 		</ConfigContext.Provider>
 	);
 }

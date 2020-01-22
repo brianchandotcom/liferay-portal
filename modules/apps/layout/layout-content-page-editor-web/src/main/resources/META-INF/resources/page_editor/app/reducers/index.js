@@ -12,8 +12,6 @@
  * details.
  */
 
-import React from 'react';
-
 import baseReducer from './baseReducer';
 import fragmentEntryLinksReducer from './fragmentEntryLinksReducer';
 import languageReducer from './languageReducer';
@@ -22,8 +20,6 @@ import mappingReducer from './mappingReducer';
 import networkReducer from './networkReducer';
 import resolvedCommentsReducer from './resolvedCommentsReducer';
 import sidebarReducer from './sidebarReducer';
-
-export const DispatchContext = React.createContext(() => {});
 
 function combineReducers(reducersObject) {
 	return (state, action) =>

@@ -171,6 +171,16 @@ public class TaxonomyVocabularySerDes {
 			sb.append("\"");
 		}
 
+		if (taxonomyVocabulary.getDescription_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(taxonomyVocabulary.getDescription_i18n()));
+		}
+
 		if (taxonomyVocabulary.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -193,6 +203,16 @@ public class TaxonomyVocabularySerDes {
 			sb.append(_escape(taxonomyVocabulary.getName()));
 
 			sb.append("\"");
+		}
+
+		if (taxonomyVocabulary.getName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(taxonomyVocabulary.getName_i18n()));
 		}
 
 		if (taxonomyVocabulary.getNumberOfTaxonomyCategories() != null) {
@@ -297,6 +317,15 @@ public class TaxonomyVocabularySerDes {
 				String.valueOf(taxonomyVocabulary.getDescription()));
 		}
 
+		if (taxonomyVocabulary.getDescription_i18n() == null) {
+			map.put("description_i18n", null);
+		}
+		else {
+			map.put(
+				"description_i18n",
+				String.valueOf(taxonomyVocabulary.getDescription_i18n()));
+		}
+
 		if (taxonomyVocabulary.getId() == null) {
 			map.put("id", null);
 		}
@@ -309,6 +338,14 @@ public class TaxonomyVocabularySerDes {
 		}
 		else {
 			map.put("name", String.valueOf(taxonomyVocabulary.getName()));
+		}
+
+		if (taxonomyVocabulary.getName_i18n() == null) {
+			map.put("name_i18n", null);
+		}
+		else {
+			map.put(
+				"name_i18n", String.valueOf(taxonomyVocabulary.getName_i18n()));
 		}
 
 		if (taxonomyVocabulary.getNumberOfTaxonomyCategories() == null) {
@@ -402,6 +439,13 @@ public class TaxonomyVocabularySerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				if (jsonParserFieldValue != null) {
+					taxonomyVocabulary.setDescription_i18n(
+						(Map)TaxonomyVocabularySerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					taxonomyVocabulary.setId(
@@ -411,6 +455,13 @@ public class TaxonomyVocabularySerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					taxonomyVocabulary.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
+				if (jsonParserFieldValue != null) {
+					taxonomyVocabulary.setName_i18n(
+						(Map)TaxonomyVocabularySerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

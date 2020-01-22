@@ -132,6 +132,36 @@ public class Site {
 	protected String description;
 
 	@Schema
+	@Valid
+	public Map<String, String> getDescription_i18n() {
+		return description_i18n;
+	}
+
+	public void setDescription_i18n(Map<String, String> description_i18n) {
+		this.description_i18n = description_i18n;
+	}
+
+	@JsonIgnore
+	public void setDescription_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			description_i18nUnsafeSupplier) {
+
+		try {
+			description_i18n = description_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> description_i18n;
+
+	@Schema
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
 	}
@@ -266,6 +296,36 @@ public class Site {
 	protected String name;
 
 	@Schema
+	@Valid
+	public Map<String, String> getName_i18n() {
+		return name_i18n;
+	}
+
+	public void setName_i18n(Map<String, String> name_i18n) {
+		this.name_i18n = name_i18n;
+	}
+
+	@JsonIgnore
+	public void setName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_i18nUnsafeSupplier) {
+
+		try {
+			name_i18n = name_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> name_i18n;
+
+	@Schema
 	public Long getParentSiteId() {
 		return parentSiteId;
 	}
@@ -397,6 +457,16 @@ public class Site {
 			sb.append("\"");
 		}
 
+		if (description_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(description_i18n));
+		}
+
 		if (friendlyUrlPath != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -461,6 +531,16 @@ public class Site {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (name_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(name_i18n));
 		}
 
 		if (parentSiteId != null) {

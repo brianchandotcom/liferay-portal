@@ -69,6 +69,16 @@ public class CustomValueSerDes {
 			sb.append("\"");
 		}
 
+		if (customValue.getData_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"data_i18n\": ");
+
+			sb.append(_toJSON(customValue.getData_i18n()));
+		}
+
 		if (customValue.getGeo() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -105,6 +115,13 @@ public class CustomValueSerDes {
 			map.put("data", String.valueOf(customValue.getData()));
 		}
 
+		if (customValue.getData_i18n() == null) {
+			map.put("data_i18n", null);
+		}
+		else {
+			map.put("data_i18n", String.valueOf(customValue.getData_i18n()));
+		}
+
 		if (customValue.getGeo() == null) {
 			map.put("geo", null);
 		}
@@ -136,6 +153,13 @@ public class CustomValueSerDes {
 			if (Objects.equals(jsonParserFieldName, "data")) {
 				if (jsonParserFieldValue != null) {
 					customValue.setData((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "data_i18n")) {
+				if (jsonParserFieldValue != null) {
+					customValue.setData_i18n(
+						(Map)CustomValueSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "geo")) {

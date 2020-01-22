@@ -399,8 +399,24 @@ public abstract class BaseRoleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
+				if (role.getDescription_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (role.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
+				if (role.getName_i18n() == null) {
 					valid = false;
 				}
 
@@ -521,6 +537,17 @@ public abstract class BaseRoleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						role1.getDescription_i18n(),
+						role2.getDescription_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(role1.getId(), role2.getId())) {
 					return false;
@@ -531,6 +558,16 @@ public abstract class BaseRoleResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(role1.getName(), role2.getName())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						role1.getName_i18n(), role2.getName_i18n())) {
+
 					return false;
 				}
 
@@ -735,6 +772,11 @@ public abstract class BaseRoleResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -746,6 +788,11 @@ public abstract class BaseRoleResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("name_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("roleType")) {

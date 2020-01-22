@@ -135,6 +135,16 @@ public class RoleSerDes {
 			sb.append("\"");
 		}
 
+		if (role.getDescription_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(role.getDescription_i18n()));
+		}
+
 		if (role.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -157,6 +167,16 @@ public class RoleSerDes {
 			sb.append(_escape(role.getName()));
 
 			sb.append("\"");
+		}
+
+		if (role.getName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(role.getName_i18n()));
 		}
 
 		if (role.getRoleType() != null) {
@@ -225,6 +245,14 @@ public class RoleSerDes {
 			map.put("description", String.valueOf(role.getDescription()));
 		}
 
+		if (role.getDescription_i18n() == null) {
+			map.put("description_i18n", null);
+		}
+		else {
+			map.put(
+				"description_i18n", String.valueOf(role.getDescription_i18n()));
+		}
+
 		if (role.getId() == null) {
 			map.put("id", null);
 		}
@@ -237,6 +265,13 @@ public class RoleSerDes {
 		}
 		else {
 			map.put("name", String.valueOf(role.getName()));
+		}
+
+		if (role.getName_i18n() == null) {
+			map.put("name_i18n", null);
+		}
+		else {
+			map.put("name_i18n", String.valueOf(role.getName_i18n()));
 		}
 
 		if (role.getRoleType() == null) {
@@ -293,6 +328,12 @@ public class RoleSerDes {
 					role.setDescription((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				if (jsonParserFieldValue != null) {
+					role.setDescription_i18n(
+						(Map)RoleSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					role.setId(Long.valueOf((String)jsonParserFieldValue));
@@ -301,6 +342,12 @@ public class RoleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					role.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
+				if (jsonParserFieldValue != null) {
+					role.setName_i18n(
+						(Map)RoleSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "roleType")) {

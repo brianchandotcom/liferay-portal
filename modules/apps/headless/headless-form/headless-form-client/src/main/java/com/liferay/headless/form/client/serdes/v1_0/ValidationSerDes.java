@@ -67,6 +67,16 @@ public class ValidationSerDes {
 			sb.append("\"");
 		}
 
+		if (validation.getErrorMessage_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"errorMessage_i18n\": ");
+
+			sb.append(_toJSON(validation.getErrorMessage_i18n()));
+		}
+
 		if (validation.getExpression() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -117,6 +127,15 @@ public class ValidationSerDes {
 				"errorMessage", String.valueOf(validation.getErrorMessage()));
 		}
 
+		if (validation.getErrorMessage_i18n() == null) {
+			map.put("errorMessage_i18n", null);
+		}
+		else {
+			map.put(
+				"errorMessage_i18n",
+				String.valueOf(validation.getErrorMessage_i18n()));
+		}
+
 		if (validation.getExpression() == null) {
 			map.put("expression", null);
 		}
@@ -155,6 +174,13 @@ public class ValidationSerDes {
 			if (Objects.equals(jsonParserFieldName, "errorMessage")) {
 				if (jsonParserFieldValue != null) {
 					validation.setErrorMessage((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "errorMessage_i18n")) {
+				if (jsonParserFieldValue != null) {
+					validation.setErrorMessage_i18n(
+						(Map)ValidationSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "expression")) {

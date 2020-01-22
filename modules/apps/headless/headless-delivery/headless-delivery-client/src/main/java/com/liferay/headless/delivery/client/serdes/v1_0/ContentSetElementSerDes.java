@@ -107,6 +107,20 @@ public class ContentSetElementSerDes {
 			sb.append("\"");
 		}
 
+		if (contentSetElement.getTitle_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"title_i18n\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(contentSetElement.getTitle_i18n()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -158,6 +172,15 @@ public class ContentSetElementSerDes {
 			map.put("title", String.valueOf(contentSetElement.getTitle()));
 		}
 
+		if (contentSetElement.getTitle_i18n() == null) {
+			map.put("title_i18n", null);
+		}
+		else {
+			map.put(
+				"title_i18n",
+				String.valueOf(contentSetElement.getTitle_i18n()));
+		}
+
 		return map;
 	}
 
@@ -199,6 +222,12 @@ public class ContentSetElementSerDes {
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
 					contentSetElement.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title_i18n")) {
+				if (jsonParserFieldValue != null) {
+					contentSetElement.setTitle_i18n(
+						(Object)jsonParserFieldValue);
 				}
 			}
 			else {

@@ -165,6 +165,16 @@ public class FormSerDes {
 			sb.append("\"");
 		}
 
+		if (form.getDescription_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(form.getDescription_i18n()));
+		}
+
 		if (form.getFormRecords() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -227,6 +237,16 @@ public class FormSerDes {
 			sb.append(_escape(form.getName()));
 
 			sb.append("\"");
+		}
+
+		if (form.getName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(form.getName_i18n()));
 		}
 
 		if (form.getSiteId() != null) {
@@ -323,6 +343,14 @@ public class FormSerDes {
 			map.put("description", String.valueOf(form.getDescription()));
 		}
 
+		if (form.getDescription_i18n() == null) {
+			map.put("description_i18n", null);
+		}
+		else {
+			map.put(
+				"description_i18n", String.valueOf(form.getDescription_i18n()));
+		}
+
 		if (form.getFormRecords() == null) {
 			map.put("formRecords", null);
 		}
@@ -349,6 +377,13 @@ public class FormSerDes {
 		}
 		else {
 			map.put("name", String.valueOf(form.getName()));
+		}
+
+		if (form.getName_i18n() == null) {
+			map.put("name_i18n", null);
+		}
+		else {
+			map.put("name_i18n", String.valueOf(form.getName_i18n()));
 		}
 
 		if (form.getSiteId() == null) {
@@ -429,6 +464,12 @@ public class FormSerDes {
 					form.setDescription((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				if (jsonParserFieldValue != null) {
+					form.setDescription_i18n(
+						(Map)FormSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "formRecords")) {
 				if (jsonParserFieldValue != null) {
 					form.setFormRecords(
@@ -455,6 +496,12 @@ public class FormSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					form.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
+				if (jsonParserFieldValue != null) {
+					form.setName_i18n(
+						(Map)FormSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

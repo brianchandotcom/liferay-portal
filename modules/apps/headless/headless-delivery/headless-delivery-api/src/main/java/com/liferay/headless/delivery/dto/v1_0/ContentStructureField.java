@@ -138,6 +138,36 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String label;
 
+	@Schema
+	@Valid
+	public Map<String, String> getLabel_i18n() {
+		return label_i18n;
+	}
+
+	public void setLabel_i18n(Map<String, String> label_i18n) {
+		this.label_i18n = label_i18n;
+	}
+
+	@JsonIgnore
+	public void setLabel_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			label_i18nUnsafeSupplier) {
+
+		try {
+			label_i18n = label_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, String> label_i18n;
+
 	@Schema(
 		description = "A flag that indicates whether the content is accessible in different languages."
 	)
@@ -322,6 +352,38 @@ public class ContentStructureField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String predefinedValue;
 
+	@Schema
+	@Valid
+	public Map<String, String> getPredefinedValue_i18n() {
+		return predefinedValue_i18n;
+	}
+
+	public void setPredefinedValue_i18n(
+		Map<String, String> predefinedValue_i18n) {
+
+		this.predefinedValue_i18n = predefinedValue_i18n;
+	}
+
+	@JsonIgnore
+	public void setPredefinedValue_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			predefinedValue_i18nUnsafeSupplier) {
+
+		try {
+			predefinedValue_i18n = predefinedValue_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, String> predefinedValue_i18n;
+
 	@Schema(
 		description = "A flag that indicates whether this content can be rendered (and answered) several times."
 	)
@@ -488,6 +550,16 @@ public class ContentStructureField {
 			sb.append("\"");
 		}
 
+		if (label_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label_i18n\": ");
+
+			sb.append(_toJSON(label_i18n));
+		}
+
 		if (localizable != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -574,6 +646,16 @@ public class ContentStructureField {
 			sb.append(_escape(predefinedValue));
 
 			sb.append("\"");
+		}
+
+		if (predefinedValue_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"predefinedValue_i18n\": ");
+
+			sb.append(_toJSON(predefinedValue_i18n));
 		}
 
 		if (repeatable != null) {

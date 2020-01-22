@@ -67,6 +67,16 @@ public class OptionSerDes {
 			sb.append("\"");
 		}
 
+		if (option.getLabel_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label_i18n\": ");
+
+			sb.append(_toJSON(option.getLabel_i18n()));
+		}
+
 		if (option.getValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -106,6 +116,13 @@ public class OptionSerDes {
 			map.put("label", String.valueOf(option.getLabel()));
 		}
 
+		if (option.getLabel_i18n() == null) {
+			map.put("label_i18n", null);
+		}
+		else {
+			map.put("label_i18n", String.valueOf(option.getLabel_i18n()));
+		}
+
 		if (option.getValue() == null) {
 			map.put("value", null);
 		}
@@ -136,6 +153,12 @@ public class OptionSerDes {
 			if (Objects.equals(jsonParserFieldName, "label")) {
 				if (jsonParserFieldValue != null) {
 					option.setLabel((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "label_i18n")) {
+				if (jsonParserFieldValue != null) {
+					option.setLabel_i18n(
+						(Map)OptionSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "value")) {

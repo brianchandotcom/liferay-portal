@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -96,6 +98,36 @@ public class SiteBrief {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@Schema
+	@Valid
+	public Map<String, String> getName_i18n() {
+		return name_i18n;
+	}
+
+	public void setName_i18n(Map<String, String> name_i18n) {
+		this.name_i18n = name_i18n;
+	}
+
+	@JsonIgnore
+	public void setName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			name_i18nUnsafeSupplier) {
+
+		try {
+			name_i18n = name_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, String> name_i18n;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -145,6 +177,16 @@ public class SiteBrief {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (name_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_i18n\": ");
+
+			sb.append(_toJSON(name_i18n));
 		}
 
 		sb.append("}");

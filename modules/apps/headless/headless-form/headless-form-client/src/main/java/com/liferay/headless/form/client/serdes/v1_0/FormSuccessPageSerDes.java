@@ -69,6 +69,16 @@ public class FormSuccessPageSerDes {
 			sb.append("\"");
 		}
 
+		if (formSuccessPage.getDescription_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(formSuccessPage.getDescription_i18n()));
+		}
+
 		if (formSuccessPage.getHeadline() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -81,6 +91,16 @@ public class FormSuccessPageSerDes {
 			sb.append(_escape(formSuccessPage.getHeadline()));
 
 			sb.append("\"");
+		}
+
+		if (formSuccessPage.getHeadline_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"headline_i18n\": ");
+
+			sb.append(_toJSON(formSuccessPage.getHeadline_i18n()));
 		}
 
 		if (formSuccessPage.getId() != null) {
@@ -121,11 +141,29 @@ public class FormSuccessPageSerDes {
 				String.valueOf(formSuccessPage.getDescription()));
 		}
 
+		if (formSuccessPage.getDescription_i18n() == null) {
+			map.put("description_i18n", null);
+		}
+		else {
+			map.put(
+				"description_i18n",
+				String.valueOf(formSuccessPage.getDescription_i18n()));
+		}
+
 		if (formSuccessPage.getHeadline() == null) {
 			map.put("headline", null);
 		}
 		else {
 			map.put("headline", String.valueOf(formSuccessPage.getHeadline()));
+		}
+
+		if (formSuccessPage.getHeadline_i18n() == null) {
+			map.put("headline_i18n", null);
+		}
+		else {
+			map.put(
+				"headline_i18n",
+				String.valueOf(formSuccessPage.getHeadline_i18n()));
 		}
 
 		if (formSuccessPage.getId() == null) {
@@ -162,9 +200,23 @@ public class FormSuccessPageSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				if (jsonParserFieldValue != null) {
+					formSuccessPage.setDescription_i18n(
+						(Map)FormSuccessPageSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "headline")) {
 				if (jsonParserFieldValue != null) {
 					formSuccessPage.setHeadline((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "headline_i18n")) {
+				if (jsonParserFieldValue != null) {
+					formSuccessPage.setHeadline_i18n(
+						(Map)FormSuccessPageSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

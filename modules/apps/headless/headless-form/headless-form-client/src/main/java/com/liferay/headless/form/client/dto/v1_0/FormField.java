@@ -17,6 +17,7 @@ package com.liferay.headless.form.client.dto.v1_0;
 import com.liferay.headless.form.client.function.UnsafeSupplier;
 import com.liferay.headless.form.client.serdes.v1_0.FormFieldSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -277,6 +278,28 @@ public class FormField {
 
 	protected String label;
 
+	public Map<String, String> getLabel_i18n() {
+		return label_i18n;
+	}
+
+	public void setLabel_i18n(Map<String, String> label_i18n) {
+		this.label_i18n = label_i18n;
+	}
+
+	public void setLabel_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			label_i18nUnsafeSupplier) {
+
+		try {
+			label_i18n = label_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> label_i18n;
+
 	public Boolean getLocalizable() {
 		return localizable;
 	}
@@ -379,6 +402,30 @@ public class FormField {
 	}
 
 	protected String predefinedValue;
+
+	public Map<String, String> getPredefinedValue_i18n() {
+		return predefinedValue_i18n;
+	}
+
+	public void setPredefinedValue_i18n(
+		Map<String, String> predefinedValue_i18n) {
+
+		this.predefinedValue_i18n = predefinedValue_i18n;
+	}
+
+	public void setPredefinedValue_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			predefinedValue_i18nUnsafeSupplier) {
+
+		try {
+			predefinedValue_i18n = predefinedValue_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> predefinedValue_i18n;
 
 	public Boolean getReadOnly() {
 		return readOnly;
@@ -524,6 +571,28 @@ public class FormField {
 	}
 
 	protected String text;
+
+	public Map<String, String> getText_i18n() {
+		return text_i18n;
+	}
+
+	public void setText_i18n(Map<String, String> text_i18n) {
+		this.text_i18n = text_i18n;
+	}
+
+	public void setText_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			text_i18nUnsafeSupplier) {
+
+		try {
+			text_i18n = text_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> text_i18n;
 
 	public String getTooltip() {
 		return tooltip;

@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -71,6 +73,36 @@ public class Validation {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String errorMessage;
+
+	@Schema
+	@Valid
+	public Map<String, String> getErrorMessage_i18n() {
+		return errorMessage_i18n;
+	}
+
+	public void setErrorMessage_i18n(Map<String, String> errorMessage_i18n) {
+		this.errorMessage_i18n = errorMessage_i18n;
+	}
+
+	@JsonIgnore
+	public void setErrorMessage_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			errorMessage_i18nUnsafeSupplier) {
+
+		try {
+			errorMessage_i18n = errorMessage_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> errorMessage_i18n;
 
 	@Schema
 	public String getExpression() {
@@ -165,6 +197,16 @@ public class Validation {
 			sb.append(_escape(errorMessage));
 
 			sb.append("\"");
+		}
+
+		if (errorMessage_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"errorMessage_i18n\": ");
+
+			sb.append(_toJSON(errorMessage_i18n));
 		}
 
 		if (expression != null) {

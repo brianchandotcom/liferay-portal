@@ -17,6 +17,7 @@ package com.liferay.headless.form.client.dto.v1_0;
 import com.liferay.headless.form.client.function.UnsafeSupplier;
 import com.liferay.headless.form.client.serdes.v1_0.FormPageSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -70,6 +71,28 @@ public class FormPage {
 
 	protected String headline;
 
+	public Map<String, String> getHeadline_i18n() {
+		return headline_i18n;
+	}
+
+	public void setHeadline_i18n(Map<String, String> headline_i18n) {
+		this.headline_i18n = headline_i18n;
+	}
+
+	public void setHeadline_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			headline_i18nUnsafeSupplier) {
+
+		try {
+			headline_i18n = headline_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> headline_i18n;
+
 	public Long getId() {
 		return id;
 	}
@@ -107,6 +130,28 @@ public class FormPage {
 	}
 
 	protected String text;
+
+	public Map<String, String> getText_i18n() {
+		return text_i18n;
+	}
+
+	public void setText_i18n(Map<String, String> text_i18n) {
+		this.text_i18n = text_i18n;
+	}
+
+	public void setText_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			text_i18nUnsafeSupplier) {
+
+		try {
+			text_i18n = text_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> text_i18n;
 
 	@Override
 	public boolean equals(Object object) {

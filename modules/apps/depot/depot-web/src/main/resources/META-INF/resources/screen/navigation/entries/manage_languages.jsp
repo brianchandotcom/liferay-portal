@@ -23,7 +23,10 @@ HashMap<String, Object> data = HashMapBuilder.<String, Object>put(
 	"customDefaultLocaleId", ParamUtil.getString(request, "customDefaultLocaleId")
 ).put(
 	"customLocalesIds", ParamUtil.getStringValues(request, "customLocalesIds")
-).build();
+).put(
+	"eventName", liferayPortletResponse.getNamespace() + "manageLanguages"
+).
+build();
 %>
 
 <react:component

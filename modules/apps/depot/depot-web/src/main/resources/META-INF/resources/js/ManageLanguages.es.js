@@ -16,12 +16,14 @@ import ClayLabel from '@clayui/label';
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const ManageLanguages = ({
 	availableLocales,
 	customDefaultLocaleId,
-	customLocalesIds
+	customLocalesIds,
+	eventName,
+	portletNamespace
 }) => {
 	const [selectedLocalesIds, setSelectedLocalesIds] = useState(customLocalesIds);
 
@@ -31,8 +33,15 @@ const ManageLanguages = ({
 		} else {
 			setSelectedLocalesIds(selectedLocalesIds.filter(id => (id != localeId)));
 		}
-		//TODO fire event name
 	}
+
+	useEffect(() => {
+		Liferay.Util.getOpener().Liferay.fire(eventName, {
+			data: {
+				value: selectedLocalesIds
+			}
+		});
+	}, [selectedLocalesIds])
 
 	const Language = ({displayName, isDefault, localeId}) => {
 		const checked = selectedLocalesIds.indexOf(localeId) != -1;
@@ -96,6 +105,8 @@ ManageLanguages.propTypes = {
 	).isRequired,
 	customDefaultLocaleId: PropTypes.string.isRequired,
 	customLocalesIds: PropTypes.array.isRequired,
+	eventName: PropTypes.string,
+	portletNamespace: PropTypes.string
 }
 
 export default function(props) {

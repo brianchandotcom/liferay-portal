@@ -1,0 +1,173 @@
+<FragmentEntryLink>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>92a36ecd-f05a-f9cf-7b12-43208c3d4da7</__uuid>
+  <__originalUuid>92a36ecd-f05a-f9cf-7b12-43208c3d4da7</__originalUuid>
+  <__fragmentEntryLinkId>45752</__fragmentEntryLinkId>
+  <__groupId>45663</__groupId>
+  <__originalGroupId>45663</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20101</__companyId>
+  <__originalCompanyId>20101</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20131</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2020-01-22 05:23:04.25</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-01-22 05:23:04.135</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__originalFragmentEntryLinkId>0</__originalFragmentEntryLinkId>
+  <__fragmentEntryId>45721</__fragmentEntryId>
+  <__originalFragmentEntryId>45721</__originalFragmentEntryId>
+  <__setOriginalFragmentEntryId>false</__setOriginalFragmentEntryId>
+  <__classNameId>20010</__classNameId>
+  <__originalClassNameId>20010</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>747</__classPK>
+  <__originalClassPK>747</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__css>@media(min-width: 768px) {
+    .westeros-links-decoration:before {
+        border-left: 1px solid;
+        bottom: 0;
+        content: &apos;&apos;;
+        left: 50%;
+        opacity: .2;
+        position: absolute;
+        top: 3rem;
+    }
+}</__css>
+  <__html>&lt;div class=&quot;westeros-links westeros-section&quot;&gt;
+	&lt;section class=&quot;bg-info py-5 text-white westeros-bg-info&quot;&gt;
+		&lt;div class=&quot;container&quot;&gt;
+			&lt;div class=&quot;row&quot;&gt;
+				&lt;div class=&quot;col-12&quot;&gt;
+					&lt;lfr-editable id=&quot;westeros-links-title&quot; type=&quot;rich-text&quot;&gt;
+						&lt;h2 aria-level=&quot;1&quot; class=&quot;h6 mb-0&quot; role=&quot;heading&quot;&gt;
+							FIND US
+						&lt;/h2&gt;
+					&lt;/lfr-editable&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+
+			&lt;div class=&quot;mb-5 position-relative row westeros-links-decoration&quot;&gt;
+				&lt;div class=&quot;align-items-center col-12 col-md-6 d-flex mt-5&quot;&gt;
+					&lt;lfr-editable id=&quot;westeros-links-icon-1&quot; type=&quot;image&quot;&gt;
+						&lt;a class=&quot;d-block&quot; href=&quot;#&quot; title=&quot;westeros&quot;&gt;
+							&lt;img
+								alt=&quot;&quot;
+								src=&quot;[$dl-reference=/group/45663/com.liferay.document.library.kernel.model.DLFileEntry/45701.xml$]?download=true&quot;
+							/&gt;
+						&lt;/a&gt;
+					&lt;/lfr-editable&gt;
+
+					&lt;div class=&quot;ml-3&quot;&gt;
+						&lt;lfr-editable
+							id=&quot;westeros-links-text-1&quot;
+							type=&quot;rich-text&quot;
+						&gt;
+							&lt;a
+								class=&quot;d-inline-block text-decoration-none text-reset&quot;
+								href=&quot;#&quot;
+								title=&quot;westeros&quot;
+							&gt;
+								&lt;p class=&quot;h3 mb-0&quot;&gt;(0054) 432 943 435&lt;/p&gt;
+								&lt;p class=&quot;mb-0&quot;&gt;
+									+435 432 654 654 from Overseas
+								&lt;/p&gt;
+							&lt;/a&gt;
+						&lt;/lfr-editable&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+
+				&lt;div class=&quot;align-items-center col-12 col-md-6 d-flex mt-5&quot;&gt;
+					&lt;lfr-editable id=&quot;westeros-links-icon-2&quot; type=&quot;image&quot;&gt;
+						&lt;a class=&quot;d-block&quot; href=&quot;#&quot; title=&quot;westeros&quot;&gt;
+							&lt;img
+								alt=&quot;&quot;
+								src=&quot;[$dl-reference=/group/45663/com.liferay.document.library.kernel.model.DLFileEntry/45704.xml$]?download=true&quot;
+							/&gt;
+						&lt;/a&gt;
+					&lt;/lfr-editable&gt;
+
+					&lt;div class=&quot;ml-3&quot;&gt;
+						&lt;lfr-editable
+							id=&quot;westeros-links-text-2&quot;
+							type=&quot;rich-text&quot;
+						&gt;
+							&lt;a
+								class=&quot;d-inline-block text-decoration-none text-reset&quot;
+								href=&quot;#&quot;
+								title=&quot;westeros&quot;
+							&gt;
+								&lt;p class=&quot;h3 mb-0&quot;&gt;Press Room&lt;/p&gt;
+							&lt;/a&gt;
+						&lt;/lfr-editable&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+
+				&lt;div class=&quot;align-items-center col-12 col-md-6 d-flex mt-5&quot;&gt;
+					&lt;lfr-editable id=&quot;westeros-links-icon-3&quot; type=&quot;image&quot;&gt;
+						&lt;a class=&quot;d-block&quot; href=&quot;#&quot; title=&quot;westeros&quot;&gt;
+							&lt;img
+								alt=&quot;&quot;
+								src=&quot;[$dl-reference=/group/45663/com.liferay.document.library.kernel.model.DLFileEntry/45707.xml$]?download=true&quot;
+							/&gt;
+						&lt;/a&gt;
+					&lt;/lfr-editable&gt;
+
+					&lt;div class=&quot;ml-3&quot;&gt;
+						&lt;lfr-editable
+							id=&quot;westeros-links-text-3&quot;
+							type=&quot;rich-text&quot;
+						&gt;
+							&lt;a
+								class=&quot;d-inline-block text-decoration-none text-reset&quot;
+								href=&quot;#&quot;
+								title=&quot;westeros&quot;
+							&gt;
+								&lt;p class=&quot;h3 mb-0&quot;&gt;Westeros Branches&lt;/p&gt;
+							&lt;/a&gt;
+						&lt;/lfr-editable&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+
+				&lt;div class=&quot;align-items-center col-12 col-md-6 d-flex mt-5&quot;&gt;
+					&lt;lfr-editable id=&quot;westeros-links-icon-4&quot; type=&quot;image&quot;&gt;
+						&lt;a class=&quot;d-block&quot; href=&quot;#&quot; title=&quot;westeros&quot;&gt;
+							&lt;img
+								alt=&quot;&quot;
+								src=&quot;[$dl-reference=/group/45663/com.liferay.document.library.kernel.model.DLFileEntry/45710.xml$]?download=true&quot;
+							/&gt;
+						&lt;/a&gt;
+					&lt;/lfr-editable&gt;
+
+					&lt;div class=&quot;ml-3&quot;&gt;
+						&lt;lfr-editable
+							id=&quot;westeros-links-text-4&quot;
+							type=&quot;rich-text&quot;
+						&gt;
+							&lt;a
+								class=&quot;d-inline-block text-decoration-none text-reset&quot;
+								href=&quot;#&quot;
+								title=&quot;westeros&quot;
+							&gt;
+								&lt;p class=&quot;h3 mb-0&quot;&gt;Work with us&lt;/p&gt;
+							&lt;/a&gt;
+						&lt;/lfr-editable&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/section&gt;
+&lt;/div&gt;</__html>
+  <__js></__js>
+  <__configuration></__configuration>
+  <__editableValues>{&quot;com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor&quot;:{},&quot;com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor&quot;:{&quot;westeros-links-title&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t&lt;h2 aria-level=\&quot;1\&quot; class=\&quot;h6 mb-0\&quot; role=\&quot;heading\&quot;&gt;\n\t\t\t\t\t\t\tFIND US\n\t\t\t\t\t\t&lt;\/h2&gt;\n\t\t\t\t\t&quot;,&quot;config&quot;:{}},&quot;westeros-links-icon-2&quot;:{&quot;defaultValue&quot;:&quot;[$dl-reference=/group/45663/com.liferay.document.library.kernel.model.DLFileEntry/45704.xml$]?download=true&quot;,&quot;config&quot;:{}},&quot;westeros-links-icon-1&quot;:{&quot;defaultValue&quot;:&quot;[$dl-reference=/group/45663/com.liferay.document.library.kernel.model.DLFileEntry/45701.xml$]?download=true&quot;,&quot;config&quot;:{}},&quot;westeros-links-icon-4&quot;:{&quot;defaultValue&quot;:&quot;[$dl-reference=/group/45663/com.liferay.document.library.kernel.model.DLFileEntry/45710.xml$]?download=true&quot;,&quot;config&quot;:{}},&quot;westeros-links-icon-3&quot;:{&quot;defaultValue&quot;:&quot;[$dl-reference=/group/45663/com.liferay.document.library.kernel.model.DLFileEntry/45707.xml$]?download=true&quot;,&quot;config&quot;:{}},&quot;westeros-links-text-4&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t\t&lt;a class=\&quot;d-inline-block text-decoration-none text-reset\&quot; href=\&quot;#\&quot; title=\&quot;westeros\&quot;&gt;\n\t\t\t\t\t\t\t\t&lt;p class=\&quot;h3 mb-0\&quot;&gt;Work with us&lt;\/p&gt;\n\t\t\t\t\t\t\t&lt;\/a&gt;\n\t\t\t\t\t\t&quot;,&quot;config&quot;:{}},&quot;westeros-links-text-3&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t\t&lt;a class=\&quot;d-inline-block text-decoration-none text-reset\&quot; href=\&quot;#\&quot; title=\&quot;westeros\&quot;&gt;\n\t\t\t\t\t\t\t\t&lt;p class=\&quot;h3 mb-0\&quot;&gt;Westeros Branches&lt;\/p&gt;\n\t\t\t\t\t\t\t&lt;\/a&gt;\n\t\t\t\t\t\t&quot;,&quot;config&quot;:{}},&quot;westeros-links-text-2&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t\t&lt;a class=\&quot;d-inline-block text-decoration-none text-reset\&quot; href=\&quot;#\&quot; title=\&quot;westeros\&quot;&gt;\n\t\t\t\t\t\t\t\t&lt;p class=\&quot;h3 mb-0\&quot;&gt;Press Room&lt;\/p&gt;\n\t\t\t\t\t\t\t&lt;\/a&gt;\n\t\t\t\t\t\t&quot;,&quot;config&quot;:{}},&quot;westeros-links-text-1&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t\t&lt;a class=\&quot;d-inline-block text-decoration-none text-reset\&quot; href=\&quot;#\&quot; title=\&quot;westeros\&quot;&gt;\n\t\t\t\t\t\t\t\t&lt;p class=\&quot;h3 mb-0\&quot;&gt;(0054) 432 943 435&lt;\/p&gt;\n\t\t\t\t\t\t\t\t&lt;p class=\&quot;mb-0\&quot;&gt;\n\t\t\t\t\t\t\t\t\t+435 432 654 654 from Overseas\n\t\t\t\t\t\t\t\t&lt;\/p&gt;\n\t\t\t\t\t\t\t&lt;\/a&gt;\n\t\t\t\t\t\t&quot;,&quot;config&quot;:{}}},&quot;com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor&quot;:{}}</__editableValues>
+  <__namespace>htqu</__namespace>
+  <__position>4</__position>
+  <__rendererKey></__rendererKey>
+  <__originalRendererKey></__originalRendererKey>
+  <__lastPropagationDate class="sql-timestamp">2020-01-22 05:23:04.25</__lastPropagationDate>
+  <__columnBitmask>0</__columnBitmask>
+</FragmentEntryLink>

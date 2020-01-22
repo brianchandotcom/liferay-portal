@@ -1,0 +1,51 @@
+<StagedLayoutSet>
+  <__lastPublishDate>1970-01-01 00:00:00.0 UTC</__lastPublishDate>
+  <__layoutSet class="com.liferay.portal.model.impl.LayoutSetImpl">
+    <__cachedModel>false</__cachedModel>
+    <__new>false</__new>
+    <__mvccVersion>1</__mvccVersion>
+    <__layoutSetId>548</__layoutSetId>
+    <__groupId>45663</__groupId>
+    <__originalGroupId>45663</__originalGroupId>
+    <__setOriginalGroupId>false</__setOriginalGroupId>
+    <__companyId>20101</__companyId>
+    <__originalCompanyId>20101</__originalCompanyId>
+    <__setOriginalCompanyId>false</__setOriginalCompanyId>
+    <__createDate>2020-01-22 05:23:03.469 UTC</__createDate>
+    <__modifiedDate>2020-01-22 05:23:03.517 UTC</__modifiedDate>
+    <__setModifiedDate>false</__setModifiedDate>
+    <__privateLayout>false</__privateLayout>
+    <__originalPrivateLayout>false</__originalPrivateLayout>
+    <__setOriginalPrivateLayout>false</__setOriginalPrivateLayout>
+    <__logoId>45666</__logoId>
+    <__originalLogoId>45666</__originalLogoId>
+    <__setOriginalLogoId>false</__setOriginalLogoId>
+    <__themeId>westerosbank_WAR_westerosbanktheme</__themeId>
+    <__colorSchemeId>01</__colorSchemeId>
+    <__css></__css>
+    <__settings></__settings>
+    <__layoutSetPrototypeUuid></__layoutSetPrototypeUuid>
+    <__originalLayoutSetPrototypeUuid></__originalLayoutSetPrototypeUuid>
+    <__layoutSetPrototypeLinkEnabled>false</__layoutSetPrototypeLinkEnabled>
+    <__columnBitmask>0</__columnBitmask>
+    <__settingsProperties serialization="custom">
+      <unserializable-parents/>
+      <map>
+        <default>
+          <loadFactor>0.75</loadFactor>
+          <threshold>0</threshold>
+        </default>
+        <int>16</int>
+        <int>0</int>
+      </map>
+      <com.liferay.portal.kernel.util.UnicodeProperties>
+        <default>
+          <__safe>true</__safe>
+        </default>
+      </com.liferay.portal.kernel.util.UnicodeProperties>
+    </__settingsProperties>
+  </__layoutSet>
+  <__userId>20131</__userId>
+  <__userName>Test Test</__userName>
+  <__userUuid>9607602d-50a7-fdd2-134f-2d54054c4a04</__userUuid>
+</StagedLayoutSet>

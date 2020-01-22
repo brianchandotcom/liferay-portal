@@ -1,0 +1,28 @@
+<Repository>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>1cdf43f1-817e-96b4-2b03-c23ce6b70483</__uuid>
+  <__originalUuid>1cdf43f1-817e-96b4-2b03-c23ce6b70483</__originalUuid>
+  <__repositoryId>45668</__repositoryId>
+  <__groupId>45663</__groupId>
+  <__originalGroupId>45663</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20101</__companyId>
+  <__originalCompanyId>20101</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20106</__userId>
+  <__userName></__userName>
+  <__createDate>2020-01-22 05:23:03.532 UTC</__createDate>
+  <__modifiedDate>2020-01-22 05:23:03.532 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>35102</__classNameId>
+  <__name>com_liferay_fragment_web_portlet_FragmentPortlet</__name>
+  <__originalName>com_liferay_fragment_web_portlet_FragmentPortlet</__originalName>
+  <__description></__description>
+  <__portletId>com_liferay_fragment_web_portlet_FragmentPortlet</__portletId>
+  <__originalPortletId>com_liferay_fragment_web_portlet_FragmentPortlet</__originalPortletId>
+  <__typeSettings></__typeSettings>
+  <__dlFolderId>45669</__dlFolderId>
+  <__columnBitmask>0</__columnBitmask>
+</Repository>

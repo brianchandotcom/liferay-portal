@@ -1,0 +1,84 @@
+<FragmentEntry>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>1</__mvccVersion>
+  <__uuid>9d76ff68-8c84-33e8-c32e-3913820ea57a</__uuid>
+  <__originalUuid>9d76ff68-8c84-33e8-c32e-3913820ea57a</__originalUuid>
+  <__fragmentEntryId>45725</__fragmentEntryId>
+  <__groupId>45663</__groupId>
+  <__originalGroupId>45663</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20101</__companyId>
+  <__originalCompanyId>20101</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20131</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2020-01-22 05:23:04.002</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-01-22 05:23:04.032</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__fragmentCollectionId>45667</__fragmentCollectionId>
+  <__originalFragmentCollectionId>45667</__originalFragmentCollectionId>
+  <__setOriginalFragmentCollectionId>false</__setOriginalFragmentCollectionId>
+  <__fragmentEntryKey>news</__fragmentEntryKey>
+  <__originalFragmentEntryKey>news</__originalFragmentEntryKey>
+  <__name>News</__name>
+  <__originalName>News</__originalName>
+  <__css>.wb-news {
+}
+
+.wb-news .background-image {
+	background-image: url(&quot;[resources:nepal_background.png]&quot;);
+}</__css>
+  <__html>&lt;div class=&quot;wb-news&quot;&gt;
+	&lt;div class=&quot;wb-text-column&quot;&gt;
+		&lt;section class=&quot;container-fluid container-fluid-max-xl&quot;&gt;
+			&lt;div class=&quot;col-md-8 mx-auto&quot;&gt;
+				&lt;h2 class=&quot;background-image text-center&quot; data-lfr-background-image-id=&quot;wb-news&quot;&gt;
+					&lt;lfr-editable id=&quot;newsTitle&quot; type=&quot;text&quot;&gt;Emergency humanitarian aid in Nepal&lt;/lfr-editable&gt;
+				&lt;/h2&gt;
+			&lt;/div&gt;
+
+			&lt;div class=&quot;col-md-6 mx-auto col-xs-10&quot;&gt;
+				&lt;lfr-editable id=&quot;newsContent1&quot; type=&quot;rich-text&quot;&gt;
+					&lt;p&gt;Putting your house or flat on the market at a high price can deter buyers, says Kate. &quot;Buyers today are really savvy. If you’re asking for too much, they won’t even come for a viewing.&quot; And if a seller does find a buyer willing to pay more, the buyer&apos;s lender still has to ensure that the property has been valued at an accurate price before they can agree to a mortgage. In fact, for chartered surveyors an accurate valuation is a professional obligation. &quot;The mortgage valuation is not an attempt to ‘down-value’ a property from an authentic higher price,&quot; says Richard Sexton.&lt;/p&gt;
+				&lt;/lfr-editable&gt;
+			&lt;/div&gt;
+
+			&lt;figure class=&quot;col-md-8 mx-auto&quot;&gt;
+				&lt;lfr-editable id=&quot;featureImage2&quot; type=&quot;image&quot;&gt;
+					&lt;img alt=&quot;&quot; class=&quot;img-fluid img-spacing&quot; src=&quot;[resources:background_1.jpg]&quot; /&gt;
+				&lt;/lfr-editable&gt;
+
+				&lt;figcaption&gt;
+					&lt;lfr-editable id=&quot;imageText&quot; type=&quot;text&quot;&gt;Mauris vestibulum sit amet purus&lt;/lfr-editable&gt;
+				&lt;/figcaption&gt;
+			&lt;/figure&gt;
+
+			&lt;div class=&quot;col-md-6 mx-auto col-xs-10&quot;&gt;
+				&lt;lfr-editable id=&quot;newsContent2&quot; type=&quot;rich-text&quot;&gt;
+					&lt;p&gt;The amount a buyer can borrow is usually based on a percentage of the property value. If a buyer makes an offer that is too high and the property is down-valued by their lender&apos;s surveyor, the lender may refuse to offer the buyer the required finance and the sale could collapse.&lt;/p&gt;
+					&lt;p&gt;Previous property sale prices are also available online with a quick search. However, Peter shares a word of caution on property valuation sites: &quot;You don’t necessarily know that you’re comparing like for like with this information. It can also be fairly out of date by the time it goes live as sales take many months to process. In a changing market, those few months can make a huge difference.&quot; Instead, information available online can be used as a starting point for valuing your property.&lt;/p&gt;
+
+					&lt;div class=&quot;alert alert-info theme-alert&quot;&gt;
+						&lt;p&gt;ES98 1465 0100 95 6000000000&lt;/p&gt;
+					&lt;/div&gt;
+				&lt;/lfr-editable&gt;
+			&lt;/div&gt;
+		&lt;/section&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</__html>
+  <__js></__js>
+  <__configuration></__configuration>
+  <__previewFileEntryId>45726</__previewFileEntryId>
+  <__readOnly>false</__readOnly>
+  <__type>0</__type>
+  <__originalType>0</__originalType>
+  <__setOriginalType>false</__setOriginalType>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20131</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2020-01-22 05:23:04.002</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</FragmentEntry>

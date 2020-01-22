@@ -75,6 +75,8 @@ definition {
 
 		AssertElementPresent(locator1 = "Button#ANY");
 
+		Pause(locator1 = "3000");
+
 		AssertClick(
 			locator1 = "Button#ANY",
 			value1 = "Save and Return to ${siteName}");

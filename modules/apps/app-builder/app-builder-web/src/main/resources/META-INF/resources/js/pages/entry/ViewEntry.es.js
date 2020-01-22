@@ -59,7 +59,9 @@ export default withRouter(
 			params: {entryIndex}
 		}
 	}) => {
-		const {appId, basePortletURL} = useContext(AppContext);
+		const {basePortletURL, dataDefinitionId, dataLayoutId} = useContext(
+			AppContext
+		);
 		const [isLoading, setLoading] = useState(true);
 		const [dataDefinition, setDataDefinition] = useState();
 		const [dataLayout, setDataLayout] = useState({});
@@ -77,33 +79,27 @@ export default withRouter(
 		});
 
 		useEffect(() => {
-			getItem(`/o/app-builder/v1.0/apps/${appId}`).then(
-				({dataDefinitionId, dataLayoutId}) => {
-					Promise.all([
-						getItem(
-							`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
-							{...query, page: entryIndex, pageSize: 1}
-						).then(({items = [], page, totalCount}) => {
-							if (items.length > 0) {
-								setResults({
-									dataRecord: items.pop(),
-									page,
-									total: totalCount
-								});
-							}
-						}),
-						getItem(
-							`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
-						).then(dataDefinition =>
-							setDataDefinition(dataDefinition)
-						),
-						getItem(
-							`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`
-						).then(dataLayout => setDataLayout(dataLayout))
-					]).then(() => setLoading(false));
-				}
-			);
-		}, [appId, entryIndex, query]);
+			Promise.all([
+				getItem(
+					`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
+					{...query, page: entryIndex, pageSize: 1}
+				).then(({items = [], page, totalCount}) => {
+					if (items.length > 0) {
+						setResults({
+							dataRecord: items.pop(),
+							page,
+							total: totalCount
+						});
+					}
+				}),
+				getItem(
+					`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
+				).then(dataDefinition => setDataDefinition(dataDefinition)),
+				getItem(
+					`/o/data-engine/v2.0/data-layouts/${dataLayoutId}`
+				).then(dataLayout => setDataLayout(dataLayout))
+			]).then(() => setLoading(false));
+		}, [dataDefinitionId, dataLayoutId, entryIndex, query]);
 
 		const {dataRecordValues = {}} = dataRecord;
 		const {dataLayoutPages} = dataLayout;

@@ -483,12 +483,12 @@
 </tr>
 <tr>
 	<td>PORTLET_COLUMN_1_NESTED_PORTLET_TITLE</td>
-	<td>//div[contains(@id,'column-1')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletTitleName}')]</td>
+	<td>//section[contains(@id,'NestedPortlets')]//div[contains(@id,'column-1')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletTitleName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PORTLET_COLUMN_2_NESTED_PORTLET_TITLE</td>
-	<td>//div[contains(@id,'column-2')]//h1[@class='portlet-title' and contains(.,'${key_portletTitleName}')]/span</td>
+	<td>//section[contains(@id,'NestedPortlets')]//div[contains(@id,'column-2')]//h2[contains(@class.'portlet-title') and contains(.,'${key_portletTitleName}')]</td>
 	<td></td>
 </tr>
 <tr>

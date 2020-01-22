@@ -215,7 +215,7 @@ definition {
 
 		Check(locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
 
-		Click(locator1 = "Icon#DELETE");
+		ClickNoError(locator1 = "Icon#REMOVE");
 
 		Alert.viewSuccessMessage();
 	}

@@ -199,6 +199,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-minus-circle')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHARE</td>
 	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-share')]]</td>
 	<td></td>

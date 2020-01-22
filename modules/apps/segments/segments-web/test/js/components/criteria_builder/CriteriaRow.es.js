@@ -129,7 +129,9 @@ describe('CriteriaRow', () => {
 		);
 
 		await wait(() =>
-			expect(getByText('unknown-entity-message-edit')).toBeInTheDocument()
+			expect(
+				getByText('unknown-element-message-edit')
+			).toBeInTheDocument()
 		);
 
 		expect(getByDisplayValue('1234')).toBeInTheDocument();
@@ -174,7 +176,9 @@ describe('CriteriaRow', () => {
 		);
 
 		await wait(() =>
-			expect(getByText('unknown-entity-message-view')).toBeInTheDocument()
+			expect(
+				getByText('unknown-element-message-view')
+			).toBeInTheDocument()
 		);
 
 		expect(getByText('1234')).toBeInTheDocument();

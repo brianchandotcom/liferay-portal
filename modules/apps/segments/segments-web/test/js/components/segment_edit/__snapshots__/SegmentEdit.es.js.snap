@@ -706,7 +706,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                               value="value"
                             />
                             <button
-                              class="btn-outline-borderless btn-sm btn btn-monospaced btn-secondary"
+                              class="btn-outline-borderless btn-sm mr-1 btn btn-monospaced btn-secondary"
                               type="button"
                             >
                               <svg

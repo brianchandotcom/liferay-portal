@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -125,7 +126,10 @@ public class PublishLayoutMVCActionCommand
 		else {
 			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
 
+			String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
+
 			layout.setType(draftLayout.getType());
+			layout.setLayoutPrototypeUuid(null);
 
 			_layoutLocalService.updateLayout(layout);
 
@@ -133,6 +137,11 @@ public class PublishLayoutMVCActionCommand
 				draftLayout.getTypeSettingsProperties();
 
 			typeSettingsProperties.setProperty("published", "true");
+
+			if (Validator.isNotNull(layoutPrototypeUuid)) {
+				typeSettingsProperties.setProperty(
+					"layoutPrototypeUuid", layoutPrototypeUuid);
+			}
 
 			draftLayout = _layoutLocalService.updateLayout(
 				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),

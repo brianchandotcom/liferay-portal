@@ -239,7 +239,9 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		List<Ranking> rankings = _getRankings(
 			actionRequest, editRankingMVCActionRequest);
 
-		_guardDuplicateQueryStrings(editRankingMVCActionRequest, rankings);
+		if (!inactive) {
+			_guardDuplicateQueryStrings(editRankingMVCActionRequest, rankings);
+		}
 
 		for (Ranking ranking : rankings) {
 			Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder(

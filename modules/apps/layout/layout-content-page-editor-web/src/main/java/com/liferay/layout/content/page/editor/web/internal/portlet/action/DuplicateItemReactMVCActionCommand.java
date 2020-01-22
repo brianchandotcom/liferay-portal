@@ -24,9 +24,9 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureItem;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -56,7 +56,6 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -151,24 +150,22 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 						duplicatedLayoutStructureItemIds.add(
 							duplicatedLayoutStructureItem.getItemId());
 
-						if (!Objects.equals(
-								LayoutDataItemTypeConstants.TYPE_FRAGMENT,
-								duplicatedLayoutStructureItem.getItemType())) {
+						if (!(duplicatedLayoutStructureItem instanceof
+								FragmentLayoutStructureItem)) {
 
 							continue;
 						}
 
-						JSONObject itemConfigJSONObject =
-							duplicatedLayoutStructureItem.
-								getItemConfigJSONObject();
-
-						long fragmentEntryLinkId = itemConfigJSONObject.getLong(
-							"fragmentEntryLinkId");
+						FragmentLayoutStructureItem
+							fragmentLayoutStructureItem =
+								(FragmentLayoutStructureItem)
+									duplicatedLayoutStructureItem;
 
 						JSONObject fragmentEntryLinkJSONObject =
 							_duplicateFragmentEntryLink(
 								actionRequest, actionResponse,
-								fragmentEntryLinkId);
+								fragmentLayoutStructureItem.
+									getFragmentEntryLinkId());
 
 						layoutStructure.updateItemConfig(
 							JSONUtil.put(

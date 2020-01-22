@@ -16,7 +16,6 @@ package com.liferay.layout.content.page.editor.web.internal.util.layout.structur
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Víctor Galán
@@ -38,27 +36,20 @@ public class LayoutStructureUtil {
 
 		List<Long> fragmentEntryLinkIds = new ArrayList<>();
 
-		for (LayoutStructureItem duplicatedLayoutStructureItem :
-				layoutStructureItems) {
-
-			if (!Objects.equals(
-					LayoutDataItemTypeConstants.TYPE_FRAGMENT,
-					duplicatedLayoutStructureItem.getItemType())) {
-
+		for (LayoutStructureItem layoutStructureItem : layoutStructureItems) {
+			if (!(layoutStructureItem instanceof FragmentLayoutStructureItem)) {
 				continue;
 			}
 
-			JSONObject itemConfigJSONObject =
-				duplicatedLayoutStructureItem.getItemConfigJSONObject();
+			FragmentLayoutStructureItem fragmentLayoutStructureItem =
+				(FragmentLayoutStructureItem)layoutStructureItem;
 
-			long fragmentEntryLinkId = itemConfigJSONObject.getLong(
-				"fragmentEntryLinkId");
-
-			if (fragmentEntryLinkId <= 0) {
+			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
 				continue;
 			}
 
-			fragmentEntryLinkIds.add(fragmentEntryLinkId);
+			fragmentEntryLinkIds.add(
+				fragmentLayoutStructureItem.getFragmentEntryLinkId());
 		}
 
 		return ArrayUtil.toLongArray(fragmentEntryLinkIds);

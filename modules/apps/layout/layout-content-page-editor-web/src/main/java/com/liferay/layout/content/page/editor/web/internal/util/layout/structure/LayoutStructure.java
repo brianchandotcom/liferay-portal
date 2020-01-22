@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -29,7 +28,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -80,13 +78,14 @@ public class LayoutStructure {
 	public LayoutStructureItem addFragmentLayoutStructureItem(
 		long fragmentEntryLinkId, String parentItemId, int position) {
 
-		LayoutStructureItem layoutStructureItem = addLayoutStructureItem(
-			LayoutDataItemTypeConstants.TYPE_FRAGMENT, parentItemId, position);
+		FragmentLayoutStructureItem fragmentLayoutStructureItem =
+			new FragmentLayoutStructureItem(parentItemId);
 
-		layoutStructureItem.updateItemConfigJSONObject(
-			JSONUtil.put("fragmentEntryLinkId", fragmentEntryLinkId));
+		_updateLayoutStructure(fragmentLayoutStructureItem, position);
 
-		return layoutStructureItem;
+		fragmentLayoutStructureItem.setFragmentEntryLinkId(fragmentEntryLinkId);
+
+		return fragmentLayoutStructureItem;
 	}
 
 	public LayoutStructureItem addLayoutStructureItem(
@@ -108,32 +107,30 @@ public class LayoutStructure {
 
 		int newPosition = position;
 
-		if (Objects.equals(
-				parentLayoutStructureItem.getItemType(),
-				LayoutDataItemTypeConstants.TYPE_ROOT)) {
+		if (parentLayoutStructureItem instanceof RootLayoutStructureItem) {
+			ContainerLayoutStructureItem containerLayoutStructureItem =
+				new ContainerLayoutStructureItem(parentItemId);
 
-			LayoutStructureItem containerLayoutStructureItem =
-				addLayoutStructureItem(
-					LayoutDataItemTypeConstants.TYPE_CONTAINER, parentItemId,
-					position);
+			_updateLayoutStructure(containerLayoutStructureItem, position);
 
 			parentItemId = containerLayoutStructureItem.getItemId();
 
 			newPosition = 0;
 		}
 
-		LayoutStructureItem layoutStructureItem = addLayoutStructureItem(
-			LayoutDataItemTypeConstants.TYPE_ROW, parentItemId, newPosition);
+		RowLayoutStructureItem rowLayoutStructureItem =
+			new RowLayoutStructureItem(parentItemId);
+
+		_updateLayoutStructure(rowLayoutStructureItem, newPosition);
 
 		for (int i = 0; i < _DEFAULT_ROW_COLUMNS; i++) {
 			_addColumnLayoutStructureItem(
-				layoutStructureItem.getItemId(), i, 4);
+				rowLayoutStructureItem.getItemId(), i, 4);
 		}
 
-		layoutStructureItem.updateItemConfigJSONObject(
-			JSONUtil.put("numberOfColumns", _DEFAULT_ROW_COLUMNS));
+		rowLayoutStructureItem.setNumberOfColumns(_DEFAULT_ROW_COLUMNS);
 
-		return layoutStructureItem;
+		return rowLayoutStructureItem;
 	}
 
 	public List<LayoutStructureItem> deleteLayoutStructureItem(String itemId) {
@@ -143,10 +140,7 @@ public class LayoutStructure {
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);
 
-		if (Objects.equals(
-				layoutStructureItem.getItemType(),
-				LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
-
+		if (layoutStructureItem instanceof DropZoneLayoutStructureItem) {
 			throw new UnsupportedOperationException(
 				"Removing the drop zone of a layout structure is not allowed");
 		}
@@ -203,12 +197,9 @@ public class LayoutStructure {
 		LayoutStructureItem newParentLayoutStructureItem =
 			_layoutStructureItems.get(parentItemId);
 
-		if (!Objects.equals(
-				layoutStructureItem.getItemType(),
-				LayoutDataItemTypeConstants.TYPE_ROW) ||
-			!Objects.equals(
-				newParentLayoutStructureItem.getItemType(),
-				LayoutDataItemTypeConstants.TYPE_ROOT)) {
+		if (!(newParentLayoutStructureItem instanceof RowLayoutStructureItem) ||
+			!(newParentLayoutStructureItem instanceof
+				RootLayoutStructureItem)) {
 
 			newParentLayoutStructureItem.addChildrenItem(position, itemId);
 
@@ -217,15 +208,12 @@ public class LayoutStructure {
 			return layoutStructureItem;
 		}
 
-		LayoutStructureItem containerLayoutStructureItem =
-			addLayoutStructureItem(
-				LayoutDataItemTypeConstants.TYPE_CONTAINER, parentItemId,
-				position);
+		ContainerLayoutStructureItem containerLayoutStructureItem =
+			new ContainerLayoutStructureItem(parentItemId);
 
 		containerLayoutStructureItem.addChildrenItem(itemId);
 
-		layoutStructureItem.setParentItemId(
-			containerLayoutStructureItem.getItemId());
+		_updateLayoutStructure(containerLayoutStructureItem, position);
 
 		return layoutStructureItem;
 	}
@@ -240,10 +228,7 @@ public class LayoutStructure {
 
 			LayoutStructureItem layoutStructureItem = entry.getValue();
 
-			if (Objects.equals(
-					layoutStructureItem.getItemType(),
-					LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
-
+			if (layoutStructureItem instanceof DropZoneLayoutStructureItem) {
 				dropZoneItemId = layoutStructureItem.getItemId();
 			}
 
@@ -271,7 +256,7 @@ public class LayoutStructure {
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);
 
-		layoutStructureItem.updateItemConfigJSONObject(itemConfigJSONObject);
+		layoutStructureItem.updateItemConfig(itemConfigJSONObject);
 
 		return layoutStructureItem;
 	}
@@ -283,34 +268,30 @@ public class LayoutStructure {
 			return Collections.emptyList();
 		}
 
-		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
-			itemId);
+		RowLayoutStructureItem rowLayoutStructureItem =
+			(RowLayoutStructureItem)_layoutStructureItems.get(itemId);
 
-		JSONObject itemConfigJSONObject =
-			layoutStructureItem.getItemConfigJSONObject();
-
-		int oldNumberOfColumns = itemConfigJSONObject.getInt("numberOfColumns");
+		int oldNumberOfColumns = rowLayoutStructureItem.getNumberOfColumns();
 
 		if (oldNumberOfColumns == numberOfColumns) {
 			return Collections.emptyList();
 		}
 
-		layoutStructureItem.updateItemConfigJSONObject(
-			JSONUtil.put("numberOfColumns", numberOfColumns));
+		rowLayoutStructureItem.setNumberOfColumns(numberOfColumns);
 
 		List<String> childrenItemIds = new ArrayList<>(
-			layoutStructureItem.getChildrenItemIds());
+			rowLayoutStructureItem.getChildrenItemIds());
 
 		if (oldNumberOfColumns < numberOfColumns) {
 			for (int i = 0; i < oldNumberOfColumns; i++) {
 				String childrenItemId = childrenItemIds.get(i);
 
-				LayoutStructureItem childLayoutStructureItem =
-					_layoutStructureItems.get(childrenItemId);
+				ColumnLayoutStructureItem columnLayoutStructureItem =
+					(ColumnLayoutStructureItem)_layoutStructureItems.get(
+						childrenItemId);
 
-				childLayoutStructureItem.updateItemConfigJSONObject(
-					JSONUtil.put(
-						"size", _COLUMN_SIZES[numberOfColumns - 1][i]));
+				columnLayoutStructureItem.setSize(
+					_COLUMN_SIZES[numberOfColumns - 1][i]);
 			}
 
 			for (int i = oldNumberOfColumns; i < numberOfColumns; i++) {
@@ -324,11 +305,12 @@ public class LayoutStructure {
 		for (int i = 0; i < numberOfColumns; i++) {
 			String childrenItemId = childrenItemIds.get(i);
 
-			LayoutStructureItem childLayoutStructureItem =
-				_layoutStructureItems.get(childrenItemId);
+			ColumnLayoutStructureItem columnLayoutStructureItem =
+				(ColumnLayoutStructureItem)_layoutStructureItems.get(
+					childrenItemId);
 
-			childLayoutStructureItem.updateItemConfigJSONObject(
-				JSONUtil.put("size", _COLUMN_SIZES[numberOfColumns - 1][i]));
+			columnLayoutStructureItem.setSize(
+				_COLUMN_SIZES[numberOfColumns - 1][i]);
 		}
 
 		List<LayoutStructureItem> deletedLayoutStructureItems =
@@ -347,11 +329,12 @@ public class LayoutStructure {
 	private void _addColumnLayoutStructureItem(
 		String parentItemId, int position, int size) {
 
-		LayoutStructureItem layoutStructureItem = addLayoutStructureItem(
-			LayoutDataItemTypeConstants.TYPE_COLUMN, parentItemId, position);
+		ColumnLayoutStructureItem columnLayoutStructureItem =
+			new ColumnLayoutStructureItem(parentItemId);
 
-		layoutStructureItem.updateItemConfigJSONObject(
-			JSONUtil.put("size", size));
+		columnLayoutStructureItem.setSize(size);
+
+		_updateLayoutStructure(columnLayoutStructureItem, position);
 	}
 
 	private List<LayoutStructureItem> _duplicateLayoutStructureItem(
@@ -364,26 +347,13 @@ public class LayoutStructure {
 			LayoutStructureItemUtil.create(
 				layoutStructureItem.getItemType(), parentItemId);
 
-		if (newLayoutStructureItem == null) {
-			return Collections.emptyList();
-		}
-
 		List<LayoutStructureItem> duplicatedLayoutStructureItems =
 			new ArrayList<>();
 
-		JSONObject newItemConfigJSONObject = JSONFactoryUtil.createJSONObject();
-
-		JSONObject itemConfigJSONObject =
-			layoutStructureItem.getItemConfigJSONObject();
-
-		for (String key : itemConfigJSONObject.keySet()) {
-			newItemConfigJSONObject.put(key, itemConfigJSONObject.get(key));
-		}
-
-		newLayoutStructureItem.setItemConfigJSONObject(newItemConfigJSONObject);
-
 		newLayoutStructureItem.setItemId(String.valueOf(UUID.randomUUID()));
-		newLayoutStructureItem.setParentItemId(parentItemId);
+
+		newLayoutStructureItem.updateItemConfig(
+			layoutStructureItem.getItemConfigJSONObject());
 
 		_updateLayoutStructure(newLayoutStructureItem, position);
 

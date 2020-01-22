@@ -554,6 +554,45 @@ public class FriendlyURLEntryLocalServiceImpl
 		return true;
 	}
 
+	private String _getUniqueUrlTitle(
+		long groupId, long classNameId, long classPK, String languageId,
+		String urlTitle) {
+
+		String normalizedUrlTitle =
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
+
+		String curUrlTitle = _getURLEncodedSubstring(
+			urlTitle, normalizedUrlTitle, maxLength);
+
+		String prefix = curUrlTitle;
+
+		for (int i = 1;; i++) {
+			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+				friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
+					groupId, classNameId, curUrlTitle);
+
+			if ((friendlyURLEntryLocalization == null) ||
+				((friendlyURLEntryLocalization.getClassPK() == classPK) &&
+				 languageId.equals(
+					 friendlyURLEntryLocalization.getLanguageId()))) {
+
+				break;
+			}
+
+			String suffix = StringPool.DASH + i;
+
+			prefix = _getURLEncodedSubstring(
+				urlTitle, prefix, maxLength - suffix.length());
+
+			curUrlTitle = prefix + suffix;
+		}
+
+		return curUrlTitle;
+	}
+
 	private String _getURLEncodedSubstring(
 		String decodedString, String encodedString, int maxLength) {
 
@@ -645,9 +684,9 @@ public class FriendlyURLEntryLocalServiceImpl
 					}
 				}
 				else {
-					normalizedUrlTitle = getUniqueUrlTitle(
+					normalizedUrlTitle = _getUniqueUrlTitle(
 						friendlyURLEntry.getGroupId(), classNameId, classPK,
-						normalizedUrlTitle);
+						entry.getKey(), normalizedUrlTitle);
 				}
 			}
 

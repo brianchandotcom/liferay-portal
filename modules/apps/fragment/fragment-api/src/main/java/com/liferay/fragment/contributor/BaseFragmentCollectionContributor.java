@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -316,7 +317,9 @@ public abstract class BaseFragmentCollectionContributor
 
 		ServletContext servletContext = getServletContext();
 
-		return servletContext.getContextPath() + "/thumbnails/" + fileName;
+		return StringBundler.concat(
+			PortalUtil.getPathProxy(), servletContext.getContextPath(),
+			"/thumbnails/", fileName);
 	}
 
 	private void _initialize() {

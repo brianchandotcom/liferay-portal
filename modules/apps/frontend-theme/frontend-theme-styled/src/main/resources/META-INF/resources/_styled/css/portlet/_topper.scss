@@ -68,7 +68,7 @@
 	border-width: $portlet-content-border-width;
 }
 
-/* ---------- Portlet topper ---------- */
+// ---------- Portlet topper ----------
 
 .portlet-actions {
 	float: right;
@@ -84,7 +84,6 @@
 }
 
 .portlet-title-default {
-	box-flex: 1;
 	-moz-flex: 1 1 auto;
 	-ms-flex: 1 1 auto;
 	flex: 1 1 auto;
@@ -95,7 +94,6 @@
 }
 
 .portlet-title-menu {
-	box-flex: 0;
 	-moz-flex: 0 1 auto;
 	-ms-flex: 0 1 auto;
 	flex: 0 1 auto;
@@ -163,7 +161,7 @@
 	}
 }
 
-/* ---------- Portlet controls in mobile ---------- */
+// ---------- Portlet controls in mobile ----------
 
 .controls-visible {
 	.portlet-content-editable {

@@ -1,4 +1,4 @@
-/* ---------- Help messages, general additional information, etc. ---------- */
+// ---------- Help messages, general additional information, etc. ----------
 
 .portlet-msg-alert,
 .portlet-msg-error,
@@ -22,31 +22,31 @@
 	padding-left: 30px;
 }
 
-/* ---------- Error messages ---------- */
+// ---------- Error messages ----------
 
 .portlet-msg-error {
 	@extend .alert-danger;
 }
 
-/* ---------- Alert messages ---------- */
+// ---------- Alert messages ----------
 
 .portlet-msg-alert {
 	@extend .alert-warning;
 }
 
-/* ---------- Success messages ---------- */
+// ---------- Success messages ----------
 
 .portlet-msg-success {
 	@extend .alert-success;
 }
 
-/* ---------- Misc ---------- */
+// ---------- Misc ----------
 
 .navbar .nav li > a {
 	@include overflow-wrap(break-all);
 }
 
-/* ---------- Status ---------- */
+// ---------- Status ----------
 
 .entry-status {
 	&.approved {

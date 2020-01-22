@@ -1,6 +1,6 @@
 @import 'atlas-variables';
 
-/* ---------- Configuration ---------- */
+// ---------- Configuration ----------
 
 .portlet-configuration {
 	.kb-block-labels .field-label {
@@ -16,7 +16,7 @@
 	}
 }
 
-/* ---------- Portal ---------- */
+// ---------- Portal ----------
 
 .controls-hidden .kb-article-icons {
 	display: none;
@@ -62,7 +62,7 @@
 		padding: 0;
 	}
 
-	/* ---------- Portlet ---------- */
+	// ---------- Portlet ----------
 
 	.kb-article {
 		.panel .panel-body,
@@ -333,7 +333,7 @@
 	}
 }
 
-/* ---------- Skin ---------- */
+// ---------- Skin ----------
 
 .knowledge-base-portlet {
 	a.text-default,

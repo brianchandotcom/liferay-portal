@@ -233,7 +233,7 @@ $product-menu-pages-administration-link-height: 72px;
 			display: none;
 		}
 
-		.autofit-col:fist-child {
+		.autofit-col:first-child {
 			display: block;
 		}
 	}
@@ -386,7 +386,7 @@ $product-menu-pages-administration-link-height: 72px;
 	}
 }
 
-/* ---------- Icon animation ---------- */
+// ---------- Icon animation ----------
 
 .toast-animation {
 	display: inline-block;

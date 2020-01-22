@@ -700,7 +700,7 @@ $section-header-bg: #cce6f7;
 	}
 }
 
-/* ---------- Extras ---------- */
+// ---------- Extras ----------
 
 .contacts-portlet {
 	.contacts-container .alert.alert-success {
@@ -712,7 +712,7 @@ $section-header-bg: #cce6f7;
 	}
 }
 
-/* ---------- Responsive ---------- */
+// ---------- Responsive ----------
 
 @include media-breakpoint-down(sm) {
 	.contacts-portlet {

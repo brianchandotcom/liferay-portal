@@ -1,15 +1,3 @@
-/* ---------- Standard styles defined in the JSR 168 specification ---------- */
-
-/* ---------- Fonts ---------- */
-
-.portlet-font {
-}
-
-.portlet-font-dim {
-}
-
-/* ---------- Sections ---------- */
-
 .portlet-section-selected {
 	&,
 	a {
@@ -23,67 +11,4 @@
 	a:focus {
 		background-color: #727c81;
 	}
-}
-
-.portlet-section-subheader {
-}
-
-.portlet-section-footer {
-}
-
-.portlet-section-text {
-}
-
-/* ---------- Forms ---------- */
-
-.portlet-form-label {
-}
-
-.portlet-form-input-field {
-}
-
-.portlet-form-button {
-}
-
-.portlet-form-field-label {
-}
-
-.portlet-form-field {
-}
-
-/* ---------- Icons ---------- */
-
-.portlet-icon-label {
-}
-
-.portlet-dlg-icon-label {
-}
-
-/* ---------- Menus ---------- */
-
-.portlet-menu {
-}
-
-.portlet-menu-item {
-}
-
-.portlet-menu-item-selected {
-}
-
-.portlet-menu-item-hover {
-}
-
-.portlet-menu-item-hover-selected {
-}
-
-.portlet-menu-cascade-item {
-}
-
-.portlet-menu-cascade-item-selected {
-}
-
-.portlet-menu-description {
-}
-
-.portlet-menu-caption {
 }

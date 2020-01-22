@@ -79,6 +79,7 @@
 }
 
 .portlet-fragment-web {
+	// stylelint-disable-next-line selector-type-no-unknown
 	lfr-editable {
 		display: block;
 	}

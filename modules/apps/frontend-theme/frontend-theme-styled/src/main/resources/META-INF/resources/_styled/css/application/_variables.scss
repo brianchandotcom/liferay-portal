@@ -1,10 +1,10 @@
-/* ---------- Cards ---------- */
+// ---------- Cards ----------
 
 $card-tab-border-left-color: #65b6f0;
 $card-tab-border-left-width: 4px;
 $card-tab-padding-left-width: 20px;
 
-/* ---------- Cards horizontal ---------- */
+// ---------- Cards horizontal ----------
 
 $card-horizontal-on-border: #65b6f0 !default;
 $card-horizontal-on-border-width: 2px !default;
@@ -80,7 +80,7 @@ $lfr-page-layouts-card-checked: map-merge(
 	$lfr-page-layouts-card-checked
 );
 
-/* ---------- Dialogs ---------- */
+// ---------- Dialogs ----------
 
 $dialog-footer-bg: $white !default;
 $dialog-footer-border-color: $modal-footer-border-color !default;
@@ -107,7 +107,7 @@ $dialog-desktop-navbar-height: if(
 $dialog-footer-padding: 20px !default;
 $dialog-iframe-padding: 0 !default;
 
-/* ---------- Splitter ---------- */
+// ---------- Splitter ----------
 
 $splitter-bg: map-get($panel-secondary, header-bg) !default;
 $splitter-border-radius: nth($panel-border-radius, 1)
@@ -122,7 +122,7 @@ $splitter-padding: 10px 15px !default;
 $splitter-spaced-border-radius: $panel-border-radius;
 $splitter-text-color: map-get($panel-secondary, color) !default;
 
-/* ---------- Toggle card ---------- */
+// ---------- Toggle card ----------
 
 $toggle-card-border-radius: 2px !default;
 
@@ -144,7 +144,7 @@ $toggle-card-on-icon-bg: $white !default;
 $toggle-card-on-icon-border: #65b6f0 !default;
 $toggle-card-on-icon-border-width: 0 !default;
 
-/* ---------- File icons colors ---------- */
+// ---------- File icons colors ----------
 
 $file-icon-color-0: $white !default;
 $file-icon-color-1: $white !default;
@@ -155,7 +155,7 @@ $file-icon-color-5: $white !default;
 $file-icon-color-6: $white !default;
 $file-icon-color-7: $white !default;
 
-/* ---------- File icons text colors ---------- */
+// ---------- File icons text colors ----------
 
 $file-icon-text-color-0: #6b6c7e !default;
 $file-icon-text-color-1: #a7a9bc !default;
@@ -166,7 +166,7 @@ $file-icon-text-color-5: #ff5f5f !default;
 $file-icon-text-color-6: #4b9bff !default;
 $file-icon-text-color-7: #272833 !default;
 
-/* ---------- User icons background colors ---------- */
+// ---------- User icons background colors ----------
 
 $user-icon-bg-color-0: $white !default;
 $user-icon-bg-color-1: $white !default;
@@ -179,7 +179,7 @@ $user-icon-bg-color-7: $white !default;
 $user-icon-bg-color-8: $white !default;
 $user-icon-bg-color-9: $white !default;
 
-/* ---------- User icons border color ---------- */
+// ---------- User icons border color ----------
 
 $user-icon-border-color-0: $gray-300 !default;
 $user-icon-border-color-1: $gray-300 !default;
@@ -192,7 +192,7 @@ $user-icon-border-color-7: $gray-300 !default;
 $user-icon-border-color-8: $gray-300 !default;
 $user-icon-border-color-9: $gray-300 !default;
 
-/* ---------- User icons colors ---------- */
+// ---------- User icons colors ----------
 
 $user-icon-color-0: #6b6c7e !default;
 $user-icon-color-1: #4b9bff !default;

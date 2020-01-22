@@ -372,8 +372,8 @@ class CriteriaRow extends Component {
 
 		if (unknownEntityError) {
 			const message = editing
-				? Liferay.Language.get('unknown-entity-message-edit')
-				: Liferay.Language.get('unknown-entity-message-view');
+				? Liferay.Language.get('unknown-element-message-edit')
+				: Liferay.Language.get('unknown-element-message-view');
 
 			errors.push({
 				message

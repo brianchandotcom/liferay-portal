@@ -83,7 +83,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 				{Liferay.Language.get('background-image')}
 			</p>
 			<ContainerBackgroundImageConfiguration
-				backgroundImageTitle={containerConfig.backgroundImageTitle}
+				backgroundImage={containerConfig.backgroundImage}
 				onValueChange={handleConfigurationValueChanged}
 			/>
 		</>

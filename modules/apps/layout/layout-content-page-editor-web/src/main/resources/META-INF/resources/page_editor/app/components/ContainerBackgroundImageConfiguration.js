@@ -24,7 +24,7 @@ const IMAGE_SOURCE = {
 };
 
 export const ContainerBackgroundImageConfiguration = ({
-	backgroundImageTitle,
+	backgroundImage,
 	onValueChange
 }) => {
 	const [imageSource, setImageSource] = useState(
@@ -56,18 +56,22 @@ export const ContainerBackgroundImageConfiguration = ({
 			</ClayForm.Group>
 			{imageSource === IMAGE_SOURCE.manualSelection ? (
 				<ImageSelector
-					imageTitle={backgroundImageTitle}
+					imageTitle={backgroundImage.title}
 					label={Liferay.Language.get('background-image')}
 					onClearButtonPressed={() =>
 						onValueChange({
-							backgroundImage: '',
-							backgroundImageTitle: ''
+							backgroundImage: {
+								title: '',
+								url: ''
+							}
 						})
 					}
 					onImageSelected={image =>
 						onValueChange({
-							backgroundImage: image.url,
-							backgroundImageTitle: image.title
+							backgroundImage: {
+								title: image.title,
+								url: image.url
+							}
 						})
 					}
 				/>

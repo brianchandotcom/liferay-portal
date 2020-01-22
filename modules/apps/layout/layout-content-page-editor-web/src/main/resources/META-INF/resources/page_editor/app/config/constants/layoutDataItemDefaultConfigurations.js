@@ -21,7 +21,7 @@ export const LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS = {
 
 	[LAYOUT_DATA_ITEM_TYPES.container]: {
 		backgroundColorCssClass: '',
-		backgroundImage: '',
+		backgroundImage: {},
 		paddingBottom: 3,
 		paddingHorizontal: 3,
 		paddingTop: 3,

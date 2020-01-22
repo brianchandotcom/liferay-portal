@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
@@ -92,6 +93,10 @@ public class PermissionsPortletConfigurationIcon
 		Layout layout = _getLayout(portletRequest);
 
 		if (layout == null) {
+			return false;
+		}
+
+		if (layout.getStatus() == WorkflowConstants.STATUS_DRAFT) {
 			return false;
 		}
 

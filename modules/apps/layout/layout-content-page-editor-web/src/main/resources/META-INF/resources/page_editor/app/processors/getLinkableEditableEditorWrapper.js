@@ -12,22 +12,25 @@
  * details.
  */
 
-import getAlloyEditorProcessor from './getAlloyEditorProcessor';
-import {getLinkableEditableEditorWrapper} from './getLinkableEditableEditorWrapper';
+export function getLinkableEditableEditorWrapper(element) {
+	const anchor =
+		element instanceof HTMLAnchorElement
+			? element
+			: element.querySelector('a');
 
-export default getAlloyEditorProcessor(
-	'text',
-	getLinkableEditableEditorWrapper,
-	(element, value, config) => {
-		const anchor =
-			element instanceof HTMLAnchorElement
-				? element
-				: element.querySelector('a');
+	if (anchor) {
+		const innerWrapper = document.createElement('div');
+		innerWrapper.innerHTML = anchor.innerHTML;
+		anchor.innerHTML = '';
+		anchor.appendChild(innerWrapper);
 
-		if (anchor) {
-			anchor.href = config.href;
-			anchor.innerHTML = value;
-			anchor.target = config.target || '';
-		}
+		return innerWrapper;
+	} else {
+		const wrapper = document.createElement('div');
+		wrapper.innerHTML = element.innerHTML;
+		element.innerHTML = '';
+		element.appendChild(wrapper);
+
+		return wrapper;
 	}
-);
+}

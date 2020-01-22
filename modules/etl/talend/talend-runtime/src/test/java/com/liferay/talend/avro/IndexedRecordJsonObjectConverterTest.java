@@ -147,13 +147,13 @@ public class IndexedRecordJsonObjectConverterTest extends BaseConverterTest {
 			indexedRecord);
 
 		Assert.assertEquals(
-			"timestamp1 value", "2019-12-02T06:17:09Z",
+			"timestamp1 value", "2019-12-02T05:17:09Z",
 			jsonObject.getString("timestamp1"));
 		Assert.assertEquals(
-			"timestamp2 value", "2019-12-02T06:17:09Z",
+			"timestamp2 value", "2019-12-02T05:17:09Z",
 			jsonObject.getString("timestamp2"));
 		Assert.assertEquals(
-			"timestamp3 value", "2019-12-02T05:17:09Z",
+			"timestamp3 value", "2019-12-02T04:17:09Z",
 			jsonObject.getString("timestamp3"));
 	}
 

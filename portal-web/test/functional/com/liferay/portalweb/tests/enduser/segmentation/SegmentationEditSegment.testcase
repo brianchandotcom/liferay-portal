@@ -130,11 +130,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.addCP(
+		User.addCPWithTag(
 			userEmailAddress = "Tag@liferay.com",
 			userFirstName = "UserTag",
-			userLastName = "Tag",
-			userScreenName = "Tag",
+			userLastName = "UserTag",
+			userScreenName = "UserTag",
 			userTag = "tagtest");
 
 		ProductMenu.gotoPortlet(
@@ -147,11 +147,18 @@ definition {
 		}
 
 		Segmentation.fillTitle(titleField = "EditSegmentUserByUserTag Test");
+
 		Segmentation.deleteProperties();
+
 		Segmentation.addProperties(propertyOption = "Tag");
-		Segmentation.selectTag()
+
+		Segmentation.selectTag(
+			tagOption = "tagtest");
 
 		Button.clickSave();
+
+		User.tearDownSpecificUser(
+			userScreenName= "usertag");
 	}
 
 }

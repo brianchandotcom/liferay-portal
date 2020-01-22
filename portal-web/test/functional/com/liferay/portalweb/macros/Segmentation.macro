@@ -67,6 +67,20 @@ definition {
 
 	macro selectTag {
 		Click(locator1 = "Segmentation#ADD_TAG_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		Click(locator1 = "Segmentation#SEARCH_TAG_FIELD");
+
+		Type(
+			locator1 = "Segmentation#SEARCH_TAG_FIELD",
+			value1 = "${tagOption}");
+		
+		KeyPress(
+			locator1 = "Segmentation#SEARCH_TAG_FIELD",
+			value1 = "\ENTER");
+
+		Click(locator1 = "Segmentation#TAG_OPTION");
 	}
 
 	macro tearDown {

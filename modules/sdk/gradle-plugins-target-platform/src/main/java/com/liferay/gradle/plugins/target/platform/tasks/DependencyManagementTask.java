@@ -14,32 +14,25 @@
 
 package com.liferay.gradle.plugins.target.platform.tasks;
 
-import com.google.common.collect.Maps;
-
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.target.platform.internal.util.XMLUtil;
 
 import groovy.util.XmlSlurper;
 import groovy.util.slurpersupport.GPathResult;
 
 import java.io.File;
-import java.io.StringWriter;
+
+import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-
-import org.apache.commons.io.FileUtils;
-
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
 
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
@@ -53,6 +46,9 @@ import org.gradle.api.tasks.options.Option;
 import org.gradle.api.tasks.options.OptionValues;
 
 import org.json.JSONObject;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @author Simon Jiang
@@ -117,61 +113,46 @@ public class DependencyManagementTask extends DefaultTask {
 	}
 
 	private String _generateXml(Map<String, String> managedVersions) {
-		String xmlString = new String();
-		Document doc = DocumentHelper.createDocument();
+		try {
+			Document document = XMLUtil.newDocument();
 
-		try (StringWriter stringWriter = new StringWriter()) {
-			Element dependencyManagementElement = doc.addElement(
-				"dependencyManagement");
+			Element dependencyManagementElement = XMLUtil.appendElement(
+				document, null, "dependencyManagement");
 
-			Element dependenciesElement =
-				dependencyManagementElement.addElement("dependencies");
+			Element dependenciesElement = XMLUtil.appendElement(
+				document, dependencyManagementElement, "dependencies");
 
 			for (Map.Entry<String, String> entry : managedVersions.entrySet()) {
-				Element dependencyElement = dependenciesElement.addElement(
-					"dependency");
-
-				Element groupIdElement = dependencyElement.addElement(
-					"groupId");
+				Element dependencyElement = XMLUtil.appendElement(
+					document, dependenciesElement, "dependency");
 
 				String dependencyKey = entry.getKey();
 
 				String[] dependencyKeyArray = dependencyKey.split(":");
 
-				groupIdElement.setText(dependencyKeyArray[0]);
+				XMLUtil.appendElement(
+					document, dependencyElement, "groupId",
+					dependencyKeyArray[0]);
+				XMLUtil.appendElement(
+					document, dependencyElement, "artifactId",
+					dependencyKeyArray[1]);
 
-				Element artifactIdElement = dependencyElement.addElement(
-					"artifactId");
-
-				artifactIdElement.setText(dependencyKeyArray[1]);
-
-				Element versionElement = dependencyElement.addElement(
-					"version");
-
-				versionElement.setText(entry.getValue());
+				XMLUtil.appendElement(
+					document, dependencyElement, "version", entry.getValue());
 			}
 
-			OutputFormat format = OutputFormat.createPrettyPrint();
-
-			XMLWriter writer = new XMLWriter(stringWriter, format);
-
-			writer.write(doc);
-			writer.close();
-
-			StringBuffer buffer = stringWriter.getBuffer();
-
-			xmlString = buffer.toString();
+			return XMLUtil.toString(document);
 		}
 		catch (Exception e) {
 		}
 
-		return xmlString;
+		return null;
 	}
 
 	private Map<String, String> _getTargetPlatformDependencies(
 		Project project, Configuration ideBomsConfiguration) {
 
-		Map<String, String> managedVersions = Maps.newHashMap();
+		Map<String, String> managedVersions = new HashMap<>();
 		DependencySet allDependencies = ideBomsConfiguration.getDependencies();
 
 		allDependencies.all(
@@ -279,8 +260,10 @@ public class DependencyManagementTask extends DefaultTask {
 
 			if (_outputFile != null) {
 				try {
-					FileUtils.writeByteArrayToFile(
-						new File(_outputFile), dependenciesOutput.getBytes());
+					File outputFile = new File(_outputFile);
+
+					Files.write(
+						outputFile.toPath(), dependenciesOutput.getBytes());
 				}
 				catch (Exception e) {
 					_logger.warn(e.getMessage());

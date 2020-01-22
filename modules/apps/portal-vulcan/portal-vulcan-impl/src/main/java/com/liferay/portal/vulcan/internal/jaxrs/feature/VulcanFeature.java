@@ -17,7 +17,6 @@ package com.liferay.portal.vulcan.internal.jaxrs.feature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -68,11 +67,11 @@ import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
@@ -132,7 +131,7 @@ public class VulcanFeature implements Feature {
 			new ContextContainerRequestFilter(
 				_language, _portal, _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService,
-				_scopeChecker));
+				_getScopeChecker()));
 		featureContext.register(
 			new FilterContextProvider(
 				_expressionConvert, _filterParserProvider, _language, _portal));
@@ -164,6 +163,18 @@ public class VulcanFeature implements Feature {
 		}
 	}
 
+	private Object _getScopeChecker() {
+		ServiceReference<?> serviceReference =
+			_bundleContext.getServiceReference(
+				"com.liferay.oauth2.provider.scope.ScopeChecker");
+
+		if (serviceReference != null) {
+			return _bundleContext.getService(serviceReference);
+		}
+
+		return null;
+	}
+
 	private BundleContext _bundleContext;
 
 	@Reference(
@@ -193,9 +204,6 @@ public class VulcanFeature implements Feature {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private ScopeChecker _scopeChecker;
 
 	@Reference
 	private SortParserProvider _sortParserProvider;

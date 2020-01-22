@@ -15,6 +15,11 @@
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import React, {useState, useContext} from 'react';
 
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
+import {updateEditableValues} from '../actions/index';
+import {DispatchContext} from '../reducers/index';
+import {StoreContext} from '../store/index';
+
 const SOURCE_TYPES = {
 	fromContentField: 'fromContentField',
 	manual: 'manual'
@@ -50,8 +55,50 @@ const TARGET_OPTIONS = [
 	}
 ];
 
-export default function LinkConfigurationPanel() {
+export default function LinkConfigurationPanel({item}) {
+	const {editableId, fragmentEntryLinkId} = item;
+
 	const [sourceType, setSourceType] = useState(SOURCE_TYPES.manual);
+
+	const {fragmentEntryLinks, segmentsExperienceId} = useContext(StoreContext);
+	const dispatch = useContext(DispatchContext);
+
+	const editableValue =
+		fragmentEntryLinks[fragmentEntryLinkId].editableValues[
+			EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+		][editableId];
+
+	const editableConfig = editableValue.config || {};
+
+	const updateRowConfig = newConfig => {
+		const editableValues =
+			fragmentEntryLinks[fragmentEntryLinkId].editableValues;
+		const editableProcessorValues =
+			editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
+
+		const nextEditableValues = {
+			...editableValues,
+
+			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
+				...editableProcessorValues,
+				[editableId]: {
+					...editableProcessorValues[editableId],
+					config: {
+						...editableConfig,
+						...newConfig
+					}
+				}
+			}
+		};
+
+		dispatch(
+			updateEditableValues({
+				editableValues: nextEditableValues,
+				fragmentEntryLinkId,
+				segmentsExperienceId
+			})
+		);
+	};
 
 	return (
 		<>
@@ -71,7 +118,14 @@ export default function LinkConfigurationPanel() {
 					<label htmlFor="floatingToolbarLinkHrefOption">
 						{Liferay.Language.get('url')}
 					</label>
-					<ClayInput id="floatingToolbarLinkHrefOption" type="text" />
+					<ClayInput
+						id="floatingToolbarLinkHrefOption"
+						onChange={event => {
+							updateRowConfig({href: event.target.value});
+						}}
+						type="text"
+						value={editableConfig.href || ''}
+					/>
 				</ClayForm.Group>
 			) : (
 				<div>Mapping gege</div>
@@ -82,8 +136,12 @@ export default function LinkConfigurationPanel() {
 				</label>
 				<ClaySelectWithOption
 					id="floatingToolbarLinkTargetOption"
+					onChange={event => {
+						updateRowConfig({target: event.target.value});
+					}}
 					options={TARGET_OPTIONS}
 					type="text"
+					value={editableConfig.target}
 				/>
 			</ClayForm.Group>
 		</>

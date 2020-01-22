@@ -23,6 +23,13 @@
 		<field name="logoId" type="long" />
 		<field name="status" type="int" />
 	</model>
+	<model name="com.liferay.account.model.AccountEntryOrganizationRel">
+		<field name="mvccVersion" type="long" />
+		<field name="accountEntryOrganizationRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="accountEntryId" type="long" />
+		<field name="organizationId" type="long" />
+	</model>
 	<model name="com.liferay.account.model.AccountEntryUserRel">
 		<field name="mvccVersion" type="long" />
 		<field name="accountEntryUserRelId" type="long" />

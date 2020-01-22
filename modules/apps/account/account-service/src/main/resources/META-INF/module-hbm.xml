@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.account.model.AccountEntry" />
+	<import class="com.liferay.account.model.AccountEntryOrganizationRel" />
 	<import class="com.liferay.account.model.AccountEntryUserRel" />
 	<import class="com.liferay.account.model.AccountRole" />
 	<class dynamic-update="true" name="com.liferay.account.model.impl.AccountEntryImpl" table="AccountEntry">
@@ -21,6 +22,15 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="domains" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.account.model.impl.AccountEntryOrganizationRelImpl" table="AccountEntryOrganizationRel">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="accountEntryOrganizationRelId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="accountEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.account.model.impl.AccountEntryUserRelImpl" table="AccountEntryUserRel">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="accountEntryUserRelId" type="long">

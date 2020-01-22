@@ -1,0 +1,9 @@
+apiDir: "../account-rest-api/src/main/java"
+apiPackagePath: "com.liferay.account.rest"
+application:
+    baseURI: "/account-rest"
+    className: "AccountRestApplication"
+    name: "Liferay.Account.Rest"
+author: "Drew Brokke"
+clientDir: "../account-rest-client/src/main/java"
+testDir: "../account-rest-test/src/testIntegration/java"

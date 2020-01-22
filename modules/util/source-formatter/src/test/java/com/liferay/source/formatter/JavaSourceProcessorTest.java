@@ -440,9 +440,10 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"UnusedVariable.testjava",
 			new String[] {
-				"Variable 'matcher' is unused", "Variable '_s' is unused"
+				"Variable 'matcher' is unused", "Variable 'hello' is unused",
+				"Variable '_s' is unused"
 			},
-			new Integer[] {26, 31});
+			new Integer[] {26, 29, 41});
 	}
 
 }

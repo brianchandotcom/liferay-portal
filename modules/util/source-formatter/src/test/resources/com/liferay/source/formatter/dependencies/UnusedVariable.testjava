@@ -22,8 +22,18 @@ import java.util.regex.Pattern;
  */
 public class UnusedVariable {
 
-	public void test(String s) {
+	public String test(String s) {
 		Matcher matcher = _pattern.matcher(s);
+
+		if (s == null) {
+			String hello = "Hello";
+
+			return s;
+		}
+
+		String hello = "World";
+
+		return hello + s;
 	}
 
 	private static final Pattern _pattern = Pattern.compile("HelloWorld");

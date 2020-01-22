@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property custom.properties = "default.layout.template.id=1_column";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}jsonws.web.service.paths.excludes=";
 	property testray.main.component.name = "Content Page Review";
 
 	setUp {
@@ -30,15 +30,10 @@ definition {
 				userLastName = "userln",
 				userScreenName = "user2");
 
-			ProductMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.editPasswordCP(
-				password = "password",
-				userEmailAddress = "user2@liferay.com",
-				userScreenName = "user2");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user2@liferay.com");
 
 			ProductMenu.gotoPortlet(
 				category = "Users",

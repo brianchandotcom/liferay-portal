@@ -15,6 +15,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -49,10 +50,6 @@ public class JSPTaglibHelperImpl implements JSPTaglibHelper {
 		Collection<String> resources = bundleWiring.listResources(
 			"META-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE);
 
-		if (resources == null) {
-			return;
-		}
-
 		for (String resource : resources) {
 			URL url = bundle.getResource(resource);
 
@@ -60,27 +57,46 @@ public class JSPTaglibHelperImpl implements JSPTaglibHelper {
 				continue;
 			}
 
-			try (InputStream inputStream = url.openStream()) {
-				Document document = SAXReaderUtil.read(inputStream);
+			_parseTLD(url, servletContext, listenerClassNames);
+		}
 
-				Element rootElement = document.getRootElement();
+		Collection<URL> urls = new ArrayList<>(
+			bundleWiring.findEntries(
+				"META-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE));
 
-				for (Element listenerElement :
-						rootElement.elements("listener")) {
+		urls.addAll(
+			bundleWiring.findEntries(
+				"WEB-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE));
 
-					String listenerClassName = listenerElement.elementText(
-						"listener-class");
+		for (URL url : urls) {
+			_parseTLD(url, servletContext, listenerClassNames);
+		}
+	}
 
-					if (Validator.isNull(listenerClassName)) {
-						continue;
-					}
+	private void _parseTLD(
+		URL url, ServletContext servletContext,
+		List<String> listenerClassNames) {
 
-					listenerClassNames.add(listenerClassName);
+		try (InputStream inputStream = url.openStream()) {
+			Document document = SAXReaderUtil.read(inputStream);
+
+			Element rootElement = document.getRootElement();
+
+			for (Element listenerElement : rootElement.elements("listener")) {
+				String listenerClassName = listenerElement.elementText(
+					"listener-class");
+
+				if (Validator.isNull(listenerClassName) ||
+					listenerClassNames.contains(listenerClassName)) {
+
+					continue;
 				}
+
+				listenerClassNames.add(listenerClassName);
 			}
-			catch (Exception exception) {
-				servletContext.log(exception.getMessage(), exception);
-			}
+		}
+		catch (Exception exception) {
+			servletContext.log(exception.getMessage(), exception);
 		}
 	}
 

@@ -34,6 +34,13 @@
 			<version>4.4.0</version>
 			<scope>provided</scope>
 		</dependency>
+#elseif (${liferayVersion.startsWith("7.3")})
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.portal.kernel</artifactId>
+			<version>5.3.0</version>
+			<scope>provided</scope>
+		</dependency>
 #end
 		<dependency>
 			<groupId>org.osgi</groupId>

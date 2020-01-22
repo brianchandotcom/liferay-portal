@@ -7,7 +7,7 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
 #end
 
-<service-builder #if (${liferayVersion.startsWith("7.2")} && (${dependencyInjector} == "ds"))dependency-injector="ds"#end package-path="${package}">
+<service-builder #if ((${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}) && (${dependencyInjector} == "ds"))dependency-injector="ds"#end package-path="${package}">
 	<namespace>FOO</namespace>
 	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
 	<entity local-service="true" name="Foo" remote-service="true" uuid="true">

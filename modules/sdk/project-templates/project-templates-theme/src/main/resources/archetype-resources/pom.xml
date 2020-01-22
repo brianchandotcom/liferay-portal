@@ -26,6 +26,10 @@
 		<com.liferay.frontend.css.common.version>4.0.0</com.liferay.frontend.css.common.version>
 		<com.liferay.frontend.theme.styled.version>4.0.7</com.liferay.frontend.theme.styled.version>
 		<com.liferay.frontend.theme.unstyled.version>4.0.4</com.liferay.frontend.theme.unstyled.version>
+#elseif (${liferayVersion.startsWith("7.3")})
+		<com.liferay.frontend.css.common.version>5.0.1</com.liferay.frontend.css.common.version>
+		<com.liferay.frontend.theme.styled.version>5.0.1</com.liferay.frontend.theme.styled.version>
+		<com.liferay.frontend.theme.unstyled.version>5.0.1</com.liferay.frontend.theme.unstyled.version>
 #end
 	</properties>
 	<build>

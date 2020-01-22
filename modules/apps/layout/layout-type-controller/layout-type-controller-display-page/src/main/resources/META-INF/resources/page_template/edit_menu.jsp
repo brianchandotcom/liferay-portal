@@ -22,6 +22,6 @@ EditDisplayPageMenuDisplayContext editDisplayPageMenuDisplayContext = new EditDi
 
 <clay:dropdown-menu
 	dropdownItems="<%= editDisplayPageMenuDisplayContext.getDropdownItems() %>"
-	icon="cog"
+	icon="pencil"
 	triggerCssClasses="icon-monospaced"
 />

@@ -1,6 +1,7 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Mentions";
@@ -16,15 +17,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			password = "password",
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 	}
 
 	tearDown {

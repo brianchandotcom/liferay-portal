@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
@@ -40,6 +41,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.util.VersionNumber;
 
 /**
  * @author Gregory Amerson
@@ -66,6 +68,16 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	@Override
 	@SuppressWarnings("serial")
 	public void apply(final Project project) {
+		Gradle gradle = project.getGradle();
+
+		VersionNumber versionNumber = VersionNumber.parse(
+			gradle.getGradleVersion());
+
+		if (versionNumber.getMajor() < 5) {
+			throw new GradleException(
+				"This plugin requires at least Gradle 5.x or greater");
+		}
+
 		final TargetPlatformExtension targetPlatformExtension =
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, TargetPlatformExtension.class);
@@ -93,8 +105,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		final Set<Project> subprojects =
 			targetPlatformExtension.getSubprojects();
-
-		Gradle gradle = project.getGradle();
 
 		gradle.afterProject(
 			new Closure<Void>(project) {

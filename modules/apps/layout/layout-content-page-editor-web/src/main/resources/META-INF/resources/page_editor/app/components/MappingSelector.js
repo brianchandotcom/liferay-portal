@@ -92,7 +92,7 @@ export default function MappingSelector({
 	const {pageType, selectedMappingTypes} = config;
 
 	const [fields, setFields] = useState([]);
-	const [imageTitle, setImageTitle] = useState('');
+	const [mappedItemTitle, setMappedItemTitle] = useState('');
 	const [selectedItem, setSelectedItem] = useState(mappedItem);
 	const [selectedSourceTypeId, setSelectedSourceTypeId] = useState(
 		MAPPING_SOURCE_TYPE_IDS.content
@@ -140,7 +140,7 @@ export default function MappingSelector({
 		);
 
 		if (infoItem) {
-			setImageTitle(infoItem.title);
+			setMappedItemTitle(infoItem.title);
 		}
 	}, [mappedInfoItems, selectedItem]);
 
@@ -221,7 +221,9 @@ export default function MappingSelector({
 					<ItemSelector
 						label={Liferay.Language.get('content')}
 						onItemSelect={onInfoItemSelect}
-						selectedItemTitle={selectedItem.title || imageTitle}
+						selectedItemTitle={
+							selectedItem.title || mappedItemTitle
+						}
 					/>
 				</ClayForm.Group>
 			)}

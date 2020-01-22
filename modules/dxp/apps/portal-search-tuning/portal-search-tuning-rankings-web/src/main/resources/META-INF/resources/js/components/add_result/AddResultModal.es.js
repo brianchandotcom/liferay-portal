@@ -18,6 +18,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
+import {usePrevious} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -28,7 +29,6 @@ import {
 	FETCH_OPTIONS,
 	KEY_CODES
 } from '../../utils/constants.es';
-import {usePrevious} from '../../utils/hooks.es';
 import {getPluralMessage} from '../../utils/language.es';
 import {buildUrl, resultsDataToMap, toggleListItem} from '../../utils/util.es';
 import Item from '../list/Item.es';

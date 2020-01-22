@@ -10,12 +10,12 @@
  * distribution rights of the Software.
  */
 
+import {usePrevious} from 'frontend-js-react-web';
 import React, {createContext, useContext, useEffect, useState} from 'react';
 
 import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents.es';
 import {ErrorContext} from '../../../../shared/components/request/Error.es';
 import {LoadingContext} from '../../../../shared/components/request/Loading.es';
-import {usePrevious} from '../../../../shared/hooks/usePrevious.es';
 import {compareArrays} from '../../../../shared/util/array.es';
 import {AppContext} from '../../../AppContext.es';
 

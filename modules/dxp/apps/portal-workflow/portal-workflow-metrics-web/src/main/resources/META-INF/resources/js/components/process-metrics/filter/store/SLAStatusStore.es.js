@@ -10,10 +10,10 @@
  * distribution rights of the Software.
  */
 
+import {usePrevious} from 'frontend-js-react-web';
 import React, {createContext, useEffect, useState} from 'react';
 
 import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents.es';
-import {usePrevious} from '../../../../shared/hooks/usePrevious.es';
 import {compareArrays} from '../../../../shared/util/array.es';
 
 const slaStatusConstants = {

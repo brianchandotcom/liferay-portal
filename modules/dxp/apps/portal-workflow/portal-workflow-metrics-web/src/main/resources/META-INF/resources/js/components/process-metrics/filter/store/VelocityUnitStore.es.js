@@ -10,11 +10,11 @@
  * distribution rights of the Software.
  */
 
+import {usePrevious} from 'frontend-js-react-web';
 import moment from 'moment';
 import React, {createContext, useContext, useEffect, useState} from 'react';
 
 import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents.es';
-import {usePrevious} from '../../../../shared/hooks/usePrevious.es';
 import {compareArrays} from '../../../../shared/util/array.es';
 import {TimeRangeContext} from './TimeRangeStore.es';
 

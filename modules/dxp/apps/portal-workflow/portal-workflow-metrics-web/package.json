@@ -14,6 +14,7 @@
 		"axios": "0.18.1",
 		"classnames": "2.2.6",
 		"custom-event-polyfill": "1.0.6",
+		"frontend-js-react-web": "*",
 		"moment": "2.24.0",
 		"numeral": "2.0.6",
 		"path-to-regexp": "3.0.0",

@@ -16,7 +16,7 @@ $product-menu-pages-administration-link-height: 72px;
 
 	.layout-finder {
 		border-bottom: 1px solid #272833;
-		padding: 24px 16px 0px 16px;
+		padding: 24px 16px 0;
 
 		input {
 			background-color: #393a4a;
@@ -28,7 +28,7 @@ $product-menu-pages-administration-link-height: 72px;
 
 		.breadcrumb {
 			flex-wrap: nowrap;
-			margin-bottom: 0px;
+			margin-bottom: 0;
 			padding-bottom: 4px;
 
 			.breadcrumb-item {
@@ -73,7 +73,7 @@ $product-menu-pages-administration-link-height: 72px;
 		display: flex;
 		font-size: 14px;
 		height: $product-menu-pages-administration-link-height;
-		padding: 16px 0px 24px 16px;
+		padding: 16px 0 24px 16px;
 		position: fixed;
 		width: $product-menu-item-fixed-width;
 
@@ -140,8 +140,8 @@ $product-menu-pages-administration-link-height: 72px;
 				border: 1px solid #393a4a;
 				border-radius: 2px;
 				font-size: 6px;
-				margin-right: 0px;
-				padding: 2px 2px 1px 2px;
+				margin-right: 0;
+				padding: 2px 2px 1px;
 				text-align: center;
 
 				& + span {

@@ -11,7 +11,7 @@
 
 	&:hover:not(.disabled) {
 		border-color: #80acff;
-		box-shadow: 0px 2px 4px rgba(39, 40, 51, 0.12);
+		box-shadow: 0 2px 4px rgba(39, 40, 51, 0.12);
 		transform: translateX(-2px);
 	}
 
@@ -42,9 +42,9 @@
 	max-width: 280px;
 
 	.field-type {
-		background-color: #ffffff;
+		background-color: #fff;
 		border-color: #80acff;
-		box-shadow: 0px 8px 16px rgba(39, 40, 51, 0.16);
+		box-shadow: 0 8px 16px rgba(39, 40, 51, 0.16);
 		cursor: grabbing;
 	}
 }

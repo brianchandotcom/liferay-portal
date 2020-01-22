@@ -14,6 +14,7 @@
 
 import React, {useContext} from 'react';
 
+import {CONTAINER_TYPES} from '../config/constants/containerTypes';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
@@ -68,10 +69,12 @@ export const ContainerConfigurationPanel = ({item}) => {
 				paddingBottom={containerConfig.paddingBottom}
 				paddingTop={containerConfig.paddingTop}
 			/>
-			<ContainerPaddingHorizontalConfiguration
-				onValueChange={handleConfigurationValueChanged}
-				paddingHorizontal={containerConfig.paddingHorizontal}
-			/>
+			{containerConfig.type === CONTAINER_TYPES.fluid && (
+				<ContainerPaddingHorizontalConfiguration
+					onValueChange={handleConfigurationValueChanged}
+					paddingHorizontal={containerConfig.paddingHorizontal}
+				/>
+			)}
 			<p className="mb-3 sheet-subtitle">
 				{Liferay.Language.get('background-color')}
 			</p>

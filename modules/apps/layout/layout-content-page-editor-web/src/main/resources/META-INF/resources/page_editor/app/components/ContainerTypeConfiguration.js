@@ -15,7 +15,10 @@
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
+import {CONTAINER_PADDING_IDENTIFIERS} from '../config/constants/containerPaddingIdentifiers';
 import {CONTAINER_TYPES} from '../config/constants/containerTypes';
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 const CONTAINER_TYPE_IDENTIFIER = 'type';
 
@@ -27,9 +30,19 @@ export const ContainerTypeConfiguration = ({containerType, onValueChange}) => (
 		<ClaySelectWithOption
 			aria-label={Liferay.Language.get('container')}
 			id="containerType"
-			onChange={({target: {value}}) =>
-				onValueChange({[CONTAINER_TYPE_IDENTIFIER]: value})
-			}
+			onChange={({target: {value}}) => {
+				if (value === CONTAINER_TYPES.fluid) {
+					onValueChange({
+						[CONTAINER_PADDING_IDENTIFIERS.paddingHorizontal]:
+							LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
+								LAYOUT_DATA_ITEM_TYPES.container
+							].paddingHorizontal,
+						[CONTAINER_TYPE_IDENTIFIER]: value
+					});
+				} else {
+					onValueChange({[CONTAINER_TYPE_IDENTIFIER]: value});
+				}
+			}}
 			options={[
 				{
 					label: Liferay.Language.get('fixed-width'),

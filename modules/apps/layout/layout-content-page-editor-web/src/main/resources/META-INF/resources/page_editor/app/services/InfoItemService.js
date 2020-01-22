@@ -16,6 +16,37 @@ import serviceFetch from './serviceFetch';
 
 export default {
 	/**
+	 * Get an asset's value
+	 * @param {object} options
+	 * @param {object} options.config Application config
+	 * @param {string} options.classNameId Asset's className
+	 * @param {string} options.classPK Asset's classPK
+	 * @param {string} options.fieldId Field id
+	 */
+	getAssetFieldValue({
+		classNameId,
+		classPK,
+		config,
+		fieldId,
+		onNetworkStatus
+	}) {
+		const {getAssetFieldValueURL} = config;
+
+		return serviceFetch(
+			config,
+			getAssetFieldValueURL,
+			{
+				body: {
+					classNameId,
+					classPK,
+					fieldId
+				}
+			},
+			onNetworkStatus
+		);
+	},
+
+	/**
 	 * Get available asset mapping fields
 	 * @param {object} options
 	 * @param {object} options.config Application config

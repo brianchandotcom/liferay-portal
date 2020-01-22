@@ -36,7 +36,6 @@
 // Horizontal gradient, from left to right
 
 // Creates two color stops, start and end, by specifying a color and position for each color stop.
-// Color stops are not available in IE9 and below.
 
 @mixin gradient-horizontal(
 	$start-color: #555,
@@ -60,13 +59,11 @@
 		$end-color $end-percent
 	); // Standard, IE10, Firefox 16+, Opera 12.10+, Safari 7+, Chrome 26+
 	background-repeat: repeat-x;
-	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=1); // IE9 and down
 }
 
 // Vertical gradient, from top to bottom
 
 // Creates two color stops, start and end, by specifying a color and position for each color stop.
-// Color stops are not available in IE9 and below.
 
 @mixin gradient-vertical(
 	$start-color: #555,
@@ -90,7 +87,6 @@
 		$end-color $end-percent
 	); // Standard, IE10, Firefox 16+, Opera 12.10+, Safari 7+, Chrome 26+
 	background-repeat: repeat-x;
-	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=0); // IE9 and down
 }
 
 @mixin gradient-directional($start-color: #555, $end-color: #333, $deg: 45deg) {
@@ -137,7 +133,6 @@
 		$end-color
 	);
 	background-repeat: no-repeat;
-	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=1); // IE9 and down, gets no color-stop at all for proper fallback
 }
 
 @mixin gradient-vertical-three-colors(
@@ -162,7 +157,6 @@
 		$end-color
 	);
 	background-repeat: no-repeat;
-	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=0); // IE9 and down, gets no color-stop at all for proper fallback
 }
 
 @mixin gradient-radial($inner-color: #555, $outer-color: #333) {
@@ -238,15 +232,6 @@
 	.progress-striped & {
 		@include gradient-striped();
 	}
-}
-
-// Reset filters for IE
-
-// When you need to remove a gradient background, do not forget to use this to reset
-// the IE filter for IE9 and below.
-
-@mixin reset-filter() {
-	filter: progid:dximagetransform.microsoft.gradient(enabled = false);
 }
 
 // _responsive-visibility.scss

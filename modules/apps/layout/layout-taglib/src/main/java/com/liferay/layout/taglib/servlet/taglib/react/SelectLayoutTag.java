@@ -179,6 +179,18 @@ public class SelectLayoutTag extends IncludeTag {
 		}
 	}
 
+	private static boolean _isContentLayoutDraft(Layout layout) {
+		if (layout.isSystem() || !layout.isTypeContent()) {
+			return false;
+		}
+
+		if (layout.isApproved() && (layout.getClassNameId() == 0)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private Map<String, Object> _getData() throws Exception {
 		Map<String, Object> map = new HashMap<>();
 
@@ -269,7 +281,7 @@ public class SelectLayoutTag extends IncludeTag {
 
 		for (Layout layout : layouts) {
 			if ((layout.isHidden() && !_showHiddenLayouts) ||
-				(!layout.isSystem() && layout.isTypeContent()) ||
+				_isContentLayoutDraft(layout) ||
 				StagingUtil.isIncomplete(layout)) {
 
 				continue;

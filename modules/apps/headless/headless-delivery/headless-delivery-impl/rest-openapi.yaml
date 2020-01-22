@@ -231,6 +231,13 @@ components:
                     type: string
                     writeOnly: true
             type: object
+        ColumnDefinition:
+            properties:
+                size:
+                    maximum: 12
+                    minimum: 1
+                    type: integer
+            type: object
         Comment:
             description:
                 Represents a comment. See [Comment](https://www.schema.org/Comment) for more details.
@@ -951,6 +958,92 @@ components:
             required:
                 - name
             type: object
+        FragmentContentField:
+            properties:
+                fragmentLink:
+                    $ref: "#/components/schemas/FragmentLink"
+                id:
+                    type: string
+                value:
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentContentFieldBackgroundImage"
+                        - $ref: "#/components/schemas/FragmentContentFieldHTML"
+                        - $ref: "#/components/schemas/FragmentContentFieldImage"
+                        - $ref: "#/components/schemas/FragmentContentFieldText"
+            type: object
+        FragmentContentFieldBackgroundImage:
+            properties:
+                backgroundImage:
+                    $ref: "#/components/schemas/FragmentImage"
+            type: object
+        FragmentContentFieldHTML:
+            properties:
+                html:
+                    oneOf:
+                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/MappedValue"
+            type: object
+        FragmentContentFieldImage:
+            properties:
+                fragmentImage:
+                    $ref: "#/components/schemas/FragmentImage"
+            type: object
+        FragmentContentFieldText:
+            properties:
+                text:
+                    oneOf:
+                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/MappedValue"
+            type: object
+        FragmentDefinition:
+            properties:
+                fragmentCollectionName:
+                    type: string
+                fragmentConfig:
+                    additionalProperties:
+                        type: object
+                    type: object
+                fragmentContentFields:
+                    items:
+                        $ref: "#/components/schemas/FragmentContentField"
+                    type: array
+                fragmentName:
+                    type: string
+            type: object
+        FragmentImage:
+            properties:
+                title:
+                    oneOf:
+                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/MappedValue"
+                url:
+                    oneOf:
+                        - $ref: "#/components/schemas/InlineValue"
+                        - $ref: "#/components/schemas/MappedValue"
+            type: object
+        FragmentLink:
+            properties:
+                target:
+                    enum: [Blank, Self]
+                    type: string
+                value:
+                    oneOf:
+                        - $ref: "#/components/schemas/InlineLink"
+                        - $ref: "#/components/schemas/MappedValue"
+        InlineLink:
+            properties:
+                href:
+                    type: string
+            type: object
+        InlineValue:
+            properties:
+                value:
+                    type: string
+                value_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+            type: object
         KnowledgeBaseArticle:
             description:
                 Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.
@@ -1233,6 +1326,19 @@ components:
             required:
                 - name
             type: object
+        MappedValue:
+            properties:
+                classNameId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                classPK:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                fieldId:
+                    readOnly: true
+                    type: string
         MessageBoardAttachment:
             description:
                 A binary file attached to a message on a message board (`MessageBoardMessage`).
@@ -1650,6 +1756,100 @@ components:
                 url:
                     readOnly: true
                     type: string
+        PageDefinition:
+            description:
+                ""
+            properties:
+                collectionName:
+                    readOnly: true
+                    type: string
+                creator:
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                friendlyURLPath:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                keywords:
+                    items:
+                        type: string
+                    type: array
+                name:
+                    type: string
+                pageElements:
+                    items:
+                        $ref: "#/components/schemas/PageElement"
+                    type: array
+                settings:
+                    properties:
+                        lookAndFeel:
+                            properties:
+                                colorSchemeName:
+                                    type: string
+                                css:
+                                    type: string
+                                javascript:
+                                    type: string
+                                themeName:
+                                    type: string
+                                themeSettings:
+                                    type: object
+                            type: object
+                        masterPage:
+                            properties:
+                                name:
+                                    type: string
+                            type: object
+                    type: object
+                taxonomyCategories:
+                    items:
+                        properties:
+                            taxonomyCategoryId:
+                                format: int64
+                                type: integer
+                            taxonomyCategoryName:
+                                type: string
+                        type: object
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                uuid:
+                    description:
+                        A valid external identifier to reference this structured content.
+                    readOnly: true
+                    type: string
+            type: object
+        PageElement:
+            properties:
+                definition:
+                    oneOf:
+                        - $ref: "#/components/schemas/ColumnDefinition"
+                        - $ref: "#/components/schemas/FragmentDefinition"
+                        - $ref: "#/components/schemas/RowDefinition"
+                        - $ref: "#/components/schemas/SectionDefinition"
+                pageElements:
+                    items:
+                        $ref: "#/components/schemas/PageElement"
+                    type: array
+                type:
+                    enum: [Column, Fragment, Row, Section]
+                    type: string
         Rating:
             description:
                 Represents a rating/score received by any kind of asset. Properties follow the
@@ -1725,6 +1925,29 @@ components:
                         The title of the content.
                     readOnly: true
                     type: string
+        RowDefinition:
+            properties:
+                gutters:
+                    type: boolean
+                numberOfColumns:
+                    type: integer
+            type: object
+        SectionDefinition:
+            properties:
+                backgroundColorCssClass:
+                    type: string
+                backgroundImage:
+                    $ref: "#/components/schemas/FragmentImage"
+                containerType:
+                    enum: [Fixed, Fluid]
+                    type: string
+                paddingBottom:
+                    type: integer
+                paddingHorizontal:
+                    type: integer
+                paddingTop:
+                    type: integer
+            type: object
         StructuredContent:
             description:
                 Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is

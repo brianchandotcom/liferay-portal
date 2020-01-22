@@ -1232,14 +1232,9 @@ definition {
 
 		Staging.publishToLive();
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(
-			parentSiteName = "Site Name",
-			siteName = "Child Site");
+		JSONGroup.addChildSite(
+			groupName = "Child Site",
+			parentGroupName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

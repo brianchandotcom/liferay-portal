@@ -166,7 +166,8 @@ public class RSSStrutsAction implements StrutsAction {
 
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
-		if (GroupPermissionUtil.contains(
+		if ((groupId == 0) ||
+			GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), groupId,
 				ActionKeys.VIEW)) {
 

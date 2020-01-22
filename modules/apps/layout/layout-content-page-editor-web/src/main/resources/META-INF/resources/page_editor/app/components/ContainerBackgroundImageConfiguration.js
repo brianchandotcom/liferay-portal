@@ -13,11 +13,9 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import addMappedInfoItem from '../actions/addMappedInfoItem';
 import {EDITABLE_TYPES} from '../config/constants/editableTypes';
-import {DispatchContext} from '../reducers/index';
 import {ImageSelector} from './../../common/components/ImageSelector';
 import MappingSelector from './MappingSelector';
 
@@ -30,8 +28,6 @@ export const ContainerBackgroundImageConfiguration = ({
 	backgroundImage,
 	onValueChange
 }) => {
-	const dispatch = useContext(DispatchContext);
-
 	const [imageSource, setImageSource] = useState(
 		IMAGE_SOURCE.manualSelection
 	);
@@ -96,8 +92,6 @@ export const ContainerBackgroundImageConfiguration = ({
 						onValueChange({
 							backgroundImage: mappedItem
 						});
-
-						dispatch(addMappedInfoItem(mappedItem));
 					}}
 				/>
 			)}

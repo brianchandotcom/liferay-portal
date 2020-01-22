@@ -16,6 +16,7 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ItemSelector from '../../common/components/ItemSelector';
+import {addMappedInfoItem} from '../actions/index';
 import {COMPATIBLE_TYPES} from '../config/constants/compatibleTypes';
 import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {ConfigContext} from '../config/index';
@@ -127,7 +128,11 @@ export default function MappingSelector({
 						classPK: selectedItem.classPK,
 						fieldId: event.target.value
 				  }
-				: {fieldId: event.target.value};
+				: {mappedField: event.target.value};
+
+		if (selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content) {
+			dispatch(addMappedInfoItem({title: selectedItem.title, ...data}));
+		}
 
 		onMappingSelect(data);
 	};

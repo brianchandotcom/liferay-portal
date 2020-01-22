@@ -112,8 +112,11 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DepotEntry depotEntry = depotEntryPersistence.update(
-			getDepotEntry(depotEntryId));
+		DepotEntry depotEntry = getDepotEntry(depotEntryId);
+
+		depotEntry.setModifiedDate(serviceContext.getModifiedDate());
+
+		depotEntry = depotEntryPersistence.update(depotEntry);
 
 		_validateTypeSettingsProperties(depotEntry, typeSettingsProperties);
 

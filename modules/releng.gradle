@@ -87,11 +87,9 @@ task tagAppReleases
 
 buildFixPackChangeLog {
 	changeLogHeader = {
-		File releaseInfoFile = file("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+		Properties releaseProperties = GUtil.loadProperties(file("../release.properties"))
 
-		Matcher matcher = (releaseInfoFile.text =~ /private static final String _VERSION = "(.+)";/)
-
-		return matcher[0][1]
+		return releaseProperties.getProperty("release.info.version")
 	}
 
 	changeLogFile = "../.releng/fix-pack.changelog"
@@ -1504,11 +1502,9 @@ private List<File> _getPortalSourcesDependencies(List<File> relengPropertiesFile
 }
 
 private String _getReleaseInfoVersion() {
-	File releaseInfoFile = file("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+	Properties releaseProperties = GUtil.loadProperties(file("../release.properties"))
 
-	Matcher matcher = (releaseInfoFile.text =~ /private static final String _VERSION = "(.+)";/)
-
-	return matcher[0][1]
+	return releaseProperties.getProperty("release.info.version")
 }
 
 private List<File> _getRelengPropertiesFiles() {

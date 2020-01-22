@@ -36,6 +36,7 @@ import java.util.TreeMap;
 
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
@@ -59,19 +60,9 @@ import org.w3c.dom.Element;
  */
 public class DependencyManagementTask extends DefaultTask {
 
-	public DependencyManagementTask() {
-		_project = getProject();
-
-		_logger = _project.getLogger();
-	}
-
 	@OptionValues("output-type")
 	public List<String> getAvailableOutputTypes() {
 		return Arrays.asList("json", "text", "xml");
-	}
-
-	public Configuration getBomsConfiguration() {
-		return GradleUtil.getConfiguration(_project, "targetPlatformIDEBoms");
 	}
 
 	@Optional
@@ -88,29 +79,30 @@ public class DependencyManagementTask extends DefaultTask {
 
 	@TaskAction
 	public void report() {
-		_startProject(_project);
+		Project project = getProject();
 
-		Configuration bomsConfiguration = getBomsConfiguration();
+		_logProject(project);
 
-		Map<String, String> managedVersions = _getTargetPlatformDependencies(
-			_project, bomsConfiguration);
-
-		_renderConfigurationManagedVersions(managedVersions, bomsConfiguration);
+		_writeConfigurationManagedVersions(
+			_getTargetPlatformDependencies(
+				project,
+				GradleUtil.getConfiguration(
+					getProject(), "targetPlatformIDEBoms")));
 	}
 
 	@Option(
-		description = "Set target file of saving target platform dependency information.",
+		description = "Set the output file for saving the target platform dependency information.",
 		option = "output-file"
 	)
-	public void setOutputFile(Object outputFile) {
+	public void setOutputFile(String outputFile) {
 		_outputFile = outputFile;
 	}
 
 	@Option(
-		description = "Set output type of target platform dependency information.",
+		description = "Set the output type of target platform dependency information.",
 		option = "output-type"
 	)
-	public void setOutputType(Object outputType) {
+	public void setOutputType(String outputType) {
 		_outputType = outputType;
 	}
 
@@ -219,13 +211,56 @@ public class DependencyManagementTask extends DefaultTask {
 		return managedVersions;
 	}
 
-	private void _renderConfigurationManagedVersions(
-		Map<String, String> managedVersions,
-		final Configuration configuration) {
+	private void _logProject(final Project project) {
+		StringBuilder sb = new StringBuilder();
 
-		_logger.lifecycle(
-			configuration.getName() + " Dependency management for the " +
-				configuration.getName() + " configuration");
+		sb.append(System.lineSeparator());
+		sb.append(
+			"------------------------------------------------------------");
+		sb.append(System.lineSeparator());
+		sb.append(System.lineSeparator());
+
+		Logger logger = getLogger();
+
+		if (project.equals(project.getRootProject())) {
+			sb.append("Root project");
+		}
+		else {
+			sb.append("Project " + project.getPath());
+		}
+
+		String description = project.getDescription();
+
+		if (description != null) {
+			sb.append(" - " + project.getDescription());
+		}
+
+		sb.append(System.lineSeparator());
+		sb.append(
+			"------------------------------------------------------------");
+		sb.append(System.lineSeparator());
+
+		logger.lifecycle(sb.toString());
+	}
+
+	private String _renderManagedVersions(Map<String, String> managedVersions) {
+		StringBuilder sb = new StringBuilder();
+
+		for (Map.Entry<String, String> entry : managedVersions.entrySet()) {
+			sb.append("\t");
+			sb.append(entry.getKey());
+			sb.append(":");
+			sb.append(entry.getValue());
+			sb.append(System.lineSeparator());
+		}
+
+		return sb.toString();
+	}
+
+	private void _writeConfigurationManagedVersions(
+		Map<String, String> managedVersions) {
+
+		Logger logger = getLogger();
 
 		Map<String, String> sortedVersions = new TreeMap<String, String>(
 			new Comparator<String>() {
@@ -248,10 +283,10 @@ public class DependencyManagementTask extends DefaultTask {
 
 		sortedVersions.putAll(managedVersions);
 
-		String dependenciesOutput = null;
-
 		if ((sortedVersions != null) && !sortedVersions.isEmpty()) {
 			try {
+				String dependenciesOutput = null;
+
 				if (Objects.equals(_outputType, "json")) {
 					dependenciesOutput = _generateJSON(sortedVersions);
 				}
@@ -269,62 +304,23 @@ public class DependencyManagementTask extends DefaultTask {
 						outputFile.toPath(), dependenciesOutput.getBytes());
 				}
 				else {
-					_logger.lifecycle("");
-
-					_logger.lifecycle(dependenciesOutput);
+					logger.lifecycle(dependenciesOutput);
 				}
 			}
 			catch (Exception exception) {
-				_logger.error(exception.getMessage());
+				throw new GradleException(
+					"Unable to output dependency management information",
+					exception);
 			}
 		}
 		else {
-			_logger.lifecycle("No dependency management");
-			_logger.lifecycle("");
+			logger.lifecycle("No dependency management information available.");
 		}
 
-		_logger.lifecycle("");
+		logger.lifecycle("");
 	}
 
-	private String _renderManagedVersions(Map<String, String> managedVersions) {
-		StringBuilder dependencyOutputBuilder = new StringBuilder();
-
-		for (Map.Entry<String, String> entry : managedVersions.entrySet()) {
-			dependencyOutputBuilder.append(
-				"    " + entry.getKey() + " " + entry.getValue() +
-					System.lineSeparator());
-		}
-
-		return dependencyOutputBuilder.toString();
-	}
-
-	private void _startProject(final Project project) {
-		_logger.lifecycle("");
-		_logger.lifecycle(
-			"------------------------------------------------------------");
-		String heading;
-
-		if (project.equals(project.getRootProject())) {
-			heading = "Root project";
-		}
-		else {
-			heading = "Project " + project.getPath();
-		}
-
-		if (project.getDescription() != null) {
-			heading += " - " + project.getDescription();
-		}
-
-		_logger.lifecycle(heading);
-		_logger.lifecycle(
-			"------------------------------------------------------------");
-
-		_logger.lifecycle("");
-	}
-
-	private final Logger _logger;
-	private Object _outputFile;
-	private Object _outputType;
-	private final Project _project;
+	private String _outputFile;
+	private String _outputType;
 
 }

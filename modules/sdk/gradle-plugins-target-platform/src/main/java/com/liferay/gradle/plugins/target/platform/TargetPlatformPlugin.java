@@ -50,7 +50,7 @@ import org.gradle.util.VersionNumber;
  */
 public class TargetPlatformPlugin implements Plugin<Project> {
 
-	public static final String DEPENDENCYMANAGEMENT_TASK_NAME =
+	public static final String DEPENDENCY_MANAGEMENT_TASK_NAME =
 		"dependencyManagement";
 
 	public static final String PLATFORM_BNDRUN_FILE_NAME = "platform.bndrun";
@@ -161,7 +161,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		final DependencyManagementTask dependencyManagementTask =
 			GradleUtil.addTask(
-				project, DEPENDENCYMANAGEMENT_TASK_NAME,
+				project, DEPENDENCY_MANAGEMENT_TASK_NAME,
 				DependencyManagementTask.class);
 
 		dependencyManagementTask.setDescription(

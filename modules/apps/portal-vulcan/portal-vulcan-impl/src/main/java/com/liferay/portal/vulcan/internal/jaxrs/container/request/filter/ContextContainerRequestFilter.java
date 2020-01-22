@@ -14,7 +14,6 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter;
 
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -28,6 +27,8 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProvider
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,7 +53,7 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 		Language language, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
-		RoleLocalService roleLocalService, ScopeChecker scopeChecker) {
+		RoleLocalService roleLocalService, Object scopeChecker) {
 
 		_language = language;
 		_portal = portal;
@@ -99,7 +100,12 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 			Class<?> fieldClass = field.getType();
 
-			if (fieldClass.isAssignableFrom(AcceptLanguage.class)) {
+			if (Objects.equals(field.getName(), "contextScopeChecker")) {
+				field.setAccessible(true);
+
+				field.set(instance, _scopeChecker);
+			}
+			else if (fieldClass.isAssignableFrom(AcceptLanguage.class)) {
 				field.setAccessible(true);
 
 				field.set(
@@ -142,11 +148,6 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 				field.set(instance, _roleLocalService);
 			}
-			else if (fieldClass.isAssignableFrom(ScopeChecker.class)) {
-				field.setAccessible(true);
-
-				field.set(instance, _scopeChecker);
-			}
 			else if (fieldClass.isAssignableFrom(UriInfo.class)) {
 				field.setAccessible(true);
 
@@ -166,6 +167,6 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;
-	private final ScopeChecker _scopeChecker;
+	private final Object _scopeChecker;
 
 }

@@ -14,12 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet;
 
-import static graphql.schema.FieldCoordinates.coordinates;
-import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -195,7 +191,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
@@ -750,7 +745,12 @@ public class GraphQLServletExtender {
 
 			Class<?> fieldClass = field.getType();
 
-			if (fieldClass.isAssignableFrom(AcceptLanguage.class)) {
+			if (Objects.equals(field.getName(), "contextScopeChecker")) {
+				field.setAccessible(true);
+
+				field.set(instance, _getScopeChecker());
+			}
+			else if (fieldClass.isAssignableFrom(AcceptLanguage.class)) {
 				field.setAccessible(true);
 
 				field.set(instance, acceptLanguage);
@@ -791,11 +791,6 @@ public class GraphQLServletExtender {
 				field.setAccessible(true);
 
 				field.set(instance, _roleLocalService);
-			}
-			else if (fieldClass.isAssignableFrom(ScopeChecker.class)) {
-				field.setAccessible(true);
-
-				field.set(instance, _scopeChecker);
 			}
 			else if (fieldClass.isAssignableFrom(UriInfo.class)) {
 				field.setAccessible(true);
@@ -1029,6 +1024,18 @@ public class GraphQLServletExtender {
 		}
 
 		return (Boolean)value;
+	}
+
+	private Object _getScopeChecker() {
+		ServiceReference<?> serviceReference =
+			_bundleContext.getServiceReference(
+				"com.liferay.oauth2.provider.scope.ScopeChecker");
+
+		if (serviceReference != null) {
+			return _bundleContext.getService(serviceReference);
+		}
+
+		return null;
 	}
 
 	private Integer _getVersion(Method method) {
@@ -1441,9 +1448,6 @@ public class GraphQLServletExtender {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private ScopeChecker _scopeChecker;
 
 	private volatile Servlet _servlet;
 	private ServiceRegistration<ServletContextHelper>

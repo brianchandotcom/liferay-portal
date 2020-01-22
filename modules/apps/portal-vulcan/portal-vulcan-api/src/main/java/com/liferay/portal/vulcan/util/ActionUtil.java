@@ -40,7 +40,7 @@ public class ActionUtil {
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, GroupedModel groupedModel,
-		String methodName, Object scopeChecker, UriInfo uriInfo) {
+		String methodName, Object object, UriInfo uriInfo) {
 
 		Class<? extends GroupedModel> groupedModelClass =
 			groupedModel.getClass();
@@ -51,8 +51,8 @@ public class ActionUtil {
 
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
-			methodName, interfaceClasses[0].getName(),
-			(ScopeChecker)scopeChecker, groupedModel.getGroupId(), uriInfo);
+			methodName, interfaceClasses[0].getName(), object,
+			groupedModel.getGroupId(), uriInfo);
 	}
 
 	/**
@@ -86,13 +86,12 @@ public class ActionUtil {
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, Long id, String methodName,
-		String permissionName, Object scopeChecker, Long siteId,
-		UriInfo uriInfo) {
+		String permissionName, Object object, Long siteId, UriInfo uriInfo) {
 
 		try {
 			return _addAction(
-				actionName, clazz, id, methodName, permissionName,
-				(ScopeChecker)scopeChecker, siteId, uriInfo);
+				actionName, clazz, id, methodName, permissionName, object,
+				siteId, uriInfo);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -101,8 +100,7 @@ public class ActionUtil {
 
 	private static Map<String, String> _addAction(
 			String actionName, Class clazz, Long id, String methodName,
-			String permissionName, ScopeChecker scopeChecker, Long siteId,
-			UriInfo uriInfo)
+			String permissionName, Object object, Long siteId, UriInfo uriInfo)
 		throws Exception {
 
 		MultivaluedMap<String, String> queryParameters =
@@ -126,12 +124,20 @@ public class ActionUtil {
 
 		if (!modelResourceActions.contains(actionName) ||
 			!permissionChecker.hasPermission(
-				siteId, permissionName, id, actionName) ||
-			(OAuth2ProviderScopeLiferayAccessControlContext.
-				isOAuth2AuthVerified() &&
-			 (scopeChecker != null) && !scopeChecker.checkScope(methodName))) {
+				siteId, permissionName, id, actionName)) {
 
 			return null;
+		}
+
+		if (object != null) {
+			ScopeChecker scopeChecker = (ScopeChecker)object;
+
+			if (OAuth2ProviderScopeLiferayAccessControlContext.
+					isOAuth2AuthVerified() &&
+				!scopeChecker.checkScope(methodName)) {
+
+				return null;
+			}
 		}
 
 		List<String> matchedURIs = uriInfo.getMatchedURIs();

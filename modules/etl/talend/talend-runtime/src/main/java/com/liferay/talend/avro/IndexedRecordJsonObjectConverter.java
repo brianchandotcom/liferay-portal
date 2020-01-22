@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -226,7 +227,12 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 	private static class ISO8601DateFormat {
 
 		private static final DateFormat _dateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'hh:mm:ss'Z'");
+			"yyyy-MM-dd'T'hh:mm:ss'Z'") {
+
+			{
+				setTimeZone(TimeZone.getTimeZone("UTC"));
+			}
+		};
 
 	}
 

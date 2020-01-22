@@ -24,13 +24,13 @@ import java.io.File;
 
 import java.nio.file.Files;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -41,6 +41,9 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.options.Option;
 import org.gradle.api.tasks.options.OptionValues;
@@ -52,6 +55,7 @@ import org.w3c.dom.Element;
 
 /**
  * @author Simon Jiang
+ * @author Gregory Amerson
  */
 public class DependencyManagementTask extends DefaultTask {
 
@@ -62,20 +66,24 @@ public class DependencyManagementTask extends DefaultTask {
 	}
 
 	@OptionValues("output-type")
-	public List<OutputType> getAvailableOutputTypes() {
-		return new ArrayList<>(Arrays.asList(OutputType.values()));
+	public List<String> getAvailableOutputTypes() {
+		return Arrays.asList("json", "text", "xml");
 	}
 
 	public Configuration getBomsConfiguration() {
 		return GradleUtil.getConfiguration(_project, "targetPlatformIDEBoms");
 	}
 
-	public String getOutputFile() {
-		return _outputFile;
+	@Optional
+	@OutputFile
+	public File getOutputFile() {
+		return GradleUtil.toFile(getProject(), _outputFile);
 	}
 
+	@Input
+	@Optional
 	public String getOutputType() {
-		return _outputType.name();
+		return GradleUtil.toString(_outputType);
 	}
 
 	@TaskAction
@@ -94,7 +102,7 @@ public class DependencyManagementTask extends DefaultTask {
 		description = "Set target file of saving target platform dependency information.",
 		option = "output-file"
 	)
-	public void setOutputFile(String outputFile) {
+	public void setOutputFile(Object outputFile) {
 		_outputFile = outputFile;
 	}
 
@@ -102,7 +110,7 @@ public class DependencyManagementTask extends DefaultTask {
 		description = "Set output type of target platform dependency information.",
 		option = "output-type"
 	)
-	public void setOutputType(OutputType outputType) {
+	public void setOutputType(Object outputType) {
 		_outputType = outputType;
 	}
 
@@ -244,19 +252,19 @@ public class DependencyManagementTask extends DefaultTask {
 
 		if ((sortedVersions != null) && !sortedVersions.isEmpty()) {
 			try {
-				if (_outputType.equals(OutputType.text)) {
-					dependenciesOutput = _renderManagedVersions(sortedVersions);
-				}
-				else if (_outputType.equals(OutputType.json)) {
+				if (Objects.equals(_outputType, "json")) {
 					dependenciesOutput = _generateJSON(sortedVersions);
 				}
-				else if (_outputType.equals(OutputType.xml)) {
+				else if (Objects.equals(_outputType, "xml")) {
 					dependenciesOutput = _generateXml(sortedVersions);
 				}
+				else {
+					dependenciesOutput = _renderManagedVersions(sortedVersions);
+				}
 
-				if (_outputFile != null) {
-					File outputFile = new File(_outputFile);
+				File outputFile = getOutputFile();
 
+				if (outputFile != null) {
 					Files.write(
 						outputFile.toPath(), dependenciesOutput.getBytes());
 				}
@@ -315,14 +323,8 @@ public class DependencyManagementTask extends DefaultTask {
 	}
 
 	private final Logger _logger;
-	private String _outputFile;
-	private OutputType _outputType = OutputType.text;
+	private Object _outputFile;
+	private Object _outputType;
 	private final Project _project;
-
-	private static enum OutputType {
-
-		json, text, xml
-
-	}
 
 }

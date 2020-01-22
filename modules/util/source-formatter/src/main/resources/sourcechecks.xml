@@ -110,6 +110,9 @@
 		<check name="GradleImportsCheck" />
 		<check name="GradleIndentationCheck" />
 		<check name="GradleJavaVersionCheck" />
+		<check name="GradleLRFISDependencyVersionCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="GradlePropertiesCheck" />
 		<check name="GradleProvidedDependenciesCheck" />
 		<check name="GradleRequiredDependenciesCheck">

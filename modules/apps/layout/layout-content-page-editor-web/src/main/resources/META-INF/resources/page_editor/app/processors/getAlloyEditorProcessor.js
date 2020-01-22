@@ -36,7 +36,7 @@ const defaultRender = (element, value) => {
  *  override getEditorWrapper function, where the editor will be instanciated
  * @param {function} [render=defaultRender] Optionally override render function
  */
-export default function getAllowEditorProcessor(
+export default function getAlloyEditorProcessor(
 	editorConfigurationName,
 	getEditorWrapper = defaultGetEditorWrapper,
 	render = defaultRender

@@ -107,7 +107,9 @@ public class StagedGroupStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(StagedGroup stagedGroup) {
-		return stagedGroup.getName();
+		Group group = stagedGroup.getGroup();
+
+		return group.getName();
 	}
 
 	@Override
@@ -198,8 +200,10 @@ public class StagedGroupStagedModelDataHandler
 
 		// Collect site portlets and initialize the progress bar
 
+		Group group = stagedGroup.getGroup();
+
 		Set<String> dataSiteLevelPortletIds = checkDataSiteLevelPortlets(
-			portletDataContext, stagedGroup);
+			portletDataContext, group);
 
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			ManifestSummary manifestSummary =
@@ -214,9 +218,9 @@ public class StagedGroupStagedModelDataHandler
 
 		long[] layoutIds = portletDataContext.getLayoutIds();
 
-		if (stagedGroup.isLayoutPrototype()) {
+		if (group.isLayoutPrototype()) {
 			layoutIds = _exportImportHelper.getAllLayoutIds(
-				stagedGroup.getGroupId(), portletDataContext.isPrivateLayout());
+				group.getGroupId(), portletDataContext.isPrivateLayout());
 		}
 
 		// Export site data portlets
@@ -405,7 +409,7 @@ public class StagedGroupStagedModelDataHandler
 	}
 
 	protected void exportSitePortlets(
-			PortletDataContext portletDataContext, StagedGroup group,
+			PortletDataContext portletDataContext, StagedGroup stagedGroup,
 			Set<String> portletIds, long[] layoutIds)
 		throws Exception {
 
@@ -423,6 +427,8 @@ public class StagedGroupStagedModelDataHandler
 		boolean permissions = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.PERMISSIONS);
+
+		Group group = stagedGroup.getGroup();
 
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			group.getGroupId(), portletDataContext.isPrivateLayout());

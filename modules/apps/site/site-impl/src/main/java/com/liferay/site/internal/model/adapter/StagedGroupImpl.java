@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupWrapper;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.model.adapter.StagedGroup;
 
@@ -40,12 +40,11 @@ import java.util.Objects;
 /**
  * @author Daniel Kocsis
  */
-public class StagedGroupImpl implements StagedGroup {
-
-	public StagedGroupImpl() {
-	}
+public class StagedGroupImpl extends GroupWrapper implements StagedGroup {
 
 	public StagedGroupImpl(Group group) {
+		super(group);
+
 		Objects.requireNonNull(
 			group, "Unable to create a new staged group for a null group");
 
@@ -53,55 +52,8 @@ public class StagedGroupImpl implements StagedGroup {
 	}
 
 	@Override
-	public String buildTreePath() throws PortalException {
-		return _group.buildTreePath();
-	}
-
-	@Override
-	public void clearStagingGroup() {
-		_group.clearStagingGroup();
-	}
-
-	@Override
 	public Object clone() {
 		return new StagedGroupImpl((Group)_group.clone());
-	}
-
-	@Override
-	public int compareTo(Group group) {
-		return _group.compareTo(group);
-	}
-
-	@Override
-	public boolean getActive() {
-		return _group.isActive();
-	}
-
-	@Override
-	public List<Group> getAncestors() {
-		return _group.getAncestors();
-	}
-
-	@Override
-	public String[] getAvailableLanguageIds() {
-		return _group.getAvailableLanguageIds();
-	}
-
-	@Override
-	public List<Group> getChildren(boolean site) {
-		return _group.getChildren(site);
-	}
-
-	@Override
-	public List<Group> getChildrenWithLayouts(
-		boolean site, int start, int end, OrderByComparator<Group> obc) {
-
-		return _group.getChildrenWithLayouts(site, start, end, obc);
-	}
-
-	@Override
-	public int getChildrenWithLayoutsCount(boolean site) {
-		return _group.getChildrenWithLayoutsCount(site);
 	}
 
 	@Override
@@ -229,6 +181,11 @@ public class StagedGroupImpl implements StagedGroup {
 	@Override
 	public String getFriendlyURL() {
 		return _group.getFriendlyURL();
+	}
+
+	@Override
+	public Group getGroup() {
+		return _group;
 	}
 
 	@Override

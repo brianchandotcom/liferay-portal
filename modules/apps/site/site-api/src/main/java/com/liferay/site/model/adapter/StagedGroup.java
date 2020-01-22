@@ -20,5 +20,8 @@ import com.liferay.portal.kernel.model.StagedModel;
 /**
  * @author Daniel Kocsis
  */
-public interface StagedGroup extends Group, StagedModel {
+public interface StagedGroup extends StagedModel {
+
+	public Group getGroup();
+
 }

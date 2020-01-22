@@ -25,9 +25,19 @@ public class FragmentLayoutStructureItem extends LayoutStructureItem {
 		super(parentItemId);
 	}
 
+	public long getFragmentEntryLinkId() {
+		return _fragmentEntryLinkId;
+	}
+
 	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_FRAGMENT;
 	}
+
+	public void setFragmentEntryLinkId(long fragmentEntryLinkId) {
+		_fragmentEntryLinkId = fragmentEntryLinkId;
+	}
+
+	private long _fragmentEntryLinkId;
 
 }

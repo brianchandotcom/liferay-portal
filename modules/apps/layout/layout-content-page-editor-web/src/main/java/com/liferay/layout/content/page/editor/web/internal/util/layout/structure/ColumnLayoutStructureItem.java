@@ -30,4 +30,14 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 		return LayoutDataItemTypeConstants.TYPE_COLUMN;
 	}
 
+	public int getSize() {
+		return _size;
+	}
+
+	public void setSize(int size) {
+		_size = size;
+	}
+
+	private int _size;
+
 }

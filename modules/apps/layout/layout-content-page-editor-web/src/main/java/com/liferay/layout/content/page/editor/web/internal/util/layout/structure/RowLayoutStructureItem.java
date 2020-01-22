@@ -30,4 +30,23 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 		return LayoutDataItemTypeConstants.TYPE_ROW;
 	}
 
+	public int getNumberOfColumns() {
+		return _numberOfColumns;
+	}
+
+	public boolean isGutters() {
+		return _gutters;
+	}
+
+	public void setGutters(boolean gutters) {
+		_gutters = gutters;
+	}
+
+	public void setNumberOfColumns(int numberOfColumns) {
+		_numberOfColumns = numberOfColumns;
+	}
+
+	private boolean _gutters;
+	private int _numberOfColumns;
+
 }

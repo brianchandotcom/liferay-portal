@@ -239,7 +239,9 @@ AUI.add(
 					);
 
 					if (field) {
-						var fieldWrapper = field.ancestor('form > fieldset > div');
+						var fieldWrapper = field.ancestor(
+							'form > fieldset > div'
+						);
 
 						var formTabs = formNode.one('.lfr-nav');
 

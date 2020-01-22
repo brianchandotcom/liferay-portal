@@ -352,7 +352,7 @@ describe('The BulkReassignModal component should', () => {
 		await fireEvent.click(nextBtn);
 
 		const alertSuccess = await getByTestId('alertSuccess');
-		const alertClose = alertSuccess.children[2];
+		const alertClose = alertSuccess.children[1];
 
 		expect(alertSuccess).toHaveTextContent(
 			'these-tasks-have-been-reassigned'

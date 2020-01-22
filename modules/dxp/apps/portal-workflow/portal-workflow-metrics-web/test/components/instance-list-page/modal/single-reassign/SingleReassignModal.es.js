@@ -142,7 +142,7 @@ describe('The SingleReassignModal component should', () => {
 
 	test('Render alert with success message and close modal', () => {
 		const alertSuccess = getByTestId('alertSuccess');
-		const alertClose = alertSuccess.children[2];
+		const alertClose = alertSuccess.children[1];
 
 		expect(alertSuccess).toHaveTextContent('this-task-has-been-reassigned');
 

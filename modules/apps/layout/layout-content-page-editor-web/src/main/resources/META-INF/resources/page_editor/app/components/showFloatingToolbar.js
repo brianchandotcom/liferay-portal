@@ -14,17 +14,36 @@
 
 import React from 'react';
 
+import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../config/constants/editableFloatingToolbarButtons';
+import {EDITABLE_TYPES} from '../config/constants/editableTypes';
 import FloatingToolbar from './FloatingToolbar';
 
 export function showFloatingToolbar(editable, fragmentEntryLinkId) {
-	const editableId = `${fragmentEntryLinkId}-${editable.current.getAttribute(
+	const itemId = `${fragmentEntryLinkId}-${editable.current.getAttribute(
 		'id'
 	)}`;
 
+	const editableType = editable.current.getAttribute('type');
+
+	const showLinkButton =
+		editableType == EDITABLE_TYPES.text ||
+		editableType == EDITABLE_TYPES.image ||
+		editableType == EDITABLE_TYPES.link;
+
+	const buttons = [{icon: 'pencil', panelId: 'panel'}];
+
+	if (showLinkButton) {
+		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.link);
+	}
+
 	return (
 		<FloatingToolbar
-			buttons={[{icon: 'pencil', panelId: 'panel'}]}
-			item={{itemId: editableId}}
+			buttons={buttons}
+			item={{
+				editableId: editable.current.getAttribute('id'),
+				fragmentEntryLinkId,
+				itemId
+			}}
 			itemRef={editable}
 		/>
 	);

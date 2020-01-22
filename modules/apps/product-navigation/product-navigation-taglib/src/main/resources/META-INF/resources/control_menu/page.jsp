@@ -38,69 +38,71 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 %>
 
 <c:if test="<%= hasControlMenuEntries %>">
-	<div class="control-menu control-menu-level-1 hidden-print" data-qa-id="controlMenu" id="<portlet:namespace />ControlMenu">
-		<div class="container-fluid container-fluid-max-xl">
-			<h1 class="sr-only"><liferay-ui:message key="admin-header" /></h1>
+	<div class="control-menu-container">
+		<div class="control-menu control-menu-level-1 hidden-print" data-qa-id="controlMenu" id="<portlet:namespace />ControlMenu">
+			<div class="container-fluid container-fluid-max-xl">
+				<h1 class="sr-only"><liferay-ui:message key="admin-header" /></h1>
 
-			<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
+				<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 
-				<%
-				for (Map.Entry entry : productNavigationControlMenuEntriesMap.entrySet()) {
-					ProductNavigationControlMenuCategory productNavigationControlMenuCategory = (ProductNavigationControlMenuCategory)entry.getKey();
-				%>
+					<%
+					for (Map.Entry entry : productNavigationControlMenuEntriesMap.entrySet()) {
+						ProductNavigationControlMenuCategory productNavigationControlMenuCategory = (ProductNavigationControlMenuCategory)entry.getKey();
+					%>
 
-					<li class="control-menu-nav-category <%= productNavigationControlMenuCategory.getKey() %>-control-group">
-						<ul class="control-menu-nav">
+						<li class="control-menu-nav-category <%= productNavigationControlMenuCategory.getKey() %>-control-group">
+							<ul class="control-menu-nav">
 
-							<%
-							for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : (List<ProductNavigationControlMenuEntry>)entry.getValue()) {
-								if (productNavigationControlMenuEntry.includeIcon(request, PipingServletResponse.createPipingServletResponse(pageContext))) {
-									continue;
+								<%
+								for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : (List<ProductNavigationControlMenuEntry>)entry.getValue()) {
+									if (productNavigationControlMenuEntry.includeIcon(request, PipingServletResponse.createPipingServletResponse(pageContext))) {
+										continue;
+									}
+								%>
+
+									<li class="control-menu-nav-item">
+										<liferay-ui:icon
+											data="<%= productNavigationControlMenuEntry.getData(request) %>"
+											icon="<%= productNavigationControlMenuEntry.getIcon(request) %>"
+											iconCssClass="<%= productNavigationControlMenuEntry.getIconCssClass(request) %>"
+											label="<%= false %>"
+											linkCssClass='<%= "control-menu-icon " + productNavigationControlMenuEntry.getLinkCssClass(request) %>'
+											markupView="<%= productNavigationControlMenuEntry.getMarkupView(request) %>"
+											message="<%= productNavigationControlMenuEntry.getLabel(locale) %>"
+											url="<%= productNavigationControlMenuEntry.getURL(request) %>"
+										/>
+									</li>
+
+								<%
 								}
-							%>
+								%>
 
-								<li class="control-menu-nav-item">
-									<liferay-ui:icon
-										data="<%= productNavigationControlMenuEntry.getData(request) %>"
-										icon="<%= productNavigationControlMenuEntry.getIcon(request) %>"
-										iconCssClass="<%= productNavigationControlMenuEntry.getIconCssClass(request) %>"
-										label="<%= false %>"
-										linkCssClass='<%= "control-menu-icon " + productNavigationControlMenuEntry.getLinkCssClass(request) %>'
-										markupView="<%= productNavigationControlMenuEntry.getMarkupView(request) %>"
-										message="<%= productNavigationControlMenuEntry.getLabel(locale) %>"
-										url="<%= productNavigationControlMenuEntry.getURL(request) %>"
-									/>
-								</li>
+							</ul>
+						</li>
 
-							<%
-							}
-							%>
+					<%
+					}
+					%>
 
-						</ul>
-					</li>
+				</ul>
+			</div>
+
+			<div class="control-menu-body">
 
 				<%
+				for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory : productNavigationControlMenuCategories) {
+					List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = productNavigationControlMenuEntriesMap.get(productNavigationControlMenuCategory);
+
+					for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
+						productNavigationControlMenuEntry.includeBody(request, PipingServletResponse.createPipingServletResponse(pageContext));
+					}
 				}
 				%>
 
-			</ul>
+			</div>
+
+			<div id="controlMenuAlertsContainer"></div>
 		</div>
-
-		<div class="control-menu-body">
-
-			<%
-			for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory : productNavigationControlMenuCategories) {
-				List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = productNavigationControlMenuEntriesMap.get(productNavigationControlMenuCategory);
-
-				for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
-					productNavigationControlMenuEntry.includeBody(request, PipingServletResponse.createPipingServletResponse(pageContext));
-				}
-			}
-			%>
-
-		</div>
-
-		<div id="controlMenuAlertsContainer"></div>
 	</div>
 
 	<aui:script use="liferay-product-navigation-control-menu">

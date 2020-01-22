@@ -14,15 +14,19 @@
 
 package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -60,10 +64,7 @@ public class PermissionsPortletConfigurationIcon
 
 		String url = StringPool.BLANK;
 
-		long selPlid = ParamUtil.getLong(
-			portletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
-
-		Layout layout = _layoutLocalService.fetchLayout(selPlid);
+		Layout layout = _getLayout(portletRequest);
 
 		if (layout == null) {
 			return url;
@@ -88,7 +89,34 @@ public class PermissionsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		return true;
+		Layout layout = _getLayout(portletRequest);
+
+		if (layout == null) {
+			return false;
+		}
+
+		if (_staging.isIncomplete(layout)) {
+			return false;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (scopeGroup.isLayoutPrototype()) {
+			return false;
+		}
+
+		try {
+			return LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.PERMISSIONS);
+		}
+		catch (Exception exception) {
+		}
+
+		return false;
 	}
 
 	@Override
@@ -101,7 +129,17 @@ public class PermissionsPortletConfigurationIcon
 		return true;
 	}
 
+	private Layout _getLayout(PortletRequest portletRequest) {
+		long selPlid = ParamUtil.getLong(
+			portletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
+
+		return _layoutLocalService.fetchLayout(selPlid);
+	}
+
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Staging _staging;
 
 }

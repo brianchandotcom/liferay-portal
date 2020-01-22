@@ -9,61 +9,39 @@
  * distribution rights of the Software.
  */
 
+import {render} from '@testing-library/react';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import renderer from 'react-test-renderer';
 
 import HeaderTitle from '../../../../src/main/resources/META-INF/resources/js/shared/components/header/HeaderTitle.es';
 
-beforeAll(() => {
-	const vbody = document.createElement('div');
+import '@testing-library/jest-dom/extend-expect';
 
-	vbody.innerHTML = '<div id="workflow"></div>';
-	document.body.appendChild(vbody);
+describe('The HeaderTitle component should', () => {
+	test('Render with title "Metrics" and rerender with "Single Approver"', () => {
+		const body = document.createElement('div');
 
-	ReactDOM.createPortal = jest.fn(element => {
-		return element;
+		body.innerHTML = '<div id="workflow" data-testid="workflow"></div>';
+
+		document.body.appendChild(body);
+
+		document.title = 'Metrics';
+
+		const containerWrapper = document.getElementById('workflow');
+
+		const {getByTestId, rerender} = render(
+			<HeaderTitle container={containerWrapper} title="Metrics" />
+		);
+
+		const container = getByTestId('workflow');
+
+		expect(container.children[0]).toHaveTextContent('Metrics');
+		expect(document.title).toBe('Metrics');
+
+		rerender(
+			<HeaderTitle container={containerWrapper} title="Single Approver" />
+		);
+
+		expect(container.children[0]).toHaveTextContent('Single Approver');
+		expect(document.title).toBe('Single Approver');
 	});
-});
-
-test('Should render component on container', () => {
-	const container = document.getElementById('workflow');
-
-	const component = renderer.create(
-		<HeaderTitle container={container} title="Metrics" />
-	);
-
-	const tree = component.toJSON();
-
-	expect(tree).toMatchSnapshot();
-});
-
-test('Should set document title', () => {
-	document.title = 'Metrics';
-
-	const container = document.getElementById('workflow');
-
-	const component = shallow(
-		<HeaderTitle container={container} title="Metrics" />
-	);
-
-	const instance = component.instance();
-
-	instance.setDocumentTitle('Metrics', 'SLAs');
-
-	expect(document.title).toEqual('SLAs');
-});
-
-test('Should set document title if title prop changed', () => {
-	document.title = 'Metrics';
-
-	const container = document.getElementById('workflow');
-
-	const component = shallow(
-		<HeaderTitle container={container} title="Metrics" />
-	);
-
-	component.setProps({title: 'SLAs'});
-
-	expect(document.title).toEqual('SLAs');
 });

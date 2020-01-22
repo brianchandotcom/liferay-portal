@@ -12,5 +12,31 @@
  * details.
  */
 
-import getAllowEditorProcessor from './getAlloyEditorProcessor';
-export default getAllowEditorProcessor('text');
+import getAlloyEditorProcessor from './getAlloyEditorProcessor';
+import {getLinkableEditableEditorWrapper} from './getLinkableEditableEditorWrapper';
+
+export default getAlloyEditorProcessor(
+	'text',
+	getLinkableEditableEditorWrapper,
+	(element, value, config = {}) => {
+		if (config.href) {
+			let anchor =
+				element instanceof HTMLAnchorElement
+					? element
+					: element.querySelector('a');
+
+			if (!anchor) {
+				anchor = document.createElement('a');
+
+				element.parentElement.replaceChild(anchor, element);
+
+				anchor.appendChild(element);
+			}
+
+			anchor.href = config.href;
+			anchor.target = config.target || '';
+		}
+
+		element.innerHTML = value;
+	}
+);

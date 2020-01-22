@@ -101,7 +101,7 @@ int index = 0;
 						String label = HtmlUtil.escape(rangesJSONObject.getString("label"));
 						String range = rangesJSONObject.getString("range");
 
-						index = (i + 1);
+						index = i + 1;
 					%>
 
 						<li class="facet-value">

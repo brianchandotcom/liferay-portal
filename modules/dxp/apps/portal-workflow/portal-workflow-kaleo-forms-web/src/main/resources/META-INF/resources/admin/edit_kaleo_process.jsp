@@ -40,7 +40,7 @@ String kaleoProcessName = KaleoFormsUtil.getKaleoProcessName(kaleoProcess, portl
 boolean kaleoProcessStarted = false;
 
 if (kaleoProcess != null) {
-	kaleoProcessStarted = (DDLRecordLocalServiceUtil.getRecordsCount(kaleoProcess.getDDLRecordSetId(), WorkflowConstants.STATUS_ANY) > 0);
+	kaleoProcessStarted = DDLRecordLocalServiceUtil.getRecordsCount(kaleoProcess.getDDLRecordSetId(), WorkflowConstants.STATUS_ANY) > 0;
 }
 
 portletDisplay.setShowBackIcon(true);

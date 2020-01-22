@@ -20,7 +20,9 @@ import java.io.ByteArrayOutputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -58,7 +60,7 @@ public class XMLUtil {
 		return element;
 	}
 
-	public static Document newDocument() throws Exception {
+	public static Document newDocument() throws ParserConfigurationException {
 		DocumentBuilderFactory documentBuilderFactory =
 			DocumentBuilderFactory.newInstance();
 
@@ -72,7 +74,9 @@ public class XMLUtil {
 		return documentBuilder.newDocument();
 	}
 
-	public static String toString(Document document) throws Exception {
+	public static String toString(Document document)
+		throws TransformerException {
+
 		TransformerFactory transformerFactory =
 			TransformerFactory.newInstance();
 

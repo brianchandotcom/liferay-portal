@@ -112,41 +112,36 @@ public class DependencyManagementTask extends DefaultTask {
 		return jsonObject.toString();
 	}
 
-	private String _generateXml(Map<String, String> managedVersions) {
-		try {
-			Document document = XMLUtil.newDocument();
+	private String _generateXml(Map<String, String> managedVersions)
+		throws Exception {
 
-			Element dependencyManagementElement = XMLUtil.appendElement(
-				document, null, "dependencyManagement");
+		Document document = XMLUtil.newDocument();
 
-			Element dependenciesElement = XMLUtil.appendElement(
-				document, dependencyManagementElement, "dependencies");
+		Element dependencyManagementElement = XMLUtil.appendElement(
+			document, document, "dependencyManagement");
 
-			for (Map.Entry<String, String> entry : managedVersions.entrySet()) {
-				Element dependencyElement = XMLUtil.appendElement(
-					document, dependenciesElement, "dependency");
+		Element dependenciesElement = XMLUtil.appendElement(
+			document, dependencyManagementElement, "dependencies");
 
-				String dependencyKey = entry.getKey();
+		for (Map.Entry<String, String> entry : managedVersions.entrySet()) {
+			Element dependencyElement = XMLUtil.appendElement(
+				document, dependenciesElement, "dependency");
 
-				String[] dependencyKeyArray = dependencyKey.split(":");
+			String dependencyKey = entry.getKey();
 
-				XMLUtil.appendElement(
-					document, dependencyElement, "groupId",
-					dependencyKeyArray[0]);
-				XMLUtil.appendElement(
-					document, dependencyElement, "artifactId",
-					dependencyKeyArray[1]);
+			String[] dependencyKeyArray = dependencyKey.split(":");
 
-				XMLUtil.appendElement(
-					document, dependencyElement, "version", entry.getValue());
-			}
+			XMLUtil.appendElement(
+				document, dependencyElement, "groupId", dependencyKeyArray[0]);
+			XMLUtil.appendElement(
+				document, dependencyElement, "artifactId",
+				dependencyKeyArray[1]);
 
-			return XMLUtil.toString(document);
-		}
-		catch (Exception e) {
+			XMLUtil.appendElement(
+				document, dependencyElement, "version", entry.getValue());
 		}
 
-		return null;
+		return XMLUtil.toString(document);
 	}
 
 	private Map<String, String> _getTargetPlatformDependencies(
@@ -248,31 +243,31 @@ public class DependencyManagementTask extends DefaultTask {
 		String dependenciesOutput = null;
 
 		if ((sortedVersions != null) && !sortedVersions.isEmpty()) {
-			if (_outputType.equals(OutputType.text)) {
-				dependenciesOutput = _renderManagedVersions(sortedVersions);
-			}
-			else if (_outputType.equals(OutputType.json)) {
-				dependenciesOutput = _generateJSON(sortedVersions);
-			}
-			else if (_outputType.equals(OutputType.xml)) {
-				dependenciesOutput = _generateXml(sortedVersions);
-			}
+			try {
+				if (_outputType.equals(OutputType.text)) {
+					dependenciesOutput = _renderManagedVersions(sortedVersions);
+				}
+				else if (_outputType.equals(OutputType.json)) {
+					dependenciesOutput = _generateJSON(sortedVersions);
+				}
+				else if (_outputType.equals(OutputType.xml)) {
+					dependenciesOutput = _generateXml(sortedVersions);
+				}
 
-			if (_outputFile != null) {
-				try {
+				if (_outputFile != null) {
 					File outputFile = new File(_outputFile);
 
 					Files.write(
 						outputFile.toPath(), dependenciesOutput.getBytes());
 				}
-				catch (Exception e) {
-					_logger.warn(e.getMessage());
+				else {
+					_logger.lifecycle("");
+
+					_logger.lifecycle(dependenciesOutput);
 				}
 			}
-			else {
-				_logger.lifecycle("");
-
-				_logger.lifecycle(dependenciesOutput);
+			catch (Exception exception) {
+				_logger.error(exception.getMessage());
 			}
 		}
 		else {

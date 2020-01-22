@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoriesSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoryPermissionChecker;
@@ -35,7 +34,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,8 +61,6 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		).when(
 			_facet
 		).getFacetCollector();
-
-		setUpPortalUtil();
 	}
 
 	@Test
@@ -401,6 +397,7 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 			_facet.getFieldId());
 		assetCategoriesSearchFacetDisplayBuilder.setParameterValue(
 			parameterValue);
+		assetCategoriesSearchFacetDisplayBuilder.setPortal(getPortal());
 
 		if (_excludedGroupId > 0) {
 			assetCategoriesSearchFacetDisplayBuilder.setExcludedGroupId(
@@ -445,26 +442,40 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 	protected HttpServletRequest getHttpServletRequest() {
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
-		ThemeDisplay themeDisplay = getThemeDisplay();
 
-		Mockito.when(
-			(ThemeDisplay)httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
+		Mockito.doReturn(
+			getThemeDisplay()
+		).when(
+			httpServletRequest
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
 		);
 
 		return httpServletRequest;
 	}
 
+	protected Portal getPortal() {
+		Portal portal = Mockito.mock(Portal.class);
+
+		Mockito.doReturn(
+			getHttpServletRequest()
+		).when(
+			portal
+		).getHttpServletRequest(
+			Matchers.any()
+		);
+
+		return portal;
+	}
+
 	protected ThemeDisplay getThemeDisplay() {
-		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
-		Mockito.when(
-			themeDisplay.getPortletDisplay()
-		).thenReturn(
-			portletDisplay
-		);
+		Mockito.doReturn(
+			Mockito.mock(PortletDisplay.class)
+		).when(
+			themeDisplay
+		).getPortletDisplay();
 
 		return themeDisplay;
 	}
@@ -501,22 +512,6 @@ public class AssetCategoriesSearchFacetDisplayContextTest {
 		).when(
 			_facetCollector
 		).getTermCollectors();
-	}
-
-	protected void setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		Portal portal = Mockito.mock(Portal.class);
-
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
-
-		Mockito.when(
-			portal.getHttpServletRequest(Matchers.any(PortletRequest.class))
-		).thenReturn(
-			httpServletRequest
-		);
-
-		portalUtil.setPortal(portal);
 	}
 
 	@Mock

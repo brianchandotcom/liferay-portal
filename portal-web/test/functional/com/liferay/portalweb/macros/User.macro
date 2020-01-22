@@ -1086,7 +1086,7 @@ definition {
 		else {
 			PortletEntry.selectAll();
 
-			ClickNoError(locator1 = "Icon#DELETE");
+			ClickNoError(locator1 = "Icon#DEACTIVATE");
 
 			AssertConfirm(value1 = "Are you sure you want to deactivate the selected users?");
 

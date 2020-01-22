@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>DEACTIVATE</td>
-	<td>//button[@data-title='Deactivate' or @title='Deactivate']</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-hidden')]]</td>
 	<td></td>
 </tr>
 <tr>

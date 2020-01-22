@@ -455,14 +455,7 @@ definition {
 	test DeleteLivePage {
 		property portal.acceptance = "true";
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		SitePages.addPublicPage(pageName = "Delete Live Page");
 
@@ -478,10 +471,7 @@ definition {
 			pageName = "Delete Live Page",
 			siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
 		SitePages.deletePage(pageName = "Delete Live Page");
 
@@ -1236,10 +1226,7 @@ definition {
 			groupName = "Child Site",
 			parentGroupName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "child-site");
 
 		SitePages.addPublicPage(pageName = "Page 1");
 
@@ -1263,14 +1250,7 @@ definition {
 
 	@priority = "4"
 	test StagingPublishOnlySelectedPage {
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
 
 		SitePages.addPublicPage(pageName = "Page 1");
 

@@ -45,7 +45,7 @@ runGradleTest {
 
 		File txtFile = file("${buildDir}/test.txt")
 
-		assert txtFile.text.contains("xpp3:xpp3_min 1.1.4")
+		assert txtFile.text.contains("xpp3:xpp3_min:1.1.4")
 
 		File xmlFile = file("${buildDir}/test.xml")
 

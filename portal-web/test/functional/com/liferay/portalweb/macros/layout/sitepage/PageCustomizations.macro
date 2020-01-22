@@ -11,9 +11,18 @@ definition {
 
 		Check.checkToggleSwitch(locator1 = "SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS");
 
-		Check.toggleSwitch(
-			key_columnId = "${columnId}",
-			locator1 = "SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX");
+		if (isSet(columnIdList)) {
+			for (var columnId : list "${columnIdList}") {
+				Check.toggleSwitch(
+					key_columnId = "${columnId}",
+					locator1 = "SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX");
+			}
+		}
+		else {
+			Check.toggleSwitch(
+				key_columnId = "${columnId}",
+				locator1 = "SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX");
+		}
 
 		Button.clickSave();
 	}

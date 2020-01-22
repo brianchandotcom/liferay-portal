@@ -127,6 +127,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		_componentId = null;
 		_containerId = null;
 		_context = null;
+		_destroyOnNavigate = true;
 		_module = null;
 		_setServletContext = false;
 	}

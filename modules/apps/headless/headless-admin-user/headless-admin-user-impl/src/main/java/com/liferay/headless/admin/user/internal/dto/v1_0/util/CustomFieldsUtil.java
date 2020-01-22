@@ -74,7 +74,7 @@ public class CustomFieldsUtil {
 		);
 	}
 
-	private static Object _getLocalizedValues(
+	private static Map<String, String> _getLocalizedValues(
 		boolean acceptAllLanguages, int attributeType, Object value) {
 
 		if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
@@ -83,7 +83,7 @@ public class CustomFieldsUtil {
 			return LocalizedMapUtil.getLocalizedMap(acceptAllLanguages, map);
 		}
 
-		return value;
+		return null;
 	}
 
 	private static Object _getValue(
@@ -173,7 +173,7 @@ public class CustomFieldsUtil {
 						}
 
 						data = _getValue(attributeType, locale, value);
-						data = _getLocalizedValues(
+						data_i18n = _getLocalizedValues(
 							acceptAllLanguages, attributeType, value);
 					}
 				};

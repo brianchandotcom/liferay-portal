@@ -65,6 +65,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -219,6 +220,9 @@ public class UserAccountResourceImpl
 				id = role.getRoleId();
 				name = role.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
+				name_i18n = LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					role.getTitleMap());
 			}
 		};
 	}
@@ -229,6 +233,9 @@ public class UserAccountResourceImpl
 				id = group.getGroupId();
 				name = group.getName(
 					contextAcceptLanguage.getPreferredLocale());
+				name_i18n = LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					group.getNameMap());
 			}
 		};
 	}

@@ -351,9 +351,6 @@ public class TaxonomyCategoryResourceImpl
 	private TaxonomyCategory _toTaxonomyCategory(AssetCategory assetCategory)
 		throws Exception {
 
-		boolean acceptAllLanguages =
-			contextAcceptLanguage.isAcceptAllLanguages();
-
 		return new TaxonomyCategory() {
 			{
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
@@ -366,14 +363,16 @@ public class TaxonomyCategoryResourceImpl
 				description = assetCategory.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
 				description_i18n = LocalizedMapUtil.getLocalizedMap(
-					acceptAllLanguages, assetCategory.getDescriptionMap());
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					assetCategory.getDescriptionMap());
 				externalReferenceCode =
 					assetCategory.getExternalReferenceCode();
 				id = String.valueOf(assetCategory.getCategoryId());
 				name = assetCategory.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
 				name_i18n = LocalizedMapUtil.getLocalizedMap(
-					acceptAllLanguages, assetCategory.getTitleMap());
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					assetCategory.getTitleMap());
 				numberOfTaxonomyCategories =
 					_assetCategoryService.getChildCategoriesCount(
 						assetCategory.getCategoryId());

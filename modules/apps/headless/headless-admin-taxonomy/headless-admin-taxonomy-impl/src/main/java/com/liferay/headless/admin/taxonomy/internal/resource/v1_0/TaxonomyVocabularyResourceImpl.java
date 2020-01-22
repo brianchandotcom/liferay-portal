@@ -475,9 +475,6 @@ public class TaxonomyVocabularyResourceImpl
 			AssetVocabulary assetVocabulary)
 		throws Exception {
 
-		boolean acceptAllLanguages =
-			contextAcceptLanguage.isAcceptAllLanguages();
-
 		return new TaxonomyVocabulary() {
 			{
 				assetTypes = _getAssetTypes(
@@ -494,12 +491,14 @@ public class TaxonomyVocabularyResourceImpl
 				description = assetVocabulary.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
 				description_i18n = LocalizedMapUtil.getLocalizedMap(
-					acceptAllLanguages, assetVocabulary.getDescriptionMap());
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					assetVocabulary.getDescriptionMap());
 				id = assetVocabulary.getVocabularyId();
 				name = assetVocabulary.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
 				name_i18n = LocalizedMapUtil.getLocalizedMap(
-					acceptAllLanguages, assetVocabulary.getTitleMap());
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					assetVocabulary.getTitleMap());
 				numberOfTaxonomyCategories = Optional.ofNullable(
 					assetVocabulary.getCategories()
 				).map(

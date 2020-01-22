@@ -73,9 +73,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	private Site _toSite(Group group) throws Exception {
-		boolean acceptAllLanguages =
-			contextAcceptLanguage.isAcceptAllLanguages();
-
 		return new Site() {
 			{
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
@@ -86,7 +83,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				description = group.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
 				description_i18n = LocalizedMapUtil.getLocalizedMap(
-					acceptAllLanguages, group.getDescriptionMap());
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					group.getDescriptionMap());
 				friendlyUrlPath = group.getFriendlyURL();
 				id = group.getGroupId();
 				key = group.getGroupKey();
@@ -94,7 +92,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				name = group.getName(
 					contextAcceptLanguage.getPreferredLocale());
 				name_i18n = LocalizedMapUtil.getLocalizedMap(
-					acceptAllLanguages, group.getNameMap());
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					group.getNameMap());
 				parentSiteId = group.getParentGroupId();
 				sites = transformToArray(
 					_groupService.getGroups(

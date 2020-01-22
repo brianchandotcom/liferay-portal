@@ -66,9 +66,6 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	private Role _toRole(com.liferay.portal.kernel.model.Role role)
 		throws Exception {
 
-		boolean acceptAllLanguages =
-			contextAcceptLanguage.isAcceptAllLanguages();
-
 		return new Role() {
 			{
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
@@ -80,12 +77,14 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				description = role.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
 				description_i18n = LocalizedMapUtil.getLocalizedMap(
-					acceptAllLanguages, role.getDescriptionMap());
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					role.getDescriptionMap());
 				id = role.getRoleId();
 				name = role.getTitle(
 					contextAcceptLanguage.getPreferredLocale());
 				name_i18n = LocalizedMapUtil.getLocalizedMap(
-					acceptAllLanguages, role.getTitleMap());
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					role.getTitleMap());
 				roleType = role.getTypeLabel();
 			}
 		};

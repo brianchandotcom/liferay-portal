@@ -129,9 +129,6 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 			return null;
 		}
 
-		boolean acceptAllLanguages =
-			contextAcceptLanguage.isAcceptAllLanguages();
-
 		return new Form() {
 			{
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
@@ -146,14 +143,17 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 				description = ddmFormInstance.getDescription(
 					contextAcceptLanguage.getPreferredLocale());
 				description_i18n = LocalizedMapUtil.getLocalizedMap(
-					acceptAllLanguages, ddmFormInstance.getDescriptionMap());
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					ddmFormInstance.getDescriptionMap());
 				id = ddmFormInstance.getFormInstanceId();
 				name = ddmFormInstance.getName(
 					contextAcceptLanguage.getPreferredLocale());
 				name_i18n = LocalizedMapUtil.getLocalizedMap(
-					acceptAllLanguages, ddmFormInstance.getNameMap());
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					ddmFormInstance.getNameMap());
 				structure = StructureUtil.toFormStructure(
-					acceptAllLanguages, ddmFormInstance.getStructure(),
+					contextAcceptLanguage.isAcceptAllLanguages(),
+					ddmFormInstance.getStructure(),
 					contextAcceptLanguage.getPreferredLocale(), _portal,
 					_userLocalService);
 			}

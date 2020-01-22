@@ -325,6 +325,386 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-105943. When convert a widget page with one Customizable column, there will be a warning message shown in conversion review"
+	@priority = "5"
+	test ConvertWidgetPageWithCustomizableColumnContainingWidgets {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Test Page Name",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		PageCustomizations.enableSectionCustomizableCP(
+			columnId = "1",
+			pageName = "Test Page Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		PageCustomizations.viewCustomizablePagePG();
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Portlet.viewPG(portletName = "Asset Publisher");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Convert to Content Page and Preview",
+			pageName = "Test Page Name");
+
+		AssertVisible(
+			key_warningMessage = "This page has customizable columns. This capability is not supported for content pages and will be lost if the conversion draft is published.",
+			locator1 = "Message#WARNING_SPECIFIC");
+
+		AssertElementNotPresent(
+			key_portletName = "Asset Publisher",
+			locator1 = "Portlet#TITLE");
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+
+		AssertElementNotPresent(
+			key_portletName = "Asset Publisher",
+			locator1 = "Portlet#TITLE");
+	}
+
+	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets, there will be a warning message shown in conversion preview"
+	@priority = "5"
+	test ConvertWidgetPageWithNestedApplicationsContainingWidgets {
+		LAR.importSiteCP(
+			larFileName = "nested-applications-site-template.lar",
+			siteName = "Test Site Name",
+			uploadFrom = "dependencies");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Portlet.viewPG(portletName = "Nested Applications");
+
+		AssertTextEquals(
+			key_portletTitleName = "Asset Publisher",
+			locator1 = "Home#PORTLET_COLUMN_1_NESTED_PORTLET_TITLE",
+			value1 = "Asset Publisher");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Convert to Content Page and Preview",
+			pageName = "Test Page Name");
+
+		AssertVisible(
+			key_warningMessage = "This page uses nested applications widgets. All widgets that were inside a nested application widget have been placed in a single column and may require manual reorganization.",
+			locator1 = "Message#WARNING_SPECIFIC");
+
+		Portlet.viewPG(portletName = "Asset Publisher");
+
+		AssertElementNotPresent(
+			key_portletName = "Nested Applications",
+			locator1 = "Portlet#TITLE");
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+
+		Portlet.viewPG(portletName = "Asset Publisher");
+
+		AssertElementNotPresent(
+			key_portletName = "Nested Applications",
+			locator1 = "Portlet#TITLE");
+	}
+
+	@description = "This is a test for LPS-105943. When convert a widget page with a non-standard layout, there will be a warning message shown in conversion preview"
+	@priority = "5"
+	test ConvertWidgetPageWithNonStandardLayout {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addCP(
+			siteName = "Test Westeros Site",
+			siteTemplateName = "Westeros Bank",
+			siteType = "Site Template");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Westeros Site",
+			layoutName = "Test Page Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Westeros Site");
+
+		SitePages.configurePage(
+			columnName = "Westeros 2 columns",
+			pageName = "Test Page Name",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Westeros Site");
+
+		Portlet.addPG(portletName = "Profile");
+
+		Portlet.dragAndDropPortletToColumnPG(
+			columnNumberFrom = "1",
+			columnNumberTo = "2",
+			portletName = "Profile");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Westeros Site");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Westeros Site");
+
+		AssertTextEquals(
+			key_portletName = "Asset Publisher",
+			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Asset Publisher");
+
+		AssertTextEquals(
+			key_portletName = "Profile",
+			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Profile");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Westeros Site");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Convert to Content Page and Preview",
+			pageName = "Test Page Name");
+
+		AssertVisible(
+			key_warningMessage = "This page uses a custom page layout. A best-effort conversion has been performed. Verify the conversion draft before publishing it.",
+			locator1 = "Message#WARNING_SPECIFIC");
+
+		AssertTextEquals(
+			key_portletName = "Asset Publisher",
+			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Asset Publisher");
+
+		AssertTextEquals(
+			key_portletName = "Profile",
+			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Profile");
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Westeros Site");
+
+		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+
+		AssertTextEquals(
+			key_portletName = "Asset Publisher",
+			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Asset Publisher");
+
+		AssertTextEquals(
+			key_portletName = "Profile",
+			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Profile");
+	}
+
+	@description = "This is a test for LPS-105943. When convert a widget page with one Customizable column and a non-standard layout, there will be two warning messages shown in conversion preview"
+	@priority = "3"
+	test ConvertWidgetPageWithNonStandardLayoutAndCustomizableColumns {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addCP(
+			siteName = "Test Westeros Site",
+			siteTemplateName = "Westeros Bank",
+			siteType = "Site Template");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Westeros Site",
+			layoutName = "Test Page Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Westeros Site");
+
+		SitePages.configurePage(
+			columnName = "Westeros 2 columns",
+			pageName = "Test Page Name",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Westeros Site");
+
+		PageCustomizations.enableSectionCustomizableCP(
+			columnIdList = "1,2",
+			pageName = "Test Page Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Westeros Site");
+
+		PageCustomizations.viewCustomizablePagePG();
+
+		Portlet.addPG(portletName = "Profile");
+
+		Portlet.dragAndDropPortletToColumnPG(
+			columnNumberFrom = "1",
+			columnNumberTo = "2",
+			portletName = "Profile");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Westeros Site");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Westeros Site");
+
+		AssertTextEquals(
+			key_portletName = "Asset Publisher",
+			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Asset Publisher");
+
+		AssertTextEquals(
+			key_portletName = "Profile",
+			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Profile");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Westeros Site");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Convert to Content Page and Preview",
+			pageName = "Test Page Name");
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_3",
+			value1 = "This page has customizable columns. This capability is not supported for content pages and will be lost if the conversion draft is published. This page uses a custom page layout. A best-effort conversion has been performed. Verify the conversion draft before publishing it.");
+
+		AssertElementNotPresent(
+			key_portletName = "Asset Publisher",
+			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE");
+
+		AssertElementNotPresent(
+			key_portletName = "Profile",
+			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE");
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Westeros Site");
+
+		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+
+		AssertElementNotPresent(
+			key_portletName = "Asset Publisher",
+			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE");
+
+		AssertElementNotPresent(
+			key_portletName = "Profile",
+			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE");
+	}
+
+	@description = "This is a test for LPS-105943. When convert a widget page with one Nested Applications widget containing widgets and a non-standard layout, there will be two warning messages shown in conversion preview"
+	@priority = "3"
+	test ConvertWidgetPageWithNonStandardLayoutAndNestedApplicationsContainingWidgets {
+		LAR.importSiteCP(
+			larFileName = "non-standard-layout-with-nested-applications-site-template.lar",
+			siteName = "Test Site Name",
+			uploadFrom = "dependencies");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertTextEquals(
+			key_portletName = "Nested Applications",
+			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Nested Applications");
+
+		AssertTextEquals(
+			key_portletTitleName = "Asset Publisher",
+			locator1 = "Home#PORTLET_COLUMN_1_NESTED_PORTLET_TITLE",
+			value1 = "Asset Publisher");
+
+		AssertTextEquals(
+			key_portletName = "Profile",
+			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Profile");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Convert to Content Page and Preview",
+			pageName = "Test Page Name");
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_3",
+			value1 = "This page uses nested applications widgets. All widgets that were inside a nested application widget have been placed in a single column and may require manual reorganization. This page uses a custom page layout. A best-effort conversion has been performed. Verify the conversion draft before publishing it.");
+
+		AssertElementNotPresent(
+			key_portletName = "Nested Applications",
+			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE");
+
+		AssertTextEquals(
+			key_portletName = "Asset Publisher",
+			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Asset Publisher");
+
+		AssertTextEquals(
+			key_portletName = "Profile",
+			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Profile");
+
+		Button.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+
+		AssertElementNotPresent(
+			key_portletName = "Nested Applications",
+			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE");
+
+		AssertTextEquals(
+			key_portletName = "Asset Publisher",
+			locator1 = "Home#PAGE_COLUMN_1_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Asset Publisher");
+
+		AssertTextEquals(
+			key_portletName = "Profile",
+			locator1 = "Home#PAGE_COLUMN_2_LAYOUT_WESTROS_2_COLUMNS_PORTLET_TITLE",
+			value1 = "Profile");
+	}
+
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."
 	@priority = "5"
 	test EditConvertedContentPageWithDecorator {

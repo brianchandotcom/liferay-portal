@@ -27,7 +27,7 @@ import Collapse from '../../../common/components/Collapse';
 const layoutElements = [
 	{
 		columns: ['12'],
-		label: Liferay.Language.get('container'),
+		label: Liferay.Language.get('section'),
 		type: 'container'
 	},
 	{

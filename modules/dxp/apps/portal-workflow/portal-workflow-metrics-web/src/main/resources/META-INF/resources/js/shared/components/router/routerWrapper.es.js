@@ -10,80 +10,51 @@
  */
 
 import React from 'react';
-import {Link, Redirect, withRouter} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
+import {useRouter} from '../../hooks/useRouter.es';
 import {parse, stringify} from './queryString.es';
 
-class BackLinkWrapper extends React.Component {
-	render() {
-		const {backPath, children, className} = this.props;
+const BackLink = ({children, ...otherProps}) => {
+	const {backPath} = useParams();
 
-		return (
-			<Link className={className} to={backPath}>
-				{children}
-			</Link>
-		);
-	}
-}
+	return (
+		<Link {...otherProps} to={backPath}>
+			{children}
+		</Link>
+	);
+};
 
-class BackRedirectWrapper extends React.Component {
-	render() {
-		const {backPath} = this.props;
+const BackRedirect = () => {
+	const {backPath} = useParams();
 
-		return <Redirect to={backPath} />;
-	}
-}
+	return <Redirect to={backPath} />;
+};
 
-class ChildLinkWrapper extends React.Component {
-	render() {
-		const {
-			children,
-			className,
-			currentPath,
-			query,
-			to,
-			...props
-		} = this.props;
+const ChildLink = ({children, query, to, ...otherProps}) => {
+	const {currentPath} = useParams();
 
-		const eventProps = getEventProps(props);
+	return (
+		<Link
+			{...otherProps}
+			to={{
+				pathname: to,
+				search: stringify({backPath: currentPath, ...query})
+			}}
+		>
+			{children}
+		</Link>
+	);
+};
 
-		return (
-			<Link
-				{...eventProps}
-				className={className}
-				to={{
-					pathname: to,
-					search: stringify({backPath: currentPath, ...query})
-				}}
-			>
-				{children}
-			</Link>
-		);
-	}
-}
+const useParams = () => {
+	const {
+		location: {pathname, search}
+	} = useRouter();
 
-const withParams = Component =>
-	withRouter(({location: {pathname, search}, match: {params}, ...props}) => (
-		<Component
-			{...params}
-			{...parse(search)}
-			{...props}
-			currentPath={pathname + search}
-		/>
-	));
+	const {backPath} = parse(search);
 
-function getEventProps(props) {
-	return Object.keys(props)
-		.filter(key => key.startsWith('on'))
-		.reduce((obj, key) => {
-			obj[key] = props[key];
-
-			return obj;
-		}, {});
-}
-
-const BackLink = withParams(BackLinkWrapper);
-const BackRedirect = withParams(BackRedirectWrapper);
-const ChildLink = withParams(ChildLinkWrapper);
+	return {backPath, currentPath: `${pathname}${search}`};
+};
 
 export {BackLink, BackRedirect, ChildLink};

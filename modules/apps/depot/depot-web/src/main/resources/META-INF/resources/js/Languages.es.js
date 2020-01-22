@@ -71,6 +71,8 @@ const Languages = ({
 			url: url.toString()
 		});
 
+		console.log('eventName: ', `_${portletNamespace}_manageLanguages`);
+
 		itemSelectorDialog.open();
 
 		itemSelectorDialog.on('selectedItemChange', event => {

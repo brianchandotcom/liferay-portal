@@ -1,6 +1,8 @@
 @component-name = "portal-xsl"
 definition {
 
+	// Ignore all tests because related apps are deprecated
+
 	property osgi.module.configuration.file.names = "com.liferay.xsl.content.web.internal.configuration.XSLContentConfiguration.config";
 	property osgi.module.configurations = "com.liferay.portlet.include=&quot;true&quot;\ncom.liferay.portlet.display-category=&quot;category.cms&quot;";
 	property osgi.modules.includes = "xsl-content";
@@ -62,6 +64,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddXSL {
 		property test.name.skip.portal.instance = "XSL#AddXSL";
@@ -177,6 +180,7 @@ definition {
 			tableYearEntry = "2015");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ConfigurePortletWithCorruptXML {
 		property ignore.errors = "must be terminated by the matching end-tag";
@@ -283,6 +287,7 @@ definition {
 		XSLContent.viewErrorMessage();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ConfigurePortletWithCorruptXSL {
 		property ignore.errors = "must be terminated by the matching end-tag";
@@ -389,6 +394,7 @@ definition {
 		XSLContent.viewErrorMessage();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ConfigurePortletWithIncorrectVersionXmlAndXsl {
 		property test.name.skip.portal.instance = "XSL#ConfigurePortletWithIncorrectVersionXmlAndXsl";
@@ -496,6 +502,7 @@ definition {
 		XSLContent.viewConsoleError(consoleTextError = "only XML 1.0 is supported");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewXSLDefaultContent {
 		property test.name.skip.portal.instance = "XSL#ViewXSLDefaultContent";

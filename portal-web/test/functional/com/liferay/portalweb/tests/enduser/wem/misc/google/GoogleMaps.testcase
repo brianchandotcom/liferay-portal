@@ -1,6 +1,8 @@
 @component-name = "portal-plugins-osgi"
 definition {
 
+	// Ignore all tests because related apps are deprecated
+
 	property osgi.app.includes = "google-maps";
 	property plugins.deployment.type = "osgi";
 	property portal.release = "true";
@@ -23,6 +25,7 @@ definition {
 		Page.tearDownCP();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test GoogleMapsPortletSmoke {
 		var appName = "Google Maps";

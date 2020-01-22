@@ -3,7 +3,7 @@ Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
 Web-ContextPath: /simulation-panel-app-${artifactId}
 #if (${buildType} != "gradle")
-#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})-contract: JavaPortlet,JavaServlet
+#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})-contract: JavaPortlet,JavaServlet
 #end
 -jsp: *.jsp,*.jspf
 -metatype: *

@@ -40,8 +40,15 @@
 			<version>4.4.0</version>
 			<scope>provided</scope>
 		</dependency>
+#elseif (${liferayVersion.startsWith("7.3")})
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.portal.kernel</artifactId>
+			<version>5.3.0</version>
+			<scope>provided</scope>
+		</dependency>
 #end
-#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 		<dependency>
 			<groupId>javax.portlet</groupId>
 			<artifactId>portlet-api</artifactId>

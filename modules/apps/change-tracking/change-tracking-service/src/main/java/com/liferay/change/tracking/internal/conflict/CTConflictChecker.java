@@ -15,9 +15,11 @@
 package com.liferay.change.tracking.internal.conflict;
 
 import com.liferay.change.tracking.conflict.ConflictInfo;
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.internal.CTRowUtil;
 import com.liferay.change.tracking.internal.resolver.ConstraintResolverHelperImpl;
 import com.liferay.change.tracking.internal.resolver.ConstraintResolverKey;
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.resolver.ConstraintResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringBundler;
@@ -58,6 +60,12 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		_serviceTrackerMap = serviceTrackerMap;
 		_sourceCollectionId = sourceCTCollectionId;
 		_targetCTCollectionId = targetCTCollectionId;
+	}
+
+	public void addCTEntry(CTEntry ctEntry) {
+		if (ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_ADDITION) {
+			_ignorablePrimaryKeys.add(ctEntry.getModelClassPK());
+		}
 	}
 
 	public List<ConflictInfo> check() throws PortalException {
@@ -202,13 +210,21 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
+				long sourcePK = rs.getLong(1);
+				long targetPK = rs.getLong(2);
+
+				if (_ignorablePrimaryKeys.contains(sourcePK) ||
+					_ignorablePrimaryKeys.contains(targetPK)) {
+
+					continue;
+				}
+
 				if (primaryKeys == null) {
 					primaryKeys = new ArrayList<>();
 				}
 
 				primaryKeys.add(
-					new AbstractMap.SimpleImmutableEntry<>(
-						rs.getLong(1), rs.getLong(2)));
+					new AbstractMap.SimpleImmutableEntry<>(sourcePK, targetPK));
 			}
 
 			if (primaryKeys == null) {
@@ -223,6 +239,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 	}
 
 	private final CTService<T> _ctService;
+	private final Set<Long> _ignorablePrimaryKeys = new HashSet<>();
 	private final ServiceTrackerMap<ConstraintResolverKey, ConstraintResolver>
 		_serviceTrackerMap;
 	private final long _sourceCollectionId;

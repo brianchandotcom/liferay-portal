@@ -120,25 +120,28 @@ public class CTCollectionLocalServiceImpl
 		Map<Long, CTConflictChecker<?>> ctConflictCheckers = new HashMap<>();
 
 		for (CTEntry ctEntry : ctEntries) {
-			ctConflictCheckers.computeIfAbsent(
-				ctEntry.getModelClassNameId(),
-				modelClassNameId -> {
-					CTService<?> ctService = _ctServiceRegistry.getCTService(
-						modelClassNameId);
+			CTConflictChecker<?> ctConflictChecker =
+				ctConflictCheckers.computeIfAbsent(
+					ctEntry.getModelClassNameId(),
+					modelClassNameId -> {
+						CTService<?> ctService =
+							_ctServiceRegistry.getCTService(modelClassNameId);
 
-					if (ctService == null) {
-						throw new SystemException(
-							StringBundler.concat(
-								"Unable to check conflicts for ", ctCollection,
-								" because service for ", modelClassNameId,
-								" is missing"));
-					}
+						if (ctService == null) {
+							throw new SystemException(
+								StringBundler.concat(
+									"Unable to check conflicts for ",
+									ctCollection, " because service for ",
+									modelClassNameId, " is missing"));
+						}
 
-					return new CTConflictChecker<>(
-						ctService, _serviceTrackerMap,
-						ctCollection.getCtCollectionId(),
-						CTConstants.CT_COLLECTION_ID_PRODUCTION);
-				});
+						return new CTConflictChecker<>(
+							ctService, _serviceTrackerMap,
+							ctCollection.getCtCollectionId(),
+							CTConstants.CT_COLLECTION_ID_PRODUCTION);
+					});
+
+			ctConflictChecker.addCTEntry(ctEntry);
 		}
 
 		try (SafeClosable safeClosable =

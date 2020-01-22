@@ -16,10 +16,13 @@ import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import React, {useState, useContext} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
+import {EDITABLE_TYPES} from '../config/constants/editableTypes';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
+import InfoItemService from '../services/InfoItemService';
 import {StoreContext} from '../store/index';
 import updateEditableValues from '../thunks/updateEditableValues';
+import MappingSelector from './MappingSelector';
 
 const SOURCE_TYPES = {
 	fromContentField: 'fromContentField',
@@ -59,8 +62,6 @@ const TARGET_OPTIONS = [
 export default function LinkConfigurationPanel({item}) {
 	const {editableId, fragmentEntryLinkId} = item;
 
-	const [sourceType, setSourceType] = useState(SOURCE_TYPES.manual);
-
 	const {fragmentEntryLinks, segmentsExperienceId} = useContext(StoreContext);
 	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
@@ -71,6 +72,12 @@ export default function LinkConfigurationPanel({item}) {
 		][editableId];
 
 	const editableConfig = editableValue.config || {};
+
+	const isMapped = editableConfig.mappedField || editableConfig.fieldId;
+
+	const [sourceType, setSourceType] = useState(
+		isMapped ? SOURCE_TYPES.fromContentField : SOURCE_TYPES.manual
+	);
 
 	const updateRowConfig = newConfig => {
 		const editableValues =
@@ -103,6 +110,20 @@ export default function LinkConfigurationPanel({item}) {
 		);
 	};
 
+	const updateMapping = mappedItem => {
+		InfoItemService.getAssetFieldValue({
+			classNameId: mappedItem.classNameId,
+			classPK: mappedItem.classPK,
+			config,
+			fieldId: mappedItem.fieldId,
+			onNetworkStatus: dispatch
+		}).then(response => {
+			const {fieldValue} = response;
+
+			updateRowConfig({href: fieldValue, ...mappedItem});
+		});
+	};
+
 	return (
 		<>
 			<ClayForm.Group small>
@@ -111,28 +132,59 @@ export default function LinkConfigurationPanel({item}) {
 				</label>
 				<ClaySelectWithOption
 					id="floatingToolbarLinkSourceOption"
-					onChange={event => setSourceType(event.target.value)}
+					onChange={event => {
+						updateRowConfig({
+							classNameId: '',
+							classPK: '',
+							fieldId: '',
+							href: '',
+							mappedField: ''
+						});
+						setSourceType(event.target.value);
+					}}
 					options={SOURCE_TYPES_OPTIONS}
 					type="text"
+					value={sourceType}
 				/>
 			</ClayForm.Group>
+
+			{sourceType === SOURCE_TYPES.fromContentField && (
+				<MappingSelector
+					fieldType={EDITABLE_TYPES.text}
+					mappedItem={editableConfig}
+					onMappingSelect={updateMapping}
+				/>
+			)}
 			{sourceType === SOURCE_TYPES.manual ? (
 				<ClayForm.Group small>
 					<label htmlFor="floatingToolbarLinkHrefOption">
 						{Liferay.Language.get('url')}
 					</label>
 					<ClayInput
+						defaultValue={editableConfig.href || ''}
 						id="floatingToolbarLinkHrefOption"
 						onBlur={event => {
 							updateRowConfig({href: event.target.value});
 						}}
 						type="text"
-						value={editableConfig.href || ''}
 					/>
 				</ClayForm.Group>
 			) : (
-				<div>Mapping gege</div>
+				editableConfig.href && (
+					<ClayForm.Group small>
+						<label htmlFor="floatingToolbarLinkHrefOption">
+							{Liferay.Language.get('url')}
+						</label>
+						<ClayInput
+							id="floatingToolbarLinkHrefOption"
+							readOnly
+							type="text"
+							value={editableConfig.href}
+						/>
+					</ClayForm.Group>
+				)
 			)}
+
 			<ClayForm.Group small>
 				<label htmlFor="floatingToolbarLinkTargetOption">
 					{Liferay.Language.get('target')}

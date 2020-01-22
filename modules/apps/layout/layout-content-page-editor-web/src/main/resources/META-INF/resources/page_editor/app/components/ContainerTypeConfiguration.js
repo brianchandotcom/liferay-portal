@@ -15,6 +15,8 @@
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
+import {CONTAINER_TYPES} from '../config/constants/containerTypes';
+
 const CONTAINER_TYPE_IDENTIFIER = 'type';
 
 export const ContainerTypeConfiguration = ({containerType, onValueChange}) => (
@@ -31,11 +33,11 @@ export const ContainerTypeConfiguration = ({containerType, onValueChange}) => (
 			options={[
 				{
 					label: Liferay.Language.get('fixed-width'),
-					value: 'fixed'
+					value: CONTAINER_TYPES.fixed
 				},
 				{
 					label: Liferay.Language.get('fluid'),
-					value: 'fluid'
+					value: CONTAINER_TYPES.fluid
 				}
 			]}
 			value={containerType}

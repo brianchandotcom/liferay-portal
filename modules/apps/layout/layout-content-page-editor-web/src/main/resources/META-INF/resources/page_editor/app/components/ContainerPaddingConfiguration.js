@@ -15,13 +15,8 @@
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
+import {CONTAINER_PADDING_IDENTIFIERS} from '../config/constants/containerPaddingIdentifiers';
 import {PADDING_OPTIONS} from '../config/constants/paddingOptions';
-
-const CONTAINER_PADDING_IDENTIFIERS = {
-	paddingBottom: 'paddingBottom',
-	paddingHorizontal: 'paddingHorizontal',
-	paddingTop: 'paddingTop'
-};
 
 export const ContainerPaddingVerticalConfiguration = ({
 	onValueChange,

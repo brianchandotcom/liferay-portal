@@ -16,15 +16,13 @@ package com.liferay.layout.content.page.editor.web.internal.util.layout.structur
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 
-import java.util.UUID;
-
 /**
  * @author Eudaldo Alonso
  */
 public class FragmentLayoutStructureItem extends LayoutStructureItem {
 
 	public FragmentLayoutStructureItem(String parentItemId) {
-		super(String.valueOf(UUID.randomUUID()), parentItemId);
+		super(parentItemId);
 	}
 
 	@Override

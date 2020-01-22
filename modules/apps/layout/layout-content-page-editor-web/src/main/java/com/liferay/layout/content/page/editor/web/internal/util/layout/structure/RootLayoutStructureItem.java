@@ -17,15 +17,13 @@ package com.liferay.layout.content.page.editor.web.internal.util.layout.structur
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.string.StringPool;
 
-import java.util.UUID;
-
 /**
  * @author Eudaldo Alonso
  */
 public class RootLayoutStructureItem extends LayoutStructureItem {
 
 	public RootLayoutStructureItem() {
-		super(String.valueOf(UUID.randomUUID()), StringPool.BLANK);
+		super(StringPool.BLANK);
 	}
 
 	@Override

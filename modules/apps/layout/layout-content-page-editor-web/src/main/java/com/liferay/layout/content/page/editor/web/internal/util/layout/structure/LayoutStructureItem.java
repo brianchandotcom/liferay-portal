@@ -58,8 +58,7 @@ public abstract class LayoutStructureItem {
 		_itemConfigJSONObject = JSONFactoryUtil.createJSONObject();
 	}
 
-	public LayoutStructureItem(String itemType, String parentItemId) {
-		_itemType = itemType;
+	public LayoutStructureItem(String parentItemId) {
 		_parentItemId = parentItemId;
 
 		_itemId = String.valueOf(UUID.randomUUID());
@@ -109,10 +108,6 @@ public abstract class LayoutStructureItem {
 		_itemId = itemId;
 	}
 
-	public void setItemType(String itemType) {
-		_itemType = itemType;
-	}
-
 	public void setParentItemId(String parentItemId) {
 		_parentItemId = parentItemId;
 	}
@@ -144,7 +139,6 @@ public abstract class LayoutStructureItem {
 	private List<String> _childrenItemIds;
 	private JSONObject _itemConfigJSONObject;
 	private String _itemId;
-	private String _itemType;
 	private String _parentItemId;
 
 }

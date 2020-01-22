@@ -12,9 +12,9 @@
  * details.
  */
 
-import getAllowEditorProcessor from './getAlloyEditorProcessor';
+import getAlloyEditorProcessor from './getAlloyEditorProcessor';
 
-export default getAllowEditorProcessor(
+export default getAlloyEditorProcessor(
 	'text',
 
 	element => {
@@ -35,17 +35,16 @@ export default getAllowEditorProcessor(
 		return element;
 	},
 
-	(element, value) => {
+	(element, value, config) => {
 		const anchor =
 			element instanceof HTMLAnchorElement
 				? element
 				: element.querySelector('a');
 
 		if (anchor) {
-			// TODO: process link configuration when we have
-			// their floating toolbar panel
-			anchor.href = 'javascript:void(0)';
+			anchor.href = config.href;
 			anchor.innerHTML = value;
+			anchor.target = config.target;
 		}
 	}
 );

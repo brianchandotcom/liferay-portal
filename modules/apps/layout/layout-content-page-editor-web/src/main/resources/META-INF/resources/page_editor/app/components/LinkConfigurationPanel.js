@@ -16,9 +16,10 @@ import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import React, {useState, useContext} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
-import {updateEditableValues} from '../actions/index';
+import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
+import updateEditableValues from '../thunks/updateEditableValues';
 
 const SOURCE_TYPES = {
 	fromContentField: 'fromContentField',
@@ -61,6 +62,7 @@ export default function LinkConfigurationPanel({item}) {
 	const [sourceType, setSourceType] = useState(SOURCE_TYPES.manual);
 
 	const {fragmentEntryLinks, segmentsExperienceId} = useContext(StoreContext);
+	const config = useContext(ConfigContext);
 	const dispatch = useContext(DispatchContext);
 
 	const editableValue =
@@ -93,6 +95,7 @@ export default function LinkConfigurationPanel({item}) {
 
 		dispatch(
 			updateEditableValues({
+				config,
 				editableValues: nextEditableValues,
 				fragmentEntryLinkId,
 				segmentsExperienceId
@@ -120,7 +123,7 @@ export default function LinkConfigurationPanel({item}) {
 					</label>
 					<ClayInput
 						id="floatingToolbarLinkHrefOption"
-						onChange={event => {
+						onBlur={event => {
 							updateRowConfig({href: event.target.value});
 						}}
 						type="text"

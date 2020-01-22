@@ -20,6 +20,8 @@ import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -33,6 +35,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -141,6 +144,15 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
+		if (searchHits == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("SearchHits object is null");
+			}
+
+			return new BaseModelSearchResult<>(
+				Collections.<User>emptyList(), 0);
+		}
+
 		List<User> users = TransformUtil.transform(
 			searchHits.getSearchHits(),
 			searchHit -> {
@@ -154,6 +166,9 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 		return new BaseModelSearchResult<>(
 			users, searchResponse.getTotalHits());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountUserRetrieverImpl.class);
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

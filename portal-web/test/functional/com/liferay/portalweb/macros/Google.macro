@@ -27,10 +27,6 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
-		if (IsElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
-			Click.clickNoSPARefresh(locator1 = "ProductMenu#TOGGLE");
-		}
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		AssertElementPresent(

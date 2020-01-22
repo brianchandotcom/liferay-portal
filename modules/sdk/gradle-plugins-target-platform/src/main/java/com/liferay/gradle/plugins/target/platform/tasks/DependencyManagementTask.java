@@ -14,8 +14,6 @@
 
 package com.liferay.gradle.plugins.target.platform.tasks;
 
-import com.alibaba.fastjson.JSON;
-
 import com.google.common.collect.Maps;
 
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
@@ -53,6 +51,8 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.options.Option;
 import org.gradle.api.tasks.options.OptionValues;
+
+import org.json.JSONObject;
 
 /**
  * @author Simon Jiang
@@ -108,6 +108,12 @@ public class DependencyManagementTask extends DefaultTask {
 	)
 	public void setOutputType(OutputType outputType) {
 		_outputType = outputType;
+	}
+
+	private String _generateJSON(Map<String, String> sortedVersions) {
+		JSONObject jsonObject = new JSONObject(sortedVersions);
+
+		return jsonObject.toString();
 	}
 
 	private String _generateXml(Map<String, String> managedVersions) {
@@ -265,7 +271,7 @@ public class DependencyManagementTask extends DefaultTask {
 				dependenciesOutput = _renderManagedVersions(sortedVersions);
 			}
 			else if (_outputType.equals(OutputType.json)) {
-				dependenciesOutput = JSON.toJSONString(sortedVersions);
+				dependenciesOutput = _generateJSON(sortedVersions);
 			}
 			else if (_outputType.equals(OutputType.xml)) {
 				dependenciesOutput = _generateXml(sortedVersions);

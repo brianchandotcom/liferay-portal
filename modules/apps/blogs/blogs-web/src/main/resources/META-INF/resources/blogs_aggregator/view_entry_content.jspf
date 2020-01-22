@@ -125,7 +125,10 @@
 				<div class="entry-social">
 					<div class="comments">
 						<a href="<%= viewEntryURL %>">
-							<i class="icon-comment icon-monospaced"></i>
+							<liferay-ui:icon
+								icon="comments"
+								markupView="lexicon"
+							/>
 
 							<span><%= String.valueOf(commentsCount) %></span>
 						</a>

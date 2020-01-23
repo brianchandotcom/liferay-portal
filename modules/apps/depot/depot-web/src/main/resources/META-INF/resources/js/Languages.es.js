@@ -60,7 +60,7 @@ const Languages = ({
 			manageCustomLanguagesURL,
 			{
 				customDefaultLocaleId,
-				customLocalesIds: customLocales.map(({localeId}) => localeId)
+				customLocales: JSON.stringify(customLocales)
 			}
 		);
 
@@ -71,13 +71,16 @@ const Languages = ({
 			url: url.toString()
 		});
 
-		console.log('eventName: ', `_${portletNamespace}_manageLanguages`);
-
 		itemSelectorDialog.open();
 
 		itemSelectorDialog.on('selectedItemChange', event => {
-			const selectedLanguages = event.selectedItem;
-			console.log(selectedLanguages);
+			const selectedItem = event.selectedItem;
+
+			if (selectedItem) {
+				const selectedLanguages = selectedItem.value;
+
+				setCustomLocales(selectedLanguages);
+			}
 		});
 	};
 

@@ -22,7 +22,7 @@ HashMap<String, Object> data = HashMapBuilder.<String, Object>put(
 ).put(
 	"customDefaultLocaleId", ParamUtil.getString(request, "customDefaultLocaleId")
 ).put(
-	"customLocalesIds", ParamUtil.getStringValues(request, "customLocalesIds")
+	"customLocales", ParamUtil.getStringValues(request, "customLocales")
 ).put(
 	"eventName", liferayPortletResponse.getNamespace() + "manageLanguages"
 ).

@@ -42,7 +42,7 @@ if (analyticsConfiguration != null) {
 		long[] syncedOrganizationIdsLong = new long[syncedOrganizationIds.length];
 
 		for (int i = 0; i < syncedOrganizationIds.length; i++) {
-			syncedOrganizationIdsLong[i] = Long.parseLong(syncedOrganizationIds[i]);
+			syncedOrganizationIdsLong[i] = GetterUtil.getLong(syncedOrganizationIds[i]);
 		}
 
 		String[] syncedUserGroupIds = analyticsConfiguration.syncedUserGroupIds();
@@ -50,7 +50,7 @@ if (analyticsConfiguration != null) {
 		long[] syncedUserGroupIdsLong = new long[syncedUserGroupIds.length];
 
 		for (int i = 0; i < syncedUserGroupIds.length; i++) {
-			syncedUserGroupIdsLong[i] = Long.parseLong(syncedUserGroupIds[i]);
+			syncedUserGroupIdsLong[i] = GetterUtil.getLong(syncedUserGroupIds[i]);
 		}
 
 		totalContactsSelected = analyticsUsersManager.getOrganizationsAndUserGroupsUsersCount(syncedOrganizationIdsLong, syncedUserGroupIdsLong);

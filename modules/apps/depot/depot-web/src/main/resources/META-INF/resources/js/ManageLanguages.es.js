@@ -21,27 +21,31 @@ import React, {useEffect, useState} from 'react';
 const ManageLanguages = ({
 	availableLocales,
 	customDefaultLocaleId,
-	customLocalesIds,
+	customLocales,
 	eventName,
 	portletNamespace
-}) => {
-	const [selectedLocalesIds, setSelectedLocalesIds] = useState(customLocalesIds);
+}) =>{
+	const [selectedLocales, setSelectedLocales] = useState(JSON.parse(customLocales));
 
-	const onChangeLocale = (checked, localeId) => {
+	const [selectedLocalesIds, setSelectedLocalesIds] = useState(selectedLocales.map(({localeId}) => localeId));
+
+	const onChangeLocale = (checked, displayName, selectedLocaleId) => {
 		if (checked) {
-			setSelectedLocalesIds(selectedLocalesIds.concat(localeId));
+			setSelectedLocales(selectedLocales.concat({displayName, localeId: selectedLocaleId}));
 		} else {
-			setSelectedLocalesIds(selectedLocalesIds.filter(id => (id != localeId)));
+			setSelectedLocales(selectedLocales.filter(({localeId}) => (localeId != selectedLocaleId)));
 		}
 	}
 
 	useEffect(() => {
 		Liferay.Util.getOpener().Liferay.fire(eventName, {
 			data: {
-				value: selectedLocalesIds
+				value: selectedLocales
 			}
 		});
-	}, [selectedLocalesIds])
+
+		setSelectedLocalesIds(selectedLocales.map(({localeId}) => localeId));
+	}, [selectedLocales])
 
 	const Language = ({displayName, isDefault, localeId}) => {
 		const checked = selectedLocalesIds.indexOf(localeId) != -1;
@@ -52,7 +56,7 @@ const ManageLanguages = ({
 					<ClayCheckbox
 						checked={checked}
 						disabled={isDefault}
-						onChange={() => {onChangeLocale(!checked, localeId)}}
+						onChange={() => {onChangeLocale(!checked, displayName, localeId)}}
 					/>
 				</ClayTable.Cell>
 
@@ -104,7 +108,7 @@ ManageLanguages.propTypes = {
 		})
 	).isRequired,
 	customDefaultLocaleId: PropTypes.string.isRequired,
-	customLocalesIds: PropTypes.array.isRequired,
+	customLocales: PropTypes.string.isRequired,
 	eventName: PropTypes.string,
 	portletNamespace: PropTypes.string
 }

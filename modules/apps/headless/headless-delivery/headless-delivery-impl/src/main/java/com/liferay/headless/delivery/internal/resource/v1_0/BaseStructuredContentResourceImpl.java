@@ -639,7 +639,7 @@ public abstract class BaseStructuredContentResourceImpl
 				role -> PermissionUtil.toPermission(
 					contextCompany.getCompanyId(), structuredContentId,
 					resourceActionLocalService.getResourceActions(
-						getPermissionCheckerResourceName()),
+						getPermissionCheckerActionsResourceName()),
 					getPermissionCheckerResourceName(),
 					resourcePermissionLocalService, role)));
 	}
@@ -756,6 +756,10 @@ public abstract class BaseStructuredContentResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
 				Long structuredContentId)
 		throws Exception {
+	}
+
+	protected String getPermissionCheckerActionsResourceName() {
+		return getPermissionCheckerResourceName();
 	}
 
 	protected String getPermissionCheckerResourceName() {

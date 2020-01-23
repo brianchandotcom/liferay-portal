@@ -107,13 +107,12 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 					return Page.of(
 						transform(
 							PermissionUtil.getRoles(
-								contextCompany, roleLocalService,
-								StringUtil.split(roleNames)),
+								contextCompany, roleLocalService, StringUtil.split(roleNames)),
 							role -> PermissionUtil.toPermission(
 								contextCompany.getCompanyId(), ${schemaVarName}Id,
 								resourceActionLocalService.getResourceActions(
-									getPermissionCheckerResourceName()),getPermissionCheckerResourceName(),resourcePermissionLocalService,
-	role)));
+									getPermissionCheckerActionsResourceName()),
+								getPermissionCheckerResourceName(), resourcePermissionLocalService, role)));
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.String")>
 				return StringPool.BLANK;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "javax.ws.rs.core.Response")>
@@ -148,7 +147,10 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	</#list>
 
 	<#list javaMethodSignatures as javaMethodSignature>
-		<#if javaMethodSignature.methodName?contains("Permission")>
+		<#if stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "Permission") || stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "PermissionsPage")>
+			protected String getPermissionCheckerActionsResourceName() {
+				return getPermissionCheckerResourceName();
+			}
 			protected String getPermissionCheckerResourceName() {
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			}

@@ -18,6 +18,7 @@ import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutColumn;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPage;
@@ -34,6 +35,7 @@ import com.liferay.data.engine.rest.internal.security.permission.resource.DataDe
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
+import com.liferay.data.engine.spi.resource.SPIDataLayoutResource;
 import com.liferay.data.engine.spi.resource.SPIDataRecordCollectionResource;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
@@ -348,6 +350,16 @@ public class DataDefinitionResourceImpl
 	}
 
 	@Override
+	public DataDefinitionLayout postDataDefinitionByContentTypeDataLayout(
+			String contentType, DataDefinitionLayout dataDefinitionLayout)
+		throws Exception {
+
+		return postSiteDataDefinitionByContentTypeDataLayout(
+			_portal.getSiteGroupId(contextCompany.getGroupId()), contentType,
+			dataDefinitionLayout);
+	}
+
+	@Override
 	public DataDefinition postSiteDataDefinitionByContentType(
 			Long siteId, String contentType, DataDefinition dataDefinition)
 		throws Exception {
@@ -397,12 +409,40 @@ public class DataDefinitionResourceImpl
 					_portal, _resourceLocalService,
 					DataRecordCollectionUtil::toDataRecordCollection);
 
-		spiDataRecordCollectionResource.addDataDefinitionDataRecordCollection(
-			contextCompany, dataDefinition.getId(),
-			dataDefinition.getDataDefinitionKey(),
+		spiDataRecordCollectionResource.addDataRecordCollection(
+			dataDefinition.getId(), dataDefinition.getDataDefinitionKey(),
 			dataDefinition.getDescription(), dataDefinition.getName());
 
 		return dataDefinition;
+	}
+
+	@Override
+	public DataDefinitionLayout postSiteDataDefinitionByContentTypeDataLayout(
+			Long siteId, String contentType,
+			DataDefinitionLayout dataDefinitionLayout)
+		throws Exception {
+
+		DataDefinition dataDefinition = postSiteDataDefinitionByContentType(
+			siteId, contentType, dataDefinitionLayout.getDataDefinition());
+
+		DataLayout dataLayout = dataDefinitionLayout.getDataLayout();
+
+		dataLayout.setDataLayoutKey(dataDefinition.getDataDefinitionKey());
+
+		SPIDataLayoutResource<DataLayout> spiDataLayoutResource =
+			_getSPIDataLayoutResource();
+
+		dataDefinitionLayout = new DataDefinitionLayout();
+
+		dataDefinitionLayout.setDataDefinition(dataDefinition);
+		dataDefinitionLayout.setDataLayout(
+			spiDataLayoutResource.addDataLayout(
+				dataDefinition.getId(),
+				DataLayoutUtil.serialize(dataLayout, _ddmFormLayoutSerializer),
+				dataLayout.getDataLayoutKey(), dataLayout.getDescription(),
+				dataLayout.getName()));
+
+		return dataDefinitionLayout;
 	}
 
 	@Override
@@ -577,6 +617,14 @@ public class DataDefinitionResourceImpl
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass()),
 			_portal.getResourceBundle(locale));
+	}
+
+	private SPIDataLayoutResource _getSPIDataLayoutResource() {
+		return new SPIDataLayoutResource<>(
+			_ddmFormLayoutSerializer, _ddmStructureLayoutLocalService,
+			_ddmStructureLocalService, _ddmStructureVersionLocalService,
+			_deDataDefinitionFieldLinkLocalService,
+			DataLayoutUtil::toDataLayout);
 	}
 
 	private String[] _removeFieldNames(

@@ -20,7 +20,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 
 import {ItemSelectorDialog} from 'frontend-js-web';
 
@@ -53,7 +53,17 @@ const Languages = ({
 		setLanguageTranslationWarning
 	] = useState(false);
 
-	const form = document[`_${portletNamespace}_fm`];
+	const form = document[`_${portletNamespace}_fm`]; //TODO delete
+
+	const customLocalesInputRef = useRef();
+
+	useEffect(() => {
+		console.log('useEffect customLocalesChanged', customLocales);
+
+		const localesIds = customLocales.map(({localeId}) => localeId);
+
+		customLocalesInputRef.current.value = localesIds.join(',');
+	}, [customLocales]);
 
 	const handleAddClick = () => {
 		var url = Liferay.Util.PortletURL.createPortletURL(
@@ -99,6 +109,7 @@ const Languages = ({
 				item: event.currentTarget
 			});
 
+			//TODO delete and put in an input element
 			Liferay.Util.setFormValues(form, {
 				languageId: localeId
 			});
@@ -211,11 +222,19 @@ const Languages = ({
 			)}
 
 			{!selectedRadioGroupValue && (
-				<LanguagesList
-					defaultLocaleId={customDefaultLocaleId}
-					locales={customLocales}
-					showActions
-				/>
+				<>
+					<input
+						name={`_${portletNamespace}_TypeSettingsProperties--locales--`}
+						ref={customLocalesInputRef}
+						type="hidden"
+					/>
+
+					<LanguagesList
+						defaultLocaleId={customDefaultLocaleId}
+						locales={customLocales}
+						showActions
+					/>
+				</>
 			)}
 
 			{languageWarning && (

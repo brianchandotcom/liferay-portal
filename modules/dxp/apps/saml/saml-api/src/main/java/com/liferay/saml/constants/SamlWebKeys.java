@@ -69,6 +69,8 @@ public interface SamlWebKeys {
 
 	public static final String SAML_SP_SESSION_KEY = "SAML_SP_SESSION_KEY";
 
+	public static final String SAML_SSO_ERROR = "SAML_SSO_ERROR";
+
 	public static final String SAML_SSO_LOGIN_CONTEXT =
 		"SAML_SSO_LOGIN_CONTEXT";
 
@@ -76,6 +78,9 @@ public interface SamlWebKeys {
 		"SAML_SSO_REQUEST_CONTEXT";
 
 	public static final String SAML_SSO_SESSION_ID = "SAML_SSO_SESSION_ID";
+
+	public static final String SAML_SUBJECT_SCREEN_NAME =
+		"SAML_SUBJECT_SCREEN_NAME";
 
 	public static final String SAML_X509_CERTIFICATE = "SAML_X509_CERTIFICATE";
 

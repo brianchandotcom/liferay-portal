@@ -88,6 +88,7 @@
 		<field name="enabled" type="boolean" />
 		<field name="forceAuthn" type="boolean" />
 		<field name="ldapImportEnabled" type="boolean" />
+		<field name="unknownUsersAreStrangers" type="boolean" />
 		<field name="metadataUrl" type="String">
 			<hint-collection name="ENTITY-ID" />
 		</field>

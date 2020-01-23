@@ -64,7 +64,7 @@ public class SamlSpIdpConnectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{samlSpIdpConnectionId=");
 		sb.append(samlSpIdpConnectionId);
@@ -90,6 +90,8 @@ public class SamlSpIdpConnectionCacheModel
 		sb.append(forceAuthn);
 		sb.append(", ldapImportEnabled=");
 		sb.append(ldapImportEnabled);
+		sb.append(", unknownUsersAreStrangers=");
+		sb.append(unknownUsersAreStrangers);
 		sb.append(", metadataUrl=");
 		sb.append(metadataUrl);
 		sb.append(", metadataXml=");
@@ -152,6 +154,8 @@ public class SamlSpIdpConnectionCacheModel
 		samlSpIdpConnectionImpl.setEnabled(enabled);
 		samlSpIdpConnectionImpl.setForceAuthn(forceAuthn);
 		samlSpIdpConnectionImpl.setLdapImportEnabled(ldapImportEnabled);
+		samlSpIdpConnectionImpl.setUnknownUsersAreStrangers(
+			unknownUsersAreStrangers);
 
 		if (metadataUrl == null) {
 			samlSpIdpConnectionImpl.setMetadataUrl("");
@@ -225,6 +229,8 @@ public class SamlSpIdpConnectionCacheModel
 		forceAuthn = objectInput.readBoolean();
 
 		ldapImportEnabled = objectInput.readBoolean();
+
+		unknownUsersAreStrangers = objectInput.readBoolean();
 		metadataUrl = objectInput.readUTF();
 		metadataXml = objectInput.readUTF();
 		metadataUpdatedDate = objectInput.readLong();
@@ -269,6 +275,8 @@ public class SamlSpIdpConnectionCacheModel
 		objectOutput.writeBoolean(forceAuthn);
 
 		objectOutput.writeBoolean(ldapImportEnabled);
+
+		objectOutput.writeBoolean(unknownUsersAreStrangers);
 
 		if (metadataUrl == null) {
 			objectOutput.writeUTF("");
@@ -322,6 +330,7 @@ public class SamlSpIdpConnectionCacheModel
 	public boolean enabled;
 	public boolean forceAuthn;
 	public boolean ldapImportEnabled;
+	public boolean unknownUsersAreStrangers;
 	public String metadataUrl;
 	public String metadataXml;
 	public long metadataUpdatedDate;

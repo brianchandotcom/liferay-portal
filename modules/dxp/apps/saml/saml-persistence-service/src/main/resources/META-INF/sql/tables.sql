@@ -64,6 +64,7 @@ create table SamlSpIdpConnection (
 	enabled BOOLEAN,
 	forceAuthn BOOLEAN,
 	ldapImportEnabled BOOLEAN,
+	unknownUsersAreStrangers BOOLEAN,
 	metadataUrl VARCHAR(1024) null,
 	metadataXml TEXT null,
 	metadataUpdatedDate DATE null,

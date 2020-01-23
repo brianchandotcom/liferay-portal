@@ -157,125 +157,35 @@ exports[`Should expand tab items 1`] = `
                       }
                       path="/metrics/:processId/completed"
                     >
-                      <withRouter()
+                      <ChildLink
                         aria-label="current-page"
                         className="active nav-link"
                         to="/metrics/35135/completed"
                       >
-                        <Component
+                        <Link
                           aria-label="current-page"
                           className="active nav-link"
-                          history={
+                          to={
                             Object {
-                              "action": "POP",
-                              "block": [Function],
-                              "canGo": [Function],
-                              "createHref": [Function],
-                              "entries": Array [
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                              ],
-                              "go": [Function],
-                              "goBack": [Function],
-                              "goForward": [Function],
-                              "index": 0,
-                              "length": 1,
-                              "listen": [Function],
-                              "location": Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                              "push": [Function],
-                              "replace": [Function],
+                              "pathname": "/metrics/35135/completed",
+                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
                             }
                           }
-                          location={
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            }
-                          }
-                          match={
-                            Object {
-                              "isExact": true,
-                              "params": Object {
-                                "page": "1",
-                                "pageSize": "20",
-                                "sort": "title:asc",
-                              },
-                              "path": "/:page/:pageSize/:sort",
-                              "url": "/1/20/title%3Aasc",
-                            }
-                          }
-                          to="/metrics/35135/completed"
                         >
-                          <ChildLinkWrapper
+                          <a
                             aria-label="current-page"
-                            backPath="/"
                             className="active nav-link"
-                            currentPath="/1/20/title%3Aasc?backPath=%2F"
-                            history={
-                              Object {
-                                "action": "POP",
-                                "block": [Function],
-                                "canGo": [Function],
-                                "createHref": [Function],
-                                "entries": Array [
-                                  Object {
-                                    "hash": "",
-                                    "pathname": "/1/20/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                ],
-                                "go": [Function],
-                                "goBack": [Function],
-                                "goForward": [Function],
-                                "index": 0,
-                                "length": 1,
-                                "listen": [Function],
-                                "location": Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                                "push": [Function],
-                                "replace": [Function],
-                              }
-                            }
-                            page="1"
-                            pageSize="20"
-                            sort="title:asc"
-                            to="/metrics/35135/completed"
+                            href="/metrics/35135/completed?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                            onClick={[Function]}
                           >
-                            <Link
-                              className="active nav-link"
-                              to={
-                                Object {
-                                  "pathname": "/metrics/35135/completed",
-                                  "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                                }
-                              }
+                            <span
+                              className="navbar-text-truncate"
                             >
-                              <a
-                                className="active nav-link"
-                                href="/metrics/35135/completed?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                                onClick={[Function]}
-                              >
-                                <span
-                                  className="navbar-text-truncate"
-                                >
-                                  completed
-                                </span>
-                              </a>
-                            </Link>
-                          </ChildLinkWrapper>
-                        </Component>
-                      </withRouter()>
+                              completed
+                            </span>
+                          </a>
+                        </Link>
+                      </ChildLink>
                     </TabItem>
                   </li>
                   <li
@@ -294,125 +204,35 @@ exports[`Should expand tab items 1`] = `
                       }
                       path="/metrics/:processId/pending"
                     >
-                      <withRouter()
+                      <ChildLink
                         aria-label=""
                         className=" nav-link"
                         to="/metrics/35135/pending"
                       >
-                        <Component
+                        <Link
                           aria-label=""
                           className=" nav-link"
-                          history={
+                          to={
                             Object {
-                              "action": "POP",
-                              "block": [Function],
-                              "canGo": [Function],
-                              "createHref": [Function],
-                              "entries": Array [
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                              ],
-                              "go": [Function],
-                              "goBack": [Function],
-                              "goForward": [Function],
-                              "index": 0,
-                              "length": 1,
-                              "listen": [Function],
-                              "location": Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                              "push": [Function],
-                              "replace": [Function],
+                              "pathname": "/metrics/35135/pending",
+                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
                             }
                           }
-                          location={
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            }
-                          }
-                          match={
-                            Object {
-                              "isExact": true,
-                              "params": Object {
-                                "page": "1",
-                                "pageSize": "20",
-                                "sort": "title:asc",
-                              },
-                              "path": "/:page/:pageSize/:sort",
-                              "url": "/1/20/title%3Aasc",
-                            }
-                          }
-                          to="/metrics/35135/pending"
                         >
-                          <ChildLinkWrapper
+                          <a
                             aria-label=""
-                            backPath="/"
                             className=" nav-link"
-                            currentPath="/1/20/title%3Aasc?backPath=%2F"
-                            history={
-                              Object {
-                                "action": "POP",
-                                "block": [Function],
-                                "canGo": [Function],
-                                "createHref": [Function],
-                                "entries": Array [
-                                  Object {
-                                    "hash": "",
-                                    "pathname": "/1/20/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                ],
-                                "go": [Function],
-                                "goBack": [Function],
-                                "goForward": [Function],
-                                "index": 0,
-                                "length": 1,
-                                "listen": [Function],
-                                "location": Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                                "push": [Function],
-                                "replace": [Function],
-                              }
-                            }
-                            page="1"
-                            pageSize="20"
-                            sort="title:asc"
-                            to="/metrics/35135/pending"
+                            href="/metrics/35135/pending?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                            onClick={[Function]}
                           >
-                            <Link
-                              className=" nav-link"
-                              to={
-                                Object {
-                                  "pathname": "/metrics/35135/pending",
-                                  "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                                }
-                              }
+                            <span
+                              className="navbar-text-truncate"
                             >
-                              <a
-                                className=" nav-link"
-                                href="/metrics/35135/pending?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                                onClick={[Function]}
-                              >
-                                <span
-                                  className="navbar-text-truncate"
-                                >
-                                  pending
-                                </span>
-                              </a>
-                            </Link>
-                          </ChildLinkWrapper>
-                        </Component>
-                      </withRouter()>
+                              pending
+                            </span>
+                          </a>
+                        </Link>
+                      </ChildLink>
                     </TabItem>
                   </li>
                 </ul>
@@ -583,125 +403,35 @@ exports[`Should hide tab items 1`] = `
                       }
                       path="/metrics/:processId/completed"
                     >
-                      <withRouter()
+                      <ChildLink
                         aria-label="current-page"
                         className="active nav-link"
                         to="/metrics/35135/completed"
                       >
-                        <Component
+                        <Link
                           aria-label="current-page"
                           className="active nav-link"
-                          history={
+                          to={
                             Object {
-                              "action": "POP",
-                              "block": [Function],
-                              "canGo": [Function],
-                              "createHref": [Function],
-                              "entries": Array [
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                              ],
-                              "go": [Function],
-                              "goBack": [Function],
-                              "goForward": [Function],
-                              "index": 0,
-                              "length": 1,
-                              "listen": [Function],
-                              "location": Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                              "push": [Function],
-                              "replace": [Function],
+                              "pathname": "/metrics/35135/completed",
+                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
                             }
                           }
-                          location={
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            }
-                          }
-                          match={
-                            Object {
-                              "isExact": true,
-                              "params": Object {
-                                "page": "1",
-                                "pageSize": "20",
-                                "sort": "title:asc",
-                              },
-                              "path": "/:page/:pageSize/:sort",
-                              "url": "/1/20/title%3Aasc",
-                            }
-                          }
-                          to="/metrics/35135/completed"
                         >
-                          <ChildLinkWrapper
+                          <a
                             aria-label="current-page"
-                            backPath="/"
                             className="active nav-link"
-                            currentPath="/1/20/title%3Aasc?backPath=%2F"
-                            history={
-                              Object {
-                                "action": "POP",
-                                "block": [Function],
-                                "canGo": [Function],
-                                "createHref": [Function],
-                                "entries": Array [
-                                  Object {
-                                    "hash": "",
-                                    "pathname": "/1/20/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                ],
-                                "go": [Function],
-                                "goBack": [Function],
-                                "goForward": [Function],
-                                "index": 0,
-                                "length": 1,
-                                "listen": [Function],
-                                "location": Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                                "push": [Function],
-                                "replace": [Function],
-                              }
-                            }
-                            page="1"
-                            pageSize="20"
-                            sort="title:asc"
-                            to="/metrics/35135/completed"
+                            href="/metrics/35135/completed?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                            onClick={[Function]}
                           >
-                            <Link
-                              className="active nav-link"
-                              to={
-                                Object {
-                                  "pathname": "/metrics/35135/completed",
-                                  "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                                }
-                              }
+                            <span
+                              className="navbar-text-truncate"
                             >
-                              <a
-                                className="active nav-link"
-                                href="/metrics/35135/completed?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                                onClick={[Function]}
-                              >
-                                <span
-                                  className="navbar-text-truncate"
-                                >
-                                  completed
-                                </span>
-                              </a>
-                            </Link>
-                          </ChildLinkWrapper>
-                        </Component>
-                      </withRouter()>
+                              completed
+                            </span>
+                          </a>
+                        </Link>
+                      </ChildLink>
                     </TabItem>
                   </li>
                   <li
@@ -720,125 +450,35 @@ exports[`Should hide tab items 1`] = `
                       }
                       path="/metrics/:processId/pending"
                     >
-                      <withRouter()
+                      <ChildLink
                         aria-label=""
                         className=" nav-link"
                         to="/metrics/35135/pending"
                       >
-                        <Component
+                        <Link
                           aria-label=""
                           className=" nav-link"
-                          history={
+                          to={
                             Object {
-                              "action": "POP",
-                              "block": [Function],
-                              "canGo": [Function],
-                              "createHref": [Function],
-                              "entries": Array [
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                              ],
-                              "go": [Function],
-                              "goBack": [Function],
-                              "goForward": [Function],
-                              "index": 0,
-                              "length": 1,
-                              "listen": [Function],
-                              "location": Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                              "push": [Function],
-                              "replace": [Function],
+                              "pathname": "/metrics/35135/pending",
+                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
                             }
                           }
-                          location={
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            }
-                          }
-                          match={
-                            Object {
-                              "isExact": true,
-                              "params": Object {
-                                "page": "1",
-                                "pageSize": "20",
-                                "sort": "title:asc",
-                              },
-                              "path": "/:page/:pageSize/:sort",
-                              "url": "/1/20/title%3Aasc",
-                            }
-                          }
-                          to="/metrics/35135/pending"
                         >
-                          <ChildLinkWrapper
+                          <a
                             aria-label=""
-                            backPath="/"
                             className=" nav-link"
-                            currentPath="/1/20/title%3Aasc?backPath=%2F"
-                            history={
-                              Object {
-                                "action": "POP",
-                                "block": [Function],
-                                "canGo": [Function],
-                                "createHref": [Function],
-                                "entries": Array [
-                                  Object {
-                                    "hash": "",
-                                    "pathname": "/1/20/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                ],
-                                "go": [Function],
-                                "goBack": [Function],
-                                "goForward": [Function],
-                                "index": 0,
-                                "length": 1,
-                                "listen": [Function],
-                                "location": Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                                "push": [Function],
-                                "replace": [Function],
-                              }
-                            }
-                            page="1"
-                            pageSize="20"
-                            sort="title:asc"
-                            to="/metrics/35135/pending"
+                            href="/metrics/35135/pending?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                            onClick={[Function]}
                           >
-                            <Link
-                              className=" nav-link"
-                              to={
-                                Object {
-                                  "pathname": "/metrics/35135/pending",
-                                  "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                                }
-                              }
+                            <span
+                              className="navbar-text-truncate"
                             >
-                              <a
-                                className=" nav-link"
-                                href="/metrics/35135/pending?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                                onClick={[Function]}
-                              >
-                                <span
-                                  className="navbar-text-truncate"
-                                >
-                                  pending
-                                </span>
-                              </a>
-                            </Link>
-                          </ChildLinkWrapper>
-                        </Component>
-                      </withRouter()>
+                              pending
+                            </span>
+                          </a>
+                        </Link>
+                      </ChildLink>
                     </TabItem>
                   </li>
                 </ul>
@@ -893,6 +533,7 @@ exports[`Should render component 1`] = `
             onClick={[Function]}
           >
             <a
+              aria-label=""
               className=" nav-link"
               href="/metrics/35135/completed?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
               onClick={[Function]}
@@ -909,6 +550,7 @@ exports[`Should render component 1`] = `
             onClick={[Function]}
           >
             <a
+              aria-label="current-page"
               className="active nav-link"
               href="/metrics/35135/pending?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
               onClick={[Function]}

@@ -248,132 +248,42 @@ exports[`Should cancel dialog through SLA List 1`] = `
                       data-tooltip-align="bottom"
                       title="new-sla"
                     >
-                      <withRouter()
+                      <ChildLink
                         className="btn btn-primary nav-btn nav-btn-monospaced"
                         to="/sla/new/undefined"
                       >
-                        <Component
+                        <Link
                           className="btn btn-primary nav-btn nav-btn-monospaced"
-                          history={
+                          to={
                             Object {
-                              "action": "POP",
-                              "block": [Function],
-                              "canGo": [Function],
-                              "createHref": [Function],
-                              "entries": Array [
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                              ],
-                              "go": [Function],
-                              "goBack": [Function],
-                              "goForward": [Function],
-                              "index": 0,
-                              "length": 1,
-                              "listen": [Function],
-                              "location": Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                              "push": [Function],
-                              "replace": [Function],
+                              "pathname": "/sla/new/undefined",
+                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
                             }
                           }
-                          location={
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            }
-                          }
-                          match={
-                            Object {
-                              "isExact": true,
-                              "params": Object {
-                                "page": "1",
-                                "pageSize": "20",
-                                "sort": "title:asc",
-                              },
-                              "path": "/:page/:pageSize/:sort",
-                              "url": "/1/20/title%3Aasc",
-                            }
-                          }
-                          to="/sla/new/undefined"
                         >
-                          <ChildLinkWrapper
-                            backPath="/"
+                          <a
                             className="btn btn-primary nav-btn nav-btn-monospaced"
-                            currentPath="/1/20/title%3Aasc?backPath=%2F"
-                            history={
-                              Object {
-                                "action": "POP",
-                                "block": [Function],
-                                "canGo": [Function],
-                                "createHref": [Function],
-                                "entries": Array [
-                                  Object {
-                                    "hash": "",
-                                    "pathname": "/1/20/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                ],
-                                "go": [Function],
-                                "goBack": [Function],
-                                "goForward": [Function],
-                                "index": 0,
-                                "length": 1,
-                                "listen": [Function],
-                                "location": Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                                "push": [Function],
-                                "replace": [Function],
-                              }
-                            }
-                            page="1"
-                            pageSize="20"
-                            sort="title:asc"
-                            to="/sla/new/undefined"
+                            href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                            onClick={[Function]}
                           >
-                            <Link
-                              className="btn btn-primary nav-btn nav-btn-monospaced"
-                              to={
-                                Object {
-                                  "pathname": "/sla/new/undefined",
-                                  "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                                }
-                              }
+                            <Icon
+                              iconName="plus"
                             >
-                              <a
-                                className="btn btn-primary nav-btn nav-btn-monospaced"
-                                href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                                onClick={[Function]}
-                              >
-                                <Icon
-                                  iconName="plus"
-                                >
-                                  <svg
-                                    className="lexicon-icon lexicon-icon-plus"
-                                    dangerouslySetInnerHTML={
-                                      Object {
-                                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                      }
-                                    }
-                                    data-testid="icon"
-                                    focusable="false"
-                                    role="presentation"
-                                  />
-                                </Icon>
-                              </a>
-                            </Link>
-                          </ChildLinkWrapper>
-                        </Component>
-                      </withRouter()>
+                              <svg
+                                className="lexicon-icon lexicon-icon-plus"
+                                dangerouslySetInnerHTML={
+                                  Object {
+                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                  }
+                                }
+                                data-testid="icon"
+                                focusable="false"
+                                role="presentation"
+                              />
+                            </Icon>
+                          </a>
+                        </Link>
+                      </ChildLink>
                     </span>
                   </span>
                 </TooltipProvider>
@@ -521,132 +431,42 @@ exports[`Should cancel dialog through SLA List 2`] = `
                       data-tooltip-align="bottom"
                       title="new-sla"
                     >
-                      <withRouter()
+                      <ChildLink
                         className="btn btn-primary nav-btn nav-btn-monospaced"
                         to="/sla/new/undefined"
                       >
-                        <Component
+                        <Link
                           className="btn btn-primary nav-btn nav-btn-monospaced"
-                          history={
+                          to={
                             Object {
-                              "action": "POP",
-                              "block": [Function],
-                              "canGo": [Function],
-                              "createHref": [Function],
-                              "entries": Array [
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                              ],
-                              "go": [Function],
-                              "goBack": [Function],
-                              "goForward": [Function],
-                              "index": 0,
-                              "length": 1,
-                              "listen": [Function],
-                              "location": Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                              "push": [Function],
-                              "replace": [Function],
+                              "pathname": "/sla/new/undefined",
+                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
                             }
                           }
-                          location={
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            }
-                          }
-                          match={
-                            Object {
-                              "isExact": true,
-                              "params": Object {
-                                "page": "1",
-                                "pageSize": "20",
-                                "sort": "title:asc",
-                              },
-                              "path": "/:page/:pageSize/:sort",
-                              "url": "/1/20/title%3Aasc",
-                            }
-                          }
-                          to="/sla/new/undefined"
                         >
-                          <ChildLinkWrapper
-                            backPath="/"
+                          <a
                             className="btn btn-primary nav-btn nav-btn-monospaced"
-                            currentPath="/1/20/title%3Aasc?backPath=%2F"
-                            history={
-                              Object {
-                                "action": "POP",
-                                "block": [Function],
-                                "canGo": [Function],
-                                "createHref": [Function],
-                                "entries": Array [
-                                  Object {
-                                    "hash": "",
-                                    "pathname": "/1/20/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                ],
-                                "go": [Function],
-                                "goBack": [Function],
-                                "goForward": [Function],
-                                "index": 0,
-                                "length": 1,
-                                "listen": [Function],
-                                "location": Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                                "push": [Function],
-                                "replace": [Function],
-                              }
-                            }
-                            page="1"
-                            pageSize="20"
-                            sort="title:asc"
-                            to="/sla/new/undefined"
+                            href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                            onClick={[Function]}
                           >
-                            <Link
-                              className="btn btn-primary nav-btn nav-btn-monospaced"
-                              to={
-                                Object {
-                                  "pathname": "/sla/new/undefined",
-                                  "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                                }
-                              }
+                            <Icon
+                              iconName="plus"
                             >
-                              <a
-                                className="btn btn-primary nav-btn nav-btn-monospaced"
-                                href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                                onClick={[Function]}
-                              >
-                                <Icon
-                                  iconName="plus"
-                                >
-                                  <svg
-                                    className="lexicon-icon lexicon-icon-plus"
-                                    dangerouslySetInnerHTML={
-                                      Object {
-                                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                      }
-                                    }
-                                    data-testid="icon"
-                                    focusable="false"
-                                    role="presentation"
-                                  />
-                                </Icon>
-                              </a>
-                            </Link>
-                          </ChildLinkWrapper>
-                        </Component>
-                      </withRouter()>
+                              <svg
+                                className="lexicon-icon lexicon-icon-plus"
+                                dangerouslySetInnerHTML={
+                                  Object {
+                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                  }
+                                }
+                                data-testid="icon"
+                                focusable="false"
+                                role="presentation"
+                              />
+                            </Icon>
+                          </a>
+                        </Link>
+                      </ChildLink>
                     </span>
                   </span>
                 </TooltipProvider>

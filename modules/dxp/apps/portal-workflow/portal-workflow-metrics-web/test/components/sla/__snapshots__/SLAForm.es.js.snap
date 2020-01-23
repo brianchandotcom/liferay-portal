@@ -558,110 +558,22 @@ exports[`Should display error on alert when receive a server error after submit 
                 <div
                   className="btn-group-item"
                 >
-                  <withRouter()
+                  <BackLink
                     className="btn btn-secondary"
                   >
-                    <Component
+                    <Link
                       className="btn btn-secondary"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
+                      to="/"
                     >
-                      <BackLinkWrapper
-                        backPath="/"
+                      <a
                         className="btn btn-secondary"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
+                        href="/"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="btn btn-secondary"
-                          to="/"
-                        >
-                          <a
-                            className="btn btn-secondary"
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            cancel
-                          </a>
-                        </Link>
-                      </BackLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        cancel
+                      </a>
+                    </Link>
+                  </BackLink>
                 </div>
               </div>
             </div>
@@ -1231,110 +1143,22 @@ exports[`Should display error on field when receive a server error after submit 
                 <div
                   className="btn-group-item"
                 >
-                  <withRouter()
+                  <BackLink
                     className="btn btn-secondary"
                   >
-                    <Component
+                    <Link
                       className="btn btn-secondary"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
+                      to="/"
                     >
-                      <BackLinkWrapper
-                        backPath="/"
+                      <a
                         className="btn btn-secondary"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
+                        href="/"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="btn btn-secondary"
-                          to="/"
-                        >
-                          <a
-                            className="btn btn-secondary"
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            cancel
-                          </a>
-                        </Link>
-                      </BackLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        cancel
+                      </a>
+                    </Link>
+                  </BackLink>
                 </div>
               </div>
             </div>
@@ -1907,110 +1731,22 @@ exports[`Should edit the SLA with valid values 1`] = `
                 <div
                   className="btn-group-item"
                 >
-                  <withRouter()
+                  <BackLink
                     className="btn btn-secondary"
                   >
-                    <Component
+                    <Link
                       className="btn btn-secondary"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
+                      to="/"
                     >
-                      <BackLinkWrapper
-                        backPath="/"
+                      <a
                         className="btn btn-secondary"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
+                        href="/"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="btn btn-secondary"
-                          to="/"
-                        >
-                          <a
-                            className="btn btn-secondary"
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            cancel
-                          </a>
-                        </Link>
-                      </BackLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        cancel
+                      </a>
+                    </Link>
+                  </BackLink>
                 </div>
               </div>
             </div>
@@ -2574,110 +2310,22 @@ exports[`Should redirect to SLA list 1`] = `
                 <div
                   className="btn-group-item"
                 >
-                  <withRouter()
+                  <BackLink
                     className="btn btn-secondary"
                   >
-                    <Component
+                    <Link
                       className="btn btn-secondary"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
+                      to="/"
                     >
-                      <BackLinkWrapper
-                        backPath="/"
+                      <a
                         className="btn btn-secondary"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
+                        href="/"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="btn btn-secondary"
-                          to="/"
-                        >
-                          <a
-                            className="btn btn-secondary"
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            cancel
-                          </a>
-                        </Link>
-                      </BackLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        cancel
+                      </a>
+                    </Link>
+                  </BackLink>
                 </div>
               </div>
             </div>
@@ -3250,110 +2898,22 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                 <div
                   className="btn-group-item"
                 >
-                  <withRouter()
+                  <BackLink
                     className="btn btn-secondary"
                   >
-                    <Component
+                    <Link
                       className="btn btn-secondary"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
+                      to="/"
                     >
-                      <BackLinkWrapper
-                        backPath="/"
+                      <a
                         className="btn btn-secondary"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
+                        href="/"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="btn btn-secondary"
-                          to="/"
-                        >
-                          <a
-                            className="btn btn-secondary"
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            cancel
-                          </a>
-                        </Link>
-                      </BackLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        cancel
+                      </a>
+                    </Link>
+                  </BackLink>
                 </div>
               </div>
             </div>
@@ -3969,110 +3529,22 @@ exports[`Should render component 1`] = `
                     <div
                       className="btn-group-item"
                     >
-                      <withRouter()
+                      <BackLink
                         className="btn btn-secondary"
                       >
-                        <Component
+                        <Link
                           className="btn btn-secondary"
-                          history={
-                            Object {
-                              "action": "POP",
-                              "block": [Function],
-                              "canGo": [Function],
-                              "createHref": [Function],
-                              "entries": Array [
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                              ],
-                              "go": [Function],
-                              "goBack": [Function],
-                              "goForward": [Function],
-                              "index": 0,
-                              "length": 1,
-                              "listen": [Function],
-                              "location": Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                              "push": [Function],
-                              "replace": [Function],
-                            }
-                          }
-                          location={
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            }
-                          }
-                          match={
-                            Object {
-                              "isExact": true,
-                              "params": Object {
-                                "page": "1",
-                                "pageSize": "20",
-                                "sort": "title:asc",
-                              },
-                              "path": "/:page/:pageSize/:sort",
-                              "url": "/1/20/title%3Aasc",
-                            }
-                          }
+                          to="/"
                         >
-                          <BackLinkWrapper
-                            backPath="/"
+                          <a
                             className="btn btn-secondary"
-                            currentPath="/1/20/title%3Aasc?backPath=%2F"
-                            history={
-                              Object {
-                                "action": "POP",
-                                "block": [Function],
-                                "canGo": [Function],
-                                "createHref": [Function],
-                                "entries": Array [
-                                  Object {
-                                    "hash": "",
-                                    "pathname": "/1/20/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                ],
-                                "go": [Function],
-                                "goBack": [Function],
-                                "goForward": [Function],
-                                "index": 0,
-                                "length": 1,
-                                "listen": [Function],
-                                "location": Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                                "push": [Function],
-                                "replace": [Function],
-                              }
-                            }
-                            page="1"
-                            pageSize="20"
-                            sort="title:asc"
+                            href="/"
+                            onClick={[Function]}
                           >
-                            <Link
-                              className="btn btn-secondary"
-                              to="/"
-                            >
-                              <a
-                                className="btn btn-secondary"
-                                href="/"
-                                onClick={[Function]}
-                              >
-                                cancel
-                              </a>
-                            </Link>
-                          </BackLinkWrapper>
-                        </Component>
-                      </withRouter()>
+                            cancel
+                          </a>
+                        </Link>
+                      </BackLink>
                     </div>
                   </div>
                 </div>
@@ -4690,110 +4162,22 @@ exports[`Should render component in edit mode 1`] = `
                     <div
                       className="btn-group-item"
                     >
-                      <withRouter()
+                      <BackLink
                         className="btn btn-secondary"
                       >
-                        <Component
+                        <Link
                           className="btn btn-secondary"
-                          history={
-                            Object {
-                              "action": "POP",
-                              "block": [Function],
-                              "canGo": [Function],
-                              "createHref": [Function],
-                              "entries": Array [
-                                Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                              ],
-                              "go": [Function],
-                              "goBack": [Function],
-                              "goForward": [Function],
-                              "index": 0,
-                              "length": 1,
-                              "listen": [Function],
-                              "location": Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                              "push": [Function],
-                              "replace": [Function],
-                            }
-                          }
-                          location={
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            }
-                          }
-                          match={
-                            Object {
-                              "isExact": true,
-                              "params": Object {
-                                "page": "1",
-                                "pageSize": "20",
-                                "sort": "title:asc",
-                              },
-                              "path": "/:page/:pageSize/:sort",
-                              "url": "/1/20/title%3Aasc",
-                            }
-                          }
+                          to="/"
                         >
-                          <BackLinkWrapper
-                            backPath="/"
+                          <a
                             className="btn btn-secondary"
-                            currentPath="/1/20/title%3Aasc?backPath=%2F"
-                            history={
-                              Object {
-                                "action": "POP",
-                                "block": [Function],
-                                "canGo": [Function],
-                                "createHref": [Function],
-                                "entries": Array [
-                                  Object {
-                                    "hash": "",
-                                    "pathname": "/1/20/title%3Aasc",
-                                    "search": "?backPath=%2F",
-                                  },
-                                ],
-                                "go": [Function],
-                                "goBack": [Function],
-                                "goForward": [Function],
-                                "index": 0,
-                                "length": 1,
-                                "listen": [Function],
-                                "location": Object {
-                                  "hash": "",
-                                  "pathname": "/1/20/title%3Aasc",
-                                  "search": "?backPath=%2F",
-                                },
-                                "push": [Function],
-                                "replace": [Function],
-                              }
-                            }
-                            page="1"
-                            pageSize="20"
-                            sort="title:asc"
+                            href="/"
+                            onClick={[Function]}
                           >
-                            <Link
-                              className="btn btn-secondary"
-                              to="/"
-                            >
-                              <a
-                                className="btn btn-secondary"
-                                href="/"
-                                onClick={[Function]}
-                              >
-                                cancel
-                              </a>
-                            </Link>
-                          </BackLinkWrapper>
-                        </Component>
-                      </withRouter()>
+                            cancel
+                          </a>
+                        </Link>
+                      </BackLink>
                     </div>
                   </div>
                 </div>
@@ -4878,110 +4262,22 @@ exports[`Should submit a new SLA with valid values 1`] = `
             <div
               className="btn-group-item"
             >
-              <withRouter()
+              <BackLink
                 className="btn btn-secondary"
               >
-                <Component
+                <Link
                   className="btn btn-secondary"
-                  history={
-                    Object {
-                      "action": "POP",
-                      "block": [Function],
-                      "canGo": [Function],
-                      "createHref": [Function],
-                      "entries": Array [
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                      ],
-                      "go": [Function],
-                      "goBack": [Function],
-                      "goForward": [Function],
-                      "index": 0,
-                      "length": 1,
-                      "listen": [Function],
-                      "location": Object {
-                        "hash": "",
-                        "pathname": "/1/20/title%3Aasc",
-                        "search": "?backPath=%2F",
-                      },
-                      "push": [Function],
-                      "replace": [Function],
-                    }
-                  }
-                  location={
-                    Object {
-                      "hash": "",
-                      "pathname": "/1/20/title%3Aasc",
-                      "search": "?backPath=%2F",
-                    }
-                  }
-                  match={
-                    Object {
-                      "isExact": true,
-                      "params": Object {
-                        "page": "1",
-                        "pageSize": "20",
-                        "sort": "title:asc",
-                      },
-                      "path": "/:page/:pageSize/:sort",
-                      "url": "/1/20/title%3Aasc",
-                    }
-                  }
+                  to="/"
                 >
-                  <BackLinkWrapper
-                    backPath="/"
+                  <a
                     className="btn btn-secondary"
-                    currentPath="/1/20/title%3Aasc?backPath=%2F"
-                    history={
-                      Object {
-                        "action": "POP",
-                        "block": [Function],
-                        "canGo": [Function],
-                        "createHref": [Function],
-                        "entries": Array [
-                          Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                        ],
-                        "go": [Function],
-                        "goBack": [Function],
-                        "goForward": [Function],
-                        "index": 0,
-                        "length": 1,
-                        "listen": [Function],
-                        "location": Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                        "push": [Function],
-                        "replace": [Function],
-                      }
-                    }
-                    page="1"
-                    pageSize="20"
-                    sort="title:asc"
+                    href="/"
+                    onClick={[Function]}
                   >
-                    <Link
-                      className="btn btn-secondary"
-                      to="/"
-                    >
-                      <a
-                        className="btn btn-secondary"
-                        href="/"
-                        onClick={[Function]}
-                      >
-                        cancel
-                      </a>
-                    </Link>
-                  </BackLinkWrapper>
-                </Component>
-              </withRouter()>
+                    cancel
+                  </a>
+                </Link>
+              </BackLink>
             </div>
           </div>
         </div>
@@ -5535,110 +4831,22 @@ exports[`Should test handler erros 1`] = `
                 <div
                   className="btn-group-item"
                 >
-                  <withRouter()
+                  <BackLink
                     className="btn btn-secondary"
                   >
-                    <Component
+                    <Link
                       className="btn btn-secondary"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
+                      to="/"
                     >
-                      <BackLinkWrapper
-                        backPath="/"
+                      <a
                         className="btn btn-secondary"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
+                        href="/"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="btn btn-secondary"
-                          to="/"
-                        >
-                          <a
-                            className="btn btn-secondary"
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            cancel
-                          </a>
-                        </Link>
-                      </BackLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        cancel
+                      </a>
+                    </Link>
+                  </BackLink>
                 </div>
               </div>
             </div>
@@ -6194,110 +5402,22 @@ exports[`Should test handler erros at start node keys 1`] = `
                 <div
                   className="btn-group-item"
                 >
-                  <withRouter()
+                  <BackLink
                     className="btn btn-secondary"
                   >
-                    <Component
+                    <Link
                       className="btn btn-secondary"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
+                      to="/"
                     >
-                      <BackLinkWrapper
-                        backPath="/"
+                      <a
                         className="btn btn-secondary"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
+                        href="/"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="btn btn-secondary"
-                          to="/"
-                        >
-                          <a
-                            className="btn btn-secondary"
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            cancel
-                          </a>
-                        </Link>
-                      </BackLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        cancel
+                      </a>
+                    </Link>
+                  </BackLink>
                 </div>
               </div>
             </div>
@@ -6853,110 +5973,22 @@ exports[`Should test handler no array erros 1`] = `
                 <div
                   className="btn-group-item"
                 >
-                  <withRouter()
+                  <BackLink
                     className="btn btn-secondary"
                   >
-                    <Component
+                    <Link
                       className="btn btn-secondary"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
+                      to="/"
                     >
-                      <BackLinkWrapper
-                        backPath="/"
+                      <a
                         className="btn btn-secondary"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
+                        href="/"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="btn btn-secondary"
-                          to="/"
-                        >
-                          <a
-                            className="btn btn-secondary"
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            cancel
-                          </a>
-                        </Link>
-                      </BackLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        cancel
+                      </a>
+                    </Link>
+                  </BackLink>
                 </div>
               </div>
             </div>
@@ -7512,110 +6544,22 @@ exports[`Should test load data callback 1`] = `
                 <div
                   className="btn-group-item"
                 >
-                  <withRouter()
+                  <BackLink
                     className="btn btn-secondary"
                   >
-                    <Component
+                    <Link
                       className="btn btn-secondary"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
+                      to="/"
                     >
-                      <BackLinkWrapper
-                        backPath="/"
+                      <a
                         className="btn btn-secondary"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
+                        href="/"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="btn btn-secondary"
-                          to="/"
-                        >
-                          <a
-                            className="btn btn-secondary"
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            cancel
-                          </a>
-                        </Link>
-                      </BackLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        cancel
+                      </a>
+                    </Link>
+                  </BackLink>
                 </div>
               </div>
             </div>
@@ -8173,110 +7117,22 @@ exports[`Should update state after input changes 1`] = `
                 <div
                   className="btn-group-item"
                 >
-                  <withRouter()
+                  <BackLink
                     className="btn btn-secondary"
                   >
-                    <Component
+                    <Link
                       className="btn btn-secondary"
-                      history={
-                        Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
-                        }
-                      }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
+                      to="/"
                     >
-                      <BackLinkWrapper
-                        backPath="/"
+                      <a
                         className="btn btn-secondary"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
+                        href="/"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="btn btn-secondary"
-                          to="/"
-                        >
-                          <a
-                            className="btn btn-secondary"
-                            href="/"
-                            onClick={[Function]}
-                          >
-                            cancel
-                          </a>
-                        </Link>
-                      </BackLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        cancel
+                      </a>
+                    </Link>
+                  </BackLink>
                 </div>
               </div>
             </div>

@@ -172,111 +172,23 @@ exports[`Should render component 2`] = `
               className="table-list-title"
             >
                
-              <withRouter()
+              <ChildLink
                 to="/sla/edit/undefined/undefined"
               >
-                <Component
-                  history={
+                <Link
+                  to={
                     Object {
-                      "action": "POP",
-                      "block": [Function],
-                      "canGo": [Function],
-                      "createHref": [Function],
-                      "entries": Array [
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                      ],
-                      "go": [Function],
-                      "goBack": [Function],
-                      "goForward": [Function],
-                      "index": 0,
-                      "length": 1,
-                      "listen": [Function],
-                      "location": Object {
-                        "hash": "",
-                        "pathname": "/1/20/title%3Aasc",
-                        "search": "?backPath=%2F",
-                      },
-                      "push": [Function],
-                      "replace": [Function],
+                      "pathname": "/sla/edit/undefined/undefined",
+                      "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
                     }
                   }
-                  location={
-                    Object {
-                      "hash": "",
-                      "pathname": "/1/20/title%3Aasc",
-                      "search": "?backPath=%2F",
-                    }
-                  }
-                  match={
-                    Object {
-                      "isExact": true,
-                      "params": Object {
-                        "page": "1",
-                        "pageSize": "20",
-                        "sort": "title:asc",
-                      },
-                      "path": "/:page/:pageSize/:sort",
-                      "url": "/1/20/title%3Aasc",
-                    }
-                  }
-                  to="/sla/edit/undefined/undefined"
                 >
-                  <ChildLinkWrapper
-                    backPath="/"
-                    currentPath="/1/20/title%3Aasc?backPath=%2F"
-                    history={
-                      Object {
-                        "action": "POP",
-                        "block": [Function],
-                        "canGo": [Function],
-                        "createHref": [Function],
-                        "entries": Array [
-                          Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                        ],
-                        "go": [Function],
-                        "goBack": [Function],
-                        "goForward": [Function],
-                        "index": 0,
-                        "length": 1,
-                        "listen": [Function],
-                        "location": Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                        "push": [Function],
-                        "replace": [Function],
-                      }
-                    }
-                    page="1"
-                    pageSize="20"
-                    sort="title:asc"
-                    to="/sla/edit/undefined/undefined"
-                  >
-                    <Link
-                      to={
-                        Object {
-                          "pathname": "/sla/edit/undefined/undefined",
-                          "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                        }
-                      }
-                    >
-                      <a
-                        href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                        onClick={[Function]}
-                      />
-                    </Link>
-                  </ChildLinkWrapper>
-                </Component>
-              </withRouter()>
+                  <a
+                    href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                    onClick={[Function]}
+                  />
+                </Link>
+              </ChildLink>
             </div>
           </td>
           <td />
@@ -327,118 +239,28 @@ exports[`Should render component 2`] = `
                 className="dropdown-menu dropdown-menu-right"
               >
                 <li>
-                  <withRouter()
+                  <ChildLink
                     className="dropdown-item"
                     to="/sla/edit/undefined/undefined"
                   >
-                    <Component
+                    <Link
                       className="dropdown-item"
-                      history={
+                      to={
                         Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
+                          "pathname": "/sla/edit/undefined/undefined",
+                          "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
                         }
                       }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
-                      to="/sla/edit/undefined/undefined"
                     >
-                      <ChildLinkWrapper
-                        backPath="/"
+                      <a
                         className="dropdown-item"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
-                        to="/sla/edit/undefined/undefined"
+                        href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="dropdown-item"
-                          to={
-                            Object {
-                              "pathname": "/sla/edit/undefined/undefined",
-                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                            }
-                          }
-                        >
-                          <a
-                            className="dropdown-item"
-                            href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                            onClick={[Function]}
-                          >
-                            edit
-                          </a>
-                        </Link>
-                      </ChildLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        edit
+                      </a>
+                    </Link>
+                  </ChildLink>
                 </li>
                 <li>
                   <button
@@ -566,111 +388,23 @@ exports[`Should render component blocked 1`] = `
                 />
               </Icon>
                
-              <withRouter()
+              <ChildLink
                 to="/sla/edit/undefined/undefined"
               >
-                <Component
-                  history={
+                <Link
+                  to={
                     Object {
-                      "action": "POP",
-                      "block": [Function],
-                      "canGo": [Function],
-                      "createHref": [Function],
-                      "entries": Array [
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                      ],
-                      "go": [Function],
-                      "goBack": [Function],
-                      "goForward": [Function],
-                      "index": 0,
-                      "length": 1,
-                      "listen": [Function],
-                      "location": Object {
-                        "hash": "",
-                        "pathname": "/1/20/title%3Aasc",
-                        "search": "?backPath=%2F",
-                      },
-                      "push": [Function],
-                      "replace": [Function],
+                      "pathname": "/sla/edit/undefined/undefined",
+                      "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
                     }
                   }
-                  location={
-                    Object {
-                      "hash": "",
-                      "pathname": "/1/20/title%3Aasc",
-                      "search": "?backPath=%2F",
-                    }
-                  }
-                  match={
-                    Object {
-                      "isExact": true,
-                      "params": Object {
-                        "page": "1",
-                        "pageSize": "20",
-                        "sort": "title:asc",
-                      },
-                      "path": "/:page/:pageSize/:sort",
-                      "url": "/1/20/title%3Aasc",
-                    }
-                  }
-                  to="/sla/edit/undefined/undefined"
                 >
-                  <ChildLinkWrapper
-                    backPath="/"
-                    currentPath="/1/20/title%3Aasc?backPath=%2F"
-                    history={
-                      Object {
-                        "action": "POP",
-                        "block": [Function],
-                        "canGo": [Function],
-                        "createHref": [Function],
-                        "entries": Array [
-                          Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                        ],
-                        "go": [Function],
-                        "goBack": [Function],
-                        "goForward": [Function],
-                        "index": 0,
-                        "length": 1,
-                        "listen": [Function],
-                        "location": Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        },
-                        "push": [Function],
-                        "replace": [Function],
-                      }
-                    }
-                    page="1"
-                    pageSize="20"
-                    sort="title:asc"
-                    to="/sla/edit/undefined/undefined"
-                  >
-                    <Link
-                      to={
-                        Object {
-                          "pathname": "/sla/edit/undefined/undefined",
-                          "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                        }
-                      }
-                    >
-                      <a
-                        href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                        onClick={[Function]}
-                      />
-                    </Link>
-                  </ChildLinkWrapper>
-                </Component>
-              </withRouter()>
+                  <a
+                    href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                    onClick={[Function]}
+                  />
+                </Link>
+              </ChildLink>
             </div>
           </td>
           <td />
@@ -721,118 +455,28 @@ exports[`Should render component blocked 1`] = `
                 className="dropdown-menu dropdown-menu-right"
               >
                 <li>
-                  <withRouter()
+                  <ChildLink
                     className="dropdown-item"
                     to="/sla/edit/undefined/undefined"
                   >
-                    <Component
+                    <Link
                       className="dropdown-item"
-                      history={
+                      to={
                         Object {
-                          "action": "POP",
-                          "block": [Function],
-                          "canGo": [Function],
-                          "createHref": [Function],
-                          "entries": Array [
-                            Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                          ],
-                          "go": [Function],
-                          "goBack": [Function],
-                          "goForward": [Function],
-                          "index": 0,
-                          "length": 1,
-                          "listen": [Function],
-                          "location": Object {
-                            "hash": "",
-                            "pathname": "/1/20/title%3Aasc",
-                            "search": "?backPath=%2F",
-                          },
-                          "push": [Function],
-                          "replace": [Function],
+                          "pathname": "/sla/edit/undefined/undefined",
+                          "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
                         }
                       }
-                      location={
-                        Object {
-                          "hash": "",
-                          "pathname": "/1/20/title%3Aasc",
-                          "search": "?backPath=%2F",
-                        }
-                      }
-                      match={
-                        Object {
-                          "isExact": true,
-                          "params": Object {
-                            "page": "1",
-                            "pageSize": "20",
-                            "sort": "title:asc",
-                          },
-                          "path": "/:page/:pageSize/:sort",
-                          "url": "/1/20/title%3Aasc",
-                        }
-                      }
-                      to="/sla/edit/undefined/undefined"
                     >
-                      <ChildLinkWrapper
-                        backPath="/"
+                      <a
                         className="dropdown-item"
-                        currentPath="/1/20/title%3Aasc?backPath=%2F"
-                        history={
-                          Object {
-                            "action": "POP",
-                            "block": [Function],
-                            "canGo": [Function],
-                            "createHref": [Function],
-                            "entries": Array [
-                              Object {
-                                "hash": "",
-                                "pathname": "/1/20/title%3Aasc",
-                                "search": "?backPath=%2F",
-                              },
-                            ],
-                            "go": [Function],
-                            "goBack": [Function],
-                            "goForward": [Function],
-                            "index": 0,
-                            "length": 1,
-                            "listen": [Function],
-                            "location": Object {
-                              "hash": "",
-                              "pathname": "/1/20/title%3Aasc",
-                              "search": "?backPath=%2F",
-                            },
-                            "push": [Function],
-                            "replace": [Function],
-                          }
-                        }
-                        page="1"
-                        pageSize="20"
-                        sort="title:asc"
-                        to="/sla/edit/undefined/undefined"
+                        href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                        onClick={[Function]}
                       >
-                        <Link
-                          className="dropdown-item"
-                          to={
-                            Object {
-                              "pathname": "/sla/edit/undefined/undefined",
-                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                            }
-                          }
-                        >
-                          <a
-                            className="dropdown-item"
-                            href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                            onClick={[Function]}
-                          >
-                            edit
-                          </a>
-                        </Link>
-                      </ChildLinkWrapper>
-                    </Component>
-                  </withRouter()>
+                        edit
+                      </a>
+                    </Link>
+                  </ChildLink>
                 </li>
                 <li>
                   <button

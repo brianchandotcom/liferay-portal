@@ -5731,7 +5731,6 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_packagePath, ".service.persistence.impl.", entityName,
 				"PersistenceImpl"));
-		boolean modelTable = isVersionGTE_7_3_0();
 
 		String finderClassName = "";
 
@@ -6414,9 +6413,9 @@ public class ServiceBuilder {
 			externalReferenceCode, localService, remoteService, persistence,
 			persistenceClassName, finderClassName, dataSource, sessionFactory,
 			txManager, cacheEnabled, changeTrackingEnabled,
-			dynamicUpdateEnabled, jsonEnabled, modelTable, mvccEnabled,
-			trashEnabled, uadApplicationName, uadAutoDelete, uadOutputPath,
-			uadPackagePath, deprecated, pkEntityColumns, regularEntityColumns,
+			dynamicUpdateEnabled, jsonEnabled, mvccEnabled, trashEnabled,
+			uadApplicationName, uadAutoDelete, uadOutputPath, uadPackagePath,
+			deprecated, pkEntityColumns, regularEntityColumns,
 			blobEntityColumns, collectionEntityColumns, entityColumns,
 			entityOrder, entityFinders, referenceEntities,
 			unresolvedReferenceEntityNames, txRequiredMethodNames,

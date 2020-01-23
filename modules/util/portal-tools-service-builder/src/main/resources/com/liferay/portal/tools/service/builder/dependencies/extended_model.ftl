@@ -62,7 +62,7 @@ public interface ${entity.name} extends
 	 * Never modify this interface directly. Add methods to <code>${packagePath}.model.impl.${entity.name}Impl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
-	<#if entity.isModelTable()>
+	<#if serviceBuilder.isVersionGTE_7_3_0()>
 		public static final ${entity.name}Table TABLE = ${entity.name}Table.INSTANCE;
 	</#if>
 

@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -45,6 +46,29 @@ public class DataLayoutUtil {
 				paginationMode = ddmFormLayout.getPaginationMode();
 			}
 		};
+	}
+
+	public static DataLayout toDataLayout(
+		DDMStructureLayout ddmStructureLayout) {
+
+		DataLayout dataLayout = toDataLayout(
+			ddmStructureLayout.getDDMFormLayout());
+
+		dataLayout.setDateCreated(ddmStructureLayout.getCreateDate());
+		dataLayout.setDataDefinitionId(ddmStructureLayout.getDDMStructureId());
+		dataLayout.setDataLayoutKey(ddmStructureLayout.getStructureLayoutKey());
+		dataLayout.setDateModified(ddmStructureLayout.getModifiedDate());
+		dataLayout.setDescription(
+			LocalizedValueUtil.toStringObjectMap(
+				ddmStructureLayout.getDescriptionMap()));
+		dataLayout.setId(ddmStructureLayout.getStructureLayoutId());
+		dataLayout.setName(
+			LocalizedValueUtil.toStringObjectMap(
+				ddmStructureLayout.getNameMap()));
+		dataLayout.setSiteId(ddmStructureLayout.getGroupId());
+		dataLayout.setUserId(ddmStructureLayout.getUserId());
+
+		return dataLayout;
 	}
 
 	public static DDMFormLayout toDDMFormLayout(DataLayout dataLayout) {

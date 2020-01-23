@@ -139,7 +139,7 @@ public class DataLayoutResourceImpl
 						pagination.getEndPosition(),
 						_toOrderByComparator(
 							(Sort)ArrayUtil.getValue(sorts, 0))),
-					this::_toDataLayout),
+					DataLayoutUtil::toDataLayout),
 				pagination,
 				_ddmStructureLayoutLocalService.getStructureLayoutsCount(
 					ddmStructure.getGroupId(), ddmStructure.getClassNameId(),
@@ -164,7 +164,7 @@ public class DataLayoutResourceImpl
 				searchContext.setGroupIds(
 					new long[] {ddmStructure.getGroupId()});
 			},
-			document -> _toDataLayout(
+			document -> DataLayoutUtil.toDataLayout(
 				_ddmStructureLayoutLocalService.getStructureLayout(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
 			sorts);
@@ -179,7 +179,7 @@ public class DataLayoutResourceImpl
 					dataLayoutId)),
 			ActionKeys.VIEW);
 
-		return _toDataLayout(
+		return DataLayoutUtil.toDataLayout(
 			_ddmStructureLayoutLocalService.getDDMStructureLayout(
 				dataLayoutId));
 	}
@@ -200,7 +200,7 @@ public class DataLayoutResourceImpl
 			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
 				contentType);
 
-		return _toDataLayout(
+		return DataLayoutUtil.toDataLayout(
 			_ddmStructureLayoutLocalService.getStructureLayout(
 				siteId, dataDefinitionContentType.getClassNameId(),
 				dataLayoutKey));
@@ -243,7 +243,7 @@ public class DataLayoutResourceImpl
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		dataLayout = _toDataLayout(
+		dataLayout = DataLayoutUtil.toDataLayout(
 			_ddmStructureLayoutLocalService.addStructureLayout(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
 				ddmStructure.getClassNameId(), dataLayout.getDataLayoutKey(),
@@ -294,7 +294,7 @@ public class DataLayoutResourceImpl
 			throw new ValidationException("Layout is empty");
 		}
 
-		dataLayout = _toDataLayout(
+		dataLayout = DataLayoutUtil.toDataLayout(
 			_ddmStructureLayoutLocalService.updateStructureLayout(
 				dataLayoutId,
 				_getDDMStructureVersionId(dataLayout.getDataDefinitionId()),
@@ -366,29 +366,6 @@ public class DataLayoutResourceImpl
 
 		return documentContext.read(
 			"$[\"pages\"][*][\"rows\"][*][\"columns\"][*][\"fieldNames\"][*]");
-	}
-
-	private DataLayout _toDataLayout(DDMStructureLayout ddmStructureLayout)
-		throws Exception {
-
-		DataLayout dataLayout = DataLayoutUtil.toDataLayout(
-			ddmStructureLayout.getDDMFormLayout());
-
-		dataLayout.setDateCreated(ddmStructureLayout.getCreateDate());
-		dataLayout.setDataDefinitionId(_getDDMStructureId(ddmStructureLayout));
-		dataLayout.setDataLayoutKey(ddmStructureLayout.getStructureLayoutKey());
-		dataLayout.setDateModified(ddmStructureLayout.getModifiedDate());
-		dataLayout.setDescription(
-			LocalizedValueUtil.toStringObjectMap(
-				ddmStructureLayout.getDescriptionMap()));
-		dataLayout.setId(ddmStructureLayout.getStructureLayoutId());
-		dataLayout.setName(
-			LocalizedValueUtil.toStringObjectMap(
-				ddmStructureLayout.getNameMap()));
-		dataLayout.setSiteId(ddmStructureLayout.getGroupId());
-		dataLayout.setUserId(ddmStructureLayout.getUserId());
-
-		return dataLayout;
 	}
 
 	private OrderByComparator<DDMStructureLayout> _toOrderByComparator(

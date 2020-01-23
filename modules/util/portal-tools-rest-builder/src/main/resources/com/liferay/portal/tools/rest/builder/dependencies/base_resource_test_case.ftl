@@ -304,7 +304,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 					Assert.assertTrue(false);
 				}
-			<#else>
+			<#elseif !javaMethodSignature.methodName?contains("Permission")>
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 					Page<${schemaName}> page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(

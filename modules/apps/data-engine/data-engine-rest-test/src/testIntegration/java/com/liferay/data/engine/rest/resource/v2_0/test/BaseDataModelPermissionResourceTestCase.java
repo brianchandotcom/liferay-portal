@@ -192,16 +192,6 @@ public abstract class BaseDataModelPermissionResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetDataModelPermissionsPage() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutDataModelPermission() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testPutDataRecordCollectionDataModelPermission()
 		throws Exception {
 

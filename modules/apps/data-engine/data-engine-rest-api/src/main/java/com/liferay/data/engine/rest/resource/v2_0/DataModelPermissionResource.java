@@ -49,14 +49,6 @@ public interface DataModelPermissionResource {
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getDataModelPermissionsPage(String roleNames)
-		throws Exception;
-
-	public void putDataModelPermission(
-			DataModelPermission[] dataModelPermissions)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getDataRecordCollectionDataModelPermissionsPage(
 				Long dataRecordCollectionId, String roleNames)
 		throws Exception;

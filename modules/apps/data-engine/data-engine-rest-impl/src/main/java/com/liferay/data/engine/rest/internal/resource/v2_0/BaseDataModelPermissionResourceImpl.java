@@ -114,44 +114,6 @@ public abstract class BaseDataModelPermissionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-model-permissions'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.QUERY, name = "roleNames")}
-	)
-	@Path("/data-model-permissions")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DataModelPermission")})
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getDataModelPermissionsPage(
-				@NotNull @Parameter(hidden = true) @QueryParam("roleNames")
-					String roleNames)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-model-permissions'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@Consumes({"application/json", "application/xml"})
-	@PUT
-	@Path("/data-model-permissions")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DataModelPermission")})
-	public void putDataModelPermission(
-			DataModelPermission[] dataModelPermissions)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/data-model-permissions'  -u 'test@liferay.com:test'
 	 */
 	@Override

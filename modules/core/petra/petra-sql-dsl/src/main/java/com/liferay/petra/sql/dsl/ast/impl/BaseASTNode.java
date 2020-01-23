@@ -60,11 +60,11 @@ public abstract class BaseASTNode implements ASTNode, Cloneable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends BaseASTNode> T withNewChild(ASTNode astNode) {
+	public <T extends BaseASTNode> T withNewChild(ASTNode childASTNode) {
 		try {
 			BaseASTNode baseASTNode = (BaseASTNode)clone();
 
-			baseASTNode._childASTNode = astNode;
+			baseASTNode._childASTNode = childASTNode;
 
 			return (T)baseASTNode;
 		}

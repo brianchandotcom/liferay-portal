@@ -176,5 +176,8 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.ParsePrimitiveTypeCheck">
 			<message key="getter.util.method.use" value="Use ''GetterUtil.{0}'' or properly catch ''NumberFormatException'' when calling ''{1}.{2}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.PersistenceCallCheck">
+			<message key="persistence.call.illegal" value="Illegal call to class ''{0}'', see LPS-68923" />
+		</module>
 	</module>
 </module>

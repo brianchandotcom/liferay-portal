@@ -2,7 +2,7 @@ Bundle-Description: Creates a FreeMarker portlet as a module project.
 Bundle-Name: Liferay Project Templates FreeMarker Portlet
 Bundle-SymbolicName: com.liferay.project.templates.freemarker.portlet
 Bundle-Version: 1.0.69
-Liferay-Versions: [7,7.3)
+Liferay-Versions: [7,7.4)
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

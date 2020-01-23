@@ -147,21 +147,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean updatePortletPermission(
-			@GraphQLName("permissions")
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataDefinitionResource ->
-				dataDefinitionResource.putPortletPermission(permissions));
-
-		return true;
-	}
-
-	@GraphQLField
 	public DataDefinition createSiteDataDefinitionByContentType(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("contentType") String contentType,

@@ -464,25 +464,6 @@ public class DataDefinitionResourceImpl
 				resourcePermissionLocalService, roleLocalService));
 	}
 
-	@Override
-	public void putPortletPermission(Permission[] permissions)
-		throws Exception {
-
-		_portletResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			contextCompany.getGroupId(), ActionKeys.PERMISSIONS);
-
-		long siteGroupId = _portal.getSiteGroupId(contextCompany.getGroupId());
-
-		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), siteGroupId,
-			DataEngineConstants.RESOURCE_NAME, String.valueOf(siteGroupId),
-			ModelPermissionsUtil.toModelPermissions(
-				contextCompany.getCompanyId(), permissions, siteGroupId,
-				DataEngineConstants.RESOURCE_NAME, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService));
-	}
-
 	private JSONObject _createFieldContextJSONObject(
 		DDMFormFieldType ddmFormFieldType,
 		HttpServletRequest httpServletRequest, Locale locale, String type) {
@@ -886,9 +867,6 @@ public class DataDefinitionResourceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(target = "(resource.name=com.liferay.data.engine)")
-	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

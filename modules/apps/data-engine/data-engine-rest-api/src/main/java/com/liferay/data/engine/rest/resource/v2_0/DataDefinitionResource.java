@@ -71,10 +71,6 @@ public interface DataDefinitionResource {
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
-	public void putPortletPermission(
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
 	public Page<DataDefinition>
 			getSiteDataDefinitionByContentTypeContentTypePage(
 				Long siteId, String contentType, String keywords,

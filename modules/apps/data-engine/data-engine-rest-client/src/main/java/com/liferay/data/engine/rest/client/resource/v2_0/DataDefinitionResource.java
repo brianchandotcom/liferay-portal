@@ -106,12 +106,6 @@ public interface DataDefinitionResource {
 			Long dataDefinitionId, Permission[] permissions)
 		throws Exception;
 
-	public void putPortletPermission(Permission[] permissions) throws Exception;
-
-	public HttpInvoker.HttpResponse putPortletPermissionHttpResponse(
-			Permission[] permissions)
-		throws Exception;
-
 	public Page<DataDefinition>
 			getSiteDataDefinitionByContentTypeContentTypePage(
 				Long siteId, String contentType, String keywords,
@@ -693,66 +687,6 @@ public interface DataDefinitionResource {
 					_builder._port +
 						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/permissions",
 				dataDefinitionId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public void putPortletPermission(Permission[] permissions)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putPortletPermissionHttpResponse(permissions);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-		}
-
-		public HttpInvoker.HttpResponse putPortletPermissionHttpResponse(
-				Permission[] permissions)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				Stream.of(
-					permissions
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
-				).toString(),
-				"application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/data-engine/v2.0/portlet-permissions");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

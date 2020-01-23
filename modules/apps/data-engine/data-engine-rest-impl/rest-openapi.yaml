@@ -1203,17 +1203,6 @@ paths:
                     description:
                         ""
             tags: ["DataRecord"]
-    "/portlet-permissions":
-        put:
-            operationId: putPortletPermission
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["DataDefinition"]
     "/sites/{siteId}/data-definitions/by-content-type/{contentType}":
         get:
             operationId: getSiteDataDefinitionByContentTypeContentTypePage

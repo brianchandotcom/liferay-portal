@@ -682,44 +682,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testPutPortletPermission() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DataDefinition dataDefinition =
-			testPutPortletPermission_addDataDefinition();
-
-		assertHttpResponseStatusCode(
-			204,
-			dataDefinitionResource.putPortletPermissionHttpResponse(
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"VIEW"});
-							setRoleName("Guest");
-						}
-					}
-				}));
-
-		assertHttpResponseStatusCode(
-			404,
-			dataDefinitionResource.putPortletPermissionHttpResponse(
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"-"});
-							setRoleName("-");
-						}
-					}
-				}));
-	}
-
-	protected DataDefinition testPutPortletPermission_addDataDefinition()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetSiteDataDefinitionByContentTypeContentTypePage()
 		throws Exception {
 

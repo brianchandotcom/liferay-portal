@@ -271,21 +271,6 @@ public abstract class BaseDataDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/portlet-permissions'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@PUT
-	@Path("/portlet-permissions")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "DataDefinition")})
-	public void putPortletPermission(
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-definitions/by-content-type/{contentType}'  -u 'test@liferay.com:test'
 	 */
 	@Override

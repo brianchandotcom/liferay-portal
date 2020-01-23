@@ -71,6 +71,14 @@ public interface AccountEntryOrganizationRelLocalService
 	public AccountEntryOrganizationRel addAccountEntryOrganizationRel(
 		AccountEntryOrganizationRel accountEntryOrganizationRel);
 
+	public AccountEntryOrganizationRel addAccountEntryOrganizationRel(
+			long accountEntryId, long organizationId)
+		throws PortalException;
+
+	public void addAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws PortalException;
+
 	/**
 	 * Creates a new account entry organization rel with the primary key. Does not add the account entry organization rel to the database.
 	 *
@@ -207,6 +215,10 @@ public interface AccountEntryOrganizationRelLocalService
 	public List<AccountEntryOrganizationRel> getAccountEntryOrganizationRels(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountEntryOrganizationRel> getAccountEntryOrganizationRels(
+		long accountEntryId);
+
 	/**
 	 * Returns the number of account entry organization rels.
 	 *
@@ -214,6 +226,9 @@ public interface AccountEntryOrganizationRelLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAccountEntryOrganizationRelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountEntryOrganizationRelsCount(long accountEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -232,6 +247,10 @@ public interface AccountEntryOrganizationRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasAccountEntryOrganizationRel(
+		long accountEntryId, long organizationId);
 
 	/**
 	 * Updates the account entry organization rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

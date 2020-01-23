@@ -51,6 +51,25 @@ public class AccountEntryOrganizationRelLocalServiceWrapper
 			addAccountEntryOrganizationRel(accountEntryOrganizationRel);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountEntryOrganizationRel
+			addAccountEntryOrganizationRel(
+				long accountEntryId, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryOrganizationRelLocalService.
+			addAccountEntryOrganizationRel(accountEntryId, organizationId);
+	}
+
+	@Override
+	public void addAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryOrganizationRelLocalService.
+			addAccountEntryOrganizationRels(accountEntryId, organizationIds);
+	}
+
 	/**
 	 * Creates a new account entry organization rel with the primary key. Does not add the account entry organization rel to the database.
 	 *
@@ -246,6 +265,14 @@ public class AccountEntryOrganizationRelLocalServiceWrapper
 			getAccountEntryOrganizationRels(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.account.model.AccountEntryOrganizationRel>
+		getAccountEntryOrganizationRels(long accountEntryId) {
+
+		return _accountEntryOrganizationRelLocalService.
+			getAccountEntryOrganizationRels(accountEntryId);
+	}
+
 	/**
 	 * Returns the number of account entry organization rels.
 	 *
@@ -255,6 +282,12 @@ public class AccountEntryOrganizationRelLocalServiceWrapper
 	public int getAccountEntryOrganizationRelsCount() {
 		return _accountEntryOrganizationRelLocalService.
 			getAccountEntryOrganizationRelsCount();
+	}
+
+	@Override
+	public int getAccountEntryOrganizationRelsCount(long accountEntryId) {
+		return _accountEntryOrganizationRelLocalService.
+			getAccountEntryOrganizationRelsCount(accountEntryId);
 	}
 
 	@Override
@@ -291,6 +324,14 @@ public class AccountEntryOrganizationRelLocalServiceWrapper
 
 		return _accountEntryOrganizationRelLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public boolean hasAccountEntryOrganizationRel(
+		long accountEntryId, long organizationId) {
+
+		return _accountEntryOrganizationRelLocalService.
+			hasAccountEntryOrganizationRel(accountEntryId, organizationId);
 	}
 
 	/**

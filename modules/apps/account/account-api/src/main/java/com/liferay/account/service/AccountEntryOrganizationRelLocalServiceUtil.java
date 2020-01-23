@@ -53,6 +53,23 @@ public class AccountEntryOrganizationRelLocalServiceUtil {
 			accountEntryOrganizationRel);
 	}
 
+	public static com.liferay.account.model.AccountEntryOrganizationRel
+			addAccountEntryOrganizationRel(
+				long accountEntryId, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addAccountEntryOrganizationRel(
+			accountEntryId, organizationId);
+	}
+
+	public static void addAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().addAccountEntryOrganizationRels(
+			accountEntryId, organizationIds);
+	}
+
 	/**
 	 * Creates a new account entry organization rel with the primary key. Does not add the account entry organization rel to the database.
 	 *
@@ -233,6 +250,13 @@ public class AccountEntryOrganizationRelLocalServiceUtil {
 		return getService().getAccountEntryOrganizationRels(start, end);
 	}
 
+	public static java.util.List
+		<com.liferay.account.model.AccountEntryOrganizationRel>
+			getAccountEntryOrganizationRels(long accountEntryId) {
+
+		return getService().getAccountEntryOrganizationRels(accountEntryId);
+	}
+
 	/**
 	 * Returns the number of account entry organization rels.
 	 *
@@ -240,6 +264,13 @@ public class AccountEntryOrganizationRelLocalServiceUtil {
 	 */
 	public static int getAccountEntryOrganizationRelsCount() {
 		return getService().getAccountEntryOrganizationRelsCount();
+	}
+
+	public static int getAccountEntryOrganizationRelsCount(
+		long accountEntryId) {
+
+		return getService().getAccountEntryOrganizationRelsCount(
+			accountEntryId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -269,6 +300,13 @@ public class AccountEntryOrganizationRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static boolean hasAccountEntryOrganizationRel(
+		long accountEntryId, long organizationId) {
+
+		return getService().hasAccountEntryOrganizationRel(
+			accountEntryId, organizationId);
 	}
 
 	/**

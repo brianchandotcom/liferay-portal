@@ -764,29 +764,29 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			serviceContext.setUserId(user.getUserId());
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			HttpServletRequest originalHttpServletRequest =
 				_portal.getOriginalServletRequest(httpServletRequest);
 
 			HttpSession session = originalHttpServletRequest.getSession();
 
-			if (pe instanceof ContactNameException) {
+			if (portalException instanceof ContactNameException) {
 				session.setAttribute(
 					SamlWebKeys.SAML_SSO_ERROR,
 					ContactNameException.class.getSimpleName());
 			}
-			else if (pe instanceof UserEmailAddressException) {
+			else if (portalException instanceof UserEmailAddressException) {
 				session.setAttribute(
 					SamlWebKeys.SAML_SSO_ERROR,
 					UserEmailAddressException.class.getSimpleName());
 			}
-			else if (pe instanceof UserScreenNameException) {
+			else if (portalException instanceof UserScreenNameException) {
 				session.setAttribute(
 					SamlWebKeys.SAML_SSO_ERROR,
 					UserScreenNameException.class.getSimpleName());
 			}
 			else {
-				Class<?> clazz = pe.getClass();
+				Class<?> clazz = portalException.getClass();
 
 				session.setAttribute(
 					SamlWebKeys.SAML_SSO_ERROR, clazz.getSimpleName());

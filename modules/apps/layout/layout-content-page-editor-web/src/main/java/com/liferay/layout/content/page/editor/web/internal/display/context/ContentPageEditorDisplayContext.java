@@ -390,6 +390,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"mappedInfoItems", editorSoyContext.get("mappedInfoItems")
 			).put(
+				"masterLayoutData", editorSoyContext.get("masterLayoutData")
+			).put(
 				"pageContents", editorSoyContext.get("pageContents")
 			).put(
 				"segmentsExperienceId",
@@ -1484,7 +1486,7 @@ public class ContentPageEditorDisplayContext {
 					updateLayoutPageTemplateStructure(
 						themeDisplay.getScopeGroupId(),
 						PortalUtil.getClassNameId(Layout.class.getName()),
-						themeDisplay.getPlid(),
+						masterLayoutPageTemplateEntry.getPlid(),
 						SegmentsExperienceConstants.ID_DEFAULT, layoutData);
 			}
 

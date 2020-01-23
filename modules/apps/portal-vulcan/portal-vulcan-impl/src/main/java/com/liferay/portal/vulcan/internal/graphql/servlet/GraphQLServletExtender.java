@@ -758,6 +758,11 @@ public class GraphQLServletExtender {
 					_companyLocalService.getCompany(
 						CompanyThreadLocal.getCompanyId()));
 			}
+			else if (fieldClass.isAssignableFrom(GroupLocalService.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _groupLocalService);
+			}
 			else if (fieldClass.isAssignableFrom(HttpServletRequest.class)) {
 				field.setAccessible(true);
 

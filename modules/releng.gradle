@@ -1344,6 +1344,10 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 
 		copy {
 			from zipTree(jarFile)
+
+			exclude "**/javadocs-*.xml"
+			exclude "**/node_modules/**"
+
 			into dir
 		}
 

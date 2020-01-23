@@ -390,6 +390,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"mappedInfoItems", editorSoyContext.get("mappedInfoItems")
 			).put(
+				"masterLayoutData", editorSoyContext.get("masterLayoutData")
+			).put(
 				"pageContents", editorSoyContext.get("pageContents")
 			).put(
 				"segmentsExperienceId",

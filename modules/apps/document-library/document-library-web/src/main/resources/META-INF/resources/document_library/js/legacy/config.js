@@ -20,13 +20,6 @@
 				combine: Liferay.AUI.getCombine(),
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
-					'document-library-checkin': {
-						path: 'checkin.js',
-						requires: [
-							'liferay-document-library',
-							'liferay-util-window'
-						]
-					},
 					'document-library-upload': {
 						path: 'upload.js',
 						requires: [

@@ -53,13 +53,9 @@ const Languages = ({
 		setLanguageTranslationWarning
 	] = useState(false);
 
-	const form = document[`_${portletNamespace}_fm`]; //TODO delete
-
 	const customLocalesInputRef = useRef();
 
 	useEffect(() => {
-		console.log('useEffect customLocalesChanged', customLocales);
-
 		const localesIds = customLocales.map(({localeId}) => localeId);
 
 		customLocalesInputRef.current.value = localesIds.join(',');
@@ -107,11 +103,6 @@ const Languages = ({
 
 			Liferay.fire('inputLocalized:defaultLocaleChanged', {
 				item: event.currentTarget
-			});
-
-			//TODO delete and put in an input element
-			Liferay.Util.setFormValues(form, {
-				languageId: localeId
 			});
 		};
 
@@ -223,6 +214,12 @@ const Languages = ({
 
 			{!selectedRadioGroupValue && (
 				<>
+					<input
+						name={`_${portletNamespace}_TypeSettingsProperties--languageId--`}
+						value={customDefaultLocaleId}
+						type="hidden"
+					/>
+
 					<input
 						name={`_${portletNamespace}_TypeSettingsProperties--locales--`}
 						ref={customLocalesInputRef}

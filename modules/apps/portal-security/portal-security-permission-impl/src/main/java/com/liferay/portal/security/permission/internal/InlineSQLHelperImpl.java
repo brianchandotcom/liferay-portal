@@ -637,24 +637,24 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		Predicate permissionPredicate = _getPermissionPredicate(
 			classPKColumn, groupIds, resourcePermissionDSLQuery);
 
-		ASTNode child = null;
+		ASTNode childASTNode = null;
 
 		if (where == null) {
-			child = whereStep.where(permissionPredicate);
+			childASTNode = whereStep.where(permissionPredicate);
 		}
 		else {
 			Predicate predicate = where.getPredicate();
 
-			child = new Where(
+			childASTNode = new Where(
 				whereStep,
 				predicate.and(permissionPredicate.withParentheses()));
 		}
 
 		for (BaseASTNode baseASTNode : baseASTNodes) {
-			child = baseASTNode.withNewChild(child);
+			childASTNode = baseASTNode.withNewChild(childASTNode);
 		}
 
-		return (DSLQuery)child;
+		return (DSLQuery)childASTNode;
 	}
 
 	private String _insertResourcePermissionSQL(

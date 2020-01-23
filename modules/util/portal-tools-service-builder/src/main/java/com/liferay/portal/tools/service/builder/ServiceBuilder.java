@@ -3100,12 +3100,10 @@ public class ServiceBuilder {
 
 			_write(file, content, _modifiedFileNames);
 		}
-		else {
-			if (file.exists()) {
-				System.out.println("Removing " + file);
+		else if (file.exists()) {
+			System.out.println("Removing " + file);
 
-				file.delete();
-			}
+			file.delete();
 		}
 	}
 

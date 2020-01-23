@@ -14,9 +14,7 @@
 
 package com.liferay.depot.application;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
 
@@ -26,10 +24,7 @@ import java.util.Locale;
 public interface DepotApplication {
 
 	public default String getLabel(Locale locale) {
-		return LanguageUtil.get(
-			locale,
-			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-				getPortletId());
+		return PortalUtil.getPortletTitle(getPortletId(), locale);
 	}
 
 	public String getPortletId();

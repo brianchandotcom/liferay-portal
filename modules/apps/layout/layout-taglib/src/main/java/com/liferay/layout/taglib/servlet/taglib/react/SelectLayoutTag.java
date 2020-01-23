@@ -180,11 +180,11 @@ public class SelectLayoutTag extends IncludeTag {
 	}
 
 	private static boolean _isContentLayoutDraft(Layout layout) {
-		if (layout.isSystem() || !layout.isTypeContent()) {
+		if (!layout.isTypeContent()) {
 			return false;
 		}
 
-		if (layout.isApproved() && (layout.getClassNameId() == 0)) {
+		if (layout.isApproved() && !layout.isHidden() && !layout.isSystem()) {
 			return false;
 		}
 

@@ -610,13 +610,10 @@ renderResponse.setTitle(headerTitle);
 		});
 	}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />showVersionDetailsDialog',
-		function(form) {
-			Liferay.DocumentLibraryCheckin.showDialog(
-				'<portlet:namespace />',
-				function(versionIncrease, changeLog) {
+	function <portlet:namespace />showVersionDetailsDialog() {
+		Liferay.componentReady('<portlet:namespace />BridgeCheckinComponent').then(
+			function(BridgeCheckinComponent) {
+				BridgeCheckinComponent.open(function(versionIncrease, changeLog) {
 					Liferay.Util.postForm(form, {
 						data: {
 							changeLog: changeLog,
@@ -624,11 +621,10 @@ renderResponse.setTitle(headerTitle);
 							versionIncrease: versionIncrease
 						}
 					});
-				}
-			);
-		},
-		['document-library-checkin']
-	);
+				});
+			}
+		);
+	}
 
 	function <portlet:namespace />updateTitle() {
 		var titleElement = document.getElementById('<portlet:namespace />title');

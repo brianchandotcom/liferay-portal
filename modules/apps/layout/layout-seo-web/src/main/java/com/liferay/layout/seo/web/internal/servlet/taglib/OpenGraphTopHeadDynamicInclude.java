@@ -31,10 +31,10 @@ import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.seo.web.internal.util.FileEntryMetadataOpenGraphTagsProvider;
+import com.liferay.layout.seo.web.internal.util.TitleProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -258,6 +257,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			new FileEntryMetadataOpenGraphTagsProvider(
 				_ddmStructureLocalService, _dlFileEntryMetadataLocalService,
 				_portal, _storageEngine);
+
+		_titleProvider = new TitleProvider(_layoutSEOLinkManager);
 	}
 
 	private String _addLinkTag(LayoutSEOLink layoutSEOLink) {
@@ -369,22 +370,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			return layoutSEOEntry.getOpenGraphTitle(themeDisplay.getLocale());
 		}
 
-		String portletId = (String)httpServletRequest.getAttribute(
-			WebKeys.PORTLET_ID);
-
-		ListMergeable<String> titleListMergeable =
-			(ListMergeable<String>)httpServletRequest.getAttribute(
-				WebKeys.PAGE_TITLE);
-		ListMergeable<String> subtitleListMergeable =
-			(ListMergeable<String>)httpServletRequest.getAttribute(
-				WebKeys.PAGE_SUBTITLE);
-
-		Company company = themeDisplay.getCompany();
-
-		return _layoutSEOLinkManager.getFullPageTitle(
-			themeDisplay.getLayout(), portletId, themeDisplay.getTilesTitle(),
-			titleListMergeable, subtitleListMergeable, company.getName(),
-			themeDisplay.getLocale());
+		return _titleProvider.getTitle(httpServletRequest);
 	}
 
 	@Reference
@@ -422,5 +408,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private StorageEngine _storageEngine;
+
+	private TitleProvider _titleProvider;
 
 }

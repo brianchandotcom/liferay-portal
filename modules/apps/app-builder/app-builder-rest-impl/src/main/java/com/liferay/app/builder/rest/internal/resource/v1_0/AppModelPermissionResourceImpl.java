@@ -65,7 +65,7 @@ public class AppModelPermissionResourceImpl
 	extends BaseAppModelPermissionResourceImpl {
 
 	@Override
-	public Page<AppModelPermission> getAppModelPermissionsPage(String roleNames)
+	public Page getAppModelPermissionsPage(String roleNames)
 		throws Exception {
 
 		_checkPortletPermissions();

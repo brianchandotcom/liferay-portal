@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class DataModelPermissionResourceImpl
 	extends BaseDataModelPermissionResourceImpl {
 
-	public Page<DataModelPermission> getDataDefinitionDataModelPermissionsPage(
+	public Page getDataDefinitionDataModelPermissionsPage(
 			Long dataDefinitionId, String roleNames)
 		throws Exception {
 
@@ -86,7 +86,7 @@ public class DataModelPermissionResourceImpl
 	}
 
 	@Override
-	public Page<DataModelPermission> getDataModelPermissionsPage(
+	public Page getDataModelPermissionsPage(
 			String roleNames)
 		throws Exception {
 
@@ -137,7 +137,7 @@ public class DataModelPermissionResourceImpl
 	}
 
 	@Override
-	public Page<DataModelPermission>
+	public Page
 			getDataRecordCollectionDataModelPermissionsPage(
 				Long dataRecordCollectionId, String roleNames)
 		throws Exception {

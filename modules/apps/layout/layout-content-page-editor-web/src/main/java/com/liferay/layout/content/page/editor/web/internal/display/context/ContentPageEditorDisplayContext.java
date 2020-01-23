@@ -1367,8 +1367,12 @@ public class ContentPageEditorDisplayContext {
 		String layoutData = layoutPageTemplateStructure.getData(
 			getSegmentsExperienceId());
 
+		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
+			layoutData);
+
 		if (Objects.equals(
-				contentPageEditorTypeConfiguration.type(), "react")) {
+				contentPageEditorTypeConfiguration.type(), "react") &&
+			!LayoutDataConverter.isLatestVersion(layoutDataJSONObject)) {
 
 			layoutData = LayoutDataConverter.convert(layoutData);
 
@@ -1475,8 +1479,12 @@ public class ContentPageEditorDisplayContext {
 			String layoutData = layoutPageTemplateStructure.getData(
 				SegmentsExperienceConstants.ID_DEFAULT);
 
+			JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
+				layoutData);
+
 			if (Objects.equals(
-					contentPageEditorTypeConfiguration.type(), "react")) {
+					contentPageEditorTypeConfiguration.type(), "react") &&
+				!LayoutDataConverter.isLatestVersion(layoutDataJSONObject)) {
 
 				layoutData = LayoutDataConverter.convert(layoutData);
 

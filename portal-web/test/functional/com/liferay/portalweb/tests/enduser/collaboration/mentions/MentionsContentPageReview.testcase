@@ -34,6 +34,16 @@ definition {
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
 				userEmailAddress = "user2@liferay.com");
+
+			User.logoutPG();
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "user2@liferay.com");
+
+			User.logoutPG();
+
+			User.firstLoginPG();
 		}
 	}
 
@@ -61,6 +71,16 @@ definition {
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
 			userEmailAddress = "user1@liferay.com");
+
+		User.logoutPG();
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "user1@liferay.com");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
 
 		ProductMenu.gotoPortlet(
 			category = "Users",

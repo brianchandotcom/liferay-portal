@@ -39,10 +39,10 @@ function ToolbarBody() {
 	const selectItem = useSelectItem();
 	const store = useSelector(state => state);
 
-	const {portletNamespace} = config;
+	const {portletNamespace, singleSegmentsExperienceMode} = config;
 	const {segmentsExperienceId} = store;
 
-	const {draft, singleSegmentsExperienceMode} = store;
+	const {draft} = store;
 
 	const {
 		classPK,

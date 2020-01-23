@@ -40,8 +40,7 @@ const INITIAL_STATE = {
 		status: SERVICE_NETWORK_STATUS_TYPES.Idle
 	},
 	reducers: {},
-	sidebarOpen: true,
-	singleSegmentsExperienceMode: false
+	sidebarOpen: true
 };
 
 /**

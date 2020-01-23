@@ -142,7 +142,9 @@ public class OrganizationResourceDTOConverter
 							});
 						setAddressCountry_i18n(
 							() -> {
-								if (dtoConverterContext.isAcceptAllLanguages()) {
+								if (!dtoConverterContext.
+										isAcceptAllLanguages()) {
+
 									return null;
 								}
 

@@ -6485,6 +6485,45 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
+    "/sites/{siteId}/structured-contents/permissions":
+        get:
+            operationId: getSiteStructuredContentPermissionsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["StructuredContent"]
+        put:
+            operationId: putSiteStructuredContentPermission
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["StructuredContent"]
     "/sites/{siteId}/wiki-nodes":
         get:
             # @review

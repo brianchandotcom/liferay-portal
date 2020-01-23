@@ -272,6 +272,12 @@
 	<#assign the_title = the_title + " - " + site_name />
 </#if>
 
+<#if htmlTitle??>
+	<#assign html_title = htmlTitle/>
+<#else>
+	<#assign html_title = the_title/>
+</#if>
+
 <#if layouts??>
 	<#assign pages = layouts />
 </#if>

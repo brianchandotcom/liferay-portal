@@ -14,14 +14,17 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -93,10 +96,24 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 					}
 
 					resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), 0, resourceName, String.valueOf(${schemaVarName}Id), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${schemaVarName}Id, resourceName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
-				}
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "PermissionsPage")>
 
-				protected String getPermissionCheckerResourceName() {
-					throw new UnsupportedOperationException("This method needs to be implemented");
+					PermissionUtil.checkPermission(
+						ActionKeys.PERMISSIONS, groupLocalService,
+							getPermissionCheckerResourceName(),
+								${schemaVarName}Id,
+								getPermissionCheckerGroupId(${schemaVarName}Id));
+
+					return Page.of(
+						transform(
+							PermissionUtil.getRoles(
+								contextCompany, roleLocalService,
+								StringUtil.split(roleNames)),
+							role -> PermissionUtil.toPermission(
+								contextCompany.getCompanyId(), ${schemaVarName}Id,
+								resourceActionLocalService.getResourceActions(
+									getPermissionCheckerResourceName()),getPermissionCheckerResourceName(),resourcePermissionLocalService,
+	role)));
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.String")>
 				return StringPool.BLANK;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "javax.ws.rs.core.Response")>
@@ -128,6 +145,18 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 				return new ${javaMethodSignature.returnType}();
 			</#if>
 		}
+	</#list>
+
+	<#list javaMethodSignatures as javaMethodSignature>
+		<#if javaMethodSignature.methodName?contains("Permission")>
+			protected String getPermissionCheckerResourceName() {
+				throw new UnsupportedOperationException("This method needs to be implemented");
+			}
+			protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+				throw new UnsupportedOperationException("This method needs to be implemented");
+			}
+			<#break>
+		</#if>
 	</#list>
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -190,6 +219,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 	protected AcceptLanguage contextAcceptLanguage;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected com.liferay.portal.kernel.model.User contextUser;
+	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
 	protected ResourceActionLocalService resourceActionLocalService;

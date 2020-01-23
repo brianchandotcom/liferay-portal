@@ -33,5 +33,6 @@
 		<suppress checks="JavaXMLSecurityCheck" files="modules/sdk/gradle-plugins-tlddoc-builder/src/main/java/com/liferay/gradle/plugins/tlddoc/builder/internal/util/TLDUtil\.java" />
 		<suppress checks="JSONValidationCheck" files="modules/sdk/project-templates/.*" />
 		<suppress checks="StringMethodsCheck" files="modules/sdk/gradle-plugins-baseline/src/main/java/com/liferay/gradle/plugins/baseline/Baseline\.java" />
+		<suppress checks="XMLServiceFileCheck" files="modules/sdk/gradle-plugins-db-support/src/gradleTest/cleanServiceBuilder/service\.xml" />
 	</source-check>
 </suppressions>

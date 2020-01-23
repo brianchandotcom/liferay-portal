@@ -14,24 +14,12 @@
 
 package com.liferay.data.engine.rest.internal.resource.util;
 
-import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.validation.ValidationException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -60,40 +48,5 @@ public class DataEnginePermissionUtil {
 				permissionChecker, resourceName, siteId, actionId);
 		}
 	}
-
-	public static List<Role> getRoles(
-			Company company, RoleLocalService roleLocalService,
-			String[] roleNames)
-		throws PortalException {
-
-		List<String> invalidRoleNames = new ArrayList<>();
-		List<Role> roles = new ArrayList<>();
-
-		for (String roleName : roleNames) {
-			try {
-				Role role = roleLocalService.getRole(
-					company.getCompanyId(), roleName);
-
-				roles.add(role);
-			}
-			catch (NoSuchRoleException noSuchRoleException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(roleName, noSuchRoleException);
-				}
-
-				invalidRoleNames.add(roleName);
-			}
-		}
-
-		if (!invalidRoleNames.isEmpty()) {
-			throw new ValidationException(
-				"Invalid roles: " + ArrayUtil.toStringArray(invalidRoleNames));
-		}
-
-		return roles;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DataEnginePermissionUtil.class);
 
 }

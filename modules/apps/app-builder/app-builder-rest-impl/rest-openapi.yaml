@@ -46,16 +46,6 @@ components:
                 type:
                     type: string
             type: object
-        AppModelPermission:
-            properties:
-                actionIds:
-                    items:
-                        type: string
-                    type:
-                        array
-                roleName:
-                    type: string
-            type: object
         DeploymentAction:
             enum: [deploy, undeploy]
             type: string
@@ -69,55 +59,6 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/app-model-permissions":
-        get:
-            operationId: getAppModelPermissionsPage
-            parameters:
-                - in: query
-                  name: roleNames
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/AppModelPermission"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/AppModelPermission"
-                                type: array
-                    description:
-                        ""
-            tags: ["AppModelPermission"]
-        put:
-            operationId: putAppModelPermission
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            items:
-                                $ref: "#/components/schemas/AppModelPermission"
-                            type: array
-                    application/xml:
-                        schema:
-                            items:
-                                $ref: "#/components/schemas/AppModelPermission"
-                            type: array
-                description:
-                    ""
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["AppModelPermission"]
     "/apps/{appId}":
         delete:
             operationId: deleteApp

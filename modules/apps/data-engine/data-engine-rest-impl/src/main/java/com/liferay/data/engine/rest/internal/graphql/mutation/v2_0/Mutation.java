@@ -17,13 +17,11 @@ package com.liferay.data.engine.rest.internal.graphql.mutation.v2_0;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataListView;
-import com.liferay.data.engine.rest.dto.v2_0.DataModelPermission;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataListViewResource;
-import com.liferay.data.engine.rest.resource.v2_0.DataModelPermissionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -72,14 +70,6 @@ public class Mutation {
 
 		_dataListViewResourceComponentServiceObjects =
 			dataListViewResourceComponentServiceObjects;
-	}
-
-	public static void setDataModelPermissionResourceComponentServiceObjects(
-		ComponentServiceObjects<DataModelPermissionResource>
-			dataModelPermissionResourceComponentServiceObjects) {
-
-		_dataModelPermissionResourceComponentServiceObjects =
-			dataModelPermissionResourceComponentServiceObjects;
 	}
 
 	public static void setDataRecordResourceComponentServiceObjects(
@@ -137,6 +127,23 @@ public class Mutation {
 			this::_populateResourceContext,
 			dataDefinitionResource -> dataDefinitionResource.putDataDefinition(
 				dataDefinitionId, dataDefinition));
+	}
+
+	@GraphQLField
+	public boolean updateDataDefinitionPermission(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.putDataDefinitionPermission(
+					dataDefinitionId, permissions));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -234,58 +241,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			dataListViewResource -> dataListViewResource.putDataListView(
 				dataListViewId, dataListView));
-	}
-
-	@GraphQLField
-	public boolean updateDataDefinitionDataModelPermission(
-			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
-			@GraphQLName("dataModelPermissions") DataModelPermission[]
-				dataModelPermissions)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataModelPermissionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataModelPermissionResource ->
-				dataModelPermissionResource.
-					putDataDefinitionDataModelPermission(
-						dataDefinitionId, dataModelPermissions));
-
-		return true;
-	}
-
-	@GraphQLField
-	public boolean updateDataModelPermission(
-			@GraphQLName("dataModelPermissions") DataModelPermission[]
-				dataModelPermissions)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataModelPermissionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataModelPermissionResource ->
-				dataModelPermissionResource.putDataModelPermission(
-					dataModelPermissions));
-
-		return true;
-	}
-
-	@GraphQLField
-	public boolean updateDataRecordCollectionDataModelPermission(
-			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
-			@GraphQLName("dataModelPermissions") DataModelPermission[]
-				dataModelPermissions)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataModelPermissionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataModelPermissionResource ->
-				dataModelPermissionResource.
-					putDataRecordCollectionDataModelPermission(
-						dataRecordCollectionId, dataModelPermissions));
-
-		return true;
 	}
 
 	@GraphQLField
@@ -389,6 +344,23 @@ public class Mutation {
 					dataRecordCollectionId, dataRecordCollection));
 	}
 
+	@GraphQLField
+	public boolean updateDataRecordCollectionPermission(
+			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataRecordCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordCollectionResource ->
+				dataRecordCollectionResource.putDataRecordCollectionPermission(
+					dataRecordCollectionId, permissions));
+
+		return true;
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -465,20 +437,6 @@ public class Mutation {
 		dataListViewResource.setContextUser(_user);
 	}
 
-	private void _populateResourceContext(
-			DataModelPermissionResource dataModelPermissionResource)
-		throws Exception {
-
-		dataModelPermissionResource.setContextAcceptLanguage(_acceptLanguage);
-		dataModelPermissionResource.setContextCompany(_company);
-		dataModelPermissionResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		dataModelPermissionResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		dataModelPermissionResource.setContextUriInfo(_uriInfo);
-		dataModelPermissionResource.setContextUser(_user);
-	}
-
 	private void _populateResourceContext(DataRecordResource dataRecordResource)
 		throws Exception {
 
@@ -510,8 +468,6 @@ public class Mutation {
 		_dataLayoutResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DataListViewResource>
 		_dataListViewResourceComponentServiceObjects;
-	private static ComponentServiceObjects<DataModelPermissionResource>
-		_dataModelPermissionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DataRecordResource>
 		_dataRecordResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DataRecordCollectionResource>

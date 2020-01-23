@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -188,10 +189,19 @@ public class LayoutStructure {
 		JSONObject layoutStructureItemsJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
+		String dropZoneItemId = StringPool.BLANK;
+
 		for (Map.Entry<String, LayoutStructureItem> entry :
 				_layoutStructureItems.entrySet()) {
 
 			LayoutStructureItem layoutStructureItem = entry.getValue();
+
+			if (Objects.equals(
+					layoutStructureItem.getItemType(),
+					LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
+
+				dropZoneItemId = layoutStructureItem.getItemId();
+			}
 
 			layoutStructureItemsJSONObject.put(
 				entry.getKey(), layoutStructureItem.toJSONObject());
@@ -200,7 +210,12 @@ public class LayoutStructure {
 		return JSONUtil.put(
 			"items", layoutStructureItemsJSONObject
 		).put(
-			"rootItems", JSONUtil.put("main", _mainItemId)
+			"rootItems",
+			JSONUtil.put(
+				"dropZone", dropZoneItemId
+			).put(
+				"main", _mainItemId
+			)
 		).put(
 			"version", 1
 		);

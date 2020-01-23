@@ -12,9 +12,12 @@
  * details.
  */
 
+window.themeDisplay = {
+	getBCP47LanguageId: () => 'en-US',
+	getPathContext: () => '/'
+};
+
 window.Liferay = {
 	...(window.Liferay || {}),
-	ThemeDisplay: {
-		getBCP47LanguageId: () => 'en-US'
-	}
+	ThemeDisplay: window.themeDisplay
 };

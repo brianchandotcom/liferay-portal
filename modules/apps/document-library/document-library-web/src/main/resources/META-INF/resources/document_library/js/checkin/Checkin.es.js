@@ -30,7 +30,7 @@ function Checkin({
 		setShowModal(false);
 	};
 
-	const {observer} = useModal({
+	const {observer, onClose} = useModal({
 		onClose: handleOnClose
 	});
 
@@ -59,7 +59,7 @@ function Checkin({
 						dlVersionNumberIncreaseValues
 					}
 					observer={observer}
-					onModalClose={handleOnClose}
+					onModalClose={onClose}
 				/>
 			)}
 		</>

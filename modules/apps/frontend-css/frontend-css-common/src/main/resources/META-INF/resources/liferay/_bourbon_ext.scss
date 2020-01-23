@@ -4,9 +4,7 @@ $experimental-support-for-opera: true !default;
 $experimental-support-for-microsoft: true !default;
 $experimental-support-for-khtml: false !default;
 
-//
 // @deprecated As of Mueller (7.2.x)
-//
 @mixin experimental(
 	$property,
 	$value,
@@ -30,9 +28,7 @@ $experimental-support-for-khtml: false !default;
 	@warn "experimental has been deprecated as of Mueller (7.2.x)";
 }
 
-//
 // @deprecated As of Mueller (7.2.x)
-//
 @mixin filter-gradient($start-color, $end-color, $orientation: vertical) {
 	$gradient-type: if($orientation == vertical, 0, 1);
 
@@ -41,9 +37,7 @@ $experimental-support-for-khtml: false !default;
 	@warn "filter-gradient has been deprecated as of Mueller (7.2.x)";
 }
 
-//
 // @deprecated As of Mueller (7.2.x)
-//
 @mixin force-wrap {
 	white-space: -hp-pre-wrap;
 	white-space: -moz-pre-wrap;
@@ -56,9 +50,7 @@ $experimental-support-for-khtml: false !default;
 	@warn "force-wrap has been deprecated as of Mueller (7.2.x)";
 }
 
-//
 // @deprecated As of Mueller (7.2.x)
-//
 @mixin hyphenation {
 	@include hyphens(auto);
 	@include word-wrap;

@@ -1,6 +1,4 @@
-//
 // @deprecated As of Mueller (7.2.x)
-//
 @mixin respond-to($types...) {
 	$maxWidth: -1;
 	$minWidth: -1;

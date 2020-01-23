@@ -1,12 +1,8 @@
-//
 // Animations
-//
 
 $defaultTransitionDuration: 0.5s;
 
-//
 // Colors
-//
 
 $colorInfoL1: #89a7e0;
 $colorPrimary: #0b5fff;
@@ -21,9 +17,7 @@ $sidebarButtonSeparatorColor: #6b6c7e;
 $sidebarContentBackgroundColor: #fff;
 $toolbarBorderColor: fade_out(#dcdcdc, 0.5);
 
-//
 // Layout
-//
 
 $pageEditorSpacing: 8px;
 
@@ -41,9 +35,7 @@ $floatingToolbarPanelMinWidth: 288px;
 $dropTargetWidth: 5px;
 $fragmentsEditorSpacing: 8px;
 
-//
 // z-indexes, ordered numerically.
-//
 
 $zIndexToolbar: 971;
 $zIndexSidebar: 972;

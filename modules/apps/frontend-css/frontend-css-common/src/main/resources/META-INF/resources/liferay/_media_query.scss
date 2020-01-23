@@ -1,6 +1,4 @@
-//
 // @deprecated As of Mueller (7.2.x)
-//
 @mixin media-query($min, $max: null) {
 	$maxWidth: -1;
 	$minWidth: -1;
@@ -40,9 +38,7 @@
 	@warn "media-query has been deprecated as of Mueller (7.2.x)";
 }
 
-//
 // @deprecated As of Mueller (7.2.x)
-//
 @mixin xs {
 	@include media-query(xs) {
 		@content;
@@ -51,9 +47,7 @@
 	@warn "xs has been deprecated as of Mueller (7.2.x)";
 }
 
-//
 // @deprecated As of Mueller (7.2.x)
-//
 @mixin sm {
 	@include media-query(sm) {
 		@content;
@@ -62,9 +56,7 @@
 	@warn "sm has been deprecated as of Mueller (7.2.x)";
 }
 
-//
 // @deprecated As of Mueller (7.2.x)
-//
 @mixin md {
 	@include media-query(md) {
 		@content;
@@ -73,9 +65,7 @@
 	@warn "md has been deprecated as of Mueller (7.2.x)";
 }
 
-//
 // @deprecated As of Mueller (7.2.x)
-//
 @mixin lg {
 	@include media-query(lg) {
 		@content;

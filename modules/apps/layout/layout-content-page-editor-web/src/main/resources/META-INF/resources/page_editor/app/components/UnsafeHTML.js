@@ -12,15 +12,24 @@
  * details.
  */
 
-import React, {forwardRef} from 'react';
+import {globalEval} from 'metal-dom';
+import React, {forwardRef, useEffect} from 'react';
 
 export default forwardRef(
-	({TagName = 'div', className = '', markup, ...otherProps}, ref) => (
-		<TagName
-			{...otherProps}
-			className={className}
-			dangerouslySetInnerHTML={{__html: markup}}
-			ref={ref}
-		/>
-	)
+	({TagName = 'div', className = '', markup, ...otherProps}, ref) => {
+		useEffect(() => {
+			if (ref && ref.current) {
+				globalEval.runScriptsInElement(ref.current);
+			}
+		}, [markup, ref]);
+
+		return (
+			<TagName
+				{...otherProps}
+				className={className}
+				dangerouslySetInnerHTML={{__html: markup}}
+				ref={ref}
+			/>
+		);
+	}
 );

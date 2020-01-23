@@ -12,8 +12,8 @@
  * details.
  */
 
-import ClayLabel from '@clayui/label';
 import {ClayCheckbox} from '@clayui/form';
+import ClayLabel from '@clayui/label';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
@@ -24,18 +24,31 @@ const ManageLanguages = ({
 	customLocales,
 	eventName,
 	portletNamespace
-}) =>{
-	const [selectedLocales, setSelectedLocales] = useState(JSON.parse(customLocales));
+}) => {
+	const [selectedLocales, setSelectedLocales] = useState(
+		JSON.parse(customLocales)
+	);
 
-	const [selectedLocalesIds, setSelectedLocalesIds] = useState(selectedLocales.map(({localeId}) => localeId));
+	const [selectedLocalesIds, setSelectedLocalesIds] = useState(
+		selectedLocales.map(({localeId}) => localeId)
+	);
 
 	const onChangeLocale = (checked, displayName, selectedLocaleId) => {
 		if (checked) {
-			setSelectedLocales(selectedLocales.concat({displayName, localeId: selectedLocaleId}));
+			setSelectedLocales(
+				selectedLocales.concat({
+					displayName,
+					localeId: selectedLocaleId
+				})
+			);
 		} else {
-			setSelectedLocales(selectedLocales.filter(({localeId}) => (localeId != selectedLocaleId)));
+			setSelectedLocales(
+				selectedLocales.filter(
+					({localeId}) => localeId != selectedLocaleId
+				)
+			);
 		}
-	}
+	};
 
 	useEffect(() => {
 		Liferay.Util.getOpener().Liferay.fire(eventName, {
@@ -45,7 +58,7 @@ const ManageLanguages = ({
 		});
 
 		setSelectedLocalesIds(selectedLocales.map(({localeId}) => localeId));
-	}, [selectedLocales])
+	}, [eventName, selectedLocales]);
 
 	const Language = ({displayName, isDefault, localeId}) => {
 		const checked = selectedLocalesIds.indexOf(localeId) != -1;
@@ -56,7 +69,9 @@ const ManageLanguages = ({
 					<ClayCheckbox
 						checked={checked}
 						disabled={isDefault}
-						onChange={() => {onChangeLocale(!checked, displayName, localeId)}}
+						onChange={() => {
+							onChangeLocale(!checked, displayName, localeId);
+						}}
 					/>
 				</ClayTable.Cell>
 
@@ -73,7 +88,7 @@ const ManageLanguages = ({
 		);
 	};
 
-	return(
+	return (
 		<div className="container">
 			<ClayTable borderless headVerticalAlignment="middle">
 				<ClayTable.Head>
@@ -89,7 +104,9 @@ const ManageLanguages = ({
 						return (
 							<Language
 								{...locale}
-								isDefault={customDefaultLocaleId === locale.localeId}
+								isDefault={
+									customDefaultLocaleId === locale.localeId
+								}
 								key={locale.localeId}
 							/>
 						);
@@ -98,7 +115,7 @@ const ManageLanguages = ({
 			</ClayTable>
 		</div>
 	);
-}
+};
 
 ManageLanguages.propTypes = {
 	availableLocales: PropTypes.arrayOf(
@@ -111,7 +128,7 @@ ManageLanguages.propTypes = {
 	customLocales: PropTypes.string.isRequired,
 	eventName: PropTypes.string,
 	portletNamespace: PropTypes.string
-}
+};
 
 export default function(props) {
 	return <ManageLanguages {...props} />;

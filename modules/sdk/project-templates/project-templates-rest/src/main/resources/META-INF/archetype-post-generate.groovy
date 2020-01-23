@@ -26,7 +26,7 @@ Properties properties = request.properties
 
 String liferayVersion = properties.get("liferayVersion")
 
-if (liferayVersion.startsWith("7.1") || liferayVersion.startsWith("7.2")) {
+if (liferayVersion.startsWith("7.1") || liferayVersion.startsWith("7.2") || liferayVersion.startsWith("7.3")) {
 	Path configPath = projectPath.resolve("src/main/resources/configuration")
 
 	String cxfConfig =

@@ -173,5 +173,8 @@
 			<property name="enabled" value="false" />
 			<message key="readability.improve" value="Create a new variable for the {0} hand side operand of the ''{1}'' operator for better readability" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.ParsePrimitiveTypeCheck">
+			<message key="getter.util.method.use" value="Use ''GetterUtil.{0}'' or properly catch ''NumberFormatException'' when calling ''{1}.{2}''" />
+		</module>
 	</module>
 </module>

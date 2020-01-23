@@ -19,10 +19,9 @@ import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayTable from '@clayui/table';
+import {ItemSelectorDialog} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState, useRef} from 'react';
-
-import {ItemSelectorDialog} from 'frontend-js-web';
 
 /**
  * @class Languages
@@ -161,7 +160,11 @@ const Languages = ({
 
 						{showActions && (
 							<ClayTable.Cell align="center">
-								<ClayButton displayType="secondary" onClick={handleAddClick} small>
+								<ClayButton
+									displayType="secondary"
+									onClick={handleAddClick}
+									small
+								>
 									{Liferay.Language.get('add')}
 								</ClayButton>
 							</ClayTable.Cell>
@@ -218,8 +221,8 @@ const Languages = ({
 				<>
 					<input
 						name={`_${portletNamespace}_TypeSettingsProperties--languageId--`}
-						value={customDefaultLocaleId}
 						type="hidden"
+						value={customDefaultLocaleId}
 					/>
 
 					<input

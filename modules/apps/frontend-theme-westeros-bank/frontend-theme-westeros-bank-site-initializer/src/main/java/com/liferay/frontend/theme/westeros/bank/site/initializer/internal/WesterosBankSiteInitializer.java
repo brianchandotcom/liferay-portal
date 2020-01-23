@@ -587,10 +587,6 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 			_layoutLocalService.updateLayout(draftLayout);
 		}
-
-		_layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			new Date());
 	}
 
 	private ServiceContext _createServiceContext(long groupId)

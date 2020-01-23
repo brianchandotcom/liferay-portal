@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
@@ -42,6 +41,8 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -170,11 +171,6 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 	protected void setMessageBoardsPortlet(Portlet portlet) {
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Reference(
 		target = "(javax.portlet.name=" + PollsPortletKeys.POLLS_DISPLAY + ")",
 		unbind = "-"
@@ -195,6 +191,12 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 	}
 
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference(
+		target = "(&(original.bean=true)(bean.id=javax.servlet.ServletContext))"
+	)
+	private ServletContext _servletContext;
+
 	private UserLocalService _userLocalService;
 
 }

@@ -190,6 +190,10 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 					_copyLayout(personalLayout);
 
+					_layoutLocalService.updateStatus(
+						serviceContext.getUserId(), personalLayout.getPlid(),
+						WorkflowConstants.STATUS_APPROVED, serviceContext);
+
 					return null;
 				});
 
@@ -232,6 +236,10 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
 					_copyLayout(businessLayout);
+
+					_layoutLocalService.updateStatus(
+						serviceContext.getUserId(), businessLayout.getPlid(),
+						WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 					return null;
 				});

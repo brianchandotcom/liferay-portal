@@ -319,6 +319,10 @@ public class FjordSiteInitializer implements SiteInitializer {
 			() -> {
 				_copyLayout(layout);
 
+				_layoutLocalService.updateStatus(
+					serviceContext.getUserId(), layout.getPlid(),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+
 				return null;
 			});
 	}

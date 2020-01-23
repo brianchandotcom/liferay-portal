@@ -18,7 +18,7 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -33,8 +33,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,22 +71,21 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(actionRequest, portalException.getClass());
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
 		SessionMessages.add(
-			httpServletRequest, "requestProcessed",
-			LanguageUtil.format(
-				httpServletRequest, "publishing-x-has-started-successfully",
-				new Object[] {name}, false));
+			actionRequest, "requestProcessed",
+			_language.format(
+				_portal.getHttpServletRequest(actionRequest),
+				"publishing-x-has-started-successfully", new Object[] {name},
+				false));
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, CTPortletKeys.CHANGE_LISTS_HISTORY,
+		PortletURL redirectURL = PortletURLFactoryUtil.create(
+			actionRequest, CTPortletKeys.CHANGE_LISTS,
 			PortletRequest.RENDER_PHASE);
 
-		sendRedirect(actionRequest, actionResponse, portletURL.toString());
+		redirectURL.setParameter(
+			"mvcRenderCommandName", "/change_lists/view_history");
+
+		sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 	}
 
 	@Reference
@@ -96,6 +93,9 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

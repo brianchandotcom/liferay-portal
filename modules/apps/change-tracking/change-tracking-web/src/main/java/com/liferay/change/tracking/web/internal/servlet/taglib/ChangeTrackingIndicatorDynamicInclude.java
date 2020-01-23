@@ -286,11 +286,11 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		addURL.setParameter(
 			"mvcRenderCommandName", "/change_lists/add_ct_collection");
 
-		PortletURL overviewURL = _portal.getControlPanelPortletURL(
+		PortletURL backURL = _portal.getControlPanelPortletURL(
 			httpServletRequest, themeDisplay.getScopeGroup(),
 			CTPortletKeys.CHANGE_LISTS, 0, 0, PortletRequest.RENDER_PHASE);
 
-		addURL.setParameter("backURL", overviewURL.toString());
+		addURL.setParameter("redirect", backURL.toString());
 
 		jsonArray.put(
 			JSONUtil.put(
@@ -302,11 +302,21 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			));
 
 		if (ctCollection != null) {
+			PortletURL reviewURL = _portal.getControlPanelPortletURL(
+				httpServletRequest, themeDisplay.getScopeGroup(),
+				CTPortletKeys.CHANGE_LISTS, 0, 0, PortletRequest.RENDER_PHASE);
+
+			reviewURL.setParameter(
+				"mvcRenderCommandName", "/change_lists/view_changes");
+			reviewURL.setParameter("backURL", backURL.toString());
+			reviewURL.setParameter(
+				"ctCollectionId", String.valueOf(ctCollectionId));
+
 			jsonArray.put(
 				JSONUtil.put("type", "divider")
 			).put(
 				JSONUtil.put(
-					"href", overviewURL.toString()
+					"href", reviewURL.toString()
 				).put(
 					"label", _language.get(resourceBundle, "review-changes")
 				).put(
@@ -338,7 +348,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						"label",
 						_language.get(resourceBundle, "prepare-to-publish")
 					).put(
-						"symbolLeft", "upload"
+						"symbolLeft", "change"
 					));
 			}
 		}

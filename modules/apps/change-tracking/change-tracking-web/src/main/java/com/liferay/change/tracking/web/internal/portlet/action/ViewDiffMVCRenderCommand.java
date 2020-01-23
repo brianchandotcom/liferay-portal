@@ -82,7 +82,7 @@ public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(portalException);
 		}
 
-		return "/change_lists/diff.jsp";
+		return "/change_lists/view_diff.jsp";
 	}
 
 	@Reference

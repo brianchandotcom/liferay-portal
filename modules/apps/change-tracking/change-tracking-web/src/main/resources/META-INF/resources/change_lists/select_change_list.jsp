@@ -17,9 +17,9 @@
 <%@ include file="/change_lists/init.jsp" %>
 
 <%
-SelectChangeListDisplayContext selectChangeListDisplayContext = new SelectChangeListDisplayContext(request, renderRequest, renderResponse);
+SearchContainer<CTCollection> searchContainer = changeListsDisplayContext.getSearchContainer();
 
-SearchContainer<CTCollection> searchContainer = selectChangeListDisplayContext.getSearchContainer();
+searchContainer.setId("selectChangeList");
 
 SelectChangeListManagementToolbarDisplayContext selectChangeListManagementToolbarDisplayContext = new SelectChangeListManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer);
 %>
@@ -38,7 +38,7 @@ SelectChangeListManagementToolbarDisplayContext selectChangeListManagementToolba
 
 <div class="container container-fluid-1280" id="<portlet:namespace />selectChangeListContainer">
 	<div class="table-responsive">
-		<table class="select-change-list-table table table-autofit">
+		<table class="change-lists-table select-change-list-table table table-autofit">
 			<tbody>
 
 				<%
@@ -50,13 +50,15 @@ SelectChangeListManagementToolbarDisplayContext selectChangeListManagementToolba
 
 					<tr>
 						<td>
-							<liferay-ui:user-portrait
-								userId="<%= ctCollection.getUserId() %>"
-							/>
+							<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(ctCollection.getUserName()) %>">
+								<liferay-ui:user-portrait
+									userId="<%= ctCollection.getUserId() %>"
+								/>
+							</span>
 						</td>
 						<td class="table-cell-expand">
 							<c:choose>
-								<c:when test="<%= ctCollection.getCtCollectionId() == selectChangeListDisplayContext.getCtCollectionId() %>">
+								<c:when test="<%= ctCollection.getCtCollectionId() == changeListsDisplayContext.getCtCollectionId() %>">
 									<div class="change-list-name font-italic">
 										<%= HtmlUtil.escape(ctCollection.getName()) %>
 									</div>
@@ -97,6 +99,6 @@ SelectChangeListManagementToolbarDisplayContext selectChangeListManagementToolba
 <aui:script>
 	Liferay.Util.selectEntityHandler(
 		'#<portlet:namespace />selectChangeListContainer',
-		'<%= selectChangeListDisplayContext.getEventName() %>'
+		'<portlet:namespace />selectChangeList'
 	);
 </aui:script>

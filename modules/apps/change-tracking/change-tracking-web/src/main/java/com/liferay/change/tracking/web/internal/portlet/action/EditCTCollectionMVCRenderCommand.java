@@ -15,7 +15,6 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -34,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
 		"mvc.command.name=/change_lists/add_ct_collection",
-		"mvc.command.name=/change_lists/edit_ct_collection"
+		"mvc.command.name=/change_lists/edit_ct_collection",
+		"mvc.command.name=/change_lists/undo_ct_collection"
 	},
 	service = MVCRenderCommand.class
 )
@@ -47,12 +47,9 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 		long ctCollectionId = ParamUtil.getLong(
 			renderRequest, "ctCollectionId");
 
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctCollectionId);
-
-		if (ctCollection != null) {
-			renderRequest.setAttribute("ctCollection", ctCollection);
-		}
+		renderRequest.setAttribute(
+			"ctCollection",
+			_ctCollectionLocalService.fetchCTCollection(ctCollectionId));
 
 		return "/change_lists/edit_ct_collection.jsp";
 	}

@@ -18,13 +18,10 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.context.ChangeListsDisplayContext;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
@@ -74,19 +71,11 @@ public class ChangeListsPortlet extends BaseChangeListsPortlet {
 
 		checkRender(renderRequest);
 
-		if (ParamUtil.getBoolean(renderRequest, "production")) {
-			SessionMessages.add(
-				renderRequest,
-				_portal.getPortletId(renderRequest) +
-					"checkoutProductionSuccess");
-		}
-
 		ChangeListsDisplayContext changeListsDisplayContext =
 			new ChangeListsDisplayContext(
-				_ctCollectionLocalService, _ctDisplayRendererRegistry,
-				_ctEntryLocalService, _ctPreferencesLocalService,
-				_ctProcessLocalService, _portal, renderRequest, renderResponse,
-				_userLocalService);
+				renderRequest, renderResponse, _ctCollectionLocalService,
+				_ctDisplayRendererRegistry, _ctEntryLocalService,
+				_ctPreferencesLocalService, _language, _portal);
 
 		renderRequest.setAttribute(
 			CTWebKeys.CHANGE_LISTS_DISPLAY_CONTEXT, changeListsDisplayContext);
@@ -107,12 +96,9 @@ public class ChangeListsPortlet extends BaseChangeListsPortlet {
 	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Reference
-	private CTProcessLocalService _ctProcessLocalService;
+	private Language _language;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

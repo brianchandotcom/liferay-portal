@@ -18,6 +18,7 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.ChangeListsConfigurationDisplayContext;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
@@ -62,9 +63,8 @@ public class ChangeListsConfigurationPortlet extends BaseChangeListsPortlet {
 		ChangeListsConfigurationDisplayContext
 			changeListsConfigurationDisplayContext =
 				new ChangeListsConfigurationDisplayContext(
-					_ctPreferencesLocalService,
 					_portal.getHttpServletRequest(renderRequest),
-					renderResponse);
+					renderResponse, _ctPreferencesLocalService, _language);
 
 		renderRequest.setAttribute(
 			CTWebKeys.CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT,
@@ -75,6 +75,9 @@ public class ChangeListsConfigurationPortlet extends BaseChangeListsPortlet {
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

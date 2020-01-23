@@ -14,8 +14,10 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<div class="change-list-name">
+	<%= HtmlUtil.escape(ctCollection.getName()) %>
+</div>
 
-<%
-ChangeListsHistoryDisplayContext changeListsHistoryDisplayContext = (ChangeListsHistoryDisplayContext)request.getAttribute(CTWebKeys.CHANGE_LISTS_HISTORY_DISPLAY_CONTEXT);
-%>
+<div class="change-list-description">
+	<%= HtmlUtil.escape(ctCollection.getDescription()) %>
+</div>

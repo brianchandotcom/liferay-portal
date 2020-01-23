@@ -1,12 +1,5 @@
 Bundle-Name: Liferay Change Tracking Web
 Bundle-SymbolicName: com.liferay.change.tracking.web
 Bundle-Version: 1.0.0
-Provide-Capability:\
-	soy;\
-		type="change-tracking-web";\
-		version:Version="${Bundle-Version}"
-Require-Capability:\
-	osgi.extender;\
-		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /change-tracking-web
 -dsannotations-options: inherit

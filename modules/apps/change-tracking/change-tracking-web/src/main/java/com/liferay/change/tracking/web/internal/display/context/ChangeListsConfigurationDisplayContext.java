@@ -18,7 +18,7 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -38,25 +38,27 @@ import javax.servlet.http.HttpServletRequest;
 public class ChangeListsConfigurationDisplayContext {
 
 	public ChangeListsConfigurationDisplayContext(
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		CTPreferencesLocalService ctPreferencesLocalService,
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+		Language language) {
 
-		_ctPreferencesLocalService = ctPreferencesLocalService;
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
+		_language = language;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.fetchCTPreferences(
-				_themeDisplay.getCompanyId(), 0);
+			ctPreferencesLocalService.fetchCTPreferences(
+				themeDisplay.getCompanyId(), 0);
 
-		if (ctPreferences == null) {
-			_changeListsEnabled = false;
+		if (ctPreferences != null) {
+			_changeListsEnabled = true;
 		}
 		else {
-			_changeListsEnabled = true;
+			_changeListsEnabled = false;
 		}
 	}
 
@@ -97,7 +99,7 @@ public class ChangeListsConfigurationDisplayContext {
 					_renderResponse.createRenderURL(), "navigation",
 					"global-settings");
 				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "global-settings"));
+					_language.get(_httpServletRequest, "global-settings"));
 			}
 		).build();
 	}
@@ -107,10 +109,9 @@ public class ChangeListsConfigurationDisplayContext {
 	}
 
 	private final boolean _changeListsEnabled;
-	private final CTPreferencesLocalService _ctPreferencesLocalService;
 	private final HttpServletRequest _httpServletRequest;
+	private final Language _language;
 	private String _navigation;
 	private final RenderResponse _renderResponse;
-	private final ThemeDisplay _themeDisplay;
 
 }

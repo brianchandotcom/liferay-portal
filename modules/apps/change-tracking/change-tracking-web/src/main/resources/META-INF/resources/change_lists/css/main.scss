@@ -1,6 +1,58 @@
-@import 'change_lists_card';
-@import 'change_lists_helper';
-@import 'change_lists_overview';
-@import 'change_lists_overview_card';
-@import 'change_lists_select_card';
-@import 'select_change_list';
+.change-lists-table {
+	.change-list-description {
+		color: #6b6c7e;
+	}
+
+	.change-list-name {
+		color: #272833;
+		font-weight: 600;
+	}
+}
+
+.change-lists-tbar {
+	font-size: 14px;
+	height: auto;
+	min-height: 3.5rem;
+
+	.change-list-name {
+		color: #272833;
+		font-size: 18px;
+		font-weight: 600;
+
+		.label {
+			margin-left: 0.5rem;
+			vertical-align: middle;
+		}
+	}
+}
+
+.change-lists-conflicts-table {
+	.entry-title {
+		margin-top: 0.25rem;
+	}
+
+	.user-portrait-wrapper {
+		display: block;
+	}
+}
+
+.change-lists-diff-table-wrapper table {
+	border-collapse: collapse;
+
+	.change-lists-diff-td {
+		border-left: solid 1px #e7e7ed;
+		border-right: solid 1px #e7e7ed;
+	}
+}
+
+.select-change-list-table {
+	border-collapse: collapse;
+
+	td:first-child {
+		vertical-align: top;
+	}
+}
+
+#selectChangeListManagementToolbar nav:last-child {
+	margin-bottom: 0;
+}

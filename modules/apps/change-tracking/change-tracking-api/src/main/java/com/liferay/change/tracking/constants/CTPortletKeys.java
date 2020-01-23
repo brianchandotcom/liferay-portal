@@ -26,7 +26,4 @@ public class CTPortletKeys {
 		"com_liferay_change_tracking_web_portlet_" +
 			"ChangeListsConfigurationPortlet";
 
-	public static final String CHANGE_LISTS_HISTORY =
-		"com_liferay_change_tracking_web_portlet_ChangeListsHistoryPortlet";
-
 }

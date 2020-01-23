@@ -17,7 +17,7 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -31,6 +31,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,6 +76,9 @@ public class UpdateGlobalChangeListsConfigurationMVCActionCommand
 			}
 		}
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
 		boolean redirectToOverview = ParamUtil.getBoolean(
 			actionRequest, "redirectToOverview");
 
@@ -81,29 +86,29 @@ public class UpdateGlobalChangeListsConfigurationMVCActionCommand
 			hideDefaultSuccessMessage(actionRequest);
 
 			SessionMessages.add(
-				_portal.getHttpServletRequest(actionRequest),
-				"requestProcessed",
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					"the-configuration-has-been-saved"));
+				httpServletRequest, "requestProcessed",
+				_language.get(
+					httpServletRequest, "the-configuration-has-been-saved"));
 
-			PortletURL portletURL = PortletURLFactoryUtil.create(
+			PortletURL redirectURL = PortletURLFactoryUtil.create(
 				actionRequest, CTPortletKeys.CHANGE_LISTS,
 				PortletRequest.RENDER_PHASE);
 
-			sendRedirect(actionRequest, actionResponse, portletURL.toString());
+			sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 		}
 		else {
 			SessionMessages.add(
 				actionRequest, "requestProcessed",
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					"the-configuration-has-been-saved"));
+				_language.get(
+					httpServletRequest, "the-configuration-has-been-saved"));
 		}
 	}
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

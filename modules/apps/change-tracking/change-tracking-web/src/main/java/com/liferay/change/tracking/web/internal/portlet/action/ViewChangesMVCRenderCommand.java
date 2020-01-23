@@ -14,17 +14,16 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
+import com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-
-import java.util.List;
-import java.util.Map;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -40,40 +39,49 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
-		"mvc.command.name=/change_lists/view_conflicts"
+		"mvc.command.name=/change_lists/view_changes"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
+public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		long ctCollectionId = ParamUtil.getLong(
+			renderRequest, "ctCollectionId");
+
 		try {
-			long ctCollectionId = ParamUtil.getLong(
-				renderRequest, "ctCollectionId");
-
-			CTCollection ctCollection =
-				_ctCollectionLocalService.getCTCollection(ctCollectionId);
-
-			Map<Long, List<ConflictInfo>> conflictInfoMap =
-				_ctCollectionLocalService.checkConflicts(ctCollection);
+			ViewChangesDisplayContext viewChangesDisplayContext =
+				new ViewChangesDisplayContext(
+					_portal.getHttpServletRequest(renderRequest), renderRequest,
+					renderResponse,
+					_ctCollectionLocalService.getCTCollection(ctCollectionId),
+					_ctEntryLocalService, _language);
 
 			renderRequest.setAttribute(
-				CTWebKeys.CONFLICT_INFO_MAP, conflictInfoMap);
-
-			renderRequest.setAttribute(CTWebKeys.CT_COLLECTION, ctCollection);
-
-			return "/change_lists/view_conflicts.jsp";
+				CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT,
+				viewChangesDisplayContext);
 		}
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
 		}
+
+		return "/change_lists/view_changes.jsp";
 	}
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

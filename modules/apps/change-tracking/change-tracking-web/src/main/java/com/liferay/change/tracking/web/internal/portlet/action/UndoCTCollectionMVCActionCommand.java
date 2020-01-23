@@ -20,6 +20,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -27,8 +28,12 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.IOException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,8 +44,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS_HISTORY,
-		"mvc.command.name=/change_lists_history/undo_ct_collection"
+		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS,
+		"mvc.command.name=/change_lists/undo_ct_collection"
 	},
 	service = MVCActionCommand.class
 )
@@ -49,7 +54,7 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
+		throws IOException, PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -69,8 +74,19 @@ public class UndoCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 				ctCollection.getName(), "\"");
 		}
 
-		_ctCollectionLocalService.undoCTCollection(
+		CTCollection ctCollection = _ctCollectionLocalService.undoCTCollection(
 			ctCollectionId, themeDisplay.getUserId(), name, description);
+
+		PortletURL redirect = PortletURLFactoryUtil.create(
+			actionRequest, CTPortletKeys.CHANGE_LISTS,
+			PortletRequest.RENDER_PHASE);
+
+		redirect.setParameter(
+			"mvcRenderCommandName", "/change_lists/view_changes");
+		redirect.setParameter(
+			"ctCollectionId", String.valueOf(ctCollection.getCtCollectionId()));
+
+		sendRedirect(actionRequest, actionResponse, redirect.toString());
 	}
 
 	@Reference

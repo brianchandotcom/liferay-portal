@@ -14,6 +14,12 @@ import javax.annotation.Generated;
 @Generated("")
 public class Permission {
 
+	public static Permission toDTO(String json) {
+		PermissionJSONParser<Permission> permissionJSONParser = new PermissionJSONParser();
+
+		return permissionJSONParser.parseToDTO(json);
+	}
+
 	public String[] getActionIds() {
 		return _actionIds;
 	}

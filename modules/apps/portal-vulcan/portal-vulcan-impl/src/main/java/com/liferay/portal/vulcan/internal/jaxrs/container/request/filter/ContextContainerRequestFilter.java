@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -50,11 +51,12 @@ import org.apache.cxf.phase.PhaseInterceptorChain;
 public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 	public ContextContainerRequestFilter(
-		Language language, Portal portal,
+		GroupLocalService groupLocalService, Language language, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, Object scopeChecker) {
 
+		_groupLocalService = groupLocalService;
 		_language = language;
 		_portal = portal;
 		_resourceActionLocalService = resourceActionLocalService;
@@ -100,6 +102,16 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 			Class<?> fieldClass = field.getType();
 
+			if (fieldClass.equals(Object.class) &&
+				Objects.equals(field.getName(), "contextScopeChecker")) {
+
+				field.setAccessible(true);
+
+				field.set(instance, _scopeChecker);
+
+				continue;
+			}
+
 			if (fieldClass.isAssignableFrom(AcceptLanguage.class)) {
 				field.setAccessible(true);
 
@@ -112,6 +124,11 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 				field.setAccessible(true);
 
 				field.set(instance, _portal.getCompany(httpServletRequest));
+			}
+			else if (fieldClass.isAssignableFrom(GroupLocalService.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _groupLocalService);
 			}
 			else if (fieldClass.isAssignableFrom(HttpServletRequest.class)) {
 				field.setAccessible(true);
@@ -153,14 +170,10 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 				field.set(instance, _portal.getUser(httpServletRequest));
 			}
-			else if (Objects.equals(field.getName(), "contextScopeChecker")) {
-				field.setAccessible(true);
-
-				field.set(instance, _scopeChecker);
-			}
 		}
 	}
 
+	private final GroupLocalService _groupLocalService;
 	private final Language _language;
 	private final Portal _portal;
 	private final ResourceActionLocalService _resourceActionLocalService;

@@ -745,6 +745,16 @@ public class GraphQLServletExtender {
 
 			Class<?> fieldClass = field.getType();
 
+			if (fieldClass.equals(Object.class) &&
+				Objects.equals(field.getName(), "contextScopeChecker")) {
+
+				field.setAccessible(true);
+
+				field.set(instance, _getScopeChecker());
+
+				continue;
+			}
+
 			if (fieldClass.isAssignableFrom(AcceptLanguage.class)) {
 				field.setAccessible(true);
 
@@ -757,6 +767,11 @@ public class GraphQLServletExtender {
 					instance,
 					_companyLocalService.getCompany(
 						CompanyThreadLocal.getCompanyId()));
+			}
+			else if (fieldClass.isAssignableFrom(GroupLocalService.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _groupLocalService);
 			}
 			else if (fieldClass.isAssignableFrom(HttpServletRequest.class)) {
 				field.setAccessible(true);
@@ -851,11 +866,6 @@ public class GraphQLServletExtender {
 					};
 
 				field.set(instance, sortsBiFunction);
-			}
-			else if (Objects.equals(field.getName(), "contextScopeChecker")) {
-				field.setAccessible(true);
-
-				field.set(instance, _getScopeChecker());
 			}
 		}
 

@@ -1570,6 +1570,23 @@ public class Mutation {
 					Long.valueOf(siteKey), structuredContent));
 	}
 
+	@GraphQLField
+	public boolean updateSiteStructuredContentPermission(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putSiteStructuredContentPermission(
+					Long.valueOf(siteKey), permissions));
+
+		return true;
+	}
+
 	@GraphQLField(
 		description = "Creates a new structured content in the folder."
 	)

@@ -31,24 +31,24 @@ public class Permission {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	public String[] getActionIds() {
-		return _actionIds;
+		return actionIds;
 	}
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	public String getRoleName() {
-		return _roleName;
+		return roleName;
 	}
 
 	public void setActionIds(String[] actionIds) {
-		_actionIds = actionIds;
+		this.actionIds = actionIds;
 	}
 
 	public void setRoleName(String roleName) {
-		_roleName = roleName;
+		this.roleName = roleName;
 	}
 
-	private String[] _actionIds;
-	private String _roleName;
+	protected String[] actionIds;
+	protected String roleName;
 
 }

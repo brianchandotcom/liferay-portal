@@ -129,9 +129,9 @@ public class VulcanFeature implements Feature {
 		featureContext.register(new CompanyContextProvider(_portal));
 		featureContext.register(
 			new ContextContainerRequestFilter(
-				_language, _portal, _resourceActionLocalService,
-				_resourcePermissionLocalService, _roleLocalService,
-				_getScopeChecker()));
+				_groupLocalService, _language, _portal,
+				_resourceActionLocalService, _resourcePermissionLocalService,
+				_roleLocalService, _getScopeChecker()));
 		featureContext.register(
 			new FilterContextProvider(
 				_expressionConvert, _filterParserProvider, _language, _portal));

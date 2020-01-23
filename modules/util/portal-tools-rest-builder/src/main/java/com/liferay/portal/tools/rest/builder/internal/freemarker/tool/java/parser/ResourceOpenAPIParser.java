@@ -77,7 +77,7 @@ public class ResourceOpenAPIParser {
 				pathItem,
 				operation -> {
 					String returnType = _getReturnType(
-						javaDataTypeMap, operation);
+						javaDataTypeMap, operation, path);
 
 					if (!_isSchemaMethod(
 							javaDataTypeMap, returnType, schemaName,
@@ -321,7 +321,7 @@ public class ResourceOpenAPIParser {
 		String operationId = operation.getOperationId();
 
 		if ((operationId != null) && operationId.endsWith("Permission") &&
-			requestBodyMediaTypes.isEmpty()) {
+			operationId.startsWith("put") && requestBodyMediaTypes.isEmpty()) {
 
 			javaMethodParameters.add(
 				new JavaMethodParameter(
@@ -556,6 +556,17 @@ public class ResourceOpenAPIParser {
 		return StringUtil.merge(methodNameSegments, "");
 	}
 
+	private static String _getPageClassName(String returnType) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(Page.class.getName());
+		sb.append("<");
+		sb.append(OpenAPIParserUtil.getElementClassName(returnType));
+		sb.append(">");
+
+		return sb.toString();
+	}
+
 	private static String _getParameterAnnotation(
 		JavaMethodParameter javaMethodParameter, OpenAPIYAML openAPIYAML,
 		Operation operation) {
@@ -628,7 +639,7 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getReturnType(
-		Map<String, String> javaDataTypeMap, Operation operation) {
+		Map<String, String> javaDataTypeMap, Operation operation, String path) {
 
 		Map<Integer, Response> responses = operation.getResponses();
 
@@ -667,6 +678,11 @@ public class ResourceOpenAPIParser {
 				return void.class.getName();
 			}
 
+			if ((operation instanceof Get) && path.endsWith("permissions")) {
+				return _getPageClassName(
+					"[L" + Permission.class.getName() + ";");
+			}
+
 			for (Content content : sortedContents.values()) {
 				Schema schema = content.getSchema();
 
@@ -684,15 +700,7 @@ public class ResourceOpenAPIParser {
 					javaDataTypeMap, schema);
 
 				if (returnType.startsWith("[")) {
-					StringBuilder sb = new StringBuilder();
-
-					sb.append(Page.class.getName());
-					sb.append("<");
-					sb.append(
-						OpenAPIParserUtil.getElementClassName(returnType));
-					sb.append(">");
-
-					return sb.toString();
+					return _getPageClassName(returnType);
 				}
 
 				String schemaReference = schema.getReference();

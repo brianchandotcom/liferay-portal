@@ -65,6 +65,20 @@ public interface DataRecordCollectionResource {
 			DataRecordCollection dataRecordCollection)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getDataRecordCollectionPermissionsPage(
+				Long dataRecordCollectionId, String roleNames)
+		throws Exception;
+
+	public void putDataRecordCollectionPermission(
+			Long dataRecordCollectionId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
+	public String getDataRecordCollectionPermissionByCurrentUser(
+			Long dataRecordCollectionId)
+		throws Exception;
+
 	public DataRecordCollection
 			getSiteDataRecordCollectionByDataRecordCollectionKey(
 				Long siteId, String dataRecordCollectionKey)

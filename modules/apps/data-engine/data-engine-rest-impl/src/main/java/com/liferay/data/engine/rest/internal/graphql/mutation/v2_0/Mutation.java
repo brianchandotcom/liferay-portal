@@ -389,6 +389,23 @@ public class Mutation {
 					dataRecordCollectionId, dataRecordCollection));
 	}
 
+	@GraphQLField
+	public boolean updateDataRecordCollectionPermission(
+			@GraphQLName("dataRecordCollectionId") Long dataRecordCollectionId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataRecordCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataRecordCollectionResource ->
+				dataRecordCollectionResource.putDataRecordCollectionPermission(
+					dataRecordCollectionId, permissions));
+
+		return true;
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

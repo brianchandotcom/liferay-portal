@@ -35,13 +35,9 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
-import com.liferay.portal.vulcan.permission.Permission;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 
 import java.util.List;
 
@@ -152,31 +148,6 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public Page<Permission> getDataRecordCollectionPermissionsPage(
-			Long dataRecordCollectionId, String roleNames)
-		throws Exception {
-
-		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
-			dataRecordCollectionId);
-
-		DataEnginePermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService,
-			ddlRecordSet.getGroupId());
-
-		String resourceName = _getResourceName(ddlRecordSet);
-
-		return Page.of(
-			transform(
-				PermissionUtil.getRoles(
-					contextCompany, roleLocalService,
-					StringUtil.split(roleNames)),
-				role -> PermissionUtil.toPermission(
-					contextCompany.getCompanyId(), dataRecordCollectionId,
-					resourceActionLocalService.getResourceActions(resourceName),
-					resourceName, resourcePermissionLocalService, role)));
-	}
-
-	@Override
 	public DataRecordCollection
 			getSiteDataRecordCollectionByDataRecordCollectionKey(
 				Long siteId, String dataRecordCollectionKey)
@@ -240,27 +211,24 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public void putDataRecordCollectionPermission(
-			Long dataRecordCollectionId, Permission[] permissions)
-		throws Exception {
-
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
-			dataRecordCollectionId);
+			(long)id);
 
-		DataEnginePermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService,
-			ddlRecordSet.getGroupId());
+		return ddlRecordSet.getGroupId();
+	}
 
-		String resourceName = _getResourceName(ddlRecordSet);
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		try {
+			DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
+				(long)id);
 
-		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), ddlRecordSet.getGroupId(),
-			resourceName, String.valueOf(dataRecordCollectionId),
-			ModelPermissionsUtil.toModelPermissions(
-				contextCompany.getCompanyId(), permissions,
-				dataRecordCollectionId, resourceName,
-				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService));
+			return _getResourceName(ddlRecordSet);
+		}
+		catch (PortalException pe) {
+			return DDLRecordSet.class.getName();
+		}
 	}
 
 	private String _getResourceName(DDLRecordSet ddlRecordSet)

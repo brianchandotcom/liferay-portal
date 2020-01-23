@@ -98,9 +98,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
-import com.liferay.portal.vulcan.permission.Permission;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
@@ -252,30 +249,6 @@ public class DataDefinitionResourceImpl
 				},
 				String.class)
 		).toString();
-	}
-
-	public Page<Permission> getDataDefinitionPermissionsPage(
-			Long dataDefinitionId, String roleNames)
-		throws Exception {
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
-			dataDefinitionId);
-
-		DataEnginePermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService,
-			ddmStructure.getGroupId());
-
-		String resourceName = _getResourceName(ddmStructure);
-
-		return Page.of(
-			transform(
-				PermissionUtil.getRoles(
-					contextCompany, roleLocalService,
-					StringUtil.split(roleNames)),
-				role -> PermissionUtil.toPermission(
-					contextCompany.getCompanyId(), dataDefinitionId,
-					resourceActionLocalService.getResourceActions(resourceName),
-					resourceName, resourcePermissionLocalService, role)));
 	}
 
 	@Override
@@ -464,26 +437,24 @@ public class DataDefinitionResourceImpl
 	}
 
 	@Override
-	public void putDataDefinitionPermission(
-			Long dataDefinitionId, Permission[] permissions)
-		throws Exception {
-
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
 		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
-			dataDefinitionId);
+			(long)id);
 
-		DataEnginePermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService,
-			ddmStructure.getGroupId());
+		return ddmStructure.getGroupId();
+	}
 
-		String resourceName = _getResourceName(ddmStructure);
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		try {
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.getDDMStructure((long)id);
 
-		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), ddmStructure.getGroupId(),
-			resourceName, String.valueOf(dataDefinitionId),
-			ModelPermissionsUtil.toModelPermissions(
-				contextCompany.getCompanyId(), permissions, dataDefinitionId,
-				resourceName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService));
+			return _getResourceName(ddmStructure);
+		}
+		catch (PortalException pe) {
+			return DDMStructure.class.getName();
+		}
 	}
 
 	private JSONObject _createFieldContextJSONObject(

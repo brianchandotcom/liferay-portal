@@ -316,7 +316,7 @@ export default ({history}) => {
 					);
 
 					return updateItem(
-						`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-model-permissions`,
+						`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/permissions`,
 						dataDefinitionPermissions
 					);
 				}}

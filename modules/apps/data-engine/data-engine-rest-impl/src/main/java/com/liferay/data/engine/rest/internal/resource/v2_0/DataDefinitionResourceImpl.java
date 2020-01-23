@@ -99,6 +99,8 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
+import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
@@ -437,6 +439,29 @@ public class DataDefinitionResourceImpl
 				new ServiceContext()));
 	}
 
+	@Override
+	public void putDataDefinitionPermission(
+			Long dataDefinitionId, Permission[] permissions)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			dataDefinitionId);
+
+		DataEnginePermissionUtil.checkPermission(
+			ActionKeys.PERMISSIONS, _groupLocalService,
+			ddmStructure.getGroupId());
+
+		String resourceName = _getResourceName(ddmStructure);
+
+		resourcePermissionLocalService.updateResourcePermissions(
+			contextCompany.getCompanyId(), ddmStructure.getGroupId(),
+			resourceName, String.valueOf(dataDefinitionId),
+			ModelPermissionsUtil.toModelPermissions(
+				contextCompany.getCompanyId(), permissions, dataDefinitionId,
+				resourceName, resourceActionLocalService,
+				resourcePermissionLocalService, roleLocalService));
+	}
+
 	private JSONObject _createFieldContextJSONObject(
 		DDMFormFieldType ddmFormFieldType,
 		HttpServletRequest httpServletRequest, Locale locale, String type) {
@@ -578,6 +603,12 @@ public class DataDefinitionResourceImpl
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass()),
 			_portal.getResourceBundle(locale));
+	}
+
+	private String _getResourceName(DDMStructure ddmStructure) {
+		return ResourceActionsUtil.getCompositeModelName(
+			_portal.getClassName(ddmStructure.getClassNameId()),
+			DDMStructure.class.getName());
 	}
 
 	private String[] _removeFieldNames(

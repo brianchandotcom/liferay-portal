@@ -816,6 +816,24 @@ paths:
                     description:
                         ""
             tags: ["DataRecord"]
+    "/data-definitions/{dataDefinitionId}/permissions":
+        put:
+            operationId: putDataDefinitionPermission
+            parameters:
+                - in: path
+                  name: dataDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["DataDefinition"]
     "/data-layouts/{dataLayoutId}":
         delete:
             operationId: deleteDataLayout

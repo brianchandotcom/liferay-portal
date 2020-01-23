@@ -149,16 +149,16 @@ public class OrganizationResourceDTOConverter
 								Set<Locale> locales =
 									LanguageUtil.getCompanyAvailableLocales(
 										organization.getCompanyId());
-								Stream<Locale> localesStream =
-									locales.stream();
+
+								Stream<Locale> localeStream = locales.stream();
 
 								Country country = _countryService.getCountry(
 									organization.getCountryId());
 
-								return localesStream.collect(
-										Collectors.toMap(
-											Locale::toLanguageTag,
-											country::getName));
+								return localeStream.collect(
+									Collectors.toMap(
+										Locale::toLanguageTag,
+										country::getName));
 							});
 						setAddressRegion(
 							() -> {

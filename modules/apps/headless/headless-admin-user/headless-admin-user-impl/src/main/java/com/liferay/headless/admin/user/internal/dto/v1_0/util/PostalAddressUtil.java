@@ -66,12 +66,14 @@ public class PostalAddressUtil {
 
 						Set<Locale> locales =
 							LanguageUtil.getCompanyAvailableLocales(companyId);
-						Stream<Locale> localesStream = locales.stream();
+
+						Stream<Locale> localeStream = locales.stream();
 
 						Country country = address.getCountry();
 
-						return localesStream.collect(Collectors.toMap(
-							Locale::toLanguageTag, country::getName));
+						return localeStream.collect(
+							Collectors.toMap(
+								Locale::toLanguageTag, country::getName));
 					});
 				setAddressRegion(
 					() -> {

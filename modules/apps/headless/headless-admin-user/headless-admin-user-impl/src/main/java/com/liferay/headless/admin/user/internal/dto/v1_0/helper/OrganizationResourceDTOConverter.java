@@ -33,6 +33,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.OrgLabor;
@@ -55,6 +56,11 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+
+import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -134,6 +140,26 @@ public class OrganizationResourceDTOConverter
 								return country.getName(
 									dtoConverterContext.getLocale());
 							});
+						setAddressCountry_i18n(
+							() -> {
+								if (dtoConverterContext.isAcceptAllLanguages()) {
+									return null;
+								}
+
+								Set<Locale> locales =
+									LanguageUtil.getCompanyAvailableLocales(
+										organization.getCompanyId());
+								Stream<Locale> localesStream =
+									locales.stream();
+
+								Country country = _countryService.getCountry(
+									organization.getCountryId());
+
+								return localesStream.collect(
+										Collectors.toMap(
+											Locale::toLanguageTag,
+											country::getName));
+							});
 						setAddressRegion(
 							() -> {
 								if (organization.getRegionId() <= 0) {
@@ -164,7 +190,9 @@ public class OrganizationResourceDTOConverter
 							postalAddresses = transformToArray(
 								organization.getAddresses(),
 								address -> PostalAddressUtil.toPostalAddress(
-									address, dtoConverterContext.getLocale()),
+									dtoConverterContext.isAcceptAllLanguages(),
+									address, organization.getCompanyId(),
+									dtoConverterContext.getLocale()),
 								PostalAddress.class);
 							telephones = transformToArray(
 								_phoneService.getPhones(

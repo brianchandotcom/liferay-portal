@@ -290,7 +290,9 @@ public class UserAccountResourceImpl
 							postalAddresses = transformToArray(
 								user.getAddresses(),
 								address -> PostalAddressUtil.toPostalAddress(
-									address,
+									contextAcceptLanguage.
+										isAcceptAllLanguages(),
+									address, user.getCompanyId(),
 									contextAcceptLanguage.getPreferredLocale()),
 								PostalAddress.class);
 							skype = contact.getSkypeSn();

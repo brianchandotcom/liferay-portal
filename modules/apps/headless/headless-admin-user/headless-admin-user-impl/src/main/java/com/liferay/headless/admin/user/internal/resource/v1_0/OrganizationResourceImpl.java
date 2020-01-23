@@ -264,8 +264,9 @@ public class OrganizationResourceImpl
 		String organizationId) {
 
 		return new DefaultDTOConverterContext(
-			organizationId, contextAcceptLanguage.getPreferredLocale(),
-			contextUriInfo, contextUser);
+			contextAcceptLanguage.isAcceptAllLanguages(), null, organizationId,
+			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+			contextUser);
 	}
 
 	private List<com.liferay.portal.kernel.model.EmailAddress>

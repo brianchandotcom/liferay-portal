@@ -15,12 +15,16 @@
 package com.liferay.headless.admin.user.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Region;
 
 import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Javier Gamarra
@@ -28,7 +32,8 @@ import java.util.Locale;
 public class PostalAddressUtil {
 
 	public static PostalAddress toPostalAddress(
-		Address address, Locale locale) {
+		boolean acceptAllLanguages, Address address, long companyId,
+		Locale locale) {
 
 		ListType listType = address.getType();
 
@@ -52,6 +57,21 @@ public class PostalAddressUtil {
 						Country country = address.getCountry();
 
 						return country.getName(locale);
+					});
+				setAddressCountry_i18n(
+					() -> {
+						if (!acceptAllLanguages) {
+							return null;
+						}
+
+						Set<Locale> locales =
+							LanguageUtil.getCompanyAvailableLocales(companyId);
+						Stream<Locale> localesStream = locales.stream();
+
+						Country country = address.getCountry();
+
+						return localesStream.collect(Collectors.toMap(
+							Locale::toLanguageTag, country::getName));
 					});
 				setAddressRegion(
 					() -> {

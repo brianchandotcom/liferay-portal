@@ -400,6 +400,9 @@ public class ContentPageEditorDisplayContext {
 				"segmentsExperienceId",
 				editorSoyContext.get("segmentsExperienceId")
 			).put(
+				"segmentsExperimentStatus",
+				editorSoyContext.get("segmentsExperimentStatus")
+			).put(
 				"showResolvedComments",
 				GetterUtil.getBoolean(
 					editorSoyContext.get("showResolvedComments"))

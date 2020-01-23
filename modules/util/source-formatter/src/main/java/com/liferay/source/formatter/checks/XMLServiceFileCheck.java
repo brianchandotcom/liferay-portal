@@ -108,6 +108,22 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 				columnNames.add(columnElement.attributeValue("name"));
 			}
 
+			if (!columnNames.isEmpty() && !columnNames.contains("companyId")) {
+				List<String> allowedEntityNames = getAttributeValues(
+					_ALLOWED_MISSING_COMPANY_ID_ENTITY_NAMES_KEY, absolutePath);
+
+				if (!allowedEntityNames.isEmpty() &&
+					!allowedEntityNames.contains(entityName)) {
+
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Entity '", entityName,
+							"' should have a column named 'companyId', See ",
+							"LPS-107076"));
+				}
+			}
+
 			ServiceFinderColumnElementComparator
 				serviceFinderColumnElementComparator =
 					new ServiceFinderColumnElementComparator(columnNames);
@@ -204,6 +220,9 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 		return false;
 	}
+
+	private static final String _ALLOWED_MISSING_COMPANY_ID_ENTITY_NAMES_KEY =
+		"allowedMissingCompanyIdEntityNames";
 
 	private static final String _ALLOWED_MISSING_MVCC_ENABLED_FILE_NAMES_KEY =
 		"allowedMissingMVVCEnabledFileNames";

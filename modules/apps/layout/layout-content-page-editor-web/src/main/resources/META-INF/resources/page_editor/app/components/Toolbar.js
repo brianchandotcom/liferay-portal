@@ -23,6 +23,7 @@ import usePlugins from '../../core/hooks/usePlugins';
 import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';
 import {useSelector, useDispatch} from '../store/index';
+import ExperimentsLabel from './ExperimentsLabel';
 import NetworkStatusBar from './NetworkStatusBar';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
@@ -37,8 +38,8 @@ function ToolbarBody() {
 	const load = useLoad();
 	const store = useSelector(state => state);
 
-	const {portletNamespace, singleSegmentsExperienceMode} = config;
-	const {segmentsExperienceId} = store;
+	const {portletNamespace} = config;
+	const {segmentsExperienceId, segmentsExperimentStatus} = store;
 
 	const {draft} = store;
 
@@ -48,6 +49,7 @@ function ToolbarBody() {
 		discardDraftURL,
 		publishURL,
 		redirectURL,
+		singleSegmentsExperienceMode,
 		toolbarPlugins
 	} = config;
 
@@ -149,6 +151,14 @@ function ToolbarBody() {
 						segmentsExperienceId={segmentsExperienceId}
 					/>
 				</li>
+				{!singleSegmentsExperienceMode && segmentsExperimentStatus && (
+					<li className="nav-item pl-2">
+						<ExperimentsLabel
+							label={segmentsExperimentStatus.label}
+							value={segmentsExperimentStatus.value}
+						/>
+					</li>
+				)}
 			</ul>
 
 			<ul className="navbar-nav">

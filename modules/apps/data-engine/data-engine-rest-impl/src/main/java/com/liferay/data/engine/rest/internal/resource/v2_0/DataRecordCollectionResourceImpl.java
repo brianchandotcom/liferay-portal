@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
+import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
 
 import java.util.List;
@@ -151,9 +152,8 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getDataRecordCollectionPermissionsPage(
-				Long dataRecordCollectionId, String roleNames)
+	public Page<Permission> getDataRecordCollectionPermissionsPage(
+			Long dataRecordCollectionId, String roleNames)
 		throws Exception {
 
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
@@ -241,8 +241,7 @@ public class DataRecordCollectionResourceImpl
 
 	@Override
 	public void putDataRecordCollectionPermission(
-			Long dataRecordCollectionId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+			Long dataRecordCollectionId, Permission[] permissions)
 		throws Exception {
 
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(

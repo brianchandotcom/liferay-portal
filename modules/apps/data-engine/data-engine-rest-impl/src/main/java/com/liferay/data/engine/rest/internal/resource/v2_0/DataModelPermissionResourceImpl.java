@@ -171,8 +171,7 @@ public class DataModelPermissionResourceImpl
 			ActionKeys.PERMISSIONS, _groupLocalService,
 			ddmStructure.getGroupId());
 
-		String resourceName = _portal.getClassName(
-			ddmStructure.getClassNameId());
+		String resourceName = _getResourceName(ddmStructure);
 
 		_resourcePermissionLocalService.updateResourcePermissions(
 			ddmStructure.getCompanyId(), ddmStructure.getGroupId(),

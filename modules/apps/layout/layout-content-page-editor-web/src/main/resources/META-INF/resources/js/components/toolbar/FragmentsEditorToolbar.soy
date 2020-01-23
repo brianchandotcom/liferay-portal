@@ -8,6 +8,7 @@
 	{@param? _handleDiscardDraft: any}
 	{@param? _handlePublish: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
+	{@param? _isMasterLayout: bool }
 	{@param? _online: bool}
 	{@param? _publishButtonEnabled: bool}
 	{@param? classPK: ?}
@@ -18,7 +19,6 @@
 	{@param? hasUpdateContentPermissions: bool }
 	{@param? hasUpdatePermissions: bool }
 	{@param? lastSaveDate: string}
-	{@param? masterUsed: bool }
 	{@param? portletNamespace: string}
 	{@param? publishURL: string}
 	{@param? redirectURL: string}
@@ -43,8 +43,8 @@
 			{sp}fragments-editor-toolbar--padded
 		{/if}
 
-		{if $masterUsed}
-			{sp}fragments-editor-toolbar__master-used
+		{if $_isMasterLayout}
+			{sp}fragments-editor-toolbar__master-layout
 		{/if}
 	{/let}
 
@@ -148,7 +148,7 @@
 						{let $publishLabel kind="text"}
 							{if $singleSegmentsExperienceMode}
 								{msg desc=""}save-variant{/msg}
-							{elseif $masterUsed}
+							{elseif $_isMasterLayout}
 								{msg desc=""}publish-master{/msg}
 							{elseif $workflowEnabled}
 								{msg desc=""}submit-for-publication{/msg}

@@ -52,6 +52,12 @@ class FragmentsEditorToolbar extends Component {
 			);
 		}
 
+		nextState = setIn(
+			nextState,
+			['_isMasterLayout'],
+			this.pageType === PAGE_TYPES.master
+		);
+
 		if (state.pageType && state.pageType === PAGE_TYPES.conversion) {
 			nextState = setIn(nextState, ['_conversionDraft'], true);
 		}

@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -244,9 +242,11 @@ public abstract class BaseStructuredContentResourceImpl
 					roleNames)
 		throws Exception {
 
+		String portletName = getPermissionCheckerPortletName(siteId);
+
 		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService,
-			getPermissionCheckerPortletName(), siteId, siteId);
+			ActionKeys.PERMISSIONS, groupLocalService, portletName, siteId,
+			siteId);
 
 		return Page.of(
 			transform(
@@ -255,10 +255,8 @@ public abstract class BaseStructuredContentResourceImpl
 					StringUtil.split(roleNames)),
 				role -> PermissionUtil.toPermission(
 					contextCompany.getCompanyId(), siteId,
-					resourceActionLocalService.getResourceActions(
-						getPermissionCheckerPortletName()),
-					getPermissionCheckerPortletName(),
-					resourcePermissionLocalService, role)));
+					resourceActionLocalService.getResourceActions(portletName),
+					portletName, resourcePermissionLocalService, role)));
 	}
 
 	/**
@@ -277,16 +275,11 @@ public abstract class BaseStructuredContentResourceImpl
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		String portletName = getPermissionCheckerPortletName(siteId);
 
-		String portletName = getPermissionCheckerPortletName();
-
-		if (!permissionChecker.hasPermission(
-				siteId, portletName, siteId, ActionKeys.PERMISSIONS)) {
-
-			return;
-		}
+		PermissionUtil.checkPermission(
+			ActionKeys.PERMISSIONS, groupLocalService, portletName, siteId,
+			siteId);
 
 		resourcePermissionLocalService.updateResourcePermissions(
 			contextCompany.getCompanyId(), siteId, portletName,
@@ -703,9 +696,12 @@ public abstract class BaseStructuredContentResourceImpl
 					roleNames)
 		throws Exception {
 
+		String resourceName = getPermissionCheckerResourceName(
+			structuredContentId);
+
 		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService,
-			getPermissionCheckerResourceName(), structuredContentId,
+			ActionKeys.PERMISSIONS, groupLocalService, resourceName,
+			structuredContentId,
 			getPermissionCheckerGroupId(structuredContentId));
 
 		return Page.of(
@@ -715,10 +711,8 @@ public abstract class BaseStructuredContentResourceImpl
 					StringUtil.split(roleNames)),
 				role -> PermissionUtil.toPermission(
 					contextCompany.getCompanyId(), structuredContentId,
-					resourceActionLocalService.getResourceActions(
-						getPermissionCheckerActionsResourceName()),
-					getPermissionCheckerResourceName(),
-					resourcePermissionLocalService, role)));
+					resourceActionLocalService.getResourceActions(resourceName),
+					resourceName, resourcePermissionLocalService, role)));
 	}
 
 	/**
@@ -742,16 +736,13 @@ public abstract class BaseStructuredContentResourceImpl
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		String resourceName = getPermissionCheckerResourceName(
+			structuredContentId);
 
-		String resourceName = getPermissionCheckerResourceName();
-
-		if (!permissionChecker.hasPermission(
-				0, resourceName, 0, ActionKeys.PERMISSIONS)) {
-
-			return;
-		}
+		PermissionUtil.checkPermission(
+			ActionKeys.PERMISSIONS, groupLocalService, resourceName,
+			structuredContentId,
+			getPermissionCheckerGroupId(structuredContentId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
 			contextCompany.getCompanyId(), 0, resourceName,
@@ -835,8 +826,8 @@ public abstract class BaseStructuredContentResourceImpl
 		throws Exception {
 	}
 
-	protected String getPermissionCheckerActionsResourceName() {
-		return getPermissionCheckerResourceName();
+	protected String getPermissionCheckerActionsResourceName(Object id) {
+		return getPermissionCheckerResourceName(id);
 	}
 
 	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
@@ -844,12 +835,12 @@ public abstract class BaseStructuredContentResourceImpl
 			"This method needs to be implemented");
 	}
 
-	protected String getPermissionCheckerPortletName() {
+	protected String getPermissionCheckerPortletName(Object id) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String getPermissionCheckerResourceName() {
+	protected String getPermissionCheckerResourceName(Object id) {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

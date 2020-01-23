@@ -158,36 +158,16 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 				return _dataJSONObject;
 			}
 
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(_plid);
+			String masterLayoutData = _getMasterLayoutData();
 
-			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					fetchLayoutPageTemplateEntryByPlid(
-						layout.getMasterLayoutPlid());
-
-			if (masterLayoutPageTemplateEntry == null) {
+			if (Validator.isNull(masterLayoutData)) {
 				_dataJSONObject = _getDefaultDataJSONObject();
 
 				return _dataJSONObject;
 			}
 
-			LayoutPageTemplateStructure masterLayoutPageTemplateStructure =
-				LayoutPageTemplateStructureLocalServiceUtil.
-					fetchLayoutPageTemplateStructure(
-						masterLayoutPageTemplateEntry.getGroupId(),
-						PortalUtil.getClassNameId(Layout.class),
-						masterLayoutPageTemplateEntry.getPlid());
-
-			data = masterLayoutPageTemplateStructure.getData(
-				SegmentsExperienceConstants.ID_DEFAULT);
-
-			if (Validator.isNull(data)) {
-				_dataJSONObject = _getDefaultDataJSONObject();
-
-				return _dataJSONObject;
-			}
-
-			_dataJSONObject = JSONFactoryUtil.createJSONObject(data);
+			_dataJSONObject = JSONFactoryUtil.createJSONObject(
+				masterLayoutData);
 
 			return _dataJSONObject;
 		}
@@ -210,6 +190,29 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 						).put(
 							"size", 12
 						)))));
+	}
+
+	private String _getMasterLayoutData() {
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(_plid);
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(
+					layout.getMasterLayoutPlid());
+
+		if (masterLayoutPageTemplateEntry == null) {
+			return null;
+		}
+
+		LayoutPageTemplateStructure masterLayoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					masterLayoutPageTemplateEntry.getGroupId(),
+					PortalUtil.getClassNameId(Layout.class),
+					masterLayoutPageTemplateEntry.getPlid());
+
+		return masterLayoutPageTemplateStructure.getData(
+			SegmentsExperienceConstants.ID_DEFAULT);
 	}
 
 	private long _getPreviewClassNameId() {

@@ -56,10 +56,12 @@ const Languages = ({
 	const customLocalesInputRef = useRef();
 
 	useEffect(() => {
-		const localesIds = customLocales.map(({localeId}) => localeId);
+		if (!selectedRadioGroupValue) {
+			const localesIds = customLocales.map(({localeId}) => localeId);
 
-		customLocalesInputRef.current.value = localesIds.join(',');
-	}, [customLocales]);
+			customLocalesInputRef.current.value = localesIds.join(',');
+		}
+	}, [customLocales, selectedRadioGroupValue]);
 
 	const handleAddClick = () => {
 		var url = Liferay.Util.PortletURL.createPortletURL(

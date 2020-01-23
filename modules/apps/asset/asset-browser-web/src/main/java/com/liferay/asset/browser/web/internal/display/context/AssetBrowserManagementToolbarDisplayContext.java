@@ -14,6 +14,7 @@
 
 package com.liferay.asset.browser.web.internal.display.context;
 
+import com.liferay.asset.browser.web.internal.constants.AssetBrowserPortletKeys;
 import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.util.AssetHelper;
@@ -27,10 +28,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -60,6 +64,8 @@ public class AssetBrowserManagementToolbarDisplayContext
 
 		_assetHelper = (AssetHelper)httpServletRequest.getAttribute(
 			AssetWebKeys.ASSET_HELPER);
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -173,9 +179,56 @@ public class AssetBrowserManagementToolbarDisplayContext
 		return LanguageUtil.get(request, "sites");
 	}
 
+	protected String getOrderByCol() {
+		if (_orderByCol != null) {
+			return _orderByCol;
+		}
+
+		String orderByCol = ParamUtil.getString(
+			liferayPortletRequest, getOrderByColParam());
+
+		if (Validator.isNotNull(orderByCol)) {
+			_portalPreferences.setValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-col",
+				orderByCol);
+		}
+		else {
+			orderByCol = _portalPreferences.getValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-col",
+				"modified-date");
+		}
+
+		_orderByCol = orderByCol;
+
+		return _orderByCol;
+	}
+
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"title", "modified-date"};
+	}
+
+	protected String getOrderByType() {
+		if (_orderByType != null) {
+			return _orderByType;
+		}
+
+		String orderByType = ParamUtil.getString(
+			liferayPortletRequest, getOrderByTypeParam());
+
+		if (Validator.isNotNull(orderByType)) {
+			_portalPreferences.setValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-type",
+				orderByType);
+		}
+		else {
+			orderByType = _portalPreferences.getValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-type", "asc");
+		}
+
+		_orderByType = orderByType;
+
+		return _orderByType;
 	}
 
 	private String _getAddButtonLabel() {
@@ -238,6 +291,9 @@ public class AssetBrowserManagementToolbarDisplayContext
 
 	private final AssetBrowserDisplayContext _assetBrowserDisplayContext;
 	private final AssetHelper _assetHelper;
+	private String _orderByCol;
+	private String _orderByType;
+	private final PortalPreferences _portalPreferences;
 	private final ThemeDisplay _themeDisplay;
 
 }

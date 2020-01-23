@@ -68,8 +68,6 @@ export default ({history}) => {
 		endpoint: null
 	});
 
-	const [isPermissionsModalOpen, openPermissionsModal] = useState(false);
-
 	const onClickAddButton = ({currentTarget}) => {
 		setAlignElement(currentTarget);
 
@@ -158,12 +156,6 @@ export default ({history}) => {
 	return (
 		<>
 			<ControlMenu
-				actions={[
-					{
-						action: () => openPermissionsModal(true),
-						name: Liferay.Language.get('permissions')
-					}
-				]}
 				title={Liferay.Language.get(
 					'javax.portlet.title.com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet'
 				)}
@@ -322,20 +314,6 @@ export default ({history}) => {
 				}}
 				rolesFilter={rolesFilter}
 				title={Liferay.Language.get('app-permissions')}
-			/>
-
-			<PermissionsModal
-				actions={[
-					{
-						key: 'MANAGE',
-						sortable: false,
-						value: Liferay.Language.get('manage')
-					}
-				]}
-				endpoint="/o/app-builder/v1.0/app-model-permissions"
-				isOpen={isPermissionsModalOpen}
-				onClose={() => openPermissionsModal(false)}
-				rolesFilter={rolesFilter}
 			/>
 		</>
 	);

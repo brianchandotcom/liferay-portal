@@ -46,13 +46,17 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(
 			new Version(7, 1, 0),
 			new UpgradeCTModel(
-				"AssetCategory", "AssetCategoryProperty",
-				"AssetEntries_AssetCategories", "AssetEntries_AssetTags",
-				"AssetEntry", "AssetLink", "AssetTag", "AssetVocabulary",
-				"Layout", "LayoutFriendlyURL", "PortletPreferences",
+				"AssetCategory", "AssetCategoryProperty", "AssetEntry",
+				"AssetLink", "AssetTag", "AssetVocabulary", "Layout",
+				"LayoutFriendlyURL", "PortletPreferences",
 				"ResourcePermission"));
 
 		upgradeProcesses.put(new Version(8, 0, 0), new UpgradeSchema());
+
+		upgradeProcesses.put(
+			new Version(8, 1, 0),
+			new UpgradeCTModel(
+				"AssetEntries_AssetCategories", "AssetEntries_AssetTags"));
 	}
 
 }

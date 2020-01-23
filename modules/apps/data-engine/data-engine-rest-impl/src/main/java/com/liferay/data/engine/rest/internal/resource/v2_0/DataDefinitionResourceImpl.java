@@ -81,7 +81,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -354,7 +353,7 @@ public class DataDefinitionResourceImpl
 		throws Exception {
 
 		DataEnginePermissionUtil.checkPermission(
-			DataActionKeys.ADD_DATA_DEFINITION, _groupLocalService, siteId);
+			DataActionKeys.ADD_DATA_DEFINITION, groupLocalService, siteId);
 
 		DataDefinitionContentType dataDefinitionContentType =
 			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
@@ -435,6 +434,27 @@ public class DataDefinitionResourceImpl
 					dataDefinition.getDescription()),
 				ddmFormSerializerSerializeResponse.getContent(),
 				new ServiceContext()));
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			(long)id);
+
+		return ddmStructure.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		try {
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.getDDMStructure((long)id);
+
+			return _getResourceName(ddmStructure);
+		}
+		catch (PortalException pe) {
+			return DDMStructure.class.getName();
+		}
 	}
 
 	private JSONObject _createFieldContextJSONObject(
@@ -578,6 +598,12 @@ public class DataDefinitionResourceImpl
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass()),
 			_portal.getResourceBundle(locale));
+	}
+
+	private String _getResourceName(DDMStructure ddmStructure) {
+		return ResourceActionsUtil.getCompositeModelName(
+			_portal.getClassName(ddmStructure.getClassNameId()),
+			DDMStructure.class.getName());
 	}
 
 	private String[] _removeFieldNames(
@@ -822,9 +848,6 @@ public class DataDefinitionResourceImpl
 
 	@Reference
 	private DEDataListViewLocalService _deDataListViewLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

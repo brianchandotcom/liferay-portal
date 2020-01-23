@@ -15,8 +15,6 @@
 package com.liferay.app.builder.rest.internal.graphql.query.v1_0;
 
 import com.liferay.app.builder.rest.dto.v1_0.App;
-import com.liferay.app.builder.rest.dto.v1_0.AppModelPermission;
-import com.liferay.app.builder.rest.resource.v1_0.AppModelPermissionResource;
 import com.liferay.app.builder.rest.resource.v1_0.AppResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -55,14 +53,6 @@ public class Query {
 
 		_appResourceComponentServiceObjects =
 			appResourceComponentServiceObjects;
-	}
-
-	public static void setAppModelPermissionResourceComponentServiceObjects(
-		ComponentServiceObjects<AppModelPermissionResource>
-			appModelPermissionResourceComponentServiceObjects) {
-
-		_appModelPermissionResourceComponentServiceObjects =
-			appModelPermissionResourceComponentServiceObjects;
 	}
 
 	/**
@@ -122,24 +112,6 @@ public class Query {
 					_sortsBiFunction.apply(appResource, sortsString))));
 	}
 
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {appModelPermissions(roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public AppModelPermissionPage appModelPermissions(
-			@GraphQLName("roleNames") String roleNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_appModelPermissionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			appModelPermissionResource -> new AppModelPermissionPage(
-				appModelPermissionResource.getAppModelPermissionsPage(
-					roleNames)));
-	}
-
 	@GraphQLName("AppPage")
 	public class AppPage {
 
@@ -157,38 +129,6 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<App> items;
-
-		@GraphQLField
-		protected long lastPage;
-
-		@GraphQLField
-		protected long page;
-
-		@GraphQLField
-		protected long pageSize;
-
-		@GraphQLField
-		protected long totalCount;
-
-	}
-
-	@GraphQLName("AppModelPermissionPage")
-	public class AppModelPermissionPage {
-
-		public AppModelPermissionPage(Page appModelPermissionPage) {
-			actions = appModelPermissionPage.getActions();
-			items = appModelPermissionPage.getItems();
-			lastPage = appModelPermissionPage.getLastPage();
-			page = appModelPermissionPage.getPage();
-			pageSize = appModelPermissionPage.getPageSize();
-			totalCount = appModelPermissionPage.getTotalCount();
-		}
-
-		@GraphQLField
-		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected java.util.Collection<AppModelPermission> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -234,24 +174,8 @@ public class Query {
 		appResource.setContextUser(_user);
 	}
 
-	private void _populateResourceContext(
-			AppModelPermissionResource appModelPermissionResource)
-		throws Exception {
-
-		appModelPermissionResource.setContextAcceptLanguage(_acceptLanguage);
-		appModelPermissionResource.setContextCompany(_company);
-		appModelPermissionResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		appModelPermissionResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		appModelPermissionResource.setContextUriInfo(_uriInfo);
-		appModelPermissionResource.setContextUser(_user);
-	}
-
 	private static ComponentServiceObjects<AppResource>
 		_appResourceComponentServiceObjects;
-	private static ComponentServiceObjects<AppModelPermissionResource>
-		_appModelPermissionResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private BiFunction<Object, String, Filter> _filterBiFunction;

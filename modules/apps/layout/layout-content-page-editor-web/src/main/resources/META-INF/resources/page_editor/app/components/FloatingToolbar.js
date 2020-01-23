@@ -15,13 +15,19 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
-import {Align} from 'metal-position';
-import React, {useLayoutEffect, useRef, useState, useEffect} from 'react';
+import {useEventListener} from 'frontend-js-react-web';
+import React, {
+	useLayoutEffect,
+	useRef,
+	useState,
+	useEffect,
+	useMemo,
+	useCallback
+} from 'react';
 import {createPortal} from 'react-dom';
 
-import useWindowScroll from '../../core/hooks/useWindowScroll';
 import useWindowWidth from '../../core/hooks/useWindowWidth';
-import ConfigurationPanel from './ConfigurationPanel';
+import ConfigurationPanel, {alignElement} from './ConfigurationPanel';
 import {useFloatingToolbar, useIsActive} from './Controls';
 
 export default function FloatingToolbar({
@@ -34,35 +40,34 @@ export default function FloatingToolbar({
 	const popoverRef = useRef(null);
 	const show = isActive(item.itemId);
 	const floatingToolbar = useFloatingToolbar();
+	const wrapperContainerEl = useMemo(
+		() => document.getElementById('wrapper'),
+		[]
+	);
 
 	const [activeConfigurationPanel, setActiveConfigurationPanel] = useState(
 		null
 	);
 
 	const windowWidth = useWindowWidth();
-	const {scrollX, scrollY} = useWindowScroll();
 
-	useLayoutEffect(() => {
+	const alignFloatingToolbar = useCallback(() => {
 		if (show && itemRef.current && popoverRef.current) {
-			const suggestedAlign = Align.suggestAlignBestRegion(
-				popoverRef.current,
-				itemRef.current,
-				Align.BottomRight
-			);
-
-			const bestPosition =
-				suggestedAlign.position !== Align.BottomRight
-					? Align.TopRight
-					: Align.BottomRight;
-
-			Align.align(
-				popoverRef.current,
-				itemRef.current,
-				bestPosition,
-				false
-			);
+			alignElement(popoverRef.current, itemRef.current);
 		}
-	}, [show, itemRef, popoverRef, windowWidth, scrollX, scrollY]);
+	}, [show, itemRef, popoverRef]);
+
+	useEventListener(
+		'scroll',
+		() => alignFloatingToolbar(),
+		true,
+		wrapperContainerEl
+	);
+
+	useLayoutEffect(() => alignFloatingToolbar(), [
+		alignFloatingToolbar,
+		windowWidth
+	]);
 
 	useEffect(() => {
 		if (!show) {

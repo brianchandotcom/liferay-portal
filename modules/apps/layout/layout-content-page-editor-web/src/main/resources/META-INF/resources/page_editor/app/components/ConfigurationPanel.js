@@ -12,8 +12,16 @@
  * details.
  */
 
+import {useEventListener} from 'frontend-js-react-web';
 import {Align} from 'metal-position';
-import React, {forwardRef, useLayoutEffect, useRef, useState} from 'react';
+import React, {
+	forwardRef,
+	useLayoutEffect,
+	useRef,
+	useState,
+	useMemo,
+	useCallback
+} from 'react';
 
 import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../config/constants/floatingToolbarConfigurations';
 
@@ -28,15 +36,19 @@ const ALIGNMENTS = [
 	'top-left'
 ];
 
-const ALIGNMENTS_MAP = {
-	bottom: Align.Bottom,
-	'bottom-left': Align.BottomLeft,
-	'bottom-right': Align.BottomRight,
-	left: Align.Left,
-	right: Align.Right,
-	top: Align.Top,
-	'top-left': Align.TopLeft,
-	'top-right': Align.TopRight
+export const alignElement = (element, alignElement) => {
+	const suggestedAlign = Align.suggestAlignBestRegion(
+		element,
+		alignElement,
+		Align.BottomRight
+	);
+
+	const bestPosition =
+		suggestedAlign.position !== Align.BottomRight
+			? Align.TopRight
+			: Align.BottomRight;
+
+	return Align.align(element, alignElement, bestPosition, false);
 };
 
 export default forwardRef(
@@ -46,19 +58,22 @@ export default forwardRef(
 			null
 		);
 
+		const wrapperContainerEl = useMemo(
+			() => document.getElementById('wrapper'),
+			[]
+		);
+
 		const ConfigurationPanelComponent =
 			configurationPanel &&
 			FLOATING_TOOLBAR_CONFIGURATIONS[configurationPanel];
 
-		useLayoutEffect(() => {
+		const alignPanel = useCallback(() => {
 			if (configurationPanelRef.current && popoverRef.current) {
 				const newAlignment =
 					ALIGNMENTS[
-						Align.align(
+						alignElement(
 							configurationPanelRef.current,
-							popoverRef.current,
-							ALIGNMENTS_MAP['bottom-right'],
-							false
+							popoverRef.current
 						)
 					];
 
@@ -66,12 +81,16 @@ export default forwardRef(
 					setConfigurationPanelAlign(newAlignment);
 				}
 			}
-		}, [
-			configurationPanel,
-			popoverRef,
-			configurationPanelRef,
-			configurationPanelAlign
-		]);
+		}, [configurationPanelAlign, configurationPanelRef, popoverRef]);
+
+		useEventListener(
+			'scroll',
+			() => alignPanel(),
+			true,
+			wrapperContainerEl
+		);
+
+		useLayoutEffect(() => alignPanel(), [alignPanel, configurationPanel]);
 
 		return (
 			<div

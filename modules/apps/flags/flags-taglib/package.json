@@ -9,8 +9,8 @@
 		"metal-soy": "2.16.8",
 		"metal-state": "2.16.8",
 		"prop-types": "15.7.2",
-		"react": "16.9.0",
-		"react-dom": "16.9.0"
+		"react": "16.12.0",
+		"react-dom": "16.12.0"
 	},
 	"main": "react/js/index.es.js",
 	"name": "flags-taglib",

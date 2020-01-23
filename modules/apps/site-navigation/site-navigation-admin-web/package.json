@@ -9,7 +9,7 @@
 		"metal-position": "2.1.2",
 		"metal-state": "2.16.8",
 		"prop-types": "15.7.2",
-		"react": "16.9.0"
+		"react": "16.12.0"
 	},
 	"name": "site-navigation-admin-web",
 	"scripts": {

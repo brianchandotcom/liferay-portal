@@ -6,7 +6,7 @@
 		"@clayui/sticker": "3.0.4",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
-		"react": "16.9.0"
+		"react": "16.12.0"
 	},
 	"name": "product-navigation-taglib",
 	"scripts": {

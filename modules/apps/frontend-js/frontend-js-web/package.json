@@ -20,8 +20,8 @@
 		"metal-events": "2.16.8",
 		"metal-position": "2.1.2",
 		"metal-soy": "2.16.8",
-		"react": "16.9.0",
-		"react-dom": "16.9.0",
+		"react": "16.12.0",
+		"react-dom": "16.12.0",
 		"svg4everybody": "^2.1.8",
 		"uuid": "^3.3.2"
 	},

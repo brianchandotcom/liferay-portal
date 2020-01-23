@@ -12,8 +12,8 @@
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
-		"react": "16.9.0",
-		"react-dom": "16.9.0"
+		"react": "16.12.0",
+		"react-dom": "16.12.0"
 	},
 	"name": "frontend-taglib",
 	"scripts": {

@@ -14,7 +14,7 @@
 		"frontend-js-web": "*",
 		"metal-dom": "2.16.8",
 		"prop-types": "15.7.2",
-		"react": "16.9.0"
+		"react": "16.12.0"
 	},
 	"name": "sharing-web",
 	"scripts": {

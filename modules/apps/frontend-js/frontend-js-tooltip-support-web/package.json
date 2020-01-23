@@ -4,7 +4,7 @@
 		"frontend-js-react-web": "*",
 		"metal-dom": "2.16.8",
 		"metal-position": "2.1.2",
-		"react": "16.9.0"
+		"react": "16.12.0"
 	},
 	"name": "frontend-js-tooltip-support-web",
 	"private": true,

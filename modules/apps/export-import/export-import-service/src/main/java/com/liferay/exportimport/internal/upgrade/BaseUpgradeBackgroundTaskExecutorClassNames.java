@@ -26,12 +26,14 @@ public abstract class BaseUpgradeBackgroundTaskExecutorClassNames
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String[][] renameTaskExecutorClassNamesArray =
-				getRenameTaskExecutorClassNames();
+		String[][] renameTaskExecutorClassNamesArray =
+			getRenameTaskExecutorClassNames();
 
-			for (String[] renameTaskExecutorClassName :
-					renameTaskExecutorClassNamesArray) {
+		for (String[] renameTaskExecutorClassName :
+				renameTaskExecutorClassNamesArray) {
+
+			try (LoggingTimer loggingTimer = new LoggingTimer(
+					renameTaskExecutorClassName[0])) {
 
 				StringBundler sb = new StringBundler(5);
 

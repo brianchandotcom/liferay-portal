@@ -343,6 +343,25 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		return new KnowledgeBaseFolder();
 	}
 
+	protected String getPermissionCheckerActionsResourceName() {
+		return getPermissionCheckerResourceName();
+	}
+
+	protected String getPermissionCheckerPortletName() {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String getPermissionCheckerResourceName() {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}

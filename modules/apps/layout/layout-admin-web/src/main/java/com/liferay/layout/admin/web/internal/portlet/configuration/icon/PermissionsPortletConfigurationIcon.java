@@ -18,6 +18,8 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -119,6 +121,9 @@ public class PermissionsPortletConfigurationIcon
 				ActionKeys.PERMISSIONS);
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
 		}
 
 		return false;
@@ -140,6 +145,9 @@ public class PermissionsPortletConfigurationIcon
 
 		return _layoutLocalService.fetchLayout(selPlid);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PermissionsPortletConfigurationIcon.class);
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

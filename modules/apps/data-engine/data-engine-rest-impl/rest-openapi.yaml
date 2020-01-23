@@ -970,55 +970,6 @@ paths:
                     description:
                         ""
             tags: ["DataListView"]
-    "/data-model-permissions":
-        get:
-            operationId: getDataModelPermissionsPage
-            parameters:
-                - in: query
-                  name: roleNames
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/DataModelPermission"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/DataModelPermission"
-                                type: array
-                    description:
-                        ""
-            tags: ["DataModelPermission"]
-        put:
-            operationId: putDataModelPermission
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            items:
-                                $ref: "#/components/schemas/DataModelPermission"
-                            type: array
-                    application/xml:
-                        schema:
-                            items:
-                                $ref: "#/components/schemas/DataModelPermission"
-                            type: array
-                description:
-                    ""
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-                    description:
-                        ""
-            tags: ["DataModelPermission"]
     "/data-record-collections/{dataRecordCollectionId}":
         delete:
             operationId: deleteDataRecordCollection
@@ -1408,6 +1359,17 @@ paths:
                     description:
                         ""
             tags: ["DataRecord"]
+    "/portlet-permissions":
+        put:
+            operationId: putPortletPermission
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["DataDefinition"]
     "/sites/{siteId}/data-definitions/by-content-type/{contentType}":
         get:
             operationId: getSiteDataDefinitionByContentTypeContentTypePage

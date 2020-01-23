@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionLayout;
 import com.liferay.data.engine.rest.client.http.HttpInvoker;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
@@ -1000,6 +1001,20 @@ public abstract class BaseDataDefinitionResourceTestCase {
 					"dataDefinitionByContentTypeByDataDefinitionKey")));
 	}
 
+	@Test
+	public void testPostDataDefinitionByContentTypeDataLayout()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostSiteDataDefinitionByContentTypeDataLayout()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
 	protected DataDefinition testGraphQLDataDefinition_addDataDefinition()
 		throws Exception {
 
@@ -1035,6 +1050,15 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 			assertEquals(dataDefinition1, dataDefinition2);
 		}
+	}
+
+	protected void assertEquals(
+		DataDefinitionLayout dataDefinitionLayout1,
+		DataDefinitionLayout dataDefinitionLayout2) {
+
+		Assert.assertTrue(
+			dataDefinitionLayout1 + " does not equal " + dataDefinitionLayout2,
+			equals(dataDefinitionLayout1, dataDefinitionLayout2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -1208,7 +1232,41 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected void assertValid(DataDefinitionLayout dataDefinitionLayout) {
+		boolean valid = true;
+
+		for (String additionalAssertFieldName :
+				getAdditionalDataDefinitionLayoutAssertFieldNames()) {
+
+			if (Objects.equals("dataDefinition", additionalAssertFieldName)) {
+				if (dataDefinitionLayout.getDataDefinition() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dataLayout", additionalAssertFieldName)) {
+				if (dataDefinitionLayout.getDataLayout() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
+
 	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected String[] getAdditionalDataDefinitionLayoutAssertFieldNames() {
 		return new String[0];
 	}
 
@@ -1375,6 +1433,47 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						dataDefinition1.getUserId(),
 						dataDefinition2.getUserId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected boolean equals(
+		DataDefinitionLayout dataDefinitionLayout1,
+		DataDefinitionLayout dataDefinitionLayout2) {
+
+		if (dataDefinitionLayout1 == dataDefinitionLayout2) {
+			return true;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalDataDefinitionLayoutAssertFieldNames()) {
+
+			if (Objects.equals("dataDefinition", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						dataDefinitionLayout1.getDataDefinition(),
+						dataDefinitionLayout2.getDataDefinition())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dataLayout", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						dataDefinitionLayout1.getDataLayout(),
+						dataDefinitionLayout2.getDataLayout())) {
 
 					return false;
 				}
@@ -1697,6 +1796,15 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 	protected DataDefinition randomPatchDataDefinition() throws Exception {
 		return randomDataDefinition();
+	}
+
+	protected DataDefinitionLayout randomDataDefinitionLayout()
+		throws Exception {
+
+		return new DataDefinitionLayout() {
+			{
+			}
+		};
 	}
 
 	protected DataDefinitionResource dataDefinitionResource;

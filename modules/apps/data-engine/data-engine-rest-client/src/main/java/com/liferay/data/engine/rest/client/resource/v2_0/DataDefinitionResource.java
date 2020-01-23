@@ -58,6 +58,20 @@ public interface DataDefinitionResource {
 			String contentType, DataDefinition dataDefinition)
 		throws Exception;
 
+	public com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionLayout
+			postDataDefinitionByContentTypeDataLayout(
+				String contentType,
+				com.liferay.data.engine.rest.client.dto.v2_0.
+					DataDefinitionLayout dataDefinitionLayout)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postDataDefinitionByContentTypeDataLayoutHttpResponse(
+				String contentType,
+				com.liferay.data.engine.rest.client.dto.v2_0.
+					DataDefinitionLayout dataDefinitionLayout)
+		throws Exception;
+
 	public String getDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception;
 
@@ -123,6 +137,20 @@ public interface DataDefinitionResource {
 	public HttpInvoker.HttpResponse
 			getSiteDataDefinitionByContentTypeByDataDefinitionKeyHttpResponse(
 				Long siteId, String contentType, String dataDefinitionKey)
+		throws Exception;
+
+	public com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionLayout
+			postSiteDataDefinitionByContentTypeDataLayout(
+				Long siteId, String contentType,
+				com.liferay.data.engine.rest.client.dto.v2_0.
+					DataDefinitionLayout dataDefinitionLayout)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postSiteDataDefinitionByContentTypeDataLayoutHttpResponse(
+				Long siteId, String contentType,
+				com.liferay.data.engine.rest.client.dto.v2_0.
+					DataDefinitionLayout dataDefinitionLayout)
 		throws Exception;
 
 	public static class Builder {
@@ -316,6 +344,81 @@ public interface DataDefinitionResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/data-engine/v2.0/data-definitions/by-content-type/{contentType}",
+				contentType);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionLayout
+				postDataDefinitionByContentTypeDataLayout(
+					String contentType,
+					com.liferay.data.engine.rest.client.dto.v2_0.
+						DataDefinitionLayout dataDefinitionLayout)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postDataDefinitionByContentTypeDataLayoutHttpResponse(
+					contentType, dataDefinitionLayout);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return com.liferay.data.engine.rest.client.serdes.v2_0.
+					DataDefinitionLayoutSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postDataDefinitionByContentTypeDataLayoutHttpResponse(
+					String contentType,
+					com.liferay.data.engine.rest.client.dto.v2_0.
+						DataDefinitionLayout dataDefinitionLayout)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				dataDefinitionLayout.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/data-engine/v2.0/data-definitions/by-content-type/{contentType}/data-layout",
 				contentType);
 
 			httpInvoker.userNameAndPassword(
@@ -823,6 +926,81 @@ public interface DataDefinitionResource {
 					_builder._port +
 						"/o/data-engine/v2.0/sites/{siteId}/data-definitions/by-content-type/{contentType}/by-data-definition-key/{dataDefinitionKey}",
 				siteId, contentType, dataDefinitionKey);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionLayout
+				postSiteDataDefinitionByContentTypeDataLayout(
+					Long siteId, String contentType,
+					com.liferay.data.engine.rest.client.dto.v2_0.
+						DataDefinitionLayout dataDefinitionLayout)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postSiteDataDefinitionByContentTypeDataLayoutHttpResponse(
+					siteId, contentType, dataDefinitionLayout);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return com.liferay.data.engine.rest.client.serdes.v2_0.
+					DataDefinitionLayoutSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw e;
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postSiteDataDefinitionByContentTypeDataLayoutHttpResponse(
+					Long siteId, String contentType,
+					com.liferay.data.engine.rest.client.dto.v2_0.
+						DataDefinitionLayout dataDefinitionLayout)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				dataDefinitionLayout.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/data-engine/v2.0/sites/{siteId}/data-definitions/by-content-type/{contentType}/data-layout",
+				siteId, contentType);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

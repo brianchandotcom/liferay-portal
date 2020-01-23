@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionLayout;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -117,6 +118,29 @@ public abstract class BaseDataDefinitionResourceImpl
 		throws Exception {
 
 		return new DataDefinition();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/by-content-type/{contentType}/data-layout' -d $'{"dataDefinition": ___, "dataLayout": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "contentType")}
+	)
+	@Path("/data-definitions/by-content-type/{contentType}/data-layout")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public DataDefinitionLayout postDataDefinitionByContentTypeDataLayout(
+			@NotNull @Parameter(hidden = true) @PathParam("contentType") String
+				contentType,
+			DataDefinitionLayout dataDefinitionLayout)
+		throws Exception {
+
+		return new DataDefinitionLayout();
 	}
 
 	/**
@@ -313,6 +337,35 @@ public abstract class BaseDataDefinitionResourceImpl
 		throws Exception {
 
 		return new DataDefinition();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-definitions/by-content-type/{contentType}/data-layout' -d $'{"dataDefinition": ___, "dataLayout": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "contentType")
+		}
+	)
+	@Path(
+		"/sites/{siteId}/data-definitions/by-content-type/{contentType}/data-layout"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public DataDefinitionLayout postSiteDataDefinitionByContentTypeDataLayout(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true) @PathParam("contentType") String
+				contentType,
+			DataDefinitionLayout dataDefinitionLayout)
+		throws Exception {
+
+		return new DataDefinitionLayout();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

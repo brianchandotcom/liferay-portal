@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionLayout;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -50,6 +51,10 @@ public interface DataDefinitionResource {
 			String contentType, DataDefinition dataDefinition)
 		throws Exception;
 
+	public DataDefinitionLayout postDataDefinitionByContentTypeDataLayout(
+			String contentType, DataDefinitionLayout dataDefinitionLayout)
+		throws Exception;
+
 	public String getDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception;
 
@@ -78,6 +83,11 @@ public interface DataDefinitionResource {
 
 	public DataDefinition getSiteDataDefinitionByContentTypeByDataDefinitionKey(
 			Long siteId, String contentType, String dataDefinitionKey)
+		throws Exception;
+
+	public DataDefinitionLayout postSiteDataDefinitionByContentTypeDataLayout(
+			Long siteId, String contentType,
+			DataDefinitionLayout dataDefinitionLayout)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

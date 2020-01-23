@@ -15,6 +15,7 @@
 package com.liferay.data.engine.rest.internal.graphql.mutation.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataModelPermission;
@@ -113,6 +114,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public DataDefinitionLayout createDataDefinitionByContentTypeDataLayout(
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("dataDefinitionLayout") DataDefinitionLayout
+				dataDefinitionLayout)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.
+					postDataDefinitionByContentTypeDataLayout(
+						contentType, dataDefinitionLayout));
+	}
+
+	@GraphQLField
 	public boolean deleteDataDefinition(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId)
 		throws Exception {
@@ -152,6 +169,24 @@ public class Mutation {
 			dataDefinitionResource ->
 				dataDefinitionResource.postSiteDataDefinitionByContentType(
 					Long.valueOf(siteKey), contentType, dataDefinition));
+	}
+
+	@GraphQLField
+	public DataDefinitionLayout createSiteDataDefinitionByContentTypeDataLayout(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("dataDefinitionLayout") DataDefinitionLayout
+				dataDefinitionLayout)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.
+					postSiteDataDefinitionByContentTypeDataLayout(
+						Long.valueOf(siteKey), contentType,
+						dataDefinitionLayout));
 	}
 
 	@GraphQLField

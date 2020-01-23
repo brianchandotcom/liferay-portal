@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -466,6 +467,10 @@ public class DataDefinitionResourceImpl
 	@Override
 	public void putPortletPermission(Permission[] permissions)
 		throws Exception {
+
+		_portletResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(),
+			contextCompany.getGroupId(), ActionKeys.PERMISSIONS);
 
 		long siteGroupId = _portal.getSiteGroupId(contextCompany.getGroupId());
 
@@ -881,6 +886,9 @@ public class DataDefinitionResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(resource.name=com.liferay.data.engine)")
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

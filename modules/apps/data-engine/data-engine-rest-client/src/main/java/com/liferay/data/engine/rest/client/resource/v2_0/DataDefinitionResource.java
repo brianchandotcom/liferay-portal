@@ -18,6 +18,7 @@ import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.client.http.HttpInvoker;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
+import com.liferay.data.engine.rest.client.permission.Permission;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataDefinitionSerDes;
 
 import java.util.LinkedHashMap;
@@ -25,6 +26,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -93,6 +96,14 @@ public interface DataDefinitionResource {
 	public HttpInvoker.HttpResponse
 			getDataDefinitionDataDefinitionFieldLinksHttpResponse(
 				Long dataDefinitionId, String fieldName)
+		throws Exception;
+
+	public void putDataDefinitionPermission(
+			Long dataDefinitionId, Permission[] permissions)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse putDataDefinitionPermissionHttpResponse(
+			Long dataDefinitionId, Permission[] permissions)
 		throws Exception;
 
 	public Page<DataDefinition>
@@ -611,6 +622,70 @@ public interface DataDefinitionResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-definition-field-links",
+				dataDefinitionId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putDataDefinitionPermission(
+				Long dataDefinitionId, Permission[] permissions)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putDataDefinitionPermissionHttpResponse(
+					dataDefinitionId, permissions);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse putDataDefinitionPermissionHttpResponse(
+				Long dataDefinitionId, Permission[] permissions)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				Stream.of(
+					permissions
+				).map(
+					value -> String.valueOf(value)
+				).collect(
+					Collectors.toList()
+				).toString(),
+				"application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/permissions",
 				dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(

@@ -140,6 +140,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateDataDefinitionPermission(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("permissions")
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionResource ->
+				dataDefinitionResource.putDataDefinitionPermission(
+					dataDefinitionId, permissions));
+
+		return true;
+	}
+
+	@GraphQLField
 	public DataDefinition createSiteDataDefinitionByContentType(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("contentType") String contentType,

@@ -18,8 +18,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../config/index';
-import {DispatchContext} from '../../reducers/index';
 import InfoItemService from '../../services/InfoItemService';
+import {useDispatch} from '../../store/index';
 
 const Container = React.forwardRef(({children, className, item}, ref) => {
 	const {
@@ -37,7 +37,7 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 	};
 
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
+	const dispatch = useDispatch();
 
 	const [backgroundImageValue, setBackgroundImageValue] = useState('');
 

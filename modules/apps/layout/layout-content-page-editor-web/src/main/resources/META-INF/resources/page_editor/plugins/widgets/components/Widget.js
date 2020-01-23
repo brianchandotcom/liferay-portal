@@ -20,14 +20,13 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../../app/config/index';
-import {DispatchContext} from '../../../app/reducers/index';
-import {StoreContext} from '../../../app/store/index';
+import {useDispatch, useSelector} from '../../../app/store/index';
 import addWidget from '../../../app/thunks/addWidget';
 
 export default function Widget({instanceable, portletId, title, used}) {
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
-	const store = useContext(StoreContext);
+	const dispatch = useDispatch();
+	const store = useSelector(state => state);
 
 	const [, drag, preview] = useDrag({
 		end(_item, _monitor) {

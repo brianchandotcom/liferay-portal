@@ -21,8 +21,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../../app/config/index';
-import {StoreContext} from '../../../app/store/index';
-import AppContext from '../../../core/AppContext';
+import {useDispatch, useSelector} from '../../../app/store/index';
 import createExperience from '../thunks/createExperience';
 import removeExperience from '../thunks/removeExperience';
 import updateExperience from '../thunks/updateExperience';
@@ -78,8 +77,9 @@ const ExperienceSelector = ({
 	selectedExperience
 }) => {
 	const config = useContext(ConfigContext);
-	const {dispatch} = useContext(AppContext);
-	const {layoutData, layoutDataList} = useContext(StoreContext);
+	const dispatch = useDispatch();
+	const layoutData = useSelector(state => state.layoutData);
+	const layoutDataList = useSelector(state => state.layoutDataList);
 
 	const {
 		classPK,

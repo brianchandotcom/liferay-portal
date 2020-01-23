@@ -13,10 +13,10 @@
  */
 
 import classNames from 'classnames';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {StoreContext} from '../store/index';
+import {useSelector} from '../store/index';
 import PageEditor from './PageEditor';
 import UnsafeHTML from './UnsafeHTML';
 import {Column, Container, Row} from './layout-data-items/index';
@@ -31,19 +31,18 @@ const LAYOUT_DATA_ITEMS = {
 };
 
 export default function MasterPage() {
-	const {
-		fragmentEntryLinks,
-		masterLayoutData,
-		sidebarOpen,
-		sidebarPanelId
-	} = useContext(StoreContext);
+	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const masterLayoutData = useSelector(state => state.masterLayoutData);
+	const sidebarOpen = useSelector(
+		state => state.sidebarPanelId && state.sidebarOpen
+	);
 
 	const mainItem = masterLayoutData.items[masterLayoutData.rootItems.main];
 
 	return (
 		<div
 			className={classNames('master-page', 'master-page--with-sidebar', {
-				'master-page--with-sidebar-open': sidebarPanelId && sidebarOpen
+				'master-page--with-sidebar-open': sidebarOpen
 			})}
 		>
 			<MasterLayoutDataItem

@@ -18,7 +18,7 @@ import React from 'react';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
-import {StoreContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import PageStructureSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/PageStructureSidebar';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -85,9 +85,11 @@ const layoutData = {
 
 const RenderPageStructureSidebar = () => {
 	return (
-		<StoreContext.Provider value={{fragmentEntryLinks, layoutData}}>
+		<StoreAPIContextProvider
+			getState={() => ({fragmentEntryLinks, layoutData})}
+		>
 			<PageStructureSidebar />
-		</StoreContext.Provider>
+		</StoreAPIContextProvider>
 	);
 };
 

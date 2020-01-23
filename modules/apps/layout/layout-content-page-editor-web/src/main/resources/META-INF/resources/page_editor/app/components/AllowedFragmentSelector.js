@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import React, {useState, useEffect, useMemo, useContext} from 'react';
 
 import {ConfigContext} from '../config/index';
-import {StoreContext} from '../store/index';
+import {useSelector} from '../store/index';
 import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
 
 const getSelectedNodeIds = (
@@ -77,7 +77,7 @@ const toFragmentEntryKeysArray = collections => {
 
 const AllowedFragmentSelector = ({onSelectedFragment}) => {
 	const {fragments} = useContext(ConfigContext);
-	const {layoutData} = useContext(StoreContext);
+	const layoutData = useSelector(state => state.layoutData);
 
 	const fragmentEntryKeysArray = useMemo(
 		() => toFragmentEntryKeysArray(fragments),

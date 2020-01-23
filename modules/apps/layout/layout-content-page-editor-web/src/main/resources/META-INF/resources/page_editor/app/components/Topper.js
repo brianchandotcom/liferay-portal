@@ -24,8 +24,7 @@ import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
-import {DispatchContext} from '../reducers/index';
-import {StoreContext} from '../store/index';
+import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
 import {
@@ -68,8 +67,8 @@ export default function Topper({
 	const [edge, setEdge] = useState(null);
 	const containerRef = useRef(null);
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
-	const store = useContext(StoreContext);
+	const dispatch = useDispatch();
+	const store = useSelector(state => state);
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
 	const isSelected = useIsSelected();

@@ -22,8 +22,7 @@ import useLoad from '../../core/hooks/useLoad';
 import usePlugins from '../../core/hooks/usePlugins';
 import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';
-import {DispatchContext} from '../reducers/index';
-import {StoreContext} from '../store/index';
+import {useSelector, useDispatch} from '../store/index';
 import NetworkStatusBar from './NetworkStatusBar';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
@@ -32,11 +31,11 @@ const {Suspense, useCallback, useContext, useRef} = React;
 
 function ToolbarBody() {
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
+	const dispatch = useDispatch();
 	const {getInstance, register} = usePlugins();
 	const isMounted = useIsMounted();
 	const load = useLoad();
-	const store = useContext(StoreContext);
+	const store = useSelector(state => state);
 
 	const {portletNamespace} = config;
 	const {segmentsExperienceId} = store;
@@ -60,7 +59,6 @@ function ToolbarBody() {
 
 				const app = {
 					Actions,
-					StoreContext,
 					config,
 					dispatch,
 					store

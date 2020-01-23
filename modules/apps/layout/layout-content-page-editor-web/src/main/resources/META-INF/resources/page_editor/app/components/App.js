@@ -12,9 +12,9 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {StoreContext} from '../store/index';
+import {useSelector} from '../store/index';
 import DisabledArea from './DisabledArea';
 import MasterLayout from './MasterLayout';
 import PageEditor from './PageEditor';
@@ -22,7 +22,7 @@ import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 
 export default function App() {
-	const {masterLayoutData = {}} = useContext(StoreContext);
+	const masterLayoutData = useSelector(state => state.masterLayoutData);
 
 	return (
 		<>

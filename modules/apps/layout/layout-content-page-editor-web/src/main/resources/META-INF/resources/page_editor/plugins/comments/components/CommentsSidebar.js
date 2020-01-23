@@ -12,11 +12,11 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React from 'react';
 
 import {useActiveItemId} from '../../../app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {StoreContext} from '../../../app/store/index';
+import {useSelector} from '../../../app/store/index';
 import FragmentComments from './FragmentComments';
 import FragmentEntryLinksWithComments from './FragmentEntryLinksWithComments';
 
@@ -39,7 +39,8 @@ function getActiveFragmentEntryLink(itemId, fragmentEntryLinks, layoutData) {
 }
 
 export default function CommentsSidebar() {
-	const {fragmentEntryLinks, layoutData} = useContext(StoreContext);
+	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const layoutData = useSelector(state => state.layoutData);
 
 	const activeItemId = useActiveItemId();
 

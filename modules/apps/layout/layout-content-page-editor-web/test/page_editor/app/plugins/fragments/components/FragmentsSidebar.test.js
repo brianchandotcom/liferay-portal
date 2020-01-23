@@ -19,6 +19,7 @@ import {DragDropContextProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import {ConfigContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
+import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import FragmentsSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments/components/FragmentsSidebar';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -51,7 +52,9 @@ const RenderFragmentsSidebar = () => {
 	return (
 		<DragDropContextProvider backend={HTML5Backend}>
 			<ConfigContext.Provider value={{fragments}}>
-				<FragmentsSidebar />
+				<StoreAPIContextProvider>
+					<FragmentsSidebar />
+				</StoreAPIContextProvider>
 			</ConfigContext.Provider>
 		</DragDropContextProvider>
 	);

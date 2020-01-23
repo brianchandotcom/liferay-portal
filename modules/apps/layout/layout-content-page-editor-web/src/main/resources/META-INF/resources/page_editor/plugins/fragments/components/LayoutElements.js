@@ -19,8 +19,7 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../../app/config/constants/layoutDataItemDefaultConfigurations';
 import {ConfigContext} from '../../../app/config/index';
-import {DispatchContext} from '../../../app/reducers/index';
-import {StoreContext} from '../../../app/store/index';
+import {useDispatch, useSelector} from '../../../app/store/index';
 import addItem from '../../../app/thunks/addItem';
 import Collapse from '../../../common/components/Collapse';
 
@@ -39,8 +38,8 @@ const layoutElements = [
 
 const LayoutElementCard = ({label, layoutColumns, type}) => {
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
-	const store = useContext(StoreContext);
+	const dispatch = useDispatch();
+	const store = useSelector(state => state);
 
 	const [, drag, preview] = useDrag({
 		end(item, monitor) {

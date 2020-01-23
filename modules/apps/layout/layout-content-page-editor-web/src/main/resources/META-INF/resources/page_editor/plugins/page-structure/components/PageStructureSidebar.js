@@ -13,16 +13,17 @@
  */
 
 import {Treeview} from 'frontend-js-components-web';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {StoreContext} from '../../../app/store/index';
+import {useSelector} from '../../../app/store/index';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import StructureTreeNode from './StructureTreeNode';
 
 export default function PageStructureSidebar() {
-	const {fragmentEntryLinks, layoutData} = useContext(StoreContext);
+	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const layoutData = useSelector(state => state.layoutData);
 
 	const getName = (item, fragmentEntryLinks) => {
 		let name;

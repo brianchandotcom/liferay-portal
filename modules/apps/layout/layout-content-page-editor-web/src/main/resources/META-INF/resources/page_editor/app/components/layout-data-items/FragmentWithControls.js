@@ -31,8 +31,7 @@ import React, {useContext} from 'react';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../config/index';
-import {DispatchContext} from '../../reducers/index';
-import {StoreContext} from '../../store/index';
+import {useSelector, useDispatch} from '../../store/index';
 import duplicateFragment from '../../thunks/duplicateFragment';
 import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
@@ -40,10 +39,10 @@ import FragmentContent from './FragmentContent';
 
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
-	const store = useContext(StoreContext);
+	const dispatch = useDispatch();
+	const state = useSelector(state => state);
 
-	const {fragmentEntryLinks} = store;
+	const {fragmentEntryLinks} = state;
 
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
@@ -55,7 +54,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 					config,
 					fragmentEntryLinkId: item.config.fragmentEntryLinkId,
 					itemId: item.itemId,
-					store
+					store: state
 				})
 			);
 		}

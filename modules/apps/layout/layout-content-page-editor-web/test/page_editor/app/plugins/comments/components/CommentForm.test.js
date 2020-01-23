@@ -18,7 +18,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {StoreContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store';
+import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import CommentForm from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/comments/components/CommentForm';
 
 jest.mock(
@@ -38,11 +38,14 @@ jest.mock(
 
 const renderForm = props =>
 	render(
-		<StoreContext.Provider
-			value={{
-				defaultEditorConfigurations: {comment: {editorConfig: {}}},
-				portletNamespace: '_testNamespace_'
-			}}
+		<StoreContextProvider
+			initialState={[
+				{},
+				{
+					defaultEditorConfigurations: {comment: {editorConfig: {}}},
+					portletNamespace: '_testNamespace_'
+				}
+			]}
 		>
 			<CommentForm
 				onCancelButtonClick={() => {}}
@@ -52,7 +55,7 @@ const renderForm = props =>
 				textareaContent=""
 				{...props}
 			/>
-		</StoreContext.Provider>
+		</StoreContextProvider>
 	);
 
 describe('CommentForm', () => {

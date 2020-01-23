@@ -24,8 +24,7 @@ import {
 	useSelectItem
 } from '../../../app/components/Controls';
 import {ConfigContext} from '../../../app/config/index';
-import {DispatchContext} from '../../../app/reducers/index';
-import {StoreContext} from '../../../app/store/index';
+import {useSelector, useDispatch} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 
 const NameButton = ({id, name}) => {
@@ -50,8 +49,8 @@ const NameButton = ({id, name}) => {
 
 const RemoveButton = ({id}) => {
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
-	const store = useContext(StoreContext);
+	const dispatch = useDispatch();
+	const store = useSelector(state => state);
 
 	return (
 		<ClayButton

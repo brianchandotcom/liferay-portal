@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useState, useContext} from 'react';
 
 import {ConfigContext} from '../../../app/config/index';
-import {DispatchContext} from '../../../app/reducers/index';
+import {useDispatch} from '../../../app/store/index';
 import addFragmentComment from '../../../app/thunks/addFragmentComment';
 import CommentForm from './CommentForm';
 
@@ -25,7 +25,7 @@ export default function AddCommentForm({fragmentEntryLinkId}) {
 	const [addingComment, setAddingComment] = useState(false);
 	const [showButtons, setShowButtons] = useState(false);
 	const [textareaContent, setTextareaContent] = useState('');
-	const dispatch = useContext(DispatchContext);
+	const dispatch = useDispatch();
 
 	const config = useContext(ConfigContext);
 

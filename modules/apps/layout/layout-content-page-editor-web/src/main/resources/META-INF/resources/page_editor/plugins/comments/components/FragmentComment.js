@@ -22,9 +22,8 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState, useContext} from 'react';
 
 import {ConfigContext} from '../../../app/config/index';
-import {DispatchContext} from '../../../app/reducers/index';
 import FragmentService from '../../../app/services/FragmentService';
-import {StoreContext} from '../../../app/store/index';
+import {useSelector, useDispatch} from '../../../app/store/index';
 import deleteFragmentComment from '../../../app/thunks/deleteFragmentComment';
 import InlineConfirm from '../../../common/components/InlineConfirm';
 import UserIcon from '../../../common/components/UserIcon';
@@ -56,8 +55,10 @@ export default function FragmentComment({
 	const [showDeleteMask, setShowDeleteMask] = useState(false);
 	const [showResolveMask, setShowResolveMask] = useState(false);
 
-	const {showResolvedComments} = useContext(StoreContext);
-	const dispatch = useContext(DispatchContext);
+	const showResolvedComments = useSelector(
+		state => state.showResolvedComments
+	);
+	const dispatch = useDispatch();
 	const config = useContext(ConfigContext);
 
 	const showModifiedDateTooltip = !!(edited && modifiedDateDescription);

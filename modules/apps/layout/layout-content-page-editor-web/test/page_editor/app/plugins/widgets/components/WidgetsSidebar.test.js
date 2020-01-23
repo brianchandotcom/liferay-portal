@@ -18,11 +18,10 @@ import React from 'react';
 import {DragDropContextProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
+import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import WidgetsSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/widgets/components/WidgetsSidebar';
 
 import '@testing-library/jest-dom/extend-expect';
-
-import {StoreContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 
 const widgets = [
 	{
@@ -70,9 +69,9 @@ const widgets = [
 const RenderWidgetsSidebar = () => {
 	return (
 		<DragDropContextProvider backend={HTML5Backend}>
-			<StoreContext.Provider value={{widgets}}>
+			<StoreAPIContextProvider getState={() => ({widgets})}>
 				<WidgetsSidebar />
-			</StoreContext.Provider>
+			</StoreAPIContextProvider>
 		</DragDropContextProvider>
 	);
 };

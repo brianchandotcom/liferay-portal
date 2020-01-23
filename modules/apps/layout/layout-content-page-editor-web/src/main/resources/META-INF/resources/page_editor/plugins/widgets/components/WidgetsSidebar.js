@@ -12,9 +12,9 @@
  * details.
  */
 
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
-import {StoreContext} from '../../../app/store/index';
+import {useSelector} from '../../../app/store/index';
 import Collapse from '../../../common/components/Collapse';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
@@ -22,7 +22,7 @@ import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import Widget from './Widget';
 
 export default function WidgetsSidebar() {
-	const {widgets} = useContext(StoreContext);
+	const widgets = useSelector(state => state.widgets);
 	const [searchValue, setSearchValue] = useState('');
 
 	const filteredWidgets = useMemo(() => {

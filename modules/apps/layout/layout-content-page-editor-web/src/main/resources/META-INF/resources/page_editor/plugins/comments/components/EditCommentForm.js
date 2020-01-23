@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useState, useContext} from 'react';
 
 import {ConfigContext} from '../../../app/config/index';
-import {DispatchContext} from '../../../app/reducers/index';
+import {useDispatch} from '../../../app/store/index';
 import editFragmentComment from '../../../app/thunks/editFragmentComment';
 import CommentForm from './CommentForm';
 
@@ -29,7 +29,7 @@ export default function EditCommentForm({
 	const [editingComment, setEditingComment] = useState(false);
 	const [textareaContent, setTextareaContent] = useState(comment.body);
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
+	const dispatch = useDispatch();
 
 	const _handleCommentButtonClick = () => {
 		setEditingComment(true);

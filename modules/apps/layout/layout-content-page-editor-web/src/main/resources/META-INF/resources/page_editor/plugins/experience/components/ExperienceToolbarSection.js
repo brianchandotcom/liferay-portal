@@ -15,20 +15,24 @@
 import React, {useContext, useMemo} from 'react';
 
 import {ConfigContext} from '../../../app/config/index';
-import {StoreContext} from '../../../app/store/index';
+import {useSelector} from '../../../app/store/index';
 import ExperienceSelector from './ExperienceSelector';
 
 // TODO: show how to colocate CSS with plugins (may use loaders)
 export default function ExperienceToolbarSection({selectId}) {
-	const {availableSegmentsExperiences, segmentsExperienceId} = useContext(
-		StoreContext
+	const availableSegmentsExperiences = useSelector(
+		state => state.availableSegmentsExperiences
 	);
-	const config = useContext(ConfigContext);
+
+	const segmentsExperienceId = useSelector(
+		state => state.segmentsExperienceId
+	);
+
 	const {
 		availableSegmentsEntries,
 		defaultSegmentsEntryId,
 		editSegmentsEntryURL
-	} = config;
+	} = useContext(ConfigContext);
 
 	const experiences = useMemo(
 		() =>

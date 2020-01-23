@@ -18,13 +18,13 @@ import PropTypes from 'prop-types';
 import React, {useState, useCallback, useContext} from 'react';
 
 import {ConfigContext} from '../config/index';
-import {DispatchContext} from '../reducers/index';
+import {useDispatch} from '../store/index';
 import updateItemConfig from '../thunks/updateItemConfig';
 import AllowedFragmentSelector from './AllowedFragmentSelector';
 
 const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
-	const dispatch = useContext(DispatchContext);
 	const config = useContext(ConfigContext);
+	const dispatch = useDispatch();
 
 	const [allowNewFragmentEntries, setAllowNewFragmentEntries] = useState(
 		true

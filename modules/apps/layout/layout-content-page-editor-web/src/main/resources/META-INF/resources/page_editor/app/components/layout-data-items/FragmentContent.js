@@ -20,11 +20,10 @@ import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ConfigContext} from '../../config/index';
 import Processors from '../../processors/index';
-import {DispatchContext} from '../../reducers/index';
 import selectEditableValueConfig from '../../selectors/selectEditableValueConfig';
 import selectEditableValueContent from '../../selectors/selectEditableValueContent';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
-import {StoreContext} from '../../store/index';
+import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 import {useSelectItem} from '../Controls';
 import UnsafeHTML from '../UnsafeHTML';
@@ -60,8 +59,8 @@ function FragmentContent({fragmentEntryLink}, ref) {
 	const defaultContent = fragmentEntryLink.content.value.content;
 	const {fragmentEntryLinkId} = fragmentEntryLink;
 	const isMounted = useIsMounted();
-	const state = useContext(StoreContext);
-	const dispatch = useContext(DispatchContext);
+	const state = useSelector(state => state);
+	const dispatch = useDispatch();
 
 	const selectItem = useSelectItem();
 	const activeEditable = useRef(null);

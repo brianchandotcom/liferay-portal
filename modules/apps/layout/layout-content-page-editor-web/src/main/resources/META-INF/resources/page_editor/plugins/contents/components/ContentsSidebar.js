@@ -12,16 +12,16 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {StoreContext} from '../../../app/store/index';
+import {useSelector} from '../../../app/store/index';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
 
 export default function ContentsSidebar() {
-	const {pageContents} = useContext(StoreContext);
+	const pageContents = useSelector(state => state.pageContents);
 	let view = <NoPageContents />;
 
 	if (pageContents.length) {

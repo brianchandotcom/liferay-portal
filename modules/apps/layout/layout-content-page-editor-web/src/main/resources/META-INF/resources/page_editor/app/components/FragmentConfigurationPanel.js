@@ -19,9 +19,8 @@ import React, {useContext} from 'react';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../config/constants/fragmentConfigurationFieldTypes';
 import {ConfigContext} from '../config/index';
-import {DispatchContext} from '../reducers/index';
 import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
-import {StoreContext} from '../store/index';
+import {useSelector, useDispatch} from '../store/index';
 import updateFragmentConfiguration from '../thunks/updateFragmentConfiguration';
 
 const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
@@ -51,14 +50,15 @@ const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
 
 export const FragmentConfigurationPanel = ({item}) => {
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
-	const store = useContext(StoreContext);
+	const dispatch = useDispatch();
 
-	const {fragmentEntryLinks} = useContext(StoreContext);
+	const fragmentEntryLink = useSelector(
+		state => state.fragmentEntryLinks[item.config.fragmentEntryLinkId]
+	);
 
-	const fragmentEntryLink =
-		fragmentEntryLinks[item.config.fragmentEntryLinkId];
-	const segmentsExperienceId = selectPrefixedSegmentsExperienceId(store);
+	const segmentsExperienceId = useSelector(
+		selectPrefixedSegmentsExperienceId
+	);
 
 	const configuration = fragmentEntryLink.configuration;
 	const defaultConfigurationValues =

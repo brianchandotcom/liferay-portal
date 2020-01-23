@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {ConfigContext} from '../../../app/config/index';
-import AppContext from '../../../core/AppContext';
+import {useDispatch} from '../../../app/store/index';
 import selectExperience from '../thunks/selectExperience';
 import {ExperienceType} from '../types';
 import ExperienceItem from './ExperienceItem';
@@ -31,8 +31,8 @@ const ExperiencesList = ({
 	onPriorityDecrease,
 	onPriorityIncrease
 }) => {
-	const {dispatch} = useContext(AppContext);
 	const config = useContext(ConfigContext);
+	const dispatch = useDispatch();
 
 	const handleExperienceSelection = id =>
 		dispatch(selectExperience(id, config));

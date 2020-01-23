@@ -15,14 +15,13 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import editFragmentEntryComment from '../../../app/actions/editFragmentEntryLinkComment';
 import {useSelectItem} from '../../../app/components/Controls';
-import {StoreContext} from '../../../app/store/index';
+import {useSelector, useDispatch} from '../../../app/store/index';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import AppContext from '../../../core/AppContext';
 import AddCommentForm from './AddCommentForm';
 import FragmentComment from './FragmentComment';
 import ResolvedCommentsToggle from './ResolvedCommentsToggle';
@@ -32,8 +31,10 @@ export default function FragmentComments({fragmentEntryLink}) {
 
 	const selectItem = useSelectItem();
 
-	const {dispatch} = useContext(AppContext);
-	const {showResolvedComments} = useContext(StoreContext);
+	const dispatch = useDispatch();
+	const showResolvedComments = useSelector(
+		state => state.showResolvedComments
+	);
 
 	const fragmentEntryLinkComments = showResolvedComments
 		? comments

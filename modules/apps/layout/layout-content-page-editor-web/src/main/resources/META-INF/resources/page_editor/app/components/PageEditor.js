@@ -14,10 +14,10 @@
 
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {StoreContext} from '../store/index';
+import {useSelector} from '../store/index';
 import {useIsActive} from './Controls';
 import DragPreview from './DragPreview';
 import {
@@ -39,12 +39,11 @@ const LAYOUT_DATA_ITEMS = {
 };
 
 export default function PageEditor({withinMasterPage = false}) {
-	const {
-		fragmentEntryLinks,
-		layoutData,
-		sidebarOpen,
-		sidebarPanelId
-	} = useContext(StoreContext);
+	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const layoutData = useSelector(state => state.layoutData);
+	const sidebarOpen = useSelector(
+		state => state.sidebarPanelId && state.sidebarOpen
+	);
 
 	const mainItem = layoutData.items[layoutData.rootItems.main];
 
@@ -53,7 +52,7 @@ export default function PageEditor({withinMasterPage = false}) {
 			className={classNames('page-editor', {
 				'page-editor--with-sidebar': !withinMasterPage,
 				'page-editor--with-sidebar-open':
-					sidebarPanelId && sidebarOpen && !withinMasterPage,
+					sidebarOpen && !withinMasterPage,
 				'pt-4': !withinMasterPage
 			})}
 			id="page-editor"

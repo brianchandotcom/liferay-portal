@@ -12,19 +12,21 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import React from 'react';
 
 import {useSelectItem, useHoverItem} from '../../../app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {StoreContext} from '../../../app/store/index';
+import {useSelector} from '../../../app/store/index';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import NoCommentsMessage from './NoCommentsMessage';
 import ResolvedCommentsToggle from './ResolvedCommentsToggle';
 
 export default function FragmentEntryLinksWithComments() {
-	const {fragmentEntryLinks, layoutData, showResolvedComments} = useContext(
-		StoreContext
+	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const layoutData = useSelector(state => state.layoutData);
+	const showResolvedComments = useSelector(
+		state => state.showResolvedComments
 	);
 
 	const selectItem = useSelectItem();

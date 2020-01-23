@@ -18,9 +18,8 @@ import React, {useState, useContext} from 'react';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
 import {EDITABLE_TYPES} from '../config/constants/editableTypes';
 import {ConfigContext} from '../config/index';
-import {DispatchContext} from '../reducers/index';
 import InfoItemService from '../services/InfoItemService';
-import {StoreContext} from '../store/index';
+import {useDispatch, useSelector} from '../store/index';
 import updateEditableValues from '../thunks/updateEditableValues';
 import MappingSelector from './MappingSelector';
 
@@ -62,9 +61,12 @@ const TARGET_OPTIONS = [
 export default function LinkConfigurationPanel({item}) {
 	const {editableId, fragmentEntryLinkId} = item;
 
-	const {fragmentEntryLinks, segmentsExperienceId} = useContext(StoreContext);
+	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const segmentsExperienceId = useSelector(
+		state => state.segmentsExperienceId
+	);
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
+	const dispatch = useDispatch();
 
 	const editableValue =
 		fragmentEntryLinks[fragmentEntryLinkId].editableValues[

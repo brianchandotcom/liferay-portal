@@ -20,9 +20,8 @@ import {addMappedInfoItem} from '../actions/index';
 import {COMPATIBLE_TYPES} from '../config/constants/compatibleTypes';
 import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {ConfigContext} from '../config/index';
-import {DispatchContext} from '../reducers/index';
 import InfoItemService from '../services/InfoItemService';
-import {StoreContext} from '../store/index';
+import {useDispatch, useSelector} from '../store/index';
 
 const MAPPING_SOURCE_TYPE_IDS = {
 	content: 'content',
@@ -86,10 +85,9 @@ export default function MappingSelector({
 	onMappingSelect
 }) {
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
-	const store = useContext(StoreContext);
+	const dispatch = useDispatch();
+	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
 
-	const {mappedInfoItems} = store;
 	const {pageType, selectedMappingTypes} = config;
 
 	const [fields, setFields] = useState([]);

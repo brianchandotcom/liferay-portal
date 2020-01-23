@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import React, {useState, useContext} from 'react';
 
 import {ConfigContext} from '../../../app/config/index';
-import {DispatchContext} from '../../../app/reducers/index';
+import {useDispatch} from '../../../app/store/index';
 import addFragmentComment from '../../../app/thunks/addFragmentComment';
 import CommentForm from './CommentForm';
 
@@ -31,7 +31,7 @@ export default function ReplyCommentForm({
 	const [showForm, setShowForm] = useState(false);
 	const [textareaContent, setTextareaContent] = useState('');
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
+	const dispatch = useDispatch();
 
 	const handleReplyButtonClick = () => {
 		setAddingComment(true);

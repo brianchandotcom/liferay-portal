@@ -18,9 +18,8 @@ import React, {useContext, useState} from 'react';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
-import {DispatchContext} from '../reducers/index';
 import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
-import {StoreContext} from '../store/index';
+import {useSelector, useDispatch} from '../store/index';
 import updateItemConfig from '../thunks/updateItemConfig';
 import updateRowColumns from '../thunks/updateRowColumns';
 
@@ -48,9 +47,9 @@ const ClayCheckboxWithState = ({onValueChange, ...otherProps}) => {
 
 export const RowConfigurationPanel = ({item}) => {
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
-	const segmentsExperienceId = selectPrefixedSegmentsExperienceId(
-		useContext(StoreContext)
+	const dispatch = useDispatch();
+	const segmentsExperienceId = useSelector(
+		selectPrefixedSegmentsExperienceId
 	);
 
 	const rowConfig = {

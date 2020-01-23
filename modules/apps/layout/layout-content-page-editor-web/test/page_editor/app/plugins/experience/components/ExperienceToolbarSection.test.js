@@ -24,8 +24,7 @@ import React from 'react';
 
 import {ConfigContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import serviceFetch from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch';
-import {StoreContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
-import AppContext from '../../../../../../src/main/resources/META-INF/resources/page_editor/core/AppContext';
+import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import {
 	CREATE_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE,
@@ -51,13 +50,14 @@ function renderExperienceToolbarSection(
 	mockDispatch = () => {}
 ) {
 	return render(
-		<AppContext.Provider value={{dispatch: mockDispatch}}>
-			<ConfigContext.Provider value={mockConfig}>
-				<StoreContext.Provider value={mockState}>
-					<ExperienceToolbarSection selectId="test-select-id" />
-				</StoreContext.Provider>
-			</ConfigContext.Provider>
-		</AppContext.Provider>,
+		<ConfigContext.Provider value={mockConfig}>
+			<StoreAPIContextProvider
+				dispatch={mockDispatch}
+				getState={() => mockState}
+			>
+				<ExperienceToolbarSection selectId="test-select-id" />
+			</StoreAPIContextProvider>
+		</ConfigContext.Provider>,
 		{
 			baseElement: document.body
 		}

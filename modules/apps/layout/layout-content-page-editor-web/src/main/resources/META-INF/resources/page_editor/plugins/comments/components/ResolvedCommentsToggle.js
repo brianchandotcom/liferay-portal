@@ -13,20 +13,24 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import toggleShowResolvedComments from '../../../app/actions/toggleShowResolvedComments';
-import {StoreContext} from '../../../app/store/index';
-import AppContext from '../../../core/AppContext';
+import {useDispatch, useSelector} from '../../../app/store/index';
 
 export default function ResolvedCommentsToggle() {
-	const {dispatch} = useContext(AppContext);
-	const {fragmentEntryLinks, showResolvedComments} = useContext(StoreContext);
+	const {dispatch} = useDispatch();
 
-	const hasResolvedComments = Object.values(fragmentEntryLinks).some(
-		fragmentEntryLink =>
-			fragmentEntryLink.comments &&
-			fragmentEntryLink.comments.some(comment => comment.resolved)
+	const showResolvedComments = useSelector(
+		state => state.showResolvedComments
+	);
+
+	const hasResolvedComments = useSelector(state =>
+		Object.values(state.fragmentEntryLinks).some(
+			fragmentEntryLink =>
+				fragmentEntryLink.comments &&
+				fragmentEntryLink.comments.some(comment => comment.resolved)
+		)
 	);
 
 	return (

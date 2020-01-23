@@ -25,8 +25,7 @@ import usePlugins from '../../core/hooks/usePlugins';
 import useStateSafe from '../../core/hooks/useStateSafe';
 import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';
-import {DispatchContext} from '../reducers/index';
-import {StoreContext} from '../store/index';
+import {useSelector, useDispatch} from '../store/index';
 
 const {Suspense, useCallback, useContext, useEffect} = React;
 
@@ -38,8 +37,8 @@ const swallow = [value => value, _error => undefined];
 
 export default function Sidebar() {
 	const config = useContext(ConfigContext);
-	const dispatch = useContext(DispatchContext);
-	const store = useContext(StoreContext);
+	const dispatch = useDispatch();
+	const store = useSelector(state => state);
 
 	const [hasError, setHasError] = useStateSafe(false);
 
@@ -58,7 +57,6 @@ export default function Sidebar() {
 
 	const app = {
 		Actions,
-		StoreContext,
 		config,
 		dispatch,
 		store

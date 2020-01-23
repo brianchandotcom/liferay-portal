@@ -61,6 +61,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Sort;
@@ -521,6 +522,16 @@ public class StructuredContentResourceImpl
 
 		_journalArticleService.unsubscribe(
 			journalArticle.getGroupId(), journalArticle.getResourcePrimKey());
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id)
+		throws PortalException {
+
+		JournalArticle article = _journalArticleLocalService.getLatestArticle(
+			(Long)id);
+
+		return article.getGroupId();
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import com.liferay.data.engine.rest.client.dto.v2_0.DataRecordCollection;
 import com.liferay.data.engine.rest.client.http.HttpInvoker;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
+import com.liferay.data.engine.rest.client.permission.Permission;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataRecordCollectionSerDes;
 
 import java.util.LinkedHashMap;
@@ -25,6 +26,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -91,6 +94,33 @@ public interface DataRecordCollectionResource {
 	public HttpInvoker.HttpResponse putDataRecordCollectionHttpResponse(
 			Long dataRecordCollectionId,
 			DataRecordCollection dataRecordCollection)
+		throws Exception;
+
+	public Page<Permission> getDataRecordCollectionPermissionsPage(
+			Long dataRecordCollectionId, String roleNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getDataRecordCollectionPermissionsPageHttpResponse(
+				Long dataRecordCollectionId, String roleNames)
+		throws Exception;
+
+	public void putDataRecordCollectionPermission(
+			Long dataRecordCollectionId, Permission[] permissions)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			putDataRecordCollectionPermissionHttpResponse(
+				Long dataRecordCollectionId, Permission[] permissions)
+		throws Exception;
+
+	public String getDataRecordCollectionPermissionByCurrentUser(
+			Long dataRecordCollectionId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getDataRecordCollectionPermissionByCurrentUserHttpResponse(
+				Long dataRecordCollectionId)
 		throws Exception;
 
 	public DataRecordCollection
@@ -545,6 +575,189 @@ public interface DataRecordCollectionResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}",
+				dataRecordCollectionId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<Permission> getDataRecordCollectionPermissionsPage(
+				Long dataRecordCollectionId, String roleNames)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getDataRecordCollectionPermissionsPageHttpResponse(
+					dataRecordCollectionId, roleNames);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, Permission::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getDataRecordCollectionPermissionsPageHttpResponse(
+					Long dataRecordCollectionId, String roleNames)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (roleNames != null) {
+				httpInvoker.parameter("roleNames", String.valueOf(roleNames));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions",
+				dataRecordCollectionId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putDataRecordCollectionPermission(
+				Long dataRecordCollectionId, Permission[] permissions)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putDataRecordCollectionPermissionHttpResponse(
+					dataRecordCollectionId, permissions);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse
+				putDataRecordCollectionPermissionHttpResponse(
+					Long dataRecordCollectionId, Permission[] permissions)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				Stream.of(
+					permissions
+				).map(
+					value -> String.valueOf(value)
+				).collect(
+					Collectors.toList()
+				).toString(),
+				"application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions",
+				dataRecordCollectionId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public String getDataRecordCollectionPermissionByCurrentUser(
+				Long dataRecordCollectionId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getDataRecordCollectionPermissionByCurrentUserHttpResponse(
+					dataRecordCollectionId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return content;
+		}
+
+		public HttpInvoker.HttpResponse
+				getDataRecordCollectionPermissionByCurrentUserHttpResponse(
+					Long dataRecordCollectionId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions/by-current-user",
 				dataRecordCollectionId);
 
 			httpInvoker.userNameAndPassword(

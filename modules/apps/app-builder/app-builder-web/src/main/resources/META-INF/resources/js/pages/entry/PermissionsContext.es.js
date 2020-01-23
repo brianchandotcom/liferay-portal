@@ -35,7 +35,7 @@ const PermissionsContextProvider = ({children, dataDefinitionId}) => {
 		)
 			.then(({id: dataRecordCollectionId}) =>
 				getItem(
-					`/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/data-model-permissions/by-current-user`
+					`/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/permissions/by-current-user`
 				)
 			)
 			.then(actionIds => setActionIds(actionIds))

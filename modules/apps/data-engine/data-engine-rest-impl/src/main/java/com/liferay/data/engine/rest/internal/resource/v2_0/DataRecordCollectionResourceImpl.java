@@ -21,17 +21,25 @@ import com.liferay.data.engine.rest.internal.resource.util.DataEnginePermissionU
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataRecordCollectionModelResourcePermission;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.data.engine.spi.resource.SPIDataRecordCollectionResource;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -110,6 +118,36 @@ public class DataRecordCollectionResourceImpl
 	}
 
 	@Override
+	public String getDataRecordCollectionPermissionByCurrentUser(
+			Long dataRecordCollectionId)
+		throws Exception {
+
+		JSONArray actionIdsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
+			dataRecordCollectionId);
+
+		String resourceName = _getResourceName(ddlRecordSet);
+
+		List<ResourceAction> resourceActions =
+			resourceActionLocalService.getResourceActions(resourceName);
+
+		for (ResourceAction resourceAction : resourceActions) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (permissionChecker.hasPermission(
+					ddlRecordSet.getGroupId(), resourceName,
+					dataRecordCollectionId, resourceAction.getActionId())) {
+
+				actionIdsJSONArray.put(resourceAction.getActionId());
+			}
+		}
+
+		return actionIdsJSONArray.toString();
+	}
+
+	@Override
 	public DataRecordCollection
 			getSiteDataRecordCollectionByDataRecordCollectionKey(
 				Long siteId, String dataRecordCollectionKey)
@@ -132,7 +170,7 @@ public class DataRecordCollectionResourceImpl
 			dataDefinitionId);
 
 		DataEnginePermissionUtil.checkPermission(
-			DataActionKeys.ADD_DATA_RECORD_COLLECTION, _groupLocalService,
+			DataActionKeys.ADD_DATA_RECORD_COLLECTION, groupLocalService,
 			ddmStructure.getGroupId());
 
 		String dataRecordCollectionKey =
@@ -172,6 +210,37 @@ public class DataRecordCollectionResourceImpl
 			dataRecordCollection.getName());
 	}
 
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
+			(long)id);
+
+		return ddlRecordSet.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		try {
+			DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
+				(long)id);
+
+			return _getResourceName(ddlRecordSet);
+		}
+		catch (PortalException portalException) {
+			return DDLRecordSet.class.getName();
+		}
+	}
+
+	private String _getResourceName(DDLRecordSet ddlRecordSet)
+		throws PortalException {
+
+		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+
+		return ResourceActionsUtil.getCompositeModelName(
+			_portal.getClassName(ddmStructure.getClassNameId()),
+			DDLRecordSet.class.getName());
+	}
+
 	private SPIDataRecordCollectionResource<DataRecordCollection>
 		_getSPIDataRecordCollectionResource() {
 
@@ -190,9 +259,6 @@ public class DataRecordCollectionResourceImpl
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

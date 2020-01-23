@@ -345,9 +345,9 @@ AUI.add(
 						}
 					} else if (action === 'checkin') {
 						Liferay.componentReady(
-							instance.ns('BridgeCheckinComponent')
-						).then(BridgeCheckinComponent => {
-							BridgeCheckinComponent.open(
+							instance.ns('DocumentLibraryCheckinModal')
+						).then(documentLibraryCheckinModal => {
+							documentLibraryCheckinModal.open(
 								(versionIncrease, changeLog) => {
 									var form = instance.get('form').node;
 

@@ -105,6 +105,14 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 				<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 			</div>
 		</c:when>
+		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_DROP_ZONE) %>">
+
+			<%
+			request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));
+			%>
+
+			<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
+		</c:when>
 		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_FRAGMENT) %>">
 
 			<%
@@ -134,6 +142,14 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 			}
 			%>
 
+		</c:when>
+		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_ROOT) %>">
+
+			<%
+			request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));
+			%>
+
+			<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_ROW) %>">
 

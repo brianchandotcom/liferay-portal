@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -153,7 +154,19 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
 			if (LayoutDataConverter.isLatestVersion(dataJSONObject)) {
-				_dataJSONObject = dataJSONObject;
+				String masterLayoutData = _getMasterLayoutData();
+
+				if (Validator.isNull(masterLayoutData)) {
+					_dataJSONObject = dataJSONObject;
+
+					return _dataJSONObject;
+				}
+
+				JSONObject masterLayoutDataJSONObject =
+					JSONFactoryUtil.createJSONObject(masterLayoutData);
+
+				_dataJSONObject = _mergeLayoutDataJSONObject(
+					dataJSONObject, masterLayoutDataJSONObject);
 
 				return _dataJSONObject;
 			}
@@ -243,6 +256,42 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		return GetterUtil.getLongValues(
 			request.getAttribute(SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
 			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
+	}
+
+	private JSONObject _mergeLayoutDataJSONObject(
+		JSONObject dataJSONObject, JSONObject masterLayoutDataJSONObject) {
+
+		JSONObject masterLayoutItemsJSONObject =
+			masterLayoutDataJSONObject.getJSONObject("items");
+
+		JSONObject itemsJSONObject = dataJSONObject.getJSONObject("items");
+
+		for (String key : itemsJSONObject.keySet()) {
+			JSONObject itemJSONObject = itemsJSONObject.getJSONObject(key);
+
+			masterLayoutItemsJSONObject.put(key, itemJSONObject);
+		}
+
+		JSONObject masterLayoutDataRootItemsJSONObject =
+			masterLayoutDataJSONObject.getJSONObject("rootItems");
+
+		String dropZoneItemId = masterLayoutDataRootItemsJSONObject.getString(
+			"dropZone");
+
+		JSONObject dropZoneJSONObject =
+			masterLayoutItemsJSONObject.getJSONObject(dropZoneItemId);
+
+		JSONArray dropZoneChildrenJSONArray = dropZoneJSONObject.getJSONArray(
+			"children");
+
+		JSONObject rootItemsJSONObject = dataJSONObject.getJSONObject(
+			"rootItems");
+
+		String mainItemId = rootItemsJSONObject.getString("main");
+
+		dropZoneChildrenJSONArray.put(mainItemId);
+
+		return masterLayoutDataJSONObject;
 	}
 
 	private static final String _PAGE = "/render_fragment_layout/page.jsp";

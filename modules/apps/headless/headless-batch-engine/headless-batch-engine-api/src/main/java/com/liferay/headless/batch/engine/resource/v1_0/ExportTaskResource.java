@@ -44,9 +44,9 @@ public interface ExportTaskResource {
 			String fieldNames)
 		throws Exception;
 
-	public ExportTask getExportTask(Long exportTaskId) throws Exception;
-
 	public Response getExportTaskContent(Long exportTaskId) throws Exception;
+
+	public ExportTask getExportTask(Long exportTaskId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

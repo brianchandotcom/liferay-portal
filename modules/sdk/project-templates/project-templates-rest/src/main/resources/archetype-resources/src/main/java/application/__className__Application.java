@@ -14,7 +14,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 
 import org.osgi.service.component.annotations.Component;
-#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
+#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 #end
 

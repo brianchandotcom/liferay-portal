@@ -7180,6 +7180,27 @@ paths:
                         ""
             tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}/permissions":
+        get:
+            operationId: getStructuredContentPermissionsPage
+            parameters:
+                - in: path
+                  name: structuredContentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["StructuredContent"]
         put:
             operationId: putStructuredContentPermission
             parameters:

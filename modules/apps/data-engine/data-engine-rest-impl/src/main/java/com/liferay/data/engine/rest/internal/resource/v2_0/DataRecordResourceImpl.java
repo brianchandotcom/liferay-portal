@@ -369,10 +369,14 @@ public class DataRecordResourceImpl
 
 			String[] values = JSONUtil.toStringArray(jsonArray);
 
+			BooleanFilter fieldBooleanFilter = new BooleanFilter();
+
 			for (String value : values) {
-				booleanFilter.addTerm(
-					indexFieldName, value, BooleanClauseOccur.MUST);
+				fieldBooleanFilter.addTerm(
+					indexFieldName, value, BooleanClauseOccur.SHOULD);
 			}
+
+			booleanFilter.add(fieldBooleanFilter, BooleanClauseOccur.MUST);
 		}
 
 		return booleanFilter;

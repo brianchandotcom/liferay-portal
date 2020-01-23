@@ -98,6 +98,15 @@ public interface DataDefinitionResource {
 				Long dataDefinitionId, String fieldName)
 		throws Exception;
 
+	public Page<Permission> getDataDefinitionPermissionsPage(
+			Long dataDefinitionId, String roleNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getDataDefinitionPermissionsPageHttpResponse(
+				Long dataDefinitionId, String roleNames)
+		throws Exception;
+
 	public void putDataDefinitionPermission(
 			Long dataDefinitionId, Permission[] permissions)
 		throws Exception;
@@ -622,6 +631,67 @@ public interface DataDefinitionResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-definition-field-links",
+				dataDefinitionId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<Permission> getDataDefinitionPermissionsPage(
+				Long dataDefinitionId, String roleNames)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getDataDefinitionPermissionsPageHttpResponse(
+					dataDefinitionId, roleNames);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, Permission::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getDataDefinitionPermissionsPageHttpResponse(
+					Long dataDefinitionId, String roleNames)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (roleNames != null) {
+				httpInvoker.parameter("roleNames", String.valueOf(roleNames));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/permissions",
 				dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(

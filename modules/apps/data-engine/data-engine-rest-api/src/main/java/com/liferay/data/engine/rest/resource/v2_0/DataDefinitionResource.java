@@ -66,6 +66,11 @@ public interface DataDefinitionResource {
 			Long dataDefinitionId, String fieldName)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getDataDefinitionPermissionsPage(
+				Long dataDefinitionId, String roleNames)
+		throws Exception;
+
 	public void putDataDefinitionPermission(
 			Long dataDefinitionId,
 			com.liferay.portal.vulcan.permission.Permission[] permissions)

@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
-import com.liferay.data.engine.constants.DataEngineConstants;
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataListView;
@@ -82,8 +81,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -103,6 +100,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.Permission;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
@@ -256,6 +254,30 @@ public class DataDefinitionResourceImpl
 		).toString();
 	}
 
+	public Page<Permission> getDataDefinitionPermissionsPage(
+			Long dataDefinitionId, String roleNames)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			dataDefinitionId);
+
+		DataEnginePermissionUtil.checkPermission(
+			ActionKeys.PERMISSIONS, groupLocalService,
+			ddmStructure.getGroupId());
+
+		String resourceName = _getResourceName(ddmStructure);
+
+		return Page.of(
+			transform(
+				PermissionUtil.getRoles(
+					contextCompany, roleLocalService,
+					StringUtil.split(roleNames)),
+				role -> PermissionUtil.toPermission(
+					contextCompany.getCompanyId(), dataDefinitionId,
+					resourceActionLocalService.getResourceActions(resourceName),
+					resourceName, resourcePermissionLocalService, role)));
+	}
+
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
@@ -358,7 +380,7 @@ public class DataDefinitionResourceImpl
 		throws Exception {
 
 		DataEnginePermissionUtil.checkPermission(
-			DataActionKeys.ADD_DATA_DEFINITION, _groupLocalService, siteId);
+			DataActionKeys.ADD_DATA_DEFINITION, groupLocalService, siteId);
 
 		DataDefinitionContentType dataDefinitionContentType =
 			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
@@ -450,7 +472,7 @@ public class DataDefinitionResourceImpl
 			dataDefinitionId);
 
 		DataEnginePermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, _groupLocalService,
+			ActionKeys.PERMISSIONS, groupLocalService,
 			ddmStructure.getGroupId());
 
 		String resourceName = _getResourceName(ddmStructure);
@@ -855,9 +877,6 @@ public class DataDefinitionResourceImpl
 
 	@Reference
 	private DEDataListViewLocalService _deDataListViewLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

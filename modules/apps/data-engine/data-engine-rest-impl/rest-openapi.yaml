@@ -745,6 +745,27 @@ paths:
                         ""
             tags: ["DataRecord"]
     "/data-definitions/{dataDefinitionId}/permissions":
+        get:
+            operationId: getDataDefinitionPermissionsPage
+            parameters:
+                - in: path
+                  name: dataDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["DataDefinition"]
         put:
             operationId: putDataDefinitionPermission
             parameters:

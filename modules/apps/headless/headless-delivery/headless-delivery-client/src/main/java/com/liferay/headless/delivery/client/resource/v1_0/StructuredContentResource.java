@@ -176,6 +176,15 @@ public interface StructuredContentResource {
 			com.liferay.headless.delivery.client.dto.v1_0.Rating rating)
 		throws Exception;
 
+	public Page<Permission> getStructuredContentPermissionsPage(
+			Long structuredContentId, String roleNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getStructuredContentPermissionsPageHttpResponse(
+				Long structuredContentId, String roleNames)
+		throws Exception;
+
 	public void putStructuredContentPermission(
 			Long structuredContentId, Permission[] permissions)
 		throws Exception;
@@ -1285,6 +1294,67 @@ public interface StructuredContentResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/my-rating",
+				structuredContentId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<Permission> getStructuredContentPermissionsPage(
+				Long structuredContentId, String roleNames)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getStructuredContentPermissionsPageHttpResponse(
+					structuredContentId, roleNames);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, Permission::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse
+				getStructuredContentPermissionsPageHttpResponse(
+					Long structuredContentId, String roleNames)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (roleNames != null) {
+				httpInvoker.parameter("roleNames", String.valueOf(roleNames));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/permissions",
 				structuredContentId);
 
 			httpInvoker.userNameAndPassword(

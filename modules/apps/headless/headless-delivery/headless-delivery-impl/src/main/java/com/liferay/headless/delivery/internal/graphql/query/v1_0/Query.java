@@ -1626,6 +1626,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentPermissions(roleNames: ___, structuredContentId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public StructuredContentPage structuredContentPermissions(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("roleNames") String roleNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource -> new StructuredContentPage(
+				structuredContentResource.getStructuredContentPermissionsPage(
+					structuredContentId, roleNames)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentRenderedContentTemplate(structuredContentId: ___, templateId: ___){}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -2764,6 +2783,33 @@ public class Query {
 				contentStructureResource ->
 					contentStructureResource.getContentStructure(
 						_structuredContent.getContentStructureId()));
+		}
+
+		private StructuredContent _structuredContent;
+
+	}
+
+	@GraphQLTypeExtension(StructuredContent.class)
+	public class GetStructuredContentPermissionsPageTypeExtension {
+
+		public GetStructuredContentPermissionsPageTypeExtension(
+			StructuredContent structuredContent) {
+
+			_structuredContent = structuredContent;
+		}
+
+		@GraphQLField
+		public StructuredContentPage permissions(
+				@GraphQLName("roleNames") String roleNames)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_structuredContentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				structuredContentResource -> new StructuredContentPage(
+					structuredContentResource.
+						getStructuredContentPermissionsPage(
+							_structuredContent.getId(), roleNames)));
 		}
 
 		private StructuredContent _structuredContent;

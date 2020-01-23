@@ -25,13 +25,16 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -602,6 +605,48 @@ public abstract class BaseStructuredContentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/permissions'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "structuredContentId"),
+			@Parameter(in = ParameterIn.QUERY, name = "roleNames")
+		}
+	)
+	@Path("/structured-contents/{structuredContentId}/permissions")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getStructuredContentPermissionsPage(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("structuredContentId") Long structuredContentId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
+		throws Exception {
+
+		PermissionUtil.checkPermission(
+			ActionKeys.PERMISSIONS, groupLocalService,
+			getPermissionCheckerResourceName(), structuredContentId,
+			getPermissionCheckerGroupId(structuredContentId));
+
+		return Page.of(
+			transform(
+				PermissionUtil.getRoles(
+					contextCompany, roleLocalService,
+					StringUtil.split(roleNames)),
+				role -> PermissionUtil.toPermission(
+					contextCompany.getCompanyId(), structuredContentId,
+					resourceActionLocalService.getResourceActions(
+						getPermissionCheckerResourceName()),
+					getPermissionCheckerResourceName(),
+					resourcePermissionLocalService, role)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/permissions'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -638,11 +683,6 @@ public abstract class BaseStructuredContentResourceImpl
 				contextCompany.getCompanyId(), permissions, structuredContentId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
-	}
-
-	protected String getPermissionCheckerResourceName() {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	/**
@@ -716,6 +756,16 @@ public abstract class BaseStructuredContentResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
 				Long structuredContentId)
 		throws Exception {
+	}
+
+	protected String getPermissionCheckerResourceName() {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -811,6 +861,7 @@ public abstract class BaseStructuredContentResourceImpl
 	protected AcceptLanguage contextAcceptLanguage;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected com.liferay.portal.kernel.model.User contextUser;
+	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
 	protected ResourceActionLocalService resourceActionLocalService;

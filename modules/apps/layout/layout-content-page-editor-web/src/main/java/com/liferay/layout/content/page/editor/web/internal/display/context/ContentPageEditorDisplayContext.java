@@ -350,6 +350,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"sidebarPanels", editorSoyContext.get("sidebarPanels")
 			).put(
+				"singleSegmentsExperienceMode",
+				editorSoyContext.get("singleSegmentsExperienceMode")
+			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
 				"updateItemConfigURL",

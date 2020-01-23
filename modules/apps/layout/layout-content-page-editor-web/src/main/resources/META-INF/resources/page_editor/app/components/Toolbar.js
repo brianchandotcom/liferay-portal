@@ -37,10 +37,10 @@ function ToolbarBody() {
 	const load = useLoad();
 	const store = useSelector(state => state);
 
-	const {portletNamespace} = config;
+	const {portletNamespace, singleSegmentsExperienceMode} = config;
 	const {segmentsExperienceId} = store;
 
-	const {draft, singleSegmentsExperienceMode} = store;
+	const {draft} = store;
 
 	const {
 		classPK,

@@ -1261,6 +1261,67 @@ paths:
                     description:
                         ""
             tags: ["DataRecord"]
+    "/data-record-collections/{dataRecordCollectionId}/permissions":
+        get:
+            operationId: getDataRecordCollectionPermissionsPage
+            parameters:
+                - in: path
+                  name: dataRecordCollectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: roleNames
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["DataRecordCollection"]
+        put:
+            operationId: putDataRecordCollectionPermission
+            parameters:
+                - in: path
+                  name: dataRecordCollectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["DataRecordCollection"]
+    "/data-record-collections/{dataRecordCollectionId}/permissions/by-current-user":
+        get:
+            operationId: getDataRecordCollectionPermissionByCurrentUser
+            parameters:
+                - in: path
+                  name: dataRecordCollectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                        application/xml:
+                            schema:
+                                type: string
+                    description:
+                        ""
+            tags: ["DataRecordCollection"]
     "/data-records/{dataRecordId}":
         delete:
             operationId: deleteDataRecord

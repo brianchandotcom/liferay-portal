@@ -135,7 +135,7 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 	}
 
 	public JenkinsSlave getJenkinsSlave(String jenkinsSlaveName) {
-		if (_jenkinsSlavesMap == null) {
+		if (_jenkinsSlavesMap.isEmpty()) {
 			update();
 		}
 

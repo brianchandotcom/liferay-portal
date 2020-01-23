@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.app.builder</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_app_builder_web_internal_portlet_AppBuilderPortlet</portlet-name>
+			<portlet-name>com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>

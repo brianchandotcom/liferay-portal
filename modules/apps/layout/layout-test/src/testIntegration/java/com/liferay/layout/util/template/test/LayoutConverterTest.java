@@ -102,7 +102,7 @@ public class LayoutConverterTest {
 			new String[] {
 				"com_liferay_hello_velocity_web_portlet_HelloVelocityPortlet",
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
-				"hello_soy_portlet"
+				"com_liferay_announcements_web_portlet_AnnouncementsPortlet"
 			}
 		).build();
 
@@ -423,7 +423,7 @@ public class LayoutConverterTest {
 			"column-2",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
-				"hello_soy_portlet"
+				"com_liferay_announcements_web_portlet_AnnouncementsPortlet"
 			}
 		).put(
 			"column-3",
@@ -454,7 +454,10 @@ public class LayoutConverterTest {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
 			}
 		).put(
-			"column-3", new String[] {"hello_soy_portlet"}
+			"column-3",
+			new String[] {
+				"com_liferay_announcements_web_portlet_AnnouncementsPortlet"
+			}
 		).build();
 
 		_testConvert("3_columns", Collections.singletonList(portletIdsMap));
@@ -1186,7 +1189,7 @@ public class LayoutConverterTest {
 			"column-2",
 			new String[] {
 				"com_liferay_hello_world_web_portlet_HelloWorldPortlet",
-				"hello_soy_portlet"
+				"com_liferay_announcements_web_portlet_AnnouncementsPortlet"
 			}
 		).build();
 

@@ -535,12 +535,12 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	protected String getPermissionCheckerPortletName() {
+	protected String getPermissionCheckerPortletName(Object id) {
 		return "com.liferay.journal";
 	}
 
 	@Override
-	protected String getPermissionCheckerResourceName() {
+	protected String getPermissionCheckerResourceName(Object id) {
 		return JournalArticle.class.getName();
 	}
 

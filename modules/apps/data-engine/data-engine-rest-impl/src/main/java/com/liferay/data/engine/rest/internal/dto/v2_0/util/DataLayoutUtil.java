@@ -19,11 +19,15 @@ import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutColumn;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPage;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRow;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -38,6 +42,21 @@ import java.util.stream.Stream;
  */
 public class DataLayoutUtil {
 
+	public static String serialize(
+		DataLayout dataLayout,
+		DDMFormLayoutSerializer ddmFormLayoutSerializer) {
+
+		DDMFormLayoutSerializerSerializeRequest.Builder builder =
+			DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
+				toDDMFormLayout(dataLayout));
+
+		DDMFormLayoutSerializerSerializeResponse
+			ddmFormLayoutSerializerSerializeResponse =
+				ddmFormLayoutSerializer.serialize(builder.build());
+
+		return ddmFormLayoutSerializerSerializeResponse.getContent();
+	}
+
 	public static DataLayout toDataLayout(DDMFormLayout ddmFormLayout) {
 		return new DataLayout() {
 			{
@@ -48,8 +67,8 @@ public class DataLayoutUtil {
 		};
 	}
 
-	public static DataLayout toDataLayout(
-		DDMStructureLayout ddmStructureLayout) {
+	public static DataLayout toDataLayout(DDMStructureLayout ddmStructureLayout)
+		throws PortalException {
 
 		DataLayout dataLayout = toDataLayout(
 			ddmStructureLayout.getDDMFormLayout());

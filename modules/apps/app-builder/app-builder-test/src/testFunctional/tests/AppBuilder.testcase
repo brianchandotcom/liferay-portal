@@ -80,7 +80,7 @@ definition {
 			isCreatingFormView = "false",
 			isCreatingViaPlusIcon = "true");
 
-		var fieldList = "Text Field,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload";
+		var fieldList = "Text,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload";
 
 		for (var field : list "${fieldList}") {
 
@@ -208,7 +208,7 @@ definition {
 	@description = "Add a Form View with a Text Field"
 	@priority = "5"
 	test AddSimpleFormViewWithTextField {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -216,7 +216,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFormViewAndValidateFieldLabel(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "My Form View");
 	}
 
@@ -238,7 +238,7 @@ definition {
 	@description = "Add a Table View"
 	@priority = "5"
 	test AddSimpleTableView {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -246,14 +246,14 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "My Form View");
 
 		AppBuilderAdmin.switchTab(tabName = "Table Views");
 
 		AppBuilderAdmin.add();
 
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "Text Field");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Text");
 
 		TableViewBuilder.setName(tableViewName = "My Table View");
 
@@ -263,9 +263,9 @@ definition {
 
 		AppBuilderAdmin.openItem(itemName = "My Table View");
 
-		TableViewBuilder.validateColumnLabel(columnLabel = "Text Field");
+		TableViewBuilder.validateColumnLabel(columnLabel = "Text");
 
-		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "Text Field");
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "Text");
 
 		TableViewBuilder.save();
 	}
@@ -315,7 +315,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Text Field - Form View Title");
 
 		FormViewBuilder.addFormView(
@@ -354,7 +354,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Text Field - Form View Title");
 
 		FormViewBuilder.addFormView(
@@ -434,7 +434,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 
@@ -478,12 +478,12 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Full name");
 		FormViewBuilder.setFieldRequired();
 		FormViewBuilder.closeSidebar();
 
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Nickname");
 		FormViewBuilder.closeSidebar();
 
@@ -731,12 +731,12 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Full name");
 		FormViewBuilder.setFieldRequired();
 		FormViewBuilder.closeSidebar();
 
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Nickname");
 		FormViewBuilder.closeSidebar();
 
@@ -984,12 +984,12 @@ definition {
 			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Full name");
 		FormViewBuilder.setFieldRequired();
 		FormViewBuilder.closeSidebar();
 
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text Field");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Nickname");
 		FormViewBuilder.closeSidebar();
 
@@ -1156,11 +1156,11 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "My Form View");
 
 		TableViewBuilder.addBasicTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			tableViewName = "My Table View");
 
 		App.add(
@@ -1176,7 +1176,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormFields.editText(
-			fieldName = "TextField",
+			fieldName = "Text",
 			fieldValue = "test");
 
 		AppBuilderAdmin.save();
@@ -1215,7 +1215,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "My Form View 1");
 
 		AppBuilderAdmin.deleteEntry(itemName = "My Form View 1");
@@ -1232,7 +1232,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 
@@ -1252,7 +1252,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "My Form View 1");
 
 		FormViewBuilder.addFormView(
@@ -1260,7 +1260,7 @@ definition {
 			formViewName = "My Form View 2");
 
 		TableViewBuilder.addBasicTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			tableViewName = "My Table View 1");
 
 		TableViewBuilder.addBasicTableView(
@@ -1286,7 +1286,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
-			fieldName = "TextField",
+			fieldName = "Text",
 			fieldValue = "content of form 1");
 
 		AppBuilderAdmin.save();
@@ -1319,7 +1319,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Text Field - Form View Title");
 
 		FormViewBuilder.addFormView(
@@ -1354,7 +1354,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Text Field - Form View Title");
 
 		FormViewBuilder.addFormView(
@@ -1380,7 +1380,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Text Field - Form View Title");
 
 		FormViewBuilder.addFormView(
@@ -1397,7 +1397,7 @@ definition {
 	@description = "Publish my app as a widget and submit entry"
 	@priority = "5"
 	test PublishAppAsWidgetAndSubmitEntry {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1405,11 +1405,11 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFormView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "My Form View");
 
 		TableViewBuilder.addBasicTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			tableViewName = "My Table View");
 
 		App.add(
@@ -1434,7 +1434,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormFields.editText(
-			fieldName = "TextField",
+			fieldName = "Text",
 			fieldValue = "Content of form deployed as widget.");
 
 		AppBuilderAdmin.save();
@@ -1530,7 +1530,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 
@@ -1557,7 +1557,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 

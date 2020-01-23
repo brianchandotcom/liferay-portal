@@ -13,7 +13,7 @@
 
 <tr>
 	<td>COLUMN_LABEL</td>
-	<td>//div[@class='col' and contains(.,'${columnLabel}')]</td>
+	<td>//div[@class='col' and contains(.,'${columnLabel}')] | //table//div[contains(@class,'col') and contains(.,'${columnLabel}')]</td>
 	<td></td>
 </tr>
 

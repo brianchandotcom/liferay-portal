@@ -22,7 +22,7 @@
 	</Appenders>
 	<Loggers>
 
-		<!-- Http Logger shows wire traffic on DEBUG. -->
+		<!-- Http Logger shows wire traffic on DEBUG -->
 
 		<!--AsyncLogger name="org.mule.service.http.impl.service.HttpMessageLogger" level="DEBUG" /-->
 		<AsyncLogger level="WARN" name="org.mule.service.http" />

@@ -179,5 +179,11 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.PersistenceCallCheck">
 			<message key="persistence.call.illegal" value="Illegal call to class ''{0}'', see LPS-68923" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.PlusStatementCheck">
+			<message key="end.character.invalid" value="When concatenating multiple literal strings using '+', only the last literal string can end with ''{0}''" />
+			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />
+			<message key="literal.string.move" value="Add the string ''{0}'' to the previous literal string" />
+			<message key="start.character.invalid" value="When concatenating multiple literal strings using '+', only the first literal string can start with ''{0}''" />
+		</module>
 	</module>
 </module>

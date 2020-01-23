@@ -1513,21 +1513,19 @@ public abstract class BaseBuild implements Build {
 
 					if (jenkinsSlave != null) {
 						jenkinsSlave.update();
-					}
 
-					if (!fromArchive && (jenkinsSlave != null) &&
-						!jenkinsSlave.isOffline()) {
+						if (!fromArchive && !jenkinsSlave.isOffline()) {
+							for (SlaveOfflineRule slaveOfflineRule :
+									slaveOfflineRules) {
 
-						for (SlaveOfflineRule slaveOfflineRule :
-								slaveOfflineRules) {
+								if (!slaveOfflineRule.matches(this)) {
+									continue;
+								}
 
-							if (!slaveOfflineRule.matches(this)) {
-								continue;
+								takeSlaveOffline(slaveOfflineRule);
+
+								break;
 							}
-
-							takeSlaveOffline(slaveOfflineRule);
-
-							break;
 						}
 					}
 

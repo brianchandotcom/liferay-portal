@@ -344,21 +344,24 @@ AUI.add(
 							action = null;
 						}
 					} else if (action === 'checkin') {
-						Liferay.DocumentLibraryCheckin.showDialog(
-							namespace,
-							(versionIncrease, changeLog) => {
-								var form = instance.get('form').node;
+						Liferay.componentReady(
+							instance.ns('BridgeCheckinComponent')
+						).then(BridgeCheckinComponent => {
+							BridgeCheckinComponent.open(
+								(versionIncrease, changeLog) => {
+									var form = instance.get('form').node;
 
-								form.get(namespace + 'changeLog').val(
-									changeLog
-								);
-								form.get(namespace + 'versionIncrease').val(
-									versionIncrease
-								);
+									form.get(namespace + 'changeLog').val(
+										changeLog
+									);
+									form.get(namespace + 'versionIncrease').val(
+										versionIncrease
+									);
 
-								instance._processAction('checkin', url);
-							}
-						);
+									instance._processAction('checkin', url);
+								}
+							);
+						});
 						action = null;
 					}
 

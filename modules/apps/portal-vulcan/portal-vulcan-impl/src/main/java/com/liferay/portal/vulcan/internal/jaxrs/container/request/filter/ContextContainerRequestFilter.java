@@ -100,6 +100,16 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 			Class<?> fieldClass = field.getType();
 
+			if (fieldClass.equals(Object.class) &&
+				Objects.equals(field.getName(), "contextScopeChecker")) {
+
+				field.setAccessible(true);
+
+				field.set(instance, _scopeChecker);
+
+				continue;
+			}
+
 			if (fieldClass.isAssignableFrom(AcceptLanguage.class)) {
 				field.setAccessible(true);
 
@@ -152,11 +162,6 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 				field.setAccessible(true);
 
 				field.set(instance, _portal.getUser(httpServletRequest));
-			}
-			else if (Objects.equals(field.getName(), "contextScopeChecker")) {
-				field.setAccessible(true);
-
-				field.set(instance, _scopeChecker);
 			}
 		}
 	}

@@ -554,7 +554,6 @@ AUI.add(
 	'',
 	{
 		requires: [
-			'document-library-checkin',
 			'document-library-upload',
 			'liferay-message',
 			'liferay-portlet-base'

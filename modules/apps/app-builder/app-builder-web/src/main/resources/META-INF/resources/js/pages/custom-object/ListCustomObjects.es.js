@@ -125,7 +125,7 @@ export default ({history}) => {
 		).then(({id: dataRecordCollectionId}) => {
 			setCustomObjectPermissionsModalState(prevState => ({
 				...prevState,
-				endpoint: `/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/data-model-permissions`
+				endpoint: `/o/data-engine/v2.0/data-record-collections/${dataRecordCollectionId}/permissions`
 			}));
 		});
 	}, [dataDefinitionId]);

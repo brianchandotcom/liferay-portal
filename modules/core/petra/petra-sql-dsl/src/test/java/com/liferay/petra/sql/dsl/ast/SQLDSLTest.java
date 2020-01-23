@@ -175,8 +175,8 @@ public class SQLDSLTest {
 		try {
 			ReferenceExampleTable.TABLE.withNewChild(null);
 		}
-		catch (RuntimeException re) {
-			Throwable cause = re.getCause();
+		catch (RuntimeException runtimeException) {
+			Throwable cause = runtimeException.getCause();
 
 			Assert.assertEquals(
 				CloneNotSupportedException.class, cause.getClass());
@@ -349,8 +349,9 @@ public class SQLDSLTest {
 		try {
 			new DSLFunction<>(DSLFunctionType.BITWISE_AND);
 		}
-		catch (Exception e) {
-			Assert.assertEquals(IllegalArgumentException.class, e.getClass());
+		catch (Exception exception) {
+			Assert.assertEquals(
+				IllegalArgumentException.class, exception.getClass());
 		}
 	}
 
@@ -432,8 +433,9 @@ public class SQLDSLTest {
 		try {
 			from.groupBy();
 		}
-		catch (Exception e) {
-			Assert.assertEquals(IllegalArgumentException.class, e.getClass());
+		catch (Exception exception) {
+			Assert.assertEquals(
+				IllegalArgumentException.class, exception.getClass());
 		}
 	}
 
@@ -516,8 +518,9 @@ public class SQLDSLTest {
 		try {
 			joinStep.orderBy();
 		}
-		catch (Exception e) {
-			Assert.assertEquals(IllegalArgumentException.class, e.getClass());
+		catch (Exception exception) {
+			Assert.assertEquals(
+				IllegalArgumentException.class, exception.getClass());
 		}
 
 		OrderByExpression orderByExpression =
@@ -570,10 +573,10 @@ public class SQLDSLTest {
 		try {
 			orderByStep.orderBy(ReferenceExampleTable.TABLE, orderByInfo);
 		}
-		catch (IllegalArgumentException iae) {
+		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
 				"No column \"flag\" for table ReferenceExample",
-				iae.getMessage());
+				illegalArgumentException.getMessage());
 		}
 	}
 
@@ -631,8 +634,9 @@ public class SQLDSLTest {
 		try {
 			new ScalarList<>(new String[0]);
 		}
-		catch (Exception e) {
-			Assert.assertEquals(IllegalArgumentException.class, e.getClass());
+		catch (Exception exception) {
+			Assert.assertEquals(
+				IllegalArgumentException.class, exception.getClass());
 		}
 	}
 
@@ -938,9 +942,9 @@ public class SQLDSLTest {
 		try {
 			columns.remove(MainExampleTable.TABLE.mainExampleId);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			Assert.assertEquals(
-				UnsupportedOperationException.class, e.getClass());
+				UnsupportedOperationException.class, exception.getClass());
 		}
 	}
 

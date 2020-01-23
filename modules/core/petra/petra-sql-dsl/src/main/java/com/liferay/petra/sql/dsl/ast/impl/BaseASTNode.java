@@ -68,8 +68,8 @@ public abstract class BaseASTNode implements ASTNode, Cloneable {
 
 			return (T)baseASTNode;
 		}
-		catch (CloneNotSupportedException cnse) {
-			throw new RuntimeException(cnse);
+		catch (CloneNotSupportedException cloneNotSupportedException) {
+			throw new RuntimeException(cloneNotSupportedException);
 		}
 	}
 

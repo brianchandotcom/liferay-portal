@@ -65,6 +65,15 @@ public class DataRecordCollectionResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testGetDataRecordCollectionPermissionByCurrentUser()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLDeleteDataRecordCollection() {
 	}
 
@@ -96,6 +105,12 @@ public class DataRecordCollectionResourceTest
 			dataRecordCollectionResource.
 				postDataDefinitionDataRecordCollectionHttpResponse(
 					0L, randomDataRecordCollection()));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testPutDataRecordCollectionPermission() throws Exception {
 	}
 
 	@Override

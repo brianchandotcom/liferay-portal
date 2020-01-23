@@ -26,6 +26,7 @@ import com.liferay.data.engine.rest.client.dto.v2_0.DataRecordCollection;
 import com.liferay.data.engine.rest.client.http.HttpInvoker;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
+import com.liferay.data.engine.rest.client.permission.Permission;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataRecordCollectionResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataRecordCollectionSerDes;
 import com.liferay.petra.string.StringBundler;
@@ -583,6 +584,56 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutDataRecordCollectionPermission() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataRecordCollection dataRecordCollection =
+			testPutDataRecordCollectionPermission_addDataRecordCollection();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataRecordCollectionResource.
+				putDataRecordCollectionPermissionHttpResponse(
+					dataRecordCollection.getId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"VIEW"});
+								setRoleName("Guest");
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataRecordCollectionResource.
+				putDataRecordCollectionPermissionHttpResponse(
+					0L,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected DataRecordCollection
+			testPutDataRecordCollectionPermission_addDataRecordCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetDataRecordCollectionPermissionByCurrentUser()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	@Test

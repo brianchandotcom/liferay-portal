@@ -148,6 +148,12 @@ public class DataDefinitionResourceTest
 	public void testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey() {
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testPutDataDefinitionPermission() throws Exception {
+	}
+
 	@Override
 	protected void assertValid(DataDefinition dataDefinition) {
 		super.assertValid(dataDefinition);

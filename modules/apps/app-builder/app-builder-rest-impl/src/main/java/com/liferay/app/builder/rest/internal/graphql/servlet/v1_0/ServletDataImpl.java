@@ -16,7 +16,6 @@ package com.liferay.app.builder.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.app.builder.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.app.builder.rest.internal.graphql.query.v1_0.Query;
-import com.liferay.app.builder.rest.resource.v1_0.AppModelPermissionResource;
 import com.liferay.app.builder.rest.resource.v1_0.AppResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -41,13 +40,9 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setAppResourceComponentServiceObjects(
 			_appResourceComponentServiceObjects);
-		Mutation.setAppModelPermissionResourceComponentServiceObjects(
-			_appModelPermissionResourceComponentServiceObjects);
 
 		Query.setAppResourceComponentServiceObjects(
 			_appResourceComponentServiceObjects);
-		Query.setAppModelPermissionResourceComponentServiceObjects(
-			_appModelPermissionResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -68,9 +63,5 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AppResource>
 		_appResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<AppModelPermissionResource>
-		_appModelPermissionResourceComponentServiceObjects;
 
 }

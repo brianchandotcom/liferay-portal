@@ -20,13 +20,17 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -228,6 +232,83 @@ public abstract class BaseDataDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/permissions'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "roleNames")
+		}
+	)
+	@Path("/data-definitions/{dataDefinitionId}/permissions")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getDataDefinitionPermissionsPage(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("dataDefinitionId") Long dataDefinitionId,
+				@Parameter(hidden = true) @QueryParam("roleNames") String
+					roleNames)
+		throws Exception {
+
+		String resourceName = getPermissionCheckerResourceName(
+			dataDefinitionId);
+
+		PermissionUtil.checkPermission(
+			ActionKeys.PERMISSIONS, groupLocalService, resourceName,
+			dataDefinitionId, getPermissionCheckerGroupId(dataDefinitionId));
+
+		return Page.of(
+			transform(
+				PermissionUtil.getRoles(
+					contextCompany, roleLocalService,
+					StringUtil.split(roleNames)),
+				role -> PermissionUtil.toPermission(
+					contextCompany.getCompanyId(), dataDefinitionId,
+					resourceActionLocalService.getResourceActions(resourceName),
+					resourceName, resourcePermissionLocalService, role)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/permissions'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId")}
+	)
+	@Path("/data-definitions/{dataDefinitionId}/permissions")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public void putDataDefinitionPermission(
+			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
+				Long dataDefinitionId,
+			com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception {
+
+		String resourceName = getPermissionCheckerResourceName(
+			dataDefinitionId);
+
+		PermissionUtil.checkPermission(
+			ActionKeys.PERMISSIONS, groupLocalService, resourceName,
+			dataDefinitionId, getPermissionCheckerGroupId(dataDefinitionId));
+
+		resourcePermissionLocalService.updateResourcePermissions(
+			contextCompany.getCompanyId(), 0, resourceName,
+			String.valueOf(dataDefinitionId),
+			ModelPermissionsUtil.toModelPermissions(
+				contextCompany.getCompanyId(), permissions, dataDefinitionId,
+				resourceName, resourceActionLocalService,
+				resourcePermissionLocalService, roleLocalService));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v2.0/sites/{siteId}/data-definitions/by-content-type/{contentType}'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -314,6 +395,25 @@ public abstract class BaseDataDefinitionResourceImpl
 		throws Exception {
 
 		return new DataDefinition();
+	}
+
+	protected String getPermissionCheckerActionsResourceName(Object id) {
+		return getPermissionCheckerResourceName(id);
+	}
+
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String getPermissionCheckerPortletName(Object id) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String getPermissionCheckerResourceName(Object id) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

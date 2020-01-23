@@ -59,3 +59,20 @@ boolean checkedOut = GetterUtil.getBoolean(request.getAttribute("edit_file_entry
 		}
 	</aui:script>
 </div>
+
+<div>
+
+	<%
+	Map<String, Object> data = HashMapBuilder.<String, Object>put(
+		"dlVersionNumberIncreaseValues", HashMapBuilder.<String, Object>put("MAJOR", DLVersionNumberIncrease.MAJOR)
+		.put("MINOR", DLVersionNumberIncrease.MINOR)
+		.put("NONE", DLVersionNumberIncrease.NONE).build()
+	).put("bridgeComponentId", liferayPortletResponse.getNamespace() + "BridgeCheckinComponent"
+	).put("checkedOut", GetterUtil.getBoolean(request.getAttribute("edit_file_entry.jsp-checkedOut"))).build();
+	%>
+
+	<react:component
+		data="<%= data %>"
+		module="document_library/js/checkin/Checkin.es"
+	/>
+</div>

@@ -69,6 +69,16 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
+		if (postalAddress.getAddressCountry_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addressCountry_i18n\": ");
+
+			sb.append(_toJSON(postalAddress.getAddressCountry_i18n()));
+		}
+
 		if (postalAddress.getAddressLocality() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -215,6 +225,15 @@ public class PostalAddressSerDes {
 				String.valueOf(postalAddress.getAddressCountry()));
 		}
 
+		if (postalAddress.getAddressCountry_i18n() == null) {
+			map.put("addressCountry_i18n", null);
+		}
+		else {
+			map.put(
+				"addressCountry_i18n",
+				String.valueOf(postalAddress.getAddressCountry_i18n()));
+		}
+
 		if (postalAddress.getAddressLocality() == null) {
 			map.put("addressLocality", null);
 		}
@@ -315,6 +334,15 @@ public class PostalAddressSerDes {
 				if (jsonParserFieldValue != null) {
 					postalAddress.setAddressCountry(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "addressCountry_i18n")) {
+
+				if (jsonParserFieldValue != null) {
+					postalAddress.setAddressCountry_i18n(
+						(Map)PostalAddressSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "addressLocality")) {

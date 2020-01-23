@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -75,6 +77,38 @@ public class Location {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String addressCountry;
+
+	@Schema
+	@Valid
+	public Map<String, String> getAddressCountry_i18n() {
+		return addressCountry_i18n;
+	}
+
+	public void setAddressCountry_i18n(
+		Map<String, String> addressCountry_i18n) {
+
+		this.addressCountry_i18n = addressCountry_i18n;
+	}
+
+	@JsonIgnore
+	public void setAddressCountry_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			addressCountry_i18nUnsafeSupplier) {
+
+		try {
+			addressCountry_i18n = addressCountry_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> addressCountry_i18n;
 
 	@Schema(
 		description = "The organization's region. This follows the [`addressRegion`](https://schema.org/addressRegion) specification."
@@ -173,6 +207,16 @@ public class Location {
 			sb.append(_escape(addressCountry));
 
 			sb.append("\"");
+		}
+
+		if (addressCountry_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addressCountry_i18n\": ");
+
+			sb.append(_toJSON(addressCountry_i18n));
 		}
 
 		if (addressRegion != null) {

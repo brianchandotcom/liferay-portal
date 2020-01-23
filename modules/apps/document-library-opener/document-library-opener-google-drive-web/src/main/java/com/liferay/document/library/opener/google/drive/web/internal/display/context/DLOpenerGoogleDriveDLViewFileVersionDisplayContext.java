@@ -125,7 +125,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 			return menu;
 		}
 
-		if (!_isCheckedOutByOther(fileEntry)) {
+		if (!_isCheckedOutByAnotherUser(fileEntry)) {
 			_addEditInGoogleDocsUIItem(
 				menu.getMenuItems(),
 				_createEditInGoogleDocsMenuItem(Constants.CHECKOUT));
@@ -230,7 +230,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		return liferayPortletResponse.getNamespace();
 	}
 
-	private boolean _isCheckedOutByOther(FileEntry fileEntry) {
+	private boolean _isCheckedOutByAnotherUser(FileEntry fileEntry) {
 		if (fileEntry.isCheckedOut() && !fileEntry.hasLock()) {
 			return true;
 		}

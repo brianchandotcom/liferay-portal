@@ -611,19 +611,19 @@ renderResponse.setTitle(headerTitle);
 	}
 
 	function <portlet:namespace />showVersionDetailsDialog() {
-		Liferay.componentReady('<portlet:namespace />BridgeCheckinComponent').then(
-			function(BridgeCheckinComponent) {
-				BridgeCheckinComponent.open(function(versionIncrease, changeLog) {
-					Liferay.Util.postForm(form, {
-						data: {
-							changeLog: changeLog,
-							updateVersionDetails: true,
-							versionIncrease: versionIncrease
-						}
-					});
+		Liferay.componentReady(
+			'<portlet:namespace />DocumentLibraryCheckinModal'
+		).then(function(documentLibraryCheckinModal) {
+			documentLibraryCheckinModal.open(function(versionIncrease, changeLog) {
+				Liferay.Util.postForm(form, {
+					data: {
+						changeLog: changeLog,
+						updateVersionDetails: true,
+						versionIncrease: versionIncrease
+					}
 				});
-			}
-		);
+			});
+		});
 	}
 
 	function <portlet:namespace />updateTitle() {

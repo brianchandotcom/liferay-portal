@@ -1,8 +1,8 @@
 window.${namespace}showVersionDetailsDialog = function (saveURL) {
 	Liferay.componentReady(
-		'${namespace}BridgeCheckinComponent'
-	).then(function(BridgeCheckinComponent) {
-		BridgeCheckinComponent.open(function(versionIncrease, changeLog) {
+		'${namespace}DocumentLibraryCheckinModal'
+	).then(function(documentLibraryCheckinModal) {
+		documentLibraryCheckinModal.open(function(versionIncrease, changeLog) {
 			var portletURL = saveURL;
 
 			if (versionIncrease) {

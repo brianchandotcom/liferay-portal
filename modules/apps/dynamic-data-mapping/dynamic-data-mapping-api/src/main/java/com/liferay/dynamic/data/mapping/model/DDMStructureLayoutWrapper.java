@@ -207,6 +207,20 @@ public class DDMStructureLayoutWrapper
 	}
 
 	@Override
+	public DDMStructure getDDMStructure()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getDDMStructure();
+	}
+
+	@Override
+	public long getDDMStructureId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getDDMStructureId();
+	}
+
+	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
 	}

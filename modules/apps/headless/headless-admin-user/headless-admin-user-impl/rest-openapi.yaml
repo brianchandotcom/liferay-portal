@@ -165,6 +165,10 @@ components:
                                 The organization's country. This follows the
                                 [`addressCountry`](https://schema.org/addressCountry) specification.
                             type: string
+                        addressCountry_i18n:
+                            additionalProperties:
+                                type: string
+                            type: object
                         addressRegion:
                             description:
                                 The organization's region. This follows the
@@ -307,6 +311,10 @@ components:
                     description:
                         The address's country (e.g., USA).
                     type: string
+                addressCountry_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 addressLocality:
                     description:
                         The address's locality (e.g., city).

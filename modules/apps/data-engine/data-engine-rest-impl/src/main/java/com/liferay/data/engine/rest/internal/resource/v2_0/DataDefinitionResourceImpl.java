@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
+import com.liferay.data.engine.constants.DataEngineConstants;
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataListView;
@@ -459,6 +460,21 @@ public class DataDefinitionResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, dataDefinitionId,
 				resourceName, resourceActionLocalService,
+				resourcePermissionLocalService, roleLocalService));
+	}
+
+	@Override
+	public void putPortletPermission(Permission[] permissions)
+		throws Exception {
+
+		long siteGroupId = _portal.getSiteGroupId(contextCompany.getGroupId());
+
+		resourcePermissionLocalService.updateResourcePermissions(
+			contextCompany.getCompanyId(), siteGroupId,
+			DataEngineConstants.RESOURCE_NAME, String.valueOf(siteGroupId),
+			ModelPermissionsUtil.toModelPermissions(
+				contextCompany.getCompanyId(), permissions, siteGroupId,
+				DataEngineConstants.RESOURCE_NAME, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
 	}
 

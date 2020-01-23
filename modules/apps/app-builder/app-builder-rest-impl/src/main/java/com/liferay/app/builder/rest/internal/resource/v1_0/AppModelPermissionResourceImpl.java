@@ -17,8 +17,8 @@ package com.liferay.app.builder.rest.internal.resource.v1_0;
 import com.liferay.app.builder.constants.AppBuilderConstants;
 import com.liferay.app.builder.rest.dto.v1_0.AppModelPermission;
 import com.liferay.app.builder.rest.resource.v1_0.AppModelPermissionResource;
-import com.liferay.data.engine.rest.client.dto.v2_0.DataModelPermission;
-import com.liferay.data.engine.rest.client.resource.v2_0.DataModelPermissionResource;
+import com.liferay.data.engine.rest.client.permission.Permission;
+import com.liferay.data.engine.rest.client.resource.v2_0.DataDefinitionResource;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -108,8 +108,8 @@ public class AppModelPermissionResourceImpl
 			String sessionId = CookieKeys.getCookie(
 				contextHttpServletRequest, CookieKeys.JSESSIONID);
 
-			DataModelPermissionResource dataModelPermissionResource =
-				DataModelPermissionResource.builder(
+			DataDefinitionResource dataDefinitionResource =
+				DataDefinitionResource.builder(
 				).endpoint(
 					_portal.getHost(contextHttpServletRequest),
 					contextHttpServletRequest.getServerPort(),
@@ -120,8 +120,8 @@ public class AppModelPermissionResourceImpl
 					"p_auth", AuthTokenUtil.getToken(contextHttpServletRequest)
 				).build();
 
-			dataModelPermissionResource.putDataModelPermission(
-				_getDataModelPermissions(appModelPermission.getRoleName()));
+			dataDefinitionResource.putPortletPermission(
+				_getPortletPermissions(appModelPermission.getRoleName()));
 		}
 	}
 
@@ -136,22 +136,6 @@ public class AppModelPermissionResourceImpl
 		_portletResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			contextCompany.getGroupId(), ActionKeys.PERMISSIONS);
-	}
-
-	private DataModelPermission[] _getDataModelPermissions(
-		String dataModelPermissionRoleName) {
-
-		return new DataModelPermission[] {
-			new DataModelPermission() {
-				{
-					actionIds = new String[] {
-						"ADD_DATA_DEFINITION", "ADD_DATA_RECORD_COLLECTION",
-						ActionKeys.PERMISSIONS
-					};
-					roleName = dataModelPermissionRoleName;
-				}
-			}
-		};
 	}
 
 	private ModelPermissions _getModelPermissions(
@@ -190,6 +174,22 @@ public class AppModelPermissionResourceImpl
 		}
 
 		return modelPermissions;
+	}
+
+	private Permission[] _getPortletPermissions(
+		String portletPermissionRoleName) {
+
+		Permission permission = new Permission();
+
+		permission.setActionIds(
+			new String[] {
+				"ADD_DATA_DEFINITION", "ADD_DATA_RECORD_COLLECTION",
+				ActionKeys.PERMISSIONS
+			});
+
+		permission.setRoleName(portletPermissionRoleName);
+
+		return new Permission[] {permission};
 	}
 
 	private List<Role> _getRoles(

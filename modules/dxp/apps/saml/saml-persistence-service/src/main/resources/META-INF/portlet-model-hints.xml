@@ -88,6 +88,7 @@
 		<field name="enabled" type="boolean" />
 		<field name="forceAuthn" type="boolean" />
 		<field name="ldapImportEnabled" type="boolean" />
+		<field name="unknownUsersAreStrangers" type="boolean" />
 		<field name="metadataUrl" type="String">
 			<hint-collection name="ENTITY-ID" />
 		</field>
@@ -103,7 +104,6 @@
 		<field name="userAttributeMappings" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="unknownUsersAreStrangers" type="boolean" />
 	</model>
 	<model name="com.liferay.saml.persistence.model.SamlSpMessage">
 		<field name="samlSpMessageId" type="long" />

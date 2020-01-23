@@ -70,6 +70,12 @@ public class SamlSpIdpConnectionLocalServiceUtil {
 			signAuthnRequest, userAttributeMappings, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by
+	 {@link #addSamlSpIdpConnection(String, boolean, long, boolean, boolean,
+	 boolean, boolean, String, InputStream, String, String, boolean, String,
+	 ServiceContext)}
+	 */
 	@Deprecated
 	public static com.liferay.saml.persistence.model.SamlSpIdpConnection
 			addSamlSpIdpConnection(

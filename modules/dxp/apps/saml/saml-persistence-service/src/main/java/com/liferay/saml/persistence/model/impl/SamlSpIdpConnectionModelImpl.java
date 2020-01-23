@@ -75,11 +75,11 @@ public class SamlSpIdpConnectionModelImpl
 		{"assertionSignatureRequired", Types.BOOLEAN},
 		{"clockSkew", Types.BIGINT}, {"enabled", Types.BOOLEAN},
 		{"forceAuthn", Types.BOOLEAN}, {"ldapImportEnabled", Types.BOOLEAN},
+		{"unknownUsersAreStrangers", Types.BOOLEAN},
 		{"metadataUrl", Types.VARCHAR}, {"metadataXml", Types.CLOB},
 		{"metadataUpdatedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
 		{"nameIdFormat", Types.VARCHAR}, {"signAuthnRequest", Types.BOOLEAN},
-		{"userAttributeMappings", Types.VARCHAR},
-		{"unknownUsersAreStrangers", Types.BOOLEAN}
+		{"userAttributeMappings", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,6 +98,7 @@ public class SamlSpIdpConnectionModelImpl
 		TABLE_COLUMNS_MAP.put("enabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("forceAuthn", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("ldapImportEnabled", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("unknownUsersAreStrangers", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("metadataUrl", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("metadataXml", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("metadataUpdatedDate", Types.TIMESTAMP);
@@ -105,11 +106,10 @@ public class SamlSpIdpConnectionModelImpl
 		TABLE_COLUMNS_MAP.put("nameIdFormat", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("signAuthnRequest", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("userAttributeMappings", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("unknownUsersAreStrangers", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SamlSpIdpConnection (samlSpIdpConnectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlIdpEntityId VARCHAR(1024) null,assertionSignatureRequired BOOLEAN,clockSkew LONG,enabled BOOLEAN,forceAuthn BOOLEAN,ldapImportEnabled BOOLEAN,metadataUrl VARCHAR(1024) null,metadataXml TEXT null,metadataUpdatedDate DATE null,name VARCHAR(75) null,nameIdFormat VARCHAR(1024) null,signAuthnRequest BOOLEAN,userAttributeMappings STRING null,unknownUsersAreStrangers BOOLEAN)";
+		"create table SamlSpIdpConnection (samlSpIdpConnectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlIdpEntityId VARCHAR(1024) null,assertionSignatureRequired BOOLEAN,clockSkew LONG,enabled BOOLEAN,forceAuthn BOOLEAN,ldapImportEnabled BOOLEAN,unknownUsersAreStrangers BOOLEAN,metadataUrl VARCHAR(1024) null,metadataXml TEXT null,metadataUpdatedDate DATE null,name VARCHAR(75) null,nameIdFormat VARCHAR(1024) null,signAuthnRequest BOOLEAN,userAttributeMappings STRING null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SamlSpIdpConnection";
@@ -342,6 +342,13 @@ public class SamlSpIdpConnectionModelImpl
 			(BiConsumer<SamlSpIdpConnection, Boolean>)
 				SamlSpIdpConnection::setLdapImportEnabled);
 		attributeGetterFunctions.put(
+			"unknownUsersAreStrangers",
+			SamlSpIdpConnection::getUnknownUsersAreStrangers);
+		attributeSetterBiConsumers.put(
+			"unknownUsersAreStrangers",
+			(BiConsumer<SamlSpIdpConnection, Boolean>)
+				SamlSpIdpConnection::setUnknownUsersAreStrangers);
+		attributeGetterFunctions.put(
 			"metadataUrl", SamlSpIdpConnection::getMetadataUrl);
 		attributeSetterBiConsumers.put(
 			"metadataUrl",
@@ -383,13 +390,6 @@ public class SamlSpIdpConnectionModelImpl
 			"userAttributeMappings",
 			(BiConsumer<SamlSpIdpConnection, String>)
 				SamlSpIdpConnection::setUserAttributeMappings);
-		attributeGetterFunctions.put(
-			"unknownUsersAreStrangers",
-			SamlSpIdpConnection::getUnknownUsersAreStrangers);
-		attributeSetterBiConsumers.put(
-			"unknownUsersAreStrangers",
-			(BiConsumer<SamlSpIdpConnection, Boolean>)
-				SamlSpIdpConnection::setUnknownUsersAreStrangers);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -594,6 +594,21 @@ public class SamlSpIdpConnectionModelImpl
 	}
 
 	@Override
+	public boolean getUnknownUsersAreStrangers() {
+		return _unknownUsersAreStrangers;
+	}
+
+	@Override
+	public boolean isUnknownUsersAreStrangers() {
+		return _unknownUsersAreStrangers;
+	}
+
+	@Override
+	public void setUnknownUsersAreStrangers(boolean unknownUsersAreStrangers) {
+		_unknownUsersAreStrangers = unknownUsersAreStrangers;
+	}
+
+	@Override
 	public String getMetadataUrl() {
 		if (_metadataUrl == null) {
 			return "";
@@ -693,21 +708,6 @@ public class SamlSpIdpConnectionModelImpl
 		_userAttributeMappings = userAttributeMappings;
 	}
 
-	@Override
-	public boolean getUnknownUsersAreStrangers() {
-		return _unknownUsersAreStrangers;
-	}
-
-	@Override
-	public boolean isUnknownUsersAreStrangers() {
-		return _unknownUsersAreStrangers;
-	}
-
-	@Override
-	public void setUnknownUsersAreStrangers(boolean unknownUsersAreStrangers) {
-		_unknownUsersAreStrangers = unknownUsersAreStrangers;
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -760,6 +760,8 @@ public class SamlSpIdpConnectionModelImpl
 		samlSpIdpConnectionImpl.setEnabled(isEnabled());
 		samlSpIdpConnectionImpl.setForceAuthn(isForceAuthn());
 		samlSpIdpConnectionImpl.setLdapImportEnabled(isLdapImportEnabled());
+		samlSpIdpConnectionImpl.setUnknownUsersAreStrangers(
+			isUnknownUsersAreStrangers());
 		samlSpIdpConnectionImpl.setMetadataUrl(getMetadataUrl());
 		samlSpIdpConnectionImpl.setMetadataXml(getMetadataXml());
 		samlSpIdpConnectionImpl.setMetadataUpdatedDate(
@@ -769,8 +771,6 @@ public class SamlSpIdpConnectionModelImpl
 		samlSpIdpConnectionImpl.setSignAuthnRequest(isSignAuthnRequest());
 		samlSpIdpConnectionImpl.setUserAttributeMappings(
 			getUserAttributeMappings());
-		samlSpIdpConnectionImpl.setUnknownUsersAreStrangers(
-			isUnknownUsersAreStrangers());
 
 		samlSpIdpConnectionImpl.resetOriginalValues();
 
@@ -903,6 +903,9 @@ public class SamlSpIdpConnectionModelImpl
 
 		samlSpIdpConnectionCacheModel.ldapImportEnabled = isLdapImportEnabled();
 
+		samlSpIdpConnectionCacheModel.unknownUsersAreStrangers =
+			isUnknownUsersAreStrangers();
+
 		samlSpIdpConnectionCacheModel.metadataUrl = getMetadataUrl();
 
 		String metadataUrl = samlSpIdpConnectionCacheModel.metadataUrl;
@@ -958,9 +961,6 @@ public class SamlSpIdpConnectionModelImpl
 
 			samlSpIdpConnectionCacheModel.userAttributeMappings = null;
 		}
-
-		samlSpIdpConnectionCacheModel.unknownUsersAreStrangers =
-			isUnknownUsersAreStrangers();
 
 		return samlSpIdpConnectionCacheModel;
 	}
@@ -1054,6 +1054,7 @@ public class SamlSpIdpConnectionModelImpl
 	private boolean _enabled;
 	private boolean _forceAuthn;
 	private boolean _ldapImportEnabled;
+	private boolean _unknownUsersAreStrangers;
 	private String _metadataUrl;
 	private String _metadataXml;
 	private Date _metadataUpdatedDate;
@@ -1061,7 +1062,6 @@ public class SamlSpIdpConnectionModelImpl
 	private String _nameIdFormat;
 	private boolean _signAuthnRequest;
 	private String _userAttributeMappings;
-	private boolean _unknownUsersAreStrangers;
 	private long _columnBitmask;
 	private SamlSpIdpConnection _escapedModel;
 

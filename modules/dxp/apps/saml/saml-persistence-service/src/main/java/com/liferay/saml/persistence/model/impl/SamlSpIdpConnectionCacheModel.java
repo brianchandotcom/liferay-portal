@@ -90,6 +90,8 @@ public class SamlSpIdpConnectionCacheModel
 		sb.append(forceAuthn);
 		sb.append(", ldapImportEnabled=");
 		sb.append(ldapImportEnabled);
+		sb.append(", unknownUsersAreStrangers=");
+		sb.append(unknownUsersAreStrangers);
 		sb.append(", metadataUrl=");
 		sb.append(metadataUrl);
 		sb.append(", metadataXml=");
@@ -104,8 +106,6 @@ public class SamlSpIdpConnectionCacheModel
 		sb.append(signAuthnRequest);
 		sb.append(", userAttributeMappings=");
 		sb.append(userAttributeMappings);
-		sb.append(", unknownUsersAreStrangers=");
-		sb.append(unknownUsersAreStrangers);
 		sb.append("}");
 
 		return sb.toString();
@@ -154,6 +154,8 @@ public class SamlSpIdpConnectionCacheModel
 		samlSpIdpConnectionImpl.setEnabled(enabled);
 		samlSpIdpConnectionImpl.setForceAuthn(forceAuthn);
 		samlSpIdpConnectionImpl.setLdapImportEnabled(ldapImportEnabled);
+		samlSpIdpConnectionImpl.setUnknownUsersAreStrangers(
+			unknownUsersAreStrangers);
 
 		if (metadataUrl == null) {
 			samlSpIdpConnectionImpl.setMetadataUrl("");
@@ -201,9 +203,6 @@ public class SamlSpIdpConnectionCacheModel
 				userAttributeMappings);
 		}
 
-		samlSpIdpConnectionImpl.setUnknownUsersAreStrangers(
-			unknownUsersAreStrangers);
-
 		samlSpIdpConnectionImpl.resetOriginalValues();
 
 		return samlSpIdpConnectionImpl;
@@ -230,6 +229,8 @@ public class SamlSpIdpConnectionCacheModel
 		forceAuthn = objectInput.readBoolean();
 
 		ldapImportEnabled = objectInput.readBoolean();
+
+		unknownUsersAreStrangers = objectInput.readBoolean();
 		metadataUrl = objectInput.readUTF();
 		metadataXml = objectInput.readUTF();
 		metadataUpdatedDate = objectInput.readLong();
@@ -238,8 +239,6 @@ public class SamlSpIdpConnectionCacheModel
 
 		signAuthnRequest = objectInput.readBoolean();
 		userAttributeMappings = objectInput.readUTF();
-
-		unknownUsersAreStrangers = objectInput.readBoolean();
 	}
 
 	@Override
@@ -276,6 +275,8 @@ public class SamlSpIdpConnectionCacheModel
 		objectOutput.writeBoolean(forceAuthn);
 
 		objectOutput.writeBoolean(ldapImportEnabled);
+
+		objectOutput.writeBoolean(unknownUsersAreStrangers);
 
 		if (metadataUrl == null) {
 			objectOutput.writeUTF("");
@@ -315,8 +316,6 @@ public class SamlSpIdpConnectionCacheModel
 		else {
 			objectOutput.writeUTF(userAttributeMappings);
 		}
-
-		objectOutput.writeBoolean(unknownUsersAreStrangers);
 	}
 
 	public long samlSpIdpConnectionId;
@@ -331,6 +330,7 @@ public class SamlSpIdpConnectionCacheModel
 	public boolean enabled;
 	public boolean forceAuthn;
 	public boolean ldapImportEnabled;
+	public boolean unknownUsersAreStrangers;
 	public String metadataUrl;
 	public String metadataXml;
 	public long metadataUpdatedDate;
@@ -338,6 +338,5 @@ public class SamlSpIdpConnectionCacheModel
 	public String nameIdFormat;
 	public boolean signAuthnRequest;
 	public String userAttributeMappings;
-	public boolean unknownUsersAreStrangers;
 
 }

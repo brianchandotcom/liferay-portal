@@ -55,6 +55,8 @@ public class SamlSpIdpConnectionWrapper
 		attributes.put("enabled", isEnabled());
 		attributes.put("forceAuthn", isForceAuthn());
 		attributes.put("ldapImportEnabled", isLdapImportEnabled());
+		attributes.put(
+			"unknownUsersAreStrangers", isUnknownUsersAreStrangers());
 		attributes.put("metadataUrl", getMetadataUrl());
 		attributes.put("metadataXml", getMetadataXml());
 		attributes.put("metadataUpdatedDate", getMetadataUpdatedDate());
@@ -62,8 +64,6 @@ public class SamlSpIdpConnectionWrapper
 		attributes.put("nameIdFormat", getNameIdFormat());
 		attributes.put("signAuthnRequest", isSignAuthnRequest());
 		attributes.put("userAttributeMappings", getUserAttributeMappings());
-		attributes.put(
-			"unknownUsersAreStrangers", isUnknownUsersAreStrangers());
 
 		return attributes;
 	}
@@ -145,6 +145,13 @@ public class SamlSpIdpConnectionWrapper
 			setLdapImportEnabled(ldapImportEnabled);
 		}
 
+		Boolean unknownUsersAreStrangers = (Boolean)attributes.get(
+			"unknownUsersAreStrangers");
+
+		if (unknownUsersAreStrangers != null) {
+			setUnknownUsersAreStrangers(unknownUsersAreStrangers);
+		}
+
 		String metadataUrl = (String)attributes.get("metadataUrl");
 
 		if (metadataUrl != null) {
@@ -186,13 +193,6 @@ public class SamlSpIdpConnectionWrapper
 
 		if (userAttributeMappings != null) {
 			setUserAttributeMappings(userAttributeMappings);
-		}
-
-		Boolean unknownUsersAreStrangers = (Boolean)attributes.get(
-			"unknownUsersAreStrangers");
-
-		if (unknownUsersAreStrangers != null) {
-			setUnknownUsersAreStrangers(unknownUsersAreStrangers);
 		}
 	}
 

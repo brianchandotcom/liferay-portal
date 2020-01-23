@@ -64,14 +64,14 @@ create table SamlSpIdpConnection (
 	enabled BOOLEAN,
 	forceAuthn BOOLEAN,
 	ldapImportEnabled BOOLEAN,
+	unknownUsersAreStrangers BOOLEAN,
 	metadataUrl VARCHAR(1024) null,
 	metadataXml TEXT null,
 	metadataUpdatedDate DATE null,
 	name VARCHAR(75) null,
 	nameIdFormat VARCHAR(1024) null,
 	signAuthnRequest BOOLEAN,
-	userAttributeMappings STRING null,
-	unknownUsersAreStrangers BOOLEAN
+	userAttributeMappings STRING null
 );
 
 create table SamlSpMessage (

@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutCreateDat
 import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutNameComparator;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -104,11 +106,36 @@ public class SPIDataLayoutResource<T> {
 		return _toDataLayoutFunction.apply(ddmStructureLayout);
 	}
 
-	public void deleteDataLayout(long dataLayoutId, DDMStructure ddmStructure) {
+	public void deleteDataLayout(long dataLayoutId, DDMStructure ddmStructure)
+		throws PortalException {
+
 		_ddmStructureLayoutLocalService.deleteDDMStructureLayout(dataLayoutId);
 
 		_deDataDefinitionFieldLinkLocalService.deleteDEDataDefinitionFieldLinks(
 			ddmStructure.getClassNameId(), dataLayoutId);
+	}
+
+	public void deleteDataLayoutDataDefinition(long dataDefinitionId)
+		throws PortalException {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			dataDefinitionId);
+
+		List<DDMStructureVersion> ddmStructureVersions =
+			_ddmStructureVersionLocalService.getStructureVersions(
+				dataDefinitionId);
+
+		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
+			List<DDMStructureLayout> ddmStructureLayouts =
+				_ddmStructureLayoutLocalService.getStructureLayouts(
+					ddmStructure.getGroupId(), ddmStructure.getClassNameId(),
+					ddmStructureVersion.getStructureVersionId());
+
+			for (DDMStructureLayout ddmStructureLayout : ddmStructureLayouts) {
+				deleteDataLayout(
+					ddmStructureLayout.getStructureLayoutId(), ddmStructure);
+			}
+		}
 	}
 
 	public T getDataLayout(long dataLayoutId) throws Exception {
@@ -151,7 +178,7 @@ public class SPIDataLayoutResource<T> {
 
 		if (Validator.isNull(keywords)) {
 			return Page.of(
-				_toDataLayoutFunction.apply(
+				TransformUtil.transform(
 					_ddmStructureLayoutLocalService.getStructureLayouts(
 						ddmStructure.getGroupId(),
 						ddmStructure.getClassNameId(),
@@ -159,7 +186,8 @@ public class SPIDataLayoutResource<T> {
 						pagination.getStartPosition(),
 						pagination.getEndPosition(),
 						_toOrderByComparator(
-							(Sort)ArrayUtil.getValue(sorts, 0)))),
+							(Sort)ArrayUtil.getValue(sorts, 0))),
+					_toDataLayoutFunction),
 				pagination,
 				_ddmStructureLayoutLocalService.getStructureLayoutsCount(
 					ddmStructure.getGroupId(), ddmStructure.getClassNameId(),
@@ -231,7 +259,9 @@ public class SPIDataLayoutResource<T> {
 		}
 	}
 
-	private long _getDDMStructureVersionId(long deDataDefinitionId) {
+	private long _getDDMStructureVersionId(long deDataDefinitionId)
+		throws PortalException {
+
 		DDMStructureVersion ddmStructureVersion =
 			_ddmStructureVersionLocalService.getLatestStructureVersion(
 				deDataDefinitionId);

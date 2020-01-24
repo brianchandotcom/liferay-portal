@@ -28,7 +28,7 @@ const CheckinModal = ({
 	dlVersionNumberIncreaseValues
 }) => {
 	const {MAJOR, MINOR, NONE} = dlVersionNumberIncreaseValues;
-	const [changeLog, setChangeLog] = useState();
+	const [changeLog, setChangeLog] = useState('');
 	const [versionIncrease, setVersionIncrease] = useState(
 		checkedOut ? MAJOR : MINOR
 	);

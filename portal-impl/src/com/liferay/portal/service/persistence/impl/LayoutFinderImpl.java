@@ -169,6 +169,14 @@ public class LayoutFinderImpl
 
 		Session session = null;
 
+		Predicate permissionWherePredicate = null;
+
+		if (inlineSQLHelper) {
+			permissionWherePredicate =
+				InlineSQLHelperUtil.getPermissionWherePredicate(
+					Layout.class, Layout.TABLE.plid, groupId);
+		}
+
 		try {
 			session = openSession();
 
@@ -186,13 +194,8 @@ public class LayoutFinderImpl
 					Group.TABLE.classPK.eq(Layout.TABLE.plid)
 				)
 			).where(
-				wherePredicate
+				wherePredicate.and(permissionWherePredicate)
 			);
-
-			if (inlineSQLHelper) {
-				dslQuery = InlineSQLHelperUtil.replacePermissionCheck(
-					dslQuery, Layout.class, Layout.TABLE.plid, groupId);
-			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(dslQuery);
 

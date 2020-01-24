@@ -13,7 +13,8 @@
  */
 
 import classNames from 'classnames';
-import React from 'react';
+import {closest} from 'metal-dom';
+import React, {useRef, useEffect} from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useSelector} from '../store/index';
@@ -89,9 +90,39 @@ function Root({children}) {
 	return <div className="pt-4">{children}</div>;
 }
 
+const FragmentContent = React.memo(function FragmentContent({content}) {
+	const ref = useRef(null);
+
+	useEffect(() => {
+		const element = ref.current;
+
+		if (!element) {
+			return;
+		}
+
+		const handler = event => {
+			const element = event.target;
+
+			if (closest(element, '[href]')) {
+				event.preventDefault();
+			}
+		};
+
+		element.addEventListener('click', handler);
+
+		return () => {
+			element.removeEventListener('click', handler);
+		};
+	});
+
+	return <UnsafeHTML markup={content} ref={ref} />;
+});
+
 function Fragment({fragmentEntryLinks, item}) {
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
-	return <UnsafeHTML markup={fragmentEntryLink.content.value.content} />;
+	return (
+		<FragmentContent content={fragmentEntryLink.content.value.content} />
+	);
 }

@@ -20,8 +20,8 @@ import java.io.IOException;
 
 import java.util.concurrent.TimeoutException;
 
+import org.mule.runtime.api.connection.CachedConnectionProvider;
 import org.mule.runtime.api.connection.ConnectionException;
-import org.mule.runtime.api.connection.ConnectionProvider;
 import org.mule.runtime.api.connection.ConnectionValidationResult;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
@@ -29,8 +29,8 @@ import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 /**
  * @author Matija Petanjek
  */
-public abstract class BaseConnectionProvider
-	implements ConnectionProvider<LiferayConnection> {
+public abstract class BaseCachedConnectionProvider
+	implements CachedConnectionProvider<LiferayConnection> {
 
 	@Override
 	public void disconnect(LiferayConnection liferayConnection) {

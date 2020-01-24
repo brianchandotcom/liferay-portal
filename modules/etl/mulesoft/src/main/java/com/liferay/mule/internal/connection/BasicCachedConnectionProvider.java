@@ -14,7 +14,7 @@
 
 package com.liferay.mule.internal.connection;
 
-import com.liferay.mule.internal.config.OAuth2AuthenticationConfig;
+import com.liferay.mule.internal.config.BasicAuthenticationConfig;
 
 import javax.inject.Inject;
 
@@ -31,25 +31,26 @@ import org.mule.runtime.http.api.HttpService;
 /**
  * @author Matija Petanjek
  */
-@Alias("oauth2-connection")
-@DisplayName("2 - OAuth 2.0")
-public class OAuth2ConnectionProvider extends BaseConnectionProvider {
+@Alias("basic-connection")
+@DisplayName("1 - Basic")
+public class BasicCachedConnectionProvider
+	extends BaseCachedConnectionProvider {
 
 	@Override
 	public LiferayConnection connect() throws ConnectionException {
-		return LiferayConnection.withOAuth2Authentication(
+		return LiferayConnection.withBasicAuthentication(
 			_httpService, _openApiSpecPath,
-			_oAuth2AuthenticationConfig.getConsumerKey(),
-			_oAuth2AuthenticationConfig.getConsumerSecret(),
+			_basicAuthenticationConfig.getUsername(),
+			_basicAuthenticationConfig.getPassword(),
 			liferayProxyConfig.getProxyConfig());
 	}
 
-	@Inject
-	private HttpService _httpService;
-
 	@ParameterGroup(name = "Connection config")
 	@Placement(order = 1)
-	private OAuth2AuthenticationConfig _oAuth2AuthenticationConfig;
+	private BasicAuthenticationConfig _basicAuthenticationConfig;
+
+	@Inject
+	private HttpService _httpService;
 
 	@DisplayName("OpenAPI Spec URL")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)

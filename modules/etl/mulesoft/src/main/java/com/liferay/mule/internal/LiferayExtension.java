@@ -14,8 +14,8 @@
 
 package com.liferay.mule.internal;
 
-import com.liferay.mule.internal.connection.BasicConnectionProvider;
-import com.liferay.mule.internal.connection.OAuth2ConnectionProvider;
+import com.liferay.mule.internal.connection.BasicCachedConnectionProvider;
+import com.liferay.mule.internal.connection.OAuth2CachedConnectionProvider;
 import com.liferay.mule.internal.error.LiferayError;
 import com.liferay.mule.internal.operation.LiferayOperations;
 
@@ -31,7 +31,7 @@ import org.mule.runtime.extension.api.annotation.license.RequiresEnterpriseLicen
  * @author Matija Petanjek
  */
 @ConnectionProviders(
-	{BasicConnectionProvider.class, OAuth2ConnectionProvider.class}
+	{BasicCachedConnectionProvider.class, OAuth2CachedConnectionProvider.class}
 )
 @ErrorTypes(LiferayError.class)
 @Extension(category = Category.CERTIFIED, name = "Liferay", vendor = "Liferay")

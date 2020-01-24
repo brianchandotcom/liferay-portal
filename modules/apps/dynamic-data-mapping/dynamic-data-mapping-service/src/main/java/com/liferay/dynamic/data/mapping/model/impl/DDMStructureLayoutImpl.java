@@ -15,7 +15,10 @@
 package com.liferay.dynamic.data.mapping.model.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.cache.CacheField;
@@ -41,6 +44,27 @@ public class DDMStructureLayoutImpl extends DDMStructureLayoutBaseImpl {
 		}
 
 		return new DDMFormLayout(_ddmFormLayout);
+	}
+
+	@Override
+	public DDMStructure getDDMStructure() {
+		try {
+			DDMStructureVersion ddmStructureVersion =
+				DDMStructureVersionLocalServiceUtil.getDDMStructureVersion(
+					getStructureVersionId());
+
+			return ddmStructureVersion.getStructure();
+		}
+		catch (Exception exception) {
+			return null;
+		}
+	}
+
+	@Override
+	public long getDDMStructureId() {
+		DDMStructure ddmStructure = getDDMStructure();
+
+		return ddmStructure.getStructureId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

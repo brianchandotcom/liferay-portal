@@ -55,11 +55,7 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 
 		Table<?> table = (Table<?>)object;
 
-		if (_tableName.equals(table._tableName)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_tableName, table._tableName);
 	}
 
 	public String getAlias() {

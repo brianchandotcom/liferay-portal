@@ -100,7 +100,9 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 		return _tableName.hashCode();
 	}
 
-	protected <C> Column<T, C> aliasColumn(Column<T, C> column, String alias) {
+	protected <C> Column<T, C> aliasColumn(
+		Column<T, C> column, String columnAlias) {
+
 		T table = _tableSupplier.get();
 
 		table.setAlias(_alias);
@@ -109,7 +111,7 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 			table, column.getColumnName(), column.getColumnType(),
 			column.getSQLType());
 
-		table.putColumn(alias, column);
+		table.putColumn(columnAlias, column);
 
 		return column;
 	}

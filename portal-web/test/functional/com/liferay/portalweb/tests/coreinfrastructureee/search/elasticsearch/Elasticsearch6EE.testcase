@@ -54,6 +54,7 @@ definition {
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
@@ -128,6 +129,7 @@ definition {
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
@@ -263,6 +265,7 @@ definition {
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
@@ -427,6 +430,7 @@ definition {
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
@@ -485,6 +489,7 @@ definition {
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
@@ -544,6 +549,7 @@ definition {
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
 			minimumDocumentFrequency = "1",
 			minimumShouldMatch = "25%",
 			minimumTermFrequency = "1");
@@ -614,6 +620,7 @@ definition {
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
+			fields = "content_en_US,localized_title_en_US",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
@@ -689,6 +696,7 @@ definition {
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
@@ -766,6 +774,7 @@ definition {
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 

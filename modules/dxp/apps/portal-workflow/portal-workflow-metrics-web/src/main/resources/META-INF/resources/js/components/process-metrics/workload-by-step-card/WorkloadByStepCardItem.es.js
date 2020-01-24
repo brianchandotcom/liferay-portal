@@ -9,79 +9,68 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {filterKeys} from '../../../shared/components/filter/util/filterConstants.es';
 import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
 import {AppContext} from '../../AppContext.es';
 import {processStatusConstants} from '../../filter/ProcessStatusFilter.es';
 
-class WorkloadByStepCardItem extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
-	getFiltersQuery(slaStatusFilter) {
-		const {taskKey} = this.props;
-
+const Item = ({
+	instanceCount,
+	name,
+	onTimeInstanceCount,
+	overdueInstanceCount,
+	processId,
+	taskKey
+}) => {
+	const {defaultDelta} = useContext(AppContext);
+	const getFiltersQuery = slaStatusFilter => {
 		return {
 			[filterKeys.processStatus]: [processStatusConstants.pending],
 			[filterKeys.processStep]: [taskKey],
 			[filterKeys.slaStatus]: [slaStatusFilter]
 		};
-	}
+	};
+	const instancesListPath = `/instance/${processId}/${defaultDelta}/1`;
 
-	render() {
-		const {defaultDelta} = this.context;
-		const {
-			instanceCount = '-',
-			name,
-			onTimeInstanceCount = '-',
-			overdueInstanceCount = '-',
-			processId
-		} = this.props;
+	return (
+		<tr>
+			<td className="lfr-title-column table-cell-expand table-cell-minw-200 table-title">
+				{name}
+			</td>
 
-		const instancesListPath = `/instance/${processId}/${defaultDelta}/1`;
+			<td className="text-right">
+				<ChildLink
+					className="workload-by-step-link"
+					query={{filters: getFiltersQuery('Overdue')}}
+					to={instancesListPath}
+				>
+					{overdueInstanceCount}
+				</ChildLink>
+			</td>
 
-		return (
-			<tr>
-				<td className="lfr-title-column table-cell-expand table-cell-minw-200 table-title">
-					{name}
-				</td>
+			<td className="text-right">
+				<ChildLink
+					className="workload-by-step-link"
+					query={{filters: getFiltersQuery('OnTime')}}
+					to={instancesListPath}
+				>
+					{onTimeInstanceCount}
+				</ChildLink>
+			</td>
 
-				<td className="text-right">
-					<ChildLink
-						className="workload-by-step-link"
-						query={{filters: this.getFiltersQuery('Overdue')}}
-						to={instancesListPath}
-					>
-						{overdueInstanceCount}
-					</ChildLink>
-				</td>
+			<td className="text-right">
+				<ChildLink
+					className="workload-by-step-link"
+					query={{filters: getFiltersQuery()}}
+					to={instancesListPath}
+				>
+					{instanceCount}
+				</ChildLink>
+			</td>
+		</tr>
+	);
+};
 
-				<td className="text-right">
-					<ChildLink
-						className="workload-by-step-link"
-						query={{filters: this.getFiltersQuery('OnTime')}}
-						to={instancesListPath}
-					>
-						{onTimeInstanceCount}
-					</ChildLink>
-				</td>
-
-				<td className="text-right">
-					<ChildLink
-						className="workload-by-step-link"
-						query={{filters: this.getFiltersQuery()}}
-						to={instancesListPath}
-					>
-						{instanceCount}
-					</ChildLink>
-				</td>
-			</tr>
-		);
-	}
-}
-
-WorkloadByStepCardItem.contextType = AppContext;
-export default WorkloadByStepCardItem;
+export {Item};

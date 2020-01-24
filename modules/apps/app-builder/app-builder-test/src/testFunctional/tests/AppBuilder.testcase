@@ -66,7 +66,6 @@ definition {
 	@description = "This is a use case for LPS-104569."
 	@priority = "5"
 	test AddMultipleFormViewsToTheSameObject {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object 1",
@@ -117,7 +116,6 @@ definition {
 	@description = "Add a Form View with a Date field"
 	@priority = "5"
 	test AddSimpleFormViewWithDateField {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -133,7 +131,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test AddSimpleFormViewWithGridField {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -148,7 +145,6 @@ definition {
 	@description = "Add a Form View with a Multiple Selection field"
 	@priority = "5"
 	test AddSimpleFormViewWithMultipleSelectionField {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -163,7 +159,6 @@ definition {
 	@description = "Add a Form View with a Numeric field"
 	@priority = "5"
 	test AddSimpleFormViewWithNumericField {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -178,7 +173,6 @@ definition {
 	@description = "Add a Form View with a Select From List field"
 	@priority = "5"
 	test AddSimpleFormViewWithSelectFromListField {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -193,7 +187,6 @@ definition {
 	@description = "Add a Form View with a Single Selection field"
 	@priority = "5"
 	test AddSimpleFormViewWithSingleSelectionField {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -223,7 +216,6 @@ definition {
 	@description = "Add a Form View with a Upload field"
 	@priority = "5"
 	test AddSimpleFormViewWithUploadField {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -273,7 +265,6 @@ definition {
 	@description = "Attempt to add a Custom Object without a valid name"
 	@priority = "5"
 	test AttemptToAddCustomObjectWithoutValidName {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "",
@@ -307,7 +298,6 @@ definition {
 	@description = "Change order of list from default most recent on top to oldest."
 	@priority = "5"
 	test ChangeFormViewsListOrderByDate {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Custom Object Title",
@@ -346,7 +336,6 @@ definition {
 	@description = "Order the list of Form Views by Name/Title (Asc or Desc)"
 	@priority = "5"
 	test ChangeFormViewsListOrderByName {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Custom Object Title",
@@ -385,7 +374,6 @@ definition {
 	@description = "Change order of Table Views list from the default of most recent on top to oldest."
 	@priority = "5"
 	test ChangeTableViewsListOrderByDate {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Custom Object Title",
@@ -426,7 +414,6 @@ definition {
 	@description = "Order the list of Table Views by Name/Title (Asc or Desc)"
 	@priority = "5"
 	test ChangeTableViewsListOrderByName {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Custom Object Title",
@@ -1148,7 +1135,6 @@ definition {
 	@description = "Delete an existing custom object with no associated relationships"
 	@priority = "5"
 	test DeleteCustomObjectWithAssociatedRelationship {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1192,7 +1178,6 @@ definition {
 	@description = "Delete an existing custom object with no associated relationships"
 	@priority = "5"
 	test DeleteCustomObjectWithNoAssociatedRelationship {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1207,7 +1192,6 @@ definition {
 	@description = "Delete an existing Form View with no active publishing through the kebab/action menu"
 	@priority = "5"
 	test DeleteFormViewThroughActionMenu {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1224,7 +1208,6 @@ definition {
 	@description = "Delete an existing Table View with no active publishing through the kebab/action menu"
 	@priority = "5"
 	test DeleteTableViewThroughActionMenu {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1244,7 +1227,6 @@ definition {
 	@description = "Choose between the existing Form Views of an object when deploying an app"
 	@priority = "5"
 	test DeployAnAppChoosingBetweenTheExistingFormViews {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1311,7 +1293,6 @@ definition {
 	@description = "Clear search results when clicking the Clear button on the search results banner"
 	@priority = "5"
 	test FormViewClearSearchResults {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Custom Object Title",
@@ -1346,7 +1327,6 @@ definition {
 	@description = "Validate returns by search engine using a search term"
 	@priority = "5"
 	test FormViewSearchByTerm {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Custom Object Title",
@@ -1372,7 +1352,6 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test FormViewSearchNoResultsFound {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Custom Object Title",
@@ -1445,7 +1424,6 @@ definition {
 	@description = "Search for an object in the object list"
 	@priority = "5"
 	test SearchForObject {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object 1",
@@ -1494,7 +1472,6 @@ definition {
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"
 	@priority = "5"
 	test TableViewClearSearchResults {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Custom Object Title",
@@ -1522,7 +1499,6 @@ definition {
 	@description = "Validate Table View search returns by search engine using a search term"
 	@priority = "5"
 	test TableViewSearchByTerm {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "My custom object",
@@ -1549,7 +1525,6 @@ definition {
 	@description = "No results found screen is shown when the Table View search doesn't retrieve any results"
 	@priority = "5"
 	test TableViewSearchNoResultsFound {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "Custom Object Title",
@@ -1578,7 +1553,6 @@ definition {
 	@description = "Validate empty list state of Apps listing screen"
 	@priority = "5"
 	test ValidateEmptyStateOfAppsListingScreen {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1597,7 +1571,6 @@ definition {
 	@description = "Validate empty list state of Custom Object listing screen"
 	@priority = "5"
 	test ValidateEmptyStateOfCustomObjectListingScreen {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.teardownAppBuilder();
 
@@ -1611,7 +1584,6 @@ definition {
 	@description = "Validate empty list state of Form View listing screen"
 	@priority = "5"
 	test ValidateEmptyStateOfFormViewListingScreen {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1628,7 +1600,6 @@ definition {
 	@description = "Validate empty list state of Table View listing screen"
 	@priority = "5"
 	test ValidateEmptyStateOfTableViewListingScreen {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

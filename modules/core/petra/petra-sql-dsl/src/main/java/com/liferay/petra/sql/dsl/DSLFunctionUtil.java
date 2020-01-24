@@ -17,6 +17,7 @@ package com.liferay.petra.sql.dsl;
 import com.liferay.petra.sql.dsl.expressions.Expression;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
 import com.liferay.petra.sql.dsl.expressions.WhenThenStep;
+import com.liferay.petra.sql.dsl.expressions.impl.AggregateExpression;
 import com.liferay.petra.sql.dsl.expressions.impl.CaseWhenThen;
 import com.liferay.petra.sql.dsl.expressions.impl.DSLFunction;
 import com.liferay.petra.sql.dsl.expressions.impl.DSLFunctionType;
@@ -40,6 +41,12 @@ public class DSLFunctionUtil {
 		Expression<N> expression, N value) {
 
 		return add(expression, new Scalar<>(value));
+	}
+
+	public static Expression<Number> avg(
+		Expression<? extends Number> expression) {
+
+		return new AggregateExpression<>(false, expression, "avg");
 	}
 
 	public static Expression<Long> bitAnd(
@@ -84,6 +91,14 @@ public class DSLFunctionUtil {
 		return new DSLFunction<>(DSLFunctionType.CONCAT, expressions);
 	}
 
+	public static Expression<Long> count(Expression<?> expression) {
+		return new AggregateExpression<>(false, expression, "count");
+	}
+
+	public static Expression<Long> countDistinct(Expression<?> expression) {
+		return new AggregateExpression<>(true, expression, "count");
+	}
+
 	public static <N extends Number> Expression<N> divide(
 		Expression<N> expression1, Expression<N> expression2) {
 
@@ -99,6 +114,18 @@ public class DSLFunctionUtil {
 
 	public static Expression<String> lower(Expression<String> expression) {
 		return new DSLFunction<>(DSLFunctionType.LOWER, expression);
+	}
+
+	public static <T extends Number> Expression<T> max(
+		Expression<T> expression) {
+
+		return new AggregateExpression<>(false, expression, "max");
+	}
+
+	public static <T extends Number> Expression<T> min(
+		Expression<T> expression) {
+
+		return new AggregateExpression<>(false, expression, "min");
 	}
 
 	public static <N extends Number> Expression<N> multiply(
@@ -125,6 +152,12 @@ public class DSLFunctionUtil {
 		Expression<N> expression, N value) {
 
 		return subtract(expression, new Scalar<>(value));
+	}
+
+	public static Expression<Number> sum(
+		Expression<? extends Number> expression) {
+
+		return new AggregateExpression<>(false, expression, "sum");
 	}
 
 }

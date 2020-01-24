@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.service.persistence.AssetTagFinder;
 import com.liferay.petra.sql.dsl.DSLFunctionUtil;
 import com.liferay.petra.sql.dsl.DSLQueryUtil;
 import com.liferay.petra.sql.dsl.expressions.Predicate;
-import com.liferay.petra.sql.dsl.expressions.impl.AggregateExpression;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -242,8 +241,8 @@ public class AssetTagFinderImpl
 			SQLQuery q = session.createSynchronizedSQLQuery(
 				DSLQueryUtil.select(
 					AssetTag.TABLE.tagId, AssetTag.TABLE.name,
-					new AggregateExpression<>(
-						false, SocialActivityCounter.TABLE.currentValue, "sum")
+					DSLFunctionUtil.sum(
+						SocialActivityCounter.TABLE.currentValue)
 				).from(
 					AssetTag.TABLE
 				).innerJoinON(

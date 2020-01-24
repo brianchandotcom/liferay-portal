@@ -64,11 +64,11 @@ public interface MFAEmailOTPConfiguration {
 	public int otpSize();
 
 	public final String DEFAULT_EMAIL_OTP_BODY =
-		"/META-INF/resources/dependencies" +
-			"/email_multi_factor_authentication_email_otp_body.tmpl";
+		"/com/liferay/multi/factor/authentication/email/otp/web/internal" +
+			"/configuration/dependencies/email_otp_sent_body.tmpl";
 
 	public final String DEFAULT_EMAIL_OTP_SUBJECT =
-		"/META-INF/resources/dependencies" +
-			"/email_multi_factor_authentication_email_otp_subject.tmpl";
+		"/com/liferay/multi/factor/authentication/email/otp/web/internal" +
+			"/configuration/dependencies/email_otp_sent_subject.tmpl";
 
 }

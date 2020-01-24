@@ -14,10 +14,16 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/change_lists/init.jsp" %>
 
-<%
-ChangeListsDisplayContext changeListsDisplayContext = (ChangeListsDisplayContext)request.getAttribute(CTWebKeys.CHANGE_LISTS_DISPLAY_CONTEXT);
+<div class="container-fluid">
 
-CTDisplayRendererRegistry ctDisplayRendererRegistry = changeListsDisplayContext.getCtDisplayRendererRegistry();
-%>
+	<%
+	long ctEntryId = ParamUtil.getLong(request, "ctEntryId");
+
+	CTEntry ctEntry = CTEntryLocalServiceUtil.fetchCTEntry(ctEntryId);
+
+	ctDisplayRendererRegistry.renderCTEntry(request, response, ctEntry, ctEntry.getCtCollectionId());
+	%>
+
+</div>

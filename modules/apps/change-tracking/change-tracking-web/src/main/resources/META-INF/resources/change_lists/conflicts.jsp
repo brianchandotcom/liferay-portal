@@ -22,7 +22,6 @@
 
 <%
 CTCollection ctCollection = (CTCollection)request.getAttribute(CTWebKeys.CT_COLLECTION);
-CTDisplayRendererRegistry ctDisplayRendererRegistry = (CTDisplayRendererRegistry)request.getAttribute(CTWebKeys.CT_DISPLAY_RENDERER_REGISTRY);
 List<ObjectValuePair<ConflictInfo, CTEntry>> resolvedConflicts = (List<ObjectValuePair<ConflictInfo, CTEntry>>)request.getAttribute(CTWebKeys.RESOLVED_CONFLICTS);
 List<ObjectValuePair<ConflictInfo, CTEntry>> unresolvedConflicts = (List<ObjectValuePair<ConflictInfo, CTEntry>>)request.getAttribute(CTWebKeys.UNRESOLVED_CONFLICTS);
 
@@ -47,6 +46,8 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 				String age = LanguageUtil.format(locale, "x-ago", LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - modifiedDate.getTime(), true));
 
 				String title = StringBundler.concat(ctDisplayRendererRegistry.getTypeName(locale, ctEntry), " ", changeListsDisplayContext.getChangeTypeName(ctEntry), " by ", ctEntry.getUserName(), " ", age);
+
+				String viewURL = ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry);
 			%>
 
 				<tr>
@@ -54,11 +55,30 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 						<p class="text-muted"><%= title %></p>
 
 						<div>
-							<clay:alert
-								message="<%= conflictInfo.getResolutionDescription(conflictInfo.getResourceBundle(locale)) %>"
-								style="success"
-								title="<%= conflictInfo.getConflictDescription(conflictInfo.getResourceBundle(locale)) %>"
-							/>
+							<div class="alert alert-success autofit-row" role="alert">
+								<div class="autofit-col autofit-col-expand">
+									<div class="autofit-section">
+										<span class="alert-indicator">
+											<aui:icon image="check-circle-full" markupView="lexicon" />
+										</span>
+
+										<strong class="lead">
+											<%= conflictInfo.getConflictDescription(conflictInfo.getResourceBundle(locale)) %>
+										</strong>
+										<%= conflictInfo.getResolutionDescription(conflictInfo.getResourceBundle(locale)) %>
+									</div>
+								</div>
+
+								<c:if test="<%= Validator.isNotNull(viewURL) %>">
+									<div class="autofit-col">
+										<div class="autofit-section">
+											<a class="btn btn-secondary btn-sm" href="<%= viewURL %>" type="button">
+												<%= LanguageUtil.get(request, "view") %>
+											</a>
+										</div>
+									</div>
+								</c:if>
+							</div>
 						</div>
 					</td>
 				</tr>
@@ -79,6 +99,15 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 				String age = LanguageUtil.format(locale, "x-ago", LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - modifiedDate.getTime(), true));
 
 				String title = StringBundler.concat(ctDisplayRendererRegistry.getTypeName(locale, ctEntry), " ", changeListsDisplayContext.getChangeTypeName(ctEntry), " by ", ctEntry.getUserName(), " ", age);
+
+				String editURL;
+
+				try {
+					editURL = ctDisplayRendererRegistry.getEditURL(request, ctEntry);
+				}
+				catch (Exception e) {
+					editURL = null;
+				}
 			%>
 
 				<tr>
@@ -86,11 +115,30 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 						<p class="text-muted"><%= title %></p>
 
 						<div>
-							<clay:alert
-								message="<%= conflictInfo.getResolutionDescription(conflictInfo.getResourceBundle(locale)) %>"
-								style="warning"
-								title="<%= conflictInfo.getConflictDescription(conflictInfo.getResourceBundle(locale)) %>"
-							/>
+							<div class="alert alert-warning autofit-row" role="alert">
+								<div class="autofit-col autofit-col-expand">
+									<div class="autofit-section">
+										<span class="alert-indicator">
+											<aui:icon image="warning-full" markupView="lexicon" />
+										</span>
+
+										<strong class="lead">
+											<%= conflictInfo.getConflictDescription(conflictInfo.getResourceBundle(locale)) %>
+										</strong>
+										<%= conflictInfo.getResolutionDescription(conflictInfo.getResourceBundle(locale)) %>
+									</div>
+								</div>
+
+								<c:if test="<%= Validator.isNotNull(editURL) %>">
+									<div class="autofit-col">
+										<div class="autofit-section">
+											<a class="btn btn-secondary btn-sm" href="<%= editURL %>" type="button">
+												<%= LanguageUtil.get(request, "edit") %>
+											</a>
+										</div>
+									</div>
+								</c:if>
+							</div>
 						</div>
 					</td>
 				</tr>

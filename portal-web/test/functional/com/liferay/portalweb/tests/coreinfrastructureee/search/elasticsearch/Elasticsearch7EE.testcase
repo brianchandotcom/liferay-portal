@@ -314,6 +314,93 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
+	test ConfigureSimilarResultsFields {
+		JSONBlog.addEntry(
+			entryContent = "Content",
+			entryTitle = "No Match");
+
+		JSONBlog.addEntry(
+			entryContent = "No Match",
+			entryTitle = "Similar Results Blogs Title 2");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Similar Results Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Asset Publisher");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addEntryWithTag(
+			entryContent = "No Match",
+			entryTitle = "No Match Tag",
+			tagName = "Apple");
+
+		Blogs.addEntryWithTag(
+			entryContent = "Content",
+			entryTitle = "Similar Results Blogs Title 1",
+			tagName = "Apple");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		Portlet.addPG(portletName = "Similar Results");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results Blogs Title 1");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results Blogs Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "No Match",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "No Match Tag",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(fields = "content_en_US");
+
+		AssertElementPresent(
+			key_linkResultTitle = "No Match",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "No Match Tag",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Blogs Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(fields = "assetTagNames,content_en_US");
+
+		AssertElementPresent(
+			key_linkResultTitle = "No Match",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "No Match Tag",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Blogs Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+	}
+
 	test ConfigureSimilarResultsMaximumItemDisplay {
 		for (var titleName : list "Alpha,Bravo,Charlie,Delta,Echo,Foxtrot") {
 			JSONWebcontent.addWebContent(

@@ -347,7 +347,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private String _getOpenGraphTag(String property, String content) {
-		if (Validator.isNull(content)) {
+		if (Validator.isNull(content) || Validator.isNull(property)) {
 			return StringPool.BLANK;
 		}
 

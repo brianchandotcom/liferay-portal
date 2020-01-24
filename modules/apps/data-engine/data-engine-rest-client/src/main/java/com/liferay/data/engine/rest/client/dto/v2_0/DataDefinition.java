@@ -160,6 +160,27 @@ public class DataDefinition {
 
 	protected Date dateModified;
 
+	public DataLayout getDefaultDataLayout() {
+		return defaultDataLayout;
+	}
+
+	public void setDefaultDataLayout(DataLayout defaultDataLayout) {
+		this.defaultDataLayout = defaultDataLayout;
+	}
+
+	public void setDefaultDataLayout(
+		UnsafeSupplier<DataLayout, Exception> defaultDataLayoutUnsafeSupplier) {
+
+		try {
+			defaultDataLayout = defaultDataLayoutUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected DataLayout defaultDataLayout;
+
 	public String getDefaultLanguageId() {
 		return defaultLanguageId;
 	}

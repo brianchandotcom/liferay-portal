@@ -1183,6 +1183,16 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"defaultDataLayout", additionalAssertFieldName)) {
+
+				if (dataDefinition.getDefaultDataLayout() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"defaultLanguageId", additionalAssertFieldName)) {
 
 				if (dataDefinition.getDefaultLanguageId() == null) {
@@ -1350,6 +1360,19 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						dataDefinition1.getDateModified(),
 						dataDefinition2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"defaultDataLayout", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						dataDefinition1.getDefaultDataLayout(),
+						dataDefinition2.getDefaultDataLayout())) {
 
 					return false;
 				}
@@ -1648,6 +1671,11 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("defaultDataLayout")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("defaultLanguageId")) {

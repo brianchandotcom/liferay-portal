@@ -62,7 +62,7 @@ const Languages = ({
 		}
 	}, [customLocales, selectedRadioGroupValue]);
 
-	const handleAddClick = () => {
+	const handleManageBtnClick = () => {
 		var url = Liferay.Util.PortletURL.createPortletURL(
 			manageCustomLanguagesURL,
 			{
@@ -162,10 +162,10 @@ const Languages = ({
 							<ClayTable.Cell align="center">
 								<ClayButton
 									displayType="secondary"
-									onClick={handleAddClick}
+									onClick={handleManageBtnClick}
 									small
 								>
-									{Liferay.Language.get('add')}
+									{Liferay.Language.get('manage')}
 								</ClayButton>
 							</ClayTable.Cell>
 						)}

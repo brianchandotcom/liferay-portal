@@ -104,15 +104,6 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 	public CreationMenu getCreationMenu() {
 		return CreationMenuUtil.addPrimaryDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref(
-					liferayPortletResponse.createRenderURL(),
-					"mvcRenderCommandName", "/account_admin/add_account_user",
-					"accountEntryId",
-					ParamUtil.getLong(liferayPortletRequest, "accountEntryId"));
-				dropdownItem.setLabel(LanguageUtil.get(request, "add-user"));
-			}
-		).addDropdownItem(
-			dropdownItem -> {
 				dropdownItem.putData("action", "selectAccountUsers");
 
 				long accountEntryId = ParamUtil.getLong(
@@ -154,8 +145,7 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(request, "assign-users"));
-			}
-		);
+			});
 	}
 
 	@Override

@@ -15,24 +15,40 @@
 package com.liferay.layout.seo.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.Value;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.nio.charset.StandardCharsets;
+
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -114,6 +130,127 @@ public class LayoutSEOEntryLocalServiceTest {
 			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isOpenGraphTitleEnabled());
 		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
+	}
+
+	@Test
+	public void testAddLayoutSEOEntryWithCustomTags() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAttribute(
+			_getDDMStructureId() + "ddmFormValues",
+			new String(
+				FileUtil.getBytes(
+					getClass(),
+					"dependencies/custom_meta_tags_ddm_form_values.json"),
+				StandardCharsets.UTF_8));
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			_layout.getLayoutId(), false,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
+			Collections.singletonMap(LocaleUtil.US, "description"),
+			Collections.singletonMap(LocaleUtil.US, "image alt"), 12345, true,
+			Collections.singletonMap(LocaleUtil.US, "title"), serviceContext);
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				_group.getGroupId(), false, _layout.getLayoutId());
+
+		DDMFormValues ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
+			layoutSEOEntry.getDDMStorageId());
+
+		Assert.assertNotNull(ddmFormValues);
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap();
+
+		Collection<List<DDMFormFieldValue>> values =
+			ddmFormFieldValuesMap.values();
+
+		Assert.assertEquals(values.toString(), 1, values.size());
+
+		for (List<DDMFormFieldValue> fieldValues : values) {
+			Assert.assertEquals(fieldValues.toString(), 2, fieldValues.size());
+
+			DDMFormFieldValue nameDDMFormFieldValue = fieldValues.get(0);
+
+			Value nameValue = nameDDMFormFieldValue.getValue();
+
+			Assert.assertEquals(
+				"property1", nameValue.getString(LocaleUtil.US));
+
+			List<DDMFormFieldValue> nestedDDMFormFieldValues =
+				nameDDMFormFieldValue.getNestedDDMFormFieldValues();
+
+			DDMFormFieldValue valueDDMFormFieldValue =
+				nestedDDMFormFieldValues.get(0);
+
+			Value valueValue = valueDDMFormFieldValue.getValue();
+
+			Assert.assertEquals(
+				"content1", valueValue.getString(LocaleUtil.US));
+
+			nameDDMFormFieldValue = fieldValues.get(1);
+
+			nameValue = nameDDMFormFieldValue.getValue();
+
+			Assert.assertEquals(
+				"property2", nameValue.getString(LocaleUtil.US));
+
+			nestedDDMFormFieldValues =
+				nameDDMFormFieldValue.getNestedDDMFormFieldValues();
+
+			valueDDMFormFieldValue = nestedDDMFormFieldValues.get(0);
+
+			valueValue = valueDDMFormFieldValue.getValue();
+
+			Assert.assertEquals(
+				"content2", valueValue.getString(LocaleUtil.US));
+		}
+	}
+
+	@Test
+	public void testAddLayoutSEOEntryWithIncompleteCustomTags()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAttribute(
+			_getDDMStructureId() + "ddmFormValues",
+			new String(
+				FileUtil.getBytes(
+					getClass(),
+					"dependencies/empty_custom_meta_tags_ddm_form_values.json"),
+				StandardCharsets.UTF_8));
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			_layout.getLayoutId(), false,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
+			Collections.singletonMap(LocaleUtil.US, "description"),
+			Collections.singletonMap(LocaleUtil.US, "image alt"), 12345, true,
+			Collections.singletonMap(LocaleUtil.US, "title"), serviceContext);
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				_group.getGroupId(), false, _layout.getLayoutId());
+
+		Assert.assertNotEquals(0, layoutSEOEntry.getDDMStorageId());
+
+		DDMFormValues ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
+			layoutSEOEntry.getDDMStorageId());
+
+		Assert.assertNotNull(ddmFormValues);
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap();
+
+		Collection<List<DDMFormFieldValue>> values =
+			ddmFormFieldValuesMap.values();
+
+		Assert.assertEquals(values.toString(), 0, values.size());
 	}
 
 	@Test
@@ -206,8 +343,33 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
 	}
 
+	private long _getDDMStructureId() throws PortalException {
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			companyGroup.getGroupId(),
+			_classNameLocalService.getClassNameId(
+				LayoutSEOEntry.class.getName()),
+			"custom-meta-tags");
+
+		return ddmStructure.getStructureId();
+	}
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private DDM _ddm;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	private Layout _layout;
 

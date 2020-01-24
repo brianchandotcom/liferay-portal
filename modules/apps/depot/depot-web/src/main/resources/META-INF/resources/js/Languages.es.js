@@ -29,7 +29,7 @@ import React, {useEffect, useState, useRef} from 'react';
 const Languages = ({
 	availableLocales,
 	defaultLocaleId,
-	inheritLocales = false,
+	inheritLocales = true,
 	manageCustomLanguagesURL,
 	portletNamespace,
 	siteAvailableLocales,
@@ -111,7 +111,6 @@ const Languages = ({
 			<ClayTable.Row>
 				<ClayTable.Cell expanded>
 					{displayName}
-					<span className="hide"> {localeId} </span>
 					{isDefault && (
 						<ClayLabel className="ml-3" displayType="info">
 							{Liferay.Language.get('default')}

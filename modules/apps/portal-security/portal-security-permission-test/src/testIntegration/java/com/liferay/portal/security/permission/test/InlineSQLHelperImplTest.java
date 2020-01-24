@@ -300,13 +300,13 @@ public class InlineSQLHelperImplTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"select * from Layout where Layout.plid in (select distinct ",
+				"select * from Layout where (Layout.plid in (select distinct ",
 				"ResourcePermission.primKeyId from ResourcePermission where ",
 				"ResourcePermission.companyId = ? and ResourcePermission.name ",
 				"= ? and ResourcePermission.scope = ? and ",
 				"ResourcePermission.viewActionId = ? and ",
 				"(ResourcePermission.roleId in (?, ?, ?, ?) or Layout.userId ",
-				"= ?)) or Layout.groupId in (?)"),
+				"= ?)) or Layout.groupId in (?))"),
 			dslQuery.toString());
 
 		GroupByStep groupByStep = joinStep.innerJoinON(
@@ -339,12 +339,12 @@ public class InlineSQLHelperImplTest {
 			StringBundler.concat(
 				"select * from Layout inner join PortletPreferences on ",
 				"PortletPreferences.plid = Layout.plid where Layout.companyId ",
-				"= ? and (Layout.plid in (select distinct ",
+				"= ? and Layout.plid in (select distinct ",
 				"ResourcePermission.primKeyId from ResourcePermission where ",
 				"ResourcePermission.companyId = ? and ResourcePermission.name ",
 				"= ? and ResourcePermission.scope = ? and ",
 				"ResourcePermission.viewActionId = ? and ",
-				"(ResourcePermission.roleId in (?, ?) or Layout.userId = ?)))"),
+				"(ResourcePermission.roleId in (?, ?) or Layout.userId = ?))"),
 			dslQuery.toString());
 	}
 

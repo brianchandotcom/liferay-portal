@@ -122,7 +122,9 @@ definition {
 			layoutName = "Similar Results Page",
 			widgetName = "Asset Publisher");
 
-		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+		// Workaround for LPS-107399
+
+		/*WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
@@ -130,7 +132,7 @@ definition {
 			WikiPage.addCP(
 				wikiPageContent = "Wiki Content",
 				wikiPageTitle = "Similar Results Wiki Title ${count}");
-		}
+		}*/
 
 		Navigator.gotoPage(pageName = "Similar Results Page");
 
@@ -252,7 +254,9 @@ definition {
 			key_linkResultTitle = "Similar Results Wiki Title",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
-		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+		// Workaround for LPS-107399
+
+		/*Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results Wiki Title 1");
 
@@ -278,7 +282,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_linkResultTitle = "Similar Results WC Title",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");*/
 	}
 
 	test ConfigureSimilarResultsDocumentFrequency {

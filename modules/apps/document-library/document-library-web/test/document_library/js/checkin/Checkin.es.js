@@ -116,4 +116,33 @@ describe('Checkin', () => {
 			);
 		});
 	});
+
+	it('the callback get the MINOR version of Checkin and set ChangeLog', async () => {
+		const {getByRole, getByLabelText} = _renderCheckinComponent();
+		const callback = jest.fn();
+
+		await act(async () => {
+			Liferay.componentReady(bridgeComponentId).then(({open}) =>
+				open(callback)
+			);
+			const form = await waitForElement(() => getByRole('form'));
+			const ChangeLogField = await waitForElement(() =>
+				getByLabelText('version-notes')
+			);
+			const MinorVersionRadio = await waitForElement(() =>
+				getByLabelText('minor-version')
+			);
+
+			fireEvent.change(ChangeLogField, {
+				target: {value: 'ChangeLog notes'}
+			});
+			fireEvent.click(MinorVersionRadio);
+			fireEvent.submit(form);
+
+			expect(callback).toHaveBeenCalledWith(
+				dlVersionNumberIncreaseValues.MINOR,
+				'ChangeLog notes'
+			);
+		});
+	});
 });

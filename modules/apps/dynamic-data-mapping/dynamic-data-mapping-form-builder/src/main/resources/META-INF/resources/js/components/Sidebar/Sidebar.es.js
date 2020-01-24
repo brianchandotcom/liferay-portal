@@ -569,19 +569,29 @@ class Sidebar extends Component {
 				return name === data.source.dataset.fieldTypeName;
 			});
 
-			const addedToPlaceholder = data.target.parentElement.parentElement.classList.contains(
-				'placeholder'
-			);
+			if (!data.target.parentElement.classList.contains('col-empty')) {
+				dispatch('sectionAdded', {
+					data,
+					fieldType: {
+						...fieldType,
+						editable: true
+					}
+				});
+			} else {
+				const addedToPlaceholder = data.target.parentElement.parentElement.classList.contains(
+					'placeholder'
+				);
 
-			dispatch('fieldAdded', {
-				addedToPlaceholder,
-				data,
-				fieldType: {
-					...fieldType,
-					editable: true,
-				},
-				indexes,
-			});
+				dispatch('fieldAdded', {
+					addedToPlaceholder,
+					data,
+					fieldType: {
+						...fieldType,
+						editable: true
+					},
+					indexes
+				});
+			}
 		}
 	}
 

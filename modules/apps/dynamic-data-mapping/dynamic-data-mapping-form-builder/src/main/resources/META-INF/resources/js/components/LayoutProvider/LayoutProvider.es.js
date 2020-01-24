@@ -35,6 +35,7 @@ import handleFieldEdited from './handlers/fieldEditedHandler.es';
 import handleFieldMoved from './handlers/fieldMovedHandler.es';
 import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
 import handleLanguageIdDeleted from './handlers/languageIdDeletedHandler.es';
+import handleSectionAdded from './handlers/sectionAddedHandler.es';
 import {generateFieldName} from './util/fields.es';
 
 /**
@@ -99,6 +100,7 @@ class LayoutProvider extends Component {
 			ruleAdded: this._handleRuleAdded.bind(this),
 			ruleDeleted: this._handleRuleDeleted.bind(this),
 			ruleSaved: this._handleRuleSaved.bind(this),
+			sectionAdded: this._handleSectionAdded.bind(this),
 			sidebarFieldBlurred: this._handleSidebarFieldBlurred.bind(this),
 			successPageChanged: this._handleSuccessPageChanged.bind(this),
 		};
@@ -478,6 +480,10 @@ class LayoutProvider extends Component {
 		});
 
 		this.emit('rulesModified');
+	}
+
+	_handleSectionAdded(event) {
+		this.setState(handleSectionAdded(this.props, this.state, event));
 	}
 
 	_handleSidebarFieldBlurred() {

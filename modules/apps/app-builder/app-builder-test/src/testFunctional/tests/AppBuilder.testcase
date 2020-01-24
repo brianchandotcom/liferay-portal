@@ -1971,6 +1971,31 @@ definition {
 		TableViewBuilder.save();
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "${myTableViewName}");
+
+		App.add(
+			appTitle = "${myAppName}",
+			deployOption = "Product Menu",
+			formViewName = "${myFormViewName}",
+			tableViewName = "${myTableViewName}");
+		
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "${myAppName}");
+
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.editText(
+			fieldName = "Full Name",
+			fieldValue = "Test");
+
+		FormViewBuilder.editText(
+			fieldName = "Nickname",
+			fieldValue = "Tester");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Test");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Tester");
 	}
 
 }

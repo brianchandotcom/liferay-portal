@@ -12,7 +12,7 @@
 <!--FIELDS_SIDEBAR-->
 <tr>
 	<td>ADD_FIELD_TYPE</td>
-	<td>//div[contains(@class,'autofit-col')]//span[contains(text(),'${key_fieldType}')]</td>
+	<td>//div[contains(@class,'field-type')]//span[contains(text(),'${key_fieldType}')]</td>
 	<td></td>
 </tr>
 

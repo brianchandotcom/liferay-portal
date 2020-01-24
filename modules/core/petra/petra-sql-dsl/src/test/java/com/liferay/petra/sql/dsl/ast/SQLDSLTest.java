@@ -39,6 +39,7 @@ import com.liferay.petra.sql.dsl.expressions.impl.WhenThen;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.HavingStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.query.LimitStep;
 import com.liferay.petra.sql.dsl.query.OrderByExpression;
@@ -46,11 +47,13 @@ import com.liferay.petra.sql.dsl.query.OrderByInfo;
 import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.petra.sql.dsl.query.impl.From;
 import com.liferay.petra.sql.dsl.query.impl.GroupBy;
+import com.liferay.petra.sql.dsl.query.impl.Having;
 import com.liferay.petra.sql.dsl.query.impl.Join;
 import com.liferay.petra.sql.dsl.query.impl.JoinType;
 import com.liferay.petra.sql.dsl.query.impl.Limit;
 import com.liferay.petra.sql.dsl.query.impl.OrderBy;
 import com.liferay.petra.sql.dsl.query.impl.OrderByExpressionImpl;
+import com.liferay.petra.sql.dsl.query.impl.QueryExpression;
 import com.liferay.petra.sql.dsl.query.impl.QueryTable;
 import com.liferay.petra.sql.dsl.query.impl.Select;
 import com.liferay.petra.sql.dsl.query.impl.Union;
@@ -88,12 +91,14 @@ public class SQLDSLTest {
 				assertClasses.add(CaseWhenThen.class);
 				assertClasses.add(Column.class);
 				assertClasses.add(DefaultASTNodeListener.class);
-				assertClasses.add(ElseEnd.class);
-				assertClasses.add(From.class);
 				assertClasses.add(DSLFunction.class);
 				assertClasses.add(DSLFunctionType.class);
 				assertClasses.add(DSLFunctionUtil.class);
+				assertClasses.add(DSLQueryUtil.class);
+				assertClasses.add(ElseEnd.class);
+				assertClasses.add(From.class);
 				assertClasses.add(GroupBy.class);
+				assertClasses.add(Having.class);
 				assertClasses.add(Join.class);
 				assertClasses.add(JoinType.class);
 				assertClasses.add(Limit.class);
@@ -102,8 +107,8 @@ public class SQLDSLTest {
 				assertClasses.add(OrderBy.class);
 				assertClasses.add(OrderByExpressionImpl.class);
 				assertClasses.add(PredicateImpl.class);
+				assertClasses.add(QueryExpression.class);
 				assertClasses.add(QueryTable.class);
-				assertClasses.add(DSLQueryUtil.class);
 				assertClasses.add(Scalar.class);
 				assertClasses.add(ScalarList.class);
 				assertClasses.add(Select.class);
@@ -285,6 +290,12 @@ public class SQLDSLTest {
 			).groupBy(
 				ReferenceExampleTable.TABLE.mainExampleId,
 				ReferenceExampleTable.TABLE.name
+			).having(
+				DSLFunctionUtil.count(
+					ReferenceExampleTable.TABLE.name
+				).gt(
+					3L
+				)
 			).as(
 				referenceExampleTable.getName()
 			),
@@ -302,9 +313,9 @@ public class SQLDSLTest {
 				"select * from MainExample left join (select ",
 				"ReferenceExample.mainExampleId, ReferenceExample.name from ",
 				"ReferenceExample group by ReferenceExample.mainExampleId, ",
-				"ReferenceExample.name) referenceExample on ",
-				"referenceExample.mainExampleId = MainExample.mainExampleId ",
-				"order by ReferenceExample.name asc"),
+				"ReferenceExample.name having count(ReferenceExample.name) > ",
+				"?) referenceExample on referenceExample.mainExampleId = ",
+				"MainExample.mainExampleId order by ReferenceExample.name asc"),
 			dslQuery.toSQL(defaultASTNodeListener));
 
 		Assert.assertArrayEquals(
@@ -463,6 +474,39 @@ public class SQLDSLTest {
 	}
 
 	@Test
+	public void testHaving() {
+		HavingStep havingStep = DSLQueryUtil.select(
+			MainExampleTable.TABLE.mainExampleId
+		).from(
+			MainExampleTable.TABLE
+		).groupBy(
+			MainExampleTable.TABLE.name
+		);
+
+		OrderByStep orderByStep = havingStep.having(null);
+
+		Assert.assertEquals(
+			"select MainExample.mainExampleId from MainExample group by " +
+				"MainExample.name",
+			orderByStep.toString());
+
+		Predicate predicate = DSLFunctionUtil.count(
+			MainExampleTable.TABLE.name
+		).gt(
+			10L
+		);
+
+		Having having = new Having(havingStep, predicate);
+
+		Assert.assertEquals(
+			"select MainExample.mainExampleId from MainExample group by " +
+				"MainExample.name having count(MainExample.name) > ?",
+			having.toString());
+
+		Assert.assertSame(predicate, having.getPredicate());
+	}
+
+	@Test
 	public void testJoin() {
 		Predicate onPredicate = ReferenceExampleTable.TABLE.mainExampleId.eq(
 			MainExampleTable.TABLE.mainExampleId);
@@ -532,6 +576,37 @@ public class SQLDSLTest {
 				"ReferenceExample.mainExampleId is NULL order by ",
 				"MainExample.flag desc, MainExample.name asc"),
 			dslQuery.toString());
+	}
+
+	@Test
+	public void testOperands() {
+		Assert.assertEquals("and", Operand.AND.toString());
+
+		Assert.assertEquals("=", Operand.EQUAL.toString());
+
+		Assert.assertEquals(">", Operand.GREATER_THAN.toString());
+
+		Assert.assertEquals(">=", Operand.GREATER_THAN_OR_EQUAL.toString());
+
+		Assert.assertEquals("in", Operand.IN.toString());
+
+		Assert.assertEquals("is", Operand.IS.toString());
+
+		Assert.assertEquals("is not", Operand.IS_NOT.toString());
+
+		Assert.assertEquals("<", Operand.LESS_THAN.toString());
+
+		Assert.assertEquals("<=", Operand.LESS_THAN_OR_EQUAL.toString());
+
+		Assert.assertEquals("like", Operand.LIKE.toString());
+
+		Assert.assertEquals("not like", Operand.NOT_LIKE.toString());
+
+		Assert.assertEquals("!=", Operand.NOT_EQUAL.toString());
+
+		Assert.assertEquals("not in", Operand.NOT_IN.toString());
+
+		Assert.assertEquals("or", Operand.OR.toString());
 	}
 
 	@Test

@@ -14,16 +14,20 @@
 
 package com.liferay.petra.sql.dsl.query;
 
-import com.liferay.petra.sql.dsl.expressions.Expression;
-import com.liferay.petra.sql.dsl.query.impl.GroupBy;
+import com.liferay.petra.sql.dsl.expressions.Predicate;
+import com.liferay.petra.sql.dsl.query.impl.Having;
 
 /**
  * @author Preston Crary
  */
-public interface GroupByStep extends OrderByStep {
+public interface HavingStep extends OrderByStep {
 
-	public default HavingStep groupBy(Expression<?>... expressions) {
-		return new GroupBy(this, expressions);
+	public default OrderByStep having(Predicate predicate) {
+		if (predicate == null) {
+			return this;
+		}
+
+		return new Having(this, predicate);
 	}
 
 }

@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -84,6 +87,8 @@ public class AssetRendererFactoryLookupImpl
 			(Class<AssetRendererFactory<?>>)
 				(Class<?>)AssetRendererFactory.class,
 			new AssetRendererFactoryServiceTrackerCustomizer());
+
+		_activated = Instant.now();
 	}
 
 	@Deactivate
@@ -105,13 +110,24 @@ public class AssetRendererFactoryLookupImpl
 		return _initializedAssetRendererFactories.contains(className);
 	}
 
+	private long _secondsElapsedSinceActivated() {
+		Instant now = Instant.now();
+
+		Duration elapsedDuration = Duration.between(_activated, now);
+
+		return elapsedDuration.getSeconds();
+	}
+
 	private void _waitAssetRendererFactoryLoaded(String className) {
 		CountDownLatch countDownLatch =
 			_assetRenderFactoriesCountDownLatchMap.computeIfAbsent(
 				className, key -> new CountDownLatch(1));
 
+		long secondsToWait = Math.max(
+			0, _INDEX_ON_STARTUP_DELAY - _secondsElapsedSinceActivated());
+
 		try {
-			countDownLatch.await(_INDEX_ON_STARTUP_DELAY, TimeUnit.SECONDS);
+			countDownLatch.await(secondsToWait, TimeUnit.SECONDS);
 		}
 		catch (InterruptedException interruptedException) {
 			if (_log.isInfoEnabled()) {
@@ -131,6 +147,7 @@ public class AssetRendererFactoryLookupImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetRendererFactoryLookupImpl.class);
 
+	private Instant _activated;
 	private final Map<String, CountDownLatch>
 		_assetRenderFactoriesCountDownLatchMap = new ConcurrentHashMap<>();
 	private BundleContext _bundleContext;

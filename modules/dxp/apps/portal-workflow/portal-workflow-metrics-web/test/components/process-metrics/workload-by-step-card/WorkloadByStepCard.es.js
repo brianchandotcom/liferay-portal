@@ -9,15 +9,24 @@
  * distribution rights of the Software.
  */
 
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
-import renderer from 'react-test-renderer';
 
 import WorkloadByStepCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-step-card/WorkloadByStepCard.es';
-import {MockRouter as Router} from '../../../mock/MockRouter.es';
-import fetch from '../../../mock/fetch.es';
-import fetchFailure from '../../../mock/fetchFailure.es';
+import {MockRouter} from '../../../mock/MockRouter.es';
 
-test('Should component receive props', () => {
+import '@testing-library/jest-dom/extend-expect';
+
+const routeParams = {
+	page: 1,
+	pageSize: 10,
+	processId: '12345',
+	sort: 'overdueTaskCount:desc'
+};
+
+describe('The WorkloadByStepCard component should', () => {
+	afterAll(cleanup);
+
 	const data = {
 		items: [
 			{
@@ -30,137 +39,102 @@ test('Should component receive props', () => {
 		totalCount: 1
 	};
 
-	const component = mount(
-		<Router client={fetch(data)} getClient={jest.fn(() => fetch(data))}>
-			<WorkloadByStepCard page={1} pageSize={10} processId={35315} />
-		</Router>
-	);
+	let getByTestId;
 
-	const instance = component.find(WorkloadByStepCard).instance();
+	const clientMock = {
+		get: jest.fn().mockResolvedValue({data})
+	};
 
-	instance.componentWillReceiveProps({
-		...instance.props,
-		page: 2,
-		sort: 'name:desc'
+	beforeAll(() => {
+		const component = render(
+			<MockRouter client={clientMock}>
+				<WorkloadByStepCard {...routeParams}></WorkloadByStepCard>
+			</MockRouter>
+		);
+
+		getByTestId = component.getByTestId;
 	});
 
-	expect(component).toMatchSnapshot();
-});
+	test('Load table component with request data and navigation links', () => {
+		const workloadByStepTable = getByTestId('workloadByStepTable');
+		const tableItems = workloadByStepTable.children[1].children[0].children;
 
-test('Should component set error state after request fails', () => {
-	const component = mount(
-		<Router
-			client={fetchFailure()}
-			getClient={jest.fn(() => fetchFailure())}
-		>
-			<WorkloadByStepCard page={1} pageSize={10} processId={35315} />
-		</Router>
-	);
+		expect(tableItems[0]).toHaveTextContent('Task Name');
+		expect(tableItems[1]).toHaveTextContent(0);
+		expect(tableItems[2]).toHaveTextContent(1);
+		expect(tableItems[3]).toHaveTextContent(1);
 
-	const instance = component.find(WorkloadByStepCard).instance();
-
-	instance.setState({
-		loading: false
-	});
-
-	return instance.loadData().catch(() => {
-		expect(instance.state.errors).toEqual(
-			'There was a problem retrieving data. Please try reloading the page.'
+		expect(tableItems[1].innerHTML).toContain(
+			'/instance/12345/20/1?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&amp;filters.statuses%5B0%5D=Pending&amp;filters.slaStatuses%5B0%5D=Overdue'
+		);
+		expect(tableItems[2].innerHTML).toContain(
+			'/instance/12345/20/1?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&amp;filters.statuses%5B0%5D=Pending&amp;filters.slaStatuses%5B0%5D=OnTime'
+		);
+		expect(tableItems[3].innerHTML).toContain(
+			'/instance/12345/20/1?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&amp;filters.statuses%5B0%5D=Pending'
 		);
 	});
 });
 
-test('Should component shows empty state when items is undefined', () => {
-	const component = mount(
-		<Router client={fetch({})} getClient={jest.fn(() => fetch({}))}>
-			<WorkloadByStepCard />
-		</Router>
-	);
+describe('When request fails the WorkloadByStepCard component should', () => {
+	const clientMock = {
+		get: jest.fn().mockRejectedValueOnce(new Error('request-failure'))
+	};
+	let getByTestId;
 
-	const instance = component.find(WorkloadByStepCard).instance();
+	beforeAll(() => {
+		const component = render(
+			<MockRouter client={clientMock}>
+				<WorkloadByStepCard {...routeParams}></WorkloadByStepCard>
+			</MockRouter>
+		);
 
-	instance.setState({
-		items: undefined
+		getByTestId = component.getByTestId;
 	});
 
-	expect(component).toMatchSnapshot();
+	test('Show error view when request fails', () => {
+		const errorState = getByTestId('emptyState');
+		expect(errorState).toHaveTextContent(
+			'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+		);
+
+		const reloadPage = getByTestId('reloadPage');
+		expect(reloadPage).toHaveTextContent('reload-page');
+	});
 });
 
-test('Should not reload component while loading state is true', () => {
-	const component = mount(
-		<Router client={fetch(null)} getClient={jest.fn(() => fetch(null))}>
-			<WorkloadByStepCard
-				page={1}
-				pageSize={10}
-				processId={35315}
-				sort="name:desc"
-			/>
-		</Router>
-	);
+describe('When request is pending the WorkloadByStepCard component should', () => {
+	test('Show loading view', () => {
+		const {getByTestId} = render(<WorkloadByStepCard.Loading />);
 
-	const instance = component.find(WorkloadByStepCard).instance();
-
-	instance.state.loading = true;
-
-	const result = instance.loadData({...instance.props, page: 2});
-
-	expect(result).toEqual(undefined);
+		const loadingState = getByTestId('loadingState');
+		expect(loadingState.children[0]).toHaveClass('loading-animation');
+		cleanup();
+	});
 });
 
-test('Should render component', () => {
-	const data = {
-		items: [
-			{
-				instanceCount: 1,
-				name: 'Task Name',
-				onTimeInstanceCount: 1,
-				overdueInstanceCount: 0
-			}
-		],
-		totalCount: 1
+describe('When request returns do data the WorkloadByStepCard component should', () => {
+	const data = {};
+
+	const clientMock = {
+		get: jest.fn().mockResolvedValue({data})
 	};
 
-	const component = mount(
-		<Router client={fetch(data)} getClient={jest.fn(() => fetch(data))}>
-			<WorkloadByStepCard page={1} pageSize={10} processId={35315} />
-		</Router>
-	);
+	let getByTestId;
 
-	const instance = component.find(WorkloadByStepCard).instance();
+	beforeAll(() => {
+		const component = render(
+			<MockRouter client={clientMock}>
+				<WorkloadByStepCard />
+			</MockRouter>
+		);
+		getByTestId = component.getByTestId;
+	});
 
-	instance.componentWillReceiveProps({page: 2});
-
-	expect(component).toMatchSnapshot();
-});
-
-test('Should render component with empty data', () => {
-	const data = {
-		items: null,
-		totalCount: 0
-	};
-
-	const component = renderer.create(
-		<Router client={fetch(data)} getClient={jest.fn(() => fetch(data))}>
-			<WorkloadByStepCard processId={35315} />
-		</Router>
-	);
-
-	const tree = component.toJSON();
-
-	expect(tree).toMatchSnapshot();
-});
-
-test('Should render component with error state', () => {
-	const component = renderer.create(
-		<Router
-			client={fetchFailure()}
-			getClient={jest.fn(() => fetchFailure())}
-		>
-			<WorkloadByStepCard processId={35315} />
-		</Router>
-	);
-
-	const tree = component.toJSON();
-
-	expect(tree).toMatchSnapshot();
+	test('Show empty view', () => {
+		const emptyState = getByTestId('emptyState');
+		expect(emptyState).toHaveTextContent(
+			'there-are-no-pending-items-at-the-moment'
+		);
+	});
 });

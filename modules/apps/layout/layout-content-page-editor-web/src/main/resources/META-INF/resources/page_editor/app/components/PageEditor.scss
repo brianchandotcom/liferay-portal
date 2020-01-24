@@ -79,13 +79,19 @@
 	}
 
 	&__root {
-		box-shadow: inset 0 0 0 0 $colorPrimary;
-		min-height: 50vh;
+		background: #f7faff;
+		box-shadow: inset 0 0 0 2px #b3cdff;
+		padding: 10vh 0;
 		transition: box-shadow ease 0.3s;
 		will-change: box-shadow;
 
 		&--active {
 			box-shadow: inset 0 0 0 4px $colorPrimary;
+		}
+
+		.taglib-empty-result-message-header {
+			max-width: 120px;
+			padding-top: 160px;
 		}
 	}
 }

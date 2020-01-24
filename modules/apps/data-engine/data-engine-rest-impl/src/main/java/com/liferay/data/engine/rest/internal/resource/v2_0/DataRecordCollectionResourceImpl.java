@@ -94,10 +94,9 @@ public class DataRecordCollectionResourceImpl
 			spiDataRecordCollectionResource =
 				_getSPIDataRecordCollectionResource();
 
-		return spiDataRecordCollectionResource.
-			getDataDefinitionDataRecordCollectionsPage(
-				contextAcceptLanguage, contextCompany, dataDefinitionId,
-				keywords, pagination);
+		return spiDataRecordCollectionResource.getDataRecordCollections(
+			dataDefinitionId, keywords,
+			contextAcceptLanguage.getPreferredLocale(), pagination);
 	}
 
 	@Override
@@ -184,11 +183,10 @@ public class DataRecordCollectionResourceImpl
 			spiDataRecordCollectionResource =
 				_getSPIDataRecordCollectionResource();
 
-		return spiDataRecordCollectionResource.
-			postDataDefinitionDataRecordCollection(
-				contextCompany, dataDefinitionId, dataRecordCollectionKey,
-				dataRecordCollection.getDescription(),
-				dataRecordCollection.getName());
+		return spiDataRecordCollectionResource.addDataRecordCollection(
+			dataDefinitionId, dataRecordCollectionKey,
+			dataRecordCollection.getDescription(),
+			dataRecordCollection.getName());
 	}
 
 	@Override
@@ -205,7 +203,7 @@ public class DataRecordCollectionResourceImpl
 			spiDataRecordCollectionResource =
 				_getSPIDataRecordCollectionResource();
 
-		return spiDataRecordCollectionResource.putDataRecordCollection(
+		return spiDataRecordCollectionResource.updateDataRecordCollection(
 			dataRecordCollectionId, dataRecordCollection.getDescription(),
 			dataRecordCollection.getName());
 	}

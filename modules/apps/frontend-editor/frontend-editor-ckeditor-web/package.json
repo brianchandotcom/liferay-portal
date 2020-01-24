@@ -1,7 +1,9 @@
 {
 	"dependencies": {
+		"ckeditor4-react": "1.0.1",
 		"liferay-ckeditor": "4.11.4-liferay.2"
 	},
+	"main": "index.js",
 	"name": "frontend-editor-ckeditor-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

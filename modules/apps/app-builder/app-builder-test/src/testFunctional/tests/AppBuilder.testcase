@@ -1985,7 +1985,7 @@ definition {
 		AppBuilderAdmin.add();
 
 		FormViewBuilder.editText(
-			fieldName = "Full Name",
+			fieldName = "FullName",
 			fieldValue = "Test");
 
 		FormViewBuilder.editText(
@@ -1996,6 +1996,23 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Test");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Tester");
+
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.editText(
+			fieldName = "FullName",
+			fieldValue = "Best");
+
+		FormViewBuilder.editText(
+			fieldName = "Nickname",
+			fieldValue = "Bester");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.viewItem(itemName = "Test");
+
+		DetailsView.validateEntry(entry = "Test");
+		DetailsView.validateEntry(entry = "Tester");
 	}
 
 }

@@ -22,7 +22,8 @@ export default function updateExperiencePriority({subtarget, target}, config) {
 				newPriority: target.priority,
 				segmentsExperienceId: target.segmentsExperienceId
 			},
-			config
+			config,
+			dispatch
 		}).then(() => {
 			return dispatch(
 				updateExperiencePriorityAction({subtarget, target})

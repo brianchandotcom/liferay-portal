@@ -21,7 +21,8 @@ export default function selectExperience(id, config) {
 			body: {
 				segmentsExperienceId: id
 			},
-			config
+			config,
+			dispatch
 		})
 			.then(portletIds => {
 				return dispatch(

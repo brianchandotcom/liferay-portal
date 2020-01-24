@@ -26,7 +26,8 @@ export default function removeExperience(
 				body: {
 					segmentsExperienceId: config.defaultSegmentsExperienceId
 				},
-				config
+				config,
+				dispatch
 			}).then(portletIds => {
 				dispatch(
 					selectExperienceAction({
@@ -40,7 +41,8 @@ export default function removeExperience(
 						fragmentEntryLinkIds,
 						segmentsExperienceId
 					},
-					config
+					config,
+					dispatch
 				}).then(() => {
 					return dispatch(
 						deleteExperienceAction({
@@ -55,7 +57,8 @@ export default function removeExperience(
 					fragmentEntryLinkIds,
 					segmentsExperienceId
 				},
-				config
+				config,
+				dispatch
 			}).then(() => {
 				return dispatch(
 					deleteExperienceAction({

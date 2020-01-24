@@ -27,7 +27,8 @@ export default function updateExperience(
 				segmentsEntryId,
 				segmentsExperienceId
 			},
-			config
+			config,
+			dispatch
 		}).then(() => {
 			return dispatch(
 				updateExperienceAction({

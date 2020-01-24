@@ -8,7 +8,7 @@
 		"liferay-frontend-common-css": "1.0.4",
 		"liferay-karma-alloy-config": "0.0.15",
 		"liferay-karma-config": "0.0.3",
-		"liferay-npm-scripts": "20.0.0",
+		"liferay-npm-scripts": "21.0.0",
 		"metal-jest-serializer": "2.0.0"
 	},
 	"private": true,

@@ -91,14 +91,6 @@ const ManageLanguages = ({
 	return (
 		<div className="container">
 			<ClayTable borderless headVerticalAlignment="middle">
-				<ClayTable.Head>
-					<ClayTable.Row>
-						<ClayTable.Cell headingCell headingTitle>
-							{Liferay.Language.get('language')}
-						</ClayTable.Cell>
-					</ClayTable.Row>
-				</ClayTable.Head>
-
 				<ClayTable.Body>
 					{availableLocales.map(locale => {
 						return (

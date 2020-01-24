@@ -119,6 +119,16 @@ definition {
 			layoutName = "Similar Results Page",
 			widgetName = "Asset Publisher");
 
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
+
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		for (var count : list "1,2,3") {
+			WikiPage.addCP(
+				wikiPageContent = "Wiki Content",
+				wikiPageTitle = "Similar Results Wiki Title ${count}");
+		}
+
 		Navigator.gotoPage(pageName = "Similar Results Page");
 
 		Portlet.addPG(portletName = "Similar Results");
@@ -151,6 +161,10 @@ definition {
 			key_linkResultTitle = "Similar Results WC Title",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Wiki Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results DM Title 1");
@@ -173,6 +187,10 @@ definition {
 
 		AssertElementNotPresent(
 			key_linkResultTitle = "Similar Results WC Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Wiki Title",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
@@ -199,6 +217,10 @@ definition {
 			key_linkResultTitle = "Similar Results WC Title",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Wiki Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results WC Title 1");
@@ -221,6 +243,38 @@ definition {
 
 		AssertElementNotPresent(
 			key_linkResultTitle = "Similar Results MB Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Wiki Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results Wiki Title 1");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results Wiki Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results Wiki Title 3",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Blogs Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results DM Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results MB Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results WC Title",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 

@@ -224,6 +224,35 @@ public class DataDefinition {
 	protected Date dateModified;
 
 	@Schema
+	@Valid
+	public DataLayout getDefaultDataLayout() {
+		return defaultDataLayout;
+	}
+
+	public void setDefaultDataLayout(DataLayout defaultDataLayout) {
+		this.defaultDataLayout = defaultDataLayout;
+	}
+
+	@JsonIgnore
+	public void setDefaultDataLayout(
+		UnsafeSupplier<DataLayout, Exception> defaultDataLayoutUnsafeSupplier) {
+
+		try {
+			defaultDataLayout = defaultDataLayoutUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DataLayout defaultDataLayout;
+
+	@Schema
 	public String getDefaultLanguageId() {
 		return defaultLanguageId;
 	}
@@ -548,6 +577,16 @@ public class DataDefinition {
 			sb.append(liferayToJSONDateFormat.format(dateModified));
 
 			sb.append("\"");
+		}
+
+		if (defaultDataLayout != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultDataLayout\": ");
+
+			sb.append(String.valueOf(defaultDataLayout));
 		}
 
 		if (defaultLanguageId != null) {

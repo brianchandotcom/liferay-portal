@@ -48,7 +48,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 					<%
 					DepotEntry depotEntry = (DepotEntry)row.getObject();
 
-					Group depotEntryGroup = GroupLocalServiceUtil.getGroup(depotEntry.getGroupId());
+					Group depotEntryGroup = depotEntry.getGroup();
 
 					row.setData(depotAdminManagementToolbarDisplayContext.getRowData(depotEntry));
 					%>

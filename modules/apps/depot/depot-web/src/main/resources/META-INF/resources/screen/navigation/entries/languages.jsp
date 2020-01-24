@@ -19,7 +19,7 @@
 <%
 DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT_ENTRY);
 
-Group group = GroupLocalServiceUtil.getGroup(depotEntry.getGroupId());
+Group group = depotEntry.getGroup();
 
 String nameMap = JSONFactoryUtil.looseSerialize(group.getNameMap());
 

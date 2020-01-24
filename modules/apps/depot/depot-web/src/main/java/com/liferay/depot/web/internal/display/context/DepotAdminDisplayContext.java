@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -116,12 +115,9 @@ public class DepotAdminDisplayContext {
 		return "depotEntries";
 	}
 
-	public String getViewDepotURL(DepotEntry depotEntry)
-		throws PortalException {
-
+	public String getViewDepotURL(DepotEntry depotEntry) {
 		return _groupURLProvider.getGroupURL(
-			GroupLocalServiceUtil.getGroup(depotEntry.getGroupId()),
-			_liferayPortletRequest);
+			depotEntry.getGroup(), _liferayPortletRequest);
 	}
 
 	public boolean isDisplayStyleDescriptive() {

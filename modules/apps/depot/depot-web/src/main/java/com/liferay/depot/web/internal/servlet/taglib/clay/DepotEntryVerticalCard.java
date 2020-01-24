@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,7 +51,7 @@ public class DepotEntryVerticalCard
 		super(depotEntry, rowChecker);
 
 		_depotEntry = depotEntry;
-		_group = GroupLocalServiceUtil.getGroup(depotEntry.getGroupId());
+		_group = depotEntry.getGroup();
 		_groupURLProvider = groupURLProvider;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -66,7 +65,7 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 			DepotEntry depotEntry = _depotEntryService.getDepotEntry(
 				depotEntryId);
 
-			Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
+			Group group = depotEntry.getGroup();
 
 			UnicodeProperties depotAppCustomizationProperties =
 				PropertiesParamUtil.getProperties(
@@ -112,8 +111,5 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DepotEntryService _depotEntryService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 }

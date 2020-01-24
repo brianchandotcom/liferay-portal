@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -129,9 +128,6 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DepotEntryService _depotEntryService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

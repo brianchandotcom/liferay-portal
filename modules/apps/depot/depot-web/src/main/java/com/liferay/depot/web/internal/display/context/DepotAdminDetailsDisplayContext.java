@@ -21,7 +21,6 @@ import com.liferay.depot.web.internal.application.controller.DepotApplicationCon
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -63,7 +62,7 @@ public class DepotAdminDetailsDisplayContext {
 			DepotEntry depotEntry = DepotEntryServiceUtil.getDepotEntry(
 				getDepotEntryId());
 
-			_group = GroupLocalServiceUtil.getGroup(depotEntry.getGroupId());
+			_group = depotEntry.getGroup();
 		}
 
 		return _group;

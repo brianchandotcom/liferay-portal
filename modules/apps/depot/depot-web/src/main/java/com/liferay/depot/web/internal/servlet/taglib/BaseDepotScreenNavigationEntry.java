@@ -24,7 +24,6 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -75,7 +74,7 @@ public abstract class BaseDepotScreenNavigationEntry
 		DepotEntry depotEntry = (DepotEntry)httpServletRequest.getAttribute(
 			DepotAdminWebKeys.DEPOT_ENTRY);
 
-		Group group = groupLocalService.fetchGroup(depotEntry.getGroupId());
+		Group group = depotEntry.getGroup();
 
 		httpServletRequest.setAttribute(
 			AssetAutoTaggerConfiguration.class.getName(),
@@ -122,9 +121,6 @@ public abstract class BaseDepotScreenNavigationEntry
 	@Reference
 	protected AssetAutoTaggerConfigurationFactory
 		assetAutoTaggerConfigurationFactory;
-
-	@Reference
-	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected JSPRenderer jspRenderer;

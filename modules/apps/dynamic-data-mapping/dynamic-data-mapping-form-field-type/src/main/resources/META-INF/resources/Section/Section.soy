@@ -1,0 +1,58 @@
+{namespace Section}
+
+{template .render}
+	{@param activePage: number}
+	{@param name: string}
+	{@param spritemap: string}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handleFieldFocused: any}
+	{@param? displayErrors: bool}
+	{@param? editable: bool}
+	{@param? errorMessage: string}
+	{@param? id: string}
+	{@param? label: string}
+	{@param? pageIndex: number}
+	{@param? readOnly: bool}
+	{@param? repeatable: bool}
+	{@param? required: bool}
+	{@param? rows: list<?>}
+	{@param? showLabel: bool}
+	{@param? tip: string}
+	{@param? tooltip: string}
+	{@param? valid: bool}
+	{@param? visible: bool}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call PageRenderer.rows}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
+				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleFieldClicked: $_handleFieldClicked /}
+				{param _handleFieldEdited: $_handleFieldEdited /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
+				{param activePage: $activePage /}
+				{param editable: $editable /}
+				{param pageIndex: $pageIndex /}
+				{param rows: $rows /}
+				{param spritemap: $spritemap /}
+			{/call}
+		{/param}
+		{param displayErrors: $displayErrors /}
+		{param errorMessage: $errorMessage /}
+		{param id: $id /}
+		{param label: $label /}
+		{param name: $name /}
+		{param readOnly: $readOnly /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param tooltip: $tooltip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
+	{/call}
+{/template}

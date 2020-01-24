@@ -143,6 +143,11 @@ public class DepotEntryWrapper
 		return model.getDepotEntryId();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Group getGroup() {
+		return model.getGroup();
+	}
+
 	/**
 	 * Returns the group ID of this depot entry.
 	 *

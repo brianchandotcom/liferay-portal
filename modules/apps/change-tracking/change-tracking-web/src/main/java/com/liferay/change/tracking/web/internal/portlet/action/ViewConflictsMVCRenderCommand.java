@@ -21,7 +21,6 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
-import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -97,25 +96,19 @@ public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(CTWebKeys.CT_COLLECTION, ctCollection);
 			renderRequest.setAttribute(
-				CTWebKeys.CT_DISPLAY_RENDERER_REGISTRY,
-				_ctDisplayRendererRegistry);
-			renderRequest.setAttribute(
 				CTWebKeys.RESOLVED_CONFLICTS, resolvedConflicts);
 			renderRequest.setAttribute(
 				CTWebKeys.UNRESOLVED_CONFLICTS, unresolvedConflicts);
 
 			return "/change_lists/conflicts.jsp";
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference
-	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

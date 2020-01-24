@@ -53,7 +53,7 @@ page import="com.liferay.portal.kernel.util.ObjectValuePair" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
-
+<%@ page import="com.liferay.change.tracking.service.CTEntryLocalServiceUtil" %>
 <%@ page import="java.util.Date" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@

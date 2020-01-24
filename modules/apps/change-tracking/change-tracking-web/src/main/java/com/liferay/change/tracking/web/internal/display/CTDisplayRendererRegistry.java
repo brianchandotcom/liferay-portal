@@ -21,19 +21,28 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeClosable;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.util.Date;
 import java.util.Locale;
+
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -146,6 +155,78 @@ public class CTDisplayRendererRegistry {
 		return name;
 	}
 
+	public <T extends CTModel<T>> String getViewURL(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse, CTEntry ctEntry) {
+
+		CTDisplayRenderer<T> ctDisplayRenderer =
+			_ctDisplayServiceTrackerMap.getService(
+				ctEntry.getModelClassNameId());
+
+		if (ctDisplayRenderer == null) {
+			return null;
+		}
+
+		CTService<T> ctService = _ctServiceServiceTrackerMap.getService(
+			ctEntry.getModelClassNameId());
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					ctEntry.getCtCollectionId())) {
+
+			T ctModel = ctService.updateWithUnsafeFunction(
+				ctPersistence -> ctPersistence.fetchByPrimaryKey(
+					ctEntry.getModelClassPK()));
+
+			if (ctModel == null) {
+				return null;
+			}
+
+			Date modifiedDate = ctEntry.getModifiedDate();
+
+			String age = _language.format(
+				liferayPortletRequest.getLocale(), "x-ago",
+				_language.getTimeDescription(
+					liferayPortletRequest.getLocale(),
+					System.currentTimeMillis() - modifiedDate.getTime(), true));
+
+			String changeTypeName = "modified";
+
+			if (ctEntry.getChangeType() ==
+					CTConstants.CT_CHANGE_TYPE_ADDITION) {
+
+				changeTypeName = "added";
+			}
+			else if (ctEntry.getChangeType() ==
+						CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+				changeTypeName = "deleted";
+			}
+
+			String title = StringBundler.concat(
+				getTypeName(liferayPortletRequest.getLocale(), ctEntry), " ",
+				changeTypeName, " by ", ctEntry.getUserName(), " ", age);
+
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+			try {
+				portletURL.setWindowState(LiferayWindowState.POP_UP);
+			}
+			catch (WindowStateException windowStateException) {
+				ReflectionUtil.throwException(windowStateException);
+			}
+
+			portletURL.setParameter(
+				"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+			portletURL.setParameter("mvcPath", "/change_lists/view_entry.jsp");
+
+			return StringBundler.concat(
+				"javascript:Liferay.Util.openWindow({dialog:{destroyOnHide:",
+				"true},title:'", title, "',uri:'", portletURL.toString(),
+				"'});");
+		}
+	}
+
 	public <T extends CTModel<T>> void renderCTEntry(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, CTEntry ctEntry,
@@ -252,6 +333,9 @@ public class CTDisplayRendererRegistry {
 	private ServiceTrackerMap<Long, CTDisplayRenderer>
 		_ctDisplayServiceTrackerMap;
 	private ServiceTrackerMap<Long, CTService> _ctServiceServiceTrackerMap;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ResourceActions _resourceActions;

@@ -150,7 +150,11 @@ public class PluginAutoDeployListenerHelper {
 	public boolean isPortletPlugin() throws AutoDeployException {
 		if (isMatchingFile(
 				"WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD, false) ||
-			isMatchingFile("WEB-INF/beans.xml", false)) {
+			isMatchingFile("WEB-INF/beans.xml", false) ||
+			isMatchingFile(
+				"WEB-INF/spring-context/portlet-application-context.xml",
+				false) ||
+			isMatchingFile("WEB-INF/applicationContext.xml", false)) {
 
 			return true;
 		}

@@ -71,7 +71,6 @@ deployDependencies {
 	from configurations.compileOnly
 
 	include "swagger-annotations-*.jar"
-	include "validation-api-*.jar"
 }
 
 jar {

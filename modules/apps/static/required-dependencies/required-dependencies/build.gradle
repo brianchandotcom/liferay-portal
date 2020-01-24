@@ -27,6 +27,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "org.osgi.service.http", version: "3.5.0-20150611.165350-3.LIFERAY-PATCHED-2"
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.3"
 	compileOnly group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", version: "1.2.2"
+	compileOnly group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
 	compileOnly group: "org.apache.aries.cdi", name: "org.apache.aries.cdi.extender", version: "1.0.1-20190213.211706-2"
 	compileOnly group: "org.apache.aries.cdi", name: "org.apache.aries.cdi.extension.el.jsp", version: "1.0.0"
 	compileOnly group: "org.apache.aries.cdi", name: "org.apache.aries.cdi.extension.http", version: "1.0.1-20190213.211731-3"

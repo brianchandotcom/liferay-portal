@@ -200,6 +200,18 @@ function updateUsedWidgets(widgets, portletIds) {
 }
 
 /**
+ * Attaches to the state a the experiment status of a experience
+ */
+function setExperimentStatus(state, experienceId) {
+	const selectedExperience = state.availableSegmentsExperiences[experienceId];
+
+	return {
+		...state,
+		segmentsExperimentStatus: selectedExperience.segmentsExperimentStatus
+	};
+}
+
+/**
  *
  * @param {object} state
  * @param {string} segmentsExperienceId
@@ -220,6 +232,7 @@ export {
 	removeLayoutDataItemById,
 	selectExperience,
 	setExperienceLock,
+	setExperimentStatus,
 	setUsedWidgets,
 	storeNewLayoutData,
 	switchLayoutData,

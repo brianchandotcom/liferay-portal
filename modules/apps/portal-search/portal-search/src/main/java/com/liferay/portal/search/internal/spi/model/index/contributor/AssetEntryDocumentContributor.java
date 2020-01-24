@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.internal.spi.model.index.contributor;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.util.AssetRendererFactoryLookup;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
@@ -43,7 +43,7 @@ public class AssetEntryDocumentContributor implements DocumentContributor {
 		String className = document.get(Field.ENTRY_CLASS_NAME);
 
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+			_assetRendererFactoryLookup.getAssetRendererFactoryByClassName(
 				className);
 
 		if ((assetRendererFactory == null) ||
@@ -103,6 +103,9 @@ public class AssetEntryDocumentContributor implements DocumentContributor {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetRendererFactoryLookup _assetRendererFactoryLookup;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

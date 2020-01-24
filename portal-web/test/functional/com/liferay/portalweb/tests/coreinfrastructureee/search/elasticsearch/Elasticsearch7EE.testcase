@@ -32,8 +32,6 @@ definition {
 	}
 
 	test AssertSimilarResultsDisplayTemplate {
-		property test.name.skip.portal.instance = "Elasticsearch7EE#AssertSimilarResultsDisplayTemplate";
-
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -93,8 +91,6 @@ definition {
 	}
 
 	test AssertSimilarResultsMatchesAssetType {
-		property test.name.skip.portal.instance = "Elasticsearch7EE#AssertSimilarResultsMatchesAssetType";
-
 		for (var count : list "1,2,3") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Content",
@@ -232,6 +228,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsDocumentFrequency {
+		property test.name.skip.portal.instance = "Elasticsearch7EE#ConfigureSimilarResultsDocumentFrequency";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",

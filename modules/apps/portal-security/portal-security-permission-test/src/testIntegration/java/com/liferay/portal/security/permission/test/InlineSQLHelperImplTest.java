@@ -312,6 +312,15 @@ public class InlineSQLHelperImplTest {
 				"= ?)) or Layout.groupId in (?))"),
 			dslQuery.toString());
 
+		_assertValidSql(dslQuery);
+
+		Assert.assertEquals(
+			dslQuery.toString(),
+			String.valueOf(
+				joinStep.where(
+					_inlineSQLHelper.getPermissionWherePredicate(
+						Layout.class, Layout.TABLE.plid, _groupIds))));
+
 		GroupByStep groupByStep = joinStep.innerJoinON(
 			PortletPreferences.TABLE,
 			PortletPreferences.TABLE.plid.eq(Layout.TABLE.plid)

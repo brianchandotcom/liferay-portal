@@ -134,6 +134,8 @@ public class EditRankingDisplayBuilder {
 		).put(
 			"initialInactive", _getInactive()
 		).put(
+			"resultsRankingUid", _getResultsRankingUid()
+		).put(
 			"searchQuery", _getKeywords()
 		).put(
 			"validateFormUrl", _getValidateResultRankingsResourceURL()

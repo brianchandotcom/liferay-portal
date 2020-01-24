@@ -11,6 +11,8 @@
 
 import {fetch} from 'frontend-js-web';
 
+import {isNull} from './util.es';
+
 /**
  * Fetches basic response given the url and parameters.
  * @param {string} url The base url to fetch.
@@ -21,7 +23,7 @@ export function fetchResponse(url, params) {
 	const fetchUrl = new URL(url);
 
 	Object.keys(params).forEach(property => {
-		if (params[property]) {
+		if (!isNull(params[property])) {
 			fetchUrl.searchParams.set(property, params[property]);
 		}
 	});

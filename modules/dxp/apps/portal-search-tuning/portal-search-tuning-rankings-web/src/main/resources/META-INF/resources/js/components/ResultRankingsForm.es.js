@@ -43,6 +43,7 @@ class ResultRankingsForm extends Component {
 		formName: PropTypes.string.isRequired,
 		initialAliases: PropTypes.arrayOf(String),
 		initialInactive: PropTypes.bool,
+		resultsRankingUid: PropTypes.string,
 		searchQuery: PropTypes.string.isRequired,
 		validateFormUrl: PropTypes.string.isRequired
 	};
@@ -458,12 +459,14 @@ class ResultRankingsForm extends Component {
 	 * submits the form.
 	 */
 	_handlePublish = () => {
-		const {indexName, namespace, resultsRankingUid} = this.context;
+		const {indexName, namespace} = this.context;
 
 		fetchResponse(this.props.validateFormUrl, {
-			[`${namespace}index`]: indexName,
 			[`${namespace}aliases`]: this.state.aliases,
-			[`${namespace}resultsRankingUid`]: resultsRankingUid
+			[`${namespace}inactive`]: this.state.inactive,
+			[`${namespace}index`]: indexName,
+			[`${namespace}keywords`]: this.props.searchQuery,
+			[`${namespace}resultsRankingUid`]: this.props.resultsRankingUid
 		}).then(response => {
 			if (response.errors.length) {
 				response.errors.forEach(message => {

@@ -23,14 +23,16 @@ export default function createExperience({name, segmentsEntryId}, config) {
 				name,
 				segmentsEntryId
 			},
-			config
+			config,
+			dispatch
 		}).then(({fragmentEntryLinks, layoutData, segmentsExperience}) => {
 			ExperienceService.selectExperience({
 				body: {
 					segmentsExperienceId:
 						segmentsExperience.segmentsExperienceId
 				},
-				config
+				config,
+				dispatch
 			})
 				.then(portletIds => {
 					return dispatch(

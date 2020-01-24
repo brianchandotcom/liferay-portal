@@ -53,7 +53,7 @@ public class FileEntryDownloadURLItemSelectorReturnTypeResolver
 
 		return _dlURLHelper.getDownloadURL(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay,
-			StringPool.BLANK, true, false);
+			StringPool.BLANK, false, false);
 	}
 
 	@Reference

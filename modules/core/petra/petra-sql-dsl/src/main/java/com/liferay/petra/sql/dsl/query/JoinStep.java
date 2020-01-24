@@ -25,10 +25,18 @@ import com.liferay.petra.sql.dsl.query.impl.JoinType;
 public interface JoinStep extends WhereStep {
 
 	public default JoinStep innerJoinON(Table<?> table, Predicate predicate) {
+		if (predicate == null) {
+			return this;
+		}
+
 		return new Join(this, JoinType.INNER, table, predicate);
 	}
 
 	public default JoinStep leftJoinOn(Table<?> table, Predicate predicate) {
+		if (predicate == null) {
+			return this;
+		}
+
 		return new Join(this, JoinType.LEFT, table, predicate);
 	}
 

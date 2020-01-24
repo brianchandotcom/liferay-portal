@@ -21,6 +21,11 @@ public class UpgradeMVCCVersion
 	extends com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion {
 
 	@Override
+	protected String[] getExcludedTableNames() {
+		return new String[] {"CompanyInfo"};
+	}
+
+	@Override
 	protected String[] getModuleTableNames() {
 		return new String[] {
 			"AnnouncementsDelivery", "AnnouncementsEntry", "AnnouncementsFlag",

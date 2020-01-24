@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_2_x;
+package com.liferay.portal.upgrade.v7_0_0;
 
 /**
- * @author Alicia García
+ * @author Alberto Chaparro
  */
 public class UpgradeMVCCVersion
 	extends com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion {
@@ -23,14 +23,6 @@ public class UpgradeMVCCVersion
 	@Override
 	protected String[] getExcludedTableNames() {
 		return new String[] {"CompanyInfo"};
-	}
-
-	@Override
-	protected String[] getModuleTableNames() {
-		return new String[] {
-			"DLFileEntry", "DLFileEntryMetadata", "DLFileEntryType",
-			"DLFileShortcut", "DLFileVersion", "DLFolder"
-		};
 	}
 
 }

@@ -297,6 +297,23 @@ export const getIndexes = node => {
 	};
 };
 
+export const getNestedIndexes = node => {
+	let indexes = [];
+
+	if (node.dataset.ddmFieldColumn) {
+		indexes = [getIndexes(node)];
+	}
+
+	if (!node.parentElement.classList.contains('ddm-form-page')) {
+		indexes = [
+			...getNestedIndexes(node.parentElement),
+			...indexes
+		];
+	}
+
+	return indexes;
+}
+
 export const updateField = (pages, fieldName, properties) => {
 	const visitor = new PagesVisitor(pages);
 

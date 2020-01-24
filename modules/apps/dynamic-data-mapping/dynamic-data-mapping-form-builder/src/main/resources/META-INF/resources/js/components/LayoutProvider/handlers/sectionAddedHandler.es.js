@@ -127,27 +127,12 @@ const getColumn = (pages, nestedIndexes = []) => {
 	return column;
 };
 
-const getNestedIndexes = node => {
-	let indexes = [];
-
-	if (node.dataset.ddmFieldColumn) {
-		indexes = [FormSupport.getIndexes(node)];
-	}
-
-	if (!node.parentElement.classList.contains('ddm-form-page')) {
-		indexes = [
-			...getNestedIndexes(node.parentElement),
-			...indexes
-		];
-	}
-
-	return indexes;
-}
-
 export default (props, state, event) => {
 	const {pages} = state;
 
-    const nestedIndexes = getNestedIndexes(event.data.target.parentElement);
+	const nestedIndexes = FormSupport.getNestedIndexes(
+		event.data.target.parentElement
+	);
 
 	const targetColumn = getColumn(pages, nestedIndexes);
 

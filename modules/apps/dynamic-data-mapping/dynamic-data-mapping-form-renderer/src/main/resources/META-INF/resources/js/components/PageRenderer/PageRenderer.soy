@@ -62,7 +62,6 @@
 {template .page}
 	{@param activePage: number}
 	{@param pageIndex: number}
-	{@param paginationMode: string}
 	{@param spritemap: string}
 	{@param total: number}
 	{@param? _handleFieldBlurred: any}
@@ -103,41 +102,66 @@
 				</div>
 			</div>
 		{else}
-			{foreach $row in $page.rows}
-				{if isFirst($row) and $editable and $activePage == $pageIndex}
-					{call .placeholder}
-						{param isRow: true /}
-						{param pageIndex: $pageIndex /}
-						{param rowIndex: 0 /}
-						{param size: 12 /}
-					{/call}
-				{/if}
-
-				{call .row}
-					{param _handleFieldBlurred: $_handleFieldBlurred /}
-					{param _handleFieldClicked: $_handleFieldClicked /}
-					{param _handleFieldEdited: $_handleFieldEdited /}
-					{param _handleFieldFocused: $_handleFieldFocused /}
-					{param activePage: $activePage /}
-					{param editable: $editable /}
-					{param pageIndex: $pageIndex /}
-					{param paginationMode: $paginationMode /}
-					{param row: $row /}
-					{param rowIndex: index($row) /}
-					{param spritemap: $spritemap /}
-				{/call}
-
-				{if $editable and $activePage == $pageIndex}
-					{call .placeholder}
-						{param isRow: true /}
-						{param pageIndex: $pageIndex /}
-						{param rowIndex: index($row) + 1 /}
-						{param size: 12 /}
-					{/call}
-				{/if}
-			{/foreach}
+			{call .rows}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
+				{param _handleFieldClicked: $_handleFieldClicked /}
+				{param _handleFieldEdited: $_handleFieldEdited /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
+				{param activePage: $activePage /}
+				{param editable: $editable /}
+				{param pageIndex: $pageIndex /}
+				{param rows: $page.rows /}
+				{param spritemap: $spritemap /}
+			{/call}
 		{/if}
 	</div>
+{/template}
+
+{template .rows}
+	{@param activePage: number}
+	{@param spritemap: string}
+	{@param? editable: bool}
+	{@param? pageIndex: number}
+	{@param? rows: list<?>}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldClicked: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handleFieldFocused: any}
+
+	{if $rows}
+		{foreach $row in $rows}
+			{if isFirst($row) and $editable and $activePage == $pageIndex}
+				{call .placeholder}
+					{param isRow: true /}
+					{param pageIndex: $pageIndex /}
+					{param rowIndex: 0 /}
+					{param size: 12 /}
+				{/call}
+			{/if}
+
+			{call .row}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
+				{param _handleFieldClicked: $_handleFieldClicked /}
+				{param _handleFieldEdited: $_handleFieldEdited /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
+				{param activePage: $activePage /}
+				{param editable: $editable /}
+				{param pageIndex: $pageIndex /}
+				{param row: $row /}
+				{param rowIndex: index($row) /}
+				{param spritemap: $spritemap /}
+			{/call}
+
+			{if $editable and $activePage == $pageIndex}
+				{call .placeholder}
+					{param isRow: true /}
+					{param pageIndex: $pageIndex /}
+					{param rowIndex: index($row) + 1 /}
+					{param size: 12 /}
+				{/call}
+			{/if}
+		{/foreach}
+	{/if}
 {/template}
 
 {template .row}
@@ -185,6 +209,29 @@
 	{@param? rowIndex: number}
 
 	{if length($column.fields) != 0}
+		{let $content kind="html"}
+			{foreach $field in $column.fields}
+				{let $fieldType: $field.type /}
+
+				{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
+					{param _handleFieldBlurred: $_handleFieldBlurred /}
+					{param _handleFieldClicked: $_handleFieldClicked /}
+					{param _handleFieldEdited: $_handleFieldEdited /}
+					{param _handleFieldFocused: $_handleFieldFocused /}
+					{param activePage: $activePage /}
+					{param editable: $editable /}
+					{param events: [
+						'fieldBlurred': $_handleFieldBlurred,
+						'fieldEdited': $_handleFieldEdited,
+						'fieldFocused': $_handleFieldFocused
+					] /}
+					{param pageIndex: $pageIndex /}
+					{param ref: 'pageRendererFieldRef' + $field.name + $rowIndex + $columnIndex + $pageIndex /}
+					{param spritemap: $spritemap /}
+				{/delcall}
+			{/foreach}
+		{/let}
+
 		{let $indexes kind="attributes"}
 			data-ddm-field-row="{$rowIndex}"
 			data-ddm-field-page="{$pageIndex}"
@@ -198,26 +245,10 @@
 		{/let}
 
 		<div {$attributes}>
-			{let $content kind="html"}
-				{foreach $field in $column.fields}
-					{let $fieldType: $field.type /}
-
-					{delcall PageRenderer.RegisterFieldType variant="$fieldType" data="$field" allowemptydefault="true"}
-						{param events: [
-						'fieldBlurred': $_handleFieldBlurred,
-						'fieldEdited': $_handleFieldEdited,
-						'fieldFocused': $_handleFieldFocused
-						] /}
-						{param ref: 'pageRendererFieldRef' + $field.name + $rowIndex + $columnIndex + $pageIndex /}
-						{param spritemap: $spritemap /}
-					{/delcall}
-				{/foreach}
-			{/let}
-
 			{if $editable}
 				{let $selected: $column.fields[0].selected /}
 
-				<div class="ddm-field-container h-100 {if $selected}selected{/if}">
+				<div class="ddm-field-container h-100 ddm-target {if $selected}selected{/if}">
 					<div class="ddm-resize-handle ddm-resize-handle-left" {$indexes}></div>
 
 					{let $attributesDrag kind="attributes"}

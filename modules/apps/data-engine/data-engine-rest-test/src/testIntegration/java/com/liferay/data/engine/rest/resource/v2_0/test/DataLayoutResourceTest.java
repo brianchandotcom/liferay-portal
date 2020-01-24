@@ -17,14 +17,11 @@ package com.liferay.data.engine.rest.resource.v2_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
-import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutColumn;
-import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutPage;
-import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutRow;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataDefinitionTestUtil;
+import com.liferay.data.engine.rest.resource.v2_0.test.util.DataLayoutTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -115,7 +112,9 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 	@Override
 	protected DataLayout randomDataLayout() {
-		return _createDataLayout(RandomTestUtil.randomString());
+		return DataLayoutTestUtil.createDataLayout(
+			_dataDefinition.getId(), RandomTestUtil.randomString(),
+			testGroup.getGroupId());
 	}
 
 	@Override
@@ -167,57 +166,6 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 			_dataDefinition.getId(), randomDataLayout());
 	}
 
-	private DataLayout _createDataLayout(String name) {
-		DataLayout dataLayout = new DataLayout() {
-			{
-				dataDefinitionId = _dataDefinition.getId();
-				dataLayoutKey = RandomTestUtil.randomString();
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				id = RandomTestUtil.randomLong();
-				paginationMode = "wizard";
-				siteId = testGroup.getGroupId();
-			}
-		};
-
-		dataLayout.setDataLayoutPages(
-			new DataLayoutPage[] {
-				new DataLayoutPage() {
-					{
-						dataLayoutRows = new DataLayoutRow[] {
-							new DataLayoutRow() {
-								{
-									dataLayoutColumns = new DataLayoutColumn[] {
-										new DataLayoutColumn() {
-											{
-												columnSize = 12;
-												fieldNames = new String[] {
-													RandomTestUtil.
-														randomString()
-												};
-											}
-										}
-									};
-								}
-							}
-						};
-						description = HashMapBuilder.<String, Object>put(
-							"en_US", "Page Description"
-						).build();
-						title = HashMapBuilder.<String, Object>put(
-							"en_US", "Page Title"
-						).build();
-					}
-				}
-			});
-		dataLayout.setName(
-			HashMapBuilder.<String, Object>put(
-				"en_US", name
-			).build());
-
-		return dataLayout;
-	}
-
 	private void _testGetDataDefinitionDataLayoutsPage(
 			String keywords, String name)
 		throws Exception {
@@ -227,7 +175,9 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 		DataLayout dataLayout =
 			testGetDataDefinitionDataLayoutsPage_addDataLayout(
-				dataDefinitionId, _createDataLayout(name));
+				dataDefinitionId,
+				DataLayoutTestUtil.createDataLayout(
+					_dataDefinition.getId(), name, testGroup.getGroupId()));
 
 		Page<DataLayout> page =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(

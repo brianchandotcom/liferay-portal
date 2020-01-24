@@ -19,6 +19,7 @@ import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
+import com.liferay.data.engine.rest.resource.v2_0.test.util.DataLayoutTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -325,6 +326,8 @@ public class DataDefinitionResourceTest
 					}
 				};
 				dataDefinitionKey = RandomTestUtil.randomString();
+				defaultDataLayout = DataLayoutTestUtil.createDataLayout(
+					0L, "Data Layout Name", testGroup.getGroupId());
 				defaultLanguageId = "en_US";
 				siteId = testGroup.getGroupId();
 				userId = TestPropsValues.getUserId();

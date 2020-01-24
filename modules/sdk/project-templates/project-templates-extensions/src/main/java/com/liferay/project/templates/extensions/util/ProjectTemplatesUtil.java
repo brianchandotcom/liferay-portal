@@ -49,37 +49,36 @@ public class ProjectTemplatesUtil {
 		Properties projectTemplateJarVersionsProperties =
 			getProjectTemplateJarVersionsProperties();
 
-		if (projectTemplateJarVersionsProperties.containsKey(artifactId)) {
-			String version = String.valueOf(
-				projectTemplateJarVersionsProperties.get(artifactId));
-
-			try {
-				String jarName = getArchetypeJarName(artifactId, version);
-
-				InputStream inputStream =
-					ProjectTemplatesUtil.class.getResourceAsStream(jarName);
-
-				Path archetypePath = Files.createTempFile(
-					"temp-archetype", null);
-
-				Files.copy(
-					inputStream, archetypePath,
-					StandardCopyOption.REPLACE_EXISTING);
-
-				File archetypeFile = archetypePath.toFile();
-
-				_archetypeFiles.put(artifactId, archetypeFile);
-
-				archetypeFile.deleteOnExit();
-
-				return archetypeFile;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
+		if (!projectTemplateJarVersionsProperties.containsKey(artifactId)) {
+			return null;
 		}
 
-		return null;
+		String version = String.valueOf(
+			projectTemplateJarVersionsProperties.get(artifactId));
+
+		try {
+			String jarName = getArchetypeJarName(artifactId, version);
+
+			InputStream inputStream =
+				ProjectTemplatesUtil.class.getResourceAsStream(jarName);
+
+			Path archetypePath = Files.createTempFile("temp-archetype", null);
+
+			Files.copy(
+				inputStream, archetypePath,
+				StandardCopyOption.REPLACE_EXISTING);
+
+			File archetypeFile = archetypePath.toFile();
+
+			_archetypeFiles.put(artifactId, archetypeFile);
+
+			archetypeFile.deleteOnExit();
+
+			return archetypeFile;
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	public static File getArchetypeFile(String artifactId, File file)
@@ -87,36 +86,38 @@ public class ProjectTemplatesUtil {
 
 		File archetypeFile = getArchetypeFile(artifactId);
 
-		if (archetypeFile == null) {
-			try (JarFile jarFile = new JarFile(file)) {
-				Enumeration<JarEntry> enumeration = jarFile.entries();
+		if (archetypeFile != null) {
+			return archetypeFile;
+		}
 
-				while (enumeration.hasMoreElements()) {
-					JarEntry jarEntry = enumeration.nextElement();
+		try (JarFile jarFile = new JarFile(file)) {
+			Enumeration<JarEntry> enumeration = jarFile.entries();
 
-					if (jarEntry.isDirectory()) {
-						continue;
-					}
+			while (enumeration.hasMoreElements()) {
+				JarEntry jarEntry = enumeration.nextElement();
 
-					String name = jarEntry.getName();
-
-					if (!name.startsWith(artifactId + "-")) {
-						continue;
-					}
-
-					Path archetypePath = Files.createTempFile(
-						"temp-archetype", null);
-
-					Files.copy(
-						jarFile.getInputStream(jarEntry), archetypePath,
-						StandardCopyOption.REPLACE_EXISTING);
-
-					archetypeFile = archetypePath.toFile();
-
-					_archetypeFiles.put(artifactId, archetypeFile);
-
-					archetypeFile.deleteOnExit();
+				if (jarEntry.isDirectory()) {
+					continue;
 				}
+
+				String name = jarEntry.getName();
+
+				if (!name.startsWith(artifactId + "-")) {
+					continue;
+				}
+
+				Path archetypePath = Files.createTempFile(
+					"temp-archetype", null);
+
+				Files.copy(
+					jarFile.getInputStream(jarEntry), archetypePath,
+					StandardCopyOption.REPLACE_EXISTING);
+
+				archetypeFile = archetypePath.toFile();
+
+				_archetypeFiles.put(artifactId, archetypeFile);
+
+				archetypeFile.deleteOnExit();
 			}
 		}
 
@@ -201,21 +202,20 @@ public class ProjectTemplatesUtil {
 						String templateName = getTemplateName(
 							bundleSymbolicName);
 
-						if (templateName.equals(template)) {
-							File templateFile = path.toFile();
+						if (!templateName.equals(template)) {
+							continue;
+						}
 
-							if (templateVersion != null) {
-								String bundleVersion =
-									FileUtil.getManifestProperty(
-										templateFile, "Bundle-Version");
+						File templateFile = path.toFile();
 
-								if (templateVersion.equals(bundleVersion)) {
-									return templateFile;
-								}
+						if (templateVersion == null) {
+							return templateFile;
+						}
 
-								continue;
-							}
+						String bundleVersion = FileUtil.getManifestProperty(
+							templateFile, "Bundle-Version");
 
+						if (templateVersion.equals(bundleVersion)) {
 							return templateFile;
 						}
 					}
@@ -236,26 +236,26 @@ public class ProjectTemplatesUtil {
 		String projectTemplatesString = "project.templates.";
 
 		try {
-			if (name.contains(projectTemplatesString)) {
-				int projectTemplatesEndIndex =
-					name.indexOf(projectTemplatesString) +
-						projectTemplatesString.length();
-
-				int dashIndex = name.indexOf("-");
-
-				if (dashIndex < 0) {
-					dashIndex = name.length();
-				}
-
-				String templateName = name.substring(
-					projectTemplatesEndIndex, dashIndex);
-
-				templateName = templateName.replace('.', '-');
-
-				return templateName;
+			if (!name.contains(projectTemplatesString)) {
+				return name;
 			}
 
-			return name;
+			int projectTemplatesEndIndex =
+				name.indexOf(projectTemplatesString) +
+					projectTemplatesString.length();
+
+			int dashIndex = name.indexOf("-");
+
+			if (dashIndex < 0) {
+				dashIndex = name.length();
+			}
+
+			String templateName = name.substring(
+				projectTemplatesEndIndex, dashIndex);
+
+			templateName = templateName.replace('.', '-');
+
+			return templateName;
 		}
 		catch (Throwable th) {
 			return name;

@@ -103,26 +103,27 @@ public class ProjectTemplates {
 								ProjectTemplatesUtil.getTemplateName(
 									bundleSymbolicName);
 
-							if (!templateName.startsWith(
+							if (templateName.startsWith(
 									WorkspaceUtil.WORKSPACE)) {
 
-								String bundleDescription =
-									FileUtil.getManifestProperty(
-										path.toFile(), "Bundle-Description");
+								continue;
+							}
 
-								if (bundleDescription != null) {
-									try (ZipFile zipFile = new ZipFile(
-											path.toFile())) {
+							String bundleDescription =
+								FileUtil.getManifestProperty(
+									path.toFile(), "Bundle-Description");
 
-										ZipEntry zipEntry = zipFile.getEntry(
-											_ARCHETYPE_METADATA_XML);
+							if (bundleDescription == null) {
+								continue;
+							}
 
-										if (Objects.nonNull(zipEntry)) {
-											templates.put(
-												templateName,
-												bundleDescription);
-										}
-									}
+							try (ZipFile zipFile = new ZipFile(path.toFile())) {
+								ZipEntry zipEntry = zipFile.getEntry(
+									_ARCHETYPE_METADATA_XML);
+
+								if (Objects.nonNull(zipEntry)) {
+									templates.put(
+										templateName, bundleDescription);
 								}
 							}
 						}
@@ -130,48 +131,47 @@ public class ProjectTemplates {
 						}
 					}
 				}
+
+				continue;
 			}
-			else {
-				try (JarFile jarFile = new JarFile(templatesFile)) {
-					Enumeration<JarEntry> enumeration = jarFile.entries();
 
-					while (enumeration.hasMoreElements()) {
-						JarEntry jarEntry = enumeration.nextElement();
+			try (JarFile jarFile = new JarFile(templatesFile)) {
+				Enumeration<JarEntry> enumeration = jarFile.entries();
 
-						if (jarEntry.isDirectory()) {
-							continue;
-						}
+				while (enumeration.hasMoreElements()) {
+					JarEntry jarEntry = enumeration.nextElement();
 
-						String template = jarEntry.getName();
+					if (jarEntry.isDirectory()) {
+						continue;
+					}
 
-						if (!template.startsWith(
-								ProjectTemplatesConstants.
-									TEMPLATE_BUNDLE_PREFIX)) {
+					String template = jarEntry.getName();
 
-							continue;
-						}
+					if (!template.startsWith(
+							ProjectTemplatesConstants.TEMPLATE_BUNDLE_PREFIX)) {
 
-						template = ProjectTemplatesUtil.getTemplateName(
-							template);
+						continue;
+					}
 
-						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
-							try (InputStream inputStream =
-									jarFile.getInputStream(jarEntry);
-								JarInputStream jarInputStream =
-									new JarInputStream(inputStream)) {
+					template = ProjectTemplatesUtil.getTemplateName(template);
 
-								Manifest manifest =
-									jarInputStream.getManifest();
+					if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
+						continue;
+					}
 
-								Attributes attributes =
-									manifest.getMainAttributes();
+					try (InputStream inputStream = jarFile.getInputStream(
+							jarEntry);
+						JarInputStream jarInputStream = new JarInputStream(
+							inputStream)) {
 
-								String bundleDescription = attributes.getValue(
-									"Bundle-Description");
+						Manifest manifest = jarInputStream.getManifest();
 
-								templates.put(template, bundleDescription);
-							}
-						}
+						Attributes attributes = manifest.getMainAttributes();
+
+						String bundleDescription = attributes.getValue(
+							"Bundle-Description");
+
+						templates.put(template, bundleDescription);
 					}
 				}
 			}

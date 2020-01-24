@@ -260,7 +260,43 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertNoOpenGraphMeta(document, "og:image:alt");
+		_assertNoOpenGraphMetaProperty(document, "og:image:alt");
+	}
+
+	@Test
+	public void testIncludeIncompleteCustomMetaTags() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute(
+			_getDDMStructureId() + "ddmFormValues",
+			new String(
+				FileUtil.getBytes(
+					getClass(),
+					"dependencies" +
+						"/incomplete_custom_meta_tags_ddm_form_values.json"),
+				StandardCharsets.UTF_8));
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			_layout.getUserId(), _layout.getGroupId(),
+			_layout.isPrivateLayout(), _layout.getLayoutId(), false,
+			Collections.emptyMap(), false, Collections.emptyMap(),
+			Collections.emptyMap(), 0, false, Collections.emptyMap(),
+			serviceContext);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_dynamicInclude.include(
+			_getHttpServletRequest(), mockHttpServletResponse,
+			RandomTestUtil.randomString());
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(document, "property1", "content1");
+		_assertNoOpenGraphMetaProperty(document, "property2");
+		_assertNoOpenGraphMetaContent(document, "content3");
 	}
 
 	@Test
@@ -328,7 +364,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			_dlurlHelper.getImagePreviewURL(
 				layoutOpenGraphImageFileEntry, _getThemeDisplay()));
 
-		_assertNoOpenGraphMeta(document, "og:image:alt");
+		_assertNoOpenGraphMetaProperty(document, "og:image:alt");
 	}
 
 	@Test
@@ -780,7 +816,17 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Assert.assertEquals(0, elements.size());
 	}
 
-	private void _assertNoOpenGraphMeta(Document document, String property) {
+	private void _assertNoOpenGraphMetaContent(
+		Document document, String content) {
+
+		Elements elements = document.select("meta[content='" + content + "']");
+
+		Assert.assertEquals(0, elements.size());
+	}
+
+	private void _assertNoOpenGraphMetaProperty(
+		Document document, String property) {
+
 		Elements elements = document.select(
 			"meta[property='" + property + "']");
 

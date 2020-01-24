@@ -1,0 +1,50 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fieldValues": [
+		{
+			"instanceId": "wxey",
+			"name": "property",
+			"nestedFieldValues": [
+				{
+					"instanceId": "ozcs",
+					"name": "content",
+					"value": {
+						"en_US": "content1"
+					}
+				}
+			],
+			"value": "property1"
+		},
+		{
+			"instanceId": "wxey",
+			"name": "property",
+			"nestedFieldValues": [
+				{
+					"instanceId": "ozcs",
+					"name": "content",
+					"value": {
+						"en_US": ""
+					}
+				}
+			],
+			"value": "property2"
+		},
+		{
+			"instanceId": "wxey",
+			"name": "property",
+			"nestedFieldValues": [
+				{
+					"instanceId": "ozcs",
+					"name": "content",
+					"value": {
+						"en_US": "content3"
+					}
+				}
+			],
+			"value": ""
+		}
+	]
+}

@@ -15,6 +15,7 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
@@ -23,8 +24,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -68,10 +71,23 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 		long suffixId = ParamUtil.getLong(actionRequest, "suffixId");
 
 		try {
-			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				accountEntryId, themeDisplay.getUserId(), screenName,
-				emailAddress, LocaleUtil.fromLanguageId(languageId), firstName,
-				middleName, lastName, prefixId, suffixId);
+			AccountEntryUserRel accountEntryUserRel =
+				_accountEntryUserRelLocalService.addAccountEntryUserRel(
+					accountEntryId, themeDisplay.getUserId(), screenName,
+					emailAddress, LocaleUtil.fromLanguageId(languageId),
+					firstName, middleName, lastName, prefixId, suffixId);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				long userId = accountEntryUserRel.getAccountUserId();
+
+				redirect = _http.setParameter(
+					redirect, actionResponse.getNamespace() + "p_u_i_d",
+					userId);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 		}
 		catch (PortalException portalException) {
 			if (portalException instanceof UserEmailAddressException ||
@@ -91,5 +107,8 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private Http _http;
 
 }

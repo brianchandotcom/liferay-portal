@@ -918,6 +918,8 @@ public class SQLDSLTest {
 
 		alias = column.getTable();
 
+		Assert.assertEquals("alias", alias.getName());
+
 		Assert.assertEquals(
 			MainExampleTable.TABLE.name,
 			alias.getColumn(nameAlias.getName(), column.getColumnType()));

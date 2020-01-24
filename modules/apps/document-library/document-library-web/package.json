@@ -19,10 +19,12 @@
 		"react-dom": "16.12.0"
 	},
 	"name": "document-library-web",
+	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "5.0.6"
 }

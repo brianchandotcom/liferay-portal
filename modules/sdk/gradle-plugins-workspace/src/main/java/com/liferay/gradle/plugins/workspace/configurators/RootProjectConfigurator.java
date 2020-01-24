@@ -573,6 +573,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 						file = new File(dir, ".touch");
 
+						file.createNewFile();
+
 						dir = new File(destinationDir, "work");
 
 						if (!dir.exists()) {

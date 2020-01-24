@@ -15,7 +15,9 @@
 package com.liferay.layout.seo.service.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDM;
@@ -30,11 +32,18 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -221,6 +230,57 @@ public class LayoutSEOEntryLocalServiceImpl
 			"custom-meta-tags");
 	}
 
+	private void _removeEmptyDDMFormFieldsValues(DDMFormValues ddmFormValues) {
+		Set<DDMFormFieldValue> notEmptyDDMFormFieldValues =
+			new LinkedHashSet<>();
+
+		HashSet<Locale> availableLocales = new HashSet<>();
+
+		for (DDMFormFieldValue formFieldValue :
+				ddmFormValues.getDDMFormFieldValues()) {
+
+			Value value = formFieldValue.getValue();
+
+			if (value == null) {
+				continue;
+			}
+
+			for (Locale locale : ddmFormValues.getAvailableLocales()) {
+				String localizedValue = value.getString(locale);
+
+				if (!Validator.isBlank(localizedValue)) {
+					notEmptyDDMFormFieldValues.add(formFieldValue);
+
+					availableLocales.add(locale);
+
+					continue;
+				}
+
+				List<DDMFormFieldValue> nestedDDMFormFieldValues =
+					formFieldValue.getNestedDDMFormFieldValues();
+
+				Stream<DDMFormFieldValue> ddmFormFieldValueStream =
+					nestedDDMFormFieldValues.stream();
+
+				boolean hasNestedValues = ddmFormFieldValueStream.anyMatch(
+					nested -> !Validator.isBlank(
+						nested.getValue(
+						).getString(
+							locale
+						)));
+
+				if (hasNestedValues) {
+					notEmptyDDMFormFieldValues.add(formFieldValue);
+					availableLocales.add(locale);
+				}
+			}
+		}
+
+		ddmFormValues.setAvailableLocales(availableLocales);
+		ddmFormValues.setDDMFormFieldValues(
+			new ArrayList<>(notEmptyDDMFormFieldValues));
+	}
+
 	private long _updateDDMStorage(
 			long companyId, long ddmStorageId, long structureId,
 			ServiceContext serviceContext)
@@ -232,6 +292,8 @@ public class LayoutSEOEntryLocalServiceImpl
 		if (ListUtil.isEmpty(ddmFormValues.getDDMFormFieldValues())) {
 			return ddmStorageId;
 		}
+
+		_removeEmptyDDMFormFieldsValues(ddmFormValues);
 
 		if (ddmStorageId == 0) {
 			return _storageEngine.create(

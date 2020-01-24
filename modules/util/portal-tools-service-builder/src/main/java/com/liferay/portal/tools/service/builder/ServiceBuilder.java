@@ -2406,10 +2406,32 @@ public class ServiceBuilder {
 
 		List<EntityColumn> entityColumns = new ArrayList<>();
 
+		boolean changeTrackingEnabled = true;
+
 		for (int i = 0; i < 3; i++) {
 			Entity entity = getEntity(entityMapping.getEntityName(i));
 
+			if ((i > 0) && !entity.isChangeTrackingEnabled()) {
+				changeTrackingEnabled = false;
+			}
+
 			entityColumns.addAll(entity.getPKEntityColumns());
+		}
+
+		if (changeTrackingEnabled) {
+			entityColumns.add(
+				new EntityColumn(
+					"ctCollectionId", "ctCollectionId", "long", true, false,
+					false, null, null, true, true, false, null, null, false,
+					null, null, true, true, false, false,
+					CTColumnResolutionType.STRICT, false, false, null, false));
+
+			entityColumns.add(
+				new EntityColumn(
+					"ctChangeType", "ctChangeType", "boolean", false, false,
+					false, null, null, true, true, false, null, null, false,
+					null, null, true, true, false, false,
+					CTColumnResolutionType.STRICT, false, false, null, false));
 		}
 
 		String name = entityMapping.getTableName();

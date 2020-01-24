@@ -135,6 +135,8 @@ public class Field implements Serializable {
 
 	public static final String ROLE_ID = "roleId";
 
+	public static final String ROLE_IDS = "roleIds";
+
 	public static final String ROOT_ENTRY_CLASS_NAME = "rootEntryClassName";
 
 	public static final String ROOT_ENTRY_CLASS_PK = "rootEntryClassPK";

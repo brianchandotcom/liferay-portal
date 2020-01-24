@@ -302,6 +302,11 @@ public class DDMStructureWrapper
 	}
 
 	@Override
+	public DDMStructureLayout getDDMStructureLayout() {
+		return model.getDDMStructureLayout();
+	}
+
+	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
 	}

@@ -75,6 +75,8 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	public DDMFormLayout getDDMFormLayout()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public DDMStructureLayout getDDMStructureLayout();
+
 	public String getFieldDataType(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

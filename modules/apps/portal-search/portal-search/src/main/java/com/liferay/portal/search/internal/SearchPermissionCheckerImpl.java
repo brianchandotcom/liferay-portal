@@ -672,7 +672,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		private final long[] _regularRoleIds;
 		private final long[] _roleIds;
 		private final TermsFilter _rolesTermsFilter = new TermsFilter(
-			Field.ROLE_ID);
+			Field.ROLE_IDS);
 		private final List<UsersGroupIdRoles> _usersGroupIdsRoles;
 
 	}

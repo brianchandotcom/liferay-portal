@@ -1,1 +1,9 @@
-{"preset":"liferay-npm-bundler-preset-liferay-dev"}
+{
+	"config": {
+		"imports": {
+			"frontend-editor-ckeditor-web": {
+				"/": ">=4.0.0"
+			}
+		}
+	}
+}

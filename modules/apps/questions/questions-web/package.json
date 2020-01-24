@@ -10,8 +10,8 @@
 		"@clayui/navigation-bar": "3.0.5",
 		"@clayui/sticker": "3.0.4",
 		"bbcode-to-react": "^0.2.9",
-		"ckeditor4-react": "^1.0.1",
 		"classnames": "2.2.6",
+		"frontend-editor-ckeditor-web": "*",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
@@ -23,8 +23,7 @@
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix",
-		"test:watch": "env TZ=utc liferay-npm-scripts test --watch"
+		"format": "liferay-npm-scripts fix"
 	},
 	"version": "1.0.7"
 }

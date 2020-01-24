@@ -13,7 +13,7 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import CKEditor from 'ckeditor4-react';
+import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 
@@ -66,7 +66,7 @@ export default withRouter(({history}) => {
 						{Liferay.Language.get('body')}
 					</label>
 
-					<CKEditor
+					<Editor
 						config={getCKEditorConfig()}
 						onBeforeLoad={CKEDITOR => {
 							CKEDITOR.disableAutoInline = true;

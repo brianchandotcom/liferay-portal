@@ -14,7 +14,7 @@
 
 import ClayForm from '@clayui/form';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
-import CKEditor from 'ckeditor4-react';
+import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import Answer from '../../components/Answer.es';
@@ -202,7 +202,7 @@ export default ({
 									{Liferay.Language.get('your-answer')}
 								</label>
 
-								<CKEditor
+								<Editor
 									config={getCKEditorConfig()}
 									data={articleBody}
 									onBeforeLoad={CKEDITOR => {

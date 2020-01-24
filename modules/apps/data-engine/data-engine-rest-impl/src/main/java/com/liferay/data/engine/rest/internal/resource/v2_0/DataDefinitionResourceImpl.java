@@ -139,19 +139,18 @@ public class DataDefinitionResourceImpl
 		_ddlRecordSetLocalService.deleteDDMStructureRecordSets(
 			dataDefinitionId);
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
-			dataDefinitionId);
+		SPIDataLayoutResource<DataLayout> spiDataLayoutResource =
+			_getSPIDataLayoutResource();
 
-		_ddmStructureLocalService.deleteDDMStructure(ddmStructure);
+		spiDataLayoutResource.deleteDataLayoutDataDefinition(dataDefinitionId);
+
+		_ddmStructureLocalService.deleteDDMStructure(dataDefinitionId);
 
 		List<DDMStructureVersion> ddmStructureVersions =
 			_ddmStructureVersionLocalService.getStructureVersions(
 				dataDefinitionId);
 
 		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
-			_ddmStructureLayoutLocalService.deleteDDMStructureLayouts(
-				ddmStructure.getClassNameId(), ddmStructureVersion);
-
 			_ddmStructureVersionLocalService.deleteDDMStructureVersion(
 				ddmStructureVersion);
 		}

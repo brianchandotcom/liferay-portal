@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:ftp="http://www.mulesoft.org/schema/mule/ftp" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:java="http://www.mulesoft.org/schema/mule/java" xmlns:liferay="http://www.mulesoft.org/schema/mule/liferay" xmlns:s3="http://www.mulesoft.org/schema/mule/s3" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:slack="http://www.mulesoft.org/schema/mule/slack" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/liferay http://www.mulesoft.org/schema/mule/liferay/current/mule-liferay.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/slack http://www.mulesoft.org/schema/mule/slack/current/mule-slack.xsd http://www.mulesoft.org/schema/mule/ftp http://www.mulesoft.org/schema/mule/ftp/current/mule-ftp.xsd http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd http://www.mulesoft.org/schema/mule/netsuite http://www.mulesoft.org/schema/mule/netsuite/current/mule-netsuite.xsd">
+	<http:listener-config doc:id="a8b4c002-e161-46a5-94c2-dcde4f6e4164" doc:name="HTTP Listener config" name="HTTP_Listener_config">
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<liferay:config doc:id="6fdcd5e7-887b-4846-8b37-1f2636e26b0c" doc:name="Liferay Config" name="Liferay_Config_Catalog">
+		<liferay:basic-connection _username="test@liferay.com" _password="test" _openApiSpecPath="http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.json" />
+	</liferay:config>
+	<flow doc:id="16c3eabe-a673-4e1d-91a2-6712bb05e599" name="commerce-delete-flow">
+		<http:listener config-ref="HTTP_Listener_config" doc:id="8b6dea74-b47f-4412-a30a-be34537cf02f" doc:name="Listener" path="/delete" />
+		<liferay:get config-ref="Liferay_Config_Catalog" doc:id="6b7a179c-7a64-40fe-bb72-c1e55a21f3dc" doc:name="Get Records" endpoint="/v1.0/products" />
+		<logger doc:id="81806c98-18cc-451e-bfb0-8e9448b68ce6" doc:name="Logger" level="INFO" message="Deleting product with id #[payload.items[0].productId]" />
+		<liferay:delete config-ref="Liferay_Config_Catalog" doc:id="c716283a-836b-4604-8353-6c858159bb15" doc:name="Delete Record" endpoint="/v1.0/products/{id}">
+			<liferay:path-params>
+				<liferay:path-param key="id" value="#[payload.items[0].productId]" />
+			</liferay:path-params>
+		</liferay:delete>
+	</flow>
+	<flow doc:id="46b7e65c-2f9d-49a7-b65e-c7adff622913" name="commerce-create-flow">
+		<http:listener config-ref="HTTP_Listener_config" doc:id="045601a7-7f06-4ca4-9063-52bb1f377785" doc:name="Listener" path="/create" />
+		<liferay:get config-ref="Liferay_Config_Catalog" doc:id="39bbd01c-1e6a-4f4a-9c9b-b2aa2e4ed204" doc:name="Get Records" endpoint="/v1.0/products" />
+		<ee:transform doc:id="f3d54874-f1d6-4ba3-be5b-ff1f4a30c7f8" doc:name="Transform Message">
+			<ee:message>
+				<ee:set-payload>
+					<![CDATA[%dw 2.0
+						output application/json
+						---
+						{
+							active: payload.items[0].active,
+							catalogId: payload.items[0].catalogId,
+							name: "en_US": "NEW PRODUCT",
+							productType: payload.items[0].productType
+						}]]>
+				</ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<liferay:post config-ref="Liferay_Config_Catalog" doc:id="858b005d-b421-4b2f-ade2-0dc8364351e3" doc:name="Create Record" endpoint="/v1.0/products" />
+		<logger doc:id="43912a5f-e82a-4e2f-9477-900d30d2f6a8" doc:name="Logger" level="INFO" message="#[payload]" />
+	</flow>
+	<flow doc:id="6ab91ba3-2999-4a13-bf13-d92d55950617" name="commerce-get-flow">
+		<http:listener config-ref="HTTP_Listener_config" doc:id="fcd905ae-ccab-4863-af2d-ee04e47ce4fd" doc:name="Listener" path="/get" />
+		<liferay:get config-ref="Liferay_Config_Catalog" doc:id="62285c71-8328-45e5-924f-0c6fb396102f" doc:name="Get" endpoint="/v1.0/products">
+			<liferay:query-params>
+				<liferay:query-param key="page" value="2" />
+				<liferay:query-param key="pageSize" value="5" />
+			</liferay:query-params>
+		</liferay:get>
+		<logger doc:id="3b3bd7a8-945e-4b68-965b-1282d506b9a7" doc:name="Logger" level="INFO" message="#[payload]" />
+	</flow>
+	<flow doc:id="d39f7897-4020-45cc-b574-f26c9515add9" name="commerce-error-flow">
+		<http:listener config-ref="HTTP_Listener_config" doc:id="2cc4cf2e-187e-4ea3-8c10-d5507c78852d" doc:name="Listener" path="/error" />
+		<logger doc:id="770c07fb-8144-424b-adba-0c5c26c4593f" doc:name="Logger" level="INFO" message="Fetching Option entity with non-existing Id" />
+		<liferay:get config-ref="Liferay_Config_Catalog" doc:id="a9c1b271-7798-4e5a-9fe5-2c07b8ffaba1" doc:name="Get Records" endpoint="/v1.0/options/{id}">
+			<liferay:path-params>
+				<liferay:path-param key="id" value="0" />
+			</liferay:path-params>
+		</liferay:get>
+		<error-handler>
+			<on-error-continue doc:id="4431af84-a4fb-4436-8a18-9003346d284b" doc:name="On Error Continue" enableNotifications="true" logException="true" type="LIFERAY:NOT_FOUND">
+				<logger doc:id="8c810bcc-f5f6-4601-8857-47fbfb3db5d2" doc:name="Logger" level="INFO" message="Entity not found!" />
+			</on-error-continue>
+			<on-error-propagate doc:id="df7e915f-141a-4ebd-b15d-d7e512701bb8" doc:name="On Error Propagate" enableNotifications="true" logException="true" type="LIFERAY:NOT_ALLOWED">
+				<logger doc:id="dc7cc957-47e7-4239-9581-80f5d3e39d62" doc:name="Logger" level="INFO" message="You shouldn't see this!" />
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>

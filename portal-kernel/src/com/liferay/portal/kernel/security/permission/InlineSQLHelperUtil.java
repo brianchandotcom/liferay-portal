@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expressions.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
@@ -24,6 +25,13 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
  * @see    InlineSQLHelper
  */
 public class InlineSQLHelperUtil {
+
+	public static <T extends Table<T>> Predicate getPermissionWherePredicate(
+		Class<?> modelClass, Column<T, Long> classPKColumn, long... groupIds) {
+
+		return _inlineSQLPermission.getPermissionWherePredicate(
+			modelClass, classPKColumn, groupIds);
+	}
 
 	public static boolean isEnabled() {
 		return _inlineSQLPermission.isEnabled();

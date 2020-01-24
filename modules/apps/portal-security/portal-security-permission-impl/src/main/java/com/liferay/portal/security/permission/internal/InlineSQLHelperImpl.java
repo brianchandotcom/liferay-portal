@@ -82,6 +82,28 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		InlineSQLHelper.class.getName() + ".findByResourcePermission";
 
 	@Override
+	public <T extends Table<T>> Predicate getPermissionWherePredicate(
+		Class<?> modelClass, Column<T, Long> classPKColumn, long... groupIds) {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((groupIds == null) || (groupIds.length == 0)) {
+			groupIds = new long[] {0};
+		}
+
+		if (_skipReplace(
+				permissionChecker, modelClass.getName(), classPKColumn,
+				groupIds)) {
+
+			return null;
+		}
+
+		return _getPermissionPredicate(
+			permissionChecker, modelClass, classPKColumn, groupIds);
+	}
+
+	@Override
 	public boolean isEnabled() {
 		return isEnabled(0, 0);
 	}
@@ -145,29 +167,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		DSLQuery dslQuery, Class<?> modelClass, Column<T, Long> classPKColumn,
 		long... groupIds) {
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		Predicate permissionPredicate = getPermissionWherePredicate(
+			modelClass, classPKColumn, groupIds);
 
-		if ((groupIds == null) || (groupIds.length == 0)) {
-			groupIds = new long[] {0};
-		}
-
-		if (_skipReplace(
-				dslQuery, permissionChecker, modelClass.getName(),
-				classPKColumn, groupIds)) {
-
-			return dslQuery;
-		}
-
-		T table = classPKColumn.getTable();
-
-		Column<T, Long> userIdColumn = table.getColumn("userId", Long.class);
-
-		DSLQuery resourcePermissionDSLQuery = _getResourcePermissionQuery(
-			permissionChecker, modelClass.getName(), userIdColumn, groupIds);
-
-		return _insertResourcePermissionQuery(
-			dslQuery, classPKColumn, groupIds, resourcePermissionDSLQuery);
+		return _insertResourcePermissionQuery(dslQuery, permissionPredicate);
 	}
 
 	@Override
@@ -280,8 +283,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (_skipReplace(
-				sql, permissionChecker, className, classPKField, groupIds)) {
+		if ((sql == null) ||
+			_skipReplace(
+				permissionChecker, className, classPKField, groupIds)) {
 
 			return sql;
 		}
@@ -427,8 +431,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private <T extends Table<T>> Predicate _getPermissionPredicate(
-		Column<T, Long> classPKColumn, long[] groupIds,
-		DSLQuery resourcePermissionDSLQuery) {
+		PermissionChecker permissionChecker, Class<?> modelClass,
+		Column<T, Long> classPKColumn, long[] groupIds) {
+
+		T table = classPKColumn.getTable();
+
+		Column<T, Long> userIdColumn = table.getColumn("userId", Long.class);
+
+		DSLQuery resourcePermissionDSLQuery = _getResourcePermissionQuery(
+			permissionChecker, modelClass, userIdColumn, groupIds);
 
 		Predicate permissionPredicate = classPKColumn.in(
 			resourcePermissionDSLQuery);
@@ -446,8 +457,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		if (groupIdSet != null) {
-			T table = classPKColumn.getTable();
-
 			Column<T, Long> groupIdColumn = table.getColumn(
 				"groupId", Long.class);
 
@@ -458,13 +467,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 			permissionPredicate = permissionPredicate.or(
 				groupIdColumn.in(groupIdSet.toArray(new Long[0])));
+
+			permissionPredicate = permissionPredicate.withParentheses();
 		}
 
 		return permissionPredicate;
 	}
 
 	private DSLQuery _getResourcePermissionQuery(
-		PermissionChecker permissionChecker, String className,
+		PermissionChecker permissionChecker, Class<?> modelClass,
 		Column<?, Long> userIdColumn, long[] groupIds) {
 
 		Predicate roleIdsOrOwnerIdsPredicate = null;
@@ -499,7 +510,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		Predicate predicate = ResourcePermission.TABLE.companyId.eq(
 			permissionChecker.getCompanyId()
 		).and(
-			ResourcePermission.TABLE.name.eq(className)
+			ResourcePermission.TABLE.name.eq(modelClass.getName())
 		).and(
 			ResourcePermission.TABLE.scope.eq(
 				ResourceConstants.SCOPE_INDIVIDUAL)
@@ -587,16 +598,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		return resourcePermissionSQL;
 	}
 
-	private <T extends Table<T>> DSLQuery _insertResourcePermissionQuery(
-		DSLQuery dslQuery, Column<T, Long> classPKColumn, long[] groupIds,
-		DSLQuery resourcePermissionDSLQuery) {
+	private DSLQuery _insertResourcePermissionQuery(
+		DSLQuery dslQuery, Predicate permissionPredicate) {
 
 		if (dslQuery instanceof WhereStep) {
 			WhereStep whereStep = (WhereStep)dslQuery;
 
-			return whereStep.where(
-				_getPermissionPredicate(
-					classPKColumn, groupIds, resourcePermissionDSLQuery));
+			return whereStep.where(permissionPredicate);
 		}
 
 		WhereStep whereStep = null;
@@ -634,9 +642,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 					"separately"));
 		}
 
-		Predicate permissionPredicate = _getPermissionPredicate(
-			classPKColumn, groupIds, resourcePermissionDSLQuery);
-
 		ASTNode childASTNode = null;
 
 		if (where == null) {
@@ -646,8 +651,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			Predicate predicate = where.getPredicate();
 
 			childASTNode = new Where(
-				whereStep,
-				predicate.and(permissionPredicate.withParentheses()));
+				whereStep, predicate.and(permissionPredicate));
 		}
 
 		for (BaseASTNode baseASTNode : baseASTNodes) {
@@ -707,7 +711,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private boolean _skipReplace(
-		Object query, PermissionChecker permissionChecker, String className,
+		PermissionChecker permissionChecker, String className,
 		Object classPKField, long[] groupIds) {
 
 		if (!isEnabled(groupIds)) {
@@ -721,10 +725,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		if (Objects.equals(className, AssetTag.class.getName())) {
 			throw new IllegalArgumentException(
 				"AssetTag does not support inline permissions. See LPS-82433.");
-		}
-
-		if (Validator.isNull(query)) {
-			return true;
 		}
 
 		if (Validator.isNull(classPKField)) {

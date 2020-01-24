@@ -49,9 +49,7 @@ public class FileEntryInfoItemItemSelectorReturnTypeResolver
 	}
 
 	@Override
-	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
-		throws Exception {
-
+	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay) {
 		JSONObject fileEntryJSONObject = JSONUtil.put(
 			"className", FileEntry.class.getName()
 		).put(

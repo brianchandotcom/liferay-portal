@@ -69,6 +69,8 @@ public class DataDefinitionUtil {
 				dataDefinitionKey = ddmStructure.getStructureKey();
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();
+				defaultDataLayout = DataLayoutUtil.toDataLayout(
+					ddmStructure.getDDMStructureLayout());
 				defaultLanguageId = LanguageUtil.getLanguageId(
 					ddmForm.getDefaultLocale());
 				description = LocalizedValueUtil.toStringObjectMap(

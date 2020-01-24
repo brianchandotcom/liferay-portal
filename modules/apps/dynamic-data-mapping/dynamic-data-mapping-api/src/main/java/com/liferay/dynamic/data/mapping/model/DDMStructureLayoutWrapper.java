@@ -207,6 +207,16 @@ public class DDMStructureLayoutWrapper
 	}
 
 	@Override
+	public DDMStructure getDDMStructure() {
+		return model.getDDMStructure();
+	}
+
+	@Override
+	public long getDDMStructureId() {
+		return model.getDDMStructureId();
+	}
+
+	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
 	}

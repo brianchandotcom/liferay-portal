@@ -62,4 +62,8 @@ public interface DDMStructureLayout
 
 	public DDMFormLayout getDDMFormLayout();
 
+	public DDMStructure getDDMStructure();
+
+	public long getDDMStructureId();
+
 }

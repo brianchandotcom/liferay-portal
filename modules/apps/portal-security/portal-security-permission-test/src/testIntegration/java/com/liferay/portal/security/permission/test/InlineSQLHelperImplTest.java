@@ -16,6 +16,7 @@ package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.sql.dsl.DSLQueryUtil;
+import com.liferay.petra.sql.dsl.ast.impl.DefaultASTNodeListener;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
@@ -56,6 +57,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -332,6 +335,8 @@ public class InlineSQLHelperImplTest {
 				"= ?)) or Layout.groupId in (?))"),
 			dslQuery.toString());
 
+		_assertValidSql(dslQuery);
+
 		dslQuery = _inlineSQLHelper.replacePermissionCheck(
 			groupByStep, Layout.class, Layout.TABLE.plid);
 
@@ -346,6 +351,8 @@ public class InlineSQLHelperImplTest {
 				"ResourcePermission.viewActionId = ? and ",
 				"(ResourcePermission.roleId in (?, ?) or Layout.userId = ?))"),
 			dslQuery.toString());
+
+		_assertValidSql(dslQuery);
 	}
 
 	@Test
@@ -428,6 +435,25 @@ public class InlineSQLHelperImplTest {
 		}
 		else {
 			Assert.assertTrue(actualSql, wherePos < orderByPos);
+		}
+	}
+
+	private void _assertValidSql(DSLQuery dslQuery) throws Exception {
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				dslQuery.toSQL(defaultASTNodeListener))) {
+
+			List<Object> scalarValues =
+				defaultASTNodeListener.getScalarValues();
+
+			for (int i = 0; i < scalarValues.size(); i++) {
+				preparedStatement.setObject(i + 1, scalarValues.get(i));
+			}
+
+			preparedStatement.executeQuery();
 		}
 	}
 

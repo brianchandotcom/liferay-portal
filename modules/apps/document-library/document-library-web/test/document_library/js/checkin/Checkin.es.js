@@ -13,7 +13,12 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render, waitForElement} from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	waitForElement
+} from '@testing-library/react';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
@@ -55,6 +60,22 @@ describe('Checkin', () => {
 
 			const form = await waitForElement(() => getByRole('form'));
 			expect(form);
+		});
+	});
+
+	it('the form has been submited and the callback has been called', async () => {
+		const {getByRole} = _renderCheckinComponent();
+		const callback = jest.fn();
+
+		await act(async () => {
+			Liferay.componentReady(bridgeComponentId).then(({open}) =>
+				open(callback)
+			);
+			const form = await waitForElement(() => getByRole('form'));
+
+			fireEvent.submit(form);
+
+			expect(callback).toHaveBeenCalled();
 		});
 	});
 });

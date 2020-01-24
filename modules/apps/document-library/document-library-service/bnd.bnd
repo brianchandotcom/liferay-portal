@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.document.library.internal.activator.DocumentLibraryServiceBundleActivator
 Bundle-Name: Liferay Document Library Service
 Bundle-SymbolicName: com.liferay.document.library.service
 Bundle-Version: 5.0.6

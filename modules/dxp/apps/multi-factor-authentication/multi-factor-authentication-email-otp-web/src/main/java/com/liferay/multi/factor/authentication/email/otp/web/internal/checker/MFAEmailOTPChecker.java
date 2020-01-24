@@ -233,17 +233,16 @@ public class MFAEmailOTPChecker {
 		MFAEmailOTPConfiguration mfaEmailOTPConfiguration =
 			_getMFAEmailOTPConfiguration(userId);
 
-		long validationExpirationTime =
-			mfaEmailOTPConfiguration.validationExpirationTime();
-
-		if (validationExpirationTime < 0) {
+		if (mfaEmailOTPConfiguration.validationExpirationTime() < 0) {
 			return true;
 		}
 
-		long validatedAtTime = (long)httpSession.getAttribute(
+		long mfaEmailOTPValidatedAtTime = (long)httpSession.getAttribute(
 			MFAEmailOTPWebKeys.MFA_EMAIL_OTP_VALIDATED_AT_TIME);
 
-		long time = (validationExpirationTime * 1000) + validatedAtTime;
+		long time =
+			(mfaEmailOTPConfiguration.validationExpirationTime() * 1000) +
+				mfaEmailOTPValidatedAtTime;
 
 		if (time > System.currentTimeMillis()) {
 			return true;
@@ -271,10 +270,10 @@ public class MFAEmailOTPChecker {
 	}
 
 	private boolean _verify(HttpSession httpSession, String otp) {
-		String expectedOtp = (String)httpSession.getAttribute(
+		String expectedMFAEmailOTP = (String)httpSession.getAttribute(
 			MFAEmailOTPWebKeys.MFA_EMAIL_OTP);
 
-		if ((expectedOtp == null) || !expectedOtp.equals(otp)) {
+		if ((expectedMFAEmailOTP == null) || !expectedMFAEmailOTP.equals(otp)) {
 			return false;
 		}
 

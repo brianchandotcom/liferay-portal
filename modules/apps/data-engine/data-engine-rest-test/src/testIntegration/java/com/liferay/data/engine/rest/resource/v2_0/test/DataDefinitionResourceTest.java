@@ -17,8 +17,10 @@ package com.liferay.data.engine.rest.resource.v2_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionField;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
+import com.liferay.data.engine.rest.resource.v2_0.test.util.DataLayoutTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -146,6 +148,38 @@ public class DataDefinitionResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey() {
+	}
+
+	@Override
+	@Test
+	public void testPutDataDefinition() throws Exception {
+		DataDefinition postDataDefinition =
+			testPutDataDefinition_addDataDefinition();
+
+		DataLayout dataLayout = postDataDefinition.getDefaultDataLayout();
+
+		DataDefinition randomDataDefinition = randomDataDefinition();
+
+		DataLayout newDataLayout = DataLayoutTestUtil.createDataLayout(
+			postDataDefinition.getId(), "Data Layout Updated",
+			postDataDefinition.getSiteId());
+
+		newDataLayout.setId(dataLayout.getId());
+
+		randomDataDefinition.setDefaultDataLayout(newDataLayout);
+
+		DataDefinition putDataDefinition =
+			dataDefinitionResource.putDataDefinition(
+				postDataDefinition.getId(), randomDataDefinition);
+
+		assertEquals(randomDataDefinition, putDataDefinition);
+		assertValid(putDataDefinition);
+
+		DataDefinition getDataDefinition =
+			dataDefinitionResource.getDataDefinition(putDataDefinition.getId());
+
+		assertEquals(randomDataDefinition, getDataDefinition);
+		assertValid(getDataDefinition);
 	}
 
 	@Ignore
@@ -325,6 +359,8 @@ public class DataDefinitionResourceTest
 					}
 				};
 				dataDefinitionKey = RandomTestUtil.randomString();
+				defaultDataLayout = DataLayoutTestUtil.createDataLayout(
+					0L, "Data Layout Name", testGroup.getGroupId());
 				defaultLanguageId = "en_US";
 				siteId = testGroup.getGroupId();
 				userId = TestPropsValues.getUserId();

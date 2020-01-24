@@ -397,9 +397,8 @@ public class DataDefinitionResourceImpl
 					_portal, _resourceLocalService,
 					DataRecordCollectionUtil::toDataRecordCollection);
 
-		spiDataRecordCollectionResource.postDataDefinitionDataRecordCollection(
-			contextCompany, dataDefinition.getId(),
-			dataDefinition.getDataDefinitionKey(),
+		spiDataRecordCollectionResource.addDataRecordCollection(
+			dataDefinition.getId(), dataDefinition.getDataDefinitionKey(),
 			dataDefinition.getDescription(), dataDefinition.getName());
 
 		return dataDefinition;

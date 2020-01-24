@@ -12,7 +12,12 @@
  * details.
  */
 
-import {switchLayoutData, selectExperience, setUsedWidgets} from './utils';
+import {
+	setExperimentStatus,
+	switchLayoutData,
+	selectExperience,
+	setUsedWidgets
+} from './utils';
 
 function selectExperienceReducer(state, payload) {
 	let nextState = state;
@@ -27,6 +32,8 @@ function selectExperienceReducer(state, payload) {
 	nextState = setUsedWidgets(nextState, {portletIds});
 
 	nextState = selectExperience(nextState, segmentsExperienceId);
+
+	nextState = setExperimentStatus(nextState, segmentsExperienceId);
 
 	return nextState;
 }

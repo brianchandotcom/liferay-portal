@@ -22,7 +22,9 @@ import java.util.Optional;
 /**
  * @author Máté Thurzó
  */
-public interface StagedLayoutSet extends LayoutSet, StagedGroupedModel {
+public interface StagedLayoutSet extends StagedGroupedModel {
+
+	public LayoutSet getLayoutSet();
 
 	public Optional<String> getLayoutSetPrototypeName();
 

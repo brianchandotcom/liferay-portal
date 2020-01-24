@@ -12,18 +12,36 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query;
+package com.liferay.petra.sql.dsl.query.impl;
 
+import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
+import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
 import com.liferay.petra.sql.dsl.expressions.Expression;
-import com.liferay.petra.sql.dsl.query.impl.GroupBy;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public interface GroupByStep extends OrderByStep {
+public class QueryExpression<T> extends BaseASTNode implements Expression<T> {
 
-	public default HavingStep groupBy(Expression<?>... expressions) {
-		return new GroupBy(this, expressions);
+	public QueryExpression(DSLQuery dslQuery) {
+		_dslQuery = Objects.requireNonNull(dslQuery);
 	}
+
+	@Override
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		consumer.accept("(");
+
+		_dslQuery.toSQL(consumer, astNodeListener);
+
+		consumer.accept(")");
+	}
+
+	private final DSLQuery _dslQuery;
 
 }

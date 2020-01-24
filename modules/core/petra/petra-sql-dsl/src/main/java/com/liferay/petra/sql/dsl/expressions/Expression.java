@@ -15,7 +15,6 @@
 package com.liferay.petra.sql.dsl.expressions;
 
 import com.liferay.petra.sql.dsl.ast.ASTNode;
-import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.expressions.impl.AliasImpl;
 import com.liferay.petra.sql.dsl.expressions.impl.NullExpression;
 import com.liferay.petra.sql.dsl.expressions.impl.Operand;
@@ -25,8 +24,7 @@ import com.liferay.petra.sql.dsl.expressions.impl.ScalarList;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.OrderByExpression;
 import com.liferay.petra.sql.dsl.query.impl.OrderByExpressionImpl;
-
-import java.util.function.Consumer;
+import com.liferay.petra.sql.dsl.query.impl.QueryExpression;
 
 /**
  * @author Preston Crary
@@ -72,22 +70,7 @@ public interface Expression<T> extends ASTNode {
 
 	public default Predicate in(DSLQuery dslQuery) {
 		return new PredicateImpl(
-			this, Operand.IN,
-			new Expression<Object>() {
-
-				@Override
-				public void toSQL(
-					Consumer<String> consumer,
-					ASTNodeListener astNodeListener) {
-
-					consumer.accept("(");
-
-					dslQuery.toSQL(consumer, astNodeListener);
-
-					consumer.accept(")");
-				}
-
-			});
+			this, Operand.IN, new QueryExpression<>(dslQuery));
 	}
 
 	public default Predicate in(T[] values) {
@@ -132,6 +115,24 @@ public interface Expression<T> extends ASTNode {
 
 	public default Predicate neq(T value) {
 		return neq(new Scalar<>(value));
+	}
+
+	public default Predicate notIn(DSLQuery dslQuery) {
+		return new PredicateImpl(
+			this, Operand.NOT_IN, new QueryExpression<>(dslQuery));
+	}
+
+	public default Predicate notIn(T[] values) {
+		return new PredicateImpl(
+			this, Operand.NOT_IN, new ScalarList<>(values));
+	}
+
+	public default Predicate notLike(Expression<String> expression) {
+		return new PredicateImpl(this, Operand.NOT_LIKE, expression);
+	}
+
+	public default Predicate notLike(String value) {
+		return like(new Scalar<>(value));
 	}
 
 }

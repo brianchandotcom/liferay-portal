@@ -43,6 +43,10 @@ public class Operand {
 
 	public static final Operand NOT_EQUAL = new Operand("!=");
 
+	public static final Operand NOT_IN = new Operand("not in");
+
+	public static final Operand NOT_LIKE = new Operand("not like");
+
 	public static final Operand OR = new Operand("or");
 
 	public Operand(String value) {

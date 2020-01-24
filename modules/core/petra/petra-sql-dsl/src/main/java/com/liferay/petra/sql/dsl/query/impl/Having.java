@@ -16,46 +16,37 @@ package com.liferay.petra.sql.dsl.query.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
-import com.liferay.petra.sql.dsl.expressions.Expression;
-import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.expressions.Predicate;
 import com.liferay.petra.sql.dsl.query.HavingStep;
+import com.liferay.petra.sql.dsl.query.OrderByStep;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class GroupBy extends BaseASTNode implements HavingStep {
+public class Having extends BaseASTNode implements OrderByStep {
 
-	public GroupBy(GroupByStep groupByStep, Expression<?>... expressions) {
-		super(groupByStep);
+	public Having(HavingStep havingStep, Predicate predicate) {
+		super(havingStep);
 
-		if (expressions.length == 0) {
-			throw new IllegalArgumentException();
-		}
-
-		_expressions = expressions;
+		_predicate = Objects.requireNonNull(predicate);
 	}
 
-	public Expression<?>[] getExpressions() {
-		return _expressions;
+	public Predicate getPredicate() {
+		return _predicate;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("group by ");
+		consumer.accept("having ");
 
-		for (int i = 0; i < _expressions.length; i++) {
-			_expressions[i].toSQL(consumer, astNodeListener);
-
-			if (i < (_expressions.length - 1)) {
-				consumer.accept(", ");
-			}
-		}
+		_predicate.toSQL(consumer, astNodeListener);
 	}
 
-	private final Expression<?>[] _expressions;
+	private final Predicate _predicate;
 
 }

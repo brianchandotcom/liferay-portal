@@ -40,8 +40,8 @@ public class IGDisplayExportImportPortletPreferencesProcessorUtil {
 				return portletPreferences.getValue("displayStyle", null);
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return null;
@@ -60,8 +60,8 @@ public class IGDisplayExportImportPortletPreferencesProcessorUtil {
 					portletPreferences.getValue("displayStyleGroupId", null));
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 
 		return 0;

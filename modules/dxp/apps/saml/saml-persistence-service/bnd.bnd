@@ -28,6 +28,6 @@ Import-Package:\
 	\
 	*
 Liferay-Releng-Module-Group-Title: SAML
-Liferay-Require-SchemaVersion: 2.1.0
+Liferay-Require-SchemaVersion: 2.2.0
 Liferay-Service: true
 -dsannotations-options: inherit

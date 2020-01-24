@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -32,12 +31,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.validation.ValidationException;
@@ -60,22 +59,53 @@ public class SPIDataRecordCollectionResource<T> {
 		_transformUnsafeFunction = transformUnsafeFunction;
 	}
 
+	public T addDataRecordCollection(
+			long dataDefinitionId, String dataRecordCollectionKey,
+			Map<String, Object> description, Map<String, Object> name)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			dataDefinitionId);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.addRecordSet(
+			PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
+			dataDefinitionId, dataRecordCollectionKey,
+			LocalizedValueUtil.toLocaleStringMap(name),
+			LocalizedValueUtil.toLocaleStringMap(description), 0,
+			DDLRecordSetConstants.SCOPE_DATA_ENGINE, serviceContext);
+
+		_resourceLocalService.addModelResources(
+			ddmStructure.getCompanyId(), ddmStructure.getGroupId(),
+			PrincipalThreadLocal.getUserId(), _getResourceName(ddlRecordSet),
+			ddlRecordSet.getPrimaryKey(), serviceContext.getModelPermissions());
+
+		return _transformUnsafeFunction.apply(ddlRecordSet);
+	}
+
 	public void deleteDataRecordCollection(Long dataRecordCollectionId)
 		throws Exception {
 
 		_ddlRecordSetLocalService.deleteRecordSet(dataRecordCollectionId);
 	}
 
-	public Page<T> getDataDefinitionDataRecordCollectionsPage(
-			AcceptLanguage acceptLanguage, Company company,
-			Long dataDefinitionId, String keywords, Pagination pagination)
+	public T getDataRecordCollection(long dataRecordCollectionId)
+		throws Exception {
+
+		return _transformUnsafeFunction.apply(
+			_ddlRecordSetLocalService.getRecordSet(dataRecordCollectionId));
+	}
+
+	public Page<T> getDataRecordCollections(
+			long dataDefinitionId, String keywords, Locale locale,
+			Pagination pagination)
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
 			throw new ValidationException(
 				LanguageUtil.format(
-					acceptLanguage.getPreferredLocale(),
-					"page-size-is-greater-than-x", 250));
+					locale, "page-size-is-greater-than-x", 250));
 		}
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
@@ -109,7 +139,7 @@ public class SPIDataRecordCollectionResource<T> {
 					"DDMStructureId", ddmStructure.getStructureId());
 				searchContext.setAttribute(
 					"scope", DDLRecordSetConstants.SCOPE_DATA_ENGINE);
-				searchContext.setCompanyId(company.getCompanyId());
+				searchContext.setCompanyId(ddmStructure.getCompanyId());
 				searchContext.setGroupIds(
 					new long[] {ddmStructure.getGroupId()});
 			},
@@ -119,50 +149,17 @@ public class SPIDataRecordCollectionResource<T> {
 			null);
 	}
 
-	public T getDataRecordCollection(Long dataRecordCollectionId)
-		throws Exception {
-
-		return _transformUnsafeFunction.apply(
-			_ddlRecordSetLocalService.getRecordSet(dataRecordCollectionId));
-	}
-
 	public T getSiteDataRecordCollection(
-			String dataRecordCollectionKey, Long siteId)
+			String dataRecordCollectionKey, long groupId)
 		throws Exception {
 
 		return _transformUnsafeFunction.apply(
 			_ddlRecordSetLocalService.getRecordSet(
-				siteId, dataRecordCollectionKey));
+				groupId, dataRecordCollectionKey));
 	}
 
-	public T postDataDefinitionDataRecordCollection(
-			Company company, Long dataDefinitionId,
-			String dataRecordCollectionKey, Map<String, Object> description,
-			Map<String, Object> name)
-		throws Exception {
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			dataDefinitionId);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.addRecordSet(
-			PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
-			dataDefinitionId, dataRecordCollectionKey,
-			LocalizedValueUtil.toLocaleStringMap(name),
-			LocalizedValueUtil.toLocaleStringMap(description), 0,
-			DDLRecordSetConstants.SCOPE_DATA_ENGINE, serviceContext);
-
-		_resourceLocalService.addModelResources(
-			company.getCompanyId(), ddmStructure.getGroupId(),
-			PrincipalThreadLocal.getUserId(), _getResourceName(ddlRecordSet),
-			ddlRecordSet.getPrimaryKey(), serviceContext.getModelPermissions());
-
-		return _transformUnsafeFunction.apply(ddlRecordSet);
-	}
-
-	public T putDataRecordCollection(
-			Long dataRecordCollectionId, Map<String, Object> description,
+	public T updateDataRecordCollection(
+			long dataRecordCollectionId, Map<String, Object> description,
 			Map<String, Object> name)
 		throws Exception {
 

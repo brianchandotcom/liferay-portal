@@ -372,6 +372,57 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
 	}
 
+	test ConfigureSimilarResultsMaximumQueryTerms {
+		for (var count : list "One, Two, Three") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "${count}");
+		}
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "One Two Three");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Similar Results Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		Portlet.addPG(portletName = "Similar Results");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "One Two Three");
+
+		for (var count : list "One, Two, Three") {
+			AssertElementPresent(
+				key_linkResultTitle = "${count}",
+				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+		}
+
+		SearchPortlets.configureSimilarResults(maximumQueryTerms = "2");
+
+		AssertElementPresent(
+			key_resultPosition = "2",
+			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
+
+		AssertElementNotPresent(
+			key_resultPosition = "3",
+			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
+	}
+
 	test ConfigureSimilarResultsStopWords {
 		JSONWebcontent.addWebContent(
 			content = "No Match",

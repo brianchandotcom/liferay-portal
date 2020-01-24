@@ -89,7 +89,7 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if ((_searchEngineAdapter == null) || !_existIndex()) {
+		if ((_searchEngineAdapter == null) || !_hasIndex()) {
 			return;
 		}
 
@@ -142,7 +142,7 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 			_queries.term("deleted", Boolean.FALSE));
 	}
 
-	private boolean _existIndex() {
+	private boolean _hasIndex() {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest("workflow-metrics-processes");
 

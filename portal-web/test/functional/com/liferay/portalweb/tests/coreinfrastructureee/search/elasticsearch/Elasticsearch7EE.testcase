@@ -455,6 +455,105 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
+	test ConfigureSimilarResultsWordLength {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Alpha Bravo");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Alpha Delta");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Alpha Bravo Charlie");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Charlie");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Similar Results Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		Portlet.addPG(portletName = "Similar Results");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Alpha Delta",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(minimumWordLength = "6");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Alpha Delta",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(minimumWordLength = "8");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Alpha Delta",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(
+			maximumWordLength = "5",
+			minimumWordLength = "5");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Alpha Delta",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+	}
+
 	test HotDeployLearningToRankApp {
 		property hot.deploy.osgi.app.includes = "portal-search-learning-to-rank";
 		property test.assert.warning.exceptions = "true";

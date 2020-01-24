@@ -127,6 +127,7 @@ public class PublishLayoutMVCActionCommand
 			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
 
 			layout.setType(draftLayout.getType());
+			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 			String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
 

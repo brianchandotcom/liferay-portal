@@ -78,4 +78,42 @@ describe('Checkin', () => {
 			expect(callback).toHaveBeenCalled();
 		});
 	});
+
+	it('the callback get the MAJOR version of Checkin when is ChechedOut is true', async () => {
+		const {getByRole} = _renderCheckinComponent();
+		const callback = jest.fn();
+
+		await act(async () => {
+			Liferay.componentReady(bridgeComponentId).then(({open}) =>
+				open(callback)
+			);
+			const form = await waitForElement(() => getByRole('form'));
+
+			fireEvent.submit(form);
+
+			expect(callback).toHaveBeenCalledWith(
+				dlVersionNumberIncreaseValues.MAJOR,
+				''
+			);
+		});
+	});
+
+	it('the callback get the MINOR version of Checkin when is ChechedOut is false', async () => {
+		const {getByRole} = _renderCheckinComponent({checkedOut: false});
+		const callback = jest.fn();
+
+		await act(async () => {
+			Liferay.componentReady(bridgeComponentId).then(({open}) =>
+				open(callback)
+			);
+			const form = await waitForElement(() => getByRole('form'));
+
+			fireEvent.submit(form);
+
+			expect(callback).toHaveBeenCalledWith(
+				dlVersionNumberIncreaseValues.MINOR,
+				''
+			);
+		});
+	});
 });

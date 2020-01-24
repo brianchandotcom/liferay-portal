@@ -103,7 +103,7 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 	protected <C> Column<T, C> aliasColumn(Column<T, C> column, String alias) {
 		T table = _tableSupplier.get();
 
-		table.setAlias(alias);
+		table.setAlias(_alias);
 
 		column = new Column<>(
 			table, column.getColumnName(), column.getColumnType(),

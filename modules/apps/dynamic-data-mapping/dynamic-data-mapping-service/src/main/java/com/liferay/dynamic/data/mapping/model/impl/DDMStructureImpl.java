@@ -153,6 +153,12 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
+	public DDMStructureLayout getDDMStructureLayout() {
+		return DDMStructureLayoutLocalServiceUtil.fetchStructureLayout(
+			getGroupId(), getClassNameId(), getStructureKey());
+	}
+
+	@Override
 	public String getDefaultLanguageId() {
 		DDMForm ddmForm = _getDDMForm();
 

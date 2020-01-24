@@ -36,6 +36,10 @@ public class PredicateImpl extends BaseASTNode implements Predicate {
 
 	@Override
 	public Predicate and(Expression<Boolean> expression) {
+		if (expression == null) {
+			return this;
+		}
+
 		return new PredicateImpl(this, Operand.AND, expression);
 	}
 
@@ -57,6 +61,10 @@ public class PredicateImpl extends BaseASTNode implements Predicate {
 
 	@Override
 	public Predicate or(Expression<Boolean> expression) {
+		if (expression == null) {
+			return this;
+		}
+
 		return new PredicateImpl(this, Operand.OR, expression);
 	}
 

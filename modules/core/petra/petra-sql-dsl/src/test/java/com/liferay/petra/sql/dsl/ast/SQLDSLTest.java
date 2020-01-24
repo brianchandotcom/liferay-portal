@@ -38,7 +38,9 @@ import com.liferay.petra.sql.dsl.expressions.impl.ScalarList;
 import com.liferay.petra.sql.dsl.expressions.impl.WhenThen;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.petra.sql.dsl.query.LimitStep;
 import com.liferay.petra.sql.dsl.query.OrderByExpression;
 import com.liferay.petra.sql.dsl.query.OrderByInfo;
 import com.liferay.petra.sql.dsl.query.OrderByStep;
@@ -484,10 +486,14 @@ public class SQLDSLTest {
 			MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
+		).leftJoinOn(
+			MainExampleTable.TABLE, null
 		).innerJoinON(
 			ReferenceExampleTable.TABLE,
 			ReferenceExampleTable.TABLE.mainExampleId.eq(
 				MainExampleTable.TABLE.mainExampleId)
+		).innerJoinON(
+			ReferenceExampleTable.TABLE, null
 		).where(
 			MainExampleTable.TABLE.name.neq("")
 		);
@@ -536,8 +542,21 @@ public class SQLDSLTest {
 			MainExampleTable.TABLE
 		);
 
+		Assert.assertEquals(
+			"select MainExample.name from MainExample", joinStep.toString());
+
+		LimitStep limitStep = joinStep.orderBy();
+
+		Assert.assertEquals(
+			"select MainExample.name from MainExample", limitStep.toString());
+
+		limitStep = joinStep.orderBy((OrderByExpression[])null);
+
+		Assert.assertEquals(
+			"select MainExample.name from MainExample", limitStep.toString());
+
 		try {
-			joinStep.orderBy();
+			new OrderBy(joinStep, new OrderByExpression[0]);
 		}
 		catch (Exception exception) {
 			Assert.assertEquals(
@@ -557,15 +576,25 @@ public class SQLDSLTest {
 			MainExampleTable.TABLE.name, orderByExpression.getExpression());
 		Assert.assertTrue(
 			orderByExpression.toString(), orderByExpression.isAscending());
+
+		Assert.assertEquals(
+			"select MainExample.name from MainExample order by " +
+				"MainExample.name asc",
+			orderBy.toString());
 	}
 
 	@Test
-	public void testOrderByComparatorAdaptor() {
+	public void testOrderByOrderByInfo() {
 		OrderByStep orderByStep = DSLQueryUtil.select(
 			MainExampleTable.TABLE.name
 		).from(
 			MainExampleTable.TABLE
 		);
+
+		DSLQuery dslQuery = orderByStep.orderBy(MainExampleTable.TABLE, null);
+
+		Assert.assertEquals(
+			"select MainExample.name from MainExample", dslQuery.toString());
 
 		OrderByInfo orderByInfo = new OrderByInfo() {
 
@@ -583,8 +612,7 @@ public class SQLDSLTest {
 
 		};
 
-		DSLQuery dslQuery = orderByStep.orderBy(
-			MainExampleTable.TABLE, orderByInfo);
+		dslQuery = orderByStep.orderBy(MainExampleTable.TABLE, orderByInfo);
 
 		Assert.assertEquals(
 			"select MainExample.name from MainExample order by " +
@@ -801,11 +829,28 @@ public class SQLDSLTest {
 
 		Assert.assertEquals("select * from MainExample", joinStep.toString());
 
+		GroupByStep groupByStep = joinStep.where(null);
+
+		Assert.assertEquals(
+			"select * from MainExample", groupByStep.toString());
+
 		Predicate predicate = MainExampleTable.TABLE.name.eq("test");
 
 		Assert.assertEquals("MainExample.name = ?", predicate.toString());
 
 		predicate = predicate.and(MainExampleTable.TABLE.mainExampleId.gt(0L));
+
+		Assert.assertEquals(
+			"MainExample.name = ? and MainExample.mainExampleId > ?",
+			predicate.toString());
+
+		predicate = predicate.and(null);
+
+		Assert.assertEquals(
+			"MainExample.name = ? and MainExample.mainExampleId > ?",
+			predicate.toString());
+
+		predicate = predicate.or(null);
 
 		Assert.assertEquals(
 			"MainExample.name = ? and MainExample.mainExampleId > ?",

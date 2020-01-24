@@ -26,10 +26,18 @@ import com.liferay.petra.string.StringBundler;
 public interface OrderByStep extends LimitStep {
 
 	public default LimitStep orderBy(OrderByExpression... orderByExpressions) {
+		if ((orderByExpressions == null) || (orderByExpressions.length == 0)) {
+			return this;
+		}
+
 		return new OrderBy(this, orderByExpressions);
 	}
 
 	public default LimitStep orderBy(Table<?> table, OrderByInfo orderByInfo) {
+		if (orderByInfo == null) {
+			return this;
+		}
+
 		String[] orderByFields = orderByInfo.getOrderByFields();
 
 		OrderByExpression[] orderByExpressions =

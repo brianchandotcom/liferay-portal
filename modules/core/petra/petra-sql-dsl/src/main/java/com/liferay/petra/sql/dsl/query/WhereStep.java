@@ -23,6 +23,10 @@ import com.liferay.petra.sql.dsl.query.impl.Where;
 public interface WhereStep extends GroupByStep {
 
 	public default GroupByStep where(Predicate predicate) {
+		if (predicate == null) {
+			return this;
+		}
+
 		return new Where(this, predicate);
 	}
 

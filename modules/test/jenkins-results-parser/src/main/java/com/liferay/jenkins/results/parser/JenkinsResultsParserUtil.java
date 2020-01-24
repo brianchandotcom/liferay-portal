@@ -187,8 +187,24 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static JSONArray createJSONArray(String jsonString) {
+		jsonString = jsonString.trim();
+
+		while (jsonString.startsWith("\uFEFF")) {
+			jsonString = jsonString.substring(1);
+		}
+
+		return new JSONArray(jsonString);
+	}
+
 	public static JSONObject createJSONObject(String jsonString)
 		throws IOException {
+
+		jsonString = jsonString.trim();
+
+		while (jsonString.startsWith("\uFEFF")) {
+			jsonString = jsonString.substring(1);
+		}
 
 		JSONObject jsonObject = new JSONObject(jsonString);
 
@@ -2334,6 +2350,16 @@ public class JenkinsResultsParserUtil {
 			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
 	}
 
+	public static String toString(
+			String url, boolean checkCache, HttpRequestMethod method,
+			String postContent)
+		throws IOException {
+
+		return toString(
+			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, method, postContent,
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
+	}
+
 	public static String toString(String url, boolean checkCache, int timeout)
 		throws IOException {
 
@@ -2395,6 +2421,16 @@ public class JenkinsResultsParserUtil {
 				}
 
 				if ((httpAuthorizationHeader == null) &&
+					url.matches("https://liferay.spiraservice.net.+")) {
+
+					Properties buildProperties = getBuildProperties();
+
+					httpAuthorizationHeader = new BasicHTTPAuthorization(
+						buildProperties.getProperty("spira.admin.user.token"),
+						buildProperties.getProperty("spira.admin.user.name"));
+				}
+
+				if ((httpAuthorizationHeader == null) &&
 					url.matches("https://test-\\d+-\\d+.liferay.com/.+")) {
 
 					Properties buildProperties = getBuildProperties();
@@ -2450,6 +2486,8 @@ public class JenkinsResultsParserUtil {
 					}
 
 					if (httpAuthorizationHeader != null) {
+						httpURLConnection.setRequestProperty(
+							"accept", "application/json");
 						httpURLConnection.setRequestProperty(
 							"Authorization",
 							httpAuthorizationHeader.toString());

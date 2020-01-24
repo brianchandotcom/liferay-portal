@@ -19,8 +19,11 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
+import com.liferay.portal.kernel.bean.BeanLocator;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentHelper;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -70,6 +74,7 @@ public class SearchResultSummaryDisplayBuilderTest {
 		MockitoAnnotations.initMocks(this);
 
 		setUpAssetRenderer();
+		setUpGroup();
 		setUpHtmlUtil();
 		setUpLocaleThreadLocal();
 		setUpProps();
@@ -455,6 +460,26 @@ public class SearchResultSummaryDisplayBuilderTest {
 		);
 	}
 
+	protected void setUpGroup() throws Exception {
+		PortalBeanLocatorUtil.setBeanLocator(beanLocator);
+
+		Mockito.doReturn(
+			groupLocalService
+		).when(
+			beanLocator
+		).locate(
+			GroupLocalService.class.getName()
+		);
+
+		Mockito.doReturn(
+			group
+		).when(
+			groupLocalService
+		).getGroup(
+			0
+		);
+	}
+
 	protected void setUpHtmlUtil() throws Exception {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
@@ -543,8 +568,17 @@ public class SearchResultSummaryDisplayBuilderTest {
 	@Mock
 	protected AssetRendererFactoryLookup assetRendererFactoryLookup;
 
+	@Mock
+	protected BeanLocator beanLocator;
+
 	protected FastDateFormatFactory fastDateFormatFactory =
 		new FastDateFormatFactoryImpl();
+
+	@Mock
+	protected Group group;
+
+	@Mock
+	protected GroupLocalService groupLocalService;
 
 	@Mock
 	protected IndexerRegistry indexerRegistry;

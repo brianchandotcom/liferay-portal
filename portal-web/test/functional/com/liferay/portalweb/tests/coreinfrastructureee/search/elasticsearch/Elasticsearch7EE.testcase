@@ -423,6 +423,76 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
 	}
 
+	test ConfigureSimilarResultsMinimumShouldMatch {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Similar 1");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Similar Results 1");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Similar Results Web 1");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Similar Results Web Content");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Similar Results Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		Portlet.addPG(portletName = "Similar Results");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			minimumDocumentFrequency = "1",
+			minimumShouldMatch = "25%",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results Web Content");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results Web 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(minimumShouldMatch = "75%");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results Web 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+	}
+
 	test ConfigureSimilarResultsStopWords {
 		JSONWebcontent.addWebContent(
 			content = "No Match",

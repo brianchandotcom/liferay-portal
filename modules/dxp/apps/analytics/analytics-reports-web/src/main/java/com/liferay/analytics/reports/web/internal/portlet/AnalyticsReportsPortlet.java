@@ -18,6 +18,7 @@ import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPort
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.web.internal.display.context.AnalyticsReportsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -35,6 +36,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author David Arques
  * @author Sarai Díaz
  */
 @Component(
@@ -61,6 +63,9 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
 		HttpServletRequest originalHttpServletRequest =
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(renderRequest));
@@ -74,12 +79,16 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			AnalyticsReportsWebKeys.ANALYTICS_REPORTS_DISPLAY_CONTEXT,
-			new AnalyticsReportsDisplayContext());
+			new AnalyticsReportsDisplayContext(
+				httpServletRequest, _userLocalService));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

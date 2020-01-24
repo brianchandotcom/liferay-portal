@@ -127,8 +127,8 @@ public class SendMFAEmailOTPMVCResourceCommand implements MVCResourceCommand {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"One-time password email sent to user ",
-					toUser.getUserId(), " at address ", toAddress));
+					"One-time password email sent to user ", toUser.getUserId(),
+					" at address ", toAddress));
 		}
 	}
 
@@ -169,8 +169,8 @@ public class SendMFAEmailOTPMVCResourceCommand implements MVCResourceCommand {
 		if (System.currentTimeMillis() <= time) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Refusing to send email before resend timeout for " +
-						"user " + user.getUserId());
+					"Refusing to send email before resend timeout for user " +
+						user.getUserId());
 			}
 
 			return false;

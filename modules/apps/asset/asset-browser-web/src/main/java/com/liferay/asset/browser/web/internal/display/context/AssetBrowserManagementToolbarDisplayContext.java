@@ -179,6 +179,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 		return LanguageUtil.get(request, "sites");
 	}
 
+	@Override
 	protected String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -208,6 +209,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 		return new String[] {"title", "modified-date"};
 	}
 
+	@Override
 	protected String getOrderByType() {
 		if (_orderByType != null) {
 			return _orderByType;

@@ -115,17 +115,19 @@ public class SQLDSLTest {
 
 	@Test
 	public void testAggregateExpression() {
-		String name = "count";
+		Expression<Long> countExpression = DSLFunctionUtil.countDistinct(
+			ReferenceExampleTable.TABLE.name);
 
-		AggregateExpression aggregateExpression = new AggregateExpression<>(
-			true, ReferenceExampleTable.TABLE.name, name);
+		AggregateExpression<Long> countAggregateExpression =
+			(AggregateExpression<Long>)countExpression;
 
 		Assert.assertTrue(
-			aggregateExpression.toString(), aggregateExpression.isDistinct());
+			countAggregateExpression.toString(),
+			countAggregateExpression.isDistinct());
 		Assert.assertSame(
 			ReferenceExampleTable.TABLE.name,
-			aggregateExpression.getExpression());
-		Assert.assertSame(name, aggregateExpression.getName());
+			countAggregateExpression.getExpression());
+		Assert.assertEquals("count", countAggregateExpression.getName());
 	}
 
 	@Test
@@ -362,6 +364,10 @@ public class SQLDSLTest {
 			String.valueOf(
 				DSLFunctionUtil.add(MainExampleTable.TABLE.mainExampleId, 2L)));
 		Assert.assertEquals(
+			"avg(MainExample.mainExampleId)",
+			String.valueOf(
+				DSLFunctionUtil.avg(MainExampleTable.TABLE.mainExampleId)));
+		Assert.assertEquals(
 			"BITAND(MainExample.mainExampleId, ?)",
 			String.valueOf(
 				DSLFunctionUtil.bitAnd(
@@ -387,6 +393,9 @@ public class SQLDSLTest {
 					MainExampleTable.TABLE.name, new Scalar<>("__delimiter__"),
 					ReferenceExampleTable.TABLE.name)));
 		Assert.assertEquals(
+			"count(MainExample.name)",
+			String.valueOf(DSLFunctionUtil.count(MainExampleTable.TABLE.name)));
+		Assert.assertEquals(
 			"LOWER(MainExample.name)",
 			String.valueOf(DSLFunctionUtil.lower(MainExampleTable.TABLE.name)));
 		Assert.assertEquals(
@@ -394,6 +403,14 @@ public class SQLDSLTest {
 			String.valueOf(
 				DSLFunctionUtil.divide(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
+		Assert.assertEquals(
+			"max(MainExample.mainExampleId)",
+			String.valueOf(
+				DSLFunctionUtil.max(MainExampleTable.TABLE.mainExampleId)));
+		Assert.assertEquals(
+			"min(MainExample.mainExampleId)",
+			String.valueOf(
+				DSLFunctionUtil.min(MainExampleTable.TABLE.mainExampleId)));
 		Assert.assertEquals(
 			"MainExample.mainExampleId * ?",
 			String.valueOf(
@@ -404,6 +421,10 @@ public class SQLDSLTest {
 			String.valueOf(
 				DSLFunctionUtil.subtract(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
+		Assert.assertEquals(
+			"sum(MainExample.mainExampleId)",
+			String.valueOf(
+				DSLFunctionUtil.sum(MainExampleTable.TABLE.mainExampleId)));
 	}
 
 	@Test

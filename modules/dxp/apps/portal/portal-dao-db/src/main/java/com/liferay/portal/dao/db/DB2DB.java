@@ -90,11 +90,6 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsAlterColumnType() {
-		return _SUPPORTS_ALTER_COLUMN_TYPE;
-	}
-
-	@Override
 	public boolean isSupportsInlineDistinct() {
 		return _SUPPORTS_INLINE_DISTINCT;
 	}
@@ -339,8 +334,6 @@ public class DB2DB extends BaseDB {
 		Types.BLOB, Types.BLOB, Types.SMALLINT, Types.TIMESTAMP, Types.DOUBLE,
 		Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.CLOB, Types.VARCHAR
 	};
-
-	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = true;
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 

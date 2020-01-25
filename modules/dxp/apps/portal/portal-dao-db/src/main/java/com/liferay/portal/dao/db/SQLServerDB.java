@@ -140,11 +140,6 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsAlterColumnType() {
-		return _SUPPORTS_ALTER_COLUMN_TYPE;
-	}
-
-	@Override
 	public boolean isSupportsNewUuidFunction() {
 		return _SUPPORTS_NEW_UUID_FUNCTION;
 	}
@@ -228,8 +223,6 @@ public class SQLServerDB extends BaseDB {
 		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.NVARCHAR,
 		Types.NVARCHAR, Types.NVARCHAR
 	};
-
-	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = false;
 
 	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;
 

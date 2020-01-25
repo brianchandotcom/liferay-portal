@@ -102,6 +102,54 @@ public class SpiraReleaseUtil {
 		return null;
 	}
 
+	protected static List<SpiraRelease> getSpiraReleasesByName(
+			int projectId, String releaseName)
+		throws IOException {
+
+		if (_spiraReleasesByName.containsKey(releaseName)) {
+			return _spiraReleasesByName.get(releaseName);
+		}
+
+		Map<String, String> urlReplacements = new HashMap<>();
+
+		urlReplacements.put("number_rows", String.valueOf(_NUMBER_ROWS));
+		urlReplacements.put("project_id", String.valueOf(projectId));
+		urlReplacements.put("start_row", String.valueOf(_START_ROW));
+
+		JSONArray requestJSONArray = new JSONArray();
+
+		JSONObject nameFilterJSONObject = new JSONObject();
+
+		nameFilterJSONObject.put("PropertyName", "Name");
+		nameFilterJSONObject.put(
+			"StringValue", releaseName.replaceAll("\\[", "[[]"));
+
+		requestJSONArray.put(nameFilterJSONObject);
+
+		JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+			"projects/{project_id}/releases/search?number_rows={number_rows}&" +
+				"start_row={start_row}",
+			urlReplacements, HttpRequestMethod.POST,
+			requestJSONArray.toString());
+
+		List<SpiraRelease> spiraReleases = new ArrayList<>();
+
+		for (int i = 0; i < responseJSONArray.length(); i++) {
+			SpiraRelease spiraRelease = _newSpiraRelease(
+				responseJSONArray.getJSONObject(i));
+
+			if (!releaseName.equals(spiraRelease.getName())) {
+				continue;
+			}
+
+			spiraReleases.add(spiraRelease);
+		}
+
+		_spiraReleasesByName.put(releaseName, spiraReleases);
+
+		return spiraReleases;
+	}
+
 	private static SpiraRelease _newSpiraRelease(JSONObject jsonObject) {
 		Integer projectID = jsonObject.getInt("ProjectId");
 
@@ -123,5 +171,8 @@ public class SpiraReleaseUtil {
 	private static final int _NUMBER_ROWS = 15000;
 
 	private static final int _START_ROW = 1;
+
+	private static final Map<String, List<SpiraRelease>> _spiraReleasesByName =
+		new HashMap<>();
 
 }

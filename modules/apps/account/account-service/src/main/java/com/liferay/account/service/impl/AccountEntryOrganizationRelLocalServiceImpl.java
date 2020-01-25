@@ -20,6 +20,9 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.base.AccountEntryOrganizationRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 
 import java.util.List;
 
@@ -54,7 +57,12 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 		accountEntryOrganizationRel.setAccountEntryId(accountEntryId);
 		accountEntryOrganizationRel.setOrganizationId(organizationId);
 
-		return updateAccountEntryOrganizationRel(accountEntryOrganizationRel);
+		accountEntryOrganizationRel = updateAccountEntryOrganizationRel(
+			accountEntryOrganizationRel);
+
+		_reindexOrganization(organizationId);
+
+		return accountEntryOrganizationRel;
 	}
 
 	@Override
@@ -98,5 +106,14 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 
 	@Reference
 	protected AccountEntryLocalService accountEntryLocalService;
+
+	private void _reindexOrganization(long organizationId)
+		throws PortalException {
+
+		Indexer<Organization> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Organization.class);
+
+		indexer.reindex(Organization.class.getName(), organizationId);
+	}
 
 }

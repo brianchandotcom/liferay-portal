@@ -40,6 +40,7 @@ import javax.annotation.Generated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -50,7 +51,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("StructuredContent")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"title"})
+@Schema(requiredProperties = {"title", "contentStructureId"})
 @XmlRootElement(name = "StructuredContent")
 public class StructuredContent {
 
@@ -238,6 +239,7 @@ public class StructuredContent {
 
 	@GraphQLField(description = "The ID of the `ContentStructure`.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected Long contentStructureId;
 
 	@Schema(description = "The structured content's creator.")

@@ -36,8 +36,7 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 			getBooleanFunction(), getCastClobTextFunction(),
 			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
 			getDropTableIfExistsTextFunction(), getIntegerDivisionFunction(),
-			getNullDateFunction(), _getAlterColumnTypeFunction(),
-			_getLikeFunction()
+			getNullDateFunction(), _getLikeFunction()
 		};
 
 		if (!db.isSupportsStringCaseSensitiveQuery()) {
@@ -76,15 +75,6 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 		return matcher.replaceAll(dropTableIfExists);
 	}
 
-	private Function<String, String> _getAlterColumnTypeFunction() {
-		return (String sql) -> {
-			Matcher matcher = _alterColumnTypePattern.matcher(sql);
-
-			return matcher.replaceAll(
-				"ALTER TABLE $1 ALTER COLUMN $2 SET DATA TYPE $3");
-		};
-	}
-
 	private Function<String, String> _getLikeFunction() {
 		return (String sql) -> {
 			Matcher matcher = _likePattern.matcher(sql);
@@ -94,9 +84,6 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 		};
 	}
 
-	private static final Pattern _alterColumnTypePattern = Pattern.compile(
-		"ALTER_COLUMN_TYPE\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)",
-		Pattern.CASE_INSENSITIVE);
 	private static final Pattern _likePattern = Pattern.compile(
 		"LIKE \\?", Pattern.CASE_INSENSITIVE);
 

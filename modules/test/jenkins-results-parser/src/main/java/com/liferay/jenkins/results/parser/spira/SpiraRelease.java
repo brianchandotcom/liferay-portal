@@ -14,49 +14,39 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class SpiraProject {
-
-	public void addSpiraRelease(SpiraRelease spiraRelease) {
-		_spiraReleaseByID.put(spiraRelease.getID(), spiraRelease);
-	}
+public class SpiraRelease {
 
 	public int getID() {
-		return _jsonObject.getInt("ProjectId");
+		return _jsonObject.getInt("ReleaseId");
 	}
 
-	public SpiraRelease getSpiraReleaseByID(int releaseID) {
-		return _spiraReleaseByID.get(releaseID);
-	}
-
-	public JSONObject toJSONObject() {
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("id", getID());
-
-		return jsonObject;
+	public String getName() {
+		return _jsonObject.getString("Name");
 	}
 
 	@Override
 	public String toString() {
-		JSONObject jsonObject = toJSONObject();
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("id", getID());
+		jsonObject.put("name", getName());
+		jsonObject.put("project", _spiraProject.toJSONObject());
 
 		return jsonObject.toString();
 	}
 
-	protected SpiraProject(JSONObject jsonObject) {
+	protected SpiraRelease(JSONObject jsonObject) {
 		_jsonObject = jsonObject;
+		_spiraProject = SpiraProjectUtil.getSpiraProjectById(
+			jsonObject.getInt("ProjectId"));
 	}
 
 	private final JSONObject _jsonObject;
-	private final Map<Integer, SpiraRelease> _spiraReleaseByID =
-		new HashMap<>();
+	private final SpiraProject _spiraProject;
 
 }

@@ -35,6 +35,10 @@ public class SpiraProject {
 		return _jsonObject.getInt("ProjectId");
 	}
 
+	public String getName() {
+		return _jsonObject.getString("Name");
+	}
+
 	public SpiraRelease getSpiraReleaseByID(int releaseID) {
 		return _spiraReleaseByID.get(releaseID);
 	}
@@ -51,6 +55,7 @@ public class SpiraProject {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("id", getID());
+		jsonObject.put("name", getName());
 
 		return jsonObject;
 	}

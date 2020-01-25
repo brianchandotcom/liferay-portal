@@ -48,14 +48,20 @@ public class SpiraRelease {
 			parentPath, "/", name.replace("/", "\\/"));
 	}
 
-	@Override
-	public String toString() {
+	public JSONObject toJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("id", getID());
 		jsonObject.put("name", getName());
 		jsonObject.put("path", getPath());
 		jsonObject.put("project", _spiraProject.toJSONObject());
+
+		return jsonObject;
+	}
+
+	@Override
+	public String toString() {
+		JSONObject jsonObject = toJSONObject();
 
 		return jsonObject.toString();
 	}

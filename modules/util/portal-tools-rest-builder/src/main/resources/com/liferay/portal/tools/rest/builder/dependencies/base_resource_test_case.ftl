@@ -1338,14 +1338,29 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					${relatedSchemaName} random${relatedSchemaName} = random${relatedSchemaName}();
 
-					${relatedSchemaName} put${relatedSchemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(post${schemaName}.getId(), random${relatedSchemaName});
+					${relatedSchemaName} put${relatedSchemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+								post${schemaName}.getId()
+							<#elseif stringUtil.equals(javaMethodParameter.parameterName, relatedSchemaName)>
+								random${relatedSchemaName}
+							<#else>
+								null
+							</#if>
+							<#sep>, </#sep>
+						</#list>
+					);
 
 					assertEquals(random${relatedSchemaName}, put${relatedSchemaName});
 					assertValid(put${relatedSchemaName});
 				}
 
 				protected ${relatedSchemaName} test${javaMethodSignature.methodName?cap_first}_add${relatedSchemaName}(long ${schemaVarName}Id, ${relatedSchemaName} ${relatedSchemaVarName}) throws Exception {
-					return ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("put", "post")}(${schemaVarName}Id, ${relatedSchemaVarName});
+					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, javaMethodSignature.methodName?replace("put", "post"))>
+						return ${schemaVarName}Resource.${javaMethodSignature.methodName?replace("put", "post")}(${schemaVarName}Id, ${relatedSchemaVarName});
+					<#else>
+						throw new UnsupportedOperationException("This method needs to be implemented");
+					</#if>
 				}
 			</#if>
 		</#list>

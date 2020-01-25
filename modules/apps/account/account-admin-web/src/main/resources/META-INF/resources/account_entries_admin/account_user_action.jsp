@@ -23,22 +23,16 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 AccountUserDisplay accountUserDisplay = (AccountUserDisplay)row.getObject();
 %>
 
-<liferay-ui:icon-menu
-	direction="left-side"
-	icon="<%= StringPool.BLANK %>"
-	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
-	showWhenSingleIcon="<%= true %>"
->
-	<portlet:actionURL name="/account_admin/remove_account_users" var="removeAccountUsersURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
-		<portlet:param name="accountUserIds" value="<%= String.valueOf(accountUserDisplay.getUserId()) %>" />
-	</portlet:actionURL>
+<portlet:actionURL name="/account_admin/remove_account_users" var="removeAccountUsersURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+	<portlet:param name="accountUserIds" value="<%= String.valueOf(accountUserDisplay.getUserId()) %>" />
+</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		confirmation="are-you-sure-you-want-to-remove-this-user"
-		message="remove"
-		url="<%= removeAccountUsersURL %>"
-	/>
-</liferay-ui:icon-menu>
+<liferay-ui:icon-delete
+	confirmation="are-you-sure-you-want-to-remove-this-user"
+	icon="times-circle"
+	message="remove"
+	showIcon="<%= true %>"
+	url="<%= removeAccountUsersURL %>"
+/>

@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
 import java.io.IOException;
 
 import org.json.JSONObject;
@@ -31,12 +33,28 @@ public class SpiraRelease {
 		return _jsonObject.getString("Name");
 	}
 
+	public String getPath() {
+		String name = getName();
+
+		String parentPath = "";
+
+		SpiraRelease parentSpiraRelease = _getParentSpiraRelease();
+
+		if (parentSpiraRelease != null) {
+			parentPath = parentSpiraRelease.getPath();
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			parentPath, "/", name.replace("/", "\\/"));
+	}
+
 	@Override
 	public String toString() {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("id", getID());
 		jsonObject.put("name", getName());
+		jsonObject.put("path", getPath());
 		jsonObject.put("project", _spiraProject.toJSONObject());
 
 		return jsonObject.toString();
@@ -71,6 +89,20 @@ public class SpiraRelease {
 
 	protected String getIndentLevel() {
 		return _jsonObject.getString("IndentLevel");
+	}
+
+	protected boolean isParentSpiraRelease(SpiraRelease parentSpiraRelease) {
+		String indentLevel = getIndentLevel();
+
+		return indentLevel.startsWith(parentSpiraRelease.getIndentLevel());
+	}
+
+	private SpiraRelease _getParentSpiraRelease() {
+		if (_parentSpiraReleases.length > 1) {
+			return _parentSpiraReleases[_parentSpiraReleases.length - 1];
+		}
+
+		return null;
 	}
 
 	private final JSONObject _jsonObject;

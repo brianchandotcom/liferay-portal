@@ -28,6 +28,7 @@ public class SpiraProject {
 		_spiraReleaseByID.put(spiraRelease.getID(), spiraRelease);
 		_spiraReleaseByIndentLevel.put(
 			spiraRelease.getIndentLevel(), spiraRelease);
+		_spiraReleaseByPath.put(spiraRelease.getPath(), spiraRelease);
 	}
 
 	public int getID() {
@@ -40,6 +41,10 @@ public class SpiraProject {
 
 	public SpiraRelease getSpiraReleaseByIndentLevel(String indentLevel) {
 		return _spiraReleaseByIndentLevel.get(indentLevel);
+	}
+
+	public SpiraRelease getSpiraReleaseByPath(String releasePath) {
+		return _spiraReleaseByPath.get(releasePath);
 	}
 
 	public JSONObject toJSONObject() {
@@ -65,6 +70,8 @@ public class SpiraProject {
 	private final Map<Integer, SpiraRelease> _spiraReleaseByID =
 		new HashMap<>();
 	private final Map<String, SpiraRelease> _spiraReleaseByIndentLevel =
+		new HashMap<>();
+	private final Map<String, SpiraRelease> _spiraReleaseByPath =
 		new HashMap<>();
 
 }

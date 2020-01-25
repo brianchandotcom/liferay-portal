@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -22,7 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -52,6 +55,69 @@ public class SpiraReleaseUtil {
 			SpiraRestAPIUtil.requestJSONObject(
 				"projects/{project_id}/releases/{release_id}", urlReplacements,
 				HttpRequestMethod.GET, null));
+	}
+
+	public static SpiraRelease getSpiraReleaseByPath(
+			int projectId, String releasePath)
+		throws IOException {
+
+		SpiraProject spiraProject = SpiraProjectUtil.getSpiraProjectById(
+			projectId);
+
+		SpiraRelease spiraRelease = spiraProject.getSpiraReleaseByPath(
+			releasePath);
+
+		if (spiraRelease != null) {
+			return spiraRelease;
+		}
+
+		if (!releasePath.matches("/.+[^/]")) {
+			throw new RuntimeException("Invalid path " + releasePath);
+		}
+
+		String[] releasePathNames = releasePath.split("(?<!\\\\)\\/");
+
+		Stack<SpiraRelease> spiraReleaseStack = new Stack<>();
+
+		for (int i = 1; i < releasePathNames.length; i++) {
+			String releasePathName = StringEscapeUtils.unescapeJava(
+				releasePathNames[i]);
+
+			List<SpiraRelease> candidateSpiraReleases = new ArrayList<>();
+
+			for (SpiraRelease candidateSpiraRelease :
+					getSpiraReleasesByName(projectId, releasePathName)) {
+
+				if (!spiraReleaseStack.empty()) {
+					SpiraRelease parentSpiraRelease = spiraReleaseStack.peek();
+
+					if (!candidateSpiraRelease.isParentSpiraRelease(
+							parentSpiraRelease)) {
+
+						continue;
+					}
+				}
+
+				candidateSpiraReleases.add(candidateSpiraRelease);
+			}
+
+			if (candidateSpiraReleases.isEmpty()) {
+				throw new RuntimeException("Could not find " + releasePath);
+			}
+
+			if (candidateSpiraReleases.size() > 1) {
+				SpiraRelease parentSpiraRelease = spiraReleaseStack.peek();
+
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Duplicate paths at ", parentSpiraRelease.getPath(),
+						"/", releasePathName));
+			}
+
+			spiraReleaseStack.push(candidateSpiraReleases.get(0));
+		}
+
+		return spiraReleaseStack.peek();
 	}
 
 	protected static SpiraRelease getSpiraReleaseByIndentLevel(

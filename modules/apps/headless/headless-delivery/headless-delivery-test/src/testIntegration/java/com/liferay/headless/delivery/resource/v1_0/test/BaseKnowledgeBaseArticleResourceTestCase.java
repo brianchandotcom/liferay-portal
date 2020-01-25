@@ -1649,12 +1649,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			knowledgeBaseArticleResource.
-				putSiteKnowledgeBaseArticleSubscribeHttpResponse(null));
+				putSiteKnowledgeBaseArticleSubscribeHttpResponse(
+					testGroup.getGroupId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseArticleResource.
-				putSiteKnowledgeBaseArticleSubscribeHttpResponse(null));
+				putSiteKnowledgeBaseArticleSubscribeHttpResponse(
+					testGroup.getGroupId()));
 	}
 
 	protected KnowledgeBaseArticle
@@ -1674,12 +1676,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			knowledgeBaseArticleResource.
-				putSiteKnowledgeBaseArticleUnsubscribeHttpResponse(null));
+				putSiteKnowledgeBaseArticleUnsubscribeHttpResponse(
+					testGroup.getGroupId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseArticleResource.
-				putSiteKnowledgeBaseArticleUnsubscribeHttpResponse(null));
+				putSiteKnowledgeBaseArticleUnsubscribeHttpResponse(
+					testGroup.getGroupId()));
 	}
 
 	protected KnowledgeBaseArticle

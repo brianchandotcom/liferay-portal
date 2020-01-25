@@ -762,11 +762,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			204,
-			blogPostingResource.putSiteBlogPostingSubscribeHttpResponse(null));
+			blogPostingResource.putSiteBlogPostingSubscribeHttpResponse(
+				testGroup.getGroupId()));
 
 		assertHttpResponseStatusCode(
 			404,
-			blogPostingResource.putSiteBlogPostingSubscribeHttpResponse(null));
+			blogPostingResource.putSiteBlogPostingSubscribeHttpResponse(
+				testGroup.getGroupId()));
 	}
 
 	protected BlogPosting testPutSiteBlogPostingSubscribe_addBlogPosting()
@@ -785,12 +787,12 @@ public abstract class BaseBlogPostingResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			blogPostingResource.putSiteBlogPostingUnsubscribeHttpResponse(
-				null));
+				testGroup.getGroupId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			blogPostingResource.putSiteBlogPostingUnsubscribeHttpResponse(
-				null));
+				testGroup.getGroupId()));
 	}
 
 	protected BlogPosting testPutSiteBlogPostingUnsubscribe_addBlogPosting()

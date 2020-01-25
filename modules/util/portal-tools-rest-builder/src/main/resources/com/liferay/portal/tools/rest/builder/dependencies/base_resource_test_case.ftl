@@ -1062,6 +1062,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 								${schemaVarName}.getId()
+							<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+								testGroup.getGroupId()
 							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "[Lcom.liferay.portal.vulcan.permission.Permission;")>
 								new Permission[] {
 									new Permission() {
@@ -1094,6 +1096,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 								<#else>
 									null
 								</#if>
+							<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+								testGroup.getGroupId()
 						 	<#elseif stringUtil.startsWith(javaMethodParameter.parameterType, "[Lcom.liferay.portal.vulcan.permission.Permission;")>
 								new Permission[]{
 									new Permission() {

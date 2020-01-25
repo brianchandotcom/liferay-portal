@@ -285,6 +285,9 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");*/
 	}
 
+	// LPS-107652
+
+	@ignore = "true"
 	test ConfigureSimilarResultsDocumentFrequency {
 		property test.name.skip.portal.instance = "Elasticsearch7EE#ConfigureSimilarResultsDocumentFrequency";
 

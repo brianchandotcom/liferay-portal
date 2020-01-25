@@ -43,13 +43,6 @@ public class DB2SQLTransformerLogicTest
 		return sb.toString();
 	}
 
-	@Test
-	public void testReplaceAlterColumnType() {
-		Assert.assertEquals(
-			"ALTER TABLE T ALTER COLUMN C SET DATA TYPE VARCHAR(256)",
-			sqlTransformer.transform("ALTER_COLUMN_TYPE T C VARCHAR(256)"));
-	}
-
 	@Override
 	@Test
 	public void testReplaceBitwiseCheckWithExtraWhitespace() {

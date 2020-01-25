@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -31,7 +33,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -103,6 +107,8 @@ public class DB2DB extends BaseDB {
 	@Override
 	public void runSQL(Connection con, String[] templates)
 		throws IOException, SQLException {
+
+		templates = splitAlterColumnType(templates);
 
 		super.runSQL(con, templates);
 
@@ -240,6 +246,32 @@ public class DB2DB extends BaseDB {
 							"@new-column@;",
 						REWORD_TEMPLATE, template);
 				}
+				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
+					String[] template = buildColumnTypeTokens(line);
+
+					String nullable = template[template.length - 1];
+
+					if (Validator.isBlank(nullable)) {
+						line = StringUtil.replace(
+							"alter table @table@ alter column @old-column@ " +
+								"set data type @type@;",
+							REWORD_TEMPLATE, template);
+					}
+					else {
+						if (nullable.equals("not null")) {
+							line = StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ set not null;",
+								REWORD_TEMPLATE, template);
+						}
+						else {
+							line = StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ drop not null;",
+								REWORD_TEMPLATE, template);
+						}
+					}
+				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
 					String[] template = buildTableNameTokens(line);
 
@@ -260,6 +292,30 @@ public class DB2DB extends BaseDB {
 
 			return sb.toString();
 		}
+	}
+
+	protected String[] splitAlterColumnType(String[] templates) {
+		List<String> newTemplates = new ArrayList<>();
+
+		for (String template : templates) {
+			newTemplates.add(template);
+
+			template = StringUtil.trim(template);
+
+			if (template.startsWith(ALTER_COLUMN_TYPE)) {
+				int index = template.indexOf(" not null");
+
+				if (index == -1) {
+					index = template.indexOf(" null");
+				}
+
+				if (index != -1) {
+					newTemplates.add(template.substring(0, index));
+				}
+			}
+		}
+
+		return ArrayUtil.toStringArray(newTemplates);
 	}
 
 	private String _removeNull(String content) {
@@ -284,7 +340,7 @@ public class DB2DB extends BaseDB {
 		Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.CLOB, Types.VARCHAR
 	};
 
-	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = false;
+	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = true;
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 

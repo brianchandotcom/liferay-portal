@@ -17,7 +17,8 @@ package com.liferay.petra.sql.dsl.query;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.query.impl.QueryTable;
-import com.liferay.petra.sql.dsl.query.impl.Union;
+import com.liferay.petra.sql.dsl.query.impl.SetOperation;
+import com.liferay.petra.sql.dsl.query.impl.SetOperationType;
 
 /**
  * @author Preston Crary
@@ -29,11 +30,11 @@ public interface DSLQuery extends ASTNode {
 	}
 
 	public default DSLQuery union(DSLQuery dslQuery) {
-		return new Union(this, false, dslQuery);
+		return new SetOperation(this, SetOperationType.UNION, dslQuery);
 	}
 
 	public default DSLQuery unionAll(DSLQuery dslQuery) {
-		return new Union(this, true, dslQuery);
+		return new SetOperation(this, SetOperationType.UNION_ALL, dslQuery);
 	}
 
 }

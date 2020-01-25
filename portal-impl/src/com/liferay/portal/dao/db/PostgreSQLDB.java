@@ -221,12 +221,23 @@ public class PostgreSQLDB extends BaseDB {
 							"using @old-column@::@type@;",
 						REWORD_TEMPLATE, template);
 
-					if (Validator.isNotNull(template[template.length - 1])) {
-						line = line.concat(
-							StringUtil.replace(
-								"alter table @table@ alter column " +
-									"@old-column@ set @nullable@;",
-								REWORD_TEMPLATE, template));
+					String nullable = template[template.length - 1];
+
+					if (!Validator.isBlank(nullable)) {
+						if (nullable.equals("not null")) {
+							line = line.concat(
+								StringUtil.replace(
+									"alter table @table@ alter column " +
+										"@old-column@ set not null;",
+									REWORD_TEMPLATE, template));
+						}
+						else {
+							line = line.concat(
+								StringUtil.replace(
+									"alter table @table@ alter column " +
+										"@old-column@ drop not null;",
+									REWORD_TEMPLATE, template));
+						}
 					}
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {

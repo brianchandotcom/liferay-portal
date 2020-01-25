@@ -16,6 +16,7 @@ package com.liferay.portal.dao.db;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -201,9 +203,28 @@ public class OracleDB extends BaseDB {
 				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
 					String[] template = buildColumnTypeTokens(line);
 
+					String nullable = template[template.length - 1];
+
+					if (!Validator.isBlank(nullable)) {
+						try (Connection con = DataAccess.getConnection()) {
+							DBInspector dbInspector = new DBInspector(con);
+
+							boolean isNullable = dbInspector.isNullable(
+								template[0], template[1]);
+
+							if ((nullable.equals("null") && isNullable) ||
+								(nullable.equals("not null") && !isNullable)) {
+
+								nullable = StringPool.BLANK;
+							}
+						}
+						catch (SQLException sqlException) {
+						}
+					}
+
 					line = StringUtil.replace(
 						"alter table @table@ modify @old-column@ @type@ " +
-							"@nullable@;",
+							nullable + ";",
 						REWORD_TEMPLATE, template);
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.dao.db;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -188,6 +189,31 @@ public class DBInspector {
 		}
 
 		return false;
+	}
+
+	public boolean isNullable(String tableName, String columnName)
+		throws SQLException {
+
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+		try (ResultSet rs = databaseMetaData.getColumns(
+				getCatalog(), getSchema(),
+				normalizeName(tableName, databaseMetaData),
+				normalizeName(columnName, databaseMetaData))) {
+
+			if (!rs.next()) {
+				throw new SQLException(
+					StringBundler.concat(
+						"Column ", tableName, StringPool.PERIOD, columnName,
+						" does not exist"));
+			}
+
+			if (rs.getInt("NULLABLE") == DatabaseMetaData.columnNullable) {
+				return true;
+			}
+
+			return false;
+		}
 	}
 
 	public String normalizeName(String name) throws SQLException {

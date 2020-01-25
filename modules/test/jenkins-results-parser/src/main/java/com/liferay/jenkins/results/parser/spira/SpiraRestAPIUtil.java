@@ -29,7 +29,7 @@ import org.json.JSONObject;
  */
 public class SpiraRestAPIUtil {
 
-	public static String request(
+	protected static String request(
 			String urlPath, Map<String, String> urlReplacements,
 			HttpRequestMethod httpRequestMethod, String requestData)
 		throws IOException {
@@ -53,7 +53,7 @@ public class SpiraRestAPIUtil {
 			_SPIRA_BASE_URL + urlPath, false, httpRequestMethod, requestData);
 	}
 
-	public static JSONArray requestJSONArray(
+	protected static JSONArray requestJSONArray(
 			String urlPath, Map<String, String> urlReplacements,
 			HttpRequestMethod httpRequestMethod, String requestData)
 		throws IOException {
@@ -62,7 +62,7 @@ public class SpiraRestAPIUtil {
 			request(urlPath, urlReplacements, httpRequestMethod, requestData));
 	}
 
-	public static JSONObject requestJSONObject(
+	protected static JSONObject requestJSONObject(
 			String urlPath, Map<String, String> urlReplacements,
 			HttpRequestMethod httpRequestMethod, String requestData)
 		throws IOException {

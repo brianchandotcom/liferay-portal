@@ -80,11 +80,9 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
-				long userId = accountEntryUserRel.getAccountUserId();
-
 				redirect = _http.setParameter(
 					redirect, actionResponse.getNamespace() + "p_u_i_d",
-					userId);
+					accountEntryUserRel.getAccountUserId());
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}

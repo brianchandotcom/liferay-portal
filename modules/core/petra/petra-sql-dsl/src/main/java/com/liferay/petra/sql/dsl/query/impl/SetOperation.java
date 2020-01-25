@@ -24,11 +24,14 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class Union extends BaseASTNode implements DSLQuery {
+public class SetOperation extends BaseASTNode implements DSLQuery {
 
-	public Union(DSLQuery leftDSLQuery, boolean all, DSLQuery rightDSLQuery) {
+	public SetOperation(
+		DSLQuery leftDSLQuery, SetOperationType setOperationType,
+		DSLQuery rightDSLQuery) {
+
 		_leftDSLQuery = Objects.requireNonNull(leftDSLQuery);
-		_all = all;
+		_setOperationType = Objects.requireNonNull(setOperationType);
 		_rightDSLQuery = Objects.requireNonNull(rightDSLQuery);
 	}
 
@@ -40,8 +43,8 @@ public class Union extends BaseASTNode implements DSLQuery {
 		return _rightDSLQuery;
 	}
 
-	public boolean isAll() {
-		return _all;
+	public SetOperationType getSetOperationType() {
+		return _setOperationType;
 	}
 
 	@Override
@@ -50,18 +53,17 @@ public class Union extends BaseASTNode implements DSLQuery {
 
 		_leftDSLQuery.toSQL(consumer, astNodeListener);
 
-		if (_all) {
-			consumer.accept(" union all ");
-		}
-		else {
-			consumer.accept(" union ");
-		}
+		consumer.accept(" ");
+
+		consumer.accept(_setOperationType.toString());
+
+		consumer.accept(" ");
 
 		_rightDSLQuery.toSQL(consumer, astNodeListener);
 	}
 
-	private final boolean _all;
 	private final DSLQuery _leftDSLQuery;
 	private final DSLQuery _rightDSLQuery;
+	private final SetOperationType _setOperationType;
 
 }

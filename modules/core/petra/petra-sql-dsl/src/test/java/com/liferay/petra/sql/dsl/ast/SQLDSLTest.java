@@ -56,7 +56,8 @@ import com.liferay.petra.sql.dsl.query.impl.OrderByExpressionImpl;
 import com.liferay.petra.sql.dsl.query.impl.QueryExpression;
 import com.liferay.petra.sql.dsl.query.impl.QueryTable;
 import com.liferay.petra.sql.dsl.query.impl.Select;
-import com.liferay.petra.sql.dsl.query.impl.Union;
+import com.liferay.petra.sql.dsl.query.impl.SetOperation;
+import com.liferay.petra.sql.dsl.query.impl.SetOperationType;
 import com.liferay.petra.sql.dsl.query.impl.Where;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -112,8 +113,9 @@ public class SQLDSLTest {
 				assertClasses.add(Scalar.class);
 				assertClasses.add(ScalarList.class);
 				assertClasses.add(Select.class);
+				assertClasses.add(SetOperation.class);
+				assertClasses.add(SetOperationType.class);
 				assertClasses.add(Table.class);
-				assertClasses.add(Union.class);
 				assertClasses.add(WhenThen.class);
 				assertClasses.add(Where.class);
 			}
@@ -1105,11 +1107,12 @@ public class SQLDSLTest {
 			ReferenceExampleTable.TABLE
 		);
 
-		Union union = new Union(dslQuery1, false, dslQuery2);
-
-		Assert.assertFalse(union.isAll());
+		SetOperation union = new SetOperation(
+			dslQuery1, SetOperationType.UNION, dslQuery2);
 
 		Assert.assertSame(dslQuery1, union.getLeftDSLQuery());
+
+		Assert.assertSame(SetOperationType.UNION, union.getSetOperationType());
 
 		Assert.assertSame(dslQuery2, union.getRightDSLQuery());
 
@@ -1118,15 +1121,16 @@ public class SQLDSLTest {
 				"ReferenceExample.name name from ReferenceExample",
 			union.toString());
 
-		union = new Union(
-			dslQuery1, true,
+		union = new SetOperation(
+			dslQuery1, SetOperationType.UNION_ALL,
 			DSLQueryUtil.select(
 				ReferenceExampleTable.TABLE.name.as("name")
 			).from(
 				ReferenceExampleTable.TABLE
 			));
 
-		Assert.assertTrue(union.isAll());
+		Assert.assertSame(
+			SetOperationType.UNION_ALL, union.getSetOperationType());
 
 		String sql =
 			"select MainExample.name name from MainExample union all select " +
@@ -1134,7 +1138,7 @@ public class SQLDSLTest {
 
 		Assert.assertEquals(sql, union.toString());
 
-		union = new Union(union, false, union);
+		union = new SetOperation(union, SetOperationType.UNION, union);
 
 		Assert.assertEquals(
 			StringBundler.concat(sql, " union ", sql), union.toString());

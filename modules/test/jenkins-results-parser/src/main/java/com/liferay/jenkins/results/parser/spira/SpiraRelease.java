@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import java.io.IOException;
+
 import org.json.JSONObject;
 
 /**
@@ -44,9 +46,35 @@ public class SpiraRelease {
 		_jsonObject = jsonObject;
 		_spiraProject = SpiraProjectUtil.getSpiraProjectById(
 			jsonObject.getInt("ProjectId"));
+
+		String indentLevel = getIndentLevel();
+
+		int parentSpiraReleaseCount = (indentLevel.length() / 3) - 1;
+
+		_parentSpiraReleases = new SpiraRelease[parentSpiraReleaseCount];
+
+		for (int i = 1; i <= parentSpiraReleaseCount; i++) {
+			String parentIndentLevel = indentLevel.substring(0, i * 3);
+
+			try {
+				SpiraRelease parentSpiraRelease =
+					SpiraReleaseUtil.getSpiraReleaseByIndentLevel(
+						_spiraProject.getID(), parentIndentLevel);
+
+				_parentSpiraReleases[i - 1] = parentSpiraRelease;
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+	}
+
+	protected String getIndentLevel() {
+		return _jsonObject.getString("IndentLevel");
 	}
 
 	private final JSONObject _jsonObject;
+	private final SpiraRelease[] _parentSpiraReleases;
 	private final SpiraProject _spiraProject;
 
 }

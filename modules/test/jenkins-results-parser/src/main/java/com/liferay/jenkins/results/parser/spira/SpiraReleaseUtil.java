@@ -18,9 +18,12 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -51,6 +54,54 @@ public class SpiraReleaseUtil {
 				HttpRequestMethod.GET, null));
 	}
 
+	protected static SpiraRelease getSpiraReleaseByIndentLevel(
+			int projectID, String indentLevel)
+		throws IOException {
+
+		SpiraProject spiraProject = SpiraProjectUtil.getSpiraProjectById(
+			projectID);
+
+		SpiraRelease spiraRelease = spiraProject.getSpiraReleaseByIndentLevel(
+			indentLevel);
+
+		if (spiraRelease != null) {
+			return spiraRelease;
+		}
+
+		Map<String, String> urlReplacements = new HashMap<>();
+
+		urlReplacements.put("number_rows", String.valueOf(_NUMBER_ROWS));
+		urlReplacements.put("project_id", String.valueOf(projectID));
+		urlReplacements.put("start_row", String.valueOf(_START_ROW));
+
+		JSONArray requestJSONArray = new JSONArray();
+
+		JSONObject nameFilterJSONObject = new JSONObject();
+
+		nameFilterJSONObject.put("PropertyName", "IndentLevel");
+		nameFilterJSONObject.put("StringValue", indentLevel);
+
+		requestJSONArray.put(nameFilterJSONObject);
+
+		JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+			"projects/{project_id}/releases/search?number_rows={number_rows}&" +
+				"start_row={start_row}",
+			urlReplacements, HttpRequestMethod.POST,
+			requestJSONArray.toString());
+
+		for (int i = 0; i < responseJSONArray.length(); i++) {
+			JSONObject jsonObject = responseJSONArray.getJSONObject(i);
+
+			if (!indentLevel.equals(jsonObject.getString("IndentLevel"))) {
+				continue;
+			}
+
+			return _newSpiraRelease(jsonObject);
+		}
+
+		return null;
+	}
+
 	private static SpiraRelease _newSpiraRelease(JSONObject jsonObject) {
 		Integer projectID = jsonObject.getInt("ProjectId");
 
@@ -68,5 +119,9 @@ public class SpiraReleaseUtil {
 
 		return spiraRelease;
 	}
+
+	private static final int _NUMBER_ROWS = 15000;
+
+	private static final int _START_ROW = 1;
 
 }

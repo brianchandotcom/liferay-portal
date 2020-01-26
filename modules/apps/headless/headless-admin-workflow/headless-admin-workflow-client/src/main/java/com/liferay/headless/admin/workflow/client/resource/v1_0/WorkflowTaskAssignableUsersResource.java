@@ -16,6 +16,7 @@ package com.liferay.headless.admin.workflow.client.resource.v1_0;
 
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskAssignableUsers;
 import com.liferay.headless.admin.workflow.client.http.HttpInvoker;
+import com.liferay.headless.admin.workflow.client.problem.Problem;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -124,7 +125,7 @@ public interface WorkflowTaskAssignableUsersResource {
 					Level.WARNING,
 					"Unable to process HTTP response: " + content, e);
 
-				throw e;
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 

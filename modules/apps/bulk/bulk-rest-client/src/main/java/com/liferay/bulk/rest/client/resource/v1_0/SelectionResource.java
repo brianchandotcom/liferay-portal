@@ -16,6 +16,7 @@ package com.liferay.bulk.rest.client.resource.v1_0;
 
 import com.liferay.bulk.rest.client.dto.v1_0.Selection;
 import com.liferay.bulk.rest.client.http.HttpInvoker;
+import com.liferay.bulk.rest.client.problem.Problem;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -126,7 +127,7 @@ public interface SelectionResource {
 					Level.WARNING,
 					"Unable to process HTTP response: " + content, e);
 
-				throw e;
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 

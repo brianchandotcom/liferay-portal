@@ -19,6 +19,7 @@ import com.liferay.app.builder.rest.client.dto.v1_0.App;
 import com.liferay.app.builder.rest.client.http.HttpInvoker;
 import com.liferay.app.builder.rest.client.pagination.Page;
 import com.liferay.app.builder.rest.client.pagination.Pagination;
+import com.liferay.app.builder.rest.client.problem.Problem;
 import com.liferay.app.builder.rest.client.serdes.v1_0.AppSerDes;
 
 import java.util.LinkedHashMap;
@@ -155,6 +156,17 @@ public interface AppResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse deleteAppHttpResponse(Long appId)
@@ -211,7 +223,7 @@ public interface AppResource {
 					Level.WARNING,
 					"Unable to process HTTP response: " + content, e);
 
-				throw e;
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 
@@ -270,7 +282,7 @@ public interface AppResource {
 					Level.WARNING,
 					"Unable to process HTTP response: " + content, e);
 
-				throw e;
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 
@@ -388,7 +400,16 @@ public interface AppResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
-			return Page.of(content, AppSerDes::toDTO);
+			try {
+				return Page.of(content, AppSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse getDataDefinitionAppsPageHttpResponse(
@@ -466,7 +487,7 @@ public interface AppResource {
 					Level.WARNING,
 					"Unable to process HTTP response: " + content, e);
 
-				throw e;
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 
@@ -525,7 +546,16 @@ public interface AppResource {
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
-			return Page.of(content, AppSerDes::toDTO);
+			try {
+				return Page.of(content, AppSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
 		}
 
 		public HttpInvoker.HttpResponse getSiteAppsPageHttpResponse(

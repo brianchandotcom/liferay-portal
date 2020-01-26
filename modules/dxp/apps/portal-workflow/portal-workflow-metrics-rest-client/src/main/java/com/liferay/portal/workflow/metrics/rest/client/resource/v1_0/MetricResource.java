@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.metrics.rest.client.resource.v1_0;
 
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Metric;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
+import com.liferay.portal.workflow.metrics.rest.client.problem.Problem;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -130,7 +131,7 @@ public interface MetricResource {
 					Level.WARNING,
 					"Unable to process HTTP response: " + content, e);
 
-				throw e;
+				throw new Problem.ProblemException(Problem.toDTO(content));
 			}
 		}
 

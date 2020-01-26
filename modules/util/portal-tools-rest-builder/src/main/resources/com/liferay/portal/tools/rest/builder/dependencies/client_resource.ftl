@@ -9,6 +9,7 @@ import ${configYAML.apiPackagePath}.client.http.HttpInvoker;
 import ${configYAML.apiPackagePath}.client.pagination.Page;
 import ${configYAML.apiPackagePath}.client.pagination.Pagination;
 import ${configYAML.apiPackagePath}.client.permission.Permission;
+import ${configYAML.apiPackagePath}.client.problem.Problem;
 import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 
 import java.io.File;
@@ -119,22 +120,24 @@ public interface ${schemaName}Resource {
 				_logger.fine("HTTP response status code: " + httpResponse.getStatusCode());
 
 				<#if !javaMethodSignature.returnType?contains("javax.ws.rs.core.Response")>
-					<#if javaMethodSignature.returnType?contains("Page<com.liferay.portal.vulcan.permission.Permission>")>
-						return Page.of(content, Permission::toDTO);
-					<#elseif javaMethodSignature.returnType?contains("Page<")>
-						return Page.of(content, ${schemaName}SerDes::toDTO);
-					<#elseif javaMethodSignature.returnType?ends_with("String")>
-						return content;
-					<#elseif !stringUtil.equals(javaMethodSignature.returnType, "void")>
-						try {
+					try {
+						<#if javaMethodSignature.returnType?contains("Page<com.liferay.portal.vulcan.permission.Permission>")>
+							return Page.of(content, Permission::toDTO);
+						<#elseif javaMethodSignature.returnType?contains("Page<")>
+							return Page.of(content, ${schemaName}SerDes::toDTO);
+						<#elseif javaMethodSignature.returnType?ends_with("String")>
+							return content;
+						<#elseif !stringUtil.equals(javaMethodSignature.returnType, "void")>
 							return ${javaMethodSignature.returnType?replace(".dto.", ".client.serdes.")}SerDes.toDTO(content);
-						}
-						catch (Exception e) {
-							_logger.log(Level.WARNING, "Unable to process HTTP response: " + content, e);
+						<#else>
+							return;
+						</#if>
+					}
+					catch (Exception e) {
+						_logger.log(Level.WARNING, "Unable to process HTTP response: " + content, e);
 
-							throw e;
-						}
-					</#if>
+						throw new Problem.ProblemException(Problem.toDTO(content));
+					}
 				</#if>
 			}
 

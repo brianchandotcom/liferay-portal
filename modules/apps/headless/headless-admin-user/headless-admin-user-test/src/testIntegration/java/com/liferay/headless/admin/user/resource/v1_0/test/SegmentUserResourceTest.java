@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.SegmentUser;
 import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
@@ -33,10 +34,7 @@ import com.liferay.segments.test.util.SegmentsTestUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.NotFoundException;
-
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -56,8 +54,7 @@ public class SegmentUserResourceTest extends BaseSegmentUserResourceTestCase {
 		Assert.assertEquals(0, page.getTotalCount());
 	}
 
-	@Ignore
-	@Test(expected = NotFoundException.class)
+	@Test(expected = Problem.ProblemException.class)
 	public void testGetSegmentUserAccountsPageWithNonexistingSegmentId()
 		throws Exception {
 
@@ -66,7 +63,7 @@ public class SegmentUserResourceTest extends BaseSegmentUserResourceTestCase {
 	}
 
 	@Override
-	protected SegmentUser randomSegmentUser() throws Exception {
+	protected SegmentUser randomSegmentUser() {
 		return new SegmentUser() {
 			{
 				emailAddress = RandomTestUtil.randomString() + "@liferay.com";

@@ -102,6 +102,22 @@ export default function widgetsReducer(widgets, action) {
 			return widgets;
 		}
 
+		case TYPES.DELETE_WIDGET: {
+			if (
+				action.fragmentEntryLink.editableValues.portletId &&
+				!action.fragmentEntryLink.editableValues.instanceable
+			) {
+				const widgetPath = getWidgetPath(
+					widgets,
+					action.fragmentEntryLink.editableValues.portletId
+				);
+
+				return setWidgetUsage(widgets, widgetPath, {used: false});
+			}
+
+			return widgets;
+		}
+
 		default:
 			return widgets;
 	}

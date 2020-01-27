@@ -21,11 +21,18 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -171,8 +178,21 @@ public class BNDExportsCheck extends BaseFileCheck {
 			return;
 		}
 
+		List<String> removedExportPackages = new ArrayList<>();
+
 		for (String exportPackage : exportPackages) {
-			if (!exportPackage.endsWith(".*")) {
+			if (exportPackage.startsWith(StringPool.EXCLAMATION)) {
+				removedExportPackages.add(
+					StringUtil.replace(
+						exportPackage.substring(1), CharPool.PERIOD,
+						CharPool.SLASH));
+			}
+			else if (exportPackage.endsWith(".*")) {
+				_checkWildCardExportPackage(
+					fileName, srcDirLocation, exportPackage,
+					removedExportPackages);
+			}
+			else {
 				_checkExportPackage(
 					fileName, srcDirLocation, exportPackage, modulesFile);
 			}
@@ -229,6 +249,97 @@ public class BNDExportsCheck extends BaseFileCheck {
 				fileName, sb.toString(),
 				getLineNumber(content, matcher.start(2)) + i);
 		}
+	}
+
+	private void _checkWildCardExportPackage(
+			String fileName, String srcDirLocation,
+			String wildCardExportPackage, List<String> removedExportPackages)
+		throws IOException {
+
+		String wildCardExportPackagePath = StringUtil.replace(
+			wildCardExportPackage, CharPool.PERIOD, CharPool.SLASH);
+
+		File exportPackageSrcDir = new File(
+			StringBundler.concat(
+				srcDirLocation, "/",
+				StringUtil.replaceLast(
+					wildCardExportPackagePath, "/*", StringPool.BLANK)));
+
+		if (!exportPackageSrcDir.exists()) {
+			addMessage(
+				fileName,
+				"Unneeded/incorrect Export-Package: " + wildCardExportPackage);
+
+			return;
+		}
+
+		Files.walkFileTree(
+			exportPackageSrcDir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					File dirFile = dirPath.toFile();
+
+					File packageinfoFile = new File(dirFile, "packageinfo");
+
+					if (packageinfoFile.exists()) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					File[] javaFiles = dirFile.listFiles(
+						new FileFilter() {
+
+							@Override
+							public boolean accept(File pathname) {
+								if (!pathname.isFile()) {
+									return false;
+								}
+
+								String fileName = pathname.getName();
+
+								if (fileName.endsWith(".java")) {
+									return true;
+								}
+
+								return false;
+							}
+
+						});
+
+					if (ArrayUtil.isEmpty(javaFiles)) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					String absolutePath = SourceUtil.getAbsolutePath(dirFile);
+
+					for (String removedExportPackage : removedExportPackages) {
+						if (!removedExportPackage.endsWith("/*")) {
+							if (absolutePath.endsWith(removedExportPackage)) {
+								return FileVisitResult.CONTINUE;
+							}
+						}
+						else if (absolutePath.contains(
+									StringUtil.replace(
+										removedExportPackage, "/*",
+										StringPool.BLANK))) {
+
+							return FileVisitResult.CONTINUE;
+						}
+					}
+
+					addMessage(
+						fileName, "Added packageinfo in " + absolutePath);
+
+					FileUtil.write(packageinfoFile, "version 1.0.0");
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private File[] _getExportPackageResourcesFiles(

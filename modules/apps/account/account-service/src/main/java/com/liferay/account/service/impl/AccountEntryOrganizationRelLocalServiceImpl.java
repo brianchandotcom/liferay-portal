@@ -76,6 +76,25 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAccountEntryOrganizationRel(
+			long accountEntryId, long organizationId)
+		throws PortalException {
+
+		accountEntryOrganizationRelPersistence.removeByA_O(
+			accountEntryId, organizationId);
+	}
+
+	@Override
+	public void deleteAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws PortalException {
+
+		for (long organizationId : organizationIds) {
+			deleteAccountEntryOrganizationRel(accountEntryId, organizationId);
+		}
+	}
+
+	@Override
 	public List<AccountEntryOrganizationRel> getAccountEntryOrganizationRels(
 		long accountEntryId) {
 

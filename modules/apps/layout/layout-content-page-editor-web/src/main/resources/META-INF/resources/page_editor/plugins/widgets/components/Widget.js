@@ -28,7 +28,13 @@ export default function Widget({instanceable, portletId, title, used}) {
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
 
+	const disabled = used && !instanceable;
+
 	const [, drag, preview] = useDrag({
+		canDrag() {
+			return !disabled;
+		},
+
 		end(_item, _monitor) {
 			const result = _monitor.getDropResult();
 
@@ -61,7 +67,7 @@ export default function Widget({instanceable, portletId, title, used}) {
 	return (
 		<button
 			className="btn btn-sm btn-unstyled d-block mb-1 px-2 py-1"
-			disabled={used && !instanceable}
+			disabled={disabled}
 			ref={drag}
 			type="button"
 		>

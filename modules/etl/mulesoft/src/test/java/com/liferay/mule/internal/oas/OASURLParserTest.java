@@ -55,6 +55,15 @@ public class OASURLParserTest {
 	}
 
 	@Test
+	public void testGetPortWhenDefaultPort() throws MalformedURLException {
+		OASURLParser oasURLParser = new OASURLParser(
+			"http://localhost/o/headless-commerce-admin-catalog/v1.0" +
+				"/openapi.json");
+
+		Assert.assertEquals("", oasURLParser.getPort());
+	}
+
+	@Test
 	public void testGetScheme() throws MalformedURLException {
 		OASURLParser oasURLParser = new OASURLParser(_OPEN_API_URL);
 

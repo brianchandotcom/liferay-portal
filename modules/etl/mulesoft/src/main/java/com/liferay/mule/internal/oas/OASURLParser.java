@@ -34,8 +34,15 @@ public class OASURLParser {
 		}
 
 		_host = matcher.group(2);
-		_jaxRSAppBase = matcher.group(4);
-		_port = matcher.group(3);
+		_jaxRSAppBase = matcher.group(5);
+
+		if (matcher.group(4) == null) {
+			_port = "";
+		}
+		else {
+			_port = matcher.group(4);
+		}
+
 		_scheme = matcher.group(1);
 	}
 
@@ -78,7 +85,7 @@ public class OASURLParser {
 	}
 
 	private static final Pattern _oasURLPattern = Pattern.compile(
-		"(.*)://(.+):(\\d+)/o/(.+)/v(.+)/openapi\\.(yaml|json)");
+		"(.*)://(.+?)(:(\\d+))?/o/(.+)/v(.+)/openapi\\.(yaml|json)");
 
 	private final String _host;
 	private final String _jaxRSAppBase;

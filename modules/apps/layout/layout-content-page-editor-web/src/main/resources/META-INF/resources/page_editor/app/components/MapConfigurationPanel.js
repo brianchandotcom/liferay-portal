@@ -12,17 +12,54 @@
  * details.
  */
 
-import React from 'react';
+import React, {useContext} from 'react';
 
-import {EDITABLE_TYPES} from '../config/constants/editableTypes';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
+import {ConfigContext} from '../config/index';
+import selectEditableValue from '../selectors/selectEditableValue';
+import {useSelector} from '../store/index';
+import updateEditableValues from '../thunks/updateEditableValues';
 import MappingSelector from './MappingSelector';
 
-export function MapConfigurationPanel() {
+export function MapConfigurationPanel({item}) {
+	const {editableId, editableType, fragmentEntryLinkId} = item;
+
+	const config = useContext(ConfigContext);
+	const state = useSelector(state => state);
+
+	const fragmentEntryLink = state.fragmentEntryLinks[fragmentEntryLinkId];
+
+	const editableValue = selectEditableValue(
+		state,
+		fragmentEntryLinkId,
+		editableId,
+		EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+	);
+
+	const updateEditableValue = newEditableValue => {
+		const nextEditableValues = {
+			...fragmentEntryLink.editableValues,
+			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
+				config: editableValue.config,
+				defaultValue: editableValue.defaultValue,
+
+				...newEditableValue
+			}
+		};
+
+		updateEditableValues({
+			config,
+			editableValues: nextEditableValues,
+			fragmentEntryLinkId,
+			segmentsExperienceId: state.segmentsExperienceId
+		});
+	};
+
 	return (
 		<MappingSelector
-			fieldType={EDITABLE_TYPES.text}
-			mappedItem={{}}
-			onMappingSelect={() => {}}
+			fieldType={editableType}
+			mappedItem={editableValue}
+			onMappingSelect={updateEditableValue}
 		/>
 	);
 }

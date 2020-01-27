@@ -149,11 +149,7 @@ public class NavigationMenuItemSerDes {
 
 			sb.append("\"name_i18n\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(navigationMenuItem.getName_i18n()));
-
-			sb.append("\"");
+			sb.append(_toJSON(navigationMenuItem.getName_i18n()));
 		}
 
 		if (navigationMenuItem.getNavigationMenuItems() != null) {
@@ -380,7 +376,8 @@ public class NavigationMenuItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setName_i18n(
-						(Object)jsonParserFieldValue);
+						(Map)NavigationMenuItemSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

@@ -114,11 +114,7 @@ public class ContentSetElementSerDes {
 
 			sb.append("\"title_i18n\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(contentSetElement.getTitle_i18n()));
-
-			sb.append("\"");
+			sb.append(_toJSON(contentSetElement.getTitle_i18n()));
 		}
 
 		sb.append("}");
@@ -227,7 +223,8 @@ public class ContentSetElementSerDes {
 			else if (Objects.equals(jsonParserFieldName, "title_i18n")) {
 				if (jsonParserFieldValue != null) {
 					contentSetElement.setTitle_i18n(
-						(Object)jsonParserFieldValue);
+						(Map)ContentSetElementSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else {

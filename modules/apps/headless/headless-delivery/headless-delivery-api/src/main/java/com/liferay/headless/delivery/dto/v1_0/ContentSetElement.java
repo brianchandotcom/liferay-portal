@@ -159,17 +159,18 @@ public class ContentSetElement {
 
 	@Schema
 	@Valid
-	public Object getTitle_i18n() {
+	public Map<String, String> getTitle_i18n() {
 		return title_i18n;
 	}
 
-	public void setTitle_i18n(Object title_i18n) {
+	public void setTitle_i18n(Map<String, String> title_i18n) {
 		this.title_i18n = title_i18n;
 	}
 
 	@JsonIgnore
 	public void setTitle_i18n(
-		UnsafeSupplier<Object, Exception> title_i18nUnsafeSupplier) {
+		UnsafeSupplier<Map<String, String>, Exception>
+			title_i18nUnsafeSupplier) {
 
 		try {
 			title_i18n = title_i18nUnsafeSupplier.get();
@@ -184,7 +185,7 @@ public class ContentSetElement {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Object title_i18n;
+	protected Map<String, String> title_i18n;
 
 	@Override
 	public boolean equals(Object object) {
@@ -272,11 +273,7 @@ public class ContentSetElement {
 
 			sb.append("\"title_i18n\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(title_i18n));
-
-			sb.append("\"");
+			sb.append(_toJSON(title_i18n));
 		}
 
 		sb.append("}");

@@ -528,14 +528,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
-				if (navigationMenu.getName_i18n() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals(
 					"navigationMenuItems", additionalAssertFieldName)) {
 
@@ -653,17 +645,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						navigationMenu1.getName(), navigationMenu2.getName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						navigationMenu1.getName_i18n(),
-						navigationMenu2.getName_i18n())) {
 
 					return false;
 				}
@@ -857,11 +838,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
-		}
-
-		if (entityFieldName.equals("name_i18n")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("navigationMenuItems")) {

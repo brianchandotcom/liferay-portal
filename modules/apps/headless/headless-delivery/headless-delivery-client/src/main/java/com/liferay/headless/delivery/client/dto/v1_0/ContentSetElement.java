@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.ContentSetElementSerDes;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -110,16 +111,17 @@ public class ContentSetElement {
 
 	protected String title;
 
-	public Object getTitle_i18n() {
+	public Map<String, String> getTitle_i18n() {
 		return title_i18n;
 	}
 
-	public void setTitle_i18n(Object title_i18n) {
+	public void setTitle_i18n(Map<String, String> title_i18n) {
 		this.title_i18n = title_i18n;
 	}
 
 	public void setTitle_i18n(
-		UnsafeSupplier<Object, Exception> title_i18nUnsafeSupplier) {
+		UnsafeSupplier<Map<String, String>, Exception>
+			title_i18nUnsafeSupplier) {
 
 		try {
 			title_i18n = title_i18nUnsafeSupplier.get();
@@ -129,7 +131,7 @@ public class ContentSetElement {
 		}
 	}
 
-	protected Object title_i18n;
+	protected Map<String, String> title_i18n;
 
 	@Override
 	public boolean equals(Object object) {

@@ -15,6 +15,7 @@
 import {Treeview} from 'frontend-js-components-web';
 import React from 'react';
 
+import {useActiveItemId} from '../../../app/components/Controls';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useSelector} from '../../../app/store/index';
@@ -22,6 +23,8 @@ import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import StructureTreeNode from './StructureTreeNode';
 
 export default function PageStructureSidebar() {
+	const activeItemId = useActiveItemId();
+
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const layoutData = useSelector(state => state.layoutData);
 
@@ -54,6 +57,7 @@ export default function PageStructureSidebar() {
 			Object.keys(fragmentChildren).forEach(childId => {
 				children.push({
 					children: [],
+					expanded: childId === activeItemId,
 					id: childId,
 					name: childId,
 					removable: false
@@ -71,6 +75,7 @@ export default function PageStructureSidebar() {
 
 		return {
 			children,
+			expanded: item.itemId === activeItemId,
 			id: item.itemId,
 			name: getName(item, fragmentEntryLinks),
 			removable: isRemovable(item, layoutData)
@@ -89,7 +94,11 @@ export default function PageStructureSidebar() {
 			</SidebarPanelHeader>
 
 			<div className="page-editor__page-structure px-4">
-				<Treeview NodeComponent={StructureTreeNode} nodes={nodes} />
+				<Treeview
+					NodeComponent={StructureTreeNode}
+					nodes={nodes}
+					selectedNodeIds={[activeItemId]}
+				/>
 			</div>
 		</>
 	);

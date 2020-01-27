@@ -587,12 +587,23 @@ function reducer(state, action) {
 				return visit(
 					node,
 					node => {
+						const {selectedNodeIds} = state;
 						const oldNode = nodeMap[node.id];
+
+						const expanded =
+							oldNode.expanded ||
+							node.expanded ||
+							node.children.some(child => {
+								return child.expanded || child.selected;
+							});
+
+						const selected =
+							oldNode.selected || selectedNodeIds.has(node.id);
 
 						return {
 							...node,
-							expanded: oldNode && oldNode.expanded,
-							selected: oldNode && oldNode.selected
+							expanded,
+							selected
 						};
 					},
 					nodeMap

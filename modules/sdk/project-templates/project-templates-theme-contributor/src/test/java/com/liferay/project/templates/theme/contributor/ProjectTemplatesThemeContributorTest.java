@@ -163,6 +163,41 @@ public class ProjectTemplatesThemeContributorTest
 	}
 
 	@Test
+	public void testBuildTemplateThemeContributorCustom73() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"theme-contributor", "my-contributor-custom", "--contributor-type",
+			"foo-bar", "--liferay-version", "7.3.0");
+
+		testContains(
+			gradleProjectDir, "bnd.bnd",
+			"Liferay-Theme-Contributor-Type: foo-bar",
+			"Web-ContextPath: /foo-bar-theme-contributor");
+		testNotContains(
+			gradleProjectDir, "bnd.bnd",
+			"-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin");
+
+		testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/foo-bar.scss");
+		testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/js/foo-bar.js");
+
+		File mavenProjectDir = buildTemplateWithMaven(
+			temporaryFolder, "theme-contributor", "my-contributor-custom",
+			"com.test", mavenExecutor, "-DcontributorType=foo-bar",
+			"-Dpackage=my.contributor.custom", "-DliferayVersion=7.3.0");
+
+		testContains(
+			mavenProjectDir, "bnd.bnd",
+			"-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin");
+
+		buildProjects(
+			_gradleDistribution, mavenExecutor, gradleProjectDir,
+			mavenProjectDir);
+	}
+
+	@Test
 	public void testBuildTemplateThemeContributorinWorkspace()
 		throws Exception {
 

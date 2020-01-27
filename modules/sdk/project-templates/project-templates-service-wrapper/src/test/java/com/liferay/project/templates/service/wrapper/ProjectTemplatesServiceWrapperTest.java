@@ -141,6 +141,30 @@ public class ProjectTemplatesServiceWrapperTest
 	}
 
 	@Test
+	public void testBuildTemplateServiceWrapper73() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-wrapper", "serviceoverride", "--service",
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
+			"--liferay-version", "7.3.0");
+
+		testContains(
+			gradleProjectDir, "build.gradle",
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+
+		File mavenProjectDir = buildTemplateWithMaven(
+			temporaryFolder, "service-wrapper", "serviceoverride", "com.test",
+			mavenExecutor, "-DclassName=Serviceoverride",
+			"-Dpackage=serviceoverride",
+			"-DserviceWrapperClass=" +
+				"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
+			"-DliferayVersion=7.3.0");
+
+		buildProjects(
+			_gradleDistribution, mavenExecutor, gradleProjectDir,
+			mavenProjectDir);
+	}
+
+	@Test
 	public void testBuildTemplateServiceWrapperInWorkspace() throws Exception {
 		File workspaceDir = buildWorkspace(temporaryFolder);
 

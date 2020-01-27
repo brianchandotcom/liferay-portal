@@ -8,7 +8,7 @@ dependencies {
 	compileInclude group: "org.apache.commons", name: "commons-dbcp2", version: "2.0"
 	compileInclude group: "org.apache.commons", name: "commons-pool2", version: "2.2"
 
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"

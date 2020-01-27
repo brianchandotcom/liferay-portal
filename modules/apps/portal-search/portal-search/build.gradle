@@ -20,7 +20,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+	testCompile group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-1"
 	testCompile project(":core:petra:petra-function")
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:petra:petra-reflect")

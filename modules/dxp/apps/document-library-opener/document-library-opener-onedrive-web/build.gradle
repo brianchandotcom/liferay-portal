@@ -15,7 +15,7 @@ dependencies {
 	compileInclude group: "org.apache.poi", name: "poi-ooxml-schemas", version: "3.17"
 	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
 
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

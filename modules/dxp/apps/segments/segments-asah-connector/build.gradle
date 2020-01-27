@@ -3,7 +3,7 @@ dependencies {
 	compileInclude group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-json-provider", version: "2.9.7"
 	compileInclude group: "com.fasterxml.jackson.module", name: "jackson-module-jaxb-annotations", version: "2.9.7"
 
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-1"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.10"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.10"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.10.1"

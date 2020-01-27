@@ -5,7 +5,7 @@ dependencies {
 	compileInclude group: "org.openoffice", name: "ridl", version: "2.3.0"
 	compileInclude group: "org.openoffice", name: "unoil", version: "2.3.0"
 
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-1"
 	compileOnly group: "com.google.code.gson", name: "gson", version: "1.4"
 	compileOnly group: "com.google.collections", name: "google-collections", version: "1.0"
 	compileOnly group: "com.googlecode.jsontoken", name: "jsontoken", version: "1.1"

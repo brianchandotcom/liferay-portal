@@ -1,10 +1,18 @@
 {
+	"jest": {
+		"setupFilesAfterEnv": [
+			"<rootDir>/test/setup.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/setup.js"
+		]
+	},
 	"name": "portal-workflow-kaleo-designer-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "karma start"
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "4.0.5"
 }

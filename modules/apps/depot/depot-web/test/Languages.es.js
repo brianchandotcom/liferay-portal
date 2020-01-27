@@ -42,7 +42,7 @@ const renderLanguagesComponent = props => render(<Languages {...props} />);
 describe('Languages', () => {
 	afterEach(cleanup);
 
-	it('should render a radio group with the first option checked', () => {
+	it('renders a radio group with the first option checked', () => {
 		const {getAllByRole} = renderLanguagesComponent(defaultProps);
 
 		const radioInputs = getAllByRole('radio');
@@ -51,7 +51,7 @@ describe('Languages', () => {
 		expect(radioInputs[0].checked).toBeTruthy();
 	});
 
-	it('should render a list with the availableLocales', () => {
+	it('renders a list with the availableLocales', () => {
 		const {container, getAllByRole} = renderLanguagesComponent(
 			defaultProps
 		);
@@ -63,7 +63,7 @@ describe('Languages', () => {
 		expect(trsElement).toHaveLength(4);
 	});
 
-	it('should render a "default" label at the first element', () => {
+	it('renders a "default" label at the first element', () => {
 		const {container, getByText} = renderLanguagesComponent(defaultProps);
 
 		expect(getByText('default'));
@@ -75,7 +75,7 @@ describe('Languages', () => {
 		).not.toBeNull();
 	});
 
-	it('should render a "manage" button if custom option is checked', () => {
+	it('renders a "manage" button if custom option is checked', () => {
 		const {getByText} = renderLanguagesComponent({
 			...defaultProps,
 			inheritLocales: false
@@ -84,7 +84,7 @@ describe('Languages', () => {
 		expect(getByText('manage'));
 	});
 
-	it('should change the default language', () => {
+	it('changes the default language', () => {
 		const {container, getAllByText} = renderLanguagesComponent({
 			...defaultProps,
 			inheritLocales: false
@@ -101,7 +101,7 @@ describe('Languages', () => {
 		expect(firstElement.querySelector('.label-info')).not.toBeNull();
 	});
 
-	it('should fire default locale changed event', () => {
+	it('fires default locale changed event', () => {
 		const {getAllByText} = renderLanguagesComponent({
 			...defaultProps,
 			inheritLocales: false
@@ -116,7 +116,7 @@ describe('Languages', () => {
 		);
 	});
 
-	it('should render a warning when default language is changed', () => {
+	it('renders a warning when default language is changed', () => {
 		const {getAllByText, getByText} = renderLanguagesComponent({
 			...defaultProps,
 			inheritLocales: false

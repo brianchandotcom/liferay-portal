@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openToast} from 'frontend-js-web';
+
 /**
  * @param {HTMLElement} element HTMLElement where the editor
  *  should be applied to.
@@ -53,8 +55,28 @@ function createEditor(element, changeCallback, destroyCallback) {
 						label: Liferay.Language.get('save'),
 						on: {
 							click() {
-								changeCallback(editor.get('value'));
-								dialog.hide();
+								const annotations = editor._editor
+									.getSession()
+									.getAnnotations();
+
+								const errorAnnotations = annotations.filter(
+									annotation => annotation.type === 'error'
+								);
+
+								if (errorAnnotations.length) {
+									const errorMessage = errorAnnotations
+										.map(annotation => annotation.text)
+										.join('\n');
+
+									openToast({
+										message: errorMessage,
+										title: Liferay.Language.get('error'),
+										type: 'danger'
+									});
+								} else {
+									changeCallback(editor.get('value'));
+									dialog.hide();
+								}
 							}
 						}
 					}

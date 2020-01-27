@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openToast} from 'frontend-js-web';
+
 import {getFloatingToolbarButtons} from './EditableRichTextFragmentProcessor.es';
 
 let _changedCallback = null;
@@ -93,9 +95,28 @@ function init(
 						label: Liferay.Language.get('save'),
 						on: {
 							click() {
-								_dialog.hide();
+								const annotations = _editor._editor
+									.getSession()
+									.getAnnotations();
 
-								_changedCallback(_editor.get('value'));
+								const errorAnnotations = annotations.filter(
+									annotation => annotation.type === 'error'
+								);
+
+								if (errorAnnotations.length) {
+									const errorMessage = errorAnnotations
+										.map(annotation => annotation.text)
+										.join('\n');
+
+									openToast({
+										message: errorMessage,
+										title: Liferay.Language.get('error'),
+										type: 'danger'
+									});
+								} else {
+									_changedCallback(_editor.get('value'));
+									_dialog.hide();
+								}
 							}
 						}
 					}

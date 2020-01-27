@@ -113,6 +113,13 @@ public class DefaultUserResolver implements UserResolver {
 	}
 
 	@Reference(unbind = "-")
+	public void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference(unbind = "-")
 	public void setMetadataManager(MetadataManager metadataManager) {
 		_metadataManager = metadataManager;
 	}
@@ -122,6 +129,13 @@ public class DefaultUserResolver implements UserResolver {
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
 
 		_samlProviderConfigurationHelper = samlProviderConfigurationHelper;
+	}
+
+	@Reference(unbind = "-")
+	public void setSamlSpIdpConnectionLocalService(
+		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService) {
+
+		_samlSpIdpConnectionLocalService = samlSpIdpConnectionLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -532,15 +546,10 @@ public class DefaultUserResolver implements UserResolver {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultUserResolver.class);
 
-	@Reference
 	private CompanyLocalService _companyLocalService;
-
 	private MetadataManager _metadataManager;
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
-
-	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
-
 	private UserImporter _userImporter;
 	private UserLocalService _userLocalService;
 

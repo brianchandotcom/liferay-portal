@@ -22,6 +22,7 @@ import com.liferay.depot.web.internal.constants.DepotScreenNavigationEntryConsta
 import com.liferay.depot.web.internal.constants.SharingWebKeys;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -71,10 +72,7 @@ public abstract class BaseDepotScreenNavigationEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		DepotEntry depotEntry = (DepotEntry)httpServletRequest.getAttribute(
-			DepotAdminWebKeys.DEPOT_ENTRY);
-
-		Group group = depotEntry.getGroup();
+		Group group = _getGroup(httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			AssetAutoTaggerConfiguration.class.getName(),
@@ -130,5 +128,19 @@ public abstract class BaseDepotScreenNavigationEntry
 
 	@Reference
 	protected SharingConfigurationFactory sharingConfigurationFactory;
+
+	private Group _getGroup(HttpServletRequest httpServletRequest)
+		throws IOException {
+
+		try {
+			DepotEntry depotEntry = (DepotEntry)httpServletRequest.getAttribute(
+				DepotAdminWebKeys.DEPOT_ENTRY);
+
+			return depotEntry.getGroup();
+		}
+		catch (PortalException portalException) {
+			throw new IOException(portalException);
+		}
+	}
 
 }

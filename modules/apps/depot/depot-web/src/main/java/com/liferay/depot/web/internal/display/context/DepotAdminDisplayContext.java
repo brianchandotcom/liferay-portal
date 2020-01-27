@@ -115,7 +115,9 @@ public class DepotAdminDisplayContext {
 		return "depotEntries";
 	}
 
-	public String getViewDepotURL(DepotEntry depotEntry) {
+	public String getViewDepotURL(DepotEntry depotEntry)
+		throws PortalException {
+
 		return _groupURLProvider.getGroupURL(
 			depotEntry.getGroup(), _liferayPortletRequest);
 	}

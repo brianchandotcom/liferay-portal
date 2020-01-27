@@ -14,6 +14,7 @@
 
 package com.liferay.depot.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
@@ -22,11 +23,9 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
  */
 public class DepotEntryImpl extends DepotEntryBaseImpl {
 
-	public DepotEntryImpl() {
-	}
-
-	public Group getGroup() {
-		return GroupLocalServiceUtil.fetchGroup(getGroupId());
+	@Override
+	public Group getGroup() throws PortalException {
+		return GroupLocalServiceUtil.getGroup(getGroupId());
 	}
 
 }

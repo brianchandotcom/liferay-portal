@@ -54,9 +54,7 @@ public class HTMLTitleTemplateContextContributor
 				"htmlTitle", _titleProvider.getTitle(httpServletRequest));
 		}
 		catch (PortalException portalException) {
-			_log.error(
-				"Unable to fill htmlTitle: " + portalException.getMessage(),
-				portalException);
+			_log.error("Unable to get htmlTitle ", portalException);
 		}
 	}
 

@@ -56,6 +56,7 @@ public interface DepotEntry extends DepotEntryModel, PersistedModel {
 
 		};
 
-	public com.liferay.portal.kernel.model.Group getGroup();
+	public com.liferay.portal.kernel.model.Group getGroup()
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 }

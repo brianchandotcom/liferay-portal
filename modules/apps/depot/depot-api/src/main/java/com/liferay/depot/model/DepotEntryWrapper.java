@@ -144,7 +144,9 @@ public class DepotEntryWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Group getGroup() {
+	public com.liferay.portal.kernel.model.Group getGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return model.getGroup();
 	}
 

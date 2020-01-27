@@ -419,8 +419,8 @@ public class DLAppHelperLocalServiceImpl
 				extraDataJSONObject.toString(), 0);
 		}
 
-		return dlAppService.updateFileShortcut(
-			fileShortcut.getFileShortcutId(), newFolderId,
+		return dlAppLocalService.updateFileShortcut(
+			userId, fileShortcut.getFileShortcutId(), newFolderId,
 			fileShortcut.getToFileEntryId(), serviceContext);
 	}
 

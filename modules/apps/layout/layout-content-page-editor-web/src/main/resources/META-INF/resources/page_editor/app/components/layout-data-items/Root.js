@@ -47,16 +47,20 @@ const Root = React.forwardRef(({children, item, layoutData}, ref) => {
 			name={Liferay.Language.get('root')}
 		>
 			{({canDrop, isOver}) => (
-				<div
-					className={classNames('page-editor__root', {
-						'page-editor__root--active': isOver && canDrop
-					})}
-					ref={ref}
-				>
+				<div className={classNames('page-editor__root')} ref={ref}>
 					{React.Children.count(children) ? (
 						children
 					) : (
-						<div className="taglib-empty-result-message">
+						<div
+							className={classNames(
+								'page-editor__no-fragments-message',
+								'taglib-empty-result-message',
+								{
+									'page-editor__no-fragments-message--active':
+										isOver && canDrop
+								}
+							)}
+						>
 							<div className="taglib-empty-result-message-header"></div>
 							<div className="text-center text-muted">
 								{Liferay.Language.get('place-fragments-here')}

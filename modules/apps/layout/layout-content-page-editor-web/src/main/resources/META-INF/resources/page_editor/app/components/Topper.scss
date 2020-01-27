@@ -71,6 +71,10 @@
 		box-shadow: 0 0 0 $borderWidth $activeBackgroundColor;
 	}
 
+	&.drag-over-middle:after {
+		border: solid $activeBackgroundColor 4px;
+	}
+
 	&.drag-over-bottom:after {
 		border-bottom: solid $activeBackgroundColor 4px;
 	}

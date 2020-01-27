@@ -83,8 +83,7 @@ public class DependencyManagementTask extends DefaultTask {
 		_writeConfigurationManagedVersions(
 			_getTargetPlatformDependencies(
 				project,
-				GradleUtil.getConfiguration(
-					getProject(), "targetPlatformIDEBoms")));
+				GradleUtil.getConfiguration(project, "targetPlatformIDEBoms")));
 	}
 
 	@Option(

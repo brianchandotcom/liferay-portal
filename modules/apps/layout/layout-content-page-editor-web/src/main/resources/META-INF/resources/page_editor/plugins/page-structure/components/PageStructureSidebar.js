@@ -76,10 +76,6 @@ export default function PageStructureSidebar() {
 			removable: isRemovable(item, layoutData)
 		};
 
-		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-			node.fragmentEntryLinkId = item.config.fragmentEntryLinkId;
-		}
-
 		return node;
 	};
 

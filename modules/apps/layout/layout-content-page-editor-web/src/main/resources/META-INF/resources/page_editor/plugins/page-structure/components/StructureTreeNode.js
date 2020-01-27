@@ -17,7 +17,6 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useContext} from 'react';
 
-import deleteWidget from '../../../app/actions/deleteWidget';
 import {
 	useHoverItem,
 	useIsHovered,
@@ -53,26 +52,12 @@ const RemoveButton = ({node}) => {
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
 
-	const {fragmentEntryLinks} = store;
-
 	return (
 		<ClayButton
 			className="page-editor__page-structure__tree-node__remove-button"
 			displayType="unstyled"
 			onClick={event => {
 				event.stopPropagation();
-
-				if (
-					node.fragmentEntryLinkId &&
-					fragmentEntryLinks[node.fragmentEntryLinkId].editableValues
-						.portletId
-				) {
-					dispatch(
-						deleteWidget(
-							fragmentEntryLinks[node.fragmentEntryLinkId]
-						)
-					);
-				}
 
 				dispatch(deleteItem({config, itemId: node.id, store}));
 			}}

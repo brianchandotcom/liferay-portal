@@ -280,8 +280,6 @@ private void _createSetUpLibTasks(Map<File, Properties> libDependenciesMap) {
 private void _createSetUpPortalToolTasks() {
 	FileTree ivyXmlFileTree = fileTree(dir: "../tools/sdk", includes: ["ivy.xml", "dependencies/*/ivy.xml"])
 
-	XmlSlurper xmlSlurper = new XmlSlurper()
-
 	ivyXmlFileTree.each {
 		File ivyXmlFile ->
 

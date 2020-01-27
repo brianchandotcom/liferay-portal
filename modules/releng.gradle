@@ -1341,8 +1341,6 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 		artifactURLs.add(artifactProperties.getProperty("artifact.url"))
 	}
 
-	XmlSlurper xmlSlurper = new XmlSlurper()
-
 	File sourceFormatterPropertiesFile = new File(projectDir, "source-formatter.properties")
 
 	if (sourceFormatterPropertiesFile.exists()) {

@@ -80,6 +80,12 @@ const useActiveItemId = () => {
 	return state.activeItemId;
 };
 
+const useHoveredItemId = () => {
+	const [state] = useContext(ControlsContext);
+
+	return state.hoveredItemId;
+};
+
 const useHoverItem = () => {
 	const [, dispatch] = useContext(ControlsContext);
 
@@ -135,6 +141,7 @@ export {
 	ControlsConsumer,
 	ControlsProvider,
 	useActiveItemId,
+	useHoveredItemId,
 	useHoverItem,
 	useIsActive,
 	useIsHovered,

@@ -2,7 +2,7 @@ Bundle-Description: Creates a Liferay Workspace project usable by Gradle and Mav
 Bundle-Name: Liferay Project Templates Workspace
 Bundle-SymbolicName: com.liferay.project.templates.workspace
 Bundle-Version: 1.0.73
-Liferay-Versions: [7,7.3)
+Liferay-Versions: [7,7.4)
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

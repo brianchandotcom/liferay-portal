@@ -2,7 +2,7 @@ Bundle-Description: Creates a Liferay Service Builder project by generating an A
 Bundle-Name: Liferay Project Templates Service Builder
 Bundle-SymbolicName: com.liferay.project.templates.service.builder
 Bundle-Version: 1.0.73
-Liferay-Versions: [7,7.3)
+Liferay-Versions: [7,7.4)
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

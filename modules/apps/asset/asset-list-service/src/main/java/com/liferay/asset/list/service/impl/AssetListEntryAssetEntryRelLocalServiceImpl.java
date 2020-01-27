@@ -170,6 +170,17 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRels(
+		long assetListEntryId, long[] segmentsEntryIds, int start, int end) {
+
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			assetListEntryAssetEntryRelPersistence.findByA_SEI(
+				assetListEntryId, segmentsEntryIds, start, end);
+
+		return _getAssetListEntryAssetEntryRels(assetListEntryAssetEntryRels);
+	}
+
+	@Override
 	public int getAssetListEntryAssetEntryRelsCount(long assetListEntryId) {
 		return assetListEntryAssetEntryRelPersistence.countByAssetListEntryId(
 			assetListEntryId);
@@ -181,6 +192,14 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 
 		return assetListEntryAssetEntryRelPersistence.countByA_S(
 			assetListEntryId, segmentsEntryId);
+	}
+
+	@Override
+	public int getAssetListEntryAssetEntryRelsCount(
+		long assetListEntryId, long[] segmentsEntryIds) {
+
+		return assetListEntryAssetEntryRelPersistence.countByA_SEI(
+			assetListEntryId, segmentsEntryIds);
 	}
 
 	@Override

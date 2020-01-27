@@ -373,7 +373,7 @@ public class LayoutStagedModelDataHandler
 		}
 		else if (Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_PORTLET) ||
-				 layout.isTypeContent()) {
+				 layout.isTypeContent() || layout.isTypeAssetDisplay()) {
 
 			exportLayoutPortlets(portletDataContext, layout, layoutElement);
 		}
@@ -851,7 +851,7 @@ public class LayoutStagedModelDataHandler
 
 		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||
-			layout.isTypeContent()) {
+			layout.isTypeContent() || layout.isTypeAssetDisplay()) {
 
 			importLayoutPortlets(
 				portletDataContext, importedLayout, layoutElement);

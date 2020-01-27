@@ -77,13 +77,13 @@ public class XMLUtil {
 	public static String toString(Document document)
 		throws TransformerException {
 
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
 		TransformerFactory transformerFactory =
 			TransformerFactory.newInstance();
 
 		Transformer transformer = transformerFactory.newTransformer();
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
 
 		transformer.transform(
 			new DOMSource(document), new StreamResult(byteArrayOutputStream));

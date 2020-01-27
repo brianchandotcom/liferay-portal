@@ -52,7 +52,7 @@ public class DSLQueryUtil {
 	public static <T extends Table<T>> FromStep selectDistinct(T table) {
 		Collection<Column<T, ?>> columns = table.getColumns();
 
-		return new Select(true, columns.toArray(new Column[0]));
+		return new Select(true, (Expression<?>[])columns.toArray());
 	}
 
 	private static final FromStep _SELECT_COUNT_STAR_COUNT_VALUE = new Select(

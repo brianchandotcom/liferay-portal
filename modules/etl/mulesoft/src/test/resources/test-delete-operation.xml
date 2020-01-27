@@ -1,33 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 
-<mule xmlns:liferay="http://www.mulesoft.org/schema/mule/liferay" xmlns="http://www.mulesoft.org/schema/mule/core"
-	  xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/liferay http://www.mulesoft.org/schema/mule/liferay/current/mule-liferay.xsd">
-
-	<configuration-properties file="automation-credentials.properties" />
-
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:liferay="http://www.mulesoft.org/schema/mule/liferay" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/liferay http://www.mulesoft.org/schema/mule/liferay/current/mule-liferay.xsd">
+	<configuration-properties file="automation-credentials.properties"/>
 	<liferay:config name="Liferay_Config">
-		<liferay:basic-connection _openApiSpecPath="${liferay.openApiSpecPath}" _username="${liferay.username}" _password="${liferay.password}" />
+		<liferay:basic-connection _openApiSpecPath="${liferay.openApiSpecPath}" _username="${liferay.username}" _password="${liferay.password}"/>
 	</liferay:config>
-
-	<flow name="test-delete-product-flow" >
-		<liferay:post endpoint="/v1.0/products" config-ref="Liferay_Config">
-			<liferay:input-stream ><![CDATA[{
-      "active": true,
-      "catalogId": 38307,
-      "description": {
-        "en_US": "Test Product"
-      },
-      "name": {
-        "en_US": "Test Product"
-      },
-      "productType": "simple"
-}]]></liferay:input-stream>
+	<flow name="test-delete-product-flow">
+		<liferay:get endpoint="/v1.0/products" config-ref="Liferay_Config"/>
+		<liferay:post config-ref="Liferay_Config" endpoint="/v1.0/products">
+			<liferay:input-stream><![CDATA[#[{
+	"active": true,
+	"catalogId": payload.items[0].catalogId,
+    "description": {
+    	"en_US": "Test Product"
+    },
+    "name": {
+    	"en_US": "Test Product"
+    },
+    "productType": "simple"
+}]]]></liferay:input-stream>
 		</liferay:post>
 		<liferay:delete endpoint="/v1.0/products/{id}" config-ref="Liferay_Config">
-			<liferay:path-params >
-				<liferay:path-param key="id" value="#[payload.productId]" />
+			<liferay:path-params>
+				<liferay:path-param key="id" value="#[payload.productId]"/>
 			</liferay:path-params>
 		</liferay:delete>
 	</flow>

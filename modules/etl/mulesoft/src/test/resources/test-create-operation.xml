@@ -12,18 +12,19 @@ http://www.mulesoft.org/schema/mule/liferay http://www.mulesoft.org/schema/mule/
 	</liferay:config>
 
 	<flow name="test-create-product-flow">
+		<liferay:get endpoint="/v1.0/products" config-ref="Liferay_Config" />
 		<liferay:post endpoint="/v1.0/products" config-ref="Liferay_Config">
-			<liferay:input-stream ><![CDATA[{
-      "active": true,
-      "catalogId": 38307,
-      "description": {
-        "en_US": "Test Product"
-      },
-      "name": {
-        "en_US": "Test Product"
-      },
-      "productType": "simple"
-    }]]></liferay:input-stream>
+			<liferay:input-stream ><![CDATA[#[{
+	"active": true,
+	"catalogId": payload.items[0].catalogId,
+    "description": {
+    	"en_US": "Test Product"
+    },
+    "name": {
+    	"en_US": "Test Product"
+    },
+    "productType": "simple"
+}]]]></liferay:input-stream>
 		</liferay:post>
 	</flow>
 </mule>

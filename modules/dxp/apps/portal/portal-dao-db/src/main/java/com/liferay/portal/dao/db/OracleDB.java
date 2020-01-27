@@ -266,7 +266,8 @@ public class OracleDB extends BaseDB {
 				else if (line.startsWith(ALTER_COLUMN_TYPE)) {
 					String[] template = buildColumnTypeTokens(line);
 
-					String nullable = template[template.length - 1];
+					String nullable =
+						StringPool.SPACE + template[template.length - 1];
 
 					if (!Validator.isBlank(nullable)) {
 						try (Connection con = DataAccess.getConnection()) {
@@ -286,7 +287,7 @@ public class OracleDB extends BaseDB {
 					}
 
 					line = StringUtil.replace(
-						"alter table @table@ modify @old-column@ @type@ " +
+						"alter table @table@ modify @old-column@ @type@" +
 							nullable + ";",
 						REWORD_TEMPLATE, template);
 				}

@@ -1431,7 +1431,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
@@ -1511,11 +1511,11 @@ definition {
 
 		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "1",
-			title = "First App");
+			title = "Third App");
 
 		AppBuilderAdmin.validateListTitleAtRow(
 			rowNumber = "3",
-			title = "Third App");
+			title = "First App");
 	}
 
 	@description = "Search for an object in the object list"

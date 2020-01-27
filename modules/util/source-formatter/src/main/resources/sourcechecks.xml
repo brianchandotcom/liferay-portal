@@ -28,6 +28,7 @@
 
 		<!-- Liferay Source Checks -->
 
+		<check name="BNDExportsCheck" />
 		<check name="BNDImportsCheck" />
 		<check name="BNDSuiteCheck" />
 
@@ -36,7 +37,6 @@
 		<check name="BNDBundleActivatorCheck" />
 		<check name="BNDBundleInformationCheck" />
 		<check name="BNDDirectoryNameCheck" />
-		<check name="BNDExportsCheck" />
 		<check name="BNDIncludeResourceCheck">
 			<property name="checkTestIncludeResource" value="true" />
 		</check>

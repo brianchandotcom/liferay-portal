@@ -22,7 +22,7 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 
 <c:choose>
 	<c:when test="<%= SegmentsExperimentUtil.isAnalyticsEnabled(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) %>">
-		<div id="<%= renderResponse.getNamespace() + "-segments-experiment-root" %>">
+		<div id="<portlet:namespace />-segments-experiment-root" %>
 			<div class="inline-item my-5 p-5 w-100">
 				<span aria-hidden="true" class="loading-animation"></span>
 			</div>

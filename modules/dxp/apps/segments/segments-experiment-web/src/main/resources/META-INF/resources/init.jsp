@@ -39,6 +39,4 @@ page import="com.liferay.segments.model.SegmentsExperiment" %>
 
 <liferay-theme:defineObjects />
 
-<portlet:defineObjects />
-
 <%@ include file="/init-ext.jsp" %>

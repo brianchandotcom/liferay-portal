@@ -75,7 +75,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		if (versionNumber.getMajor() < 5) {
 			throw new GradleException(
-				"This plugin requires at least Gradle 5.x or greater");
+				"This plugin requires Gradle 5.0 or greater");
 		}
 
 		final TargetPlatformExtension targetPlatformExtension =

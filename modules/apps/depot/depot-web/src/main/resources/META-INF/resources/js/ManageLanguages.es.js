@@ -22,8 +22,7 @@ const ManageLanguages = ({
 	availableLocales,
 	customDefaultLocaleId,
 	customLocales,
-	eventName,
-	portletNamespace
+	eventName
 }) => {
 	const [selectedLocales, setSelectedLocales] = useState(
 		JSON.parse(customLocales)
@@ -118,8 +117,7 @@ ManageLanguages.propTypes = {
 	).isRequired,
 	customDefaultLocaleId: PropTypes.string.isRequired,
 	customLocales: PropTypes.string.isRequired,
-	eventName: PropTypes.string,
-	portletNamespace: PropTypes.string
+	eventName: PropTypes.string
 };
 
 export default function(props) {

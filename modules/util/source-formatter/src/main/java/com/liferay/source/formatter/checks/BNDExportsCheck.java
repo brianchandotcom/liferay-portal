@@ -262,8 +262,7 @@ public class BNDExportsCheck extends BaseFileCheck {
 		File exportPackageSrcDir = new File(
 			StringBundler.concat(
 				srcDirLocation, "/",
-				StringUtil.replaceLast(
-					wildCardExportPackagePath, "/*", StringPool.BLANK)));
+				StringUtil.removeSubstring(wildCardExportPackagePath, "/*")));
 
 		if (!exportPackageSrcDir.exists()) {
 			addMessage(
@@ -323,9 +322,8 @@ public class BNDExportsCheck extends BaseFileCheck {
 							}
 						}
 						else if (absolutePath.contains(
-									StringUtil.replace(
-										removedExportPackage, "/*",
-										StringPool.BLANK))) {
+									StringUtil.removeSubstring(
+										removedExportPackage, "/*"))) {
 
 							return FileVisitResult.CONTINUE;
 						}

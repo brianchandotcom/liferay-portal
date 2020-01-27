@@ -81,8 +81,6 @@ public class DependencyManagementTask extends DefaultTask {
 	public void report() {
 		Project project = getProject();
 
-		_logProject(project);
-
 		_writeConfigurationManagedVersions(
 			_getTargetPlatformDependencies(
 				project,
@@ -209,38 +207,6 @@ public class DependencyManagementTask extends DefaultTask {
 			});
 
 		return managedVersions;
-	}
-
-	private void _logProject(final Project project) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(System.lineSeparator());
-		sb.append(
-			"------------------------------------------------------------");
-		sb.append(System.lineSeparator());
-		sb.append(System.lineSeparator());
-
-		Logger logger = getLogger();
-
-		if (project.equals(project.getRootProject())) {
-			sb.append("Root project");
-		}
-		else {
-			sb.append("Project " + project.getPath());
-		}
-
-		String description = project.getDescription();
-
-		if (description != null) {
-			sb.append(" - " + project.getDescription());
-		}
-
-		sb.append(System.lineSeparator());
-		sb.append(
-			"------------------------------------------------------------");
-		sb.append(System.lineSeparator());
-
-		logger.lifecycle(sb.toString());
 	}
 
 	private String _renderManagedVersions(Map<String, String> managedVersions) {

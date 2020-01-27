@@ -1553,7 +1553,6 @@ definition {
 	@description = "Unpublish and Republish an App"
 	@priority = "5"
 	test UnpublishAndRepublish {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1561,7 +1560,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
 

@@ -69,12 +69,18 @@ export default function PageStructureSidebar() {
 			});
 		}
 
-		return {
+		const node = {
 			children,
 			id: item.itemId,
 			name: getName(item, fragmentEntryLinks),
 			removable: isRemovable(item, layoutData)
 		};
+
+		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+			node.fragmentEntryLinkId = item.config.fragmentEntryLinkId;
+		}
+
+		return node;
 	};
 
 	const nodes = visit(

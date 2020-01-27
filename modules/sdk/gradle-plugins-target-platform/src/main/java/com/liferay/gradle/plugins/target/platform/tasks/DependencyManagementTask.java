@@ -26,7 +26,6 @@ import java.nio.file.Files;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -145,7 +144,25 @@ public class DependencyManagementTask extends DefaultTask {
 	private Map<String, String> _getTargetPlatformDependencies(
 		Project project, Configuration ideBomsConfiguration) {
 
-		Map<String, String> managedVersions = new HashMap<>();
+		Map<String, String> managedVersions = new TreeMap<String, String>(
+			new Comparator<String>() {
+
+				@Override
+				public int compare(String one, String two) {
+					String[] oneComponents = one.split(":");
+					String[] twoComponents = two.split(":");
+
+					int result = oneComponents[0].compareTo(twoComponents[0]);
+
+					if (result == 0) {
+						result = oneComponents[1].compareTo(twoComponents[1]);
+					}
+
+					return result;
+				}
+
+			});
+
 		DependencySet allDependencies = ideBomsConfiguration.getDependencies();
 
 		allDependencies.all(
@@ -228,39 +245,19 @@ public class DependencyManagementTask extends DefaultTask {
 
 		Logger logger = getLogger();
 
-		Map<String, String> sortedVersions = new TreeMap<String, String>(
-			new Comparator<String>() {
-
-				@Override
-				public int compare(String one, String two) {
-					String[] oneComponents = one.split(":");
-					String[] twoComponents = two.split(":");
-
-					int result = oneComponents[0].compareTo(twoComponents[0]);
-
-					if (result == 0) {
-						result = oneComponents[1].compareTo(twoComponents[1]);
-					}
-
-					return result;
-				}
-
-			});
-
-		sortedVersions.putAll(managedVersions);
-
-		if ((sortedVersions != null) && !sortedVersions.isEmpty()) {
+		if ((managedVersions != null) && !managedVersions.isEmpty()) {
 			try {
 				String dependenciesOutput = null;
 
 				if (Objects.equals(_outputType, "json")) {
-					dependenciesOutput = _generateJSON(sortedVersions);
+					dependenciesOutput = _generateJSON(managedVersions);
 				}
 				else if (Objects.equals(_outputType, "xml")) {
-					dependenciesOutput = _generateXml(sortedVersions);
+					dependenciesOutput = _generateXml(managedVersions);
 				}
 				else {
-					dependenciesOutput = _renderManagedVersions(sortedVersions);
+					dependenciesOutput = _renderManagedVersions(
+						managedVersions);
 				}
 
 				File outputFile = getOutputFile();

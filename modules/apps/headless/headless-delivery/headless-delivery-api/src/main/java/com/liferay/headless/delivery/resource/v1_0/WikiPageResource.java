@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -58,6 +59,9 @@ public interface WikiPageResource {
 		throws Exception;
 
 	public void deleteWikiPage(Long wikiPageId) throws Exception;
+
+	public Response deleteWikiPageBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public WikiPage getWikiPage(Long wikiPageId) throws Exception;
 

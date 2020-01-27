@@ -847,6 +847,25 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteMessageBoardThreadBatch() throws Exception {
+		MessageBoardThread messageBoardThread =
+			testDeleteMessageBoardThreadBatch_addMessageBoardThread();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardThreadResource.
+				deleteMessageBoardThreadBatchHttpResponse(null, null));
+	}
+
+	protected MessageBoardThread
+			testDeleteMessageBoardThreadBatch_addMessageBoardThread()
+		throws Exception {
+
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Test
 	public void testGetMessageBoardThread() throws Exception {
 		MessageBoardThread postMessageBoardThread =
 			testGetMessageBoardThread_addMessageBoardThread();
@@ -1440,6 +1459,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				randomMessageBoardThread,
 				JSONFactoryUtil.createJSONObject(
 					JSONFactoryUtil.serialize(messageBoardThread))));
+	}
+
+	@Test
+	public void testPostSiteMessageBoardThreadBatch() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	@Test

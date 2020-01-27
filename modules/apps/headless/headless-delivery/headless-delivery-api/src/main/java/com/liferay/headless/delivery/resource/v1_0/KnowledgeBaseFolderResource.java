@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -41,6 +42,10 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface KnowledgeBaseFolderResource {
 
 	public void deleteKnowledgeBaseFolder(Long knowledgeBaseFolderId)
+		throws Exception;
+
+	public Response deleteKnowledgeBaseFolderBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public KnowledgeBaseFolder getKnowledgeBaseFolder(
@@ -71,6 +76,10 @@ public interface KnowledgeBaseFolderResource {
 
 	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
 			Long siteId, KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception;
+
+	public Response postSiteKnowledgeBaseFolderBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

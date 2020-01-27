@@ -97,7 +97,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 					batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
 				<#else>
 					batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
-                </#if>
+				</#if>
 				itemClass = ${schemaName}.class
 			)
 		</#if>
@@ -147,7 +147,7 @@ public abstract class Base${schemaName}ResourceImpl implements ${schemaName}Reso
 				Response.ResponseBuilder responseBuilder = Response.accepted();
 
 				return responseBuilder.entity(
-					_importTaskResource.deleteImportTask(${schemaName}.class.getName(), "${openAPIYAML.info.version}", callbackURL, object)
+					_importTaskResource.deleteImportTask(${schemaName}.class.getName(), callbackURL, object)
 				).build();
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "javax.ws.rs.core.Response")>
 				Response.ResponseBuilder responseBuilder = Response.ok();

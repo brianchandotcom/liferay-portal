@@ -929,6 +929,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testPostSiteStructuredContentBatch() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetSiteStructuredContentByKey() throws Exception {
 		StructuredContent postStructuredContent =
 			testGetSiteStructuredContentByKey_addStructuredContent();
@@ -1510,6 +1515,25 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			Assert.assertTrue(errorsJSONArray.length() > 0);
 		}
+	}
+
+	@Test
+	public void testDeleteStructuredContentBatch() throws Exception {
+		StructuredContent structuredContent =
+			testDeleteStructuredContentBatch_addStructuredContent();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.deleteStructuredContentBatchHttpResponse(
+				null, null));
+	}
+
+	protected StructuredContent
+			testDeleteStructuredContentBatch_addStructuredContent()
+		throws Exception {
+
+		return structuredContentResource.postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
 	}
 
 	@Test

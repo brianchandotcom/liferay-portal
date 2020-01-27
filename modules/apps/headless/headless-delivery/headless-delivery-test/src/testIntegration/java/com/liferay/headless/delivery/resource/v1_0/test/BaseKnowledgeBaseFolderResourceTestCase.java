@@ -278,6 +278,25 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteKnowledgeBaseFolderBatch() throws Exception {
+		KnowledgeBaseFolder knowledgeBaseFolder =
+			testDeleteKnowledgeBaseFolderBatch_addKnowledgeBaseFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			knowledgeBaseFolderResource.
+				deleteKnowledgeBaseFolderBatchHttpResponse(null, null));
+	}
+
+	protected KnowledgeBaseFolder
+			testDeleteKnowledgeBaseFolderBatch_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+	}
+
+	@Test
 	public void testGetKnowledgeBaseFolder() throws Exception {
 		KnowledgeBaseFolder postKnowledgeBaseFolder =
 			testGetKnowledgeBaseFolder_addKnowledgeBaseFolder();
@@ -787,6 +806,11 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				randomKnowledgeBaseFolder,
 				JSONFactoryUtil.createJSONObject(
 					JSONFactoryUtil.serialize(knowledgeBaseFolder))));
+	}
+
+	@Test
+	public void testPostSiteKnowledgeBaseFolderBatch() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	protected KnowledgeBaseFolder

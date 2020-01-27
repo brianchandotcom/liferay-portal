@@ -640,6 +640,19 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteWikiPageBatch() throws Exception {
+		WikiPage wikiPage = testDeleteWikiPageBatch_addWikiPage();
+
+		assertHttpResponseStatusCode(
+			204, wikiPageResource.deleteWikiPageBatchHttpResponse(null, null));
+	}
+
+	protected WikiPage testDeleteWikiPageBatch_addWikiPage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetWikiPage() throws Exception {
 		WikiPage postWikiPage = testGetWikiPage_addWikiPage();
 

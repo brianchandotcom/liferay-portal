@@ -63,6 +63,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -132,6 +133,30 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		throws Exception {
 
 		return new StructuredContentFolder();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/structured-content-folders/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/sites/{siteId}/structured-content-folders/batch")
+	@Tags(value = {@Tag(name = "StructuredContentFolder")})
+	public Response postSiteStructuredContentFolderBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
 	}
 
 	/**
@@ -237,6 +262,39 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			@PathParam("structuredContentFolderId") Long
 				structuredContentFolderId)
 		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/structured-content-folders/batch")
+	@Tags(value = {@Tag(name = "StructuredContentFolder")})
+	public Response deleteStructuredContentFolderBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		_importTaskResource.setContextCompany(contextCompany);
+		_importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		_importTaskResource.setContextUriInfo(contextUriInfo);
+		_importTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			_importTaskResource.deleteImportTask(
+				StructuredContentFolder.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	/**

@@ -278,6 +278,25 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteWikiPageAttachmentBatch() throws Exception {
+		WikiPageAttachment wikiPageAttachment =
+			testDeleteWikiPageAttachmentBatch_addWikiPageAttachment();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiPageAttachmentResource.
+				deleteWikiPageAttachmentBatchHttpResponse(null, null));
+	}
+
+	protected WikiPageAttachment
+			testDeleteWikiPageAttachmentBatch_addWikiPageAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetWikiPageAttachment() throws Exception {
 		WikiPageAttachment postWikiPageAttachment =
 			testGetWikiPageAttachment_addWikiPageAttachment();

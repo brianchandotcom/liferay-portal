@@ -410,6 +410,25 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteKnowledgeBaseAttachmentBatch() throws Exception {
+		KnowledgeBaseAttachment knowledgeBaseAttachment =
+			testDeleteKnowledgeBaseAttachmentBatch_addKnowledgeBaseAttachment();
+
+		assertHttpResponseStatusCode(
+			204,
+			knowledgeBaseAttachmentResource.
+				deleteKnowledgeBaseAttachmentBatchHttpResponse(null, null));
+	}
+
+	protected KnowledgeBaseAttachment
+			testDeleteKnowledgeBaseAttachmentBatch_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetKnowledgeBaseAttachment() throws Exception {
 		KnowledgeBaseAttachment postKnowledgeBaseAttachment =
 			testGetKnowledgeBaseAttachment_addKnowledgeBaseAttachment();

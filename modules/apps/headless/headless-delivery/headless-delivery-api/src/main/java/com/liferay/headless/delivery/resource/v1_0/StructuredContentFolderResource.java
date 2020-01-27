@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -51,6 +52,10 @@ public interface StructuredContentFolderResource {
 			Long siteId, StructuredContentFolder structuredContentFolder)
 		throws Exception;
 
+	public Response postSiteStructuredContentFolderBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<StructuredContentFolder>
 			getStructuredContentFolderStructuredContentFoldersPage(
 				Long parentStructuredContentFolderId, String search,
@@ -64,6 +69,10 @@ public interface StructuredContentFolderResource {
 		throws Exception;
 
 	public void deleteStructuredContentFolder(Long structuredContentFolderId)
+		throws Exception;
+
+	public Response deleteStructuredContentFolderBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public StructuredContentFolder getStructuredContentFolder(

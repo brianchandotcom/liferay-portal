@@ -27,6 +27,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -55,6 +56,10 @@ public interface StructuredContentResource {
 
 	public StructuredContent postSiteStructuredContent(
 			Long siteId, StructuredContent structuredContent)
+		throws Exception;
+
+	public Response postSiteStructuredContentBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public StructuredContent getSiteStructuredContentByKey(
@@ -86,6 +91,10 @@ public interface StructuredContentResource {
 		throws Exception;
 
 	public void deleteStructuredContent(Long structuredContentId)
+		throws Exception;
+
+	public Response deleteStructuredContentBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public StructuredContent getStructuredContent(Long structuredContentId)

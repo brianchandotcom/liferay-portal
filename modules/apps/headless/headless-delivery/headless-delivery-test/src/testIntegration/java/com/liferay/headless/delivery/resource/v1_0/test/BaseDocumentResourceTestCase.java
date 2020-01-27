@@ -584,6 +584,19 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDocumentBatch() throws Exception {
+		Document document = testDeleteDocumentBatch_addDocument();
+
+		assertHttpResponseStatusCode(
+			204, documentResource.deleteDocumentBatchHttpResponse(null, null));
+	}
+
+	protected Document testDeleteDocumentBatch_addDocument() throws Exception {
+		return documentResource.postSiteDocument(
+			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	@Test
 	public void testGetDocument() throws Exception {
 		Document postDocument = testGetDocument_addDocument();
 
@@ -1054,6 +1067,11 @@ public abstract class BaseDocumentResourceTestCase {
 				randomDocument,
 				JSONFactoryUtil.createJSONObject(
 					JSONFactoryUtil.serialize(document))));
+	}
+
+	@Test
+	public void testPostSiteDocumentBatch() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	@Test

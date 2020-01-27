@@ -64,6 +64,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -99,6 +100,39 @@ public abstract class BaseBlogPostingResourceImpl
 			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
 			@PathParam("blogPostingId") Long blogPostingId)
 		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/blog-postings/batch")
+	@Tags(value = {@Tag(name = "BlogPosting")})
+	public Response deleteBlogPostingBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		_importTaskResource.setContextCompany(contextCompany);
+		_importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		_importTaskResource.setContextUriInfo(contextUriInfo);
+		_importTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			_importTaskResource.deleteImportTask(
+				BlogPosting.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	/**
@@ -403,6 +437,30 @@ public abstract class BaseBlogPostingResourceImpl
 		throws Exception {
 
 		return new BlogPosting();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-postings/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/sites/{siteId}/blog-postings/batch")
+	@Tags(value = {@Tag(name = "BlogPosting")})
+	public Response postSiteBlogPostingBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
 	}
 
 	/**

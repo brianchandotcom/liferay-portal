@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -43,6 +44,10 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface MessageBoardSectionResource {
 
 	public void deleteMessageBoardSection(Long messageBoardSectionId)
+		throws Exception;
+
+	public Response deleteMessageBoardSectionBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public MessageBoardSection getMessageBoardSection(
@@ -81,6 +86,10 @@ public interface MessageBoardSectionResource {
 
 	public MessageBoardSection postSiteMessageBoardSection(
 			Long siteId, MessageBoardSection messageBoardSection)
+		throws Exception;
+
+	public Response postSiteMessageBoardSectionBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

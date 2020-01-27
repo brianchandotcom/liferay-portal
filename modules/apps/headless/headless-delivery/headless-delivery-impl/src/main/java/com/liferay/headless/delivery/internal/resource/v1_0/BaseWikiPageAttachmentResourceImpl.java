@@ -57,6 +57,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -94,6 +96,39 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
 			@PathParam("wikiPageAttachmentId") Long wikiPageAttachmentId)
 		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-page-attachments/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/wiki-page-attachments/batch")
+	@Tags(value = {@Tag(name = "WikiPageAttachment")})
+	public Response deleteWikiPageAttachmentBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		_importTaskResource.setContextCompany(contextCompany);
+		_importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		_importTaskResource.setContextUriInfo(contextUriInfo);
+		_importTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			_importTaskResource.deleteImportTask(
+				WikiPageAttachment.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	/**

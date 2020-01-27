@@ -285,6 +285,25 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteMessageBoardMessageBatch() throws Exception {
+		MessageBoardMessage messageBoardMessage =
+			testDeleteMessageBoardMessageBatch_addMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardMessageResource.
+				deleteMessageBoardMessageBatchHttpResponse(null, null));
+	}
+
+	protected MessageBoardMessage
+			testDeleteMessageBoardMessageBatch_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetMessageBoardMessage() throws Exception {
 		MessageBoardMessage postMessageBoardMessage =
 			testGetMessageBoardMessage_addMessageBoardMessage();

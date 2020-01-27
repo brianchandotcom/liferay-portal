@@ -632,6 +632,11 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPostSiteStructuredContentFolderBatch() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetStructuredContentFolderStructuredContentFoldersPage()
 		throws Exception {
 
@@ -1092,6 +1097,25 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 			Assert.assertTrue(errorsJSONArray.length() > 0);
 		}
+	}
+
+	@Test
+	public void testDeleteStructuredContentFolderBatch() throws Exception {
+		StructuredContentFolder structuredContentFolder =
+			testDeleteStructuredContentFolderBatch_addStructuredContentFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentFolderResource.
+				deleteStructuredContentFolderBatchHttpResponse(null, null));
+	}
+
+	protected StructuredContentFolder
+			testDeleteStructuredContentFolderBatch_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
 	}
 
 	@Test

@@ -281,6 +281,22 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteBlogPostingBatch() throws Exception {
+		BlogPosting blogPosting = testDeleteBlogPostingBatch_addBlogPosting();
+
+		assertHttpResponseStatusCode(
+			204,
+			blogPostingResource.deleteBlogPostingBatchHttpResponse(null, null));
+	}
+
+	protected BlogPosting testDeleteBlogPostingBatch_addBlogPosting()
+		throws Exception {
+
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Test
 	public void testGetBlogPosting() throws Exception {
 		BlogPosting postBlogPosting = testGetBlogPosting_addBlogPosting();
 
@@ -752,6 +768,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 				randomBlogPosting,
 				JSONFactoryUtil.createJSONObject(
 					JSONFactoryUtil.serialize(blogPosting))));
+	}
+
+	@Test
+	public void testPostSiteBlogPostingBatch() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	@Test

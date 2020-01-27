@@ -294,6 +294,25 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteKnowledgeBaseArticleBatch() throws Exception {
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			testDeleteKnowledgeBaseArticleBatch_addKnowledgeBaseArticle();
+
+		assertHttpResponseStatusCode(
+			204,
+			knowledgeBaseArticleResource.
+				deleteKnowledgeBaseArticleBatchHttpResponse(null, null));
+	}
+
+	protected KnowledgeBaseArticle
+			testDeleteKnowledgeBaseArticleBatch_addKnowledgeBaseArticle()
+		throws Exception {
+
+		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+	}
+
+	@Test
 	public void testGetKnowledgeBaseArticle() throws Exception {
 		KnowledgeBaseArticle postKnowledgeBaseArticle =
 			testGetKnowledgeBaseArticle_addKnowledgeBaseArticle();
@@ -1638,6 +1657,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				randomKnowledgeBaseArticle,
 				JSONFactoryUtil.createJSONObject(
 					JSONFactoryUtil.serialize(knowledgeBaseArticle))));
+	}
+
+	@Test
+	public void testPostSiteKnowledgeBaseArticleBatch() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	@Test

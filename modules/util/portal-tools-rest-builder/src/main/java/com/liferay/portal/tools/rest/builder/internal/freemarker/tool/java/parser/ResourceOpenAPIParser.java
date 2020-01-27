@@ -31,11 +31,14 @@ import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
+import com.liferay.portal.vulcan.yaml.openapi.Delete;
 import com.liferay.portal.vulcan.yaml.openapi.Get;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
 import com.liferay.portal.vulcan.yaml.openapi.PathItem;
+import com.liferay.portal.vulcan.yaml.openapi.Post;
+import com.liferay.portal.vulcan.yaml.openapi.Put;
 import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import com.liferay.portal.vulcan.yaml.openapi.Response;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
@@ -103,6 +106,11 @@ public class ResourceOpenAPIParser {
 									requestBodyMediaTypes, schemaName,
 									javaMethodParameters, methodName,
 									returnType));
+
+							_addBatchJavaMethodSignature(
+								javaMethodSignatures, methodName, operation,
+								path, pathItem, requestBodyMediaTypes,
+								schemaName);
 						});
 				});
 		}
@@ -221,6 +229,67 @@ public class ResourceOpenAPIParser {
 		return sb.toString();
 	}
 
+	private static void _addBatchJavaMethodSignature(
+		List<JavaMethodSignature> javaMethodSignatures, String methodName,
+		Operation operation, String path, PathItem pathItem,
+		Set<String> requestBodyMediaTypes, String schemaName) {
+
+		if (methodName.equals("delete" + schemaName) ||
+			methodName.equals("postSite" + schemaName) ||
+			methodName.equals("putSite" + schemaName)) {
+
+			Operation batchOperation;
+
+			if (methodName.startsWith("delete")) {
+				batchOperation = new Delete();
+			}
+			else if (methodName.startsWith("post")) {
+				batchOperation = new Post();
+			}
+			else {
+				batchOperation = new Put();
+			}
+
+			batchOperation.setOperationId(operation.getOperationId() + "Batch");
+			ArrayList<Parameter> parameters = new ArrayList<>();
+
+			Parameter e = new Parameter();
+
+			e.setName("callbackURL");
+			e.setIn("query");
+			Schema schema = new Schema();
+
+			schema.setType("String");
+			e.setSchema(schema);
+			parameters.add(e);
+
+			batchOperation.setParameters(parameters);
+			batchOperation.setTags(operation.getTags());
+
+			List<JavaMethodParameter> javaMethodParameters = new ArrayList<>();
+
+			javaMethodParameters.add(
+				new JavaMethodParameter("callbackURL", "String"));
+			javaMethodParameters.add(
+				new JavaMethodParameter("object", "Object"));
+
+			String batchPath = StringUtil.replace(
+				path,
+				"/{" + StringUtil.lowerCaseFirstLetter(schemaName) + "Id}", "");
+
+			TreeSet<String> requestBodyMediaTypes1 = new TreeSet<>();
+
+			requestBodyMediaTypes1.add("application/json");
+			requestBodyMediaTypes1.add("application/xml");
+
+			javaMethodSignatures.add(
+				new JavaMethodSignature(
+					batchPath + "/batch", pathItem, batchOperation,
+					requestBodyMediaTypes1, schemaName, javaMethodParameters,
+					methodName + "Batch", "javax.ws.rs.core.Response"));
+		}
+	}
+
 	private static String _addParameter(Parameter parameter) {
 		if (parameter == null) {
 			return "";
@@ -271,7 +340,8 @@ public class ResourceOpenAPIParser {
 		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
 
 		if ((operationId != null) &&
-			(operationId.equals("delete" + schemaName) || operationId.equals("update" + schemaName)) &&
+			(operationId.equals("delete" + schemaName) ||
+			 operationId.equals("update" + schemaName)) &&
 			parameterName.equals(
 				StringUtil.lowerCaseFirstLetter(schemaName) + "Id") &&
 			propertySchemas.containsKey("id")) {

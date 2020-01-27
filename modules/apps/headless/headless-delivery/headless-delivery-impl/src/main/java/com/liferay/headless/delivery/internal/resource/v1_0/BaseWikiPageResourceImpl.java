@@ -62,6 +62,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -202,6 +203,39 @@ public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
 			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
 			@PathParam("wikiPageId") Long wikiPageId)
 		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-pages/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/wiki-pages/batch")
+	@Tags(value = {@Tag(name = "WikiPage")})
+	public Response deleteWikiPageBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		_importTaskResource.setContextCompany(contextCompany);
+		_importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		_importTaskResource.setContextUriInfo(contextUriInfo);
+		_importTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			_importTaskResource.deleteImportTask(
+				WikiPage.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	/**

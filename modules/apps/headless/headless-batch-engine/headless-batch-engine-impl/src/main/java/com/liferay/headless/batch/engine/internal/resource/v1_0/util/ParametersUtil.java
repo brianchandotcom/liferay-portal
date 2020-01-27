@@ -32,7 +32,9 @@ import javax.ws.rs.core.UriInfo;
 public class ParametersUtil {
 
 	public static String getVersion(String className) {
-		className = className.substring(className.indexOf('v'));
+		String str = ".dto.v";
+
+		className = className.substring(className.indexOf(str) + str.length() + 1);
 
 		className = className.substring(0, className.indexOf('.'));
 

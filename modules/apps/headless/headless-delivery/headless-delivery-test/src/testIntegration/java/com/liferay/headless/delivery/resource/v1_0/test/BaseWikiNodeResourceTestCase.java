@@ -541,6 +541,11 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	@Test
+	public void testPostSiteWikiNodeBatch() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testDeleteWikiNode() throws Exception {
 		WikiNode wikiNode = testDeleteWikiNode_addWikiNode();
 
@@ -603,6 +608,19 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 			Assert.assertTrue(errorsJSONArray.length() > 0);
 		}
+	}
+
+	@Test
+	public void testDeleteWikiNodeBatch() throws Exception {
+		WikiNode wikiNode = testDeleteWikiNodeBatch_addWikiNode();
+
+		assertHttpResponseStatusCode(
+			204, wikiNodeResource.deleteWikiNodeBatchHttpResponse(null, null));
+	}
+
+	protected WikiNode testDeleteWikiNodeBatch_addWikiNode() throws Exception {
+		return wikiNodeResource.postSiteWikiNode(
+			testGroup.getGroupId(), randomWikiNode());
 	}
 
 	@Test

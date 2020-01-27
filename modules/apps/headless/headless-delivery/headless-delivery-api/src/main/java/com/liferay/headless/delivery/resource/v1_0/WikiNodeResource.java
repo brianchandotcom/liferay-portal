@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -50,7 +51,13 @@ public interface WikiNodeResource {
 	public WikiNode postSiteWikiNode(Long siteId, WikiNode wikiNode)
 		throws Exception;
 
+	public Response postSiteWikiNodeBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteWikiNode(Long wikiNodeId) throws Exception;
+
+	public Response deleteWikiNodeBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public WikiNode getWikiNode(Long wikiNodeId) throws Exception;
 

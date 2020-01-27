@@ -282,6 +282,26 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteBlogPostingImageBatch() throws Exception {
+		BlogPostingImage blogPostingImage =
+			testDeleteBlogPostingImageBatch_addBlogPostingImage();
+
+		assertHttpResponseStatusCode(
+			204,
+			blogPostingImageResource.deleteBlogPostingImageBatchHttpResponse(
+				null, null));
+	}
+
+	protected BlogPostingImage
+			testDeleteBlogPostingImageBatch_addBlogPostingImage()
+		throws Exception {
+
+		return blogPostingImageResource.postSiteBlogPostingImage(
+			testGroup.getGroupId(), randomBlogPostingImage(),
+			getMultipartFiles());
+	}
+
+	@Test
 	public void testGetBlogPostingImage() throws Exception {
 		BlogPostingImage postBlogPostingImage =
 			testGetBlogPostingImage_addBlogPostingImage();
@@ -728,6 +748,11 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				randomBlogPostingImage,
 				JSONFactoryUtil.createJSONObject(
 					JSONFactoryUtil.serialize(blogPostingImage))));
+	}
+
+	@Test
+	public void testPostSiteBlogPostingImageBatch() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	protected BlogPostingImage testGraphQLBlogPostingImage_addBlogPostingImage()

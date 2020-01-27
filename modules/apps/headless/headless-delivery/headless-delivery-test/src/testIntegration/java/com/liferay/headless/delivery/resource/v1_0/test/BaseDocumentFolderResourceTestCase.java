@@ -275,6 +275,24 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDocumentFolderBatch() throws Exception {
+		DocumentFolder documentFolder =
+			testDeleteDocumentFolderBatch_addDocumentFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			documentFolderResource.deleteDocumentFolderBatchHttpResponse(
+				null, null));
+	}
+
+	protected DocumentFolder testDeleteDocumentFolderBatch_addDocumentFolder()
+		throws Exception {
+
+		return documentFolderResource.postSiteDocumentFolder(
+			testGroup.getGroupId(), randomDocumentFolder());
+	}
+
+	@Test
 	public void testGetDocumentFolder() throws Exception {
 		DocumentFolder postDocumentFolder =
 			testGetDocumentFolder_addDocumentFolder();
@@ -1149,6 +1167,11 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				randomDocumentFolder,
 				JSONFactoryUtil.createJSONObject(
 					JSONFactoryUtil.serialize(documentFolder))));
+	}
+
+	@Test
+	public void testPostSiteDocumentFolderBatch() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	protected DocumentFolder testGraphQLDocumentFolder_addDocumentFolder()

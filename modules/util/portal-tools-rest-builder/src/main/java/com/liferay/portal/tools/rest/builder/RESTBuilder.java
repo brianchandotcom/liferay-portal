@@ -1145,7 +1145,9 @@ public class RESTBuilder {
 
 				String methodName = javaMethodSignature.getMethodName();
 
-				if (methodNames.contains(methodName)) {
+				if (methodNames.contains(methodName) ||
+					methodName.endsWith("Batch")) {
+
 					continue;
 				}
 

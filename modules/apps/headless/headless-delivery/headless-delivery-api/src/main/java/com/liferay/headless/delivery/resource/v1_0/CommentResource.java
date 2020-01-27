@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -51,6 +52,9 @@ public interface CommentResource {
 		throws Exception;
 
 	public void deleteComment(Long commentId) throws Exception;
+
+	public Response deleteCommentBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public Comment getComment(Long commentId) throws Exception;
 

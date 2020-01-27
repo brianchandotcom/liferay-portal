@@ -553,6 +553,19 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteCommentBatch() throws Exception {
+		Comment comment = testDeleteCommentBatch_addComment();
+
+		assertHttpResponseStatusCode(
+			204, commentResource.deleteCommentBatchHttpResponse(null, null));
+	}
+
+	protected Comment testDeleteCommentBatch_addComment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetComment() throws Exception {
 		Comment postComment = testGetComment_addComment();
 

@@ -283,6 +283,25 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteMessageBoardSectionBatch() throws Exception {
+		MessageBoardSection messageBoardSection =
+			testDeleteMessageBoardSectionBatch_addMessageBoardSection();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardSectionResource.
+				deleteMessageBoardSectionBatchHttpResponse(null, null));
+	}
+
+	protected MessageBoardSection
+			testDeleteMessageBoardSectionBatch_addMessageBoardSection()
+		throws Exception {
+
+		return messageBoardSectionResource.postSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
+	}
+
+	@Test
 	public void testGetMessageBoardSection() throws Exception {
 		MessageBoardSection postMessageBoardSection =
 			testGetMessageBoardSection_addMessageBoardSection();
@@ -1215,6 +1234,11 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				randomMessageBoardSection,
 				JSONFactoryUtil.createJSONObject(
 					JSONFactoryUtil.serialize(messageBoardSection))));
+	}
+
+	@Test
+	public void testPostSiteMessageBoardSectionBatch() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	protected MessageBoardSection

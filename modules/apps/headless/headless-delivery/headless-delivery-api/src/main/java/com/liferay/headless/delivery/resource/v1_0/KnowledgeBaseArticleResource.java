@@ -27,6 +27,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -44,6 +45,10 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface KnowledgeBaseArticleResource {
 
 	public void deleteKnowledgeBaseArticle(Long knowledgeBaseArticleId)
+		throws Exception;
+
+	public Response deleteKnowledgeBaseArticleBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public KnowledgeBaseArticle getKnowledgeBaseArticle(
@@ -110,6 +115,10 @@ public interface KnowledgeBaseArticleResource {
 
 	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
 			Long siteId, KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception;
+
+	public Response postSiteKnowledgeBaseArticleBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public void putSiteKnowledgeBaseArticleSubscribe(Long siteId)

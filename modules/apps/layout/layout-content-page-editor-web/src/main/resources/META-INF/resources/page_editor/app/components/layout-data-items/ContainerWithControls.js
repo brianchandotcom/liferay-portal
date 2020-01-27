@@ -18,8 +18,7 @@ import React, {useContext} from 'react';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../config/index';
-import {DispatchContext} from '../../reducers/index';
-import {StoreContext} from '../../store/index';
+import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
@@ -28,8 +27,10 @@ import Container from './Container';
 const ContainerWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
 		const config = useContext(ConfigContext);
-		const dispatch = useContext(DispatchContext);
-		const store = useContext(StoreContext);
+		const dispatch = useDispatch();
+		const segmentsExperienceId = useSelector(
+			state => state.segmentsExperienceId
+		);
 
 		const handleButtonClick = id => {
 			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
@@ -37,7 +38,7 @@ const ContainerWithControls = React.forwardRef(
 					duplicateItem({
 						config,
 						itemId: item.itemId,
-						store
+						store: {segmentsExperienceId}
 					})
 				);
 			}

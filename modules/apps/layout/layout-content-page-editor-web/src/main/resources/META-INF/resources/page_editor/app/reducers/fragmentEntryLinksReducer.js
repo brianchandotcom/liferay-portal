@@ -148,6 +148,12 @@ export default function fragmentEntryLinksReducer(fragmentEntryLinks, action) {
 				delete nextFragmentEntryLinks[fragmentEntryLinkId];
 			});
 
+			action.addedFragmentEntryLinks.forEach(fragmentEntryLink => {
+				nextFragmentEntryLinks[
+					fragmentEntryLink.fragmentEntryLinkId
+				] = fragmentEntryLink;
+			});
+
 			return nextFragmentEntryLinks;
 		}
 

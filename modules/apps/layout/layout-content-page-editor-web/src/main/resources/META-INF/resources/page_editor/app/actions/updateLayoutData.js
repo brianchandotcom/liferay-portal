@@ -15,10 +15,12 @@
 import {UPDATE_LAYOUT_DATA} from './types';
 
 export default function updateLayoutData({
+	addedFragmentEntryLinks = [],
 	deletedFragmentEntryLinkIds = [],
 	layoutData
 }) {
 	return {
+		addedFragmentEntryLinks,
 		deletedFragmentEntryLinkIds,
 		layoutData,
 		type: UPDATE_LAYOUT_DATA

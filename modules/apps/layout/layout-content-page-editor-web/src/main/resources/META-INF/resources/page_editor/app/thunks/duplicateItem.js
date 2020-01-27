@@ -1,4 +1,4 @@
-import addFragmentEntryLink from '../actions/addFragmentEntryLink';
+import {updateLayoutData} from '../actions/index';
 import FragmentService from '../services/FragmentService';
 
 /**
@@ -24,17 +24,23 @@ export default function duplicateItem({config, itemId, store}) {
 			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId
-		}).then(({fragmentEntryLink, layoutData}) => {
-			// TODO: LPS-106738
-			fragmentEntryLink.content = {
-				value: {
-					content: fragmentEntryLink.content
+		}).then(({duplicatedFragmentEntryLinks, layoutData}) => {
+			const addedFragmentEntryLinks = duplicatedFragmentEntryLinks.map(
+				fragmentEntryLink => {
+					// TODO: LPS-106738
+					fragmentEntryLink.content = {
+						value: {
+							content: fragmentEntryLink.content
+						}
+					};
+
+					return fragmentEntryLink;
 				}
-			};
+			);
 
 			dispatch(
-				addFragmentEntryLink({
-					fragmentEntryLink,
+				updateLayoutData({
+					addedFragmentEntryLinks,
 					layoutData
 				})
 			);

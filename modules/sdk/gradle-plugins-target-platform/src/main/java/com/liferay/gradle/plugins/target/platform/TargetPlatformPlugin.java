@@ -159,10 +159,9 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	private DependencyManagementTask _addTaskDependencyManagement(
 		Project project) {
 
-		final DependencyManagementTask dependencyManagementTask =
-			GradleUtil.addTask(
-				project, DEPENDENCY_MANAGEMENT_TASK_NAME,
-				DependencyManagementTask.class);
+		DependencyManagementTask dependencyManagementTask = GradleUtil.addTask(
+			project, DEPENDENCY_MANAGEMENT_TASK_NAME,
+			DependencyManagementTask.class);
 
 		dependencyManagementTask.setDescription(
 			"Displays the target platform dependencies for the project.");

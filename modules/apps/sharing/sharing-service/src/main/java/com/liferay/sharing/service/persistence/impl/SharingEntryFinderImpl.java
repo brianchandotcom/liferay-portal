@@ -14,7 +14,6 @@
 
 package com.liferay.sharing.service.persistence.impl;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -138,8 +137,7 @@ public class SharingEntryFinderImpl
 				"AND SharingEntry.classNameId = ?");
 		}
 		else {
-			sql = StringUtil.replace(
-				sql, "[$CLASS_NAME_ID_WHERE$]", StringPool.BLANK);
+			sql = StringUtil.removeSubstring(sql, "[$CLASS_NAME_ID_WHERE$]");
 		}
 
 		return sql;

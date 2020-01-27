@@ -105,20 +105,18 @@ public class SyncDLObjectFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_BY_MODIFIED_TIME);
 
 			if (modifiedTime <= 0) {
-				sql = StringUtil.replace(
-					sql, "(SyncDLObject.modifiedTime > ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(SyncDLObject.modifiedTime > ?) AND");
 			}
 
 			if (parentFolderId == 0) {
-				sql = StringUtil.replace(
-					sql, "AND (SyncDLObject.treePath LIKE ?)",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "AND (SyncDLObject.treePath LIKE ?)");
 			}
 
 			if (type == null) {
-				sql = StringUtil.replace(
-					sql, "AND (SyncDLObject.type_ = ?)", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "AND (SyncDLObject.type_ = ?)");
 			}
 
 			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {

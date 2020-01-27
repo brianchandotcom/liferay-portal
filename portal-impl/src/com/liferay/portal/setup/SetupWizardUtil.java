@@ -223,8 +223,8 @@ public class SetupWizardUtil {
 			}
 		}
 
-		return StringUtil.replace(
-			unicodeProperties.toString(), _NULL_HOLDER, StringPool.BLANK);
+		return StringUtil.removeSubstring(
+			unicodeProperties.toString(), _NULL_HOLDER);
 	}
 
 	private static boolean _isDatabaseConfigured(

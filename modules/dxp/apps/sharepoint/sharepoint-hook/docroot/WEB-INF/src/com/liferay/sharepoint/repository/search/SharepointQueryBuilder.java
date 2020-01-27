@@ -175,7 +175,7 @@ public class SharepointQueryBuilder {
 		throws SearchException {
 
 		QueryValue queryValue = new QueryValue(
-			StringUtil.replace(fieldValue, CharPool.STAR, StringPool.BLANK));
+			StringUtil.removeSubstring(fieldValue, CharPool.STAR));
 
 		if (fieldValue.startsWith(StringPool.STAR) &&
 			fieldValue.endsWith(StringPool.STAR)) {

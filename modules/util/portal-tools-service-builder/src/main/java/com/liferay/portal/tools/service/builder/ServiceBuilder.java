@@ -1047,10 +1047,10 @@ public class ServiceBuilder {
 
 		String createMappingTableSQL = _getCreateMappingTableSQL(entityMapping);
 
-		createMappingTableSQL = StringUtil.replace(
-			createMappingTableSQL, '\n', "");
-		createMappingTableSQL = StringUtil.replace(
-			createMappingTableSQL, '\t', "");
+		createMappingTableSQL = StringUtil.removeSubstring(
+			createMappingTableSQL, '\n');
+		createMappingTableSQL = StringUtil.removeSubstring(
+			createMappingTableSQL, '\t');
 		createMappingTableSQL = createMappingTableSQL.substring(
 			0, createMappingTableSQL.length() - 1);
 
@@ -1060,8 +1060,8 @@ public class ServiceBuilder {
 	public String getCreateTableSQL(Entity entity) {
 		String createTableSQL = _getCreateTableSQL(entity);
 
-		createTableSQL = StringUtil.replace(createTableSQL, '\n', "");
-		createTableSQL = StringUtil.replace(createTableSQL, '\t', "");
+		createTableSQL = StringUtil.removeSubstring(createTableSQL, '\n');
+		createTableSQL = StringUtil.removeSubstring(createTableSQL, '\t');
 		createTableSQL = createTableSQL.substring(
 			0, createTableSQL.length() - 1);
 
@@ -2595,11 +2595,10 @@ public class ServiceBuilder {
 		if (finderImplFile.exists()) {
 			String content = _read(finderImplFile);
 
-			content = StringUtil.replace(
+			content = StringUtil.removeSubstring(
 				content,
 				"import com.liferay.portal.service.persistence.impl." +
-					"BasePersistenceImpl;\n",
-				"");
+					"BasePersistenceImpl;\n");
 
 			content = StringUtil.replace(
 				content, "BasePersistenceImpl<" + entity.getName() + ">",
@@ -4391,7 +4390,7 @@ public class ServiceBuilder {
 			xml = xml.substring(0, x) + "\n" + xml.substring(y);
 		}
 
-		xml = StringUtil.replace(xml, '\r', "");
+		xml = StringUtil.removeSubstring(xml, '\r');
 		xml = Dom4jUtil.toString(xml);
 		xml = StringUtil.replace(xml, "\"/>", "\" />");
 

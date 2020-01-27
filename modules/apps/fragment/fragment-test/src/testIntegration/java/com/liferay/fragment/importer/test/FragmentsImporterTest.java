@@ -202,8 +202,7 @@ public class FragmentsImporterTest {
 
 		String entryPath = path + StringPool.FORWARD_SLASH + key;
 
-		String zipPath = StringUtil.replace(
-			entryPath, _FRAGMENTS_PATH, StringPool.BLANK);
+		String zipPath = StringUtil.removeSubstring(entryPath, _FRAGMENTS_PATH);
 
 		URL url = _bundle.getEntry(entryPath);
 

@@ -642,8 +642,7 @@ public class CustomSQL {
 		}
 
 		if (ArrayUtil.isEmpty(values)) {
-			return StringUtil.replace(
-				sql, oldSqlSB.toString(), StringPool.BLANK);
+			return StringUtil.removeSubstring(sql, oldSqlSB.toString());
 		}
 
 		StringBundler newSqlSB = new StringBundler(values.length * 4 + 3);
@@ -688,8 +687,7 @@ public class CustomSQL {
 		}
 
 		if (ArrayUtil.isEmpty(values)) {
-			return StringUtil.replace(
-				sql, oldSqlSB.toString(), StringPool.BLANK);
+			return StringUtil.removeSubstring(sql, oldSqlSB.toString());
 		}
 
 		StringBundler newSqlSB = new StringBundler(values.length * 4 + 3);

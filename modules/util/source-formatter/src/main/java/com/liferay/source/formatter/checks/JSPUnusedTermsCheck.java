@@ -531,8 +531,7 @@ public class JSPUnusedTermsCheck extends JSPTermsBaseCheck {
 		_addJSPUnusedImports(fileName, importLines, unneededImports);
 
 		for (String unneededImport : unneededImports) {
-			newImports = StringUtil.replace(
-				newImports, unneededImport, StringPool.BLANK);
+			newImports = StringUtil.removeSubstring(newImports, unneededImport);
 		}
 
 		return StringUtil.replaceFirst(content, imports, newImports);
@@ -600,8 +599,7 @@ public class JSPUnusedTermsCheck extends JSPTermsBaseCheck {
 		_addJSPUnusedTaglibs(fileName, taglibLines, unneededTaglibs);
 
 		for (String unneededTaglib : unneededTaglibs) {
-			newTaglibs = StringUtil.replace(
-				newTaglibs, unneededTaglib, StringPool.BLANK);
+			newTaglibs = StringUtil.removeSubstring(newTaglibs, unneededTaglib);
 		}
 
 		return StringUtil.replaceFirst(content, taglibs, newTaglibs);

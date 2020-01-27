@@ -568,7 +568,7 @@ public class IconTag extends IncludeTag {
 		String spriteFileName = null;
 		String spriteFileURL = null;
 
-		String imageFileName = StringUtil.replace(_src, "common/../", "");
+		String imageFileName = StringUtil.removeSubstring(_src, "common/../");
 
 		HttpServletRequest httpServletRequest = getRequest();
 
@@ -702,7 +702,7 @@ public class IconTag extends IncludeTag {
 			sb.append(_image);
 			sb.append(".png");
 
-			return StringUtil.replace(sb.toString(), "common/../", "");
+			return StringUtil.removeSubstring(sb.toString(), "common/../");
 		}
 
 		return StringPool.BLANK;

@@ -133,8 +133,8 @@ public class LPKGOverrideTest {
 							if (name.endsWith(".war")) {
 								String fileName = matcher.group(1);
 
-								fileName = StringUtil.replace(
-									fileName, "-dxp", StringPool.BLANK);
+								fileName = StringUtil.removeSubstring(
+									fileName, "-dxp");
 
 								overrides.put("war.".concat(fileName), null);
 

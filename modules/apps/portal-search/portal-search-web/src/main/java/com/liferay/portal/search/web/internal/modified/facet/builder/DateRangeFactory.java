@@ -169,7 +169,7 @@ public class DateRangeFactory {
 	}
 
 	private String _normalizeRangeBoundary(String dateString, String pad) {
-		dateString = StringUtil.replace(dateString, '-', "");
+		dateString = StringUtil.removeSubstring(dateString, '-');
 
 		return dateString + pad;
 	}

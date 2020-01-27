@@ -713,8 +713,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 				recurrence = recurrence.substring(0, index);
 			}
 
-			recurrence = StringUtil.replace(
-				recurrence, _RRULE, StringPool.BLANK);
+			recurrence = StringUtil.removeSubstring(recurrence, _RRULE);
 
 			RRule rRule = new RRule(recurrence);
 

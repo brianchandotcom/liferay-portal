@@ -87,7 +87,7 @@ public class XMLMergerRunner {
 
 		String header = xml.substring(pos, xml.indexOf("?>", pos) + 2);
 
-		xml = StringUtil.replace(xml, header, "");
+		xml = StringUtil.removeSubstring(xml, header);
 		xml = StringBundler.concat(header, "\n", docType, "\n", xml);
 
 		return xml;
@@ -105,7 +105,7 @@ public class XMLMergerRunner {
 			masterDoctype = masterXml.substring(
 				pos, masterXml.indexOf(">", pos) + 1);
 
-			masterXml = StringUtil.replace(masterXml, masterDoctype, "");
+			masterXml = StringUtil.removeSubstring(masterXml, masterDoctype);
 		}
 
 		pos = slaveXml.indexOf("<!DOCTYPE");
@@ -116,7 +116,7 @@ public class XMLMergerRunner {
 			slaveDoctype = slaveXml.substring(
 				pos, slaveXml.indexOf(">", pos) + 1);
 
-			slaveXml = StringUtil.replace(slaveXml, slaveDoctype, "");
+			slaveXml = StringUtil.removeSubstring(slaveXml, slaveDoctype);
 		}
 
 		String doctype = null;

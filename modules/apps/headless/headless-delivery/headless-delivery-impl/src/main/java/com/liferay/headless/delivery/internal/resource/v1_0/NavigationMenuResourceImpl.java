@@ -96,7 +96,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	private Locale _getLocaleFromProperty(Map.Entry<String, String> property) {
 		return LocaleUtil.fromLanguageId(
-			StringUtil.replace(property.getKey(), "name_", ""));
+			StringUtil.removeSubstring(property.getKey(), "name_"));
 	}
 
 	private Map<Locale, String> _getLocalizedNamesFromProperties(

@@ -275,7 +275,7 @@ public class UpgradeTableBuilder {
 
 		content = content.substring(x, y + 1);
 
-		content = StringUtil.replace(content, "\t", "");
+		content = StringUtil.removeSubstring(content, "\t");
 		content = StringUtil.replace(content, "{ \"", "{\"");
 		content = StringUtil.replace(content, "new Integer(Types.", "Types.");
 		content = StringUtil.replace(content, ") }", "}");

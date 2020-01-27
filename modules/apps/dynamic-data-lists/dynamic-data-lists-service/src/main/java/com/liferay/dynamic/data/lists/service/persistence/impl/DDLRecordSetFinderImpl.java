@@ -232,13 +232,13 @@ public class DDLRecordSetFinderImpl
 			}
 
 			if (groupId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(DDLRecordSet.groupId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(DDLRecordSet.groupId = ?) AND");
 			}
 
 			if (ddmStructureId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(DDLRecordSet.DDMStructureId = ?)", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(DDLRecordSet.DDMStructureId = ?)");
 			}
 
 			sql = _customSQL.replaceAndOperator(sql, andOperator);
@@ -298,13 +298,13 @@ public class DDLRecordSetFinderImpl
 			}
 
 			if (groupId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(DDLRecordSet.groupId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(DDLRecordSet.groupId = ?) AND");
 			}
 
 			if (scope == DDLRecordSetConstants.SCOPE_ANY) {
-				sql = StringUtil.replace(
-					sql, "(DDLRecordSet.scope = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(DDLRecordSet.scope = ?) AND");
 			}
 
 			sql = _customSQL.replaceKeywords(
@@ -376,13 +376,13 @@ public class DDLRecordSetFinderImpl
 			}
 
 			if (groupId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(DDLRecordSet.groupId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(DDLRecordSet.groupId = ?) AND");
 			}
 
 			if (scope == DDLRecordSetConstants.SCOPE_ANY) {
-				sql = StringUtil.replace(
-					sql, "(DDLRecordSet.scope = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(DDLRecordSet.scope = ?) AND");
 			}
 
 			sql = _customSQL.replaceKeywords(

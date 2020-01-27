@@ -383,8 +383,8 @@ public class AlloyControllerInvokerManager {
 		if (enclosingClass != null) {
 			prefix = enclosingClass.getName();
 
-			String name = StringUtil.replace(
-				enclosingClass.getSimpleName(), "005f", StringPool.BLANK);
+			String name = StringUtil.removeSubstring(
+				enclosingClass.getSimpleName(), "005f");
 
 			int trimIndex = name.indexOf("_controller");
 

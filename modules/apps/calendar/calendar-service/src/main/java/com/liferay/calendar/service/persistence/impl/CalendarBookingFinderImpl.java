@@ -359,8 +359,8 @@ public class CalendarBookingFinderImpl
 			sql = StringUtil.replace(sql, "[$STATUS$]", getStatuses(statuses));
 
 			if (parentCalendarBookingId < 0) {
-				sql = StringUtil.replace(
-					sql, "(parentCalendarBookingId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(parentCalendarBookingId = ?) AND");
 			}
 
 			sql = _customSQL.replaceKeywords(
@@ -469,8 +469,8 @@ public class CalendarBookingFinderImpl
 			sql = StringUtil.replace(sql, "[$STATUS$]", getStatuses(statuses));
 
 			if (parentCalendarBookingId < 0) {
-				sql = StringUtil.replace(
-					sql, "(parentCalendarBookingId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(parentCalendarBookingId = ?) AND");
 			}
 
 			sql = _customSQL.replaceKeywords(

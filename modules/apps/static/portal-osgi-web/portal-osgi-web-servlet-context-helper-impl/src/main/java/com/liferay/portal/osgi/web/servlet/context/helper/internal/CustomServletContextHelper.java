@@ -118,8 +118,8 @@ public class CustomServletContextHelper
 		if (PropsValues.WORK_DIR_OVERRIDE_ENABLED &&
 			(name.endsWith(".css") || name.endsWith(".js"))) {
 
-			String overrideName = StringUtil.replace(
-				name, "/META-INF/resources", "");
+			String overrideName = StringUtil.removeSubstring(
+				name, "/META-INF/resources");
 
 			File file = new File(_overrideDirName, overrideName);
 

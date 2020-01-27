@@ -78,8 +78,8 @@ public class JSONWebServiceNaming {
 	public String convertServiceClassToSimpleName(Class<?> clazz) {
 		String className = clazz.getSimpleName();
 
-		className = StringUtil.replace(className, "Impl", StringPool.BLANK);
-		className = StringUtil.replace(className, "Service", StringPool.BLANK);
+		className = StringUtil.removeSubstring(className, "Impl");
+		className = StringUtil.removeSubstring(className, "Service");
 
 		return className;
 	}

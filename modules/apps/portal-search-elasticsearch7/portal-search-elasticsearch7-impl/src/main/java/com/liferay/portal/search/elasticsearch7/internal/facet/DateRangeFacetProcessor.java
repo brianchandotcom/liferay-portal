@@ -68,10 +68,8 @@ public class DateRangeFacetProcessor
 
 			String range = rangeJSONObject.getString("range");
 
-			range = StringUtil.replace(
-				range, CharPool.OPEN_BRACKET, StringPool.BLANK);
-			range = StringUtil.replace(
-				range, CharPool.CLOSE_BRACKET, StringPool.BLANK);
+			range = StringUtil.removeSubstring(range, CharPool.OPEN_BRACKET);
+			range = StringUtil.removeSubstring(range, CharPool.CLOSE_BRACKET);
 
 			String[] rangeParts = range.split(StringPool.SPACE);
 

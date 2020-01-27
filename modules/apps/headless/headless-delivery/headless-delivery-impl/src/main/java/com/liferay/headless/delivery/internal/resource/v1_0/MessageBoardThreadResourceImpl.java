@@ -376,7 +376,7 @@ public class MessageBoardThreadResourceImpl
 			for (Sort sort : sorts) {
 				String fieldName = sort.getFieldName();
 
-				fieldName = StringUtil.replace(fieldName, "_sortable", "");
+				fieldName = StringUtil.removeSubstring(fieldName, "_sortable");
 
 				if (sort.isReverse()) {
 					dynamicQuery.addOrder(OrderFactoryUtil.desc(fieldName));

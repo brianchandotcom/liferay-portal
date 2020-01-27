@@ -1044,8 +1044,8 @@ public class GroupImpl extends GroupBaseImpl {
 					continue;
 				}
 
-				String stagedPortletId = StringUtil.replace(
-					key, StagingConstants.STAGED_PORTLET, StringPool.BLANK);
+				String stagedPortletId = StringUtil.removeSubstring(
+					key, StagingConstants.STAGED_PORTLET);
 
 				Portlet stagedPortlet = PortletLocalServiceUtil.getPortletById(
 					stagedPortletId);

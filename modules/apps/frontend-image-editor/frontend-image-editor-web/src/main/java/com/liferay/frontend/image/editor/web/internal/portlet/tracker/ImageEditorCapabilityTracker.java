@@ -102,8 +102,8 @@ public class ImageEditorCapabilityTracker {
 	}
 
 	private String _getJavaScriptFileName(String fileName) {
-		return StringUtil.replace(
-			FileUtil.getShortFileName(fileName), ".js", StringPool.BLANK);
+		return StringUtil.removeSubstring(
+			FileUtil.getShortFileName(fileName), ".js");
 	}
 
 	private Set<String> _rebuildImageEditorCapabilitiesRequirements(

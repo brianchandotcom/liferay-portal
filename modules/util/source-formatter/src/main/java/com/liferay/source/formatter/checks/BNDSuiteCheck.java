@@ -75,8 +75,8 @@ public class BNDSuiteCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String s = StringUtil.replace(
-				line, "Liferay-Releng-Suite:", StringPool.BLANK);
+			String s = StringUtil.removeSubstring(
+				line, "Liferay-Releng-Suite:");
 
 			String value = StringUtil.toLowerCase(s.trim());
 

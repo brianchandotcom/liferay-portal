@@ -563,8 +563,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		String content = FileUtil.read(contextPath);
 
 		if (!PropsValues.AUTO_DEPLOY_UNPACK_WAR) {
-			content = StringUtil.replace(
-				content, "antiResourceLocking=\"true\"", StringPool.BLANK);
+			content = StringUtil.removeSubstring(
+				content, "antiResourceLocking=\"true\"");
 		}
 
 		FileUtil.write(targetFile, content);

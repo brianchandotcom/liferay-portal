@@ -16,7 +16,6 @@ package com.liferay.portal.json;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -371,7 +370,7 @@ public class JSONFactoryTest {
 	}
 
 	protected String removeQuotes(String string) {
-		return StringUtil.replace(string, CharPool.QUOTE, StringPool.BLANK);
+		return StringUtil.removeSubstring(string, CharPool.QUOTE);
 	}
 
 	private static final double[] _DOUBLE_ARRAY = {1.2345, 2.3456, 5.6789};

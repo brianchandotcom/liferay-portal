@@ -167,8 +167,7 @@ public class BackgroundTaskFinderImpl
 				sql, "[$WHERE_CONDITIONS$]", "WHERE " + sb.toString());
 		}
 		else {
-			sql = StringUtil.replace(
-				sql, "[$WHERE_CONDITIONS$]", StringPool.BLANK);
+			sql = StringUtil.removeSubstring(sql, "[$WHERE_CONDITIONS$]");
 		}
 
 		return sql;

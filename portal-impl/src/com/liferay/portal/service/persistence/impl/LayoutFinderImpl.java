@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -82,8 +81,8 @@ public class LayoutFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_SCOPE_GROUP);
 
-			sql = StringUtil.replace(
-				sql, "AND (Layout.privateLayout = ?)", StringPool.BLANK);
+			sql = StringUtil.removeSubstring(
+				sql, "AND (Layout.privateLayout = ?)");
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, Layout.class.getName(), "Layout.plid", groupId);

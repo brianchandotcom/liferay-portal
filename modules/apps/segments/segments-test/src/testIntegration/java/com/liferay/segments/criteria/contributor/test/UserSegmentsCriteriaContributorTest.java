@@ -154,7 +154,7 @@ public class UserSegmentsCriteriaContributorTest {
 		Set<String> complexEntityFieldNames = stream.filter(
 			field -> StringUtil.startsWith(field.getName(), "customField/")
 		).map(
-			field -> StringUtil.replace(field.getName(), "customField/", "")
+			field -> StringUtil.removeSubstring(field.getName(), "customField/")
 		).collect(
 			Collectors.toSet()
 		);

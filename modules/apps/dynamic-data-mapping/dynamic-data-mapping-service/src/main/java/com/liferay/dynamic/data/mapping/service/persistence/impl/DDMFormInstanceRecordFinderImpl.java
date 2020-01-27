@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordFinder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -59,9 +58,8 @@ public class DDMFormInstanceRecordFinderImpl
 			String sql = _customSQL.get(getClass(), COUNT_BY_F_S);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(
-					sql, "(DDMFormInstanceRecordVersion.status = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(DDMFormInstanceRecordVersion.status = ?) AND");
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -109,9 +107,8 @@ public class DDMFormInstanceRecordFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_BY_F_S);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(
-					sql, "(DDMFormInstanceRecordVersion.status = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(DDMFormInstanceRecordVersion.status = ?) AND");
 			}
 
 			sql = _customSQL.replaceOrderBy(sql, orderByComparator);

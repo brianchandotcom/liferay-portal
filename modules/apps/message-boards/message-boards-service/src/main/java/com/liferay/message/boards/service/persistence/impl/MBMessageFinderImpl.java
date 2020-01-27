@@ -17,7 +17,6 @@ package com.liferay.message.boards.service.persistence.impl;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.impl.MBMessageImpl;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -271,13 +270,12 @@ public class MBMessageFinderImpl
 			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_C_S);
 
 			if (userId <= 0) {
-				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _USER_ID_SQL);
 			}
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
-				sql = StringUtil.replace(
-					sql, "(currentMessage.categoryId = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(currentMessage.categoryId = ?) AND");
 			}
 			else {
 				String mergedCategoryIds = StringUtil.merge(
@@ -347,9 +345,8 @@ public class MBMessageFinderImpl
 			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_C_A_S);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
-				sql = StringUtil.replace(
-					sql, "(currentMessage.categoryId = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(currentMessage.categoryId = ?) AND");
 			}
 			else {
 				String mergedCategoryIds = StringUtil.merge(
@@ -426,13 +423,12 @@ public class MBMessageFinderImpl
 			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_MD_C_A_S);
 
 			if (userId <= 0) {
-				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _USER_ID_SQL);
 			}
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
-				sql = StringUtil.replace(
-					sql, "(currentMessage.categoryId = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(currentMessage.categoryId = ?) AND");
 			}
 			else {
 				String mergedCategoryIds = StringUtil.merge(
@@ -509,13 +505,12 @@ public class MBMessageFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_BY_G_U_C_S);
 
 			if (userId <= 0) {
-				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _USER_ID_SQL);
 			}
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
-				sql = StringUtil.replace(
-					sql, "(currentMessage.categoryId = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(currentMessage.categoryId = ?) AND");
 			}
 			else {
 				String mergedCategoryIds = StringUtil.merge(
@@ -575,9 +570,8 @@ public class MBMessageFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_BY_G_U_C_A_S);
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
-				sql = StringUtil.replace(
-					sql, "(currentMessage.categoryId = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(currentMessage.categoryId = ?) AND");
 			}
 			else {
 				String mergedCategoryIds = StringUtil.merge(
@@ -645,13 +639,12 @@ public class MBMessageFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_BY_G_U_MD_C_A_S);
 
 			if (userId <= 0) {
-				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _USER_ID_SQL);
 			}
 
 			if (ArrayUtil.isEmpty(categoryIds)) {
-				sql = StringUtil.replace(
-					sql, "(currentMessage.categoryId = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(currentMessage.categoryId = ?) AND");
 			}
 			else {
 				String mergedCategoryIds = StringUtil.merge(

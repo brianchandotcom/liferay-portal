@@ -282,10 +282,9 @@ public class DLFileEntryTypeFinderImpl
 			String sql = CustomSQLUtil.get(COUNT_BY_C_F_G_N_D_S);
 
 			if (inherited) {
-				sql = StringUtil.replace(
-					sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _INNER_JOIN_SQL);
 
-				sql = StringUtil.replace(sql, _WHERE_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _WHERE_SQL);
 			}
 
 			if (inlineSQLHelper) {
@@ -437,10 +436,9 @@ public class DLFileEntryTypeFinderImpl
 			String sql = CustomSQLUtil.get(FIND_BY_C_F_G_N_D_S);
 
 			if (inherited) {
-				sql = StringUtil.replace(
-					sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _INNER_JOIN_SQL);
 
-				sql = StringUtil.replace(sql, _WHERE_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _WHERE_SQL);
 			}
 
 			if (inlineSQLHelper) {

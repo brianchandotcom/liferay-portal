@@ -81,8 +81,7 @@ public class PortletRegistryImpl implements PortletRegistry {
 				continue;
 			}
 
-			String alias = StringUtil.replace(
-				tagName, "lfr-widget-", StringPool.BLANK);
+			String alias = StringUtil.removeSubstring(tagName, "lfr-widget-");
 
 			String portletName = getPortletName(alias);
 

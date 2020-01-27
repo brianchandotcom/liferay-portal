@@ -118,8 +118,7 @@ public class SearchContainer<R> {
 		}
 
 		if (!_curParam.equals(DEFAULT_CUR_PARAM)) {
-			String s = StringUtil.replace(
-				_curParam, DEFAULT_CUR_PARAM, StringPool.BLANK);
+			String s = StringUtil.removeSubstring(_curParam, DEFAULT_CUR_PARAM);
 
 			_deltaParam = DEFAULT_DELTA_PARAM + s;
 		}

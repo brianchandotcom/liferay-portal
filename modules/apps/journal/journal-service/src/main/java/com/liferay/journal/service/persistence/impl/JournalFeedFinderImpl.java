@@ -99,8 +99,7 @@ public class JournalFeedFinderImpl
 			String sql = _customSQL.get(getClass(), COUNT_BY_C_G_F_N_D);
 
 			if (groupId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(groupId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, "(groupId = ?) AND");
 			}
 
 			sql = _customSQL.replaceKeywords(
@@ -205,8 +204,7 @@ public class JournalFeedFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_BY_C_G_F_N_D);
 
 			if (groupId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(groupId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, "(groupId = ?) AND");
 			}
 
 			sql = _customSQL.replaceKeywords(

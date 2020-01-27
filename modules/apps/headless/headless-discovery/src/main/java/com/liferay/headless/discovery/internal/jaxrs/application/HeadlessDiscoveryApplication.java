@@ -119,7 +119,7 @@ public class HeadlessDiscoveryApplication extends Application {
 
 		String absolutePath = uri.toString();
 
-		String serverURL = StringUtil.replace(absolutePath, "/api/", "");
+		String serverURL = StringUtil.removeSubstring(absolutePath, "/api/");
 
 		RuntimeDTO runtimeDTO = _jaxrsServiceRuntime.getRuntimeDTO();
 

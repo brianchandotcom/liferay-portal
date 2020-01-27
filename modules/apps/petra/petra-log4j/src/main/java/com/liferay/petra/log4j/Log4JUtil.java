@@ -304,9 +304,8 @@ public class Log4JUtil {
 			content = content.substring(0, x) + content.substring(y);
 		}
 
-		return StringUtil.replace(
-			content, "<appender-ref ref=\"" + appenderName + "\" />",
-			StringPool.BLANK);
+		return StringUtil.removeSubstring(
+			content, "<appender-ref ref=\"" + appenderName + "\" />");
 	}
 
 	private static final Logger _logger = Logger.getRootLogger();

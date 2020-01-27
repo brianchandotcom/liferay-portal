@@ -257,9 +257,8 @@ public class MBCategoryFinderImpl
 			String sql = _customSQL.get(getClass(), COUNT_C_BY_S_G_U_P);
 
 			if (ArrayUtil.isEmpty(parentCategoryIds)) {
-				sql = StringUtil.replace(
-					sql, "(MBCategory.parentCategoryId = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(MBCategory.parentCategoryId = ?) AND");
 			}
 			else {
 				String mergedParentCategoryIds = StringUtil.merge(
@@ -516,9 +515,8 @@ public class MBCategoryFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_C_BY_S_G_U_P);
 
 			if (ArrayUtil.isEmpty(parentCategoryIds)) {
-				sql = StringUtil.replace(
-					sql, "(MBCategory.parentCategoryId = ?) AND",
-					StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(MBCategory.parentCategoryId = ?) AND");
 			}
 			else {
 				String mergedParentCategoryIds = StringUtil.merge(

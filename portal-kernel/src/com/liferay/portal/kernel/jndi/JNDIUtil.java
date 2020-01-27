@@ -51,8 +51,8 @@ public class JNDIUtil {
 
 			if (location.contains("java:comp/env/")) {
 				try {
-					String newLocation = StringUtil.replace(
-						location, "java:comp/env/", "");
+					String newLocation = StringUtil.removeSubstring(
+						location, "java:comp/env/");
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(namingException1.getMessage());
@@ -65,8 +65,8 @@ public class JNDIUtil {
 
 					// java:comp/env/ObjectName to java:ObjectName
 
-					String newLocation = StringUtil.replace(
-						location, "comp/env/", "");
+					String newLocation = StringUtil.removeSubstring(
+						location, "comp/env/");
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(namingException2.getMessage());
@@ -81,8 +81,8 @@ public class JNDIUtil {
 				// java:ObjectName to ObjectName
 
 				try {
-					String newLocation = StringUtil.replace(
-						location, "java:", "");
+					String newLocation = StringUtil.removeSubstring(
+						location, "java:");
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(namingException1.getMessage());

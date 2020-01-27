@@ -178,8 +178,8 @@ public class DynamicCSSUtil {
 		if (portalThemeMatcher.find()) {
 			String themePathId = portalThemeMatcher.group(1);
 
-			themePathId = StringUtil.replace(
-				themePathId, CharPool.UNDERLINE, StringPool.BLANK);
+			themePathId = StringUtil.removeSubstring(
+				themePathId, CharPool.UNDERLINE);
 
 			themeId = PortalUtil.getJsSafePortletId(themePathId);
 		}
@@ -190,8 +190,8 @@ public class DynamicCSSUtil {
 			if (pluginThemeMatcher.find()) {
 				String themePathId = pluginThemeMatcher.group(1);
 
-				themePathId = StringUtil.replace(
-					themePathId, CharPool.UNDERLINE, StringPool.BLANK);
+				themePathId = StringUtil.removeSubstring(
+					themePathId, CharPool.UNDERLINE);
 
 				StringBundler sb = new StringBundler(4);
 

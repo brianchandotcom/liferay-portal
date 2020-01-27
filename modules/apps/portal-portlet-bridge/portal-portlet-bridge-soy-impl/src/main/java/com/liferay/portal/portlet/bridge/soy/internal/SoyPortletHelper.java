@@ -172,11 +172,10 @@ public class SoyPortletHelper {
 		String filePath = getJavaScriptFilePath(bundle, mvcCommandName);
 
 		if (filePath.endsWith(".js")) {
-			filePath = StringUtil.replace(filePath, ".js", StringPool.BLANK);
+			filePath = StringUtil.removeSubstring(filePath, ".js");
 		}
 
-		controllerName = StringUtil.replace(
-			filePath, _RESOURCES_PATH, StringPool.BLANK);
+		controllerName = StringUtil.removeSubstring(filePath, _RESOURCES_PATH);
 
 		_javaScriptLoaderModulesMap.put(mvcCommandName, controllerName);
 

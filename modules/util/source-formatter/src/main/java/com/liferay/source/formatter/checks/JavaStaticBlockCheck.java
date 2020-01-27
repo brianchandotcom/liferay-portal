@@ -194,8 +194,8 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			classContent = StringUtil.replace(
-				classContent, staticBlockContent + "\n", StringPool.BLANK);
+			classContent = StringUtil.removeSubstring(
+				classContent, staticBlockContent + "\n");
 
 			classContent = StringUtil.replace(
 				classContent, lastJavaTermContent,

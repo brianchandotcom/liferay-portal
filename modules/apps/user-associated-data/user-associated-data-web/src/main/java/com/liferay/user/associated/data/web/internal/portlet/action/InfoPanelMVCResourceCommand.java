@@ -64,7 +64,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		for (String key : parameterMap.keySet()) {
 			if (key.startsWith("uadRegistryKey__")) {
 				entityTypes.add(
-					StringUtil.replace(key, "uadRegistryKey__", ""));
+					StringUtil.removeSubstring(key, "uadRegistryKey__"));
 			}
 		}
 

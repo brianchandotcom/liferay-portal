@@ -485,7 +485,7 @@ public class InvokerFilterHelper {
 					serviceReference.getProperty(key));
 
 				initParameterMap.put(
-					StringUtil.replace(key, "init.param.", ""), value);
+					StringUtil.removeSubstring(key, "init.param."), value);
 			}
 
 			ServletContext servletContext = ServletContextPool.get(

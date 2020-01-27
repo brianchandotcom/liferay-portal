@@ -98,8 +98,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				continue;
 			}
 
-			String alias = StringUtil.replace(
-				tagName, "lfr-widget-", StringPool.BLANK);
+			String alias = StringUtil.removeSubstring(tagName, "lfr-widget-");
 
 			String portletName = _portletRegistry.getPortletName(alias);
 
@@ -525,8 +524,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				continue;
 			}
 
-			String alias = StringUtil.replace(
-				htmlTagName, "lfr-widget-", StringPool.BLANK);
+			String alias = StringUtil.removeSubstring(
+				htmlTagName, "lfr-widget-");
 
 			if (Validator.isNull(_portletRegistry.getPortletName(alias))) {
 				throw new FragmentEntryContentException(

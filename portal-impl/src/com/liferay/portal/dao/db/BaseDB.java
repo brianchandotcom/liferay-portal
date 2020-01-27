@@ -807,7 +807,7 @@ public abstract class BaseDB implements DB {
 		String s = null;
 
 		if (this instanceof MySQLDB) {
-			s = StringUtil.replace(data, "SPECIFIC_TIMESTAMP_", "");
+			s = StringUtil.removeSubstring(data, "SPECIFIC_TIMESTAMP_");
 		}
 		else {
 			Matcher matcher = _timestampPattern.matcher(data);
@@ -1168,7 +1168,7 @@ public abstract class BaseDB implements DB {
 		content = StringUtil.replace(content, " = null", " = NULL");
 		content = StringUtil.replace(content, " is null", " IS NULL");
 		content = StringUtil.replace(content, " not null", " not_null");
-		content = StringUtil.replace(content, " null", "");
+		content = StringUtil.removeSubstring(content, " null");
 		content = StringUtil.replace(content, " not_null", " not null");
 
 		return content;

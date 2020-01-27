@@ -254,7 +254,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 					StringPool.CLOSE_PARENTHESIS);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _STATUS_SQL);
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -527,7 +527,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				emailAddresses);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _STATUS_SQL);
 			}
 
 			StringBundler sb = null;
@@ -898,7 +898,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				emailAddresses);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
+				sql = StringUtil.removeSubstring(sql, _STATUS_SQL);
 			}
 
 			StringBundler sb = new StringBundler(paramsList.size() * 3 + 2);
@@ -1404,8 +1404,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 			Long groupId = valueArray[0];
 
 			if (Validator.isNull(groupId)) {
-				join = StringUtil.replace(
-					join, "(UserGroupRole.groupId = ?) AND", StringPool.BLANK);
+				join = StringUtil.removeSubstring(
+					join, "(UserGroupRole.groupId = ?) AND");
 			}
 		}
 		else if (key.equals("usersGroups")) {

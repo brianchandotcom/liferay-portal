@@ -108,8 +108,8 @@ public class SourceFinderImpl
 			}
 
 			if (groupId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(Reports_Source.groupId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(Reports_Source.groupId = ?) AND");
 			}
 
 			sql = _customSQL.replaceKeywords(
@@ -180,8 +180,8 @@ public class SourceFinderImpl
 			}
 
 			if (groupId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(Reports_Source.groupId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "(Reports_Source.groupId = ?) AND");
 			}
 
 			sql = _customSQL.replaceKeywords(

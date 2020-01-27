@@ -48,7 +48,13 @@ const TopperListItem = React.forwardRef(
 	)
 );
 
-export default function Topper({acceptDrop, children, item, layoutData}) {
+export default function Topper({
+	acceptDrop,
+	children,
+	dropNestedAndSibling,
+	item,
+	layoutData
+}) {
 	const containerRef = useRef(null);
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
@@ -58,9 +64,18 @@ export default function Topper({acceptDrop, children, item, layoutData}) {
 	const isSelected = useIsSelected();
 	const selectItem = useSelectItem();
 
-	const {canDrop, drag, drop, edge, isDragging, isOver} = useDragAndDrop({
+	const {
+		canDrop,
+		drag,
+		drop,
+		edge,
+		isDragging,
+		isOver,
+		middle
+	} = useDragAndDrop({
 		accept: acceptDrop,
 		containerRef,
+		dropNestedAndSibling,
 		item,
 		layoutData,
 		onDragEnd: data =>
@@ -109,6 +124,7 @@ export default function Topper({acceptDrop, children, item, layoutData}) {
 			className={classNames({
 				active: isSelected(item.itemId),
 				'drag-over-bottom': edge === EDGE.BOTTOM && isOver,
+				'drag-over-middle': middle && isOver,
 				'drag-over-top': edge === EDGE.TOP && isOver,
 				dragged: isDragging,
 				hovered: isHovered(item.itemId),

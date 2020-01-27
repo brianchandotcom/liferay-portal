@@ -27,11 +27,13 @@ export const EDGE = {
 export default function useDragAndDrop({
 	accept,
 	containerRef,
+	dropNestedAndSibling,
 	item,
 	layoutData,
 	onDragEnd
 }) {
 	const [edge, setEdge] = useState(null);
+	const [middle, setMiddle] = useState(null);
 
 	const [dragOptions, drag, preview] = useDrag({
 		collect: _monitor => ({
@@ -68,17 +70,20 @@ export default function useDragAndDrop({
 		drop(_item, _monitor) {
 			if (
 				!_monitor.didDrop() &&
-				isValidMove({
-					edge,
-					item: _item,
-					items: layoutData.items,
-					siblingOrParent: item
-				})
+				(isValidMoveToMiddle(dropNestedAndSibling, item, _item) ||
+					isValidMoveToEdge({
+						edge,
+						item: _item,
+						items: layoutData.items,
+						siblingOrParent: item
+					}))
 			) {
 				const {parentId, position} = getParentItemIdAndPositon({
+					dropNestedAndSibling,
 					edge,
 					item: _item,
 					items: layoutData.items,
+					middle,
 					siblingOrParentId: item.itemId
 				});
 
@@ -92,6 +97,7 @@ export default function useDragAndDrop({
 		},
 		hover(_item, _monitor) {
 			setEdge(null);
+			setMiddle(null);
 
 			if (_item.itemId === item.itemId || rootVoid(item)) {
 				return;
@@ -110,10 +116,17 @@ export default function useDragAndDrop({
 			// Get pixels to the top
 			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
+			if (isValidMoveToMiddle(dropNestedAndSibling, item, _item)) {
+				if (isMiddle(hoverClientY, hoverMiddleY)) {
+					setMiddle(true);
+					return;
+				}
+			}
+
 			const newEdge = getEdge(hoverClientY, hoverMiddleY);
 
 			if (
-				isValidMove({
+				isValidMoveToEdge({
 					edge: newEdge,
 					item: _item,
 					items: layoutData.items,
@@ -134,11 +147,20 @@ export default function useDragAndDrop({
 		...dropOptions,
 		drag,
 		drop,
-		edge
+		edge,
+		middle
 	};
 }
 
-function isValidMove({edge, item, items, siblingOrParent}) {
+function isValidMoveToMiddle(enable, item, dragItem) {
+	return (
+		enable &&
+		!item.children.length &&
+		isNestingSupported(dragItem.type, item.type)
+	);
+}
+
+function isValidMoveToEdge({edge, item, items, siblingOrParent}) {
 	const {children} = items[
 		siblingOrParent.parentId !== ''
 			? siblingOrParent.parentId
@@ -158,6 +180,24 @@ function isValidMove({edge, item, items, siblingOrParent}) {
 	}
 
 	return true;
+}
+
+const MIDDLE_PERCENTAGE = 0.3;
+
+/**
+ * The calculation to identify when the mouse position is over the middle of the element,
+ * the middle region is evaluated according to the MIDDLE_PERCENTAGE constant multiplied
+ * by two, creating the region from the middle.
+ */
+function isMiddle(hoverClientY, hoverMiddleY) {
+	if (
+		hoverClientY > hoverMiddleY - hoverMiddleY * MIDDLE_PERCENTAGE &&
+		hoverClientY < hoverMiddleY + hoverMiddleY * MIDDLE_PERCENTAGE
+	) {
+		return true;
+	}
+
+	return false;
 }
 
 /**
@@ -194,10 +234,21 @@ function rootVoid(item) {
 	);
 }
 
-function getParentItemIdAndPositon({edge, item, items, siblingOrParentId}) {
+function getParentItemIdAndPositon({
+	dropNestedAndSibling,
+	edge,
+	item,
+	items,
+	middle,
+	siblingOrParentId
+}) {
 	const siblingOrParent = items[siblingOrParentId];
 
-	if (isNestingSupported(item.type, siblingOrParent.type)) {
+	if (
+		(!dropNestedAndSibling &&
+			isNestingSupported(item.type, siblingOrParent.type)) ||
+		(dropNestedAndSibling && middle)
+	) {
 		return {
 			parentId: siblingOrParentId,
 			position: siblingOrParent.children.length

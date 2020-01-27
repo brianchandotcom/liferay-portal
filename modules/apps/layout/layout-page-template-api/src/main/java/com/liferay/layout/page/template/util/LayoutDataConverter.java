@@ -182,7 +182,7 @@ public class LayoutDataConverter {
 					inputRowConfigJSONObject.getInt("paddingVertical")
 				).put(
 					"type",
-					inputRowConfigJSONObject.getString("containerType", null)
+					inputRowConfigJSONObject.getString("containerType", "fluid")
 				);
 
 				JSONObject containerJSONObject = _getItemJSONObject(

@@ -29,8 +29,8 @@ import org.json.JSONObject;
 public class SpiraProjectUtil {
 
 	public static SpiraProject getSpiraProjectById(int projectID) {
-		if (_spiraProjectByID.containsKey(projectID)) {
-			return _spiraProjectByID.get(projectID);
+		if (_spiraProjectsMap.containsKey(projectID)) {
+			return _spiraProjectsMap.get(projectID);
 		}
 
 		Map<String, String> urlReplacements = new HashMap<>();
@@ -51,18 +51,18 @@ public class SpiraProjectUtil {
 	private static SpiraProject _newSpiraProject(JSONObject jsonObject) {
 		int projectID = jsonObject.getInt("ProjectId");
 
-		if (_spiraProjectByID.containsKey(projectID)) {
-			return _spiraProjectByID.get(projectID);
+		if (_spiraProjectsMap.containsKey(projectID)) {
+			return _spiraProjectsMap.get(projectID);
 		}
 
 		SpiraProject spiraProject = new SpiraProject(jsonObject);
 
-		_spiraProjectByID.put(spiraProject.getID(), spiraProject);
+		_spiraProjectsMap.put(spiraProject.getID(), spiraProject);
 
 		return spiraProject;
 	}
 
-	private static final Map<Integer, SpiraProject> _spiraProjectByID =
+	private static final Map<Integer, SpiraProject> _spiraProjectsMap =
 		new HashMap<>();
 
 }

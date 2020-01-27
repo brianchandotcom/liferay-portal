@@ -1,0 +1,235 @@
+{namespace LocalizableText}
+
+{template .render}
+	{@param name: string}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
+	{@param? _value: string}
+	{@param? displayErrors: bool}
+	{@param? displayStyle: string}
+	{@param? errorMessage: string}
+	{@param? id: string}
+	{@param? label: string}
+	{@param? placeholder: string}
+	{@param? predefinedValue: string}
+	{@param? readOnly: bool}
+	{@param? repeatable: bool}
+	{@param? required: bool}
+	{@param? showLabel: bool}
+	{@param? spritemap: string}
+	{@param? tip: string}
+	{@param? tooltip: string}
+	{@param? valid: bool}
+	{@param? value: string}
+	{@param? visible: bool}
+
+	{call FieldBase.render}
+		{param contentRenderer kind="html"}
+			{call .content}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
+				{param _handleFieldChanged: $_handleFieldChanged /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
+				{param displayStyle: $displayStyle /}
+				{param id: $id /}
+				{param name: $name /}
+				{param placeholder: $placeholder /}
+				{param predefinedValue: $predefinedValue /}
+				{param readOnly: $readOnly /}
+				{param spritemap: $spritemap /}
+				{param value: isNonnull($_value) ? $_value : $value /}
+			{/call}
+		{/param}
+		{param displayErrors: $displayErrors /}
+		{param errorMessage: $errorMessage /}
+		{param id: $id /}
+		{param label: $label /}
+		{param name: $name /}
+		{param readOnly: $readOnly /}
+		{param repeatable: $repeatable /}
+		{param required: $required /}
+		{param showLabel: $showLabel /}
+		{param spritemap: $spritemap /}
+		{param tip: $tip /}
+		{param tooltip: $tooltip /}
+		{param valid: $valid /}
+		{param visible: $visible /}
+	{/call}
+{/template}
+
+{template .content}
+	{@param name: string}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldChanged: any}
+	{@param? _handleFieldFocused: any}
+	{@param? displayStyle: string}
+	{@param? id: string}
+	{@param? placeholder: string}
+	{@param? predefinedValue: string}
+	{@param? readOnly: bool}
+	{@param? spritemap: string}
+	{@param? value: string}
+
+	{let $inputValue: isNonnull($value) and $value != '' ? $value : $predefinedValue /}
+
+	{let $attributes kind="attributes"}
+		class="ddm-field-text form-control"
+
+		name="{$name}"
+
+		type="text"
+
+		data-oninput="{$_handleFieldChanged}"
+
+		data-onfocus="{$_handleFieldFocused}"
+
+		{if $id}
+			id="{$id}"
+		{/if}
+
+		{if $placeholder}
+			placeholder="{$placeholder}"
+		{/if}
+
+		type="text"
+
+		data-onblur="{$_handleFieldBlurred}"
+
+		{if $readOnly}
+			disabled="disabled"
+		{/if}
+
+		{if $displayStyle == 'singleline'}
+			value="{$inputValue}"
+		{/if}
+	{/let}
+	
+	<div class="input-group">
+		{if $displayStyle == 'multiline'}
+			<div class="input-group-item">
+				<textarea {$attributes}>{$inputValue}</textarea>
+			</div>
+		{elseif ($displayStyle == 'singleline' and $readOnly)}
+			<div class="input-group-append input-group-item">
+				<input {$attributes}>
+			</div>
+		{/if}
+
+		<div class="input-group-item input-group-item-shrink">
+			<button
+				aria-expanded="false"
+				aria-haspopup="true"
+				class="btn btn-monospaced btn-secondary dropdown-toggle"
+				data-toggle="dropdown"
+				type="button"
+			>
+				<span class="inline-item">
+					<svg
+						class="lexicon-icon lexicon-icon-es-es"
+						focusable="false"
+						role="presentation"
+					>
+						<use href="{$spritemap}#es-es"></use>
+					</svg>
+				</span>
+				<span class="btn-section">es-ES</span>
+			</button>
+			<ul class="dropdown-menu dropdown-menu-right">
+				<li>
+					<a class="autofit-row dropdown-item" href="#1">
+						<span class="autofit-col autofit-col-expand">
+							<span class="autofit-section">
+								<span class="inline-item inline-item-before">
+									<svg
+										class="lexicon-icon lexicon-icon-en-us"
+										focusable="false"
+										role="presentation"
+									>
+										<use href="{$spritemap}#en-us"></use>
+									</svg>
+								</span>
+								en-US
+							</span>
+						</span>
+						<span class="autofit-col">
+							<span class="label label-info">
+								<span class="label-item label-item-expand">Default</span>
+							</span>
+						</span>
+					</a>
+				</li>
+				<li>
+					<a class="autofit-row dropdown-item" href="#1">
+						<span class="autofit-col autofit-col-expand">
+							<span class="autofit-section">
+								<span class="inline-item inline-item-before">
+									<svg
+										class="lexicon-icon lexicon-icon-en-gb"
+										focusable="false"
+										role="presentation"
+									>
+										<use href="{$spritemap}#en-gb"></use>
+									</svg>
+								</span>
+								en-GB
+							</span>
+						</span>
+						<span class="autofit-col">
+							<span class="label label-success">
+								<span class="label-item label-item-expand"
+									>Translated</span
+								>
+							</span>
+						</span>
+					</a>
+				</li>
+				<li>
+					<a class="active autofit-row dropdown-item" href="#1">
+						<span class="autofit-col autofit-col-expand">
+							<span class="autofit-section">
+								<span class="inline-item inline-item-before">
+									<svg
+										class="lexicon-icon lexicon-icon-es-es"
+										focusable="false"
+										role="presentation"
+									>
+										<use href="{$spritemap}#es-es"></use>
+									</svg>
+								</span>
+								es-ES
+							</span>
+						</span>
+						<span class="autofit-col">
+							<span class="label label-success">
+								<span class="label-item label-item-expand">Translated</span>
+							</span>
+						</span>
+					</a>
+				</li>
+				<li>
+					<a class="autofit-row dropdown-item" href="#1">
+						<span class="autofit-col autofit-col-expand">
+							<span class="autofit-section">
+								<span class="inline-item inline-item-before">
+									<svg
+										class="lexicon-icon lexicon-icon-fr-fr"
+										focusable="false"
+										role="presentation"
+									>
+										<use href="{$spritemap}#fr-fr"></use>
+									</svg>
+								</span>
+								fr-FR
+							</span>
+						</span>
+						<span class="autofit-col">
+							<span class="label label-warning">
+								<span class="label-item label-item-expand">Not Translated</span>
+							</span>
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+{/template}

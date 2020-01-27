@@ -14,6 +14,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.journal.internal.upgrade.v0_0_8.UpgradeArticleAssets">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.journal.internal.upgrade.v1_1_0.UpgradeImageTypeContent">
 		<priority value="INFO" />
 	</category>

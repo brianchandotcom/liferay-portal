@@ -809,6 +809,31 @@ public class ContentPageEditorDisplayContext {
 		return _defaultConfigurations;
 	}
 
+	private JSONObject _getDropZoneConfigJSONObject(
+		JSONObject masterLayoutDataJSONObject) {
+
+		if (!LayoutDataConverter.isLatestVersion(masterLayoutDataJSONObject)) {
+			return masterLayoutDataJSONObject;
+		}
+
+		JSONObject itemsJSONObject = masterLayoutDataJSONObject.getJSONObject(
+			"items");
+
+		JSONObject rootItemsJSONObject =
+			masterLayoutDataJSONObject.getJSONObject("rootItems");
+
+		String dropZoneId = rootItemsJSONObject.getString("dropZone");
+
+		JSONObject dropZoneJSONObject = itemsJSONObject.getJSONObject(
+			dropZoneId);
+
+		if (dropZoneJSONObject == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		return dropZoneJSONObject.getJSONObject("config");
+	}
+
 	private List<SoyContext> _getDynamicFragmentsSoyContexts() {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
@@ -1040,8 +1065,11 @@ public class ContentPageEditorDisplayContext {
 			JSONObject masterLayoutDataJSONObject =
 				JSONFactoryUtil.createJSONObject(masterLayoutData);
 
+			JSONObject dropZoneJSONObject = _getDropZoneConfigJSONObject(
+				masterLayoutDataJSONObject);
+
 			JSONArray fragmentEntryKeysJSONArray =
-				masterLayoutDataJSONObject.getJSONArray("fragmentEntryKeys");
+				dropZoneJSONObject.getJSONArray("fragmentEntryKeys");
 
 			Iterator<String> iteratorFragmentEntryKeys =
 				fragmentEntryKeysJSONArray.iterator();
@@ -1854,7 +1882,10 @@ public class ContentPageEditorDisplayContext {
 			JSONObject masterLayoutDataJSONObject =
 				JSONFactoryUtil.createJSONObject(masterLayoutData);
 
-			_allowNewFragmentEntries = masterLayoutDataJSONObject.getBoolean(
+			JSONObject dropZoneJSONObject = _getDropZoneConfigJSONObject(
+				masterLayoutDataJSONObject);
+
+			_allowNewFragmentEntries = dropZoneJSONObject.getBoolean(
 				"allowNewFragmentEntries", true);
 
 			return _allowNewFragmentEntries;

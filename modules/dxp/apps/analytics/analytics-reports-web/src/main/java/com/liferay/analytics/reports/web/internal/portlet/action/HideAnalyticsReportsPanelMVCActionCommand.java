@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.reports.web.internal.portlet.action;
 
+import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -25,13 +26,13 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eduardo García
+ * @author Sarai Díaz
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SegmentsPortletKeys.SEGMENTS_EXPERIMENT,
-		"mvc.command.name=/hide_segments_experiment_panel"
+		"javax.portlet.name=" + AnalyticsReportsPortletKeys.ANALYTICS_REPORTS,
+		"mvc.command.name=/analytics_reports/hide_panel"
 	},
 	service = MVCActionCommand.class
 )
@@ -46,7 +47,7 @@ public class HideAnalyticsReportsPanelMVCActionCommand
 			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
 
 		portalPreferences.setValue(
-			SegmentsPortletKeys.SEGMENTS_EXPERIMENT, "hide-panel",
+			AnalyticsReportsPortletKeys.ANALYTICS_REPORTS, "hide-panel",
 			Boolean.TRUE.toString());
 	}
 

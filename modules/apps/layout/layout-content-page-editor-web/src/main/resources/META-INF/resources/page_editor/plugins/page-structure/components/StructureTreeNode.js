@@ -17,6 +17,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useContext} from 'react';
 
+import deleteWidget from '../../../app/actions/deleteWidget';
 import {
 	useHoverItem,
 	useIsHovered,
@@ -47,10 +48,12 @@ const NameButton = ({id, name}) => {
 	);
 };
 
-const RemoveButton = ({id}) => {
+const RemoveButton = ({node}) => {
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
+
+	const {fragmentEntryLinks} = store;
 
 	return (
 		<ClayButton
@@ -58,7 +61,20 @@ const RemoveButton = ({id}) => {
 			displayType="unstyled"
 			onClick={event => {
 				event.stopPropagation();
-				dispatch(deleteItem({config, itemId: id, store}));
+
+				if (
+					node.fragmentEntryLinkId &&
+					fragmentEntryLinks[node.fragmentEntryLinkId].editableValues
+						.portletId
+				) {
+					dispatch(
+						deleteWidget(
+							fragmentEntryLinks[node.fragmentEntryLinkId]
+						)
+					);
+				}
+
+				dispatch(deleteItem({config, itemId: node.id, store}));
 			}}
 		>
 			<ClayIcon symbol="times-circle" />
@@ -92,7 +108,7 @@ export default function StructureTreeNode({node}) {
 			}}
 		>
 			<NameButton id={node.id} name={node.name} />
-			{node.removable && <RemoveButton id={node.id} />}
+			{node.removable && <RemoveButton node={node} />}
 		</div>
 	);
 }

@@ -27,7 +27,8 @@
 				"backgroundColorCssClass": "success",
 				"paddingBottom": 3,
 				"paddingHorizontal": 3,
-				"paddingTop": 3
+				"paddingTop": 3,
+				"type": "fluid"
 			},
 			"itemId": "CONTAINER1-UUID",
 			"parentId": "MAIN-UUID",
@@ -44,7 +45,8 @@
 				},
 				"paddingBottom": 3,
 				"paddingHorizontal": 3,
-				"paddingTop": 3
+				"paddingTop": 3,
+				"type": "fluid"
 			},
 			"itemId": "CONTAINER2-UUID",
 			"parentId": "MAIN-UUID",
@@ -62,7 +64,8 @@
 				},
 				"paddingBottom": 3,
 				"paddingHorizontal": 3,
-				"paddingTop": 3
+				"paddingTop": 3,
+				"type": "fluid"
 			},
 			"itemId": "CONTAINER3-UUID",
 			"parentId": "MAIN-UUID",

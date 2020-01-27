@@ -82,14 +82,11 @@ public class XMLUtil {
 
 		Transformer transformer = transformerFactory.newTransformer();
 
-		DOMSource domSource = new DOMSource(document);
-
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		StreamResult streamResult = new StreamResult(byteArrayOutputStream);
-
-		transformer.transform(domSource, streamResult);
+		transformer.transform(
+			new DOMSource(document), new StreamResult(byteArrayOutputStream));
 
 		return byteArrayOutputStream.toString();
 	}

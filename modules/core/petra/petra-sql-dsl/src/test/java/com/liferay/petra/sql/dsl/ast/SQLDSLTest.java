@@ -189,7 +189,7 @@ public class SQLDSLTest {
 		catch (RuntimeException runtimeException) {
 			Throwable cause = runtimeException.getCause();
 
-			Assert.assertEquals(
+			Assert.assertSame(
 				CloneNotSupportedException.class, cause.getClass());
 		}
 	}
@@ -367,7 +367,7 @@ public class SQLDSLTest {
 			new DSLFunction<>(DSLFunctionType.BITWISE_AND);
 		}
 		catch (Exception exception) {
-			Assert.assertEquals(
+			Assert.assertSame(
 				IllegalArgumentException.class, exception.getClass());
 		}
 	}
@@ -470,7 +470,7 @@ public class SQLDSLTest {
 			from.groupBy();
 		}
 		catch (Exception exception) {
-			Assert.assertEquals(
+			Assert.assertSame(
 				IllegalArgumentException.class, exception.getClass());
 		}
 	}
@@ -636,7 +636,7 @@ public class SQLDSLTest {
 			new OrderBy(joinStep, new OrderByExpression[0]);
 		}
 		catch (Exception exception) {
-			Assert.assertEquals(
+			Assert.assertSame(
 				IllegalArgumentException.class, exception.getClass());
 		}
 
@@ -761,7 +761,7 @@ public class SQLDSLTest {
 			new ScalarList<>(new String[0]);
 		}
 		catch (Exception exception) {
-			Assert.assertEquals(
+			Assert.assertSame(
 				IllegalArgumentException.class, exception.getClass());
 		}
 	}
@@ -1088,7 +1088,7 @@ public class SQLDSLTest {
 			columns.remove(MainExampleTable.TABLE.mainExampleId);
 		}
 		catch (Exception exception) {
-			Assert.assertEquals(
+			Assert.assertSame(
 				UnsupportedOperationException.class, exception.getClass());
 		}
 	}

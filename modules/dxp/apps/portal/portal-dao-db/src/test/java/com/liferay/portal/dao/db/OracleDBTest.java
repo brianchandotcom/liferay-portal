@@ -31,7 +31,7 @@ public class OracleDBTest extends BaseDBTestCase {
 	public void testRewordAlterColumnType() throws IOException {
 		Assert.assertEquals(
 			"alter table DLFolder modify name VARCHAR2(255 CHAR);\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255) null;"));
+			buildSQL("alter_column_type DLFolder name VARCHAR(255);"));
 	}
 
 	@Test
@@ -46,13 +46,6 @@ public class OracleDBTest extends BaseDBTestCase {
 		Assert.assertEquals(
 			"alter table BlogsEntry modify description VARCHAR2(4000 CHAR);\n",
 			buildSQL("alter_column_type BlogsEntry description STRING;"));
-	}
-
-	@Test
-	public void testRewordAlterColumnTypeStringNull() throws IOException {
-		Assert.assertEquals(
-			"alter table BlogsEntry modify description VARCHAR2(4000 CHAR);\n",
-			buildSQL("alter_column_type BlogsEntry description STRING null;"));
 	}
 
 	@Override

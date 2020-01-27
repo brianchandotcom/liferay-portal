@@ -12,7 +12,7 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import HeaderBackButton from '../../../../src/main/resources/META-INF/resources/js/shared/components/header-controller/HeaderBackButton.es';
+import HeaderBackButton from '../../../../src/main/resources/META-INF/resources/js/shared/components/header/HeaderBackButton.es';
 import {MockRouter} from '../../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';

@@ -82,7 +82,7 @@
 		<suppress checks="JavaDiamondOperatorCheck" files="portal-kernel/src/com/liferay/portal/kernel/search/generic/BooleanClauseFactoryImpl\.java" />
 		<suppress checks="JavaDiamondOperatorCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />
 		<suppress checks="JavaFinderImplCustomSQLCheck" files="portal-impl/src/com/liferay/portlet/asset/service/persistence/impl/AssetCategoryPropertyFinderImpl\.java" />
-		<suppress checks="JavaIllegalImportsCheck" files="util-slf4j/src/com/liferay/util/sl4fj/LiferayLoggerFactory\.java" />
+		<suppress checks="JavaIllegalImportsCheck" files="util-slf4j/src/com/liferay/util/slf4j/LiferayLoggerFactory\.java" />
 		<suppress checks="JavaStringBundlerConcatCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 		<suppress checks="JavaStringBundlerInitialCapacityCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 		<suppress checks="JavaTaglibMethodCheck" files="util-taglib/src/com/liferay/taglib/ui/IconTag\.java" />

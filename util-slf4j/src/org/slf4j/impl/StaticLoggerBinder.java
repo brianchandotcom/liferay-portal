@@ -14,7 +14,7 @@
 
 package org.slf4j.impl;
 
-import com.liferay.util.sl4fj.LiferayLoggerFactory;
+import com.liferay.util.slf4j.LiferayLoggerFactory;
 
 import org.slf4j.ILoggerFactory;
 import org.slf4j.spi.LoggerFactoryBinder;

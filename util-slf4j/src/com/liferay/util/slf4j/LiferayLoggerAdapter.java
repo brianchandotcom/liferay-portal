@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.sl4fj;
+package com.liferay.util.slf4j;
 
 import com.liferay.portal.kernel.log.Log;
 

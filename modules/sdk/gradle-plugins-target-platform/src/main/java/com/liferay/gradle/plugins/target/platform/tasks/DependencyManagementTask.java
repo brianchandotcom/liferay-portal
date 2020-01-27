@@ -148,14 +148,14 @@ public class DependencyManagementTask extends DefaultTask {
 			new Comparator<String>() {
 
 				@Override
-				public int compare(String one, String two) {
-					String[] oneComponents = one.split(":");
-					String[] twoComponents = two.split(":");
+				public int compare(String entry1, String entry2) {
+					String[] components1 = entry1.split(":");
+					String[] components2 = entry2.split(":");
 
-					int result = oneComponents[0].compareTo(twoComponents[0]);
+					int result = components1[0].compareTo(components2[0]);
 
 					if (result == 0) {
-						result = oneComponents[1].compareTo(twoComponents[1]);
+						result = components1[1].compareTo(components2[1]);
 					}
 
 					return result;

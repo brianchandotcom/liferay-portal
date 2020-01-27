@@ -104,7 +104,7 @@ const getParams = (currentTab, taskKeys) => {
 	}
 
 	if (currentTab === 'overdue') {
-		params.sort = 'overdueTaskCount:desc'; //%3Adesc
+		params.sort = 'overdueTaskCount:desc';
 	} else if (currentTab === 'onTime') {
 		params.sort = 'onTimeTaskCount:desc';
 	} else {

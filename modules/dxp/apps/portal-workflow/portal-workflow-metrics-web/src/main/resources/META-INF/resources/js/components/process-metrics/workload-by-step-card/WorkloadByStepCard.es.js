@@ -16,17 +16,19 @@ import EmptyState from '../../../shared/components/list/EmptyState.es';
 import ReloadButton from '../../../shared/components/list/ReloadButton.es';
 import LoadingState from '../../../shared/components/loading/LoadingState.es';
 import PaginationBar from '../../../shared/components/pagination-bar/PaginationBar.es';
-import PromisesResolver from '../../../shared/components/request/PromisesResolver.es';
+import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
 import {useFetch} from '../../../shared/hooks/useFetch.es';
 import {Table} from './WorkloadByStepCardTable.es';
 
 const EmptyView = () => {
 	return (
 		<EmptyState
+			className="border-0 mb-0"
+			hideAnimation={true}
 			message={Liferay.Language.get(
 				'there-are-no-pending-items-at-the-moment'
 			)}
-			type={'empty'}
+			messageClassName="small"
 		/>
 	);
 };
@@ -78,7 +80,7 @@ const WorkloadByStepCard = ({page, pageSize, processId, sort}) => {
 				/>
 
 				<PromisesResolver.Resolved>
-					{data.totalCount ? (
+					{totalCount ? (
 						<Panel.Body>
 							<WorkloadByStepCard.Table
 								items={items}
@@ -87,7 +89,6 @@ const WorkloadByStepCard = ({page, pageSize, processId, sort}) => {
 
 							<PaginationBar
 								page={page}
-								pageCount={items.length}
 								pageSize={pageSize}
 								totalCount={totalCount}
 							/>

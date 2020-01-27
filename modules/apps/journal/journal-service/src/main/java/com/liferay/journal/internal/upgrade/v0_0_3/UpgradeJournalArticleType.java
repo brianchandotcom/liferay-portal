@@ -41,8 +41,8 @@ import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -126,12 +126,12 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 		alterTable();
 	}
 
-	protected List<String> getArticleTypes() throws Exception {
+	protected Set<String> getArticleTypes() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select distinct type_ from JournalArticle");
 			ResultSet rs = ps.executeQuery()) {
 
-			List<String> types = new ArrayList<>();
+			Set<String> types = new HashSet<>();
 
 			while (rs.next()) {
 				types.add(StringUtil.toLowerCase(rs.getString("type_")));
@@ -209,7 +209,7 @@ public class UpgradeJournalArticleType extends UpgradeProcess {
 				return;
 			}
 
-			List<String> types = getArticleTypes();
+			Set<String> types = getArticleTypes();
 
 			if (types.size() <= 0) {
 				return;

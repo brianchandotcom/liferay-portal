@@ -1424,7 +1424,6 @@ definition {
 	@description = "Search for a deployment in the deployment lists"
 	@priority = "5"
 	test SearchForDeployedItem {
-		property portal.acceptance = "false";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

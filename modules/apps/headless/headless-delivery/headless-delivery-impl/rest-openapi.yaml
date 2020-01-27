@@ -453,7 +453,7 @@ components:
                     readOnly: true
                     type: string
                 title_i18n:
-                    additionalParameters:
+                    additionalProperties:
                         type: string
                     readOnly: true
                     type: object
@@ -1594,10 +1594,6 @@ components:
                     type: integer
                 name:
                     type: string
-                name_i18n:
-                    additionalProperties:
-                        type: string
-                    type: object
                 navigationMenuItems:
                     items:
                         $ref: "#/components/schemas/NavigationMenuItem"
@@ -1631,7 +1627,7 @@ components:
                 name:
                     type: string
                 name_i18n:
-                    additionalProperty:
+                    additionalProperties:
                         type: string
                     type: object
                 navigationMenuItems:

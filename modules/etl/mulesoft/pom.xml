@@ -84,12 +84,27 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.javadoc.formatter</artifactId>
-				<version>1.0.33</version>
+				<version>1.0.35</version>
 			</plugin>
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.source.formatter</artifactId>
-				<version>1.0.948</version>
+				<version>1.0.957</version>
+			</plugin>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.xml.formatter</artifactId>
+				<version>1.0.5</version>
+				<configuration>
+					<fileName>demo/liferay-connector-demo/pom.xml</fileName>
+					<fileName>demo/liferay-connector-demo/src/main/mule/liferay-connector-demo.xml</fileName>
+					<fileName>demo/liferay-connector-demo/src/main/resources/log4j2.xml</fileName>
+					<fileName>demo/liferay-connector-demo/src/test/resources/log4j2-test.xml</fileName>
+					<fileName>src/test/resources/test-create-operation.xml</fileName>
+					<fileName>src/test/resources/test-delete-operation.xml</fileName>
+					<fileName>src/test/resources/test-get-operation.xml</fileName>
+					<fileName>src/test/resources/test-update-operation.xml</fileName>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

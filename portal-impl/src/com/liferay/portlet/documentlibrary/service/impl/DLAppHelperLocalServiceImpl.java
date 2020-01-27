@@ -1254,8 +1254,8 @@ public class DLAppHelperLocalServiceImpl
 
 		// App helper
 
-		fileEntry = dlAppService.moveFileEntry(
-			fileEntry.getFileEntryId(), newFolderId, serviceContext);
+		fileEntry = dlAppLocalService.moveFileEntry(
+			userId, fileEntry.getFileEntryId(), newFolderId, serviceContext);
 
 		// Sync
 

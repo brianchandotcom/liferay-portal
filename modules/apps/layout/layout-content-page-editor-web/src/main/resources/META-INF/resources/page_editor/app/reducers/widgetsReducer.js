@@ -102,20 +102,26 @@ export default function widgetsReducer(widgets, action) {
 			return widgets;
 		}
 
-		case TYPES.DELETE_WIDGET: {
-			if (
-				action.fragmentEntryLink.editableValues.portletId &&
-				!action.fragmentEntryLink.editableValues.instanceable
-			) {
-				const widgetPath = getWidgetPath(
-					widgets,
-					action.fragmentEntryLink.editableValues.portletId
-				);
+		case TYPES.DELETE_WIDGETS: {
+			let nextWidgets = widgets;
 
-				return setWidgetUsage(widgets, widgetPath, {used: false});
-			}
+			action.fragmentEntryLinks.forEach(fragmentEntryLink => {
+				if (
+					fragmentEntryLink.editableValues.portletId &&
+					!fragmentEntryLink.editableValues.instanceable
+				) {
+					const widgetPath = getWidgetPath(
+						nextWidgets,
+						fragmentEntryLink.editableValues.portletId
+					);
 
-			return widgets;
+					nextWidgets = setWidgetUsage(nextWidgets, widgetPath, {
+						used: false
+					});
+				}
+			});
+
+			return nextWidgets;
 		}
 
 		default:

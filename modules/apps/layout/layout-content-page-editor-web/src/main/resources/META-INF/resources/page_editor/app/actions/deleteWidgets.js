@@ -12,11 +12,11 @@
  * details.
  */
 
-import {DELETE_WIDGET} from './types';
+import {DELETE_WIDGETS} from './types';
 
-export default function deleteWidget(fragmentEntryLink) {
+export default function deleteWidgets(fragmentEntryLinks = []) {
 	return {
-		fragmentEntryLink,
-		type: DELETE_WIDGET
+		fragmentEntryLinks,
+		type: DELETE_WIDGETS
 	};
 }

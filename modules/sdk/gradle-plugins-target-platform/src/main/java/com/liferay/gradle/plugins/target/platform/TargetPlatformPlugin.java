@@ -165,8 +165,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 				DependencyManagementTask.class);
 
 		dependencyManagementTask.setDescription(
-			"Displays the target platform dependency management declared in " +
-				dependencyManagementTask.getProject() + ".");
+			"Displays the target platform dependencies for the project.");
 
 		dependencyManagementTask.setGroup(HelpTasksPlugin.HELP_GROUP);
 

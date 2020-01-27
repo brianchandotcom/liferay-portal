@@ -13,7 +13,7 @@
  */
 
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
 import {EDITABLE_TYPES} from '../config/constants/editableTypes';
@@ -158,19 +158,12 @@ export default function LinkConfigurationPanel({item}) {
 				/>
 			)}
 			{sourceType === SOURCE_TYPES.manual ? (
-				<ClayForm.Group small>
-					<label htmlFor="floatingToolbarLinkHrefOption">
-						{Liferay.Language.get('url')}
-					</label>
-					<ClayInput
-						defaultValue={editableConfig.href || ''}
-						id="floatingToolbarLinkHrefOption"
-						onBlur={event => {
-							updateRowConfig({href: event.target.value});
-						}}
-						type="text"
-					/>
-				</ClayForm.Group>
+				<ManualHrefInput
+					initialHref={editableConfig.href}
+					onChange={href => {
+						updateRowConfig({href});
+					}}
+				/>
 			) : (
 				editableConfig.href && (
 					<ClayForm.Group small>
@@ -202,5 +195,30 @@ export default function LinkConfigurationPanel({item}) {
 				/>
 			</ClayForm.Group>
 		</>
+	);
+}
+
+function ManualHrefInput({initialHref, onChange}) {
+	const [href, setHref] = useState(initialHref);
+
+	useEffect(() => {
+		setHref(initialHref);
+	}, [initialHref]);
+
+	return (
+		<ClayForm.Group small>
+			<label htmlFor="floatingToolbarLinkHrefOption">
+				{Liferay.Language.get('url')}
+			</label>
+			<ClayInput
+				id="floatingToolbarLinkHrefOption"
+				onBlur={() => {
+					onChange(href);
+				}}
+				onChange={setHref}
+				type="text"
+				value={href}
+			/>
+		</ClayForm.Group>
 	);
 }

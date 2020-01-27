@@ -24,7 +24,7 @@ import {act} from 'react-dom/test-utils';
 
 import Checkin from '../../../../src/main/resources/META-INF/resources/document_library/js/checkin/Checkin.es';
 
-const bridgeComponentId = 'bridgeComponentId';
+const bridgeComponentId = '_portletNamespace_DocumentLibraryCheckinModal';
 const dlVersionNumberIncreaseValues = {
 	MAJOR: 'MAJOR',
 	MINOR: 'MINOR',
@@ -34,9 +34,9 @@ const dlVersionNumberIncreaseValues = {
 function _renderCheckinComponent({checkedOut = true} = {}) {
 	return render(
 		<Checkin
-			bridgeComponentId={bridgeComponentId}
 			checkedOut={checkedOut}
 			dlVersionNumberIncreaseValues={dlVersionNumberIncreaseValues}
+			portletNamespace="portletNamespace"
 		/>,
 		{
 			baseElement: document.body
@@ -52,97 +52,128 @@ describe('Checkin', () => {
 	Liferay.componentReady = id => Promise.resolve(components[id]);
 	afterEach(cleanup);
 
-	it('register a bridge and get it via Liferay.component and render the form', async () => {
-		const {getByRole} = _renderCheckinComponent();
-
-		await act(async () => {
-			Liferay.componentReady(bridgeComponentId).then(({open}) => open());
-
-			const form = await waitForElement(() => getByRole('form'));
-			expect(form);
-		});
-	});
-
-	it('the form has been submited and the callback has been called', async () => {
-		const {getByRole} = _renderCheckinComponent();
-		const callback = jest.fn();
-
-		await act(async () => {
-			Liferay.componentReady(bridgeComponentId).then(({open}) =>
-				open(callback)
-			);
-			const form = await waitForElement(() => getByRole('form'));
-
-			fireEvent.submit(form);
-
-			expect(callback).toHaveBeenCalled();
-		});
-	});
-
-	it('the callback get the MAJOR version of Checkin when is ChechedOut is true', async () => {
-		const {getByRole} = _renderCheckinComponent();
-		const callback = jest.fn();
-
-		await act(async () => {
-			Liferay.componentReady(bridgeComponentId).then(({open}) =>
-				open(callback)
-			);
-			const form = await waitForElement(() => getByRole('form'));
-
-			fireEvent.submit(form);
-
-			expect(callback).toHaveBeenCalledWith(
-				dlVersionNumberIncreaseValues.MAJOR,
-				''
-			);
-		});
-	});
-
-	it('the callback get the MINOR version of Checkin when is ChechedOut is false', async () => {
-		const {getByRole} = _renderCheckinComponent({checkedOut: false});
-		const callback = jest.fn();
-
-		await act(async () => {
-			Liferay.componentReady(bridgeComponentId).then(({open}) =>
-				open(callback)
-			);
-			const form = await waitForElement(() => getByRole('form'));
-
-			fireEvent.submit(form);
-
-			expect(callback).toHaveBeenCalledWith(
-				dlVersionNumberIncreaseValues.MINOR,
-				''
-			);
-		});
-	});
-
-	it('the callback get the MINOR version of Checkin and set ChangeLog', async () => {
-		const {getByRole, getByLabelText} = _renderCheckinComponent();
-		const callback = jest.fn();
-
-		await act(async () => {
-			Liferay.componentReady(bridgeComponentId).then(({open}) =>
-				open(callback)
-			);
-			const form = await waitForElement(() => getByRole('form'));
-			const ChangeLogField = await waitForElement(() =>
-				getByLabelText('version-notes')
-			);
-			const MinorVersionRadio = await waitForElement(() =>
-				getByLabelText('minor-version')
-			);
-
-			fireEvent.change(ChangeLogField, {
-				target: {value: 'ChangeLog notes'}
+	describe('when the file is checked out', () => {
+		describe('and the component is rendered', () => {
+			let result;
+			beforeEach(() => {
+				result = _renderCheckinComponent();
 			});
-			fireEvent.click(MinorVersionRadio);
-			fireEvent.submit(form);
 
-			expect(callback).toHaveBeenCalledWith(
-				dlVersionNumberIncreaseValues.MINOR,
-				'ChangeLog notes'
-			);
+			describe('and we call the open method on the bridge component', () => {
+				let callback;
+				beforeEach(() => {
+					callback = jest.fn();
+
+					return act(() =>
+						Liferay.componentReady(bridgeComponentId).then(
+							({open}) => {
+								open(callback);
+							}
+						)
+					);
+				});
+
+				it('renders the form', async () => {
+					const form = await waitForElement(() =>
+						result.getByRole('form')
+					);
+					expect(form);
+				});
+
+				describe('and the form is submitted', () => {
+					beforeEach(async () => {
+						const form = await waitForElement(() =>
+							result.getByRole('form')
+						);
+						act(() => {
+							fireEvent.submit(form);
+						});
+					});
+
+					it('the callback is called with the major version', () => {
+						expect(callback).toHaveBeenCalledWith(
+							dlVersionNumberIncreaseValues.MAJOR,
+							''
+						);
+					});
+				});
+
+				describe('and the save button is cliked with changes in version and changeLog', () => {
+					beforeEach(async () => {
+						const saveButton = await waitForElement(() =>
+							result.getByText('save')
+						);
+						const changeLogField = await waitForElement(() =>
+							result.getByLabelText('version-notes')
+						);
+						const minorVersionRadio = await waitForElement(() =>
+							result.getByLabelText('minor-version')
+						);
+
+						act(() => {
+							fireEvent.change(changeLogField, {
+								target: {value: 'ChangeLog notes'}
+							});
+							fireEvent.click(minorVersionRadio);
+							fireEvent.click(saveButton);
+						});
+					});
+
+					it('the callback is called with the minor version and version notes', () => {
+						expect(callback).toHaveBeenCalledWith(
+							dlVersionNumberIncreaseValues.MINOR,
+							'ChangeLog notes'
+						);
+					});
+				});
+			});
+		});
+	});
+
+	describe('when the file is not checked out', () => {
+		describe('and the component is rendered', () => {
+			let result;
+			beforeEach(() => {
+				result = _renderCheckinComponent({checkedOut: false});
+			});
+
+			describe('and we call the open method on the bridge component', () => {
+				let callback;
+				beforeEach(() => {
+					callback = jest.fn();
+
+					return act(() =>
+						Liferay.componentReady(
+							bridgeComponentId
+						).then(({open}) => open(callback))
+					);
+				});
+
+				it('renders the form', async () => {
+					const form = await waitForElement(() =>
+						result.getByRole('form')
+					);
+					expect(form);
+				});
+
+				describe('and the form is submitted', () => {
+					beforeEach(async () => {
+						const form = await waitForElement(() =>
+							result.getByRole('form')
+						);
+						act(() => {
+							fireEvent.submit(form);
+						});
+					});
+
+					it('the callback is called with the major version', () => {
+						expect(callback).toHaveBeenCalledWith(
+							dlVersionNumberIncreaseValues.MINOR,
+							''
+						);
+					});
+				});
+			});
 		});
 	});
 });

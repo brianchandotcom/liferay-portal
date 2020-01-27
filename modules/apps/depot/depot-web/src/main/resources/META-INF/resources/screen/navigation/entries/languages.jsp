@@ -21,8 +21,6 @@ DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT
 
 Group group = depotEntry.getGroup();
 
-String nameMap = JSONFactoryUtil.looseSerialize(group.getNameMap());
-
 UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
 
 boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getProperty(GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES), true);
@@ -68,9 +66,9 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 	).put(
 		"defaultLocaleId", LocaleUtil.toLanguageId(company.getDefaultUser().getLocale())
 	).put(
-		"manageCustomLanguagesURL", manageCustomLanguagesURL.toString()
-	).put(
 		"inheritLocales", inheritLocales
+	).put(
+		"manageCustomLanguagesURL", manageCustomLanguagesURL.toString()
 	).put(
 		"siteAvailableLocales", DepotLanguageUtil.getDepotAvailableLocalesJSONArray(group, locale)
 	).put(

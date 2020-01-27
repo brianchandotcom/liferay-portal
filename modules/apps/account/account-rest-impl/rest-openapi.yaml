@@ -1,9 +1,34 @@
 components:
     schemas:
         Account:
+            # @review
             description:
-                ""
+                An account represents an external account, for example a
+                customer business.
             properties:
+                description:
+                    type: string
+                domains:
+                    # @review
+                    description:
+                        The account's email domains. Users assigned to this
+                        account generally will have email addresses under one
+                        of these domains.
+                    items:
+                        type: string
+                    type: array
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                parentAccountId:
+                    format: int64
+                    type: integer
+                status:
+                    readOnly: true
+                    type: integer
             type: object
 info:
     description:

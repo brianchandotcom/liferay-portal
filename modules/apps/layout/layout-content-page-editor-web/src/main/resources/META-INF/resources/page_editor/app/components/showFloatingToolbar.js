@@ -30,7 +30,10 @@ export function showFloatingToolbar(editable, fragmentEntryLinkId) {
 		editableType == EDITABLE_TYPES.image ||
 		editableType == EDITABLE_TYPES.link;
 
-	const buttons = [{icon: 'pencil', panelId: 'panel'}];
+	const buttons = [
+		{icon: 'pencil', panelId: 'panel'},
+		EDITABLE_FLOATING_TOOLBAR_BUTTONS.map
+	];
 
 	if (showLinkButton) {
 		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.link);
@@ -41,6 +44,7 @@ export function showFloatingToolbar(editable, fragmentEntryLinkId) {
 			buttons={buttons}
 			item={{
 				editableId: editable.current.getAttribute('id'),
+				editableType,
 				fragmentEntryLinkId,
 				itemId
 			}}

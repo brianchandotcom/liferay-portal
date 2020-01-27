@@ -114,6 +114,22 @@ public class AccountEntryOrganizationRelLocalServiceUtil {
 			accountEntryOrganizationRelId);
 	}
 
+	public static void deleteAccountEntryOrganizationRel(
+			long accountEntryId, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteAccountEntryOrganizationRel(
+			accountEntryId, organizationId);
+	}
+
+	public static void deleteAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteAccountEntryOrganizationRels(
+			accountEntryId, organizationIds);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

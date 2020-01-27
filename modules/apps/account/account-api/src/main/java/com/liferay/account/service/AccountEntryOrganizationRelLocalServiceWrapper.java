@@ -117,6 +117,24 @@ public class AccountEntryOrganizationRelLocalServiceWrapper
 			deleteAccountEntryOrganizationRel(accountEntryOrganizationRelId);
 	}
 
+	@Override
+	public void deleteAccountEntryOrganizationRel(
+			long accountEntryId, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRel(accountEntryId, organizationId);
+	}
+
+	@Override
+	public void deleteAccountEntryOrganizationRels(
+			long accountEntryId, long[] organizationIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRels(accountEntryId, organizationIds);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

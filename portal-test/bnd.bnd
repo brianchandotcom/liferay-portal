@@ -9,8 +9,6 @@ Export-Package:\
 	com.liferay.portal.kernel.test.portlet,\
 	com.liferay.portal.kernel.test.randomizerbumpers,\
 	com.liferay.portal.kernel.test.rule,\
-	com.liferay.portal.kernel.test.rule.callback,\
-	com.liferay.portal.kernel.test.search,\
 	com.liferay.portal.kernel.test.util,\
 	com.liferay.portal.test.log,\
 	com.liferay.portal.test.mail,\
@@ -19,7 +17,6 @@ Export-Package:\
 	com.liferay.portlet.asset.service.persistence.test,\
 	com.liferay.portlet.dynamicdatamapping.util.test,\
 	com.liferay.portlet.expando.util.test,\
-	com.liferay.portlet.messageboards.util.test,\
 	com.liferay.portlet.passwordpoliciesadmin.util.test,\
 	com.liferay.spring.mock.web.portlet,\
 	\

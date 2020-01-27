@@ -4,7 +4,6 @@ Bundle-Version: 4.0.2
 Export-Package:\
 	com.liferay.support.tomcat.jasper.runtime,\
 	com.liferay.support.tomcat.loader,\
-	com.liferay.support.tomcat.poller.comet,\
 	com.liferay.support.tomcat.session,\
 	com.liferay.support.tomcat.startup,\
 	com.liferay.support.tomcat.util.scan,\

@@ -143,6 +143,13 @@ public class LayoutStructure {
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);
 
+		if (Objects.equals(
+				layoutStructureItem.getItemType(),
+				LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		List<String> childrenItemIds = new ArrayList<>(
 			layoutStructureItem.getChildrenItemIds());
 

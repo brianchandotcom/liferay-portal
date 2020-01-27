@@ -154,6 +154,35 @@ public class ProjectTemplatesServiceTest
 	}
 
 	@Test
+	public void testBuildTemplateService73() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service", "servicepreaction", "--class-name", "FooAction",
+			"--service", "com.liferay.portal.kernel.events.LifecycleAction",
+			"--liferay-version", "7.3.0");
+
+		testContains(
+			gradleProjectDir, "build.gradle",
+			"apply plugin: \"com.liferay.plugin\"",
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+
+		File mavenProjectDir = buildTemplateWithMaven(
+			temporaryFolder, "service", "servicepreaction", "com.test",
+			mavenExecutor, "-DclassName=FooAction",
+			"-Dpackage=servicepreaction",
+			"-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction",
+			"-DliferayVersion=7.3.0");
+
+		if (isBuildProjects()) {
+			_writeServiceClass(gradleProjectDir);
+			_writeServiceClass(mavenProjectDir);
+
+			buildProjects(
+				_gradleDistribution, mavenExecutor, gradleProjectDir,
+				mavenProjectDir);
+		}
+	}
+
+	@Test
 	public void testBuildTemplateServiceInWorkspace() throws Exception {
 		File workspaceDir = buildWorkspace(temporaryFolder);
 

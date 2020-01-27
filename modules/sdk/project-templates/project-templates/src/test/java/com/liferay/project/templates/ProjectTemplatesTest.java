@@ -2227,12 +2227,12 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 	@Test
 	public void testBuildTemplateRest72() throws Exception {
-		_testBuildTemplateRestLatest("7.2.1");
+		_testBuildTemplateRest("7.2.1");
 	}
 
 	@Test
 	public void testBuildTemplateRest73() throws Exception {
-		_testBuildTemplateRestLatest("7.3.0");
+		_testBuildTemplateRest("7.3.0");
 	}
 
 	@Test
@@ -4526,7 +4526,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		}
 	}
 
-	private void _testBuildTemplateRestLatest(String liferayVersion)
+	private void _testBuildTemplateRest(String liferayVersion)
 		throws Exception {
 
 		File gradleProjectDir = _buildTemplateWithGradle(

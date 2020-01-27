@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -88,8 +92,12 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Path("/message-board-sections/{messageBoardSectionId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = MessageBoardSection.class
+	)
 	public void deleteMessageBoardSection(
-			@NotNull @Parameter(hidden = true)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
 			@PathParam("messageBoardSectionId") Long messageBoardSectionId)
 		throws Exception {
 	}
@@ -226,6 +234,10 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Path("/message-board-sections/{messageBoardSectionId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = MessageBoardSection.class
+	)
 	public MessageBoardSection putMessageBoardSection(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("messageBoardSectionId") Long messageBoardSectionId,
@@ -398,6 +410,10 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	@Path("/sites/{siteId}/message-board-sections")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+		itemClass = MessageBoardSection.class
+	)
 	public MessageBoardSection postSiteMessageBoardSection(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MessageBoardSection messageBoardSection)
@@ -507,5 +523,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

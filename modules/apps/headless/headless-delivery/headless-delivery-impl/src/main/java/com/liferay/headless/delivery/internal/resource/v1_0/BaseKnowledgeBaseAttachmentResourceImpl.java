@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -146,8 +150,12 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	@Path("/knowledge-base-attachments/{knowledgeBaseAttachmentId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseAttachment")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = KnowledgeBaseAttachment.class
+	)
 	public void deleteKnowledgeBaseAttachment(
-			@NotNull @Parameter(hidden = true)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
 			@PathParam("knowledgeBaseAttachmentId") Long
 				knowledgeBaseAttachmentId)
 		throws Exception {
@@ -281,5 +289,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

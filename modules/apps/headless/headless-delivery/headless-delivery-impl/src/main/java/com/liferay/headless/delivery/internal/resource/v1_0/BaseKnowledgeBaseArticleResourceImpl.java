@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
@@ -89,8 +93,12 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = KnowledgeBaseArticle.class
+	)
 	public void deleteKnowledgeBaseArticle(
-			@NotNull @Parameter(hidden = true)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
 			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
 		throws Exception {
 	}
@@ -252,6 +260,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = KnowledgeBaseArticle.class
+	)
 	public KnowledgeBaseArticle putKnowledgeBaseArticle(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId,
@@ -599,6 +611,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	@Path("/sites/{siteId}/knowledge-base-articles")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+		itemClass = KnowledgeBaseArticle.class
+	)
 	public KnowledgeBaseArticle postSiteKnowledgeBaseArticle(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			KnowledgeBaseArticle knowledgeBaseArticle)
@@ -740,5 +756,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.WikiNode;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -114,6 +118,10 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 	@Path("/sites/{siteId}/wiki-nodes")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiNode")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+		itemClass = WikiNode.class
+	)
 	public WikiNode postSiteWikiNode(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			WikiNode wikiNode)
@@ -138,9 +146,13 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 	@Path("/wiki-nodes/{wikiNodeId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiNode")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = WikiNode.class
+	)
 	public void deleteWikiNode(
-			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
-				wikiNodeId)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
+			@PathParam("wikiNodeId") Long wikiNodeId)
 		throws Exception {
 	}
 
@@ -183,6 +195,10 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 	@Path("/wiki-nodes/{wikiNodeId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiNode")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = WikiNode.class
+	)
 	public WikiNode putWikiNode(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiNodeId") Long
 				wikiNodeId,
@@ -329,5 +345,7 @@ public abstract class BaseWikiNodeResourceImpl implements WikiNodeResource {
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

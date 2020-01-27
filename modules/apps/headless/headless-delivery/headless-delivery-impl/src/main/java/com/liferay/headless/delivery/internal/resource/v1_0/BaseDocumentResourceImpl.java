@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
@@ -149,9 +153,13 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Path("/documents/{documentId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = Document.class
+	)
 	public void deleteDocument(
-			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
-				documentId)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
+			@PathParam("documentId") Long documentId)
 		throws Exception {
 	}
 
@@ -220,6 +228,10 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Path("/documents/{documentId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = Document.class
+	)
 	public Document putDocument(
 			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
 				documentId,
@@ -375,6 +387,10 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Path("/sites/{siteId}/documents")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Document")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+		itemClass = Document.class
+	)
 	public Document postSiteDocument(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MultipartBody multipartBody)
@@ -482,5 +498,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

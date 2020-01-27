@@ -14,8 +14,12 @@
 
 package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -142,8 +146,12 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = TaxonomyVocabulary.class
+	)
 	public void deleteTaxonomyVocabulary(
-			@NotNull @Parameter(hidden = true)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
 			@PathParam("taxonomyVocabularyId") Long taxonomyVocabularyId)
 		throws Exception {
 	}
@@ -384,5 +392,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

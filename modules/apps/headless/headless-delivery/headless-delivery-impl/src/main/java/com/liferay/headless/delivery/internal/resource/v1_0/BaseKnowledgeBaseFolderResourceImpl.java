@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -85,8 +89,12 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Path("/knowledge-base-folders/{knowledgeBaseFolderId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = KnowledgeBaseFolder.class
+	)
 	public void deleteKnowledgeBaseFolder(
-			@NotNull @Parameter(hidden = true)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
 			@PathParam("knowledgeBaseFolderId") Long knowledgeBaseFolderId)
 		throws Exception {
 	}
@@ -217,6 +225,10 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Path("/knowledge-base-folders/{knowledgeBaseFolderId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = KnowledgeBaseFolder.class
+	)
 	public KnowledgeBaseFolder putKnowledgeBaseFolder(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("knowledgeBaseFolderId") Long knowledgeBaseFolderId,
@@ -335,6 +347,10 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Path("/sites/{siteId}/knowledge-base-folders")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+		itemClass = KnowledgeBaseFolder.class
+	)
 	public KnowledgeBaseFolder postSiteKnowledgeBaseFolder(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			KnowledgeBaseFolder knowledgeBaseFolder)
@@ -444,5 +460,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

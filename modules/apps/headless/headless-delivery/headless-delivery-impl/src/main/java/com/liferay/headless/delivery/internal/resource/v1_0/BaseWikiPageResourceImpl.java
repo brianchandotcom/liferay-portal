@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -190,9 +194,13 @@ public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
 	@Path("/wiki-pages/{wikiPageId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiPage")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = WikiPage.class
+	)
 	public void deleteWikiPage(
-			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
-				wikiPageId)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
+			@PathParam("wikiPageId") Long wikiPageId)
 		throws Exception {
 	}
 
@@ -235,6 +243,10 @@ public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
 	@Path("/wiki-pages/{wikiPageId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WikiPage")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = WikiPage.class
+	)
 	public WikiPage putWikiPage(
 			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
 				wikiPageId,
@@ -381,5 +393,7 @@ public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

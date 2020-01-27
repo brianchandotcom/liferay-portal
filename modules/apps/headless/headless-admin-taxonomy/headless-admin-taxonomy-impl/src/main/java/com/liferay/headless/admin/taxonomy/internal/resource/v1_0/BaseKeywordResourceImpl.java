@@ -14,8 +14,12 @@
 
 package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -82,9 +86,13 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	@Path("/keywords/{keywordId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Keyword")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = Keyword.class
+	)
 	public void deleteKeyword(
-			@NotNull @Parameter(hidden = true) @PathParam("keywordId") Long
-				keywordId)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
+			@PathParam("keywordId") Long keywordId)
 		throws Exception {
 	}
 
@@ -285,5 +293,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

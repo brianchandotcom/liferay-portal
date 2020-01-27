@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
@@ -87,9 +91,13 @@ public abstract class BaseBlogPostingResourceImpl
 	@Path("/blog-postings/{blogPostingId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPosting")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = BlogPosting.class
+	)
 	public void deleteBlogPosting(
-			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
-				blogPostingId)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
+			@PathParam("blogPostingId") Long blogPostingId)
 		throws Exception {
 	}
 
@@ -228,6 +236,10 @@ public abstract class BaseBlogPostingResourceImpl
 	@Path("/blog-postings/{blogPostingId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPosting")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = BlogPosting.class
+	)
 	public BlogPosting putBlogPosting(
 			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
 				blogPostingId,
@@ -381,6 +393,10 @@ public abstract class BaseBlogPostingResourceImpl
 	@Path("/sites/{siteId}/blog-postings")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPosting")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+		itemClass = BlogPosting.class
+	)
 	public BlogPosting postSiteBlogPosting(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			BlogPosting blogPosting)
@@ -521,5 +537,7 @@ public abstract class BaseBlogPostingResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -118,6 +122,10 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Path("/sites/{siteId}/structured-content-folders")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+		itemClass = StructuredContentFolder.class
+	)
 	public StructuredContentFolder postSiteStructuredContentFolder(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			StructuredContentFolder structuredContentFolder)
@@ -220,8 +228,12 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = StructuredContentFolder.class
+	)
 	public void deleteStructuredContentFolder(
-			@NotNull @Parameter(hidden = true)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
 			@PathParam("structuredContentFolderId") Long
 				structuredContentFolderId)
 		throws Exception {
@@ -371,6 +383,10 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	@Path("/structured-content-folders/{structuredContentFolderId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContentFolder")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = StructuredContentFolder.class
+	)
 	public StructuredContentFolder putStructuredContentFolder(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("structuredContentFolderId") Long
@@ -530,5 +546,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

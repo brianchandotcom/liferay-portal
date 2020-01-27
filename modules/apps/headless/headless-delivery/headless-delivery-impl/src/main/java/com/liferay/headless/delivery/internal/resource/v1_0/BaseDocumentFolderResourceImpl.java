@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -86,9 +90,13 @@ public abstract class BaseDocumentFolderResourceImpl
 	@Path("/document-folders/{documentFolderId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DocumentFolder")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = DocumentFolder.class
+	)
 	public void deleteDocumentFolder(
-			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")
-				Long documentFolderId)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
+			@PathParam("documentFolderId") Long documentFolderId)
 		throws Exception {
 	}
 
@@ -214,6 +222,10 @@ public abstract class BaseDocumentFolderResourceImpl
 	@Path("/document-folders/{documentFolderId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DocumentFolder")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = DocumentFolder.class
+	)
 	public DocumentFolder putDocumentFolder(
 			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")
 				Long documentFolderId,
@@ -373,6 +385,10 @@ public abstract class BaseDocumentFolderResourceImpl
 	@Path("/sites/{siteId}/document-folders")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "DocumentFolder")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+		itemClass = DocumentFolder.class
+	)
 	public DocumentFolder postSiteDocumentFolder(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			DocumentFolder documentFolder)
@@ -481,5 +497,7 @@ public abstract class BaseDocumentFolderResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
@@ -89,8 +93,12 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	@Path("/message-board-messages/{messageBoardMessageId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = MessageBoardMessage.class
+	)
 	public void deleteMessageBoardMessage(
-			@NotNull @Parameter(hidden = true)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
 			@PathParam("messageBoardMessageId") Long messageBoardMessageId)
 		throws Exception {
 	}
@@ -252,6 +260,10 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	@Path("/message-board-messages/{messageBoardMessageId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardMessage")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = MessageBoardMessage.class
+	)
 	public MessageBoardMessage putMessageBoardMessage(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("messageBoardMessageId") Long messageBoardMessageId,
@@ -682,5 +694,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

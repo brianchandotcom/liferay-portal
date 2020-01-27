@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -83,9 +87,13 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Path("/blog-posting-images/{blogPostingImageId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = BlogPostingImage.class
+	)
 	public void deleteBlogPostingImage(
-			@NotNull @Parameter(hidden = true) @PathParam("blogPostingImageId")
-				Long blogPostingImageId)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
+			@PathParam("blogPostingImageId") Long blogPostingImageId)
 		throws Exception {
 	}
 
@@ -161,6 +169,10 @@ public abstract class BaseBlogPostingImageResourceImpl
 	@Path("/sites/{siteId}/blog-posting-images")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "BlogPostingImage")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+		itemClass = BlogPostingImage.class
+	)
 	public BlogPostingImage postSiteBlogPostingImage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MultipartBody multipartBody)
@@ -270,5 +282,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

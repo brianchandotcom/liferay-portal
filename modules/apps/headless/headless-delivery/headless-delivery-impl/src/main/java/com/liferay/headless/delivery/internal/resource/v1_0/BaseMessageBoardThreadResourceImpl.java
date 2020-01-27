@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
@@ -186,8 +190,12 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Path("/message-board-threads/{messageBoardThreadId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = MessageBoardThread.class
+	)
 	public void deleteMessageBoardThread(
-			@NotNull @Parameter(hidden = true)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
 			@PathParam("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
 	}
@@ -344,6 +352,10 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Path("/message-board-threads/{messageBoardThreadId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = MessageBoardThread.class
+	)
 	public MessageBoardThread putMessageBoardThread(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("messageBoardThreadId") Long messageBoardThreadId,
@@ -545,6 +557,10 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Path("/sites/{siteId}/message-board-threads")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+		itemClass = MessageBoardThread.class
+	)
 	public MessageBoardThread postSiteMessageBoardThread(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			MessageBoardThread messageBoardThread)
@@ -654,5 +670,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

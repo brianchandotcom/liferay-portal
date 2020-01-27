@@ -14,6 +14,10 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskFieldId;
+import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
@@ -158,6 +162,10 @@ public abstract class BaseStructuredContentResourceImpl
 	@Path("/sites/{siteId}/structured-contents")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.CREATE,
+		itemClass = StructuredContent.class
+	)
 	public StructuredContent postSiteStructuredContent(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			StructuredContent structuredContent)
@@ -382,9 +390,13 @@ public abstract class BaseStructuredContentResourceImpl
 	@Path("/structured-contents/{structuredContentId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.DELETE,
+		itemClass = StructuredContent.class
+	)
 	public void deleteStructuredContent(
-			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
-				Long structuredContentId)
+			@BatchEngineTaskFieldId("id") @NotNull @Parameter(hidden = true)
+			@PathParam("structuredContentId") Long structuredContentId)
 		throws Exception {
 	}
 
@@ -561,6 +573,10 @@ public abstract class BaseStructuredContentResourceImpl
 	@Path("/structured-contents/{structuredContentId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "StructuredContent")})
+	@BatchEngineTaskMethod(
+		batchEngineTaskOperation = BatchEngineTaskOperation.UPDATE,
+		itemClass = StructuredContent.class
+	)
 	public StructuredContent putStructuredContent(
 			@NotNull @Parameter(hidden = true) @PathParam("structuredContentId")
 				Long structuredContentId,
@@ -952,5 +968,7 @@ public abstract class BaseStructuredContentResourceImpl
 	protected RoleLocalService roleLocalService;
 	protected Object contextScopeChecker;
 	protected UriInfo contextUriInfo;
+
+	private ImportTaskResource _importTaskResource;
 
 }

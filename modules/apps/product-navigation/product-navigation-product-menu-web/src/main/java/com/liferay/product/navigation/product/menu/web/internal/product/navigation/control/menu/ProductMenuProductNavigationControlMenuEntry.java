@@ -36,8 +36,6 @@ import com.liferay.product.navigation.control.menu.BaseProductNavigationControlM
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
-import com.liferay.taglib.portletext.RuntimeTag;
-import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -53,8 +51,6 @@ import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,19 +77,6 @@ public class ProductMenuProductNavigationControlMenuEntry
 	@Override
 	public String getURL(HttpServletRequest httpServletRequest) {
 		return null;
-	}
-
-	@Override
-	public boolean includeBody(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		_processBodyBottomContent(
-			PageContextFactoryUtil.create(
-				httpServletRequest, httpServletResponse));
-
-		return true;
 	}
 
 	@Override
@@ -184,56 +167,6 @@ public class ProductMenuProductNavigationControlMenuEntry
 		}
 
 		return true;
-	}
-
-	private void _processBodyBottomContent(PageContext pageContext) {
-		try {
-			JspWriter jspWriter = pageContext.getOut();
-
-			jspWriter.write("<div class=\"");
-
-			HttpServletRequest httpServletRequest =
-				(HttpServletRequest)pageContext.getRequest();
-
-			String productMenuState = SessionClicks.get(
-				httpServletRequest,
-				"com.liferay.product.navigation.product.menu.web_" +
-					"productMenuState",
-				"closed");
-
-			if (Objects.equals(productMenuState, "open")) {
-				productMenuState += StringPool.SPACE + "product-menu-open";
-			}
-
-			jspWriter.write(productMenuState);
-
-			jspWriter.write(
-				" hidden-print lfr-product-menu-panel sidenav-fixed " +
-					"sidenav-menu-slider\" id=\"");
-
-			String portletNamespace = _portal.getPortletNamespace(
-				ProductNavigationProductMenuPortletKeys.
-					PRODUCT_NAVIGATION_PRODUCT_MENU);
-
-			jspWriter.write(portletNamespace);
-
-			jspWriter.write("sidenavSliderId\">");
-			jspWriter.write(
-				"<div class=\"product-menu sidebar sidenav-menu\">");
-
-			RuntimeTag runtimeTag = new RuntimeTag();
-
-			runtimeTag.setPortletName(
-				ProductNavigationProductMenuPortletKeys.
-					PRODUCT_NAVIGATION_PRODUCT_MENU);
-
-			runtimeTag.doTag(pageContext);
-
-			jspWriter.write("</div></div>");
-		}
-		catch (Exception exception) {
-			ReflectionUtil.throwException(exception);
-		}
 	}
 
 	private static final String _TMPL_CONTENT = StringUtil.read(

@@ -20,6 +20,7 @@ import mappingReducer from './mappingReducer';
 import networkReducer from './networkReducer';
 import resolvedCommentsReducer from './resolvedCommentsReducer';
 import sidebarReducer from './sidebarReducer';
+import widgetsReducer from './widgetsReducer';
 
 function combineReducers(reducersObject) {
 	return (state, action) =>
@@ -46,7 +47,8 @@ export function reducer(state, action) {
 			layoutData: layoutDataReducer,
 			mappedInfoItems: mappingReducer,
 			network: networkReducer,
-			showResolvedComments: resolvedCommentsReducer
+			showResolvedComments: resolvedCommentsReducer,
+			widgets: widgetsReducer
 		}),
 		...Object.values(state.reducers)
 	].reduce((nextState, nextReducer) => {

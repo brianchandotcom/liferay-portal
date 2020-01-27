@@ -384,17 +384,11 @@ public class BNDExportsCheck extends BaseFileCheck {
 		for (String line : StringUtil.splitLines(matcher.group(3))) {
 			line = StringUtil.trim(line);
 
-			if (Validator.isNull(line) || line.equals("\\")) {
-				continue;
+			if (Validator.isNotNull(line) && !line.equals("\\") &&
+				!line.contains(StringPool.SEMICOLON)) {
+
+				exportPackages.add(StringUtil.removeSubstring(line, ",\\"));
 			}
-
-			line = StringUtil.removeSubstring(line, ",\\");
-
-			if (line.indexOf(StringPool.SEMICOLON) != -1) {
-				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
-			}
-
-			exportPackages.add(line);
 		}
 
 		return exportPackages;

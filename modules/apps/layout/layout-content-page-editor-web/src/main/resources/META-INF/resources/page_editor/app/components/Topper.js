@@ -20,6 +20,7 @@ import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import useOnClickOutside from '../../core/hooks/useOnClickOutside';
+import deleteWidget from '../actions/deleteWidget';
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
@@ -362,6 +363,21 @@ export default function Topper({
 								displayType="unstyled"
 								onClick={event => {
 									event.stopPropagation();
+
+									const fragmentEntryLink =
+										store.fragmentEntryLinks[
+											item.config.fragmentEntryLinkId
+										];
+
+									if (
+										fragmentEntryLink.editableValues
+											.portletId
+									) {
+										dispatch(
+											deleteWidget(fragmentEntryLink)
+										);
+									}
+
 									dispatch(
 										deleteItem({
 											config,

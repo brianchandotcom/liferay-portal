@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -57,11 +58,28 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 				Collection<String> tagNames =
 					_gCloudNaturalLanguageDocumentAssetAutoTagger.getTagNames(
 						RandomTestUtil.randomLong(),
-						RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN);
+						Arrays.toString(RandomTestUtil.randomStrings(20)),
+						ContentTypes.TEXT_PLAIN);
 
 				Assert.assertEquals(
 					tagNames.toString(), Collections.emptySet(), tagNames);
 			});
+	}
+
+	@Test
+	public void testGetTagNamesWithIncorrectContentLength() throws Exception {
+		_testWithGCloudNaturalLanguageAutoTagEntitiesEndpointEnabledAndClassificationEndpointEnabled(
+			() -> {
+				Collection<String> tagNames =
+					_gCloudNaturalLanguageDocumentAssetAutoTagger.getTagNames(
+						RandomTestUtil.randomLong(),
+						Arrays.toString(RandomTestUtil.randomStrings(5)),
+						ContentTypes.TEXT_PLAIN);
+
+				Assert.assertEquals(
+					tagNames.toString(), Collections.emptySet(), tagNames);
+			},
+			RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -95,7 +113,8 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 				try {
 					_gCloudNaturalLanguageDocumentAssetAutoTagger.getTagNames(
 						RandomTestUtil.randomLong(),
-						RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN);
+						Arrays.toString(RandomTestUtil.randomStrings(20)),
+						ContentTypes.TEXT_PLAIN);
 
 					Assert.fail();
 				}
@@ -123,7 +142,8 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 				Collection<String> tagNames =
 					_gCloudNaturalLanguageDocumentAssetAutoTagger.getTagNames(
 						RandomTestUtil.randomLong(),
-						RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG);
+						Arrays.toString(RandomTestUtil.randomStrings(20)),
+						ContentTypes.IMAGE_JPEG);
 
 				Assert.assertEquals(
 					tagNames.toString(), Collections.emptySet(), tagNames);

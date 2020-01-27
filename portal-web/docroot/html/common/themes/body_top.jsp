@@ -33,3 +33,5 @@ com.liferay.petra.string.StringBundler bodyTopSB = OutputTag.getDataSB(request, 
 <%@ include file="/html/common/themes/top_messages.jsp" %>
 
 <liferay-util:include page="/html/common/themes/body_top-ext.jsp" />
+
+<liferay-util:dynamic-include key="/html/common/themes/body_top.jsp#post" />

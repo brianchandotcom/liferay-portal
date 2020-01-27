@@ -1516,7 +1516,7 @@ private List<File> _getRelengPropertiesFiles() {
 
 	List<File> artifactPropertiesFiles = new ArrayList<>()
 
-	fileTree(dir: file(".releng"), exclude: "**/test/**", include: "**/*.properties").each {
+	fileTree(dir: file(".releng"), excludes: ["/sdk/**", "**/test/**", "/third-party/**", "/util/**"], include: "**/*.properties").each {
 		File relengFile ->
 
 		Properties relengProperties = GUtil.loadProperties(relengFile)

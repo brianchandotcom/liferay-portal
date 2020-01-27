@@ -15,40 +15,19 @@ repositories {
 	}
 }
 
-task dependencyManagementJson(type: DependencyManagementTask)
-task dependencyManagementText(type: DependencyManagementTask)
-task dependencyManagementXml(type: DependencyManagementTask)
+task dependencyManagementTest(type: DependencyManagementTask)
 task runGradleTest
 
-dependencyManagementJson {
-	outputFile = "${buildDir}/test.json"
-	outputType = "json"
-}
-
-dependencyManagementText {
+dependencyManagementTest {
 	outputFile = "${buildDir}/test.txt"
-	outputType = "text"
-}
-
-dependencyManagementXml {
-	outputFile = "${buildDir}/test.xml"
-	outputType = "xml"
 }
 
 runGradleTest {
-	dependsOn dependencyManagementJson, dependencyManagementText, dependencyManagementXml
+	dependsOn dependencyManagementTest
 
 	doLast {
-		File jsonFile = file("${buildDir}/test.json")
-
-		assert jsonFile.text.contains("1.1.4c")
-
 		File txtFile = file("${buildDir}/test.txt")
 
 		assert txtFile.text.contains("xpp3:xpp3_min:1.1.4")
-
-		File xmlFile = file("${buildDir}/test.xml")
-
-		assert xmlFile.text.contains("<artifactId>xml-apis</artifactId>")
 	}
 }

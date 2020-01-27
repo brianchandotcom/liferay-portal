@@ -15,7 +15,6 @@
 package com.liferay.gradle.plugins.target.platform.tasks;
 
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.target.platform.internal.util.XMLUtil;
 
 import groovy.util.XmlSlurper;
 import groovy.util.slurpersupport.GPathResult;
@@ -24,12 +23,9 @@ import java.io.File;
 
 import java.nio.file.Files;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -41,17 +37,10 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.options.Option;
-import org.gradle.api.tasks.options.OptionValues;
-
-import org.json.JSONObject;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * @author Simon Jiang
@@ -59,21 +48,10 @@ import org.w3c.dom.Element;
  */
 public class DependencyManagementTask extends DefaultTask {
 
-	@OptionValues("output-type")
-	public List<String> getAvailableOutputTypes() {
-		return Arrays.asList("json", "text", "xml");
-	}
-
 	@Optional
 	@OutputFile
 	public File getOutputFile() {
 		return GradleUtil.toFile(getProject(), _outputFile);
-	}
-
-	@Input
-	@Optional
-	public String getOutputType() {
-		return GradleUtil.toString(_outputType);
 	}
 
 	@TaskAction
@@ -92,52 +70,6 @@ public class DependencyManagementTask extends DefaultTask {
 	)
 	public void setOutputFile(String outputFile) {
 		_outputFile = outputFile;
-	}
-
-	@Option(
-		description = "Set the output type of target platform dependency information.",
-		option = "output-type"
-	)
-	public void setOutputType(String outputType) {
-		_outputType = outputType;
-	}
-
-	private String _generateJSON(Map<String, String> sortedVersions) {
-		JSONObject jsonObject = new JSONObject(sortedVersions);
-
-		return jsonObject.toString();
-	}
-
-	private String _generateXml(Map<String, String> managedVersions)
-		throws Exception {
-
-		Document document = XMLUtil.newDocument();
-
-		Element dependencyManagementElement = XMLUtil.appendElement(
-			document, document, "dependencyManagement");
-
-		Element dependenciesElement = XMLUtil.appendElement(
-			document, dependencyManagementElement, "dependencies");
-
-		for (Map.Entry<String, String> entry : managedVersions.entrySet()) {
-			Element dependencyElement = XMLUtil.appendElement(
-				document, dependenciesElement, "dependency");
-
-			String dependencyKey = entry.getKey();
-
-			String[] dependencyKeyArray = dependencyKey.split(":");
-
-			XMLUtil.appendElement(
-				document, dependencyElement, "groupId", dependencyKeyArray[0]);
-			XMLUtil.appendElement(
-				document, dependencyElement, "artifactId",
-				dependencyKeyArray[1]);
-
-			XMLUtil.appendElement(
-				document, dependencyElement, "version", entry.getValue());
-		}
-
-		return XMLUtil.toString(document);
 	}
 
 	private Map<String, String> _getTargetPlatformDependencies(
@@ -246,18 +178,8 @@ public class DependencyManagementTask extends DefaultTask {
 
 		if ((managedVersions != null) && !managedVersions.isEmpty()) {
 			try {
-				String dependenciesOutput = null;
-
-				if (Objects.equals(_outputType, "json")) {
-					dependenciesOutput = _generateJSON(managedVersions);
-				}
-				else if (Objects.equals(_outputType, "xml")) {
-					dependenciesOutput = _generateXml(managedVersions);
-				}
-				else {
-					dependenciesOutput = _renderManagedVersions(
-						managedVersions);
-				}
+				String dependenciesOutput = _renderManagedVersions(
+					managedVersions);
 
 				File outputFile = getOutputFile();
 
@@ -283,6 +205,5 @@ public class DependencyManagementTask extends DefaultTask {
 	}
 
 	private String _outputFile;
-	private String _outputType;
 
 }

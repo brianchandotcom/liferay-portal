@@ -34,21 +34,65 @@ const getFieldIndexes = (pages, fieldName) => {
 	return indexes;
 };
 
-const getFieldContainer = (pages, fieldName) => {
-	const {columnIndex, pageIndex, rowIndex} = getFieldIndexes(
-		pages,
-		fieldName
-	);
+const getNestedFieldIndexes = (context, fieldName) => {
+	let indexes = [];
 
-	return document.querySelector(
-		[
-			'.col-ddm',
-			`[data-ddm-field-column="${columnIndex}"]`,
-			`[data-ddm-field-page="${pageIndex}"]`,
-			`[data-ddm-field-row="${rowIndex}"]`,
-			' .ddm-field-container',
-		].join('')
-	);
+	const mapper = (field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+		const indexesRef = [...indexes];
+
+		if (field.fieldName !== fieldName && field.rows) {
+			const visitor = new PagesVisitor([field]);
+
+			visitor.mapFields(mapper);
+		}
+
+		if (
+			field.fieldName === fieldName ||
+			indexesRef.length !== indexes.length
+		) {
+			indexes = [{columnIndex, pageIndex, rowIndex}, ...indexes];
+		}
+	};
+
+	const visitor = new PagesVisitor(context);
+
+	visitor.mapFields(mapper);
+
+	return indexes;
+};
+
+const getFieldContainer = (pages, fieldName) => {
+	const nestedFieldIndexes = getNestedFieldIndexes(pages, fieldName);
+
+	let selector = '';
+
+	nestedFieldIndexes.forEach((fieldIndexes, i) => {
+		const {columnIndex, pageIndex, rowIndex} = fieldIndexes;
+
+		if (i === 0) {
+			selector = [
+				'.ddm-form-page > .row > .col-ddm',
+				`[data-ddm-field-column="${columnIndex}"]`,
+				`[data-ddm-field-page="${pageIndex}"]`,
+				`[data-ddm-field-row="${rowIndex}"]`,
+				'> .ddm-field-container'
+			].join('');
+		}
+		else {
+			selector = [
+				selector,
+				'.ddm-field-container > .ddm-drag > .form-group > .row > .col-ddm',
+				`[data-ddm-field-column="${columnIndex}"]`,
+				`[data-ddm-field-page="${pageIndex}"]`,
+				`[data-ddm-field-row="${rowIndex}"]`,
+				'> .ddm-field-container'
+			].join('');
+		}
+	});
+
+	if (selector) {
+		return document.querySelector(selector);
+	}
 };
 
 class Actions extends Component {
@@ -73,7 +117,7 @@ class Actions extends Component {
 					disabled={disabled}
 					events={{
 						expandedChanged: this._handleExpandedChanged.bind(this),
-						itemClicked: this._handleItemClicked.bind(this),
+						itemClicked: this._handleItemClicked.bind(this)
 					}}
 					expanded={expanded}
 					items={items}
@@ -141,8 +185,8 @@ class Actions extends Component {
 
 	_handleItemClicked({
 		data: {
-			item: {action},
-		},
+			item: {action}
+		}
 	}) {
 		const {fieldName} = this.state;
 		const {pages} = this.props;
@@ -189,7 +233,7 @@ Actions.PROPS = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required(),
+	spritemap: Config.string().required()
 };
 
 Actions.STATE = {
@@ -200,7 +244,7 @@ Actions.STATE = {
 	 * @type {!Object}
 	 */
 
-	fieldName: Config.string(),
+	fieldName: Config.string()
 };
 
 const withActionableFields = ChildComponent => {
@@ -213,6 +257,14 @@ const withActionableFields = ChildComponent => {
 					'mouseenter',
 					'.ddm-field-container',
 					this._handleMouseEnterField.bind(this)
+				)
+			);
+
+			this._eventHandler.add(
+				this.delegate(
+					'mouseleave',
+					'.ddm-field-container',
+					this._handleMouseLeaveField.bind(this)
 				)
 			);
 		}
@@ -280,8 +332,8 @@ const withActionableFields = ChildComponent => {
 			}
 		}
 
-		showActions(actions, fieldName) {
-			actions.props.label = this._getFieldType(fieldName);
+		showActions(actions, fieldName, field) {
+			actions.props.label = this._getFieldType(fieldName, field);
 			actions.props.visible = true;
 
 			if (fieldName !== actions.state.fieldName) {
@@ -302,38 +354,37 @@ const withActionableFields = ChildComponent => {
 			});
 		}
 
-		_getColumnField(indexes) {
+		_getColumnField(nestedIndexes) {
 			const {pages} = this.props;
-			const visitor = new PagesVisitor(pages);
-			let field;
 
-			visitor.mapFields(
-				(
-					currentField,
-					fieldIndex,
-					columnIndex,
+			let column;
+			let context = pages;
+
+			nestedIndexes.forEach(indexes => {
+				const {columnIndex, pageIndex, rowIndex} = indexes;
+
+				column = FormSupport.getColumn(
+					context,
+					column ? 0 : pageIndex,
 					rowIndex,
-					pageIndex
-				) => {
-					if (
-						indexes.pageIndex === pageIndex &&
-						indexes.rowIndex === rowIndex &&
-						indexes.columnIndex === columnIndex
-					) {
-						field = currentField;
-					}
-				}
-			);
+					columnIndex
+				);
 
-			return field;
+				context = column.fields;
+			});
+
+			return column.fields[0];
 		}
 
-		_getFieldType(fieldName) {
+		_getFieldType(fieldName, field) {
 			const {fieldTypes, pages} = this.props;
-			const visitor = new PagesVisitor(pages);
-			const field = visitor.findField(
-				field => field.fieldName === fieldName
-			);
+
+			if (!field) {
+				const visitor = new PagesVisitor(pages);
+				field = visitor.findField(
+					fieldItem => fieldItem.fieldName === fieldName
+				);
+			}
 
 			return (
 				field &&
@@ -343,15 +394,39 @@ const withActionableFields = ChildComponent => {
 			);
 		}
 
-		_handleMouseEnterField({delegateTarget}) {
+		_handleMouseEnterField(event) {
+			event.stopPropagation();
+
+			const {delegateTarget} = event;
+
 			if (!delegateTarget.classList.contains('selected')) {
 				const {hoveredFieldActions} = this.refs;
-				const indexes = FormSupport.getIndexes(
+				const indexes = FormSupport.getNestedIndexes(
 					dom.closest(delegateTarget, '.col-ddm')
 				);
-				const {fieldName} = this._getColumnField(indexes);
+				const field = this._getColumnField(indexes);
 
-				this.showActions(hoveredFieldActions, fieldName);
+				this.showActions(hoveredFieldActions, field.fieldName, field);
+			}
+		}
+
+		_handleMouseLeaveField(event) {
+			const delegateTarget = dom.closest(
+				event.delegateTarget.parentElement,
+				'.ddm-field-container'
+			);
+
+			if (
+				delegateTarget &&
+				!delegateTarget.classList.contains('selected')
+			) {
+				const {hoveredFieldActions} = this.refs;
+				const indexes = FormSupport.getNestedIndexes(
+					dom.closest(delegateTarget, '.col-ddm')
+				);
+				const field = this._getColumnField(indexes);
+
+				this.showActions(hoveredFieldActions, field.fieldName, field);
 			}
 		}
 	}
@@ -472,7 +547,7 @@ const withActionableFields = ChildComponent => {
 		successPageSettings: Config.shapeOf({
 			body: Config.object(),
 			enabled: Config.bool(),
-			title: Config.object(),
+			title: Config.object()
 		}).value({}),
 
 		/**
@@ -482,7 +557,7 @@ const withActionableFields = ChildComponent => {
 		 * @type {?string}
 		 */
 
-		view: Config.string(),
+		view: Config.string()
 	};
 
 	return ActionableFields;

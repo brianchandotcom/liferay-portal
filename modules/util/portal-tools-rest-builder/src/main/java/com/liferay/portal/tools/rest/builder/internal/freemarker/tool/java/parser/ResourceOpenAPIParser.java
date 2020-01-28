@@ -65,8 +65,6 @@ public class ResourceOpenAPIParser {
 			return Collections.emptyList();
 		}
 
-		Map<String, Parameter> parameterMap = OpenAPIParserUtil.getParameterMap(
-			openAPIYAML);
 		Map<String, String> javaDataTypeMap =
 			OpenAPIParserUtil.getJavaDataTypeMap(configYAML, openAPIYAML);
 		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
@@ -78,20 +76,6 @@ public class ResourceOpenAPIParser {
 			_visitOperations(
 				pathItem,
 				operation -> {
-					List<Parameter> parameters = operation.getParameters();
-
-					for (int i = 0; i < parameters.size(); i++) {
-						Parameter parameter = parameters.get(i);
-
-						if (Validator.isNotNull(parameter.getReference())) {
-							parameters.set(
-								i,
-								parameterMap.get(
-									OpenAPIParserUtil.getReferenceName(
-										parameter.getReference())));
-						}
-					}
-
 					String returnType = _getReturnType(
 						javaDataTypeMap, operation, path);
 

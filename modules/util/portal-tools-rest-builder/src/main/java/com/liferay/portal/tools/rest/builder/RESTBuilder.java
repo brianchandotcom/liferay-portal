@@ -159,11 +159,9 @@ public class RESTBuilder {
 		File[] files = FileUtil.getFiles(_configDir, "rest-openapi", ".yaml");
 
 		for (File file : files) {
-			_checkOpenAPIYAMLFile(freeMarkerTool, file);
+			OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(file);
 
-			String content = FileUtil.read(file);
-
-			OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(content);
+			_checkOpenAPIYAMLFile(freeMarkerTool, openAPIYAML, file);
 
 			Info info = openAPIYAML.getInfo();
 
@@ -290,29 +288,30 @@ public class RESTBuilder {
 		jCommander.usage();
 	}
 
-	private void _checkOpenAPIYAMLFile(FreeMarkerTool freeMarkerTool, File file)
+	private void _checkOpenAPIYAMLFile(
+			FreeMarkerTool freeMarkerTool, OpenAPIYAML openAPIYAML, File file)
 		throws Exception {
 
-		String s = _fixOpenAPILicense(FileUtil.read(file));
+		String s = _fixOpenAPILicense(openAPIYAML, FileUtil.read(file));
 
-		s = _fixOpenAPIPaths(s);
+		s = _fixOpenAPIPaths(openAPIYAML, s);
 
-		s = _fixOpenAPIPathParameters(s);
+		s = _fixOpenAPIPathParameters(openAPIYAML, s);
 
 		if (_configYAML.isForcePredictableSchemaPropertyName()) {
-			s = _fixOpenAPISchemaPropertyNames(freeMarkerTool, s);
+			s = _fixOpenAPISchemaPropertyNames(freeMarkerTool, openAPIYAML, s);
 		}
 
 		if (_configYAML.isForcePredictableOperationId()) {
-			s = _fixOpenAPIOperationIds(freeMarkerTool, s);
+			s = _fixOpenAPIOperationIds(freeMarkerTool, openAPIYAML, s);
 		}
 
 		if (_configYAML.isForcePredictableContentApplicationXML()) {
-			s = _fixOpenAPIContentApplicationXML(s);
+			s = _fixOpenAPIContentApplicationXML(openAPIYAML, s);
 		}
 
 		if (_configYAML.isWarningsEnabled()) {
-			_validate(s);
+			_validate(openAPIYAML);
 		}
 
 		FileUtil.write(file, s);
@@ -960,8 +959,8 @@ public class RESTBuilder {
 		return StringUtil.replaceFirst(s, oldSub, oldSub + replacement, index);
 	}
 
-	private String _fixOpenAPIContentApplicationXML(String s) {
-		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
+	private String _fixOpenAPIContentApplicationXML(
+		OpenAPIYAML openAPIYAML, String s) {
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
@@ -1011,7 +1010,7 @@ public class RESTBuilder {
 		return s;
 	}
 
-	private String _fixOpenAPILicense(String s) {
+	private String _fixOpenAPILicense(OpenAPIYAML openAPIYAML, String s) {
 		String licenseName = _configYAML.getLicenseName();
 		String licenseURL = _configYAML.getLicenseURL();
 
@@ -1023,8 +1022,6 @@ public class RESTBuilder {
 		licenseSB.append("        url: \"");
 		licenseSB.append(licenseURL);
 		licenseSB.append("\"");
-
-		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
 
 		Info info = openAPIYAML.getInfo();
 
@@ -1124,11 +1121,9 @@ public class RESTBuilder {
 	}
 
 	private String _fixOpenAPIOperationIds(
-		FreeMarkerTool freeMarkerTool, String s) {
+		FreeMarkerTool freeMarkerTool, OpenAPIYAML openAPIYAML, String s) {
 
 		s = s.replaceAll("\n\\s+operationId:.+", "");
-
-		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
 
 		Components components = openAPIYAML.getComponents();
 
@@ -1210,8 +1205,8 @@ public class RESTBuilder {
 		return s;
 	}
 
-	private String _fixOpenAPIPathParameters(String s) {
-		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
+	private String _fixOpenAPIPathParameters(
+		OpenAPIYAML openAPIYAML, String s) {
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
@@ -1238,10 +1233,6 @@ public class RESTBuilder {
 					OpenAPIParserUtil.getHTTPMethod(operation) + ":", x);
 
 				for (Parameter parameter : operation.getParameters()) {
-					if (Validator.isNotNull(parameter.getReference())) {
-						continue;
-					}
-
 					String in = parameter.getIn();
 					String parameterName = parameter.getName();
 
@@ -1320,10 +1311,6 @@ public class RESTBuilder {
 					OpenAPIParserUtil.getHTTPMethod(operation) + ":", x);
 
 				for (Parameter parameter : operation.getParameters()) {
-					if (Validator.isNotNull(parameter.getReference())) {
-						continue;
-					}
-
 					String in = parameter.getIn();
 					String parameterName = parameter.getName();
 
@@ -1360,9 +1347,7 @@ public class RESTBuilder {
 		return s;
 	}
 
-	private String _fixOpenAPIPaths(String s) {
-		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
-
+	private String _fixOpenAPIPaths(OpenAPIYAML openAPIYAML, String s) {
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
 		if (pathItems == null) {
@@ -1400,9 +1385,7 @@ public class RESTBuilder {
 	}
 
 	private String _fixOpenAPISchemaPropertyNames(
-		FreeMarkerTool freeMarkerTool, String s) {
-
-		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
+		FreeMarkerTool freeMarkerTool, OpenAPIYAML openAPIYAML, String s) {
 
 		Components components = openAPIYAML.getComponents();
 
@@ -1624,9 +1607,7 @@ public class RESTBuilder {
 		context.put("relatedSchemaNames", relatedSchemaNames);
 	}
 
-	private void _validate(String string) {
-		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(string);
-
+	private void _validate(OpenAPIYAML openAPIYAML) {
 		Components components = openAPIYAML.getComponents();
 
 		Map<String, Schema> schemas = components.getSchemas();

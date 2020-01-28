@@ -195,7 +195,7 @@
 <!--OBJECT_FIELD-->
 <tr>
 	<td>OBJECT_FIELD_NAME</td>
-	<td>//div[@class='custom-object-field autofit-row autofit-row-center field-type']//span[contains(text(), '${key_fieldName}')]</td>
+	<td>//span[contains(text(), '${key_fieldName}')]</td>
 	<td></td>
 </tr>
 >>>>>>> LRQA-54502 Added text field from object field

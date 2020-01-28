@@ -25,13 +25,10 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
-import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -43,7 +40,6 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -52,7 +48,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -79,22 +74,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			PortalUtil.getHttpServletRequest(liferayPortletRequest));
 	}
 
-	public List<DropdownItem> getActionItemsDropdownItems(String action) {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", action);
-						dropdownItem.setIcon("times-circle");
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_dlRequestHelper.getRequest(), "delete"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
-	}
-
 	public String getClearResultsURL() throws PortletException {
 		PortletURL clearResultsURL = PortletURLUtil.clone(
 			getPortletURL(), _liferayPortletResponse);
@@ -107,89 +86,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 	public DDMDisplay getDDMDisplay() {
 		return _ddmDisplayRegistry.getDDMDisplay(
 			DLPortletKeys.DOCUMENT_LIBRARY);
-	}
-
-	public List<DropdownItem> getFilterItemsDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							getFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_dlRequestHelper.getRequest(),
-								"filter-by-navigation"));
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(
-								_dlRequestHelper.getRequest(), "order-by"));
-					});
-			}
-		};
-	}
-
-	public List<NavigationItem> getNavigationItem() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(getScopedStructureLabel());
-					});
-			}
-		};
-	}
-
-	public List<NavigationItem> getNavigationItems(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-
-		return new NavigationItemList() {
-			{
-				DDMDisplay ddmDisplay = getDDMDisplay();
-
-				for (DDMDisplayTabItem ddmDisplayTabItem :
-						ddmDisplay.getTabItems()) {
-
-					if (!ddmDisplayTabItem.isShow(liferayPortletRequest)) {
-						continue;
-					}
-
-					String ddmDisplayTabItemTitle = GetterUtil.getString(
-						ddmDisplayTabItem.getTitle(
-							liferayPortletRequest, liferayPortletResponse));
-
-					DDMDisplayTabItem defaultDDMDisplayTabItem =
-						ddmDisplay.getDefaultTabItem();
-
-					String defaultDDMDisplayTabItemTitle = GetterUtil.getString(
-						defaultDDMDisplayTabItem.getTitle(
-							liferayPortletRequest, liferayPortletResponse));
-
-					String ddmDisplayTabItemHREF = GetterUtil.getString(
-						ddmDisplayTabItem.getURL(
-							liferayPortletRequest, liferayPortletResponse));
-
-					add(
-						navigationItem -> {
-							navigationItem.setActive(
-								Objects.equals(
-									ddmDisplayTabItemTitle,
-									defaultDDMDisplayTabItemTitle));
-							navigationItem.setHref(ddmDisplayTabItemHREF);
-							navigationItem.setLabel(ddmDisplayTabItemTitle);
-						});
-				}
-			}
-		};
 	}
 
 	public String getOrderByCol() {
@@ -270,85 +166,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		};
 	}
 
-	public String getSelectStructureSearchActionURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/select_structure.jsp");
-		portletURL.setParameter(
-			"classPK",
-			String.valueOf(
-				ParamUtil.getLong(_liferayPortletRequest, "classPK")));
-		portletURL.setParameter(
-			"eventName",
-			ParamUtil.getString(
-				_liferayPortletRequest, "eventName", "selectStructure"));
-
-		return portletURL.toString();
-	}
-
-	public String getSelectTemplateSearchActionURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/select_template.jsp");
-		portletURL.setParameter(
-			"templateId",
-			String.valueOf(
-				ParamUtil.getLong(_liferayPortletRequest, "templateId")));
-		portletURL.setParameter(
-			"classNameId", String.valueOf(getClassNameId()));
-		portletURL.setParameter(
-			"classPK",
-			String.valueOf(
-				ParamUtil.getLong(_liferayPortletRequest, "classPK")));
-		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(getResourceClassNameId()));
-		portletURL.setParameter(
-			"eventName",
-			ParamUtil.getString(
-				_liferayPortletRequest, "eventName", "selectTemplate"));
-
-		return portletURL.toString();
-	}
-
-	public String getSortingURL() throws Exception {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
-
-		String orderByType = ParamUtil.getString(
-			_liferayPortletRequest, "orderByType");
-
-		sortingURL.setParameter(
-			"orderByType", orderByType.equals("asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
-	public CreationMenu getStructureCreationMenu() throws PortalException {
-		if (!isShowAddStructureButton()) {
-			return null;
-		}
-
-		PortletURL redirect = _liferayPortletResponse.createRenderURL();
-
-		redirect.setParameter("mvcPath", "/view.jsp");
-		redirect.setParameter(
-			"groupId", String.valueOf(_dlRequestHelper.getScopeGroupId()));
-
-		PortletURL addTemplateURL = _liferayPortletResponse.createRenderURL();
-
-		addTemplateURL.setParameter("mvcPath", "/edit_structure.jsp");
-		addTemplateURL.setParameter("redirect", redirect.toString());
-		addTemplateURL.setParameter(
-			"groupId", String.valueOf(_dlRequestHelper.getScopeGroupId()));
-
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					getCreationMenuDropdownItem(addTemplateURL, "add"));
-			}
-		};
-	}
-
 	public SearchContainer<DDMStructure> getStructureSearch() throws Exception {
 		StructureSearch structureSearch = new StructureSearch(
 			_liferayPortletRequest, getPortletURL());
@@ -394,10 +211,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			"groupId", String.valueOf(_dlRequestHelper.getScopeGroupId()));
 
 		return portletURL.toString();
-	}
-
-	public String getStructureSearchContainerId() {
-		return "ddmStructures";
 	}
 
 	public int getTotalItems() throws Exception {

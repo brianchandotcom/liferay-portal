@@ -47,22 +47,6 @@ com.liferay.dynamic.data.mapping.model.DDMStructure structure = (com.liferay.dyn
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.VIEW) %>">
-		<portlet:renderURL var="manageViewURL">
-			<portlet:param name="mvcPath" value="/view_template.jsp" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
-			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(structure.getClassNameId()) %>" />
-			<portlet:param name="showHeader" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			localizeMessage="<%= false %>"
-			message='<%= LanguageUtil.format(request, "manage-x", HtmlUtil.escape(ddmDisplay.getViewTemplatesTitle(null, locale))) %>'
-			url="<%= manageViewURL %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= DDMStructurePermission.getStructureModelResourceName(structure.getClassNameId()) %>"

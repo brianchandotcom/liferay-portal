@@ -14,12 +14,15 @@
 
 import ClayLabel from '@clayui/label';
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 export default ({keywords = []}) => (
 	<>
 		{keywords.map(keyword => (
 			<ClayLabel displayType="secondary" key={keyword}>
-				{keyword}
+				<Link key={keyword} to={`/questions/keyword/${keyword}`}>
+					{keyword}
+				</Link>
 			</ClayLabel>
 		))}
 	</>

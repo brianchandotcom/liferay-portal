@@ -15,6 +15,7 @@
 import ClayCard, {ClayCardWithNavigation} from '@clayui/card';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import React, {useContext, useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import {getKeywords} from '../../utils/client.es';
@@ -44,7 +45,11 @@ export default () => {
 								<ClayCardWithNavigation>
 									<ClayCard.Body>
 										<ClayCard.Description displayType="title">
-											#{keyword.name}
+											<Link
+												to={`/questions/keyword/${keyword.name}`}
+											>
+												{keyword.name}
+											</Link>
 										</ClayCard.Description>
 										<ClayCard.Description displayType="text">
 											{lang.sub(

@@ -287,14 +287,19 @@ export const getThreadContent = messageBoardThreadId =>
         }`);
 
 export const getThreads = ({
-	filter = '',
+	keyword = '',
 	page = 1,
 	pageSize = 30,
 	search = '',
 	siteKey,
 	sort = 'dateModified:desc'
-}) =>
-	request(gql`
+}) => {
+	let filter = '';
+	if (keyword) {
+		filter = `(keywords/any(x:x eq '${keyword}'))`;
+	}
+
+	return request(gql`
         query {
             messageBoardThreads(filter: ${filter}, page: ${page}, pageSize: ${pageSize}, search: ${search}, siteKey: ${siteKey}, sort: ${sort}){
                 items {
@@ -325,6 +330,7 @@ export const getThreads = ({
                 totalCount
             }
         }`);
+};
 
 export const getRankedThreads = (dateModified, page = 1, pageSize = 30, sort) =>
 	request(gql`

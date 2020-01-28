@@ -24,7 +24,11 @@ import UserIcon from '../../components/UserIcon.es';
 import {getThreads} from '../../utils/client.es';
 import {dateToInternationalHuman} from '../../utils/utils.es';
 
-export default () => {
+export default ({
+	match: {
+		params: {keyword}
+	}
+}) => {
 	const context = useContext(AppContext);
 
 	const [loading, setLoading] = useState(true);
@@ -33,10 +37,10 @@ export default () => {
 	const [questions, setQuestions] = useState([]);
 
 	useEffect(() => {
-		getThreads({page, pageSize, siteKey: context.siteKey})
+		getThreads({keyword, page, pageSize, siteKey: context.siteKey})
 			.then(data => setQuestions(data))
 			.then(() => setLoading(false));
-	}, [page, pageSize, context.siteKey]);
+	}, [keyword, page, pageSize, context.siteKey]);
 
 	const hasValidAnswer = question =>
 		question.messageBoardMessages.items.filter(

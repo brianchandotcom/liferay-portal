@@ -82,8 +82,8 @@ public interface WorkflowTaskResource {
 			String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
 			java.util.Date dateDueEnd, java.util.Date dateDueStart,
 			Boolean searchByUserRoles, String[] taskNames,
-			Long[] workflowInstanceIds, Pagination pagination,
-			String sortString)
+			Long workflowDefinitionId, Long[] workflowInstanceIds,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkflowTasksPageHttpResponse(
@@ -91,8 +91,8 @@ public interface WorkflowTaskResource {
 			String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
 			java.util.Date dateDueEnd, java.util.Date dateDueStart,
 			Boolean searchByUserRoles, String[] taskNames,
-			Long[] workflowInstanceIds, Pagination pagination,
-			String sortString)
+			Long workflowDefinitionId, Long[] workflowInstanceIds,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public void patchWorkflowTaskAssignToUser(
@@ -536,16 +536,16 @@ public interface WorkflowTaskResource {
 				String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
 				java.util.Date dateDueEnd, java.util.Date dateDueStart,
 				Boolean searchByUserRoles, String[] taskNames,
-				Long[] workflowInstanceIds, Pagination pagination,
-				String sortString)
+				Long workflowDefinitionId, Long[] workflowInstanceIds,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWorkflowTasksPageHttpResponse(
 					andOperator, assetPrimaryKeys, assetTitle, assetTypes,
 					assigneeUserIds, completed, dateDueEnd, dateDueStart,
-					searchByUserRoles, taskNames, workflowInstanceIds,
-					pagination, sortString);
+					searchByUserRoles, taskNames, workflowDefinitionId,
+					workflowInstanceIds, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -572,8 +572,8 @@ public interface WorkflowTaskResource {
 				String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
 				java.util.Date dateDueEnd, java.util.Date dateDueStart,
 				Boolean searchByUserRoles, String[] taskNames,
-				Long[] workflowInstanceIds, Pagination pagination,
-				String sortString)
+				Long workflowDefinitionId, Long[] workflowInstanceIds,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -656,6 +656,12 @@ public interface WorkflowTaskResource {
 					httpInvoker.parameter(
 						"taskNames", String.valueOf(taskNames[i]));
 				}
+			}
+
+			if (workflowDefinitionId != null) {
+				httpInvoker.parameter(
+					"workflowDefinitionId",
+					String.valueOf(workflowDefinitionId));
 			}
 
 			if (workflowInstanceIds != null) {

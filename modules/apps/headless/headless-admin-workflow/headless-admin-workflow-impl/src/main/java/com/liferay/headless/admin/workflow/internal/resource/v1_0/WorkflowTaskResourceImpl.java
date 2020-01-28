@@ -222,8 +222,8 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
 			String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
 			Date dateDueEnd, Date dateDueStart, Boolean searchByUserRoles,
-			String[] taskNames, Long[] workflowInstanceIds,
-			Pagination pagination, Sort[] sorts)
+			String[] taskNames, Long workflowDefinitionId,
+			Long[] workflowInstanceIds, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(
@@ -232,7 +232,8 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 					contextCompany.getCompanyId(), contextUser.getUserId(),
 					assetTitle, taskNames, assetTypes, assetPrimaryKeys,
 					assigneeUserIds, dateDueStart, dateDueEnd, completed,
-					searchByUserRoles, workflowInstanceIds,
+					searchByUserRoles, workflowDefinitionId,
+					workflowInstanceIds,
 					GetterUtil.getBoolean(andOperator, true),
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
@@ -242,7 +243,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				assetTitle, taskNames, assetTypes, assetPrimaryKeys,
 				assigneeUserIds, dateDueStart, dateDueEnd, completed,
-				searchByUserRoles, workflowInstanceIds,
+				searchByUserRoles, workflowDefinitionId, workflowInstanceIds,
 				GetterUtil.getBoolean(andOperator, true)));
 	}
 

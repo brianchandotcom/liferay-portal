@@ -329,8 +329,17 @@ public class LayoutStructure {
 
 		LayoutStructureItem newLayoutStructureItem = new LayoutStructureItem();
 
-		newLayoutStructureItem.setItemConfigJSONObject(
-			layoutStructureItem.getItemConfigJSONObject());
+		JSONObject newItemConfigJSONObject = JSONFactoryUtil.createJSONObject();
+
+		JSONObject itemConfigJSONObject =
+			layoutStructureItem.getItemConfigJSONObject();
+
+		for (String key : itemConfigJSONObject.keySet()) {
+			newItemConfigJSONObject.put(key, itemConfigJSONObject.get(key));
+		}
+
+		newLayoutStructureItem.setItemConfigJSONObject(newItemConfigJSONObject);
+
 		newLayoutStructureItem.setItemId(String.valueOf(UUID.randomUUID()));
 		newLayoutStructureItem.setItemType(layoutStructureItem.getItemType());
 		newLayoutStructureItem.setParentItemId(parentItemId);

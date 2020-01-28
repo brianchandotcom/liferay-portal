@@ -115,6 +115,9 @@ describe('Checkin', () => {
 								target: {value: 'ChangeLog notes'}
 							});
 							fireEvent.click(minorVersionRadio);
+						});
+
+						act(() => {
 							fireEvent.click(saveButton);
 						});
 					});

@@ -12,49 +12,59 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.content.internal.product.navigation.control.menu;
+package com.liferay.layout.type.controller.content.internal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
-import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
-import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+
+import java.io.IOException;
 
 import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Chema Balsas
  */
-@Component(
-	immediate = true,
-	property = {
-		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
-		"product.navigation.control.menu.entry.order:Integer=100"
-	},
-	service = ProductNavigationControlMenuEntry.class
-)
-public class LayoutEditorToolbarProductNavigationControlMenuEntry
-	extends BaseJSPProductNavigationControlMenuEntry
-	implements ProductNavigationControlMenuEntry {
+@Component(service = DynamicInclude.class)
+public class LayoutEditorToolbarControlMenuJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
-	public String getIconJspPath() {
-		return "/layout_editor_toolbar/entry.jsp";
+	public void include(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
+		throws IOException {
+
+		try {
+			if (!isShow(httpServletRequest)) {
+				return;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		super.include(httpServletRequest, httpServletResponse, key);
 	}
 
-	@Override
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -89,12 +99,31 @@ public class LayoutEditorToolbarProductNavigationControlMenuEntry
 	}
 
 	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"com.liferay.product.navigation.taglib#/page.jsp#post");
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/dynamic_include/entry.jsp";
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)",
 		unbind = "-"
 	)
-	public void setServletContext(ServletContext servletContext) {
+	protected void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutEditorToolbarControlMenuJSPDynamicInclude.class);
 
 }

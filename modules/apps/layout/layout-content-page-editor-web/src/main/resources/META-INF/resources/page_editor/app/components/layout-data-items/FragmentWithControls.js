@@ -37,6 +37,30 @@ import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
 import FragmentContent from './FragmentContent';
 
+function getWidget(widgets, portletId) {
+	let widget = null;
+
+	const widgetsLength = widgets.length;
+
+	for (let i = 0; i < widgetsLength; i++) {
+		const {categories = [], portlets = []} = widgets[i];
+		const categoryPortlet = portlets.find(
+			_portlet => _portlet.portletId === portletId
+		);
+		const subCategoryPortlet = getWidget(categories, portletId);
+
+		if (categoryPortlet) {
+			widget = categoryPortlet;
+		}
+
+		if (subCategoryPortlet) {
+			widget = subCategoryPortlet;
+		}
+	}
+
+	return widget;
+}
+
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
@@ -60,13 +84,17 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 		}
 	};
 
-	const portletId = fragmentEntryLink.portletId;
+	const floatingToolbarButtons = [];
 
-	const floatingToolbarButtons = [
-		LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem
-	];
+	const portletId = fragmentEntryLink.editableValues.portletId;
 
-	if (!portletId) {
+	const widget = portletId && getWidget(state.widgets, portletId);
+
+	if (!widget || widget.instanceable) {
+		floatingToolbarButtons.push(
+			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem
+		);
+	} else {
 		floatingToolbarButtons.push(
 			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration
 		);

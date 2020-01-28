@@ -198,6 +198,12 @@ wrapperProjectTemplates {
 
 	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
 	scriptFile = new File(wrapperDir, "gradlew")
+
+	doLast {
+		File gradleWrapperPropertiesFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.properties")
+
+		gradleWrapperPropertiesFile.text = gradleWrapperPropertiesFile.text.trim()
+	}
 }
 
 wrapperSubrepo {

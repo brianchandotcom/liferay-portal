@@ -100,10 +100,7 @@ public class DependencyManagementTask extends DefaultTask {
 		}
 	}
 
-	@Option(
-		description = "Set the output file for saving the target platform dependency information.",
-		option = "output-file"
-	)
+	@Option(description = "Set the output file.", option = "output-file")
 	public void setOutputFile(String outputFile) {
 		_outputFile = outputFile;
 	}

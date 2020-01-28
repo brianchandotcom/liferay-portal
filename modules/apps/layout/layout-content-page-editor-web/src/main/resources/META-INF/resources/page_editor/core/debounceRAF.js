@@ -12,22 +12,25 @@
  * details.
  */
 
-import {useEventListener} from 'frontend-js-react-web';
-import {useState} from 'react';
-
-export default function useWindowScroll() {
-	const [scrollState, setScrollState] = useState({
-		scrollX: window.pageXOffset,
-		scrollY: window.pageYOffset
-	});
-
-	const handleScroll = () =>
-		setScrollState({
-			scrollX: window.pageXOffset,
-			scrollY: window.pageYOffset
+/**
+ * Debounces function execution until next animation frame.
+ * @param {!function()} fn
+ * @return {!function()}
+ */
+export default function debounceRAF(fn) {
+	return function debounced() {
+		const args = arguments;
+		cancelDebounce(debounced);
+		debounced.id = requestAnimationFrame(() => {
+			fn(...args);
 		});
+	};
+}
 
-	useEventListener('scroll', handleScroll, false, window);
-
-	return scrollState;
+/**
+ * Cancels the scheduled debounced function.
+ * @param {function()} debounced
+ */
+function cancelDebounce(debounced) {
+	cancelAnimationFrame(debounced.id);
 }

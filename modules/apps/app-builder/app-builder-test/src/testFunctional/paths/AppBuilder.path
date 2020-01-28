@@ -294,6 +294,14 @@
 	<td>//td[contains(@class,'text-left')]//p[text()='${key_roleTitle}']/parent::td/following-sibling::td//input[@name='VIEW_DATA_RECORD']</td>
 	<td></td>
 </tr>
+ </tr>
+<!-- NAVBAR -->
+<tr>
+	<td>NAVBAR</td>
+	<td>//div[contains(@class,'navbar')]</td>
+	<td></td>
+</tr>
+
 
 </tbody>
 </table>

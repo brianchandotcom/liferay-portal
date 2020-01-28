@@ -104,7 +104,7 @@ public class ExportUtil {
 		FileEntry previewFileEntry = _getPreviewFileEntry(previewFileEntryId);
 
 		zipWriter.addEntry(
-			path + "/layout-template.json", jsonObject.toString());
+			path + "/page-definition.json", jsonObject.toString());
 
 		if (previewFileEntry != null) {
 			zipWriter.addEntry(

@@ -307,6 +307,50 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
 	}
 
+	@Test
+	public void testUpdateLayoutSEOEntryWithEmptyCustomTags() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAttribute(
+			_getDDMStructureId() + "ddmFormValues",
+			new String(
+				FileUtil.getBytes(
+					getClass(),
+					"dependencies/custom_meta_tags_ddm_form_values.json"),
+				StandardCharsets.UTF_8));
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				_layout.getLayoutId(), false,
+				Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+				true, Collections.singletonMap(LocaleUtil.US, "description"),
+				Collections.singletonMap(LocaleUtil.US, "image alt"), 12345,
+				true, Collections.singletonMap(LocaleUtil.US, "title"),
+				serviceContext);
+
+		Assert.assertNotEquals(0, layoutSEOEntry.getDDMStorageId());
+
+		serviceContext.setAttribute(
+			_getDDMStructureId() + "ddmFormValues",
+			new String(
+				FileUtil.getBytes(
+					getClass(),
+					"dependencies/empty_custom_meta_tags_ddm_form_values.json"),
+				StandardCharsets.UTF_8));
+
+		layoutSEOEntry = _layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			_layout.getLayoutId(), false,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
+			Collections.singletonMap(LocaleUtil.US, "description"),
+			Collections.singletonMap(LocaleUtil.US, "image alt"), 12345, true,
+			Collections.singletonMap(LocaleUtil.US, "title"), serviceContext);
+
+		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
+	}
+
 	private void _assertDDMFormFieldValueEquals(
 		String expected, DDMFormFieldValue ddmFormFieldValue) {
 

@@ -19,9 +19,6 @@ package com.liferay.document.library.web.internal.constants;
  */
 public class DLWebKeys {
 
-	public static final String DOCUMENT_LIBRARY_DDM_DISPLAY_CONTEXT =
-		"DOCUMENT_LIBRARY_DDM_DISPLAY_CONTEXT";
-
 	public static final String
 		DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT =
 			"DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT";
@@ -47,5 +44,9 @@ public class DLWebKeys {
 
 	public static final String DOCUMENT_LIBRARY_TRASH_UTIL =
 		"DOCUMENT_LIBRARY_TRASH_UTIL";
+
+	public static final String
+		DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT =
+			"DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT";
 
 }

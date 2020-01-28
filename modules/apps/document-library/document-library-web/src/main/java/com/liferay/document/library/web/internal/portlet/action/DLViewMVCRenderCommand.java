@@ -21,7 +21,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
-import com.liferay.document.library.web.internal.display.context.DDMDisplayContext;
+import com.liferay.document.library.web.internal.display.context.DLViewFileEntryMetadataSetsDisplayContext;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLPortletToolbarContributorRegistry;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
@@ -66,16 +66,17 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 		try {
 			renderRequest.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_DDM_DISPLAY_CONTEXT,
-				new DDMDisplayContext(
+				DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
+				_dlPortletToolbarContributorRegistry.
+					getDLPortletToolbarContributor());
+			renderRequest.setAttribute(
+				DLWebKeys.
+					DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT,
+				new DLViewFileEntryMetadataSetsDisplayContext(
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
 					_ddmDisplayRegistry, _ddmStructureLinkLocalService,
 					_ddmStructureService));
-			renderRequest.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
-				_dlPortletToolbarContributorRegistry.
-					getDLPortletToolbarContributor());
 
 			if (_pingFolderRepository(renderRequest, renderResponse)) {
 				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;

@@ -17,9 +17,10 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_DDM_DISPLAY_CONTEXT);
+DLViewFileEntryMetadataSetsDisplayContext
+	dLViewFileEntryMetadataSetsDisplayContext = (DLViewFileEntryMetadataSetsDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT);
 
-DDMDisplay ddmDisplay = ddmDisplayContext.getDDMDisplay();
+DDMDisplay ddmDisplay = dLViewFileEntryMetadataSetsDisplayContext.getDDMDisplay();
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 

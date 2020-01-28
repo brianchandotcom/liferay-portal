@@ -17,17 +17,18 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_DDM_DISPLAY_CONTEXT);
+DLViewFileEntryMetadataSetsDisplayContext
+	dLViewFileEntryMetadataSetsDisplayContext = (DLViewFileEntryMetadataSetsDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT);
 %>
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
-	clearResultsURL="<%= ddmDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= ddmDisplayContext.getSelectStructureCreationMenu() %>"
-	disabled="<%= ddmDisplayContext.isDisabledManagementBar() %>"
-	itemsTotal="<%= ddmDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= ddmDisplayContext.getStructureSearchActionURL() %>"
+	clearResultsURL="<%= dLViewFileEntryMetadataSetsDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= dLViewFileEntryMetadataSetsDisplayContext.getSelectStructureCreationMenu() %>"
+	disabled="<%= dLViewFileEntryMetadataSetsDisplayContext.isDisabledManagementBar() %>"
+	itemsTotal="<%= dLViewFileEntryMetadataSetsDisplayContext.getTotalItems() %>"
+	searchActionURL="<%= dLViewFileEntryMetadataSetsDisplayContext.getStructureSearchActionURL() %>"
 	searchFormName="fm"
 	selectable="<%= false %>"
 />
@@ -40,7 +41,7 @@ DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(DL
 	<liferay-ui:search-container
 		id="ddmStructures"
 		rowChecker="<%= new DDMStructureRowChecker(renderResponse) %>"
-		searchContainer="<%= ddmDisplayContext.getStructureSearch() %>"
+		searchContainer="<%= dLViewFileEntryMetadataSetsDisplayContext.getStructureSearch() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructure"

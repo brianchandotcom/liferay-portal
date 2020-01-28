@@ -60,9 +60,9 @@ import javax.portlet.PortletURL;
 /**
  * @author Rafael Praxedes
  */
-public class DDMDisplayContext {
+public class DLViewFileEntryMetadataSetsDisplayContext {
 
-	public DDMDisplayContext(
+	public DLViewFileEntryMetadataSetsDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		DDMDisplayRegistry ddmDisplayRegistry,

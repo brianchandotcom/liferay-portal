@@ -82,11 +82,7 @@ public class DepotEntryServiceTest {
 					String.valueOf(TestPropsValues.getCompanyId()),
 					DepotActionKeys.ADD_DEPOT_ENTRY);
 
-				DepotEntry depotEntry = _addDepotEntry(user);
-
-				Assert.assertNotNull(
-					_depotEntryService.getDepotEntry(
-						depotEntry.getDepotEntryId()));
+				Assert.assertNotNull(_addDepotEntry(user));
 			});
 	}
 

@@ -221,7 +221,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
-	private void _createDirectoryStub(File dir) throws IOException {
+	private void _createTouchFile(File dir) throws IOException {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
@@ -565,11 +565,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					try {
 						File destinationDir = workspaceExtension.getDockerDir();
 
-						_createDirectoryStub(
-							new File(destinationDir, "deploy"));
-						_createDirectoryStub(
-							new File(destinationDir, "scripts"));
-						_createDirectoryStub(new File(destinationDir, "work"));
+						_createTouchFile(new File(destinationDir, "deploy"));
+						_createTouchFile(new File(destinationDir, "scripts"));
+						_createTouchFile(new File(destinationDir, "work"));
 
 						File file = new File(
 							destinationDir, _LIFERAY_IMAGE_SETUP_SCRIPT);

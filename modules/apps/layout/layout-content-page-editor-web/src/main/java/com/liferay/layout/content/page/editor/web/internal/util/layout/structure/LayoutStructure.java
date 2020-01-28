@@ -335,15 +335,7 @@ public class LayoutStructure {
 		newLayoutStructureItem.setItemType(layoutStructureItem.getItemType());
 		newLayoutStructureItem.setParentItemId(parentItemId);
 
-		LayoutStructureItem parentLayoutStructureItem =
-			_layoutStructureItems.get(parentItemId);
-
-		List<String> parentLayoutChildrenItemIds =
-			parentLayoutStructureItem.getChildrenItemIds();
-
-		_updateLayoutStructure(
-			newLayoutStructureItem,
-			parentLayoutChildrenItemIds.indexOf(itemId) + 1);
+		_updateLayoutStructure(newLayoutStructureItem, -1);
 
 		for (String childrenItemId : layoutStructureItem.getChildrenItemIds()) {
 			duplicatedLayoutStructureItems.addAll(
@@ -369,8 +361,14 @@ public class LayoutStructure {
 		LayoutStructureItem parentLayoutStructureItem =
 			_layoutStructureItems.get(layoutStructureItem.getParentItemId());
 
-		parentLayoutStructureItem.addChildrenItem(
-			position, layoutStructureItem.getItemId());
+		if (position >= 0) {
+			parentLayoutStructureItem.addChildrenItem(
+				position, layoutStructureItem.getItemId());
+		}
+		else {
+			parentLayoutStructureItem.addChildrenItem(
+				layoutStructureItem.getItemId());
+		}
 	}
 
 	private static final int[][] _COLUMN_SIZES = {

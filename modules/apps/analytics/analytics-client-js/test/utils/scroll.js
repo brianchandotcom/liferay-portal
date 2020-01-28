@@ -12,8 +12,6 @@
  * details.
  */
 
-import {expect} from 'chai';
-
 import {ScrollTracker} from '../../src/utils/scroll';
 
 const blogElement = `<div data-analytics-asset-id="1" data-analytics-asset-type="blog" id="blog">
@@ -31,76 +29,135 @@ const divElement = `<div>
 </div>`;
 
 const getPage = () => {
-	document.body.innerHTML = '';
+	setInnerHTML(document.body, '');
 
 	const page = document.createElement('div');
+
 	page.style.width = '600px';
-	page.innerHTML =
-		divElement + divElement + blogElement + divElement + divElement;
+
+	setInnerHTML(
+		page,
+		divElement + divElement + blogElement + divElement + divElement
+	);
 
 	document.body.appendChild(page);
 
 	return page;
 };
 
-describe('getDepth from a element', () => {
-	it('returns the depth number from a element when the element has not yet been seen', () => {
-		const page = getPage();
-		const blogElementNode = page.querySelector('#blog');
-		const scroll = new ScrollTracker();
+describe('ScrollTracker', () => {
+	describe('getDepth() from an element', () => {
+		beforeEach(() => {
+			// Avoid: "Error: Not implemented: window.scrollTo."
+			window.scrollTo = (_x, y) => {
+				window.pageYOffset = y;
+			};
 
-		window.scrollTo(0, 0);
+			Object.defineProperty(document.body, 'clientHeight', {
+				value: 4000
+			});
+		});
 
-		expect(scroll.getDepth(blogElementNode)).to.equal(0);
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
 
-		page.innerHTML = '';
+		it('returns the depth number from a element when the element has not yet been seen', () => {
+			const page = getPage();
 
-		document.body.removeChild(page);
+			const blogElementNode = page.querySelector('#blog');
+
+			const scroll = new ScrollTracker();
+
+			jest.spyOn(
+				blogElementNode,
+				'getBoundingClientRect'
+			).mockImplementation(() => {
+				return {
+					bottom: 1600,
+					height: 500,
+					top: 1100
+				};
+			});
+
+			expect(scroll.getDepth(blogElementNode)).toBe(0);
+
+			setInnerHTML(page, '');
+
+			document.body.removeChild(page);
+		});
+
+		it('returns the depth number from a element when the element was completely viewed', () => {
+			const page = getPage();
+
+			const blogElementNode = page.querySelector('#blog');
+
+			const scroll = new ScrollTracker();
+
+			window.scrollTo(0, 5000);
+
+			jest.spyOn(
+				blogElementNode,
+				'getBoundingClientRect'
+			).mockImplementation(() => {
+				return {
+					bottom: -1100,
+					height: 500,
+					top: -1600
+				};
+			});
+
+			expect(scroll.getDepth(blogElementNode)).toBe(100);
+
+			setInnerHTML(page, '');
+
+			document.body.removeChild(page);
+		});
+
+		it('returns the depth number from a element when it is fully visible on the screen', () => {
+			const page = getPage();
+
+			const blogElementNode = page.querySelector('#blog');
+
+			const scroll = new ScrollTracker();
+
+			window.scrollTo(0, 2000);
+
+			jest.spyOn(
+				blogElementNode,
+				'getBoundingClientRect'
+			).mockImplementation(() => {
+				return {
+					bottom: 900,
+					height: 1000,
+					top: -100
+				};
+			});
+
+			const {bottom, top} = blogElementNode.getBoundingClientRect();
+
+			expect(top < 0 && bottom > 0).toBe(true);
+
+			expect(
+				scroll.getDepth(blogElementNode) > 0 &&
+					scroll.getDepth(blogElementNode) < 100
+			).toBe(true);
+
+			setInnerHTML(page, '');
+
+			document.body.removeChild(page);
+		});
 	});
 
-	it('returns the depth number from a element when the element was completely viewed', () => {
-		const page = getPage();
-		const blogElementNode = page.querySelector('#blog');
-		const scroll = new ScrollTracker();
+	describe('getDepth() from a page', () => {
+		it('returns the depth number from page when the element was completely viewed', () => {
+			getPage();
 
-		window.scrollTo(0, 5000);
+			const scroll = new ScrollTracker();
 
-		expect(scroll.getDepth(blogElementNode)).to.equal(100);
+			window.scrollTo(0, 5000);
 
-		page.innerHTML = '';
-
-		document.body.removeChild(page);
-	});
-
-	it('returns the depth number from a element when it is fully visible on the screen', () => {
-		const page = getPage();
-		const blogElementNode = page.querySelector('#blog');
-		const scroll = new ScrollTracker();
-
-		window.scrollTo(0, 2000);
-
-		const {bottom, top} = blogElementNode.getBoundingClientRect();
-
-		expect(top <= 0 && bottom > 0).to.equal(true);
-		expect(
-			scroll.getDepth(blogElementNode) >= 0 &&
-				scroll.getDepth(blogElementNode) <= 100
-		).to.equal(true);
-
-		page.innerHTML = '';
-
-		document.body.removeChild(page);
-	});
-});
-
-describe('getDepth from a page', () => {
-	it('returns the depth number from page when the element was completely viewed', () => {
-		getPage();
-
-		const scroll = new ScrollTracker();
-
-		window.scrollTo(0, 5000);
-
-		expect(scroll.getDepth()).to.equal(100);
+			expect(scroll.getDepth()).toBe(100);
+		});
 	});
 });

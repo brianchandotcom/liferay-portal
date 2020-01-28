@@ -12,6 +12,15 @@
  * details.
  */
 
-var context = require.context('.', true, /\.test\.js$/);
-
-context.keys().forEach(context);
+/**
+ * The analytics-client-js implementation relies on the non-standard
+ * `innerText` property, which jsdom does not implement, so we need this
+ * special helper in tests that sets `innerText` whenever `innerHTML` is
+ * set.
+ *
+ * @see https://github.com/jsdom/jsdom/issues/1245
+ */
+global.setInnerHTML = (element, html) => {
+	element.innerHTML = html;
+	element.innerText = element.textContent;
+};

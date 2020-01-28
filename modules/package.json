@@ -4,10 +4,7 @@
 		"babel-plugin-incremental-dom": "3.4.0",
 		"compass-mixins": "0.12.10",
 		"jsdoc": "3.6.3",
-		"karma": "4.0.0",
 		"liferay-frontend-common-css": "1.0.4",
-		"liferay-karma-alloy-config": "0.0.15",
-		"liferay-karma-config": "0.0.3",
 		"liferay-npm-scripts": "21.0.0",
 		"metal-jest-serializer": "2.0.0"
 	},

@@ -12,38 +12,32 @@
  * details.
  */
 
-import {assert} from 'chai';
-import fetchMock from 'fetch-mock';
-
 import AnalyticsClient from '../src/analytics';
 
-let Analytics;
-
 describe('Analytics Plugin Integration', () => {
+	let Analytics;
+
+	beforeEach(() => {
+		Analytics = AnalyticsClient.create();
+	});
+
 	afterEach(() => {
 		Analytics.reset();
 		Analytics.dispose();
 	});
 
-	beforeEach(() => {
-		fetchMock.mock('*', () => 200);
-		Analytics = AnalyticsClient.create();
-	});
-
-	describe('.registerPlugin', () => {
+	describe('registerPlugin()', () => {
 		it('is exposed as an Analytics static method', () => {
-			Analytics.registerPlugin.should.be.a('function');
+			expect(typeof Analytics.registerPlugin).toBe('function');
 		});
 
-		it('processes the given plugin and execute its initialisation logic', () => {
-			const plugin = analytics => {
-				analytics.should.be.equal(Analytics);
-			};
+		it('processes the given plugin and execute its initialization logic', () => {
+			const plugin = jest.fn();
 
-			const spy = sinon.spy(plugin);
+			Analytics.registerPlugin(plugin);
 
-			Analytics.registerPlugin(spy);
-			assert.isTrue(spy.calledOnce);
+			expect(plugin).toHaveBeenCalledWith(Analytics);
+			expect(plugin.mock.calls.length).toBe(1);
 		});
 	});
 });

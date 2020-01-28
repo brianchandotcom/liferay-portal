@@ -12,7 +12,6 @@
  * details.
  */
 
-import {expect} from 'chai';
 import fetchMock from 'fetch-mock';
 import dom from 'metal-dom';
 
@@ -22,24 +21,22 @@ const applicationId = 'Blog';
 
 const googleUrl = 'http://google.com/';
 
-let Analytics;
-
 const createBlogElement = () => {
 	const blogElement = document.createElement('div');
+
 	blogElement.dataset.analyticsAssetId = 'assetId';
 	blogElement.dataset.analyticsAssetTitle = 'Blog Title 1';
 	blogElement.dataset.analyticsAssetType = 'blog';
 	blogElement.innerText =
 		'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
+
 	document.body.appendChild(blogElement);
+
 	return blogElement;
 };
 
 describe('Blogs Plugin', () => {
-	afterEach(() => {
-		Analytics.reset();
-		Analytics.dispose();
-	});
+	let Analytics;
 
 	beforeEach(() => {
 		// Force attaching DOM Content Loaded event
@@ -49,7 +46,15 @@ describe('Blogs Plugin', () => {
 		});
 
 		fetchMock.mock('*', () => 200);
+
 		Analytics = AnalyticsClient.create();
+	});
+
+	afterEach(() => {
+		Analytics.reset();
+		Analytics.dispose();
+
+		fetchMock.restore();
 	});
 
 	describe('blogViewed event', () => {
@@ -57,22 +62,24 @@ describe('Blogs Plugin', () => {
 			const blogElement = createBlogElement();
 
 			const domContentLoaded = new Event('DOMContentLoaded');
+
 			document.dispatchEvent(domContentLoaded);
 
 			const events = Analytics.events.filter(
 				({eventId}) => eventId === 'blogViewed'
 			);
 
-			expect(events.length).to.be.at.least(
-				1,
-				'At least one event should have been fired'
-			);
+			expect(events.length).toBeGreaterThanOrEqual(1);
 
-			events[0].should.deep.include({
-				applicationId,
-				eventId: 'blogViewed'
-			});
-			expect(events[0].properties.entryId).to.equal('assetId');
+			expect(events[0]).toEqual(
+				expect.objectContaining({
+					applicationId,
+					eventId: 'blogViewed',
+					properties: expect.objectContaining({
+						entryId: 'assetId'
+					})
+				})
+			);
 
 			document.body.removeChild(blogElement);
 		});
@@ -83,49 +90,55 @@ describe('Blogs Plugin', () => {
 			const blogElement = createBlogElement();
 
 			const imageInsideBlog = document.createElement('img');
+
 			imageInsideBlog.src = googleUrl;
+
 			blogElement.appendChild(imageInsideBlog);
+
 			dom.triggerEvent(imageInsideBlog, 'click');
 
-			expect(Analytics.events.length).to.equal(1);
-
-			Analytics.events[0].should.deep.include({
-				applicationId,
-				eventId: 'blogClicked'
-			});
-
-			Analytics.events[0].properties.should.deep.include({
-				entryId: 'assetId',
-				src: googleUrl,
-				tagName: 'img'
-			});
+			expect(Analytics.events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'blogClicked',
+					properties: expect.objectContaining({
+						entryId: 'assetId',
+						src: googleUrl,
+						tagName: 'img'
+					})
+				})
+			]);
 
 			document.body.removeChild(blogElement);
 		});
 
 		it('is fired when clicking a link inside a blog', () => {
 			const blogElement = createBlogElement();
+
 			const text = 'Link inside a Blog';
 
 			const linkInsideBlog = document.createElement('a');
+
 			linkInsideBlog.href = googleUrl;
-			linkInsideBlog.innerHTML = text;
+
+			setInnerHTML(linkInsideBlog, text);
+
 			blogElement.appendChild(linkInsideBlog);
+
 			dom.triggerEvent(linkInsideBlog, 'click');
 
-			expect(Analytics.events.length).to.equal(1);
-
-			Analytics.events[0].should.deep.include({
-				applicationId,
-				eventId: 'blogClicked'
-			});
-
-			Analytics.events[0].properties.should.deep.include({
-				entryId: 'assetId',
-				href: googleUrl,
-				tagName: 'a',
-				text
-			});
+			expect(Analytics.events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'blogClicked',
+					properties: expect.objectContaining({
+						entryId: 'assetId',
+						href: googleUrl,
+						tagName: 'a',
+						text
+					})
+				})
+			]);
 
 			document.body.removeChild(blogElement);
 		});
@@ -134,22 +147,25 @@ describe('Blogs Plugin', () => {
 			const blogElement = createBlogElement();
 
 			const paragraphInsideBlog = document.createElement('p');
+
 			paragraphInsideBlog.href = googleUrl;
-			paragraphInsideBlog.innerHTML = 'Paragraph inside a Blog';
+
+			setInnerHTML(paragraphInsideBlog, 'Paragraph inside a Blog');
+
 			blogElement.appendChild(paragraphInsideBlog);
+
 			dom.triggerEvent(paragraphInsideBlog, 'click');
 
-			expect(Analytics.events.length).to.equal(1);
-
-			Analytics.events[0].should.deep.include({
-				applicationId,
-				eventId: 'blogClicked'
-			});
-
-			Analytics.events[0].properties.should.deep.include({
-				entryId: 'assetId',
-				tagName: 'p'
-			});
+			expect(Analytics.events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'blogClicked',
+					properties: expect.objectContaining({
+						entryId: 'assetId',
+						tagName: 'p'
+					})
+				})
+			]);
 
 			document.body.removeChild(blogElement);
 		});

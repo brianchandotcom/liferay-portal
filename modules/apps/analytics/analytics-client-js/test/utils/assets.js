@@ -12,11 +12,15 @@
  * details.
  */
 
-import {expect} from 'chai';
-
 import {getNumberOfWords} from '../../src/utils/assets';
 
-describe('getNumberOfWords', () => {
+describe('getNumberOfWords()', () => {
+	let document;
+
+	beforeEach(() => {
+		document = global.document;
+	});
+
 	it('returns the number of words', () => {
 		const content = {
 			description:
@@ -30,19 +34,21 @@ describe('getNumberOfWords', () => {
 						</header>`;
 
 		const element = document.createElement('div');
-		element.innerHTML = markup;
+
+		setInnerHTML(element, markup);
 
 		const numberOfWords = getNumberOfWords(element);
 
-		expect(numberOfWords).to.equal(20);
+		expect(numberOfWords).toBe(20);
 	});
 
 	it('returns 0 if the number of words is empty', () => {
 		const element = document.createElement('div');
 
 		element.innerText = '';
+
 		const numberOfWords = getNumberOfWords(element);
 
-		expect(numberOfWords).to.equal(0);
+		expect(numberOfWords).toBe(0);
 	});
 });

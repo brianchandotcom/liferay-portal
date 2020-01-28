@@ -12,20 +12,15 @@
  * details.
  */
 
-import {expect} from 'chai';
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../../src/analytics';
 
 const applicationId = 'Form';
 
-let Analytics;
-
 describe('Forms Plugin', () => {
-	afterEach(() => {
-		Analytics.reset();
-		Analytics.dispose();
-	});
+	let Analytics;
+	let duration;
 
 	beforeEach(() => {
 		// Force attaching DOM Content Loaded event
@@ -34,42 +29,78 @@ describe('Forms Plugin', () => {
 			writable: false
 		});
 
+		if (!global.performance.clearMarks) {
+			global.performance.clearMarks = () => {};
+		}
+
+		if (!global.performance.mark) {
+			global.performance.mark = () => {};
+		}
+
+		if (!global.performance.measure) {
+			global.performance.measure = () => {};
+		}
+
+		if (!global.performance.getEntriesByName) {
+			global.performance.getEntriesByName = () => [
+				{
+					duration: duration || 1
+				}
+			];
+		}
+
 		fetchMock.mock('*', () => 200);
+
 		Analytics = AnalyticsClient.create();
+	});
+
+	afterEach(() => {
+		Analytics.reset();
+		Analytics.dispose();
+
+		fetchMock.restore();
 	});
 
 	describe('formViewed event', () => {
 		it('is fired for every form on the page', () => {
 			const formWithAssetId = document.createElement('form');
+
 			formWithAssetId.dataset.analyticsAssetId = 'assetId';
 			formWithAssetId.dataset.analyticsAssetTitle = 'Form Title 1';
+
 			document.body.appendChild(formWithAssetId);
 
 			const formWithFormId = document.createElement('form');
+
 			formWithFormId.dataset.analyticsFormId = 'formId';
 			formWithFormId.dataset.analyticsAssetTitle = 'Form Title 2';
+
 			document.body.appendChild(formWithFormId);
 
 			const domContentLoaded = new Event('DOMContentLoaded');
+
 			document.dispatchEvent(domContentLoaded);
 
 			const events = Analytics.events.filter(
 				({eventId}) => eventId === 'formViewed'
 			);
 
-			expect(events.length).to.equal(2);
-
-			expect(events[1]).to.deep.include({
-				applicationId,
-				eventId: 'formViewed'
-			});
-			expect(events[1].properties.formId).to.equal('formId');
-
-			events[0].should.deep.include({
-				applicationId,
-				eventId: 'formViewed'
-			});
-			expect(events[0].properties.formId).to.equal('assetId');
+			expect(events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'formViewed',
+					properties: expect.objectContaining({
+						formId: 'assetId'
+					})
+				}),
+				expect.objectContaining({
+					applicationId,
+					eventId: 'formViewed',
+					properties: expect.objectContaining({
+						formId: 'formId'
+					})
+				})
+			]);
 
 			document.body.removeChild(formWithAssetId);
 			document.body.removeChild(formWithFormId);
@@ -79,42 +110,51 @@ describe('Forms Plugin', () => {
 	describe('formSubmitted event', () => {
 		it('is fired when a form is submitted', () => {
 			const form = document.createElement('form');
+
 			form.dataset.analyticsAssetId = 'formId';
 			form.dataset.analyticsAssetTitle = 'Form Title';
+
 			document.body.appendChild(form);
+
 			form.addEventListener('submit', event => event.preventDefault());
 
 			const event = new Event('submit', {
 				cancelable: true
 			});
+
 			form.dispatchEvent(event);
 
 			const events = Analytics.events.filter(
 				({eventId}) => eventId === 'formSubmitted'
 			);
 
-			expect(events.length).to.equal(1);
-
-			expect(events[0]).to.deep.include({
-				applicationId,
-				eventId: 'formSubmitted',
-				properties: {
-					formId: 'formId',
-					title: 'Form Title'
-				}
-			});
+			expect(events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'formSubmitted',
+					properties: {
+						formId: 'formId',
+						title: 'Form Title'
+					}
+				})
+			]);
 		});
 	});
 
 	describe('fieldFocused event', () => {
 		it('is fired whenever a field is focused', () => {
 			const form = document.createElement('form');
+
 			form.dataset.analyticsAssetId = 'formId';
 			form.dataset.analyticsAssetTitle = 'Form Title';
+
 			document.body.appendChild(form);
+
 			const field = document.createElement('input');
+
 			field.name = 'myField';
 			field.type = 'text';
+
 			form.appendChild(field);
 
 			field.dispatchEvent(new Event('focus'));
@@ -123,49 +163,61 @@ describe('Forms Plugin', () => {
 				({eventId}) => eventId === 'fieldFocused'
 			);
 
-			expect(events.length).to.equal(1);
-
-			expect(events[0]).to.deep.include({
-				applicationId,
-				eventId: 'fieldFocused',
-				properties: {
-					fieldName: 'myField',
-					formId: 'formId'
-				}
-			});
+			expect(events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'fieldFocused',
+					properties: {
+						fieldName: 'myField',
+						formId: 'formId'
+					}
+				})
+			]);
 		});
 	});
 
 	describe('fieldBlurred event', () => {
-		it('is fired whenever a field is blurred', done => {
+		it('is fired whenever a field is blurred', () => {
 			const form = document.createElement('form');
+
 			form.dataset.analyticsAssetId = 'formId';
 			form.dataset.analyticsAssetTitle = 'Form Title';
+
 			document.body.appendChild(form);
+
 			const field = document.createElement('input');
+
 			field.name = 'myField';
 			field.type = 'text';
+
 			form.appendChild(field);
 
 			field.dispatchEvent(new Event('focus'));
 
-			setTimeout(() => {
-				field.dispatchEvent(new Event('blur'));
+			// Fake timing.
+			duration = 1500;
 
-				const events = Analytics.events.filter(
-					({eventId}) => eventId === 'fieldBlurred'
-				);
+			field.dispatchEvent(new Event('blur'));
 
-				expect(events.length).to.equal(1);
+			const events = Analytics.events.filter(
+				({eventId}) => eventId === 'fieldBlurred'
+			);
 
-				events[0].applicationId.should.equal(applicationId);
-				events[0].eventId.should.equal('fieldBlurred');
-				events[0].properties.formId.should.equal('formId');
-				events[0].properties.fieldName.should.equal('myField');
-				events[0].properties.focusDuration.should.be.at.least(1500);
+			expect(events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'fieldBlurred',
+					properties: expect.objectContaining({
+						fieldName: 'myField',
+						focusDuration: expect.any(Number),
+						formId: 'formId'
+					})
+				})
+			]);
 
-				done();
-			}, 1500);
+			expect(events[0].properties.focusDuration).toBeGreaterThanOrEqual(
+				1500
+			);
 		});
 	});
 });

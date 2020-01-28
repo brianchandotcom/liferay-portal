@@ -12,7 +12,6 @@
  * details.
  */
 
-import {expect} from 'chai';
 import fetchMock from 'fetch-mock';
 import dom from 'metal-dom';
 
@@ -22,24 +21,22 @@ const applicationId = 'WebContent';
 
 const googleUrl = 'http://google.com/';
 
-let Analytics;
-
 const createWebContentElement = () => {
 	const webContentElement = document.createElement('div');
+
 	webContentElement.dataset.analyticsAssetId = 'assetId';
 	webContentElement.dataset.analyticsAssetTitle = 'Web Content Title 1';
 	webContentElement.dataset.analyticsAssetType = 'web-content';
 	webContentElement.innerText =
 		'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
+
 	document.body.appendChild(webContentElement);
+
 	return webContentElement;
 };
 
 describe('WebContent Plugin', () => {
-	afterEach(() => {
-		Analytics.reset();
-		Analytics.dispose();
-	});
+	let Analytics;
 
 	beforeEach(() => {
 		// Force attaching DOM Content Loaded event
@@ -49,7 +46,15 @@ describe('WebContent Plugin', () => {
 		});
 
 		fetchMock.mock('*', () => 200);
+
 		Analytics = AnalyticsClient.create();
+	});
+
+	afterEach(() => {
+		Analytics.reset();
+		Analytics.dispose();
+
+		fetchMock.restore();
 	});
 
 	describe('webContentViewed event', () => {
@@ -57,23 +62,24 @@ describe('WebContent Plugin', () => {
 			const webContentElement = createWebContentElement();
 
 			const domContentLoaded = new Event('DOMContentLoaded');
+
 			document.dispatchEvent(domContentLoaded);
 
 			const events = Analytics.events.filter(
 				({eventId}) => eventId === 'webContentViewed'
 			);
 
-			expect(events.length).to.be.at.least(
-				1,
-				'At least one event should have been fired'
+			expect(events.length).toBeGreaterThanOrEqual(1);
+
+			expect(events[0]).toEqual(
+				expect.objectContaining({
+					applicationId,
+					eventId: 'webContentViewed',
+					properties: expect.objectContaining({
+						articleId: 'assetId'
+					})
+				})
 			);
-
-			events[0].should.deep.include({
-				applicationId,
-				eventId: 'webContentViewed'
-			});
-
-			expect(events[0].properties.articleId).to.equal('assetId');
 
 			document.body.removeChild(webContentElement);
 		});
@@ -84,49 +90,55 @@ describe('WebContent Plugin', () => {
 			const webContentElement = createWebContentElement();
 
 			const imageInsideWebContent = document.createElement('img');
+
 			imageInsideWebContent.src = googleUrl;
+
 			webContentElement.appendChild(imageInsideWebContent);
+
 			dom.triggerEvent(imageInsideWebContent, 'click');
 
-			expect(Analytics.events.length).to.equal(1);
-
-			Analytics.events[0].should.deep.include({
-				applicationId,
-				eventId: 'webContentClicked'
-			});
-
-			Analytics.events[0].properties.should.deep.include({
-				articleId: 'assetId',
-				src: googleUrl,
-				tagName: 'img'
-			});
+			expect(Analytics.events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'webContentClicked',
+					properties: expect.objectContaining({
+						articleId: 'assetId',
+						src: googleUrl,
+						tagName: 'img'
+					})
+				})
+			]);
 
 			document.body.removeChild(webContentElement);
 		});
 
 		it('is fired when clicking a link inside a webContent', () => {
 			const webContentElement = createWebContentElement();
+
 			const text = 'Link inside a WebContent';
 
 			const linkInsideWebContent = document.createElement('a');
+
 			linkInsideWebContent.href = googleUrl;
-			linkInsideWebContent.innerHTML = text;
+
+			setInnerHTML(linkInsideWebContent, text);
+
 			webContentElement.appendChild(linkInsideWebContent);
+
 			dom.triggerEvent(linkInsideWebContent, 'click');
 
-			expect(Analytics.events.length).to.equal(1);
-
-			Analytics.events[0].should.deep.include({
-				applicationId,
-				eventId: 'webContentClicked'
-			});
-
-			Analytics.events[0].properties.should.deep.include({
-				articleId: 'assetId',
-				href: googleUrl,
-				tagName: 'a',
-				text
-			});
+			expect(Analytics.events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'webContentClicked',
+					properties: expect.objectContaining({
+						articleId: 'assetId',
+						href: googleUrl,
+						tagName: 'a',
+						text
+					})
+				})
+			]);
 
 			document.body.removeChild(webContentElement);
 		});
@@ -135,23 +147,28 @@ describe('WebContent Plugin', () => {
 			const webContentElement = createWebContentElement();
 
 			const paragraphInsideWebContent = document.createElement('p');
+
 			paragraphInsideWebContent.href = googleUrl;
-			paragraphInsideWebContent.innerHTML =
-				'Paragraph inside a WebContent';
+
+			setInnerHTML(
+				paragraphInsideWebContent,
+				'Paragraph inside a WebContent'
+			);
+
 			webContentElement.appendChild(paragraphInsideWebContent);
+
 			dom.triggerEvent(paragraphInsideWebContent, 'click');
 
-			expect(Analytics.events.length).to.equal(1);
-
-			Analytics.events[0].should.deep.include({
-				applicationId,
-				eventId: 'webContentClicked'
-			});
-
-			Analytics.events[0].properties.should.deep.include({
-				articleId: 'assetId',
-				tagName: 'p'
-			});
+			expect(Analytics.events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'webContentClicked',
+					properties: expect.objectContaining({
+						articleId: 'assetId',
+						tagName: 'p'
+					})
+				})
+			]);
 
 			document.body.removeChild(webContentElement);
 		});

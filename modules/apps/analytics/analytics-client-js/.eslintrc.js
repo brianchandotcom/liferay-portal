@@ -14,11 +14,7 @@
 
 module.exports = {
 	globals: {
-		__dirname: true,
-		global: true,
-		module: true,
-		require: true,
-		sinon: true
+		global: true
 	},
 	rules: {
 		'liferay-portal/no-global-fetch': 'off'

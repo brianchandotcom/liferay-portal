@@ -12,12 +12,9 @@
  * details.
  */
 
-import {assert, expect} from 'chai';
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../src/analytics';
-
-let Analytics;
 
 /**
  * Sends dummy events to test the Analytics API
@@ -26,63 +23,64 @@ let Analytics;
 function sendDummyEvents(eventsNumber = 5) {
 	for (let i = 0; i <= eventsNumber; i++) {
 		const applicationId = 'test';
+
 		const eventId = i;
+
 		const properties = {
 			a: 1,
 			b: 2,
 			c: 3
 		};
 
-		Analytics.send(eventId, applicationId, properties);
+		global.Analytics.send(eventId, applicationId, properties);
 	}
 }
 
 describe('Analytics MiddleWare Integration', () => {
-	afterEach(() => {
-		Analytics.reset();
-		Analytics.dispose();
-		fetchMock.restore();
-	});
+	let Analytics;
 
 	beforeEach(() => {
 		fetchMock.mock('*', () => 200);
+
 		Analytics = AnalyticsClient.create();
 	});
 
-	describe('.registerMiddleware', () => {
+	afterEach(() => {
+		Analytics.reset();
+		Analytics.dispose();
+
+		fetchMock.restore();
+	});
+
+	describe('registerMiddleware()', () => {
 		it('is exposed as an Analytics static method', () => {
-			Analytics.registerMiddleware.should.be.a('function');
+			expect(typeof Analytics.registerMiddleware).toBe('function');
 		});
 
-		it('processes the given middleware', () => {
-			const middleware = (req, analytics) => {
-				analytics.should.be.equal(Analytics);
-				req.should.be.a('object');
-
+		it('processes the given middleware', async () => {
+			const middleware = jest.fn((req, _analytics) => {
 				return req;
-			};
+			});
 
-			const spy = sinon.spy(middleware);
-
-			Analytics.registerMiddleware(spy);
+			Analytics.registerMiddleware(middleware);
 
 			sendDummyEvents();
 
-			return Analytics.flush()
-				.then(() => {
-					assert.isTrue(spy.calledOnce);
-				})
-				.catch(e => {
-					console.error('caught', e);
-				});
+			await Analytics.flush();
+
+			expect(middleware).toHaveBeenCalledWith(
+				expect.objectContaining({context: expect.anything()}),
+				Analytics
+			);
 		});
 	});
 
 	describe('default middlewares', () => {
-		it('includes document metadata by default', done => {
+		it('includes document metadata by default', async () => {
 			let body = null;
 
 			fetchMock.restore();
+
 			fetchMock.mock('*', (url, opts) => {
 				body = JSON.parse(opts.body);
 
@@ -91,23 +89,21 @@ describe('Analytics MiddleWare Integration', () => {
 
 			sendDummyEvents();
 
-			Analytics.flush()
-				.then(() => {
-					expect(body.context).to.include.all.keys(
-						'canonicalUrl',
-						'contentLanguageId',
-						'description',
-						'keywords',
-						'languageId',
-						'referrer',
-						'title',
-						'url',
-						'userAgent'
-					);
+			await Analytics.flush();
 
-					done();
+			expect(body.context).toEqual(
+				expect.objectContaining({
+					canonicalUrl: expect.anything(),
+					contentLanguageId: expect.anything(),
+					description: expect.anything(),
+					keywords: expect.anything(),
+					languageId: expect.anything(),
+					referrer: expect.anything(),
+					title: expect.anything(),
+					url: expect.anything(),
+					userAgent: expect.anything()
 				})
-				.catch(done);
+			);
 		});
 	});
 });

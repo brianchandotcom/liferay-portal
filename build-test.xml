@@ -7658,6 +7658,7 @@ mail.send.blacklist=
 
 mail.session.jndi.name=
 
+module.framework.properties.dependency.manager.sync.timeout=1800
 module.framework.properties.initial.system.check.enabled=true
 
 sprite.root.dir=/tmp/sprite

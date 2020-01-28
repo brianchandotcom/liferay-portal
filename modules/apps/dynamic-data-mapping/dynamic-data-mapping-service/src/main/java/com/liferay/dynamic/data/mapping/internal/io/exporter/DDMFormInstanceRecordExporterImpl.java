@@ -35,10 +35,12 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServic
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.comparator.FormInstanceVersionVersionComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,6 +53,7 @@ import java.time.format.FormatStyle;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -249,7 +252,9 @@ public class DDMFormInstanceRecordExporterImpl
 		stream.map(
 			this::getNontransientDDMFormFieldsMap
 		).forEach(
-			ddmFormFields::putAll
+			map -> map.forEach(
+				(key, ddmFormField) -> ddmFormFields.putIfAbsent(
+					key, ddmFormField))
 		);
 
 		return ddmFormFields;
@@ -275,6 +280,12 @@ public class DDMFormInstanceRecordExporterImpl
 		List<DDMFormInstanceVersion> ddmFormInstanceVersions =
 			ddmFormInstanceVersionLocalService.getFormInstanceVersions(
 				ddmFormInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		ddmFormInstanceVersions = ListUtil.copy(ddmFormInstanceVersions);
+
+		Collections.sort(
+			ddmFormInstanceVersions,
+			new FormInstanceVersionVersionComparator());
 
 		List<DDMStructureVersion> ddmStructureVersions = new ArrayList<>();
 

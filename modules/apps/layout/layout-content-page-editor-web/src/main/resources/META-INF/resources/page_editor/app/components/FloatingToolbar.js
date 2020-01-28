@@ -68,7 +68,7 @@ export default function FloatingToolbar({
 
 	return (
 		show && (
-			<>
+			<div onClick={event => event.stopPropagation()}>
 				{buttons.length &&
 					createPortal(
 						<div className="p-2 position-absolute" ref={popoverRef}>
@@ -117,7 +117,7 @@ export default function FloatingToolbar({
 						/>,
 						document.body
 					)}
-			</>
+			</div>
 		)
 	);
 }

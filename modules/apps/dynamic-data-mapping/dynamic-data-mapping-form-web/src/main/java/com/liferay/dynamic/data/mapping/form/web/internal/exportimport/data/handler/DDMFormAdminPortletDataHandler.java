@@ -64,19 +64,20 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 	protected void activate() {
 		setDataLocalized(true);
 		setDeletionSystemEventStagedModelTypes(
+			new StagedModelType(DDMDataProviderInstance.class),
 			new StagedModelType(DDMFormInstanceRecord.class),
 			new StagedModelType(DDMFormInstance.class));
 
 		PortletDataHandlerControl[] formsPortletDataHandlerControlChildren = {
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "ddm-data-provider", true, false, null,
-				DDMDataProviderInstance.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "form-entries", true, false, null,
 				DDMFormInstanceRecord.class.getName())
 		};
 
 		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "ddm-data-provider", true, false, null,
+				DDMDataProviderInstance.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "forms", true, false,
 				formsPortletDataHandlerControlChildren,
@@ -225,12 +226,20 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
 				new StagedModelType[] {
+					new StagedModelType(
+						DDMDataProviderInstance.class.getName()),
 					new StagedModelType(DDMFormInstance.class.getName()),
 					new StagedModelType(DDMFormInstanceRecord.class.getName())
 				});
 
 			return;
 		}
+
+		ActionableDynamicQuery ddmDataProviderInstanceActionableDynamicQuery =
+			_ddmDataProviderInstanceStagedModelRepository.
+				getExportActionableDynamicQuery(portletDataContext);
+
+		ddmDataProviderInstanceActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery formInstanceActionableDynamicQuery =
 			_formInstanceStagedModelRepository.getExportActionableDynamicQuery(

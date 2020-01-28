@@ -14,19 +14,20 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
-import {useEventListener} from 'frontend-js-react-web';
+import {useIsMounted} from 'frontend-js-react-web';
+import {Align} from 'metal-position';
 import React, {
 	useLayoutEffect,
 	useRef,
 	useState,
+	useEffect,
 	useMemo,
-	useCallback,
-	useEffect
+	useCallback
 } from 'react';
 import {createPortal} from 'react-dom';
 
-import useWindowWidth from '../../core/hooks/useWindowWidth';
-import ConfigurationPanel, {alignElement} from './ConfigurationPanel';
+import debounceRAF from '../../core/debounceRAF';
+import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../config/constants/floatingToolbarConfigurations';
 import {useIsActive} from './Controls';
 
 export default function FloatingToolbar({
@@ -35,78 +36,128 @@ export default function FloatingToolbar({
 	itemRef,
 	onButtonClick = () => {}
 }) {
-	const isActive = useIsActive();
-	const popoverRef = useRef(null);
-	const show = isActive(item.itemId);
-	const wrapperContainerEl = useMemo(
-		() => document.getElementById('wrapper'),
-		[]
+	const isMounted = useIsMounted();
+	const [panelId, setPanelId] = useState(null);
+	const panelRef = useRef(null);
+	const show = useIsActive()(item.itemId);
+	const toolbarRef = useRef(null);
+	const [wrapperScrollPosition, setWrapperScrollPosition] = useState(0);
+	const [windowWidth, setWindowWidth] = useState(0);
+
+	const PanelComponent = useMemo(
+		() => FLOATING_TOOLBAR_CONFIGURATIONS[panelId] || null,
+		[panelId]
 	);
 
-	const [activeConfigurationPanel, setActiveConfigurationPanel] = useState(
-		null
+	const alignElement = useCallback(
+		(elementRef, anchorRef, callback) => {
+			if (
+				isMounted() &&
+				show &&
+				elementRef.current &&
+				anchorRef.current
+			) {
+				Align.align(
+					elementRef.current,
+					anchorRef.current,
+					getElementAlign(elementRef.current, anchorRef.current),
+					false
+				);
+
+				if (callback) {
+					requestAnimationFrame(() => {
+						if (isMounted() && show) {
+							callback();
+						}
+					});
+				}
+			}
+		},
+		[isMounted, show]
 	);
 
-	const windowWidth = useWindowWidth();
+	const handleButtonClick = useCallback(
+		(buttonId, newPanelId) => {
+			onButtonClick(buttonId);
 
-	const alignFloatingToolbar = useCallback(() => {
-		if (show && itemRef.current && popoverRef.current) {
-			alignElement(popoverRef.current, itemRef.current);
-		}
-	}, [show, itemRef, popoverRef]);
-
-	useEventListener(
-		'scroll',
-		() => alignFloatingToolbar(),
-		true,
-		wrapperContainerEl
+			if (newPanelId) {
+				if (newPanelId === panelId) {
+					setPanelId(null);
+				} else {
+					setPanelId(newPanelId);
+				}
+			}
+		},
+		[onButtonClick, panelId]
 	);
 
-	useLayoutEffect(() => alignFloatingToolbar(), [
-		alignFloatingToolbar,
-		windowWidth
+	useEffect(() => {
+		const wrapper = document.getElementById('wrapper');
+
+		const handleWindowResize = debounceRAF(() => {
+			setWindowWidth(window.innerWidth);
+		});
+
+		const handleWrapperScroll = debounceRAF(() => {
+			setWrapperScrollPosition(wrapper.scrollTop);
+		});
+
+		window.addEventListener('resize', handleWindowResize);
+		wrapper.addEventListener('scroll', handleWrapperScroll);
+
+		return () => {
+			window.removeEventListener('resize', handleWindowResize);
+			wrapper.removeEventListener('scroll', handleWrapperScroll);
+		};
+	}, []);
+
+	useLayoutEffect(() => {
+		alignElement(toolbarRef, itemRef, () => {
+			alignElement(panelRef, toolbarRef);
+		});
+	}, [
+		alignElement,
+		itemRef,
+		panelId,
+		show,
+		windowWidth,
+		wrapperScrollPosition
 	]);
 
 	useEffect(() => {
-		if (activeConfigurationPanel && !show) {
-			setActiveConfigurationPanel(null);
+		if (panelId && !show) {
+			setPanelId(null);
 		}
-	}, [activeConfigurationPanel, show]);
+	}, [panelId, show]);
 
 	return (
 		show && (
 			<div onClick={event => event.stopPropagation()}>
 				{buttons.length &&
 					createPortal(
-						<div className="p-2 position-absolute" ref={popoverRef}>
+						<div className="p-2 position-fixed" ref={toolbarRef}>
 							<div className="popover position-static">
 								<div className="p-2 popover-body">
 									{buttons.map(button => (
-										<FloatingToolbarButton
-											active={
-												button.panelId ===
-												activeConfigurationPanel
+										<ClayButtonWithIcon
+											borderless
+											className={classNames({
+												active:
+													button.panelId === panelId,
+												'lfr-portal-tooltip':
+													button.title
+											})}
+											displayType="secondary"
+											key={button.id}
+											onClick={() =>
+												handleButtonClick(
+													button.id,
+													button.panelId
+												)
 											}
-											key={button.panelId}
-											onClick={(id, panelId) => {
-												onButtonClick(id);
-
-												if (panelId) {
-													if (
-														activeConfigurationPanel ===
-														panelId
-													) {
-														setActiveConfigurationPanel(
-															null
-														);
-													} else {
-														setActiveConfigurationPanel(
-															panelId
-														);
-													}
-												}
-											}}
-											{...button}
+											small
+											symbol={button.icon}
+											title={button.title}
 										/>
 									))}
 								</div>
@@ -115,13 +166,16 @@ export default function FloatingToolbar({
 						document.body
 					)}
 
-				{activeConfigurationPanel &&
+				{PanelComponent &&
 					createPortal(
-						<ConfigurationPanel
-							configurationPanel={activeConfigurationPanel}
-							item={item}
-							popoverRef={popoverRef}
-						/>,
+						<div
+							className="fragments-editor__floating-toolbar-panel p-2 position-fixed"
+							ref={panelRef}
+						>
+							<div className="p-3 popover popover-scrollable position-static">
+								<PanelComponent item={item} />
+							</div>
+						</div>,
 						document.body
 					)}
 			</div>
@@ -129,32 +183,75 @@ export default function FloatingToolbar({
 	);
 }
 
-function FloatingToolbarButton({
-	active,
-	icon,
-	id,
-	onClick,
-	panelId,
-	title,
-	...otherProps
-}) {
-	return (
-		<ClayButtonWithIcon
-			borderless
-			className={classNames({
-				active,
-				'lfr-portal-tooltip': title
-			})}
-			displayType="secondary"
-			onClick={() => {
-				if (onClick) {
-					onClick(id, panelId);
-				}
-			}}
-			small
-			symbol={icon}
-			title={title}
-			{...otherProps}
-		/>
-	);
-}
+/**
+ * @type {object}
+ */
+const ELEMENT_AVAILABLE_POSITIONS = {
+	bottom: [
+		Align.Bottom,
+		Align.BottomCenter,
+		Align.BottomLeft,
+		Align.BottomRight
+	],
+
+	left: [Align.BottomLeft, Align.Left, Align.LeftCenter, Align.TopRight],
+	right: [Align.BottomRight, Align.Right, Align.RightCenter, Align.TopRight],
+	top: [Align.Top, Align.TopCenter, Align.TopLeft, Align.TopRight]
+};
+
+/**
+ * @type {object}
+ */
+const ELEMENT_POSITION = {
+	bottom: {
+		left: Align.BottomLeft,
+		right: Align.BottomRight
+	},
+
+	top: {
+		left: Align.TopLeft,
+		right: Align.TopRight
+	}
+};
+
+/**
+ * Gets a suggested align of an element to an anchor, following this logic:
+ * - Vertically, if the element fits at bottom, it's placed there, otherwise
+ *   it is placed at top.
+ * - Horizontally, if the element fits at right, it's placed there, otherwise
+ *   it is placed at left.
+ * @param {HTMLElement|null} element
+ * @param {HTMLElement|null} anchor
+ * @private
+ * @return {number} Selected align
+ * @review
+ */
+const getElementAlign = (element, anchor) => {
+	const alignFits = (align, availableAlign) =>
+		availableAlign.includes(
+			Align.suggestAlignBestRegion(element, anchor, align).position
+		);
+
+	const anchorRect = anchor.getBoundingClientRect();
+	const elementRect = element.getBoundingClientRect();
+	const horizontal =
+		anchorRect.right - elementRect.width > 0 ? 'right' : 'left';
+
+	const fallbackVertical = 'top';
+	let vertical = 'bottom';
+
+	if (
+		!alignFits(
+			ELEMENT_POSITION[vertical][horizontal],
+			ELEMENT_AVAILABLE_POSITIONS[vertical]
+		) &&
+		alignFits(
+			ELEMENT_POSITION[fallbackVertical][horizontal],
+			ELEMENT_AVAILABLE_POSITIONS[fallbackVertical]
+		)
+	) {
+		vertical = fallbackVertical;
+	}
+
+	return ELEMENT_POSITION[vertical][horizontal];
+};

@@ -21,11 +21,14 @@ import com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Map;
@@ -53,6 +56,9 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
+
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			liferayPortletRequest);
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
@@ -70,7 +76,27 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(_httpServletRequest, "orderByType", "asc");
+		if (_orderByType != null) {
+			return _orderByType;
+		}
+
+		String orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType");
+
+		if (Validator.isNotNull(orderByType)) {
+			_portalPreferences.setValue(
+				_TAGLIB_UI_REPOSITORY_ENTRY_BROWSER_PAGE_NAMESPACE,
+				"order-by-type", orderByType);
+		}
+		else {
+			orderByType = _portalPreferences.getValue(
+				_TAGLIB_UI_REPOSITORY_ENTRY_BROWSER_PAGE_NAMESPACE,
+				"order-by-type", "asc");
+		}
+
+		_orderByType = orderByType;
+
+		return _orderByType;
 	}
 
 	public PortletURL getSearchURL() throws PortletException {
@@ -139,7 +165,27 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	private String _getOrderByCol() {
-		return ParamUtil.getString(_httpServletRequest, "orderByCol", "title");
+		if (_orderByCol != null) {
+			return _orderByCol;
+		}
+
+		String orderByCol = ParamUtil.getString(
+			_httpServletRequest, "orderByCol");
+
+		if (Validator.isNotNull(orderByCol)) {
+			_portalPreferences.setValue(
+				_TAGLIB_UI_REPOSITORY_ENTRY_BROWSER_PAGE_NAMESPACE,
+				"order-by-col", orderByCol);
+		}
+		else {
+			orderByCol = _portalPreferences.getValue(
+				_TAGLIB_UI_REPOSITORY_ENTRY_BROWSER_PAGE_NAMESPACE,
+				"order-by-col", "title");
+		}
+
+		_orderByCol = orderByCol;
+
+		return _orderByCol;
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
@@ -181,9 +227,16 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 			"liferay-item-selector:repository-entry-browser:portletURL");
 	}
 
+	private static final String
+		_TAGLIB_UI_REPOSITORY_ENTRY_BROWSER_PAGE_NAMESPACE =
+			"taglib_ui_repository_entry_browse_page";
+
 	private final PortletURL _currentURLObj;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _orderByCol;
+	private String _orderByType;
+	private final PortalPreferences _portalPreferences;
 
 }

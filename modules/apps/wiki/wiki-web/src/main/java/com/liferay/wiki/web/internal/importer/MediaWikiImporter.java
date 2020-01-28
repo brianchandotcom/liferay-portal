@@ -281,36 +281,38 @@ public class MediaWikiImporter implements WikiImporter {
 
 		String frontPageTitle = MapUtil.getString(options, OPTIONS_FRONT_PAGE);
 
-		if (Validator.isNotNull(frontPageTitle)) {
-			frontPageTitle = _wikiPageTitleValidator.normalize(frontPageTitle);
+		if (Validator.isNull(frontPageTitle)) {
+			return;
+		}
 
-			try {
-				int count = _wikiPageLocalService.getPagesCount(
-					node.getNodeId(), frontPageTitle, true);
+		frontPageTitle = _wikiPageTitleValidator.normalize(frontPageTitle);
 
-				if (count > 0) {
-					ServiceContext serviceContext = new ServiceContext();
+		try {
+			int count = _wikiPageLocalService.getPagesCount(
+				node.getNodeId(), frontPageTitle, true);
 
-					serviceContext.setAddGroupPermissions(true);
-					serviceContext.setAddGuestPermissions(true);
+			if (count > 0) {
+				ServiceContext serviceContext = new ServiceContext();
 
-					_wikiPageLocalService.renamePage(
-						userId, node.getNodeId(), frontPageTitle,
-						_wikiGroupServiceConfiguration.frontPageName(), false,
-						serviceContext);
-				}
+				serviceContext.setAddGroupPermissions(true);
+				serviceContext.setAddGuestPermissions(true);
+
+				_wikiPageLocalService.renamePage(
+					userId, node.getNodeId(), frontPageTitle,
+					_wikiGroupServiceConfiguration.frontPageName(), false,
+					serviceContext);
 			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					StringBundler sb = new StringBundler(4);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(4);
 
-					sb.append("Could not move ");
-					sb.append(_wikiGroupServiceConfiguration.frontPageName());
-					sb.append(" to the title provided: ");
-					sb.append(frontPageTitle);
+				sb.append("Could not move ");
+				sb.append(_wikiGroupServiceConfiguration.frontPageName());
+				sb.append(" to the title provided: ");
+				sb.append(frontPageTitle);
 
-					_log.warn(sb.toString(), exception);
-				}
+				_log.warn(sb.toString(), exception);
 			}
 		}
 	}

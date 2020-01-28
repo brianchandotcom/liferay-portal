@@ -378,39 +378,40 @@ public class GoExecutor {
 
 		File executableDir = _getExecutableDir();
 
-		if (executableDir != null) {
-			for (String pathKey : _PATH_KEYS) {
-				String path = environment.get(pathKey);
-
-				if (Validator.isNull(path)) {
-					continue;
-				}
-
-				path =
-					executableDir.getAbsolutePath() + File.pathSeparator + path;
-
-				environment.put(pathKey, path);
-			}
-
-			environment.put("GOBIN", executableDir.getAbsolutePath());
-			environment.put("GOROOT", getGoDir().getAbsolutePath());
-
-			File goDir = getGoDir();
-
-			File goParentDir = goDir.getParentFile();
-
-			if (goParentDir == null) {
-				goParentDir = _project.getProjectDir();
-			}
-
-			File dir = new File(goParentDir, "go-cache");
-
-			environment.put("GOCACHE", dir.getAbsolutePath());
-
-			dir = new File(goParentDir, "go-work");
-
-			environment.put("GOPATH", dir.getAbsolutePath());
+		if (executableDir == null) {
+			return;
 		}
+
+		for (String pathKey : _PATH_KEYS) {
+			String path = environment.get(pathKey);
+
+			if (Validator.isNull(path)) {
+				continue;
+			}
+
+			path = executableDir.getAbsolutePath() + File.pathSeparator + path;
+
+			environment.put(pathKey, path);
+		}
+
+		environment.put("GOBIN", executableDir.getAbsolutePath());
+		environment.put("GOROOT", getGoDir().getAbsolutePath());
+
+		File goDir = getGoDir();
+
+		File goParentDir = goDir.getParentFile();
+
+		if (goParentDir == null) {
+			goParentDir = _project.getProjectDir();
+		}
+
+		File dir = new File(goParentDir, "go-cache");
+
+		environment.put("GOCACHE", dir.getAbsolutePath());
+
+		dir = new File(goParentDir, "go-work");
+
+		environment.put("GOPATH", dir.getAbsolutePath());
 	}
 
 	private static final String _NO_PROXY_KEY = "no_proxy";

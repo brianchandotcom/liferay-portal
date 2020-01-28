@@ -416,37 +416,39 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 
 		assetClassName = DLFileEntry.class.getName();
 
-		if (assetClassName.equals(className)) {
-			Object assetObject = assetRenderer.getAssetObject();
+		if (!assetClassName.equals(className)) {
+			return;
+		}
 
-			if (assetObject instanceof FileEntry) {
-				FileEntry fileEntry = (FileEntry)assetObject;
+		Object assetObject = assetRenderer.getAssetObject();
 
-				similarResultsDocumentDisplayContext.setIconId(
-					fileEntry.getIconCssClass());
+		if (assetObject instanceof FileEntry) {
+			FileEntry fileEntry = (FileEntry)assetObject;
 
-				try {
-					thumbnailURLString = DLURLHelperUtil.getThumbnailSrc(
-						fileEntry, _themeDisplay);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"File entry thumbnail url exception and contains " +
-								"file classPK " + classPK);
-					}
-				}
+			similarResultsDocumentDisplayContext.setIconId(
+				fileEntry.getIconCssClass());
 
-				similarResultsDocumentDisplayContext.setThumbnailURLString(
-					thumbnailURLString);
+			try {
+				thumbnailURLString = DLURLHelperUtil.getThumbnailSrc(
+					fileEntry, _themeDisplay);
 			}
-			else {
-				DLFileEntry dlFileEntry =
-					(DLFileEntry)assetRenderer.getAssetObject();
-
-				similarResultsDocumentDisplayContext.setIconId(
-					dlFileEntry.getIconCssClass());
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"File entry thumbnail url exception and contains " +
+							"file classPK " + classPK);
+				}
 			}
+
+			similarResultsDocumentDisplayContext.setThumbnailURLString(
+				thumbnailURLString);
+		}
+		else {
+			DLFileEntry dlFileEntry =
+				(DLFileEntry)assetRenderer.getAssetObject();
+
+			similarResultsDocumentDisplayContext.setIconId(
+				dlFileEntry.getIconCssClass());
 		}
 	}
 

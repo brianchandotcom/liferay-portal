@@ -127,44 +127,45 @@ public abstract class BaseWorkflowMetricsTestCase {
 			return;
 		}
 
-		if (parameters != null) {
-			if ((parameters.length % 2) != 0) {
-				throw new IllegalArgumentException(
-					"Parameters length is not an even number");
-			}
-
-			IdempotentRetryAssert.retryAssert(
-				15, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
-				() -> {
-					CountSearchRequest countSearchRequest =
-						new CountSearchRequest();
-
-					countSearchRequest.setIndexNames(indexName);
-
-					BooleanQuery booleanQuery = queries.booleanQuery();
-
-					for (int i = 0; i < parameters.length; i = i + 2) {
-						booleanQuery.addMustQueryClauses(
-							queries.term(
-								String.valueOf(parameters[i]),
-								parameters[i + 1]));
-					}
-
-					countSearchRequest.setQuery(booleanQuery);
-
-					countSearchRequest.setTypes(indexType);
-
-					CountSearchResponse countSearchResponse =
-						searchEngineAdapter.execute(countSearchRequest);
-
-					Assert.assertEquals(
-						indexName + " " + indexType + " " +
-							countSearchResponse.getSearchRequestString(),
-						expectedCount, countSearchResponse.getCount());
-
-					return null;
-				});
+		if (parameters == null) {
+			return;
 		}
+
+		if ((parameters.length % 2) != 0) {
+			throw new IllegalArgumentException(
+				"Parameters length is not an even number");
+		}
+
+		IdempotentRetryAssert.retryAssert(
+			15, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
+			() -> {
+				CountSearchRequest countSearchRequest =
+					new CountSearchRequest();
+
+				countSearchRequest.setIndexNames(indexName);
+
+				BooleanQuery booleanQuery = queries.booleanQuery();
+
+				for (int i = 0; i < parameters.length; i = i + 2) {
+					booleanQuery.addMustQueryClauses(
+						queries.term(
+							String.valueOf(parameters[i]), parameters[i + 1]));
+				}
+
+				countSearchRequest.setQuery(booleanQuery);
+
+				countSearchRequest.setTypes(indexType);
+
+				CountSearchResponse countSearchResponse =
+					searchEngineAdapter.execute(countSearchRequest);
+
+				Assert.assertEquals(
+					indexName + " " + indexType + " " +
+						countSearchResponse.getSearchRequestString(),
+					expectedCount, countSearchResponse.getCount());
+
+				return null;
+			});
 	}
 
 	protected void retryAssertCount(

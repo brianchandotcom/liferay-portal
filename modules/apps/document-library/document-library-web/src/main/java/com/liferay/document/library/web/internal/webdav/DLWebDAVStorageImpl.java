@@ -1154,39 +1154,40 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 		long fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 
-		if (fileEntryTypeId > 0) {
-			serviceContext.setAttribute(
-				"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
+		if (fileEntryTypeId <= 0) {
+			return;
+		}
 
-			DLFileVersion dlFileVersion =
-				_dlFileVersionLocalService.getLatestFileVersion(
-					fileEntry.getFileEntryId(), !dlFileEntry.isCheckedOut());
+		serviceContext.setAttribute(
+			"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
 
-			DLFileEntryType dlFileEntryType =
-				_dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
+		DLFileVersion dlFileVersion =
+			_dlFileVersionLocalService.getLatestFileVersion(
+				fileEntry.getFileEntryId(), !dlFileEntry.isCheckedOut());
 
-			List<DDMStructure> ddmStructures =
-				dlFileEntryType.getDDMStructures();
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
 
-			for (DDMStructure ddmStructure : ddmStructures) {
-				DLFileEntryMetadata dlFileEntryMetadata =
-					_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
-						ddmStructure.getStructureId(),
-						dlFileVersion.getFileVersionId());
+		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
-				if (dlFileEntryMetadata == null) {
-					continue;
-				}
+		for (DDMStructure ddmStructure : ddmStructures) {
+			DLFileEntryMetadata dlFileEntryMetadata =
+				_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+					ddmStructure.getStructureId(),
+					dlFileVersion.getFileVersionId());
 
-				DDMFormValues ddmFormValues =
-					StorageEngineManagerUtil.getDDMFormValues(
-						dlFileEntryMetadata.getDDMStorageId());
-
-				serviceContext.setAttribute(
-					DDMFormValues.class.getName() + StringPool.POUND +
-						ddmStructure.getStructureId(),
-					ddmFormValues);
+			if (dlFileEntryMetadata == null) {
+				continue;
 			}
+
+			DDMFormValues ddmFormValues =
+				StorageEngineManagerUtil.getDDMFormValues(
+					dlFileEntryMetadata.getDDMStorageId());
+
+			serviceContext.setAttribute(
+				DDMFormValues.class.getName() + StringPool.POUND +
+					ddmStructure.getStructureId(),
+				ddmFormValues);
 		}
 	}
 

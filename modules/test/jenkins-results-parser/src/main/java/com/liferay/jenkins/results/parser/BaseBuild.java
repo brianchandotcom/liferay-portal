@@ -3068,42 +3068,43 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setInvocationURL(String invocationURL) {
-		if (getBuildURL() == null) {
-			try {
-				invocationURL = JenkinsResultsParserUtil.decode(invocationURL);
-			}
-			catch (UnsupportedEncodingException unsupportedEncodingException) {
-				throw new IllegalArgumentException(
-					"Unable to decode " + invocationURL,
-					unsupportedEncodingException);
-			}
+		if (getBuildURL() != null) {
+			return;
+		}
 
-			Matcher invocationURLMatcher = invocationURLPattern.matcher(
-				invocationURL);
+		try {
+			invocationURL = JenkinsResultsParserUtil.decode(invocationURL);
+		}
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new IllegalArgumentException(
+				"Unable to decode " + invocationURL,
+				unsupportedEncodingException);
+		}
 
-			if (!invocationURLMatcher.find()) {
-				throw new RuntimeException("Invalid invocation URL");
-			}
+		Matcher invocationURLMatcher = invocationURLPattern.matcher(
+			invocationURL);
 
-			setJobName(invocationURLMatcher.group("jobName"));
-			setJenkinsMaster(
-				new JenkinsMaster(invocationURLMatcher.group("master")));
+		if (!invocationURLMatcher.find()) {
+			throw new RuntimeException("Invalid invocation URL");
+		}
 
-			loadParametersFromQueryString(invocationURL);
+		setJobName(invocationURLMatcher.group("jobName"));
+		setJenkinsMaster(
+			new JenkinsMaster(invocationURLMatcher.group("master")));
 
-			setStatus("starting");
+		loadParametersFromQueryString(invocationURL);
 
-			if (JenkinsResultsParserUtil.isCINode()) {
-				invocationURL = JenkinsResultsParserUtil.getLocalURL(
-					invocationURL);
-			}
+		setStatus("starting");
 
-			try {
-				JenkinsResultsParserUtil.toString(invocationURL, false);
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
+		if (JenkinsResultsParserUtil.isCINode()) {
+			invocationURL = JenkinsResultsParserUtil.getLocalURL(invocationURL);
+		}
+
+		try {
+			JenkinsResultsParserUtil.toString(invocationURL, false);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 

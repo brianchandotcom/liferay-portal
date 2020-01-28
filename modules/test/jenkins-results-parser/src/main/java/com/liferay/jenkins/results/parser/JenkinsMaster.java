@@ -235,36 +235,38 @@ public class JenkinsMaster implements Comparable<JenkinsMaster> {
 
 		_queueCount = 0;
 
-		if (queueJSONObject.has("items")) {
-			JSONArray itemsJSONArray = queueJSONObject.getJSONArray("items");
+		if (!queueJSONObject.has("items")) {
+			return;
+		}
 
-			for (int i = 0; i < itemsJSONArray.length(); i++) {
-				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+		JSONArray itemsJSONArray = queueJSONObject.getJSONArray("items");
 
-				if (itemJSONObject.has("task")) {
-					JSONObject taskJSONObject = itemJSONObject.getJSONObject(
-						"task");
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-					String taskName = taskJSONObject.getString("name");
+			if (itemJSONObject.has("task")) {
+				JSONObject taskJSONObject = itemJSONObject.getJSONObject(
+					"task");
 
-					if (taskName.equals("verification-node")) {
-						continue;
-					}
+				String taskName = taskJSONObject.getString("name");
+
+				if (taskName.equals("verification-node")) {
+					continue;
 				}
-
-				if (itemJSONObject.has("why")) {
-					String why = itemJSONObject.optString("why");
-
-					if (why.startsWith("There are no nodes") ||
-						why.contains("already in progress") ||
-						why.endsWith("is offline")) {
-
-						continue;
-					}
-				}
-
-				_queueCount++;
 			}
+
+			if (itemJSONObject.has("why")) {
+				String why = itemJSONObject.optString("why");
+
+				if (why.startsWith("There are no nodes") ||
+					why.contains("already in progress") ||
+					why.endsWith("is offline")) {
+
+					continue;
+				}
+			}
+
+			_queueCount++;
 		}
 	}
 

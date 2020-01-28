@@ -128,36 +128,37 @@ public class AnalyzeIndexRequestExecutorImpl
 		AnalyzeIndexResponse analyzeIndexResponse,
 		DetailAnalyzeResponse detailAnalyzeResponse) {
 
-		if (detailAnalyzeResponse != null) {
-			StringOutputStream stringOutputStream = new StringOutputStream();
+		if (detailAnalyzeResponse == null) {
+			return;
+		}
 
-			OutputStreamStreamOutput outputStreamStreamOutput =
-				new OutputStreamStreamOutput(stringOutputStream);
+		StringOutputStream stringOutputStream = new StringOutputStream();
 
+		OutputStreamStreamOutput outputStreamStreamOutput =
+			new OutputStreamStreamOutput(stringOutputStream);
+
+		try {
+			detailAnalyzeResponse.writeTo(outputStreamStreamOutput);
+
+			outputStreamStreamOutput.flush();
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException, ioException);
+			}
+		}
+		finally {
 			try {
-				detailAnalyzeResponse.writeTo(outputStreamStreamOutput);
-
-				outputStreamStreamOutput.flush();
+				outputStreamStreamOutput.close();
 			}
 			catch (IOException ioException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(ioException, ioException);
 				}
 			}
-			finally {
-				try {
-					outputStreamStreamOutput.close();
-				}
-				catch (IOException ioException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(ioException, ioException);
-					}
-				}
-			}
-
-			analyzeIndexResponse.setAnalysisDetails(
-				stringOutputStream.toString());
 		}
+
+		analyzeIndexResponse.setAnalysisDetails(stringOutputStream.toString());
 	}
 
 	@Reference(unbind = "-")

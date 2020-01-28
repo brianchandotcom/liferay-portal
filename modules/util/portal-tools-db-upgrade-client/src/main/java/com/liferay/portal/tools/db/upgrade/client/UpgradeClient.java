@@ -562,116 +562,115 @@ public class UpgradeClient {
 		String value = _portalUpgradeDatabaseProperties.getProperty(
 			"jdbc.default.driverClassName");
 
-		if ((value == null) || value.isEmpty()) {
-			String response = null;
+		if ((value != null) && !value.isEmpty()) {
+			return;
+		}
 
-			Database dataSource = null;
+		String response = null;
 
-			while (dataSource == null) {
-				System.out.print("[ ");
+		Database dataSource = null;
 
-				for (String database : _databases.keySet()) {
-					System.out.print(database + " ");
-				}
+		while (dataSource == null) {
+			System.out.print("[ ");
 
-				System.out.println("]");
-
-				System.out.println("Please enter your database (mysql): ");
-
-				response = _consoleReader.readLine();
-
-				if (response.isEmpty()) {
-					response = "mysql";
-				}
-
-				dataSource = _databases.get(response);
-
-				if (dataSource == null) {
-					System.err.println(
-						response + " is an unsupported database.");
-				}
+			for (String database : _databases.keySet()) {
+				System.out.print(database + " ");
 			}
 
-			System.out.println(
-				"Please enter your database JDBC driver class name (" +
-					dataSource.getClassName() + "): ");
+			System.out.println("]");
+
+			System.out.println("Please enter your database (mysql): ");
 
 			response = _consoleReader.readLine();
 
-			if (!response.isEmpty()) {
-				dataSource.setClassName(response);
+			if (response.isEmpty()) {
+				response = "mysql";
 			}
 
-			System.out.println(
-				"Please enter your database JDBC driver protocol (" +
-					dataSource.getProtocol() + "): ");
+			dataSource = _databases.get(response);
 
-			response = _consoleReader.readLine();
-
-			if (!response.isEmpty()) {
-				dataSource.setProtocol(response);
+			if (dataSource == null) {
+				System.err.println(response + " is an unsupported database.");
 			}
+		}
 
-			System.out.println(
-				"Please enter your database host (" + dataSource.getHost() +
-					"): ");
+		System.out.println(
+			"Please enter your database JDBC driver class name (" +
+				dataSource.getClassName() + "): ");
 
-			response = _consoleReader.readLine();
+		response = _consoleReader.readLine();
 
-			if (!response.isEmpty()) {
-				dataSource.setHost(response);
-			}
+		if (!response.isEmpty()) {
+			dataSource.setClassName(response);
+		}
 
-			String port = null;
+		System.out.println(
+			"Please enter your database JDBC driver protocol (" +
+				dataSource.getProtocol() + "): ");
 
-			if (dataSource.getPort() > 0) {
-				port = String.valueOf(dataSource.getPort());
+		response = _consoleReader.readLine();
+
+		if (!response.isEmpty()) {
+			dataSource.setProtocol(response);
+		}
+
+		System.out.println(
+			"Please enter your database host (" + dataSource.getHost() + "): ");
+
+		response = _consoleReader.readLine();
+
+		if (!response.isEmpty()) {
+			dataSource.setHost(response);
+		}
+
+		String port = null;
+
+		if (dataSource.getPort() > 0) {
+			port = String.valueOf(dataSource.getPort());
+		}
+		else {
+			port = "none";
+		}
+
+		System.out.println("Please enter your database port (" + port + "): ");
+
+		response = _consoleReader.readLine();
+
+		if (!response.isEmpty()) {
+			if (response.equals("none")) {
+				dataSource.setPort(0);
 			}
 			else {
-				port = "none";
+				dataSource.setPort(Integer.parseInt(response));
 			}
-
-			System.out.println(
-				"Please enter your database port (" + port + "): ");
-
-			response = _consoleReader.readLine();
-
-			if (!response.isEmpty()) {
-				if (response.equals("none")) {
-					dataSource.setPort(0);
-				}
-				else {
-					dataSource.setPort(Integer.parseInt(response));
-				}
-			}
-
-			System.out.println(
-				"Please enter your database name (" +
-					dataSource.getDatabaseName() + "): ");
-
-			response = _consoleReader.readLine();
-
-			if (!response.isEmpty()) {
-				dataSource.setDatabaseName(response);
-			}
-
-			System.out.println("Please enter your database username: ");
-
-			String username = _consoleReader.readLine();
-
-			System.out.println("Please enter your database password: ");
-
-			String password = _consoleReader.readLine('*');
-
-			_portalUpgradeDatabaseProperties.setProperty(
-				"jdbc.default.driverClassName", dataSource.getClassName());
-			_portalUpgradeDatabaseProperties.setProperty(
-				"jdbc.default.password", password);
-			_portalUpgradeDatabaseProperties.setProperty(
-				"jdbc.default.url", dataSource.getURL());
-			_portalUpgradeDatabaseProperties.setProperty(
-				"jdbc.default.username", username);
 		}
+
+		System.out.println(
+			"Please enter your database name (" + dataSource.getDatabaseName() +
+				"): ");
+
+		response = _consoleReader.readLine();
+
+		if (!response.isEmpty()) {
+			dataSource.setDatabaseName(response);
+		}
+
+		System.out.println("Please enter your database username: ");
+
+		String username = _consoleReader.readLine();
+
+		System.out.println("Please enter your database password: ");
+
+		String password = _consoleReader.readLine('*');
+
+		_portalUpgradeDatabaseProperties.setProperty(
+			"jdbc.default.driverClassName", dataSource.getClassName());
+		_portalUpgradeDatabaseProperties.setProperty(
+			"jdbc.default.password", password);
+		_portalUpgradeDatabaseProperties.setProperty(
+			"jdbc.default.url", dataSource.getURL());
+		_portalUpgradeDatabaseProperties.setProperty(
+			"jdbc.default.username", username);
 	}
 
 	private void _verifyPortalUpgradeExtProperties() throws IOException {

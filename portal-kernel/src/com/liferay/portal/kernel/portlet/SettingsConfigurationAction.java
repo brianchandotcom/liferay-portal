@@ -158,35 +158,37 @@ public abstract class SettingsConfigurationAction
 
 		postProcess(themeDisplay.getCompanyId(), actionRequest, settings);
 
-		if (SessionErrors.isEmpty(actionRequest)) {
-			try {
-				modifiableSettings.store();
-			}
-			catch (ValidatorException validatorException) {
-				SessionErrors.add(
-					actionRequest, ValidatorException.class.getName(),
-					validatorException);
+		if (!SessionErrors.isEmpty(actionRequest)) {
+			return;
+		}
 
-				return;
-			}
+		try {
+			modifiableSettings.store();
+		}
+		catch (ValidatorException validatorException) {
+			SessionErrors.add(
+				actionRequest, ValidatorException.class.getName(),
+				validatorException);
 
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-				portletResource);
+			return;
+		}
 
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+			portletResource);
 
-			String redirect = PortalUtil.escapeRedirect(
-				ParamUtil.getString(actionRequest, "redirect"));
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
 
-			if (Validator.isNotNull(redirect)) {
-				actionResponse.sendRedirect(redirect);
-			}
+		String redirect = PortalUtil.escapeRedirect(
+			ParamUtil.getString(actionRequest, "redirect"));
+
+		if (Validator.isNotNull(redirect)) {
+			actionResponse.sendRedirect(redirect);
 		}
 	}
 

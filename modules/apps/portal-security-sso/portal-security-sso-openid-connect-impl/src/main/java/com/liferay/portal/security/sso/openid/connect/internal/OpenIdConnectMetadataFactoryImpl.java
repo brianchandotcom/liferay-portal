@@ -170,43 +170,45 @@ public class OpenIdConnectMetadataFactoryImpl
 	protected synchronized void refresh(long time)
 		throws OpenIdConnectServiceException.ProviderException {
 
-		if (needsRefresh(time)) {
-			StopWatch stopWatch = new StopWatch();
+		if (!needsRefresh(time)) {
+			return;
+		}
 
-			stopWatch.start();
+		StopWatch stopWatch = new StopWatch();
 
-			try {
-				HTTPRequest httpRequest = new HTTPRequest(
-					HTTPRequest.Method.GET, _discoveryEndPointURL);
+		stopWatch.start();
 
-				HTTPResponse httpResponse = httpRequest.send();
+		try {
+			HTTPRequest httpRequest = new HTTPRequest(
+				HTTPRequest.Method.GET, _discoveryEndPointURL);
 
-				JSONObject jsonObject = httpResponse.getContentAsJSONObject();
+			HTTPResponse httpResponse = httpRequest.send();
 
-				_oidcProviderMetadata = OIDCProviderMetadata.parse(jsonObject);
+			JSONObject jsonObject = httpResponse.getContentAsJSONObject();
 
-				refreshClientMetadata(_oidcProviderMetadata);
+			_oidcProviderMetadata = OIDCProviderMetadata.parse(jsonObject);
 
-				_lastRefreshTimestamp = time;
-			}
-			catch (IOException | ParseException exception) {
-				throw new OpenIdConnectServiceException.ProviderException(
+			refreshClientMetadata(_oidcProviderMetadata);
+
+			_lastRefreshTimestamp = time;
+		}
+		catch (IOException | ParseException exception) {
+			throw new OpenIdConnectServiceException.ProviderException(
+				StringBundler.concat(
+					"Unable to get metadata for OpenId Connect provider ",
+					_providerName, " from ", _discoveryEndPointURL, ": ",
+					exception.getMessage()),
+				exception);
+		}
+		finally {
+			stopWatch.stop();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
 					StringBundler.concat(
-						"Unable to get metadata for OpenId Connect provider ",
-						_providerName, " from ", _discoveryEndPointURL, ": ",
-						exception.getMessage()),
-					exception);
-			}
-			finally {
-				stopWatch.stop();
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Getting OpenId Connect provider metadata from ",
-							_discoveryEndPointURL, " took ",
-							stopWatch.getTime(), "ms"));
-				}
+						"Getting OpenId Connect provider metadata from ",
+						_discoveryEndPointURL, " took ", stopWatch.getTime(),
+						"ms"));
 			}
 		}
 	}

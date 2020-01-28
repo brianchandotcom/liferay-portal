@@ -1058,36 +1058,38 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		File file = project.file("bnd.bnd");
 
-		if (file.exists()) {
-			UTF8Properties utf8Properties = new UTF8Properties();
+		if (!file.exists()) {
+			return;
+		}
 
-			try (Processor processor = new Processor()) {
-				utf8Properties.load(file, processor);
+		UTF8Properties utf8Properties = new UTF8Properties();
 
-				Enumeration<Object> keys = utf8Properties.keys();
+		try (Processor processor = new Processor()) {
+			utf8Properties.load(file, processor);
 
-				while (keys.hasMoreElements()) {
-					String key = (String)keys.nextElement();
+			Enumeration<Object> keys = utf8Properties.keys();
 
-					String value = utf8Properties.getProperty(key);
+			while (keys.hasMoreElements()) {
+				String key = (String)keys.nextElement();
 
-					if (Objects.equals(key, Constants.INCLUDERESOURCE) &&
-						value.contains("[0-9]*")) {
+				String value = utf8Properties.getProperty(key);
 
-						value = value.replace("[0-9]*", "[0-9.]*");
+				if (Objects.equals(key, Constants.INCLUDERESOURCE) &&
+					value.contains("[0-9]*")) {
 
-						logger.lifecycle(
-							"DEPRECATED: Update \"{}\" to \"{}\" to remove " +
-								"this message",
-							Constants.INCLUDERESOURCE, value);
-					}
+					value = value.replace("[0-9]*", "[0-9.]*");
 
-					bundleExtension.put(key, value);
+					logger.lifecycle(
+						"DEPRECATED: Update \"{}\" to \"{}\" to remove this " +
+							"message",
+						Constants.INCLUDERESOURCE, value);
 				}
+
+				bundleExtension.put(key, value);
 			}
-			catch (Exception exception) {
-				throw new GradleException("Could not read " + file, exception);
-			}
+		}
+		catch (Exception exception) {
+			throw new GradleException("Could not read " + file, exception);
 		}
 	}
 

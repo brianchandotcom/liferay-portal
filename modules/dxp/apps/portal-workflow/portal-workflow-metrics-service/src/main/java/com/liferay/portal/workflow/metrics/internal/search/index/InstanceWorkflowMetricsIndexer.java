@@ -166,57 +166,55 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 	public void updateDocument(Document document) {
 		super.updateDocument(document);
 
-		if (GetterUtil.getBoolean(document.get("completed"))) {
-			BooleanQuery booleanQuery = queries.booleanQuery();
-
-			booleanQuery.addMustQueryClauses(
-				queries.term(
-					"companyId", GetterUtil.getLong(document.get("companyId"))),
-				queries.term(
-					"instanceId",
-					GetterUtil.getLong(document.get("instanceId"))));
-
-			_slaInstanceResultWorkflowMetricsIndexer.updateDocuments(
-				documentImpl -> new DocumentImpl() {
-					{
-						try {
-							addDateSortable(
-								"completionDate",
-								document.getDate("completionDate"));
-						}
-						catch (ParseException parseException) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(parseException, parseException);
-							}
-						}
-
-						addKeyword("instanceCompleted", Boolean.TRUE);
-						addKeyword(
-							Field.UID, documentImpl.getString(Field.UID));
-					}
-				},
-				booleanQuery);
-
-			_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
-				documentImpl -> new DocumentImpl() {
-					{
-						addKeyword("instanceCompleted", Boolean.TRUE);
-						addKeyword(
-							Field.UID, documentImpl.getString(Field.UID));
-					}
-				},
-				booleanQuery);
-
-			_tokenWorkflowMetricsIndexer.updateDocuments(
-				documentImpl -> new DocumentImpl() {
-					{
-						addKeyword("instanceCompleted", Boolean.TRUE);
-						addKeyword(
-							Field.UID, documentImpl.getString(Field.UID));
-					}
-				},
-				booleanQuery);
+		if (!GetterUtil.getBoolean(document.get("completed"))) {
+			return;
 		}
+
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		booleanQuery.addMustQueryClauses(
+			queries.term(
+				"companyId", GetterUtil.getLong(document.get("companyId"))),
+			queries.term(
+				"instanceId", GetterUtil.getLong(document.get("instanceId"))));
+
+		_slaInstanceResultWorkflowMetricsIndexer.updateDocuments(
+			documentImpl -> new DocumentImpl() {
+				{
+					try {
+						addDateSortable(
+							"completionDate",
+							document.getDate("completionDate"));
+					}
+					catch (ParseException parseException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(parseException, parseException);
+						}
+					}
+
+					addKeyword("instanceCompleted", Boolean.TRUE);
+					addKeyword(Field.UID, documentImpl.getString(Field.UID));
+				}
+			},
+			booleanQuery);
+
+		_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
+			documentImpl -> new DocumentImpl() {
+				{
+					addKeyword("instanceCompleted", Boolean.TRUE);
+					addKeyword(Field.UID, documentImpl.getString(Field.UID));
+				}
+			},
+			booleanQuery);
+
+		_tokenWorkflowMetricsIndexer.updateDocuments(
+			documentImpl -> new DocumentImpl() {
+				{
+					addKeyword("instanceCompleted", Boolean.TRUE);
+					addKeyword(Field.UID, documentImpl.getString(Field.UID));
+				}
+			},
+			booleanQuery);
 	}
 
 	private Map<Locale, String> _createAssetTitleLocalizationMap(

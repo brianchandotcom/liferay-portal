@@ -149,45 +149,47 @@ public abstract class BaseSalesforceClientImpl implements SalesforceClient {
 			_connectorConfig.setUsername(_userName);
 		}
 
-		if (_debugEnabled) {
-			_connectorConfig.setPrettyPrintXml(true);
-			_connectorConfig.setTraceMessage(true);
+		if (!_debugEnabled) {
+			return;
+		}
 
-			String baseDirName = System.getProperty("default.liferay.home");
+		_connectorConfig.setPrettyPrintXml(true);
+		_connectorConfig.setTraceMessage(true);
 
-			if (baseDirName == null) {
-				baseDirName = System.getProperty("user.dir");
-			}
+		String baseDirName = System.getProperty("default.liferay.home");
 
-			String filePathName = baseDirName + "/logs/salesforce.log";
+		if (baseDirName == null) {
+			baseDirName = System.getProperty("user.dir");
+		}
 
-			if (_logger.isInfoEnabled()) {
-				_logger.info("Salesforce log file: {}", filePathName);
-			}
+		String filePathName = baseDirName + "/logs/salesforce.log";
 
-			Path filePath = Paths.get(filePathName);
+		if (_logger.isInfoEnabled()) {
+			_logger.info("Salesforce log file: {}", filePathName);
+		}
 
-			if (!Files.exists(filePath)) {
-				try {
-					Path parentFilePath = filePath.getParent();
+		Path filePath = Paths.get(filePathName);
 
-					if (!Files.exists(parentFilePath)) {
-						Files.createDirectories(parentFilePath);
-					}
-
-					Files.createFile(filePath);
-				}
-				catch (IOException ioException) {
-					_logger.error("Unable to create log file", ioException);
-				}
-			}
-
+		if (!Files.exists(filePath)) {
 			try {
-				_connectorConfig.setTraceFile(filePathName);
+				Path parentFilePath = filePath.getParent();
+
+				if (!Files.exists(parentFilePath)) {
+					Files.createDirectories(parentFilePath);
+				}
+
+				Files.createFile(filePath);
 			}
-			catch (FileNotFoundException fileNotFoundException) {
-				_logger.error("File not found", fileNotFoundException);
+			catch (IOException ioException) {
+				_logger.error("Unable to create log file", ioException);
 			}
+		}
+
+		try {
+			_connectorConfig.setTraceFile(filePathName);
+		}
+		catch (FileNotFoundException fileNotFoundException) {
+			_logger.error("File not found", fileNotFoundException);
 		}
 	}
 

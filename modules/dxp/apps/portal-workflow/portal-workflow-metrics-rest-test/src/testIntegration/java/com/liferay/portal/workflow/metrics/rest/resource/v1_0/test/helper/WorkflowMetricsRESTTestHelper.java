@@ -862,40 +862,41 @@ public class WorkflowMetricsRESTTestHelper {
 			return;
 		}
 
-		if (parameters != null) {
-			if ((parameters.length % 2) != 0) {
-				throw new IllegalArgumentException(
-					"Parameters length is not an even number");
-			}
-
-			IdempotentRetryAssert.retryAssert(
-				10, TimeUnit.SECONDS,
-				() -> {
-					CountSearchRequest countSearchRequest =
-						new CountSearchRequest();
-
-					countSearchRequest.setIndexNames(indexName);
-
-					BooleanQuery booleanQuery = _queries.booleanQuery();
-
-					for (int i = 0; i < parameters.length; i = i + 2) {
-						booleanQuery.addMustQueryClauses(
-							_queries.term(
-								String.valueOf(parameters[i]),
-								parameters[i + 1]));
-					}
-
-					countSearchRequest.setQuery(booleanQuery);
-
-					CountSearchResponse countSearchResponse =
-						_searchEngineAdapter.execute(countSearchRequest);
-
-					Assert.assertEquals(
-						expectedCount, countSearchResponse.getCount());
-
-					return null;
-				});
+		if (parameters == null) {
+			return;
 		}
+
+		if ((parameters.length % 2) != 0) {
+			throw new IllegalArgumentException(
+				"Parameters length is not an even number");
+		}
+
+		IdempotentRetryAssert.retryAssert(
+			10, TimeUnit.SECONDS,
+			() -> {
+				CountSearchRequest countSearchRequest =
+					new CountSearchRequest();
+
+				countSearchRequest.setIndexNames(indexName);
+
+				BooleanQuery booleanQuery = _queries.booleanQuery();
+
+				for (int i = 0; i < parameters.length; i = i + 2) {
+					booleanQuery.addMustQueryClauses(
+						_queries.term(
+							String.valueOf(parameters[i]), parameters[i + 1]));
+				}
+
+				countSearchRequest.setQuery(booleanQuery);
+
+				CountSearchResponse countSearchResponse =
+					_searchEngineAdapter.execute(countSearchRequest);
+
+				Assert.assertEquals(
+					expectedCount, countSearchResponse.getCount());
+
+				return null;
+			});
 	}
 
 	private void _retryAssertCount(String indexName, Object... parameters)

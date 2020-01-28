@@ -93,47 +93,48 @@ public class DeleteSegmentsExperienceMVCActionCommand
 		String fragmentEntryLinkIdsString = ParamUtil.getString(
 			actionRequest, "fragmentEntryLinkIds");
 
-		if (Validator.isNotNull(fragmentEntryLinkIdsString)) {
-			long[] toFragmentEntryLinkIds = JSONUtil.toLongArray(
-				JSONFactoryUtil.createJSONArray(fragmentEntryLinkIdsString));
+		if (Validator.isNull(fragmentEntryLinkIdsString)) {
+			return;
+		}
 
-			for (long fragmentEntryLinkId : toFragmentEntryLinkIds) {
-				FragmentEntryLink fragmentEntryLink =
-					_fragmentEntryLinkLocalService.getFragmentEntryLink(
-						fragmentEntryLinkId);
+		long[] toFragmentEntryLinkIds = JSONUtil.toLongArray(
+			JSONFactoryUtil.createJSONArray(fragmentEntryLinkIdsString));
 
-				List<String> portletIds =
-					_portletRegistry.getFragmentEntryLinkPortletIds(
-						fragmentEntryLink);
+		for (long fragmentEntryLinkId : toFragmentEntryLinkIds) {
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentEntryLinkId);
 
-				for (String portletId : portletIds) {
-					String portletIdWithExperience =
-						SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-							portletId, segmentsExperienceId);
+			List<String> portletIds =
+				_portletRegistry.getFragmentEntryLinkPortletIds(
+					fragmentEntryLink);
 
-					PortletPreferences jxPortletPreferences =
-						_portletPreferencesLocalService.fetchPreferences(
-							fragmentEntryLink.getCompanyId(),
-							PortletKeys.PREFS_OWNER_ID_DEFAULT,
-							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-							fragmentEntryLink.getClassPK(),
-							portletIdWithExperience);
+			for (String portletId : portletIds) {
+				String portletIdWithExperience =
+					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+						portletId, segmentsExperienceId);
 
-					if (jxPortletPreferences != null) {
-						_portletPreferencesLocalService.
-							deletePortletPreferences(
-								PortletKeys.PREFS_OWNER_ID_DEFAULT,
-								PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-								fragmentEntryLink.getClassPK(),
-								portletIdWithExperience);
-					}
+				PortletPreferences jxPortletPreferences =
+					_portletPreferencesLocalService.fetchPreferences(
+						fragmentEntryLink.getCompanyId(),
+						PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						fragmentEntryLink.getClassPK(),
+						portletIdWithExperience);
+
+				if (jxPortletPreferences != null) {
+					_portletPreferencesLocalService.deletePortletPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						fragmentEntryLink.getClassPK(),
+						portletIdWithExperience);
 				}
 			}
+		}
 
-			if (deleteSegmentsExperience) {
-				_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
-					toFragmentEntryLinkIds);
-			}
+		if (deleteSegmentsExperience) {
+			_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
+				toFragmentEntryLinkIds);
 		}
 	}
 

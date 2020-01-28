@@ -224,38 +224,40 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 			}
 		}
 
-		if (!es6Modules.isEmpty()) {
-			writer.write("Liferay.Loader.require(");
-
-			for (String es6Module : es6Modules) {
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(es6Module);
-				writer.write(StringPool.APOSTROPHE);
-				writer.write(StringPool.COMMA_AND_SPACE);
-			}
-
-			writer.write("function(");
-
-			String delimiter = StringPool.BLANK;
-
-			for (String es6Variable : es6Variables) {
-				writer.write(delimiter);
-				writer.write(es6Variable);
-
-				delimiter = StringPool.COMMA_AND_SPACE;
-			}
-
-			writer.write(") {\n");
-			writer.write("try {\n");
-
-			es6CallbacksSB.writeTo(writer);
-
-			writer.write("} catch (err) {\n");
-			writer.write("\tconsole.error(err);\n");
-			writer.write("}\n");
-
-			writer.write("});");
+		if (es6Modules.isEmpty()) {
+			return;
 		}
+
+		writer.write("Liferay.Loader.require(");
+
+		for (String es6Module : es6Modules) {
+			writer.write(StringPool.APOSTROPHE);
+			writer.write(es6Module);
+			writer.write(StringPool.APOSTROPHE);
+			writer.write(StringPool.COMMA_AND_SPACE);
+		}
+
+		writer.write("function(");
+
+		String delimiter = StringPool.BLANK;
+
+		for (String es6Variable : es6Variables) {
+			writer.write(delimiter);
+			writer.write(es6Variable);
+
+			delimiter = StringPool.COMMA_AND_SPACE;
+		}
+
+		writer.write(") {\n");
+		writer.write("try {\n");
+
+		es6CallbacksSB.writeTo(writer);
+
+		writer.write("} catch (err) {\n");
+		writer.write("\tconsole.error(err);\n");
+		writer.write("}\n");
+
+		writer.write("});");
 	}
 
 	private static final long serialVersionUID = 1L;

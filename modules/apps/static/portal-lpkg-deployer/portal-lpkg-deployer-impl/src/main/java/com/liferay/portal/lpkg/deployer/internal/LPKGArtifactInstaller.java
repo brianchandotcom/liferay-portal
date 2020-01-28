@@ -284,61 +284,61 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 		Bundle bundle = _bundleContext.getBundle(canonicalPath);
 
-		if (bundle != null) {
-			Version currentVersion = bundle.getVersion();
+		if (bundle == null) {
+			return;
+		}
 
-			Version newVersion = new Version(properties.getProperty("version"));
+		Version currentVersion = bundle.getVersion();
 
-			if (newVersion.compareTo(currentVersion) > 0) {
-				if (GetterUtil.getBoolean(
-						properties.getProperty("restart-required"), true)) {
+		Version newVersion = new Version(properties.getProperty("version"));
 
-					_logRestartRequired(canonicalPath);
+		if (newVersion.compareTo(currentVersion) <= 0) {
+			return;
+		}
 
-					return;
-				}
+		if (GetterUtil.getBoolean(
+				properties.getProperty("restart-required"), true)) {
 
-				Map<Bundle, List<Bundle>> deployedLPKGBundles =
-					_lpkgDeployer.getDeployedLPKGBundles();
+			_logRestartRequired(canonicalPath);
 
-				List<Bundle> installedBundles = deployedLPKGBundles.get(bundle);
+			return;
+		}
 
-				Set<Bundle> wrapperBundles = new HashSet<>();
+		Map<Bundle, List<Bundle>> deployedLPKGBundles =
+			_lpkgDeployer.getDeployedLPKGBundles();
 
-				for (Bundle installedBundle : installedBundles) {
-					Dictionary<String, String> headers = bundle.getHeaders(
-						StringPool.BLANK);
+		List<Bundle> installedBundles = deployedLPKGBundles.get(bundle);
 
-					if (Boolean.getBoolean(headers.get("Wrapper-Bundle"))) {
-						wrapperBundles.add(installedBundle);
-					}
-				}
+		Set<Bundle> wrapperBundles = new HashSet<>();
 
-				if (!wrapperBundles.isEmpty()) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							StringBundler.concat(
-								"Refreshing ", wrapperBundles, " to update ",
-								bundle));
-					}
+		for (Bundle installedBundle : installedBundles) {
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
-					FrameworkEvent frameworkEvent = _refreshBundles(
-						wrapperBundles);
-
-					if (frameworkEvent.getType() !=
-							FrameworkEvent.PACKAGES_REFRESHED) {
-
-						_log.error(
-							StringBundler.concat(
-								"Unable to refresh ", wrapperBundles,
-								" because of framework event ", frameworkEvent),
-							frameworkEvent.getThrowable());
-					}
-				}
-
-				bundle.update(_lpkgDeployer.toBundle(file));
+			if (Boolean.getBoolean(headers.get("Wrapper-Bundle"))) {
+				wrapperBundles.add(installedBundle);
 			}
 		}
+
+		if (!wrapperBundles.isEmpty()) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Refreshing ", wrapperBundles, " to update ", bundle));
+			}
+
+			FrameworkEvent frameworkEvent = _refreshBundles(wrapperBundles);
+
+			if (frameworkEvent.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to refresh ", wrapperBundles,
+						" because of framework event ", frameworkEvent),
+					frameworkEvent.getThrowable());
+			}
+		}
+
+		bundle.update(_lpkgDeployer.toBundle(file));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

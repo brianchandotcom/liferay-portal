@@ -1921,38 +1921,38 @@ public class LayoutStagedModelDataHandler
 
 		String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
 
-		if (Validator.isNotNull(layoutPrototypeUuid)) {
-			LayoutPrototype layoutPrototype =
-				_layoutPrototypeLocalService.
-					getLayoutPrototypeByUuidAndCompanyId(
-						layoutPrototypeUuid, layout.getCompanyId());
-
-			long defaultUserId = _userLocalService.getDefaultUserId(
-				layout.getCompanyId());
-
-			if (defaultUserId == layoutPrototype.getUserId()) {
-				layoutElement.addAttribute("preloaded", "true");
-			}
-
-			layoutElement.addAttribute(
-				"layout-prototype-uuid", layoutPrototypeUuid);
-			layoutElement.addAttribute(
-				"layout-prototype-name",
-				layoutPrototype.getName(LocaleUtil.getDefault()));
-
-			boolean layoutPrototypeGlobal = false;
-
-			Group companyGroup = _groupLocalService.getCompanyGroup(
-				layoutPrototype.getCompanyId());
-
-			if (layoutPrototype.getGroupId() == companyGroup.getGroupId()) {
-				layoutPrototypeGlobal = true;
-			}
-
-			layoutElement.addAttribute(
-				"layout-prototype-global",
-				String.valueOf(layoutPrototypeGlobal));
+		if (Validator.isNull(layoutPrototypeUuid)) {
+			return;
 		}
+
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeLocalService.getLayoutPrototypeByUuidAndCompanyId(
+				layoutPrototypeUuid, layout.getCompanyId());
+
+		long defaultUserId = _userLocalService.getDefaultUserId(
+			layout.getCompanyId());
+
+		if (defaultUserId == layoutPrototype.getUserId()) {
+			layoutElement.addAttribute("preloaded", "true");
+		}
+
+		layoutElement.addAttribute(
+			"layout-prototype-uuid", layoutPrototypeUuid);
+		layoutElement.addAttribute(
+			"layout-prototype-name",
+			layoutPrototype.getName(LocaleUtil.getDefault()));
+
+		boolean layoutPrototypeGlobal = false;
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			layoutPrototype.getCompanyId());
+
+		if (layoutPrototype.getGroupId() == companyGroup.getGroupId()) {
+			layoutPrototypeGlobal = true;
+		}
+
+		layoutElement.addAttribute(
+			"layout-prototype-global", String.valueOf(layoutPrototypeGlobal));
 	}
 
 	@Reference(unbind = "-")

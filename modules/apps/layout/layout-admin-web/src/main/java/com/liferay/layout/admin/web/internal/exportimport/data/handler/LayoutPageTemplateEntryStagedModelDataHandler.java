@@ -444,41 +444,41 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			_layoutPrototypeLocalService.getLayoutPrototypeByUuidAndCompanyId(
 				layoutPrototype.getUuid(), portletDataContext.getCompanyId());
 
-		if (existingLayoutPrototype != null) {
-			List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
-				_layoutPageTemplateEntryLocalService.
-					getLayoutPageTemplateEntriesByLayoutPrototypeId(
-						existingLayoutPrototype.getLayoutPrototypeId());
+		if (existingLayoutPrototype == null) {
+			return;
+		}
 
-			for (LayoutPageTemplateEntry existingLayoutPageTemplateEntry :
-					layoutPageTemplateEntries) {
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntriesByLayoutPrototypeId(
+					existingLayoutPrototype.getLayoutPrototypeId());
 
-				long existingLayoutPageTemplateEntryId =
-					existingLayoutPageTemplateEntry.
-						getLayoutPageTemplateEntryId();
-				long importedLayoutPageTemplateEntryId =
-					importedLayoutPageTemplateEntry.
-						getLayoutPageTemplateEntryId();
+		for (LayoutPageTemplateEntry existingLayoutPageTemplateEntry :
+				layoutPageTemplateEntries) {
 
-				if ((existingLayoutPageTemplateEntryId !=
-						importedLayoutPageTemplateEntryId) &&
-					(existingLayoutPageTemplateEntry.getCompanyId() ==
-						importedLayoutPageTemplateEntry.getCompanyId())) {
+			long existingLayoutPageTemplateEntryId =
+				existingLayoutPageTemplateEntry.getLayoutPageTemplateEntryId();
+			long importedLayoutPageTemplateEntryId =
+				importedLayoutPageTemplateEntry.getLayoutPageTemplateEntryId();
 
-					StringBundler sb = new StringBundler(8);
+			if ((existingLayoutPageTemplateEntryId !=
+					importedLayoutPageTemplateEntryId) &&
+				(existingLayoutPageTemplateEntry.getCompanyId() ==
+					importedLayoutPageTemplateEntry.getCompanyId())) {
 
-					sb.append("Layout page template ");
-					sb.append(
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-					sb.append(" cannot be imported because a layout ");
-					sb.append("prototype with UUID ");
-					sb.append(layoutPrototype.getUuid());
-					sb.append(" and company ID ");
-					sb.append(portletDataContext.getCompanyId());
-					sb.append(" already exists");
+				StringBundler sb = new StringBundler(8);
 
-					throw new UnsupportedOperationException(sb.toString());
-				}
+				sb.append("Layout page template ");
+				sb.append(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+				sb.append(" cannot be imported because a layout prototype ");
+				sb.append("with UUID ");
+				sb.append(layoutPrototype.getUuid());
+				sb.append(" and company ID ");
+				sb.append(portletDataContext.getCompanyId());
+				sb.append(" already exists");
+
+				throw new UnsupportedOperationException(sb.toString());
 			}
 		}
 	}

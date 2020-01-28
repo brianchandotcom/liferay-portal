@@ -230,7 +230,13 @@ public class LayoutSEOEntryLocalServiceImpl
 			"custom-meta-tags");
 	}
 
-	private void _removeEmptyDDMFormFieldsValues(DDMFormValues ddmFormValues) {
+	private DDMFormValues _getDDMFormValues(
+			long structureId, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMFormValues ddmFormValues = _ddm.getDDMFormValues(
+			structureId, String.valueOf(structureId), serviceContext);
+
 		Set<DDMFormFieldValue> notEmptyDDMFormFieldValues =
 			new LinkedHashSet<>();
 
@@ -279,6 +285,8 @@ public class LayoutSEOEntryLocalServiceImpl
 		ddmFormValues.setAvailableLocales(availableLocales);
 		ddmFormValues.setDDMFormFieldValues(
 			new ArrayList<>(notEmptyDDMFormFieldValues));
+
+		return ddmFormValues;
 	}
 
 	private long _updateDDMStorage(
@@ -286,14 +294,12 @@ public class LayoutSEOEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMFormValues ddmFormValues = _ddm.getDDMFormValues(
-			structureId, String.valueOf(structureId), serviceContext);
+		DDMFormValues ddmFormValues = _getDDMFormValues(
+			structureId, serviceContext);
 
 		if (ListUtil.isEmpty(ddmFormValues.getDDMFormFieldValues())) {
 			return ddmStorageId;
 		}
-
-		_removeEmptyDDMFormFieldsValues(ddmFormValues);
 
 		if (ddmStorageId == 0) {
 			return _storageEngine.create(

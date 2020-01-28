@@ -170,7 +170,7 @@ public class LayoutDataConverter {
 						"backgroundColorCssClass", null)
 				).put(
 					"backgroundImage",
-					inputRowConfigJSONObject.getJSONObject("backgroundImage")
+					_getBackgroundImageJSONObject(inputRowConfigJSONObject)
 				).put(
 					"paddingBottom",
 					inputRowConfigJSONObject.getInt("paddingVertical")
@@ -250,6 +250,19 @@ public class LayoutDataConverter {
 		}
 
 		return false;
+	}
+
+	private static JSONObject _getBackgroundImageJSONObject(
+		JSONObject inputRowConfigJSONObject) {
+
+		Object backgroundImage = inputRowConfigJSONObject.get(
+			"backgroundImage");
+
+		if (backgroundImage instanceof JSONObject) {
+			return (JSONObject)backgroundImage;
+		}
+
+		return JSONUtil.put("url", backgroundImage);
 	}
 
 	private static JSONObject _getItemJSONObject(

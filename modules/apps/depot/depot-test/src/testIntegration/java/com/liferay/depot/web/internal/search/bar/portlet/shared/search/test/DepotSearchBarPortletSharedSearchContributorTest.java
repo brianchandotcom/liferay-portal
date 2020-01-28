@@ -18,29 +18,20 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.test.util.DepotTestUtil;
-import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -48,7 +39,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -207,7 +197,7 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			depotEntry.getDepotEntryId(), _group.getGroupId());
 
-		_withRegularUser(
+		DepotTestUtil.withRegularUser(
 			(user, role) -> {
 				PortletSharedSearchSettings portletSharedSearchSettings =
 					_getPortletSharedSearchSettings();
@@ -236,7 +226,7 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			depotEntry.getDepotEntryId(), _group.getGroupId());
 
-		_withRegularUser(
+		DepotTestUtil.withRegularUser(
 			(user, role) -> {
 				RoleTestUtil.addResourcePermission(
 					role, DepotEntry.class.getName(),
@@ -506,30 +496,6 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 		};
 	}
 
-	private void _withRegularUser(
-			UnsafeBiConsumer<User, Role, Exception> consumer)
-		throws Exception {
-
-		User user = UserTestUtil.addUser();
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_userLocalService.addRoleUser(role.getRoleId(), user);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			consumer.accept(user, role);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-		}
-	}
-
 	@DeleteAfterTestRun
 	private final List<DepotEntry> _depotEntries = new ArrayList<>();
 
@@ -538,9 +504,6 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Inject
-	private DepotEntryService _depotEntryService;
 
 	@Inject(filter = "javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR)
 	private PortletSharedSearchContributor
@@ -556,12 +519,6 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
-	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	@Inject
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

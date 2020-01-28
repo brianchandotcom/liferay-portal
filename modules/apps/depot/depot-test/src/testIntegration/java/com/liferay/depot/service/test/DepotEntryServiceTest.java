@@ -19,25 +19,18 @@ import com.liferay.depot.constants.DepotActionKeys;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
-import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.depot.test.util.DepotTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
@@ -69,12 +62,12 @@ public class DepotEntryServiceTest {
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testAddDepotEntryWithoutPermissions() throws Exception {
-		_withRegularUser((user, role) -> _addDepotEntry(user));
+		DepotTestUtil.withRegularUser((user, role) -> _addDepotEntry(user));
 	}
 
 	@Test
 	public void testAddDepotEntryWithPermissions() throws Exception {
-		_withRegularUser(
+		DepotTestUtil.withRegularUser(
 			(user, role) -> {
 				RoleTestUtil.addResourcePermission(
 					role, DepotConstants.RESOURCE_NAME,
@@ -90,7 +83,7 @@ public class DepotEntryServiceTest {
 	public void testDeleteDepotEntryWithoutPermissions() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_withRegularUser(
+		DepotTestUtil.withRegularUser(
 			(user, role) -> _depotEntryService.deleteDepotEntry(
 				depotEntry.getDepotEntryId()));
 	}
@@ -99,7 +92,7 @@ public class DepotEntryServiceTest {
 	public void testDeleteDepotEntryWithPermissions() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_withRegularUser(
+		DepotTestUtil.withRegularUser(
 			(user, role) -> {
 				RoleTestUtil.addResourcePermission(
 					role, DepotEntry.class.getName(),
@@ -119,7 +112,7 @@ public class DepotEntryServiceTest {
 	public void testGetDepotEntryWithoutPermissions() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_withRegularUser(
+		DepotTestUtil.withRegularUser(
 			(user, role) -> _depotEntryService.getDepotEntry(
 				depotEntry.getDepotEntryId()));
 	}
@@ -128,7 +121,7 @@ public class DepotEntryServiceTest {
 	public void testGetDepotEntryWithPermissions() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_withRegularUser(
+		DepotTestUtil.withRegularUser(
 			(user, role) -> {
 				RoleTestUtil.addResourcePermission(
 					role, DepotEntry.class.getName(),
@@ -146,7 +139,7 @@ public class DepotEntryServiceTest {
 	public void testGetGroupDepotEntryWithoutPermissions() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_withRegularUser(
+		DepotTestUtil.withRegularUser(
 			(user, role) -> _depotEntryService.getGroupDepotEntry(
 				depotEntry.getGroupId()));
 	}
@@ -155,7 +148,7 @@ public class DepotEntryServiceTest {
 	public void testGetGroupDepotEntryWithPermissions() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_withRegularUser(
+		DepotTestUtil.withRegularUser(
 			(user, role) -> {
 				RoleTestUtil.addResourcePermission(
 					role, DepotEntry.class.getName(),
@@ -173,14 +166,15 @@ public class DepotEntryServiceTest {
 	public void testUpdateDepotEntryWithoutPermissions() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_withRegularUser((user, role) -> _updateDepotEntry(depotEntry, user));
+		DepotTestUtil.withRegularUser(
+			(user, role) -> _updateDepotEntry(depotEntry, user));
 	}
 
 	@Test
 	public void testUpdateDepotEntryWithPermissions() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_withRegularUser(
+		DepotTestUtil.withRegularUser(
 			(user, role) -> {
 				RoleTestUtil.addResourcePermission(
 					role, DepotEntry.class.getName(),
@@ -220,40 +214,10 @@ public class DepotEntryServiceTest {
 				user.getGroupId(), user.getUserId()));
 	}
 
-	private void _withRegularUser(
-			UnsafeBiConsumer<User, Role, Exception> consumer)
-		throws Exception {
-
-		User user = UserTestUtil.addUser();
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_userLocalService.addRoleUser(role.getRoleId(), user);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			consumer.accept(user, role);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-		}
-	}
-
 	@DeleteAfterTestRun
 	private final List<DepotEntry> _depotEntries = new ArrayList<>();
 
 	@Inject
 	private DepotEntryService _depotEntryService;
-
-	@Inject
-	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

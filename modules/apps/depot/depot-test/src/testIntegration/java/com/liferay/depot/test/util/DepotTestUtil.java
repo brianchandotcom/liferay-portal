@@ -14,8 +14,18 @@
 
 package com.liferay.depot.test.util;
 
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -37,6 +47,30 @@ public class DepotTestUtil {
 				new ConfigurationTemporarySwapper(_PID, dictionary)) {
 
 			unsafeRunnable.run();
+		}
+	}
+
+	public static void withRegularUser(
+			UnsafeBiConsumer<User, Role, Exception> consumer)
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			consumer.accept(user, role);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			UserLocalServiceUtil.deleteUser(user);
 		}
 	}
 

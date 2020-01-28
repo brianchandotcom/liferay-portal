@@ -189,8 +189,7 @@ public class DependencyManagementTask extends DefaultTask {
 				}
 				catch (IOException ioException) {
 					throw new GradleException(
-						"Unable to output dependency management information",
-						ioException);
+						"Unable to write dependencies to file", ioException);
 				}
 			}
 			else {

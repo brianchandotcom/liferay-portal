@@ -713,7 +713,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
 	 *             long, String, String[], String[], Long[], Long[], Date, Date,
-	 *             Boolean, Boolean, Long[], Boolean, int, int,
+	 *             Boolean, Boolean, Long, Long[], Boolean, int, int,
 	 *             OrderByComparator)}
 	 */
 	@Deprecated
@@ -727,13 +727,14 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		return search(
 			companyId, userId, null, _getTaskNames(keywords),
 			_getAssetTypes(keywords), null, null, null, null, completed,
-			searchByUserRoles, null, false, start, end, orderByComparator);
+			searchByUserRoles, null, null, false, start, end,
+			orderByComparator);
 	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
 	 *             long, String, String[], String[], Long[], Long[], Date, Date,
-	 *             Boolean, Boolean, Long[], Boolean, int, int,
+	 *             Boolean, Boolean, Long, Long[], Boolean, int, int,
 	 *             OrderByComparator)}
 	 */
 	@Deprecated
@@ -749,14 +750,14 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		return search(
 			companyId, userId, null, _getTaskNames(taskName),
 			_getAssetTypes(assetType), assetPrimaryKeys, null, dueDateGT,
-			dueDateLT, completed, searchByUserRoles, null, andOperator, start,
-			end, orderByComparator);
+			dueDateLT, completed, searchByUserRoles, null, null, andOperator,
+			start, end, orderByComparator);
 	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
 	 *             long, String, String[], String[], Long[], Long[], Date, Date,
-	 *             Boolean, Boolean, Long[], Boolean, int, int,
+	 *             Boolean, Boolean, Long, Long[], Boolean, int, int,
 	 *             OrderByComparator)}
 	 */
 	@Deprecated
@@ -772,14 +773,14 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		return search(
 			companyId, userId, assetTitle, _getTaskNames(taskName), assetTypes,
 			assetPrimaryKeys, null, dueDateGT, dueDateLT, completed,
-			searchByUserRoles, null, andOperator, start, end,
+			searchByUserRoles, null, null, andOperator, start, end,
 			orderByComparator);
 	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
 	 *             long, String, String[], String[], Long[], Long[], Date, Date,
-	 *             Boolean, Boolean, Long[], Boolean, int, int,
+	 *             Boolean, Boolean, Long, Long[], Boolean, int, int,
 	 *             OrderByComparator)}
 	 */
 	@Deprecated
@@ -792,8 +793,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 		return search(
 			companyId, userId, keywords, _getTaskNames(keywords), assetTypes,
-			null, null, null, null, completed, searchByUserRoles, null, false,
-			start, end, orderByComparator);
+			null, null, null, null, completed, searchByUserRoles, null, null,
+			false, start, end, orderByComparator);
 	}
 
 	@Override
@@ -802,7 +803,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			String[] assetTypes, Long[] assetPrimaryKeys,
 			Long[] assigneeUserIds, Date dueDateGT, Date dueDateLT,
 			Boolean completed, Boolean searchByUserRoles,
-			Long[] workflowInstanceIds, Boolean andOperator, int start, int end,
+			Long workflowDefinitionId, Long[] workflowInstanceIds,
+			Boolean andOperator, int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
@@ -816,8 +818,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				_kaleoTaskInstanceTokenLocalService.search(
 					assetTitle, taskNames, assetTypes, assetPrimaryKeys,
 					assigneeUserIds, dueDateGT, dueDateLT, completed,
-					workflowInstanceIds, searchByUserRoles, andOperator, start,
-					end,
+					workflowDefinitionId, workflowInstanceIds,
+					searchByUserRoles, andOperator, start, end,
 					KaleoTaskInstanceTokenOrderByComparator.
 						getOrderByComparator(
 							orderByComparator, _kaleoWorkflowModelConverter),
@@ -831,9 +833,33 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
+	 *             long, String, String[], String[], Long[], Long[], Date, Date,
+	 *             Boolean, Boolean, Long, Long[], Boolean, int, int,
+	 *             OrderByComparator)}
+	 */
+	@Deprecated
+	@Override
+	public List<WorkflowTask> search(
+			long companyId, long userId, String assetTitle, String[] taskNames,
+			String[] assetTypes, Long[] assetPrimaryKeys,
+			Long[] assigneeUserIds, Date dueDateGT, Date dueDateLT,
+			Boolean completed, Boolean searchByUserRoles,
+			Long[] workflowInstanceIds, Boolean andOperator, int start, int end,
+			OrderByComparator<WorkflowTask> orderByComparator)
+		throws WorkflowException {
+
+		return search(
+			companyId, userId, assetTitle, taskNames, assetTypes,
+			assetPrimaryKeys, assigneeUserIds, dueDateGT, dueDateLT, completed,
+			searchByUserRoles, null, workflowInstanceIds, andOperator, start,
+			end, orderByComparator);
+	}
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #searchCount(long, long, String, String[], String[], Long[],
-	 *             Long[], Date, Date, Boolean, Boolean, Long[], Boolean)}
+	 *             Long[], Date, Date, Boolean, Boolean, Long, Long[], Boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -845,13 +871,13 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		return searchCount(
 			companyId, userId, null, _getTaskNames(keywords),
 			_getAssetTypes(keywords), null, null, null, null, completed,
-			searchByUserRoles, null, false);
+			searchByUserRoles, null, null, false);
 	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #searchCount(long, long, String, String[], String[], Long[],
-	 *             Long[], Date, Date, Boolean, Boolean, Long[], Boolean)}
+	 *             Long[], Date, Date, Boolean, Boolean, Long, Long[], Boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -864,13 +890,13 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		return searchCount(
 			companyId, userId, null, _getTaskNames(taskName),
 			_getAssetTypes(assetType), assetPrimaryKeys, null, dueDateGT,
-			dueDateLT, completed, searchByUserRoles, null, andOperator);
+			dueDateLT, completed, searchByUserRoles, null, null, andOperator);
 	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #searchCount(long, long, String, String[], String[], Long[],
-	 *             Long[], Date, Date, Boolean, Boolean, Long[], Boolean)}
+	 *             Long[], Date, Date, Boolean, Boolean, Long, Long[], Boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -884,13 +910,13 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		return searchCount(
 			companyId, userId, assetTitle, _getTaskNames(taskName), assetTypes,
 			assetPrimaryKeys, null, dueDateGT, dueDateLT, completed,
-			searchByUserRoles, null, andOperator);
+			searchByUserRoles, null, null, andOperator);
 	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #searchCount(long, long, String, String[], String[], Long[],
-	 *             Long[], Date, Date, Boolean, Boolean, Long[], Boolean)}
+	 *             Long[], Date, Date, Boolean, Boolean, Long, Long[], Boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -901,7 +927,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 		return searchCount(
 			companyId, userId, keywords, _getTaskNames(keywords), assetTypes,
-			null, null, null, null, completed, searchByUserRoles, null, false);
+			null, null, null, null, completed, searchByUserRoles, null, null,
+			false);
 	}
 
 	@Override
@@ -910,7 +937,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			String[] assetTypes, Long[] assetPrimaryKeys,
 			Long[] assigneeUserIds, Date dueDateGT, Date dueDateLT,
 			Boolean completed, Boolean searchByUserRoles,
-			Long[] workflowInstanceIds, Boolean andOperator)
+			Long workflowDefinitionId, Long[] workflowInstanceIds,
+			Boolean andOperator)
 		throws WorkflowException {
 
 		try {
@@ -922,12 +950,33 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			return _kaleoTaskInstanceTokenLocalService.searchCount(
 				assetTitle, taskNames, assetTypes, assetPrimaryKeys,
 				assigneeUserIds, dueDateGT, dueDateLT, completed,
-				workflowInstanceIds, searchByUserRoles, andOperator,
-				serviceContext);
+				workflowDefinitionId, workflowInstanceIds, searchByUserRoles,
+				andOperator, serviceContext);
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #searchCount(long, long, String, String[], String[], Long[],
+	 *             Long[], Date, Date, Boolean, Boolean, Long, Long[], Boolean)}
+	 */
+	@Deprecated
+	@Override
+	public int searchCount(
+			long companyId, long userId, String assetTitle, String[] taskNames,
+			String[] assetTypes, Long[] assetPrimaryKeys,
+			Long[] assigneeUserIds, Date dueDateGT, Date dueDateLT,
+			Boolean completed, Boolean searchByUserRoles,
+			Long[] workflowInstanceIds, Boolean andOperator)
+		throws WorkflowException {
+
+		return searchCount(
+			companyId, userId, assetTitle, taskNames, assetTypes,
+			assetPrimaryKeys, assigneeUserIds, dueDateGT, dueDateLT, completed,
+			searchByUserRoles, null, workflowInstanceIds, andOperator);
 	}
 
 	@Override

@@ -21,9 +21,8 @@
 </liferay-portlet:renderURL>
 
 <%
+Map<Long, List<ConflictInfo>> conflictInfoMap = (Map<Long, List<ConflictInfo>>)request.getAttribute(CTWebKeys.CONFLICT_INFO_MAP);
 CTCollection ctCollection = (CTCollection)request.getAttribute(CTWebKeys.CT_COLLECTION);
-List<ObjectValuePair<ConflictInfo, CTEntry>> resolvedConflicts = (List<ObjectValuePair<ConflictInfo, CTEntry>>)request.getAttribute(CTWebKeys.RESOLVED_CONFLICTS);
-List<ObjectValuePair<ConflictInfo, CTEntry>> unresolvedConflicts = (List<ObjectValuePair<ConflictInfo, CTEntry>>)request.getAttribute(CTWebKeys.UNRESOLVED_CONFLICTS);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
@@ -37,118 +36,150 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 			<tr class="table-divider"><td><%= LanguageUtil.get(request, "automatically-resolved") %></td></tr>
 
 			<%
-			for (ObjectValuePair<ConflictInfo, CTEntry> pair : resolvedConflicts) {
-				ConflictInfo conflictInfo = pair.getKey();
-				CTEntry ctEntry = pair.getValue();
+			for (Map.Entry<Long, List<ConflictInfo>> entry : conflictInfoMap.entrySet()) {
+				for (ConflictInfo conflictInfo : entry.getValue()) {
+					if (!conflictInfo.isResolved()) {
+						continue;
+					}
 
-				Date modifiedDate = ctEntry.getModifiedDate();
-
-				String age = LanguageUtil.format(locale, "x-ago", LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - modifiedDate.getTime(), true));
-
-				String title = StringBundler.concat(ctDisplayRendererRegistry.getTypeName(locale, ctEntry), " ", changeListsDisplayContext.getChangeTypeName(ctEntry), " by ", ctEntry.getUserName(), " ", age);
-
-				String viewURL = ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry);
+					CTEntry ctEntry = CTEntryLocalServiceUtil.fetchCTEntry(ctCollection.getCtCollectionId(), entry.getKey(), conflictInfo.getSourcePrimaryKey());
 			%>
 
-				<tr>
-					<td>
-						<p class="text-muted"><%= title %></p>
+					<tr>
+						<td>
+							<p class="text-muted"><%= ctDisplayRendererRegistry.getEntryTitle(ctEntry, request) %></p>
 
-						<div>
-							<div class="alert alert-success autofit-row" role="alert">
-								<div class="autofit-col autofit-col-expand">
-									<div class="autofit-section">
-										<span class="alert-indicator">
-											<aui:icon image="check-circle-full" markupView="lexicon" />
-										</span>
-
-										<strong class="lead">
-											<%= conflictInfo.getConflictDescription(conflictInfo.getResourceBundle(locale)) %>
-										</strong>
-										<%= conflictInfo.getResolutionDescription(conflictInfo.getResourceBundle(locale)) %>
-									</div>
-								</div>
-
-								<c:if test="<%= Validator.isNotNull(viewURL) %>">
-									<div class="autofit-col">
+							<div>
+								<div class="alert alert-success autofit-row" role="alert">
+									<div class="autofit-col autofit-col-expand">
 										<div class="autofit-section">
-											<a class="btn btn-secondary btn-sm" href="<%= viewURL %>" type="button">
-												<%= LanguageUtil.get(request, "view") %>
-											</a>
+											<span class="alert-indicator">
+												<aui:icon image="check-circle-full" markupView="lexicon" />
+											</span>
+
+											<%
+											ResourceBundle conflictInfoResourceBundle = conflictInfo.getResourceBundle(locale);
+											%>
+
+											<strong class="lead">
+												<%= conflictInfo.getConflictDescription(conflictInfoResourceBundle) %>
+											</strong>
+											<%= conflictInfo.getResolutionDescription(conflictInfoResourceBundle) %>
 										</div>
 									</div>
-								</c:if>
+
+									<%
+									String viewURL = ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry);
+									%>
+
+									<c:if test="<%= Validator.isNotNull(viewURL) %>">
+										<div class="autofit-col">
+											<div class="autofit-section">
+												<a class="btn btn-secondary btn-sm" href="<%= viewURL %>" type="button">
+													<%= LanguageUtil.get(request, "view") %>
+												</a>
+											</div>
+										</div>
+									</c:if>
+								</div>
 							</div>
-						</div>
-					</td>
-				</tr>
+						</td>
+					</tr>
 
 			<%
+				}
 			}
 			%>
 
 			<tr class="table-divider"><td><%= LanguageUtil.get(request, "needs-manual-resolution") %></td></tr>
 
 			<%
-			for (ObjectValuePair<ConflictInfo, CTEntry> pair : unresolvedConflicts) {
-				ConflictInfo conflictInfo = pair.getKey();
-				CTEntry ctEntry = pair.getValue();
+			boolean resolved = true;
 
-				Date modifiedDate = ctEntry.getModifiedDate();
+			for (Map.Entry<Long, List<ConflictInfo>> entry : conflictInfoMap.entrySet()) {
+				for (ConflictInfo conflictInfo : entry.getValue()) {
+					if (conflictInfo.isResolved()) {
+						continue;
+					}
 
-				String age = LanguageUtil.format(locale, "x-ago", LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - modifiedDate.getTime(), true));
+					resolved = false;
 
-				String title = StringBundler.concat(ctDisplayRendererRegistry.getTypeName(locale, ctEntry), " ", changeListsDisplayContext.getChangeTypeName(ctEntry), " by ", ctEntry.getUserName(), " ", age);
-
-				String editURL;
-
-				try {
-					editURL = ctDisplayRendererRegistry.getEditURL(request, ctEntry);
-				}
-				catch (Exception e) {
-					editURL = null;
-				}
+					CTEntry ctEntry = CTEntryLocalServiceUtil.fetchCTEntry(ctCollection.getCtCollectionId(), entry.getKey(), conflictInfo.getSourcePrimaryKey());
 			%>
 
-				<tr>
-					<td>
-						<p class="text-muted"><%= title %></p>
+					<tr>
+						<td>
+							<p class="text-muted"><%= ctDisplayRendererRegistry.getEntryTitle(ctEntry, request) %></p>
 
-						<div>
-							<div class="alert alert-warning autofit-row" role="alert">
-								<div class="autofit-col autofit-col-expand">
-									<div class="autofit-section">
-										<span class="alert-indicator">
-											<aui:icon image="warning-full" markupView="lexicon" />
-										</span>
-
-										<strong class="lead">
-											<%= conflictInfo.getConflictDescription(conflictInfo.getResourceBundle(locale)) %>
-										</strong>
-										<%= conflictInfo.getResolutionDescription(conflictInfo.getResourceBundle(locale)) %>
-									</div>
-								</div>
-
-								<c:if test="<%= Validator.isNotNull(editURL) %>">
-									<div class="autofit-col">
+							<div>
+								<div class="alert alert-warning autofit-row" role="alert">
+									<div class="autofit-col autofit-col-expand">
 										<div class="autofit-section">
-											<a class="btn btn-secondary btn-sm" href="<%= editURL %>" type="button">
-												<%= LanguageUtil.get(request, "edit") %>
-											</a>
+											<span class="alert-indicator">
+												<aui:icon image="warning-full" markupView="lexicon" />
+											</span>
+
+											<%
+											ResourceBundle conflictInfoResourceBundle = conflictInfo.getResourceBundle(locale);
+											%>
+
+											<strong class="lead">
+												<%= conflictInfo.getConflictDescription(conflictInfoResourceBundle) %>
+											</strong>
+											<%= conflictInfo.getResolutionDescription(conflictInfoResourceBundle) %>
 										</div>
 									</div>
-								</c:if>
+
+									<%
+									String editURL;
+
+									try {
+										editURL = ctDisplayRendererRegistry.getEditURL(request, ctEntry);
+									}
+									catch (Exception e) {
+										editURL = null;
+									}
+									%>
+
+									<c:choose>
+										<c:when test="<%= Validator.isNotNull(editURL) %>">
+											<div class="autofit-col">
+												<div class="autofit-section">
+													<a class="btn btn-secondary btn-sm" href="<%= editURL %>" type="button">
+														<%= LanguageUtil.get(request, "edit") %>
+													</a>
+												</div>
+											</div>
+										</c:when>
+										<c:otherwise>
+
+											<%
+											String viewURL = ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry);
+											%>
+
+											<c:if test="<%= Validator.isNotNull(viewURL) %>">
+												<div class="autofit-col">
+													<div class="autofit-section">
+														<a class="btn btn-secondary btn-sm" href="<%= viewURL %>" type="button">
+															<%= LanguageUtil.get(request, "view") %>
+														</a>
+													</div>
+												</div>
+											</c:if>
+										</c:otherwise>
+									</c:choose>
+								</div>
 							</div>
-						</div>
-					</td>
-				</tr>
+						</td>
+					</tr>
 
 			<%
+				}
 			}
 			%>
 
 			<tr><td>
-				<aui:button disabled="<%= !unresolvedConflicts.isEmpty() %>" href="<%= changeListsDisplayContext.getPublishURL(ctCollection.getCtCollectionId(), ctCollection.getName()) %>" primary="true" value="publish" />
+				<aui:button disabled="<%= !resolved %>" href="<%= changeListsDisplayContext.getPublishURL(ctCollection.getCtCollectionId(), ctCollection.getName()) %>" primary="true" value="publish" />
 
 				<aui:button href="<%= backURL %>" type="cancel" />
 			</td></tr>

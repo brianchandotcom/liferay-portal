@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.web.internal.display;
 
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.change.tracking.display.CTDisplayRenderer;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
-import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Locale;
 
@@ -34,15 +32,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Samuel Trong Tran
@@ -140,12 +133,6 @@ public class CTDisplayRendererRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_assetRendererFactoryServiceTracker = new ServiceTracker<>(
-			bundleContext, AssetRendererFactory.class,
-			new AssetRendererFactoryServiceTrackerCustomizer(bundleContext));
-
-		_assetRendererFactoryServiceTracker.open();
-
 		_ctDisplayServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, CTDisplayRenderer.class, null,
@@ -178,12 +165,10 @@ public class CTDisplayRendererRegistry {
 
 	@Deactivate
 	protected void deactivate() {
-		_assetRendererFactoryServiceTracker.close();
 		_ctDisplayServiceTrackerMap.close();
+
 		_ctServiceServiceTrackerMap.close();
 	}
-
-	private ServiceTracker<?, ?> _assetRendererFactoryServiceTracker;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
@@ -194,72 +179,5 @@ public class CTDisplayRendererRegistry {
 
 	@Reference
 	private ResourceActions _resourceActions;
-
-	private static class AssetRendererFactoryServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<AssetRendererFactory, ServiceRegistration> {
-
-		@Override
-		public ServiceRegistration addingService(
-			ServiceReference<AssetRendererFactory> serviceReference) {
-
-			AssetRendererFactory<?> assetRendererFactory =
-				_bundleContext.getService(serviceReference);
-
-			Class<?> clazz = assetRendererFactory.getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			try {
-				clazz = classLoader.loadClass(
-					assetRendererFactory.getClassName());
-			}
-			catch (ClassNotFoundException classNotFoundException) {
-				return null;
-			}
-
-			if (!CTModel.class.isAssignableFrom(clazz)) {
-				return null;
-			}
-
-			return _registerService(assetRendererFactory, clazz);
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<AssetRendererFactory> serviceReference,
-			ServiceRegistration serviceRegistration) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<AssetRendererFactory> serviceReference,
-			ServiceRegistration serviceRegistration) {
-
-			serviceRegistration.unregister();
-
-			_bundleContext.ungetService(serviceReference);
-		}
-
-		private AssetRendererFactoryServiceTrackerCustomizer(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
-		private <T extends CTModel<T>> ServiceRegistration _registerService(
-			AssetRendererFactory<?> assetRendererFactory, Class<?> clazz) {
-
-			return _bundleContext.registerService(
-				CTDisplayRenderer.class,
-				new CTDisplayRendererAssetRendererAdapter<>(
-					(AssetRendererFactory<T>)assetRendererFactory,
-					(Class<T>)clazz),
-				MapUtil.singletonDictionary(Constants.SERVICE_RANKING, -100));
-		}
-
-		private final BundleContext _bundleContext;
-
-	}
 
 }

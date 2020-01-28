@@ -161,39 +161,41 @@ public class MenuItem implements Serializable {
 
 			String s = matcher.group(2);
 
-			if (s != null) {
-				MenuItem childMenuItem = new MenuItem();
-
-				int index = s.indexOf(StringPool.PIPE);
-
-				String label = null;
-				String url = null;
-
-				if (index != -1) {
-					label = s.substring(index + 1);
-					url = s.substring(0, index);
-				}
-				else {
-					label = s;
-					url = s;
-				}
-
-				if (!url.startsWith(Http.HTTP)) {
-					portletURL.setParameter("title", url);
-					portletURL.setParameter(
-						"nodeId", String.valueOf(wikiPage.getNodeId()));
-
-					url = portletURL.toString();
-				}
-				else {
-					childMenuItem.setExternalURL(true);
-				}
-
-				childMenuItem.setLabel(label);
-				childMenuItem.setURL(url);
-
-				menuItem.addChild(childMenuItem);
+			if (s == null) {
+				continue;
 			}
+
+			MenuItem childMenuItem = new MenuItem();
+
+			int index = s.indexOf(StringPool.PIPE);
+
+			String label = null;
+			String url = null;
+
+			if (index != -1) {
+				label = s.substring(index + 1);
+				url = s.substring(0, index);
+			}
+			else {
+				label = s;
+				url = s;
+			}
+
+			if (!url.startsWith(Http.HTTP)) {
+				portletURL.setParameter("title", url);
+				portletURL.setParameter(
+					"nodeId", String.valueOf(wikiPage.getNodeId()));
+
+				url = portletURL.toString();
+			}
+			else {
+				childMenuItem.setExternalURL(true);
+			}
+
+			childMenuItem.setLabel(label);
+			childMenuItem.setURL(url);
+
+			menuItem.addChild(childMenuItem);
 		}
 
 		return menuItems;

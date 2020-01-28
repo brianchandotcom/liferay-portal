@@ -481,37 +481,37 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 			portletDataHandlerInstance.getExportControls();
 
 		for (PortletDataHandlerControl exportControl : exportControls) {
-			if (exportControl instanceof PortletDataHandlerBoolean) {
-				PortletDataHandlerBoolean portletDataHandlerBoolean =
-					(PortletDataHandlerBoolean)exportControl;
+			if (!(exportControl instanceof PortletDataHandlerBoolean)) {
+				continue;
+			}
 
-				boolean controlValue =
-					portletDataHandlerBoolean.getDefaultState();
+			PortletDataHandlerBoolean portletDataHandlerBoolean =
+				(PortletDataHandlerBoolean)exportControl;
 
-				if (!portletDataHandlerBoolean.isDisabled()) {
-					controlValue = MapUtil.getBoolean(
-						parameterMap,
-						portletDataHandlerBoolean.getNamespacedControlName(),
-						true);
+			boolean controlValue = portletDataHandlerBoolean.getDefaultState();
+
+			if (!portletDataHandlerBoolean.isDisabled()) {
+				controlValue = MapUtil.getBoolean(
+					parameterMap,
+					portletDataHandlerBoolean.getNamespacedControlName(), true);
+			}
+
+			if ((portletDataAll || controlValue) &&
+				(portletDataHandlerBoolean.getClassName() != null)) {
+
+				String referrerClassName =
+					portletDataHandlerBoolean.getReferrerClassName();
+
+				if (referrerClassName == null) {
+					parameterMap.put(
+						portletDataHandlerBoolean.getClassName(),
+						new String[] {Boolean.TRUE.toString()});
 				}
-
-				if ((portletDataAll || controlValue) &&
-					(portletDataHandlerBoolean.getClassName() != null)) {
-
-					String referrerClassName =
-						portletDataHandlerBoolean.getReferrerClassName();
-
-					if (referrerClassName == null) {
-						parameterMap.put(
-							portletDataHandlerBoolean.getClassName(),
-							new String[] {Boolean.TRUE.toString()});
-					}
-					else {
-						parameterMap.put(
-							portletDataHandlerBoolean.getClassName() +
-								StringPool.POUND + referrerClassName,
-							new String[] {Boolean.TRUE.toString()});
-					}
+				else {
+					parameterMap.put(
+						portletDataHandlerBoolean.getClassName() +
+							StringPool.POUND + referrerClassName,
+						new String[] {Boolean.TRUE.toString()});
 				}
 			}
 		}

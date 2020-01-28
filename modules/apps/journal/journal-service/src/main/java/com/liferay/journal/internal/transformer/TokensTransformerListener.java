@@ -89,46 +89,48 @@ public class TokensTransformerListener extends BaseTransformerListener {
 		for (Map.Entry<String, String> entry : tokens.entrySet()) {
 			String key = entry.getKey();
 
-			if (Validator.isNotNull(key) && s.contains(key)) {
-				if (!hasKey) {
-					escapedKeysList = new ArrayList<>();
-					escapedValuesList = new ArrayList<>();
-					keysList = new ArrayList<>();
-					valuesList = new ArrayList<>();
-					tempEscapedKeysList = new ArrayList<>();
-					tempEscapedValuesList = new ArrayList<>();
+			if (Validator.isNull(key) || !s.contains(key)) {
+				continue;
+			}
 
-					hasKey = true;
-				}
+			if (!hasKey) {
+				escapedKeysList = new ArrayList<>();
+				escapedValuesList = new ArrayList<>();
+				keysList = new ArrayList<>();
+				valuesList = new ArrayList<>();
+				tempEscapedKeysList = new ArrayList<>();
+				tempEscapedValuesList = new ArrayList<>();
 
-				String actualKey = StringPool.AT.concat(
+				hasKey = true;
+			}
+
+			String actualKey = StringPool.AT.concat(
+				key
+			).concat(
+				StringPool.AT
+			);
+
+			String escapedKey = StringPool.AT.concat(
+				actualKey
+			).concat(
+				StringPool.AT
+			);
+
+			String tempEscapedKey =
+				JournalTransformerListenerKeys.TEMP_ESCAPED_AT_OPEN.concat(
 					key
 				).concat(
-					StringPool.AT
+					JournalTransformerListenerKeys.TEMP_ESCAPED_AT_CLOSE
 				);
 
-				String escapedKey = StringPool.AT.concat(
-					actualKey
-				).concat(
-					StringPool.AT
-				);
+			escapedKeysList.add(escapedKey);
+			escapedValuesList.add(tempEscapedKey);
 
-				String tempEscapedKey =
-					JournalTransformerListenerKeys.TEMP_ESCAPED_AT_OPEN.concat(
-						key
-					).concat(
-						JournalTransformerListenerKeys.TEMP_ESCAPED_AT_CLOSE
-					);
+			keysList.add(actualKey);
+			valuesList.add(GetterUtil.getString(entry.getValue()));
 
-				escapedKeysList.add(escapedKey);
-				escapedValuesList.add(tempEscapedKey);
-
-				keysList.add(actualKey);
-				valuesList.add(GetterUtil.getString(entry.getValue()));
-
-				tempEscapedKeysList.add(tempEscapedKey);
-				tempEscapedValuesList.add(actualKey);
-			}
+			tempEscapedKeysList.add(tempEscapedKey);
+			tempEscapedValuesList.add(actualKey);
 		}
 
 		if (!hasKey) {

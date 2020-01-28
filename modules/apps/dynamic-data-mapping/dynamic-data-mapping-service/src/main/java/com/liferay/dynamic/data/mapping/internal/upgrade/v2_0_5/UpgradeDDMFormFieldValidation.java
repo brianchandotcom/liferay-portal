@@ -107,36 +107,35 @@ public class UpgradeDDMFormFieldValidation extends UpgradeProcess {
 		for (int i = 0; i < fieldsJSONArray.length(); i++) {
 			JSONObject jsonObject = fieldsJSONArray.getJSONObject(i);
 
-			if (_hasValidation(jsonObject)) {
-				JSONObject validationJSONObject = jsonObject.getJSONObject(
-					"validation");
+			if (!_hasValidation(jsonObject)) {
+				continue;
+			}
 
-				String originalValue = validationJSONObject.getString(
-					"errorMessage");
+			JSONObject validationJSONObject = jsonObject.getJSONObject(
+				"validation");
 
-				if (JSONUtil.isValid(originalValue)) {
-					continue;
-				}
+			String originalValue = validationJSONObject.getString(
+				"errorMessage");
 
-				Map<String, String> localizedValue = new HashMap<>();
+			if (JSONUtil.isValid(originalValue)) {
+				continue;
+			}
 
-				for (int j = 0; j < availableLanguageIdsJSONArray.length();
-					 j++) {
+			Map<String, String> localizedValue = new HashMap<>();
 
-					localizedValue.put(
-						availableLanguageIdsJSONArray.getString(j),
-						originalValue);
-				}
+			for (int j = 0; j < availableLanguageIdsJSONArray.length(); j++) {
+				localizedValue.put(
+					availableLanguageIdsJSONArray.getString(j), originalValue);
+			}
 
-				validationJSONObject.put("errorMessage", localizedValue);
+			validationJSONObject.put("errorMessage", localizedValue);
 
-				JSONArray nestedFieldsJSONArray = jsonObject.getJSONArray(
-					"nestedFields");
+			JSONArray nestedFieldsJSONArray = jsonObject.getJSONArray(
+				"nestedFields");
 
-				if (nestedFieldsJSONArray != null) {
-					makeFieldsLocalizable(
-						availableLanguageIdsJSONArray, nestedFieldsJSONArray);
-				}
+			if (nestedFieldsJSONArray != null) {
+				makeFieldsLocalizable(
+					availableLanguageIdsJSONArray, nestedFieldsJSONArray);
 			}
 		}
 	}

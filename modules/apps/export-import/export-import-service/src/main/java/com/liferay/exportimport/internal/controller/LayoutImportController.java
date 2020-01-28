@@ -1261,37 +1261,39 @@ public class LayoutImportController implements ImportController {
 			String layoutPrototypeUuid = GetterUtil.getString(
 				layoutElement.attributeValue("layout-prototype-uuid"));
 
-			if (Validator.isNotNull(layoutPrototypeUuid)) {
-				String layoutPrototypeName = GetterUtil.getString(
-					layoutElement.attributeValue("layout-prototype-name"));
+			if (Validator.isNull(layoutPrototypeUuid)) {
+				continue;
+			}
 
-				boolean preloaded = GetterUtil.getBoolean(
-					layoutElement.attributeValue("preloaded"));
+			String layoutPrototypeName = GetterUtil.getString(
+				layoutElement.attributeValue("layout-prototype-name"));
 
-				if (!preloaded) {
-					LayoutPrototype layoutPrototype =
-						_layoutPrototypeLocalService.
-							fetchLayoutPrototypeByUuidAndCompanyId(
-								layoutPrototypeUuid, companyId);
+			boolean preloaded = GetterUtil.getBoolean(
+				layoutElement.attributeValue("preloaded"));
 
-					if (layoutPrototype == null) {
-						missingLayoutPrototypes.add(
-							new Tuple(
-								LayoutPrototype.class.getName(),
-								layoutPrototypeUuid, layoutPrototypeName));
-					}
+			if (!preloaded) {
+				LayoutPrototype layoutPrototype =
+					_layoutPrototypeLocalService.
+						fetchLayoutPrototypeByUuidAndCompanyId(
+							layoutPrototypeUuid, companyId);
+
+				if (layoutPrototype == null) {
+					missingLayoutPrototypes.add(
+						new Tuple(
+							LayoutPrototype.class.getName(),
+							layoutPrototypeUuid, layoutPrototypeName));
 				}
-				else {
-					LayoutPrototype layoutPrototype =
-						_layoutPrototypeLocalService.fetchLayoutProtoype(
-							companyId, layoutPrototypeName);
+			}
+			else {
+				LayoutPrototype layoutPrototype =
+					_layoutPrototypeLocalService.fetchLayoutProtoype(
+						companyId, layoutPrototypeName);
 
-					if (layoutPrototype == null) {
-						missingLayoutPrototypes.add(
-							new Tuple(
-								LayoutPrototype.class.getName(),
-								layoutPrototypeUuid, layoutPrototypeName));
-					}
+				if (layoutPrototype == null) {
+					missingLayoutPrototypes.add(
+						new Tuple(
+							LayoutPrototype.class.getName(),
+							layoutPrototypeUuid, layoutPrototypeName));
 				}
 			}
 		}

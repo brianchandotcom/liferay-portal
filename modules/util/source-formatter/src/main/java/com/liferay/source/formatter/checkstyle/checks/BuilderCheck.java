@@ -142,40 +142,42 @@ public class BuilderCheck extends ChainedMethodCheck {
 
 			DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
 
-			if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
-				if (!ArrayUtil.contains(
-						builderInformation.getMethodNames(),
-						firstChildDetailAST.getText())) {
+			if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
+				continue;
+			}
 
+			if (!ArrayUtil.contains(
+					builderInformation.getMethodNames(),
+					firstChildDetailAST.getText())) {
+
+				return;
+			}
+
+			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
+				TokenTypes.ELIST);
+
+			DetailAST childDetailAST = elistDetailAST.getFirstChild();
+
+			while (true) {
+				if (childDetailAST == null) {
+					break;
+				}
+
+				if (_isNullValueExpression(childDetailAST)) {
 					return;
 				}
 
-				DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
-					TokenTypes.ELIST);
+				childDetailAST = childDetailAST.getNextSibling();
+			}
 
-				DetailAST childDetailAST = elistDetailAST.getFirstChild();
+			parentDetailAST = getParentWithTokenType(
+				methodCallDetailAST, TokenTypes.DO_WHILE, TokenTypes.LAMBDA,
+				TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
 
-				while (true) {
-					if (childDetailAST == null) {
-						break;
-					}
+			if ((parentDetailAST != null) &&
+				(detailAST.getLineNo() <= parentDetailAST.getLineNo())) {
 
-					if (_isNullValueExpression(childDetailAST)) {
-						return;
-					}
-
-					childDetailAST = childDetailAST.getNextSibling();
-				}
-
-				parentDetailAST = getParentWithTokenType(
-					methodCallDetailAST, TokenTypes.DO_WHILE, TokenTypes.LAMBDA,
-					TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
-
-				if ((parentDetailAST != null) &&
-					(detailAST.getLineNo() <= parentDetailAST.getLineNo())) {
-
-					return;
-				}
+				return;
 			}
 		}
 

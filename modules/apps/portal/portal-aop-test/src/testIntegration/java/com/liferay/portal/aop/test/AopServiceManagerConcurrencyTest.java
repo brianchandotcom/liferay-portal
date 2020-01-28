@@ -157,39 +157,40 @@ public class AopServiceManagerConcurrencyTest {
 						testService = (TestService)_bundleContext.getService(
 							serviceReferences[0]);
 
-						if (testService == null) {
-							Assert.assertSame(
-								aopService,
-								_bundleContext.getService(
-									aopServiceServiceRegistration.
-										getReference()));
+						if (testService != null) {
+							continue;
+						}
 
-							_bundleContext.ungetService(
-								aopServiceServiceRegistration.getReference());
+						Assert.assertSame(
+							aopService,
+							_bundleContext.getService(
+								aopServiceServiceRegistration.getReference()));
 
-							_assertUsingBundles(aopServiceServiceRegistration);
+						_bundleContext.ungetService(
+							aopServiceServiceRegistration.getReference());
 
-							Assert.assertSame(
-								testTransactionHandler,
-								_bundleContext.getService(
-									transactionHandlerServiceRegistration.
-										getReference()));
+						_assertUsingBundles(aopServiceServiceRegistration);
 
-							_bundleContext.ungetService(
+						Assert.assertSame(
+							testTransactionHandler,
+							_bundleContext.getService(
 								transactionHandlerServiceRegistration.
-									getReference());
+									getReference()));
 
-							_assertUsingBundles(
-								transactionHandlerServiceRegistration);
+						_bundleContext.ungetService(
+							transactionHandlerServiceRegistration.
+								getReference());
 
-							serviceReferences = null;
+						_assertUsingBundles(
+							transactionHandlerServiceRegistration);
 
-							while (serviceReferences == null) {
-								serviceReferences =
-									_bundleContext.getServiceReferences(
-										TestService.class.getName(),
-										"(index=" + index + ")");
-							}
+						serviceReferences = null;
+
+						while (serviceReferences == null) {
+							serviceReferences =
+								_bundleContext.getServiceReferences(
+									TestService.class.getName(),
+									"(index=" + index + ")");
 						}
 					}
 

@@ -1971,52 +1971,51 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		for (SubjectConfirmation subjectConfirmation : subjectConfirmations) {
 			String method = subjectConfirmation.getMethod();
 
-			if (method.equals(SubjectConfirmation.METHOD_BEARER)) {
-				SubjectConfirmationData subjectConfirmationData =
-					subjectConfirmation.getSubjectConfirmationData();
-
-				if (subjectConfirmationData == null) {
-					continue;
-				}
-
-				DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
-				long clockSkew = metadataManager.getClockSkew();
-
-				DateTime notBeforeDateTime =
-					subjectConfirmationData.getNotBefore();
-
-				if (notBeforeDateTime != null) {
-					verifyNotBeforeDateTime(
-						nowDateTime, clockSkew, notBeforeDateTime);
-				}
-
-				DateTime notOnOrAfterDateTime =
-					subjectConfirmationData.getNotOnOrAfter();
-
-				if (notOnOrAfterDateTime != null) {
-					verifyNotOnOrAfterDateTime(
-						nowDateTime, clockSkew, notOnOrAfterDateTime);
-				}
-
-				if (Validator.isNull(subjectConfirmationData.getRecipient())) {
-					continue;
-				}
-
-				verifyDestination(
-					messageContext, subjectConfirmationData.getRecipient());
-
-				NameID nameID = subject.getNameID();
-
-				SAMLSubjectNameIdentifierContext
-					samlSubjectNameIdentifierContext =
-						messageContext.getSubcontext(
-							SAMLSubjectNameIdentifierContext.class);
-
-				samlSubjectNameIdentifierContext.setSubjectNameIdentifier(
-					nameID);
-
-				return;
+			if (!method.equals(SubjectConfirmation.METHOD_BEARER)) {
+				continue;
 			}
+
+			SubjectConfirmationData subjectConfirmationData =
+				subjectConfirmation.getSubjectConfirmationData();
+
+			if (subjectConfirmationData == null) {
+				continue;
+			}
+
+			DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
+			long clockSkew = metadataManager.getClockSkew();
+
+			DateTime notBeforeDateTime = subjectConfirmationData.getNotBefore();
+
+			if (notBeforeDateTime != null) {
+				verifyNotBeforeDateTime(
+					nowDateTime, clockSkew, notBeforeDateTime);
+			}
+
+			DateTime notOnOrAfterDateTime =
+				subjectConfirmationData.getNotOnOrAfter();
+
+			if (notOnOrAfterDateTime != null) {
+				verifyNotOnOrAfterDateTime(
+					nowDateTime, clockSkew, notOnOrAfterDateTime);
+			}
+
+			if (Validator.isNull(subjectConfirmationData.getRecipient())) {
+				continue;
+			}
+
+			verifyDestination(
+				messageContext, subjectConfirmationData.getRecipient());
+
+			NameID nameID = subject.getNameID();
+
+			SAMLSubjectNameIdentifierContext samlSubjectNameIdentifierContext =
+				messageContext.getSubcontext(
+					SAMLSubjectNameIdentifierContext.class);
+
+			samlSubjectNameIdentifierContext.setSubjectNameIdentifier(nameID);
+
+			return;
 		}
 
 		throw new SubjectException("Unable to verify subject");

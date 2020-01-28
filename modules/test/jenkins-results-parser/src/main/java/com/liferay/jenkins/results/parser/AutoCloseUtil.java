@@ -345,43 +345,44 @@ public class AutoCloseUtil {
 					localLiferayJenkinsEEBuildProperties,
 					"subrepository.package.names");
 
-			if (gitSubrepositoryPackageNames != null) {
-				for (String gitSubrepositoryPackageName :
-						gitSubrepositoryPackageNames.split(",")) {
+			if (gitSubrepositoryPackageNames == null) {
+				continue;
+			}
 
-					if (!jenkinsJobFailureURLs.isEmpty()) {
-						break;
+			for (String gitSubrepositoryPackageName :
+					gitSubrepositoryPackageNames.split(",")) {
+
+				if (!jenkinsJobFailureURLs.isEmpty()) {
+					break;
+				}
+
+				List<TestResult> testResults = new ArrayList<>();
+
+				testResults.addAll(downstreamBuild.getTestResults("FAILED"));
+				testResults.addAll(
+					downstreamBuild.getTestResults("REGRESSION"));
+
+				for (TestResult testResult : testResults) {
+					if (UpstreamFailureUtil.isTestFailingInUpstreamJob(
+							testResult)) {
+
+						continue;
 					}
 
-					List<TestResult> testResults = new ArrayList<>();
+					if (gitSubrepositoryPackageName.equals(
+							testResult.getPackageName())) {
 
-					testResults.addAll(
-						downstreamBuild.getTestResults("FAILED"));
-					testResults.addAll(
-						downstreamBuild.getTestResults("REGRESSION"));
+						failedDownstreamBuild = downstreamBuild;
 
-					for (TestResult testResult : testResults) {
-						if (UpstreamFailureUtil.isTestFailingInUpstreamJob(
-								testResult)) {
+						StringBuilder sb = new StringBuilder();
 
-							continue;
-						}
+						sb.append("<a href=\"");
+						sb.append(testResult.getTestReportURL());
+						sb.append("\">");
+						sb.append(testResult.getClassName());
+						sb.append("</a>");
 
-						if (gitSubrepositoryPackageName.equals(
-								testResult.getPackageName())) {
-
-							failedDownstreamBuild = downstreamBuild;
-
-							StringBuilder sb = new StringBuilder();
-
-							sb.append("<a href=\"");
-							sb.append(testResult.getTestReportURL());
-							sb.append("\">");
-							sb.append(testResult.getClassName());
-							sb.append("</a>");
-
-							jenkinsJobFailureURLs.add(sb.toString());
-						}
+						jenkinsJobFailureURLs.add(sb.toString());
 					}
 				}
 			}

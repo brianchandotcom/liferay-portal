@@ -234,36 +234,38 @@ public class EditQuestionMVCActionCommand extends BaseMVCActionCommand {
 		while (enu.hasMoreElements()) {
 			String param = enu.nextElement();
 
-			if (param.startsWith(CHOICE_DESCRIPTION_PREFIX)) {
-				int endIndex = param.indexOf(CharPool.UNDERLINE);
-
-				if (endIndex < 0) {
-					endIndex = param.length();
-				}
-
-				String id = param.substring(
-					CHOICE_DESCRIPTION_PREFIX.length(), endIndex);
-
-				if (readParameters.contains(id)) {
-					continue;
-				}
-
-				String choiceName = ParamUtil.getString(
-					actionRequest, CHOICE_NAME_PREFIX + id);
-
-				Map<Locale, String> localeChoiceDescriptionMap =
-					LocalizationUtil.getLocalizationMap(
-						actionRequest, CHOICE_DESCRIPTION_PREFIX + id);
-
-				PollsChoice choice = PollsChoiceUtil.create(0);
-
-				choice.setName(choiceName);
-				choice.setDescriptionMap(localeChoiceDescriptionMap);
-
-				choices.add(choice);
-
-				readParameters.add(id);
+			if (!param.startsWith(CHOICE_DESCRIPTION_PREFIX)) {
+				continue;
 			}
+
+			int endIndex = param.indexOf(CharPool.UNDERLINE);
+
+			if (endIndex < 0) {
+				endIndex = param.length();
+			}
+
+			String id = param.substring(
+				CHOICE_DESCRIPTION_PREFIX.length(), endIndex);
+
+			if (readParameters.contains(id)) {
+				continue;
+			}
+
+			String choiceName = ParamUtil.getString(
+				actionRequest, CHOICE_NAME_PREFIX + id);
+
+			Map<Locale, String> localeChoiceDescriptionMap =
+				LocalizationUtil.getLocalizationMap(
+					actionRequest, CHOICE_DESCRIPTION_PREFIX + id);
+
+			PollsChoice choice = PollsChoiceUtil.create(0);
+
+			choice.setName(choiceName);
+			choice.setDescriptionMap(localeChoiceDescriptionMap);
+
+			choices.add(choice);
+
+			readParameters.add(id);
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

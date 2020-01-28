@@ -202,94 +202,93 @@ public class LPKGDeployerTest {
 					}
 				}
 
-				if (name.endsWith(".war")) {
-					String location =
-						(String)generateInnerBundleLocationMethod.invoke(
-							null, lpkgBundle, name);
+				if (!name.endsWith(".war")) {
+					continue;
+				}
 
-					Bundle bundle = bundleContext.getBundle(location);
+				String location =
+					(String)generateInnerBundleLocationMethod.invoke(
+						null, lpkgBundle, name);
 
-					Assert.assertNotNull(
-						"No matching app bundle for " + location, bundle);
+				Bundle bundle = bundleContext.getBundle(location);
 
-					actualAppBundles.add(bundle);
+				Assert.assertNotNull(
+					"No matching app bundle for " + location, bundle);
 
-					String contextName = name.substring(
-						0, name.lastIndexOf(".war"));
+				actualAppBundles.add(bundle);
 
-					int index = contextName.lastIndexOf('-');
+				String contextName = name.substring(
+					0, name.lastIndexOf(".war"));
 
-					if (index >= 0) {
-						contextName = contextName.substring(0, index);
-					}
+				int index = contextName.lastIndexOf('-');
 
-					String portalProfileNames = null;
+				if (index >= 0) {
+					contextName = contextName.substring(0, index);
+				}
 
-					Path tempFilePath = Files.createTempFile(null, null);
+				String portalProfileNames = null;
 
-					try (InputStream inputStream1 = zipFile.getInputStream(
-							zipEntry)) {
+				Path tempFilePath = Files.createTempFile(null, null);
 
-						Files.copy(
-							inputStream1, tempFilePath,
-							StandardCopyOption.REPLACE_EXISTING);
+				try (InputStream inputStream1 = zipFile.getInputStream(
+						zipEntry)) {
 
-						try (ZipFile zipFile2 = new ZipFile(
-								tempFilePath.toFile());
-							InputStream inputStream2 = zipFile2.getInputStream(
-								new ZipEntry(
-									"WEB-INF/liferay-plugin-package." +
-										"properties"))) {
+					Files.copy(
+						inputStream1, tempFilePath,
+						StandardCopyOption.REPLACE_EXISTING);
 
-							if (inputStream2 != null) {
-								Properties properties = new Properties();
+					try (ZipFile zipFile2 = new ZipFile(tempFilePath.toFile());
+						InputStream inputStream2 = zipFile2.getInputStream(
+							new ZipEntry(
+								"WEB-INF/liferay-plugin-package.properties"))) {
 
-								properties.load(inputStream2);
+						if (inputStream2 != null) {
+							Properties properties = new Properties();
 
-								String configuredServletContextName =
-									properties.getProperty(
-										"servlet-context-name");
+							properties.load(inputStream2);
 
-								if (configuredServletContextName != null) {
-									contextName = configuredServletContextName;
-								}
+							String configuredServletContextName =
+								properties.getProperty("servlet-context-name");
 
-								portalProfileNames = properties.getProperty(
-									"liferay-portal-profile-names");
+							if (configuredServletContextName != null) {
+								contextName = configuredServletContextName;
 							}
+
+							portalProfileNames = properties.getProperty(
+								"liferay-portal-profile-names");
 						}
 					}
-					finally {
-						Files.delete(tempFilePath);
-					}
-
-					StringBundler sb = new StringBundler(13);
-
-					sb.append("webbundle:/");
-					sb.append(URLCodec.encodeURL(lpkgBundle.getSymbolicName()));
-					sb.append(StringPool.DASH);
-					sb.append(lpkgBundle.getVersion());
-					sb.append(StringPool.SLASH);
-					sb.append(contextName);
-					sb.append(".war?Bundle-Version=");
-					sb.append(bundle.getVersion());
-					sb.append("&Web-ContextPath=/");
-					sb.append(contextName);
-					sb.append("&protocol=lpkg");
-
-					if (Validator.isNotNull(portalProfileNames)) {
-						sb.append("&liferay-portal-profile-names=");
-						sb.append(portalProfileNames);
-					}
-
-					location = sb.toString();
-
-					Assert.assertNotNull(
-						StringBundler.concat(
-							"Missing WAR bundle for wrapper bundle ", bundle,
-							" with expected location ", location),
-						bundleContext.getBundle(location));
 				}
+				finally {
+					Files.delete(tempFilePath);
+				}
+
+				StringBundler sb = new StringBundler(13);
+
+				sb.append("webbundle:/");
+				sb.append(URLCodec.encodeURL(lpkgBundle.getSymbolicName()));
+				sb.append(StringPool.DASH);
+				sb.append(lpkgBundle.getVersion());
+				sb.append(StringPool.SLASH);
+				sb.append(contextName);
+				sb.append(".war?Bundle-Version=");
+				sb.append(bundle.getVersion());
+				sb.append("&Web-ContextPath=/");
+				sb.append(contextName);
+				sb.append("&protocol=lpkg");
+
+				if (Validator.isNotNull(portalProfileNames)) {
+					sb.append("&liferay-portal-profile-names=");
+					sb.append(portalProfileNames);
+				}
+
+				location = sb.toString();
+
+				Assert.assertNotNull(
+					StringBundler.concat(
+						"Missing WAR bundle for wrapper bundle ", bundle,
+						" with expected location ", location),
+					bundleContext.getBundle(location));
 			}
 
 			if (!symbolicName.equals("static")) {

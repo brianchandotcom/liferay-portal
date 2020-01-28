@@ -72,43 +72,43 @@ public class UnavailableComponentUtil {
 				}
 			}
 
-			if (!unavailableComponentDeclarations.isEmpty()) {
-				BundleContext bundleContext =
-					dependencyManager.getBundleContext();
+			if (unavailableComponentDeclarations.isEmpty()) {
+				continue;
+			}
 
-				Bundle bundle = bundleContext.getBundle();
+			BundleContext bundleContext = dependencyManager.getBundleContext();
 
-				sb.append("\nBundle {id: ");
-				sb.append(bundle.getBundleId());
-				sb.append(", name: ");
-				sb.append(bundle.getSymbolicName());
-				sb.append(", version: ");
-				sb.append(bundle.getVersion());
-				sb.append("}.\n");
+			Bundle bundle = bundleContext.getBundle();
 
-				for (Map.Entry
-						<ComponentDeclaration,
-						 List<ComponentDependencyDeclaration>> entry :
-							unavailableComponentDeclarations.entrySet()) {
+			sb.append("\nBundle {id: ");
+			sb.append(bundle.getBundleId());
+			sb.append(", name: ");
+			sb.append(bundle.getSymbolicName());
+			sb.append(", version: ");
+			sb.append(bundle.getVersion());
+			sb.append("}.\n");
 
-					sb.append("\tComponent with ID ");
+			for (Map.Entry
+					<ComponentDeclaration, List<ComponentDependencyDeclaration>>
+						entry : unavailableComponentDeclarations.entrySet()) {
 
-					ComponentDeclaration componentDeclaration = entry.getKey();
+				sb.append("\tComponent with ID ");
 
-					sb.append(componentDeclaration.getId());
+				ComponentDeclaration componentDeclaration = entry.getKey();
 
-					sb.append(" is unavailable due to missing required ");
-					sb.append("dependencies:\n\t\t");
+				sb.append(componentDeclaration.getId());
 
-					for (ComponentDependencyDeclaration
-							componentDependencyDeclaration : entry.getValue()) {
+				sb.append(" is unavailable due to missing required ");
+				sb.append("dependencies:\n\t\t");
 
-						sb.append(componentDependencyDeclaration);
-						sb.append("\n\t\t");
-					}
+				for (ComponentDependencyDeclaration
+						componentDependencyDeclaration : entry.getValue()) {
 
-					sb.setIndex(sb.index() - 1);
+					sb.append(componentDependencyDeclaration);
+					sb.append("\n\t\t");
 				}
+
+				sb.setIndex(sb.index() - 1);
 			}
 		}
 

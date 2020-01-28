@@ -296,41 +296,43 @@ public class FreeMarkerTool {
 			List<JavaMethodParameter> javaMethodParameters =
 				javaMethodSignature.getJavaMethodParameters();
 
-			if (!javaMethodParameters.isEmpty()) {
-				JavaMethodParameter javaMethodParameter =
-					javaMethodParameters.get(0);
+			if (javaMethodParameters.isEmpty()) {
+				continue;
+			}
 
-				String parameterName = javaMethodParameter.getParameterName();
+			JavaMethodParameter javaMethodParameter = javaMethodParameters.get(
+				0);
 
-				String methodName = javaMethodSignature.getMethodName();
+			String parameterName = javaMethodParameter.getParameterName();
 
-				JavaMethodSignature relationJavaMethodSignature =
-					_getGraphQLPathRelation(
-						javaMethodSignature, javaMethodSignatures,
-						parameterName, schemas);
+			String methodName = javaMethodSignature.getMethodName();
 
-				if (relationJavaMethodSignature != null) {
-					javaMethodSignatureMap.put(
-						methodName, relationJavaMethodSignature);
-				}
+			JavaMethodSignature relationJavaMethodSignature =
+				_getGraphQLPathRelation(
+					javaMethodSignature, javaMethodSignatures, parameterName,
+					schemas);
 
-				for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
-					Schema schema = entry.getValue();
+			if (relationJavaMethodSignature != null) {
+				javaMethodSignatureMap.put(
+					methodName, relationJavaMethodSignature);
+			}
 
-					Map<String, Schema> propertySchemas =
-						schema.getPropertySchemas();
+			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
+				Schema schema = entry.getValue();
 
-					if (propertySchemas != null) {
-						for (String propertyName : propertySchemas.keySet()) {
-							if (_isGraphQLPropertyRelation(
-									javaMethodSignature, parameterName,
-									propertyName)) {
+				Map<String, Schema> propertySchemas =
+					schema.getPropertySchemas();
 
-								javaMethodSignatureMap.put(
-									methodName,
-									_getJavaMethodSignature(
-										javaMethodSignature, entry.getKey()));
-							}
+				if (propertySchemas != null) {
+					for (String propertyName : propertySchemas.keySet()) {
+						if (_isGraphQLPropertyRelation(
+								javaMethodSignature, parameterName,
+								propertyName)) {
+
+							javaMethodSignatureMap.put(
+								methodName,
+								_getJavaMethodSignature(
+									javaMethodSignature, entry.getKey()));
 						}
 					}
 				}

@@ -484,37 +484,38 @@ public class JournalArticleExportImportContentProcessor
 					JournalArticle journalArticle =
 						_journalArticleLocalService.fetchLatestArticle(classPK);
 
-					if (journalArticle == null) {
-						if (ExportImportThreadLocal.isImportInProcess()) {
-							if (_log.isDebugEnabled()) {
-								StringBundler sb = new StringBundler(7);
+					if (journalArticle != null) {
+						continue;
+					}
 
-								sb.append("An invalid web content article ");
-								sb.append("was detected during import when ");
-								sb.append("validating the content below. ");
-								sb.append("This is not an error; it ");
-								sb.append("typically means the web content ");
-								sb.append("article was deleted.\n");
-								sb.append(content);
+					if (ExportImportThreadLocal.isImportInProcess()) {
+						if (_log.isDebugEnabled()) {
+							StringBundler sb = new StringBundler(6);
 
-								_log.debug(sb.toString());
-							}
+							sb.append("An invalid web content article was ");
+							sb.append("detected during import when ");
+							sb.append("validating the content below. This is ");
+							sb.append("not an error; it typically means the ");
+							sb.append("web content article was deleted.\n");
+							sb.append(content);
 
-							return;
+							_log.debug(sb.toString());
 						}
 
-						NoSuchArticleException noSuchArticleException =
-							new NoSuchArticleException(
-								StringBundler.concat(
-									"No JournalArticle exists with the key ",
-									"{resourcePrimKey=", classPK, "}"));
+						return;
+					}
 
-						if (throwable == null) {
-							throwable = noSuchArticleException;
-						}
-						else {
-							throwable.addSuppressed(noSuchArticleException);
-						}
+					NoSuchArticleException noSuchArticleException =
+						new NoSuchArticleException(
+							StringBundler.concat(
+								"No JournalArticle exists with the key ",
+								"{resourcePrimKey=", classPK, "}"));
+
+					if (throwable == null) {
+						throwable = noSuchArticleException;
+					}
+					else {
+						throwable.addSuppressed(noSuchArticleException);
 					}
 				}
 			}

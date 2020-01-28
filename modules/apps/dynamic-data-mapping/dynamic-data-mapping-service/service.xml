@@ -64,6 +64,7 @@
 		<column localized="true" name="description" type="String" />
 		<column name="definition" type="String" />
 		<column name="type" type="String" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 

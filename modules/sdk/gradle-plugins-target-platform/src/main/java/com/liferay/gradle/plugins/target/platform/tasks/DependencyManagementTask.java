@@ -58,8 +58,40 @@ public class DependencyManagementTask extends DefaultTask {
 
 	@TaskAction
 	public void report() {
-		_writeConfigurationManagedVersions(
-			_getTargetPlatformDependencies(getProject()));
+		List<String> dependencies = _getTargetPlatformDependencies(
+			getProject());
+
+		Logger logger = getLogger();
+
+		if ((dependencies != null) && !dependencies.isEmpty()) {
+			StringBuilder sb = new StringBuilder();
+
+			for (String dependency : dependencies) {
+				sb.append("\t");
+				sb.append(dependency);
+				sb.append(System.lineSeparator());
+			}
+
+			String output = sb.toString();
+
+			File outputFile = getOutputFile();
+
+			if (outputFile != null) {
+				try {
+					Files.write(outputFile.toPath(), output.getBytes());
+				}
+				catch (IOException ioException) {
+					throw new GradleException(
+						"Unable to write dependencies to file", ioException);
+				}
+			}
+			else {
+				logger.lifecycle(output);
+			}
+		}
+		else {
+			logger.lifecycle("No dependency management information available.");
+		}
 	}
 
 	@Option(
@@ -157,45 +189,6 @@ public class DependencyManagementTask extends DefaultTask {
 			});
 
 		return dependencies;
-	}
-
-	private String _renderManagedVersions(List<String> dependencies) {
-		StringBuilder sb = new StringBuilder();
-
-		for (String dependency : dependencies) {
-			sb.append("\t");
-			sb.append(dependency);
-			sb.append(System.lineSeparator());
-		}
-
-		return sb.toString();
-	}
-
-	private void _writeConfigurationManagedVersions(List<String> dependencies) {
-		Logger logger = getLogger();
-
-		if ((dependencies != null) && !dependencies.isEmpty()) {
-			String dependenciesOutput = _renderManagedVersions(dependencies);
-
-			File outputFile = getOutputFile();
-
-			if (outputFile != null) {
-				try {
-					Files.write(
-						outputFile.toPath(), dependenciesOutput.getBytes());
-				}
-				catch (IOException ioException) {
-					throw new GradleException(
-						"Unable to write dependencies to file", ioException);
-				}
-			}
-			else {
-				logger.lifecycle(dependenciesOutput);
-			}
-		}
-		else {
-			logger.lifecycle("No dependency management information available.");
-		}
 	}
 
 	private String _outputFile;

@@ -19,6 +19,7 @@ import com.liferay.depot.constants.DepotActionKeys;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -68,224 +68,116 @@ public class DepotEntryServiceTest {
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testAddDepotEntryWithoutPermissions() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			_addDepotEntry(user);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-		}
+		_withRegularUser((user, role) -> _addDepotEntry(user));
 	}
 
 	@Test
 	public void testAddDepotEntryWithPermissions() throws Exception {
-		User user = UserTestUtil.addUser();
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		_withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role, DepotConstants.RESOURCE_NAME,
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					DepotActionKeys.ADD_DEPOT_ENTRY);
 
-		_userLocalService.addRoleUser(role.getRoleId(), user);
+				DepotEntry depotEntry = _addDepotEntry(user);
 
-		RoleTestUtil.addResourcePermission(
-			role, DepotConstants.RESOURCE_NAME, ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			DepotActionKeys.ADD_DEPOT_ENTRY);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			DepotEntry depotEntry = _addDepotEntry(user);
-
-			Assert.assertNotNull(
-				_depotEntryService.getDepotEntry(depotEntry.getDepotEntryId()));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-			_roleLocalService.deleteRole(role);
-		}
+				Assert.assertNotNull(
+					_depotEntryService.getDepotEntry(
+						depotEntry.getDepotEntryId()));
+			});
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testDeleteDepotEntryWithoutPermissions() throws Exception {
-		User user = UserTestUtil.addUser();
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
-
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			_depotEntryService.deleteDepotEntry(depotEntry.getDepotEntryId());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-		}
+		_withRegularUser(
+			(user, role) -> _depotEntryService.deleteDepotEntry(
+				depotEntry.getDepotEntryId()));
 	}
 
 	@Test
 	public void testDeleteDepotEntryWithPermissions() throws Exception {
-		User user = UserTestUtil.addUser();
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_userLocalService.addRoleUser(role.getRoleId(), user);
+		_withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role, DepotEntry.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.DELETE);
 
-		RoleTestUtil.addResourcePermission(
-			role, DepotEntry.class.getName(), ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.DELETE);
+				Assert.assertNotNull(
+					_depotEntryService.deleteDepotEntry(
+						depotEntry.getDepotEntryId()));
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
-
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			Assert.assertNotNull(
-				_depotEntryService.deleteDepotEntry(
-					depotEntry.getDepotEntryId()));
-
-			_depotEntries.remove(depotEntry);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-			_roleLocalService.deleteRole(role);
-		}
+				_depotEntries.remove(depotEntry);
+			});
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testGetDepotEntryWithoutPermissions() throws Exception {
-		User user = UserTestUtil.addUser();
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
-
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			_depotEntryService.getDepotEntry(depotEntry.getDepotEntryId());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-		}
+		_withRegularUser(
+			(user, role) -> _depotEntryService.getDepotEntry(
+				depotEntry.getDepotEntryId()));
 	}
 
 	@Test
 	public void testGetDepotEntryWithPermissions() throws Exception {
-		User user = UserTestUtil.addUser();
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_userLocalService.addRoleUser(role.getRoleId(), user);
+		_withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role, DepotEntry.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.VIEW);
 
-		RoleTestUtil.addResourcePermission(
-			role, DepotEntry.class.getName(), ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.VIEW);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
-
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			Assert.assertNotNull(
-				_depotEntryService.getDepotEntry(depotEntry.getDepotEntryId()));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-			_roleLocalService.deleteRole(role);
-		}
+				Assert.assertNotNull(
+					_depotEntryService.getDepotEntry(
+						depotEntry.getDepotEntryId()));
+			});
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testGetGroupDepotEntryWithoutPermissions() throws Exception {
-		User user = UserTestUtil.addUser();
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
-
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			_depotEntryService.getGroupDepotEntry(depotEntry.getGroupId());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-		}
+		_withRegularUser(
+			(user, role) -> _depotEntryService.getGroupDepotEntry(
+				depotEntry.getGroupId()));
 	}
 
 	@Test
 	public void testGetGroupDepotEntryWithPermissions() throws Exception {
-		User user = UserTestUtil.addUser();
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_userLocalService.addRoleUser(role.getRoleId(), user);
+		_withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role, DepotEntry.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.VIEW);
 
-		RoleTestUtil.addResourcePermission(
-			role, DepotEntry.class.getName(), ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.VIEW);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
-
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			Assert.assertNotNull(
-				_depotEntryService.getGroupDepotEntry(depotEntry.getGroupId()));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-			_roleLocalService.deleteRole(role);
-		}
+				Assert.assertNotNull(
+					_depotEntryService.getGroupDepotEntry(
+						depotEntry.getGroupId()));
+			});
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testUpdateDepotEntryWithoutPermissions() throws Exception {
-		User user = UserTestUtil.addUser();
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
-
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			_depotEntryService.updateDepotEntry(
+		_withRegularUser(
+			(user, role) -> _depotEntryService.updateDepotEntry(
 				depotEntry.getDepotEntryId(),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -293,50 +185,34 @@ public class DepotEntryServiceTest {
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				Collections.emptyMap(), new UnicodeProperties(),
 				ServiceContextTestUtil.getServiceContext(
-					user.getGroupId(), user.getUserId()));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-		}
+					user.getGroupId(), user.getUserId())));
 	}
 
 	@Test
 	public void testUpdateDepotEntryWithPermissions() throws Exception {
-		User user = UserTestUtil.addUser();
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_userLocalService.addRoleUser(role.getRoleId(), user);
+		_withRegularUser(
+			(user, role) -> {
+				RoleTestUtil.addResourcePermission(
+					role, DepotEntry.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					ActionKeys.UPDATE);
 
-		RoleTestUtil.addResourcePermission(
-			role, DepotEntry.class.getName(), ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.UPDATE);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
-
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			Assert.assertNotNull(
-				_depotEntryService.updateDepotEntry(
-					depotEntry.getDepotEntryId(),
-					Collections.singletonMap(
-						LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-					Collections.singletonMap(
-						LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-					Collections.emptyMap(), new UnicodeProperties(),
-					ServiceContextTestUtil.getServiceContext(
-						user.getGroupId(), user.getUserId())));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			_userLocalService.deleteUser(user);
-			_roleLocalService.deleteRole(role);
-		}
+				Assert.assertNotNull(
+					_depotEntryService.updateDepotEntry(
+						depotEntry.getDepotEntryId(),
+						Collections.singletonMap(
+							LocaleUtil.getDefault(),
+							RandomTestUtil.randomString()),
+						Collections.singletonMap(
+							LocaleUtil.getDefault(),
+							RandomTestUtil.randomString()),
+						Collections.emptyMap(), new UnicodeProperties(),
+						ServiceContextTestUtil.getServiceContext(
+							user.getGroupId(), user.getUserId())));
+			});
 	}
 
 	private DepotEntry _addDepotEntry(User user) throws Exception {
@@ -353,6 +229,30 @@ public class DepotEntryServiceTest {
 		return depotEntry;
 	}
 
+	private void _withRegularUser(
+			UnsafeBiConsumer<User, Role, Exception> consumer)
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_userLocalService.addRoleUser(role.getRoleId(), user);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(user));
+
+			consumer.accept(user, role);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			_userLocalService.deleteUser(user);
+		}
+	}
+
 	@DeleteAfterTestRun
 	private final List<DepotEntry> _depotEntries = new ArrayList<>();
 
@@ -361,9 +261,6 @@ public class DepotEntryServiceTest {
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

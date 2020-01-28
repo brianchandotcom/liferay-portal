@@ -94,9 +94,9 @@ public class DependencyManagementTask extends DefaultTask {
 
 			});
 
-		DependencySet allDependencies = ideBomsConfiguration.getDependencies();
+		DependencySet dependencySet = ideBomsConfiguration.getDependencies();
 
-		allDependencies.all(
+		dependencySet.all(
 			new Action<Dependency>() {
 
 				@Override

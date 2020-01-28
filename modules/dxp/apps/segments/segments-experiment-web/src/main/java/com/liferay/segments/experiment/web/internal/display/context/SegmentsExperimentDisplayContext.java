@@ -195,7 +195,8 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getCreateSegmentsExperimentURL() {
-		return _getSegmentsExperimentActionURL("/add_segments_experiment");
+		return _getSegmentsExperimentActionURL(
+			"/segments_experiment/add_segments_experiment");
 	}
 
 	private String _getCreateSegmentsVariantURL() {
@@ -204,21 +205,23 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getDeleteSegmentsExperimentURL() {
-		return _getSegmentsExperimentActionURL("/delete_segments_experiment");
+		return _getSegmentsExperimentActionURL(
+			"/segments_experiment/delete_segments_experiment");
 	}
 
 	private String _getDeleteSegmentsVariantURL() {
 		return _getSegmentsExperimentActionURL(
-			"/delete_segments_experiment_rel");
+			"/segments_experiment/delete_segments_experiment_rel");
 	}
 
 	private String _getEditSegmentsExperimentStatusURL() {
 		return _getSegmentsExperimentActionURL(
-			"/edit_segments_experiment_status");
+			"/segments_experiment/edit_segments_experiment_status");
 	}
 
 	private String _getEditSegmentsExperimentURL() {
-		return _getSegmentsExperimentActionURL("/edit_segments_experiment");
+		return _getSegmentsExperimentActionURL(
+			"/segments_experiment/edit_segments_experiment");
 	}
 
 	private String _getEditSegmentsVariantLayoutURL() throws PortalException {
@@ -245,7 +248,8 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getEditSegmentsVariantURL() {
-		return _getSegmentsExperimentActionURL("/edit_segments_experiment_rel");
+		return _getSegmentsExperimentActionURL(
+			"/segments_experiment/edit_segments_experiment_rel");
 	}
 
 	private Map<String, Object> _getEndpoints() throws PortalException {
@@ -319,7 +323,8 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getRunSegmentsExperimenttURL() {
-		return _getSegmentsExperimentActionURL("/run_segments_experiment");
+		return _getSegmentsExperimentActionURL(
+			"/segments_experiment/run_segments_experiment");
 	}
 
 	private long _getSegmentsExperienceId() throws PortalException {

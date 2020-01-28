@@ -67,7 +67,7 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 				</c:otherwise>
 			</c:choose>
 
-			<portlet:actionURL name="/hide_segments_experiment_panel" var="hideSegmentsExperimentPanelURL">
+			<portlet:actionURL name="/segments_experiment/hide_panel" var="hideSegmentsExperimentPanelURL">
 				<portlet:param name="redirect" value="<%= themeDisplay.getLayoutFriendlyURL(layout) %>" />
 			</portlet:actionURL>
 

@@ -20,6 +20,7 @@ import groovy.util.XmlSlurper;
 import groovy.util.slurpersupport.GPathResult;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.file.Files;
 
@@ -177,24 +178,23 @@ public class DependencyManagementTask extends DefaultTask {
 		Logger logger = getLogger();
 
 		if ((managedVersions != null) && !managedVersions.isEmpty()) {
-			try {
-				String dependenciesOutput = _renderManagedVersions(
-					managedVersions);
+			String dependenciesOutput = _renderManagedVersions(managedVersions);
 
-				File outputFile = getOutputFile();
+			File outputFile = getOutputFile();
 
-				if (outputFile != null) {
+			if (outputFile != null) {
+				try {
 					Files.write(
 						outputFile.toPath(), dependenciesOutput.getBytes());
 				}
-				else {
-					logger.lifecycle(dependenciesOutput);
+				catch (IOException ioException) {
+					throw new GradleException(
+						"Unable to output dependency management information",
+						ioException);
 				}
 			}
-			catch (Exception exception) {
-				throw new GradleException(
-					"Unable to output dependency management information",
-					exception);
+			else {
+				logger.lifecycle(dependenciesOutput);
 			}
 		}
 		else {

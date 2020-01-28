@@ -145,10 +145,10 @@ public class DependencyManagementTask extends DefaultTask {
 								while (iterator.hasNext()) {
 									gPathResult = (GPathResult)iterator.next();
 
-									String groupId = String.valueOf(
-										gPathResult.getProperty("groupId"));
 									String artifactId = String.valueOf(
 										gPathResult.getProperty("artifactId"));
+									String groupId = String.valueOf(
+										gPathResult.getProperty("groupId"));
 									String version = String.valueOf(
 										gPathResult.getProperty("version"));
 

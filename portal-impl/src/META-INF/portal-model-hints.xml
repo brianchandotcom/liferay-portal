@@ -92,7 +92,9 @@
 		<field name="treePath" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field localized="true" name="title" type="String">
 			<validator name="required" />
 		</field>

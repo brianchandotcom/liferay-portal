@@ -221,16 +221,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
-	private void _createTouchFile(File dir) throws IOException {
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-
-		File file = new File(dir, ".touch");
-
-		file.createNewFile();
-	}
-
 	private Configuration _addConfigurationBundleSupport(
 		final Project project) {
 
@@ -1301,6 +1291,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _createTouchFile(File dir) throws IOException {
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+
+		File file = new File(dir, ".touch");
+
+		file.createNewFile();
 	}
 
 	private String _getDockerContainerId(Project project) {

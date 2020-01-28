@@ -328,6 +328,16 @@ public class DataRecordResourceImpl
 			ddlRecordSet.getRecordSetId(), dataRecord.getDataRecordValues(),
 			ddlRecord.getGroupId());
 
+		DDLRecordSetVersion ddlRecordSetVersion =
+			ddlRecordSet.getRecordSetVersion();
+
+		DDMStructureVersion ddmStructureVersion =
+			ddlRecordSetVersion.getDDMStructureVersion();
+
+		_ddmStorageLinkLocalService.addStorageLink(
+			_portal.getClassNameId(DataRecord.class.getName()), ddmStorageId,
+			ddmStructureVersion.getStructureVersionId(), new ServiceContext());
+
 		_ddlRecordLocalService.updateRecord(
 			PrincipalThreadLocal.getUserId(), dataRecordId, ddmStorageId,
 			new ServiceContext());

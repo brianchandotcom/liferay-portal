@@ -20,7 +20,6 @@ import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
@@ -33,11 +32,7 @@ import java.util.Map;
 public class BlogPostingEntityModel implements EntityModel {
 
 	public BlogPostingEntityModel(List<EntityField> entityFields) {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new IdEntityField(
-				"id",
-				locale -> Field.ENTRY_CLASS_PK,
-				String::valueOf),
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new CollectionEntityField(
 				new IntegerEntityField(
 					"taxonomyCategoryIds", locale -> "assetCategoryIds")),

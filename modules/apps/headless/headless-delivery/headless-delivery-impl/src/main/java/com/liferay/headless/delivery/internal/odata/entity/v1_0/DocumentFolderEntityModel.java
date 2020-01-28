@@ -31,7 +31,7 @@ import java.util.Map;
 public class DocumentFolderEntityModel implements EntityModel {
 
 	public DocumentFolderEntityModel(List<EntityField> entityFields) {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new ComplexEntityField("customFields", entityFields),
 			new DateTimeEntityField(
 				"dateCreated",

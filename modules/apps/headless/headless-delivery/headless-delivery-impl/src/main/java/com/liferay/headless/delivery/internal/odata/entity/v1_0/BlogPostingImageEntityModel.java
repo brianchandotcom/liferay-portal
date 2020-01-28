@@ -34,7 +34,7 @@ import java.util.Map;
 public class BlogPostingImageEntityModel implements EntityModel {
 
 	public BlogPostingImageEntityModel() {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new IdEntityField(
 				"encodingFormat",
 				locale -> Field.getSortableFieldName(

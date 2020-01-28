@@ -29,7 +29,7 @@ import java.util.Map;
 public class CategoryEntityModel implements EntityModel {
 
 	public CategoryEntityModel() {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

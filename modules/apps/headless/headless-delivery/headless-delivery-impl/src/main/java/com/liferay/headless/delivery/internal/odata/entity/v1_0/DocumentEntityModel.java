@@ -38,7 +38,7 @@ import java.util.Map;
 public class DocumentEntityModel implements EntityModel {
 
 	public DocumentEntityModel(List<EntityField> entityFields) {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new CollectionEntityField(
 				new IntegerEntityField(
 					"taxonomyCategoryIds", locale -> "assetCategoryIds")),

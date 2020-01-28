@@ -34,7 +34,7 @@ import java.util.Map;
 public class MessageBoardMessageEntityModel implements EntityModel {
 
 	public MessageBoardMessageEntityModel(List<EntityField> entityFields) {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new BooleanEntityField("showAsQuestion", locale -> "question"),
 			new CollectionEntityField(
 				new StringEntityField(

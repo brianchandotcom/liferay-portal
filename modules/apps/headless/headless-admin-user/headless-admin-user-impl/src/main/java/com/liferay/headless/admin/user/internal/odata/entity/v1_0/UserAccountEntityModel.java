@@ -30,7 +30,7 @@ import java.util.Map;
 public class UserAccountEntityModel implements EntityModel {
 
 	public UserAccountEntityModel() {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),
@@ -38,7 +38,6 @@ public class UserAccountEntityModel implements EntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
-			new IdEntityField("id", locale -> Field.USER_ID, String::valueOf),
 			new IdEntityField(
 				"organizationIds", locale -> "organizationIds",
 				String::valueOf),

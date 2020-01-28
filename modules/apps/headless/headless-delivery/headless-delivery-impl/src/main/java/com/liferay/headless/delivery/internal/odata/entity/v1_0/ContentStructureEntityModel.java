@@ -29,7 +29,7 @@ import java.util.Map;
 public class ContentStructureEntityModel implements EntityModel {
 
 	public ContentStructureEntityModel() {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

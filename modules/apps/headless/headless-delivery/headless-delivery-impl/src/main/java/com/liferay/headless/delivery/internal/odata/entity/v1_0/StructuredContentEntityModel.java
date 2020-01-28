@@ -37,7 +37,7 @@ public class StructuredContentEntityModel implements EntityModel {
 	public StructuredContentEntityModel(
 		List<EntityField> entityFields, List<EntityField> customEntityFields) {
 
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new CollectionEntityField(
 				new IntegerEntityField(
 					"taxonomyCategoryIds", locale -> "assetCategoryIds")),

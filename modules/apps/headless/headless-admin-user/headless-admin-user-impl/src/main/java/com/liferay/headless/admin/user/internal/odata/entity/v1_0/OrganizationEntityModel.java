@@ -30,7 +30,7 @@ import java.util.Map;
 public class OrganizationEntityModel implements EntityModel {
 
 	public OrganizationEntityModel() {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),

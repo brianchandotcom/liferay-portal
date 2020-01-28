@@ -32,7 +32,7 @@ import java.util.Map;
 public class StructuredContentFolderEntityModel implements EntityModel {
 
 	public StructuredContentFolderEntityModel(List<EntityField> entityFields) {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new ComplexEntityField("customFields", entityFields),
 			new DateTimeEntityField(
 				"dateCreated",

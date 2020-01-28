@@ -15,6 +15,7 @@
 package com.liferay.portal.odata.entity;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
@@ -36,6 +37,20 @@ public interface EntityModel {
 		for (EntityField entityField : entityFields) {
 			entityFieldsMap.put(entityField.getName(), entityField);
 		}
+
+		return entityFieldsMap;
+	}
+
+	public static Map<String, EntityField> toEntityFieldsMapWithId(
+		EntityField... entityFields) {
+
+		Map<String, EntityField> entityFieldsMap = toEntityFieldsMap(
+			entityFields);
+
+		EntityField idEntityField = new IdEntityField(
+			"id", locale -> Field.ENTRY_CLASS_PK, String::valueOf);
+
+		entityFieldsMap.put(idEntityField.getName(), idEntityField);
 
 		return entityFieldsMap;
 	}

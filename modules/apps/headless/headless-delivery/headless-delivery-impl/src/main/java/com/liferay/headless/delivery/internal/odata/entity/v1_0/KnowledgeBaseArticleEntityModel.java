@@ -33,7 +33,7 @@ import java.util.Map;
 public class KnowledgeBaseArticleEntityModel implements EntityModel {
 
 	public KnowledgeBaseArticleEntityModel(List<EntityField> entityFields) {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new CollectionEntityField(
 				new IntegerEntityField(
 					"taxonomyCategoryIds", locale -> "assetCategoryIds")),

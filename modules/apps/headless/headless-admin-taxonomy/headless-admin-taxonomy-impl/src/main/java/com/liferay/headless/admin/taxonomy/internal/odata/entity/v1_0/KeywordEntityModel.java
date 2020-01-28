@@ -30,7 +30,7 @@ import java.util.Map;
 public class KeywordEntityModel implements EntityModel {
 
 	public KeywordEntityModel() {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+		_entityFieldsMap = EntityModel.toEntityFieldsMapWithId(
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

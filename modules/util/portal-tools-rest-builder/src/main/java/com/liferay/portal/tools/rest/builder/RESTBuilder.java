@@ -1591,11 +1591,12 @@ public class RESTBuilder {
 					Parameter parameter = parameters.get(i);
 
 					if (Validator.isNotNull(parameter.getReference())) {
-						parameters.set(
-							i,
-							parameterMap.get(
-								OpenAPIParserUtil.getReferenceName(
-									parameter.getReference())));
+						String key = OpenAPIParserUtil.getReferenceName(
+							parameter.getReference());
+
+						if (parameterMap.containsKey(key)) {
+							parameters.set(i, parameterMap.get(key));
+						}
 					}
 				}
 			}

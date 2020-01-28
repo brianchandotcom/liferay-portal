@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/control/menu/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <%
 String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES);

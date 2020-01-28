@@ -14,31 +14,32 @@
  */
 --%>
 
-<%@ include file="/control/menu/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <%
 String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES);
 
-boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(CustomizationSettingsProductNavigationControlMenuEntry.CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION));
+boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(CustomizationSettingsControlMenuJSPDynamicInclude.CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION));
 
 Map<String, Object> data = new HashMap<>();
 
 data.put("qa-id", "customizations");
 %>
 
-<li class="active control-menu-link control-menu-nav-item customization-link d-block d-sm-none">
-	<liferay-ui:icon
-		data="<%= data %>"
-		icon="pencil"
-		id='<%= portletNamespace + "customizationButton" %>'
-		label="<%= false %>"
-		linkCssClass="control-menu-icon"
-		markupView="lexicon"
-		message="this-page-can-be-customized"
-		url="javascript:;"
-	/>
-</li>
-<li class="control-menu-nav-item" id="<%= portletNamespace %>customizationBar">
+<div id="<%= portletNamespace %>customizationBar">
+	<div class="active control-menu-link customization-link d-block d-sm-none">
+		<liferay-ui:icon
+			data="<%= data %>"
+			icon="pencil"
+			id='<%= portletNamespace + "customizationButton" %>'
+			label="<%= false %>"
+			linkCssClass="control-menu-icon"
+			markupView="lexicon"
+			message="this-page-can-be-customized"
+			url="javascript:;"
+		/>
+	</div>
+
 	<div class="control-menu-level-2">
 		<div class="container-fluid container-fluid-max-xl">
 			<div class="control-menu-level-2-heading d-block d-sm-none">
@@ -195,4 +196,4 @@ data.put("qa-id", "customizations");
 			</ul>
 		</div>
 	</div>
-</li>
+</div>

@@ -15,25 +15,11 @@
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import TreeviewContext from './TreeviewContext';
-
-/**
- * Local version of `classnames()` required due to loader bug which prevents us
- * from importing the shared version.
- *
- * See: https://github.com/liferay/liferay-amd-loader/issues/225
- */
-function classNames(classes) {
-	return Object.entries(classes)
-		.map(([key, value]) => {
-			return value ? key : false;
-		})
-		.filter(Boolean)
-		.join(' ');
-}
 
 export default function TreeviewCard({node}) {
 	const {state} = useContext(TreeviewContext);

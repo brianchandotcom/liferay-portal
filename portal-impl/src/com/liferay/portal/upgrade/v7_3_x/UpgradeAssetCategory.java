@@ -69,7 +69,7 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 			while (true) {
 				try (ResultSet rs = selectPS.executeQuery()) {
 					if (!rs.next()) {
-						return;
+						break;
 					}
 
 					do {
@@ -84,6 +84,10 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 				}
 			}
 		}
+
+		alter(
+			AssetCategoryTable.class,
+			new AlterTableAddColumn("name VARCHAR(255) null"));
 	}
 
 }

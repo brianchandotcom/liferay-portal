@@ -20,6 +20,7 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -176,16 +177,7 @@ public class DepotEntryServiceTest {
 	public void testUpdateDepotEntryWithoutPermissions() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry(TestPropsValues.getUser());
 
-		_withRegularUser(
-			(user, role) -> _depotEntryService.updateDepotEntry(
-				depotEntry.getDepotEntryId(),
-				Collections.singletonMap(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-				Collections.singletonMap(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-				Collections.emptyMap(), new UnicodeProperties(),
-				ServiceContextTestUtil.getServiceContext(
-					user.getGroupId(), user.getUserId())));
+		_withRegularUser((user, role) -> _updateDepotEntry(depotEntry, user));
 	}
 
 	@Test
@@ -200,18 +192,7 @@ public class DepotEntryServiceTest {
 					String.valueOf(TestPropsValues.getCompanyId()),
 					ActionKeys.UPDATE);
 
-				Assert.assertNotNull(
-					_depotEntryService.updateDepotEntry(
-						depotEntry.getDepotEntryId(),
-						Collections.singletonMap(
-							LocaleUtil.getDefault(),
-							RandomTestUtil.randomString()),
-						Collections.singletonMap(
-							LocaleUtil.getDefault(),
-							RandomTestUtil.randomString()),
-						Collections.emptyMap(), new UnicodeProperties(),
-						ServiceContextTestUtil.getServiceContext(
-							user.getGroupId(), user.getUserId())));
+				Assert.assertNotNull(_updateDepotEntry(depotEntry, user));
 			});
 	}
 
@@ -227,6 +208,20 @@ public class DepotEntryServiceTest {
 		_depotEntries.add(depotEntry);
 
 		return depotEntry;
+	}
+
+	private DepotEntry _updateDepotEntry(DepotEntry depotEntry, User user)
+		throws PortalException {
+
+		return _depotEntryService.updateDepotEntry(
+			depotEntry.getDepotEntryId(),
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			Collections.emptyMap(), new UnicodeProperties(),
+			ServiceContextTestUtil.getServiceContext(
+				user.getGroupId(), user.getUserId()));
 	}
 
 	private void _withRegularUser(

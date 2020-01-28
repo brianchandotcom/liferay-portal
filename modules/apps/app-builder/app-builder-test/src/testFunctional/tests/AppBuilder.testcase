@@ -1423,7 +1423,6 @@ definition {
 	}
 
 	@description = "No results found screen is shown when the search doesn't retrieve any results"
-	@ignore = "true"
 	@priority = "5"
 	test FormViewSearchNoResultsFound {
 

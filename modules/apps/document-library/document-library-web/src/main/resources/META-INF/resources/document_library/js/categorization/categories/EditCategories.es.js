@@ -30,7 +30,7 @@ function EditCategories(props) {
 		setShowModal(false);
 	};
 
-	const {observer} = useModal({
+	const {observer, onClose} = useModal({
 		onClose: handleOnClose
 	});
 
@@ -59,7 +59,7 @@ function EditCategories(props) {
 					fileEntries={fileEntries}
 					folderId={folderId}
 					observer={observer}
-					onModalClose={handleOnClose}
+					onModalClose={onClose}
 					selectAll={selectAll}
 				/>
 			)}

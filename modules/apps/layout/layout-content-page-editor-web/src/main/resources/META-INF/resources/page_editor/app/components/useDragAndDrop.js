@@ -19,9 +19,10 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
-export const EDGE = {
-	BOTTOM: 1,
-	TOP: 0
+export const TARGET_POSITION = {
+	BOTTOM: 0,
+	MIDDLE: 1,
+	TOP: 2
 };
 
 export default function useDragAndDrop({
@@ -32,8 +33,7 @@ export default function useDragAndDrop({
 	layoutData,
 	onDragEnd
 }) {
-	const [edge, setEdge] = useState(null);
-	const [middle, setMiddle] = useState(null);
+	const [targetPosition, setTargetPosition] = useState(null);
 
 	const [dragOptions, drag, preview] = useDrag({
 		collect: _monitor => ({
@@ -41,13 +41,10 @@ export default function useDragAndDrop({
 		}),
 		end(_item, _monitor) {
 			const result = _monitor.getDropResult();
-
 			if (!result) {
 				return;
 			}
-
 			const {itemId, parentId, position} = result;
-
 			if (itemId !== parentId) {
 				onDragEnd({
 					itemId,
@@ -71,20 +68,19 @@ export default function useDragAndDrop({
 			if (
 				!_monitor.didDrop() &&
 				(isValidMoveToMiddle(dropNestedAndSibling, item, _item) ||
-					isValidMoveToEdge({
-						edge,
+					isValidMoveToTargetPosition({
 						item: _item,
 						items: layoutData.items,
-						siblingOrParent: item
+						siblingOrParent: item,
+						targetPosition
 					}))
 			) {
 				const {parentId, position} = getParentItemIdAndPositon({
 					dropNestedAndSibling,
-					edge,
 					item: _item,
 					items: layoutData.items,
-					middle,
-					siblingOrParentId: item.itemId
+					siblingOrParentId: item.itemId,
+					targetPosition
 				});
 
 				return {
@@ -96,9 +92,6 @@ export default function useDragAndDrop({
 			}
 		},
 		hover(_item, _monitor) {
-			setEdge(null);
-			setMiddle(null);
-
 			if (_item.itemId === item.itemId || rootVoid(item)) {
 				return;
 			}
@@ -118,22 +111,25 @@ export default function useDragAndDrop({
 
 			if (isValidMoveToMiddle(dropNestedAndSibling, item, _item)) {
 				if (isMiddle(hoverClientY, hoverMiddleY)) {
-					setMiddle(true);
+					setTargetPosition(TARGET_POSITION.MIDDLE);
 					return;
 				}
 			}
 
-			const newEdge = getEdge(hoverClientY, hoverMiddleY);
+			const newTargetPosition = getTargetPosition(
+				hoverClientY,
+				hoverMiddleY
+			);
 
 			if (
-				isValidMoveToEdge({
-					edge: newEdge,
+				isValidMoveToTargetPosition({
 					item: _item,
 					items: layoutData.items,
-					siblingOrParent: item
+					siblingOrParent: item,
+					targetPosition: newTargetPosition
 				})
 			) {
-				setEdge(newEdge);
+				setTargetPosition(newTargetPosition);
 			}
 		}
 	});
@@ -147,8 +143,7 @@ export default function useDragAndDrop({
 		...dropOptions,
 		drag,
 		drop,
-		edge,
-		middle
+		targetPosition
 	};
 }
 
@@ -160,22 +155,29 @@ function isValidMoveToMiddle(enable, item, dragItem) {
 	);
 }
 
-function isValidMoveToEdge({edge, item, items, siblingOrParent}) {
+function isValidMoveToTargetPosition({
+	item,
+	items,
+	siblingOrParent,
+	targetPosition
+}) {
 	const {children} = items[
 		siblingOrParent.parentId !== ''
 			? siblingOrParent.parentId
 			: siblingOrParent.itemId
 	];
 
-	if (typeof edge !== 'number' && !rootVoid(siblingOrParent)) {
+	if (typeof targetPosition !== 'number' && !rootVoid(siblingOrParent)) {
 		return false;
 	}
 
 	if (children.includes(item.itemId)) {
 		return !(
-			isSibling(children, item, edge, siblingOrParent.itemId) ||
-			(isFirstItem(children, item) && edge === EDGE.TOP) ||
-			(isLastItem(children, item) && edge === EDGE.BOTTOM)
+			isSibling(children, item, targetPosition, siblingOrParent.itemId) ||
+			(isFirstItem(children, item) &&
+				targetPosition === TARGET_POSITION.TOP) ||
+			(isLastItem(children, item) &&
+				targetPosition === TARGET_POSITION.BOTTOM)
 		);
 	}
 
@@ -204,19 +206,21 @@ function isMiddle(hoverClientY, hoverMiddleY) {
  * When dragging downwards, only move when the cursor is below 50%
  * When dragging upwards, only move when the cursor is above 50%
  */
-function getEdge(hoverClientY, hoverMiddleY) {
+function getTargetPosition(hoverClientY, hoverMiddleY) {
 	if (hoverClientY < hoverMiddleY) {
-		return EDGE.TOP;
+		return TARGET_POSITION.TOP;
 	} else if (hoverClientY > hoverMiddleY) {
-		return EDGE.BOTTOM;
+		return TARGET_POSITION.BOTTOM;
 	}
 }
 
-function isSibling(children, item, edge, hoverId) {
+function isSibling(children, item, targetPosition, hoverId) {
 	const itemIndex = children.findIndex(id => id === item.itemId);
 	return (
-		(children[itemIndex + 1] === hoverId && edge === EDGE.TOP) ||
-		(children[itemIndex - 1] === hoverId && edge === EDGE.BOTTOM)
+		(children[itemIndex + 1] === hoverId &&
+			targetPosition === TARGET_POSITION.TOP) ||
+		(children[itemIndex - 1] === hoverId &&
+			targetPosition === TARGET_POSITION.BOTTOM)
 	);
 }
 
@@ -236,18 +240,17 @@ function rootVoid(item) {
 
 function getParentItemIdAndPositon({
 	dropNestedAndSibling,
-	edge,
 	item,
 	items,
-	middle,
-	siblingOrParentId
+	siblingOrParentId,
+	targetPosition
 }) {
 	const siblingOrParent = items[siblingOrParentId];
 
 	if (
 		(!dropNestedAndSibling &&
 			isNestingSupported(item.type, siblingOrParent.type)) ||
-		(dropNestedAndSibling && middle)
+		(dropNestedAndSibling && targetPosition === TARGET_POSITION.MIDDLE)
 	) {
 		return {
 			parentId: siblingOrParentId,
@@ -258,7 +261,10 @@ function getParentItemIdAndPositon({
 
 		const siblingIndex = parent.children.indexOf(siblingOrParentId);
 
-		let position = edge === EDGE.TOP ? siblingIndex : siblingIndex + 1;
+		let position =
+			targetPosition === TARGET_POSITION.TOP
+				? siblingIndex
+				: siblingIndex + 1;
 
 		// Moving an item in the same parent
 		if (parent.children.includes(item.itemId)) {

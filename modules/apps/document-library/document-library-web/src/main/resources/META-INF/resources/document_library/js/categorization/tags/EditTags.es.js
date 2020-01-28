@@ -13,7 +13,7 @@
  */
 
 import {useModal} from '@clayui/modal';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 
 import EditTagsContext from './EditTagsContext.es';
 import EditTagsModal from './EditTagsModal.es';
@@ -23,6 +23,8 @@ function EditTags(props) {
 	const [selectAll, setSelectAll] = useState();
 	const [folderId, setFolderId] = useState();
 	const [showModal, setShowModal] = useState();
+	const {namespace} = useContext(EditTagsContext);
+	const bridgeComponentId = `${namespace}EditTagsComponent`;
 
 	const handleOnClose = () => {
 		setShowModal(false);
@@ -32,9 +34,9 @@ function EditTags(props) {
 		onClose: handleOnClose
 	});
 
-	if (!Liferay.component(props.componentId)) {
+	if (!Liferay.component(bridgeComponentId)) {
 		Liferay.component(
-			props.componentId,
+			bridgeComponentId,
 			{
 				open: (fileEntries, selectAll, folderId) => {
 					setFileEntries(fileEntries);

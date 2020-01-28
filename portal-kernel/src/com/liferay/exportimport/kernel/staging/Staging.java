@@ -256,7 +256,8 @@ public interface Staging {
 		throws PortalException;
 
 	public void setRemoteSiteURL(
-			Group stagingGroup, boolean setRemoteSiteURL, String remoteSiteURL)
+			Group stagingGroup, boolean overrideRemoteSiteURL,
+			String remoteSiteURL)
 		throws PortalException;
 
 	public String stripProtocolFromRemoteAddress(String remoteAddress);

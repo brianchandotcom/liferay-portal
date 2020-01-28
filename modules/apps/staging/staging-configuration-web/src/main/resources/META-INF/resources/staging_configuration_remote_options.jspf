@@ -54,7 +54,7 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 
 			<%
 			boolean secureConnection = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("secureConnection"));
-			boolean setRemoteSiteURL = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("setRemoteSiteURL"));
+			boolean overrideRemoteSiteURL = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("overrideRemoteSiteURL"));
 			%>
 
 			<liferay-staging:checkbox
@@ -64,28 +64,28 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 			/>
 
 			<liferay-staging:checkbox
-				checked="<%= setRemoteSiteURL %>"
+				checked="<%= overrideRemoteSiteURL %>"
 				label="manually-define-remote-site-url"
-				name="setRemoteSiteURL"
+				name="overrideRemoteSiteURL"
 			/>
 		</div>
 
-		<div class="<%= setRemoteSiteURL ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />remoteSiteURLContainer">
+		<div class="<%= overrideRemoteSiteURL ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />remoteSiteURLContainer">
 			<aui:input helpMessage="remote-site-url-help-message" label="remote-site-url" name="remoteSiteURL" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteSiteURL") %>' />
 		</div>
 	</div>
 </div>
 
 <aui:script>
-	var setRemoteSiteURLCheckbox = document.getElementById(
-		'<portlet:namespace />setRemoteSiteURL'
+	var overrideRemoteSiteURLCheckbox = document.getElementById(
+		'<portlet:namespace />overrideRemoteSiteURL'
 	);
 	var remoteSiteURLContainer = document.getElementById(
 		'<portlet:namespace />remoteSiteURLContainer'
 	);
 
-	setRemoteSiteURLCheckbox.addEventListener('click', function() {
-		var checked = setRemoteSiteURLCheckbox.checked;
+	overrideRemoteSiteURLCheckbox.addEventListener('click', function() {
+		var checked = overrideRemoteSiteURLCheckbox.checked;
 
 		if (checked) {
 			remoteSiteURLContainer.classList.remove('hide');

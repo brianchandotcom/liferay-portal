@@ -455,11 +455,12 @@ public class StagingUtil {
 	}
 
 	public static void setRemoteSiteURL(
-			Group stagingGroup, boolean setRemoteSiteURL, String remoteSiteURL)
+			Group stagingGroup, boolean overrideRemoteSiteURL,
+			String remoteSiteURL)
 		throws PortalException {
 
 		_staging.setRemoteSiteURL(
-			stagingGroup, setRemoteSiteURL, remoteSiteURL);
+			stagingGroup, overrideRemoteSiteURL, remoteSiteURL);
 	}
 
 	public static String stripProtocolFromRemoteAddress(String remoteAddress) {

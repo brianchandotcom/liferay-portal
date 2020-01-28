@@ -93,6 +93,7 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendAssigneeClassPKsTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendCompletedTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
+		appendKaleoDefinitionIdTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendKaleoInstanceIdsTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendRoleIdsTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendSearchByUserRolesTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
@@ -212,6 +213,21 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 
 		booleanFilter.add(
 			dueDateRangeFilterBuilder.build(), BooleanClauseOccur.MUST);
+	}
+
+	protected void appendKaleoDefinitionIdTerm(
+		BooleanFilter booleanFilter,
+		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
+
+		Long kaleoDefinitionId =
+			kaleoTaskInstanceTokenQuery.getKaleoDefinitionId();
+
+		if (kaleoDefinitionId == null) {
+			return;
+		}
+
+		booleanFilter.addRequiredTerm(
+			KaleoTaskInstanceTokenField.KALEO_DEFINITION_ID, kaleoDefinitionId);
 	}
 
 	protected void appendKaleoInstanceIdsTerm(

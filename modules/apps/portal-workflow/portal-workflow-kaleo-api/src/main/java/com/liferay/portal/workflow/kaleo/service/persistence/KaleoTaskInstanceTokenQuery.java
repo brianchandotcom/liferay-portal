@@ -88,6 +88,10 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		return _end;
 	}
 
+	public Long getKaleoDefinitionId() {
+		return _kaleoDefinitionId;
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getKaleoInstanceIds()}
@@ -210,6 +214,10 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 		_end = end;
 	}
 
+	public void setKaleoDefinitionId(Long kaleoDefinitionId) {
+		_kaleoDefinitionId = kaleoDefinitionId;
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #setKaleoInstanceIds(Long[])}
@@ -273,6 +281,7 @@ public class KaleoTaskInstanceTokenQuery implements Serializable {
 	private Date _dueDateGT;
 	private Date _dueDateLT;
 	private int _end = QueryUtil.ALL_POS;
+	private Long _kaleoDefinitionId;
 	private Long[] _kaleoInstanceIds;
 	private OrderByComparator<KaleoTaskInstanceToken> _orderByComparator;
 	private List<Long> _roleIds;

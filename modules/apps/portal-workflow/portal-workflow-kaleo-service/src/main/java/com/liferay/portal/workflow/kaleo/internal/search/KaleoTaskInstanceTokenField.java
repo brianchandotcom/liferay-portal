@@ -41,6 +41,8 @@ public class KaleoTaskInstanceTokenField {
 
 	public static final String DUE_DATE = "dueDate";
 
+	public static final String KALEO_DEFINITION_ID = "kaleoDefinitionId";
+
 	public static final String KALEO_INSTANCE_ID = "kaleoInstanceId";
 
 	public static final String KALEO_TASK_ID = "kaleoTaskId";

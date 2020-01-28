@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -102,11 +103,11 @@ public class UpgradeKaleoDefinition extends UpgradeProcess {
 				String name = rs.getString("name");
 				String title = rs.getString("title");
 				String content = rs.getString("content");
-				int version = rs.getInt("version");
+				String version = rs.getString("version");
 
 				addKaleoDefinition(
 					groupId, userId, createDate, modifiedDate, name, title,
-					content, version);
+					content, (int)GetterUtil.getDouble(version));
 			}
 		}
 	}

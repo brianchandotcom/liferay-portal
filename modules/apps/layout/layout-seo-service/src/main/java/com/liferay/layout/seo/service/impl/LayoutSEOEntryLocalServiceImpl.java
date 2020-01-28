@@ -237,10 +237,9 @@ public class LayoutSEOEntryLocalServiceImpl
 		DDMFormValues ddmFormValues = _ddm.getDDMFormValues(
 			structureId, String.valueOf(structureId), serviceContext);
 
-		Set<DDMFormFieldValue> notEmptyDDMFormFieldValues =
+		Set<Locale> availableLocales = new HashSet<>();
+		Set<DDMFormFieldValue> ddmFormFieldValues =
 			new LinkedHashSet<>();
-
-		HashSet<Locale> availableLocales = new HashSet<>();
 
 		for (DDMFormFieldValue formFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {
@@ -252,39 +251,36 @@ public class LayoutSEOEntryLocalServiceImpl
 			}
 
 			for (Locale locale : ddmFormValues.getAvailableLocales()) {
-				String localizedValue = value.getString(locale);
-
-				if (!Validator.isBlank(localizedValue)) {
-					notEmptyDDMFormFieldValues.add(formFieldValue);
-
+				if (!Validator.isBlank(value.getString(locale))) {
 					availableLocales.add(locale);
+
+					ddmFormFieldValues.add(formFieldValue);
 
 					continue;
 				}
 
-				List<DDMFormFieldValue> nestedDDMFormFieldValues =
-					formFieldValue.getNestedDDMFormFieldValues();
+				for (DDMFormFieldValue nestedDDMFormFieldValue :
+						formFieldValue.getNestedDDMFormFieldValues()) {
 
-				Stream<DDMFormFieldValue> ddmFormFieldValueStream =
-					nestedDDMFormFieldValues.stream();
+					Value nestedDDMFormFieldValueValue =
+						nestedDDMFormFieldValue.getValue();
 
-				boolean hasNestedValues = ddmFormFieldValueStream.anyMatch(
-					nested -> !Validator.isBlank(
-						nested.getValue(
-						).getString(
-							locale
-						)));
+					if (!Validator.isBlank(
+							nestedDDMFormFieldValueValue.getString(locale))) {
 
-				if (hasNestedValues) {
-					notEmptyDDMFormFieldValues.add(formFieldValue);
-					availableLocales.add(locale);
+						availableLocales.add(locale);
+
+						ddmFormFieldValues.add(formFieldValue);
+
+						break;
+					}
 				}
 			}
 		}
 
 		ddmFormValues.setAvailableLocales(availableLocales);
 		ddmFormValues.setDDMFormFieldValues(
-			new ArrayList<>(notEmptyDDMFormFieldValues));
+			new ArrayList<>(ddmFormFieldValues));
 
 		return ddmFormValues;
 	}

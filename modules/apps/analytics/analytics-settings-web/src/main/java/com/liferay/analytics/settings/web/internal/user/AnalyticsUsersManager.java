@@ -69,7 +69,7 @@ public class AnalyticsUsersManager {
 			return activeUsersCount - analyticsAdministratorsCount;
 		}
 
-		SearchContext searchContext = _getSearchContext();
+		SearchContext searchContext = _createSearchContext();
 
 		searchContext.setCompanyId(companyId);
 
@@ -92,7 +92,7 @@ public class AnalyticsUsersManager {
 				organizationIds, userGroupIds);
 		}
 
-		SearchContext searchContext = _getSearchContext();
+		SearchContext searchContext = _createSearchContext();
 
 		searchContext.setAttribute("selectedOrganizationIds", organizationIds);
 		searchContext.setAttribute("selectedUserGroupIds", userGroupIds);
@@ -118,7 +118,7 @@ public class AnalyticsUsersManager {
 			}
 		}
 
-		SearchContext searchContext = _getSearchContext();
+		SearchContext searchContext = _createSearchContext();
 
 		searchContext.setAttribute(
 			"selectedOrganizationIds", new long[] {organizationId});
@@ -144,7 +144,7 @@ public class AnalyticsUsersManager {
 			}
 		}
 
-		SearchContext searchContext = _getSearchContext();
+		SearchContext searchContext = _createSearchContext();
 
 		searchContext.setAttribute(
 			"selectedUserGroupIds", new long[] {userGroupId});
@@ -155,13 +155,7 @@ public class AnalyticsUsersManager {
 		return _getUsersCount(searchContext);
 	}
 
-	private Role _fetchAnalyticsAdministratorRole() {
-		return _roleLocalService.fetchRole(
-			CompanyThreadLocal.getCompanyId(),
-			RoleConstants.ANALYTICS_ADMINISTRATOR);
-	}
-
-	private SearchContext _getSearchContext() {
+	private SearchContext _createSearchContext() {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAttribute(
@@ -173,6 +167,12 @@ public class AnalyticsUsersManager {
 		queryConfig.setHighlightEnabled(false);
 
 		return searchContext;
+	}
+
+	private Role _fetchAnalyticsAdministratorRole() {
+		return _roleLocalService.fetchRole(
+			CompanyThreadLocal.getCompanyId(),
+			RoleConstants.ANALYTICS_ADMINISTRATOR);
 	}
 
 	private int _getUsersCount(SearchContext searchContext) {

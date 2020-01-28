@@ -19,7 +19,6 @@ import React, {useContext, useRef, useState, useEffect, useMemo} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import useOnClickOutside from '../../core/hooks/useOnClickOutside';
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ALLOWED_PARENT_TYPES} from '../config/constants/layoutDataAllowedParentTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';

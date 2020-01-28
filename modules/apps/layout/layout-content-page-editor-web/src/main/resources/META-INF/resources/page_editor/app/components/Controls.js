@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useCallback, useContext, useReducer, useRef} from 'react';
+import React, {useCallback, useContext, useReducer} from 'react';
 
 const INITIAL_STATE = {
 	activeItemId: null,

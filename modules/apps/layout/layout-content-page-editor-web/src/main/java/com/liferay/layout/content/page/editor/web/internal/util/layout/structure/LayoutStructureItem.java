@@ -64,9 +64,7 @@ public class LayoutStructureItem {
 	}
 
 	public void addChildrenItem(int position, String itemId) {
-		List<String> childrenItemIds = getChildrenItemIds();
-
-		childrenItemIds.add(position, itemId);
+		_childrenItemIds.add(position, itemId);
 	}
 
 	public void deleteChildrenItem(String itemId) {

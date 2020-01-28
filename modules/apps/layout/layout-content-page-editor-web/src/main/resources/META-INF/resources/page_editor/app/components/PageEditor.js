@@ -18,7 +18,7 @@ import React, {useEffect, useRef} from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useSelector} from '../store/index';
-import {useIsActive} from './Controls';
+import {useIsActive, useSelectItem} from './Controls';
 import DragPreview from './DragPreview';
 import {
 	ColumnWithControls,
@@ -41,11 +41,18 @@ const LAYOUT_DATA_ITEMS = {
 export default function PageEditor({withinMasterPage = false}) {
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
 	const layoutData = useSelector(state => state.layoutData);
+	const selectItem = useSelectItem();
 	const sidebarOpen = useSelector(
 		state => state.sidebarPanelId && state.sidebarOpen
 	);
 
 	const mainItem = layoutData.items[layoutData.rootItems.main];
+
+	const onClick = event => {
+		if (event.target === event.currentTarget) {
+			selectItem(null, {multiSelect: event.shiftKey});
+		}
+	};
 
 	return (
 		<div
@@ -56,6 +63,7 @@ export default function PageEditor({withinMasterPage = false}) {
 				'pt-4': !withinMasterPage
 			})}
 			id="page-editor"
+			onClick={onClick}
 		>
 			<DragPreview />
 

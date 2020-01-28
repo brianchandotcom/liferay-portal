@@ -3,6 +3,7 @@
 @import './variables';
 
 .page-editor {
+	min-height: 50vh;
 	transition: padding-right ease $defaultTransitionDuration;
 	will-change: padding-right;
 
@@ -80,7 +81,6 @@
 
 	&__root {
 		box-shadow: inset 0 0 0 0 $colorPrimary;
-		min-height: 50vh;
 		transition: box-shadow ease 0.3s;
 		will-change: box-shadow;
 

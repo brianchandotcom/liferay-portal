@@ -20,7 +20,6 @@ import React, {
 	useLayoutEffect,
 	useRef,
 	useState,
-	useEffect,
 	useMemo,
 	useCallback
 } from 'react';
@@ -28,7 +27,7 @@ import {createPortal} from 'react-dom';
 
 import useWindowWidth from '../../core/hooks/useWindowWidth';
 import ConfigurationPanel, {alignElement} from './ConfigurationPanel';
-import {useFloatingToolbar, useIsActive} from './Controls';
+import {useIsActive} from './Controls';
 
 export default function FloatingToolbar({
 	buttons,
@@ -39,7 +38,6 @@ export default function FloatingToolbar({
 	const isActive = useIsActive();
 	const popoverRef = useRef(null);
 	const show = isActive(item.itemId);
-	const floatingToolbar = useFloatingToolbar();
 	const wrapperContainerEl = useMemo(
 		() => document.getElementById('wrapper'),
 		[]
@@ -68,14 +66,6 @@ export default function FloatingToolbar({
 		alignFloatingToolbar,
 		windowWidth
 	]);
-
-	useEffect(() => {
-		if (!show) {
-			setActiveConfigurationPanel(false);
-		}
-
-		floatingToolbar(popoverRef);
-	}, [floatingToolbar, show]);
 
 	return (
 		show &&

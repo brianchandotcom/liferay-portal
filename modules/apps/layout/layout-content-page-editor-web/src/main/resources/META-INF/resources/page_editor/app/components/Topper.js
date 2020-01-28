@@ -28,7 +28,6 @@ import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
 import {
-	useCurrentFloatingToolbar,
 	useIsSelected,
 	useIsHovered,
 	useSelectItem,
@@ -73,8 +72,6 @@ export default function Topper({
 	const isHovered = useIsHovered();
 	const isSelected = useIsSelected();
 	const selectItem = useSelectItem();
-
-	const floatingToolbarRef = useCurrentFloatingToolbar();
 
 	const [{isDragging}, drag, preview] = useDrag({
 		collect: monitor => ({
@@ -200,15 +197,6 @@ export default function Topper({
 		preview(getEmptyImage(), {captureDraggingState: true});
 	}, [preview]);
 
-	useOnClickOutside(
-		[containerRef.current, floatingToolbarRef.current],
-		event => {
-			if (!event.shiftKey) {
-				selectItem(null);
-			}
-		}
-	);
-
 	const showDeleteButton = useMemo(() => isRemovable(item, layoutData), [
 		item,
 		layoutData
@@ -282,11 +270,7 @@ export default function Topper({
 			onClick={event => {
 				event.stopPropagation();
 
-				if (
-					!acceptDrop.length ||
-					isDragging ||
-					floatingToolbarRef.current
-				) {
+				if (!acceptDrop.length || isDragging) {
 					return;
 				}
 

@@ -26,6 +26,7 @@ import useStateSafe from '../../core/hooks/useStateSafe';
 import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';
 import {useSelector, useDispatch} from '../store/index';
+import {useSelectItem} from './Controls';
 
 const {Suspense, useCallback, useContext, useEffect} = React;
 
@@ -39,20 +40,16 @@ export default function Sidebar() {
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
-
 	const [hasError, setHasError] = useStateSafe(false);
+	const isMounted = useIsMounted();
+	const selectItem = useSelectItem();
+	const load = useLoad();
+	const {getInstance, register} = usePlugins();
 
 	const {panels, sidebarPanels} = config;
 	const {sidebarOpen, sidebarPanelId} = store;
 
-	const isMounted = useIsMounted();
-
-	const load = useLoad();
-
-	const {getInstance, register} = usePlugins();
-
 	const panel = sidebarPanels[sidebarPanelId];
-
 	const promise = load(sidebarPanelId, panel.pluginEntryPoint);
 
 	const app = {
@@ -85,6 +82,12 @@ export default function Sidebar() {
 			}
 		}, [])
 	);
+
+	const deselectItem = event => {
+		if (event.target === event.currentTarget) {
+			selectItem(null, {multiSelect: event.shiftKey});
+		}
+	};
 
 	const handleClick = panel => {
 		const open =
@@ -121,7 +124,10 @@ export default function Sidebar() {
 	return (
 		<ClayTooltipProvider>
 			<div className="page-editor-sidebar">
-				<div className="page-editor-sidebar-buttons">
+				<div
+					className="page-editor-sidebar-buttons"
+					onClick={deselectItem}
+				>
 					{panels.reduce((elements, group, groupIndex) => {
 						const buttons = group.map(panelId => {
 							const panel = sidebarPanels[panelId];
@@ -169,6 +175,7 @@ export default function Sidebar() {
 						'page-editor-sidebar-content': true,
 						'page-editor-sidebar-content-open': sidebarOpen
 					})}
+					onClick={deselectItem}
 				>
 					{hasError ? (
 						<div>

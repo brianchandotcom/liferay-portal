@@ -23,6 +23,7 @@ import usePlugins from '../../core/hooks/usePlugins';
 import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';
 import {useSelector, useDispatch} from '../store/index';
+import {useSelectItem} from './Controls';
 import NetworkStatusBar from './NetworkStatusBar';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
@@ -35,6 +36,7 @@ function ToolbarBody() {
 	const {getInstance, register} = usePlugins();
 	const isMounted = useIsMounted();
 	const load = useLoad();
+	const selectItem = useSelectItem();
 	const store = useSelector(state => state);
 
 	const {portletNamespace} = config;
@@ -114,9 +116,18 @@ function ToolbarBody() {
 		}
 	};
 
+	const deselectItem = event => {
+		if (event.target === event.currentTarget) {
+			selectItem(null, {multiSelect: event.shiftKey});
+		}
+	};
+
 	return (
-		<div className="container-fluid container-fluid-max-xl">
-			<ul className="navbar-nav">
+		<div
+			className="container-fluid container-fluid-max-xl"
+			onClick={deselectItem}
+		>
+			<ul className="navbar-nav" onClick={deselectItem}>
 				{toolbarPlugins.map(
 					({loadingPlaceholder, pluginEntryPoint}) => {
 						return (
@@ -151,7 +162,7 @@ function ToolbarBody() {
 				</li>
 			</ul>
 
-			<ul className="navbar-nav">
+			<ul className="navbar-nav" onClick={deselectItem}>
 				<NetworkStatusBar {...store.network} />
 				<li className="nav-item">
 					<form action={discardDraftURL} method="POST">

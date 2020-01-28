@@ -24,11 +24,12 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
-import java.util.TreeMap;
 
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
@@ -73,27 +74,10 @@ public class DependencyManagementTask extends DefaultTask {
 		_outputFile = outputFile;
 	}
 
-	private Map<String, String> _getTargetPlatformDependencies(
+	private List<String> _getTargetPlatformDependencies(
 		Project project, Configuration ideBomsConfiguration) {
 
-		Map<String, String> managedVersions = new TreeMap<String, String>(
-			new Comparator<String>() {
-
-				@Override
-				public int compare(String entry1, String entry2) {
-					String[] components1 = entry1.split(":");
-					String[] components2 = entry2.split(":");
-
-					int result = components1[0].compareTo(components2[0]);
-
-					if (result == 0) {
-						result = components1[1].compareTo(components2[1]);
-					}
-
-					return result;
-				}
-
-			});
+		final List<String> dependencies = new ArrayList<>();
 
 		DependencySet dependencySet = ideBomsConfiguration.getDependencies();
 
@@ -137,8 +121,9 @@ public class DependencyManagementTask extends DefaultTask {
 									String version = String.valueOf(
 										gPathResult.getProperty("version"));
 
-									managedVersions.put(
-										groupId + ":" + artifactId, version);
+									dependencies.add(
+										groupId + ':' + artifactId + ':' +
+											version);
 								}
 							}
 							catch (Exception exception) {
@@ -155,30 +140,46 @@ public class DependencyManagementTask extends DefaultTask {
 
 			});
 
-		return managedVersions;
+		Collections.sort(
+			dependencies,
+			new Comparator<String>() {
+
+				@Override
+				public int compare(String entry1, String entry2) {
+					String[] components1 = entry1.split(":");
+					String[] components2 = entry2.split(":");
+
+					int result = components1[0].compareTo(components2[0]);
+
+					if (result == 0) {
+						result = components1[1].compareTo(components2[1]);
+					}
+
+					return result;
+				}
+
+			});
+
+		return dependencies;
 	}
 
-	private String _renderManagedVersions(Map<String, String> managedVersions) {
+	private String _renderManagedVersions(List<String> dependencies) {
 		StringBuilder sb = new StringBuilder();
 
-		for (Map.Entry<String, String> entry : managedVersions.entrySet()) {
+		for (String dependency : dependencies) {
 			sb.append("\t");
-			sb.append(entry.getKey());
-			sb.append(":");
-			sb.append(entry.getValue());
+			sb.append(dependency);
 			sb.append(System.lineSeparator());
 		}
 
 		return sb.toString();
 	}
 
-	private void _writeConfigurationManagedVersions(
-		Map<String, String> managedVersions) {
-
+	private void _writeConfigurationManagedVersions(List<String> dependencies) {
 		Logger logger = getLogger();
 
-		if ((managedVersions != null) && !managedVersions.isEmpty()) {
-			String dependenciesOutput = _renderManagedVersions(managedVersions);
+		if ((dependencies != null) && !dependencies.isEmpty()) {
+			String dependenciesOutput = _renderManagedVersions(dependencies);
 
 			File outputFile = getOutputFile();
 

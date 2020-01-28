@@ -16,6 +16,7 @@ package com.liferay.analytics.reports.internal.info.item;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.analytics.reports.internal.util.GenericsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -55,13 +56,15 @@ public class AnalyticsReportsInfoItemTrackerImpl
 		AnalyticsReportsInfoItem analyticsReportsInfo) {
 
 		_analyticsReportsInfoItems.put(
-			analyticsReportsInfo.getKey(), analyticsReportsInfo);
+			GenericsUtil.getItemClassName(analyticsReportsInfo),
+			analyticsReportsInfo);
 	}
 
 	protected void unsetInfoItemSelector(
 		AnalyticsReportsInfoItem analyticsReportsInfo) {
 
-		_analyticsReportsInfoItems.remove(analyticsReportsInfo.getKey());
+		_analyticsReportsInfoItems.remove(
+			GenericsUtil.getItemClassName(analyticsReportsInfo));
 	}
 
 	private final Map<String, AnalyticsReportsInfoItem>

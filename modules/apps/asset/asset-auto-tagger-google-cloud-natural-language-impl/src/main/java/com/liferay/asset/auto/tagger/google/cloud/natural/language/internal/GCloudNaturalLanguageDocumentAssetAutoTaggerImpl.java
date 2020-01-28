@@ -218,7 +218,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 	private boolean _hasMinimumNumberOfTokens(String content) {
 		StringTokenizer st = new StringTokenizer(content);
 
-		if (st.countTokens() >= _MIN_NUMBER_CLASSIFYTEXT_TOKENS) {
+		if (st.countTokens() >= _MINIMUM_NUMBER_OF_TOKENS) {
 			return true;
 		}
 
@@ -291,7 +291,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 		);
 	}
 
-	private static final int _MIN_NUMBER_CLASSIFYTEXT_TOKENS = 20;
+	private static final int _MINIMUM_NUMBER_OF_TOKENS = 20;
 
 	private static final int _MINIMUM_PAYLOAD_SIZE;
 

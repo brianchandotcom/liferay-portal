@@ -61,8 +61,6 @@ public class DependencyManagementTask extends DefaultTask {
 		List<String> dependencies = _getTargetPlatformDependencies(
 			getProject());
 
-		Logger logger = getLogger();
-
 		if ((dependencies != null) && !dependencies.isEmpty()) {
 			StringBuilder sb = new StringBuilder();
 
@@ -86,11 +84,20 @@ public class DependencyManagementTask extends DefaultTask {
 				}
 			}
 			else {
-				logger.lifecycle(output);
+				Logger logger = getLogger();
+
+				if (logger.isLifecycleEnabled()) {
+					logger.lifecycle(output);
+				}
 			}
 		}
 		else {
-			logger.lifecycle("No dependency management information available.");
+			Logger logger = getLogger();
+
+			if (logger.isLifecycleEnabled()) {
+				logger.lifecycle(
+					"No dependency management information available.");
+			}
 		}
 	}
 

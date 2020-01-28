@@ -14,10 +14,8 @@
 
 package com.liferay.journal.internal.upgrade.v3_0_1;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
@@ -87,9 +85,7 @@ public class UpgradeJournalArticle extends UpgradeProcess {
 			for (Element dynamicContentElement : dynamicContentElements) {
 				String data = String.valueOf(dynamicContentElement.getData());
 
-				data = StringUtil.replace(
-					data, new String[] {"[\"", "\"]"},
-					new String[] {StringPool.BLANK, StringPool.BLANK});
+				data = _removeUnusedChars(data);
 
 				dynamicContentElement.clearContent();
 
@@ -98,6 +94,22 @@ public class UpgradeJournalArticle extends UpgradeProcess {
 		}
 
 		return contentDocument.formattedString();
+	}
+
+	private String _removeUnusedChars(String data) {
+		if ((data != null) && (data.length() > 3)) {
+			int start = 0;
+			int end = data.length() - 1;
+
+			if ((data.charAt(start) == '[') && (data.charAt(end) == ']') &&
+				(data.charAt(start + 1) == '"') &&
+				(data.charAt(end - 1) == '"')) {
+
+				data = data.substring(start + 2, end - 1);
+			}
+		}
+
+		return data;
 	}
 
 }

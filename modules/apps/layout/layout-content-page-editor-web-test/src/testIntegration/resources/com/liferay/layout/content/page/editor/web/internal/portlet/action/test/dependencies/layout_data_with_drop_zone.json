@@ -1,0 +1,33 @@
+{
+	"items": {
+		"dropZoneItemId": {
+			"children": [],
+			"config": {},
+			"itemId": "dropZoneItemId",
+			"parentId": "newItemId",
+			"type": "drop-zone"
+		},
+		"newItemId": {
+			"children": [
+				"dropZoneItemId"
+			],
+			"config": {},
+			"itemId": "newItemId",
+			"parentId": "root",
+			"type": "container"
+		},
+		"root": {
+			"children": [
+				"newItemId"
+			],
+			"config": {},
+			"itemId": "root",
+			"parentId": null,
+			"type": "root"
+		}
+	},
+	"rootItems": {
+		"main": "root"
+	},
+	"version": 1
+}

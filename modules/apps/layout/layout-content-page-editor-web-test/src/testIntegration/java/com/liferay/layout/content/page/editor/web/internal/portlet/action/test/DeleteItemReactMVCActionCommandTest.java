@@ -117,6 +117,20 @@ public class DeleteItemReactMVCActionCommandTest {
 		Assert.assertEquals(0, childrenJSONArray.length());
 	}
 
+	@Test(expected = UnsupportedOperationException.class)
+	public void testDeleteDropZone() throws Exception {
+		_addLayoutPageTemplateStructure(
+			_read("layout_data_with_drop_zone.json"));
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "deleteItemJSONObject",
+			new Class<?>[] {
+				long.class, long.class, String.class, long.class, long.class
+			},
+			_group.getCompanyId(), _group.getGroupId(), "dropZoneItemId",
+			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
+	}
+
 	@Test
 	public void testDeleteFragmentEntryLinkItem() throws Exception {
 		FragmentEntryLink fragmentEntryLink =
@@ -161,6 +175,20 @@ public class DeleteItemReactMVCActionCommandTest {
 		Assert.assertNull(
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId()));
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testDeleteItemContainingDropZone() throws Exception {
+		_addLayoutPageTemplateStructure(
+			_read("layout_data_with_drop_zone.json"));
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "deleteItemJSONObject",
+			new Class<?>[] {
+				long.class, long.class, String.class, long.class, long.class
+			},
+			_group.getCompanyId(), _group.getGroupId(), "newItemId",
+			_layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT);
 	}
 
 	@Test

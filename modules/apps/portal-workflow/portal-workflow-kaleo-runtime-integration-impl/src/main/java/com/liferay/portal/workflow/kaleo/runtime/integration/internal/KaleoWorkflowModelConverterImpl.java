@@ -288,13 +288,21 @@ public class KaleoWorkflowModelConverterImpl
 					kaleoTaskInstanceToken.getWorkflowContext()));
 		}
 
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
+				kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
+
+		KaleoDefinition kaleoDefinition =
+			kaleoDefinitionVersion.getKaleoDefinition();
+
+		defaultWorkflowTask.setWorkflowDefinitionId(
+			kaleoDefinition.getKaleoDefinitionId());
+
 		KaleoInstanceToken kaleoInstanceToken =
 			kaleoTaskInstanceToken.getKaleoInstanceToken();
 
 		KaleoInstance kaleoInstance = kaleoInstanceToken.getKaleoInstance();
 
-		defaultWorkflowTask.setWorkflowDefinitionId(
-			kaleoInstance.getKaleoDefinitionVersionId());
 		defaultWorkflowTask.setWorkflowDefinitionName(
 			kaleoInstance.getKaleoDefinitionName());
 		defaultWorkflowTask.setWorkflowDefinitionVersion(

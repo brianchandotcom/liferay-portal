@@ -39,8 +39,8 @@ runGradleTest {
 
 		String[] deployDirFileNames = deployDir.list()
 
-		assert deployDirFileNames.contains("com.liferay.foo.web-1.0.0.jar")
 		assert deployDirFileNames.contains(".touch")
+		assert deployDirFileNames.contains("com.liferay.foo.web-1.0.0.jar")
 
 		File scriptsDir = new File(inputDir, "scripts")
 

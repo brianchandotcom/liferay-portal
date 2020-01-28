@@ -1,11 +1,11 @@
 {
 	"dependencies": {
-		"clay-button": "2.20.0",
-		"clay-checkbox": "2.20.0",
-		"clay-dropdown": "2.20.0",
-		"clay-icon": "2.20.0",
-		"clay-label": "2.20.0",
-		"clay-radio": "2.20.0",
+		"clay-button": "2.20.2",
+		"clay-checkbox": "2.20.2",
+		"clay-dropdown": "2.20.2",
+		"clay-icon": "2.20.2",
+		"clay-label": "2.20.2",
+		"clay-radio": "2.20.2",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",

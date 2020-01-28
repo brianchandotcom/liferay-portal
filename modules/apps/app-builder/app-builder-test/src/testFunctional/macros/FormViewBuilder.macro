@@ -25,7 +25,7 @@ definition {
 
 	macro addFormView {
 
-		if (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_FIELDS_TAB") && IsElementPresent(locator1 = "AppBuilder#FORM_VIEW_TAB")) {
+		if(IsElementPresent(locator1 = "AppBuilder#NAVBAR")){
 			FormViewBuilder.switchToFormViewTab();
 			AppBuilderAdmin.add();
 		}

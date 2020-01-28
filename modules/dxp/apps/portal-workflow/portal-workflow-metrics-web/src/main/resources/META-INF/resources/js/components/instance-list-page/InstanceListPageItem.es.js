@@ -19,8 +19,8 @@ import moment from '../../shared/util/moment.es';
 import {ModalContext} from './modal/ModalContext.es';
 import {InstanceListContext} from './store/InstanceListPageStore.es';
 
-const getStatusIcon = status => {
-	if (status === 'OnTime') {
+const getSLAStatusIcon = slaStatus => {
+	if (slaStatus === 'OnTime') {
 		return {
 			bgColor: 'bg-success-light',
 			iconColor: 'text-success',
@@ -28,7 +28,7 @@ const getStatusIcon = status => {
 		};
 	}
 
-	if (status === 'Overdue') {
+	if (slaStatus === 'Overdue') {
 		return {
 			bgColor: 'bg-danger-light',
 			iconColor: 'text-danger',
@@ -36,15 +36,11 @@ const getStatusIcon = status => {
 		};
 	}
 
-	if (status === 'Untracked') {
-		return {
-			bgColor: 'bg-info-light',
-			iconColor: 'text-info',
-			iconName: 'hr'
-		};
-	}
-
-	return null;
+	return {
+		bgColor: 'bg-info-light',
+		iconColor: 'text-info',
+		iconName: 'hr'
+	};
 };
 
 const Item = taskItem => {
@@ -71,7 +67,7 @@ const Item = taskItem => {
 	} = taskItem;
 
 	const completed = status === 'Completed';
-	const statusIcon = getStatusIcon(slaStatus);
+	const slaStatusIcon = getSLAStatusIcon(slaStatus);
 	const formattedAssignees = !completed
 		? assigneeUsers && assigneeUsers.length
 			? assigneeUsers.map(assigneeUser => assigneeUser.name).join(', ')
@@ -100,18 +96,16 @@ const Item = taskItem => {
 						onChange={handleCheck}
 					/>
 
-					{statusIcon && (
-						<span
-							className={`sticker sticker-sm ${statusIcon.bgColor}`}
-						>
-							<span className="inline-item">
-								<Icon
-									elementClasses={statusIcon.iconColor}
-									iconName={statusIcon.iconName}
-								/>
-							</span>
+					<span
+						className={`sticker sticker-sm ${slaStatusIcon.bgColor}`}
+					>
+						<span className="inline-item">
+							<Icon
+								elementClasses={slaStatusIcon.iconColor}
+								iconName={slaStatusIcon.iconName}
+							/>
 						</span>
-					)}
+					</span>
 				</div>
 			</ClayTable.Cell>
 
@@ -161,7 +155,7 @@ const Item = taskItem => {
 
 const QuickActionMenu = ({taskItem}) => {
 	const {setSingleModal} = useContext(ModalContext);
-	const handleClickReassigneeTask = useCallback(
+	const handleClickReassignTask = useCallback(
 		() => {
 			setSingleModal({
 				selectedItem: taskItem,
@@ -174,7 +168,7 @@ const QuickActionMenu = ({taskItem}) => {
 
 	const kebabItems = [
 		{
-			action: handleClickReassigneeTask,
+			action: handleClickReassignTask,
 			icon: 'change',
 			title: Liferay.Language.get('reassign-task')
 		}

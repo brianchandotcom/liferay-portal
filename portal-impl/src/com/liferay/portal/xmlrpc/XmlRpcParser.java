@@ -92,50 +92,52 @@ public class XmlRpcParser {
 
 				name = xmlStreamReader.getLocalName();
 
-				if (name.equals("param")) {
-					xmlStreamReader.nextTag();
+				if (!name.equals("param")) {
+					continue;
+				}
 
+				xmlStreamReader.nextTag();
+
+				name = xmlStreamReader.getLocalName();
+
+				int event = xmlStreamReader.next();
+
+				if (event == XMLStreamConstants.START_ELEMENT) {
 					name = xmlStreamReader.getLocalName();
 
-					int event = xmlStreamReader.next();
+					xmlStreamReader.next();
 
-					if (event == XMLStreamConstants.START_ELEMENT) {
-						name = xmlStreamReader.getLocalName();
+					String text = xmlStreamReader.getText();
 
-						xmlStreamReader.next();
-
-						String text = xmlStreamReader.getText();
-
-						if (name.equals("string")) {
-							arguments.add(text);
-						}
-						else if (name.equals("int") || name.equals("i4")) {
-							arguments.add(GetterUtil.getInteger(text));
-						}
-						else if (name.equals("double")) {
-							arguments.add(GetterUtil.getDouble(text));
-						}
-						else if (name.equals("boolean")) {
-							arguments.add(GetterUtil.getBoolean(text));
-						}
-						else {
-							throw new IOException(
-								"XML-RPC not implemented for " + name);
-						}
-
-						xmlStreamReader.nextTag();
-						xmlStreamReader.nextTag();
-						xmlStreamReader.nextTag();
+					if (name.equals("string")) {
+						arguments.add(text);
+					}
+					else if (name.equals("int") || name.equals("i4")) {
+						arguments.add(GetterUtil.getInteger(text));
+					}
+					else if (name.equals("double")) {
+						arguments.add(GetterUtil.getDouble(text));
+					}
+					else if (name.equals("boolean")) {
+						arguments.add(GetterUtil.getBoolean(text));
 					}
 					else {
-						arguments.add(xmlStreamReader.getText());
-
-						xmlStreamReader.nextTag();
-						xmlStreamReader.nextTag();
+						throw new IOException(
+							"XML-RPC not implemented for " + name);
 					}
 
-					name = xmlStreamReader.getLocalName();
+					xmlStreamReader.nextTag();
+					xmlStreamReader.nextTag();
+					xmlStreamReader.nextTag();
 				}
+				else {
+					arguments.add(xmlStreamReader.getText());
+
+					xmlStreamReader.nextTag();
+					xmlStreamReader.nextTag();
+				}
+
+				name = xmlStreamReader.getLocalName();
 			}
 
 			return new Tuple(methodName, arguments.toArray());

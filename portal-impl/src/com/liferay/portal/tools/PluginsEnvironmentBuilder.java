@@ -789,45 +789,46 @@ public class PluginsEnvironmentBuilder {
 			libDir, dependencyJars, projectDirName, projectName, javaProject);
 
 		for (String sourceDirName : _SOURCE_DIR_NAMES) {
-			if (_fileImpl.exists(projectDirName + "/" + sourceDirName)) {
-				List<String> gitIgnores = new ArrayList<>();
+			if (!_fileImpl.exists(projectDirName + "/" + sourceDirName)) {
+				continue;
+			}
 
-				if (sourceDirName.endsWith("ext-impl/src")) {
-					gitIgnores.add("/classes");
-					gitIgnores.add("/ext-impl.jar");
-				}
-				else if (sourceDirName.endsWith("ext-kernel/src")) {
-					gitIgnores.add("/classes");
-					gitIgnores.add("/ext-kernel.jar");
-				}
-				else if (sourceDirName.endsWith("ext-util-bridges/src")) {
-					gitIgnores.add("/classes");
-					gitIgnores.add("/ext-util-bridges.jar");
-				}
-				else if (sourceDirName.endsWith("ext-util-java/src")) {
-					gitIgnores.add("/classes");
-					gitIgnores.add("/ext-util-java.jar");
-				}
-				else if (sourceDirName.endsWith("ext-util-taglib/src")) {
-					gitIgnores.add("/classes");
-					gitIgnores.add("/ext-util-taglib.jar");
-				}
-				else {
-					continue;
-				}
+			List<String> gitIgnores = new ArrayList<>();
 
-				String dirName = StringBundler.concat(
-					projectDirName, "/", sourceDirName, "/../");
+			if (sourceDirName.endsWith("ext-impl/src")) {
+				gitIgnores.add("/classes");
+				gitIgnores.add("/ext-impl.jar");
+			}
+			else if (sourceDirName.endsWith("ext-kernel/src")) {
+				gitIgnores.add("/classes");
+				gitIgnores.add("/ext-kernel.jar");
+			}
+			else if (sourceDirName.endsWith("ext-util-bridges/src")) {
+				gitIgnores.add("/classes");
+				gitIgnores.add("/ext-util-bridges.jar");
+			}
+			else if (sourceDirName.endsWith("ext-util-java/src")) {
+				gitIgnores.add("/classes");
+				gitIgnores.add("/ext-util-java.jar");
+			}
+			else if (sourceDirName.endsWith("ext-util-taglib/src")) {
+				gitIgnores.add("/classes");
+				gitIgnores.add("/ext-util-taglib.jar");
+			}
+			else {
+				continue;
+			}
 
-				if (gitIgnores.isEmpty()) {
-					_fileImpl.delete(dirName + ".gitignore");
-				}
-				else {
-					String gitIgnoresString = StringUtil.merge(
-						gitIgnores, "\n");
+			String dirName = StringBundler.concat(
+				projectDirName, "/", sourceDirName, "/../");
 
-					_fileImpl.write(dirName + ".gitignore", gitIgnoresString);
-				}
+			if (gitIgnores.isEmpty()) {
+				_fileImpl.delete(dirName + ".gitignore");
+			}
+			else {
+				String gitIgnoresString = StringUtil.merge(gitIgnores, "\n");
+
+				_fileImpl.write(dirName + ".gitignore", gitIgnoresString);
 			}
 		}
 

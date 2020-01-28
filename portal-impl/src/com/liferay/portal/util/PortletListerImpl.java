@@ -206,41 +206,41 @@ public class PortletListerImpl implements PortletLister {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				_user.getCompanyId(), portletId);
 
-			if (portlet != null) {
-				if (portlet.isSystem()) {
-				}
-				else if (!portlet.isActive()) {
-				}
-				else if (portlet.isInstanceable() &&
-						 !_includeInstanceablePortlets) {
-				}
-				else if (!portlet.isInstanceable() &&
-						 _layoutTypePortlet.hasPortletId(
-							 portlet.getPortletId())) {
+			if (portlet == null) {
+				continue;
+			}
 
-					portlets.add(portlet);
-				}
-				else if (!portlet.hasAddPortletPermission(_user.getUserId())) {
-				}
-				else {
-					portlets.add(portlet);
-				}
+			if (portlet.isSystem()) {
+			}
+			else if (!portlet.isActive()) {
+			}
+			else if (portlet.isInstanceable() &&
+					 !_includeInstanceablePortlets) {
+			}
+			else if (!portlet.isInstanceable() &&
+					 _layoutTypePortlet.hasPortletId(portlet.getPortletId())) {
 
-				PortletApp portletApp = portlet.getPortletApp();
+				portlets.add(portlet);
+			}
+			else if (!portlet.hasAddPortletPermission(_user.getUserId())) {
+			}
+			else {
+				portlets.add(portlet);
+			}
 
-				if (portletApp.isWARFile() &&
-					Validator.isNull(externalPortletCategory)) {
+			PortletApp portletApp = portlet.getPortletApp();
 
-					PortletConfig portletConfig =
-						PortletConfigFactoryUtil.create(
-							portlet, _servletContext);
+			if (portletApp.isWARFile() &&
+				Validator.isNull(externalPortletCategory)) {
 
-					ResourceBundle resourceBundle =
-						portletConfig.getResourceBundle(getLocale());
+				PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+					portlet, _servletContext);
 
-					externalPortletCategory = ResourceBundleUtil.getString(
-						resourceBundle, portletCategory.getName());
-				}
+				ResourceBundle resourceBundle = portletConfig.getResourceBundle(
+					getLocale());
+
+				externalPortletCategory = ResourceBundleUtil.getString(
+					resourceBundle, portletCategory.getName());
 			}
 		}
 

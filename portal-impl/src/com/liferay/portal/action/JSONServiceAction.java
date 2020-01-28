@@ -489,48 +489,51 @@ public class JSONServiceAction extends JSONAction {
 		for (Method curMethod : methods) {
 			String curMethodName = curMethod.getName();
 
-			if (curMethodName.equals(methodName)) {
-				Type[] curParameterTypes = curMethod.getGenericParameterTypes();
+			if (!curMethodName.equals(methodName)) {
+				continue;
+			}
 
-				if (curParameterTypes.length == parameters.length) {
-					if ((parameterTypes.length > 0) &&
-						(parameterTypes.length == curParameterTypes.length)) {
+			Type[] curParameterTypes = curMethod.getGenericParameterTypes();
 
-						boolean match = true;
+			if (curParameterTypes.length != parameters.length) {
+				continue;
+			}
 
-						for (int j = 0; j < parameterTypes.length; j++) {
-							String t1 = parameterTypes[j];
-							String t2 = getTypeNameOrClassDescriptor(
-								curParameterTypes[j]);
+			if ((parameterTypes.length > 0) &&
+				(parameterTypes.length == curParameterTypes.length)) {
 
-							if (!t1.equals(t2)) {
-								match = false;
-							}
-						}
+				boolean match = true;
 
-						if (match) {
-							method = curMethod;
-							methodParameterTypes = curParameterTypes;
+				for (int j = 0; j < parameterTypes.length; j++) {
+					String t1 = parameterTypes[j];
+					String t2 = getTypeNameOrClassDescriptor(
+						curParameterTypes[j]);
 
-							break;
-						}
-					}
-					else if (method != null) {
-						String parametersString = StringUtil.merge(parameters);
-
-						_log.error(
-							StringBundler.concat(
-								"Obscure method name for class ", clazz,
-								", method ", methodName, ", and parameters ",
-								parametersString));
-
-						return null;
-					}
-					else {
-						method = curMethod;
-						methodParameterTypes = curParameterTypes;
+					if (!t1.equals(t2)) {
+						match = false;
 					}
 				}
+
+				if (match) {
+					method = curMethod;
+					methodParameterTypes = curParameterTypes;
+
+					break;
+				}
+			}
+			else if (method != null) {
+				String parametersString = StringUtil.merge(parameters);
+
+				_log.error(
+					StringBundler.concat(
+						"Obscure method name for class ", clazz, ", method ",
+						methodName, ", and parameters ", parametersString));
+
+				return null;
+			}
+			else {
+				method = curMethod;
+				methodParameterTypes = curParameterTypes;
 			}
 		}
 

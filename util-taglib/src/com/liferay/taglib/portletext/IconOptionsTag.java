@@ -168,43 +168,43 @@ public class IconOptionsTag extends IconTag {
 					PipingServletResponse.createPipingServletResponse(
 						pageContext));
 
-				if (!include) {
-					IconTag iconTag = new IconTag();
-
-					iconTag.setAlt(portletConfigurationIcon.getAlt());
-					iconTag.setAriaRole(portletConfigurationIcon.getAriaRole());
-					iconTag.setCssClass(portletConfigurationIcon.getCssClass());
-					iconTag.setData(portletConfigurationIcon.getData());
-					iconTag.setIconCssClass(
-						portletConfigurationIcon.getIconCssClass());
-					iconTag.setId(portletConfigurationIcon.getId());
-					iconTag.setImage(portletConfigurationIcon.getImage());
-					iconTag.setImageHover(
-						portletConfigurationIcon.getImageHover());
-					iconTag.setLabel(portletConfigurationIcon.isLabel());
-					iconTag.setLang(portletConfigurationIcon.getLang());
-					iconTag.setLinkCssClass(
-						"dropdown-item " +
-							portletConfigurationIcon.getLinkCssClass());
-					iconTag.setLocalizeMessage(false);
-					iconTag.setMessage(
-						portletConfigurationIcon.getMessage(portletRequest));
-					iconTag.setMethod(portletConfigurationIcon.getMethod());
-					iconTag.setOnClick(
-						portletConfigurationIcon.getOnClick(
-							portletRequest, portletResponse));
-					iconTag.setSrc(portletConfigurationIcon.getSrc());
-					iconTag.setSrcHover(portletConfigurationIcon.getSrcHover());
-					iconTag.setTarget(portletConfigurationIcon.getTarget());
-					iconTag.setToolTip(portletConfigurationIcon.isToolTip());
-					iconTag.setUrl(
-						portletConfigurationIcon.getURL(
-							portletRequest, portletResponse));
-					iconTag.setUseDialog(
-						portletConfigurationIcon.isUseDialog());
-
-					iconTag.doTag(pageContext);
+				if (include) {
+					continue;
 				}
+
+				IconTag iconTag = new IconTag();
+
+				iconTag.setAlt(portletConfigurationIcon.getAlt());
+				iconTag.setAriaRole(portletConfigurationIcon.getAriaRole());
+				iconTag.setCssClass(portletConfigurationIcon.getCssClass());
+				iconTag.setData(portletConfigurationIcon.getData());
+				iconTag.setIconCssClass(
+					portletConfigurationIcon.getIconCssClass());
+				iconTag.setId(portletConfigurationIcon.getId());
+				iconTag.setImage(portletConfigurationIcon.getImage());
+				iconTag.setImageHover(portletConfigurationIcon.getImageHover());
+				iconTag.setLabel(portletConfigurationIcon.isLabel());
+				iconTag.setLang(portletConfigurationIcon.getLang());
+				iconTag.setLinkCssClass(
+					"dropdown-item " +
+						portletConfigurationIcon.getLinkCssClass());
+				iconTag.setLocalizeMessage(false);
+				iconTag.setMessage(
+					portletConfigurationIcon.getMessage(portletRequest));
+				iconTag.setMethod(portletConfigurationIcon.getMethod());
+				iconTag.setOnClick(
+					portletConfigurationIcon.getOnClick(
+						portletRequest, portletResponse));
+				iconTag.setSrc(portletConfigurationIcon.getSrc());
+				iconTag.setSrcHover(portletConfigurationIcon.getSrcHover());
+				iconTag.setTarget(portletConfigurationIcon.getTarget());
+				iconTag.setToolTip(portletConfigurationIcon.isToolTip());
+				iconTag.setUrl(
+					portletConfigurationIcon.getURL(
+						portletRequest, portletResponse));
+				iconTag.setUseDialog(portletConfigurationIcon.isUseDialog());
+
+				iconTag.doTag(pageContext);
 			}
 		}
 		catch (Exception exception) {

@@ -20,7 +20,8 @@ import React, {
 	useRef,
 	useState,
 	useMemo,
-	useCallback
+	useCallback,
+	useEffect
 } from 'react';
 import {createPortal} from 'react-dom';
 
@@ -65,6 +66,12 @@ export default function FloatingToolbar({
 		alignFloatingToolbar,
 		windowWidth
 	]);
+
+	useEffect(() => {
+		if (activeConfigurationPanel && !show) {
+			setActiveConfigurationPanel(null);
+		}
+	}, [activeConfigurationPanel, show]);
 
 	return (
 		show && (

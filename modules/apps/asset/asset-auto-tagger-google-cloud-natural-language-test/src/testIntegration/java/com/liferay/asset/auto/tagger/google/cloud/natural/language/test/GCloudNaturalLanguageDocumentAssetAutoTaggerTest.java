@@ -52,22 +52,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetTagNamesWithAllEndpointDisabled() throws Exception {
-		_testWithGCloudNaturalLanguageAutoTagAndEntitiesEndpointDisabledAndClassificationEndpointDisabled(
-			() -> {
-				Collection<String> tagNames =
-					_gCloudNaturalLanguageDocumentAssetAutoTagger.getTagNames(
-						RandomTestUtil.randomLong(),
-						Arrays.toString(RandomTestUtil.randomStrings(20)),
-						ContentTypes.TEXT_PLAIN);
-
-				Assert.assertEquals(
-					tagNames.toString(), Collections.emptySet(), tagNames);
-			});
-	}
-
-	@Test
-	public void testGetTagNamesWithIncorrectContentLength() throws Exception {
+	public void testGetTagNamesFromLessThanTwentyTokens() throws Exception {
 		_testWithGCloudNaturalLanguageAutoTagEntitiesEndpointEnabledAndClassificationEndpointEnabled(
 			() -> {
 				Collection<String> tagNames =
@@ -80,6 +65,21 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 					tagNames.toString(), Collections.emptySet(), tagNames);
 			},
 			RandomTestUtil.randomString());
+	}
+
+	@Test
+	public void testGetTagNamesWithAllEndpointDisabled() throws Exception {
+		_testWithGCloudNaturalLanguageAutoTagAndEntitiesEndpointDisabledAndClassificationEndpointDisabled(
+			() -> {
+				Collection<String> tagNames =
+					_gCloudNaturalLanguageDocumentAssetAutoTagger.getTagNames(
+						RandomTestUtil.randomLong(),
+						Arrays.toString(RandomTestUtil.randomStrings(20)),
+						ContentTypes.TEXT_PLAIN);
+
+				Assert.assertEquals(
+					tagNames.toString(), Collections.emptySet(), tagNames);
+			});
 	}
 
 	@Test

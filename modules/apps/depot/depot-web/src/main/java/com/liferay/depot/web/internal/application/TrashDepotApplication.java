@@ -32,7 +32,7 @@ public class TrashDepotApplication implements DepotApplication {
 
 	@Override
 	public boolean isCustomizable() {
-		return true;
+		return false;
 	}
 
 }

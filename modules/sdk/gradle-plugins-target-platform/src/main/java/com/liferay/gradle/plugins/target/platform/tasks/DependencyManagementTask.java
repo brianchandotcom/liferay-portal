@@ -95,8 +95,7 @@ public class DependencyManagementTask extends DefaultTask {
 			Logger logger = getLogger();
 
 			if (logger.isLifecycleEnabled()) {
-				logger.lifecycle(
-					"No dependency management information available.");
+				logger.lifecycle("No dependencies found");
 			}
 		}
 	}

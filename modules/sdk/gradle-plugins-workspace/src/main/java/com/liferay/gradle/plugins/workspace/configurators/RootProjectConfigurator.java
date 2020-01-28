@@ -221,7 +221,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
-	private static void _createDirectoryStub(File dir) throws IOException {
+	private void _createDirectoryStub(File dir) throws IOException {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}

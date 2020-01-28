@@ -45,6 +45,8 @@ public class DDMFormFieldType {
 
 	public static final String LINK_TO_PAGE = "ddm-link-to-page";
 
+	public static final String LOCALIZABLE_TEXT = "localizable_text";
+
 	public static final String NUMBER = "ddm-number";
 
 	public static final String NUMERIC = "numeric";

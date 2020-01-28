@@ -147,7 +147,8 @@ public class LayoutStructure {
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
 
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(
+				"Removing the drop zone of a layout structure is not allowed");
 		}
 
 		List<String> childrenItemIds = new ArrayList<>(

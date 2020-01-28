@@ -315,8 +315,6 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		Map<String, Object> editTagsProps = new HashMap<>();
 
-		editTagsProps.put("componentId", liferayPortletResponse.getNamespace() + "EditTagsComponent");
-
 		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 
 		editTagsProps.put("groupIds", groupIds);
@@ -341,7 +339,6 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		Map<String, Object> editCategoriesProps = new HashMap<>();
 
-		editCategoriesProps.put("componentId", liferayPortletResponse.getNamespace() + "EditCategoriesComponent");
 		editCategoriesProps.put("groupIds", groupIds);
 		editCategoriesProps.put("pathModule", PortalUtil.getPathModule());
 		editCategoriesProps.put("repositoryId", String.valueOf(repositoryId));

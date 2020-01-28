@@ -14,17 +14,17 @@
 
 package com.liferay.analytics.reports.web.internal.display.context;
 
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Locale;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,11 +36,14 @@ import javax.servlet.http.HttpServletRequest;
 public class AnalyticsReportsDisplayContext {
 
 	public AnalyticsReportsDisplayContext(
-		HttpServletRequest httpServletRequest,
-		UserLocalService userLocalService) {
+		AnalyticsReportsInfoItem analyticsReportsInfoItem,
+		Object analyticsReportsInfoItemObject,
+		HttpServletRequest httpServletRequest) {
+
+		_analyticsReportsInfoItem = analyticsReportsInfoItem;
+		_analyticsReportsInfoItemObject = analyticsReportsInfoItemObject;
 
 		_httpServletRequest = httpServletRequest;
-		_userLocalService = userLocalService;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -54,7 +57,7 @@ public class AnalyticsReportsDisplayContext {
 		_data = HashMapBuilder.<String, Object>put(
 			"context", StringPool.BLANK
 		).put(
-			"props", getProps()
+			"props", _getProps()
 		).build();
 
 		return _data;
@@ -64,36 +67,44 @@ public class AnalyticsReportsDisplayContext {
 		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsURL");
 	}
 
-	protected Map<String, Object> getProps() {
-		Layout layout = _themeDisplay.getLayout();
-
-		User user = _userLocalService.fetchUser(layout.getUserId());
-
-		String authorName = StringPool.BLANK;
-
-		if (user != null) {
-			authorName = user.getFullName();
-		}
-
-		Locale locale = _themeDisplay.getLocale();
-
+	private Map<String, Object> _getProps() {
 		return HashMapBuilder.<String, Object>put(
-			"authorName", authorName
+			"authorName",
+			_analyticsReportsInfoItem.getAuthorName(
+				_analyticsReportsInfoItemObject)
 		).put(
 			"publishDate",
-			FastDateFormatFactoryUtil.getSimpleDateFormat(
-				"MMMM dd, yyyy", locale
-			).format(
-				layout.getPublishDate()
-			)
+			() -> {
+				Layout layout = _themeDisplay.getLayout();
+
+				return FastDateFormatFactoryUtil.getSimpleDateFormat(
+					"MMMM dd, yyyy", _themeDisplay.getLocale()
+				).format(
+					_maxDate(
+						_analyticsReportsInfoItem.getPublishDate(
+							_analyticsReportsInfoItemObject),
+						layout.getPublishDate())
+				);
+			}
 		).put(
-			"title", layout.getTitle(locale)
+			"title",
+			_analyticsReportsInfoItem.getTitle(
+				_analyticsReportsInfoItemObject, _themeDisplay.getLocale())
 		).build();
 	}
 
+	private Date _maxDate(Date date1, Date date2) {
+		if (DateUtil.compareTo(date1, date2) > 0) {
+			return date1;
+		}
+
+		return date2;
+	}
+
+	private final AnalyticsReportsInfoItem _analyticsReportsInfoItem;
+	private final Object _analyticsReportsInfoItemObject;
 	private Map<String, Object> _data;
 	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
-	private final UserLocalService _userLocalService;
 
 }

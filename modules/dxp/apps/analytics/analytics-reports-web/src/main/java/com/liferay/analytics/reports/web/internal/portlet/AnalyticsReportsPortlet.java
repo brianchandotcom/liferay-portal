@@ -14,14 +14,20 @@
 
 package com.liferay.analytics.reports.web.internal.portlet;
 
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.web.internal.display.context.AnalyticsReportsDisplayContext;
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -76,18 +82,49 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 			return;
 		}
 
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			(InfoDisplayObjectProvider)httpServletRequest.getAttribute(
+				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+
+		AnalyticsReportsInfoItem analyticsReportsInfoItem = null;
+		Object analyticsReportsInfoItemObject = null;
+
+		if (infoDisplayObjectProvider != null) {
+			analyticsReportsInfoItem =
+				_analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
+					_portal.getClassName(
+						infoDisplayObjectProvider.getClassNameId()));
+			analyticsReportsInfoItemObject =
+				infoDisplayObjectProvider.getDisplayObject();
+		}
+
+		if ((analyticsReportsInfoItem == null) ||
+			(analyticsReportsInfoItemObject == null)) {
+
+			analyticsReportsInfoItem =
+				_analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
+					Layout.class.getName());
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			analyticsReportsInfoItemObject = themeDisplay.getLayout();
+		}
+
 		renderRequest.setAttribute(
 			AnalyticsReportsWebKeys.ANALYTICS_REPORTS_DISPLAY_CONTEXT,
 			new AnalyticsReportsDisplayContext(
-				httpServletRequest, _userLocalService));
+				analyticsReportsInfoItem, analyticsReportsInfoItemObject,
+				httpServletRequest));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
 	@Reference
-	private Portal _portal;
+	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;
 
 	@Reference
-	private UserLocalService _userLocalService;
+	private Portal _portal;
 
 }

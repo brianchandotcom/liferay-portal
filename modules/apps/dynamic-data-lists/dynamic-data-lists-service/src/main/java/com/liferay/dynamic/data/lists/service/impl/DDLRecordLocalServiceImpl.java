@@ -799,8 +799,6 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		record.setModifiedDate(serviceContext.getModifiedDate(null));
 		record.setDDMStorageId(ddmStorageId);
 
-		record = ddlRecordPersistence.update(record);
-
 		// Record version
 
 		DDLRecordVersion ddlRecordVersion = record.getLatestRecordVersion();
@@ -808,6 +806,10 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		String version = getNextVersion(
 			ddlRecordVersion.getVersion(), true,
 			serviceContext.getWorkflowAction());
+
+		record.setVersion(version);
+
+		record = ddlRecordPersistence.update(record);
 
 		int status = GetterUtil.getInteger(
 			serviceContext.getAttribute("status"),

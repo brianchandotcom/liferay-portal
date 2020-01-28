@@ -30,7 +30,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 Folder folder = null;
 
-if (row != null) {
+if ((row != null) && (row instanceof Folder)) {
 	folder = (Folder)row.getObject();
 }
 else {

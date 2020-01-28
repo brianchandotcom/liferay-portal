@@ -16,16 +16,12 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -36,7 +32,6 @@ import com.liferay.portal.kernel.webdav.WebDAVUtil;
 
 import java.util.List;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,8 +77,8 @@ public class DLAdminNavigationDisplayContext {
 							navigationItem, navigation));
 
 					add(
-						DLAdminNavigationDisplayContext.this::
-							_populateMetadataSetsNavigationItem);
+						navigationItem -> _populateMetadataSetsNavigationItem(
+							navigationItem, navigation));
 				}
 			}
 		};
@@ -98,7 +93,9 @@ public class DLAdminNavigationDisplayContext {
 	private void _populateDocumentLibraryNavigationItem(
 		NavigationItem navigationItem, String navigation) {
 
-		navigationItem.setActive(!navigation.equals("file_entry_types"));
+		navigationItem.setActive(
+			!navigation.equals("file_entry_types") &&
+			!navigation.equals("file_entry_metadata_sets"));
 
 		PortletURL viewDocumentLibraryURL =
 			_liferayPortletResponse.createRenderURL();
@@ -137,33 +134,23 @@ public class DLAdminNavigationDisplayContext {
 	}
 
 	private void _populateMetadataSetsNavigationItem(
-		NavigationItem navigationItem) {
+		NavigationItem navigationItem, String navigation) {
 
-		navigationItem.setActive(false);
+		navigationItem.setActive(navigation.equals("file_entry_metadata_sets"));
 
 		Portlet portlet = _getPortlet(_themeDisplay);
 
-		PortletURL viewMetadataSetsURL = PortletURLFactoryUtil.create(
-			_liferayPortletRequest,
-			PortletProviderUtil.getPortletId(
-				DDMStructure.class.getName(), PortletProvider.Action.VIEW),
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		viewMetadataSetsURL.setParameter("mvcPath", "/view.jsp");
-		viewMetadataSetsURL.setParameter(
-			"backURL", _themeDisplay.getURLCurrent());
-		viewMetadataSetsURL.setParameter(
+		portletURL.setParameter("navigation", "file_entry_metadata_sets");
+		portletURL.setParameter("backURL", _themeDisplay.getURLCurrent());
+		portletURL.setParameter(
 			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-		viewMetadataSetsURL.setParameter(
-			"refererPortletName", DLPortletKeys.DOCUMENT_LIBRARY);
-		viewMetadataSetsURL.setParameter(
+		portletURL.setParameter(
 			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
-		viewMetadataSetsURL.setParameter(
-			"showAncestorScopes", Boolean.TRUE.toString());
-		viewMetadataSetsURL.setParameter(
-			"showManageTemplates", Boolean.FALSE.toString());
+		portletURL.setParameter("redirect", _currentURLObj.toString());
 
-		navigationItem.setHref(viewMetadataSetsURL.toString());
+		navigationItem.setHref(portletURL.toString());
 
 		navigationItem.setLabel(
 			LanguageUtil.get(

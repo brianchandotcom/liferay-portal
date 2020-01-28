@@ -202,7 +202,7 @@ module.framework.properties.osgi.console=11312</echo>
 						<else>
 							<execute>
 								<![CDATA[
-									7z x @{src} -o @{dest} -aoa
+									7z x @{src} -o@{dest} -aoa
 								]]>
 							</execute>
 						</else>

@@ -161,4 +161,51 @@ definition {
 			userScreenName= "usertag");
 	}
 
+	@description = "Validate if the user can edit a segment with Organization Tag"
+	@priority = "5"
+	test EditSegmentUserByOrganizationTag {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCPWithTag(
+			userEmailAddress = "OrganizationTag@liferay.com",
+			userFirstName = "OrganizationTag",
+			userLastName = "OrganizationTag",
+			userScreenName = "OrganizationTag",
+			userTag = "organizationtagtest");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			panel = "Site Administration",
+			portlet = "Segments");
+
+		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
+			Segmentation.editSegment();
+		}
+
+		Segmentation.fillTitle(titleField = "EditSegmentUserByOrganizationTag Test");
+
+		Segmentation.deleteProperties();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Tag");
+
+		Segmentation.selectTag(
+			tagOption = "organizationtagtest");
+
+		Button.clickSave();
+
+		User.tearDownSpecificUser(
+			userScreenName= "usertag");
+	}
+
+	@description = "Delete user"
+	@priority = "5"
+	test DeleteUser {
+		User.tearDownSpecificUser(
+			userScreenName= "Prueba");
+	}
 }

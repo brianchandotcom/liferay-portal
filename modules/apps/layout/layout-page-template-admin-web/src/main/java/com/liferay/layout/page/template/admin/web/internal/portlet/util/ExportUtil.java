@@ -14,13 +14,23 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.util;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -54,7 +64,6 @@ public class ExportUtil {
 					pageDefinitionsMap.entrySet()) {
 
 				PageDefinition pageDefinition = entry.getValue();
-
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					_layoutPageTemplateEntryLocalService.
 						fetchLayoutPageTemplateEntryByPlid(entry.getKey());
@@ -99,12 +108,18 @@ public class ExportUtil {
 
 		path = path + StringPool.SLASH + pageDefinition.getName();
 
-		JSONObject jsonObject = JSONUtil.put("name", pageDefinition.getName());
+		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
 
-		FileEntry previewFileEntry = _getPreviewFileEntry(previewFileEntryId);
+		FilterProvider filterProvider = simpleFilterProvider.addFilter(
+			"Liferay.Vulcan", SimpleBeanPropertyFilter.serializeAll());
+
+		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
 
 		zipWriter.addEntry(
-			path + "/page-definition.json", jsonObject.toString());
+			path + "/page-definition.json",
+			objectWriter.writeValueAsString(pageDefinition));
+
+		FileEntry previewFileEntry = _getPreviewFileEntry(previewFileEntryId);
 
 		if (previewFileEntry != null) {
 			zipWriter.addEntry(
@@ -114,6 +129,20 @@ public class ExportUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ExportUtil.class);
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper() {
+		{
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+			configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+			enable(SerializationFeature.INDENT_OUTPUT);
+			setDateFormat(new ISO8601DateFormat());
+			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+			setVisibility(
+				PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+			setVisibility(
+				PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+		}
+	};
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

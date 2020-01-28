@@ -12,48 +12,55 @@
  * details.
  */
 
-package com.liferay.staging.bar.web.internal.product.navigation.control.menu;
+package com.liferay.staging.bar.web.internal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
-import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
-import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+
+import java.io.IOException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Julio Camarero
+ * @author Chema Balsas
  */
-@Component(
-	immediate = true,
-	property = {
-		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
-		"product.navigation.control.menu.entry.order:Integer=100"
-	},
-	service = {
-		ProductNavigationControlMenuEntry.class,
-		StagingProductNavigationControlMenuEntry.class
-	}
-)
-public class StagingProductNavigationControlMenuEntry
-	extends BaseJSPProductNavigationControlMenuEntry
-	implements ProductNavigationControlMenuEntry {
+@Component(service = DynamicInclude.class)
+public class StagingBarControlMenuJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
-	public String getIconJspPath() {
-		return "/control_menu/entry.jsp";
+	public void include(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
+		throws IOException {
+
+		try {
+			if (!isShow(httpServletRequest)) {
+				return;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
+
+		super.include(httpServletRequest, httpServletResponse, key);
 	}
 
-	@Override
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -71,11 +78,27 @@ public class StagingProductNavigationControlMenuEntry
 	}
 
 	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"com.liferay.product.navigation.taglib#/page.jsp#post");
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/dynamic_include/entry.jsp";
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.staging.bar.web)",
 		unbind = "-"
 	)
-	public void setServletContext(ServletContext servletContext) {
+	protected void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
 
@@ -107,6 +130,9 @@ public class StagingProductNavigationControlMenuEntry
 	}
 
 	private static final String _SHOW =
-		StagingProductNavigationControlMenuEntry.class + "#_SHOW";
+		StagingBarControlMenuJSPDynamicInclude.class + "#_SHOW";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StagingBarControlMenuJSPDynamicInclude.class);
 
 }

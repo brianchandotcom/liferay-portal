@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.staging.bar.web.internal.product.navigation.control.menu.StagingProductNavigationControlMenuEntry;
+import com.liferay.staging.bar.web.internal.servlet.taglib.ui.StagingBarControlMenuJSPDynamicInclude;
 
 import java.util.Map;
 import java.util.Objects;
@@ -57,7 +57,7 @@ public class StagingBarTemplateContextContributor
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			if (_stagingProductNavigationControlMenuEntry.isShow(
+			if (_stagingBarControlMenuJSPDynamicInclude.isShow(
 					httpServletRequest)) {
 
 				StringBuilder sb = new StringBuilder();
@@ -113,17 +113,17 @@ public class StagingBarTemplateContextContributor
 
 	@Reference(unbind = "-")
 	protected void setCustomizationSettingsProductNavigationControlMenuEntry(
-		StagingProductNavigationControlMenuEntry
+		StagingBarControlMenuJSPDynamicInclude
 			stagingProductNavigationControlMenuEntry) {
 
-		_stagingProductNavigationControlMenuEntry =
+		_stagingBarControlMenuJSPDynamicInclude =
 			stagingProductNavigationControlMenuEntry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingBarTemplateContextContributor.class);
 
-	private StagingProductNavigationControlMenuEntry
-		_stagingProductNavigationControlMenuEntry;
+	private StagingBarControlMenuJSPDynamicInclude
+		_stagingBarControlMenuJSPDynamicInclude;
 
 }

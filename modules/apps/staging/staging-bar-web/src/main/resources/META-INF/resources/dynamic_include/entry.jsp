@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/control_menu/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <li class="control-menu-nav-item staging-links">
 	<liferay-portlet:runtime

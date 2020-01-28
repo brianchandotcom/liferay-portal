@@ -13,18 +13,18 @@
  */
 
 import {useModal} from '@clayui/modal';
-import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import CheckinModal from './CheckinModal.es';
 
 function Checkin({
-	bridgeComponentId,
 	checkedOut,
-	dlVersionNumberIncreaseValues
+	dlVersionNumberIncreaseValues,
+	portletNamespace
 }) {
 	const [showModal, setShowModal] = useState(false);
 	const [callback, setCallback] = useState();
+	const bridgeComponentId = `${portletNamespace}DocumentLibraryCheckinModal`;
 
 	const handleOnClose = () => {
 		setShowModal(false);
@@ -66,10 +66,8 @@ function Checkin({
 	);
 }
 
-Checkin.propTypes = {
-	bridgeComponentId: PropTypes.string.isRequired
-};
-
 export default function(props) {
-	return <Checkin {...props} />;
+	return (
+		<Checkin {...props} portletNamespace={`_${props.portletNamespace}_`} />
+	);
 }

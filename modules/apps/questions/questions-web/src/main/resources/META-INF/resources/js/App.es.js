@@ -33,7 +33,18 @@ export default props => {
 						<Route
 							exact
 							path="/"
-							render={props => <Questions {...props} />}
+							render={props => (
+								<Questions {...props} keyword={''} />
+							)}
+						/>
+						<Route
+							path="/questions/keyword/:keyword"
+							render={props => (
+								<Questions
+									{...props}
+									keyword={props.match.params.keyword}
+								/>
+							)}
 						/>
 						<Route component={Questions} exact path="/questions" />
 						<Route

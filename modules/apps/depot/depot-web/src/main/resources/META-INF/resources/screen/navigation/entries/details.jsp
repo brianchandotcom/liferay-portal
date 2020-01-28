@@ -87,4 +87,12 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 	>
 		<liferay-util:include page="/screen/navigation/entries/documents_and_media.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:fieldset>
+
+	<liferay-frontend:fieldset
+		collapsible="true"
+		cssClass="panel-group-flush"
+		label='<%= LanguageUtil.get(request, "recycle-bin") %>'
+	>
+		<liferay-util:include page="/screen/navigation/entries/recycle_bin.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:fieldset>
 </liferay-frontend:fieldset-group>

@@ -179,6 +179,8 @@ public class SQLServerDB extends BaseDB {
 						"alter table @table@ alter column @old-column@ " +
 							"@type@ @nullable@;",
 						REWORD_TEMPLATE, template);
+
+					line = StringUtil.replace(line, " ;", ";");
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
 					String[] template = buildTableNameTokens(line);

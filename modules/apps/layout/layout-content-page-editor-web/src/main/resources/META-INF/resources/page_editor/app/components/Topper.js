@@ -29,7 +29,7 @@ import {
 	useSelectItem,
 	useHoverItem
 } from './Controls';
-import useDragAndDrop, {EDGE} from './useDragAndDrop';
+import useDragAndDrop, {TARGET_POSITION} from './useDragAndDrop';
 
 const TopperListItem = React.forwardRef(
 	({children, className, expand, ...props}, ref) => (
@@ -68,10 +68,9 @@ export default function Topper({
 		canDrop,
 		drag,
 		drop,
-		edge,
 		isDragging,
 		isOver,
-		middle
+		targetPosition
 	} = useDragAndDrop({
 		accept: acceptDrop,
 		containerRef,
@@ -123,9 +122,12 @@ export default function Topper({
 		<div
 			className={classNames({
 				active: isSelected(item.itemId),
-				'drag-over-bottom': edge === EDGE.BOTTOM && isOver,
-				'drag-over-middle': middle && isOver,
-				'drag-over-top': edge === EDGE.TOP && isOver,
+				'drag-over-bottom':
+					targetPosition === TARGET_POSITION.BOTTOM && isOver,
+				'drag-over-middle':
+					targetPosition === TARGET_POSITION.MIDDLE && isOver,
+				'drag-over-top':
+					targetPosition === TARGET_POSITION.TOP && isOver,
 				dragged: isDragging,
 				hovered: isHovered(item.itemId),
 				'page-editor-topper': true

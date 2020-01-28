@@ -15,12 +15,12 @@
 import classNames from 'classnames';
 import React, {useRef} from 'react';
 
-import useDragAndDrop, {EDGE} from './useDragAndDrop';
+import useDragAndDrop, {TARGET_POSITION} from './useDragAndDrop';
 
 export default function TopperEmpty({acceptDrop, children, item, layoutData}) {
 	const containerRef = useRef(null);
 
-	const {canDrop, drop, edge, isDragging, isOver} = useDragAndDrop({
+	const {canDrop, drop, isDragging, isOver, targetPosition} = useDragAndDrop({
 		accept: acceptDrop,
 		containerRef,
 		item,
@@ -42,8 +42,10 @@ export default function TopperEmpty({acceptDrop, children, item, layoutData}) {
 		return React.cloneElement(child, {
 			...child.props,
 			className: classNames(child.props.className, {
-				'drag-over-bottom': edge === EDGE.BOTTOM && isOver,
-				'drag-over-top': edge === EDGE.TOP && isOver,
+				'drag-over-bottom':
+					targetPosition === TARGET_POSITION.BOTTOM && isOver,
+				'drag-over-top':
+					targetPosition === TARGET_POSITION.TOP && isOver,
 				dragged: isDragging,
 				'page-editor-topper': true
 			}),

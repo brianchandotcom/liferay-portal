@@ -211,7 +211,7 @@ public class LayoutSEOEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddLayoutSEOEntryWithIncompleteCustomTags()
+	public void testAddLayoutSEOEntryWithEmptyCustomTags()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -237,20 +237,7 @@ public class LayoutSEOEntryLocalServiceTest {
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				_group.getGroupId(), false, _layout.getLayoutId());
 
-		Assert.assertNotEquals(0, layoutSEOEntry.getDDMStorageId());
-
-		DDMFormValues ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
-			layoutSEOEntry.getDDMStorageId());
-
-		Assert.assertNotNull(ddmFormValues);
-
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			ddmFormValues.getDDMFormFieldValuesMap();
-
-		Collection<List<DDMFormFieldValue>> values =
-			ddmFormFieldValuesMap.values();
-
-		Assert.assertEquals(values.toString(), 0, values.size());
+		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
 	}
 
 	@Test

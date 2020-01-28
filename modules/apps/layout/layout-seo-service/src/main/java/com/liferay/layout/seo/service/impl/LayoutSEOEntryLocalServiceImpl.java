@@ -294,7 +294,11 @@ public class LayoutSEOEntryLocalServiceImpl
 			structureId, serviceContext);
 
 		if (ListUtil.isEmpty(ddmFormValues.getDDMFormFieldValues())) {
-			return ddmStorageId;
+			if (ddmStorageId != 0) {
+				_storageEngine.deleteByClass(ddmStorageId);
+			}
+
+			return 0;
 		}
 
 		if (ddmStorageId == 0) {

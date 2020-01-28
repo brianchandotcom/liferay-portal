@@ -58,12 +58,8 @@ public class DependencyManagementTask extends DefaultTask {
 
 	@TaskAction
 	public void report() {
-		Project project = getProject();
-
 		_writeConfigurationManagedVersions(
-			_getTargetPlatformDependencies(
-				project,
-				GradleUtil.getConfiguration(project, "targetPlatformIDEBoms")));
+			_getTargetPlatformDependencies(getProject()));
 	}
 
 	@Option(
@@ -74,21 +70,21 @@ public class DependencyManagementTask extends DefaultTask {
 		_outputFile = outputFile;
 	}
 
-	private List<String> _getTargetPlatformDependencies(
-		Project project, Configuration ideBomsConfiguration) {
-
+	private List<String> _getTargetPlatformDependencies(Project project) {
 		final List<String> dependencies = new ArrayList<>();
 
-		DependencySet dependencySet = ideBomsConfiguration.getDependencies();
+		final Configuration configuration = GradleUtil.getConfiguration(
+			project, "targetPlatformIDEBoms");
+
+		DependencySet dependencySet = configuration.getDependencies();
 
 		dependencySet.all(
 			new Action<Dependency>() {
 
 				@Override
 				public void execute(Dependency dependency) {
-					if (ideBomsConfiguration.isCanBeResolved()) {
-						Set<File> files = ideBomsConfiguration.files(
-							dependency);
+					if (configuration.isCanBeResolved()) {
+						Set<File> files = configuration.files(dependency);
 
 						for (File file : files) {
 							try {

@@ -187,9 +187,29 @@ public class LayoutStructure {
 		LayoutStructureItem newParentLayoutStructureItem =
 			_layoutStructureItems.get(parentItemId);
 
-		newParentLayoutStructureItem.addChildrenItem(position, itemId);
+		if (!Objects.equals(
+				layoutStructureItem.getItemType(),
+				LayoutDataItemTypeConstants.TYPE_ROW) ||
+			!Objects.equals(
+				newParentLayoutStructureItem.getItemType(),
+				LayoutDataItemTypeConstants.TYPE_ROOT)) {
 
-		layoutStructureItem.setParentItemId(parentItemId);
+			newParentLayoutStructureItem.addChildrenItem(position, itemId);
+
+			layoutStructureItem.setParentItemId(parentItemId);
+
+			return layoutStructureItem;
+		}
+
+		LayoutStructureItem containerLayoutStructureItem =
+			addLayoutStructureItem(
+				LayoutDataItemTypeConstants.TYPE_CONTAINER, parentItemId,
+				position);
+
+		containerLayoutStructureItem.addChildrenItem(itemId);
+
+		layoutStructureItem.setParentItemId(
+			containerLayoutStructureItem.getItemId());
 
 		return layoutStructureItem;
 	}

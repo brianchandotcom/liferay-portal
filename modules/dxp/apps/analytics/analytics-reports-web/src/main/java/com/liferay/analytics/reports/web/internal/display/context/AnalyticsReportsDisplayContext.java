@@ -74,18 +74,11 @@ public class AnalyticsReportsDisplayContext {
 				_analyticsReportsInfoItemObject)
 		).put(
 			"publishDate",
-			() -> {
-				Layout layout = _themeDisplay.getLayout();
-
-				return FastDateFormatFactoryUtil.getSimpleDateFormat(
-					"MMMM dd, yyyy", _themeDisplay.getLocale()
-				).format(
-					_maxDate(
-						_analyticsReportsInfoItem.getPublishDate(
-							_analyticsReportsInfoItemObject),
-						layout.getPublishDate())
-				);
-			}
+			FastDateFormatFactoryUtil.getSimpleDateFormat(
+				"MMMM dd, yyyy", _themeDisplay.getLocale()
+			).format(
+				_getPublishDate()
+			)
 		).put(
 			"title",
 			_analyticsReportsInfoItem.getTitle(
@@ -93,12 +86,17 @@ public class AnalyticsReportsDisplayContext {
 		).build();
 	}
 
-	private Date _maxDate(Date date1, Date date2) {
-		if (DateUtil.compareTo(date1, date2) > 0) {
-			return date1;
+	private Date _getPublishDate() {
+		Date publishDate = _analyticsReportsInfoItem.getPublishDate(
+			_analyticsReportsInfoItemObject);
+
+		Layout layout = _themeDisplay.getLayout();
+
+		if (DateUtil.compareTo(publishDate, layout.getPublishDate()) > 0) {
+			return publishDate;
 		}
 
-		return date2;
+		return layout.getPublishDate();
 	}
 
 	private final AnalyticsReportsInfoItem _analyticsReportsInfoItem;

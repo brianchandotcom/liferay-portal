@@ -145,69 +145,46 @@ public class LayoutSEOEntryLocalServiceTest {
 					"dependencies/custom_meta_tags_ddm_form_values.json"),
 				StandardCharsets.UTF_8));
 
-		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			_layout.getLayoutId(), false,
-			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
-			Collections.singletonMap(LocaleUtil.US, "description"),
-			Collections.singletonMap(LocaleUtil.US, "image alt"), 12345, true,
-			Collections.singletonMap(LocaleUtil.US, "title"), serviceContext);
-
 		LayoutSEOEntry layoutSEOEntry =
-			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-				_group.getGroupId(), false, _layout.getLayoutId());
+			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				_layout.getLayoutId(), false,
+				Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+				true, Collections.singletonMap(LocaleUtil.US, "description"),
+				Collections.singletonMap(LocaleUtil.US, "image alt"), 12345,
+				true, Collections.singletonMap(LocaleUtil.US, "title"),
+				serviceContext);
 
 		DDMFormValues ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
 			layoutSEOEntry.getDDMStorageId());
 
 		Assert.assertNotNull(ddmFormValues);
 
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			ddmFormValues.getDDMFormFieldValuesMap();
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
 
-		Collection<List<DDMFormFieldValue>> values =
-			ddmFormFieldValuesMap.values();
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 2, ddmFormFieldValues.size());
 
-		Assert.assertEquals(values.toString(), 1, values.size());
+		DDMFormFieldValue firstDDMFormFieldValue = ddmFormFieldValues.get(0);
 
-		for (List<DDMFormFieldValue> fieldValues : values) {
-			Assert.assertEquals(fieldValues.toString(), 2, fieldValues.size());
+		_assertDDMFormFieldValueEquals("property1", firstDDMFormFieldValue);
 
-			DDMFormFieldValue nameDDMFormFieldValue = fieldValues.get(0);
+		List<DDMFormFieldValue> firstNestedDDMFormFieldValues =
+			firstDDMFormFieldValue.getNestedDDMFormFieldValues();
 
-			Value nameValue = nameDDMFormFieldValue.getValue();
+		_assertDDMFormFieldValueEquals(
+			"content1", firstNestedDDMFormFieldValues.get(0));
 
-			Assert.assertEquals(
-				"property1", nameValue.getString(LocaleUtil.US));
+		DDMFormFieldValue secondDDMFormFieldValue = ddmFormFieldValues.get(1);
 
-			List<DDMFormFieldValue> nestedDDMFormFieldValues =
-				nameDDMFormFieldValue.getNestedDDMFormFieldValues();
+		_assertDDMFormFieldValueEquals("property2", secondDDMFormFieldValue);
 
-			DDMFormFieldValue valueDDMFormFieldValue =
-				nestedDDMFormFieldValues.get(0);
+		List<DDMFormFieldValue> secondNestedDDMFormFieldValues =
+			secondDDMFormFieldValue.getNestedDDMFormFieldValues();
 
-			Value valueValue = valueDDMFormFieldValue.getValue();
-
-			Assert.assertEquals(
-				"content1", valueValue.getString(LocaleUtil.US));
-
-			nameDDMFormFieldValue = fieldValues.get(1);
-
-			nameValue = nameDDMFormFieldValue.getValue();
-
-			Assert.assertEquals(
-				"property2", nameValue.getString(LocaleUtil.US));
-
-			nestedDDMFormFieldValues =
-				nameDDMFormFieldValue.getNestedDDMFormFieldValues();
-
-			valueDDMFormFieldValue = nestedDDMFormFieldValues.get(0);
-
-			valueValue = valueDDMFormFieldValue.getValue();
-
-			Assert.assertEquals(
-				"content2", valueValue.getString(LocaleUtil.US));
-		}
+		_assertDDMFormFieldValueEquals(
+			"content2", secondNestedDDMFormFieldValues.get(0));
 	}
 
 	@Test
@@ -328,6 +305,14 @@ public class LayoutSEOEntryLocalServiceTest {
 			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertTrue(layoutSEOEntry.isOpenGraphTitleEnabled());
 		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
+	}
+
+	private void _assertDDMFormFieldValueEquals(
+		String expected, DDMFormFieldValue ddmFormFieldValue) {
+
+		Value value = ddmFormFieldValue.getValue();
+
+		Assert.assertEquals(expected, value.getString(LocaleUtil.US));
 	}
 
 	private long _getDDMStructureId() throws PortalException {

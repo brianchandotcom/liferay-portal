@@ -30,7 +30,7 @@ function EditTags(props) {
 		setShowModal(false);
 	};
 
-	const {observer} = useModal({
+	const {observer, onClose} = useModal({
 		onClose: handleOnClose
 	});
 
@@ -59,7 +59,7 @@ function EditTags(props) {
 					fileEntries={fileEntires}
 					folderId={folderId}
 					observer={observer}
-					onModalClose={handleOnClose}
+					onModalClose={onClose}
 					selectAll={selectAll}
 				/>
 			)}

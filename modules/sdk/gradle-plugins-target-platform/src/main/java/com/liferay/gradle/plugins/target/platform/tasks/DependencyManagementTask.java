@@ -122,49 +122,8 @@ public class DependencyManagementTask extends DefaultTask {
 						Set<File> files = configuration.files(dependency);
 
 						for (File file : files) {
-							try {
-								XmlSlurper xmlSlurper = new XmlSlurper();
-
-								GPathResult gPathResult = xmlSlurper.parse(
-									file);
-
-								gPathResult =
-									(GPathResult)gPathResult.getProperty(
-										"dependencyManagement");
-
-								gPathResult =
-									(GPathResult)gPathResult.getProperty(
-										"dependencies");
-
-								gPathResult =
-									(GPathResult)gPathResult.getProperty(
-										"dependency");
-
-								Iterator<?> iterator = gPathResult.iterator();
-
-								while (iterator.hasNext()) {
-									gPathResult = (GPathResult)iterator.next();
-
-									String artifactId = String.valueOf(
-										gPathResult.getProperty("artifactId"));
-									String groupId = String.valueOf(
-										gPathResult.getProperty("groupId"));
-									String version = String.valueOf(
-										gPathResult.getProperty("version"));
-
-									dependencies.add(
-										groupId + ':' + artifactId + ':' +
-											version);
-								}
-							}
-							catch (Exception exception) {
-								Logger logger = project.getLogger();
-
-								if (logger.isWarnEnabled()) {
-									logger.warn(
-										"Unable to parse BOM from {}", file);
-								}
-							}
+							dependencies.addAll(
+								_getTargetPlatformDependencies(project, file));
 						}
 					}
 				}
@@ -192,6 +151,51 @@ public class DependencyManagementTask extends DefaultTask {
 			});
 
 		return dependencies;
+	}
+
+	private List<String> _getTargetPlatformDependencies(
+		Project project, File file) {
+
+		try {
+			List<String> dependencies = new ArrayList<>();
+
+			XmlSlurper xmlSlurper = new XmlSlurper();
+
+			GPathResult gPathResult = xmlSlurper.parse(file);
+
+			gPathResult = (GPathResult)gPathResult.getProperty(
+				"dependencyManagement");
+
+			gPathResult = (GPathResult)gPathResult.getProperty("dependencies");
+
+			gPathResult = (GPathResult)gPathResult.getProperty("dependency");
+
+			Iterator<?> iterator = gPathResult.iterator();
+
+			while (iterator.hasNext()) {
+				gPathResult = (GPathResult)iterator.next();
+
+				String artifactId = String.valueOf(
+					gPathResult.getProperty("artifactId"));
+				String groupId = String.valueOf(
+					gPathResult.getProperty("groupId"));
+				String version = String.valueOf(
+					gPathResult.getProperty("version"));
+
+				dependencies.add(groupId + ':' + artifactId + ':' + version);
+			}
+
+			return dependencies;
+		}
+		catch (Exception exception) {
+			Logger logger = project.getLogger();
+
+			if (logger.isWarnEnabled()) {
+				logger.warn("Unable to parse BOM from {}", file);
+			}
+
+			return Collections.emptyList();
+		}
 	}
 
 	private String _outputFile;

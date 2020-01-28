@@ -3,7 +3,6 @@
 @import './variables';
 
 .page-editor {
-	min-height: 50vh;
 	transition: padding-right ease $defaultTransitionDuration;
 	will-change: padding-right;
 
@@ -83,15 +82,11 @@
 		background: #f7faff;
 		box-shadow: inset 0 0 0 2px #b3cdff;
 		padding: 10vh 0;
-	}
-
-	&__root {
-		box-shadow: inset 0 0 0 0 $colorPrimary;
 		transition: box-shadow ease 0.3s;
 		will-change: box-shadow;
 
 		&--active {
-			box-shadow: inset 0 0 0 4px $colorPrimary !important;
+			box-shadow: inset 0 0 0 4px $colorPrimary;
 		}
 
 		.taglib-empty-result-message-header {

@@ -443,8 +443,8 @@ class Analytics {
 
 		let newUserIdRequired = false;
 
-		// During logout or session expiration, identiy object becomes undefined
-		// because the client object is being instatiated on every page navigation,
+		// During logout or session expiration, identity object becomes undefined
+		// because the client object is being instantiated on every page navigation,
 		// in such cases, we force a new user ID token.
 
 		if (!storedUserId || (identityHash && !this.config.identity)) {

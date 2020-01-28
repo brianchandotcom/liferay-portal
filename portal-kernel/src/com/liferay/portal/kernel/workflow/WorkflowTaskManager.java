@@ -166,7 +166,7 @@ public interface WorkflowTaskManager {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
 	 *             long, String, String[], String[], Long[], Long[], Date, Date,
-	 *             Boolean, Boolean, Long[], Boolean, int, int,
+	 *             Boolean, Boolean, Long, Long[], Boolean, int, int,
 	 *             OrderByComparator)}
 	 */
 	@Deprecated
@@ -179,7 +179,7 @@ public interface WorkflowTaskManager {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
 	 *             long, String, String[], String[], Long[], Long[], Date, Date,
-	 *             Boolean, Boolean, Long[], Boolean, int, int,
+	 *             Boolean, Boolean, Long, Long[], Boolean, int, int,
 	 *             OrderByComparator)}
 	 */
 	@Deprecated
@@ -194,7 +194,7 @@ public interface WorkflowTaskManager {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
 	 *             long, String, String[], String[], Long[], Long[], Date, Date,
-	 *             Boolean, Boolean, Long[], Boolean, int, int,
+	 *             Boolean, Boolean, Long, Long[], Boolean, int, int,
 	 *             OrderByComparator)}
 	 */
 	@Deprecated
@@ -212,7 +212,7 @@ public interface WorkflowTaskManager {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
 	 *             long, String, String[], String[], Long[], Long[], Date, Date,
-	 *             Boolean, Boolean, Long[], Boolean, int, int,
+	 *             Boolean, Boolean, Long, Long[], Boolean, int, int,
 	 *             OrderByComparator)}
 	 */
 	@Deprecated
@@ -222,6 +222,26 @@ public interface WorkflowTaskManager {
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException;
 
+	public default List<WorkflowTask> search(
+			long companyId, long userId, String assetTitle, String[] taskNames,
+			String[] assetTypes, Long[] assetPrimaryKeys,
+			Long[] assigneeUserIds, Date dueDateGT, Date dueDateLT,
+			Boolean completed, Boolean searchByUserRoles,
+			Long workflowDefinitionId, Long[] workflowInstanceIds,
+			Boolean andOperator, int start, int end,
+			OrderByComparator<WorkflowTask> orderByComparator)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
+	 *             long, String, String[], String[], Long[], Long[], Date, Date,
+	 *             Boolean, Boolean, Long, Long[], Boolean, int, int,
+	 *             OrderByComparator)}
+	 */
+	@Deprecated
 	public default List<WorkflowTask> search(
 			long companyId, long userId, String assetTitle, String[] taskNames,
 			String[] assetTypes, Long[] assetPrimaryKeys,
@@ -237,7 +257,7 @@ public interface WorkflowTaskManager {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #searchCount(long, long, String, String[], String[], Long[],
-	 *             Long[], Date, Date, Boolean, Boolean, Long[], Boolean)}
+	 *             Long[], Date, Date, Boolean, Boolean, Long, Long[], Boolean)}
 	 */
 	@Deprecated
 	public int searchCount(
@@ -248,7 +268,7 @@ public interface WorkflowTaskManager {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #searchCount(long, long, String, String[], String[], Long[],
-	 *             Long[], Date, Date, Boolean, Boolean, Long[], Boolean)}
+	 *             Long[], Date, Date, Boolean, Boolean, Long, Long[], Boolean)}
 	 */
 	@Deprecated
 	public int searchCount(
@@ -260,7 +280,7 @@ public interface WorkflowTaskManager {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #searchCount(long, long, String, String[], String[], Long[],
-	 *             Long[], Date, Date, Boolean, Boolean, Long[], Boolean)}
+	 *             Long[], Date, Date, Boolean, Boolean, Long, Long[], Boolean)}
 	 */
 	@Deprecated
 	public default int searchCount(
@@ -276,7 +296,7 @@ public interface WorkflowTaskManager {
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #searchCount(long, long, String, String[], String[], Long[],
-	 *             Long[], Date, Date, Boolean, Boolean, Long[], Boolean)}
+	 *             Long[], Date, Date, Boolean, Boolean, Long, Long[], Boolean)}
 	 */
 	@Deprecated
 	public int searchCount(
@@ -284,6 +304,24 @@ public interface WorkflowTaskManager {
 			Boolean completed, Boolean searchByUserRoles)
 		throws WorkflowException;
 
+	public default int searchCount(
+			long companyId, long userId, String assetTitle, String[] taskNames,
+			String[] assetTypes, Long[] assetPrimaryKeys,
+			Long[] assigneeUserIds, Date dueDateGT, Date dueDateLT,
+			Boolean completed, Boolean searchByUserRoles,
+			Long workflowDefinitionId, Long[] workflowInstanceIds,
+			Boolean andOperator)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #searchCount(long, long, String, String[], String[], Long[],
+	 *             Long[], Date, Date, Boolean, Boolean, Long, Long[], Boolean)}
+	 */
+	@Deprecated
 	public default int searchCount(
 			long companyId, long userId, String assetTitle, String[] taskNames,
 			String[] assetTypes, Long[] assetPrimaryKeys,

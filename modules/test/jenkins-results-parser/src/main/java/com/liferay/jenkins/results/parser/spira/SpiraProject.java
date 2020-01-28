@@ -14,8 +14,17 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+import java.io.IOException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Stack;
+
+import org.apache.commons.lang.StringEscapeUtils;
 
 import org.json.JSONObject;
 
@@ -24,11 +33,28 @@ import org.json.JSONObject;
  */
 public class SpiraProject {
 
-	public void addSpiraRelease(SpiraRelease spiraRelease) {
-		_spiraReleaseByID.put(spiraRelease.getID(), spiraRelease);
-		_spiraReleaseByIndentLevel.put(
-			spiraRelease.getIndentLevel(), spiraRelease);
-		_spiraReleaseByPath.put(spiraRelease.getPath(), spiraRelease);
+	public static SpiraProject getSpiraProjectById(int projectID) {
+		if (!_spiraProjects.containsKey(projectID)) {
+			Map<String, String> urlReplacements = new HashMap<>();
+
+			urlReplacements.put("project_id", String.valueOf(projectID));
+
+			try {
+				SpiraProject spiraProject = new SpiraProject(
+					SpiraRestAPIUtil.requestJSONObject(
+						"projects/{project_id}", urlReplacements,
+						JenkinsResultsParserUtil.HttpRequestMethod.GET, null));
+
+				if (spiraProject != null) {
+					_spiraProjects.put(spiraProject.getID(), spiraProject);
+				}
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
+		return _spiraProjects.get(projectID);
 	}
 
 	public int getID() {
@@ -39,16 +65,60 @@ public class SpiraProject {
 		return _jsonObject.getString("Name");
 	}
 
-	public SpiraRelease getSpiraReleaseByID(int releaseID) {
-		return _spiraReleaseByID.get(releaseID);
+	public SpiraRelease getSpiraReleaseById(int releaseID) throws IOException {
+		return SpiraRelease.getSpiraReleaseByID(this, releaseID);
 	}
 
-	public SpiraRelease getSpiraReleaseByIndentLevel(String indentLevel) {
-		return _spiraReleaseByIndentLevel.get(indentLevel);
-	}
+	public SpiraRelease getSpiraReleaseByPath(String releasePath)
+		throws IOException {
 
-	public SpiraRelease getSpiraReleaseByPath(String releasePath) {
-		return _spiraReleaseByPath.get(releasePath);
+		if (!releasePath.matches("/.+[^/]")) {
+			throw new RuntimeException("Invalid path " + releasePath);
+		}
+
+		String[] releasePathNames = releasePath.split("(?<!\\\\)\\/");
+
+		Stack<SpiraRelease> spiraReleaseStack = new Stack<>();
+
+		for (int i = 1; i < releasePathNames.length; i++) {
+			String releasePathName = StringEscapeUtils.unescapeJava(
+				releasePathNames[i]);
+
+			List<SpiraRelease> candidateSpiraReleases = new ArrayList<>();
+
+			for (SpiraRelease candidateSpiraRelease :
+					getSpiraReleasesByName(releasePathName)) {
+
+				if (!spiraReleaseStack.empty()) {
+					SpiraRelease parentSpiraRelease = spiraReleaseStack.peek();
+
+					if (!candidateSpiraRelease.isParentSpiraRelease(
+							parentSpiraRelease)) {
+
+						continue;
+					}
+				}
+
+				candidateSpiraReleases.add(candidateSpiraRelease);
+			}
+
+			if (candidateSpiraReleases.isEmpty()) {
+				throw new RuntimeException("Could not find " + releasePath);
+			}
+
+			if (candidateSpiraReleases.size() > 1) {
+				SpiraRelease parentSpiraRelease = spiraReleaseStack.peek();
+
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Duplicate paths at ", parentSpiraRelease.getPath(),
+						"/", releasePathName));
+			}
+
+			spiraReleaseStack.push(candidateSpiraReleases.get(0));
+		}
+
+		return spiraReleaseStack.peek();
 	}
 
 	public JSONObject toJSONObject() {
@@ -71,12 +141,34 @@ public class SpiraProject {
 		_jsonObject = jsonObject;
 	}
 
+	protected SpiraRelease getSpiraReleaseByIndentLevel(String indentLevel)
+		throws IOException {
+
+		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
+			this, null,
+			new SpiraRelease.SearchParameter("IndentLevel", indentLevel));
+
+		if (spiraReleases.size() > 1) {
+			throw new RuntimeException("Duplicate indent level found");
+		}
+
+		if (spiraReleases.size() == 1) {
+			return spiraReleases.get(0);
+		}
+
+		return null;
+	}
+
+	protected List<SpiraRelease> getSpiraReleasesByName(String releaseName)
+		throws IOException {
+
+		return SpiraRelease.getSpiraReleases(
+			this, null, new SpiraRelease.SearchParameter("Name", releaseName));
+	}
+
+	private static final Map<Integer, SpiraProject> _spiraProjects =
+		new HashMap<>();
+
 	private final JSONObject _jsonObject;
-	private final Map<Integer, SpiraRelease> _spiraReleaseByID =
-		new HashMap<>();
-	private final Map<String, SpiraRelease> _spiraReleaseByIndentLevel =
-		new HashMap<>();
-	private final Map<String, SpiraRelease> _spiraReleaseByPath =
-		new HashMap<>();
 
 }

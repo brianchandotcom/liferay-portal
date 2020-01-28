@@ -23,7 +23,6 @@
 		"dlVersionNumberIncreaseValues", HashMapBuilder.<String, Object>put("MAJOR", DLVersionNumberIncrease.MAJOR)
 		.put("MINOR", DLVersionNumberIncrease.MINOR)
 		.put("NONE", DLVersionNumberIncrease.NONE).build()
-	).put("bridgeComponentId", liferayPortletResponse.getNamespace() + "DocumentLibraryCheckinModal"
 	).put("checkedOut", GetterUtil.getBoolean(request.getAttribute("edit_file_entry.jsp-checkedOut"))).build();
 	%>
 

@@ -1,0 +1,19 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "aQute/bnd/annotation/metatype/Configurable.java"
+
+	originalLibModuleName = "biz.aQute.bnd.annotation"
+}

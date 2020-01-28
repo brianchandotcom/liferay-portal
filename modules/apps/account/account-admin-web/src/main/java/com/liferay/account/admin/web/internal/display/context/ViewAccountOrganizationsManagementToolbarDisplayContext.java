@@ -14,14 +14,21 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,6 +57,61 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		return CreationMenuUtil.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.putData("action", "selectAccountOrganizations");
+
+				long accountEntryId = ParamUtil.getLong(
+					request, "accountEntryId");
+
+				AccountEntry accountEntry =
+					AccountEntryLocalServiceUtil.fetchAccountEntry(
+						accountEntryId);
+
+				if (accountEntry != null) {
+					dropdownItem.putData(
+						"accountEntryName", accountEntry.getName());
+				}
+
+				PortletURL assignAccountOrganizationsURL =
+					liferayPortletResponse.createActionURL();
+
+				assignAccountOrganizationsURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/account_admin/assign_account_organizations");
+				assignAccountOrganizationsURL.setParameter(
+					"redirect", currentURLObj.toString());
+
+				dropdownItem.putData(
+					"assignAccountOrganizationsURL",
+					assignAccountOrganizationsURL.toString());
+
+				PortletURL selectAccountOrganizationsURL =
+					liferayPortletResponse.createRenderURL();
+
+				selectAccountOrganizationsURL.setParameter(
+					"mvcPath",
+					"/account_entries_admin/select_account_organizations.jsp");
+				selectAccountOrganizationsURL.setParameter(
+					"accountEntryId", String.valueOf(accountEntryId));
+				selectAccountOrganizationsURL.setWindowState(
+					LiferayWindowState.POP_UP);
+
+				dropdownItem.putData(
+					"selectAccountOrganizationsURL",
+					selectAccountOrganizationsURL.toString());
+
+				dropdownItem.setLabel(
+					LanguageUtil.get(request, "assign-organizations"));
+			});
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "ACCOUNT_ORGANIZATIONS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	@Override

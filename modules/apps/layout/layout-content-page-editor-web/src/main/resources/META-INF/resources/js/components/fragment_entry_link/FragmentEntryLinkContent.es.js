@@ -64,6 +64,14 @@ class FragmentEntryLinkContent extends Component {
 	}
 
 	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	rendered() {
+		this._renderContent(this.content, {evaluateJs: true});
+	}
+
+	/**
 	 * @inheritdoc
 	 * @return {boolean}
 	 * @review

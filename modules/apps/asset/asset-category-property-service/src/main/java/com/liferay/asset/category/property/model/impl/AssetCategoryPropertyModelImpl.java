@@ -97,7 +97,7 @@ public class AssetCategoryPropertyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetCategoryProperty (mvccVersion LONG default 0 not null,categoryPropertyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,key_ VARCHAR(75) null,value VARCHAR(75) null)";
+		"create table AssetCategoryProperty (mvccVersion LONG default 0 not null,categoryPropertyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,key_ VARCHAR(255) null,value VARCHAR(255) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetCategoryProperty";

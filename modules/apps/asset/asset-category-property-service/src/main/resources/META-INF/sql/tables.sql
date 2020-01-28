@@ -7,6 +7,6 @@ create table AssetCategoryProperty (
 	createDate DATE null,
 	modifiedDate DATE null,
 	categoryId LONG,
-	key_ VARCHAR(75) null,
-	value VARCHAR(75) null
+	key_ VARCHAR(255) null,
+	value VARCHAR(255) null
 );

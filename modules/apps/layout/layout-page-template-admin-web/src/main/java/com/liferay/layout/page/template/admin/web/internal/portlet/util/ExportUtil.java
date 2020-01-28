@@ -14,9 +14,9 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.util;
 
-import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
 import java.io.File;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 
@@ -43,25 +43,26 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ExportUtil.class)
 public class ExportUtil {
 
-	public File exportLayoutPageTemplateEntries(
-			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
+	public File exportPageDefinitions(
+			Map<Long, PageDefinition> pageDefinitionsMap)
 		throws PortletException {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 		try {
-			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
-					layoutPageTemplateEntries) {
+			for (Map.Entry<Long, PageDefinition> entry :
+					pageDefinitionsMap.entrySet()) {
 
-				LayoutPageTemplateCollection layoutPageTemplateCollection =
-					_layoutPageTemplateCollectionService.
-						fetchLayoutPageTemplateCollection(
-							layoutPageTemplateEntry.
-								getLayoutPageTemplateCollectionId());
+				PageDefinition pageDefinition = entry.getValue();
+
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						fetchLayoutPageTemplateEntryByPlid(entry.getKey());
 
 				_populateZipWriter(
-					layoutPageTemplateEntry, zipWriter,
-					layoutPageTemplateCollection.getName());
+					pageDefinition,
+					layoutPageTemplateEntry.getPreviewFileEntryId(), zipWriter,
+					pageDefinition.getCollectionName());
 			}
 
 			zipWriter.finish();
@@ -73,16 +74,14 @@ public class ExportUtil {
 		}
 	}
 
-	private FileEntry _getPreviewFileEntry(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		if (layoutPageTemplateEntry.getPreviewFileEntryId() <= 0) {
+	private FileEntry _getPreviewFileEntry(long previewFileEntryId) {
+		if (previewFileEntryId <= 0) {
 			return null;
 		}
 
 		try {
 			return PortletFileRepositoryUtil.getPortletFileEntry(
-				layoutPageTemplateEntry.getPreviewFileEntryId());
+				previewFileEntryId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -94,23 +93,15 @@ public class ExportUtil {
 	}
 
 	private void _populateZipWriter(
-			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			PageDefinition pageDefinition, long previewFileEntryId,
 			ZipWriter zipWriter, String path)
 		throws Exception {
 
-		path = path + StringPool.SLASH + layoutPageTemplateEntry.getName();
+		path = path + StringPool.SLASH + pageDefinition.getName();
 
-		JSONObject jsonObject = JSONUtil.put(
-			"name", layoutPageTemplateEntry.getName());
+		JSONObject jsonObject = JSONUtil.put("name", pageDefinition.getName());
 
-		FileEntry previewFileEntry = _getPreviewFileEntry(
-			layoutPageTemplateEntry);
-
-		if (previewFileEntry != null) {
-			jsonObject.put(
-				"thumbnailPath",
-				"thumbnail." + previewFileEntry.getExtension());
-		}
+		FileEntry previewFileEntry = _getPreviewFileEntry(previewFileEntryId);
 
 		zipWriter.addEntry(
 			path + "/layout-template.json", jsonObject.toString());
@@ -125,7 +116,7 @@ public class ExportUtil {
 	private static final Log _log = LogFactoryUtil.getLog(ExportUtil.class);
 
 	@Reference
-	private LayoutPageTemplateCollectionService
-		_layoutPageTemplateCollectionService;
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

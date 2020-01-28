@@ -113,7 +113,7 @@ public class ExportUtil {
 		}
 
 		zipWriter.addEntry(
-			path + "/layout-template.json", jsonObject.toString());
+			path + "/page-definition.json", jsonObject.toString());
 
 		if (previewFileEntry != null) {
 			zipWriter.addEntry(

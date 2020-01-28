@@ -94,7 +94,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
-				"layout-page-template-entries-" + Time.getTimestamp() + ".zip",
+				"page-templates-" + Time.getTimestamp() + ".zip",
 				new FileInputStream(file), ContentTypes.APPLICATION_ZIP);
 		}
 		catch (Exception exception) {

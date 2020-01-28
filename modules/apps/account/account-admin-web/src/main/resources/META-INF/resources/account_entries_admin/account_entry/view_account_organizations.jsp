@@ -15,3 +15,51 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
+
+SearchContainer accountOrganizationSearchContainer = AccountOrganizationSearchContainerFactory.create(accountEntryDisplay.getAccountEntryId(), liferayPortletRequest, liferayPortletResponse);
+
+ViewAccountOrganizationsManagementToolbarDisplayContext viewAccountOrganizationsManagementToolbarDisplayContext = new ViewAccountOrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountOrganizationSearchContainer);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
+
+renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay.getName());
+%>
+
+<clay:management-toolbar
+	displayContext="<%= viewAccountOrganizationsManagementToolbarDisplayContext %>"
+	selectable="<%= false %>"
+/>
+
+<aui:container cssClass="container-fluid container-fluid-max-xl">
+	<aui:form method="post" name="fm">
+		<liferay-ui:search-container
+			searchContainer="<%= accountOrganizationSearchContainer %>"
+		>
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.model.Organization"
+				keyProperty="organizationId"
+				modelVar="accountOrganization"
+			>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-small table-cell-minw-150"
+					name="id"
+					property="organizationId"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-cell-minw-150"
+					name="name"
+					property="name"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				markupView="lexicon"
+			/>
+		</liferay-ui:search-container>
+	</aui:form>
+</aui:container>

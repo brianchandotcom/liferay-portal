@@ -299,9 +299,9 @@ public class DDMDataProviderInstanceLocalServiceImpl
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException {
-		
+
 		Date now = new Date();
-		
+
 		User user = userLocalService.getUser(userId);
 
 		validate(nameMap, ddmFormValues);

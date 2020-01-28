@@ -45,11 +45,6 @@ public class BlogsAnalyticsReportsInfoItem
 	}
 
 	@Override
-	public String getKey() {
-		return BlogsEntry.class.getName();
-	}
-
-	@Override
 	public Date getPublishDate(BlogsEntry blogsEntry) {
 		return blogsEntry.getDisplayDate();
 	}

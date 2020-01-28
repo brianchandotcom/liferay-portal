@@ -24,12 +24,6 @@ public interface AnalyticsReportsInfoItem<T> {
 
 	public String getAuthorName(T model);
 
-	public default String getKey() {
-		Class<?> clazz = getClass();
-
-		return clazz.getName();
-	}
-
 	public Date getPublishDate(T model);
 
 	public String getTitle(T model, Locale locale);

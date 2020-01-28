@@ -54,11 +54,6 @@ public class JournalArticleAnalyticsReportsInfoItem
 	}
 
 	@Override
-	public String getKey() {
-		return JournalArticle.class.getName();
-	}
-
-	@Override
 	public Date getPublishDate(JournalArticle article) {
 		return article.getDisplayDate();
 	}

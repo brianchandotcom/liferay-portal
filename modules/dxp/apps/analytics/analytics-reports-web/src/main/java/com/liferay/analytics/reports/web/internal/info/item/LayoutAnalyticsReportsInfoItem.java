@@ -45,11 +45,6 @@ public class LayoutAnalyticsReportsInfoItem
 	}
 
 	@Override
-	public String getKey() {
-		return Layout.class.getName();
-	}
-
-	@Override
 	public Date getPublishDate(Layout layout) {
 		return layout.getPublishDate();
 	}

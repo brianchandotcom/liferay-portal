@@ -196,8 +196,6 @@ public class DependencyManagementTask extends DefaultTask {
 		else {
 			logger.lifecycle("No dependency management information available.");
 		}
-
-		logger.lifecycle("");
 	}
 
 	private String _outputFile;

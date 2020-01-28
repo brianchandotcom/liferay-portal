@@ -26,6 +26,7 @@ task setUpPortalTools
 task setUpYarnOfflineCache
 task updateYarnBinariesCache
 task wrapperPortal(type: Wrapper)
+task wrapperProjectTemplates(type: Wrapper)
 task wrapperSubrepo(type: Wrapper)
 
 FileTree libDependenciesFileTree = fileTree(dir: "../lib", include: "*/dependencies.properties")
@@ -187,6 +188,13 @@ set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% "-Dgradle.user.home=%APP_HOME%\\.gradle"
 			value: 'org.gradle.wrapper.GradleWrapperMain "--init-script=%APP_HOME%\\modules\\init.gradle" %CMD_LINE_ARGS%'
 		)
 	}
+
+	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
+	scriptFile = new File(wrapperDir, "gradlew")
+}
+
+wrapperProjectTemplates {
+	File wrapperDir = new File(projectDir.parentFile, "modules/sdk/project-templates/project-templates/src/main/resources/gradle-wrapper")
 
 	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
 	scriptFile = new File(wrapperDir, "gradlew")

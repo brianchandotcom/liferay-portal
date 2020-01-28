@@ -97,7 +97,7 @@ create table AssetCategory (
 	modifiedDate DATE null,
 	parentCategoryId LONG,
 	treePath STRING null,
-	name VARCHAR(75) null,
+	name VARCHAR(255) null,
 	title STRING null,
 	description STRING null,
 	vocabularyId LONG,

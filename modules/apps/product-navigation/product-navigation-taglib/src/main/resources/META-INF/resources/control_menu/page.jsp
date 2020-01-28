@@ -39,6 +39,8 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 
 <c:if test="<%= hasControlMenuEntries %>">
 	<div class="control-menu-container">
+		<liferay-util:dynamic-include key="com.liferay.product.navigation.taglib#/page.jsp#pre" />
+
 		<div class="control-menu control-menu-level-1 hidden-print" data-qa-id="controlMenu" id="<portlet:namespace />ControlMenu">
 			<div class="container-fluid container-fluid-max-xl">
 				<h1 class="sr-only"><liferay-ui:message key="admin-header" /></h1>
@@ -100,6 +102,8 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 				%>
 
 			</div>
+
+			<liferay-util:dynamic-include key="com.liferay.product.navigation.taglib#/page.jsp#post" />
 
 			<div id="controlMenuAlertsContainer"></div>
 		</div>

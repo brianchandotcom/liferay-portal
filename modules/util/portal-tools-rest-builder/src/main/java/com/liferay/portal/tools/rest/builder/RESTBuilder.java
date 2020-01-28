@@ -48,6 +48,7 @@ import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -1535,6 +1536,72 @@ public class RESTBuilder {
 		}
 
 		return relatedSchemaNames;
+	}
+
+	private OpenAPIYAML _loadOpenAPIYAML(File file) throws IOException {
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(FileUtil.read(file));
+
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		if (pathItems == null) {
+			return openAPIYAML;
+		}
+
+		Components components = openAPIYAML.getComponents();
+
+		Map<String, Parameter> parameterMap = components.getParameters();
+
+		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
+			PathItem pathItem = entry.getValue();
+
+			List<Operation> operations = new ArrayList<>();
+
+			if (pathItem.getDelete() != null) {
+				operations.add(pathItem.getDelete());
+			}
+
+			if (pathItem.getGet() != null) {
+				operations.add(pathItem.getGet());
+			}
+
+			if (pathItem.getHead() != null) {
+				operations.add(pathItem.getHead());
+			}
+
+			if (pathItem.getOptions() != null) {
+				operations.add(pathItem.getOptions());
+			}
+
+			if (pathItem.getPatch() != null) {
+				operations.add(pathItem.getPatch());
+			}
+
+			if (pathItem.getPost() != null) {
+				operations.add(pathItem.getPost());
+			}
+
+			if (pathItem.getPut() != null) {
+				operations.add(pathItem.getPut());
+			}
+
+			for (Operation operation : operations) {
+				List<Parameter> parameters = operation.getParameters();
+
+				for (int i = 0; i < parameters.size(); i++) {
+					Parameter parameter = parameters.get(i);
+
+					if (Validator.isNotNull(parameter.getReference())) {
+						parameters.set(
+							i,
+							parameterMap.get(
+								OpenAPIParserUtil.getReferenceName(
+									parameter.getReference())));
+					}
+				}
+			}
+		}
+
+		return openAPIYAML;
 	}
 
 	private void _putSchema(

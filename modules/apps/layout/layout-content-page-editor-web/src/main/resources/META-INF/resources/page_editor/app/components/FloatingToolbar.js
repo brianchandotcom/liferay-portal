@@ -13,7 +13,6 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
 import {useEventListener} from 'frontend-js-react-web';
 import React, {
@@ -68,44 +67,57 @@ export default function FloatingToolbar({
 	]);
 
 	return (
-		show &&
-		buttons.length &&
-		createPortal(
-			<div className="pb-2 position-absolute pr-2 pt-2" ref={popoverRef}>
-				<ClayPopover
-					alignPosition={false}
-					className="position-static"
-					show
-				>
-					{buttons.map(button => (
-						<FloatingToolbarButton
-							active={button.panelId === activeConfigurationPanel}
-							key={button.panelId}
-							onClick={(id, panelId) => {
-								onButtonClick(id);
+		show && (
+			<>
+				{buttons.length &&
+					createPortal(
+						<div className="p-2 position-absolute" ref={popoverRef}>
+							<div className="popover position-static">
+								<div className="p-2 popover-body">
+									{buttons.map(button => (
+										<FloatingToolbarButton
+											active={
+												button.panelId ===
+												activeConfigurationPanel
+											}
+											key={button.panelId}
+											onClick={(id, panelId) => {
+												onButtonClick(id);
 
-								if (panelId) {
-									if (activeConfigurationPanel === panelId) {
-										setActiveConfigurationPanel(null);
-									} else {
-										setActiveConfigurationPanel(panelId);
-									}
-								}
-							}}
-							{...button}
-						/>
-					))}
-				</ClayPopover>
+												if (panelId) {
+													if (
+														activeConfigurationPanel ===
+														panelId
+													) {
+														setActiveConfigurationPanel(
+															null
+														);
+													} else {
+														setActiveConfigurationPanel(
+															panelId
+														);
+													}
+												}
+											}}
+											{...button}
+										/>
+									))}
+								</div>
+							</div>
+						</div>,
+						document.body
+					)}
 
-				{activeConfigurationPanel && (
-					<ConfigurationPanel
-						configurationPanel={activeConfigurationPanel}
-						item={item}
-						popoverRef={popoverRef}
-					/>
-				)}
-			</div>,
-			document.body
+				{activeConfigurationPanel &&
+					createPortal(
+						<ConfigurationPanel
+							configurationPanel={activeConfigurationPanel}
+							item={item}
+							popoverRef={popoverRef}
+						/>,
+						document.body
+					)}
+			</>
 		)
 	);
 }

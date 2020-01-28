@@ -26,14 +26,14 @@ String samlSubjectScreenName = (String)request.getAttribute(SamlWebKeys.SAML_SUB
 	<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(samlSubjectScreenName) + "</strong>" %>' key="your-user-x-could-not-be-logged-in" />
 
 	<c:choose>
+		<c:when test='<%= SessionMessages.contains(request, "ContactNameException") %>'>
+			<liferay-ui:message key="your-contact-name-is-incomplete-or-invalid" />
+		</c:when>
 		<c:when test='<%= SessionMessages.contains(request, "MustNotUseCompanyMx") %>'>
 			<liferay-ui:message key="the-email-address-associated-with-your-saml-account-cannot-be-used-to-register-a-new-user-because-its-email-domain-is-reserved" />
 		</c:when>
 		<c:when test='<%= SessionMessages.contains(request, "SubjectException") %>'>
 			<liferay-ui:message key="only-known-users-are-allowed-to-sign-in-using-saml" />
-		</c:when>
-		<c:when test='<%= SessionMessages.contains(request, "ContactNameException") %>'>
-			<liferay-ui:message key="your-contact-name-is-incomplete-or-invalid" />
 		</c:when>
 		<c:when test='<%= SessionMessages.contains(request, "UserEmailAddressException") %>'>
 			<liferay-ui:message key="your-email-address-is-incomplete-or-invalid" />

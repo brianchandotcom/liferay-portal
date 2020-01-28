@@ -18,13 +18,18 @@ import com.liferay.change.tracking.display.CTDisplayRenderer;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeClosable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Locale;
 
@@ -124,10 +129,37 @@ public class CTDisplayRendererRegistry {
 
 			if (ctDisplayRenderer == null) {
 				ctDisplayRenderer = CTModelDisplayRendererAdapter.getInstance();
+
+				ctDisplayRenderer.render(
+					httpServletRequest, httpServletResponse, ctModel);
+
+				return;
 			}
 
-			ctDisplayRenderer.render(
-				httpServletRequest, httpServletResponse, ctModel);
+			try (UnsyncStringWriter unsyncStringWriter =
+					new UnsyncStringWriter()) {
+
+				PipingServletResponse pipingServletResponse =
+					new PipingServletResponse(
+						httpServletResponse, unsyncStringWriter);
+
+				ctDisplayRenderer.render(
+					httpServletRequest, pipingServletResponse, ctModel);
+
+				StringBundler sb = unsyncStringWriter.getStringBundler();
+
+				sb.writeTo(httpServletResponse.getWriter());
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception, exception);
+				}
+
+				ctDisplayRenderer = CTModelDisplayRendererAdapter.getInstance();
+
+				ctDisplayRenderer.render(
+					httpServletRequest, httpServletResponse, ctModel);
+			}
 		}
 	}
 
@@ -169,6 +201,9 @@ public class CTDisplayRendererRegistry {
 
 		_ctServiceServiceTrackerMap.close();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTDisplayRendererRegistry.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

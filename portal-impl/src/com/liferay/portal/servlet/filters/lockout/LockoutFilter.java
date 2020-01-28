@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.password.modified;
+package com.liferay.portal.servlet.filters.lockout;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -22,20 +22,16 @@ import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManag
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
-
-import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * @author Marta Medio
+ * @author Norbert Kocsis
  */
-public class PasswordModifiedFilter extends BasePortalFilter {
+public class LockoutFilter extends BasePortalFilter {
 
 	@Override
 	protected void processFilter(
@@ -43,7 +39,7 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		if (_isPasswordModified(httpServletRequest)) {
+		if (_isLockout(httpServletRequest)) {
 			AuthenticatedSessionManagerUtil.logout(
 				httpServletRequest, httpServletResponse);
 
@@ -63,37 +59,11 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 		}
 	}
 
-	private boolean _isPasswordModified(HttpServletRequest httpServletRequest) {
-		HttpSession session = httpServletRequest.getSession(false);
-
-		if (session == null) {
-			return false;
-		}
-
-		if (!httpServletRequest.isRequestedSessionIdValid()) {
-			return false;
-		}
-
+	private boolean _isLockout(HttpServletRequest httpServletRequest) {
 		try {
 			User user = PortalUtil.getUser(httpServletRequest);
 
-			if ((user == null) || user.isDefaultUser()) {
-				return false;
-			}
-
-			if (!_isValidRealUserId(session, user)) {
-				return false;
-			}
-
-			Date passwordModifiedDate = user.getPasswordModifiedDate();
-
-			if (passwordModifiedDate == null) {
-				return false;
-			}
-
-			if (!httpServletRequest.isRequestedSessionIdValid() ||
-				(session.getCreationTime() < passwordModifiedDate.getTime())) {
-
+			if ((user != null) && user.isLockout()) {
 				return true;
 			}
 
@@ -106,17 +76,6 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 		}
 	}
 
-	private boolean _isValidRealUserId(HttpSession session, User user) {
-		Long realUserId = (Long)session.getAttribute(WebKeys.USER_ID);
-
-		if ((realUserId == null) || (user.getUserId() != realUserId)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PasswordModifiedFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(LockoutFilter.class);
 
 }

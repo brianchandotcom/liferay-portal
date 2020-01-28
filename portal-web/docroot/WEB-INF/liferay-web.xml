@@ -242,6 +242,10 @@
 		</init-param>
 	</filter>
 	<filter>
+		<filter-name>Lockout Filter</filter-name>
+		<filter-class>com.liferay.portal.servlet.filters.lockout.LockoutFilter</filter-class>
+	</filter>
+	<filter>
 		<filter-name>Password Modified Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.password.modified.PasswordModifiedFilter</filter-class>
 	</filter>
@@ -770,6 +774,12 @@
 	<filter-mapping>
 		<filter-name>Secure RSS Filter</filter-name>
 		<url-pattern>/user/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Lockout Filter</filter-name>
+		<url-pattern>/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>

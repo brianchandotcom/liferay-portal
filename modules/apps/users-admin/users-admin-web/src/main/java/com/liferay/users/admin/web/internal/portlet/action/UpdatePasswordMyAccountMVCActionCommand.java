@@ -15,6 +15,7 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -24,10 +25,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.auth.PasswordModificationThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
@@ -36,6 +40,9 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -95,6 +102,35 @@ public class UpdatePasswordMyAccountMVCActionCommand
 			}
 
 			if (authResult == Authenticator.FAILURE) {
+				user = _portal.getSelectedUser(actionRequest);
+
+				if (user.isLockout()) {
+					HttpServletRequest originalHttpServletRequest =
+						_portal.getOriginalServletRequest(
+							_portal.getHttpServletRequest(actionRequest));
+					HttpServletResponse httpServletResponse =
+						_portal.getHttpServletResponse(actionResponse);
+
+					AuthenticatedSessionManagerUtil.logout(
+						originalHttpServletRequest, httpServletResponse);
+
+					if (StringUtil.equals(
+							originalHttpServletRequest.getMethod(),
+							HttpMethods.GET)) {
+
+						httpServletResponse.sendRedirect(
+							_portal.getCurrentCompleteURL(
+								originalHttpServletRequest));
+					}
+					else {
+						httpServletResponse.sendRedirect(
+							_portal.getPortalURL(originalHttpServletRequest));
+					}
+
+					throw new UserLockoutException.PasswordPolicyLockout(
+						user, user.getPasswordPolicy());
+				}
+
 				throw new UserPasswordException.MustMatchCurrentPassword(
 					user.getUserId());
 			}

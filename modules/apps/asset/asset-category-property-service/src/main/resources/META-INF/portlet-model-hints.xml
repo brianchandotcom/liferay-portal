@@ -12,9 +12,11 @@
 		<field name="categoryId" type="long" />
 		<field name="key" type="String">
 			<hint name="display-width">210</hint>
+			<hint name="max-length">255</hint>
 		</field>
 		<field name="value" type="String">
 			<hint name="display-width">210</hint>
+			<hint name="max-length">255</hint>
 		</field>
 	</model>
 </model-hints>

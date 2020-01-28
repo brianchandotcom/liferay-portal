@@ -55,8 +55,6 @@ public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		String changeType = ParamUtil.getString(renderRequest, "changeType");
-
 		long ctEntryId = ParamUtil.getLong(renderRequest, "ctEntryId");
 
 		try {
@@ -74,9 +72,8 @@ public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
 
 			CTEntryDiffDisplay ctEntryDiffDisplay = new CTEntryDiffDisplay(
 				httpServletRequest,
-				_portal.getHttpServletResponse(renderResponse), changeType,
-				ctCollection, _ctDisplayRendererRegistry, ctEntry, _language,
-				name);
+				_portal.getHttpServletResponse(renderResponse), ctCollection,
+				_ctDisplayRendererRegistry, ctEntry, _language, name);
 
 			renderRequest.setAttribute(
 				CTWebKeys.CT_ENTRY_DIFF_DISPLAY, ctEntryDiffDisplay);

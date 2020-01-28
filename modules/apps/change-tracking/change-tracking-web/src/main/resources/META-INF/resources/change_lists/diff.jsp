@@ -29,42 +29,100 @@ portletDisplay.setURLBack(backURL);
 
 <div class="container-fluid-1280">
 	<div class="row">
-		<div class="col-sm-6">
-			<div class="overview-card-sheet">
-				<div class="overview-card-container overview-card-header">
-					<div class="row">
-						<h4><%= HtmlUtil.escape(ctEntryDiffDisplay.getLeftTitle()) %></h4>
+
+		<%
+		if (ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_ADDITION)) {
+		%>
+
+			<div class="col-sm-12">
+				<div class="overview-card-sheet">
+					<div class="overview-card-container overview-card-header">
+						<div class="row">
+							<h4><%= HtmlUtil.escape(ctEntryDiffDisplay.getCTCollectionTitle()) %></h4>
+						</div>
+					</div>
+
+					<div class="overview-card-sheet-divider"></div>
+					<div class="overview-card-body overview-card-container">
+
+						<%
+						ctEntryDiffDisplay.renderCTCollectionCTEntry();
+						%>
+
 					</div>
 				</div>
-
-				<div class="overview-card-sheet-divider"></div>
-				<div class="overview-card-body overview-card-container">
-
-					<%
-					ctEntryDiffDisplay.renderLeftView();
-					%>
-
-				</div>
 			</div>
-		</div>
 
-		<div class="col-sm-6">
-			<div class="overview-card-sheet">
-				<div class="overview-card-container overview-card-header">
-					<div class="row">
-						<h4><%= HtmlUtil.escape(ctEntryDiffDisplay.getRightTitle()) %></h4>
+		<%
+		}
+		else if (ctEntryDiffDisplay.isChangeType(CTConstants.CT_CHANGE_TYPE_DELETION)) {
+		%>
+
+			<div class="col-sm-12">
+				<div class="overview-card-sheet">
+					<div class="overview-card-container overview-card-header">
+						<div class="row">
+							<h4><%= HtmlUtil.escape(ctEntryDiffDisplay.getProductionTitle()) %></h4>
+						</div>
+					</div>
+
+					<div class="overview-card-sheet-divider"></div>
+					<div class="overview-card-body overview-card-container">
+
+						<%
+						ctEntryDiffDisplay.renderProductionCTEntry();
+						%>
+
 					</div>
 				</div>
+			</div>
 
-				<div class="overview-card-sheet-divider"></div>
-				<div class="overview-card-body overview-card-container">
+		<%
+		}
+		else {
+		%>
 
-					<%
-					ctEntryDiffDisplay.renderRightView();
-					%>
+			<div class="col-sm-6">
+				<div class="overview-card-sheet">
+					<div class="overview-card-container overview-card-header">
+						<div class="row">
+							<h4><%= HtmlUtil.escape(ctEntryDiffDisplay.getProductionTitle()) %></h4>
+						</div>
+					</div>
 
+					<div class="overview-card-sheet-divider"></div>
+					<div class="overview-card-body overview-card-container">
+
+						<%
+						ctEntryDiffDisplay.renderProductionCTEntry();
+						%>
+
+					</div>
 				</div>
 			</div>
-		</div>
+
+			<div class="col-sm-6">
+				<div class="overview-card-sheet">
+					<div class="overview-card-container overview-card-header">
+						<div class="row">
+							<h4><%= HtmlUtil.escape(ctEntryDiffDisplay.getCTCollectionTitle()) %></h4>
+						</div>
+					</div>
+
+					<div class="overview-card-sheet-divider"></div>
+					<div class="overview-card-body overview-card-container">
+
+						<%
+						ctEntryDiffDisplay.renderCTCollectionCTEntry();
+						%>
+
+					</div>
+				</div>
+			</div>
+
+		<%
+		}
+		%>
+
 	</div>
 </div>

@@ -532,7 +532,6 @@ public class ChangeListsDisplayContext {
 				Format format = FastDateFormatFactoryUtil.getDateTime(
 					_themeDisplay.getLocale());
 
-				diffURL.setParameter("changeType", changeTypeKey);
 				diffURL.setParameter(
 					"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
 

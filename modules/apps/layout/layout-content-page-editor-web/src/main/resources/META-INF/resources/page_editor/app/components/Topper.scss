@@ -71,8 +71,8 @@
 		box-shadow: 0 0 0 $borderWidth $activeBackgroundColor;
 	}
 
-	&.drag-over-middle:after {
-		border: solid $activeBackgroundColor 4px;
+	&.drag-over-middle .page-editor__container > .container-fluid {
+		border: 4px solid $activeBackgroundColor;
 	}
 
 	&.drag-over-bottom:after {

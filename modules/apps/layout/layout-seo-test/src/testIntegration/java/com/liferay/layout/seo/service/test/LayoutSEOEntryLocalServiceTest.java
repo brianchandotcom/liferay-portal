@@ -45,10 +45,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -188,9 +186,7 @@ public class LayoutSEOEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddLayoutSEOEntryWithEmptyCustomTags()
-		throws Exception {
-
+	public void testAddLayoutSEOEntryWithEmptyCustomTags() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 

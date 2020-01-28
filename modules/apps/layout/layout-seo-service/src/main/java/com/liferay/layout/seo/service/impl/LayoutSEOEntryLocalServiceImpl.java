@@ -39,11 +39,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -219,17 +217,6 @@ public class LayoutSEOEntryLocalServiceImpl
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}
 
-	private DDMStructure _getDDMStructure(Group group) throws PortalException {
-		Group companyGroup = _groupLocalService.getCompanyGroup(
-			group.getCompanyId());
-
-		return _ddmStructureLocalService.getStructure(
-			companyGroup.getGroupId(),
-			_classNameLocalService.getClassNameId(
-				LayoutSEOEntry.class.getName()),
-			"custom-meta-tags");
-	}
-
 	private DDMFormValues _getDDMFormValues(
 			long structureId, ServiceContext serviceContext)
 		throws PortalException {
@@ -238,8 +225,7 @@ public class LayoutSEOEntryLocalServiceImpl
 			structureId, String.valueOf(structureId), serviceContext);
 
 		Set<Locale> availableLocales = new HashSet<>();
-		Set<DDMFormFieldValue> ddmFormFieldValues =
-			new LinkedHashSet<>();
+		Set<DDMFormFieldValue> ddmFormFieldValues = new LinkedHashSet<>();
 
 		for (DDMFormFieldValue formFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {
@@ -283,6 +269,17 @@ public class LayoutSEOEntryLocalServiceImpl
 			new ArrayList<>(ddmFormFieldValues));
 
 		return ddmFormValues;
+	}
+
+	private DDMStructure _getDDMStructure(Group group) throws PortalException {
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			group.getCompanyId());
+
+		return _ddmStructureLocalService.getStructure(
+			companyGroup.getGroupId(),
+			_classNameLocalService.getClassNameId(
+				LayoutSEOEntry.class.getName()),
+			"custom-meta-tags");
 	}
 
 	private long _updateDDMStorage(

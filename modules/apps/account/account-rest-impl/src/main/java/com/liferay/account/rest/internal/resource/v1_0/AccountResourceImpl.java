@@ -18,7 +18,15 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.rest.dto.v1_0.Account;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,6 +44,34 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	@Override
 	public Account getAccount(Long accountId) throws Exception {
 		return _toAccount(_accountEntryLocalService.getAccountEntry(accountId));
+	}
+
+	@Override
+	public Page<Account> getAccountsPage(
+			String keywords, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			booleanQuery -> {
+			},
+			filter, AccountEntry.class, keywords, pagination,
+			queryConfig -> {
+			},
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+
+				if (Validator.isNotNull(keywords)) {
+					searchContext.setKeywords(keywords);
+				}
+			},
+			document -> {
+				long accountEntryId = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				return _toAccount(
+					_accountEntryLocalService.getAccountEntry(accountEntryId));
+			},
+			sorts);
 	}
 
 	private Account _toAccount(AccountEntry accountEntry) throws Exception {

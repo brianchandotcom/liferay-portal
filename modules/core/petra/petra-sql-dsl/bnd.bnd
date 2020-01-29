@@ -8,4 +8,6 @@ Export-Package:\
 	com.liferay.petra.sql.dsl.expression,\
 	com.liferay.petra.sql.dsl.expression.impl,\
 	com.liferay.petra.sql.dsl.query,\
-	com.liferay.petra.sql.dsl.query.impl
+	com.liferay.petra.sql.dsl.query.impl,\
+	com.liferay.petra.sql.dsl.query.sort,\
+	com.liferay.petra.sql.dsl.query.sort.impl

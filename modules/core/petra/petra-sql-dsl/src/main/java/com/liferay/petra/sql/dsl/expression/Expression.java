@@ -22,9 +22,9 @@ import com.liferay.petra.sql.dsl.expression.impl.PredicateImpl;
 import com.liferay.petra.sql.dsl.expression.impl.Scalar;
 import com.liferay.petra.sql.dsl.expression.impl.ScalarList;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.petra.sql.dsl.query.OrderByExpression;
-import com.liferay.petra.sql.dsl.query.impl.OrderByExpressionImpl;
 import com.liferay.petra.sql.dsl.query.impl.QueryExpression;
+import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
+import com.liferay.petra.sql.dsl.query.sort.impl.OrderByExpressionImpl;
 
 /**
  * @author Preston Crary

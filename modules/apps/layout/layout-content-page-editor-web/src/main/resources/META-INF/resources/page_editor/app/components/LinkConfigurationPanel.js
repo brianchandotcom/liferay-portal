@@ -215,7 +215,7 @@ function ManualHrefInput({initialHref, onChange}) {
 				onBlur={() => {
 					onChange(href);
 				}}
-				onChange={setHref}
+				onChange={event => setHref(event.target.value)}
 				type="text"
 				value={href}
 			/>

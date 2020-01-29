@@ -46,6 +46,18 @@
 					"if": {
 						"properties": {
 							"type": {
+								"const": "itemCollectionSelector"
+							}
+						}
+					},
+					"then": {
+						"$ref": "#/definitions/fieldItemCollectionSelector"
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
 								"const": "itemSelector"
 							}
 						}
@@ -106,6 +118,7 @@
 					"enum": [
 						"checkbox",
 						"colorPalette",
+						"itemCollectionSelector",
 						"itemSelector",
 						"select",
 						"text"
@@ -161,6 +174,25 @@
 						"rgbValue"
 					],
 					"title": "The DefaultValue Schema"
+				}
+			}
+		},
+		"fieldItemCollectionSelector": {
+			"properties": {
+				"typeOptions": {
+					"additionalProperties": false,
+					"properties": {
+						"itemSubtype": {
+							"title": "The ItemSubtype Schema",
+							"type": "string"
+						},
+						"itemType": {
+							"title": "The ItemType Schema",
+							"type": "string"
+						}
+					},
+					"title": "The Typeoptions Schema",
+					"type": "object"
 				}
 			}
 		},

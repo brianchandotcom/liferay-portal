@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.spi.query;
+package com.liferay.petra.sql.dsl;
 
-import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.ast.ASTNode;
+
+import java.util.Collection;
 
 /**
  * @author Preston Crary
  */
-public interface DefaultDSLQuery extends DSLQuery {
+public interface Table<T extends Table<T>> extends ASTNode {
 
-	@Override
-	public default Table<?> as(String name) {
-		return new QueryTable(name, this);
-	}
+	public T as(String alias);
 
-	@Override
-	public default DSLQuery union(DSLQuery dslQuery) {
-		return new SetOperation(this, SetOperationType.UNION, dslQuery);
-	}
+	public String getAlias();
 
-	@Override
-	public default DSLQuery unionAll(DSLQuery dslQuery) {
-		return new SetOperation(this, SetOperationType.UNION_ALL, dslQuery);
-	}
+	public Column<T, ?> getColumn(String columnName);
+
+	public <C> Column<T, C> getColumn(String columnName, Class<C> clazz);
+
+	public Collection<Column<T, ?>> getColumns();
+
+	public String getName();
+
+	public String getTableName();
 
 }

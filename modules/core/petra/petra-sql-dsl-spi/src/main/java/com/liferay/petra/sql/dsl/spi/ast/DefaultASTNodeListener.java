@@ -14,7 +14,7 @@
 
 package com.liferay.petra.sql.dsl.spi.ast;
 
-import com.liferay.petra.sql.dsl.BaseTable;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
@@ -66,10 +66,10 @@ public class DefaultASTNodeListener implements ASTNodeListener {
 
 			Collections.addAll(_scalarValues, scalarList.getValues());
 		}
-		else if (astNode instanceof BaseTable<?>) {
-			BaseTable<?> baseTable = (BaseTable<?>)astNode;
+		else if (astNode instanceof Table<?>) {
+			Table<? extends Table<?>> table = (Table<?>)astNode;
 
-			String tableName = baseTable.getTableName();
+			String tableName = table.getTableName();
 
 			if (tableName != null) {
 				_tableNames.add(tableName);

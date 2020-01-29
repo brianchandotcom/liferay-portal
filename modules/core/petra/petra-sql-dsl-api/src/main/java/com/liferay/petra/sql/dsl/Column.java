@@ -19,7 +19,7 @@ import com.liferay.petra.sql.dsl.expression.Expression;
 /**
  * @author Preston Crary
  */
-public interface Column<T extends BaseTable<T>, C> extends Expression<C> {
+public interface Column<T extends Table<T>, C> extends Expression<C> {
 
 	public String getColumnName();
 

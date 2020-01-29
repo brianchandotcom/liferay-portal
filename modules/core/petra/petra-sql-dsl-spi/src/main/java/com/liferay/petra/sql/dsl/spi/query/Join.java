@@ -14,7 +14,7 @@
 
 package com.liferay.petra.sql.dsl.spi.query;
 
-import com.liferay.petra.sql.dsl.BaseTable;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.JoinStep;
@@ -29,13 +29,13 @@ import java.util.function.Consumer;
 public class Join extends BaseASTNode implements DefaultJoinStep {
 
 	public Join(
-		JoinStep joinStep, JoinType joinType, BaseTable<?> baseTable,
+		JoinStep joinStep, JoinType joinType, Table<?> table,
 		Predicate onPredicate) {
 
 		super(joinStep);
 
 		_joinType = Objects.requireNonNull(joinType);
-		_baseTable = Objects.requireNonNull(baseTable);
+		_table = Objects.requireNonNull(table);
 		_onPredicate = Objects.requireNonNull(onPredicate);
 	}
 
@@ -47,8 +47,8 @@ public class Join extends BaseASTNode implements DefaultJoinStep {
 		return _onPredicate;
 	}
 
-	public BaseTable<?> getTable() {
-		return _baseTable;
+	public Table<?> getTable() {
+		return _table;
 	}
 
 	@Override
@@ -59,15 +59,15 @@ public class Join extends BaseASTNode implements DefaultJoinStep {
 
 		consumer.accept(" join ");
 
-		_baseTable.toSQL(consumer, astNodeListener);
+		_table.toSQL(consumer, astNodeListener);
 
 		consumer.accept(" on ");
 
 		_onPredicate.toSQL(consumer, astNodeListener);
 	}
 
-	private final BaseTable<?> _baseTable;
 	private final JoinType _joinType;
 	private final Predicate _onPredicate;
+	private final Table<?> _table;
 
 }

@@ -14,8 +14,8 @@
 
 package com.liferay.petra.sql.dsl.spi.query;
 
-import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.LimitStep;
 import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
@@ -29,9 +29,16 @@ import com.liferay.petra.string.StringBundler;
 public interface DefaultOrderByStep extends DefaultLimitStep, OrderByStep {
 
 	@Override
-	public default LimitStep orderBy(
-		BaseTable<?> baseTable, OrderByInfo orderByInfo) {
+	public default LimitStep orderBy(OrderByExpression... orderByExpressions) {
+		if ((orderByExpressions == null) || (orderByExpressions.length == 0)) {
+			return this;
+		}
 
+		return new OrderBy(this, orderByExpressions);
+	}
+
+	@Override
+	public default LimitStep orderBy(Table<?> table, OrderByInfo orderByInfo) {
 		if (orderByInfo == null) {
 			return this;
 		}
@@ -44,26 +51,17 @@ public interface DefaultOrderByStep extends DefaultLimitStep, OrderByStep {
 		for (int i = 0; i < orderByFields.length; i++) {
 			String field = orderByFields[i];
 
-			Column<?, ?> column = baseTable.getColumn(field);
+			Column<?, ?> column = table.getColumn(field);
 
 			if (column == null) {
 				throw new IllegalArgumentException(
 					StringBundler.concat(
 						"No column \"", field, "\" for table ",
-						baseTable.getTableName()));
+						table.getTableName()));
 			}
 
 			orderByExpressions[i] = new DefaultOrderByExpression(
 				column, orderByInfo.isAscending(field));
-		}
-
-		return new OrderBy(this, orderByExpressions);
-	}
-
-	@Override
-	public default LimitStep orderBy(OrderByExpression... orderByExpressions) {
-		if ((orderByExpressions == null) || (orderByExpressions.length == 0)) {
-			return this;
 		}
 
 		return new OrderBy(this, orderByExpressions);

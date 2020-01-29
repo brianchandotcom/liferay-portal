@@ -18,6 +18,7 @@ import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.expression.Alias;
 import com.liferay.petra.sql.dsl.expression.Expression;
@@ -810,13 +811,13 @@ public class SQLDSLTest {
 
 	@Test
 	public void testQueryTable() {
-		BaseTable<?> baseTable = DSLQueryFactoryUtil.select(
+		Table<?> table = DSLQueryFactoryUtil.select(
 			new Scalar<>(1)
 		).as(
 			"alias"
 		);
 
-		Assert.assertEquals("(select ?) alias", baseTable.toString());
+		Assert.assertEquals("(select ?) alias", table.toString());
 	}
 
 	@Test

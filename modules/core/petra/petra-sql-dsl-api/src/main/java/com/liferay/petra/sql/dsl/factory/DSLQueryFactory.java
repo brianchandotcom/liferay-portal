@@ -14,7 +14,7 @@
 
 package com.liferay.petra.sql.dsl.factory;
 
-import com.liferay.petra.sql.dsl.BaseTable;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.query.FromStep;
 
@@ -33,6 +33,6 @@ public interface DSLQueryFactory {
 
 	public FromStep selectDistinct(Expression<?>... expressions);
 
-	public <T extends BaseTable<T>> FromStep selectDistinct(T table);
+	public <T extends Table<T>> FromStep selectDistinct(T table);
 
 }

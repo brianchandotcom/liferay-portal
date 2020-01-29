@@ -14,7 +14,7 @@
 
 package com.liferay.petra.sql.dsl.spi.query;
 
-import com.liferay.petra.sql.dsl.BaseTable;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 
@@ -24,25 +24,21 @@ import com.liferay.petra.sql.dsl.query.JoinStep;
 public interface DefaultJoinStep extends DefaultWhereStep, JoinStep {
 
 	@Override
-	public default JoinStep innerJoinON(
-		BaseTable<?> baseTable, Predicate predicate) {
-
+	public default JoinStep innerJoinON(Table<?> table, Predicate predicate) {
 		if (predicate == null) {
 			return this;
 		}
 
-		return new Join(this, JoinType.INNER, baseTable, predicate);
+		return new Join(this, JoinType.INNER, table, predicate);
 	}
 
 	@Override
-	public default JoinStep leftJoinOn(
-		BaseTable<?> baseTable, Predicate predicate) {
-
+	public default JoinStep leftJoinOn(Table<?> table, Predicate predicate) {
 		if (predicate == null) {
 			return this;
 		}
 
-		return new Join(this, JoinType.LEFT, baseTable, predicate);
+		return new Join(this, JoinType.LEFT, table, predicate);
 	}
 
 }

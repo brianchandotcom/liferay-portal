@@ -14,13 +14,13 @@
 
 package com.liferay.petra.sql.dsl.query;
 
-import com.liferay.petra.sql.dsl.BaseTable;
+import com.liferay.petra.sql.dsl.Table;
 
 /**
  * @author Preston Crary
  */
 public interface FromStep extends DSLQuery {
 
-	public JoinStep from(BaseTable<?> baseTable);
+	public JoinStep from(Table<?> table);
 
 }

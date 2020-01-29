@@ -57,9 +57,40 @@ public class AnalyticsReportsDisplayContext {
 		}
 
 		_data = HashMapBuilder.<String, Object>put(
-			"context", getContext()
+			"context",
+			HashMapBuilder.<String, Object>put(
+				"endpoints",
+				HashMapBuilder.<String, Object>put(
+					"getAnalyticsReportsTotalViewsURL",
+					() -> {
+						ResourceURL resourceURL =
+							_renderResponse.createResourceURL();
+
+						resourceURL.setResourceID(
+							"/analytics_reports/get_total_views");
+
+						return resourceURL.toString();
+					}
+				).build()
+			).build()
 		).put(
-			"props", _getProps()
+			"props",
+			HashMapBuilder.<String, Object>put(
+				"authorName",
+				_analyticsReportsInfoItem.getAuthorName(
+					_analyticsReportsInfoItemObject)
+			).put(
+				"publishDate",
+				FastDateFormatFactoryUtil.getSimpleDateFormat(
+					"MMMM dd, yyyy", _themeDisplay.getLocale()
+				).format(
+					_getPublishDate()
+				)
+			).put(
+				"title",
+				_analyticsReportsInfoItem.getTitle(
+					_analyticsReportsInfoItemObject, _themeDisplay.getLocale())
+			).build()
 		).build();
 
 		return _data;
@@ -67,46 +98,6 @@ public class AnalyticsReportsDisplayContext {
 
 	public String getLiferayAnalyticsURL(long companyId) {
 		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsURL");
-	}
-
-	protected Map<String, Object> getContext() {
-		return HashMapBuilder.<String, Object>put(
-			"endpoints", _getEndpoints()
-		).build();
-	}
-
-	private String _getAnalyticsReportsTotalViewsURL() {
-		ResourceURL resourceURL = _renderResponse.createResourceURL();
-
-		resourceURL.setResourceID("/analytics_reports/get_total_views");
-
-		return resourceURL.toString();
-	}
-
-	private Map<String, Object> _getEndpoints() {
-		return HashMapBuilder.<String, Object>put(
-			"getAnalyticsReportsTotalViewsURL",
-			_getAnalyticsReportsTotalViewsURL()
-		).build();
-	}
-
-	private Map<String, Object> _getProps() {
-		return HashMapBuilder.<String, Object>put(
-			"authorName",
-			_analyticsReportsInfoItem.getAuthorName(
-				_analyticsReportsInfoItemObject)
-		).put(
-			"publishDate",
-			FastDateFormatFactoryUtil.getSimpleDateFormat(
-				"MMMM dd, yyyy", _themeDisplay.getLocale()
-			).format(
-				_getPublishDate()
-			)
-		).put(
-			"title",
-			_analyticsReportsInfoItem.getTitle(
-				_analyticsReportsInfoItemObject, _themeDisplay.getLocale())
-		).build();
 	}
 
 	private Date _getPublishDate() {

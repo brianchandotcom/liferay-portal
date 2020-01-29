@@ -139,14 +139,7 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 									</div>
 
 									<%
-									String editURL;
-
-									try {
-										editURL = ctDisplayRendererRegistry.getEditURL(request, ctEntry);
-									}
-									catch (Exception e) {
-										editURL = null;
-									}
+									String editURL = ctDisplayRendererRegistry.getEditURL(request, ctEntry);
 									%>
 
 									<c:choose>

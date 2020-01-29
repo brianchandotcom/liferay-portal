@@ -20,14 +20,22 @@ import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ConfigContext} from '../../config/index';
 import Processors from '../../processors/index';
+import selectEditableValue from '../../selectors/selectEditableValue';
 import selectEditableValueConfig from '../../selectors/selectEditableValueConfig';
 import selectEditableValueContent from '../../selectors/selectEditableValueContent';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
+import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 import {useSelectItem} from '../Controls';
 import UnsafeHTML from '../UnsafeHTML';
 import {showFloatingToolbar} from '../showFloatingToolbar';
+
+const editableIsMapped = editableValue =>
+	(editableValue.classNameId &&
+		editableValue.classPK &&
+		editableValue.fieldId) ||
+	editableValue.mappedField;
 
 const resolveEditableValue = (
 	state,
@@ -35,8 +43,29 @@ const resolveEditableValue = (
 	fragmentEntryLinkId,
 	editableId,
 	processorType
-) =>
-	new Promise(resolve => {
+) => {
+	const editableValue = selectEditableValue(
+		state,
+		fragmentEntryLinkId,
+		editableId,
+		processorType
+	);
+
+	if (editableIsMapped(editableValue)) {
+		return InfoItemService.getAssetFieldValue({
+			classNameId: editableValue.classNameId,
+			classPK: editableValue.classPK,
+			config,
+			fieldId: editableValue.fieldId,
+			onNetworkStatus: () => {}
+		}).then(response => {
+			const {fieldValue} = response;
+
+			return [fieldValue, editableValue.config];
+		});
+	}
+
+	return new Promise(resolve => {
 		resolve([
 			selectEditableValueContent(
 				state,
@@ -53,6 +82,7 @@ const resolveEditableValue = (
 			)
 		]);
 	});
+};
 
 function FragmentContent({fragmentEntryLink}, ref) {
 	const config = useContext(ConfigContext);

@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Petra SQL DSL
-Bundle-SymbolicName: com.liferay.petra.sql.dsl
+Bundle-Name: Liferay Petra SQL DSL API
+Bundle-SymbolicName: com.liferay.petra.sql.dsl.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.petra.sql.dsl,\

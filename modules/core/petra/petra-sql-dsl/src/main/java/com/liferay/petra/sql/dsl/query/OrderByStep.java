@@ -17,7 +17,9 @@ package com.liferay.petra.sql.dsl.query;
 import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.query.impl.OrderBy;
-import com.liferay.petra.sql.dsl.query.impl.OrderByExpressionImpl;
+import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
+import com.liferay.petra.sql.dsl.query.sort.OrderByInfo;
+import com.liferay.petra.sql.dsl.query.sort.impl.OrderByExpressionImpl;
 import com.liferay.petra.string.StringBundler;
 
 /**

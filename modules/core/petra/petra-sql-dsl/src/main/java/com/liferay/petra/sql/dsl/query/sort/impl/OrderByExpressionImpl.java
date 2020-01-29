@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query.impl;
+package com.liferay.petra.sql.dsl.query.sort.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
 import com.liferay.petra.sql.dsl.expression.Expression;
-import com.liferay.petra.sql.dsl.query.OrderByExpression;
+import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 
 import java.util.Objects;
 import java.util.function.Consumer;

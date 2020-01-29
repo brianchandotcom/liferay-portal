@@ -18,8 +18,8 @@ import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.LimitStep;
-import com.liferay.petra.sql.dsl.query.OrderByExpression;
 import com.liferay.petra.sql.dsl.query.OrderByStep;
+import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 
 import java.util.function.Consumer;
 

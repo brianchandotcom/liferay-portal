@@ -48,7 +48,6 @@ import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -958,9 +957,7 @@ public class RESTBuilder {
 		return StringUtil.replaceFirst(s, oldSub, oldSub + replacement, index);
 	}
 
-	private String _fixOpenAPIContentApplicationXML(String s)
-		throws IOException {
-
+	private String _fixOpenAPIContentApplicationXML(String s) {
 		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
@@ -1011,7 +1008,7 @@ public class RESTBuilder {
 		return s;
 	}
 
-	private String _fixOpenAPILicense(String s) throws IOException {
+	private String _fixOpenAPILicense(String s) {
 		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
 
 		String licenseName = _configYAML.getLicenseName();
@@ -1124,8 +1121,7 @@ public class RESTBuilder {
 	}
 
 	private String _fixOpenAPIOperationIds(
-			FreeMarkerTool freeMarkerTool, String s)
-		throws IOException {
+		FreeMarkerTool freeMarkerTool, String s) {
 
 		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
 
@@ -1211,7 +1207,7 @@ public class RESTBuilder {
 		return s;
 	}
 
-	private String _fixOpenAPIPathParameters(String s) throws IOException {
+	private String _fixOpenAPIPathParameters(String s) {
 		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
@@ -1353,7 +1349,7 @@ public class RESTBuilder {
 		return s;
 	}
 
-	private String _fixOpenAPIPaths(String s) throws IOException {
+	private String _fixOpenAPIPaths(String s) {
 		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
@@ -1393,8 +1389,7 @@ public class RESTBuilder {
 	}
 
 	private String _fixOpenAPISchemaPropertyNames(
-			FreeMarkerTool freeMarkerTool, String s)
-		throws IOException {
+		FreeMarkerTool freeMarkerTool, String s) {
 
 		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
 
@@ -1532,7 +1527,7 @@ public class RESTBuilder {
 		return relatedSchemaNames;
 	}
 
-	private OpenAPIYAML _loadOpenAPIYAML(String yamlString) throws IOException {
+	private OpenAPIYAML _loadOpenAPIYAML(String yamlString) {
 		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(yamlString);
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
@@ -1618,7 +1613,7 @@ public class RESTBuilder {
 		context.put("relatedSchemaNames", relatedSchemaNames);
 	}
 
-	private void _validate(String s) throws IOException {
+	private void _validate(String s) {
 		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
 
 		Components components = openAPIYAML.getComponents();

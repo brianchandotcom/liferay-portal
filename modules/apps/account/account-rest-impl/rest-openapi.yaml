@@ -40,6 +40,49 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/accounts":
+        get:
+            # @review
+            description:
+                Retrieves the accounts. Results can be paginated, filtered, searched, and sorted.
+            operationId: getAccountsPage
+            parameters:
+                - in: query
+                  name: keywords
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+                    description:
+                        ""
+            tags: ["Account"]
     "/accounts/{accountId}":
         get:
             description:

@@ -25,10 +25,12 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class OrderByExpressionImpl
+public class DefaultOrderByExpression
 	extends BaseASTNode implements OrderByExpression {
 
-	public OrderByExpressionImpl(Expression<?> expression, boolean ascending) {
+	public DefaultOrderByExpression(
+		Expression<?> expression, boolean ascending) {
+
 		_expression = Objects.requireNonNull(expression);
 		_ascending = ascending;
 	}

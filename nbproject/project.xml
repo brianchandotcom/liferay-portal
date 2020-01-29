@@ -105,6 +105,18 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
+					<label>modules\core\petra\petra-sql-dsl-api\src\main\java</label>
+					<type>java</type>
+					<location>modules/core/petra/petra-sql-dsl-api/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
+					<label>modules\core\petra\petra-sql-dsl-spi\src\main\java</label>
+					<type>java</type>
+					<location>modules/core/petra/petra-sql-dsl-spi/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
 					<label>modules\core\petra\petra-string\src\main\java</label>
 					<type>java</type>
 					<location>modules/core/petra/petra-string/src/main/java</location>
@@ -363,6 +375,8 @@
 				<package-root>modules/core/petra/petra-nio/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-process/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-reflect/src/main/java</package-root>
+				<package-root>modules/core/petra/petra-sql-dsl-api/src/main/java</package-root>
+				<package-root>modules/core/petra/petra-sql-dsl-spi/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-string/src/main/java</package-root>
 				<package-root>modules/core/registry-api/src/main/java</package-root>
 				<package-root>portal-impl/src</package-root>

@@ -18,6 +18,8 @@ tmp/lib-pre/com.liferay.petra.memory.jar
 tmp/lib-pre/com.liferay.petra.nio.jar
 tmp/lib-pre/com.liferay.petra.process.jar
 tmp/lib-pre/com.liferay.petra.reflect.jar
+tmp/lib-pre/com.liferay.petra.sql.dsl.api.jar
+tmp/lib-pre/com.liferay.petra.sql.dsl.spi.jar
 tmp/lib-pre/com.liferay.petra.string.jar
 tmp/lib-pre/com.liferay.petra.test.util.jar
 tmp/lib-pre/com.liferay.petra.xml.jar

@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions;
+package com.liferay.petra.sql.dsl.expression;
 
 import com.liferay.petra.sql.dsl.ast.ASTNode;
-import com.liferay.petra.sql.dsl.expressions.impl.AliasImpl;
-import com.liferay.petra.sql.dsl.expressions.impl.NullExpression;
-import com.liferay.petra.sql.dsl.expressions.impl.Operand;
-import com.liferay.petra.sql.dsl.expressions.impl.PredicateImpl;
-import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
-import com.liferay.petra.sql.dsl.expressions.impl.ScalarList;
+import com.liferay.petra.sql.dsl.expression.impl.AliasImpl;
+import com.liferay.petra.sql.dsl.expression.impl.NullExpression;
+import com.liferay.petra.sql.dsl.expression.impl.Operand;
+import com.liferay.petra.sql.dsl.expression.impl.PredicateImpl;
+import com.liferay.petra.sql.dsl.expression.impl.Scalar;
+import com.liferay.petra.sql.dsl.expression.impl.ScalarList;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.OrderByExpression;
 import com.liferay.petra.sql.dsl.query.impl.OrderByExpressionImpl;

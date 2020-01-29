@@ -12,17 +12,24 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions;
+package com.liferay.petra.sql.dsl.expression;
+
+import com.liferay.petra.sql.dsl.expression.impl.Scalar;
+import com.liferay.petra.sql.dsl.expression.impl.WhenThen;
 
 /**
  * @author Preston Crary
  */
-public interface Predicate extends Expression<Boolean> {
+public interface WhenThenStep<T> extends ElseEndStep<T> {
 
-	public Predicate and(Expression<Boolean> expression);
+	public default WhenThenStep<T> whenThen(
+		Predicate predicate, Expression<T> expression) {
 
-	public Predicate or(Expression<Boolean> expression);
+		return new WhenThen<>(this, predicate, expression);
+	}
 
-	public Predicate withParentheses();
+	public default WhenThenStep<T> whenThen(Predicate predicate, T value) {
+		return whenThen(predicate, new Scalar<>(value));
+	}
 
 }

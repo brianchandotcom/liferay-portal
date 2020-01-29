@@ -12,24 +12,29 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions;
+package com.liferay.petra.sql.dsl.expression.impl;
 
-import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
-import com.liferay.petra.sql.dsl.expressions.impl.WhenThen;
+import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
+import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
+import com.liferay.petra.sql.dsl.expression.Expression;
+
+import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public interface WhenThenStep<T> extends ElseEndStep<T> {
+public class NullExpression extends BaseASTNode implements Expression<Void> {
 
-	public default WhenThenStep<T> whenThen(
-		Predicate predicate, Expression<T> expression) {
+	public static final NullExpression INSTANCE = new NullExpression();
 
-		return new WhenThen<>(this, predicate, expression);
+	@Override
+	protected void doToSQL(
+		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		consumer.accept("NULL");
 	}
 
-	public default WhenThenStep<T> whenThen(Predicate predicate, T value) {
-		return whenThen(predicate, new Scalar<>(value));
+	private NullExpression() {
 	}
 
 }

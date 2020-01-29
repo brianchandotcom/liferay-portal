@@ -406,6 +406,8 @@ Provide-Capability:\
 	@lib/com.liferay.petra.nio.jar,\
 	@lib/com.liferay.petra.process.jar,\
 	@lib/com.liferay.petra.reflect.jar,\
+	@lib/com.liferay.petra.sql.dsl.api.jar,\
+	@lib/com.liferay.petra.sql.dsl.spi.jar,\
 	@lib/com.liferay.petra.string.jar,\
 	@lib/com.liferay.petra.xml.jar,\
 	@lib/com.liferay.registry.api.jar

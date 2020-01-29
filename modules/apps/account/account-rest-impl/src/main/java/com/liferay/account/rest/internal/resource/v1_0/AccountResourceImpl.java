@@ -14,9 +14,16 @@
 
 package com.liferay.account.rest.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.rest.dto.v1_0.Account;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.petra.string.StringUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +34,36 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = AccountResource.class
 )
 public class AccountResourceImpl extends BaseAccountResourceImpl {
+
+	@Override
+	public Account getAccount(Long accountId) throws Exception {
+		return _toAccount(_accountEntryLocalService.getAccountEntry(accountId));
+	}
+
+	private String[] _getDomainsArray(AccountEntry accountEntry) {
+		List<String> domains = StringUtil.split(accountEntry.getDomains());
+
+		return domains.toArray(new String[0]);
+	}
+
+	private Account _toAccount(AccountEntry accountEntry) throws Exception {
+		if (accountEntry == null) {
+			return null;
+		}
+
+		return new Account() {
+			{
+				setDescription(accountEntry.getDescription());
+				setDomains(_getDomainsArray(accountEntry));
+				setId(accountEntry.getAccountEntryId());
+				setName(accountEntry.getName());
+				setParentAccountId(accountEntry.getParentAccountEntryId());
+				setStatus(accountEntry.getStatus());
+			}
+		};
+	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
 }

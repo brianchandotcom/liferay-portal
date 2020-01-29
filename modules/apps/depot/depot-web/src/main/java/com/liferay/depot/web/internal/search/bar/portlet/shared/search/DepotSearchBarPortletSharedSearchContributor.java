@@ -14,20 +14,13 @@
 
 package com.liferay.depot.web.internal.search.bar.portlet.shared.search;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.model.DepotEntryGroupRelModel;
 import com.liferay.depot.model.DepotEntryModel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.util.DepotSupportChecker;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
@@ -39,8 +32,6 @@ import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alejandro Tardín
@@ -90,8 +81,6 @@ public class DepotSearchBarPortletSharedSearchContributor
 				DepotEntryGroupRelModel::getDepotEntryId
 			).map(
 				_depotEntryLocalService::fetchDepotEntry
-			).filter(
-				this::_hasViewPermission
 			).map(
 				DepotEntryModel::getGroupId
 			).collect(
@@ -105,22 +94,6 @@ public class DepotSearchBarPortletSharedSearchContributor
 		}
 	}
 
-	private boolean _hasViewPermission(DepotEntry depotEntry) {
-		try {
-			return _depotEntryModelResourcePermission.contains(
-				GuestOrUserUtil.getPermissionChecker(), depotEntry,
-				ActionKeys.VIEW);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-
-			return false;
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DepotSearchBarPortletSharedSearchContributor.class);
-
 	@Reference(
 		target = "(&(javax.portlet.name=" + SearchBarPortletKeys.SEARCH_BAR + ")(!(component.name=com.liferay.depot.web.internal.search.bar.portlet.shared.search.DepotSearchBarPortletSharedSearchContributor)))"
 	)
@@ -132,14 +105,6 @@ public class DepotSearchBarPortletSharedSearchContributor
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.depot.model.DepotEntry)"
-	)
-	private volatile ModelResourcePermission<DepotEntry>
-		_depotEntryModelResourcePermission;
 
 	@Reference
 	private DepotSupportChecker _depotSupportChecker;

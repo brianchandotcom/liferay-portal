@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -128,7 +129,14 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		String jndiName = properties.getProperty("jndi.name");
 
 		if (Validator.isNotNull(jndiName)) {
+			Thread currentThread = Thread.currentThread();
+
+			ClassLoader classLoader = currentThread.getContextClassLoader();
+
 			try {
+				currentThread.setContextClassLoader(
+					PortalClassLoaderUtil.getClassLoader());
+
 				Properties jndiEnvironmentProperties = PropsUtil.getProperties(
 					PropsKeys.JNDI_ENVIRONMENT, true);
 
@@ -138,6 +146,9 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 			catch (Exception exception) {
 				_log.error("Unable to lookup " + jndiName, exception);
+			}
+			finally {
+				currentThread.setContextClassLoader(classLoader);
 			}
 		}
 		else {

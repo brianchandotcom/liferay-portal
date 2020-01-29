@@ -98,7 +98,7 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 			<tr class="table-divider"><td><%= LanguageUtil.get(request, "needs-manual-resolution") %></td></tr>
 
 			<%
-			boolean resolved = true;
+			boolean unresolved = false;
 
 			for (Map.Entry<Long, List<ConflictInfo>> entry : conflictInfoMap.entrySet()) {
 				for (ConflictInfo conflictInfo : entry.getValue()) {
@@ -106,13 +106,13 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 						continue;
 					}
 
-					resolved = false;
-
 					CTEntry ctEntry = CTEntryLocalServiceUtil.fetchCTEntry(ctCollection.getCtCollectionId(), entry.getKey(), conflictInfo.getSourcePrimaryKey());
 
 					if (ctEntry == null) {
 						continue;
 					}
+
+					unresolved = true;
 			%>
 
 					<tr>
@@ -187,7 +187,7 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 			%>
 
 			<tr><td>
-				<aui:button disabled="<%= !resolved %>" href="<%= changeListsDisplayContext.getPublishURL(ctCollection.getCtCollectionId(), ctCollection.getName()) %>" primary="true" value="publish" />
+				<aui:button disabled="<%= unresolved %>" href="<%= changeListsDisplayContext.getPublishURL(ctCollection.getCtCollectionId(), ctCollection.getName()) %>" primary="true" value="publish" />
 
 				<aui:button href="<%= backURL %>" type="cancel" />
 			</td></tr>

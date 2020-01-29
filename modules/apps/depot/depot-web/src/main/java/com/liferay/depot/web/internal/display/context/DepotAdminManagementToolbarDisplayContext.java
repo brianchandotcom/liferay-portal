@@ -58,7 +58,7 @@ public class DepotAdminManagementToolbarDisplayContext
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			depotAdminDisplayContext.searchContainer());
+			depotAdminDisplayContext.getSearchContainer());
 
 		_depotAdminDisplayContext = depotAdminDisplayContext;
 	}

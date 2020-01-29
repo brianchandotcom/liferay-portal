@@ -35,7 +35,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 
 			<liferay-ui:search-container
 				id="<%= depotAdminDisplayContext.getSearchContainerId() %>"
-				searchContainer="<%= depotAdminDisplayContext.searchContainer() %>"
+				searchContainer="<%= depotAdminDisplayContext.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.depot.model.DepotEntry"

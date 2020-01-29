@@ -87,7 +87,7 @@ public class DepotAdminDisplayContext {
 			DepotEntry depotEntry)
 		throws PortalException {
 
-		SearchContainer<DepotEntry> searchContainer = searchContainer();
+		SearchContainer<DepotEntry> searchContainer = getSearchContainer();
 
 		return new DepotEntryVerticalCard(
 			depotEntry, _groupURLProvider, _liferayPortletRequest,
@@ -106,31 +106,12 @@ public class DepotAdminDisplayContext {
 	}
 
 	public PortletURL getIteratorURL() throws PortalException {
-		SearchContainer<DepotEntry> searchContainer = searchContainer();
+		SearchContainer<DepotEntry> searchContainer = getSearchContainer();
 
 		return searchContainer.getIteratorURL();
 	}
 
-	public String getSearchContainerId() {
-		return "depotEntries";
-	}
-
-	public String getViewDepotURL(DepotEntry depotEntry)
-		throws PortalException {
-
-		return _groupURLProvider.getGroupURL(
-			depotEntry.getGroup(), _liferayPortletRequest);
-	}
-
-	public boolean isDisplayStyleDescriptive() {
-		return Objects.equals(getDisplayStyle(), "descriptive");
-	}
-
-	public boolean isDisplayStyleIcon() {
-		return Objects.equals(getDisplayStyle(), "icon");
-	}
-
-	public SearchContainer<DepotEntry> searchContainer()
+	public SearchContainer<DepotEntry> getSearchContainer()
 		throws PortalException {
 
 		if (_depotEntrySearch != null) {
@@ -174,6 +155,25 @@ public class DepotAdminDisplayContext {
 		_depotEntrySearch.setTotal(hits.getLength());
 
 		return _depotEntrySearch;
+	}
+
+	public String getSearchContainerId() {
+		return "depotEntries";
+	}
+
+	public String getViewDepotURL(DepotEntry depotEntry)
+		throws PortalException {
+
+		return _groupURLProvider.getGroupURL(
+			depotEntry.getGroup(), _liferayPortletRequest);
+	}
+
+	public boolean isDisplayStyleDescriptive() {
+		return Objects.equals(getDisplayStyle(), "descriptive");
+	}
+
+	public boolean isDisplayStyleIcon() {
+		return Objects.equals(getDisplayStyle(), "icon");
 	}
 
 	private PortletURL _getPortletURL() {

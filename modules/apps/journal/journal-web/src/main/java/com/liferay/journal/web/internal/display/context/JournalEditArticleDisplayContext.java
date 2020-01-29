@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -537,6 +538,16 @@ public class JournalEditArticleDisplayContext {
 		return _smallImageSource;
 	}
 
+	public Map<String, Object> getValues(DDMStructure ddmStructure)
+		throws PortalException {
+
+		DDMFormValuesToMapConverter ddmFormValuesToMapConverter =
+			_getDDMFormValuesToMapConverter();
+
+		return ddmFormValuesToMapConverter.convert(
+			getDDMFormValues(ddmStructure), ddmStructure);
+	}
+
 	public double getVersion() {
 		if (_version != null) {
 			return _version;
@@ -616,6 +627,11 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		return false;
+	}
+
+	private DDMFormValuesToMapConverter _getDDMFormValuesToMapConverter() {
+		return (DDMFormValuesToMapConverter)_httpServletRequest.getAttribute(
+			DDMFormValuesToMapConverter.class.getName());
 	}
 
 	private long _getInheritedWorkflowDDMStructuresFolderId()

@@ -246,7 +246,8 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 						<c:when test="<%= journalDisplayContext.useDataEngineEditor() %>">
 							<liferay-data-engine:data-layout-renderer
 								containerId="reportId"
-								dataLayoutId="<%= 0L %>"
+								dataDefinitionId="<%= ddmStructure.getStructureId() %>"
+								dataRecordValues="<%= journalEditArticleDisplayContext.getValues(ddmStructure) %>"
 								namespace="<%= renderResponse.getNamespace() %>"
 							/>
 						</c:when>

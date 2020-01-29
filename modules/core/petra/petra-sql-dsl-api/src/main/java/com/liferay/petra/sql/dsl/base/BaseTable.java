@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl;
+package com.liferay.petra.sql.dsl.base;
 
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.factory.ColumnFactory;
 

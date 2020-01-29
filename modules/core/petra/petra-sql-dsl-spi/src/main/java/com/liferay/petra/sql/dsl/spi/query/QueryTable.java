@@ -14,8 +14,8 @@
 
 package com.liferay.petra.sql.dsl.spi.query;
 
-import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
+import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 
 import java.util.Objects;

@@ -35,9 +35,9 @@ import com.liferay.petra.sql.dsl.query.sort.OrderByInfo;
 import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
-import com.liferay.petra.sql.dsl.spi.expression.AliasImpl;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
+import com.liferay.petra.sql.dsl.spi.expression.DefaultAlias;
 import com.liferay.petra.sql.dsl.spi.expression.NullExpression;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
 import com.liferay.petra.sql.dsl.spi.expression.PredicateImpl;
@@ -89,10 +89,10 @@ public class SQLDSLTest {
 				assertClasses.clear();
 
 				assertClasses.add(AggregateExpression.class);
-				assertClasses.add(AliasImpl.class);
 				assertClasses.add(BaseASTNode.class);
 				assertClasses.add(BaseTable.class);
 				assertClasses.add(CaseWhenThen.class);
+				assertClasses.add(DefaultAlias.class);
 				assertClasses.add(DefaultASTNodeListener.class);
 				assertClasses.add(DefaultColumn.class);
 				assertClasses.add(DSLFunction.class);

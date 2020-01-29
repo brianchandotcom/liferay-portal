@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions.impl;
+package com.liferay.petra.sql.dsl.expression.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
-import com.liferay.petra.sql.dsl.expressions.Expression;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.expression.WhenThenStep;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -24,53 +26,35 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class AggregateExpression<T extends Number>
-	extends BaseASTNode implements Expression<T> {
+public class CaseWhenThen<T> extends BaseASTNode implements WhenThenStep<T> {
 
-	public AggregateExpression(
-		boolean distinct, Expression<?> expression, String name) {
-
-		_distinct = distinct;
-		_expression = expression;
-		_name = Objects.requireNonNull(name);
+	public CaseWhenThen(Predicate predicate, Expression<T> thenExpression) {
+		_predicate = Objects.requireNonNull(predicate);
+		_thenExpression = Objects.requireNonNull(thenExpression);
 	}
 
-	public Expression<?> getExpression() {
-		return _expression;
+	public Predicate getPredicate() {
+		return _predicate;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
-	public boolean isDistinct() {
-		return _distinct;
+	public Expression<T> getThenExpression() {
+		return _thenExpression;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept(_name);
+		consumer.accept("case when ");
 
-		consumer.accept("(");
+		_predicate.toSQL(consumer, astNodeListener);
 
-		if (_distinct) {
-			consumer.accept("distinct ");
-		}
+		consumer.accept(" then ");
 
-		if (_expression == null) {
-			consumer.accept("*");
-		}
-		else {
-			_expression.toSQL(consumer, astNodeListener);
-		}
-
-		consumer.accept(")");
+		_thenExpression.toSQL(consumer, astNodeListener);
 	}
 
-	private final boolean _distinct;
-	private final Expression<?> _expression;
-	private final String _name;
+	private final Predicate _predicate;
+	private final Expression<T> _thenExpression;
 
 }

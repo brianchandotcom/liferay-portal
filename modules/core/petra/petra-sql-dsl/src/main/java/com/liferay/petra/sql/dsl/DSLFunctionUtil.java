@@ -14,14 +14,14 @@
 
 package com.liferay.petra.sql.dsl;
 
-import com.liferay.petra.sql.dsl.expressions.Expression;
-import com.liferay.petra.sql.dsl.expressions.Predicate;
-import com.liferay.petra.sql.dsl.expressions.WhenThenStep;
-import com.liferay.petra.sql.dsl.expressions.impl.AggregateExpression;
-import com.liferay.petra.sql.dsl.expressions.impl.CaseWhenThen;
-import com.liferay.petra.sql.dsl.expressions.impl.DSLFunction;
-import com.liferay.petra.sql.dsl.expressions.impl.DSLFunctionType;
-import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.expression.WhenThenStep;
+import com.liferay.petra.sql.dsl.expression.impl.AggregateExpression;
+import com.liferay.petra.sql.dsl.expression.impl.CaseWhenThen;
+import com.liferay.petra.sql.dsl.expression.impl.DSLFunction;
+import com.liferay.petra.sql.dsl.expression.impl.DSLFunctionType;
+import com.liferay.petra.sql.dsl.expression.impl.Scalar;
 
 import java.sql.Clob;
 

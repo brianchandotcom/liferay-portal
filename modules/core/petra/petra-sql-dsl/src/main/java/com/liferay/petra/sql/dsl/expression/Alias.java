@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions;
-
-import com.liferay.petra.sql.dsl.ast.ASTNode;
-import com.liferay.petra.sql.dsl.expressions.impl.ElseEnd;
-import com.liferay.petra.sql.dsl.expressions.impl.Scalar;
+package com.liferay.petra.sql.dsl.expression;
 
 /**
  * @author Preston Crary
  */
-public interface ElseEndStep<T> extends ASTNode {
+public interface Alias<T> extends Expression<T> {
 
-	public default Expression<T> elseEnd(Expression<T> expression) {
-		return new ElseEnd<>(this, expression);
-	}
+	public Expression<T> getExpression();
 
-	public default Expression<T> elseEnd(T value) {
-		return elseEnd(new Scalar<>(value));
-	}
+	public String getName();
 
 }

@@ -184,7 +184,7 @@ public class NavigationMenuItem {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String link;
 
 	@Schema
@@ -210,7 +210,7 @@ public class NavigationMenuItem {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	@Schema
@@ -240,7 +240,7 @@ public class NavigationMenuItem {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> name_i18n;
 
 	@Schema
@@ -300,7 +300,7 @@ public class NavigationMenuItem {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long parentNavigationMenuId;
 
 	@Schema
@@ -326,7 +326,7 @@ public class NavigationMenuItem {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String type;
 
 	@Schema
@@ -352,7 +352,7 @@ public class NavigationMenuItem {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String url;
 
 	@Override

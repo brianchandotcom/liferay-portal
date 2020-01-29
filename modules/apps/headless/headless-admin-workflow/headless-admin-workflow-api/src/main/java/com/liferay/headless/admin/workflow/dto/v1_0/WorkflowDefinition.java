@@ -73,7 +73,7 @@ public class WorkflowDefinition {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
 	@Schema
@@ -101,7 +101,7 @@ public class WorkflowDefinition {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String content;
 
 	@Schema
@@ -183,7 +183,7 @@ public class WorkflowDefinition {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@Schema
@@ -211,7 +211,7 @@ public class WorkflowDefinition {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String title;
 
 	@Schema
@@ -239,7 +239,7 @@ public class WorkflowDefinition {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String version;
 
 	@Override

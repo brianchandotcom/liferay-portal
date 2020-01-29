@@ -96,6 +96,28 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{exportTaskId}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Operation(description = "Retrieves the export task.")
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "exportTaskId")}
+	)
+	@Path("/export-task/{exportTaskId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ExportTask")})
+	public ExportTask getExportTask(
+			@NotNull @Parameter(hidden = true) @PathParam("exportTaskId") Long
+				exportTaskId)
+		throws Exception {
+
+		return new ExportTask();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{exportTaskId}/content'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -115,28 +137,6 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
 		return responseBuilder.build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-batch-engine/v1.0/export-task/{exportTaskId}'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Operation(description = "Retrieves the export task.")
-	@Parameters(
-		value = {@Parameter(in = ParameterIn.PATH, name = "exportTaskId")}
-	)
-	@Path("/export-task/{exportTaskId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "ExportTask")})
-	public ExportTask getExportTask(
-			@NotNull @Parameter(hidden = true) @PathParam("exportTaskId") Long
-				exportTaskId)
-		throws Exception {
-
-		return new ExportTask();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

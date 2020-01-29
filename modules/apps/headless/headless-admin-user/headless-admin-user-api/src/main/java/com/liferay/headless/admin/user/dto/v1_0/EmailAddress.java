@@ -95,7 +95,7 @@ public class EmailAddress {
 	}
 
 	@GraphQLField(description = "The email address's ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@Schema(

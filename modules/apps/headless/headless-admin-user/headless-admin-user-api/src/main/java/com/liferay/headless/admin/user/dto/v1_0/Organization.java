@@ -194,7 +194,7 @@ public class Organization {
 	}
 
 	@GraphQLField(description = "The organization's ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String id;
 
 	@Schema(description = "A relative URL to the organization's image.")

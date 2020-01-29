@@ -290,29 +290,30 @@ public class RESTBuilder {
 	private void _checkOpenAPIYAMLFile(FreeMarkerTool freeMarkerTool, File file)
 		throws Exception {
 
-		String s = _fixOpenAPILicense(FileUtil.read(file));
+		String yamlString = _fixOpenAPILicense(FileUtil.read(file));
 
-		s = _fixOpenAPIPaths(s);
+		yamlString = _fixOpenAPIPaths(yamlString);
 
-		s = _fixOpenAPIPathParameters(s);
+		yamlString = _fixOpenAPIPathParameters(yamlString);
 
 		if (_configYAML.isForcePredictableSchemaPropertyName()) {
-			s = _fixOpenAPISchemaPropertyNames(freeMarkerTool, s);
+			yamlString = _fixOpenAPISchemaPropertyNames(
+				freeMarkerTool, yamlString);
 		}
 
 		if (_configYAML.isForcePredictableOperationId()) {
-			s = _fixOpenAPIOperationIds(freeMarkerTool, s);
+			yamlString = _fixOpenAPIOperationIds(freeMarkerTool, yamlString);
 		}
 
 		if (_configYAML.isForcePredictableContentApplicationXML()) {
-			s = _fixOpenAPIContentApplicationXML(s);
+			yamlString = _fixOpenAPIContentApplicationXML(yamlString);
 		}
 
 		if (_configYAML.isWarningsEnabled()) {
-			_validate(s);
+			_validate(yamlString);
 		}
 
-		FileUtil.write(file, s);
+		FileUtil.write(file, yamlString);
 	}
 
 	private void _createApplicationFile(Map<String, Object> context)
@@ -957,22 +958,22 @@ public class RESTBuilder {
 		return StringUtil.replaceFirst(s, oldSub, oldSub + replacement, index);
 	}
 
-	private String _fixOpenAPIContentApplicationXML(String s) {
-		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
+	private String _fixOpenAPIContentApplicationXML(String yamlString) {
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
 		if (pathItems == null) {
-			return s;
+			return yamlString;
 		}
 
 		for (Map.Entry<String, PathItem> entry1 : pathItems.entrySet()) {
 			String path = entry1.getKey();
 
-			int x = s.indexOf(StringUtil.quote(path, '"') + ":");
+			int x = yamlString.indexOf(StringUtil.quote(path, '"') + ":");
 
 			if (x == -1) {
-				x = s.indexOf(path + ":");
+				x = yamlString.indexOf(path + ":");
 			}
 
 			for (Operation operation : _getOperations(entry1.getValue())) {
@@ -980,13 +981,14 @@ public class RESTBuilder {
 
 				String httpMethod = OpenAPIParserUtil.getHTTPMethod(operation);
 
-				int y = s.indexOf(httpMethod + ":", x);
+				int y = yamlString.indexOf(httpMethod + ":", x);
 
 				if (requestBody != null) {
 					Map<String, Content> contents = requestBody.getContent();
-					int index = s.indexOf("requestBody:", y);
+					int index = yamlString.indexOf("requestBody:", y);
 
-					s = _fixOpenAPIContentApplicationXML(contents, index, s);
+					yamlString = _fixOpenAPIContentApplicationXML(
+						contents, index, yamlString);
 				}
 
 				Map<Integer, Response> responses = operation.getResponses();
@@ -998,18 +1000,19 @@ public class RESTBuilder {
 
 					Map<String, Content> contents = response.getContent();
 
-					int index = s.indexOf(entry2.getKey() + ":", y);
+					int index = yamlString.indexOf(entry2.getKey() + ":", y);
 
-					s = _fixOpenAPIContentApplicationXML(contents, index, s);
+					yamlString = _fixOpenAPIContentApplicationXML(
+						contents, index, yamlString);
 				}
 			}
 		}
 
-		return s;
+		return yamlString;
 	}
 
-	private String _fixOpenAPILicense(String s) {
-		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
+	private String _fixOpenAPILicense(String yamlString) {
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
 		String licenseName = _configYAML.getLicenseName();
 		String licenseURL = _configYAML.getLicenseURL();
@@ -1031,7 +1034,7 @@ public class RESTBuilder {
 			sb.append("info:\n");
 			sb.append(licenseSB.toString());
 			sb.append('\n');
-			sb.append(s);
+			sb.append(yamlString);
 
 			return sb.toString();
 		}
@@ -1041,14 +1044,15 @@ public class RESTBuilder {
 		if ((license != null) && licenseName.equals(license.getName()) &&
 			licenseURL.equals(license.getUrl())) {
 
-			return s;
+			return yamlString;
 		}
 
-		int x = s.indexOf("\ninfo:");
+		int x = yamlString.indexOf("\ninfo:");
 
-		int y = s.indexOf('\n', x + 1);
+		int y = yamlString.indexOf('\n', x + 1);
 
-		String line = s.substring(y + 1, s.indexOf("\n", y + 1));
+		String line = yamlString.substring(
+			y + 1, yamlString.indexOf("\n", y + 1));
 
 		String leadingWhiteSpace = line.replaceAll("^(\\s+).+", "$1");
 
@@ -1075,19 +1079,19 @@ public class RESTBuilder {
 				fieldValue = fieldValue + '\n' + line;
 			}
 
-			if (s.indexOf('\n', y + 1) == -1) {
-				y = s.length();
+			if (yamlString.indexOf('\n', y + 1) == -1) {
+				y = yamlString.length();
 
 				break;
 			}
 
-			line = s.substring(y + 1, s.indexOf('\n', y + 1));
+			line = yamlString.substring(y + 1, yamlString.indexOf('\n', y + 1));
 
-			y = s.indexOf('\n', y + 1);
+			y = yamlString.indexOf('\n', y + 1);
 		}
 
 		if (Validator.isNull(fieldName)) {
-			return s;
+			return yamlString;
 		}
 
 		fieldMap.put(fieldName, fieldValue);
@@ -1096,7 +1100,7 @@ public class RESTBuilder {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(s.substring(0, s.indexOf('\n', x + 1) + 1));
+		sb.append(yamlString.substring(0, yamlString.indexOf('\n', x + 1) + 1));
 
 		for (Map.Entry<String, String> entry : fieldMap.entrySet()) {
 			sb.append(leadingWhiteSpace);
@@ -1115,17 +1119,18 @@ public class RESTBuilder {
 			sb.append('\n');
 		}
 
-		sb.append(s.substring(s.lastIndexOf('\n', y - 1) + 1));
+		sb.append(
+			yamlString.substring(yamlString.lastIndexOf('\n', y - 1) + 1));
 
 		return sb.toString();
 	}
 
 	private String _fixOpenAPIOperationIds(
-		FreeMarkerTool freeMarkerTool, String s) {
+		FreeMarkerTool freeMarkerTool, String yamlString) {
 
-		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
-		s = s.replaceAll("\n\\s+operationId:.+", "");
+		yamlString = yamlString.replaceAll("\n\\s+operationId:.+", "");
 
 		Components components = openAPIYAML.getComponents();
 
@@ -1149,89 +1154,94 @@ public class RESTBuilder {
 
 				methodNames.add(methodName);
 
-				int x = s.indexOf(
+				int x = yamlString.indexOf(
 					StringUtil.quote(javaMethodSignature.getPath(), '"') + ":");
 
 				if (x == -1) {
-					x = s.indexOf(javaMethodSignature.getPath() + ":");
+					x = yamlString.indexOf(javaMethodSignature.getPath() + ":");
 				}
 
-				String pathLine = s.substring(
-					s.lastIndexOf("\n", x) + 1, s.indexOf("\n", x));
+				String pathLine = yamlString.substring(
+					yamlString.lastIndexOf("\n", x) + 1,
+					yamlString.indexOf("\n", x));
 
 				String httpMethod = OpenAPIParserUtil.getHTTPMethod(
 					javaMethodSignature.getOperation());
 
-				int y = s.indexOf(httpMethod + ":", x);
+				int y = yamlString.indexOf(httpMethod + ":", x);
 
-				String httpMethodLine = s.substring(
-					s.lastIndexOf("\n", y) + 1, s.indexOf("\n", y));
+				String httpMethodLine = yamlString.substring(
+					yamlString.lastIndexOf("\n", y) + 1,
+					yamlString.indexOf("\n", y));
 
 				String leadingWhiteSpace =
 					pathLine.replaceAll("^(\\s+).+", "$1") +
 						httpMethodLine.replaceAll("^(\\s+).+", "$1");
 
-				int z = s.indexOf('\n', y);
+				int z = yamlString.indexOf('\n', y);
 
-				String line = s.substring(z + 1, s.indexOf("\n", z + 1));
+				String line = yamlString.substring(
+					z + 1, yamlString.indexOf("\n", z + 1));
 
 				while (line.startsWith(leadingWhiteSpace)) {
 					if (line.matches(leadingWhiteSpace + "\\w.*")) {
 						String text = line.trim();
 
 						if ((text.compareTo("operationId:") > 0) ||
-							(s.indexOf('\n', z + 1) == -1)) {
+							(yamlString.indexOf('\n', z + 1) == -1)) {
 
 							break;
 						}
 					}
 
-					z = s.indexOf('\n', z + 1);
+					z = yamlString.indexOf('\n', z + 1);
 
-					line = s.substring(z + 1, s.indexOf("\n", z + 1));
+					line = yamlString.substring(
+						z + 1, yamlString.indexOf("\n", z + 1));
 				}
 
 				StringBuilder sb = new StringBuilder();
 
-				sb.append(s.substring(0, z + 1));
+				sb.append(yamlString.substring(0, z + 1));
 				sb.append(leadingWhiteSpace);
 				sb.append("operationId: ");
 				sb.append(methodName);
 				sb.append("\n");
-				sb.append(s.substring(z + 1));
+				sb.append(yamlString.substring(z + 1));
 
-				s = sb.toString();
+				yamlString = sb.toString();
 			}
 		}
 
-		return s;
+		return yamlString;
 	}
 
-	private String _fixOpenAPIPathParameters(String s) {
-		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
+	private String _fixOpenAPIPathParameters(String yamlString) {
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
 		if (pathItems == null) {
-			return s;
+			return yamlString;
 		}
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			String path = entry.getKey();
 
-			int x = s.indexOf(StringUtil.quote(path, '"') + ":");
+			int x = yamlString.indexOf(StringUtil.quote(path, '"') + ":");
 
 			if (x == -1) {
-				x = s.indexOf(path + ":");
+				x = yamlString.indexOf(path + ":");
 			}
 
-			String pathLine = s.substring(
-				s.lastIndexOf("\n", x) + 1, s.indexOf("\n", x));
+			String pathLine = yamlString.substring(
+				yamlString.lastIndexOf("\n", x) + 1,
+				yamlString.indexOf("\n", x));
 
 			// /blogs/{blog-id}/blogs --> /blogs/{blogId}/blogs
 
 			for (Operation operation : _getOperations(entry.getValue())) {
-				int y = s.indexOf(
+				int y = yamlString.indexOf(
 					OpenAPIParserUtil.getHTTPMethod(operation) + ":", x);
 
 				for (Parameter parameter : operation.getParameters()) {
@@ -1242,22 +1252,26 @@ public class RESTBuilder {
 						String newParameterName = CamelCaseUtil.toCamelCase(
 							parameterName);
 
-						int z = s.indexOf(" " + parameterName + "\n", y);
+						int z = yamlString.indexOf(
+							" " + parameterName + "\n", y);
 
 						StringBuilder sb = new StringBuilder();
 
-						sb.append(s.substring(0, z + 1));
+						sb.append(yamlString.substring(0, z + 1));
 						sb.append(newParameterName);
 						sb.append("\n");
-						sb.append(s.substring(z + parameterName.length() + 2));
+						sb.append(
+							yamlString.substring(
+								z + parameterName.length() + 2));
 
-						s = sb.toString();
+						yamlString = sb.toString();
 
 						String newPathLine = StringUtil.replace(
 							pathLine, "{" + parameterName + "}",
 							"{" + newParameterName + "}");
 
-						s = StringUtil.replace(s, pathLine, newPathLine);
+						yamlString = StringUtil.replace(
+							yamlString, pathLine, newPathLine);
 					}
 				}
 			}
@@ -1309,7 +1323,7 @@ public class RESTBuilder {
 				"parent" + StringUtil.upperCaseFirstLetter(selParameterName);
 
 			for (Operation operation : _getOperations(entry.getValue())) {
-				int y = s.indexOf(
+				int y = yamlString.indexOf(
 					OpenAPIParserUtil.getHTTPMethod(operation) + ":", x);
 
 				for (Parameter parameter : operation.getParameters()) {
@@ -1319,22 +1333,26 @@ public class RESTBuilder {
 					if (in.equals("path") &&
 						parameterName.equals(selParameterName)) {
 
-						int z = s.indexOf(" " + parameterName + "\n", y);
+						int z = yamlString.indexOf(
+							" " + parameterName + "\n", y);
 
 						sb.setLength(0);
 
-						sb.append(s.substring(0, z + 1));
+						sb.append(yamlString.substring(0, z + 1));
 						sb.append(newParameterName);
 						sb.append("\n");
-						sb.append(s.substring(z + parameterName.length() + 2));
+						sb.append(
+							yamlString.substring(
+								z + parameterName.length() + 2));
 
-						s = sb.toString();
+						yamlString = sb.toString();
 
 						String newPathLine = StringUtil.replace(
 							pathLine, "{" + parameterName + "}",
 							"{" + newParameterName + "}");
 
-						s = StringUtil.replace(s, pathLine, newPathLine);
+						yamlString = StringUtil.replace(
+							yamlString, pathLine, newPathLine);
 					}
 				}
 			}
@@ -1343,19 +1361,19 @@ public class RESTBuilder {
 				pathLine, "{" + selParameterName + "}",
 				"{" + newParameterName + "}");
 
-			s = StringUtil.replace(s, pathLine, newPathLine);
+			yamlString = StringUtil.replace(yamlString, pathLine, newPathLine);
 		}
 
-		return s;
+		return yamlString;
 	}
 
-	private String _fixOpenAPIPaths(String s) {
-		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
+	private String _fixOpenAPIPaths(String yamlString) {
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
 		if (pathItems == null) {
-			return s;
+			return yamlString;
 		}
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
@@ -1367,31 +1385,33 @@ public class RESTBuilder {
 
 			String newPath = path.substring(0, path.length() - 1);
 
-			int x = s.indexOf(StringUtil.quote(path, '"') + ":");
+			int x = yamlString.indexOf(StringUtil.quote(path, '"') + ":");
 
 			if (x != -1) {
 				String newSub = StringUtil.quote(newPath, '"');
 				String oldSub = StringUtil.quote(path, '"');
 
-				s = StringUtil.replaceFirst(s, oldSub, newSub, x);
+				yamlString = StringUtil.replaceFirst(
+					yamlString, oldSub, newSub, x);
 
 				continue;
 			}
 
-			x = s.indexOf(path + ":");
+			x = yamlString.indexOf(path + ":");
 
 			if (x != -1) {
-				s = StringUtil.replaceFirst(s, path, newPath, x);
+				yamlString = StringUtil.replaceFirst(
+					yamlString, path, newPath, x);
 			}
 		}
 
-		return s;
+		return yamlString;
 	}
 
 	private String _fixOpenAPISchemaPropertyNames(
-		FreeMarkerTool freeMarkerTool, String s) {
+		FreeMarkerTool freeMarkerTool, String yamlString) {
 
-		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
 		Components components = openAPIYAML.getComponents();
 
@@ -1430,11 +1450,11 @@ public class RESTBuilder {
 					continue;
 				}
 
-				int x = s.indexOf(' ' + entry1.getKey() + ':');
+				int x = yamlString.indexOf(' ' + entry1.getKey() + ':');
 
-				int y = s.indexOf(' ' + entry2.getKey() + ':', x);
+				int y = yamlString.indexOf(' ' + entry2.getKey() + ':', x);
 
-				int z = s.indexOf(':', y);
+				int z = yamlString.indexOf(':', y);
 
 				String propertyName = entry2.getKey();
 				String schemaVarName = freeMarkerTool.getSchemaVarName(
@@ -1450,7 +1470,9 @@ public class RESTBuilder {
 						continue;
 					}
 
-					s = s.substring(0, y + 1) + plural + s.substring(z);
+					yamlString =
+						yamlString.substring(0, y + 1) + plural +
+							yamlString.substring(z);
 				}
 				else {
 					if (propertyName.endsWith(
@@ -1460,12 +1482,14 @@ public class RESTBuilder {
 						continue;
 					}
 
-					s = s.substring(0, y + 1) + schemaVarName + s.substring(z);
+					yamlString =
+						yamlString.substring(0, y + 1) + schemaVarName +
+							yamlString.substring(z);
 				}
 			}
 		}
 
-		return s;
+		return yamlString;
 	}
 
 	private List<Operation> _getOperations(PathItem pathItem) {
@@ -1613,8 +1637,8 @@ public class RESTBuilder {
 		context.put("relatedSchemaNames", relatedSchemaNames);
 	}
 
-	private void _validate(String s) {
-		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
+	private void _validate(String yamlString) {
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
 		Components components = openAPIYAML.getComponents();
 

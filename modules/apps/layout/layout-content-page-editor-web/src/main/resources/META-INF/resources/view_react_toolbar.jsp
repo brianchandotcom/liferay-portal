@@ -20,7 +20,7 @@
 ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
 %>
 
-<div class="management-bar navbar navbar-expand-md page-editor-toolbar" id="<%= contentPageEditorDisplayContext.getPortletNamespace() %>pageEditorToolbar">
+<div class="management-bar navbar navbar-expand-md page-editor-toolbar <%= contentPageEditorDisplayContext.isMasterLayout() ? "page-editor-toolbar--master-layout":"" %>" id="<%= contentPageEditorDisplayContext.getPortletNamespace() %>pageEditorToolbar">
 	<div class="container-fluid container-fluid-max-xl">
 		<ul class="navbar-nav">
 		</ul>
@@ -45,6 +45,9 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 				<li class="nav-item">
 					<button class="btn btn-primary nav-btn" disabled type="submit">
 						<c:choose>
+							<c:when test="<%= contentPageEditorDisplayContext.isMasterLayout() %>">
+								<liferay-ui:message key="publish-master" />
+							</c:when>
 							<c:when test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
 								<liferay-ui:message key="save-variant" />
 							</c:when>

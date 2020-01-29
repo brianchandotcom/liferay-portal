@@ -620,6 +620,16 @@ public class ContentPageEditorDisplayContext {
 		return getFragmentEntryActionURL("/content_layout/publish_layout");
 	}
 
+	public boolean isMasterLayout() throws PortalException {
+		if (_getPageType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isSingleSegmentsExperienceMode() {
 		return false;
 	}

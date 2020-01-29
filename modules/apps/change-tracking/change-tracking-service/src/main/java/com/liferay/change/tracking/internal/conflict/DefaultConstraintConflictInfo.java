@@ -38,7 +38,7 @@ public class DefaultConstraintConflictInfo implements ConflictInfo {
 	@Override
 	public String getConflictDescription(ResourceBundle resourceBundle) {
 		return LanguageUtil.format(
-			resourceBundle, "values-for-x-must-be-unique", _uniqueColumnNames,
+			resourceBundle, "values-for-x-are-not-unique", _uniqueColumnNames,
 			false);
 	}
 
@@ -50,7 +50,7 @@ public class DefaultConstraintConflictInfo implements ConflictInfo {
 	@Override
 	public String getResolutionDescription(ResourceBundle resourceBundle) {
 		return LanguageUtil.format(
-			resourceBundle, "values-for-x-are-not-unique", _uniqueColumnNames,
+			resourceBundle, "update-values-to-be-unique", _uniqueColumnNames,
 			false);
 	}
 

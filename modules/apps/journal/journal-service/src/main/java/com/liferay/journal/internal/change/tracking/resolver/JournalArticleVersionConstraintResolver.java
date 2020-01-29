@@ -41,7 +41,7 @@ public class JournalArticleVersionConstraintResolver
 
 	@Override
 	public String getConflictDescriptionKey() {
-		return "article-version";
+		return "duplicate-article-version";
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class JournalArticleVersionConstraintResolver
 
 	@Override
 	public String getResolutionDescriptionKey() {
-		return "set-the-articles-version-to-latest";
+		return "the-article-version-was-updated-to-latest";
 	}
 
 	@Override

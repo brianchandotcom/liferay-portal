@@ -15,23 +15,29 @@
 package com.liferay.depot.web.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -46,53 +52,10 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotAdminGroupSearchProvider {
 
 	public GroupSearch getGroupSearch(
-		PortletRequest portletRequest, PortletURL portletURL) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Company company = themeDisplay.getCompany();
-
-		LinkedHashMap<String, Object> groupParams =
-			LinkedHashMapBuilder.<String, Object>put(
-				"site", Boolean.FALSE
-			).build();
+			PortletRequest portletRequest, PortletURL portletURL)
+		throws SearchException {
 
 		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);
-
-		GroupSearchTerms searchTerms =
-			(GroupSearchTerms)groupSearch.getSearchTerms();
-
-		List<Group> results = null;
-
-		if (searchTerms.hasSearchTerms()) {
-			int total = _groupLocalService.searchCount(
-				company.getCompanyId(), _classNameIds,
-				searchTerms.getKeywords(), groupParams);
-
-			groupSearch.setTotal(total);
-
-			results = _groupLocalService.search(
-				company.getCompanyId(), _classNameIds,
-				searchTerms.getKeywords(), groupParams, groupSearch.getStart(),
-				groupSearch.getEnd(), groupSearch.getOrderByComparator());
-		}
-		else {
-			long groupId = ParamUtil.getLong(
-				portletRequest, "groupId",
-				GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-			int total = _groupLocalService.searchCount(
-				company.getCompanyId(), _classNameIds, groupId,
-				searchTerms.getKeywords(), groupParams);
-
-			groupSearch.setTotal(total);
-
-			results = _groupLocalService.search(
-				company.getCompanyId(), _classNameIds, groupId,
-				searchTerms.getKeywords(), groupParams, groupSearch.getStart(),
-				groupSearch.getEnd(), groupSearch.getOrderByComparator());
-		}
 
 		groupSearch.setEmptyResultsMessage(
 			LanguageUtil.get(
@@ -100,23 +63,65 @@ public class DepotAdminGroupSearchProvider {
 					portletRequest.getLocale(), getClass()),
 				"no-repositories-were-found"));
 
-		groupSearch.setResults(results);
+		Indexer indexer = IndexerRegistryUtil.getIndexer(DepotEntry.class);
+
+		SearchContext searchContext = _getSearchContext(
+			portletRequest, groupSearch);
+
+		groupSearch.setResults(_getDepotGroups(indexer, searchContext));
+		groupSearch.setTotal((int)indexer.searchCount(searchContext));
 
 		return groupSearch;
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	private List<Group> _getDepotGroups(
+			Indexer<DepotEntry> indexer, SearchContext searchContext)
+		throws SearchException {
 
-		_classNameIds = new long[] {
-			PortalUtil.getClassNameId(DepotEntry.class.getName())
-		};
+		Hits hits = indexer.search(searchContext);
+
+		List<SearchResult> searchResults = SearchResultUtil.getSearchResults(
+			hits, LocaleUtil.getDefault());
+
+		Stream<SearchResult> stream = searchResults.stream();
+
+		return stream.map(
+			SearchResult::getClassPK
+		).map(
+			_depotEntryLocalService::fetchDepotEntry
+		).map(
+			DepotEntry::getGroupId
+		).map(
+			_groupLocalService::fetchGroup
+		).collect(
+			Collectors.toList()
+		);
 	}
 
-	private long[] _classNameIds;
+	private SearchContext _getSearchContext(
+		PortletRequest portletRequest, GroupSearch groupSearch) {
+
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			_portal.getHttpServletRequest(portletRequest));
+
+		searchContext.setEnd(groupSearch.getEnd());
+		searchContext.setGroupIds(null);
+		searchContext.setSorts(
+			new Sort(
+				Field.NAME, Sort.STRING_TYPE,
+				StringUtil.equals(groupSearch.getOrderByType(), "asc")));
+		searchContext.setStart(groupSearch.getStart());
+
+		return searchContext;
+	}
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

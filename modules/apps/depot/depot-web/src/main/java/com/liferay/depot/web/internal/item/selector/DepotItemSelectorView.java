@@ -23,6 +23,7 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -153,7 +154,7 @@ public class DepotItemSelectorView
 		}
 
 		@Override
-		public GroupSearch getGroupSearch() {
+		public GroupSearch getGroupSearch() throws SearchException {
 			return _depotAdminGroupSearchProvider.getGroupSearch(
 				getPortletRequest(), getPortletURL());
 		}

@@ -255,6 +255,10 @@ public class LayoutDataConverter {
 	private static JSONObject _getBackgroundImageJSONObject(
 		JSONObject inputRowConfigJSONObject) {
 
+		if (inputRowConfigJSONObject.isNull("backgroundImage")) {
+			return null;
+		}
+
 		Object backgroundImage = inputRowConfigJSONObject.get(
 			"backgroundImage");
 

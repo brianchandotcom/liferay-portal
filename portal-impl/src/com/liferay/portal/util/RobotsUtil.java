@@ -15,6 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.petra.content.ContentUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -75,11 +76,16 @@ public class RobotsUtil {
 		TreeMap<String, String> virtualHostnames =
 			PortalUtil.getVirtualHostnames(layoutSet);
 
+		String virtualHostname = StringPool.BLANK;
+
+		if (!virtualHostnames.isEmpty()) {
+			virtualHostname = virtualHostnames.firstKey();
+		}
+
 		return GetterUtil.get(
 			layoutSet.getSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
-			getDefaultRobots(
-				virtualHostnames.firstKey(), secure, portalServerPort));
+			getDefaultRobots(virtualHostname, secure, portalServerPort));
 	}
 
 }

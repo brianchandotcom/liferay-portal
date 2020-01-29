@@ -28,31 +28,16 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeReque
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -89,9 +74,10 @@ public class JSONDataStorage implements DataStorage {
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
 
-		return _toDataRecordValues(
+		return _ddmFormValuesToMapConverter.convert(
 			_deserializeDDMFormValues(
-				ddmContent.getData(), ddmStructure.getFullHierarchyDDMForm()));
+				ddmContent.getData(), ddmStructure.getFullHierarchyDDMForm()),
+			ddmStructure);
 	}
 
 	@Override
@@ -150,78 +136,14 @@ public class JSONDataStorage implements DataStorage {
 		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
-	private Map<String, Object> _toDataRecordValues(
-		DDMFormValues ddmFormValues) {
-
-		Map<String, Object> dataRecordValues = new HashMap<>();
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			ddmFormValues.getDDMFormFieldValues();
-
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			Value value = ddmFormFieldValue.getValue();
-
-			if (value == null) {
-				continue;
-			}
-
-			DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-			if (value.isLocalized()) {
-				dataRecordValues.put(
-					ddmFormFieldValue.getName(),
-					_toLocalizedMap(
-						ddmFormField.getType(), (LocalizedValue)value));
-			}
-			else {
-				dataRecordValues.put(
-					ddmFormFieldValue.getName(),
-					value.getString(value.getDefaultLocale()));
-			}
-		}
-
-		return dataRecordValues;
-	}
-
-	private Map<String, Object> _toLocalizedMap(
-		String fieldType, LocalizedValue localizedValue) {
-
-		Set<Locale> availableLocales = localizedValue.getAvailableLocales();
-
-		Stream<Locale> stream = availableLocales.stream();
-
-		if (fieldType.equals(DDMFormFieldType.CHECKBOX_MULTIPLE) ||
-			fieldType.equals(DDMFormFieldType.SELECT)) {
-
-			return stream.collect(
-				Collectors.toMap(
-					LanguageUtil::getLanguageId,
-					locale -> _toStringList(locale, localizedValue)));
-		}
-
-		return stream.collect(
-			Collectors.toMap(
-				LanguageUtil::getLanguageId, localizedValue::getString));
-	}
-
-	private List<String> _toStringList(
-		Locale locale, LocalizedValue localizedValue) {
-
-		try {
-			return JSONUtil.toStringList(
-				JSONFactoryUtil.createJSONArray(
-					localizedValue.getString(locale)));
-		}
-		catch (JSONException jsonException) {
-			return Collections.emptyList();
-		}
-	}
-
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 	@Reference
 	private DDMContentLocalService _ddmContentLocalService;
+
+	@Reference
+	private DDMFormValuesToMapConverter _ddmFormValuesToMapConverter;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

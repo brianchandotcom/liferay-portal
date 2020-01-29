@@ -14,5 +14,6 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaForLoopCheck" files="dynamic-data-mapping-form-values-query/src/main/java/com/liferay/dynamic/data/mapping/form/values/query/internal/model/DDMFormValuesFilterImpl\.java" />
+		<suppress checks="JavaLongLinesCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/java/com/liferay/dynamic/data/mapping/form/field/type/internal/localizable/text/LocalizableTextDDMFormFieldType\.java" />
 	</source-check>
 </suppressions>

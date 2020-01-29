@@ -58,7 +58,15 @@ renderResponse.setTitle((category == null) ? LanguageUtil.get(request, "add-new-
 				collapsible="<%= true %>"
 				label="details"
 			>
-				<aui:input autoFocus="<%= true %>" label="name" name="title" placeholder="name" />
+				<aui:field-wrapper label="name">
+					<liferay-ui:input-localized
+						autoFocus="<%= true %>"
+						maxLength='<%= String.valueOf(ModelHintsUtil.getMaxLength(AssetCategory.class.getName(), "name")) %>'
+						name="title"
+						placeholder="name"
+						xml='<%= BeanPropertiesUtil.getString(category, "title") %>'
+					/>
+				</aui:field-wrapper>
 
 				<aui:input name="description" placeholder="description" />
 

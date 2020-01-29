@@ -842,15 +842,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 						<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
 							Pagination.of(1, 2)
 						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-							post${schemaName}.
-
 							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-								getId
+								post${schemaName}.getId()
+							<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
+								post${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
 							<#else>
-								get${javaMethodParameter.parameterName?cap_first}
+								null
 							</#if>
-
-							()
 						<#else>
 							null
 						</#if>
@@ -1274,8 +1272,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 													<#else>
 														${schemaVarName}.getId()
 													</#if>
-												<#else>
+												<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
 													${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+												<#else>
+													null
 												</#if>
 											);
 										</#if>

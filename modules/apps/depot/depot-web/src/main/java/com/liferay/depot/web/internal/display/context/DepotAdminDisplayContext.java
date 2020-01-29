@@ -127,7 +127,6 @@ public class DepotAdminDisplayContext {
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			PortalUtil.getHttpServletRequest(_liferayPortletRequest));
 
-		searchContext.setAttribute(Field.STATUS, WorkflowConstants.STATUS_ANY);
 		searchContext.setEnd(_depotEntrySearch.getEnd());
 		searchContext.setGroupIds(null);
 		searchContext.setSorts(

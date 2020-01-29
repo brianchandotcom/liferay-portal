@@ -199,7 +199,7 @@ public class AccountEntryOrganizationRelLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchEntryOrganizationRelException.class)
-	public void testDeleteAccountEntryUserRelThrowsNoSuchEntryOrganizationRelException()
+	public void testDeleteAccountEntryOrganizationRelThrowsNoSuchEntryOrganizationRelException()
 		throws Exception {
 
 		_accountEntryOrganizationRelLocalService.

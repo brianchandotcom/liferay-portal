@@ -43,7 +43,7 @@ public class SpiraRelease {
 		}
 
 		List<SpiraRelease> spiraReleases = getSpiraReleases(
-			spiraProject, releaseID);
+			spiraProject, new SearchParameter("ReleaseId", releaseID));
 
 		SpiraRelease spiraRelease = spiraReleases.get(0);
 
@@ -55,32 +55,8 @@ public class SpiraRelease {
 	}
 
 	public static List<SpiraRelease> getSpiraReleases(
-			SpiraProject spiraProject, Integer releaseID,
-			SearchParameter... searchParameters)
+			SpiraProject spiraProject, SearchParameter... searchParameters)
 		throws IOException {
-
-		Map<String, String> urlReplacements = new HashMap<>();
-
-		urlReplacements.put("project_id", String.valueOf(spiraProject.getID()));
-
-		if (releaseID != null) {
-			urlReplacements.put("release_id", String.valueOf(releaseID));
-
-			String spiraReleaseKey = _createSpiraReleaseKey(
-				spiraProject.getID(), releaseID);
-
-			if (!_spiraReleases.containsKey(spiraReleaseKey)) {
-				_spiraReleases.put(
-					spiraReleaseKey,
-					new SpiraRelease(
-						SpiraRestAPIUtil.requestJSONObject(
-							"projects/{project_id}/releases/{release_id}",
-							urlReplacements, HttpRequestMethod.GET, null)));
-			}
-
-			return Collections.singletonList(
-				_spiraReleases.get(spiraReleaseKey));
-		}
 
 		List<SpiraRelease> spiraReleases = new ArrayList<>();
 
@@ -94,6 +70,9 @@ public class SpiraRelease {
 			return spiraReleases;
 		}
 
+		Map<String, String> urlReplacements = new HashMap<>();
+
+		urlReplacements.put("project_id", String.valueOf(spiraProject.getID()));
 		urlReplacements.put("number_rows", String.valueOf(_NUMBER_ROWS));
 		urlReplacements.put("start_row", String.valueOf(_START_ROW));
 
@@ -166,7 +145,7 @@ public class SpiraRelease {
 
 	public static class SearchParameter {
 
-		public SearchParameter(String name, String value) {
+		public SearchParameter(String name, Object value) {
 			_name = name;
 			_value = value;
 		}
@@ -175,7 +154,7 @@ public class SpiraRelease {
 			return _name;
 		}
 
-		public String getValue() {
+		public Object getValue() {
 			return _value;
 		}
 
@@ -184,19 +163,27 @@ public class SpiraRelease {
 
 			filterJSONObject.put("PropertyName", _name);
 
-			if (_name.equals("Name")) {
-				filterJSONObject.put(
-					"StringValue", _value.replaceAll("\\[", "[[]"));
+			if (_value instanceof Integer) {
+				Integer intValue = (Integer)_value;
+
+				filterJSONObject.put("IntValue", intValue);
+			}
+			else if (_value instanceof String) {
+				String stringValue = (String)_value;
+
+				stringValue = stringValue.replaceAll("\\[", "[[]");
+
+				filterJSONObject.put("StringValue", stringValue);
 			}
 			else {
-				filterJSONObject.put("StringValue", _value);
+				throw new RuntimeException("Invalid value type");
 			}
 
 			return filterJSONObject;
 		}
 
 		private final String _name;
-		private final String _value;
+		private final Object _value;
 
 	}
 

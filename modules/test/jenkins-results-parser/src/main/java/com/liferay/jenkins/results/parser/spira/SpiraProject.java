@@ -138,8 +138,7 @@ public class SpiraProject {
 		throws IOException {
 
 		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
-			this, null,
-			new SpiraRelease.SearchParameter("IndentLevel", indentLevel));
+			this, new SpiraRelease.SearchParameter("IndentLevel", indentLevel));
 
 		if (spiraReleases.size() > 1) {
 			throw new RuntimeException("Duplicate indent level found");
@@ -156,7 +155,7 @@ public class SpiraProject {
 		throws IOException {
 
 		return SpiraRelease.getSpiraReleases(
-			this, null, new SpiraRelease.SearchParameter("Name", releaseName));
+			this, new SpiraRelease.SearchParameter("Name", releaseName));
 	}
 
 	private static final Map<Integer, SpiraProject> _spiraProjects =

@@ -5,9 +5,22 @@
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleFieldFocused: any}
+	{@param? _handleLanguageClicked: any}
 	{@param? _value: string}
+	{@param? availableLocales: list<[
+		displayName: string,
+		icon: string,
+		isDefault: bool,
+		isTranslated: bool,
+		localeId: string
+	]>}
 	{@param? displayErrors: bool}
 	{@param? displayStyle: string}
+	{@param? editingLocale: [
+		displayName: string,
+		icon: string,
+		localeId: string
+	]}
 	{@param? errorMessage: string}
 	{@param? id: string}
 	{@param? label: string}
@@ -21,7 +34,6 @@
 	{@param? tip: string}
 	{@param? tooltip: string}
 	{@param? valid: bool}
-	{@param? value: string}
 	{@param? visible: bool}
 
 	{call FieldBase.render}
@@ -30,14 +42,17 @@
 				{param _handleFieldBlurred: $_handleFieldBlurred /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
 				{param _handleFieldFocused: $_handleFieldFocused /}
+				{param _handleLanguageClicked: $_handleLanguageClicked /}
+				{param availableLocales: $availableLocales /}
 				{param displayStyle: $displayStyle /}
+				{param editingLocale: $editingLocale /}
 				{param id: $id /}
 				{param name: $name /}
 				{param placeholder: $placeholder /}
 				{param predefinedValue: $predefinedValue /}
 				{param readOnly: $readOnly /}
 				{param spritemap: $spritemap /}
-				{param value: isNonnull($_value) ? $_value : $value /}
+				{param value: isNonnull($_value) ? $_value : '' /}
 			{/call}
 		{/param}
 		{param displayErrors: $displayErrors /}
@@ -62,7 +77,20 @@
 	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleFieldFocused: any}
+	{@param? _handleLanguageClicked: any}
+	{@param? availableLocales: list<[
+		displayName: string,
+		icon: string,
+		isDefault: bool,
+		isTranslated: bool,
+		localeId: string
+	]>}
 	{@param? displayStyle: string}
+	{@param? editingLocale: [
+		displayName: string,
+		icon: string,
+		localeId: string
+	]}
 	{@param? id: string}
 	{@param? placeholder: string}
 	{@param? predefinedValue: string}
@@ -99,136 +127,88 @@
 			disabled="disabled"
 		{/if}
 
-		{if $displayStyle == 'singleline'}
-			value="{$inputValue}"
-		{/if}
+		value="{$inputValue}"
 	{/let}
-	
+
 	<div class="input-group">
 		{if $displayStyle == 'multiline'}
 			<div class="input-group-item">
 				<textarea {$attributes}>{$inputValue}</textarea>
 			</div>
-		{elseif ($displayStyle == 'singleline' and $readOnly)}
+		{else}
 			<div class="input-group-append input-group-item">
 				<input {$attributes}>
 			</div>
 		{/if}
 
 		<div class="input-group-item input-group-item-shrink">
-			<button
-				aria-expanded="false"
-				aria-haspopup="true"
-				class="btn btn-monospaced btn-secondary dropdown-toggle"
-				data-toggle="dropdown"
-				type="button"
-			>
-				<span class="inline-item">
-					<svg
-						class="lexicon-icon lexicon-icon-es-es"
-						focusable="false"
-						role="presentation"
-					>
-						<use href="{$spritemap}#es-es"></use>
-					</svg>
-				</span>
-				<span class="btn-section">es-ES</span>
-			</button>
+			{if isNonnull($editingLocale)}
+				<button
+					aria-expanded="false"
+					aria-haspopup="true"
+					class="btn btn-monospaced btn-secondary dropdown-toggle"
+					data-toggle="dropdown"
+					type="button"
+				>
+					<span class="inline-item">
+						<svg
+							class="lexicon-icon lexicon-icon-{$editingLocale.icon}"
+							focusable="false"
+							role="presentation"
+						>
+							<use href="{$spritemap}#{$editingLocale.icon}"></use>
+						</svg>
+					</span>
+					<span class="btn-section">{$editingLocale.icon}</span>
+				</button>
+			{/if}
+
 			<ul class="dropdown-menu dropdown-menu-right">
-				<li>
-					<a class="autofit-row dropdown-item" href="#1">
-						<span class="autofit-col autofit-col-expand">
-							<span class="autofit-section">
-								<span class="inline-item inline-item-before">
-									<svg
-										class="lexicon-icon lexicon-icon-en-us"
-										focusable="false"
-										role="presentation"
-									>
-										<use href="{$spritemap}#en-us"></use>
-									</svg>
+				{if isNonnull($availableLocales)}
+					{foreach $availableLocale in $availableLocales}
+						<li>
+							<a
+								class="autofit-row dropdown-item"
+								data-locale-id="{$availableLocale.localeId}"
+								href="#1"
+								onClick="{$_handleLanguageClicked}"
+							>
+								<span class="autofit-col autofit-col-expand">
+									<span class="autofit-section">
+										<span class="inline-item inline-item-before">
+											{if isNonnull($availableLocale.icon)}
+												<svg
+													class="lexicon-icon lexicon-icon-{$availableLocale.icon}"
+													focusable="false"
+													role="presentation"
+												>
+													<use href="{$spritemap}#{$availableLocale.icon}"></use>
+												</svg>
+											{/if}
+										</span>
+										{$availableLocale.displayName}
+									</span>
 								</span>
-								en-US
-							</span>
-						</span>
-						<span class="autofit-col">
-							<span class="label label-info">
-								<span class="label-item label-item-expand">Default</span>
-							</span>
-						</span>
-					</a>
-				</li>
-				<li>
-					<a class="autofit-row dropdown-item" href="#1">
-						<span class="autofit-col autofit-col-expand">
-							<span class="autofit-section">
-								<span class="inline-item inline-item-before">
-									<svg
-										class="lexicon-icon lexicon-icon-en-gb"
-										focusable="false"
-										role="presentation"
-									>
-										<use href="{$spritemap}#en-gb"></use>
-									</svg>
+								<span class="autofit-col">
+									{if $availableLocale.isDefault}
+										<span class="label label-info">
+											<span class="label-item label-item-expand">{msg desc=""}default{/msg}</span>
+										</span>
+									{elseif $availableLocale.isTranslated}
+										<span class="label label-success">
+											<span class="label-item label-item-expand">{msg desc=""}translated{/msg}</span
+											>
+										</span>
+									{else}
+										<span class="label label-warning">
+											<span class="label-item label-item-expand">{msg desc=""}not-translated{/msg}</span>
+										</span>
+									{/if}
 								</span>
-								en-GB
-							</span>
-						</span>
-						<span class="autofit-col">
-							<span class="label label-success">
-								<span class="label-item label-item-expand"
-									>Translated</span
-								>
-							</span>
-						</span>
-					</a>
-				</li>
-				<li>
-					<a class="active autofit-row dropdown-item" href="#1">
-						<span class="autofit-col autofit-col-expand">
-							<span class="autofit-section">
-								<span class="inline-item inline-item-before">
-									<svg
-										class="lexicon-icon lexicon-icon-es-es"
-										focusable="false"
-										role="presentation"
-									>
-										<use href="{$spritemap}#es-es"></use>
-									</svg>
-								</span>
-								es-ES
-							</span>
-						</span>
-						<span class="autofit-col">
-							<span class="label label-success">
-								<span class="label-item label-item-expand">Translated</span>
-							</span>
-						</span>
-					</a>
-				</li>
-				<li>
-					<a class="autofit-row dropdown-item" href="#1">
-						<span class="autofit-col autofit-col-expand">
-							<span class="autofit-section">
-								<span class="inline-item inline-item-before">
-									<svg
-										class="lexicon-icon lexicon-icon-fr-fr"
-										focusable="false"
-										role="presentation"
-									>
-										<use href="{$spritemap}#fr-fr"></use>
-									</svg>
-								</span>
-								fr-FR
-							</span>
-						</span>
-						<span class="autofit-col">
-							<span class="label label-warning">
-								<span class="label-item label-item-expand">Not Translated</span>
-							</span>
-						</span>
-					</a>
-				</li>
+							</a>
+						</li>
+					{/foreach}
+				{/if}
 			</ul>
 		</div>
 	</div>

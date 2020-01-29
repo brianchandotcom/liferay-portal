@@ -15,15 +15,22 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.localizable.text;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -53,7 +60,20 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 		Map<String, Object> parameters = new HashMap<>();
 
 		if (ddmFormFieldRenderingContext.isReturnFullContext()) {
+			parameters.put(
+				"availableLocales",
+				getAvailableLocalesJSONArray(
+					ddmFormFieldRenderingContext.getLocale()));
+
+			DDMForm ddmForm = ddmFormField.getDDMForm();
+
+			JSONObject defaultLocaleJSONObject = getLocaleJSONObject(
+				ddmForm.getDefaultLocale(),
+				ddmFormFieldRenderingContext.getLocale());
+
+			parameters.put("defaultLocale", defaultLocaleJSONObject);
 			parameters.put("displayStyle", getDisplayStyle(ddmFormField));
+			parameters.put("editingLocale", defaultLocaleJSONObject);
 			parameters.put(
 				"placeholder",
 				getPlaceholder(ddmFormField, ddmFormFieldRenderingContext));
@@ -69,18 +89,46 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 			parameters.put("predefinedValue", predefinedValue);
 		}
 
-		String value = getValue(ddmFormFieldRenderingContext);
-
-		if (Validator.isNotNull(value)) {
-			parameters.put("value", value);
-		}
+		parameters.put("value", getValue(ddmFormFieldRenderingContext));
 
 		return parameters;
+	}
+
+	protected JSONArray getAvailableLocalesJSONArray(Locale displayLocale) {
+		JSONArray availableLocalesJSONArray = jsonFactory.createJSONArray();
+
+		for (Locale availableLocale : language.getAvailableLocales()) {
+			availableLocalesJSONArray.put(
+				getLocaleJSONObject(availableLocale, displayLocale));
+		}
+
+		return availableLocalesJSONArray;
 	}
 
 	protected String getDisplayStyle(DDMFormField ddmFormField) {
 		return GetterUtil.getString(
 			ddmFormField.getProperty("displayStyle"), "singleline");
+	}
+
+	protected JSONObject getLocaleJSONObject(
+		Locale locale, Locale displayLocale) {
+
+		JSONObject jsonObject = jsonFactory.createJSONObject();
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		jsonObject.put(
+			"displayName", locale.getDisplayName(locale)
+		).put(
+			"icon",
+			StringUtil.replace(
+				languageId, '_', "-"
+			).toLowerCase()
+		).put(
+			"localeId", languageId
+		);
+
+		return jsonObject;
 	}
 
 	protected String getPlaceholder(
@@ -121,17 +169,20 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 			ddmFormFieldRenderingContext);
 	}
 
-	protected String getValue(
+	protected JSONObject getValue(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		String value = String.valueOf(
-			ddmFormFieldRenderingContext.getProperty("value"));
-
-		if (ddmFormFieldRenderingContext.isViewMode()) {
-			value = HtmlUtil.extractText(value);
+		try {
+			return jsonFactory.createJSONObject(
+				ddmFormFieldRenderingContext.getValue());
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException, jsonException);
+			}
 		}
 
-		return value;
+		return jsonFactory.createJSONObject();
 	}
 
 	protected String getValueString(
@@ -147,5 +198,11 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	@Reference
+	protected Language language;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LocalizableTextDDMFormFieldTemplateContextContributor.class);
 
 }

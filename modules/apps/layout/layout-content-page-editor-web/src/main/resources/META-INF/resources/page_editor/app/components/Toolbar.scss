@@ -11,6 +11,11 @@
 	width: 100%;
 	z-index: $zIndexToolbar;
 
+	&--master-layout {
+		background-color: #f0f5ff;
+		border-bottom: 1px solid #80acff;
+	}
+
 	button {
 		color: #6b6c7e;
 	}

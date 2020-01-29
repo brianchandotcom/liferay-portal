@@ -136,12 +136,21 @@
 			<liferay-util:buffer
 				var="publishOnLayoutLink"
 			>
-				<li class="control-menu-nav-item">
-					<div class="dropdown publish-btn-group">
-						<button class="btn btn-primary btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id="<%= layoutSetBranchId + "publishToLiveLink" %>" type="button">
-							<liferay-ui:message key="publish-to-live" />
+				<div class="dropdown">
+					<button class="btn btn-primary btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id="<%= layoutSetBranchId + "publishToLiveLink" %>" type="button">
+						<liferay-ui:message key="publish-to-live" />
+					</button>
+
+					<c:if test="<%= branchingEnabled %>">
+						<button aria-expanded="false" class="btn btn-primary btn-sm d-block d-sm-none dropdown-toggle" data-toggle="dropdown" type="button">
+							<aui:icon image="angle-down" markupView="lexicon" />
+
+							<span class="sr-only">
+								<liferay-ui:message key="toggle-dropdown" />
+							</span>
 						</button>
 
+<<<<<<< HEAD
 						<c:if test="<%= branchingEnabled %>">
 							<button aria-expanded="false" class="btn btn-primary btn-sm d-block d-sm-none dropdown-toggle" data-toggle="liferay-dropdown" type="button">
 								<aui:icon image="angle-down" markupView="lexicon" />
@@ -153,48 +162,51 @@
 
 							<ul class="dropdown-menu" role="menu">
 								<c:if test="<%= !layoutRevision.isIncomplete() %>">
+=======
+						<ul class="dropdown-menu" role="menu">
+							<c:if test="<%= !layoutRevision.isIncomplete() %>">
+								<li>
+									<a class="dropdown-icon" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>viewHistory', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);">
+										<liferay-ui:message key="history" />
+									</a>
+								</li>
+							</c:if>
+
+							<c:if test="<%= !hasWorkflowTask %>">
+								<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
+>>>>>>> LPS-107487 Fix staging bar styles
 									<li>
-										<a class="dropdown-icon" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>viewHistory', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);">
-											<liferay-ui:message key="history" />
+										<a class="dropdown-icon" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>undo', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);">
+											<liferay-ui:message key="undo" />
 										</a>
 									</li>
 								</c:if>
 
-								<c:if test="<%= !hasWorkflowTask %>">
-									<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
+								<c:if test="<%= layoutRevision.hasChildren() %>">
+
+									<%
+									List<LayoutRevision> childLayoutRevisions = layoutRevision.getChildren();
+
+									LayoutRevision firstChildLayoutRevision = childLayoutRevisions.get(0);
+
+									if (firstChildLayoutRevision.isInactive()) {
+									%>
+
 										<li>
-											<a class="dropdown-icon" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>undo', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);">
-												<liferay-ui:message key="undo" />
+											<a class="dropdown-icon" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>redo', {layoutRevisionId: '<%= firstChildLayoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= firstChildLayoutRevision.getLayoutSetBranchId() %>'}); void(0);">
+												<liferay-ui:message key="redo" />
 											</a>
 										</li>
-									</c:if>
 
-									<c:if test="<%= layoutRevision.hasChildren() %>">
+									<%
+									}
+									%>
 
-										<%
-										List<LayoutRevision> childLayoutRevisions = layoutRevision.getChildren();
-
-										LayoutRevision firstChildLayoutRevision = childLayoutRevisions.get(0);
-
-										if (firstChildLayoutRevision.isInactive()) {
-										%>
-
-											<li>
-												<a class="dropdown-icon" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>redo', {layoutRevisionId: '<%= firstChildLayoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= firstChildLayoutRevision.getLayoutSetBranchId() %>'}); void(0);">
-													<liferay-ui:message key="redo" />
-												</a>
-											</li>
-
-										<%
-										}
-										%>
-
-									</c:if>
 								</c:if>
-							</ul>
-						</c:if>
-					</div>
-				</li>
+							</c:if>
+						</ul>
+					</c:if>
+				</div>
 			</liferay-util:buffer>
 
 			<c:choose>

@@ -87,52 +87,48 @@ if (Validator.isNull(publisherName)) {
 <c:choose>
 	<c:when test="<%= lastImportDate > 0 %>">
 		<c:if test="<%= Validator.isNotNull(lastImportLayoutSetBranchName) && Validator.isNotNull(publisherName) %>">
-			<div class="alert alert-fluid alert-info custom-info-alert" role="alert">
-				<div class="staging-alert-container">
-					<span class="alert-indicator">
-						<svg aria-hidden="true" class="lexicon-icon lexicon-icon-info-circle">
-							<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#info-circle" />
-						</svg>
-					</span>
-					<span class="last-publication-branch">
-						<liferay-ui:message arguments='<%= new String[] {"<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>", "<em>" + HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(lastImportLayoutSetBranchName)) + "</em>"} %>' key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "page-x-was-last-published-to-live" : "page-x-was-last-published-from-x" %>' translateArguments="<%= false %>" />
-
-						<c:if test="<%= (Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1)) || Validator.isNotNull(lastImportLayoutRevisionId) %>">
-							<span class="last-publication-variation-details">(
-								<c:if test="<%= Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1) %>">
-									<span class="variation-name">
-										<liferay-ui:message key="variation" />: <strong><liferay-ui:message key="<%= HtmlUtil.escape(layoutBranchDisplayContext.getLayoutBranchDisplayName(lastImportLayoutBranchName)) %>" localizeKey="<%= false %>" /></strong>
-									</span>
-								</c:if>
-
-								<c:if test="<%= Validator.isNotNull(lastImportLayoutRevisionId) %>">
-									<span class="layout-version">
-										<liferay-ui:message key="version" />: <strong><%= lastImportLayoutRevisionId %></strong>
-									</span>
-								</c:if>
-							)</span>
-						</c:if>
-					</span>
-					<span class="last-publication-user">
-						<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(StringUtil.toLowerCase(LanguageUtil.getTimeDescription(request, (System.currentTimeMillis() - lastImportDate), true))), HtmlUtil.escape(publisherName)} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
-					</span>
-				</div>
-			</div>
-		</c:if>
-	</c:when>
-	<c:otherwise>
-		<div class="alert alert-fluid alert-info custom-info-alert" role="alert">
-			<div class="staging-alert-container">
+			<div class="alert alert-info" role="alert">
 				<span class="alert-indicator">
 					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-info-circle">
 						<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#info-circle" />
 					</svg>
 				</span>
+				<span class="last-publication-branch">
+					<liferay-ui:message arguments='<%= new String[] {"<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>", "<em>" + HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(lastImportLayoutSetBranchName)) + "</em>"} %>' key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "page-x-was-last-published-to-live" : "page-x-was-last-published-from-x" %>' translateArguments="<%= false %>" />
 
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key="x-is-staged" translateArguments="<%= false %>" />
+					<c:if test="<%= (Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1)) || Validator.isNotNull(lastImportLayoutRevisionId) %>">
+						<span class="last-publication-variation-details">(
+							<c:if test="<%= Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1) %>">
+								<span class="variation-name">
+									<liferay-ui:message key="variation" />: <strong><liferay-ui:message key="<%= HtmlUtil.escape(layoutBranchDisplayContext.getLayoutBranchDisplayName(lastImportLayoutBranchName)) %>" localizeKey="<%= false %>" /></strong>
+								</span>
+							</c:if>
 
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED ? "staging-live-help2-x" : "staging-live-help-x" %>' translateArguments="<%= false %>" />
+							<c:if test="<%= Validator.isNotNull(lastImportLayoutRevisionId) %>">
+								<span class="layout-version">
+									<liferay-ui:message key="version" />: <strong><%= lastImportLayoutRevisionId %></strong>
+								</span>
+							</c:if>
+						)</span>
+					</c:if>
+				</span>
+				<span class="last-publication-user">
+					<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(StringUtil.toLowerCase(LanguageUtil.getTimeDescription(request, (System.currentTimeMillis() - lastImportDate), true))), HtmlUtil.escape(publisherName)} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+				</span>
 			</div>
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-info" role="alert">
+			<span class="alert-indicator">
+				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-info-circle">
+					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#info-circle" />
+				</svg>
+			</span>
+
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key="x-is-staged" translateArguments="<%= false %>" />
+
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED ? "staging-live-help2-x" : "staging-live-help-x" %>' translateArguments="<%= false %>" />
 		</div>
 	</c:otherwise>
 </c:choose>

@@ -158,15 +158,6 @@ a.control-menu-icon,
 	}
 }
 
-.control-menu-link {
-	&.active {
-		&:after {
-			background-color: $control-menu-level-1-active-border;
-			height: $control-menu-level-1-active-border-width;
-		}
-	}
-}
-
 .control-menu-nav {
 	align-items: center;
 	display: flex;
@@ -206,30 +197,6 @@ a.control-menu-icon,
 
 .control-menu-nav-item-field {
 	flex: 0 1 auto;
-}
-
-.live-link,
-.staging-link {
-	a,
-	a:focus {
-		color: $secondary;
-	}
-
-	&.active {
-		position: relative;
-
-		&:after {
-			bottom: -16px;
-			content: '';
-			left: 0;
-			position: absolute;
-			right: 0;
-		}
-
-		a {
-			color: $white;
-		}
-	}
 }
 
 .sidenav-transition {

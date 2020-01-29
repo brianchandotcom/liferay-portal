@@ -311,6 +311,187 @@ public class AccountEntryOrganizationRelUtil {
 	}
 
 	/**
+	 * Returns all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @return the matching account entry organization rels
+	 */
+	public static List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId) {
+
+		return getPersistence().findByOrganizationId(organizationId);
+	}
+
+	/**
+	 * Returns a range of all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @return the range of matching account entry organization rels
+	 */
+	public static List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId, int start, int end) {
+
+		return getPersistence().findByOrganizationId(
+			organizationId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account entry organization rels
+	 */
+	public static List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId, int start, int end,
+		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
+
+		return getPersistence().findByOrganizationId(
+			organizationId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching account entry organization rels
+	 */
+	public static List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId, int start, int end,
+		OrderByComparator<AccountEntryOrganizationRel> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByOrganizationId(
+			organizationId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account entry organization rel
+	 * @throws NoSuchEntryOrganizationRelException if a matching account entry organization rel could not be found
+	 */
+	public static AccountEntryOrganizationRel findByOrganizationId_First(
+			long organizationId,
+			OrderByComparator<AccountEntryOrganizationRel> orderByComparator)
+		throws com.liferay.account.exception.
+			NoSuchEntryOrganizationRelException {
+
+		return getPersistence().findByOrganizationId_First(
+			organizationId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
+	 */
+	public static AccountEntryOrganizationRel fetchByOrganizationId_First(
+		long organizationId,
+		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
+
+		return getPersistence().fetchByOrganizationId_First(
+			organizationId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account entry organization rel
+	 * @throws NoSuchEntryOrganizationRelException if a matching account entry organization rel could not be found
+	 */
+	public static AccountEntryOrganizationRel findByOrganizationId_Last(
+			long organizationId,
+			OrderByComparator<AccountEntryOrganizationRel> orderByComparator)
+		throws com.liferay.account.exception.
+			NoSuchEntryOrganizationRelException {
+
+		return getPersistence().findByOrganizationId_Last(
+			organizationId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
+	 */
+	public static AccountEntryOrganizationRel fetchByOrganizationId_Last(
+		long organizationId,
+		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
+
+		return getPersistence().fetchByOrganizationId_Last(
+			organizationId, orderByComparator);
+	}
+
+	/**
+	 * Returns the account entry organization rels before and after the current account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param accountEntryOrganizationRelId the primary key of the current account entry organization rel
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next account entry organization rel
+	 * @throws NoSuchEntryOrganizationRelException if a account entry organization rel with the primary key could not be found
+	 */
+	public static AccountEntryOrganizationRel[]
+			findByOrganizationId_PrevAndNext(
+				long accountEntryOrganizationRelId, long organizationId,
+				OrderByComparator<AccountEntryOrganizationRel>
+					orderByComparator)
+		throws com.liferay.account.exception.
+			NoSuchEntryOrganizationRelException {
+
+		return getPersistence().findByOrganizationId_PrevAndNext(
+			accountEntryOrganizationRelId, organizationId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the account entry organization rels where organizationId = &#63; from the database.
+	 *
+	 * @param organizationId the organization ID
+	 */
+	public static void removeByOrganizationId(long organizationId) {
+		getPersistence().removeByOrganizationId(organizationId);
+	}
+
+	/**
+	 * Returns the number of account entry organization rels where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @return the number of matching account entry organization rels
+	 */
+	public static int countByOrganizationId(long organizationId) {
+		return getPersistence().countByOrganizationId(organizationId);
+	}
+
+	/**
 	 * Returns the account entry organization rel where accountEntryId = &#63; and organizationId = &#63; or throws a <code>NoSuchEntryOrganizationRelException</code> if it could not be found.
 	 *
 	 * @param accountEntryId the account entry ID

@@ -186,6 +186,150 @@ public interface AccountEntryOrganizationRelPersistence
 	public int countByAccountEntryId(long accountEntryId);
 
 	/**
+	 * Returns all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @return the matching account entry organization rels
+	 */
+	public java.util.List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId);
+
+	/**
+	 * Returns a range of all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @return the range of matching account entry organization rels
+	 */
+	public java.util.List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account entry organization rels
+	 */
+	public java.util.List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AccountEntryOrganizationRel> orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching account entry organization rels
+	 */
+	public java.util.List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AccountEntryOrganizationRel> orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account entry organization rel
+	 * @throws NoSuchEntryOrganizationRelException if a matching account entry organization rel could not be found
+	 */
+	public AccountEntryOrganizationRel findByOrganizationId_First(
+			long organizationId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AccountEntryOrganizationRel> orderByComparator)
+		throws NoSuchEntryOrganizationRelException;
+
+	/**
+	 * Returns the first account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
+	 */
+	public AccountEntryOrganizationRel fetchByOrganizationId_First(
+		long organizationId,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AccountEntryOrganizationRel> orderByComparator);
+
+	/**
+	 * Returns the last account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account entry organization rel
+	 * @throws NoSuchEntryOrganizationRelException if a matching account entry organization rel could not be found
+	 */
+	public AccountEntryOrganizationRel findByOrganizationId_Last(
+			long organizationId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AccountEntryOrganizationRel> orderByComparator)
+		throws NoSuchEntryOrganizationRelException;
+
+	/**
+	 * Returns the last account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
+	 */
+	public AccountEntryOrganizationRel fetchByOrganizationId_Last(
+		long organizationId,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AccountEntryOrganizationRel> orderByComparator);
+
+	/**
+	 * Returns the account entry organization rels before and after the current account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param accountEntryOrganizationRelId the primary key of the current account entry organization rel
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next account entry organization rel
+	 * @throws NoSuchEntryOrganizationRelException if a account entry organization rel with the primary key could not be found
+	 */
+	public AccountEntryOrganizationRel[] findByOrganizationId_PrevAndNext(
+			long accountEntryOrganizationRelId, long organizationId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AccountEntryOrganizationRel> orderByComparator)
+		throws NoSuchEntryOrganizationRelException;
+
+	/**
+	 * Removes all the account entry organization rels where organizationId = &#63; from the database.
+	 *
+	 * @param organizationId the organization ID
+	 */
+	public void removeByOrganizationId(long organizationId);
+
+	/**
+	 * Returns the number of account entry organization rels where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @return the number of matching account entry organization rels
+	 */
+	public int countByOrganizationId(long organizationId);
+
+	/**
 	 * Returns the account entry organization rel where accountEntryId = &#63; and organizationId = &#63; or throws a <code>NoSuchEntryOrganizationRelException</code> if it could not be found.
 	 *
 	 * @param accountEntryId the account entry ID

@@ -171,6 +171,13 @@ public class AccountEntryOrganizationRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByOrganizationId() throws Exception {
+		_persistence.countByOrganizationId(RandomTestUtil.nextLong());
+
+		_persistence.countByOrganizationId(0L);
+	}
+
+	@Test
 	public void testCountByA_O() throws Exception {
 		_persistence.countByA_O(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

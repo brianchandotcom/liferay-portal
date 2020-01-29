@@ -610,6 +610,529 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	private static final String _FINDER_COLUMN_ACCOUNTENTRYID_ACCOUNTENTRYID_2 =
 		"accountEntryOrganizationRel.accountEntryId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByOrganizationId;
+	private FinderPath _finderPathWithoutPaginationFindByOrganizationId;
+	private FinderPath _finderPathCountByOrganizationId;
+
+	/**
+	 * Returns all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @return the matching account entry organization rels
+	 */
+	@Override
+	public List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId) {
+
+		return findByOrganizationId(
+			organizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @return the range of matching account entry organization rels
+	 */
+	@Override
+	public List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId, int start, int end) {
+
+		return findByOrganizationId(organizationId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account entry organization rels
+	 */
+	@Override
+	public List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId, int start, int end,
+		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
+
+		return findByOrganizationId(
+			organizationId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching account entry organization rels
+	 */
+	@Override
+	public List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId, int start, int end,
+		OrderByComparator<AccountEntryOrganizationRel> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByOrganizationId;
+				finderArgs = new Object[] {organizationId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByOrganizationId;
+			finderArgs = new Object[] {
+				organizationId, start, end, orderByComparator
+			};
+		}
+
+		List<AccountEntryOrganizationRel> list = null;
+
+		if (useFinderCache) {
+			list = (List<AccountEntryOrganizationRel>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AccountEntryOrganizationRel accountEntryOrganizationRel :
+						list) {
+
+					if (organizationId !=
+							accountEntryOrganizationRel.getOrganizationId()) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE);
+
+			query.append(_FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				query.append(
+					AccountEntryOrganizationRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(organizationId);
+
+				list = (List<AccountEntryOrganizationRel>)QueryUtil.list(
+					q, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account entry organization rel
+	 * @throws NoSuchEntryOrganizationRelException if a matching account entry organization rel could not be found
+	 */
+	@Override
+	public AccountEntryOrganizationRel findByOrganizationId_First(
+			long organizationId,
+			OrderByComparator<AccountEntryOrganizationRel> orderByComparator)
+		throws NoSuchEntryOrganizationRelException {
+
+		AccountEntryOrganizationRel accountEntryOrganizationRel =
+			fetchByOrganizationId_First(organizationId, orderByComparator);
+
+		if (accountEntryOrganizationRel != null) {
+			return accountEntryOrganizationRel;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("organizationId=");
+		msg.append(organizationId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryOrganizationRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the first account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
+	 */
+	@Override
+	public AccountEntryOrganizationRel fetchByOrganizationId_First(
+		long organizationId,
+		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
+
+		List<AccountEntryOrganizationRel> list = findByOrganizationId(
+			organizationId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account entry organization rel
+	 * @throws NoSuchEntryOrganizationRelException if a matching account entry organization rel could not be found
+	 */
+	@Override
+	public AccountEntryOrganizationRel findByOrganizationId_Last(
+			long organizationId,
+			OrderByComparator<AccountEntryOrganizationRel> orderByComparator)
+		throws NoSuchEntryOrganizationRelException {
+
+		AccountEntryOrganizationRel accountEntryOrganizationRel =
+			fetchByOrganizationId_Last(organizationId, orderByComparator);
+
+		if (accountEntryOrganizationRel != null) {
+			return accountEntryOrganizationRel;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("organizationId=");
+		msg.append(organizationId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryOrganizationRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the last account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
+	 */
+	@Override
+	public AccountEntryOrganizationRel fetchByOrganizationId_Last(
+		long organizationId,
+		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
+
+		int count = countByOrganizationId(organizationId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AccountEntryOrganizationRel> list = findByOrganizationId(
+			organizationId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the account entry organization rels before and after the current account entry organization rel in the ordered set where organizationId = &#63;.
+	 *
+	 * @param accountEntryOrganizationRelId the primary key of the current account entry organization rel
+	 * @param organizationId the organization ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next account entry organization rel
+	 * @throws NoSuchEntryOrganizationRelException if a account entry organization rel with the primary key could not be found
+	 */
+	@Override
+	public AccountEntryOrganizationRel[] findByOrganizationId_PrevAndNext(
+			long accountEntryOrganizationRelId, long organizationId,
+			OrderByComparator<AccountEntryOrganizationRel> orderByComparator)
+		throws NoSuchEntryOrganizationRelException {
+
+		AccountEntryOrganizationRel accountEntryOrganizationRel =
+			findByPrimaryKey(accountEntryOrganizationRelId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AccountEntryOrganizationRel[] array =
+				new AccountEntryOrganizationRelImpl[3];
+
+			array[0] = getByOrganizationId_PrevAndNext(
+				session, accountEntryOrganizationRel, organizationId,
+				orderByComparator, true);
+
+			array[1] = accountEntryOrganizationRel;
+
+			array[2] = getByOrganizationId_PrevAndNext(
+				session, accountEntryOrganizationRel, organizationId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AccountEntryOrganizationRel getByOrganizationId_PrevAndNext(
+		Session session,
+		AccountEntryOrganizationRel accountEntryOrganizationRel,
+		long organizationId,
+		OrderByComparator<AccountEntryOrganizationRel> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE);
+
+		query.append(_FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AccountEntryOrganizationRelModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(organizationId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						accountEntryOrganizationRel)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<AccountEntryOrganizationRel> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the account entry organization rels where organizationId = &#63; from the database.
+	 *
+	 * @param organizationId the organization ID
+	 */
+	@Override
+	public void removeByOrganizationId(long organizationId) {
+		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
+				findByOrganizationId(
+					organizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(accountEntryOrganizationRel);
+		}
+	}
+
+	/**
+	 * Returns the number of account entry organization rels where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @return the number of matching account entry organization rels
+	 */
+	@Override
+	public int countByOrganizationId(long organizationId) {
+		FinderPath finderPath = _finderPathCountByOrganizationId;
+
+		Object[] finderArgs = new Object[] {organizationId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ACCOUNTENTRYORGANIZATIONREL_WHERE);
+
+			query.append(_FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(organizationId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2 =
+		"accountEntryOrganizationRel.organizationId = ?";
+
 	private FinderPath _finderPathFetchByA_O;
 	private FinderPath _finderPathCountByA_O;
 
@@ -1219,6 +1742,14 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByAccountEntryId, args);
 
+			args = new Object[] {
+				accountEntryOrganizationRelModelImpl.getOrganizationId()
+			};
+
+			finderCache.removeResult(_finderPathCountByOrganizationId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByOrganizationId, args);
+
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
@@ -1246,6 +1777,30 @@ public class AccountEntryOrganizationRelPersistenceImpl
 					_finderPathCountByAccountEntryId, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByAccountEntryId, args);
+			}
+
+			if ((accountEntryOrganizationRelModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByOrganizationId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					accountEntryOrganizationRelModelImpl.
+						getOriginalOrganizationId()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByOrganizationId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByOrganizationId, args);
+
+				args = new Object[] {
+					accountEntryOrganizationRelModelImpl.getOrganizationId()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByOrganizationId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByOrganizationId, args);
 			}
 		}
 
@@ -1573,6 +2128,27 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		_finderPathCountByAccountEntryId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountEntryId",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByOrganizationId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			AccountEntryOrganizationRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOrganizationId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByOrganizationId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			AccountEntryOrganizationRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOrganizationId",
+			new String[] {Long.class.getName()},
+			AccountEntryOrganizationRelModelImpl.ORGANIZATIONID_COLUMN_BITMASK);
+
+		_finderPathCountByOrganizationId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOrganizationId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByA_O = new FinderPath(

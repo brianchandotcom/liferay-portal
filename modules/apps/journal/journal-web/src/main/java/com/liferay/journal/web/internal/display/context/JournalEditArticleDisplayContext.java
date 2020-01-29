@@ -542,7 +542,8 @@ public class JournalEditArticleDisplayContext {
 		throws PortalException {
 
 		DDMFormValuesToMapConverter ddmFormValuesToMapConverter =
-			_getDDMFormValuesToMapConverter();
+			(DDMFormValuesToMapConverter)_httpServletRequest.getAttribute(
+				DDMFormValuesToMapConverter.class.getName());
 
 		return ddmFormValuesToMapConverter.convert(
 			getDDMFormValues(ddmStructure), ddmStructure);
@@ -627,11 +628,6 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		return false;
-	}
-
-	private DDMFormValuesToMapConverter _getDDMFormValuesToMapConverter() {
-		return (DDMFormValuesToMapConverter)_httpServletRequest.getAttribute(
-			DDMFormValuesToMapConverter.class.getName());
 	}
 
 	private long _getInheritedWorkflowDDMStructuresFolderId()

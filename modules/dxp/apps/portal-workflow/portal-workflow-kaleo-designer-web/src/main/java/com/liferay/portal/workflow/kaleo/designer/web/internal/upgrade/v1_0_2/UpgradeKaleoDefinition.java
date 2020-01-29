@@ -117,7 +117,9 @@ public class UpgradeKaleoDefinition extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasTable("KaleoDraftDefinition")) {
+		if (hasTable("KaleoDefinitionVersion") &&
+			hasTable("KaleoDraftDefinition")) {
+
 			addKaleoDefinitionsFromKaleoDefinitionVersion();
 		}
 	}

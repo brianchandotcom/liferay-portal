@@ -68,6 +68,9 @@
 		<finder name="AccountEntryId" return-type="Collection">
 			<finder-column name="accountEntryId" />
 		</finder>
+		<finder name="OrganizationId" return-type="Collection">
+			<finder-column name="organizationId" />
+		</finder>
 		<finder name="A_O" return-type="AccountEntryOrganizationRel">
 			<finder-column name="accountEntryId" />
 			<finder-column name="organizationId" />

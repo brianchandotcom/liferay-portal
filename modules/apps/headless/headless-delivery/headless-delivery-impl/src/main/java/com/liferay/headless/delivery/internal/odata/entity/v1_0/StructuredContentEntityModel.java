@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.internal.odata.entity.v1_0;
 
+import com.liferay.headless.common.spi.odata.entity.EntityFieldsFactory;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
@@ -37,35 +38,36 @@ public class StructuredContentEntityModel implements EntityModel {
 	public StructuredContentEntityModel(
 		List<EntityField> entityFields, List<EntityField> customEntityFields) {
 
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new CollectionEntityField(
+		_entityFieldsMap =
+			EntityFieldsFactory.createEntityFieldsMapWithEntityId(
+				new CollectionEntityField(
+					new IntegerEntityField(
+						"taxonomyCategoryIds", locale -> "assetCategoryIds")),
+				new CollectionEntityField(
+					new StringEntityField(
+						"keywords", locale -> "assetTagNames.raw")),
+				new ComplexEntityField("contentFields", entityFields),
+				new ComplexEntityField("customFields", customEntityFields),
+				new DateTimeEntityField(
+					"dateCreated",
+					locale -> Field.getSortableFieldName(Field.CREATE_DATE),
+					locale -> Field.CREATE_DATE),
+				new DateTimeEntityField(
+					"dateModified",
+					locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
+					locale -> Field.MODIFIED_DATE),
+				new DateTimeEntityField(
+					"datePublished",
+					locale -> Field.getSortableFieldName(Field.DISPLAY_DATE),
+					locale -> Field.DISPLAY_DATE),
 				new IntegerEntityField(
-					"taxonomyCategoryIds", locale -> "assetCategoryIds")),
-			new CollectionEntityField(
+					"contentStructureId", locale -> Field.CLASS_TYPE_ID),
+				new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 				new StringEntityField(
-					"keywords", locale -> "assetTagNames.raw")),
-			new ComplexEntityField("contentFields", entityFields),
-			new ComplexEntityField("customFields", customEntityFields),
-			new DateTimeEntityField(
-				"dateCreated",
-				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
-				locale -> Field.CREATE_DATE),
-			new DateTimeEntityField(
-				"dateModified",
-				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
-				locale -> Field.MODIFIED_DATE),
-			new DateTimeEntityField(
-				"datePublished",
-				locale -> Field.getSortableFieldName(Field.DISPLAY_DATE),
-				locale -> Field.DISPLAY_DATE),
-			new IntegerEntityField(
-				"contentStructureId", locale -> Field.CLASS_TYPE_ID),
-			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
-			new StringEntityField(
-				"title",
-				locale -> Field.getSortableFieldName(
-					"localized_title_".concat(
-						LocaleUtil.toLanguageId(locale)))));
+					"title",
+					locale -> Field.getSortableFieldName(
+						"localized_title_".concat(
+							LocaleUtil.toLanguageId(locale)))));
 	}
 
 	@Override

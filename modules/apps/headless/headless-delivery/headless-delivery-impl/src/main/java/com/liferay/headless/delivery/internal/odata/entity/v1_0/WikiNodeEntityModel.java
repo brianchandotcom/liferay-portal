@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.internal.odata.entity.v1_0;
 
+import com.liferay.headless.common.spi.odata.entity.EntityFieldsFactory;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -29,18 +30,19 @@ import java.util.Map;
 public class WikiNodeEntityModel implements EntityModel {
 
 	public WikiNodeEntityModel() {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new DateTimeEntityField(
-				"dateCreated",
-				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
-				locale -> Field.CREATE_DATE),
-			new DateTimeEntityField(
-				"dateModified",
-				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
-				locale -> Field.MODIFIED_DATE),
-			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
-			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.TITLE)));
+		_entityFieldsMap =
+			EntityFieldsFactory.createEntityFieldsMapWithEntityId(
+				new DateTimeEntityField(
+					"dateCreated",
+					locale -> Field.getSortableFieldName(Field.CREATE_DATE),
+					locale -> Field.CREATE_DATE),
+				new DateTimeEntityField(
+					"dateModified",
+					locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
+					locale -> Field.MODIFIED_DATE),
+				new IntegerEntityField("creatorId", locale -> Field.USER_ID),
+				new StringEntityField(
+					"name", locale -> Field.getSortableFieldName(Field.TITLE)));
 	}
 
 	@Override

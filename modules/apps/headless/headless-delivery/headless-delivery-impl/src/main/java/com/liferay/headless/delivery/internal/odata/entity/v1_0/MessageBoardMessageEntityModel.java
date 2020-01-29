@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.internal.odata.entity.v1_0;
 
+import com.liferay.headless.common.spi.odata.entity.EntityFieldsFactory;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.BooleanEntityField;
@@ -34,39 +35,41 @@ import java.util.Map;
 public class MessageBoardMessageEntityModel implements EntityModel {
 
 	public MessageBoardMessageEntityModel(List<EntityField> entityFields) {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new BooleanEntityField("showAsQuestion", locale -> "question"),
-			new CollectionEntityField(
+		_entityFieldsMap =
+			EntityFieldsFactory.createEntityFieldsMapWithEntityId(
+				new BooleanEntityField("showAsQuestion", locale -> "question"),
+				new CollectionEntityField(
+					new StringEntityField(
+						"keywords", locale -> "assetTagNames.raw")),
+				new ComplexEntityField("customFields", entityFields),
+				new DateTimeEntityField(
+					"dateCreated",
+					locale -> Field.getSortableFieldName(Field.CREATE_DATE),
+					locale -> Field.CREATE_DATE),
+				new DateTimeEntityField(
+					"dateModified",
+					locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
+					locale -> Field.MODIFIED_DATE),
+				new EntityField(
+					"showAsAnswer", EntityField.Type.BOOLEAN,
+					locale -> Field.getSortableFieldName("answer_String"),
+					locale -> "answer", String::valueOf),
+				new IntegerEntityField("creatorId", locale -> Field.USER_ID),
+				new IntegerEntityField(
+					"messageBoardSectionId", locale -> Field.CATEGORY_ID),
+				new IntegerEntityField(
+					"messageBoardThreadId",
+					locale -> Field.ROOT_ENTRY_CLASS_PK),
+				new IntegerEntityField(
+					"parentMessageBoardMessageId", locale -> "parentMessageId"),
+				new IntegerEntityField(
+					"ratingValue",
+					locale -> Field.getSortableFieldName("totalScore")),
 				new StringEntityField(
-					"keywords", locale -> "assetTagNames.raw")),
-			new ComplexEntityField("customFields", entityFields),
-			new DateTimeEntityField(
-				"dateCreated",
-				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
-				locale -> Field.CREATE_DATE),
-			new DateTimeEntityField(
-				"dateModified",
-				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
-				locale -> Field.MODIFIED_DATE),
-			new EntityField(
-				"showAsAnswer", EntityField.Type.BOOLEAN,
-				locale -> Field.getSortableFieldName("answer_String"),
-				locale -> "answer", String::valueOf),
-			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
-			new IntegerEntityField(
-				"messageBoardSectionId", locale -> Field.CATEGORY_ID),
-			new IntegerEntityField(
-				"messageBoardThreadId", locale -> Field.ROOT_ENTRY_CLASS_PK),
-			new IntegerEntityField(
-				"parentMessageBoardMessageId", locale -> "parentMessageId"),
-			new IntegerEntityField(
-				"ratingValue",
-				locale -> Field.getSortableFieldName("totalScore")),
-			new StringEntityField(
-				"headline",
-				locale -> Field.getSortableFieldName(
-					"localized_title_".concat(
-						LocaleUtil.toLanguageId(locale)))));
+					"headline",
+					locale -> Field.getSortableFieldName(
+						"localized_title_".concat(
+							LocaleUtil.toLanguageId(locale)))));
 	}
 
 	@Override

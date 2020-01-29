@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0;
 
+import com.liferay.headless.common.spi.odata.entity.EntityFieldsFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
@@ -30,20 +31,21 @@ import java.util.Map;
 public class KeywordEntityModel implements EntityModel {
 
 	public KeywordEntityModel() {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new DateTimeEntityField(
-				"dateCreated",
-				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
-				locale -> Field.CREATE_DATE),
-			new DateTimeEntityField(
-				"dateModified",
-				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
-				locale -> Field.MODIFIED_DATE),
-			new StringEntityField(
-				Field.NAME,
-				locale -> Field.getSortableFieldName(
-					StringBundler.concat(
-						Field.NAME, StringPool.UNDERLINE, "String"))));
+		_entityFieldsMap =
+			EntityFieldsFactory.createEntityFieldsMapWithEntityId(
+				new DateTimeEntityField(
+					"dateCreated",
+					locale -> Field.getSortableFieldName(Field.CREATE_DATE),
+					locale -> Field.CREATE_DATE),
+				new DateTimeEntityField(
+					"dateModified",
+					locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
+					locale -> Field.MODIFIED_DATE),
+				new StringEntityField(
+					Field.NAME,
+					locale -> Field.getSortableFieldName(
+						StringBundler.concat(
+							Field.NAME, StringPool.UNDERLINE, "String"))));
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0;
 
+import com.liferay.headless.common.spi.odata.entity.EntityFieldsFactory;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
@@ -29,19 +30,20 @@ import java.util.Map;
 public class CategoryEntityModel implements EntityModel {
 
 	public CategoryEntityModel() {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new DateTimeEntityField(
-				"dateCreated",
-				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
-				locale -> Field.CREATE_DATE),
-			new DateTimeEntityField(
-				"dateModified",
-				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
-				locale -> Field.MODIFIED_DATE),
-			new StringEntityField(
-				"name",
-				locale -> Field.getSortableFieldName(
-					"localized_title_" + LocaleUtil.toLanguageId(locale))));
+		_entityFieldsMap =
+			EntityFieldsFactory.createEntityFieldsMapWithEntityId(
+				new DateTimeEntityField(
+					"dateCreated",
+					locale -> Field.getSortableFieldName(Field.CREATE_DATE),
+					locale -> Field.CREATE_DATE),
+				new DateTimeEntityField(
+					"dateModified",
+					locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
+					locale -> Field.MODIFIED_DATE),
+				new StringEntityField(
+					"name",
+					locale -> Field.getSortableFieldName(
+						"localized_title_" + LocaleUtil.toLanguageId(locale))));
 	}
 
 	@Override

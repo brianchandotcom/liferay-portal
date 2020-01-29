@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.user.internal.odata.entity.v1_0;
 
+import com.liferay.headless.common.spi.odata.entity.EntityFieldsFactory;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
@@ -30,19 +31,20 @@ import java.util.Map;
 public class OrganizationEntityModel implements EntityModel {
 
 	public OrganizationEntityModel() {
-		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new CollectionEntityField(
+		_entityFieldsMap =
+			EntityFieldsFactory.createEntityFieldsMapWithEntityId(
+				new CollectionEntityField(
+					new StringEntityField(
+						"keywords", locale -> "assetTagNames.raw")),
+				new DateTimeEntityField(
+					"dateModified",
+					locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
+					locale -> Field.MODIFIED_DATE),
+				new IdEntityField(
+					"parentOrganizationId", locale -> "parentOrganizationId",
+					String::valueOf),
 				new StringEntityField(
-					"keywords", locale -> "assetTagNames.raw")),
-			new DateTimeEntityField(
-				"dateModified",
-				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
-				locale -> Field.MODIFIED_DATE),
-			new IdEntityField(
-				"parentOrganizationId", locale -> "parentOrganizationId",
-				String::valueOf),
-			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.NAME)));
+					"name", locale -> Field.getSortableFieldName(Field.NAME)));
 	}
 
 	@Override

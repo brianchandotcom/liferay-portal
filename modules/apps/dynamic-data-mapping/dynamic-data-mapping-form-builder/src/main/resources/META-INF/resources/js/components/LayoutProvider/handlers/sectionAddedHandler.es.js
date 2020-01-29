@@ -42,7 +42,8 @@ const createField = (props, event) => {
 				newFieldName = value;
 			}
 		});
-	} else {
+	}
+	else {
 		newFieldName = fieldNameGenerator(fieldType.label);
 	}
 

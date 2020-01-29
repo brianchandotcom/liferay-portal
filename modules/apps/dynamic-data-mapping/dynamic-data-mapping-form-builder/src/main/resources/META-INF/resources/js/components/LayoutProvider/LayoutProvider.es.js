@@ -293,10 +293,19 @@ class LayoutProvider extends Component {
 		});
 	}
 
-	_handleColumnResized({column, direction, source}) {
+	_handleColumnResized({column, container, direction, source}) {
 		const {state} = this;
 
-		this.setState(handleColumnResized(state, source, column, direction));
+		this.setState(
+			handleColumnResized(
+				this.props,
+				state,
+				source,
+				container,
+				column,
+				direction
+			)
+		);
 	}
 
 	_handleFieldAdded(event) {

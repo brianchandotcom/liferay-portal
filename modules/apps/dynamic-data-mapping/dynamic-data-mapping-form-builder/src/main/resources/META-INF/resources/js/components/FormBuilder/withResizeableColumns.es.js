@@ -92,6 +92,8 @@ const withResizeableColumns = ChildComponent => {
 			if (parentElement) {
 				parentElement.classList.remove('dragging');
 			}
+
+			this._currentRow = null;
 		}
 
 		_handleDragStart() {
@@ -105,7 +107,19 @@ const withResizeableColumns = ChildComponent => {
 			const {source, x} = event;
 			const {store} = this.context;
 
-			const container = dom.closest(source, '.ddm-field-container');
+			if (!this._currentRow) {
+				this._currentRow = dom.closest(source, '.row');
+			}
+
+			const container = this._currentRow.querySelector(
+				[
+					'.col-ddm',
+					`[data-ddm-field-column="${source.dataset.ddmFieldColumn}"]`,
+					`[data-ddm-field-page="${source.dataset.ddmFieldPage}"]`,
+					`[data-ddm-field-row="${source.dataset.ddmFieldRow}"]`,
+					'> .ddm-field-container'
+				].join('')
+			);
 
 			if (container) {
 				container.classList.add('dragging');
@@ -138,6 +152,7 @@ const withResizeableColumns = ChildComponent => {
 
 					store.emit('columnResized', {
 						column,
+						container,
 						direction,
 						source,
 					});

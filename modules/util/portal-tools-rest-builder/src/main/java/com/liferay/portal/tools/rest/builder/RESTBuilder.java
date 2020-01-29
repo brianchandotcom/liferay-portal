@@ -159,9 +159,9 @@ public class RESTBuilder {
 		File[] files = FileUtil.getFiles(_configDir, "rest-openapi", ".yaml");
 
 		for (File file : files) {
-			OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(file);
+			_checkOpenAPIYAMLFile(freeMarkerTool, file);
 
-			_checkOpenAPIYAMLFile(freeMarkerTool, openAPIYAML, file);
+			OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(FileUtil.read(file));
 
 			Info info = openAPIYAML.getInfo();
 
@@ -288,30 +288,29 @@ public class RESTBuilder {
 		jCommander.usage();
 	}
 
-	private void _checkOpenAPIYAMLFile(
-			FreeMarkerTool freeMarkerTool, OpenAPIYAML openAPIYAML, File file)
+	private void _checkOpenAPIYAMLFile(FreeMarkerTool freeMarkerTool, File file)
 		throws Exception {
 
-		String s = _fixOpenAPILicense(openAPIYAML, FileUtil.read(file));
+		String s = _fixOpenAPILicense(FileUtil.read(file));
 
-		s = _fixOpenAPIPaths(openAPIYAML, s);
+		s = _fixOpenAPIPaths(s);
 
-		s = _fixOpenAPIPathParameters(openAPIYAML, s);
+		s = _fixOpenAPIPathParameters(s);
 
 		if (_configYAML.isForcePredictableSchemaPropertyName()) {
-			s = _fixOpenAPISchemaPropertyNames(freeMarkerTool, openAPIYAML, s);
+			s = _fixOpenAPISchemaPropertyNames(freeMarkerTool, s);
 		}
 
 		if (_configYAML.isForcePredictableOperationId()) {
-			s = _fixOpenAPIOperationIds(freeMarkerTool, openAPIYAML, s);
+			s = _fixOpenAPIOperationIds(freeMarkerTool, s);
 		}
 
 		if (_configYAML.isForcePredictableContentApplicationXML()) {
-			s = _fixOpenAPIContentApplicationXML(openAPIYAML, s);
+			s = _fixOpenAPIContentApplicationXML(s);
 		}
 
 		if (_configYAML.isWarningsEnabled()) {
-			_validate(openAPIYAML);
+			_validate(s);
 		}
 
 		FileUtil.write(file, s);
@@ -959,8 +958,10 @@ public class RESTBuilder {
 		return StringUtil.replaceFirst(s, oldSub, oldSub + replacement, index);
 	}
 
-	private String _fixOpenAPIContentApplicationXML(
-		OpenAPIYAML openAPIYAML, String s) {
+	private String _fixOpenAPIContentApplicationXML(String s)
+		throws IOException {
+
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
@@ -1010,7 +1011,9 @@ public class RESTBuilder {
 		return s;
 	}
 
-	private String _fixOpenAPILicense(OpenAPIYAML openAPIYAML, String s) {
+	private String _fixOpenAPILicense(String s) throws IOException {
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
+
 		String licenseName = _configYAML.getLicenseName();
 		String licenseURL = _configYAML.getLicenseURL();
 
@@ -1121,7 +1124,10 @@ public class RESTBuilder {
 	}
 
 	private String _fixOpenAPIOperationIds(
-		FreeMarkerTool freeMarkerTool, OpenAPIYAML openAPIYAML, String s) {
+			FreeMarkerTool freeMarkerTool, String s)
+		throws IOException {
+
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
 
 		s = s.replaceAll("\n\\s+operationId:.+", "");
 
@@ -1205,8 +1211,8 @@ public class RESTBuilder {
 		return s;
 	}
 
-	private String _fixOpenAPIPathParameters(
-		OpenAPIYAML openAPIYAML, String s) {
+	private String _fixOpenAPIPathParameters(String s) throws IOException {
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
@@ -1347,7 +1353,9 @@ public class RESTBuilder {
 		return s;
 	}
 
-	private String _fixOpenAPIPaths(OpenAPIYAML openAPIYAML, String s) {
+	private String _fixOpenAPIPaths(String s) throws IOException {
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
+
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
 		if (pathItems == null) {
@@ -1385,7 +1393,10 @@ public class RESTBuilder {
 	}
 
 	private String _fixOpenAPISchemaPropertyNames(
-		FreeMarkerTool freeMarkerTool, OpenAPIYAML openAPIYAML, String s) {
+			FreeMarkerTool freeMarkerTool, String s)
+		throws IOException {
+
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
 
 		Components components = openAPIYAML.getComponents();
 
@@ -1521,8 +1532,8 @@ public class RESTBuilder {
 		return relatedSchemaNames;
 	}
 
-	private OpenAPIYAML _loadOpenAPIYAML(File file) throws IOException {
-		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(FileUtil.read(file));
+	private OpenAPIYAML _loadOpenAPIYAML(String yamlString) throws IOException {
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(yamlString);
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
@@ -1607,7 +1618,9 @@ public class RESTBuilder {
 		context.put("relatedSchemaNames", relatedSchemaNames);
 	}
 
-	private void _validate(OpenAPIYAML openAPIYAML) {
+	private void _validate(String s) throws IOException {
+		OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(s);
+
 		Components components = openAPIYAML.getComponents();
 
 		Map<String, Schema> schemas = components.getSchemas();

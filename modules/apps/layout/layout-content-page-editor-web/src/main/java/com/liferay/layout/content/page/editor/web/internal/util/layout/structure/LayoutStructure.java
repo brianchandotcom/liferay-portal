@@ -177,8 +177,16 @@ public class LayoutStructure {
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);
 
+		LayoutStructureItem parentLayoutStructureItem =
+			_layoutStructureItems.get(layoutStructureItem.getParentItemId());
+
+		List<String> childrenItemIds =
+			parentLayoutStructureItem.getChildrenItemIds();
+
+		int position = childrenItemIds.indexOf(itemId) + 1;
+
 		return _duplicateLayoutStructureItem(
-			itemId, layoutStructureItem.getParentItemId());
+			itemId, layoutStructureItem.getParentItemId(), position);
 	}
 
 	public LayoutStructureItem moveLayoutStructureItem(
@@ -347,7 +355,7 @@ public class LayoutStructure {
 	}
 
 	private List<LayoutStructureItem> _duplicateLayoutStructureItem(
-		String itemId, String parentItemId) {
+		String itemId, String parentItemId, int position) {
 
 		List<LayoutStructureItem> duplicatedLayoutStructureItems =
 			new ArrayList<>();
@@ -372,12 +380,12 @@ public class LayoutStructure {
 		newLayoutStructureItem.setItemType(layoutStructureItem.getItemType());
 		newLayoutStructureItem.setParentItemId(parentItemId);
 
-		_updateLayoutStructure(newLayoutStructureItem, -1);
+		_updateLayoutStructure(newLayoutStructureItem, position);
 
 		for (String childrenItemId : layoutStructureItem.getChildrenItemIds()) {
 			duplicatedLayoutStructureItems.addAll(
 				_duplicateLayoutStructureItem(
-					childrenItemId, newLayoutStructureItem.getItemId()));
+					childrenItemId, newLayoutStructureItem.getItemId(), -1));
 		}
 
 		duplicatedLayoutStructureItems.add(newLayoutStructureItem);

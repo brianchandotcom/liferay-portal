@@ -17,12 +17,6 @@
 		"vanilla-text-mask": "^5.0.1"
 	},
 	"jest": {
-		"moduleNameMapper": {
-			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/$1.js"
-		},
-		"modulePathIgnorePatterns": [
-			"/__mock__/"
-		],
 		"setupFiles": [
 			"<rootDir>/jest-setup.config.js"
 		],
@@ -39,7 +33,6 @@
 			"Validation"
 		]
 	},
-	"main": "./",
 	"name": "dynamic-data-mapping-form-field-type",
 	"private": true,
 	"scripts": {

@@ -3,6 +3,7 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="AppendCheck" files="modules/core/petra/petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
+		<suppress checks="ChainingCheck" files="modules/core/petra/petra-sql-dsl-spi/src/test/java/com/liferay/petra/sql/dsl/spi/SQLDSLTest\.java" />
 		<suppress checks="ConcatCheck" files="modules/core/petra/petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
 		<suppress checks="EnumConstantOrderCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/ProcessLog\.java" />
 		<suppress checks="MethodNameCheck" files="modules/core/petra/petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />

@@ -13,20 +13,24 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
+import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
+import ClayModal from '@clayui/modal';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
+
+const noop = () => {};
 
 const ManageLanguages = ({
 	availableLocales,
 	customDefaultLocaleId,
 	customLocales,
-	eventName
+	observer,
+	onModalClose = noop,
+	onModalSave = noop
 }) => {
-	const [selectedLocales, setSelectedLocales] = useState(
-		JSON.parse(customLocales)
-	);
+	const [selectedLocales, setSelectedLocales] = useState(customLocales);
 
 	const [selectedLocalesIds, setSelectedLocalesIds] = useState(
 		selectedLocales.map(({localeId}) => localeId)
@@ -50,14 +54,8 @@ const ManageLanguages = ({
 	};
 
 	useEffect(() => {
-		Liferay.Util.getOpener().Liferay.fire(eventName, {
-			data: {
-				value: selectedLocales
-			}
-		});
-
 		setSelectedLocalesIds(selectedLocales.map(({localeId}) => localeId));
-	}, [eventName, selectedLocales]);
+	}, [selectedLocales]);
 
 	const Language = ({displayName, isDefault, localeId}) => {
 		const checked = selectedLocalesIds.indexOf(localeId) != -1;
@@ -88,23 +86,46 @@ const ManageLanguages = ({
 	};
 
 	return (
-		<div className="container">
-			<ClayTable borderless headVerticalAlignment="middle">
-				<ClayTable.Body>
-					{availableLocales.map(locale => {
-						return (
-							<Language
-								{...locale}
-								isDefault={
-									customDefaultLocaleId === locale.localeId
-								}
-								key={locale.localeId}
-							/>
-						);
-					})}
-				</ClayTable.Body>
-			</ClayTable>
-		</div>
+		<ClayModal observer={observer}>
+			<ClayModal.Header>
+				{Liferay.Language.get('language-selection')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<ClayTable borderless headVerticalAlignment="middle">
+					<ClayTable.Body>
+						{availableLocales.map(locale => {
+							return (
+								<Language
+									{...locale}
+									isDefault={
+										customDefaultLocaleId === locale.localeId
+									}
+									key={locale.localeId}
+								/>
+							);
+						})}
+					</ClayTable.Body>
+				</ClayTable>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={onModalClose}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton displayType="primary" onClick={() => onModalSave(selectedLocales)}>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</ClayModal>
 	);
 };
 
@@ -116,8 +137,15 @@ ManageLanguages.propTypes = {
 		})
 	).isRequired,
 	customDefaultLocaleId: PropTypes.string.isRequired,
-	customLocales: PropTypes.string.isRequired,
-	eventName: PropTypes.string
+	customLocales: PropTypes.arrayOf(
+		PropTypes.shape({
+			displayName: PropTypes.string,
+			localeId: PropTypes.string
+		})
+	).isRequired,
+	handleSaveBtn: PropTypes.func,
+	observer: PropTypes.object.isRequired,
+	onModalClose: PropTypes.func
 };
 
 export default function(props) {

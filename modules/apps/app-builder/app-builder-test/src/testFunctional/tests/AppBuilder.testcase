@@ -2153,7 +2153,7 @@ definition {
 
 		FormViewBuilder.setFieldLabel(fieldLabel = "Testing Select List");
 
-		FormViewBuilder.searchObjectField(fieldValue = "Date of Birth");
+		FormViewBuilder.searchObjectField(fieldValue = "Date of birth");
 	}
 
 	@description = "Search for an object in the object list"

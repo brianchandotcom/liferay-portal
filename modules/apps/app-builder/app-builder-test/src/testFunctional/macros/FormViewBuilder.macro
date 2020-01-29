@@ -158,7 +158,7 @@ definition {
 			locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_BOX",
 			value1 = "${fieldValue}");
 		
-		FormViewBuilder.validateFieldInObject(fieldLabel = "${fieldValue}")
+		FormViewBuilder.validateSearchResult(fieldLabel = "${fieldValue}");
 	}
 
 	macro selectRadioOption {
@@ -235,6 +235,14 @@ definition {
 	macro validateFieldLabel {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+	}
+
+	macro validateSearchResult {
+		var key_fieldName = "${fieldLabel}";
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_RESULT",
 			value1 = "${fieldLabel}");
 	}
 

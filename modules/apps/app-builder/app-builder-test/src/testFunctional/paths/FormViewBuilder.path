@@ -219,6 +219,12 @@
 </tr>
 
 <tr>
+	<td>OBJECT_FIELD_SEARCH_RESULT</td>
+	<td>//div[@class='custom-object-field autofit-row autofit-row-center field-type']//span[contains(text(),'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>OBJECT_FIELD_BUTTON_DROPDOWN</td>
 	<td>//button[@class='dropdown-item' and contains(text(), '${key_fieldName}')]</td>
 	<td></td>

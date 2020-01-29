@@ -25,7 +25,7 @@ long mfaEmailOTPUserId = (Long)request.getAttribute(MFAEmailOTPWebKeys.MFA_EMAIL
 %>
 
 <portlet:actionURL name="/mfa_email_otp_verify/verify" var="verifyURL">
-	<portlet:param name="mvcRenderCommandName" value="/mfa_email_otp_verify/view" />
+	<portlet:param name="mvcRenderCommandName" value="/mfa_email_otp_verify/verify" />
 </portlet:actionURL>
 
 <aui:form action="<%= verifyURL %>" cssClass="container-fluid-1280 sign-in-form" data-senna-off="true" method="post" name="fm">

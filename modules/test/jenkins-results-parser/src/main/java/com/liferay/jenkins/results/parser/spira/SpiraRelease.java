@@ -260,7 +260,7 @@ public class SpiraRelease {
 	}
 
 	private SpiraRelease _getParentSpiraRelease() {
-		if (_parentSpiraReleases.length > 1) {
+		if (_parentSpiraReleases.length > 0) {
 			return _parentSpiraReleases[_parentSpiraReleases.length - 1];
 		}
 

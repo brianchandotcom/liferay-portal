@@ -28,9 +28,9 @@ import java.util.function.Supplier;
 /**
  * @author Preston Crary
  */
-public abstract class Table<T extends Table<T>> extends BaseASTNode {
+public abstract class BaseTable<T extends BaseTable<T>> extends BaseASTNode {
 
-	public Table(String tableName, Supplier<T> tableSupplier) {
+	public BaseTable(String tableName, Supplier<T> tableSupplier) {
 		_tableName = tableName;
 		_tableSupplier = Objects.requireNonNull(tableSupplier);
 	}
@@ -49,13 +49,13 @@ public abstract class Table<T extends Table<T>> extends BaseASTNode {
 			return true;
 		}
 
-		if (!(object instanceof Table<?>)) {
+		if (!(object instanceof BaseTable<?>)) {
 			return false;
 		}
 
-		Table<?> table = (Table<?>)object;
+		BaseTable<?> baseTable = (BaseTable<?>)object;
 
-		return Objects.equals(_tableName, table._tableName);
+		return Objects.equals(_tableName, baseTable._tableName);
 	}
 
 	public String getAlias() {

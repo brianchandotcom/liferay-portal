@@ -27,7 +27,7 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class Column<T extends Table<T>, C>
+public class Column<T extends BaseTable<T>, C>
 	extends BaseASTNode implements Expression<C> {
 
 	public Column(

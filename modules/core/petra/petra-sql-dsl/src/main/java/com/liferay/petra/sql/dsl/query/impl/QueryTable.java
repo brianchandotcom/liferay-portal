@@ -14,7 +14,7 @@
 
 package com.liferay.petra.sql.dsl.query.impl;
 
-import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 
@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 /**
  * @author Shuyang Zhou
  */
-public class QueryTable extends Table<QueryTable> {
+public class QueryTable extends BaseTable<QueryTable> {
 
 	public QueryTable(String name, DSLQuery dslQuery) {
 		super(null, () -> new QueryTable(name, dslQuery));

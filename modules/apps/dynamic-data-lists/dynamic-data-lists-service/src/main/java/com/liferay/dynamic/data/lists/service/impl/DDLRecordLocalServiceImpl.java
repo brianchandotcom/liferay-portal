@@ -807,15 +807,15 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			ddlRecordVersion.getVersion(), true,
 			serviceContext.getWorkflowAction());
 
-		record.setVersion(version);
-
-		record = ddlRecordPersistence.update(record);
-
 		int status = GetterUtil.getInteger(
 			serviceContext.getAttribute("status"),
 			WorkflowConstants.STATUS_APPROVED);
 
 		addRecordVersion(user, record, ddmStorageId, version, 0, status);
+
+		record.setVersion(version);
+
+		record = ddlRecordPersistence.update(record);
 
 		return record;
 	}

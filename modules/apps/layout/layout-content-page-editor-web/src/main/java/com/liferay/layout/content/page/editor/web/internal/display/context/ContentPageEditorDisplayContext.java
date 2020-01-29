@@ -327,6 +327,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"mappingFieldsURL", editorSoyContext.get("mappingFieldsURL")
 			).put(
+				"masterUsed", editorSoyContext.get("masterUsed")
+			).put(
 				"moveItemURL",
 				getFragmentEntryActionURL(
 					"/content_layout/move_fragment_entry_link_react")

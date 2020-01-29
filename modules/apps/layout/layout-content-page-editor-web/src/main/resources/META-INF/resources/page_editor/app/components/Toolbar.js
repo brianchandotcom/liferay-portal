@@ -41,7 +41,7 @@ function ToolbarBody() {
 	const selectItem = useSelectItem();
 	const store = useSelector(state => state);
 
-	const {portletNamespace} = config;
+	const {masterUsed, portletNamespace} = config;
 	const {segmentsExperienceId, segmentsExperimentStatus} = store;
 
 	const {draft} = store;
@@ -113,6 +113,19 @@ function ToolbarBody() {
 			!confirm(
 				Liferay.Language.get(
 					'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
+				)
+			)
+		) {
+			event.preventDefault();
+		}
+	};
+
+	const handleSubmit = event => {
+		if (
+			masterUsed &&
+			!confirm(
+				Liferay.Language.get(
+					'changes-made-on-this-master-are-going-to-be-propagated-to-all-page-templates,-display-page-templates,-and-pages-using-it.are-you-sure-you-want-to-proceed'
 				)
 			)
 		) {
@@ -223,6 +236,7 @@ function ToolbarBody() {
 						<ClayButton
 							className="nav-btn"
 							displayType="primary"
+							onClick={handleSubmit}
 							small
 							type="submit"
 						>

@@ -32,7 +32,7 @@ public class AssetCategoriesAdminDepotApplication implements DepotApplication {
 
 	@Override
 	public boolean isCustomizable() {
-		return true;
+		return false;
 	}
 
 }

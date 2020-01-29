@@ -32,7 +32,7 @@ public class AssetTagsAdminDepotApplication implements DepotApplication {
 
 	@Override
 	public boolean isCustomizable() {
-		return true;
+		return false;
 	}
 
 }

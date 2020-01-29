@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.spi.expression;
+package com.liferay.petra.sql.dsl.spi.expression.step;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.expression.Expression;
-import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.expression.WhenThenStep;
+import com.liferay.petra.sql.dsl.expression.step.ElseEndStep;
 import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
+import com.liferay.petra.sql.dsl.spi.expression.DefaultExpression;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -26,40 +26,29 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class WhenThen<T> extends BaseASTNode implements DefaultWhenThenStep<T> {
+public class ElseEnd<T> extends BaseASTNode implements DefaultExpression<T> {
 
-	public WhenThen(
-		WhenThenStep<T> whenThenStep, Predicate predicate,
-		Expression<T> thenExpression) {
+	public ElseEnd(ElseEndStep<T> elseEndStep, Expression<T> elseExpression) {
+		super(elseEndStep);
 
-		super(whenThenStep);
-
-		_predicate = Objects.requireNonNull(predicate);
-		_thenExpression = Objects.requireNonNull(thenExpression);
+		_elseExpression = Objects.requireNonNull(elseExpression);
 	}
 
-	public Predicate getPredicate() {
-		return _predicate;
-	}
-
-	public Expression<T> getThenExpression() {
-		return _thenExpression;
+	public Expression<T> getElseExpression() {
+		return _elseExpression;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("when ");
+		consumer.accept("else ");
 
-		_predicate.toSQL(consumer, astNodeListener);
+		_elseExpression.toSQL(consumer, astNodeListener);
 
-		consumer.accept(" then ");
-
-		_thenExpression.toSQL(consumer, astNodeListener);
+		consumer.accept(" end");
 	}
 
-	private final Predicate _predicate;
-	private final Expression<T> _thenExpression;
+	private final Expression<T> _elseExpression;
 
 }

@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expression;
+package com.liferay.petra.sql.dsl.expression.step;
 
-import com.liferay.petra.sql.dsl.ast.ASTNode;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 
 /**
  * @author Preston Crary
  */
-public interface ElseEndStep<T> extends ASTNode {
+public interface WhenThenStep<T> extends ElseEndStep<T> {
 
-	public Expression<T> elseEnd(Expression<T> expression);
+	public WhenThenStep<T> whenThen(
+		Predicate predicate, Expression<T> expression);
 
-	public Expression<T> elseEnd(T value);
+	public WhenThenStep<T> whenThen(Predicate predicate, T value);
 
 }

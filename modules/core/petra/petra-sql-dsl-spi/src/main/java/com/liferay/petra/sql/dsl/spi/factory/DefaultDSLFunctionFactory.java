@@ -16,13 +16,13 @@ package com.liferay.petra.sql.dsl.spi.factory;
 
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.expression.WhenThenStep;
+import com.liferay.petra.sql.dsl.expression.step.WhenThenStep;
 import com.liferay.petra.sql.dsl.factory.DSLFunctionFactory;
 import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
-import com.liferay.petra.sql.dsl.spi.expression.CaseWhenThen;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
+import com.liferay.petra.sql.dsl.spi.expression.step.CaseWhenThen;
 
 import java.sql.Clob;
 

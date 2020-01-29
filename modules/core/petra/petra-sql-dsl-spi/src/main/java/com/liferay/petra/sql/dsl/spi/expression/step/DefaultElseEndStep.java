@@ -12,16 +12,25 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expression;
+package com.liferay.petra.sql.dsl.spi.expression.step;
+
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.step.ElseEndStep;
+import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 
 /**
  * @author Preston Crary
  */
-public interface WhenThenStep<T> extends ElseEndStep<T> {
+public interface DefaultElseEndStep<T> extends ElseEndStep<T> {
 
-	public WhenThenStep<T> whenThen(
-		Predicate predicate, Expression<T> expression);
+	@Override
+	public default Expression<T> elseEnd(Expression<T> expression) {
+		return new ElseEnd<>(this, expression);
+	}
 
-	public WhenThenStep<T> whenThen(Predicate predicate, T value);
+	@Override
+	public default Expression<T> elseEnd(T value) {
+		return elseEnd(new Scalar<>(value));
+	}
 
 }

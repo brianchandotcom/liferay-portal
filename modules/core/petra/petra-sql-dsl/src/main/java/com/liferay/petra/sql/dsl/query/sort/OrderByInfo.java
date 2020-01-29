@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query;
+package com.liferay.petra.sql.dsl.query.sort;
 
 /**
  * @author Preston Crary

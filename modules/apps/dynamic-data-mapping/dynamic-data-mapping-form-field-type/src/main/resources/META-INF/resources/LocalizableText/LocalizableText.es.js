@@ -16,50 +16,13 @@ import '../FieldBase/FieldBase.es';
 
 import './LocalizableTextRegister.soy.js';
 
-import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
-import {debounce, cancelDebounce} from 'frontend-js-web';
 import Component from 'metal-component';
-import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import templates from './LocalizableText.soy.js';
 
 class LocalizableText extends Component {
-	created() {
-		this.debouncedUpdate = debounce(_value => {
-			if (this.animationFrameRequest) {
-				window.cancelAnimationFrame(this.animationFrameRequest);
-			}
-
-			this.animationFrameRequest = window.requestAnimationFrame(() => {
-				if (!this.isDisposed()) {
-					this.setState({_value});
-				}
-			});
-		}, 300);
-	}
-
-	attached() {
-		const portalElement = dom.toElement('#clay_dropdown_portal');
-
-		if (portalElement) {
-			dom.addClasses(portalElement, 'show');
-		}
-	}
-
-	// prepareStateForRender(state) {
-	// 	return {
-	// 		...state,
-	// 		availableLanguages: this.availableLanguages.map((current) => {
-	// 			return {
-	// 				...current,
-	// 				translated: this._isTranslated(current.code)
-	// 			}
-	// 		})
-	// 	}
-	// }
-
 	dispatchEvent(event, name, value) {
 		this.emit(name, {
 			fieldInstance: this,
@@ -68,25 +31,29 @@ class LocalizableText extends Component {
 		});
 	}
 
-	shouldUpdate(changes) {
-		return Object.keys(changes || {}).some(key => {
-			if (key === 'events' || key === 'value') {
-				return false;
-			}
-
-			if (
-				!Liferay.Util.isEqual(changes[key].newVal, changes[key].prevVal)
-			) {
-				return true;
-			}
-		});
+	prepareStateForRender(state) {
+		return {
+			...state,
+			_value: this.getEditingValue(),
+			availableLocales: state.availableLocales.map(availableLocale => {
+				return {
+					...availableLocale,
+					icon: availableLocale.localeId
+						.replace('_', '-')
+						.toLowerCase(),
+					isDefault: this._isDefaultLocale(availableLocale.localeId),
+					isTranslated: this._isTranslated(availableLocale.localeId)
+				};
+			})
+		};
 	}
 
-	willReceiveState(changes) {
-		if (changes.value) {
-			cancelDebounce(this.debouncedUpdate);
-			this.debouncedUpdate(changes.value.newVal);
-		}
+	getEditingValue() {
+		const {defaultLocale, editingLocale, value} = this;
+
+		return (
+			value[editingLocale.localeId] || value[defaultLocale.localeId] || ''
+		);
 	}
 
 	_handleFieldBlurred(event) {
@@ -94,21 +61,19 @@ class LocalizableText extends Component {
 	}
 
 	_handleFieldChanged(event) {
+		const {editingLocale, value} = this;
 		const {target} = event;
-		let {value} = target;
-		const {fieldName} = this;
 
-		if (fieldName === 'name') {
-			value = normalizeFieldName(value);
-
-			target.value = value;
-		}
+		const newValue = {
+			...value,
+			[editingLocale.localeId]: target.value
+		};
 
 		this.setState(
 			{
-				value
+				value: newValue
 			},
-			() => this.dispatchEvent(event, 'fieldEdited', value)
+			() => this.dispatchEvent(event, 'fieldEdited', newValue)
 		);
 	}
 
@@ -116,10 +81,37 @@ class LocalizableText extends Component {
 		this.dispatchEvent(event, 'fieldFocused', event.target.value);
 	}
 
+	_handleLanguageClicked({delegateTarget}) {
+		const {availableLocales} = this;
+		const editingLocale = availableLocales.find(
+			availableLocale =>
+				availableLocale.localeId === delegateTarget.dataset.localeId
+		);
+
+		this.setState({
+			editingLocale: {
+				...editingLocale,
+				icon: editingLocale.localeId.replace('_', '-').toLowerCase()
+			}
+		});
+	}
+
 	_internalValueFn() {
+		const {editingLocale, value} = this;
+
+		return value[editingLocale.localeId] || '';
+	}
+
+	_isDefaultLocale(localeId) {
+		const {defaultLocale} = this;
+
+		return defaultLocale.localeId === localeId;
+	}
+
+	_isTranslated(localeId) {
 		const {value} = this;
 
-		return value;
+		return !!value[localeId];
 	}
 }
 
@@ -145,6 +137,18 @@ LocalizableText.STATE = {
 	dataType: Config.string().value('string'),
 
 	/**
+	 * @default themeDisplay.getDefaultLanguageId()
+	 * @instance
+	 * @memberof LocalizableText
+	 * @type {?(string|undefined)}
+	 */
+
+	defaultLocale: Config.object().value({
+		icon: themeDisplay.getDefaultLanguageId(),
+		localeId: themeDisplay.getDefaultLanguageId()
+	}),
+
+	/**
 	 * @default false
 	 * @instance
 	 * @memberof LocalizableText
@@ -161,6 +165,19 @@ LocalizableText.STATE = {
 	 */
 
 	displayStyle: Config.string().value('singleline'),
+
+	/**
+	 * @default themeDisplay.getDefaultLanguageId()
+	 * @instance
+	 * @memberof LocalizableText
+	 * @type {?(string|undefined)}
+	 */
+
+	editingLocale: Config.object()
+		.internal()
+		.value({
+			localeId: themeDisplay.getDefaultLanguageId()
+		}),
 
 	/**
 	 * @default undefined
@@ -295,16 +312,16 @@ LocalizableText.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	type: Config.string().value('LocalizableText'),
+	type: Config.string().value('localizable_text'),
 
 	/**
-	 * @default undefined
+	 * @default {}
 	 * @instance
 	 * @memberof LocalizableText
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.string().value('')
+	value: Config.object().value({})
 };
 
 Soy.register(LocalizableText, templates);

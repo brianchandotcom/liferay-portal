@@ -70,7 +70,7 @@ public class CreateTokenMojo extends AbstractMojo {
 	)
 	protected File tokenFile;
 
-	@Parameter(defaultValue = BundleSupportConstants.DEFAULT_BUNDLE_URL)
+	@Parameter(defaultValue = BundleSupportConstants.DEFAULT_TOKEN_URL)
 	protected URL tokenUrl;
 
 }

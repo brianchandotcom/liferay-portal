@@ -32,6 +32,11 @@
 		min-height: 10em;
 	}
 
+	&__editable {
+		cursor: pointer;
+		display: block;
+	}
+
 	&__fragment {
 		cursor: pointer;
 

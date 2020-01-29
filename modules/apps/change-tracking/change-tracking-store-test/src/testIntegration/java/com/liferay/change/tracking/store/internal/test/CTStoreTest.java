@@ -800,6 +800,18 @@ public class CTStoreTest {
 			this::_assertHasCTFile, this::_assertHasFile, _HAS_FILE_METHOD);
 	}
 
+	@Test
+	public void testHasFileWithBlankVersion() throws Exception {
+		_testSingleFileRead(
+			(fileName, data) -> Assert.assertArrayEquals(
+				data,
+				StreamUtil.toByteArray(
+					_ctStore.getFileAsStream(
+						_COMPANY_ID, _REPOSITORY_ID, fileName,
+						StringPool.BLANK))),
+			this::_assertFile, _GET_FILE_AS_STREAM_METHOD);
+	}
+
 	private static String _toVersion(byte[] data) {
 		String version = _VERSION_1;
 

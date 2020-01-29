@@ -16,13 +16,14 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v1_0_2;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
@@ -109,7 +110,7 @@ public class UpgradeKaleoDefinition extends UpgradeProcess {
 
 				addKaleoDefinition(
 					groupId, userId, createDate, modifiedDate, name, title,
-					content, (int)GetterUtil.getDouble(version));
+					content, getVersion(version));
 			}
 		}
 	}
@@ -119,6 +120,12 @@ public class UpgradeKaleoDefinition extends UpgradeProcess {
 		if (hasTable("KaleoDraftDefinition")) {
 			addKaleoDefinitionsFromKaleoDefinitionVersion();
 		}
+	}
+
+	protected int getVersion(String version) {
+		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
+
+		return versionParts[0];
 	}
 
 	private final CounterLocalService _counterLocalService;

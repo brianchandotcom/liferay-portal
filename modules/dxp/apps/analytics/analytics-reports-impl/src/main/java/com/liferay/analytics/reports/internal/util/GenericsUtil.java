@@ -42,9 +42,9 @@ public class GenericsUtil {
 	}
 
 	public static Class<?> getItemClass(Object object) {
-		Class<?> infoListProviderClass = object.getClass();
+		Class<?> clazz = object.getClass();
 
-		return getItemClass(infoListProviderClass);
+		return getItemClass(clazz);
 	}
 
 	public static String getItemClassName(Object object) {

@@ -167,11 +167,17 @@ public class LayoutDataConverter {
 				JSONObject containerConfigJSONObject = JSONUtil.put(
 					"backgroundColorCssClass",
 					inputRowConfigJSONObject.getString(
-						"backgroundColorCssClass", null)
-				).put(
-					"backgroundImage",
-					_getBackgroundImageJSONObject(inputRowConfigJSONObject)
-				).put(
+						"backgroundColorCssClass", null));
+
+				JSONObject backgroundImageJSONObject =
+					_getBackgroundImageJSONObject(inputRowConfigJSONObject);
+
+				if (backgroundImageJSONObject != null) {
+					containerConfigJSONObject.put(
+						"backgroundImage", backgroundImageJSONObject);
+				}
+
+				containerConfigJSONObject.put(
 					"paddingBottom",
 					inputRowConfigJSONObject.getInt("paddingVertical")
 				).put(

@@ -14,7 +14,7 @@
 
 package com.liferay.petra.sql.dsl.spi.query;
 
-import com.liferay.petra.sql.dsl.BaseTable;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
@@ -27,14 +27,14 @@ import java.util.function.Consumer;
  */
 public class From extends BaseASTNode implements DefaultJoinStep {
 
-	public From(FromStep fromStep, BaseTable<?> baseTable) {
+	public From(FromStep fromStep, Table<?> table) {
 		super(fromStep);
 
-		_baseTable = Objects.requireNonNull(baseTable);
+		_table = Objects.requireNonNull(table);
 	}
 
-	public BaseTable<?> getTable() {
-		return _baseTable;
+	public Table<?> getTable() {
+		return _table;
 	}
 
 	@Override
@@ -43,9 +43,9 @@ public class From extends BaseASTNode implements DefaultJoinStep {
 
 		consumer.accept("from ");
 
-		_baseTable.toSQL(consumer, astNodeListener);
+		_table.toSQL(consumer, astNodeListener);
 	}
 
-	private final BaseTable<?> _baseTable;
+	private final Table<?> _table;
 
 }

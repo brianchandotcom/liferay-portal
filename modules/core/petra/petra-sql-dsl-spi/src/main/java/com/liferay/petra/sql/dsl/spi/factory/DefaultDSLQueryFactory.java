@@ -14,8 +14,8 @@
 
 package com.liferay.petra.sql.dsl.spi.factory;
 
-import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.factory.DSLQueryFactory;
 import com.liferay.petra.sql.dsl.query.FromStep;
@@ -60,7 +60,7 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 	}
 
 	@Override
-	public <T extends BaseTable<T>> FromStep selectDistinct(T table) {
+	public <T extends Table<T>> FromStep selectDistinct(T table) {
 		Collection<Column<T, ?>> columns = table.getColumns();
 
 		return new Select(true, columns.toArray(new Column[0]));

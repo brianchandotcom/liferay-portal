@@ -127,6 +127,8 @@ function FragmentContent({fragmentEntryLink}, ref) {
 
 		Array.from(element.querySelectorAll('lfr-editable')).forEach(
 			editable => {
+				editable.classList.add('page-editor__editable');
+
 				resolveEditableValue(
 					state,
 					config,

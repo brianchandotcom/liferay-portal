@@ -20,7 +20,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.sql.dsl.spi.query.QueryExpression;
-import com.liferay.petra.sql.dsl.spi.query.sort.OrderByExpressionImpl;
+import com.liferay.petra.sql.dsl.spi.query.sort.DefaultOrderByExpression;
 
 /**
  * @author Preston Crary
@@ -34,12 +34,12 @@ public interface DefaultExpression<T> extends Expression<T> {
 
 	@Override
 	public default OrderByExpression ascending() {
-		return new OrderByExpressionImpl(this, true);
+		return new DefaultOrderByExpression(this, true);
 	}
 
 	@Override
 	public default OrderByExpression descending() {
-		return new OrderByExpressionImpl(this, false);
+		return new DefaultOrderByExpression(this, false);
 	}
 
 	@Override

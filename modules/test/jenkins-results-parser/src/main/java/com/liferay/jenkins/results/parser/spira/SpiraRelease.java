@@ -163,12 +163,9 @@ public class SpiraRelease {
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = new JSONObject(_jsonObject.toString());
 
-		jsonObject.put("id", getID());
-		jsonObject.put("name", getName());
-		jsonObject.put("path", getPath());
-		jsonObject.put("project", _spiraProject.toJSONObject());
+		jsonObject.put("Path", getPath());
 
 		return jsonObject;
 	}

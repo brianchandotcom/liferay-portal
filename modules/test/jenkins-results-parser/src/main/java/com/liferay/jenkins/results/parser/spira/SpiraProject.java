@@ -122,19 +122,12 @@ public class SpiraProject {
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("id", getID());
-		jsonObject.put("name", getName());
-
-		return jsonObject;
+		return _jsonObject;
 	}
 
 	@Override
 	public String toString() {
-		JSONObject jsonObject = toJSONObject();
-
-		return jsonObject.toString();
+		return _jsonObject.toString();
 	}
 
 	protected SpiraProject(JSONObject jsonObject) {

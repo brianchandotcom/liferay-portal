@@ -16,7 +16,7 @@ package com.liferay.petra.sql.dsl.factory;
 
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.expression.WhenThenStep;
+import com.liferay.petra.sql.dsl.expression.step.WhenThenStep;
 
 import java.sql.Clob;
 

@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.petra.sql.dsl.spi,\
 	com.liferay.petra.sql.dsl.spi.ast,\
 	com.liferay.petra.sql.dsl.spi.expression,\
+	com.liferay.petra.sql.dsl.spi.expression.step,\
 	com.liferay.petra.sql.dsl.spi.factory,\
 	com.liferay.petra.sql.dsl.spi.query,\
 	com.liferay.petra.sql.dsl.spi.query.sort

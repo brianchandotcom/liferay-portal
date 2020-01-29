@@ -15,7 +15,9 @@
 package com.liferay.site.navigation.item.selector.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -140,24 +142,32 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 		List<SiteNavigationMenu> menus = null;
 		int menusCount = 0;
 
+		long[] groupIds = {themeDisplay.getScopeGroupId()};
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (!scopeGroup.isCompany()) {
+			groupIds = ArrayUtil.append(
+				groupIds, themeDisplay.getCompanyGroupId());
+		}
+
 		if (Validator.isNotNull(getKeywords())) {
 			menus = SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
-				themeDisplay.getScopeGroupId(), getKeywords(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
-
-			menusCount =
-				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
-					themeDisplay.getScopeGroupId(), getKeywords());
-		}
-		else {
-			menus = SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
-				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+				groupIds, getKeywords(), searchContainer.getStart(),
 				searchContainer.getEnd(), orderByComparator);
 
 			menusCount =
 				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
-					themeDisplay.getScopeGroupId());
+					groupIds, getKeywords());
+		}
+		else {
+			menus = SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+				groupIds, searchContainer.getStart(), searchContainer.getEnd(),
+				orderByComparator);
+
+			menusCount =
+				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
+					groupIds);
 		}
 
 		searchContainer.setResults(menus);

@@ -15,19 +15,12 @@
 package com.liferay.petra.sql.dsl.query;
 
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.query.impl.Where;
 
 /**
  * @author Preston Crary
  */
 public interface WhereStep extends GroupByStep {
 
-	public default GroupByStep where(Predicate predicate) {
-		if (predicate == null) {
-			return this;
-		}
-
-		return new Where(this, predicate);
-	}
+	public GroupByStep where(Predicate predicate);
 
 }

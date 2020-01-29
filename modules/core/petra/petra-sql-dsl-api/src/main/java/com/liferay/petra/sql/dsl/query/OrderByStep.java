@@ -15,55 +15,16 @@
 package com.liferay.petra.sql.dsl.query;
 
 import com.liferay.petra.sql.dsl.BaseTable;
-import com.liferay.petra.sql.dsl.Column;
-import com.liferay.petra.sql.dsl.query.impl.OrderBy;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.sql.dsl.query.sort.OrderByInfo;
-import com.liferay.petra.sql.dsl.query.sort.impl.OrderByExpressionImpl;
-import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Preston Crary
  */
 public interface OrderByStep extends LimitStep {
 
-	public default LimitStep orderBy(
-		BaseTable<?> baseTable, OrderByInfo orderByInfo) {
+	public LimitStep orderBy(BaseTable<?> baseTable, OrderByInfo orderByInfo);
 
-		if (orderByInfo == null) {
-			return this;
-		}
-
-		String[] orderByFields = orderByInfo.getOrderByFields();
-
-		OrderByExpression[] orderByExpressions =
-			new OrderByExpression[orderByFields.length];
-
-		for (int i = 0; i < orderByFields.length; i++) {
-			String field = orderByFields[i];
-
-			Column<?, ?> column = baseTable.getColumn(field);
-
-			if (column == null) {
-				throw new IllegalArgumentException(
-					StringBundler.concat(
-						"No column \"", field, "\" for table ",
-						baseTable.getTableName()));
-			}
-
-			orderByExpressions[i] = new OrderByExpressionImpl(
-				column, orderByInfo.isAscending(field));
-		}
-
-		return new OrderBy(this, orderByExpressions);
-	}
-
-	public default LimitStep orderBy(OrderByExpression... orderByExpressions) {
-		if ((orderByExpressions == null) || (orderByExpressions.length == 0)) {
-			return this;
-		}
-
-		return new OrderBy(this, orderByExpressions);
-	}
+	public LimitStep orderBy(OrderByExpression... orderByExpressions);
 
 }

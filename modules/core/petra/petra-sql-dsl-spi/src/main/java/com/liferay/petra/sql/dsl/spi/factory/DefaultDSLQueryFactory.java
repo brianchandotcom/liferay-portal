@@ -1,0 +1,76 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.petra.sql.dsl.spi.factory;
+
+import com.liferay.petra.sql.dsl.BaseTable;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.factory.DSLQueryFactory;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
+import com.liferay.petra.sql.dsl.spi.expression.AliasImpl;
+import com.liferay.petra.sql.dsl.spi.query.Select;
+
+import java.util.Collection;
+
+/**
+ * @author Preston Crary
+ */
+public class DefaultDSLQueryFactory implements DSLQueryFactory {
+
+	@Override
+	public FromStep count() {
+		return _SELECT_COUNT_STAR_COUNT_VALUE;
+	}
+
+	@Override
+	public FromStep countDistinct(Expression<?> expression) {
+		return new Select(
+			false,
+			new AliasImpl<>(
+				new AggregateExpression<>(true, expression, "count"),
+				"COUNT_VALUE"));
+	}
+
+	@Override
+	public FromStep select() {
+		return _SELECT_STAR;
+	}
+
+	@Override
+	public FromStep select(Expression<?>... expressions) {
+		return new Select(false, expressions);
+	}
+
+	@Override
+	public FromStep selectDistinct(Expression<?>... expressions) {
+		return new Select(true, expressions);
+	}
+
+	@Override
+	public <T extends BaseTable<T>> FromStep selectDistinct(T table) {
+		Collection<Column<T, ?>> columns = table.getColumns();
+
+		return new Select(true, columns.toArray(new Column[0]));
+	}
+
+	private static final FromStep _SELECT_COUNT_STAR_COUNT_VALUE = new Select(
+		false,
+		new AliasImpl<>(
+			new AggregateExpression<>(false, null, "count"), "COUNT_VALUE"));
+
+	private static final FromStep _SELECT_STAR = new Select(false);
+
+}

@@ -157,6 +157,8 @@ definition {
 		Type(
 			locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_BOX",
 			value1 = "${fieldValue}");
+		
+		FormViewBuilder.validateFieldInObject(fieldLabel = "${fieldValue}")
 	}
 
 	macro selectRadioOption {

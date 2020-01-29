@@ -160,8 +160,16 @@ public class CTSContentLocalServiceImpl extends CTSContentLocalServiceBaseImpl {
 		long companyId, long repositoryId, String path, String version,
 		String storeType) {
 
-		int count = ctsContentPersistence.countByC_R_P_V_S(
-			companyId, repositoryId, path, version, storeType);
+		int count = 0;
+
+		if (version.isEmpty()) {
+			count = ctsContentPersistence.countByC_R_P_S(
+				companyId, repositoryId, path, storeType);
+		}
+		else {
+			count = ctsContentPersistence.countByC_R_P_V_S(
+				companyId, repositoryId, path, version, storeType);
+		}
 
 		if (count > 0) {
 			return true;

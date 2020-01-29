@@ -65,8 +65,8 @@ public interface WorkflowTaskResource {
 			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
 			String[] assetTypes, Long[] assigneeUserIds, Boolean completed,
 			Date dateDueEnd, Date dateDueStart, Boolean searchByUserRoles,
-			String[] taskNames, Long[] workflowInstanceIds,
-			Pagination pagination, Sort[] sorts)
+			String[] taskNames, Long workflowDefinitionId,
+			Long[] workflowInstanceIds, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public void patchWorkflowTaskAssignToUser(

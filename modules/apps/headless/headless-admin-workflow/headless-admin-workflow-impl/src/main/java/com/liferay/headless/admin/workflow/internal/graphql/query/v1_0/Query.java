@@ -385,7 +385,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTasks(andOperator: ___, assetPrimaryKeys: ___, assetTitle: ___, assetTypes: ___, assigneeUserIds: ___, completed: ___, dateDueEnd: ___, dateDueStart: ___, page: ___, pageSize: ___, searchByUserRoles: ___, sorts: ___, taskNames: ___, workflowInstanceIds: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTasks(andOperator: ___, assetPrimaryKeys: ___, assetTitle: ___, assetTypes: ___, assigneeUserIds: ___, completed: ___, dateDueEnd: ___, dateDueStart: ___, page: ___, pageSize: ___, searchByUserRoles: ___, sorts: ___, taskNames: ___, workflowDefinitionId: ___, workflowInstanceIds: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public WorkflowTaskPage workflowTasks(
@@ -399,6 +399,7 @@ public class Query {
 			@GraphQLName("dateDueStart") Date dateDueStart,
 			@GraphQLName("searchByUserRoles") Boolean searchByUserRoles,
 			@GraphQLName("taskNames") String[] taskNames,
+			@GraphQLName("workflowDefinitionId") Long workflowDefinitionId,
 			@GraphQLName("workflowInstanceIds") Long[] workflowInstanceIds,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
@@ -412,8 +413,8 @@ public class Query {
 				workflowTaskResource.getWorkflowTasksPage(
 					andOperator, assetPrimaryKeys, assetTitle, assetTypes,
 					assigneeUserIds, completed, dateDueEnd, dateDueStart,
-					searchByUserRoles, taskNames, workflowInstanceIds,
-					Pagination.of(page, pageSize),
+					searchByUserRoles, taskNames, workflowDefinitionId,
+					workflowInstanceIds, Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						workflowTaskResource, sortsString))));
 	}

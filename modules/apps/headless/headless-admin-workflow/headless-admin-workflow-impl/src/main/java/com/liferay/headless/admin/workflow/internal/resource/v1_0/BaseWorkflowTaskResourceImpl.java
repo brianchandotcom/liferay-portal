@@ -185,6 +185,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "dateDueStart"),
 			@Parameter(in = ParameterIn.QUERY, name = "searchByUserRoles"),
 			@Parameter(in = ParameterIn.QUERY, name = "taskNames"),
+			@Parameter(in = ParameterIn.QUERY, name = "workflowDefinitionId"),
 			@Parameter(in = ParameterIn.QUERY, name = "workflowInstanceIds"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
@@ -215,6 +216,8 @@ public abstract class BaseWorkflowTaskResourceImpl
 				searchByUserRoles,
 			@Parameter(hidden = true) @QueryParam("taskNames") String[]
 				taskNames,
+			@Parameter(hidden = true) @QueryParam("workflowDefinitionId") Long
+				workflowDefinitionId,
 			@Parameter(hidden = true) @QueryParam("workflowInstanceIds") Long[]
 				workflowInstanceIds,
 			@Context Pagination pagination, @Context Sort[] sorts)

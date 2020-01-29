@@ -59,7 +59,7 @@ import com.liferay.petra.sql.dsl.spi.query.Select;
 import com.liferay.petra.sql.dsl.spi.query.SetOperation;
 import com.liferay.petra.sql.dsl.spi.query.SetOperationType;
 import com.liferay.petra.sql.dsl.spi.query.Where;
-import com.liferay.petra.sql.dsl.spi.query.sort.OrderByExpressionImpl;
+import com.liferay.petra.sql.dsl.spi.query.sort.DefaultOrderByExpression;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
@@ -95,6 +95,7 @@ public class SQLDSLTest {
 				assertClasses.add(DefaultAlias.class);
 				assertClasses.add(DefaultASTNodeListener.class);
 				assertClasses.add(DefaultColumn.class);
+				assertClasses.add(DefaultOrderByExpression.class);
 				assertClasses.add(DefaultPredicate.class);
 				assertClasses.add(DSLFunction.class);
 				assertClasses.add(DSLFunctionType.class);
@@ -110,7 +111,6 @@ public class SQLDSLTest {
 				assertClasses.add(NullExpression.class);
 				assertClasses.add(Operand.class);
 				assertClasses.add(OrderBy.class);
-				assertClasses.add(OrderByExpressionImpl.class);
 				assertClasses.add(QueryExpression.class);
 				assertClasses.add(QueryTable.class);
 				assertClasses.add(Scalar.class);

@@ -49,7 +49,7 @@ public class DSLQueryUtil {
 		return new Select(true, expressions);
 	}
 
-	public static <T extends Table<T>> FromStep selectDistinct(T table) {
+	public static <T extends BaseTable<T>> FromStep selectDistinct(T table) {
 		Collection<Column<T, ?>> columns = table.getColumns();
 
 		return new Select(true, columns.toArray(new Column[0]));

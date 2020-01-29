@@ -14,7 +14,7 @@
 
 package com.liferay.petra.sql.dsl.query;
 
-import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.query.impl.From;
 
 /**
@@ -22,8 +22,8 @@ import com.liferay.petra.sql.dsl.query.impl.From;
  */
 public interface FromStep extends DSLQuery {
 
-	public default JoinStep from(Table<?> table) {
-		return new From(this, table);
+	public default JoinStep from(BaseTable<?> baseTable) {
+		return new From(this, baseTable);
 	}
 
 }

@@ -15,7 +15,11 @@
 package com.liferay.account.rest.resource.v1_0;
 
 import com.liferay.account.rest.dto.v1_0.Account;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.annotation.Generated;
 
@@ -37,6 +41,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @Generated("")
 @ProviderType
 public interface AccountResource {
+
+	public Page<Account> getAccountsPage(
+			String keywords, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
 
 	public Account getAccount(Long accountId) throws Exception;
 

@@ -15,124 +15,62 @@
 package com.liferay.petra.sql.dsl.expression;
 
 import com.liferay.petra.sql.dsl.ast.ASTNode;
-import com.liferay.petra.sql.dsl.expression.impl.AliasImpl;
-import com.liferay.petra.sql.dsl.expression.impl.NullExpression;
-import com.liferay.petra.sql.dsl.expression.impl.Operand;
-import com.liferay.petra.sql.dsl.expression.impl.PredicateImpl;
-import com.liferay.petra.sql.dsl.expression.impl.Scalar;
-import com.liferay.petra.sql.dsl.expression.impl.ScalarList;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.petra.sql.dsl.query.impl.QueryExpression;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
-import com.liferay.petra.sql.dsl.query.sort.impl.OrderByExpressionImpl;
 
 /**
  * @author Preston Crary
  */
 public interface Expression<T> extends ASTNode {
 
-	public default Alias<T> as(String name) {
-		return new AliasImpl<>(this, name);
-	}
+	public Alias<T> as(String name);
 
-	public default OrderByExpression ascending() {
-		return new OrderByExpressionImpl(this, true);
-	}
+	public OrderByExpression ascending();
 
-	public default OrderByExpression descending() {
-		return new OrderByExpressionImpl(this, false);
-	}
+	public OrderByExpression descending();
 
-	public default Predicate eq(Expression<T> expression) {
-		return new PredicateImpl(this, Operand.EQUAL, expression);
-	}
+	public Predicate eq(Expression<T> expression);
 
-	public default Predicate eq(T value) {
-		return eq(new Scalar<>(value));
-	}
+	public Predicate eq(T value);
 
-	public default Predicate gt(Expression<T> expression) {
-		return new PredicateImpl(this, Operand.GREATER_THAN, expression);
-	}
+	public Predicate gt(Expression<T> expression);
 
-	public default Predicate gt(T value) {
-		return gt(new Scalar<>(value));
-	}
+	public Predicate gt(T value);
 
-	public default Predicate gte(Expression<T> expression) {
-		return new PredicateImpl(
-			this, Operand.GREATER_THAN_OR_EQUAL, expression);
-	}
+	public Predicate gte(Expression<T> expression);
 
-	public default Predicate gte(T value) {
-		return gte(new Scalar<>(value));
-	}
+	public Predicate gte(T value);
 
-	public default Predicate in(DSLQuery dslQuery) {
-		return new PredicateImpl(
-			this, Operand.IN, new QueryExpression<>(dslQuery));
-	}
+	public Predicate in(DSLQuery dslQuery);
 
-	public default Predicate in(T[] values) {
-		return new PredicateImpl(this, Operand.IN, new ScalarList<>(values));
-	}
+	public Predicate in(T[] values);
 
-	public default Predicate isNotNull() {
-		return new PredicateImpl(this, Operand.IS_NOT, NullExpression.INSTANCE);
-	}
+	public Predicate isNotNull();
 
-	public default Predicate isNull() {
-		return new PredicateImpl(this, Operand.IS, NullExpression.INSTANCE);
-	}
+	public Predicate isNull();
 
-	public default Predicate like(Expression<String> expression) {
-		return new PredicateImpl(this, Operand.LIKE, expression);
-	}
+	public Predicate like(Expression<String> expression);
 
-	public default Predicate like(String s) {
-		return like(new Scalar<>(s));
-	}
+	public Predicate like(String s);
 
-	public default Predicate lt(Expression<T> expression) {
-		return new PredicateImpl(this, Operand.LESS_THAN, expression);
-	}
+	public Predicate lt(Expression<T> expression);
 
-	public default Predicate lt(T value) {
-		return lt(new Scalar<>(value));
-	}
+	public Predicate lt(T value);
 
-	public default Predicate lte(Expression<T> expression) {
-		return new PredicateImpl(this, Operand.LESS_THAN_OR_EQUAL, expression);
-	}
+	public Predicate lte(Expression<T> expression);
 
-	public default Predicate lte(T value) {
-		return lte(new Scalar<>(value));
-	}
+	public Predicate lte(T value);
 
-	public default Predicate neq(Expression<T> expression) {
-		return new PredicateImpl(this, Operand.NOT_EQUAL, expression);
-	}
+	public Predicate neq(Expression<T> expression);
 
-	public default Predicate neq(T value) {
-		return neq(new Scalar<>(value));
-	}
+	public Predicate neq(T value);
 
-	public default Predicate notIn(DSLQuery dslQuery) {
-		return new PredicateImpl(
-			this, Operand.NOT_IN, new QueryExpression<>(dslQuery));
-	}
+	public Predicate notIn(DSLQuery dslQuery);
 
-	public default Predicate notIn(T[] values) {
-		return new PredicateImpl(
-			this, Operand.NOT_IN, new ScalarList<>(values));
-	}
+	public Predicate notIn(T[] values);
 
-	public default Predicate notLike(Expression<String> expression) {
-		return new PredicateImpl(this, Operand.NOT_LIKE, expression);
-	}
+	public Predicate notLike(Expression<String> expression);
 
-	public default Predicate notLike(String value) {
-		return like(new Scalar<>(value));
-	}
+	public Predicate notLike(String value);
 
 }

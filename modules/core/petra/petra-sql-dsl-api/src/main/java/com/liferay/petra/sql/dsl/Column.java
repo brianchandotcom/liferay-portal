@@ -14,97 +14,19 @@
 
 package com.liferay.petra.sql.dsl;
 
-import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
-import com.liferay.petra.sql.dsl.expression.Alias;
 import com.liferay.petra.sql.dsl.expression.Expression;
-import com.liferay.petra.sql.dsl.expression.impl.AliasImpl;
-
-import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class Column<T extends BaseTable<T>, C>
-	extends BaseASTNode implements Expression<C> {
+public interface Column<T extends BaseTable<T>, C> extends Expression<C> {
 
-	public Column(
-		T table, String columnName, Class<C> columnType, int sqlType) {
+	public String getColumnName();
 
-		_table = Objects.requireNonNull(table);
-		_columnName = Objects.requireNonNull(columnName);
-		_columnType = Objects.requireNonNull(columnType);
-		_sqlType = sqlType;
-	}
+	public Class<C> getColumnType();
 
-	@Override
-	public Alias<C> as(String name) {
-		if (_columnName.equals(name)) {
-			return new AliasImpl<>(this, name);
-		}
+	public int getSQLType();
 
-		return new AliasImpl<>(_table.aliasColumn(this, name), name);
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof Column<?, ?>)) {
-			return false;
-		}
-
-		Column<?, ?> column = (Column<?, ?>)object;
-
-		if (_columnName.equals(column.getColumnName()) &&
-			_table.equals(column._table)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public String getColumnName() {
-		return _columnName;
-	}
-
-	public Class<C> getColumnType() {
-		return _columnType;
-	}
-
-	public int getSQLType() {
-		return _sqlType;
-	}
-
-	public T getTable() {
-		return _table;
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = HashUtil.hash(0, _columnName);
-
-		return HashUtil.hash(hash, _table);
-	}
-
-	@Override
-	protected void doToSQL(
-		Consumer<String> consumer, ASTNodeListener astNodeListener) {
-
-		consumer.accept(_table.getName());
-
-		consumer.accept(".");
-		consumer.accept(_columnName);
-	}
-
-	private final String _columnName;
-	private final Class<C> _columnType;
-	private final int _sqlType;
-	private final T _table;
+	public T getTable();
 
 }

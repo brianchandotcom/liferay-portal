@@ -14,25 +14,44 @@
 
 package com.liferay.petra.sql.dsl;
 
+import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
+import com.liferay.petra.sql.dsl.factory.ColumnFactory;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ServiceLoader;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
  * @author Preston Crary
  */
-public abstract class BaseTable<T extends BaseTable<T>> extends BaseASTNode {
+public abstract class BaseTable<T extends BaseTable<T>> implements ASTNode {
 
 	public BaseTable(String tableName, Supplier<T> tableSupplier) {
 		_tableName = tableName;
 		_tableSupplier = Objects.requireNonNull(tableSupplier);
+	}
+
+	public <C> Column<T, C> aliasColumn(
+		Column<T, C> column, String columnAlias) {
+
+		T table = _tableSupplier.get();
+
+		table.setAlias(_alias);
+
+		column = _COLUMN_FACTORY.createColumn(
+			table, column.getColumnName(), column.getColumnType(),
+			column.getSQLType());
+
+		table.putColumn(columnAlias, column);
+
+		return column;
 	}
 
 	public T as(String alias) {
@@ -100,37 +119,13 @@ public abstract class BaseTable<T extends BaseTable<T>> extends BaseASTNode {
 		return _tableName.hashCode();
 	}
 
-	protected <C> Column<T, C> aliasColumn(
-		Column<T, C> column, String columnAlias) {
-
-		T table = _tableSupplier.get();
-
-		table.setAlias(_alias);
-
-		column = new Column<>(
-			table, column.getColumnName(), column.getColumnType(),
-			column.getSQLType());
-
-		table.putColumn(columnAlias, column);
-
-		return column;
-	}
-
-	protected <C> Column<T, C> createColumn(
-		String columnName, Class<C> columnType, int sqlType) {
-
-		@SuppressWarnings("unchecked")
-		Column<T, C> column = new Column<>(
-			(T)this, columnName, columnType, sqlType);
-
-		_columnMap.put(columnName, column);
-
-		return column;
-	}
-
 	@Override
-	protected void doToSQL(
+	public void toSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
+
+		if (astNodeListener != null) {
+			astNodeListener.process(this);
+		}
 
 		consumer.accept(_tableName);
 
@@ -140,12 +135,40 @@ public abstract class BaseTable<T extends BaseTable<T>> extends BaseASTNode {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return toSQL(null);
+	}
+
+	protected <C> Column<T, C> createColumn(
+		String columnName, Class<C> columnType, int sqlType) {
+
+		@SuppressWarnings("unchecked")
+		Column<T, C> column = _COLUMN_FACTORY.createColumn(
+			(T)this, columnName, columnType, sqlType);
+
+		_columnMap.put(columnName, column);
+
+		return column;
+	}
+
 	protected <C> void putColumn(String columnName, Column<T, C> column) {
 		_columnMap.put(columnName, column);
 	}
 
 	protected void setAlias(String alias) {
 		_alias = alias;
+	}
+
+	private static final ColumnFactory _COLUMN_FACTORY;
+
+	static {
+		ServiceLoader<ColumnFactory> serviceLoader = ServiceLoader.load(
+			ColumnFactory.class);
+
+		Iterator<ColumnFactory> iterator = serviceLoader.iterator();
+
+		_COLUMN_FACTORY = iterator.next();
 	}
 
 	private String _alias;

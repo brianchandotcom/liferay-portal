@@ -14,15 +14,11 @@
 
 package com.liferay.petra.sql.dsl.query;
 
-import com.liferay.petra.sql.dsl.query.impl.Limit;
-
 /**
  * @author Preston Crary
  */
 public interface LimitStep extends DSLQuery {
 
-	public default DSLQuery limit(int start, int end) {
-		return new Limit(this, start, end);
-	}
+	public DSLQuery limit(int start, int end);
 
 }

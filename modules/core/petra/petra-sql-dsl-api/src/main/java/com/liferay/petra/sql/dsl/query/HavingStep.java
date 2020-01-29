@@ -15,19 +15,12 @@
 package com.liferay.petra.sql.dsl.query;
 
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.query.impl.Having;
 
 /**
  * @author Preston Crary
  */
 public interface HavingStep extends OrderByStep {
 
-	public default OrderByStep having(Predicate predicate) {
-		if (predicate == null) {
-			return this;
-		}
-
-		return new Having(this, predicate);
-	}
+	public OrderByStep having(Predicate predicate);
 
 }

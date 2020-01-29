@@ -15,15 +15,12 @@
 package com.liferay.petra.sql.dsl.query;
 
 import com.liferay.petra.sql.dsl.expression.Expression;
-import com.liferay.petra.sql.dsl.query.impl.GroupBy;
 
 /**
  * @author Preston Crary
  */
 public interface GroupByStep extends OrderByStep {
 
-	public default HavingStep groupBy(Expression<?>... expressions) {
-		return new GroupBy(this, expressions);
-	}
+	public HavingStep groupBy(Expression<?>... expressions);
 
 }

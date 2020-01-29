@@ -10,6 +10,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:petra:petra-encryptor")
 	compileOnly project(":apps:portal-settings:portal-settings-api")
 	compileOnly project(":apps:portal-settings:portal-settings-lang")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

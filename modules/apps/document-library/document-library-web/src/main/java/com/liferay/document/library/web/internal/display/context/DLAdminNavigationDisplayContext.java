@@ -19,16 +19,12 @@ import com.liferay.document.library.web.internal.display.context.util.DLRequestH
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.webdav.WebDAVUtil;
 
 import java.util.List;
 
@@ -84,12 +80,6 @@ public class DLAdminNavigationDisplayContext {
 		};
 	}
 
-	private Portlet _getPortlet(ThemeDisplay themeDisplay) {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-	}
-
 	private void _populateDocumentLibraryNavigationItem(
 		NavigationItem navigationItem, String navigation) {
 
@@ -138,16 +128,12 @@ public class DLAdminNavigationDisplayContext {
 
 		navigationItem.setActive(navigation.equals("file_entry_metadata_sets"));
 
-		Portlet portlet = _getPortlet(_themeDisplay);
-
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("navigation", "file_entry_metadata_sets");
 		portletURL.setParameter("backURL", _themeDisplay.getURLCurrent());
 		portletURL.setParameter(
 			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-		portletURL.setParameter(
-			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
 		portletURL.setParameter("redirect", _currentURLObj.toString());
 
 		navigationItem.setHref(portletURL.toString());

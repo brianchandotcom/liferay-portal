@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/document_library/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 DLViewFileEntryMetadataSetsDisplayContext
@@ -24,7 +24,7 @@ DDMDisplay ddmDisplay = dLViewFileEntryMetadataSetsDisplayContext.getDDMDisplay(
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-com.liferay.dynamic.data.mapping.model.DDMStructure structure = (com.liferay.dynamic.data.mapping.model.DDMStructure)row.getObject();
+com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.dynamic.data.mapping.model.DDMStructure)row.getObject();
 %>
 
 <liferay-ui:icon-menu
@@ -34,24 +34,18 @@ com.liferay.dynamic.data.mapping.model.DDMStructure structure = (com.liferay.dyn
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
-		</portlet:renderURL>
-
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE) %>">
 		<liferay-ui:icon
 			message="edit"
-			url="<%= editURL %>"
+			url="<%= String.valueOf(dLViewFileEntryMetadataSetsDisplayContext.getEditDDMStructurePortletURL(ddmStructure)) %>"
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
-			modelResource="<%= DDMStructurePermission.getStructureModelResourceName(structure.getClassNameId()) %>"
-			modelResourceDescription="<%= structure.getName(locale) %>"
-			resourcePrimKey="<%= String.valueOf(structure.getStructureId()) %>"
+			modelResource="<%= DDMStructurePermission.getStructureModelResourceName(ddmStructure.getClassNameId()) %>"
+			modelResourceDescription="<%= ddmStructure.getName(locale) %>"
+			resourcePrimKey="<%= String.valueOf(ddmStructure.getStructureId()) %>"
 			var="permissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
@@ -64,11 +58,10 @@ com.liferay.dynamic.data.mapping.model.DDMStructure structure = (com.liferay.dyn
 		/>
 	</c:if>
 
-	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) && DDMStructurePermission.containsAddDDMStructurePermission(permissionChecker, scopeGroupId, structure.getClassNameId()) %>">
+	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) && DDMStructurePermission.containsAddDDMStructurePermission(permissionChecker, scopeGroupId, ddmStructure.getClassNameId()) %>">
 		<portlet:renderURL var="copyURL">
-			<portlet:param name="mvcPath" value="/copy_structure.jsp" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
+			<portlet:param name="mvcPath" value="/document_library/ddm/copy_ddm_structure.jsp" />
+			<portlet:param name="ddmStructureId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -77,10 +70,9 @@ com.liferay.dynamic.data.mapping.model.DDMStructure structure = (com.liferay.dyn
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.DELETE) %>">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteStructure" var="deleteURL">
-			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
+			<portlet:param name="ddmStructureId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

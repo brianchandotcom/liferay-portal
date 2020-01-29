@@ -23,7 +23,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)request.getAttribute(WebKeys.DO
 
 long fileEntryTypeId = BeanParamUtil.getLong(fileEntryType, request, "fileEntryTypeId");
 
-DDMStructure ddmStructure = (DDMStructure)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
+com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.dynamic.data.mapping.model.DDMStructure)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
 
 long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
 
@@ -33,7 +33,7 @@ if (fileEntryType != null) {
 	ddmStructures = fileEntryType.getDDMStructures();
 
 	if (ddmStructure != null) {
-		ddmStructures = new ArrayList<DDMStructure>(ddmStructures);
+		ddmStructures = new ArrayList<>(ddmStructures);
 
 		ddmStructures.remove(ddmStructure);
 	}

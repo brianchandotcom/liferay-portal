@@ -51,6 +51,7 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 
 /**
  * @author Rafael Praxedes
@@ -86,6 +87,20 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 	public DDMDisplay getDDMDisplay() {
 		return _ddmDisplayRegistry.getDDMDisplay(
 			DLPortletKeys.DOCUMENT_LIBRARY);
+	}
+
+	public PortletURL getEditDDMStructurePortletURL(DDMStructure ddmStructure) {
+		RenderURL renderURL = _liferayPortletResponse.createRenderURL();
+
+		renderURL.setParameter(
+			"mvcRenderCommandName", "/document_library/ddm/edit_ddm_structure");
+		renderURL.setParameter(
+			"redirect",
+			String.valueOf(PortletURLUtil.getCurrent(_liferayPortletRequest, _liferayPortletResponse)));
+		renderURL.setParameter(
+			"ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
+
+		return renderURL;
 	}
 
 	public String getOrderByCol() {
@@ -139,24 +154,19 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			return null;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		return new CreationMenu() {
 			{
-				PortletURL redirect = _liferayPortletResponse.createRenderURL();
-
-				redirect.setParameter("mvcPath", "/select_structure.jsp");
-				redirect.setParameter("classPK", String.valueOf(getClassPK()));
-				redirect.setParameter(
-					"eventName",
-					ParamUtil.getString(
-						_liferayPortletRequest, "eventName",
-						"selectStructure"));
-
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
 							_liferayPortletResponse.createRenderURL(),
-							"mvcPath", "/edit_structure.jsp", "redirect",
-							redirect, "groupId",
+							"mvcRenderCommandName",
+							"/document_library/ddm/edit_ddm_structure",
+							"redirect", themeDisplay.getURLCurrent(), "groupId",
 							String.valueOf(_dlRequestHelper.getScopeGroupId()));
 						dropdownItem.setLabel(
 							LanguageUtil.get(
@@ -262,32 +272,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		return ParamUtil.getLong(_liferayPortletRequest, "classPK");
 	}
 
-	protected UnsafeConsumer<DropdownItem, Exception>
-		getCreationMenuDropdownItem(PortletURL url, String label) {
-
-		return dropdownItem -> {
-			dropdownItem.setHref(url);
-			dropdownItem.setLabel(
-				LanguageUtil.get(_dlRequestHelper.getRequest(), label));
-		};
-	}
-
-	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(
-							getPortletURL(), "navigation", "all");
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_dlRequestHelper.getRequest(), "all"));
-					});
-			}
-		};
-	}
-
 	protected String getKeywords() {
 		return ParamUtil.getString(_liferayPortletRequest, "keywords");
 	}
@@ -300,15 +284,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
 			dropdownItem.setLabel(
 				LanguageUtil.get(_dlRequestHelper.getRequest(), orderByCol));
-		};
-	}
-
-	protected List<DropdownItem> getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(getOrderByDropdownItem("modified-date"));
-				add(getOrderByDropdownItem("id"));
-			}
 		};
 	}
 

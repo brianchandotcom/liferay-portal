@@ -46,19 +46,18 @@ DLViewFileEntryMetadataSetsDisplayContext
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 			keyProperty="structureId"
-			modelVar="structure"
+			modelVar="ddmStructure"
 		>
 
 			<%
 			String rowHREF = StringPool.BLANK;
 
-			if (DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE)) {
+			if (DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE)) {
 				PortletURL rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcPath", "/edit_structure.jsp");
+				rowURL.setParameter("mvcRenderCommandName", "/document_library/edit_ddm_structure");
 				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
-				rowURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
+				rowURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
 
 				rowHREF = rowURL.toString();
 			}
@@ -76,18 +75,18 @@ DLViewFileEntryMetadataSetsDisplayContext
 				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				href="<%= rowHREF %>"
 				name="name"
-				value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
+				value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-cell-minw-200"
 				href="<%= rowHREF %>"
 				name="description"
-				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
+				value="<%= HtmlUtil.escape(ddmStructure.getDescription(locale)) %>"
 			/>
 
 			<%
-			Group group = GroupLocalServiceUtil.getGroup(structure.getGroupId());
+			Group group = GroupLocalServiceUtil.getGroup(ddmStructure.getGroupId());
 			%>
 
 			<liferay-ui:search-container-column-text
@@ -102,7 +101,7 @@ DLViewFileEntryMetadataSetsDisplayContext
 				name="modified-date"
 				orderable="<%= true %>"
 				orderableProperty="modified-date"
-				value="<%= structure.getModifiedDate() %>"
+				value="<%= ddmStructure.getModifiedDate() %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp

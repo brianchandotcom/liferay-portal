@@ -20,7 +20,7 @@ import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.factory.DSLQueryFactory;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
-import com.liferay.petra.sql.dsl.spi.expression.AliasImpl;
+import com.liferay.petra.sql.dsl.spi.expression.DefaultAlias;
 import com.liferay.petra.sql.dsl.spi.query.Select;
 
 import java.util.Collection;
@@ -39,7 +39,7 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 	public FromStep countDistinct(Expression<?> expression) {
 		return new Select(
 			false,
-			new AliasImpl<>(
+			new DefaultAlias<>(
 				new AggregateExpression<>(true, expression, "count"),
 				"COUNT_VALUE"));
 	}
@@ -68,7 +68,7 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 
 	private static final FromStep _SELECT_COUNT_STAR_COUNT_VALUE = new Select(
 		false,
-		new AliasImpl<>(
+		new DefaultAlias<>(
 			new AggregateExpression<>(false, null, "count"), "COUNT_VALUE"));
 
 	private static final FromStep _SELECT_STAR = new Select(false);

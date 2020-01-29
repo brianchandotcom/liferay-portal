@@ -25,10 +25,10 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class AliasImpl<T>
+public class DefaultAlias<T>
 	extends BaseASTNode implements Alias<T>, DefaultExpression<T> {
 
-	public AliasImpl(Expression<T> expression, String name) {
+	public DefaultAlias(Expression<T> expression, String name) {
 		_expression = Objects.requireNonNull(expression);
 		_name = Objects.requireNonNull(name);
 	}

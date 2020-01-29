@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
+import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -83,7 +84,7 @@ public class BlogPostingImageResourceTest
 			Assert.fail();
 		}
 		catch (Throwable e) {
-			Assert.assertTrue(e instanceof IllegalArgumentException);
+			Assert.assertTrue(e instanceof Problem.ProblemException);
 		}
 
 		folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(

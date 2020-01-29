@@ -297,6 +297,13 @@ public class SPIDataLayoutResource<T> {
 			throw new ValidationException("Name is required");
 		}
 
+		name.forEach(
+			(locale, localeName) -> {
+				if (Validator.isNull((String)localeName)) {
+					throw new ValidationException("Name is required");
+				}
+			});
+
 		List<String> fieldNames = _getFieldNames(content);
 
 		if (ListUtil.isEmpty(fieldNames)) {

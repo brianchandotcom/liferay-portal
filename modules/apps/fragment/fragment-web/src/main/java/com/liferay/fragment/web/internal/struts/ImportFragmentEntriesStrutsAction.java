@@ -14,12 +14,10 @@
 
 package com.liferay.fragment.web.internal.struts;
 
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -93,10 +91,5 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(resource.name=" + FragmentConstants.RESOURCE_NAME + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 }

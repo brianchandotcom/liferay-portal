@@ -296,7 +296,7 @@ public class MFAEmailOTPChecker {
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.multi.factor.authentication.checker.email.otp.web)"
+		target = "(osgi.web.symbolicname=com.liferay.multi.factor.authentication.email.otp.web)"
 	)
 	private ServletContext _servletContext;
 

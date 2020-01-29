@@ -66,11 +66,12 @@ public class SpiraRelease {
 		if (releaseID != null) {
 			urlReplacements.put("release_id", String.valueOf(releaseID));
 
-			if (!_spiraReleases.containsKey(
-					_createSpiraReleaseKey(spiraProject.getID(), releaseID))) {
+			String spiraReleaseKey = _createSpiraReleaseKey(
+				spiraProject.getID(), releaseID);
 
+			if (!_spiraReleases.containsKey(spiraReleaseKey)) {
 				_spiraReleases.put(
-					_createSpiraReleaseKey(spiraProject.getID(), releaseID),
+					spiraReleaseKey,
 					new SpiraRelease(
 						SpiraRestAPIUtil.requestJSONObject(
 							"projects/{project_id}/releases/{release_id}",
@@ -78,8 +79,7 @@ public class SpiraRelease {
 			}
 
 			return Collections.singletonList(
-				_spiraReleases.get(
-					_createSpiraReleaseKey(spiraProject.getID(), releaseID)));
+				_spiraReleases.get(spiraReleaseKey));
 		}
 
 		List<SpiraRelease> spiraReleases = new ArrayList<>();
@@ -253,7 +253,7 @@ public class SpiraRelease {
 	private static String _createSpiraReleaseKey(
 		Integer projectID, Integer releaseID) {
 
-		return String.valueOf(projectID) + "-" + String.valueOf(releaseID);
+		return projectID + "-" + releaseID;
 	}
 
 	private SpiraRelease _getParentSpiraRelease() {

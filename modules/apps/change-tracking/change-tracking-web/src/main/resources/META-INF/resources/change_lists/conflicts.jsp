@@ -43,6 +43,10 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 					}
 
 					CTEntry ctEntry = CTEntryLocalServiceUtil.fetchCTEntry(ctCollection.getCtCollectionId(), entry.getKey(), conflictInfo.getSourcePrimaryKey());
+
+					if (ctEntry == null) {
+						continue;
+					}
 			%>
 
 					<tr>
@@ -105,6 +109,10 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 					resolved = false;
 
 					CTEntry ctEntry = CTEntryLocalServiceUtil.fetchCTEntry(ctCollection.getCtCollectionId(), entry.getKey(), conflictInfo.getSourcePrimaryKey());
+
+					if (ctEntry == null) {
+						continue;
+					}
 			%>
 
 					<tr>

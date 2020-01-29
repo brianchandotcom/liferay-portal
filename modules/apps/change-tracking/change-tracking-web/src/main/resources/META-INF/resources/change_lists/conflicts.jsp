@@ -62,7 +62,7 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 											%>
 
 											<strong class="lead">
-												<%= conflictInfo.getConflictDescription(conflictInfoResourceBundle) %>
+												<%= conflictInfo.getConflictDescription(conflictInfoResourceBundle) + ":" %>
 											</strong>
 											<%= conflictInfo.getResolutionDescription(conflictInfoResourceBundle) %>
 										</div>
@@ -124,7 +124,7 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 											%>
 
 											<strong class="lead">
-												<%= conflictInfo.getConflictDescription(conflictInfoResourceBundle) %>
+												<%= conflictInfo.getConflictDescription(conflictInfoResourceBundle) + ":" %>
 											</strong>
 											<%= conflictInfo.getResolutionDescription(conflictInfoResourceBundle) %>
 										</div>

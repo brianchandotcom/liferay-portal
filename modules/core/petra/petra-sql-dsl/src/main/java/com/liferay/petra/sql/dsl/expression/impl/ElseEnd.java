@@ -12,29 +12,42 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions.impl;
+package com.liferay.petra.sql.dsl.expression.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
-import com.liferay.petra.sql.dsl.expressions.Expression;
+import com.liferay.petra.sql.dsl.expression.ElseEndStep;
+import com.liferay.petra.sql.dsl.expression.Expression;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class NullExpression extends BaseASTNode implements Expression<Void> {
+public class ElseEnd<T> extends BaseASTNode implements Expression<T> {
 
-	public static final NullExpression INSTANCE = new NullExpression();
+	public ElseEnd(ElseEndStep<T> elseEndStep, Expression<T> elseExpression) {
+		super(elseEndStep);
+
+		_elseExpression = Objects.requireNonNull(elseExpression);
+	}
+
+	public Expression<T> getElseExpression() {
+		return _elseExpression;
+	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("NULL");
+		consumer.accept("else ");
+
+		_elseExpression.toSQL(consumer, astNodeListener);
+
+		consumer.accept(" end");
 	}
 
-	private NullExpression() {
-	}
+	private final Expression<T> _elseExpression;
 
 }

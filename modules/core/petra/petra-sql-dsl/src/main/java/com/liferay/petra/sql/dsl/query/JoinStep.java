@@ -15,7 +15,7 @@
 package com.liferay.petra.sql.dsl.query;
 
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.sql.dsl.expressions.Predicate;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.impl.Join;
 import com.liferay.petra.sql.dsl.query.impl.JoinType;
 

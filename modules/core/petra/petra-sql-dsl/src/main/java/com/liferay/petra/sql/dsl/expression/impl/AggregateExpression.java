@@ -12,49 +12,65 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions.impl;
+package com.liferay.petra.sql.dsl.expression.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
-import com.liferay.petra.sql.dsl.expressions.Expression;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.sql.dsl.expression.Expression;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class ScalarList<T> extends BaseASTNode implements Expression<T> {
+public class AggregateExpression<T extends Number>
+	extends BaseASTNode implements Expression<T> {
 
-	public ScalarList(T[] values) {
-		if (values.length == 0) {
-			throw new IllegalArgumentException();
-		}
+	public AggregateExpression(
+		boolean distinct, Expression<?> expression, String name) {
 
-		_values = values;
+		_distinct = distinct;
+		_expression = expression;
+		_name = Objects.requireNonNull(name);
 	}
 
-	public T[] getValues() {
-		return _values;
+	public Expression<?> getExpression() {
+		return _expression;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public boolean isDistinct() {
+		return _distinct;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
+		consumer.accept(_name);
+
 		consumer.accept("(");
 
-		for (int i = 0; i < _values.length; i++) {
-			consumer.accept(StringPool.QUESTION);
+		if (_distinct) {
+			consumer.accept("distinct ");
+		}
 
-			if (i < (_values.length - 1)) {
-				consumer.accept(", ");
-			}
+		if (_expression == null) {
+			consumer.accept("*");
+		}
+		else {
+			_expression.toSQL(consumer, astNodeListener);
 		}
 
 		consumer.accept(")");
 	}
 
-	private final T[] _values;
+	private final boolean _distinct;
+	private final Expression<?> _expression;
+	private final String _name;
 
 }

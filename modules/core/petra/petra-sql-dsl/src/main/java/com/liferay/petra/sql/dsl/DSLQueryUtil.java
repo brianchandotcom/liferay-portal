@@ -14,8 +14,8 @@
 
 package com.liferay.petra.sql.dsl;
 
-import com.liferay.petra.sql.dsl.expressions.Expression;
-import com.liferay.petra.sql.dsl.expressions.impl.AliasImpl;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.impl.AliasImpl;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.impl.Select;
 

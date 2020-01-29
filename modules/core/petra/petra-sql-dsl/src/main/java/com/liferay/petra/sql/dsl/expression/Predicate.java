@@ -12,35 +12,17 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions.impl;
-
-import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
-import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
-import com.liferay.petra.sql.dsl.expressions.Expression;
-import com.liferay.petra.string.StringPool;
-
-import java.util.function.Consumer;
+package com.liferay.petra.sql.dsl.expression;
 
 /**
  * @author Preston Crary
  */
-public class Scalar<T> extends BaseASTNode implements Expression<T> {
+public interface Predicate extends Expression<Boolean> {
 
-	public Scalar(T value) {
-		_value = value;
-	}
+	public Predicate and(Expression<Boolean> expression);
 
-	public T getValue() {
-		return _value;
-	}
+	public Predicate or(Expression<Boolean> expression);
 
-	@Override
-	protected void doToSQL(
-		Consumer<String> consumer, ASTNodeListener astNodeListener) {
-
-		consumer.accept(StringPool.QUESTION);
-	}
-
-	private final T _value;
+	public Predicate withParentheses();
 
 }

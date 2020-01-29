@@ -12,50 +12,35 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.query.impl;
+package com.liferay.petra.sql.dsl.expression.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
 import com.liferay.petra.sql.dsl.expression.Expression;
-import com.liferay.petra.sql.dsl.query.GroupByStep;
-import com.liferay.petra.sql.dsl.query.HavingStep;
+import com.liferay.petra.string.StringPool;
 
 import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class GroupBy extends BaseASTNode implements HavingStep {
+public class Scalar<T> extends BaseASTNode implements Expression<T> {
 
-	public GroupBy(GroupByStep groupByStep, Expression<?>... expressions) {
-		super(groupByStep);
-
-		if (expressions.length == 0) {
-			throw new IllegalArgumentException();
-		}
-
-		_expressions = expressions;
+	public Scalar(T value) {
+		_value = value;
 	}
 
-	public Expression<?>[] getExpressions() {
-		return _expressions;
+	public T getValue() {
+		return _value;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("group by ");
-
-		for (int i = 0; i < _expressions.length; i++) {
-			_expressions[i].toSQL(consumer, astNodeListener);
-
-			if (i < (_expressions.length - 1)) {
-				consumer.accept(", ");
-			}
-		}
+		consumer.accept(StringPool.QUESTION);
 	}
 
-	private final Expression<?>[] _expressions;
+	private final T _value;
 
 }

@@ -5,7 +5,7 @@ Export-Package:\
 	com.liferay.petra.sql.dsl,\
 	com.liferay.petra.sql.dsl.ast,\
 	com.liferay.petra.sql.dsl.ast.impl,\
-	com.liferay.petra.sql.dsl.expressions,\
-	com.liferay.petra.sql.dsl.expressions.impl,\
+	com.liferay.petra.sql.dsl.expression,\
+	com.liferay.petra.sql.dsl.expression.impl,\
 	com.liferay.petra.sql.dsl.query,\
 	com.liferay.petra.sql.dsl.query.impl

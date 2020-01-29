@@ -12,44 +12,49 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.expressions.impl;
+package com.liferay.petra.sql.dsl.expression.impl;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
-import com.liferay.petra.sql.dsl.expressions.Alias;
-import com.liferay.petra.sql.dsl.expressions.Expression;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.string.StringPool;
 
-import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
  * @author Preston Crary
  */
-public class AliasImpl<T> extends BaseASTNode implements Alias<T> {
+public class ScalarList<T> extends BaseASTNode implements Expression<T> {
 
-	public AliasImpl(Expression<T> expression, String name) {
-		_expression = Objects.requireNonNull(expression);
-		_name = Objects.requireNonNull(name);
+	public ScalarList(T[] values) {
+		if (values.length == 0) {
+			throw new IllegalArgumentException();
+		}
+
+		_values = values;
 	}
 
-	@Override
-	public Expression<T> getExpression() {
-		return _expression;
-	}
-
-	@Override
-	public String getName() {
-		return _name;
+	public T[] getValues() {
+		return _values;
 	}
 
 	@Override
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept(_name);
+		consumer.accept("(");
+
+		for (int i = 0; i < _values.length; i++) {
+			consumer.accept(StringPool.QUESTION);
+
+			if (i < (_values.length - 1)) {
+				consumer.accept(", ");
+			}
+		}
+
+		consumer.accept(")");
 	}
 
-	private final Expression<T> _expression;
-	private final String _name;
+	private final T[] _values;
 
 }

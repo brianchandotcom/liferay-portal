@@ -14,8 +14,12 @@
 
 package com.liferay.analytics.reports.web.internal.product.navigation.control.menu;
 
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
+import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
+import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -201,6 +205,10 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			return false;
 		}
 
+		if (!_analyticsReportsInfoItemExists(httpServletRequest)) {
+			return false;
+		}
+
 		if (isEmbeddedPersonalApplicationLayout(layout)) {
 			return false;
 		}
@@ -234,6 +242,31 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 	protected void activate() {
 		_portletNamespace = _portal.getPortletNamespace(
 			AnalyticsReportsPortletKeys.ANALYTICS_REPORTS);
+	}
+
+	private boolean _analyticsReportsInfoItemExists(
+		HttpServletRequest httpServletRequest) {
+
+		InfoDisplayObjectProvider infoDisplayObjectProvider =
+			(InfoDisplayObjectProvider)httpServletRequest.getAttribute(
+				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+
+		if (infoDisplayObjectProvider == null) {
+			return false;
+		}
+
+		AnalyticsReportsInfoItem analyticsReportsInfoItem =
+			_analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
+				_portal.getClassName(
+					infoDisplayObjectProvider.getClassNameId()));
+
+		if ((analyticsReportsInfoItem == null) ||
+			(infoDisplayObjectProvider.getDisplayObject() == null)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private void _processBodyBottomTagBody(PageContext pageContext) {
@@ -284,6 +317,9 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 	private static final String _ICON_TMPL_CONTENT = StringUtil.read(
 		AnalyticsReportsProductNavigationControlMenuEntry.class, "icon.tmpl");
+
+	@Reference
+	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;
 
 	@Reference
 	private Html _html;

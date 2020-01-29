@@ -20,7 +20,6 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +71,8 @@ public class SpiraRelease {
 
 		Map<String, String> urlReplacements = new HashMap<>();
 
-		urlReplacements.put("project_id", String.valueOf(spiraProject.getID()));
 		urlReplacements.put("number_rows", String.valueOf(_NUMBER_ROWS));
+		urlReplacements.put("project_id", String.valueOf(spiraProject.getID()));
 		urlReplacements.put("start_row", String.valueOf(_START_ROW));
 
 		JSONArray requestJSONArray = new JSONArray();

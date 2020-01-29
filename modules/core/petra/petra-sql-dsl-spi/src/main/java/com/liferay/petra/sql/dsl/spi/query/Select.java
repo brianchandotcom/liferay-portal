@@ -19,6 +19,8 @@ import com.liferay.petra.sql.dsl.expression.Alias;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -27,12 +29,14 @@ import java.util.function.Consumer;
  */
 public class Select extends BaseASTNode implements DefaultFromStep {
 
-	public Select(boolean distinct, Expression<?>... expressions) {
+	public Select(
+		boolean distinct, Collection<? extends Expression<?>> expressions) {
+
 		_distinct = distinct;
 		_expressions = Objects.requireNonNull(expressions);
 	}
 
-	public Expression<?>[] getExpressions() {
+	public Collection<? extends Expression<?>> getExpressions() {
 		return _expressions;
 	}
 
@@ -50,9 +54,12 @@ public class Select extends BaseASTNode implements DefaultFromStep {
 			consumer.accept("distinct ");
 		}
 
-		if (_expressions.length > 0) {
-			for (int i = 0; i < _expressions.length; i++) {
-				Expression<?> expression = _expressions[i];
+		if (_expressions.size() > 0) {
+			Iterator<? extends Expression<?>> iterator =
+				_expressions.iterator();
+
+			while (iterator.hasNext()) {
+				Expression<?> expression = iterator.next();
 
 				if (expression instanceof Alias) {
 					Alias<?> alias = (Alias<?>)expression;
@@ -66,7 +73,7 @@ public class Select extends BaseASTNode implements DefaultFromStep {
 
 				expression.toSQL(consumer, astNodeListener);
 
-				if (i < (_expressions.length - 1)) {
+				if (iterator.hasNext()) {
 					consumer.accept(", ");
 				}
 			}
@@ -77,6 +84,6 @@ public class Select extends BaseASTNode implements DefaultFromStep {
 	}
 
 	private final boolean _distinct;
-	private final Expression<?>[] _expressions;
+	private final Collection<? extends Expression<?>> _expressions;
 
 }

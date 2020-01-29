@@ -14,7 +14,6 @@
 
 package com.liferay.petra.sql.dsl.spi.factory;
 
-import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.factory.DSLQueryFactory;
@@ -23,7 +22,8 @@ import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultAlias;
 import com.liferay.petra.sql.dsl.spi.query.Select;
 
-import java.util.Collection;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Preston Crary
@@ -39,9 +39,10 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 	public FromStep countDistinct(Expression<?> expression) {
 		return new Select(
 			false,
-			new DefaultAlias<>(
-				new AggregateExpression<>(true, expression, "count"),
-				"COUNT_VALUE"));
+			Collections.singletonList(
+				new DefaultAlias<>(
+					new AggregateExpression<>(true, expression, "count"),
+					"COUNT_VALUE")));
 	}
 
 	@Override
@@ -51,26 +52,27 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 
 	@Override
 	public FromStep select(Expression<?>... expressions) {
-		return new Select(false, expressions);
+		return new Select(false, Arrays.asList(expressions));
 	}
 
 	@Override
 	public FromStep selectDistinct(Expression<?>... expressions) {
-		return new Select(true, expressions);
+		return new Select(true, Arrays.asList(expressions));
 	}
 
 	@Override
 	public <T extends Table<T>> FromStep selectDistinct(T table) {
-		Collection<Column<T, ?>> columns = table.getColumns();
-
-		return new Select(true, columns.toArray(new Column[0]));
+		return new Select(true, table.getColumns());
 	}
 
 	private static final FromStep _SELECT_COUNT_STAR_COUNT_VALUE = new Select(
 		false,
-		new DefaultAlias<>(
-			new AggregateExpression<>(false, null, "count"), "COUNT_VALUE"));
+		Collections.singletonList(
+			new DefaultAlias<>(
+				new AggregateExpression<>(false, null, "count"),
+				"COUNT_VALUE")));
 
-	private static final FromStep _SELECT_STAR = new Select(false);
+	private static final FromStep _SELECT_STAR = new Select(
+		false, Collections.emptyList());
 
 }

@@ -85,6 +85,8 @@ public class LayoutWorkflowHandlerTest {
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_CONTENT, false, null, _serviceContext);
 
+		Assert.assertEquals(WorkflowConstants.STATUS_DRAFT, layout.getStatus());
+
 		WorkflowHandler workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(
 				Layout.class.getName());
@@ -95,8 +97,6 @@ public class LayoutWorkflowHandlerTest {
 				layout.getPlid());
 
 		Assert.assertNotNull(workflowDefinitionLink);
-
-		Assert.assertEquals(WorkflowConstants.STATUS_DRAFT, layout.getStatus());
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			TestPropsValues.getCompanyId(), _group.getGroupId(),

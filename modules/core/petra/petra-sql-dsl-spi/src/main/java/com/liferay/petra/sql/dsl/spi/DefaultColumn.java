@@ -15,9 +15,9 @@
 package com.liferay.petra.sql.dsl.spi;
 
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
+import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Alias;
 import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultAlias;

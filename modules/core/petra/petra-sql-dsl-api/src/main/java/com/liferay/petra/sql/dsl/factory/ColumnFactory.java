@@ -14,8 +14,8 @@
 
 package com.liferay.petra.sql.dsl.factory;
 
-import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.base.BaseTable;
 
 /**
  * @author Preston Crary

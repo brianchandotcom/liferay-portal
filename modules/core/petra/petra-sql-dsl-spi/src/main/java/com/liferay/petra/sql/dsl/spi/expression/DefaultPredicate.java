@@ -25,10 +25,10 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class PredicateImpl
+public class DefaultPredicate
 	extends BaseASTNode implements DefaultExpression<Boolean>, Predicate {
 
-	public PredicateImpl(
+	public DefaultPredicate(
 		Expression<?> leftExpression, Operand operand,
 		Expression<?> rightExpression) {
 
@@ -41,7 +41,7 @@ public class PredicateImpl
 			return this;
 		}
 
-		return new PredicateImpl(this, Operand.AND, expression);
+		return new DefaultPredicate(this, Operand.AND, expression);
 	}
 
 	public Expression<?> getLeftExpression() {
@@ -66,7 +66,7 @@ public class PredicateImpl
 			return this;
 		}
 
-		return new PredicateImpl(this, Operand.OR, expression);
+		return new DefaultPredicate(this, Operand.OR, expression);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class PredicateImpl
 			return this;
 		}
 
-		return new PredicateImpl(
+		return new DefaultPredicate(
 			_leftExpression, _operand, _rightExpression, true);
 	}
 
@@ -100,7 +100,7 @@ public class PredicateImpl
 		}
 	}
 
-	private PredicateImpl(
+	private DefaultPredicate(
 		Expression<?> leftExpression, Operand operand,
 		Expression<?> rightExpression, boolean wrapParentheses) {
 

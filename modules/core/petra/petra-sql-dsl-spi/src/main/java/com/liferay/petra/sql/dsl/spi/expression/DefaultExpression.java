@@ -44,7 +44,7 @@ public interface DefaultExpression<T> extends Expression<T> {
 
 	@Override
 	public default Predicate eq(Expression<T> expression) {
-		return new PredicateImpl(this, Operand.EQUAL, expression);
+		return new DefaultPredicate(this, Operand.EQUAL, expression);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public interface DefaultExpression<T> extends Expression<T> {
 
 	@Override
 	public default Predicate gt(Expression<T> expression) {
-		return new PredicateImpl(this, Operand.GREATER_THAN, expression);
+		return new DefaultPredicate(this, Operand.GREATER_THAN, expression);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public interface DefaultExpression<T> extends Expression<T> {
 
 	@Override
 	public default Predicate gte(Expression<T> expression) {
-		return new PredicateImpl(
+		return new DefaultPredicate(
 			this, Operand.GREATER_THAN_OR_EQUAL, expression);
 	}
 
@@ -75,28 +75,29 @@ public interface DefaultExpression<T> extends Expression<T> {
 
 	@Override
 	public default Predicate in(DSLQuery dslQuery) {
-		return new PredicateImpl(
+		return new DefaultPredicate(
 			this, Operand.IN, new QueryExpression<>(dslQuery));
 	}
 
 	@Override
 	public default Predicate in(T[] values) {
-		return new PredicateImpl(this, Operand.IN, new ScalarList<>(values));
+		return new DefaultPredicate(this, Operand.IN, new ScalarList<>(values));
 	}
 
 	@Override
 	public default Predicate isNotNull() {
-		return new PredicateImpl(this, Operand.IS_NOT, NullExpression.INSTANCE);
+		return new DefaultPredicate(
+			this, Operand.IS_NOT, NullExpression.INSTANCE);
 	}
 
 	@Override
 	public default Predicate isNull() {
-		return new PredicateImpl(this, Operand.IS, NullExpression.INSTANCE);
+		return new DefaultPredicate(this, Operand.IS, NullExpression.INSTANCE);
 	}
 
 	@Override
 	public default Predicate like(Expression<String> expression) {
-		return new PredicateImpl(this, Operand.LIKE, expression);
+		return new DefaultPredicate(this, Operand.LIKE, expression);
 	}
 
 	@Override
@@ -106,7 +107,7 @@ public interface DefaultExpression<T> extends Expression<T> {
 
 	@Override
 	public default Predicate lt(Expression<T> expression) {
-		return new PredicateImpl(this, Operand.LESS_THAN, expression);
+		return new DefaultPredicate(this, Operand.LESS_THAN, expression);
 	}
 
 	@Override
@@ -116,7 +117,8 @@ public interface DefaultExpression<T> extends Expression<T> {
 
 	@Override
 	public default Predicate lte(Expression<T> expression) {
-		return new PredicateImpl(this, Operand.LESS_THAN_OR_EQUAL, expression);
+		return new DefaultPredicate(
+			this, Operand.LESS_THAN_OR_EQUAL, expression);
 	}
 
 	@Override
@@ -126,7 +128,7 @@ public interface DefaultExpression<T> extends Expression<T> {
 
 	@Override
 	public default Predicate neq(Expression<T> expression) {
-		return new PredicateImpl(this, Operand.NOT_EQUAL, expression);
+		return new DefaultPredicate(this, Operand.NOT_EQUAL, expression);
 	}
 
 	@Override
@@ -136,19 +138,19 @@ public interface DefaultExpression<T> extends Expression<T> {
 
 	@Override
 	public default Predicate notIn(DSLQuery dslQuery) {
-		return new PredicateImpl(
+		return new DefaultPredicate(
 			this, Operand.NOT_IN, new QueryExpression<>(dslQuery));
 	}
 
 	@Override
 	public default Predicate notIn(T[] values) {
-		return new PredicateImpl(
+		return new DefaultPredicate(
 			this, Operand.NOT_IN, new ScalarList<>(values));
 	}
 
 	@Override
 	public default Predicate notLike(Expression<String> expression) {
-		return new PredicateImpl(this, Operand.NOT_LIKE, expression);
+		return new DefaultPredicate(this, Operand.NOT_LIKE, expression);
 	}
 
 	@Override

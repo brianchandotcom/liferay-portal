@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -160,27 +158,20 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 						long fragmentEntryLinkId = itemConfigJSONObject.getLong(
 							"fragmentEntryLinkId");
 
-						try {
-							JSONObject fragmentEntryLinkJSONObject =
-								_duplicateFragmentEntryLink(
-									actionRequest, actionResponse,
-									fragmentEntryLinkId);
+						JSONObject fragmentEntryLinkJSONObject =
+							_duplicateFragmentEntryLink(
+								actionRequest, actionResponse,
+								fragmentEntryLinkId);
 
-							duplicatedLayoutStructureItem.
-								updateItemConfigJSONObject(
-									JSONUtil.put(
-										"fragmentEntryLinkId",
-										fragmentEntryLinkJSONObject.get(
-											"fragmentEntryLinkId")));
+						layoutStructure.updateItemConfig(
+							JSONUtil.put(
+								"fragmentEntryLinkId",
+								fragmentEntryLinkJSONObject.get(
+									"fragmentEntryLinkId")),
+							duplicatedLayoutStructureItem.getItemId());
 
-							duplicatedFragmentEntryLinksJSONArray.put(
-								fragmentEntryLinkJSONObject);
-						}
-						catch (Exception exception) {
-							if (_log.isDebugEnabled()) {
-								_log.debug(exception, exception);
-							}
-						}
+						duplicatedFragmentEntryLinksJSONArray.put(
+							fragmentEntryLinkJSONObject);
 					}
 				});
 
@@ -219,7 +210,7 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 	private JSONObject _duplicateFragmentEntryLink(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			long fragmentEntryLinkId)
-		throws Exception {
+		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
@@ -269,9 +260,6 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 			duplicateFragmentEntryLink, _fragmentCollectionContributorTracker,
 			_fragmentRendererController, _fragmentRendererTracker, portletId);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DuplicateItemReactMVCActionCommand.class);
 
 	@Reference
 	private FragmentCollectionContributorTracker

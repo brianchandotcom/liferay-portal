@@ -129,7 +129,7 @@ public class FragmentEntryLinkUtil {
 				fragmentCollectionContributorTracker,
 			FragmentRendererController fragmentRendererController,
 			FragmentRendererTracker fragmentRendererTracker, String portletId)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

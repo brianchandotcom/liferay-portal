@@ -85,23 +85,7 @@ public class SpiraRelease {
 		List<SpiraRelease> spiraReleases = new ArrayList<>();
 
 		for (SpiraRelease spiraRelease : _spiraReleases.values()) {
-			JSONObject spiraReleaseJSONObject = spiraRelease.toJSONObject();
-
-			boolean matches = true;
-
-			for (SearchParameter searchParameter : searchParameters) {
-				if (!Objects.equals(
-						searchParameter.getValue(),
-						spiraReleaseJSONObject.get(
-							searchParameter.getName()))) {
-
-					matches = false;
-
-					break;
-				}
-			}
-
-			if (matches) {
+			if (spiraRelease.matchesSearchParameters(searchParameters)) {
 				spiraReleases.add(spiraRelease);
 			}
 		}
@@ -133,7 +117,10 @@ public class SpiraRelease {
 				_createSpiraReleaseKey(
 					spiraProject.getID(), spiraRelease.getID()),
 				spiraRelease);
-			spiraReleases.add(spiraRelease);
+
+			if (spiraRelease.matchesSearchParameters(searchParameters)) {
+				spiraReleases.add(spiraRelease);
+			}
 		}
 
 		return spiraReleases;
@@ -248,6 +235,23 @@ public class SpiraRelease {
 		String indentLevel = getIndentLevel();
 
 		return indentLevel.startsWith(parentSpiraRelease.getIndentLevel());
+	}
+
+	protected boolean matchesSearchParameters(
+		SearchParameter... searchParameters) {
+
+		JSONObject jsonObject = toJSONObject();
+
+		for (SearchParameter searchParameter : searchParameters) {
+			if (!Objects.equals(
+					searchParameter.getValue(),
+					jsonObject.get(searchParameter.getName()))) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private static String _createSpiraReleaseKey(

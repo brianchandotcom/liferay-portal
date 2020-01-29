@@ -25,9 +25,6 @@ import React, {useEffect, useState, useRef} from 'react';
 
 import ManageLanguages from './ManageLanguages.es';
 
-/**
- * @class Languages
- */
 const Languages = ({
 	availableLocales,
 	defaultLocaleId,

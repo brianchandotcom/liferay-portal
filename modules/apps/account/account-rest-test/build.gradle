@@ -1,0 +1,12 @@
+dependencies {
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.10"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.10"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.10.1"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:account:account-api")
+	testIntegrationCompile project(":apps:account:account-rest-api")
+	testIntegrationCompile project(":apps:account:account-rest-client")
+	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
+	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

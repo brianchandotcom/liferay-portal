@@ -1,3 +1,6 @@
 Bundle-Name: Liferay Account Rest API
 Bundle-SymbolicName: com.liferay.account.rest.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.account.rest.dto.v1_0,\
+	com.liferay.account.rest.resource.v1_0

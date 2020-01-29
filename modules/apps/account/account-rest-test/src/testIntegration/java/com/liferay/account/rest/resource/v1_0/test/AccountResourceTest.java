@@ -49,6 +49,13 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	}
 
 	@Override
+	protected Account testGetAccountsPage_addAccount(Account account)
+		throws Exception {
+
+		return _addAccount(account);
+	}
+
+	@Override
 	protected Account testGraphQLAccount_addAccount() throws Exception {
 		return _addAccount();
 	}
@@ -57,12 +64,34 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		return _toAccount(_addAccountEntry());
 	}
 
+	private Account _addAccount(Account account) throws Exception {
+		return _toAccount(_addAccountEntry(account));
+	}
+
 	private AccountEntry _addAccountEntry() throws PortalException {
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(),
+		return _addAccountEntry(
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, WorkflowConstants.STATUS_APPROVED);
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	private AccountEntry _addAccountEntry(Account account)
+		throws PortalException {
+
+		return _addAccountEntry(
+			account.getParentAccountId(), account.getName(),
+			account.getDescription(), account.getDomains(),
+			account.getStatus());
+	}
+
+	private AccountEntry _addAccountEntry(
+			long parentAccountEntryId, String name, String description,
+			String[] domains, int status)
+		throws PortalException {
+
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			TestPropsValues.getUserId(), parentAccountEntryId, name,
+			description, domains, null, status);
 
 		_accountEntries.add(accountEntry);
 

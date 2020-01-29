@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.bundle.support</artifactId>
-	<version>3.5.1</version>
+	<version>3.5.2</version>
 	<goalPrefix>bundle-support</goalPrefix>
 	<mojos>
 		<mojo>
@@ -148,7 +148,7 @@
 			</parameters>
 			<configuration>
 				<tokenFile implementation="java.io.File" default-value="${user.home}/.liferay/token"/>
-				<tokenUrl implementation="java.net.URL" default-value="https://releases-cdn.liferay.com/portal/7.2.1-ga2/liferay-ce-portal-tomcat-7.2.1-ga2-20191111141448326.tar.gz"/>
+				<tokenUrl implementation="java.net.URL" default-value="https://web.liferay.com/token-auth-portlet/api/secure/jsonws/tokenauthentry/add-token-auth-entry"/>
 			</configuration>
 		</mojo>
 		<mojo>

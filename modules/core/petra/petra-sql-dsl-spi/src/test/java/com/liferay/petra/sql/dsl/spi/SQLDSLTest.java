@@ -268,16 +268,18 @@ public class SQLDSLTest {
 
 	@Test
 	public void testColumn() {
-		MainExampleTable alias = MainExampleTable.TABLE.as("alias");
+		MainExampleTable aliasMainExampleTable = MainExampleTable.TABLE.as(
+			"alias");
 
 		Assert.assertEquals(
 			MainExampleTable.TABLE.mainExampleId,
 			MainExampleTable.TABLE.mainExampleId);
 		Assert.assertEquals(
-			MainExampleTable.TABLE.mainExampleId, alias.mainExampleId);
+			MainExampleTable.TABLE.mainExampleId,
+			aliasMainExampleTable.mainExampleId);
 		Assert.assertEquals(
 			MainExampleTable.TABLE.mainExampleId.hashCode(),
-			alias.mainExampleId.hashCode());
+			aliasMainExampleTable.mainExampleId.hashCode());
 		Assert.assertNotEquals(
 			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE.name);
 		Assert.assertNotEquals(
@@ -286,7 +288,9 @@ public class SQLDSLTest {
 		Assert.assertNotEquals(
 			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE);
 
-		Assert.assertSame(alias, alias.mainExampleId.getTable());
+		Assert.assertSame(
+			aliasMainExampleTable,
+			aliasMainExampleTable.mainExampleId.getTable());
 	}
 
 	@Test
@@ -297,7 +301,7 @@ public class SQLDSLTest {
 
 	@Test
 	public void testDerivedTable() {
-		ReferenceExampleTable referenceExampleTable =
+		ReferenceExampleTable aliasReferenceExampleTable =
 			ReferenceExampleTable.TABLE.as("referenceExample");
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
@@ -319,9 +323,9 @@ public class SQLDSLTest {
 					3L
 				)
 			).as(
-				referenceExampleTable.getName()
+				aliasReferenceExampleTable.getName()
 			),
-			referenceExampleTable.mainExampleId.eq(
+			aliasReferenceExampleTable.mainExampleId.eq(
 				MainExampleTable.TABLE.mainExampleId)
 		).orderBy(
 			ReferenceExampleTable.TABLE.name.ascending()
@@ -661,11 +665,11 @@ public class SQLDSLTest {
 
 		Assert.assertEquals("like", Operand.LIKE.toString());
 
-		Assert.assertEquals("not like", Operand.NOT_LIKE.toString());
-
 		Assert.assertEquals("!=", Operand.NOT_EQUAL.toString());
 
 		Assert.assertEquals("not in", Operand.NOT_IN.toString());
+
+		Assert.assertEquals("not like", Operand.NOT_LIKE.toString());
 
 		Assert.assertEquals("or", Operand.OR.toString());
 	}
@@ -868,16 +872,17 @@ public class SQLDSLTest {
 
 	@Test
 	public void testSelectDistinctWhereInWithAlias() {
-		MainExampleTable mainTable = MainExampleTable.TABLE.as("mainTable");
+		MainExampleTable aliasMainExampleTable = MainExampleTable.TABLE.as(
+			"mainTable");
 
 		JoinStep joinStep = DSLQueryFactoryUtil.selectDistinct(
-			mainTable.name
+			aliasMainExampleTable.name
 		).from(
-			mainTable
+			aliasMainExampleTable
 		);
 
 		DSLQuery dslQuery = joinStep.where(
-			mainTable.flag.in(new Integer[] {1, 2}));
+			aliasMainExampleTable.flag.in(new Integer[] {1, 2}));
 
 		Assert.assertEquals(
 			"select distinct mainTable.name from MainExample mainTable where " +
@@ -885,9 +890,9 @@ public class SQLDSLTest {
 			dslQuery.toString());
 
 		dslQuery = joinStep.where(
-			mainTable.mainExampleId.in(new Long[] {1L, 2L, null})
+			aliasMainExampleTable.mainExampleId.in(new Long[] {1L, 2L, null})
 		).orderBy(
-			mainTable.name.ascending()
+			aliasMainExampleTable.name.ascending()
 		);
 
 		DefaultASTNodeListener defaultASTNodeListener =
@@ -908,12 +913,12 @@ public class SQLDSLTest {
 
 		dslQuery = joinStep.where(
 			DSLFunctionFactoryUtil.castText(
-				mainTable.mainExampleId
+				aliasMainExampleTable.mainExampleId
 			).in(
 				strings
 			)
 		).orderBy(
-			mainTable.name.ascending()
+			aliasMainExampleTable.name.ascending()
 		);
 
 		defaultASTNodeListener = new DefaultASTNodeListener();
@@ -931,7 +936,7 @@ public class SQLDSLTest {
 
 	@Test
 	public void testSelfJoin() {
-		MainExampleTable tempMainExample = MainExampleTable.TABLE.as(
+		MainExampleTable aliasMainExampleTable = MainExampleTable.TABLE.as(
 			"tempMainExample");
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
@@ -939,11 +944,11 @@ public class SQLDSLTest {
 		).from(
 			MainExampleTable.TABLE
 		).leftJoinOn(
-			tempMainExample,
+			aliasMainExampleTable,
 			MainExampleTable.TABLE.mainExampleId.lt(
-				tempMainExample.mainExampleId)
+				aliasMainExampleTable.mainExampleId)
 		).where(
-			tempMainExample.mainExampleId.isNull()
+			aliasMainExampleTable.mainExampleId.isNull()
 		);
 
 		Assert.assertEquals(
@@ -1102,19 +1107,21 @@ public class SQLDSLTest {
 	public void testTable() {
 		Assert.assertEquals("MainExample", MainExampleTable.TABLE.toString());
 
-		MainExampleTable alias = MainExampleTable.TABLE.as("alias");
+		MainExampleTable aliasMainExampleTable = MainExampleTable.TABLE.as(
+			"alias");
 
-		Assert.assertNotSame(MainExampleTable.TABLE, alias);
+		Assert.assertNotSame(MainExampleTable.TABLE, aliasMainExampleTable);
 
 		Assert.assertEquals(MainExampleTable.TABLE, MainExampleTable.TABLE);
-		Assert.assertEquals(MainExampleTable.TABLE, alias);
+		Assert.assertEquals(MainExampleTable.TABLE, aliasMainExampleTable);
 		Assert.assertNotEquals(
 			MainExampleTable.TABLE, MainExampleTable.TABLE.name);
 		Assert.assertNotEquals(
 			MainExampleTable.TABLE, ReferenceExampleTable.TABLE);
 
 		Assert.assertEquals(
-			MainExampleTable.TABLE.hashCode(), alias.hashCode());
+			MainExampleTable.TABLE.hashCode(),
+			aliasMainExampleTable.hashCode());
 
 		Assert.assertSame(
 			MainExampleTable.TABLE.name,
@@ -1125,22 +1132,24 @@ public class SQLDSLTest {
 			MainExampleTable.TABLE.getColumn(
 				MainExampleTable.TABLE.name.getColumnName(), Long.class));
 
-		Alias<String> nameAlias = alias.name.as("nameAlias");
+		Alias<String> nameAlias = aliasMainExampleTable.name.as("nameAlias");
 
-		Assert.assertEquals("MainExample alias", alias.toString());
+		Assert.assertEquals(
+			"MainExample alias", aliasMainExampleTable.toString());
 
 		Column<MainExampleTable, String> column =
 			(Column<MainExampleTable, String>)nameAlias.getExpression();
 
 		Assert.assertNotSame(MainExampleTable.TABLE.name, column);
 
-		alias = column.getTable();
+		aliasMainExampleTable = column.getTable();
 
-		Assert.assertEquals("alias", alias.getName());
+		Assert.assertEquals("alias", aliasMainExampleTable.getName());
 
 		Assert.assertEquals(
 			MainExampleTable.TABLE.name,
-			alias.getColumn(nameAlias.getName(), column.getColumnType()));
+			aliasMainExampleTable.getColumn(
+				nameAlias.getName(), column.getColumnType()));
 
 		Assert.assertNull(
 			MainExampleTable.TABLE.getColumn(nameAlias.getName()));

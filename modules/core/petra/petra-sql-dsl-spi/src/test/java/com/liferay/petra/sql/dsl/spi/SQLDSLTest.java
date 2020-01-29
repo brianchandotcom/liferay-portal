@@ -1191,22 +1191,21 @@ public class SQLDSLTest {
 			ReferenceExampleTable.TABLE
 		);
 
-		SetOperation union = new SetOperation(
-			dslQuery1, SetOperationType.UNION, dslQuery2);
+		SetOperation setOperation = (SetOperation)dslQuery1.union(dslQuery2);
 
-		Assert.assertSame(dslQuery1, union.getLeftDSLQuery());
+		Assert.assertSame(dslQuery1, setOperation.getLeftDSLQuery());
 
-		Assert.assertSame(SetOperationType.UNION, union.getSetOperationType());
+		Assert.assertSame(
+			SetOperationType.UNION, setOperation.getSetOperationType());
 
-		Assert.assertSame(dslQuery2, union.getRightDSLQuery());
+		Assert.assertSame(dslQuery2, setOperation.getRightDSLQuery());
 
 		Assert.assertEquals(
 			"select MainExample.name name from MainExample union select " +
 				"ReferenceExample.name name from ReferenceExample",
-			union.toString());
+			setOperation.toString());
 
-		union = new SetOperation(
-			dslQuery1, SetOperationType.UNION_ALL,
+		setOperation = (SetOperation)dslQuery1.unionAll(
 			DSLQueryFactoryUtil.select(
 				ReferenceExampleTable.TABLE.name.as("name")
 			).from(
@@ -1214,18 +1213,18 @@ public class SQLDSLTest {
 			));
 
 		Assert.assertSame(
-			SetOperationType.UNION_ALL, union.getSetOperationType());
+			SetOperationType.UNION_ALL, setOperation.getSetOperationType());
 
 		String sql =
 			"select MainExample.name name from MainExample union all select " +
 				"ReferenceExample.name name from ReferenceExample";
 
-		Assert.assertEquals(sql, union.toString());
+		Assert.assertEquals(sql, setOperation.toString());
 
-		union = new SetOperation(union, SetOperationType.UNION, union);
+		setOperation = (SetOperation)setOperation.union(setOperation);
 
 		Assert.assertEquals(
-			StringBundler.concat(sql, " union ", sql), union.toString());
+			StringBundler.concat(sql, " union ", sql), setOperation.toString());
 	}
 
 	@Test

@@ -177,6 +177,7 @@ export const getThread = (
 	request(gql`
         query {
             messageBoardThread(messageBoardThreadId: ${messageBoardThreadId}){
+            	actions
                 aggregateRating {
                     ratingAverage
                     ratingCount
@@ -194,6 +195,7 @@ export const getThread = (
                 keywords 
                 messageBoardMessages(page: ${page}, pageSize: 20, sort: ${sort}) {
                     items {
+                    	actions
                         aggregateRating {
                             ratingAverage
                             ratingCount
@@ -207,6 +209,7 @@ export const getThread = (
                         id
                         messageBoardMessages {
                             items {
+                            	actions
                                 articleBody
                                 creator {
                                     id

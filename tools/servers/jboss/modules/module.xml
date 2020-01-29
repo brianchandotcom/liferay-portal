@@ -11,6 +11,8 @@
 		<resource-root path="com.liferay.petra.nio.jar" />
 		<resource-root path="com.liferay.petra.process.jar" />
 		<resource-root path="com.liferay.petra.reflect.jar" />
+		<resource-root path="com.liferay.petra.sql.dsl.api.jar" />
+		<resource-root path="com.liferay.petra.sql.dsl.spi.jar" />
 		<resource-root path="com.liferay.petra.string.jar" />
 		<resource-root path="com.liferay.registry.api.jar" />
 		<resource-root path="hsql.jar" />

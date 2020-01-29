@@ -101,7 +101,8 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 						"deleted";
 			}
 			else if (exception instanceof PortletIdException) {
-				errorMessage = "uninstanceable-widget-cannot-be-duplicated";
+				errorMessage =
+					"elements-with-uninstanceable-widget-cannot-be-duplicated";
 			}
 
 			ThemeDisplay themeDisplay =

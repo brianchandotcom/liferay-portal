@@ -22,7 +22,6 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -30,15 +29,12 @@ import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributo
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Activate;
@@ -137,26 +133,10 @@ public class BlogsContentEditorConfigContributor
 		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new URLItemSelectorReturnType());
 
-		PortletURL uploadURL = requestBackedPortletURLFactory.createActionURL(
-			PortletKeys.BLOGS);
-
-		uploadURL.setParameter(
-			ActionRequest.ACTION_NAME, "/blogs/upload_image");
-
-		ItemSelectorCriterion uploadItemSelectorCriterion =
-			new UploadItemSelectorCriterion(
-				PortletKeys.BLOGS, uploadURL.toString(),
-				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"),
-				_blogsFileUploadsConfiguration.imageMaxSize(),
-				_blogsFileUploadsConfiguration.imageExtensions());
-
-		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
-
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, eventName,
 			blogsItemSelectorCriterion, imageItemSelectorCriterion,
-			urlItemSelectorCriterion, uploadItemSelectorCriterion);
+			urlItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString()

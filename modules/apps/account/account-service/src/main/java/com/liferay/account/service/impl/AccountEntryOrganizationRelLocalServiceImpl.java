@@ -103,6 +103,14 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 	}
 
 	@Override
+	public List<AccountEntryOrganizationRel>
+		getAccountEntryOrganizationRelsByOrganizationId(long organizationId) {
+
+		return accountEntryOrganizationRelPersistence.findByOrganizationId(
+			organizationId);
+	}
+
+	@Override
 	public int getAccountEntryOrganizationRelsCount(long accountEntryId) {
 		return accountEntryOrganizationRelPersistence.countByAccountEntryId(
 			accountEntryId);

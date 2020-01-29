@@ -206,7 +206,7 @@ function ToolbarBody() {
 						/>
 
 						<ClayButton
-							className="btn btn-secondary nav-btn"
+							className="btn btn-secondary mr-3"
 							disabled={!draft}
 							displayType="secondary"
 							onClick={handleDiscardDraft}
@@ -234,7 +234,6 @@ function ToolbarBody() {
 						/>
 
 						<ClayButton
-							className="nav-btn"
 							displayType="primary"
 							onClick={handleSubmit}
 							small

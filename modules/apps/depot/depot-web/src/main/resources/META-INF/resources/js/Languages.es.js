@@ -18,10 +18,10 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import {useModal} from '@clayui/modal';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState, useRef} from 'react';
-import {useModal} from '@clayui/modal';
 
 import ManageLanguages from './ManageLanguages.es';
 
@@ -32,7 +32,6 @@ const Languages = ({
 	availableLocales,
 	defaultLocaleId,
 	inheritLocales = true,
-	manageCustomLanguagesURL,
 	portletNamespace,
 	siteAvailableLocales,
 	siteDefaultLocaleId,
@@ -275,7 +274,6 @@ Languages.propTypes = {
 	).isRequired,
 	defaultLocaleId: PropTypes.string.isRequired,
 	inheritLocales: PropTypes.bool,
-	manageCustomLanguagesURL: PropTypes.string,
 	portletNamespace: PropTypes.string.isRequired,
 	siteAvailableLocales: PropTypes.arrayOf(
 		PropTypes.shape({

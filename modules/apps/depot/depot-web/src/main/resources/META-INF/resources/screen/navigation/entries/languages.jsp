@@ -54,10 +54,6 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 	<liferay-ui:message key="please-enter-a-valid-name" />
 </liferay-ui:error>
 
-<portlet:renderURL var="manageCustomLanguagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/screen/navigation/entries/manage_languages.jsp" />
-</portlet:renderURL>
-
 <div class="site-languages">
 
 	<%
@@ -67,8 +63,6 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 		"defaultLocaleId", LocaleUtil.toLanguageId(company.getDefaultUser().getLocale())
 	).put(
 		"inheritLocales", inheritLocales
-	).put(
-		"manageCustomLanguagesURL", manageCustomLanguagesURL.toString()
 	).put(
 		"siteAvailableLocales", DepotLanguageUtil.getDepotAvailableLocalesJSONArray(group, locale)
 	).put(

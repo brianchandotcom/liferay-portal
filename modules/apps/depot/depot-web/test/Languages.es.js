@@ -12,7 +12,12 @@
  * details.
  */
 
-import {cleanup, fireEvent, render, waitForElement} from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	waitForElement
+} from '@testing-library/react';
 import React from 'react';
 
 import Languages from '../src/main/resources/META-INF/resources/js/Languages.es';
@@ -145,14 +150,14 @@ describe('Languages', () => {
 			fireEvent.click(result.getByText('manage'));
 		});
 
-		it('renders a modal when user clicks on Manage button',  async () => {
+		it('renders a modal when user clicks on Manage button', async () => {
 			const title = await waitForElement(() =>
 				result.getByText('language-selection')
 			);
 			expect(title);
 		});
 
-		it('renders custom locales checked',  async () => {
+		it('renders custom locales checked', async () => {
 			const checkboxes = await waitForElement(() =>
 				result.getAllByRole('checkbox')
 			);
@@ -165,7 +170,7 @@ describe('Languages', () => {
 			expect(checkboxes[3]).toHaveProperty('checked', false);
 		});
 
-		it('custom locale check is disabled',  async () => {
+		it('custom locale check is disabled', async () => {
 			const checkboxes = await waitForElement(() =>
 				result.getAllByRole('checkbox')
 			);
@@ -173,14 +178,14 @@ describe('Languages', () => {
 			expect(checkboxes[1]).toHaveProperty('disabled', true);
 		});
 
-		it('uncheck custom locale and save',  async () => {
+		it('uncheck custom locale and save', async () => {
 			const checkboxes = await waitForElement(() =>
 				result.getAllByRole('checkbox')
 			);
 
 			fireEvent.click(checkboxes[0]);
 
-			fireEvent.click(result.getByText('save'))
+			fireEvent.click(result.getByText('save'));
 
 			const languagesList = await waitForElement(() =>
 				result.container.querySelectorAll('tbody > tr')
@@ -189,14 +194,14 @@ describe('Languages', () => {
 			expect(languagesList).toHaveLength(1);
 		});
 
-		it('add custom locale and save',  async () => {
+		it('add custom locale and save', async () => {
 			const checkboxes = await waitForElement(() =>
 				result.getAllByRole('checkbox')
 			);
 
 			fireEvent.click(checkboxes[2]);
 
-			fireEvent.click(result.getByText('save'))
+			fireEvent.click(result.getByText('save'));
 
 			const languagesList = await waitForElement(() =>
 				result.container.querySelectorAll('tbody > tr')
@@ -204,5 +209,5 @@ describe('Languages', () => {
 
 			expect(languagesList).toHaveLength(3);
 		});
-	})
+	});
 });

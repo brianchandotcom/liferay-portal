@@ -6,7 +6,7 @@
 		"@clayui/form": "3.3.0",
 		"@clayui/icon": "3.0.2",
 		"@clayui/label": "3.0.2",
-		"@clayui/modal": "^3.1.4",
+		"@clayui/modal": "3.1.4",
 		"@clayui/table": "3.0.5",
 		"frontend-js-web": "*",
 		"metal-dom": "2.16.8",

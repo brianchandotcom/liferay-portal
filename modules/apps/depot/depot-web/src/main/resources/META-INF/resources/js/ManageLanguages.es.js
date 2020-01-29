@@ -12,8 +12,8 @@
  * details.
  */
 
-import {ClayCheckbox} from '@clayui/form';
 import ClayButton from '@clayui/button';
+import {ClayCheckbox} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayModal from '@clayui/modal';
 import ClayTable from '@clayui/table';
@@ -99,7 +99,8 @@ const ManageLanguages = ({
 								<Language
 									{...locale}
 									isDefault={
-										customDefaultLocaleId === locale.localeId
+										customDefaultLocaleId ===
+										locale.localeId
 									}
 									key={locale.localeId}
 								/>
@@ -119,7 +120,10 @@ const ManageLanguages = ({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton displayType="primary" onClick={() => onModalSave(selectedLocales)}>
+						<ClayButton
+							displayType="primary"
+							onClick={() => onModalSave(selectedLocales)}
+						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>

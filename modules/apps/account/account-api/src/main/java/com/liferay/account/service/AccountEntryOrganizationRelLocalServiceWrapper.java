@@ -291,6 +291,14 @@ public class AccountEntryOrganizationRelLocalServiceWrapper
 			getAccountEntryOrganizationRels(accountEntryId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.account.model.AccountEntryOrganizationRel>
+		getAccountEntryOrganizationRelsByOrganizationId(long organizationId) {
+
+		return _accountEntryOrganizationRelLocalService.
+			getAccountEntryOrganizationRelsByOrganizationId(organizationId);
+	}
+
 	/**
 	 * Returns the number of account entry organization rels.
 	 *

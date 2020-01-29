@@ -227,6 +227,10 @@ public interface AccountEntryOrganizationRelLocalService
 	public List<AccountEntryOrganizationRel> getAccountEntryOrganizationRels(
 		long accountEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountEntryOrganizationRel>
+		getAccountEntryOrganizationRelsByOrganizationId(long organizationId);
+
 	/**
 	 * Returns the number of account entry organization rels.
 	 *

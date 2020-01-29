@@ -16,32 +16,14 @@ package com.liferay.petra.sql.dsl.query;
 
 import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.query.impl.Join;
-import com.liferay.petra.sql.dsl.query.impl.JoinType;
 
 /**
  * @author Preston Crary
  */
 public interface JoinStep extends WhereStep {
 
-	public default JoinStep innerJoinON(
-		BaseTable<?> baseTable, Predicate predicate) {
+	public JoinStep innerJoinON(BaseTable<?> baseTable, Predicate predicate);
 
-		if (predicate == null) {
-			return this;
-		}
-
-		return new Join(this, JoinType.INNER, baseTable, predicate);
-	}
-
-	public default JoinStep leftJoinOn(
-		BaseTable<?> baseTable, Predicate predicate) {
-
-		if (predicate == null) {
-			return this;
-		}
-
-		return new Join(this, JoinType.LEFT, baseTable, predicate);
-	}
+	public JoinStep leftJoinOn(BaseTable<?> baseTable, Predicate predicate);
 
 }

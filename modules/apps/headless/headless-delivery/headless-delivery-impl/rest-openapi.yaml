@@ -318,6 +318,7 @@ components:
                     description:
                         The document's ID.
                     format: int64
+                    readOnly: true
                     type: integer
                 sizeInBytes:
                     description:
@@ -353,6 +354,7 @@ components:
                 label_i18n:
                     additionalProperties:
                         type: string
+                    readOnly: true
                     type: object
                 name:
                     description:
@@ -1593,6 +1595,7 @@ components:
                     readOnly: true
                     type: integer
                 name:
+                    readOnly: true
                     type: string
                 navigationMenuItems:
                     items:
@@ -1623,12 +1626,15 @@ components:
                     readOnly: true
                     type: integer
                 link:
+                    readOnly: true
                     type: string
                 name:
+                    readOnly: true
                     type: string
                 name_i18n:
                     additionalProperties:
                         type: string
+                    readOnly: true
                     type: object
                 navigationMenuItems:
                     items:
@@ -1636,10 +1642,13 @@ components:
                     type: array
                 parentNavigationMenuId:
                     format: int64
+                    readOnly: true
                     type: integer
                 type:
+                    readOnly: true
                     type: string
                 url:
+                    readOnly: true
                     type: string
         Rating:
             description:

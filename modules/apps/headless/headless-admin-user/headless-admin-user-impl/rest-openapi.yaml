@@ -103,6 +103,7 @@ components:
                     description:
                         The email address's ID.
                     format: int64
+                    readOnly: true
                     type: integer
                 # @review
                 primary:
@@ -142,6 +143,7 @@ components:
                 id:
                     description:
                         The organization's ID.
+                    readOnly: true
                     type: string
                 image:
                     description:

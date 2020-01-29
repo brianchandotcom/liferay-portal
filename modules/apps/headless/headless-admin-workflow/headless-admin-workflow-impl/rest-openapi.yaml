@@ -163,10 +163,8 @@ components:
         WorkflowDefinition:
             properties:
                 active:
-                    readOnly: true
                     type: boolean
                 content:
-                    readOnly: true
                     type: string
                 dateModified:
                     format: date-time
@@ -176,13 +174,10 @@ components:
                     readOnly: true
                     type: string
                 name:
-                    readOnly: true
                     type: string
                 title:
-                    readOnly: true
                     type: string
                 version:
-                    readOnly: true
                     type: string
             type: object
         WorkflowInstance:

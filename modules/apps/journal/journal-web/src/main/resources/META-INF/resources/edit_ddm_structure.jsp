@@ -183,8 +183,7 @@ if (ddmStructure != null) {
 						dataDefinitionId="<%= ddmStructureId %>"
 						groupId="<%= groupId %>"
 						namespace="<%= renderResponse.getNamespace() %>"
-					>
-					</liferay-data-engine:data-layout-builder>
+					/>
 				</c:when>
 				<c:otherwise>
 					<div class="sheet">

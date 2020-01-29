@@ -14,7 +14,6 @@
 
 package com.liferay.petra.sql.dsl;
 
-import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.factory.ColumnFactory;
 
@@ -31,7 +30,7 @@ import java.util.function.Supplier;
 /**
  * @author Preston Crary
  */
-public abstract class BaseTable<T extends BaseTable<T>> implements ASTNode {
+public abstract class BaseTable<T extends BaseTable<T>> implements Table<T> {
 
 	public BaseTable(String tableName, Supplier<T> tableSupplier) {
 		_tableName = tableName;
@@ -54,6 +53,7 @@ public abstract class BaseTable<T extends BaseTable<T>> implements ASTNode {
 		return column;
 	}
 
+	@Override
 	public T as(String alias) {
 		T table = _tableSupplier.get();
 
@@ -68,23 +68,26 @@ public abstract class BaseTable<T extends BaseTable<T>> implements ASTNode {
 			return true;
 		}
 
-		if (!(object instanceof BaseTable<?>)) {
+		if (!(object instanceof Table<?>)) {
 			return false;
 		}
 
-		BaseTable<?> baseTable = (BaseTable<?>)object;
+		Table<?> table = (Table<?>)object;
 
-		return Objects.equals(_tableName, baseTable._tableName);
+		return Objects.equals(_tableName, table.getTableName());
 	}
 
+	@Override
 	public String getAlias() {
 		return _alias;
 	}
 
+	@Override
 	public Column<T, ?> getColumn(String columnName) {
 		return _columnMap.get(columnName);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <C> Column<T, C> getColumn(String columnName, Class<C> clazz) {
 		Column<T, ?> column = _columnMap.get(columnName);
@@ -98,10 +101,12 @@ public abstract class BaseTable<T extends BaseTable<T>> implements ASTNode {
 		return (Column<T, C>)column;
 	}
 
+	@Override
 	public Collection<Column<T, ?>> getColumns() {
 		return Collections.unmodifiableCollection(_columnMap.values());
 	}
 
+	@Override
 	public String getName() {
 		if (_alias == null) {
 			return _tableName;
@@ -110,6 +115,7 @@ public abstract class BaseTable<T extends BaseTable<T>> implements ASTNode {
 		return _alias;
 	}
 
+	@Override
 	public String getTableName() {
 		return _tableName;
 	}

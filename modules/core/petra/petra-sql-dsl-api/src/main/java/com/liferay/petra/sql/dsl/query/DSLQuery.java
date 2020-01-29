@@ -14,7 +14,7 @@
 
 package com.liferay.petra.sql.dsl.query;
 
-import com.liferay.petra.sql.dsl.BaseTable;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
 
 /**
@@ -22,7 +22,7 @@ import com.liferay.petra.sql.dsl.ast.ASTNode;
  */
 public interface DSLQuery extends ASTNode {
 
-	public BaseTable<?> as(String name);
+	public Table<?> as(String name);
 
 	public DSLQuery union(DSLQuery dslQuery);
 

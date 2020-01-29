@@ -216,7 +216,7 @@ public class SQLDSLTest {
 	@Test
 	public void testCaseSelect() {
 		Alias<String> numberAlias = DSLFunctionFactoryUtil.caseWhenThen(
-			MainExampleTable.TABLE.mainExampleId.eq(1L), "one"
+			MainExampleTable.TABLE.mainExampleId.eq(1L), new Scalar<>("one")
 		).whenThen(
 			MainExampleTable.TABLE.mainExampleId.eq(2L), "two"
 		).whenThen(
@@ -395,6 +395,12 @@ public class SQLDSLTest {
 	@Test
 	public void testFunctions() {
 		Assert.assertEquals(
+			"MainExample.mainExampleId + ReferenceExample.referenceExampleId",
+			String.valueOf(
+				DSLFunctionFactoryUtil.add(
+					MainExampleTable.TABLE.mainExampleId,
+					ReferenceExampleTable.TABLE.referenceExampleId)));
+		Assert.assertEquals(
 			"MainExample.mainExampleId + ?",
 			String.valueOf(
 				DSLFunctionFactoryUtil.add(
@@ -404,6 +410,13 @@ public class SQLDSLTest {
 			String.valueOf(
 				DSLFunctionFactoryUtil.avg(
 					MainExampleTable.TABLE.mainExampleId)));
+		Assert.assertEquals(
+			"BITAND(MainExample.mainExampleId, " +
+				"ReferenceExample.referenceExampleId)",
+			String.valueOf(
+				DSLFunctionFactoryUtil.bitAnd(
+					MainExampleTable.TABLE.mainExampleId,
+					ReferenceExampleTable.TABLE.referenceExampleId)));
 		Assert.assertEquals(
 			"BITAND(MainExample.mainExampleId, ?)",
 			String.valueOf(
@@ -443,6 +456,12 @@ public class SQLDSLTest {
 				DSLFunctionFactoryUtil.divide(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
 		Assert.assertEquals(
+			"MainExample.mainExampleId / ReferenceExample.referenceExampleId",
+			String.valueOf(
+				DSLFunctionFactoryUtil.divide(
+					MainExampleTable.TABLE.mainExampleId,
+					ReferenceExampleTable.TABLE.referenceExampleId)));
+		Assert.assertEquals(
 			"max(MainExample.mainExampleId)",
 			String.valueOf(
 				DSLFunctionFactoryUtil.max(
@@ -458,10 +477,22 @@ public class SQLDSLTest {
 				DSLFunctionFactoryUtil.multiply(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
 		Assert.assertEquals(
+			"MainExample.mainExampleId * ReferenceExample.referenceExampleId",
+			String.valueOf(
+				DSLFunctionFactoryUtil.multiply(
+					MainExampleTable.TABLE.mainExampleId,
+					ReferenceExampleTable.TABLE.referenceExampleId)));
+		Assert.assertEquals(
 			"MainExample.mainExampleId - ?",
 			String.valueOf(
 				DSLFunctionFactoryUtil.subtract(
 					MainExampleTable.TABLE.mainExampleId, 2L)));
+		Assert.assertEquals(
+			"MainExample.mainExampleId - ReferenceExample.referenceExampleId",
+			String.valueOf(
+				DSLFunctionFactoryUtil.subtract(
+					MainExampleTable.TABLE.mainExampleId,
+					ReferenceExampleTable.TABLE.referenceExampleId)));
 		Assert.assertEquals(
 			"sum(MainExample.mainExampleId)",
 			String.valueOf(
@@ -778,6 +809,17 @@ public class SQLDSLTest {
 	}
 
 	@Test
+	public void testQueryTable() {
+		BaseTable<?> baseTable = DSLQueryFactoryUtil.select(
+			new Scalar<>(1)
+		).as(
+			"alias"
+		);
+
+		Assert.assertEquals("(select ?) alias", baseTable.toString());
+	}
+
+	@Test
 	public void testScalarList() {
 		Long[] longs = {0L, 1L, 2L};
 
@@ -1058,6 +1100,8 @@ public class SQLDSLTest {
 
 	@Test
 	public void testTable() {
+		Assert.assertEquals("MainExample", MainExampleTable.TABLE.toString());
+
 		MainExampleTable alias = MainExampleTable.TABLE.as("alias");
 
 		Assert.assertNotSame(MainExampleTable.TABLE, alias);
@@ -1082,6 +1126,8 @@ public class SQLDSLTest {
 				MainExampleTable.TABLE.name.getColumnName(), Long.class));
 
 		Alias<String> nameAlias = alias.name.as("nameAlias");
+
+		Assert.assertEquals("MainExample alias", alias.toString());
 
 		Column<MainExampleTable, String> column =
 			(Column<MainExampleTable, String>)nameAlias.getExpression();

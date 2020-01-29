@@ -77,9 +77,10 @@ public class FragmentRendererPortalInstanceLifecycleListener
 				"liferay-json-web-services",
 				"com.liferay.oauth2.provider.jsonws",
 				scopeAssigner -> scopeAssigner.assignScope(
-					"everything.read"
+					"everything.read", "everything.write"
 				).mapToScopeAlias(
-					"liferay-json-web-services.everything.read"
+					"liferay-json-web-services.everything.read",
+					"liferay-json-web-services.everything.write"
 				)),
 			new ServiceContext());
 	}

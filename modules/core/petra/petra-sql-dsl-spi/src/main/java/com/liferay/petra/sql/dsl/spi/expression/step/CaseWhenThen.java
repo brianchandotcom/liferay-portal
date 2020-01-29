@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl.spi.expression;
+package com.liferay.petra.sql.dsl.spi.expression.step;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.expression.Expression;

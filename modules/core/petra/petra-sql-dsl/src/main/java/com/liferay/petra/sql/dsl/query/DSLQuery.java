@@ -14,7 +14,7 @@
 
 package com.liferay.petra.sql.dsl.query;
 
-import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
 import com.liferay.petra.sql.dsl.query.impl.QueryTable;
 import com.liferay.petra.sql.dsl.query.impl.SetOperation;
@@ -25,7 +25,7 @@ import com.liferay.petra.sql.dsl.query.impl.SetOperationType;
  */
 public interface DSLQuery extends ASTNode {
 
-	public default Table<?> as(String name) {
+	public default BaseTable<?> as(String name) {
 		return new QueryTable(name, this);
 	}
 

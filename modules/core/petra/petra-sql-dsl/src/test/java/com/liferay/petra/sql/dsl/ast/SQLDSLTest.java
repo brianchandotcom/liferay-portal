@@ -14,10 +14,10 @@
 
 package com.liferay.petra.sql.dsl.ast;
 
+import com.liferay.petra.sql.dsl.BaseTable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionUtil;
 import com.liferay.petra.sql.dsl.DSLQueryUtil;
-import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.impl.BaseASTNode;
 import com.liferay.petra.sql.dsl.ast.impl.DefaultASTNodeListener;
 import com.liferay.petra.sql.dsl.expression.Alias;
@@ -89,6 +89,7 @@ public class SQLDSLTest {
 				assertClasses.add(AggregateExpression.class);
 				assertClasses.add(AliasImpl.class);
 				assertClasses.add(BaseASTNode.class);
+				assertClasses.add(BaseTable.class);
 				assertClasses.add(CaseWhenThen.class);
 				assertClasses.add(Column.class);
 				assertClasses.add(DefaultASTNodeListener.class);
@@ -115,7 +116,6 @@ public class SQLDSLTest {
 				assertClasses.add(Select.class);
 				assertClasses.add(SetOperation.class);
 				assertClasses.add(SetOperationType.class);
-				assertClasses.add(Table.class);
 				assertClasses.add(WhenThen.class);
 				assertClasses.add(Where.class);
 			}
@@ -1160,7 +1160,7 @@ public class SQLDSLTest {
 		Assert.assertSame(scalar, whenThen.getThenExpression());
 	}
 
-	private static class MainExampleTable extends Table<MainExampleTable> {
+	private static class MainExampleTable extends BaseTable<MainExampleTable> {
 
 		public static final MainExampleTable TABLE = new MainExampleTable();
 
@@ -1180,7 +1180,7 @@ public class SQLDSLTest {
 	}
 
 	private static class ReferenceExampleTable
-		extends Table<ReferenceExampleTable> {
+		extends BaseTable<ReferenceExampleTable> {
 
 		public static final ReferenceExampleTable TABLE =
 			new ReferenceExampleTable();

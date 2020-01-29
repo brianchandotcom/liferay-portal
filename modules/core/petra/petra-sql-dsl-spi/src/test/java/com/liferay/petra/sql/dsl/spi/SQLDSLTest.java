@@ -839,9 +839,8 @@ public class SQLDSLTest {
 
 	@Test
 	public void testSelect() {
-		Expression<?>[] expressions = {
-			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE.flag
-		};
+		List<Expression<?>> expressions = Arrays.asList(
+			MainExampleTable.TABLE.mainExampleId, MainExampleTable.TABLE.flag);
 
 		Select select = new Select(true, expressions);
 

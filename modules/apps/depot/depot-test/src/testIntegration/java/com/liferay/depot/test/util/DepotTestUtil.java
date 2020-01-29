@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -71,6 +72,7 @@ public class DepotTestUtil {
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			UserLocalServiceUtil.deleteUser(user);
+			RoleLocalServiceUtil.deleteRole(role);
 		}
 	}
 

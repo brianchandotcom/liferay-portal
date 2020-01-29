@@ -274,7 +274,8 @@ public class DLAdminManagementToolbarDisplayContext {
 
 			if (!RepositoryUtil.isExternalRepository(
 					fileEntry.getRepositoryId()) &&
-				!_hasWorkflowDefinitionLink(fileEntry)) {
+				!_hasWorkflowDefinitionLink(fileEntry) &&
+				!_isCheckedOutByAnotherUser(fileEntry)) {
 
 				if (_hasValidAssetVocabularies(
 						_themeDisplay.getScopeGroupId())) {
@@ -896,6 +897,14 @@ public class DLAdminManagementToolbarDisplayContext {
 		return DLUtil.hasWorkflowDefinitionLink(
 			_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
 			folderId, fileEntryTypeId);
+	}
+
+	private boolean _isCheckedOutByAnotherUser(FileEntry fileEntry) {
+		if (fileEntry.isCheckedOut() && !fileEntry.hasLock()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isEnableOnBulk() {

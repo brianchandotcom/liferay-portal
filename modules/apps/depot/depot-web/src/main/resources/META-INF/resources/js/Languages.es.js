@@ -59,14 +59,14 @@ const Languages = ({
 		setShowModal(false);
 	};
 
-	const handleOnSaveModal = selectedLocales => {
-		setShowModal(false);
-		setCustomLocales(selectedLocales);
-	};
-
 	const {observer, onClose} = useModal({
 		onClose: handleOnCloseModal
 	});
+
+	const handleOnSaveModal = selectedLocales => {
+		setCustomLocales(selectedLocales);
+		onClose();
+	};
 
 	const customLocalesInputRef = useRef();
 

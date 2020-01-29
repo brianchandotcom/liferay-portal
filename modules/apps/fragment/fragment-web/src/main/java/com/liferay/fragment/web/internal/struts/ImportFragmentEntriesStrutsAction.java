@@ -54,10 +54,6 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		UploadServletRequest uploadServletRequest =
 			_portal.getUploadServletRequest(httpServletRequest);
 
@@ -75,6 +71,10 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 					"the-selected-file-is-not-a-valid-zip-file"));
 		}
 		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			List<String> invalidFragmentEntryNames =
 				_fragmentsImporter.importFile(
 					themeDisplay.getUserId(), groupId, 0L, file, true);

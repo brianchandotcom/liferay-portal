@@ -39,8 +39,16 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 			<%
 			Map<String, Object> data = new HashMap<String, Object>();
 
+			String name = siteNavigationMenu.getName();
+
+			if (siteNavigationMenu.getGroupId() != scopeGroupId) {
+				Group group = GroupLocalServiceUtil.getGroup(siteNavigationMenu.getGroupId());
+
+				name = StringUtil.appendParentheticalSuffix(name, group.getDescriptiveName(locale));
+			}
+
 			data.put("id", siteNavigationMenu.getSiteNavigationMenuId());
-			data.put("name", siteNavigationMenu.getName());
+			data.put("name", name);
 			%>
 
 			<c:choose>
@@ -55,7 +63,7 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 					>
 						<h4>
 							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-								<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
+								<%= HtmlUtil.escape(name) %>
 							</aui:a>
 						</h4>
 
@@ -76,7 +84,7 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 						name="title"
 					>
 						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-							<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
+							<%= HtmlUtil.escape(name) %>
 						</aui:a>
 					</liferay-ui:search-container-column-text>
 

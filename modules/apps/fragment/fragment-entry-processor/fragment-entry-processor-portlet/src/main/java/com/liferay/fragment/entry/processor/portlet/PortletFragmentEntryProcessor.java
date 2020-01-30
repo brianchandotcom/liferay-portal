@@ -422,18 +422,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		HttpServletRequest httpServletRequest =
 			fragmentEntryProcessorContext.getHttpServletRequest();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		long defaultPlid = layout.getPlid();
-
-		if (layout.getMasterLayoutPlid() > 0) {
-			defaultPlid = layout.getMasterLayoutPlid();
-		}
-
 		if (segmentsExperienceIdOptionalLong.isPresent()) {
 			String preferencesPortletId = portletId;
 
@@ -453,6 +441,18 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				instanceId, segmentsExperienceIdOptionalLong.getAsLong());
 
 			preferencesPortletId = PortletIdCodec.encode(portletId, instanceId);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Layout layout = themeDisplay.getLayout();
+
+			long defaultPlid = layout.getPlid();
+
+			if (layout.getMasterLayoutPlid() > 0) {
+				defaultPlid = layout.getMasterLayoutPlid();
+			}
 
 			PortletPreferences defaultExperiencePortletPreferences =
 				_portletPreferencesLocalService.fetchPreferences(

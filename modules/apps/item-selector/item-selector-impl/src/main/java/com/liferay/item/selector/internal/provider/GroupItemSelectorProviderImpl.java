@@ -87,7 +87,7 @@ public class GroupItemSelectorProviderImpl
 
 	@Override
 	public String getIcon() {
-		return "site";
+		return "sites";
 	}
 
 	@Override

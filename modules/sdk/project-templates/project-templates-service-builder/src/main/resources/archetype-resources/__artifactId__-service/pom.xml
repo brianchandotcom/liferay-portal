@@ -105,11 +105,18 @@
 			<version>2.0.0</version>
 			<scope>provided</scope>
 		</dependency>
-#elseif (${liferayVersion.startsWith("7.1")} || (${dependencyInjector} != "ds"))
+#elseif (${liferayVersion.startsWith("7.1")} || (${liferayVersion.startsWith("7.2")} && ${dependencyInjector} == "spring"))
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.portal.spring.extender.api</artifactId>
 			<version>3.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+#elseif (${liferayVersion.startsWith("7.3")} && ${dependencyInjector} == "spring"))
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.portal.spring.extender.api</artifactId>
+			<version>5.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 #end

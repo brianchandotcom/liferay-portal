@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupRolePermissionUtil;
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 import com.liferay.portal.service.base.UserGroupRoleServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -48,11 +47,11 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 			UserGroupRolePermissionUtil.check(
 				getPermissionChecker(), group, role);
 
-			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-				userId, groupId, roleId);
+			UserGroupRole userGroupRole = userGroupRolePersistence.create(0);
 
-			UserGroupRole userGroupRole = userGroupRolePersistence.create(
-				userGroupRolePK);
+			userGroupRole.setUserId(userId);
+			userGroupRole.setGroupId(groupId);
+			userGroupRole.setRoleId(roleId);
 
 			if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
 				organizationUserGroupRoles.add(userGroupRole);
@@ -93,11 +92,11 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		List<UserGroupRole> userGroupRoles = new ArrayList<>();
 
 		for (long userId : userIds) {
-			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-				userId, groupId, roleId);
+			UserGroupRole userGroupRole = userGroupRolePersistence.create(0);
 
-			UserGroupRole userGroupRole = userGroupRolePersistence.create(
-				userGroupRolePK);
+			userGroupRole.setUserId(userId);
+			userGroupRole.setGroupId(groupId);
+			userGroupRole.setRoleId(roleId);
 
 			userGroupRoles.add(userGroupRole);
 		}
@@ -142,11 +141,11 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 			UserGroupRolePermissionUtil.check(
 				getPermissionChecker(), group, role);
 
-			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-				userId, groupId, roleId);
+			UserGroupRole userGroupRole = userGroupRolePersistence.create(0);
 
-			UserGroupRole userGroupRole = userGroupRolePersistence.create(
-				userGroupRolePK);
+			userGroupRole.setUserId(userId);
+			userGroupRole.setGroupId(groupId);
+			userGroupRole.setRoleId(roleId);
 
 			if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
 				if (!OrganizationMembershipPolicyUtil.isRoleProtected(
@@ -206,11 +205,11 @@ public class UserGroupRoleServiceImpl extends UserGroupRoleServiceBaseImpl {
 		Role role = rolePersistence.findByPrimaryKey(roleId);
 
 		for (long userId : userIds) {
-			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-				userId, groupId, roleId);
+			UserGroupRole userGroupRole = userGroupRolePersistence.create(0);
 
-			UserGroupRole userGroupRole = userGroupRolePersistence.create(
-				userGroupRolePK);
+			userGroupRole.setUserId(userId);
+			userGroupRole.setGroupId(groupId);
+			userGroupRole.setRoleId(roleId);
 
 			if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
 				Group group = groupPersistence.findByPrimaryKey(groupId);

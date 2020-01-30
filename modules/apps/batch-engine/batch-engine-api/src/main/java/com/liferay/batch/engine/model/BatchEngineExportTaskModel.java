@@ -334,19 +334,4 @@ public interface BatchEngineExportTaskModel
 	 */
 	public void setStartTime(Date startTime);
 
-	/**
-	 * Returns the version of this batch engine export task.
-	 *
-	 * @return the version of this batch engine export task
-	 */
-	@AutoEscape
-	public String getVersion();
-
-	/**
-	 * Sets the version of this batch engine export task.
-	 *
-	 * @param version the version of this batch engine export task
-	 */
-	public void setVersion(String version);
-
 }

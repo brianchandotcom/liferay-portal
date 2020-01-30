@@ -80,7 +80,7 @@ public interface BatchEngineExportTaskLocalService
 	public BatchEngineExportTask addBatchEngineExportTask(
 		long companyId, long userId, String callbackURL, String className,
 		String contentType, String executeStatus, List<String> fieldNamesList,
-		Map<String, Serializable> parameters, String version);
+		Map<String, Serializable> parameters);
 
 	/**
 	 * Creates a new batch engine export task with the primary key. Does not add the batch engine export task to the database.

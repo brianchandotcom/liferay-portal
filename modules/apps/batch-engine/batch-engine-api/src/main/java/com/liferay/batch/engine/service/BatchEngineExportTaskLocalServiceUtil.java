@@ -57,12 +57,11 @@ public class BatchEngineExportTaskLocalServiceUtil {
 			long companyId, long userId, String callbackURL, String className,
 			String contentType, String executeStatus,
 			java.util.List<String> fieldNamesList,
-			java.util.Map<String, java.io.Serializable> parameters,
-			String version) {
+			java.util.Map<String, java.io.Serializable> parameters) {
 
 		return getService().addBatchEngineExportTask(
 			companyId, userId, callbackURL, className, contentType,
-			executeStatus, fieldNamesList, parameters, version);
+			executeStatus, fieldNamesList, parameters);
 	}
 
 	/**

@@ -81,7 +81,7 @@ public interface BatchEngineImportTaskLocalService
 		long companyId, long userId, long batchSize, String callbackURL,
 		String className, byte[] content, String contentType,
 		String executeStatus, Map<String, String> fieldNameMappingMap,
-		String operation, Map<String, Serializable> parameters, String version);
+		String operation, Map<String, Serializable> parameters);
 
 	/**
 	 * Creates a new batch engine import task with the primary key. Does not add the batch engine import task to the database.

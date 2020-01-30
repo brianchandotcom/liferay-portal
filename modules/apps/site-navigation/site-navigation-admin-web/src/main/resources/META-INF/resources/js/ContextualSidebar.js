@@ -106,28 +106,30 @@ function ContextualSidebar({
 	]);
 
 	useEffect(() => {
-		const handleSettingButtonClick = () => {
-			openSidebar(
-				siteNavigationMenuName,
-				editSiteNavigationMenuSettingsURL,
-				{
-					redirect,
-					siteNavigationMenuId
-				}
-			);
-		};
-
 		const settingsButton = document.getElementById(
 			`${namespace}showSiteNavigationMenuSettings`
 		);
 
-		settingsButton.addEventListener('click', handleSettingButtonClick);
+		if (settingsButton) {
+			const handleSettingButtonClick = () => {
+				openSidebar(
+					siteNavigationMenuName,
+					editSiteNavigationMenuSettingsURL,
+					{
+						redirect,
+						siteNavigationMenuId
+					}
+				);
+			};
 
-		return () =>
-			settingsButton.removeEventListener(
-				'click',
-				handleSettingButtonClick
-			);
+			settingsButton.addEventListener('click', handleSettingButtonClick);
+
+			return () =>
+				settingsButton.removeEventListener(
+					'click',
+					handleSettingButtonClick
+				);
+		}
 	}, [
 		editSiteNavigationMenuSettingsURL,
 		namespace,

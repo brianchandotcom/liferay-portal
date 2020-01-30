@@ -76,7 +76,7 @@ public class BlogsContentEditorConfigContributor
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
 
 		_populateFileBrowserURL(
-			jsonObject, themeDisplay, requestBackedPortletURLFactory,
+			jsonObject, requestBackedPortletURLFactory,
 			namespace + name + "selectItem");
 
 		_populateTwitterButton(jsonObject);
@@ -96,7 +96,7 @@ public class BlogsContentEditorConfigContributor
 	}
 
 	private void _populateFileBrowserURL(
-		JSONObject jsonObject, ThemeDisplay themeDisplay,
+		JSONObject jsonObject,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String eventName) {
 

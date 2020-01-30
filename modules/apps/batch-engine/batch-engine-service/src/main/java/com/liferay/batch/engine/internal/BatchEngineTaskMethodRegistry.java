@@ -14,19 +14,15 @@
 
 package com.liferay.batch.engine.internal;
 
-import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.ItemClassRegistry;
-import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegateCreator;
+import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorCreator;
 
 /**
  * @author Ivica Cardic
  */
 public interface BatchEngineTaskMethodRegistry extends ItemClassRegistry {
 
-	public BatchEngineTaskItemResourceDelegateCreator
-		getBatchEngineTaskItemResourceDelegateCreator(
-			String apiVersion,
-			BatchEngineTaskOperation batchEngineTaskOperation,
-			String itemClassName);
+	public BatchEngineTaskItemDelegateExecutorCreator
+		getBatchEngineTaskItemDelegateExecutorCreator(String itemClassName);
 
 }

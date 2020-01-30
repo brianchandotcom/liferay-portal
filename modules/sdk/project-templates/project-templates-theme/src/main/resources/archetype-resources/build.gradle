@@ -42,9 +42,9 @@ dependencies {
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "4.0.0"
 #elseif (${liferayVersion.startsWith("7.3")})
 	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "5.0.1"
-	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "5.0.1"
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "5.0.3"
 
-	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "5.0.1"
+	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common", version: "5.0.2"
 #end
 #end
 

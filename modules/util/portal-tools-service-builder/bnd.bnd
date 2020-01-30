@@ -44,6 +44,7 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.petra.memory-*.jar!/com/liferay/petra/memory/FinalizeManager.class,\
 	@com.liferay.petra.memory-*.jar!/com/liferay/petra/memory/FinalizeManager$*.class,\
 	@com.liferay.petra.reflect-*.jar!/com/liferay/petra/reflect/ReflectionUtil.class,\
+	@com.liferay.petra.sql.dsl.api-*.jar!/com/liferay/petra/sql/dsl/query/sort/OrderByInfo.class,\
 	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/*.class,\
 	@com.liferay.petra.xml-*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
 	@com.liferay.petra.xml-*.jar!/com/liferay/petra/xml/XMLUtil.class,\

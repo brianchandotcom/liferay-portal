@@ -815,6 +815,8 @@ public class ServiceBuilder {
 
 							_createModelSoap(entity);
 
+							_createModelTable(entity);
+
 							_createBlobModels(entity);
 
 							_createPool(entity);
@@ -927,6 +929,10 @@ public class ServiceBuilder {
 								_getTransients(entity, true));
 						}
 					}
+				}
+
+				for (EntityMapping entityMapping : _entityMappings.values()) {
+					_createEntityMappingTable(entityMapping);
 				}
 
 				_createHbmXml();
@@ -2330,6 +2336,106 @@ public class ServiceBuilder {
 		_write(file, content, _modifiedFileNames);
 	}
 
+	/**
+	 * @see #_getCreateTableSQL(Entity)
+	 */
+	private void _createDSLTable(
+			List<EntityColumn> entityColumns, String name, String tableName,
+			boolean changeTrackingEnabled, boolean classDeprecated,
+			String classDeprecatedComment, List<String> modelNames)
+		throws Exception {
+
+		if (!isVersionGTE_7_4_0() &&
+			!ArrayUtil.contains(_incubationFeatures, "DSL")) {
+
+			return;
+		}
+
+		File modelTableFile = new File(
+			StringBundler.concat(
+				_serviceOutputPath, "/model/", name, "Table.java"));
+
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
+			"apiPackagePath", _apiPackagePath
+		).put(
+			"author", _author
+		).put(
+			"changeTrackingEnabled", changeTrackingEnabled
+		).put(
+			"classDeprecated", classDeprecated
+		).put(
+			"classDeprecatedComment", classDeprecatedComment
+		).put(
+			"columns",
+			() -> {
+				List<Map<String, String>> columns = new ArrayList<>(
+					entityColumns.size());
+
+				for (EntityColumn entityColumn : entityColumns) {
+					String sqlType = getSqlType(
+						name, entityColumn.getName(), entityColumn.getType());
+
+					Map<String, String> column = HashMapBuilder.put(
+						"dbName", entityColumn.getDBName()
+					).put(
+						"flag",
+						() -> {
+							if (entityColumn.isPrimary()) {
+								return "FLAG_PRIMARY";
+							}
+
+							if (changeTrackingEnabled &&
+								Objects.equals(
+									entityColumn.getName(), "ctCollectionId")) {
+
+								return "FLAG_PRIMARY";
+							}
+
+							if (Objects.equals(
+									entityColumn.getName(), "mvccVersion")) {
+
+								return "FLAG_NULLITY";
+							}
+
+							return "FLAG_DEFAULT";
+						}
+					).put(
+						"javaType",
+						() -> {
+							if (entityColumn.isPrimitiveType()) {
+								return getPrimitiveObj(entityColumn.getType());
+							}
+
+							if (Objects.equals("CLOB", sqlType)) {
+								return "Clob";
+							}
+
+							return entityColumn.getGenericizedType();
+						}
+					).put(
+						"name", entityColumn.getName()
+					).put(
+						"sqlType", sqlType
+					).build();
+
+					columns.add(column);
+				}
+
+				return columns;
+			}
+		).put(
+			"modelNames", modelNames
+		).put(
+			"name", name
+		).put(
+			"table", tableName
+		).build();
+
+		String content = _processTemplate(_tplModelTable, context);
+
+		_write(modelTableFile, content, _modifiedFileNames);
+	}
+
 	private void _createEJBPK(Entity entity) throws Exception {
 		List<EntityColumn> pkEntityColumns = entity.getPKEntityColumns();
 
@@ -2349,6 +2455,70 @@ public class ServiceBuilder {
 				entity.getPKClassName(), ".java"));
 
 		_write(file, content, _modifiedFileNames);
+	}
+
+	private void _createEntityMappingTable(EntityMapping entityMapping)
+		throws Exception {
+
+		List<EntityColumn> entityColumns = new ArrayList<>();
+
+		boolean changeTrackingEnabled = true;
+		boolean classDeprecated = false;
+		String classDeprecatedComment = "";
+		List<String> modelNames = new ArrayList<>(2);
+
+		for (int i = 0; i < 3; i++) {
+			Entity entity = getEntity(entityMapping.getEntityName(i));
+
+			if (i > 0) {
+				if (!entity.isChangeTrackingEnabled()) {
+					changeTrackingEnabled = false;
+				}
+
+				modelNames.add(entity.getName());
+			}
+
+			if (entity.isDeprecated()) {
+				classDeprecated = true;
+
+				JavaClass modelJavaClass = _getJavaClass(
+					StringBundler.concat(
+						_serviceOutputPath, "/model/", entity.getName(),
+						"Model.java"));
+
+				if (modelJavaClass != null) {
+					DocletTag tag = modelJavaClass.getTagByName("deprecated");
+
+					if (tag != null) {
+						classDeprecatedComment = tag.getValue();
+					}
+				}
+			}
+
+			entityColumns.addAll(entity.getPKEntityColumns());
+		}
+
+		if (changeTrackingEnabled) {
+			entityColumns.add(
+				new EntityColumn(
+					"ctCollectionId", null, "ctCollectionId", "long", true,
+					false, false, null, null, true, true, false, null, null,
+					false, null, null, true, true, false, false,
+					CTColumnResolutionType.STRICT, false, false, null, false));
+
+			entityColumns.add(
+				new EntityColumn(
+					"ctChangeType", null, "ctChangeType", "boolean", false,
+					false, false, null, null, true, true, false, null, null,
+					false, null, null, true, true, false, false,
+					CTColumnResolutionType.STRICT, false, false, null, false));
+		}
+
+		String name = entityMapping.getTableName();
+
+		_createDSLTable(
+			entityColumns, name, name, changeTrackingEnabled, classDeprecated,
+			classDeprecatedComment, modelNames);
 	}
 
 	private void _createExceptions(List<String> exceptions) throws Exception {
@@ -2966,6 +3136,31 @@ public class ServiceBuilder {
 		_write(modelFile, content, _modifiedFileNames);
 	}
 
+	private void _createModelTable(Entity entity) throws Exception {
+		String classDeprecatedComment = "";
+
+		if (entity.isDeprecated()) {
+			JavaClass modelJavaClass = _getJavaClass(
+				StringBundler.concat(
+					_serviceOutputPath, "/model/", entity.getName(),
+					"Model.java"));
+
+			if (modelJavaClass != null) {
+				DocletTag tag = modelJavaClass.getTagByName("deprecated");
+
+				if (tag != null) {
+					classDeprecatedComment = tag.getValue();
+				}
+			}
+		}
+
+		_createDSLTable(
+			entity.getDatabaseRegularEntityColumns(), entity.getName(),
+			entity.getTable(), entity.isChangeTrackingEnabled(),
+			entity.isDeprecated(), classDeprecatedComment,
+			Collections.singletonList(entity.getName()));
+	}
+
 	private void _createModelWrapper(Entity entity) throws Exception {
 		JavaClass modelJavaClass = _getJavaClass(
 			StringBundler.concat(
@@ -3029,9 +3224,9 @@ public class ServiceBuilder {
 			_write(file, content, _modifiedFileNames);
 		}
 		else {
-			System.out.println("Removing " + file);
-
 			if (file.exists()) {
+				System.out.println("Removing " + file);
+
 				file.delete();
 			}
 		}
@@ -3077,12 +3272,10 @@ public class ServiceBuilder {
 
 			_write(file, content, _modifiedFileNames);
 		}
-		else {
+		else if (file.exists()) {
 			System.out.println("Removing " + file);
 
-			if (file.exists()) {
-				file.delete();
-			}
+			file.delete();
 		}
 
 		file = new File(
@@ -3160,12 +3353,10 @@ public class ServiceBuilder {
 
 			_write(file, content, _modifiedFileNames);
 		}
-		else {
+		else if (file.exists()) {
 			System.out.println("Removing " + file);
 
-			if (file.exists()) {
-				file.delete();
-			}
+			file.delete();
 		}
 	}
 
@@ -4764,6 +4955,9 @@ public class ServiceBuilder {
 		return sb.toString();
 	}
 
+	/**
+	 * @see #_createDSLTable(List, String, String, boolean, boolean)
+	 */
 	private String _getCreateTableSQL(Entity entity) {
 		List<EntityColumn> databaseRegularEntityColumns =
 			entity.getDatabaseRegularEntityColumns();
@@ -7534,6 +7728,7 @@ public class ServiceBuilder {
 	private String _tplModelHintsXml = _TPL_ROOT + "model_hints_xml.ftl";
 	private String _tplModelImpl = _TPL_ROOT + "model_impl.ftl";
 	private String _tplModelSoap = _TPL_ROOT + "model_soap.ftl";
+	private String _tplModelTable = _TPL_ROOT + "model_table.ftl";
 	private String _tplModelWrapper = _TPL_ROOT + "model_wrapper.ftl";
 	private String _tplPersistence = _TPL_ROOT + "persistence.ftl";
 	private String _tplPersistenceConstants =

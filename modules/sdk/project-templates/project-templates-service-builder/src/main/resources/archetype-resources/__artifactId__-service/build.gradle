@@ -49,7 +49,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api", version: "1.0.0"
 #elseif (${liferayVersion.startsWith("7.3")})
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "4.0.1"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api", version: "1.0.2"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api", version: "2.0.0"
 #end
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
@@ -63,7 +63,7 @@ dependencies {
 #elseif (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.4.0"
 #elseif (${liferayVersion.startsWith("7.3")})
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "5.3.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "5.4.0"
 #end
 #if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"

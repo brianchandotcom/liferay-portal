@@ -16,7 +16,7 @@ package com.liferay.site.memberships.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.site.memberships.web.internal.constants.SiteMembershipsPortletKeys;
+import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

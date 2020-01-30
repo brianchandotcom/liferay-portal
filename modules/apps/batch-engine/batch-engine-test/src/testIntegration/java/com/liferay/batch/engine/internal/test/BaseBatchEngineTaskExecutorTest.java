@@ -103,17 +103,18 @@ public class BaseBatchEngineTaskExecutorTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		batchEngineTaskItemDelegateRegistration = bundleContext.registerService(
-			BatchEngineTaskItemDelegate.class.getName(),
-			new TestBlogPostingBatchEngineTaskItemDelegate(),
-			new HashMapDictionary<String, String>());
+		_batchEngineTaskItemDelegateRegistration =
+			bundleContext.registerService(
+				BatchEngineTaskItemDelegate.class.getName(),
+				new TestBlogPostingBatchEngineTaskItemDelegate(),
+				new HashMapDictionary<String, String>());
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		blogsEntryLocalService.deleteEntries(group.getGroupId());
 
-		batchEngineTaskItemDelegateRegistration.unregister();
+		_batchEngineTaskItemDelegateRegistration.unregister();
 	}
 
 	public class BlogPostingEntityModel implements EntityModel {
@@ -169,7 +170,7 @@ public class BaseBatchEngineTaskExecutorTest {
 
 			Image image = blogPosting.getImage();
 
-			blogsEntryService.addEntry(
+			_blogsEntryService.addEntry(
 				blogPosting.getHeadline(), blogPosting.getAlternativeHeadline(),
 				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
 				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
@@ -190,7 +191,7 @@ public class BaseBatchEngineTaskExecutorTest {
 				Map<String, Serializable> queryParameters, User user)
 			throws Exception {
 
-			blogsEntryService.deleteEntry(blogPosting.getId());
+			_blogsEntryService.deleteEntry(blogPosting.getId());
 		}
 
 		@Override
@@ -222,7 +223,7 @@ public class BaseBatchEngineTaskExecutorTest {
 					searchContext.setGroupIds(new long[] {siteId});
 				},
 				document -> _toBlogPosting(
-					blogsEntryService.getEntry(
+					_blogsEntryService.getEntry(
 						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
 					user),
 				sorts, Collections.emptyMap());
@@ -239,10 +240,10 @@ public class BaseBatchEngineTaskExecutorTest {
 
 			Image image = blogPosting.getImage();
 
-			BlogsEntry blogsEntry = blogsEntryService.getEntry(
+			BlogsEntry blogsEntry = _blogsEntryService.getEntry(
 				blogPosting.getId());
 
-			blogsEntryService.updateEntry(
+			_blogsEntryService.updateEntry(
 				blogPosting.getId(), blogPosting.getHeadline(),
 				blogPosting.getAlternativeHeadline(),
 				blogPosting.getFriendlyUrlPath(), blogPosting.getDescription(),
@@ -272,7 +273,7 @@ public class BaseBatchEngineTaskExecutorTest {
 			}
 
 			try {
-				FileEntry fileEntry = dlAppService.getFileEntry(
+				FileEntry fileEntry = _dlAppService.getFileEntry(
 					image.getImageId());
 
 				return new ImageSelector(
@@ -291,12 +292,12 @@ public class BaseBatchEngineTaskExecutorTest {
 			throws Exception {
 
 			DTOConverter<BlogsEntry, BlogPosting> blogPostingDTOConverter =
-				dtoConverterRegistry.getDTOConverter(
+				_dtoConverterRegistry.getDTOConverter(
 					BlogsEntry.class.getName());
 
 			return blogPostingDTOConverter.toDTO(
 				new DefaultDTOConverterContext(
-					false, Collections.emptyMap(), dtoConverterRegistry,
+					false, Collections.emptyMap(), _dtoConverterRegistry,
 					blogsEntry.getEntryId(), user.getLocale(), null, user));
 		}
 
@@ -329,27 +330,28 @@ public class BaseBatchEngineTaskExecutorTest {
 	protected static final ObjectMapper objectMapper = new ObjectMapper();
 
 	protected Date baseDate;
-	protected ServiceRegistration<?> batchEngineTaskItemDelegateRegistration;
 
 	@Inject
 	protected BlogsEntryLocalService blogsEntryLocalService;
 
-	@Inject
-	protected BlogsEntryService blogsEntryService;
-
 	protected final DateFormat dateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:00.000Z");
-
-	@Inject
-	protected DLAppService dlAppService;
-
-	@Inject
-	protected DTOConverterRegistry dtoConverterRegistry;
 
 	@DeleteAfterTestRun
 	protected Group group;
 
 	@DeleteAfterTestRun
 	protected User user;
+
+	private ServiceRegistration<?> _batchEngineTaskItemDelegateRegistration;
+
+	@Inject
+	private BlogsEntryService _blogsEntryService;
+
+	@Inject
+	private DLAppService _dlAppService;
+
+	@Inject
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 }

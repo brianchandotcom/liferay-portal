@@ -14,10 +14,13 @@
 
 import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
-import React, {useContext, useEffect, useState, useRef} from 'react';
+import {closest} from 'metal-dom';
+import React, {useContext, useEffect, useLayoutEffect, useState} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
+import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {ConfigContext} from '../../config/index';
 import Processors from '../../processors/index';
 import selectEditableValue from '../../selectors/selectEditableValue';
@@ -27,9 +30,15 @@ import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSe
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
-import {useSelectItem} from '../Controls';
+import {
+	useSelectItem,
+	useHoverItem,
+	useIsActive,
+	useActiveItemId
+} from '../Controls';
+import FloatingToolbar from '../FloatingToolbar';
 import UnsafeHTML from '../UnsafeHTML';
-import {showFloatingToolbar} from '../showFloatingToolbar';
+import EditableDecoration from './EditableDecoration';
 
 const editableIsMapped = editableValue =>
 	(editableValue.classNameId &&
@@ -84,20 +93,56 @@ const resolveEditableValue = (
 	});
 };
 
-function FragmentContent({fragmentEntryLink}, ref) {
+function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const config = useContext(ConfigContext);
+	const dispatch = useDispatch();
+	const hoverItem = useHoverItem();
+	const activeItemId = useActiveItemId();
+	const isActive = useIsActive();
+	const isMounted = useIsMounted();
+	const selectItem = useSelectItem();
+	const state = useSelector(state => state);
+
 	const defaultContent = fragmentEntryLink.content.value.content;
 	const {fragmentEntryLinkId} = fragmentEntryLink;
-	const isMounted = useIsMounted();
-	const state = useSelector(state => state);
-	const dispatch = useDispatch();
-
-	const selectItem = useSelectItem();
-	const activeEditable = useRef(null);
 
 	const [content, setContent] = useState(defaultContent);
+	const [editablesIds, setEditablesIds] = useState([]);
 
-	const [hasEditableActive, setHasEditableActive] = useState(false);
+	const getEditableId = editableUniqueId => {
+		const [, ...editableId] = editableUniqueId.split('-');
+
+		return editableId.join('-');
+	};
+
+	const getEditableUniqueId = editableId =>
+		`${fragmentEntryLinkId}-${editableId}`;
+
+	const siblingEditableIsActive = id =>
+		editablesIds
+			.filter(editableId => editableId !== id)
+			.some(siblingId => isActive(getEditableUniqueId(siblingId)));
+
+	useLayoutEffect(() => {
+		setEditablesIds(
+			Array.from(ref.current.querySelectorAll('lfr-editable')).map(
+				element => element.id
+			)
+		);
+	}, [content, ref]);
+
+	useEffect(() => {
+		const activeEditable = ref.current.querySelector(
+			`[id="${getEditableId(activeItemId || '')}"]`
+		);
+
+		if (activeEditable) {
+			destroyProcessor(
+				activeEditable,
+				activeEditable.getAttribute('type')
+			);
+		}
+	}, [activeItemId, ref]);
 
 	useEffect(() => {
 		let element = document.createElement('div');
@@ -154,75 +199,50 @@ function FragmentContent({fragmentEntryLink}, ref) {
 		};
 	}, [state, config, defaultContent, fragmentEntryLinkId, isMounted]);
 
-	const onDoubleClick = event => {
-		const editable = event.target.closest('lfr-editable');
-		const backgroundImageEditable = event.target.closest(
-			'[data-lfr-background-image-id]'
-		);
+	const onClick = event => {
+		const editableElement = closest(event.target, 'lfr-editable');
 
-		if (editable) {
-			const editableId = `${fragmentEntryLinkId}-${editable.getAttribute(
-				'id'
-			)}`;
+		if (editableElement) {
+			if (isActive(getEditableUniqueId(editableElement.id))) {
+				event.stopPropagation();
 
-			if (activeEditable.current) {
-				destroyProcessor(
-					activeEditable.current,
-					activeEditable.current.getAttribute('type')
-				);
+				initProcessor({
+					config,
+					editableConfig: selectEditableValueConfig(
+						state,
+						fragmentEntryLinkId,
+						editableElement.id,
+						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+					),
+					editableType: editableElement.getAttribute('type'),
+					element: editableElement,
+					processorType: EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+				});
 			}
 
-			activeEditable.current = editable;
+			if (
+				isActive(itemId) ||
+				siblingEditableIsActive(editableElement.id)
+			) {
+				event.stopPropagation();
 
-			initProcessor({
-				config,
-				editableConfig: selectEditableValueConfig(
-					state,
-					fragmentEntryLinkId,
-					editable.getAttribute('id'),
-					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-				),
-				editableType: editable.getAttribute('type'),
-				element: editable,
-				processorType: EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-			});
-
-			selectItem(editableId);
-			setHasEditableActive(true);
-		} else if (backgroundImageEditable) {
-			if (activeEditable.current) {
-				destroyProcessor(activeEditable.current, 'background-image');
+				selectItem(getEditableUniqueId(editableElement.id));
 			}
+		}
+	};
 
-			activeEditable.current = backgroundImageEditable;
+	const onMouseOver = event => {
+		const editableElement = closest(event.target, 'lfr-editable');
 
-			initProcessor({
-				config,
-				editableConfig: selectEditableValueConfig(
-					state,
-					fragmentEntryLinkId,
-					backgroundImageEditable.dataset.lfrBackgroundImageId,
-					BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
-				),
-				editableType: 'background-image',
-				element: backgroundImageEditable,
-				processorType: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
-			});
+		if (editableElement) {
+			if (
+				(isActive(itemId) ||
+					siblingEditableIsActive(editableElement.id)) &&
+				editableElement
+			) {
+				event.stopPropagation();
 
-			selectItem(backgroundImageEditable.dataset.lfrBackgroundImageId);
-
-			setHasEditableActive(true);
-		} else {
-			if (activeEditable.current) {
-				destroyProcessor(
-					activeEditable.current,
-					activeEditable.current.getAttribute('type')
-				);
-				activeEditable.current = null;
-
-				setHasEditableActive(false);
-
-				selectItem(null);
+				hoverItem(getEditableUniqueId(editableElement.id));
 			}
 		}
 	};
@@ -283,13 +303,69 @@ function FragmentContent({fragmentEntryLink}, ref) {
 
 	return (
 		<>
-			{hasEditableActive &&
-				showFloatingToolbar(activeEditable, fragmentEntryLinkId)}
 			<UnsafeHTML
 				markup={content}
-				onDoubleClick={onDoubleClick}
+				onClick={onClick}
+				onMouseOver={onMouseOver}
 				ref={ref}
 			/>
+
+			{editablesIds
+				.filter(editableId => isActive(getEditableUniqueId(editableId)))
+				.map(editableId => {
+					const editableElement = ref.current.querySelector(
+						`[id="${editableId}"]`
+					);
+					const editableRef = React.createRef();
+					const editableType = editableElement.getAttribute('type');
+
+					editableRef.current = editableElement;
+
+					const showLinkButton =
+						editableType == EDITABLE_TYPES.text ||
+						editableType == EDITABLE_TYPES.image ||
+						editableType == EDITABLE_TYPES.link;
+
+					const buttons = [
+						{icon: 'pencil', panelId: 'panel'},
+						EDITABLE_FLOATING_TOOLBAR_BUTTONS.map
+					];
+
+					if (showLinkButton) {
+						buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.link);
+					}
+
+					return (
+						<FloatingToolbar
+							buttons={buttons}
+							item={{
+								editableId,
+								editableType,
+								fragmentEntryLinkId,
+								itemId: getEditableUniqueId(editableId)
+							}}
+							itemRef={editableRef}
+							key={getEditableUniqueId(editableId)}
+						/>
+					);
+				})}
+
+			{(isActive(itemId) ||
+				editablesIds.some(editableId =>
+					isActive(getEditableUniqueId(editableId))
+				)) &&
+				editablesIds.map(editableId => (
+					<EditableDecoration
+						editableId={editableId}
+						editableUniqueId={getEditableUniqueId(editableId)}
+						key={getEditableUniqueId(editableId)}
+						parentItemId={itemId}
+						parentRef={ref}
+						siblingsIds={editablesIds
+							.filter(siblingId => siblingId !== editableId)
+							.map(siblingId => getEditableUniqueId(siblingId))}
+					></EditableDecoration>
+				))}
 		</>
 	);
 }

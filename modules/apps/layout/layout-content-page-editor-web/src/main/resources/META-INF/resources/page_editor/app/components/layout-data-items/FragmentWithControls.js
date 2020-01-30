@@ -105,6 +105,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 
 					<FragmentContent
 						fragmentEntryLink={fragmentEntryLink}
+						itemId={item.itemId}
 						ref={ref}
 					/>
 				</>

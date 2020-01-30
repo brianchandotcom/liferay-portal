@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Date;
@@ -112,7 +113,7 @@ public class CTDisplayRendererRegistry {
 
 		Date modifiedDate = ctEntry.getModifiedDate();
 
-		return _language.format(
+		String entryTitle = _language.format(
 			httpServletRequest, languageKey,
 			new Object[] {
 				ctEntry.getUserName(),
@@ -122,6 +123,8 @@ public class CTDisplayRendererRegistry {
 					System.currentTimeMillis() - modifiedDate.getTime(), true)
 			},
 			false);
+
+		return _html.escape(entryTitle);
 	}
 
 	public <T extends CTModel<T>> String getTypeName(
@@ -336,6 +339,9 @@ public class CTDisplayRendererRegistry {
 	private ServiceTrackerMap<Long, CTDisplayRenderer>
 		_ctDisplayServiceTrackerMap;
 	private ServiceTrackerMap<Long, CTService> _ctServiceServiceTrackerMap;
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private Language _language;

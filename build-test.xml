@@ -4487,7 +4487,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					then
 						docker kill ${docker_rm_list}
 
-						docker rm ${docker_rm_list}
+						docker rm -f ${docker_rm_list}
 					fi
 				]]>
 			</echo>

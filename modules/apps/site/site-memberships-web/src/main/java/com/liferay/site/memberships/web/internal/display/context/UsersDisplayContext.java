@@ -16,6 +16,7 @@ package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -23,10 +24,13 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
+import com.liferay.site.memberships.web.internal.util.GroupUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -198,7 +202,15 @@ public class UsersDisplayContext {
 		UserSearch userSearch = new UserSearch(_renderRequest, getPortletURL());
 
 		userSearch.setEmptyResultsMessage(
-			"no-user-was-found-that-is-a-direct-member-of-this-site");
+			LanguageUtil.format(
+				ResourceBundleUtil.getBundle(
+					themeDisplay.getLocale(), getClass()),
+				"no-user-was-found-that-is-a-direct-member-of-this-x",
+				StringUtil.toLowerCase(
+					GroupUtil.getGroupTypeLabel(
+						_groupId, themeDisplay.getLocale())),
+				false));
+
 		userSearch.setOrderByCol(getOrderByCol());
 		userSearch.setOrderByType(getOrderByType());
 		userSearch.setRowChecker(new EmptyOnClickRowChecker(_renderResponse));

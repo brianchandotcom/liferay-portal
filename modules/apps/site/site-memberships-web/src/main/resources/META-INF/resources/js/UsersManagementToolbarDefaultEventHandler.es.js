@@ -82,7 +82,10 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
 			eventName: this.ns('selectUsers'),
-			title: Liferay.Language.get('assign-users-to-this-site'),
+			title: Liferay.Util.sub(
+				Liferay.Language.get('assign-users-to-this-x'),
+				itemData.groupTypeLabel
+			),
 			url: itemData.selectUsersURL
 		});
 

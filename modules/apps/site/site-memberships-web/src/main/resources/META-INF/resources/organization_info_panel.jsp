@@ -72,7 +72,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 				</p>
 
 				<p class="h6 text-muted">
-					<liferay-ui:message arguments="<%= organization.getName() %>" key="all-users-of-x-are-automatically-members-of-the-site" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= new String[] {organization.getName(), StringUtil.toLowerCase(GroupUtil.getGroupTypeLabel(group, locale)), GroupUtil.getGroupTypeLabel(group, locale)} %>" key="all-users-of-x-are-automatically-members-of-the-x" translateArguments="<%= false %>" />
 				</p>
 			</c:if>
 		</div>

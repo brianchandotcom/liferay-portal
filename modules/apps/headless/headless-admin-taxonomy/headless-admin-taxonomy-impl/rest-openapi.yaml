@@ -72,6 +72,13 @@ components:
                 Represents a keyword that describes content. Properties follow the
                 [keywords](https://schema.org/keywords) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -119,6 +126,13 @@ components:
                 Represents a category, which is a hierarchical classification that can be associated with particular
                 asset types. Properties follow the [category](https://schema.org/category) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 availableLanguages:
                     description:
                         A list of languages the category has a translation for.
@@ -208,6 +222,13 @@ components:
                 Represents a vocabulary, which is a grouping of categories for a specific purpose (e.g., classification,
                 sorting, etc.).
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 assetTypes:
                     description:
                         A list of asset types that can be associated with this vocabulary.

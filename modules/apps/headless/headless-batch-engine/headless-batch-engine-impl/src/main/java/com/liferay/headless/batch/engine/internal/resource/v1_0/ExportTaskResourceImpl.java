@@ -112,8 +112,8 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 				callbackURL, className, StringUtil.upperCase(contentType),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				_toList(fieldNames),
-				ParametersUtil.toParameters(contextUriInfo, _ignoredParameters),
-				ParametersUtil.getVersion(className));
+				ParametersUtil.toParameters(
+					contextUriInfo, _ignoredParameters));
 
 		executorService.submit(
 			() -> _batchEngineExportTaskExecutor.execute(
@@ -135,7 +135,6 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 					batchEngineExportTask.getExecuteStatus());
 				id = batchEngineExportTask.getBatchEngineExportTaskId();
 				startTime = batchEngineExportTask.getStartTime();
-				version = batchEngineExportTask.getVersion();
 			}
 		};
 	}

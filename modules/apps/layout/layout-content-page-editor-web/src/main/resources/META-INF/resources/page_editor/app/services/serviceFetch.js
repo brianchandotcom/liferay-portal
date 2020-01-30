@@ -81,7 +81,7 @@ export default function serviceFetch(
 							status: SERVICE_NETWORK_STATUS_TYPES.Error
 						})
 					);
-					return;
+					return Promise.reject(body.exception);
 				} else if ('error' in body) {
 					onNetworkStatus(
 						updateNetwork({
@@ -89,7 +89,7 @@ export default function serviceFetch(
 							status: SERVICE_NETWORK_STATUS_TYPES.Error
 						})
 					);
-					return;
+					return Promise.reject(body.error);
 				}
 			}
 
@@ -100,7 +100,7 @@ export default function serviceFetch(
 						status: SERVICE_NETWORK_STATUS_TYPES.Error
 					})
 				);
-				return;
+				return Promise.reject(`${response.status} ${body}`);
 			}
 
 			onNetworkStatus(

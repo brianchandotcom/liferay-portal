@@ -76,6 +76,19 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 									String viewURL = ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry);
 									%>
 
+									<liferay-portlet:actionURL name="/change_lists/delete_ct_auto_resolution_info" var="dismissURL">
+										<liferay-portlet:param name="ctAutoResolutionInfoId" value="<%= String.valueOf(conflictInfo.getCTAutoResolutionInfoId()) %>" />
+										<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+									</liferay-portlet:actionURL>
+
+									<div class="autofit-col">
+										<div class="autofit-section">
+											<a class="btn btn-secondary btn-sm" href="<%= dismissURL %>" type="button">
+												<%= LanguageUtil.get(request, "dismiss") %>
+											</a>
+										</div>
+									</div>
+
 									<c:if test="<%= Validator.isNotNull(viewURL) %>">
 										<div class="autofit-col">
 											<div class="autofit-section">

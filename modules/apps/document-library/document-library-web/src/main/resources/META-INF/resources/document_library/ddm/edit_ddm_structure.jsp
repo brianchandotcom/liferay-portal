@@ -42,9 +42,9 @@ if (ddmStructure != null) {
 }
 %>
 
-<portlet:actionURL name="/document_library/ddm/add_ddm_structure" var="addDDMStructureURL"/>
+<portlet:actionURL name="/document_library/ddm/add_ddm_structure" var="addDDMStructureURL" />
 
-<portlet:actionURL name="/document_library/ddm/update_ddm_structure" var="updateDDMStructureURL"/>
+<portlet:actionURL name="/document_library/ddm/update_ddm_structure" var="updateDDMStructureURL" />
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= (ddmStructure == null) ? addDDMStructureURL : updateDDMStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
@@ -52,7 +52,6 @@ if (ddmStructure != null) {
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="definition" type="hidden" />
 		<aui:input name="status" type="hidden" />
-
 
 		<c:if test="<%= ddmStructure != null %>">
 			<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructure.getStructureId() %>" />
@@ -175,9 +174,9 @@ if (ddmStructure != null) {
 						<aui:input name="description" />
 
 						<aui:field-wrapper label='<%= LanguageUtil.format(request, "parent-x", HtmlUtil.escape(LanguageUtil.get(resourceBundle, "metadata-set")), false) %>'>
-							<aui:input name="parentStructureId" type="hidden" value="<%= dlEditDDMStructureDisplayContext.getParentDDMStructureId() %>" />
+							<aui:input name="parentDDMStructureId" type="hidden" value="<%= dlEditDDMStructureDisplayContext.getParentDDMStructureId() %>" />
 
-							<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentStructureName" type="text" value="<%= dlEditDDMStructureDisplayContext.getParentDDMStructureName() %>" />
+							<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentDDMStructureName" type="text" value="<%= dlEditDDMStructureDisplayContext.getParentDDMStructureName() %>" />
 
 							<aui:button onClick='<%= renderResponse.getNamespace() + "openParentDDMStructureSelector();" %>' value="select" />
 
@@ -212,26 +211,25 @@ if (ddmStructure != null) {
 
 <aui:script>
 	function <portlet:namespace />openParentDDMStructureSelector() {
-		Liferay.Util.openDDMPortlet(
+		Liferay.Util.selectEntity(
 			{
-				basePortletURL:
-					'<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE) %>',
-				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0 %>,
 				dialog: {
-					destroyOnHide: true
+					constrain: true,
+					modal: true
 				},
-				eventName: '<portlet:namespace />selectParentStructure',
-				mvcPath: '/select_structure.jsp',
-				showAncestorScopes: true,
-				showManageTemplates: false,
-				title: '<%= UnicodeLanguageUtil.get(request, "select-structure") %>'
+				eventName: '<portlet:namespace />selectDDMStructure',
+				id: '<portlet:namespace />selectDDMStructure',
+				title:
+					'<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
+				uri:
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(dlEditDDMStructureDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>'
 			},
 			function(event) {
 				var form = document.<portlet:namespace />fm;
 
 				Liferay.Util.setFormValues(form, {
-					parentStructureId: event.ddmstructureid,
-					parentStructureName: Liferay.Util.unescape(event.name)
+					parentDDMStructureId: event.ddmstructureid,
+					parentDDMStructureName: Liferay.Util.unescape(event.name)
 				});
 
 				var removeParentDDMStructureButton = Liferay.Util.getFormElement(
@@ -253,8 +251,8 @@ if (ddmStructure != null) {
 		var form = document.<portlet:namespace />fm;
 
 		Liferay.Util.setFormValues(form, {
-			parentStructureId: '',
-			parentStructureName: ''
+			parentDDMStructureId: '',
+			parentDDMStructureName: ''
 		});
 
 		var removeParentDDMStructureButton = Liferay.Util.getFormElement(

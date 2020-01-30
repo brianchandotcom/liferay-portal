@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -96,7 +95,9 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			"mvcRenderCommandName", "/document_library/ddm/edit_ddm_structure");
 		renderURL.setParameter(
 			"redirect",
-			String.valueOf(PortletURLUtil.getCurrent(_liferayPortletRequest, _liferayPortletResponse)));
+			String.valueOf(
+				PortletURLUtil.getCurrent(
+					_liferayPortletRequest, _liferayPortletResponse)));
 		renderURL.setParameter(
 			"ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
 

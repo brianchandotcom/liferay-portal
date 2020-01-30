@@ -14,8 +14,6 @@
 
 package com.liferay.batch.engine.internal.test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.blogs.model.BlogsEntry;
@@ -326,8 +324,6 @@ public class BaseBatchEngineTaskExecutorTest {
 	};
 
 	protected static final int ROWS_COUNT = 18;
-
-	protected static final ObjectMapper objectMapper = new ObjectMapper();
 
 	protected Date baseDate;
 

@@ -16,6 +16,7 @@ package com.liferay.batch.engine.internal.test;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
@@ -76,7 +77,7 @@ public class BatchEngineExportTaskExecutorTest
 
 	@BeforeClass
 	public static void setUpClass() {
-		objectMapper.addMixIn(BlogPosting.class, BlogPostingMixin.class);
+		_objectMapper.addMixIn(BlogPosting.class, BlogPostingMixin.class);
 	}
 
 	@Override
@@ -477,7 +478,7 @@ public class BatchEngineExportTaskExecutorTest
 			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
 				_batchEngineExportTask.getBatchEngineExportTaskId());
 
-		List<BlogPosting> blogPostings = objectMapper.readValue(
+		List<BlogPosting> blogPostings = _objectMapper.readValue(
 			_getZipInputStream(
 				_batchEngineExportTaskLocalService.openContentInputStream(
 					batchEngineExportTask.getBatchEngineExportTaskId())),
@@ -521,7 +522,7 @@ public class BatchEngineExportTaskExecutorTest
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			blogPostings.add(
-				objectMapper.readValue(
+				_objectMapper.readValue(
 					line,
 					new TypeReference<BlogPosting>() {
 					}));
@@ -606,6 +607,8 @@ public class BatchEngineExportTaskExecutorTest
 		_CLASS_NAME_BATCH_ENGINE_EXPORT_TASK_EXECUTOR_IMPL =
 			"com.liferay.batch.engine.internal." +
 				"BatchEngineExportTaskExecutorImpl";
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private BatchEngineExportTask _batchEngineExportTask;
 

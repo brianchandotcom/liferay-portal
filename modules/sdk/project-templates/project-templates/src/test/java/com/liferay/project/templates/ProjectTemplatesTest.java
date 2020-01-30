@@ -275,6 +275,19 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Test
+	public void testBuildTemplateContentDTDVersionLayoutTemplate73()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"layout-template", "foo-bar", "--liferay-version", "7.3.0");
+
+		testContains(
+			gradleProjectDir,
+			"src/main/webapp/WEB-INF/liferay-layout-templates.xml",
+			"liferay-layout-templates_7_3_0.dtd");
+	}
+
+	@Test
 	public void testBuildTemplateContentDTDVersionWarHook70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-hook", "foo-bar", "--liferay-version", "7.0.6");
@@ -302,6 +315,16 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-hook.xml",
 			"liferay-hook_7_2_0.dtd");
+	}
+
+	@Test
+	public void testBuildTemplateContentDTDVersionWarHook73() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"war-hook", "foo-bar", "--liferay-version", "7.3.0");
+
+		testContains(
+			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-hook.xml",
+			"liferay-hook_7_3_0.dtd");
 	}
 
 	@Test
@@ -350,6 +373,22 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		testContains(
 			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
 			"liferay-portlet-app_7_2_0.dtd");
+	}
+
+	@Test
+	public void testBuildTemplateContentDTDVersionWarMVCPortlet73()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"war-mvc-portlet", "foo-bar", "--liferay-version", "7.3.0");
+
+		testContains(
+			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-display.xml",
+			"liferay-display_7_3_0.dtd");
+
+		testContains(
+			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-portlet.xml",
+			"liferay-portlet-app_7_3_0.dtd");
 	}
 
 	@Test
@@ -599,7 +638,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		testContains(
 			gradleProjectDir, "build.gradle",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0\"");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0\"");
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "control-menu-entry", "foo-bar", "com.test",
@@ -1534,7 +1573,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		testContains(
 			gradleProjectDir, "build.gradle",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "panel-app", "gradle.test", "com.test",
@@ -1684,7 +1723,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 		testContains(
 			gradleProjectDir,
 			"src/main/java/foo/test/constants/FooPortletKeys.java",
@@ -1786,7 +1825,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-configuration-icon", "icontest",
@@ -1937,7 +1976,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		testContains(
 			gradleProjectDir, "build.gradle",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-provider", "provider.test", "com.test",
@@ -2085,7 +2124,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "portlet-toolbar-contributor", "toolbartest",
@@ -2341,7 +2380,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		testContains(
 			gradleProjectDir, "build.gradle",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "simulation-panel-entry", "simulator", "com.test",
@@ -2530,7 +2569,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "template-context-contributor", "blade-test",
@@ -2773,7 +2812,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		testContains(
 			gradleProjectDir, "build.gradle",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "war-hook", "WarHook", "warhook", mavenExecutor,
@@ -2874,7 +2913,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		testContains(
 			gradleProjectDir, "build.gradle",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "war-mvc-portlet", "WarMVCPortlet",
@@ -3839,7 +3878,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 		testContains(
 			gradleProjectDir, "src/main/java/foo/constants/FooPortletKeys.java",
 			"public class FooPortletKeys", "public static final String FOO");
@@ -4033,7 +4072,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 		testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
@@ -4236,7 +4275,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 		testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/constants/PortletPortletKeys.java",
@@ -4445,7 +4484,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 		testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/constants/PortletPortletKeys.java",
@@ -4489,8 +4528,11 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		else if (liferayVersion.equals("7.1.3")) {
 			enableTargetPlatformInWorkspace(workspaceDir, "7.1.3");
 		}
-		else {
+		else if (liferayVersion.equals("7.2.1")) {
 			enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
+		}
+		else {
+			enableTargetPlatformInWorkspace(workspaceDir, "7.3.0");
 		}
 
 		File warsDir = new File(workspaceDir, "wars");

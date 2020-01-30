@@ -163,7 +163,7 @@ public class ProjectTemplatesServiceTest
 		testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.3.0");
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"5.4.0");
 
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service", "servicepreaction", "com.test",

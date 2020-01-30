@@ -2016,6 +2016,8 @@ definition {
 
 		DetailsView.nextEntry();
 
+		DetailsView.validateEntry(entry = "Best");
+
 		DetailsView.editEntry();
 
 		FormViewBuilder.editText(

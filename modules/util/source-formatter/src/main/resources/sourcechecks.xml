@@ -280,7 +280,6 @@
 			<category name="Performance" />
 			<description name="Checks if performance can be improved by using different String operation methods" />
 		</check>
-		
 		<check name="SubstringCheck" />
 
 		<!-- Module Source Checks -->

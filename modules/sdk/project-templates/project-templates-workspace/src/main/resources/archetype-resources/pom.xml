@@ -19,6 +19,8 @@
 		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.1.3-ga4/liferay-ce-portal-tomcat-7.1.3-ga4-20190508171117552.tar.gz</liferay.workspace.bundle.url>
 #elseif (${liferayVersion.startsWith("7.2")})
 		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.2.1-ga2/liferay-ce-portal-tomcat-7.2.1-ga2-20191111141448326.tar.gz</liferay.workspace.bundle.url>
+#elseif (${liferayVersion.startsWith("7.3")})
+		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.3.0-ga1/liferay-ce-portal-tomcat-7.3.0-ga1-20200127150653953.tar.gz</liferay.workspace.bundle.url>
 #end
 	</properties>
 	<build>

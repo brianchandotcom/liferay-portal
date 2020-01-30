@@ -610,7 +610,7 @@ public class GitWorkingDirectory {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("git fetch --progress -v -f ");
+		sb.append("git fetch -f ");
 
 		if (noTags) {
 			sb.append("--no-tags ");

@@ -202,6 +202,9 @@ public class CTCollectionLocalServiceImpl
 						StringUtil.merge(
 							constraintResolver.getUniqueIndexColumnNames(),
 							StringPool.COMMA));
+
+					constraintResolverConflictInfo.setCtAutoResolutionInfoId(
+						ctAutoResolutionInfo.getCtAutoResolutionInfoId());
 				}
 
 				_ctAutoResolutionInfoPersistence.update(ctAutoResolutionInfo);
@@ -228,11 +231,16 @@ public class CTCollectionLocalServiceImpl
 						uniqueIndexes.toArray(new String[0])));
 
 			if (constraintResolver != null) {
-				conflictInfos.add(
+				ConstraintResolverConflictInfo constraintResolverConflictInfo =
 					new ConstraintResolverConflictInfo(
 						constraintResolver,
 						ctAutoResolutionInfo.getSourceModelClassPK(),
-						ctAutoResolutionInfo.getTargetModelClassPK(), true));
+						ctAutoResolutionInfo.getTargetModelClassPK(), true);
+
+				constraintResolverConflictInfo.setCtAutoResolutionInfoId(
+					ctAutoResolutionInfo.getCtAutoResolutionInfoId());
+
+				conflictInfos.add(constraintResolverConflictInfo);
 			}
 		}
 
@@ -246,6 +254,17 @@ public class CTCollectionLocalServiceImpl
 
 		for (CTCollection ctCollection : ctCollections) {
 			deleteCTCollection(ctCollection);
+		}
+	}
+
+	@Override
+	public void deleteCTAutoResolutionInfo(long ctAutoResolutionInfoId) {
+		CTAutoResolutionInfo ctAutoResolutionInfo =
+			_ctAutoResolutionInfoPersistence.fetchByPrimaryKey(
+				ctAutoResolutionInfoId);
+
+		if (ctAutoResolutionInfo != null) {
+			_ctAutoResolutionInfoPersistence.remove(ctAutoResolutionInfo);
 		}
 	}
 

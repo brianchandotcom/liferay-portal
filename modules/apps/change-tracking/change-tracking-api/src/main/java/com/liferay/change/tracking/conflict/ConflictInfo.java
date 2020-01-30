@@ -27,6 +27,8 @@ public interface ConflictInfo {
 
 	public String getConflictDescription(ResourceBundle resourceBundle);
 
+	public long getCTAutoResolutionInfoId();
+
 	public String getResolutionDescription(ResourceBundle resourceBundle);
 
 	public ResourceBundle getResourceBundle(Locale locale);

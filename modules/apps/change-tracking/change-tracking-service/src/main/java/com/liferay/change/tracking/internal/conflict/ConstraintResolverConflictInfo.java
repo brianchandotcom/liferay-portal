@@ -47,6 +47,11 @@ public class ConstraintResolverConflictInfo implements ConflictInfo {
 	}
 
 	@Override
+	public long getCTAutoResolutionInfoId() {
+		return _ctAutoResolutionInfoId;
+	}
+
+	@Override
 	public String getResolutionDescription(ResourceBundle resourceBundle) {
 		return ResourceBundleUtil.getString(
 			resourceBundle, _constraintResolver.getResolutionDescriptionKey());
@@ -72,7 +77,12 @@ public class ConstraintResolverConflictInfo implements ConflictInfo {
 		return _resolved;
 	}
 
+	public void setCtAutoResolutionInfoId(long ctAutoResolutionInfoId) {
+		_ctAutoResolutionInfoId = ctAutoResolutionInfoId;
+	}
+
 	private final ConstraintResolver<?> _constraintResolver;
+	private long _ctAutoResolutionInfoId;
 	private final boolean _resolved;
 	private final long _sourcePrimaryKey;
 	private final long _targetPrimaryKey;

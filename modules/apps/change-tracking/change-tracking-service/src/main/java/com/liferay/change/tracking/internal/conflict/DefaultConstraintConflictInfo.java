@@ -43,6 +43,11 @@ public class DefaultConstraintConflictInfo implements ConflictInfo {
 	}
 
 	@Override
+	public long getCTAutoResolutionInfoId() {
+		return 0;
+	}
+
+	@Override
 	public String getResolutionDescription(ResourceBundle resourceBundle) {
 		return LanguageUtil.format(
 			resourceBundle, "values-for-x-are-not-unique", _uniqueColumnNames,

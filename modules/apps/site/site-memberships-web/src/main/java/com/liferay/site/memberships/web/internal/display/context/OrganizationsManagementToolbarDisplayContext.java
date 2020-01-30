@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.memberships.web.internal.util.GroupUtil;
 
 import java.util.List;
 
@@ -116,6 +117,17 @@ public class OrganizationsManagementToolbarDisplayContext
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "selectOrganizations");
+
+							ThemeDisplay themeDisplay =
+								(ThemeDisplay)request.getAttribute(
+									WebKeys.THEME_DISPLAY);
+
+							dropdownItem.putData(
+								"groupTypeLabel",
+								GroupUtil.getGroupTypeLabel(
+									_organizationsDisplayContext.getGroupId(),
+									themeDisplay.getLocale()));
+
 							dropdownItem.putData(
 								"selectOrganizationsURL",
 								selectOrganizationsURL.toString());

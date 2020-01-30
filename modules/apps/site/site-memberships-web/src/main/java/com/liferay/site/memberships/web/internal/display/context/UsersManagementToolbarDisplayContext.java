@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.memberships.web.internal.util.GroupUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +106,7 @@ public class UsersManagementToolbarDisplayContext
 								dropdownItem.putData(
 									"selectSiteRoleURL",
 									_getSelectorURL("/site_roles.jsp"));
+
 								dropdownItem.setIcon("add-role");
 								dropdownItem.setLabel(
 									LanguageUtil.get(request, "assign-roles"));
@@ -215,6 +217,17 @@ public class UsersManagementToolbarDisplayContext
 					addDropdownItem(
 						dropdownItem -> {
 							dropdownItem.putData("action", "selectUsers");
+
+							ThemeDisplay themeDisplay =
+								(ThemeDisplay)request.getAttribute(
+									WebKeys.THEME_DISPLAY);
+
+							dropdownItem.putData(
+								"groupTypeLabel",
+								GroupUtil.getGroupTypeLabel(
+									_usersDisplayContext.getGroupId(),
+									themeDisplay.getLocale()));
+
 							dropdownItem.putData(
 								"selectUsersURL", selectUsersURL.toString());
 							dropdownItem.setLabel(

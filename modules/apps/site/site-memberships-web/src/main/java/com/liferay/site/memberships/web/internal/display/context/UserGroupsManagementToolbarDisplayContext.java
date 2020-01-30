@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.memberships.web.internal.util.GroupUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -196,6 +197,17 @@ public class UserGroupsManagementToolbarDisplayContext
 					addDropdownItem(
 						dropdownItem -> {
 							dropdownItem.putData("action", "selectUserGroups");
+
+							ThemeDisplay themeDisplay =
+								(ThemeDisplay)request.getAttribute(
+									WebKeys.THEME_DISPLAY);
+
+							dropdownItem.putData(
+								"groupTypeLabel",
+								GroupUtil.getGroupTypeLabel(
+									_userGroupsDisplayContext.getGroupId(),
+									themeDisplay.getLocale()));
+
 							dropdownItem.putData(
 								"selectUserGroupsURL",
 								selectUserGroupsURL.toString());

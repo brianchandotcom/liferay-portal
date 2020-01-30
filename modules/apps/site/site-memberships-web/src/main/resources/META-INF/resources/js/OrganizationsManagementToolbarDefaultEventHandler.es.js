@@ -30,7 +30,10 @@ class OrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHand
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
 			eventName: this.ns('selectOrganizations'),
-			title: Liferay.Language.get('assign-organizations-to-this-site'),
+			title: Liferay.Util.sub(
+				Liferay.Language.get('assign-organizations-to-this-x'),
+				itemData.groupTypeLabel
+			),
 			url: itemData.selectOrganizationsURL
 		});
 

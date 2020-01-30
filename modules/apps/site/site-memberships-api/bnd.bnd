@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Site Memberships API
+Bundle-SymbolicName: com.liferay.site.memberships.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.site.memberships.constants

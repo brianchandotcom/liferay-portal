@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.site.memberships.web.internal.constants.SiteMembershipsPortletKeys;
+import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

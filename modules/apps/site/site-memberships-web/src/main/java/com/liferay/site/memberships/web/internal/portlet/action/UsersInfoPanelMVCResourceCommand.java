@@ -16,8 +16,8 @@ package com.liferay.site.memberships.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 import com.liferay.site.memberships.web.internal.constants.SiteMembershipWebKeys;
-import com.liferay.site.memberships.web.internal.constants.SiteMembershipsPortletKeys;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;

@@ -24,10 +24,12 @@ import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
 import {
+	useActiveItemId,
+	useHoveredItemId,
+	useHoverItem,
 	useIsSelected,
 	useIsHovered,
-	useSelectItem,
-	useHoverItem
+	useSelectItem
 } from './Controls';
 import useDragAndDrop, {TARGET_POSITION} from './useDragAndDrop';
 
@@ -59,6 +61,8 @@ export default function Topper({
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const store = useSelector(state => state);
+	const activeItemId = useActiveItemId();
+	const hoveredItemId = useHoveredItemId();
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
 	const isSelected = useIsSelected();
@@ -118,6 +122,27 @@ export default function Topper({
 		return name;
 	};
 
+	const fragmentShouldBeHovered = () => {
+		const [activeItemfragmentEntryLinkId] = activeItemId
+			? activeItemId.split('-')
+			: '';
+		const [hoveredItemfragmentEntryLinkId] = hoveredItemId
+			? hoveredItemId.split('-')
+			: '';
+
+		const childIsActive =
+			Number(activeItemfragmentEntryLinkId) ===
+			item.config.fragmentEntryLinkId;
+		const childIsHovered =
+			Number(hoveredItemfragmentEntryLinkId) ===
+			item.config.fragmentEntryLinkId;
+
+		return (
+			item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
+			(hoveredItemId === item.itemId || (childIsActive && childIsHovered))
+		);
+	};
+
 	return (
 		<div
 			className={classNames({
@@ -129,7 +154,7 @@ export default function Topper({
 				'drag-over-top':
 					targetPosition === TARGET_POSITION.TOP && isOver,
 				dragged: isDragging,
-				hovered: isHovered(item.itemId),
+				hovered: isHovered(item.itemId) || fragmentShouldBeHovered(),
 				'page-editor-topper': true
 			})}
 			onClick={event => {

@@ -110,6 +110,14 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editFieldInObject {
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_RESULT");
+		
+		FormViewBuilder.setFieldLabel(fieldLabel = "${fieldLabel}");
+	}
+
 	macro editOptionsRow {
 
 		var key_rowNumber = "${rowNumber}";
@@ -157,8 +165,6 @@ definition {
 		Type(
 			locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_BOX",
 			value1 = "${fieldValue}");
-		
-		FormViewBuilder.validateSearchResult(fieldLabel = "${fieldValue}");
 	}
 
 	macro selectRadioOption {
@@ -235,6 +241,16 @@ definition {
 	macro validateFieldLabel {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+	}
+
+	macro validateFormMultipleSelectionField {
+		var key_fieldType = "${fieldLabel}";
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldName}");
+
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#FIELD_LABEL_MULTIPLE_SELECTION",
 			value1 = "${fieldLabel}");
 	}
 

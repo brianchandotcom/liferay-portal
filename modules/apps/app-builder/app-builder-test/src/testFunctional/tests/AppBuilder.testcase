@@ -2145,15 +2145,25 @@ definition {
 
 		AppBuilderAdmin.openItem(itemName = "My Form View");
 
-		FormViewBuilder.addFromObjectField(fieldName = "Full name");
+		FormViewBuilder.addFromObjectField(fieldName = "Hobbies");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldName = "Hobbies",
+			fieldLabel = "Multiple 1");
+
+		FormViewBuilder.editFieldInObject(
+			fieldName = "Nickname",
+			fieldLabel = "Testing Changed Name");
 
 		FormViewBuilder.addFieldToObject(fieldName = "Text");
 
 		FormViewBuilder.addFieldToObject(fieldName = "Select from List");
 
-		FormViewBuilder.setFieldLabel(fieldLabel = "Testing Select List");
-
 		FormViewBuilder.searchObjectField(fieldValue = "Date of birth");
+
+		FormViewBuilder.validateSearchResult(fieldLabel = "Date of birth");
+
+		FormViewBuilder.save();
 	}
 
 	@description = "Search for an object in the object list"

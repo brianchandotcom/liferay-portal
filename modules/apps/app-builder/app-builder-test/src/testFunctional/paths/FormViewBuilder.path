@@ -53,6 +53,12 @@
 </tr>
 
 <tr>
+	<td>FIELD_LABEL_MULTIPLE_SELECTION</td>
+	<td>//span[@class='custom-control-label-text' and contains(text(), '${key_fieldType}')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>FIELD_VALUE</td>
 	<td>//input[contains (@name,'${key_fieldType}') and @value='${fieldLabel}']</td>
 	<td></td>

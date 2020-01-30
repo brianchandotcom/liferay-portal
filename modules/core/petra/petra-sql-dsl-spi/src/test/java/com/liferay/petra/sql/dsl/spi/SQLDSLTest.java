@@ -573,6 +573,9 @@ public class SQLDSLTest {
 
 	@Test
 	public void testJoin() {
+		Assert.assertEquals("inner", JoinType.INNER.toString());
+		Assert.assertEquals("left", JoinType.LEFT.toString());
+
 		Predicate onPredicate = ReferenceExampleTable.TABLE.mainExampleId.eq(
 			MainExampleTable.TABLE.mainExampleId);
 
@@ -1179,6 +1182,10 @@ public class SQLDSLTest {
 
 	@Test
 	public void testUnionSelect() {
+		Assert.assertEquals("union", SetOperationType.UNION.toString());
+
+		Assert.assertEquals("union all", SetOperationType.UNION_ALL.toString());
+
 		DSLQuery dslQuery1 = DSLQueryFactoryUtil.select(
 			MainExampleTable.TABLE.name.as("name")
 		).from(

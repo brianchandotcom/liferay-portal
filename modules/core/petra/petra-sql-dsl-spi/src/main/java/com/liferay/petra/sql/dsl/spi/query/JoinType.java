@@ -27,6 +27,12 @@ public class JoinType {
 
 	public JoinType(String value) {
 		_value = Objects.requireNonNull(value);
+
+		_valueWithJoin = _value.concat(" join ");
+	}
+
+	public String getStringWithJoin() {
+		return _valueWithJoin;
 	}
 
 	@Override
@@ -35,5 +41,6 @@ public class JoinType {
 	}
 
 	private final String _value;
+	private final String _valueWithJoin;
 
 }

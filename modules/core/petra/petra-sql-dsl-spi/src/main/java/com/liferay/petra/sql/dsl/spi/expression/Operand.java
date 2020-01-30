@@ -51,6 +51,12 @@ public class Operand {
 
 	public Operand(String value) {
 		_value = Objects.requireNonNull(value);
+
+		_valueWithSpaces = " ".concat(_value.concat(" "));
+	}
+
+	public String getStringWithSpaces() {
+		return _valueWithSpaces;
 	}
 
 	@Override
@@ -59,5 +65,6 @@ public class Operand {
 	}
 
 	private final String _value;
+	private final String _valueWithSpaces;
 
 }

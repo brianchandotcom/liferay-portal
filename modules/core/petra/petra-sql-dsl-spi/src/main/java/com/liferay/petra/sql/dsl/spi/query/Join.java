@@ -55,9 +55,7 @@ public class Join extends BaseASTNode implements DefaultJoinStep {
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept(String.valueOf(_joinType));
-
-		consumer.accept(" join ");
+		consumer.accept(_joinType.getStringWithJoin());
 
 		_table.toSQL(consumer, astNodeListener);
 

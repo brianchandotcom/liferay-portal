@@ -46,12 +46,12 @@ public class GroupBy extends BaseASTNode implements DefaultHavingStep {
 
 		consumer.accept("group by ");
 
-		for (int i = 0; i < _expressions.length; i++) {
-			_expressions[i].toSQL(consumer, astNodeListener);
+		_expressions[0].toSQL(consumer, astNodeListener);
 
-			if (i < (_expressions.length - 1)) {
-				consumer.accept(", ");
-			}
+		for (int i = 1; i < _expressions.length; i++) {
+			consumer.accept(", ");
+
+			_expressions[i].toSQL(consumer, astNodeListener);
 		}
 	}
 

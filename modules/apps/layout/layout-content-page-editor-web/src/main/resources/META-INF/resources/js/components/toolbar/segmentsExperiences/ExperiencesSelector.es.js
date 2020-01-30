@@ -250,14 +250,14 @@ const ExperiencesSelector = ({
 	return (
 		<div className="position-relative segments-experience-selector">
 			<label
-				className="mr-2"
+				className="mr-sm-2"
 				htmlFor={`${portletNamespace}SegmentsExperienceSelector`}
 			>
 				{Liferay.Language.get('experience')}
 			</label>
 
 			<button
-				className="align-items-end btn btn-secondary btn-sm d-inline-flex form-control-select justify-content-between mr-2 text-left text-truncate"
+				className="align-items-end btn btn-secondary btn-sm d-inline-flex form-control-select justify-content-between mr-sm-2 text-left text-truncate"
 				id={`${portletNamespace}SegmentsExperienceSelector`}
 				onBlur={handleDropdownButtonBlur}
 				onClick={handleDropdownButtonClick}

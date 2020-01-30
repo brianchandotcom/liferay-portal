@@ -81,7 +81,7 @@ public class GroupConstants {
 		"/personal_site";
 
 	public static String getTypeLabel(int type) {
-		if (type == TYPE_SITE_OPEN) {
+		if ((type == TYPE_DEPOT) || (type == TYPE_SITE_OPEN)) {
 			return TYPE_SITE_OPEN_LABEL;
 		}
 		else if (type == TYPE_SITE_PRIVATE) {

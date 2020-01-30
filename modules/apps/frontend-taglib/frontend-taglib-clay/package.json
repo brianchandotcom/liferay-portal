@@ -73,9 +73,6 @@
 		"metal-state": "2.16.8"
 	},
 	"jest": {
-		"moduleNameMapper": {
-			"(.*)\\.soy": "$1.soy.js"
-		},
 		"transformIgnorePatterns": [
 			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
 		]

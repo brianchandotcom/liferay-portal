@@ -31,7 +31,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		if (isPortalSource() || isSubrepository()) {
-			return new String[] {"**/*.properties"};
+			return _INCLUDES;
 		}
 
 		return new String[] {
@@ -40,5 +40,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			"**/service.properties", "**/source-formatter.properties"
 		};
 	}
+
+	private static final String[] _INCLUDES = {"**/*.properties"};
 
 }

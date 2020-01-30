@@ -437,11 +437,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						instanceId, SegmentsExperienceConstants.ID_DEFAULT));
 			}
 
-			instanceId = SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-				instanceId, segmentsExperienceIdOptionalLong.getAsLong());
-
-			preferencesPortletId = PortletIdCodec.encode(portletId, instanceId);
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -466,6 +461,11 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					PortletPreferencesFactoryUtil.fromDefaultXML(
 						portlet.getDefaultPreferences());
 			}
+
+			instanceId = SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+				instanceId, segmentsExperienceIdOptionalLong.getAsLong());
+
+			preferencesPortletId = PortletIdCodec.encode(portletId, instanceId);
 
 			portletPreferences = PortletPreferencesFactoryUtil.getPortletSetup(
 				fragmentEntryProcessorContext.getHttpServletRequest(),

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
@@ -351,13 +349,7 @@ public class BaseBatchEngineTaskExecutorTest {
 	@DeleteAfterTestRun
 	protected Group group;
 
-	@Inject
-	protected Portal portal;
-
 	@DeleteAfterTestRun
 	protected User user;
-
-	@Inject
-	protected UserLocalService userLocalService;
 
 }

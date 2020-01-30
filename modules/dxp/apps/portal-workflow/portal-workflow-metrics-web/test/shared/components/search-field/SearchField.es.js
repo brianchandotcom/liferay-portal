@@ -57,8 +57,6 @@ describe('The SearchField component should', () => {
 		expect(searchInput.value).toBe('test');
 
 		fireEvent.submit(searchForm);
-
-		//@TODO: waiting for mock router improve implamentation to expect the correct search router value
 	});
 
 	test('Be render with "test" value, change for "testing" and submit', () => {
@@ -78,7 +76,5 @@ describe('The SearchField component should', () => {
 		expect(searchInput.value).toBe('testing');
 
 		fireEvent.submit(searchForm);
-
-		//@TODO: waiting for mock router improve implamentation to expect the correct search router value
 	});
 });

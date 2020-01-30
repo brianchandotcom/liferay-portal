@@ -60,7 +60,7 @@ public class SpiraRelease {
 		List<SpiraRelease> spiraReleases = new ArrayList<>();
 
 		for (SpiraRelease spiraRelease : _spiraReleases.values()) {
-			if (spiraRelease.matchesSearchParameters(searchParameters)) {
+			if (spiraRelease.matches(searchParameters)) {
 				spiraReleases.add(spiraRelease);
 			}
 		}
@@ -96,7 +96,7 @@ public class SpiraRelease {
 					spiraProject.getID(), spiraRelease.getID()),
 				spiraRelease);
 
-			if (spiraRelease.matchesSearchParameters(searchParameters)) {
+			if (spiraRelease.matches(searchParameters)) {
 				spiraReleases.add(spiraRelease);
 			}
 		}
@@ -155,6 +155,14 @@ public class SpiraRelease {
 
 		public Object getValue() {
 			return _value;
+		}
+
+		public boolean matches(JSONObject jsonObject) {
+			if (!Objects.equals(getValue(), jsonObject.get(getName()))) {
+				return false;
+			}
+
+			return true;
 		}
 
 		public JSONObject toFilterJSONObject() {
@@ -223,16 +231,11 @@ public class SpiraRelease {
 		return indentLevel.startsWith(parentSpiraRelease.getIndentLevel());
 	}
 
-	protected boolean matchesSearchParameters(
-		SearchParameter... searchParameters) {
-
+	protected boolean matches(SearchParameter... searchParameters) {
 		JSONObject jsonObject = toJSONObject();
 
 		for (SearchParameter searchParameter : searchParameters) {
-			if (!Objects.equals(
-					searchParameter.getValue(),
-					jsonObject.get(searchParameter.getName()))) {
-
+			if (!searchParameter.matches(jsonObject)) {
 				return false;
 			}
 		}

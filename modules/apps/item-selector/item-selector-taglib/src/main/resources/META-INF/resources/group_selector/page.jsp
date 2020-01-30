@@ -24,7 +24,7 @@ Set<String> groupTypes = groupSelectorDisplayContext.getGroupTypes();
 
 <c:if test="<%= groupTypes.size() > 1 %>">
 	<div class="container-fluid-1280">
-		<div class="btn-group" role="group">
+		<div class="btn-group btn-group-sm my-3" role="group">
 
 			<%
 			for (String curGroupType : groupTypes) {

@@ -16,16 +16,20 @@ package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.OrganizationSearch;
 import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
+import com.liferay.site.memberships.web.internal.util.GroupUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -121,7 +125,15 @@ public class OrganizationsDisplayContext {
 			_renderRequest, getPortletURL());
 
 		organizationSearch.setEmptyResultsMessage(
-			"no-organization-was-found-that-is-a-member-of-this-site");
+			LanguageUtil.format(
+				ResourceBundleUtil.getBundle(
+					themeDisplay.getLocale(), getClass()),
+				"no-organization-was-found-that-is-a-member-of-this-x",
+				StringUtil.toLowerCase(
+					GroupUtil.getGroupTypeLabel(
+						_groupId, themeDisplay.getLocale())),
+				false));
+
 		organizationSearch.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 

@@ -35,7 +35,7 @@ export function getCKEditorConfig() {
 		}
 	];
 	config.removeButtons =
-		'About,Anchor,BGColor,BidiLtr,BidiRtl,Button,Checkbox,CopyFormatting,Find,Flash,Font,FontSize,Form,Format,HiddenField,HorizontalRule,Iframe,Image,ImageButton,JustifyBlock,JustifyCenter,JustifyLeft,JustifyRight,Language,Maximize,NewPage,PageBreak,PasteFromWord,PasteText,Preview,Print,Radio,RemoveFormat,Replace,Save,Select,SelectAll,ShowBlocks,Smiley,SpecialChar,Styles,Subscript,Superscript,Table,Templates,TextColor,TextField,Textarea';
+		'About,Anchor,BGColor,BidiLtr,BidiRtl,Button,Checkbox,Copy,CopyFormatting,CreateDiv,Cut,Find,Flash,Font,FontSize,Form,Format,HiddenField,HorizontalRule,Iframe,Image,ImageButton,JustifyBlock,JustifyCenter,JustifyLeft,JustifyRight,Language,Maximize,NewPage,PageBreak,Paste,PasteFromWord,PasteText,Preview,Print,Radio,RemoveFormat,Replace,Save,Select,SelectAll,ShowBlocks,Smiley,Source,SpecialChar,Styles,Subscript,Superscript,Table,Templates,TextColor,TextField,Textarea';
 	return config;
 }
 

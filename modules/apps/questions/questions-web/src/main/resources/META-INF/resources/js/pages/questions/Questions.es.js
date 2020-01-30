@@ -14,6 +14,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
+import parser from 'bbcode-to-react';
 import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
@@ -102,7 +103,7 @@ export default ({
 						<div className="autofit-padded autofit-row">
 							<div className="autofit-col autofit-col-expand">
 								<p className="text-truncate">
-									{question.articleBody}
+									{parser.toReact(question.articleBody)}
 								</p>
 							</div>
 						</div>

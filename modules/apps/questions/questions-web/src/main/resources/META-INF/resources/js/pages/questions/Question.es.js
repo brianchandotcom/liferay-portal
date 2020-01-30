@@ -14,6 +14,7 @@
 
 import ClayForm from '@clayui/form';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
+import parser from 'bbcode-to-react';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -152,7 +153,7 @@ export default ({
 								</div>
 							</div>
 							<div>
-								<p>{question.articleBody}</p>
+								<p>{parser.toReact(question.articleBody)}</p>
 							</div>
 
 							<KeywordList keywords={question.keywords} />

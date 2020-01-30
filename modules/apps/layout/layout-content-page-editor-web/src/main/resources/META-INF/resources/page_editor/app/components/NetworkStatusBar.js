@@ -30,7 +30,7 @@ const getStatus = (isOnline, status, lastSaveDate) => {
 	return null;
 };
 
-const NetworkStatusBar = ({lastFetch, status}) => {
+const NetworkStatusBar = ({error, lastFetch, status}) => {
 	const [isOnline, setIsOnline] = useState(true);
 
 	const lastSaveDate = useMemo(() => {
@@ -49,12 +49,12 @@ const NetworkStatusBar = ({lastFetch, status}) => {
 	useEffect(() => {
 		if (status === SERVICE_NETWORK_STATUS_TYPES.Error) {
 			openToast({
-				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				message: error,
 				title: Liferay.Language.get('error'),
 				type: 'danger'
 			});
 		}
-	}, [status]);
+	}, [error, status]);
 
 	useEventListener('online', () => setIsOnline(true), true, window);
 

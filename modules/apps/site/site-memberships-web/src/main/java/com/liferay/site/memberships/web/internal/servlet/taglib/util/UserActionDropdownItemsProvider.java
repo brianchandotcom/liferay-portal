@@ -109,7 +109,7 @@ public class UserActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"editUserGroupRoleURL", editUserGroupRoleURL.toString());
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "assign-site-roles"));
+				LanguageUtil.get(_httpServletRequest, "assign-roles"));
 		};
 	}
 

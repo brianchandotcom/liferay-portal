@@ -47,7 +47,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			cssClass="assign-site-roles"
 			data="<%= assignData %>"
 			id='<%= row.getRowId() + "assignSiteRoles" %>'
-			message="assign-site-roles"
+			message="assign-roles"
 			url="javascript:;"
 		/>
 
@@ -69,7 +69,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			cssClass="unassign-site-roles"
 			data="<%= unassignData %>"
 			id='<%= row.getRowId() + "unassignSiteRoles" %>'
-			message="unassign-site-roles"
+			message="unassign-roles"
 			url="javascript:;"
 		/>
 	</c:if>
@@ -113,7 +113,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			var itemSelectorDialog = new ItemSelectorDialog.default({
 				buttonAddLabel: '<liferay-ui:message key="done" />',
 				eventName: '<portlet:namespace />selectUserGroupsRoles',
-				title: '<liferay-ui:message key="assign-site-roles" />',
+				title: '<liferay-ui:message key="assign-roles" />',
 				url: target.dataset.href
 			});
 
@@ -160,7 +160,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			var itemSelectorDialog = new ItemSelectorDialog.default({
 				buttonAddLabel: '<liferay-ui:message key="done" />',
 				eventName: '<portlet:namespace />selectUserGroupsRoles',
-				title: '<liferay-ui:message key="unassign-site-roles" />',
+				title: '<liferay-ui:message key="unassign-roles" />',
 				url: target.dataset.href
 			});
 

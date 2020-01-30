@@ -41,7 +41,7 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 					modal: true
 				},
 				eventName: this.ns('selectSiteRole'),
-				title: Liferay.Language.get('select-site-role'),
+				title: Liferay.Language.get('select-role'),
 				uri: itemData.selectRolesURL
 			},
 			event => {
@@ -57,7 +57,7 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
 			eventName: this.ns('selectSiteRole'),
-			title: Liferay.Language.get('assign-site-roles'),
+			title: Liferay.Language.get('assign-roles'),
 			url: itemData.selectSiteRoleURL
 		});
 

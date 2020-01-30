@@ -15,8 +15,6 @@
 package com.liferay.site.memberships.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
@@ -42,9 +40,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SiteRolesDisplayContext {
+public class SelectRolesDisplayContext {
 
-	public SiteRolesDisplayContext(
+	public SelectRolesDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
@@ -71,7 +69,7 @@ public class SiteRolesDisplayContext {
 
 		_eventName = ParamUtil.getString(
 			_httpServletRequest, "eventName",
-			_renderResponse.getNamespace() + "selectSiteRole");
+			_renderResponse.getNamespace() + "selectRole");
 
 		return _eventName;
 	}
@@ -127,7 +125,7 @@ public class SiteRolesDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/site_roles.jsp");
+		portletURL.setParameter("mvcPath", "/select_site_role.jsp");
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
 		portletURL.setParameter("roleType", String.valueOf(getRoleType()));
 		portletURL.setParameter("eventName", getEventName());
@@ -171,12 +169,6 @@ public class SiteRolesDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		RoleSearch roleSearch = new RoleSearch(_renderRequest, getPortletURL());
-
-		RowChecker rowChecker = new EmptyOnClickRowChecker(_renderResponse);
-
-		rowChecker.setRowIds("rowIdsRole");
-
-		roleSearch.setRowChecker(rowChecker);
 
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();

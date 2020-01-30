@@ -61,7 +61,7 @@ public class UserActionDropdownItemsProvider {
 						_themeDisplay.getSiteGroupIdOrLiveGroupId(),
 						ActionKeys.ASSIGN_USER_ROLES)) {
 
-					add(_getAssignSiteRolesActionUnsafeConsumer());
+					add(_getAssignRolesActionUnsafeConsumer());
 				}
 
 				if (GroupPermissionUtil.contains(
@@ -82,18 +82,18 @@ public class UserActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-			_getAssignSiteRolesActionUnsafeConsumer()
+			_getAssignRolesActionUnsafeConsumer()
 		throws Exception {
 
-		PortletURL assignSiteRolesURL = _renderResponse.createRenderURL();
+		PortletURL assignRolesURL = _renderResponse.createRenderURL();
 
-		assignSiteRolesURL.setParameter(
+		assignRolesURL.setParameter(
 			"p_u_i_d", String.valueOf(_user.getUserId()));
-		assignSiteRolesURL.setParameter("mvcPath", "/users_roles.jsp");
-		assignSiteRolesURL.setParameter(
+		assignRolesURL.setParameter("mvcPath", "/users_roles.jsp");
+		assignRolesURL.setParameter(
 			"groupId",
 			String.valueOf(_themeDisplay.getSiteGroupIdOrLiveGroupId()));
-		assignSiteRolesURL.setWindowState(LiferayWindowState.POP_UP);
+		assignRolesURL.setWindowState(LiferayWindowState.POP_UP);
 
 		PortletURL editUserGroupRoleURL = _renderResponse.createActionURL();
 
@@ -103,9 +103,8 @@ public class UserActionDropdownItemsProvider {
 			"p_u_i_d", String.valueOf(_user.getUserId()));
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "assignSiteRoles");
-			dropdownItem.putData(
-				"assignSiteRolesURL", assignSiteRolesURL.toString());
+			dropdownItem.putData("action", "assignRoles");
+			dropdownItem.putData("assignRolesURL", assignRolesURL.toString());
 			dropdownItem.putData(
 				"editUserGroupRoleURL", editUserGroupRoleURL.toString());
 			dropdownItem.setLabel(

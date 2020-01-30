@@ -89,22 +89,21 @@ public class UsersManagementToolbarDisplayContext
 
 						add(
 							dropdownItem -> {
-								dropdownItem.putData(
-									"action", "selectSiteRole");
+								dropdownItem.putData("action", "selectRole");
 
-								PortletURL editUsersSiteRolesURL =
+								PortletURL editUsersRolesURL =
 									liferayPortletResponse.createActionURL();
 
-								editUsersSiteRolesURL.setParameter(
+								editUsersRolesURL.setParameter(
 									ActionRequest.ACTION_NAME,
-									"editUsersSiteRoles");
+									"editUsersRoles");
 
 								dropdownItem.putData(
-									"editUsersSiteRolesURL",
-									editUsersSiteRolesURL.toString());
+									"editUsersRolesURL",
+									editUsersRolesURL.toString());
 
 								dropdownItem.putData(
-									"selectSiteRoleURL",
+									"selectRoleURL",
 									_getSelectorURL("/site_roles.jsp"));
 
 								dropdownItem.setIcon("add-role");
@@ -123,7 +122,7 @@ public class UsersManagementToolbarDisplayContext
 							add(
 								dropdownItem -> {
 									dropdownItem.putData(
-										"action", "removeUserSiteRole");
+										"action", "removeUserRole");
 									dropdownItem.putData(
 										"message",
 										LanguageUtil.format(
@@ -133,17 +132,17 @@ public class UsersManagementToolbarDisplayContext
 											role.getTitle(
 												themeDisplay.getLocale())));
 
-									PortletURL removeUserSiteRoleURL =
+									PortletURL removeUserRoleURL =
 										liferayPortletResponse.
 											createActionURL();
 
-									removeUserSiteRoleURL.setParameter(
+									removeUserRoleURL.setParameter(
 										ActionRequest.ACTION_NAME,
-										"removeUserSiteRole");
+										"removeUserRole");
 
 									dropdownItem.putData(
-										"removeUserSiteRoleURL",
-										removeUserSiteRoleURL.toString());
+										"removeUserRoleURL",
+										removeUserRoleURL.toString());
 
 									dropdownItem.setIcon("remove-role");
 									dropdownItem.setLabel(label);
@@ -181,7 +180,7 @@ public class UsersManagementToolbarDisplayContext
 				themeDisplay.getSiteGroupIdOrLiveGroupId(),
 				ActionKeys.ASSIGN_USER_ROLES)) {
 
-			availableActions.add("selectSiteRole");
+			availableActions.add("selectRole");
 		}
 
 		return StringUtil.merge(availableActions, StringPool.COMMA);

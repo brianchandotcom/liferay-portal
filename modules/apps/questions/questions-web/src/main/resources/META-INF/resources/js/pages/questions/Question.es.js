@@ -15,8 +15,9 @@
 import ClayForm from '@clayui/form';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
+import {AppContext} from '../../AppContext.es';
 import Answer from '../../components/Answer.es';
 import CreatorRow from '../../components/CreatorRow.es';
 import KeywordList from '../../components/KeywordList.es';
@@ -38,6 +39,8 @@ export default ({
 		params: {questionId}
 	}
 }) => {
+	const context = useContext(AppContext);
+
 	const [answers, setAnswers] = useState([]);
 	const [articleBody, setArticleBody] = useState();
 	const [page, setPage] = useState(1);
@@ -195,38 +198,48 @@ export default ({
 								/>
 							)}
 
-						<ClayForm>
-							<ClayForm.Group className="form-group-sm">
-								<label htmlFor="basicInput">
-									{Liferay.Language.get('your-answer')}
-								</label>
+						{context.canCreateThread && (
+							<>
+								<ClayForm>
+									<ClayForm.Group className="form-group-sm">
+										<label htmlFor="basicInput">
+											{Liferay.Language.get(
+												'your-answer'
+											)}
+										</label>
 
-								<Editor
-									config={getCKEditorConfig()}
-									data={articleBody}
-									onBeforeLoad={CKEDITOR => {
-										CKEDITOR.disableAutoInline = true;
-									}}
-									onChange={event =>
-										setArticleBody(event.editor.getData())
-									}
-								/>
-							</ClayForm.Group>
-						</ClayForm>
+										<Editor
+											config={getCKEditorConfig()}
+											data={articleBody}
+											onBeforeLoad={CKEDITOR => {
+												CKEDITOR.disableAutoInline = true;
+											}}
+											onChange={event =>
+												setArticleBody(
+													event.editor.getData()
+												)
+											}
+										/>
+									</ClayForm.Group>
+								</ClayForm>
 
-						<div className="sheet-footer">
-							<div className="btn-group-item">
-								<div className="btn-group-item">
-									<button
-										className="btn btn-primary"
-										disabled={!articleBody}
-										onClick={postAnswer}
-									>
-										{Liferay.Language.get('post-answer')}
-									</button>
+								<div className="sheet-footer">
+									<div className="btn-group-item">
+										<div className="btn-group-item">
+											<button
+												className="btn btn-primary"
+												disabled={!articleBody}
+												onClick={postAnswer}
+											>
+												{Liferay.Language.get(
+													'post-answer'
+												)}
+											</button>
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
+							</>
+						)}
 					</div>
 				</div>
 			)}

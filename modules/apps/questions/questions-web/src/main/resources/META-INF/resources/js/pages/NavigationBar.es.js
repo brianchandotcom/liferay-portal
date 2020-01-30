@@ -15,14 +15,18 @@
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
+
+import {AppContext} from '../AppContext.es';
 
 export default withRouter(({history}) => {
 	const navigate = href => {
 		history.push('/' + href);
 		setActive(href);
 	};
+
+	const context = useContext(AppContext);
 
 	const [active, setActive] = useState('questions');
 
@@ -49,12 +53,14 @@ export default withRouter(({history}) => {
 				</ClayNavigationBar>
 			</div>
 			<div className="autofit-col">
-				<ClayButton
-					displayType="primary"
-					onClick={() => navigate('questions/new')}
-				>
-					{Liferay.Language.get('ask-question')}
-				</ClayButton>
+				{context.canCreateThread && (
+					<ClayButton
+						displayType="primary"
+						onClick={() => navigate('questions/new')}
+					>
+						{Liferay.Language.get('ask-question')}
+					</ClayButton>
+				)}
 			</div>
 		</div>
 	);

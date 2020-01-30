@@ -2013,6 +2013,16 @@ definition {
 
 		DetailsView.validateEntry(entry = "Test");
 		DetailsView.validateEntry(entry = "Tester");
+
+		DetailsView.nextEntry();
+
+		DetailsView.editEntry();
+
+		FormViewBuilder.editText(
+			fieldName = "FullName",
+			fieldValue = "Changed");
+
+		AppBuilderAdmin.save();
 	}
 
 }

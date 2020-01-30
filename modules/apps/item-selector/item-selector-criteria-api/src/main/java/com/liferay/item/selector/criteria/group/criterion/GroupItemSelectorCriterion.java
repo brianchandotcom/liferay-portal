@@ -20,4 +20,22 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  * @author Adolfo Pérez
  */
 public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
+
+	public GroupItemSelectorCriterion() {
+	}
+
+	public GroupItemSelectorCriterion(boolean privateLayout) {
+		_privateLayout = privateLayout;
+	}
+
+	public boolean isPrivateLayout() {
+		return _privateLayout;
+	}
+
+	public void setPrivateLayout(boolean privateLayout) {
+		_privateLayout = privateLayout;
+	}
+
+	private boolean _privateLayout;
+
 }

@@ -82,7 +82,10 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
 			eventName: this.ns('selectUserGroups'),
-			title: Liferay.Language.get('assign-user-groups-to-this-site'),
+			title: Liferay.Util.sub(
+				Liferay.Language.get('assign-user-groups-to-this-x'),
+				itemData.groupTypeLabel
+			),
 			url: itemData.selectUserGroupsURL
 		});
 

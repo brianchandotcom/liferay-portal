@@ -47,7 +47,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 			</h4>
 
 			<h6 class="text-muted">
-				<liferay-ui:message key='<%= "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help" %>' />
+				<liferay-ui:message arguments="<%= GroupUtil.getGroupTypeLabel(group, locale) %>" key='<%= "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help" %>' translateArguments="<%= false %>" />
 			</h6>
 		</div>
 

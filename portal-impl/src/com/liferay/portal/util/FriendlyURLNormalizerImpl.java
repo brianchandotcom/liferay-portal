@@ -53,7 +53,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 		if (Validator.isNull(decodedFriendlyURL)) {
 			decodedFriendlyURL = HttpUtil.decodePath(
 				StringUtil.replace(
-					friendlyURL, CharPool.PERCENT, CharPool.DASH));
+					friendlyURL, CharPool.PERCENT, CharPool.POUND));
 		}
 
 		StringBuilder sb = new StringBuilder(decodedFriendlyURL.length());

@@ -116,8 +116,8 @@ public class UpgradeKBArticle extends UpgradeProcess {
 
 		return _renameConflictingFriendlyURL(
 			StringBundler.concat(
-				"select kbArticle2.kbArticleId, kbArticle2.urlTitle from ",
-				"KBArticle kbArticle1 inner join KBArticle kbArticle2 on ",
+				"select distinct kbArticle2.kbArticleId, kbArticle2.urlTitle ",
+				"from KBArticle kbArticle1 inner join KBArticle kbArticle2 on ",
 				"kbArticle1.groupId = kbArticle2.groupId and ",
 				"kbArticle1.kbFolderId = kbArticle2.kbFolderId and ",
 				"kbArticle1.urlTitle = kbArticle2.urlTitle where ",
@@ -130,8 +130,8 @@ public class UpgradeKBArticle extends UpgradeProcess {
 
 		return _renameConflictingFriendlyURL(
 			StringBundler.concat(
-				"select kbArticle2.kbFolderId, kbArticle2.urlTitle from ",
-				"KBFolder kbArticle1 inner join KBFolder kbArticle2 on ",
+				"select distinct kbArticle2.kbFolderId, kbArticle2.urlTitle ",
+				"from KBFolder kbArticle1 inner join KBFolder kbArticle2 on ",
 				"kbArticle1.groupId = kbArticle2.groupId and ",
 				"kbArticle1.parentKBFolderId = kbArticle2.parentKBFolderId ",
 				"and kbArticle1.urlTitle = kbArticle2.urlTitle where ",

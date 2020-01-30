@@ -20,8 +20,6 @@
 DLViewFileEntryMetadataSetsDisplayContext
 	dLViewFileEntryMetadataSetsDisplayContext = (DLViewFileEntryMetadataSetsDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT);
 
-DDMDisplay ddmDisplay = dLViewFileEntryMetadataSetsDisplayContext.getDDMDisplay();
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.dynamic.data.mapping.model.DDMStructure)row.getObject();
@@ -58,7 +56,7 @@ com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.
 		/>
 	</c:if>
 
-	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) && DDMStructurePermission.containsAddDDMStructurePermission(permissionChecker, scopeGroupId, ddmStructure.getClassNameId()) %>">
+	<c:if test="<%= dLViewFileEntryMetadataSetsDisplayContext.isShowAddStructureButton() %>">
 		<liferay-ui:icon
 			message="copy"
 			url="<%= String.valueOf(dLViewFileEntryMetadataSetsDisplayContext.getCopyDDMStructurePortletURL(ddmStructure)) %>"

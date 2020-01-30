@@ -14,13 +14,11 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
-import com.liferay.document.library.web.internal.dynamic.data.mapping.util.DLDDMDisplay;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,15 +56,7 @@ public class DLEditFileEntryTypeDisplayContext {
 	}
 
 	public String getAvailableFields() {
-		if (_availableFields != null) {
-			return _availableFields;
-		}
-
-		DDMDisplay ddmDisplay = new DLDDMDisplay();
-
-		_availableFields = ddmDisplay.getAvailableFields();
-
-		return _availableFields;
+		return "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE";
 	}
 
 	public Locale[] getAvailableLocales() throws PortalException {
@@ -205,7 +195,6 @@ public class DLEditFileEntryTypeDisplayContext {
 			WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
 	}
 
-	private String _availableFields;
 	private Locale[] _availableLocales;
 	private final DDM _ddm;
 	private DDMForm _ddmForm;

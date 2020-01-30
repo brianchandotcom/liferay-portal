@@ -26,7 +26,6 @@ import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLP
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
@@ -75,8 +74,8 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 				new DLViewFileEntryMetadataSetsDisplayContext(
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
-					_ddmDisplayRegistry, _ddmStructureLinkLocalService,
-					_ddmStructureService));
+					_ddmStructureLinkLocalService, _ddmStructureService,
+					_portal));
 
 			if (_pingFolderRepository(renderRequest, renderResponse)) {
 				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
@@ -146,9 +145,6 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 		return false;
 	}
-
-	@Reference
-	private DDMDisplayRegistry _ddmDisplayRegistry;
 
 	@Reference
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;

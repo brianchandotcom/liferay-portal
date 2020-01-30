@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.search.StructureSearch;
 import com.liferay.document.library.web.internal.search.StructureSearchTerms;
@@ -23,8 +24,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.util.DDMDisplay;
-import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -33,6 +32,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -41,7 +41,8 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -62,18 +63,18 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 	public DLViewFileEntryMetadataSetsDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		DDMDisplayRegistry ddmDisplayRegistry,
 		DDMStructureLinkLocalService ddmStructureLinkLocalService,
-		DDMStructureService ddmStructureService) {
+		DDMStructureService ddmStructureService, Portal portal) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_ddmDisplayRegistry = ddmDisplayRegistry;
 		_ddmStructureLinkLocalService = ddmStructureLinkLocalService;
 		_ddmStructureService = ddmStructureService;
 
+		_portal = portal;
+
 		_dlRequestHelper = new DLRequestHelper(
-			PortalUtil.getHttpServletRequest(liferayPortletRequest));
+			_portal.getHttpServletRequest(liferayPortletRequest));
 	}
 
 	public String getClearResultsURL() throws PortletException {
@@ -99,11 +100,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			"ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
 
 		return renderURL;
-	}
-
-	public DDMDisplay getDDMDisplay() {
-		return _ddmDisplayRegistry.getDDMDisplay(
-			DLPortletKeys.DOCUMENT_LIBRARY);
 	}
 
 	public PortletURL getDeleteDDMStructurePortletURL(
@@ -283,17 +279,18 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 	}
 
 	public boolean isShowAddStructureButton() throws PortalException {
-		DDMDisplay ddmDisplay = getDDMDisplay();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) &&
-			DDMStructurePermission.containsAddDDMStructurePermission(
-				_dlRequestHelper.getPermissionChecker(),
-				_dlRequestHelper.getScopeGroupId(),
-				getStructureClassNameId())) {
+		Group group = themeDisplay.getScopeGroup();
+
+		if (!group.hasLocalOrRemoteStagingGroup() ||
+			(group.isStagingGroup() &&
+			 DDMStructurePermission.containsAddDDMStructurePermission(
+				 _dlRequestHelper.getPermissionChecker(),
+				 _dlRequestHelper.getScopeGroupId(),
+				 getStructureClassNameId()))) {
 
 			return true;
 		}
@@ -402,7 +399,7 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			_liferayPortletRequest, "resourceClassNameId");
 
 		if (resourceClassNameId == 0) {
-			resourceClassNameId = PortalUtil.getClassNameId(
+			resourceClassNameId = _portal.getClassNameId(
 				PortletDisplayTemplate.class);
 		}
 
@@ -410,16 +407,10 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 	}
 
 	protected String getScopedStructureLabel() {
-		String scopeTitle = ParamUtil.getString(
-			_liferayPortletRequest, "scopeTitle");
-
-		if (Validator.isNull(scopeTitle)) {
-			DDMDisplay ddmDisplay = getDDMDisplay();
-
-			return ddmDisplay.getTitle(_dlRequestHelper.getLocale());
-		}
-
-		return scopeTitle;
+		return LanguageUtil.get(
+			ResourceBundleUtil.getBundle(
+				_dlRequestHelper.getLocale(), getClass()),
+			"documents-and-media");
 	}
 
 	protected long getSearchRestrictionClassNameId() {
@@ -433,9 +424,7 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 	}
 
 	protected long getStructureClassNameId() {
-		DDMDisplay ddmDisplay = getDDMDisplay();
-
-		return PortalUtil.getClassNameId(ddmDisplay.getStructureType());
+		return _portal.getClassNameId(DLFileEntryMetadata.class.getName());
 	}
 
 	protected boolean hasResults() throws Exception {
@@ -453,12 +442,12 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			(StructureSearchTerms)structureSearch.getSearchTerms();
 
 		long[] groupIds = {
-			PortalUtil.getScopeGroupId(
+			_portal.getScopeGroupId(
 				_dlRequestHelper.getRequest(), DLPortletKeys.DOCUMENT_LIBRARY,
 				true)
 		};
 
-		groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds);
+		groupIds = _portal.getCurrentAndAncestorSiteGroupIds(groupIds);
 
 		List<DDMStructure> results = null;
 
@@ -487,12 +476,12 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 			(StructureSearchTerms)structureSearch.getSearchTerms();
 
 		long[] groupIds = {
-			PortalUtil.getScopeGroupId(
+			_portal.getScopeGroupId(
 				_dlRequestHelper.getRequest(), DLPortletKeys.DOCUMENT_LIBRARY,
 				true)
 		};
 
-		groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds);
+		groupIds = _portal.getCurrentAndAncestorSiteGroupIds(groupIds);
 
 		int total = 0;
 
@@ -511,11 +500,11 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		structureSearch.setTotal(total);
 	}
 
-	private final DDMDisplayRegistry _ddmDisplayRegistry;
 	private final DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 	private final DDMStructureService _ddmStructureService;
 	private final DLRequestHelper _dlRequestHelper;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final Portal _portal;
 
 }

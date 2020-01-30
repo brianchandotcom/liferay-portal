@@ -2,7 +2,7 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-[ArrayCheck](documentation/checks/array_check.markdown) | Performance | Checks if performance can be improved by using different mehods that can be used by collections |
+[ArrayCheck](checks/array_check.markdown) | Performance | Checks if performance can be improved by using different mehods that can be used by collections |
 CompatClassImportsCheck | Miscellaneous | |
 CopyrightCheck | Miscellaneous | |
 EmptyCollectionCheck | Miscellaneous | |
@@ -36,7 +36,7 @@ JavaEmptyLinesCheck | Miscellaneous | |
 JavaExceptionCheck | Miscellaneous | |
 JavaFinderCacheCheck | Miscellaneous | |
 JavaFinderImplCustomSQLCheck | Miscellaneous | |
-[JavaForLoopCheck](documentation/checks/java_for_loop_check.markdown) | Styling | Checks if a Enhanced For Loop can be used instead of a Simple For Loop |
+[JavaForLoopCheck](checks/java_for_loop_check.markdown) | Styling | Checks if a Enhanced For Loop can be used instead of a Simple For Loop |
 JavaHibernateSQLCheck | Miscellaneous | |
 JavaIOExceptionCheck | Miscellaneous | |
 JavaIllegalImportsCheck | Miscellaneous | |
@@ -95,7 +95,7 @@ JavaTaglibMethodCheck | Miscellaneous | |
 JavaTermDividersCheck | Miscellaneous | |
 JavaTermOrderCheck | Miscellaneous | |
 JavaTermStylingCheck | Miscellaneous | |
-[JavaTestMethodAnnotationsCheck](documentation/checks/java_test_method_annotations_check.markdown) | Naming Conventions | Checks if methods with test annotations follow the naming conventions |
+[JavaTestMethodAnnotationsCheck](checks/java_test_method_annotations_check.markdown) | Naming Conventions | Checks if methods with test annotations follow the naming conventions |
 JavaUnsafeCastingCheck | Bug Prevention | Checks for potential ClassCastException |
 JavaUnusedSourceFormatterChecksCheck | Miscellaneous | |
 JavaUpgradeClassCheck | Miscellaneous | |
@@ -111,7 +111,7 @@ PrimitiveWrapperInstantiationCheck | Miscellaneous | |
 PrincipalExceptionCheck | Miscellaneous | |
 ResourceBundleCheck | Miscellaneous | |
 SessionKeysCheck | Miscellaneous | |
-[StringMethodsCheck](documentation/checks/string_methods_check.markdown) | Performance | Checks if performance can be improved by using different String operation methods |
+[StringMethodsCheck](checks/string_methods_check.markdown) | Performance | Checks if performance can be improved by using different String operation methods |
 SubstringCheck | Miscellaneous | |
 UnparameterizedClassCheck | Miscellaneous | |
 ValidatorEqualsCheck | Miscellaneous | |

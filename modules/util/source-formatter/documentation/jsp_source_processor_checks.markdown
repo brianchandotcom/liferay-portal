@@ -2,7 +2,7 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-[ArrayCheck](documentation/checks/array_check.markdown) | Performance | Checks if performance can be improved by using different mehods that can be used by collections |
+[ArrayCheck](checks/array_check.markdown) | Performance | Checks if performance can be improved by using different mehods that can be used by collections |
 CompatClassImportsCheck | Miscellaneous | |
 CopyrightCheck | Miscellaneous | |
 EmptyCollectionCheck | Miscellaneous | |

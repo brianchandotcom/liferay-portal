@@ -138,7 +138,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 			%>
 
 			<c:if test="<%= !ListUtil.isEmpty(siteRolesAndTeamsNames) %>">
-				<h5><liferay-ui:message key="site-roles-and-teams" /></h5>
+				<h5><liferay-ui:message key="roles-and-teams" /></h5>
 
 				<p>
 					<%= HtmlUtil.escape(StringUtil.merge(siteRolesAndTeamsNames, StringPool.COMMA_AND_SPACE)) %>

@@ -30,7 +30,7 @@ class UserDropdownDefaultEventHandler extends DefaultEventHandler {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
 			eventName: this.ns('selectUsersRoles'),
-			title: Liferay.Language.get('assign-site-roles'),
+			title: Liferay.Language.get('assign-roles'),
 			url: itemData.assignSiteRolesURL
 		});
 

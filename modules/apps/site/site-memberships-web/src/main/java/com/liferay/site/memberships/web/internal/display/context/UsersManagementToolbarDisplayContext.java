@@ -107,8 +107,7 @@ public class UsersManagementToolbarDisplayContext
 									_getSelectorURL("/site_roles.jsp"));
 								dropdownItem.setIcon("add-role");
 								dropdownItem.setLabel(
-									LanguageUtil.get(
-										request, "assign-site-roles"));
+									LanguageUtil.get(request, "assign-roles"));
 								dropdownItem.setQuickAction(true);
 							});
 
@@ -116,7 +115,7 @@ public class UsersManagementToolbarDisplayContext
 
 						if (role != null) {
 							String label = LanguageUtil.format(
-								request, "remove-site-role-x",
+								request, "remove-role-x",
 								role.getTitle(themeDisplay.getLocale()), false);
 
 							add(

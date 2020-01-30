@@ -98,7 +98,7 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 		<c:if test="<%= !selectUsers %>">
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-cell-minw-200"
-				name="site-roles-and-teams"
+				name="roles-and-teams"
 				value="<%= HtmlUtil.escape(StringUtil.merge(names, StringPool.COMMA_AND_SPACE)) %>"
 			/>
 

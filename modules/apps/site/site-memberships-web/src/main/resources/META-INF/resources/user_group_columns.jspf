@@ -75,7 +75,7 @@ String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersA
 		<c:if test="<%= !selectUserGroup %>">
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-cell-minw-200"
-				name="site-roles"
+				name="roles"
 				value="<%= HtmlUtil.escape(userGroupGroupRolesString) %>"
 			/>
 

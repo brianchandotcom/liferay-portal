@@ -377,13 +377,26 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
-			portlet = "Account Users");
+			portlet = "Accounts");
 
-		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+		LexiconEntry.gotoEntry(rowEntry = "Remove Account User");
 
-		AccountUsers.removeUser(
-			emptyMessage = "There are no users associated with this account.",
-			userFirstName = "userfn");
+		Navigator.gotoNavItem(navItem = "Users");
+
+		Accounts.removeUser(userFirstName = "userfn");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Remove Account User");
+
+		Navigator.gotoNavItem(navItem = "Users");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no users associated with this account.");
 	}
 
 	@priority = "5"

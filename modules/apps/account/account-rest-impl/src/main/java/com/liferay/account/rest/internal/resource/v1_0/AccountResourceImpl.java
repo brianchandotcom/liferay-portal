@@ -16,6 +16,7 @@ package com.liferay.account.rest.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.rest.dto.v1_0.Account;
+import com.liferay.account.rest.internal.odata.entity.v1_0.AccountEntityModel;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -24,9 +25,13 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +44,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/account.properties",
 	scope = ServiceScope.PROTOTYPE, service = AccountResource.class
 )
-public class AccountResourceImpl extends BaseAccountResourceImpl {
+public class AccountResourceImpl
+	extends BaseAccountResourceImpl implements EntityModelResource {
 
 	@Override
 	public Account getAccount(Long accountId) throws Exception {
@@ -74,6 +80,13 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			sorts);
 	}
 
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
+	}
+
 	private Account _toAccount(AccountEntry accountEntry) throws Exception {
 		return new Account() {
 			{
@@ -89,5 +102,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	private final EntityModel _entityModel = new AccountEntityModel();
 
 }

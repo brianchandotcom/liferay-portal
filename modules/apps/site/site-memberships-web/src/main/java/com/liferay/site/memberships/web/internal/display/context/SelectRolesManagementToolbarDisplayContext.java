@@ -26,19 +26,19 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SelectSiteRolesManagementToolbarDisplayContext
+public class SelectRolesManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public SelectSiteRolesManagementToolbarDisplayContext(
+	public SelectRolesManagementToolbarDisplayContext(
 			HttpServletRequest httpServletRequest,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			SelectSiteRolesDisplayContext selectSiteRolesDisplayContext)
+			SelectRolesDisplayContext selectRolesDisplayContext)
 		throws Exception {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			selectSiteRolesDisplayContext.getRoleSearchSearchContainer());
+			selectRolesDisplayContext.getRoleSearchSearchContainer());
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class SelectSiteRolesManagementToolbarDisplayContext
 
 	@Override
 	public String getComponentId() {
-		return "siteRolesManagementToolbar";
+		return "rolesManagementToolbar";
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class SelectSiteRolesManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchContainerId() {
-		return "siteRoles";
+		return "roles";
 	}
 
 	@Override

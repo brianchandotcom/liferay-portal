@@ -17,17 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SiteRolesDisplayContext siteRolesDisplayContext = new SiteRolesDisplayContext(request, renderRequest, renderResponse);
+RolesDisplayContext rolesDisplayContext = new RolesDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SiteRolesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, siteRolesDisplayContext) %>"
+	displayContext="<%= new RolesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, rolesDisplayContext) %>"
 />
 
-<aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">
+<aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-roles" name="fm">
 	<liferay-ui:search-container
-		id="siteRoles"
-		searchContainer="<%= siteRolesDisplayContext.getRoleSearchSearchContainer() %>"
+		id="roles"
+		searchContainer="<%= rolesDisplayContext.getRoleSearchSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Role"
@@ -37,27 +37,25 @@ SiteRolesDisplayContext siteRolesDisplayContext = new SiteRolesDisplayContext(re
 		>
 
 			<%
-			String displayStyle = siteRolesDisplayContext.getDisplayStyle();
+			String displayStyle = rolesDisplayContext.getDisplayStyle();
 			%>
 
 			<%@ include file="/role_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= siteRolesDisplayContext.getDisplayStyle() %>"
+			displayStyle="<%= rolesDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
 </aui:form>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />siteRoles'
-	);
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />roles');
 
 	searchContainer.on('rowToggled', function(event) {
 		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(siteRolesDisplayContext.getEventName()) %>',
+			'<%= HtmlUtil.escapeJS(rolesDisplayContext.getEventName()) %>',
 			{
 				data: event.elements.allSelectedElements.getDOMNodes()
 			}

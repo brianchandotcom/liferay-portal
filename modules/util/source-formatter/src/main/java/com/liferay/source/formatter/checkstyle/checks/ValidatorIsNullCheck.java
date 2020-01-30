@@ -74,8 +74,9 @@ public class ValidatorIsNullCheck extends BaseCheck {
 
 			childDetailAST = typeDetailAST.getFirstChild();
 
-			if ((childDetailAST.getType() == TokenTypes.LITERAL_INT) ||
-				(childDetailAST.getType() == TokenTypes.LITERAL_LONG)) {
+			if ((childDetailAST != null) &&
+				((childDetailAST.getType() == TokenTypes.LITERAL_INT) ||
+				 (childDetailAST.getType() == TokenTypes.LITERAL_LONG))) {
 
 				log(
 					methodCallDetailAST, _MSG_INVALID_METHOD_NAME,

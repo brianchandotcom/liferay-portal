@@ -53,11 +53,7 @@ public class SetOperation extends BaseASTNode implements DefaultDSLQuery {
 
 		_leftDSLQuery.toSQL(consumer, astNodeListener);
 
-		consumer.accept(" ");
-
-		consumer.accept(_setOperationType.toString());
-
-		consumer.accept(" ");
+		consumer.accept(_setOperationType.getStringWithSpaces());
 
 		_rightDSLQuery.toSQL(consumer, astNodeListener);
 	}

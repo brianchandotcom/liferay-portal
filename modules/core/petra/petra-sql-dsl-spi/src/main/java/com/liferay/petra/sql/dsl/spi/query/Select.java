@@ -48,10 +48,11 @@ public class Select extends BaseASTNode implements DefaultFromStep {
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("select ");
-
 		if (_distinct) {
-			consumer.accept("distinct ");
+			consumer.accept("select distinct ");
+		}
+		else {
+			consumer.accept("select ");
 		}
 
 		if (_expressions.size() > 0) {

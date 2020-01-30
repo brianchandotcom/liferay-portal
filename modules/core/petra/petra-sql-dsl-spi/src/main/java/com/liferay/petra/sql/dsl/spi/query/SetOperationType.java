@@ -28,6 +28,12 @@ public class SetOperationType {
 
 	public SetOperationType(String value) {
 		_value = Objects.requireNonNull(value);
+
+		_valueWithSpaces = " ".concat(_value.concat(" "));
+	}
+
+	public String getStringWithSpaces() {
+		return _valueWithSpaces;
 	}
 
 	@Override
@@ -36,5 +42,6 @@ public class SetOperationType {
 	}
 
 	private final String _value;
+	private final String _valueWithSpaces;
 
 }

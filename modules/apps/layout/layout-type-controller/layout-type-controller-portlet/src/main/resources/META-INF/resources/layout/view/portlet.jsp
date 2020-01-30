@@ -40,7 +40,7 @@
 		}
 
 		if (Validator.isNotNull(templateContent)) {
-			RuntimePageUtil.processTemplate(request, response, ppid, new StringTemplateResource(templateId, templateContent), langType);
+			RuntimePageUtil.processTemplate(PortalUtil.getOriginalServletRequest(request), response, ppid, new StringTemplateResource(templateId, templateContent), langType);
 		}
 		%>
 
@@ -125,7 +125,7 @@
 													String langType = LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
 
 													if (Validator.isNotNull(templateContent)) {
-														RuntimePageUtil.processTemplate(request, response, new StringTemplateResource(templateId, templateContent), langType);
+														RuntimePageUtil.processTemplate(PortalUtil.getOriginalServletRequest(request), response, new StringTemplateResource(templateId, templateContent), langType);
 													}
 													%>
 

@@ -845,12 +845,22 @@ AUI.add(
 
 					var container = instance.get('container');
 
+					var fieldType = instance.getFieldDefinition().dataType;
+
 					var containerLabel = container._node.children[0];
 
-					containerLabel.insertAdjacentHTML(
-						'afterbegin',
-						TPL_REPEATABLE_ICON
-					);
+					if (fieldType == "html") {
+						container._node.insertAdjacentHTML(
+							'afterbegin',
+							TPL_REPEATABLE_ICON
+						);
+					}
+					else {
+						containerLabel.insertAdjacentHTML(
+							'afterbegin',
+							TPL_REPEATABLE_ICON
+						);
+					}
 
 					container.append(TPL_REPEATABLE_ADD);
 					container.append(TPL_REPEATABLE_DELETE);

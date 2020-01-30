@@ -71,8 +71,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	private AccountEntry _addAccountEntry() throws PortalException {
 		return _addAccountEntry(
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			WorkflowConstants.STATUS_APPROVED);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null);
 	}
 
 	private AccountEntry _addAccountEntry(Account account)
@@ -80,18 +79,17 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		return _addAccountEntry(
 			account.getParentAccountId(), account.getName(),
-			account.getDescription(), account.getDomains(),
-			account.getStatus());
+			account.getDescription(), account.getDomains());
 	}
 
 	private AccountEntry _addAccountEntry(
 			long parentAccountEntryId, String name, String description,
-			String[] domains, int status)
+			String[] domains)
 		throws PortalException {
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), parentAccountEntryId, name,
-			description, domains, null, status);
+			description, domains, null, WorkflowConstants.STATUS_APPROVED);
 
 		_accountEntries.add(accountEntry);
 

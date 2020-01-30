@@ -59,6 +59,16 @@ public class KeywordSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (keyword.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(keyword.getActions()));
+		}
+
 		if (keyword.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -163,6 +173,13 @@ public class KeywordSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (keyword.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(keyword.getActions()));
+		}
+
 		if (keyword.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -228,7 +245,13 @@ public class KeywordSerDes {
 			Keyword keyword, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "creator")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					keyword.setActions(
+						(Map)KeywordSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
 					keyword.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));

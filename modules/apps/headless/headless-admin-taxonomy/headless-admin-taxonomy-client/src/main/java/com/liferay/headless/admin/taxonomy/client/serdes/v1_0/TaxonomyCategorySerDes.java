@@ -61,6 +61,16 @@ public class TaxonomyCategorySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (taxonomyCategory.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(taxonomyCategory.getActions()));
+		}
+
 		if (taxonomyCategory.getAvailableLanguages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -273,6 +283,13 @@ public class TaxonomyCategorySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (taxonomyCategory.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(taxonomyCategory.getActions()));
+		}
+
 		if (taxonomyCategory.getAvailableLanguages() == null) {
 			map.put("availableLanguages", null);
 		}
@@ -403,7 +420,16 @@ public class TaxonomyCategorySerDes {
 			TaxonomyCategory taxonomyCategory, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "availableLanguages")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					taxonomyCategory.setActions(
+						(Map)TaxonomyCategorySerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "availableLanguages")) {
+
 				if (jsonParserFieldValue != null) {
 					taxonomyCategory.setAvailableLanguages(
 						toStrings((Object[])jsonParserFieldValue));

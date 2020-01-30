@@ -289,6 +289,14 @@ export const getThreadContent = messageBoardThreadId =>
             }
         }`);
 
+export const hasListPermissions = (permission, siteKey) =>
+	request(gql`
+			query {
+				messageBoardThreads(siteKey: ${siteKey}) {
+					actions
+				}
+			}`).then(data => Boolean(data.actions[permission]));
+
 export const getThreads = ({
 	keyword = '',
 	page = 1,

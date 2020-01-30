@@ -12,15 +12,26 @@
  * details.
  */
 
-import React, {createContext} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
+
+import {hasListPermissions} from './utils/client.es';
 
 const AppContext = createContext();
 
 const AppContextProvider = ({children, ...context}) => {
+	const [canCreateThread, setCanCreateThread] = useState(false);
+
+	useEffect(() => {
+		hasListPermissions('create', context.siteKey).then(value =>
+			setCanCreateThread(value)
+		);
+	}, [context.siteKey]);
+
 	return (
 		<AppContext.Provider
 			value={{
-				...context
+				...context,
+				canCreateThread
 			}}
 		>
 			{children}

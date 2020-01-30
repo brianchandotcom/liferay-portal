@@ -17,7 +17,7 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.
 
 const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
 
-const UNIMPLIMENTED_PROPERTIES = [
+const UNIMPLEMENTED_PROPERTIES = [
 	'fieldNamespace',
 	'indexType',
 	'localizable',
@@ -38,7 +38,7 @@ export const getFilteredSettingsContext = settingsContext => {
 				fields: column.fields
 					.filter(
 						({fieldName}) =>
-							UNIMPLIMENTED_PROPERTIES.indexOf(fieldName) === -1
+							UNIMPLEMENTED_PROPERTIES.indexOf(fieldName) === -1
 					)
 					.map(field => {
 						if (field.fieldName === 'dataSourceType') {

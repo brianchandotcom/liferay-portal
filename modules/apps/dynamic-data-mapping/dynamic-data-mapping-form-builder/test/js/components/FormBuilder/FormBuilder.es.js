@@ -16,7 +16,7 @@ import dom from 'metal-dom';
 
 import Builder from '../../../../src/main/resources/META-INF/resources/js/components/FormBuilder/FormBuilder.es';
 import Pages from '../../__mock__/mockPages.es';
-import SucessPageSettings from '../../__mock__/mockSuccessPage.es';
+import SuccessPageSettings from '../../__mock__/mockSuccessPage.es';
 
 const spritemap = 'icons.svg';
 
@@ -119,7 +119,7 @@ const fieldTypes = [
 describe('Builder', () => {
 	beforeEach(() => {
 		pages = JSON.parse(JSON.stringify(Pages));
-		successPageSettings = JSON.parse(JSON.stringify(SucessPageSettings));
+		successPageSettings = JSON.parse(JSON.stringify(SuccessPageSettings));
 
 		jest.useFakeTimers();
 

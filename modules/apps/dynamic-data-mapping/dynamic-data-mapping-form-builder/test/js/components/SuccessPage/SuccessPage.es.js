@@ -16,7 +16,7 @@ import dom from 'metal-dom';
 import JSXComponent from 'metal-jsx';
 
 import SuccessPage from '../../../../src/main/resources/META-INF/resources/js/components/SuccessPage/SuccessPage.es';
-import SucessPageSettings from '../../__mock__/mockSuccessPage.es';
+import SuccessPageSettings from '../../__mock__/mockSuccessPage.es';
 
 let component;
 let successPageSettings;
@@ -40,7 +40,7 @@ const withStore = context => {
 
 describe('SuccessPage', () => {
 	beforeEach(() => {
-		successPageSettings = JSON.parse(JSON.stringify(SucessPageSettings));
+		successPageSettings = JSON.parse(JSON.stringify(SuccessPageSettings));
 
 		jest.useFakeTimers();
 	});

@@ -298,8 +298,8 @@ public class SPIDataLayoutResource<T> {
 		}
 
 		name.forEach(
-			(locale, localeName) -> {
-				if (Validator.isNull((String)localeName)) {
+			(locale, localizedName) -> {
+				if (Validator.isNull(localizedName)) {
 					throw new ValidationException("Name is required");
 				}
 			});

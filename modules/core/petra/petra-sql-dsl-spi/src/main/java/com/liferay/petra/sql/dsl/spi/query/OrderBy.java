@@ -48,12 +48,12 @@ public class OrderBy extends BaseASTNode implements DefaultLimitStep {
 
 		consumer.accept("order by ");
 
-		for (int i = 0; i < _orderByExpressions.length; i++) {
-			_orderByExpressions[i].toSQL(consumer, astNodeListener);
+		_orderByExpressions[0].toSQL(consumer, astNodeListener);
 
-			if (i < (_orderByExpressions.length - 1)) {
-				consumer.accept(", ");
-			}
+		for (int i = 1; i < _orderByExpressions.length; i++) {
+			consumer.accept(", ");
+
+			_orderByExpressions[i].toSQL(consumer, astNodeListener);
 		}
 	}
 

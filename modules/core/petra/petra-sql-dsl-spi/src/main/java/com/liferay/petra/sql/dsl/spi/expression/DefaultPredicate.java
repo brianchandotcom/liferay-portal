@@ -89,9 +89,7 @@ public class DefaultPredicate
 
 		_leftExpression.toSQL(consumer, astNodeListener);
 
-		consumer.accept(" ");
-		consumer.accept(_operand.toString());
-		consumer.accept(" ");
+		consumer.accept(_operand.getStringWithSpaces());
 
 		_rightExpression.toSQL(consumer, astNodeListener);
 

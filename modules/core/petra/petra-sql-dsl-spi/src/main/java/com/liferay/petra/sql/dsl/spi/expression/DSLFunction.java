@@ -53,12 +53,12 @@ public class DSLFunction<T>
 
 		consumer.accept(_dslFunctionType.getPrefix());
 
-		for (int i = 0; i < _expressions.length; i++) {
-			_expressions[i].toSQL(consumer, astNodeListener);
+		_expressions[0].toSQL(consumer, astNodeListener);
 
-			if (i < (_expressions.length - 1)) {
-				consumer.accept(_dslFunctionType.getDelimiter());
-			}
+		for (int i = 1; i < _expressions.length; i++) {
+			consumer.accept(_dslFunctionType.getDelimiter());
+
+			_expressions[i].toSQL(consumer, astNodeListener);
 		}
 
 		consumer.accept(_dslFunctionType.getPostfix());

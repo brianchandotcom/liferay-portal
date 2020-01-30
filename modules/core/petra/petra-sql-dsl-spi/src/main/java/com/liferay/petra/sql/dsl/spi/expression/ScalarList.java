@@ -16,7 +16,6 @@ package com.liferay.petra.sql.dsl.spi.expression;
 
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
-import com.liferay.petra.string.StringPool;
 
 import java.util.function.Consumer;
 
@@ -41,14 +40,10 @@ public class ScalarList<T> extends BaseASTNode implements DefaultExpression<T> {
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept("(");
+		consumer.accept("(?");
 
-		for (int i = 0; i < _values.length; i++) {
-			consumer.accept(StringPool.QUESTION);
-
-			if (i < (_values.length - 1)) {
-				consumer.accept(", ");
-			}
+		for (int i = 1; i < _values.length; i++) {
+			consumer.accept(", ?");
 		}
 
 		consumer.accept(")");

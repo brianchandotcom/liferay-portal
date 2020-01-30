@@ -11194,10 +11194,10 @@ liferay-npm-bundler@2.17.0:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-npm-scripts@21.0.1-beta.1:
-  version "21.0.1-beta.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-21.0.1-beta.1.tgz#668be91740ca6d857348feb6c1b192d235d399ed"
-  integrity sha512-3VZyvRG4Hzn1Y56t4XWyDMstrMe/KPmgsj2JPQCxytmhpmu6imA3MP+AU40F68PP+JLrHpbrKOsmI3GtU4e2/Q==
+liferay-npm-scripts@21.0.1-beta.2:
+  version "21.0.1-beta.2"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-21.0.1-beta.2.tgz#2fbf4c6b90bb3627fd761db8107a1357451d5183"
+  integrity sha512-MXn8n/v30ftmUYgJ0fLMydq4OcdxiXRqLs8DQiRcrn92c5q6qVQYborLyE9Uj0B2r1gCVmtZUqRhvUZlWBLmSw==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"

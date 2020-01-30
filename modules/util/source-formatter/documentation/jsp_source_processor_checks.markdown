@@ -1,0 +1,47 @@
+# Checks for .jsp, .jspf, .tag, .tpl or .vm
+
+Check | Category | Description
+----- | -------- | -----------
+[ArrayCheck](documentation/checks/array_check.markdown) | Performance | Checks if performance can be improved by using different mehods that can be used by collections |
+CompatClassImportsCheck | Miscellaneous | |
+CopyrightCheck | Miscellaneous | |
+EmptyCollectionCheck | Miscellaneous | |
+GetterUtilCheck | Miscellaneous | |
+JSPButtonTagCheck | Miscellaneous | |
+JSPDefineObjectsCheck | Miscellaneous | |
+JSPEmptyLinesCheck | Miscellaneous | |
+JSPExceptionOrderCheck | Miscellaneous | |
+JSPFunctionNameCheck | Miscellaneous | |
+JSPImportsCheck | Miscellaneous | |
+JSPIncludeCheck | Miscellaneous | |
+JSPIndentationCheck | Miscellaneous | |
+JSPLanguageKeysCheck | Miscellaneous | |
+JSPLanguageUtilCheck | Miscellaneous | |
+JSPLineBreakCheck | Miscellaneous | |
+JSPLogFileNameCheck | Miscellaneous | |
+JSPLogParametersCheck | Miscellaneous | |
+JSPMissingTaglibsCheck | Miscellaneous | |
+JSPModuleIllegalImportsCheck | Miscellaneous | |
+JSPParenthesesCheck | Miscellaneous | |
+JSPRedirectBackURLCheck | Miscellaneous | |
+JSPSendRedirectCheck | Miscellaneous | |
+JSPServiceUtilCheck | Miscellaneous | |
+JSPSessionKeysCheck | Miscellaneous | |
+JSPStringBundlerCheck | Miscellaneous | |
+JSPStringMethodsCheck | Miscellaneous | |
+JSPStylingCheck | Miscellaneous | |
+JSPSubnameCheck | Miscellaneous | |
+JSPTagAttributesCheck | Miscellaneous | |
+JSPTaglibVariableCheck | Miscellaneous | |
+JSPUnusedJSPF | Miscellaneous | |
+JSPUnusedTermsCheck | Miscellaneous | |
+JSPWhitespaceCheck | Miscellaneous | |
+JSPXSSVulnerabilitiesCheck | Miscellaneous | |
+LocaleUtilCheck | Miscellaneous | |
+MethodCallsOrderCheck | Miscellaneous | |
+PrimitiveWrapperInstantiationCheck | Miscellaneous | |
+PrincipalExceptionCheck | Miscellaneous | |
+ResourceBundleCheck | Miscellaneous | |
+SubstringCheck | Miscellaneous | |
+UnparameterizedClassCheck | Miscellaneous | |
+ValidatorEqualsCheck | Miscellaneous | |

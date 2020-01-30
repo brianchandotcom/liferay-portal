@@ -2476,25 +2476,25 @@ definition {
 			portlet = "Web Content");
 
 		WebContent.addArticleCP(
-			webContentContent = "WebContent Content",
-			webContentTitle = "WebContent Title");
+			webContentContent = "WC Content",
+			webContentTitle = "Apple");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "search",
 			siteName = "Site Name");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Web Content Article");
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "WebContent Title",
+			searchAssetTitle = "Apple",
 			searchAssetType = "Web Content Article");
 
 		ProductMenu.gotoLiveSite();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Web Content Article");
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewSearchResultNotPresent(
-			searchAssetTitle = "WebContent Title",
+			searchAssetTitle = "Apple",
 			searchAssetType = "Web Content Article");
 
 		// LPS-83060
@@ -2530,24 +2530,24 @@ definition {
 		WebContent.deleteStagedCP(
 			pageName = "search",
 			siteName = "Site Name",
-			webContentTitle = "WebContent Title");
+			webContentTitle = "Apple");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "search",
 			siteName = "Site Name");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Web Content Article");
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewSearchResultNotPresent(
-			searchAssetTitle = "WebContent Title",
+			searchAssetTitle = "Apple",
 			searchAssetType = "Web Content Article");
 
 		ProductMenu.gotoLiveSite();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Web Content Article");
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "WebContent Title",
+			searchAssetTitle = "Apple",
 			searchAssetType = "Web Content Article");
 	}
 

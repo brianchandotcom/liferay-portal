@@ -393,7 +393,7 @@ public class BatchEngineExportTaskExecutorTest
 				user.getCompanyId(), user.getUserId(), null,
 				BlogPosting.class.getName(), contentType,
 				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldNames,
-				parameters, "v1.0");
+				parameters);
 
 		_batchEngineExportTaskExecutor.execute(_batchEngineExportTask);
 	}

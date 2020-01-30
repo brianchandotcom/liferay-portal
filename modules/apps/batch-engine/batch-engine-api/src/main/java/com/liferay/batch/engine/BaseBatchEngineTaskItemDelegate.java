@@ -20,9 +20,8 @@ import com.liferay.portal.odata.entity.EntityModel;
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-
-import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * @author Ivica Cardic
@@ -63,7 +62,7 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap<?, ?> multivaluedMap)
+	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
 		return null;

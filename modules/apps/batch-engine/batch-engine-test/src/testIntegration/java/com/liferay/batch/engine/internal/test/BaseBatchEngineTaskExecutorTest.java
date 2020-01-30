@@ -73,9 +73,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.MultivaluedMap;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -211,7 +208,8 @@ public class BaseBatchEngineTaskExecutorTest {
 		}
 
 		@Override
-		public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		public EntityModel getEntityModel(
+				Map<String, List<String>> multivaluedMap)
 			throws Exception {
 
 			return new BlogPostingEntityModel();
@@ -298,7 +296,7 @@ public class BaseBatchEngineTaskExecutorTest {
 					"{\"height\": 0, \"width\": 0, \"x\": 0, \"y\": 0}");
 			}
 			catch (Exception exception) {
-				throw new BadRequestException(
+				throw new RuntimeException(
 					"Unable to get file entry " + imageId, exception);
 			}
 		}

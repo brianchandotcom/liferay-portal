@@ -1,7 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.10.1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile group: "log4j", name: "log4j", version: "1.2.17"
 	testIntegrationCompile group: "org.apache.commons", name: "commons-collections4", version: "4.4"
 	testIntegrationCompile group: "org.apache.commons", name: "commons-compress", version: "1.19"

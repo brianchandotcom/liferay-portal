@@ -24,9 +24,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-
-import javax.ws.rs.core.MultivaluedMap;
 
 /**
  * @author Ivica Cardic
@@ -43,7 +42,7 @@ public interface BatchEngineTaskItemDelegate<T> {
 			User user)
 		throws Exception;
 
-	public EntityModel getEntityModel(MultivaluedMap<?, ?> multivaluedMap)
+	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception;
 
 	public Page<T> read(

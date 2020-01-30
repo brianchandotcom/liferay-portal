@@ -40,8 +40,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.MultivaluedHashMap;
-
 import org.osgi.framework.ServiceObjects;
 
 /**
@@ -101,7 +99,7 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 		}
 
 		EntityModel entityModel = _batchEngineTaskItemDelegate.getEntityModel(
-			_getMultivaluedHashMap(_parameters));
+			_toMultivaluedMap(_parameters));
 
 		if (entityModel == null) {
 			return null;
@@ -129,24 +127,6 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 		return filteredParameters;
 	}
 
-	private MultivaluedHashMap<String, String> _getMultivaluedHashMap(
-		Map<String, Serializable> parameterMap) {
-
-		return new MultivaluedHashMap<String, String>() {
-			{
-				for (Entry<String, Serializable> entry :
-						parameterMap.entrySet()) {
-
-					Object value = entry.getValue();
-
-					put(
-						entry.getKey(),
-						Collections.singletonList(value.toString()));
-				}
-			}
-		};
-	}
-
 	private Sort[] _getSorts() throws Exception {
 		String sortString = (String)_parameters.get("sort");
 
@@ -155,7 +135,7 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 		}
 
 		EntityModel entityModel = _batchEngineTaskItemDelegate.getEntityModel(
-			_getMultivaluedHashMap(_parameters));
+			_toMultivaluedMap(_parameters));
 
 		if (entityModel == null) {
 			return null;
@@ -185,6 +165,18 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 		}
 
 		return sorts;
+	}
+
+	private Map<String, List<String>> _toMultivaluedMap(
+		Map<String, Serializable> parameterMap) {
+
+		Map<String, List<String>> multivaluedMap = new HashMap<>();
+
+		parameterMap.forEach(
+			(key, value) -> multivaluedMap.put(
+				key, Collections.singletonList(String.valueOf(value))));
+
+		return multivaluedMap;
 	}
 
 	private final BatchEngineTaskItemDelegate<Object>

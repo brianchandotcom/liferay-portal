@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutRevision;
@@ -50,11 +51,13 @@ import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenu
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 
 import java.io.IOException;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -341,6 +344,26 @@ public class LayoutSiteNavigationMenuItemType
 
 			importedSiteNavigationMenuItem.setTypeSettings(
 				typeSettingsProperties.toString());
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean isAvailable(
+		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext) {
+
+		Optional<Group> groupOptional =
+			siteNavigationMenuItemTypeContext.getGroupOptional();
+
+		if (!groupOptional.isPresent()) {
+			return false;
+		}
+
+		Group group = groupOptional.get();
+
+		if (group.isCompany()) {
+			return false;
 		}
 
 		return true;

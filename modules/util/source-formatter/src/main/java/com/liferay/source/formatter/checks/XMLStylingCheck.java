@@ -16,6 +16,9 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Alan Huang
  */
@@ -25,13 +28,27 @@ public class XMLStylingCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (content.startsWith("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")) {
-			content = StringUtil.replaceFirst(
-				content, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
-				"<?xml version=\"1.0\"?>");
+		Matcher matcher = _xmlDeclarationPattern.matcher(content);
+
+		if (matcher.find()) {
+			String oldXmlDeclaration = matcher.group();
+
+			String xmlDeclaration = StringUtil.replace(
+				oldXmlDeclaration, " = ", "=");
+
+			xmlDeclaration = xmlDeclaration.replaceAll(
+				" encoding=\"[^\"]*\"", "");
+
+			if (!oldXmlDeclaration.equals(xmlDeclaration)) {
+				return StringUtil.replaceFirst(
+					content, oldXmlDeclaration, xmlDeclaration);
+			}
 		}
 
 		return content;
 	}
+
+	private static final Pattern _xmlDeclarationPattern = Pattern.compile(
+		"(\\A)<\\?xml .+?(?=\\Z|\n)");
 
 }

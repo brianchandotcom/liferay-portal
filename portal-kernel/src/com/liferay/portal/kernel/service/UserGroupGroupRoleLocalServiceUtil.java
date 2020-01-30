@@ -75,15 +75,13 @@ public class UserGroupGroupRoleLocalServiceUtil {
 	/**
 	 * Creates a new user group group role with the primary key. Does not add the user group group role to the database.
 	 *
-	 * @param userGroupGroupRolePK the primary key for the new user group group role
+	 * @param userGroupGroupRoleId the primary key for the new user group group role
 	 * @return the new user group group role
 	 */
 	public static com.liferay.portal.kernel.model.UserGroupGroupRole
-		createUserGroupGroupRole(
-			com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK
-				userGroupGroupRolePK) {
+		createUserGroupGroupRole(long userGroupGroupRoleId) {
 
-		return getService().createUserGroupGroupRole(userGroupGroupRolePK);
+		return getService().createUserGroupGroupRole(userGroupGroupRoleId);
 	}
 
 	/**
@@ -98,6 +96,20 @@ public class UserGroupGroupRoleLocalServiceUtil {
 	}
 
 	/**
+	 * Deletes the user group group role with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param userGroupGroupRoleId the primary key of the user group group role
+	 * @return the user group group role that was removed
+	 * @throws PortalException if a user group group role with the primary key could not be found
+	 */
+	public static com.liferay.portal.kernel.model.UserGroupGroupRole
+			deleteUserGroupGroupRole(long userGroupGroupRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteUserGroupGroupRole(userGroupGroupRoleId);
+	}
+
+	/**
 	 * Deletes the user group group role from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param userGroupGroupRole the user group group role
@@ -109,22 +121,6 @@ public class UserGroupGroupRoleLocalServiceUtil {
 				userGroupGroupRole) {
 
 		return getService().deleteUserGroupGroupRole(userGroupGroupRole);
-	}
-
-	/**
-	 * Deletes the user group group role with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userGroupGroupRolePK the primary key of the user group group role
-	 * @return the user group group role that was removed
-	 * @throws PortalException if a user group group role with the primary key could not be found
-	 */
-	public static com.liferay.portal.kernel.model.UserGroupGroupRole
-			deleteUserGroupGroupRole(
-				com.liferay.portal.kernel.service.persistence.
-					UserGroupGroupRolePK userGroupGroupRolePK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().deleteUserGroupGroupRole(userGroupGroupRolePK);
 	}
 
 	public static void deleteUserGroupGroupRoles(long groupId, int roleType) {
@@ -255,11 +251,9 @@ public class UserGroupGroupRoleLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.UserGroupGroupRole
-		fetchUserGroupGroupRole(
-			com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK
-				userGroupGroupRolePK) {
+		fetchUserGroupGroupRole(long userGroupGroupRoleId) {
 
-		return getService().fetchUserGroupGroupRole(userGroupGroupRolePK);
+		return getService().fetchUserGroupGroupRole(userGroupGroupRoleId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -297,17 +291,15 @@ public class UserGroupGroupRoleLocalServiceUtil {
 	/**
 	 * Returns the user group group role with the primary key.
 	 *
-	 * @param userGroupGroupRolePK the primary key of the user group group role
+	 * @param userGroupGroupRoleId the primary key of the user group group role
 	 * @return the user group group role
 	 * @throws PortalException if a user group group role with the primary key could not be found
 	 */
 	public static com.liferay.portal.kernel.model.UserGroupGroupRole
-			getUserGroupGroupRole(
-				com.liferay.portal.kernel.service.persistence.
-					UserGroupGroupRolePK userGroupGroupRolePK)
+			getUserGroupGroupRole(long userGroupGroupRoleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getUserGroupGroupRole(userGroupGroupRolePK);
+		return getService().getUserGroupGroupRole(userGroupGroupRoleId);
 	}
 
 	/**

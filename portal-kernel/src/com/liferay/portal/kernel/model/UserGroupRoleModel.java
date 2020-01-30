@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -44,14 +42,14 @@ public interface UserGroupRoleModel
 	 *
 	 * @return the primary key of this user group role
 	 */
-	public UserGroupRolePK getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this user group role.
 	 *
 	 * @param primaryKey the primary key of this user group role
 	 */
-	public void setPrimaryKey(UserGroupRolePK primaryKey);
+	public void setPrimaryKey(long primaryKey);
 
 	/**
 	 * Returns the mvcc version of this user group role.
@@ -68,6 +66,36 @@ public interface UserGroupRoleModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the user group role ID of this user group role.
+	 *
+	 * @return the user group role ID of this user group role
+	 */
+	public long getUserGroupRoleId();
+
+	/**
+	 * Sets the user group role ID of this user group role.
+	 *
+	 * @param userGroupRoleId the user group role ID of this user group role
+	 */
+	public void setUserGroupRoleId(long userGroupRoleId);
+
+	/**
+	 * Returns the company ID of this user group role.
+	 *
+	 * @return the company ID of this user group role
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user group role.
+	 *
+	 * @param companyId the company ID of this user group role
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this user group role.
@@ -124,21 +152,5 @@ public interface UserGroupRoleModel
 	 * @param roleId the role ID of this user group role
 	 */
 	public void setRoleId(long roleId);
-
-	/**
-	 * Returns the company ID of this user group role.
-	 *
-	 * @return the company ID of this user group role
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this user group role.
-	 *
-	 * @param companyId the company ID of this user group role
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 }

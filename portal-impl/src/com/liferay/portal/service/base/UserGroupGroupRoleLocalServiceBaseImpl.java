@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder;
-import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK;
 import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -92,31 +91,31 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	/**
 	 * Creates a new user group group role with the primary key. Does not add the user group group role to the database.
 	 *
-	 * @param userGroupGroupRolePK the primary key for the new user group group role
+	 * @param userGroupGroupRoleId the primary key for the new user group group role
 	 * @return the new user group group role
 	 */
 	@Override
 	@Transactional(enabled = false)
 	public UserGroupGroupRole createUserGroupGroupRole(
-		UserGroupGroupRolePK userGroupGroupRolePK) {
+		long userGroupGroupRoleId) {
 
-		return userGroupGroupRolePersistence.create(userGroupGroupRolePK);
+		return userGroupGroupRolePersistence.create(userGroupGroupRoleId);
 	}
 
 	/**
 	 * Deletes the user group group role with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userGroupGroupRolePK the primary key of the user group group role
+	 * @param userGroupGroupRoleId the primary key of the user group group role
 	 * @return the user group group role that was removed
 	 * @throws PortalException if a user group group role with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public UserGroupGroupRole deleteUserGroupGroupRole(
-			UserGroupGroupRolePK userGroupGroupRolePK)
+			long userGroupGroupRoleId)
 		throws PortalException {
 
-		return userGroupGroupRolePersistence.remove(userGroupGroupRolePK);
+		return userGroupGroupRolePersistence.remove(userGroupGroupRoleId);
 	}
 
 	/**
@@ -223,26 +222,25 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 
 	@Override
 	public UserGroupGroupRole fetchUserGroupGroupRole(
-		UserGroupGroupRolePK userGroupGroupRolePK) {
+		long userGroupGroupRoleId) {
 
 		return userGroupGroupRolePersistence.fetchByPrimaryKey(
-			userGroupGroupRolePK);
+			userGroupGroupRoleId);
 	}
 
 	/**
 	 * Returns the user group group role with the primary key.
 	 *
-	 * @param userGroupGroupRolePK the primary key of the user group group role
+	 * @param userGroupGroupRoleId the primary key of the user group group role
 	 * @return the user group group role
 	 * @throws PortalException if a user group group role with the primary key could not be found
 	 */
 	@Override
-	public UserGroupGroupRole getUserGroupGroupRole(
-			UserGroupGroupRolePK userGroupGroupRolePK)
+	public UserGroupGroupRole getUserGroupGroupRole(long userGroupGroupRoleId)
 		throws PortalException {
 
 		return userGroupGroupRolePersistence.findByPrimaryKey(
-			userGroupGroupRolePK);
+			userGroupGroupRoleId);
 	}
 
 	@Override
@@ -256,9 +254,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(UserGroupGroupRole.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"primaryKey.userGroupId");
-
-		actionableDynamicQuery.setGroupIdPropertyName("primaryKey.groupId");
+			"userGroupGroupRoleId");
 
 		return actionableDynamicQuery;
 	}
@@ -276,10 +272,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(UserGroupGroupRole.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"primaryKey.userGroupId");
-
-		indexableActionableDynamicQuery.setGroupIdPropertyName(
-			"primaryKey.groupId");
+			"userGroupGroupRoleId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -293,9 +286,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(UserGroupGroupRole.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"primaryKey.userGroupId");
-
-		actionableDynamicQuery.setGroupIdPropertyName("primaryKey.groupId");
+			"userGroupGroupRoleId");
 	}
 
 	/**
@@ -305,7 +296,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 		throws PortalException {
 
 		return userGroupGroupRolePersistence.create(
-			(UserGroupGroupRolePK)primaryKeyObj);
+			((Long)primaryKeyObj).longValue());
 	}
 
 	/**

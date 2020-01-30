@@ -31,6 +31,14 @@ public class UserGroupRoleLocalServiceWrapper
 		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.UserGroupRole addUserGroupRole(
+		long userId, long groupId, long roleId) {
+
+		return _userGroupRoleLocalService.addUserGroupRole(
+			userId, groupId, roleId);
+	}
+
 	/**
 	 * Adds the user group role to the database. Also notifies the appropriate model listeners.
 	 *
@@ -74,15 +82,14 @@ public class UserGroupRoleLocalServiceWrapper
 	/**
 	 * Creates a new user group role with the primary key. Does not add the user group role to the database.
 	 *
-	 * @param userGroupRolePK the primary key for the new user group role
+	 * @param userGroupRoleId the primary key for the new user group role
 	 * @return the new user group role
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.UserGroupRole createUserGroupRole(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK
-			userGroupRolePK) {
+		long userGroupRoleId) {
 
-		return _userGroupRoleLocalService.createUserGroupRole(userGroupRolePK);
+		return _userGroupRoleLocalService.createUserGroupRole(userGroupRoleId);
 	}
 
 	/**
@@ -97,6 +104,21 @@ public class UserGroupRoleLocalServiceWrapper
 	}
 
 	/**
+	 * Deletes the user group role with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param userGroupRoleId the primary key of the user group role
+	 * @return the user group role that was removed
+	 * @throws PortalException if a user group role with the primary key could not be found
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.UserGroupRole deleteUserGroupRole(
+			long userGroupRoleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userGroupRoleLocalService.deleteUserGroupRole(userGroupRoleId);
+	}
+
+	/**
 	 * Deletes the user group role from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param userGroupRole the user group role
@@ -107,22 +129,6 @@ public class UserGroupRoleLocalServiceWrapper
 		com.liferay.portal.kernel.model.UserGroupRole userGroupRole) {
 
 		return _userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
-	}
-
-	/**
-	 * Deletes the user group role with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userGroupRolePK the primary key of the user group role
-	 * @return the user group role that was removed
-	 * @throws PortalException if a user group role with the primary key could not be found
-	 */
-	@Override
-	public com.liferay.portal.kernel.model.UserGroupRole deleteUserGroupRole(
-			com.liferay.portal.kernel.service.persistence.UserGroupRolePK
-				userGroupRolePK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userGroupRoleLocalService.deleteUserGroupRole(userGroupRolePK);
 	}
 
 	@Override
@@ -272,10 +278,17 @@ public class UserGroupRoleLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.UserGroupRole fetchUserGroupRole(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK
-			userGroupRolePK) {
+		long userGroupRoleId) {
 
-		return _userGroupRoleLocalService.fetchUserGroupRole(userGroupRolePK);
+		return _userGroupRoleLocalService.fetchUserGroupRole(userGroupRoleId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.UserGroupRole fetchUserGroupRole(
+		long userId, long groupId, long roleId) {
+
+		return _userGroupRoleLocalService.fetchUserGroupRole(
+			userId, groupId, roleId);
 	}
 
 	@Override
@@ -316,17 +329,16 @@ public class UserGroupRoleLocalServiceWrapper
 	/**
 	 * Returns the user group role with the primary key.
 	 *
-	 * @param userGroupRolePK the primary key of the user group role
+	 * @param userGroupRoleId the primary key of the user group role
 	 * @return the user group role
 	 * @throws PortalException if a user group role with the primary key could not be found
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.UserGroupRole getUserGroupRole(
-			com.liferay.portal.kernel.service.persistence.UserGroupRolePK
-				userGroupRolePK)
+			long userGroupRoleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _userGroupRoleLocalService.getUserGroupRole(userGroupRolePK);
+		return _userGroupRoleLocalService.getUserGroupRole(userGroupRoleId);
 	}
 
 	/**

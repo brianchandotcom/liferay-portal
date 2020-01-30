@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -59,6 +58,8 @@ public interface UserGroupRoleLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserGroupRoleLocalServiceUtil} to access the user group role local service. Add custom service methods to <code>com.liferay.portal.service.impl.UserGroupRoleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public UserGroupRole addUserGroupRole(
+		long userId, long groupId, long roleId);
 
 	/**
 	 * Adds the user group role to the database. Also notifies the appropriate model listeners.
@@ -84,17 +85,28 @@ public interface UserGroupRoleLocalService
 	/**
 	 * Creates a new user group role with the primary key. Does not add the user group role to the database.
 	 *
-	 * @param userGroupRolePK the primary key for the new user group role
+	 * @param userGroupRoleId the primary key for the new user group role
 	 * @return the new user group role
 	 */
 	@Transactional(enabled = false)
-	public UserGroupRole createUserGroupRole(UserGroupRolePK userGroupRolePK);
+	public UserGroupRole createUserGroupRole(long userGroupRoleId);
 
 	/**
 	 * @throws PortalException
 	 */
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	/**
+	 * Deletes the user group role with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param userGroupRoleId the primary key of the user group role
+	 * @return the user group role that was removed
+	 * @throws PortalException if a user group role with the primary key could not be found
+	 */
+	@Indexable(type = IndexableType.DELETE)
+	public UserGroupRole deleteUserGroupRole(long userGroupRoleId)
 		throws PortalException;
 
 	/**
@@ -105,17 +117,6 @@ public interface UserGroupRoleLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public UserGroupRole deleteUserGroupRole(UserGroupRole userGroupRole);
-
-	/**
-	 * Deletes the user group role with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param userGroupRolePK the primary key of the user group role
-	 * @return the user group role that was removed
-	 * @throws PortalException if a user group role with the primary key could not be found
-	 */
-	@Indexable(type = IndexableType.DELETE)
-	public UserGroupRole deleteUserGroupRole(UserGroupRolePK userGroupRolePK)
-		throws PortalException;
 
 	public void deleteUserGroupRoles(long groupId, int roleType);
 
@@ -203,7 +204,11 @@ public interface UserGroupRoleLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserGroupRole fetchUserGroupRole(UserGroupRolePK userGroupRolePK);
+	public UserGroupRole fetchUserGroupRole(long userGroupRoleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserGroupRole fetchUserGroupRole(
+		long userId, long groupId, long roleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -229,12 +234,12 @@ public interface UserGroupRoleLocalService
 	/**
 	 * Returns the user group role with the primary key.
 	 *
-	 * @param userGroupRolePK the primary key of the user group role
+	 * @param userGroupRoleId the primary key of the user group role
 	 * @return the user group role
 	 * @throws PortalException if a user group role with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserGroupRole getUserGroupRole(UserGroupRolePK userGroupRolePK)
+	public UserGroupRole getUserGroupRole(long userGroupRoleId)
 		throws PortalException;
 
 	/**

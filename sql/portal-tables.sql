@@ -1339,20 +1339,20 @@ create table UserGroup (
 
 create table UserGroupGroupRole (
 	mvccVersion LONG default 0 not null,
-	userGroupId LONG not null,
-	groupId LONG not null,
-	roleId LONG not null,
+	userGroupGroupRoleId LONG not null primary key,
 	companyId LONG,
-	primary key (userGroupId, groupId, roleId)
+	userGroupId LONG,
+	groupId LONG,
+	roleId LONG
 );
 
 create table UserGroupRole (
 	mvccVersion LONG default 0 not null,
-	userId LONG not null,
-	groupId LONG not null,
-	roleId LONG not null,
+	userGroupRoleId LONG not null primary key,
 	companyId LONG,
-	primary key (userId, groupId, roleId)
+	userId LONG,
+	groupId LONG,
+	roleId LONG
 );
 
 create table UserGroups_Teams (

@@ -436,9 +436,11 @@ create index IX_72394F8E on UserGroup (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_CAB0CCC8 on UserGroupGroupRole (groupId, roleId);
 create index IX_1CDF88C on UserGroupGroupRole (roleId);
+create unique index IX_9D2A4FB7 on UserGroupGroupRole (userGroupId, groupId, roleId);
 
 create index IX_871412DF on UserGroupRole (groupId, roleId);
 create index IX_887A2C95 on UserGroupRole (roleId);
+create unique index IX_EF9125E5 on UserGroupRole (userId, groupId, roleId);
 
 create index IX_2AC5356C on UserGroups_Teams (companyId);
 create index IX_7F187E63 on UserGroups_Teams (userGroupId);

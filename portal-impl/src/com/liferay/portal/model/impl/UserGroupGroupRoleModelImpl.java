@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
@@ -23,7 +25,7 @@ import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupGroupRoleModel;
 import com.liferay.portal.kernel.model.UserGroupGroupRoleSoap;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -67,9 +69,9 @@ public class UserGroupGroupRoleModelImpl
 	public static final String TABLE_NAME = "UserGroupGroupRole";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"userGroupId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"roleId", Types.BIGINT},
-		{"companyId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"userGroupGroupRoleId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userGroupId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"roleId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -77,22 +79,23 @@ public class UserGroupGroupRoleModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userGroupGroupRoleId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userGroupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table UserGroupGroupRole (mvccVersion LONG default 0 not null,userGroupId LONG not null,groupId LONG not null,roleId LONG not null,companyId LONG,primary key (userGroupId, groupId, roleId))";
+		"create table UserGroupGroupRole (mvccVersion LONG default 0 not null,userGroupGroupRoleId LONG not null primary key,companyId LONG,userGroupId LONG,groupId LONG,roleId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table UserGroupGroupRole";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY userGroupGroupRole.id.userGroupId ASC, userGroupGroupRole.id.groupId ASC, userGroupGroupRole.id.roleId ASC";
+		" ORDER BY userGroupGroupRole.userGroupGroupRoleId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY UserGroupGroupRole.userGroupId ASC, UserGroupGroupRole.groupId ASC, UserGroupGroupRole.roleId ASC";
+		" ORDER BY UserGroupGroupRole.userGroupGroupRoleId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -121,6 +124,8 @@ public class UserGroupGroupRoleModelImpl
 
 	public static final long USERGROUPID_COLUMN_BITMASK = 4L;
 
+	public static final long USERGROUPGROUPROLEID_COLUMN_BITMASK = 8L;
+
 	/**
 	 * Converts the soap model instance into a normal model instance.
 	 *
@@ -135,10 +140,11 @@ public class UserGroupGroupRoleModelImpl
 		UserGroupGroupRole model = new UserGroupGroupRoleImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setUserGroupGroupRoleId(soapModel.getUserGroupGroupRoleId());
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserGroupId(soapModel.getUserGroupId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setRoleId(soapModel.getRoleId());
-		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -174,25 +180,23 @@ public class UserGroupGroupRoleModelImpl
 	}
 
 	@Override
-	public UserGroupGroupRolePK getPrimaryKey() {
-		return new UserGroupGroupRolePK(_userGroupId, _groupId, _roleId);
+	public long getPrimaryKey() {
+		return _userGroupGroupRoleId;
 	}
 
 	@Override
-	public void setPrimaryKey(UserGroupGroupRolePK primaryKey) {
-		setUserGroupId(primaryKey.userGroupId);
-		setGroupId(primaryKey.groupId);
-		setRoleId(primaryKey.roleId);
+	public void setPrimaryKey(long primaryKey) {
+		setUserGroupGroupRoleId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return new UserGroupGroupRolePK(_userGroupId, _groupId, _roleId);
+		return _userGroupGroupRoleId;
 	}
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey((UserGroupGroupRolePK)primaryKeyObj);
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -309,6 +313,19 @@ public class UserGroupGroupRoleModelImpl
 			(BiConsumer<UserGroupGroupRole, Long>)
 				UserGroupGroupRole::setMvccVersion);
 		attributeGetterFunctions.put(
+			"userGroupGroupRoleId",
+			UserGroupGroupRole::getUserGroupGroupRoleId);
+		attributeSetterBiConsumers.put(
+			"userGroupGroupRoleId",
+			(BiConsumer<UserGroupGroupRole, Long>)
+				UserGroupGroupRole::setUserGroupGroupRoleId);
+		attributeGetterFunctions.put(
+			"companyId", UserGroupGroupRole::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<UserGroupGroupRole, Long>)
+				UserGroupGroupRole::setCompanyId);
+		attributeGetterFunctions.put(
 			"userGroupId", UserGroupGroupRole::getUserGroupId);
 		attributeSetterBiConsumers.put(
 			"userGroupId",
@@ -324,12 +341,6 @@ public class UserGroupGroupRoleModelImpl
 			"roleId",
 			(BiConsumer<UserGroupGroupRole, Long>)
 				UserGroupGroupRole::setRoleId);
-		attributeGetterFunctions.put(
-			"companyId", UserGroupGroupRole::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<UserGroupGroupRole, Long>)
-				UserGroupGroupRole::setCompanyId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -346,6 +357,28 @@ public class UserGroupGroupRoleModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getUserGroupGroupRoleId() {
+		return _userGroupGroupRoleId;
+	}
+
+	@Override
+	public void setUserGroupGroupRoleId(long userGroupGroupRoleId) {
+		_userGroupGroupRoleId = userGroupGroupRoleId;
+	}
+
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@JSON
@@ -417,19 +450,22 @@ public class UserGroupGroupRoleModelImpl
 		return _originalRoleId;
 	}
 
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), UserGroupGroupRole.class.getName(),
+			getPrimaryKey());
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -453,10 +489,12 @@ public class UserGroupGroupRoleModelImpl
 			new UserGroupGroupRoleImpl();
 
 		userGroupGroupRoleImpl.setMvccVersion(getMvccVersion());
+		userGroupGroupRoleImpl.setUserGroupGroupRoleId(
+			getUserGroupGroupRoleId());
+		userGroupGroupRoleImpl.setCompanyId(getCompanyId());
 		userGroupGroupRoleImpl.setUserGroupId(getUserGroupId());
 		userGroupGroupRoleImpl.setGroupId(getGroupId());
 		userGroupGroupRoleImpl.setRoleId(getRoleId());
-		userGroupGroupRoleImpl.setCompanyId(getCompanyId());
 
 		userGroupGroupRoleImpl.resetOriginalValues();
 
@@ -465,9 +503,17 @@ public class UserGroupGroupRoleModelImpl
 
 	@Override
 	public int compareTo(UserGroupGroupRole userGroupGroupRole) {
-		UserGroupGroupRolePK primaryKey = userGroupGroupRole.getPrimaryKey();
+		long primaryKey = userGroupGroupRole.getPrimaryKey();
 
-		return getPrimaryKey().compareTo(primaryKey);
+		if (getPrimaryKey() < primaryKey) {
+			return -1;
+		}
+		else if (getPrimaryKey() > primaryKey) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -482,9 +528,9 @@ public class UserGroupGroupRoleModelImpl
 
 		UserGroupGroupRole userGroupGroupRole = (UserGroupGroupRole)obj;
 
-		UserGroupGroupRolePK primaryKey = userGroupGroupRole.getPrimaryKey();
+		long primaryKey = userGroupGroupRole.getPrimaryKey();
 
-		if (getPrimaryKey().equals(primaryKey)) {
+		if (getPrimaryKey() == primaryKey) {
 			return true;
 		}
 		else {
@@ -494,7 +540,7 @@ public class UserGroupGroupRoleModelImpl
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey().hashCode();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
@@ -534,17 +580,18 @@ public class UserGroupGroupRoleModelImpl
 		UserGroupGroupRoleCacheModel userGroupGroupRoleCacheModel =
 			new UserGroupGroupRoleCacheModel();
 
-		userGroupGroupRoleCacheModel.userGroupGroupRolePK = getPrimaryKey();
-
 		userGroupGroupRoleCacheModel.mvccVersion = getMvccVersion();
+
+		userGroupGroupRoleCacheModel.userGroupGroupRoleId =
+			getUserGroupGroupRoleId();
+
+		userGroupGroupRoleCacheModel.companyId = getCompanyId();
 
 		userGroupGroupRoleCacheModel.userGroupId = getUserGroupId();
 
 		userGroupGroupRoleCacheModel.groupId = getGroupId();
 
 		userGroupGroupRoleCacheModel.roleId = getRoleId();
-
-		userGroupGroupRoleCacheModel.companyId = getCompanyId();
 
 		return userGroupGroupRoleCacheModel;
 	}
@@ -620,6 +667,8 @@ public class UserGroupGroupRoleModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _userGroupGroupRoleId;
+	private long _companyId;
 	private long _userGroupId;
 	private long _originalUserGroupId;
 	private boolean _setOriginalUserGroupId;
@@ -629,7 +678,6 @@ public class UserGroupGroupRoleModelImpl
 	private long _roleId;
 	private long _originalRoleId;
 	private boolean _setOriginalRoleId;
-	private long _companyId;
 	private long _columnBitmask;
 	private UserGroupGroupRole _escapedModel;
 

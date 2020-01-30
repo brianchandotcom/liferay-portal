@@ -17,8 +17,6 @@ package com.liferay.portal.kernel.service.persistence;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupGroupRoleException;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 
-import java.util.Set;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -159,14 +157,14 @@ public interface UserGroupGroupRolePersistence
 	/**
 	 * Returns the user group group roles before and after the current user group group role in the ordered set where userGroupId = &#63;.
 	 *
-	 * @param userGroupGroupRolePK the primary key of the current user group group role
+	 * @param userGroupGroupRoleId the primary key of the current user group group role
 	 * @param userGroupId the user group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user group group role
 	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
 	 */
 	public UserGroupGroupRole[] findByUserGroupId_PrevAndNext(
-			UserGroupGroupRolePK userGroupGroupRolePK, long userGroupId,
+			long userGroupGroupRoleId, long userGroupId,
 			com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole>
 				orderByComparator)
 		throws NoSuchUserGroupGroupRoleException;
@@ -302,14 +300,14 @@ public interface UserGroupGroupRolePersistence
 	/**
 	 * Returns the user group group roles before and after the current user group group role in the ordered set where groupId = &#63;.
 	 *
-	 * @param userGroupGroupRolePK the primary key of the current user group group role
+	 * @param userGroupGroupRoleId the primary key of the current user group group role
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user group group role
 	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
 	 */
 	public UserGroupGroupRole[] findByGroupId_PrevAndNext(
-			UserGroupGroupRolePK userGroupGroupRolePK, long groupId,
+			long userGroupGroupRoleId, long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole>
 				orderByComparator)
 		throws NoSuchUserGroupGroupRoleException;
@@ -445,14 +443,14 @@ public interface UserGroupGroupRolePersistence
 	/**
 	 * Returns the user group group roles before and after the current user group group role in the ordered set where roleId = &#63;.
 	 *
-	 * @param userGroupGroupRolePK the primary key of the current user group group role
+	 * @param userGroupGroupRoleId the primary key of the current user group group role
 	 * @param roleId the role ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user group group role
 	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
 	 */
 	public UserGroupGroupRole[] findByRoleId_PrevAndNext(
-			UserGroupGroupRolePK userGroupGroupRolePK, long roleId,
+			long userGroupGroupRoleId, long roleId,
 			com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole>
 				orderByComparator)
 		throws NoSuchUserGroupGroupRoleException;
@@ -597,7 +595,7 @@ public interface UserGroupGroupRolePersistence
 	/**
 	 * Returns the user group group roles before and after the current user group group role in the ordered set where userGroupId = &#63; and groupId = &#63;.
 	 *
-	 * @param userGroupGroupRolePK the primary key of the current user group group role
+	 * @param userGroupGroupRoleId the primary key of the current user group group role
 	 * @param userGroupId the user group ID
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -605,8 +603,7 @@ public interface UserGroupGroupRolePersistence
 	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
 	 */
 	public UserGroupGroupRole[] findByU_G_PrevAndNext(
-			UserGroupGroupRolePK userGroupGroupRolePK, long userGroupId,
-			long groupId,
+			long userGroupGroupRoleId, long userGroupId, long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole>
 				orderByComparator)
 		throws NoSuchUserGroupGroupRoleException;
@@ -753,7 +750,7 @@ public interface UserGroupGroupRolePersistence
 	/**
 	 * Returns the user group group roles before and after the current user group group role in the ordered set where groupId = &#63; and roleId = &#63;.
 	 *
-	 * @param userGroupGroupRolePK the primary key of the current user group group role
+	 * @param userGroupGroupRoleId the primary key of the current user group group role
 	 * @param groupId the group ID
 	 * @param roleId the role ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -761,8 +758,7 @@ public interface UserGroupGroupRolePersistence
 	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
 	 */
 	public UserGroupGroupRole[] findByG_R_PrevAndNext(
-			UserGroupGroupRolePK userGroupGroupRolePK, long groupId,
-			long roleId,
+			long userGroupGroupRoleId, long groupId, long roleId,
 			com.liferay.portal.kernel.util.OrderByComparator<UserGroupGroupRole>
 				orderByComparator)
 		throws NoSuchUserGroupGroupRoleException;
@@ -785,6 +781,64 @@ public interface UserGroupGroupRolePersistence
 	public int countByG_R(long groupId, long roleId);
 
 	/**
+	 * Returns the user group group role where userGroupId = &#63; and groupId = &#63; and roleId = &#63; or throws a <code>NoSuchUserGroupGroupRoleException</code> if it could not be found.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param groupId the group ID
+	 * @param roleId the role ID
+	 * @return the matching user group group role
+	 * @throws NoSuchUserGroupGroupRoleException if a matching user group group role could not be found
+	 */
+	public UserGroupGroupRole findByU_G_R(
+			long userGroupId, long groupId, long roleId)
+		throws NoSuchUserGroupGroupRoleException;
+
+	/**
+	 * Returns the user group group role where userGroupId = &#63; and groupId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param groupId the group ID
+	 * @param roleId the role ID
+	 * @return the matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	 */
+	public UserGroupGroupRole fetchByU_G_R(
+		long userGroupId, long groupId, long roleId);
+
+	/**
+	 * Returns the user group group role where userGroupId = &#63; and groupId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param groupId the group ID
+	 * @param roleId the role ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching user group group role, or <code>null</code> if a matching user group group role could not be found
+	 */
+	public UserGroupGroupRole fetchByU_G_R(
+		long userGroupId, long groupId, long roleId, boolean useFinderCache);
+
+	/**
+	 * Removes the user group group role where userGroupId = &#63; and groupId = &#63; and roleId = &#63; from the database.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param groupId the group ID
+	 * @param roleId the role ID
+	 * @return the user group group role that was removed
+	 */
+	public UserGroupGroupRole removeByU_G_R(
+			long userGroupId, long groupId, long roleId)
+		throws NoSuchUserGroupGroupRoleException;
+
+	/**
+	 * Returns the number of user group group roles where userGroupId = &#63; and groupId = &#63; and roleId = &#63;.
+	 *
+	 * @param userGroupId the user group ID
+	 * @param groupId the group ID
+	 * @param roleId the role ID
+	 * @return the number of matching user group group roles
+	 */
+	public int countByU_G_R(long userGroupId, long groupId, long roleId);
+
+	/**
 	 * Caches the user group group role in the entity cache if it is enabled.
 	 *
 	 * @param userGroupGroupRole the user group group role
@@ -802,19 +856,19 @@ public interface UserGroupGroupRolePersistence
 	/**
 	 * Creates a new user group group role with the primary key. Does not add the user group group role to the database.
 	 *
-	 * @param userGroupGroupRolePK the primary key for the new user group group role
+	 * @param userGroupGroupRoleId the primary key for the new user group group role
 	 * @return the new user group group role
 	 */
-	public UserGroupGroupRole create(UserGroupGroupRolePK userGroupGroupRolePK);
+	public UserGroupGroupRole create(long userGroupGroupRoleId);
 
 	/**
 	 * Removes the user group group role with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param userGroupGroupRolePK the primary key of the user group group role
+	 * @param userGroupGroupRoleId the primary key of the user group group role
 	 * @return the user group group role that was removed
 	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
 	 */
-	public UserGroupGroupRole remove(UserGroupGroupRolePK userGroupGroupRolePK)
+	public UserGroupGroupRole remove(long userGroupGroupRoleId)
 		throws NoSuchUserGroupGroupRoleException;
 
 	public UserGroupGroupRole updateImpl(UserGroupGroupRole userGroupGroupRole);
@@ -822,22 +876,20 @@ public interface UserGroupGroupRolePersistence
 	/**
 	 * Returns the user group group role with the primary key or throws a <code>NoSuchUserGroupGroupRoleException</code> if it could not be found.
 	 *
-	 * @param userGroupGroupRolePK the primary key of the user group group role
+	 * @param userGroupGroupRoleId the primary key of the user group group role
 	 * @return the user group group role
 	 * @throws NoSuchUserGroupGroupRoleException if a user group group role with the primary key could not be found
 	 */
-	public UserGroupGroupRole findByPrimaryKey(
-			UserGroupGroupRolePK userGroupGroupRolePK)
+	public UserGroupGroupRole findByPrimaryKey(long userGroupGroupRoleId)
 		throws NoSuchUserGroupGroupRoleException;
 
 	/**
 	 * Returns the user group group role with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param userGroupGroupRolePK the primary key of the user group group role
+	 * @param userGroupGroupRoleId the primary key of the user group group role
 	 * @return the user group group role, or <code>null</code> if a user group group role with the primary key could not be found
 	 */
-	public UserGroupGroupRole fetchByPrimaryKey(
-		UserGroupGroupRolePK userGroupGroupRolePK);
+	public UserGroupGroupRole fetchByPrimaryKey(long userGroupGroupRoleId);
 
 	/**
 	 * Returns all the user group group roles.
@@ -906,7 +958,5 @@ public interface UserGroupGroupRolePersistence
 	 * @return the number of user group group roles
 	 */
 	public int countAll();
-
-	public Set<String> getCompoundPKColumnNames();
 
 }

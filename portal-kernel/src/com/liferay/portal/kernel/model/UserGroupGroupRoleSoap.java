@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -33,10 +31,11 @@ public class UserGroupGroupRoleSoap implements Serializable {
 		UserGroupGroupRoleSoap soapModel = new UserGroupGroupRoleSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setUserGroupGroupRoleId(model.getUserGroupGroupRoleId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserGroupId(model.getUserGroupId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setRoleId(model.getRoleId());
-		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -91,14 +90,12 @@ public class UserGroupGroupRoleSoap implements Serializable {
 	public UserGroupGroupRoleSoap() {
 	}
 
-	public UserGroupGroupRolePK getPrimaryKey() {
-		return new UserGroupGroupRolePK(_userGroupId, _groupId, _roleId);
+	public long getPrimaryKey() {
+		return _userGroupGroupRoleId;
 	}
 
-	public void setPrimaryKey(UserGroupGroupRolePK pk) {
-		setUserGroupId(pk.userGroupId);
-		setGroupId(pk.groupId);
-		setRoleId(pk.roleId);
+	public void setPrimaryKey(long pk) {
+		setUserGroupGroupRoleId(pk);
 	}
 
 	public long getMvccVersion() {
@@ -107,6 +104,22 @@ public class UserGroupGroupRoleSoap implements Serializable {
 
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	public long getUserGroupGroupRoleId() {
+		return _userGroupGroupRoleId;
+	}
+
+	public void setUserGroupGroupRoleId(long userGroupGroupRoleId) {
+		_userGroupGroupRoleId = userGroupGroupRoleId;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	public long getUserGroupId() {
@@ -133,18 +146,11 @@ public class UserGroupGroupRoleSoap implements Serializable {
 		_roleId = roleId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	private long _mvccVersion;
+	private long _userGroupGroupRoleId;
+	private long _companyId;
 	private long _userGroupId;
 	private long _groupId;
 	private long _roleId;
-	private long _companyId;
 
 }

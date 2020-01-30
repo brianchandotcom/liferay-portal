@@ -1450,17 +1450,19 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserGroupGroupRole">
 		<field name="mvccVersion" type="long" />
+		<field name="userGroupGroupRoleId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="userGroupId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="roleId" type="long" />
-		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserGroupRole">
 		<field name="mvccVersion" type="long" />
+		<field name="userGroupRoleId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="roleId" type="long" />
-		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserIdMapper">
 		<field name="mvccVersion" type="long" />

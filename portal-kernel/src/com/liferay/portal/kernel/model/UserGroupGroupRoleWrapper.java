@@ -41,10 +41,11 @@ public class UserGroupGroupRoleWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("userGroupGroupRoleId", getUserGroupGroupRoleId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userGroupId", getUserGroupId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("roleId", getRoleId());
-		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -55,6 +56,19 @@ public class UserGroupGroupRoleWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long userGroupGroupRoleId = (Long)attributes.get(
+			"userGroupGroupRoleId");
+
+		if (userGroupGroupRoleId != null) {
+			setUserGroupGroupRoleId(userGroupGroupRoleId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userGroupId = (Long)attributes.get("userGroupId");
@@ -73,12 +87,6 @@ public class UserGroupGroupRoleWrapper
 
 		if (roleId != null) {
 			setRoleId(roleId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 	}
 
@@ -125,9 +133,7 @@ public class UserGroupGroupRoleWrapper
 	 * @return the primary key of this user group group role
 	 */
 	@Override
-	public com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK
-		getPrimaryKey() {
-
+	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
@@ -153,6 +159,16 @@ public class UserGroupGroupRoleWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getUserGroup();
+	}
+
+	/**
+	 * Returns the user group group role ID of this user group group role.
+	 *
+	 * @return the user group group role ID of this user group group role
+	 */
+	@Override
+	public long getUserGroupGroupRoleId() {
+		return model.getUserGroupGroupRoleId();
 	}
 
 	/**
@@ -206,10 +222,7 @@ public class UserGroupGroupRoleWrapper
 	 * @param primaryKey the primary key of this user group group role
 	 */
 	@Override
-	public void setPrimaryKey(
-		com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK
-			primaryKey) {
-
+	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 
@@ -221,6 +234,16 @@ public class UserGroupGroupRoleWrapper
 	@Override
 	public void setRoleId(long roleId) {
 		model.setRoleId(roleId);
+	}
+
+	/**
+	 * Sets the user group group role ID of this user group group role.
+	 *
+	 * @param userGroupGroupRoleId the user group group role ID of this user group group role
+	 */
+	@Override
+	public void setUserGroupGroupRoleId(long userGroupGroupRoleId) {
+		model.setUserGroupGroupRoleId(userGroupGroupRoleId);
 	}
 
 	/**

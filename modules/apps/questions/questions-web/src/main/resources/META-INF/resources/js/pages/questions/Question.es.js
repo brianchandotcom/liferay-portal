@@ -178,7 +178,6 @@ export default ({
 							<Answer
 								answer={answer}
 								answerChange={answerChange}
-								creatorId={question.creator.id}
 								deleteAnswer={deleteAnswer}
 								key={answer.id}
 							/>

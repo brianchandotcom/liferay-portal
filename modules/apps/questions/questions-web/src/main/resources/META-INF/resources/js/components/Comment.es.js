@@ -36,9 +36,14 @@ export default ({comment, commentChange}) => {
 					<strong>{comment.creator.name}</strong>
 				</p>
 				<p>
-					<ClayButton displayType="unstyled" onClick={deleteComment}>
-						{Liferay.Language.get('delete')}
-					</ClayButton>
+					{comment.actions.delete && (
+						<ClayButton
+							displayType="unstyled"
+							onClick={deleteComment}
+						>
+							{Liferay.Language.get('delete')}
+						</ClayButton>
+					)}
 				</p>
 			</div>
 		</div>

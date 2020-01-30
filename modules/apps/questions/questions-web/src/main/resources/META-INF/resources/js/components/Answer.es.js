@@ -16,9 +16,8 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import parser from 'bbcode-to-react';
 import classnames from 'classnames';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
-import {AppContext} from '../AppContext.es';
 import {
 	deleteMessage,
 	markAsAnswerMessageBoardMessage
@@ -27,17 +26,10 @@ import Comments from './Comments.es';
 import Rating from './Rating.es';
 import UserRow from './UserRow.es';
 
-export default ({answer, answerChange, creatorId, deleteAnswer}) => {
-	const context = useContext(AppContext);
-
+export default ({answer, answerChange, deleteAnswer}) => {
 	const [comments, setComments] = useState(answer.messageBoardMessages.items);
 	const [showAsAnswer, setShowAsAnswer] = useState(answer.showAsAnswer);
 	const [showNewComment, setShowNewComment] = useState(false);
-
-	const _canAccept = () =>
-		context.userId === creatorId || context.isOmniAdmin;
-	const _canEdit = () =>
-		context.userId === answer.creator.id || context.isOmniAdmin;
 
 	const _deleteAnswer = () =>
 		deleteMessage(answer).then(() => deleteAnswer(answer));
@@ -101,13 +93,15 @@ export default ({answer, answerChange, creatorId, deleteAnswer}) => {
 						<p>{parser.toReact(answer.articleBody)}</p>
 
 						<ClayButton.Group spaced={true}>
-							<ClayButton
-								displayType="unstyled"
-								onClick={() => setShowNewComment(true)}
-							>
-								{Liferay.Language.get('reply')}
-							</ClayButton>
-							{_canEdit() && (
+							{answer.actions.create && (
+								<ClayButton
+									displayType="unstyled"
+									onClick={() => setShowNewComment(true)}
+								>
+									{Liferay.Language.get('reply')}
+								</ClayButton>
+							)}
+							{answer.actions.delete && (
 								<ClayButton
 									displayType="unstyled"
 									onClick={_deleteAnswer}
@@ -115,7 +109,7 @@ export default ({answer, answerChange, creatorId, deleteAnswer}) => {
 									{Liferay.Language.get('delete')}
 								</ClayButton>
 							)}
-							{_canAccept() && (
+							{answer.actions.replace && (
 								<ClayButton
 									displayType="unstyled"
 									onClick={_answerChange}

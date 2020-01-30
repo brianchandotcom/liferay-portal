@@ -46,6 +46,15 @@ export default props => {
 								/>
 							)}
 						/>
+						<Route
+							path="/questions/creator/:creatorId"
+							render={props => (
+								<Questions
+									{...props}
+									keyword={props.match.params.creatorId}
+								/>
+							)}
+						/>
 						<Route component={Questions} exact path="/questions" />
 						<Route
 							component={NewQuestion}

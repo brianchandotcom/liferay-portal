@@ -298,6 +298,7 @@ export const hasListPermissions = (permission, siteKey) =>
 			}`).then(data => Boolean(data.actions[permission]));
 
 export const getThreads = ({
+	creatorId = '',
 	keyword = '',
 	page = 1,
 	pageSize = 30,
@@ -307,7 +308,9 @@ export const getThreads = ({
 }) => {
 	let filter = '';
 	if (keyword) {
-		filter = `(keywords/any(x:x eq '${keyword}'))`;
+		filter = `keywords/any(x:x eq '${keyword}')`;
+	} else if (creatorId) {
+		filter = `creator/id eq ${creatorId}`;
 	}
 
 	return request(gql`

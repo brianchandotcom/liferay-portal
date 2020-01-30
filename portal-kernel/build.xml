@@ -18,18 +18,6 @@
 
 	<target depends="replace-release-info-tokens" name="compile">
 		<if>
-			<equals arg1="${release.info.uptodate}" arg2="false" />
-			<then>
-				<copy
-					file="build/temp/ReleaseInfo.java.new"
-					overwrite="true"
-					tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-					verbose="true"
-				/>
-			</then>
-		</if>
-
-		<if>
 			<istrue value="${build.portal.artifacts.enabled}" />
 			<then>
 				<condition property="compile.uptodate">
@@ -47,17 +35,12 @@
 
 		<antcall target="build-common-java.compile" />
 
-		<if>
-			<equals arg1="${release.info.uptodate}" arg2="false" />
-			<then>
-				<copy
-					file="build/temp/ReleaseInfo.java.original"
-					overwrite="true"
-					tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-					verbose="true"
-				/>
-			</then>
-		</if>
+		<copy
+			file="build/temp/ReleaseInfo.java.original"
+			overwrite="true"
+			tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+			verbose="true"
+		/>
 	</target>
 
 	<target name="replace-release-info-tokens">
@@ -106,6 +89,13 @@
 			file="build/temp/ReleaseInfo.java.new"
 			overwrite="true"
 			tofile="build/temp/ReleaseInfo.java.old"
+		/>
+
+		<copy
+			file="build/temp/ReleaseInfo.java.new"
+			overwrite="true"
+			tofile="src/com/liferay/portal/kernel/util/ReleaseInfo.java"
+			verbose="true"
 		/>
 	</target>
 </project>

@@ -1061,6 +1061,13 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		</gradle-execute>
 
 		<update-gradle-properties />
+
+		<if>
+			<equals arg1="${build.patcher.replace.release.info.tokens}" arg2="true" />
+			<then>
+				<ant dir="portal-kernel" inheritAll="false" target="replace-release-info-tokens" />
+			</then>
+		</if>
 	</target>
 
 	<target name="setup-profile-portal">
@@ -1072,6 +1079,13 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		</delete>
 
 		<update-gradle-properties />
+
+		<if>
+			<equals arg1="${build.patcher.replace.release.info.tokens}" arg2="true" />
+			<then>
+				<ant dir="portal-kernel" inheritAll="false" target="replace-release-info-tokens" />
+			</then>
+		</if>
 	</target>
 
 	<target name="setup-sdk">

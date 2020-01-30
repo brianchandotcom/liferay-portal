@@ -30,12 +30,28 @@ GroupDisplayContext groupDisplayContext = new GroupDisplayContext(renderRequest,
 
 <portlet:actionURL name="/analytics/edit_synced_sites" var="editSyncedSitesURL" />
 
-<div class="sheet sheet-lg">
-	<h2 class="autofit-row">
+<div class="portlet-analytics-settings sheet sheet-lg">
+	<h2 class="autofit-row mb-4">
 		<span class="autofit-col autofit-col-expand">
-			<liferay-ui:message key="choose-sites-to-sync" />
+			<liferay-ui:message key="synced-sites" />
 		</span>
 	</h2>
+
+	<ul class="list-options">
+		<li class="mb-3">
+			<aui:input label="single-property-data-source" name="optionProperty" type="radio" />
+			<span class="description text-secondary">
+				<liferay-ui:message key="all-sites-are-combined-in-to-a-single-analytics-cloud-property" />
+			</span>
+		</li>
+
+		<li class="mb-3">
+			<aui:input label="multi-property-data-source" name="optionProperty" type="radio" />
+			<span class="description text-secondary">
+				<liferay-ui:message key="each-site-is-its-own-analytics-cloud-property" />
+			</span>
+		</li>
+	</ul>
 
 	<clay:management-toolbar
 		displayContext="<%= new GroupManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, groupDisplayContext) %>"

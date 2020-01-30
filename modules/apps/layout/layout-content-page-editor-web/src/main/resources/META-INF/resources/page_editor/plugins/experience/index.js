@@ -47,8 +47,9 @@ export default class Experience {
 		this.toolbarPluginId = toolbarPlugin.toolbarPluginId;
 
 		if (
-			app.store.availableSegmentsExperiences !== null ||
-			app.config.singleSegmentsExperienceMode === true
+			(app.store.availableSegmentsExperiences !== undefined ||
+				app.store.availableSegmentsExperiences !== null) &&
+			app.config.singleSegmentsExperienceMode !== true
 		) {
 			this.activate = experiencesActivate.bind(this);
 			this.renderToolbarSection = renderExperiencesSection.bind(this);

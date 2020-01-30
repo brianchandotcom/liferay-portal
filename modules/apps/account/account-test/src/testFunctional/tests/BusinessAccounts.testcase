@@ -45,6 +45,11 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Users");
+
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
 
@@ -116,9 +121,13 @@ definition {
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
-		Navigator.gotoNavItem(navItem = "Users");
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Users");
 
-		Accounts.addUsers(
+		AccountUsers.addUsers(
+			accountName = "Account with User",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -236,9 +245,13 @@ definition {
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
-		Navigator.gotoNavItem(navItem = "Users");
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Users");
 
-		Accounts.addUsers(
+		AccountUsers.addUsers(
+			accountName = "Account with User",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -349,13 +362,22 @@ definition {
 			accountDescription = "This is a test to remove account user.",
 			accountName = "Remove Account User");
 
-		Navigator.gotoNavItem(navItem = "Users");
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Users");
 
-		Accounts.addUsers(
+		AccountUsers.addUsers(
+			accountName = "Remove Account User",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Account Users");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 

@@ -26,7 +26,7 @@ import {dateToInternationalHuman} from '../../utils/utils.es';
 
 export default ({
 	match: {
-		params: {keyword}
+		params: {creatorId, keyword}
 	}
 }) => {
 	const context = useContext(AppContext);
@@ -37,10 +37,16 @@ export default ({
 	const [questions, setQuestions] = useState([]);
 
 	useEffect(() => {
-		getThreads({keyword, page, pageSize, siteKey: context.siteKey})
+		getThreads({
+			creatorId,
+			keyword,
+			page,
+			pageSize,
+			siteKey: context.siteKey
+		})
 			.then(data => setQuestions(data))
 			.then(() => setLoading(false));
-	}, [keyword, page, pageSize, context.siteKey]);
+	}, [keyword, page, pageSize, context.siteKey, creatorId]);
 
 	const hasValidAnswer = question =>
 		question.messageBoardMessages.items.filter(
@@ -117,9 +123,16 @@ export default ({
 										userId={String(question.creator.id)}
 									/>
 									<span>
-										<strong>
-											{' ' + question.creator.name}
-										</strong>
+										<Link
+											to={
+												'/questions/creator/' +
+												question.creator.id
+											}
+										>
+											<strong>
+												{' ' + question.creator.name}
+											</strong>
+										</Link>
 									</span>
 									<span>
 										{' - ' +

@@ -102,7 +102,8 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (exception instanceof PortletIdException) {
 				errorMessage =
-					"elements-with-uninstanceable-widget-cannot-be-duplicated";
+					"layouts-that-include-non-instantiable-widgets-cannot-be-" +
+						"duplicated";
 			}
 
 			ThemeDisplay themeDisplay =

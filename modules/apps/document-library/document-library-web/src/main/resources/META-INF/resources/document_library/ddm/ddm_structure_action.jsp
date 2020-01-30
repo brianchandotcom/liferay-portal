@@ -59,14 +59,9 @@ com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.
 	</c:if>
 
 	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) && DDMStructurePermission.containsAddDDMStructurePermission(permissionChecker, scopeGroupId, ddmStructure.getClassNameId()) %>">
-		<portlet:renderURL var="copyURL">
-			<portlet:param name="mvcPath" value="/document_library/ddm/copy_ddm_structure.jsp" />
-			<portlet:param name="ddmStructureId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-		</portlet:renderURL>
-
 		<liferay-ui:icon
 			message="copy"
-			url="<%= copyURL %>"
+			url="<%= String.valueOf(dLViewFileEntryMetadataSetsDisplayContext.getCopyDDMStructurePortletURL(ddmStructure)) %>"
 		/>
 	</c:if>
 

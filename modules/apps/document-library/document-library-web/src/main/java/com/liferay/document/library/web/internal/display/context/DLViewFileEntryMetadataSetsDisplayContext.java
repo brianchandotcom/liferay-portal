@@ -83,6 +83,22 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		return clearResultsURL.toString();
 	}
 
+	public PortletURL getCopyDDMStructurePortletURL(DDMStructure ddmStructure) {
+		RenderURL renderURL = _liferayPortletResponse.createRenderURL();
+
+		renderURL.setParameter(
+			"mvcPath", "/document_library/ddm/copy_ddm_structure.jsp");
+		renderURL.setParameter(
+			"redirect",
+			String.valueOf(
+				PortletURLUtil.getCurrent(
+					_liferayPortletRequest, _liferayPortletResponse)));
+		renderURL.setParameter(
+			"ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
+
+		return renderURL;
+	}
+
 	public DDMDisplay getDDMDisplay() {
 		return _ddmDisplayRegistry.getDDMDisplay(
 			DLPortletKeys.DOCUMENT_LIBRARY);

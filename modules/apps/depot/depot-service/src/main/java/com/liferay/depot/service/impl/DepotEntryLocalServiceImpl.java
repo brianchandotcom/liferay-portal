@@ -71,7 +71,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			serviceContext.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			DepotEntry.class.getName(), depotEntry.getDepotEntryId(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, descriptionMap,
-			GroupConstants.TYPE_DEPOT, false,
+			GroupConstants.TYPE_DEPOT, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, false,
 			true, serviceContext);
 

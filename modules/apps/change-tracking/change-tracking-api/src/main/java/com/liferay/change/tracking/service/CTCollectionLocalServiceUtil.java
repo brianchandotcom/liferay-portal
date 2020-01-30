@@ -96,6 +96,10 @@ public class CTCollectionLocalServiceUtil {
 		getService().deleteCompanyCTCollections(companyId);
 	}
 
+	public static void deleteCTAutoResolutionInfo(long ctAutoResolutionInfoId) {
+		getService().deleteCTAutoResolutionInfo(ctAutoResolutionInfoId);
+	}
+
 	/**
 	 * Deletes the ct collection from the database. Also notifies the appropriate model listeners.
 	 *

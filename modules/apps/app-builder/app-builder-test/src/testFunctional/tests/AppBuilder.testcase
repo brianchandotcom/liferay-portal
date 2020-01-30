@@ -1929,7 +1929,7 @@ definition {
 
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Table View");
 	}
-	
+
 	@description = "View details of an entry in an App"
 	@priority = "5"
 	test ViewEntryDetails {
@@ -1977,7 +1977,7 @@ definition {
 			deployOption = "Product Menu",
 			formViewName = "${myFormViewName}",
 			tableViewName = "${myTableViewName}");
-		
+
 		AppBuilderAdmin.gotoCustomAppCP(
 			panel = "Control Panel",
 			portlet = "${myAppName}");

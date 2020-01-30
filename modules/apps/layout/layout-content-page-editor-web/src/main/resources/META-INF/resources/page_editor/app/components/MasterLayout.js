@@ -45,6 +45,7 @@ export default function MasterPage() {
 			className={classNames('master-page', 'master-page--with-sidebar', {
 				'master-page--with-sidebar-open': sidebarOpen
 			})}
+			id="master-layout"
 		>
 			<MasterLayoutDataItem
 				fragmentEntryLinks={fragmentEntryLinks}

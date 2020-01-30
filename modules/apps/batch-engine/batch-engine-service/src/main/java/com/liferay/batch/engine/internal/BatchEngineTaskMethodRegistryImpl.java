@@ -187,6 +187,7 @@ public class BatchEngineTaskMethodRegistryImpl
 			return itemClass;
 		}
 
+		@SuppressWarnings("unchecked")
 		private Class<?> _getItemClass(ParameterizedType parameterizedType) {
 			Type[] genericTypes = parameterizedType.getActualTypeArguments();
 

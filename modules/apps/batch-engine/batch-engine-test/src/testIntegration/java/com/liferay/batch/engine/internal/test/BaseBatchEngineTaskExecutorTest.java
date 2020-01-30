@@ -71,7 +71,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -169,8 +168,8 @@ public class BaseBatchEngineTaskExecutorTest {
 
 			LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
 				blogPosting.getDatePublished());
-			Optional<Image> imageOptional = Optional.ofNullable(
-				blogPosting.getImage());
+
+			Image image = blogPosting.getImage();
 
 			blogsEntryService.addEntry(
 				blogPosting.getHeadline(), blogPosting.getAlternativeHeadline(),
@@ -178,18 +177,7 @@ public class BaseBatchEngineTaskExecutorTest {
 				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
 				localDateTime.getHour(), localDateTime.getMinute(), true, true,
-				new String[0],
-				imageOptional.map(
-					Image::getCaption
-				).orElse(
-					null
-				),
-				_getImageSelector(
-					imageOptional.map(
-						Image::getImageId
-					).orElse(
-						null
-					)),
+				new String[0], _getCaption(image), _getImageSelector(image),
 				null,
 				ServiceContextUtil.createServiceContext(
 					blogPosting.getTaxonomyCategoryIds(),
@@ -250,8 +238,9 @@ public class BaseBatchEngineTaskExecutorTest {
 
 			LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
 				blogPosting.getDatePublished());
-			Optional<Image> imageOptional = Optional.ofNullable(
-				blogPosting.getImage());
+
+			Image image = blogPosting.getImage();
+
 			BlogsEntry blogsEntry = blogsEntryService.getEntry(
 				blogPosting.getId());
 
@@ -262,18 +251,7 @@ public class BaseBatchEngineTaskExecutorTest {
 				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
 				localDateTime.getHour(), localDateTime.getMinute(), true, true,
-				new String[0],
-				imageOptional.map(
-					Image::getCaption
-				).orElse(
-					null
-				),
-				_getImageSelector(
-					imageOptional.map(
-						Image::getImageId
-					).orElse(
-						null
-					)),
+				new String[0], _getCaption(image), _getImageSelector(image),
 				null,
 				ServiceContextUtil.createServiceContext(
 					blogPosting.getTaxonomyCategoryIds(),
@@ -282,13 +260,22 @@ public class BaseBatchEngineTaskExecutorTest {
 					blogPosting.getViewableByAsString()));
 		}
 
-		private ImageSelector _getImageSelector(Long imageId) {
-			if ((imageId == null) || (imageId == 0)) {
+		private String _getCaption(Image image) {
+			if (image == null) {
+				return null;
+			}
+
+			return image.getCaption();
+		}
+
+		private ImageSelector _getImageSelector(Image image) {
+			if ((image == null) || (image.getImageId() == 0)) {
 				return new ImageSelector();
 			}
 
 			try {
-				FileEntry fileEntry = dlAppService.getFileEntry(imageId);
+				FileEntry fileEntry = dlAppService.getFileEntry(
+					image.getImageId());
 
 				return new ImageSelector(
 					FileUtil.getBytes(fileEntry.getContentStream()),
@@ -297,7 +284,8 @@ public class BaseBatchEngineTaskExecutorTest {
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(
-					"Unable to get file entry " + imageId, exception);
+					"Unable to get file entry " + image.getImageId(),
+					exception);
 			}
 		}
 

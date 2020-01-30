@@ -42,7 +42,7 @@ String processListListViewCss = "process-list";
 
 if (Objects.equals(displayStyle, "list")) {
 	processListListViewCss += " process-list-list-view";
-};
+}
 
 PortletURL renderURL = liferayPortletResponse.createRenderURL();
 

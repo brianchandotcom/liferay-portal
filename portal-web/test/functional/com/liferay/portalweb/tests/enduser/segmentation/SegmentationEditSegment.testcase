@@ -157,8 +157,15 @@ definition {
 
 		Button.clickSave();
 
-		User.tearDownSpecificUser(
-			userScreenName= "usertag");
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deactivateCP(
+			userFirstName= "UserTag");
+		
+		User.deleteCP();
 	}
 
 	@description = "Validate if the user can edit a segment with Organization Tag"
@@ -198,14 +205,14 @@ definition {
 
 		Button.clickSave();
 
-		User.tearDownSpecificUser(
-			userScreenName= "usertag");
-	}
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
 
-	@description = "Delete user"
-	@priority = "5"
-	test DeleteUser {
-		User.tearDownSpecificUser(
-			userScreenName= "Prueba");
+		User.deactivateCP(
+			userFirstName= "OrganizationTag");
+		
+		User.deleteCP();
 	}
 }

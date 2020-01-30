@@ -889,17 +889,6 @@ public class PortletPreferencesFactoryImpl
 		int ownerType = 0;
 		long plid = 0;
 
-		long masterLayoutPlid = layout.getMasterLayoutPlid();
-		boolean hasMasterLayoutPreferences = false;
-
-		if ((masterLayoutPlid > 0) &&
-			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, masterLayoutPlid,
-				portletId) > 0)) {
-
-			hasMasterLayoutPreferences = true;
-		}
-
 		if (modeEditGuest) {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
@@ -918,6 +907,18 @@ public class PortletPreferencesFactoryImpl
 					permissionChecker, Layout.class.getName(),
 					layout.getLayoutId(), ActionKeys.UPDATE);
 			}
+		}
+
+		long masterLayoutPlid = layout.getMasterLayoutPlid();
+
+		boolean hasMasterLayoutPreferences = false;
+
+		if ((masterLayoutPlid > 0) &&
+			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, masterLayoutPlid,
+				portletId) > 0)) {
+
+			hasMasterLayoutPreferences = true;
 		}
 
 		if (hasMasterLayoutPreferences) {

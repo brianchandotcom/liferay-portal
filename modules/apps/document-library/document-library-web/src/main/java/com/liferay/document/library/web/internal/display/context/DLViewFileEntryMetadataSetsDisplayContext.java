@@ -48,6 +48,8 @@ import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.List;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionURL;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderURL;
@@ -102,6 +104,24 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 	public DDMDisplay getDDMDisplay() {
 		return _ddmDisplayRegistry.getDDMDisplay(
 			DLPortletKeys.DOCUMENT_LIBRARY);
+	}
+
+	public PortletURL getDeleteDDMStructurePortletURL(
+		DDMStructure ddmStructure) {
+
+		ActionURL actionURL = _liferayPortletResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/document_library/ddm/delete_ddm_structure");
+
+		actionURL.setParameter("navigation", "file_entry_metadata_sets");
+		actionURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view");
+		actionURL.setParameter(
+			"ddmStructureId", String.valueOf(ddmStructure.getStructureId()));
+
+		return actionURL;
 	}
 
 	public PortletURL getEditDDMStructurePortletURL(DDMStructure ddmStructure) {

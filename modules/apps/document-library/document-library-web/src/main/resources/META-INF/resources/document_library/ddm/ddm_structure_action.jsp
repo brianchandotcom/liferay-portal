@@ -66,12 +66,8 @@ com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteStructure" var="deleteURL">
-			<portlet:param name="ddmStructureId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
-		</portlet:actionURL>
-
 		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
+			url="<%= String.valueOf(dLViewFileEntryMetadataSetsDisplayContext.getDeleteDDMStructurePortletURL(ddmStructure)) %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

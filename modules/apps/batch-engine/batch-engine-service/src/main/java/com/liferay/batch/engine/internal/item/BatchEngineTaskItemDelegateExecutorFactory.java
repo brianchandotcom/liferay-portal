@@ -45,8 +45,7 @@ public class BatchEngineTaskItemDelegateExecutorFactory {
 	}
 
 	public BatchEngineTaskItemDelegateExecutor create(
-			String className, long companyId,
-			Map<String, Serializable> parameters, long userId)
+			String className, Map<String, Serializable> parameters, long userId)
 		throws Exception {
 
 		BatchEngineTaskItemDelegateExecutorCreator

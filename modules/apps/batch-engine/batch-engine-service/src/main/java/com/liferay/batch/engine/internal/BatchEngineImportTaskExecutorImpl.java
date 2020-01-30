@@ -141,7 +141,6 @@ public class BatchEngineImportTaskExecutorImpl
 				batchEngineTaskItemDelegateExecutor =
 					_batchEngineTaskItemDelegateExecutorFactory.create(
 						batchEngineImportTask.getClassName(),
-						batchEngineImportTask.getCompanyId(),
 						batchEngineImportTask.getParameters(),
 						batchEngineImportTask.getUserId())) {
 

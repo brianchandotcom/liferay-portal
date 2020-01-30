@@ -125,7 +125,6 @@ public class BatchEngineExportTaskExecutorImpl
 				batchEngineTaskItemDelegateExecutor =
 					_batchEngineTaskItemDelegateExecutorFactory.create(
 						batchEngineExportTask.getClassName(),
-						batchEngineExportTask.getCompanyId(),
 						batchEngineExportTask.getParameters(),
 						batchEngineExportTask.getUserId());
 			ZipOutputStream zipOutputStream = _getZipOutputStream(

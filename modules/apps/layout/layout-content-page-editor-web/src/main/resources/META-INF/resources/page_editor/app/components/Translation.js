@@ -21,6 +21,8 @@ import {updateLanguageId} from '../actions/index';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {TRANSLATION_STATUS_TYPE} from '../config/constants/translationStatusType';
+import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
+import {useSelector} from '../store/index';
 
 const getEditableValues = fragmentEntryLinks =>
 	Object.values(fragmentEntryLinks)
@@ -112,7 +114,7 @@ const TranslationItem = ({
 					{TRANSLATION_STATUS_LANGUAGE[status]}
 					{TRANSLATION_STATUS_TYPE[status] ===
 						TRANSLATION_STATUS_TYPE.translating &&
-						`${translatedValuesLength}/${editableValuesLength}`}
+						` ${translatedValuesLength}/${editableValuesLength}`}
 				</div>
 			</span>
 		</ClayDropDown.Item>
@@ -124,10 +126,12 @@ export default function Translation({
 	defaultLanguageId,
 	dispatch,
 	fragmentEntryLinks,
-	languageId,
-	segmentsExperienceId
+	languageId
 }) {
 	const [active, setActive] = useState(false);
+	const segmentsExperienceId = useSelector(
+		selectPrefixedSegmentsExperienceId
+	);
 	const editableValues = useMemo(
 		() => getEditableValues(fragmentEntryLinks),
 		[fragmentEntryLinks]
@@ -197,7 +201,7 @@ export default function Translation({
 							);
 							setActive(false);
 						}}
-						translatedValuesLength={languageValues.values.length}
+						translatedValuesLength={language.values.length}
 					/>
 				))}
 			</ClayDropDown.ItemList>

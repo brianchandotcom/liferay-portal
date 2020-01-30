@@ -27,15 +27,28 @@ CTCollection ctCollection = (CTCollection)request.getAttribute(CTWebKeys.CT_COLL
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"), ": ", ctCollection.getName()));
+
+String conflictingChangesDescriptionKey = "the-following-conflicts-need-to-be-resolved-before-publishing";
+
+if (conflictInfoMap.isEmpty()) {
+	conflictingChangesDescriptionKey = "no-conflicts-were-found-ready-to-publish";
+}
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="sheet-lg table-responsive">
 		<table class="table table-autofit table-list">
-			<tr ><td><h2><%= LanguageUtil.get(request, "conflicting-changes") %></h2></td></tr>
-			<tr class="table-divider"><td><%= LanguageUtil.get(request, "automatically-resolved") %></td></tr>
+			<tr>
+				<td>
+					<h2><%= LanguageUtil.get(request, "conflicting-changes") %></h2>
+
+					<h5 class="text-muted"><%= LanguageUtil.get(request, conflictingChangesDescriptionKey) %></h5>
+				</td>
+			</tr>
 
 			<%
+			boolean autoResolved = false;
+
 			for (Map.Entry<Long, List<ConflictInfo>> entry : conflictInfoMap.entrySet()) {
 				for (ConflictInfo conflictInfo : entry.getValue()) {
 					if (!conflictInfo.isResolved()) {
@@ -46,6 +59,15 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 
 					if (ctEntry == null) {
 						continue;
+					}
+
+					if (!autoResolved) {
+						autoResolved = true;
+			%>
+
+						<tr class="table-divider"><td><%= LanguageUtil.get(request, "automatically-resolved") %></td></tr>
+
+			<%
 					}
 			%>
 
@@ -72,10 +94,6 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 										</div>
 									</div>
 
-									<%
-									String viewURL = ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry);
-									%>
-
 									<liferay-portlet:actionURL name="/change_lists/delete_ct_auto_resolution_info" var="dismissURL">
 										<liferay-portlet:param name="ctAutoResolutionInfoId" value="<%= String.valueOf(conflictInfo.getCTAutoResolutionInfoId()) %>" />
 										<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
@@ -88,6 +106,10 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 											</a>
 										</div>
 									</div>
+
+									<%
+									String viewURL = ctDisplayRendererRegistry.getViewURL(liferayPortletRequest, liferayPortletResponse, ctEntry);
+									%>
 
 									<c:if test="<%= Validator.isNotNull(viewURL) %>">
 										<div class="autofit-col">
@@ -106,11 +128,7 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 			<%
 				}
 			}
-			%>
 
-			<tr class="table-divider"><td><%= LanguageUtil.get(request, "needs-manual-resolution") %></td></tr>
-
-			<%
 			boolean unresolved = false;
 
 			for (Map.Entry<Long, List<ConflictInfo>> entry : conflictInfoMap.entrySet()) {
@@ -125,7 +143,14 @@ renderResponse.setTitle(StringBundler.concat(LanguageUtil.get(request, "publish"
 						continue;
 					}
 
-					unresolved = true;
+					if (!unresolved) {
+						unresolved = true;
+			%>
+
+						<tr class="table-divider"><td><%= LanguageUtil.get(request, "needs-manual-resolution") %></td></tr>
+
+			<%
+					}
 			%>
 
 					<tr>

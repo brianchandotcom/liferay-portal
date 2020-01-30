@@ -180,8 +180,9 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		File documentationDir = new File(
 			rootFolderLocation + _DOCUMENTATION_DIR_LOCATION);
+
 		File documentationChecksDir = new File(
-			rootFolderLocation + _DOCUMENTATION_CHECKS_DIR_LOCATION);
+			documentationDir, _DOCUMENTATION_CHECKS_DIR_LOCATION);
 
 		StringBundler sb = new StringBundler();
 
@@ -309,8 +310,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		}
 	}
 
-	private static final String _DOCUMENTATION_CHECKS_DIR_LOCATION =
-		"documentation/checks/";
+	private static final String _DOCUMENTATION_CHECKS_DIR_LOCATION = "checks/";
 
 	private static final String _DOCUMENTATION_DIR_LOCATION = "documentation/";
 

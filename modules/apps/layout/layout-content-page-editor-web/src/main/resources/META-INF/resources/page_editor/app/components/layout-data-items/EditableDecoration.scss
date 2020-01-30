@@ -1,0 +1,23 @@
+.page-editor__editable-decoration {
+	cursor: pointer;
+	pointer-events: none;
+	position: absolute;
+	transition: opacity ease 0.3s;
+
+	&--active,
+	&--hovered {
+		background-color: rgba(11, 95, 255, 0.04);
+	}
+
+	&--hovered {
+		box-shadow: inset 0 0 0 1px rgba(11, 95, 255, 0.4);
+	}
+
+	&--active {
+		box-shadow: inset 0 0 0 1px rgba(11, 95, 255, 0.6);
+	}
+
+	&--highlighted {
+		box-shadow: inset 0 0 0 1px rgba(11, 95, 255, 0.2);
+	}
+}

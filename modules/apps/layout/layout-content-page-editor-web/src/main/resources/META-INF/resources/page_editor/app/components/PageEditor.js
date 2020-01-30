@@ -86,6 +86,11 @@ export default function PageEditor({withinMasterPage = false}) {
 			}
 
 			const item = layoutData.items[activeItemId];
+
+			if (!item) {
+				return;
+			}
+
 			const {itemId, parentId} = item;
 
 			const direction = getDirection(event.keyCode);

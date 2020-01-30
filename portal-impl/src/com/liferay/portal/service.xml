@@ -2823,13 +2823,17 @@
 
 		<!-- PK fields -->
 
-		<column name="userGroupId" primary="true" type="long" />
-		<column name="groupId" primary="true" type="long" />
-		<column name="roleId" primary="true" type="long" />
+		<column name="userGroupGroupRoleId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="userGroupId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="roleId" type="long" />
 
 		<!-- Finder methods -->
 
@@ -2850,6 +2854,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="roleId" />
 		</finder>
+		<finder name="U_G_R" return-type="UserGroupGroupRole" unique="true">
+			<finder-column name="userGroupId" />
+			<finder-column name="groupId" />
+			<finder-column name="roleId" />
+		</finder>
 
 		<!-- References -->
 
@@ -2860,13 +2869,17 @@
 
 		<!-- PK fields -->
 
-		<column name="userId" primary="true" type="long" />
-		<column accessor="true" name="groupId" primary="true" type="long" />
-		<column accessor="true" name="roleId" primary="true" type="long" />
+		<column name="userGroupRoleId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column accessor="true" name="userId" type="long" />
+		<column accessor="true" name="groupId" type="long" />
+		<column accessor="true" name="roleId" type="long" />
 
 		<!-- Finder methods -->
 
@@ -2884,6 +2897,11 @@
 			<finder-column name="groupId" />
 		</finder>
 		<finder name="G_R" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="roleId" />
+		</finder>
+		<finder name="U_G_R" return-type="UserGroupRole" unique="true">
+			<finder-column name="userId" />
 			<finder-column name="groupId" />
 			<finder-column name="roleId" />
 		</finder>

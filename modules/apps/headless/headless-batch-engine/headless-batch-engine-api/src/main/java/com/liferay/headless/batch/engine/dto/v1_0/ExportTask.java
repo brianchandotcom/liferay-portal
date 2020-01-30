@@ -301,34 +301,6 @@ public class ExportTask {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date startTime;
 
-	@Schema(description = "The version of item class.")
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
-	}
-
-	@JsonIgnore
-	public void setVersion(
-		UnsafeSupplier<String, Exception> versionUnsafeSupplier) {
-
-		try {
-			version = versionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The version of item class.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String version;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -449,20 +421,6 @@ public class ExportTask {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(startTime));
-
-			sb.append("\"");
-		}
-
-		if (version != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"version\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(version));
 
 			sb.append("\"");
 		}

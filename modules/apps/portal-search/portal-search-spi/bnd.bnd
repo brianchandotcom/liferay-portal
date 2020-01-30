@@ -13,6 +13,6 @@ Export-Package:\
 	com.liferay.portal.search.spi.model.result.contributor,\
 	com.liferay.portal.search.spi.searcher
 Import-Package:\
-	com.liferay.portal.kernel.search;version="[8.1.0,9.1.0)",\
+	com.liferay.portal.kernel.search;version="[8.1.0,9.2.0)",\
 	\
 	*

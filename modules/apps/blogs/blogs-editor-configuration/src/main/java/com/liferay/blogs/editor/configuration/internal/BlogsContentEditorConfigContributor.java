@@ -14,7 +14,6 @@
 
 package com.liferay.blogs.editor.configuration.internal;
 
-import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelector;
@@ -24,7 +23,6 @@ import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -32,15 +30,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-
-import java.util.Map;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletURL;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Map;
 
 /**
  * @author Roberto Díaz
@@ -86,13 +80,6 @@ public class BlogsContentEditorConfigContributor
 			namespace + name + "selectItem");
 
 		_populateTwitterButton(jsonObject);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_blogsFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
-			BlogsFileUploadsConfiguration.class, properties);
 	}
 
 	protected String getAllowedContentLists() {
@@ -195,8 +182,6 @@ public class BlogsContentEditorConfigContributor
 			return;
 		}
 	}
-
-	private BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
 
 	@Reference
 	private ItemSelector _itemSelector;

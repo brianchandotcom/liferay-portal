@@ -26,9 +26,9 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		}
 	}
 
-	removeUserSiteRole(itemData) {
+	removeUserRole(itemData) {
 		if (confirm(itemData.message)) {
-			submitForm(this.one('#fm'), itemData.removeUserSiteRoleURL);
+			submitForm(this.one('#fm'), itemData.removeUserRoleURL);
 		}
 	}
 
@@ -40,7 +40,7 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 					destroyOnHide: true,
 					modal: true
 				},
-				eventName: this.ns('selectSiteRole'),
+				eventName: this.ns('selectRole'),
 				title: Liferay.Language.get('select-role'),
 				uri: itemData.selectRolesURL
 			},
@@ -53,12 +53,12 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		);
 	}
 
-	selectSiteRole(itemData) {
+	selectRole(itemData) {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
-			eventName: this.ns('selectSiteRole'),
+			eventName: this.ns('selectRole'),
 			title: Liferay.Language.get('assign-roles'),
-			url: itemData.selectSiteRoleURL
+			url: itemData.selectRoleURL
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {
@@ -71,7 +71,7 @@ class UsersManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 					dom.append(fm, item);
 				});
 
-				submitForm(fm, itemData.editUsersSiteRolesURL);
+				submitForm(fm, itemData.editUsersRolesURL);
 			}
 		});
 

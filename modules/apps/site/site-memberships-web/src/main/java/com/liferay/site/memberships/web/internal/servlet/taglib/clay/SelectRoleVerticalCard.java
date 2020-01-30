@@ -32,9 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SelectSiteRoleVerticalCard implements VerticalCard {
+public class SelectRoleVerticalCard implements VerticalCard {
 
-	public SelectSiteRoleVerticalCard(Role role, RenderRequest renderRequest) {
+	public SelectRoleVerticalCard(Role role, RenderRequest renderRequest) {
 		_role = role;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);

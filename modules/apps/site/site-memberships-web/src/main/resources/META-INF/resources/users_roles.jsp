@@ -24,7 +24,7 @@ UserRolesDisplayContext userRolesDisplayContext = new UserRolesDisplayContext(re
 	displayContext="<%= new UserRolesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userRolesDisplayContext) %>"
 />
 
-<aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">
+<aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-roles" name="fm">
 	<liferay-ui:membership-policy-error />
 
 	<liferay-ui:search-container

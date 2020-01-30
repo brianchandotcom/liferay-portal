@@ -2023,6 +2023,11 @@ definition {
 			fieldValue = "Changed");
 
 		AppBuilderAdmin.save();
+
+		DetailsView.validateEntry(entry = "Changed");
+		DetailsView.validateEntry(entry = "Bester");
+
+		DetailsView.deleteEntry(itemName = "Changed");
 	}
 
 }

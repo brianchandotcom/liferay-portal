@@ -913,11 +913,12 @@ public class PortletPreferencesFactoryImpl
 
 		boolean hasMasterLayoutPreferences = false;
 
-		if ((masterLayoutPlid > 0) &&
-			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+		long portletPreferencesCount =
+			PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, masterLayoutPlid,
-				portletId) > 0)) {
+				portletId);
 
+		if ((masterLayoutPlid > 0) && (portletPreferencesCount > 0)) {
 			hasMasterLayoutPreferences = true;
 		}
 

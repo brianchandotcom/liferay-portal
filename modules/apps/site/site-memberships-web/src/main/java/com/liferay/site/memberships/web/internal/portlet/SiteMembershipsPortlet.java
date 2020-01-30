@@ -272,7 +272,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			ArrayUtil.toLongArray(removeRoleIds));
 	}
 
-	public void editUserGroupsSiteRoles(
+	public void editUserGroupsRoles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -288,7 +288,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		}
 	}
 
-	public void editUsersSiteRoles(
+	public void editUsersRoles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -304,7 +304,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		}
 	}
 
-	public void removeUserGroupSiteRole(
+	public void removeUserGroupRole(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -316,7 +316,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 			userIds, group.getGroupId(), roleId);
 	}
 
-	public void removeUserSiteRole(
+	public void removeUserRole(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

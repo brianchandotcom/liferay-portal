@@ -95,24 +95,23 @@ public class UserGroupsManagementToolbarDisplayContext
 
 						add(
 							dropdownItem -> {
-								dropdownItem.putData(
-									"action", "selectSiteRole");
+								dropdownItem.putData("action", "selectRole");
 
-								PortletURL editUserGroupsSiteRolesURL =
+								PortletURL editUserGroupsRolesURL =
 									liferayPortletResponse.createActionURL();
 
-								editUserGroupsSiteRolesURL.setParameter(
+								editUserGroupsRolesURL.setParameter(
 									ActionRequest.ACTION_NAME,
-									"editUserGroupsSiteRoles");
-								editUserGroupsSiteRolesURL.setParameter(
+									"editUserGroupsRoles");
+								editUserGroupsRolesURL.setParameter(
 									"tabs1", "user-groups");
 
 								dropdownItem.putData(
-									"editUserGroupsSiteRolesURL",
-									editUserGroupsSiteRolesURL.toString());
+									"editUserGroupsRolesURL",
+									editUserGroupsRolesURL.toString());
 
 								dropdownItem.putData(
-									"selectSiteRoleURL",
+									"selectRoleURL",
 									_getSelectorURL("/site_roles.jsp"));
 								dropdownItem.setIcon("add-role");
 								dropdownItem.setLabel(
@@ -130,7 +129,7 @@ public class UserGroupsManagementToolbarDisplayContext
 							add(
 								dropdownItem -> {
 									dropdownItem.putData(
-										"action", "removeUserGroupSiteRole");
+										"action", "removeUserGroupRole");
 									dropdownItem.putData(
 										"message",
 										LanguageUtil.format(
@@ -141,17 +140,17 @@ public class UserGroupsManagementToolbarDisplayContext
 											role.getTitle(
 												themeDisplay.getLocale())));
 
-									PortletURL removeUserGroupSiteRoleURL =
+									PortletURL removeUserGroupRoleURL =
 										liferayPortletResponse.
 											createActionURL();
 
-									removeUserGroupSiteRoleURL.setParameter(
+									removeUserGroupRoleURL.setParameter(
 										ActionRequest.ACTION_NAME,
-										"removeUserGroupSiteRole");
+										"removeUserGroupRole");
 
 									dropdownItem.putData(
-										"removeUserGroupSiteRoleURL",
-										removeUserGroupSiteRoleURL.toString());
+										"removeUserGroupRoleURL",
+										removeUserGroupRoleURL.toString());
 
 									dropdownItem.setIcon("remove-role");
 									dropdownItem.setLabel(label);

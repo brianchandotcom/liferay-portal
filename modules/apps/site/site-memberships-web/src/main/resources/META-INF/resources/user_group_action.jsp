@@ -44,9 +44,9 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		%>
 
 		<liferay-ui:icon
-			cssClass="assign-site-roles"
+			cssClass="assign-roles"
 			data="<%= assignData %>"
-			id='<%= row.getRowId() + "assignSiteRoles" %>'
+			id='<%= row.getRowId() + "assignRoles" %>'
 			message="assign-roles"
 			url="javascript:;"
 		/>
@@ -66,9 +66,9 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		%>
 
 		<liferay-ui:icon
-			cssClass="unassign-site-roles"
+			cssClass="unassign-roles"
 			data="<%= unassignData %>"
-			id='<%= row.getRowId() + "unassignSiteRoles" %>'
+			id='<%= row.getRowId() + "unassignRoles" %>'
 			message="unassign-roles"
 			url="javascript:;"
 		/>
@@ -89,12 +89,12 @@ UserGroup userGroup = (UserGroup)row.getObject();
 </liferay-ui:icon-menu>
 
 <aui:script require="metal-dom/src/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
-	var assignSiteRolesLink = document.getElementById(
-		'<portlet:namespace /><%= row.getRowId() %>assignSiteRoles'
+	var assignRolesLink = document.getElementById(
+		'<portlet:namespace /><%= row.getRowId() %>assignRoles'
 	);
 
-	if (assignSiteRolesLink) {
-		assignSiteRolesLink.addEventListener('click', function(event) {
+	if (assignRolesLink) {
+		assignRolesLink.addEventListener('click', function(event) {
 			event.preventDefault();
 
 			var target = event.target;
@@ -136,12 +136,12 @@ UserGroup userGroup = (UserGroup)row.getObject();
 		});
 	}
 
-	var unassignSiteRolesLink = document.getElementById(
-		'<portlet:namespace /><%= row.getRowId() %>unassignSiteRoles'
+	var unassignRolesLink = document.getElementById(
+		'<portlet:namespace /><%= row.getRowId() %>unassignRoles'
 	);
 
-	if (unassignSiteRolesLink) {
-		unassignSiteRolesLink.addEventListener('click', function(event) {
+	if (unassignRolesLink) {
+		unassignRolesLink.addEventListener('click', function(event) {
 			event.preventDefault();
 
 			var target = event.target;

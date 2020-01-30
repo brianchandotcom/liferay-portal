@@ -19,7 +19,6 @@ import com.jayway.jsonpath.JsonPath;
 
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
@@ -60,7 +59,6 @@ import javax.validation.ValidationException;
 public class SPIDataLayoutResource<T> {
 
 	public SPIDataLayoutResource(
-		DDMFormLayoutSerializer ddmFormLayoutSerializer,
 		DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMStructureVersionLocalService ddmStructureVersionLocalService,
@@ -68,7 +66,6 @@ public class SPIDataLayoutResource<T> {
 			deDataDefinitionFieldLinkLocalService,
 		UnsafeFunction<DDMStructureLayout, T, Exception> toDataLayoutFunction) {
 
-		_ddmFormLayoutSerializer = ddmFormLayoutSerializer;
 		_ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
@@ -311,7 +308,6 @@ public class SPIDataLayoutResource<T> {
 		}
 	}
 
-	private final DDMFormLayoutSerializer _ddmFormLayoutSerializer;
 	private final DDMStructureLayoutLocalService
 		_ddmStructureLayoutLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;

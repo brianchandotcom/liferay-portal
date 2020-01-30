@@ -43,11 +43,6 @@ components:
                     example: 2019-27-09'T'08:23:33'Z'
                     format: date-time
                     type: string
-                version:
-                    description:
-                        The version of item class.
-                    example: v1.0
-                    type: string
             type: object
         ImportTask:
             # @review
@@ -97,11 +92,6 @@ components:
                         The start time of import task operation.
                     example: 2019-27-09'T'08:23:33'Z'
                     format: date-time
-                    type: string
-                version:
-                    description:
-                        The version of item class.
-                    example: v1.0
                     type: string
             type: object
 info:

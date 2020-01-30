@@ -51,20 +51,4 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro removeUser {
-		Search.searchCP(searchTerm = "${userFirstName}");
-
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Remove",
-			rowEntry = "${userFirstName}");
-
-		AssertConfirm(value1 = "Are you sure you want to remove this user?");
-
-		Alert.viewSuccessMessage();
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "${emptyMessage}");
-	}
-
 }

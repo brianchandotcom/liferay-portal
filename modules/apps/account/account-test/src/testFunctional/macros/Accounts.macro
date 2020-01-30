@@ -171,6 +171,20 @@ definition {
 			locator1 = "Account#DOMAIN_REMOVE_DOMAIN");
 	}
 
+	macro removeUser {
+		var key_userFirstName = "${userFirstName}";
+
+		Search.searchCP(searchTerm = "${userFirstName}");
+
+		ClickNoError(
+			locator1 = "Icon#REMOVE_USER",
+			value1 = "${userFirstName}");
+
+		AssertConfirm(value1 = "Are you sure you want to remove this user?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro tearDownCP {
 		ProductMenu.gotoPortlet(
 			category = "Accounts",

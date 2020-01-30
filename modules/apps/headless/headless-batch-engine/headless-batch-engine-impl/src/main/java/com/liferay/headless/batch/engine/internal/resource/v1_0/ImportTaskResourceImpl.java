@@ -316,8 +316,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				StringUtil.upperCase(batchEngineTaskContentType),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				_toMap(fieldNameMappingString), batchEngineTaskOperation.name(),
-				ParametersUtil.toParameters(contextUriInfo, _ignoredParameters),
-				ParametersUtil.getVersion(className));
+				ParametersUtil.toParameters(
+					contextUriInfo, _ignoredParameters));
 
 		executorService.submit(
 			() -> _batchEngineImportTaskExecutor.execute(
@@ -341,7 +341,6 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				operation = ImportTask.Operation.valueOf(
 					batchEngineImportTask.getOperation());
 				startTime = batchEngineImportTask.getStartTime();
-				version = batchEngineImportTask.getVersion();
 			}
 		};
 	}

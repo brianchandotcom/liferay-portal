@@ -178,8 +178,8 @@ public class DataLayoutResourceImpl
 
 	private SPIDataLayoutResource _getSPIDataLayoutResource() {
 		return new SPIDataLayoutResource<>(
-			_ddmFormLayoutSerializer, _ddmStructureLayoutLocalService,
-			_ddmStructureLocalService, _ddmStructureVersionLocalService,
+			_ddmStructureLayoutLocalService, _ddmStructureLocalService,
+			_ddmStructureVersionLocalService,
 			_deDataDefinitionFieldLinkLocalService,
 			DataLayoutUtil::toDataLayout);
 	}

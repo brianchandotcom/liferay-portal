@@ -17,6 +17,7 @@ import ClayIcon from '@clayui/icon';
 import parser from 'bbcode-to-react';
 import classnames from 'classnames';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
 import {
@@ -108,12 +109,22 @@ export default ({answer, answerChange, creatorId, deleteAnswer}) => {
 								{Liferay.Language.get('reply')}
 							</ClayButton>
 							{_canEdit() && (
-								<ClayButton
-									displayType="unstyled"
-									onClick={_deleteAnswer}
-								>
-									{Liferay.Language.get('delete')}
-								</ClayButton>
+								<>
+									<ClayButton
+										displayType="unstyled"
+										onClick={_deleteAnswer}
+									>
+										{Liferay.Language.get('delete')}
+									</ClayButton>
+
+									<ClayButton displayType="unstyled">
+										<Link to={`/answers/${answer.id}/edit`}>
+											<span>
+												{Liferay.Language.get('edit')}
+											</span>
+										</Link>
+									</ClayButton>
+								</>
 							)}
 							{_canAccept() && (
 								<ClayButton

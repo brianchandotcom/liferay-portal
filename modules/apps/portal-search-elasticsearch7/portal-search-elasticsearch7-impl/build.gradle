@@ -25,7 +25,7 @@ dependencies {
 	compileInclude group: "commons-io", name: "commons-io", version: "2.6"
 	compileInclude group: "commons-lang", name: "commons-lang", version: "2.6"
 	compileInclude group: "commons-logging", name: "commons-logging", version: "1.2"
-	compileInclude group: "io.netty", name: "netty-all", version: "4.1.11.Final"
+	compileInclude group: "io.netty", name: "netty-all", version: "4.1.36.Final"
 	compileInclude group: "joda-time", name: "joda-time", version: "2.9.5"
 	compileInclude group: "log4j", name: "log4j", version: "1.2.17"
 	compileInclude group: "net.sf.jopt-simple", name: "jopt-simple", version: "5.0.2"

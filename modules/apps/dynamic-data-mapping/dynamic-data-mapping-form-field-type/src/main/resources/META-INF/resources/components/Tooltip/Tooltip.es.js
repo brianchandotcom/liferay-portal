@@ -22,7 +22,7 @@ import {Align} from 'metal-position';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './Tooltip.soy.js';
+import templates from './Tooltip.soy';
 
 const POSITIONS = ['top', 'left', 'right', 'bottom'];
 

@@ -16,7 +16,7 @@
 			"FormRenderer"
 		]
 	},
-	"main": "./",
+	"main": "index.js",
 	"name": "dynamic-data-mapping-form-renderer",
 	"private": true,
 	"scripts": {

@@ -13,9 +13,7 @@
  */
 
 import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-
-const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 const UNIMPLEMENTED_PROPERTIES = [
 	'fieldNamespace',
@@ -88,6 +86,8 @@ export default ({dispatchEvent, settingsContext}, container) => {
 	const handleFormAttached = function() {
 		this.evaluate();
 	};
+
+	const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
 
 	return new Form(
 		{

@@ -24,7 +24,7 @@ import ReactDOM from 'react-dom';
  * inside Soy Templates, the rest ReactComponentAdapter will take care of render.
  * @example
  * // import getConnectedReactComponentAdapter from '/path/ReactComponentAdapter.es';
- * // import templates from './ComponentNameAdapter.soy.js';
+ * // import templates from './ComponentNameAdapter.soy';
  * //
  * // const DatePickerWithState = ({dispatch}) => (
  * // 	<ClayDatePicker {...} />

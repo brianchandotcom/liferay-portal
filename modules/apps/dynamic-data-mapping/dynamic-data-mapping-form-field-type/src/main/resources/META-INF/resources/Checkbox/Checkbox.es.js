@@ -14,13 +14,13 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './CheckboxRegister.soy.js';
+import './CheckboxRegister.soy';
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './Checkbox.soy.js';
+import templates from './Checkbox.soy';
 
 /**
  * Checkbox.

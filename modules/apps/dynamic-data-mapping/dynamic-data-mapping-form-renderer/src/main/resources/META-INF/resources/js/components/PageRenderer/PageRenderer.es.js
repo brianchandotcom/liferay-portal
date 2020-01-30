@@ -12,13 +12,13 @@
  * details.
  */
 
-import './PaginatedPageRenderer.soy.js';
+import './PaginatedPageRenderer.soy';
 
-import './SimplePageRenderer.soy.js';
+import './SimplePageRenderer.soy';
 
-import './TabbedPageRenderer.soy.js';
+import './TabbedPageRenderer.soy';
 
-import './WizardPageRenderer.soy.js';
+import './WizardPageRenderer.soy';
 
 import 'clay-button';
 
@@ -31,7 +31,7 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import * as FormSupport from '../FormRenderer/FormSupport.es';
-import templates from './PageRenderer.soy.js';
+import templates from './PageRenderer.soy';
 
 class PageRenderer extends Component {
 	getPage(page) {

@@ -17,7 +17,7 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import {setValue} from '../../util/i18n.es';
-import templates from './SuccessPage.soy.js';
+import templates from './SuccessPage.soy';
 
 class SuccessPage extends Component {
 	prepareStateForRender(state) {

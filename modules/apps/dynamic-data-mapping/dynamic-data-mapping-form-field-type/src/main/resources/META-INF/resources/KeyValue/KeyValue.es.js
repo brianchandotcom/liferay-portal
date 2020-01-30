@@ -16,14 +16,14 @@ import '../FieldBase/FieldBase.es';
 
 import '../Text/Text.es';
 
-import './KeyValueRegister.soy.js';
+import './KeyValueRegister.soy';
 
-import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './KeyValue.soy.js';
+import templates from './KeyValue.soy';
 
 /**
  * KeyValue.

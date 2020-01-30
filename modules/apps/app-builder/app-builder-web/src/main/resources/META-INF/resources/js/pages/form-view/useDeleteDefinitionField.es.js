@@ -13,7 +13,7 @@
  */
 
 import {DataLayoutVisitor} from 'data-engine-taglib';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {useContext} from 'react';
 
 import FormViewContext from './FormViewContext.es';

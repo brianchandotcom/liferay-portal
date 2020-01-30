@@ -12,28 +12,12 @@
  * details.
  */
 
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+export {default as compose} from './js/util/compose.es';
 
-import templates from './Wizard.soy';
+export {normalizeFieldName} from './js/util/fields.es';
 
-class Wizard extends Component {
-	_handleItemClicked({delegateTarget: {dataset}}) {
-		const {dispatch} = this.context;
-		const {pageIndex} = dataset;
+export {getRepeatedIndex} from './js/util/repeatable.es';
 
-		dispatch('paginationItemClicked', {
-			pageIndex: Number(pageIndex)
-		});
-	}
-}
+export {PagesVisitor, RulesVisitor} from './js/util/visitors.es';
 
-Wizard.STATE = {
-	activePage: Config.number(),
-	pages: Config.array()
-};
-
-Soy.register(Wizard, templates);
-
-export default Wizard;
+export * as FormSupport from './js/components/FormRenderer/FormSupport.es';

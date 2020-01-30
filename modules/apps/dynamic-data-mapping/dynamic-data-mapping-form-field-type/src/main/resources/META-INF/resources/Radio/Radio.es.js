@@ -14,7 +14,7 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './RadioRegister.soy.js';
+import './RadioRegister.soy';
 
 import 'clay-radio';
 import Component from 'metal-component';
@@ -22,7 +22,7 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import {setJSONArrayValue} from '../util/setters.es';
-import templates from './Radio.soy.js';
+import templates from './Radio.soy';
 
 /**
  * Radio.

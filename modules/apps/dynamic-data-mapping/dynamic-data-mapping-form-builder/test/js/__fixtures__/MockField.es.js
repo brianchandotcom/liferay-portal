@@ -12,13 +12,13 @@
  * details.
  */
 
-import './MockFieldRegister.soy.js';
+import './MockFieldRegister.soy';
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import Config from 'metal-state/lib/Config';
 
-import templates from './MockField.soy.js';
+import templates from './MockField.soy';
 
 class MockField extends Component {
 	emitFieldEdited(value, fieldName) {

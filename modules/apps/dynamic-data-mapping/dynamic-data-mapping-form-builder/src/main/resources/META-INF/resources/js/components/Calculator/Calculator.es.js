@@ -19,7 +19,7 @@ import {Config} from 'metal-state';
 
 import Token from '../../expressions/Token.es';
 import Tokenizer from '../../expressions/Tokenizer.es';
-import templates from './Calculator.soy.js';
+import templates from './Calculator.soy';
 
 /**
  * Calculator.

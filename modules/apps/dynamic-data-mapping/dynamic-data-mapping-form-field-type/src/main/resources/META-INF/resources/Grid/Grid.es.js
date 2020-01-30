@@ -14,13 +14,13 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './GridRegister.soy.js';
+import './GridRegister.soy';
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './Grid.soy.js';
+import templates from './Grid.soy';
 
 class Grid extends Component {
 	_handleFieldBlurred(event) {

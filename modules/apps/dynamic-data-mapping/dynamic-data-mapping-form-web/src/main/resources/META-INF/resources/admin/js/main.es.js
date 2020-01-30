@@ -28,8 +28,7 @@ import {
 	isModifyingKey
 } from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
-import compose from 'dynamic-data-mapping-form-renderer/js/util/compose.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {PagesVisitor, compose} from 'dynamic-data-mapping-form-renderer';
 import core from 'metal';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';

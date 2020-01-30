@@ -30,7 +30,7 @@ import {Config} from 'metal-state';
 
 import {maxPageIndex, pageOptions} from '../../util/pageSupport.es';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
-import templates from './RuleEditor.soy.js';
+import templates from './RuleEditor.soy';
 
 const fieldOptionStructure = Config.shapeOf({
 	dataType: Config.string(),

@@ -14,7 +14,7 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './DocumentLibraryRegister.soy.js';
+import './DocumentLibraryRegister.soy';
 
 import {
 	createActionURL,
@@ -25,7 +25,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './DocumentLibrary.soy.js';
+import templates from './DocumentLibrary.soy';
 
 class DocumentLibrary extends Component {
 	prepareStateForRender(state) {

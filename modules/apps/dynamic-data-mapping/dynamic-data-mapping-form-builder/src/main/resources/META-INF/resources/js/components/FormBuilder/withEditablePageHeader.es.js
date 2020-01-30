@@ -12,7 +12,7 @@
  * details.
  */
 
-import './EditablePageHeader.soy.js';
+import './EditablePageHeader.soy';
 
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {EventHandler} from 'metal-events';

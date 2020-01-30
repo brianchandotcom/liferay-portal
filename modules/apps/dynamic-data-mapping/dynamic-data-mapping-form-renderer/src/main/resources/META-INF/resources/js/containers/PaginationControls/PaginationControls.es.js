@@ -15,7 +15,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import templates from './PaginationControls.soy.js';
+import templates from './PaginationControls.soy';
 
 class PaginationControls extends Component {
 	_handleNextClicked() {

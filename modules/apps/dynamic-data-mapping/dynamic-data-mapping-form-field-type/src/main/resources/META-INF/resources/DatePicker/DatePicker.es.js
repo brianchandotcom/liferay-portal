@@ -16,7 +16,7 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './DatePickerRegister.soy.js';
+import './DatePickerRegister.soy';
 
 import 'clay-button';
 
@@ -30,7 +30,7 @@ import moment from 'moment';
 import {createAutoCorrectedDatePipe} from 'text-mask-addons';
 import vanillaTextMask from 'vanilla-text-mask';
 
-import templates from './DatePicker.soy.js';
+import templates from './DatePicker.soy';
 import * as Helpers from './Helpers.es';
 
 /**

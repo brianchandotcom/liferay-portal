@@ -14,14 +14,14 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './SeparatorRegister.soy.js';
+import './SeparatorRegister.soy';
 
 import 'clay-autocomplete';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './Separator.soy.js';
+import templates from './Separator.soy';
 
 class Separator extends Component {}
 

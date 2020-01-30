@@ -14,9 +14,9 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './ColorPickerAdapter.soy.js';
+import './ColorPickerAdapter.soy';
 
-import './ColorPickerRegister.soy.js';
+import './ColorPickerRegister.soy';
 
 import './ReactColorPickerAdapter.es';
 
@@ -24,7 +24,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './ColorPicker.soy.js';
+import templates from './ColorPicker.soy';
 
 class ColorPicker extends Component {
 	dispatchEvent(event, name, value) {

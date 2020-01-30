@@ -14,13 +14,13 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './EditorRegister.soy.js';
+import './EditorRegister.soy';
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './Editor.soy.js';
+import templates from './Editor.soy';
 
 class Editor extends Component {
 	attached() {

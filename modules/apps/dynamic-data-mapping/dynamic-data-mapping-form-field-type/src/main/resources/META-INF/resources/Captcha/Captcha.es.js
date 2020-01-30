@@ -14,13 +14,13 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './CaptchaRegister.soy.js';
+import './CaptchaRegister.soy';
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './Captcha.soy.js';
+import templates from './Captcha.soy';
 
 /**
  * Captcha.

@@ -24,7 +24,7 @@ import {Config} from 'metal-state';
 
 import {maxPageIndex, pageOptions} from '../../util/pageSupport.es';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
-import templates from './RuleList.soy.js';
+import templates from './RuleList.soy';
 
 /**
  * RuleList.

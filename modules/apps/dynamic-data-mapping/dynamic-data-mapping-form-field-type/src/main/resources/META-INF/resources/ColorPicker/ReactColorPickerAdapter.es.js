@@ -16,7 +16,7 @@ import ClayColorPicker from '@clayui/color-picker';
 import React, {useState, useEffect} from 'react';
 
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
-import templates from './ColorPickerAdapter.soy.js';
+import templates from './ColorPickerAdapter.soy';
 
 const DEFAULT_COLORS = [
 	'000000',

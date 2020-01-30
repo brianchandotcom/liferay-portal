@@ -14,7 +14,7 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './NumericRegister.soy.js';
+import './NumericRegister.soy';
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
@@ -22,7 +22,7 @@ import {Config} from 'metal-state';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import vanillaTextMask from 'vanilla-text-mask';
 
-import templates from './Numeric.soy.js';
+import templates from './Numeric.soy';
 
 class Numeric extends Component {
 	applyMask() {

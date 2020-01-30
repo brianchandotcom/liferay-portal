@@ -12,11 +12,11 @@
  * details.
  */
 
-import '../SuccessPage/SuccessPagePaginationItem.soy.js';
+import '../SuccessPage/SuccessPagePaginationItem.soy';
 
-import '../SuccessPage/SuccessPageRenderer.soy.js';
+import '../SuccessPage/SuccessPageRenderer.soy';
 
-import '../SuccessPage/SuccessPageWizardItem.soy.js';
+import '../SuccessPage/SuccessPageWizardItem.soy';
 
 import {ClayActionsDropdown} from 'clay-dropdown';
 import Component from 'metal-jsx';

@@ -35,7 +35,6 @@ const TableWithPagination = ({actions, columns, items, totalCount}) => {
 						activePage={page}
 						deltas={deltas}
 						ellipsisBuffer={3}
-						initialActivePage={page}
 						initialSelectedDelta={{label: pageSize}}
 						onDeltaChange={pageSize =>
 							dispatch({pageSize, type: 'CHANGE_PAGE_SIZE'})

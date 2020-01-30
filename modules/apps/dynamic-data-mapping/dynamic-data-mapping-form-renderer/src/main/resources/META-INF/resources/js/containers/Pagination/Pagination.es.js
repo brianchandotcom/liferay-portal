@@ -15,7 +15,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import templates from './Pagination.soy.js';
+import templates from './Pagination.soy';
 
 class Pagination extends Component {
 	_handleItemClicked({delegateTarget: {dataset}}) {

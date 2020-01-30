@@ -37,7 +37,9 @@ import com.liferay.site.navigation.admin.web.internal.util.SiteNavigationMenuPor
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
+import com.liferay.site.navigation.type.DefaultSiteNavigationMenuItemTypeContext;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
@@ -77,11 +79,21 @@ public class SiteNavigationAdminDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext =
+			new DefaultSiteNavigationMenuItemTypeContext(
+				themeDisplay.getScopeGroup());
+
 		return new DropdownItemList() {
 			{
 				for (SiteNavigationMenuItemType siteNavigationMenuItemType :
 						_siteNavigationMenuItemTypeRegistry.
 							getSiteNavigationMenuItemTypes()) {
+
+					if (!siteNavigationMenuItemType.isAvailable(
+							siteNavigationMenuItemTypeContext)) {
+
+						continue;
+					}
 
 					add(
 						dropdownItem -> {

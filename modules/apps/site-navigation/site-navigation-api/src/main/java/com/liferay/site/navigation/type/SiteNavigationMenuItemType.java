@@ -155,6 +155,12 @@ public interface SiteNavigationMenuItemType {
 		return true;
 	}
 
+	public default boolean isAvailable(
+		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext) {
+
+		return true;
+	}
+
 	public default boolean isBrowsable(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 

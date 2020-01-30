@@ -60,11 +60,11 @@ public class BlogsContentEditorConfigContributor
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("a[*](*); ");
-		sb.append(getAllowedContentText());
+		sb.append(_getAllowedContentText());
 		sb.append(" div[*](*); iframe[*](*); img[*](*){*}; ");
-		sb.append(getAllowedContentLists());
+		sb.append(_getAllowedContentLists());
 		sb.append(" p {text-align}; ");
-		sb.append(getAllowedContentTable());
+		sb.append(_getAllowedContentTable());
 		sb.append(" video[*](*);");
 
 		jsonObject.put("allowedContent", sb.toString());
@@ -75,27 +75,27 @@ public class BlogsContentEditorConfigContributor
 		String name = GetterUtil.getString(
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
 
-		populateFileBrowserURL(
+		_populateFileBrowserURL(
 			jsonObject, themeDisplay, requestBackedPortletURLFactory,
 			namespace + name + "selectItem");
 
 		_populateTwitterButton(jsonObject);
 	}
 
-	protected String getAllowedContentLists() {
+	private String _getAllowedContentLists() {
 		return "li ol ul;";
 	}
 
-	protected String getAllowedContentTable() {
+	private String _getAllowedContentTable() {
 		return "table[border, cellpadding, cellspacing] {width}; tbody td " +
 			"th[scope]; thead tr[scope];";
 	}
 
-	protected String getAllowedContentText() {
+	private String _getAllowedContentText() {
 		return "b blockquote code em h1 h2 h3 h4 h5 h6 hr i pre strong u;";
 	}
 
-	protected void populateFileBrowserURL(
+	private void _populateFileBrowserURL(
 		JSONObject jsonObject, ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String eventName) {

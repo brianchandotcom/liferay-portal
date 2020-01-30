@@ -134,7 +134,10 @@
 		<check name="XMLTagAttributesCheck" />
 	</source-processor>
 	<source-processor name="JavaSourceProcessor">
-		<check name="ArrayCheck" />
+		<check name="ArrayCheck">
+			<category name="Performance" />
+			<description name="Checks if performance can be improved by using different mehods that can be used by collections" />
+		</check>
 		<check name="CopyrightCheck">
 			<property name="copyrightFileName" value="copyright.txt" />
 		</check>
@@ -160,7 +163,10 @@
 		<check name="JavaExceptionCheck">
 			<property name="enabled" value="false" />
 		</check>
-		<check name="JavaForLoopCheck" />
+		<check name="JavaForLoopCheck">
+			<category name="Styling" />
+			<description name="Checks if a Enhanced For Loop can be used instead of a Simple For Loop" />
+		</check>
 		<check name="JavaHibernateSQLCheck" />
 		<check name="JavaImportsCheck" />
 		<check name="JavaIndexableCheck" />
@@ -250,8 +256,14 @@
 		<check name="JavaSwitchCheck" />
 		<check name="JavaSystemEventAnnotationCheck" />
 		<check name="JavaTaglibMethodCheck" />
-		<check name="JavaTestMethodAnnotationsCheck" />
-		<check name="JavaUnsafeCastingCheck" />
+		<check name="JavaTestMethodAnnotationsCheck">
+			<category name="Naming Conventions" />
+			<description name="Checks if methods with test annotations follow the naming conventions" />
+		</check>
+		<check name="JavaUnsafeCastingCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for potential ClassCastException" />
+		</check>
 		<check name="JavaUnusedSourceFormatterChecksCheck" />
 		<check name="JavaUpgradeClassCheck" />
 		<check name="JavaUpgradeConnectionCheck" />
@@ -264,7 +276,11 @@
 		<check name="LanguageKeysCheck" />
 		<check name="LocaleUtilCheck" />
 		<check name="ResourceBundleCheck" />
-		<check name="StringMethodsCheck" />
+		<check name="StringMethodsCheck">
+			<category name="Performance" />
+			<description name="Checks if performance can be improved by using different String operation methods" />
+		</check>
+		
 		<check name="SubstringCheck" />
 
 		<!-- Module Source Checks -->
@@ -316,7 +332,10 @@
 		<check name="JSONPackageJSONDependencyVersionCheck" />
 	</source-processor>
 	<source-processor name="JSPSourceProcessor">
-		<check name="ArrayCheck" />
+		<check name="ArrayCheck">
+			<category name="Performance" />
+			<description name="Checks if performance can be improved by using different mehods that can be used by collections" />
+		</check>
 		<check name="CopyrightCheck">
 			<property name="copyrightFileName" value="copyright.txt" />
 		</check>
@@ -450,7 +469,10 @@
 	</source-processor>
 	<source-processor name="SQLSourceProcessor">
 		<check name="SQLEmptyLinesCheck" />
-		<check name="SQLLongNamesCheck" />
+		<check name="SQLLongNamesCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for table and column names that exceed 30 characters" />
+		</check>
 		<check name="SQLStylingCheck" />
 		<check name="WhitespaceCheck" />
 	</source-processor>

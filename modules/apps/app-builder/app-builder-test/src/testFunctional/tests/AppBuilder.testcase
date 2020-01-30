@@ -2148,12 +2148,12 @@ definition {
 		FormViewBuilder.addFromObjectField(fieldName = "Hobbies");
 
 		FormViewBuilder.validateFormMultipleSelectionField(
-			fieldName = "Hobbies",
-			fieldLabel = "Multiple 1");
+			fieldLabel = "Multiple 1",
+			fieldName = "Hobbies");
 
 		FormViewBuilder.editFieldInObject(
-			fieldName = "Nickname",
-			fieldLabel = "Testing Changed Name");
+			fieldLabel = "Testing Changed Name",
+			fieldName = "Nickname");
 
 		FormViewBuilder.addFieldToObject(fieldName = "Text");
 

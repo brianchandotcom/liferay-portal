@@ -31,10 +31,6 @@ Set<String> syncedOrganizationIds = SetUtil.fromArray(analyticsConfiguration.syn
 Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.syncedUserGroupIds());
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
 <portlet:actionURL name="/analytics/edit_synced_contacts" var="editSyncedContactsURL" />
 
 <div class="portlet-analytics-settings sheet sheet-lg">

@@ -21,7 +21,6 @@
 		<field name="executeStatus" type="String" />
 		<field name="parameters" type="Map" />
 		<field name="startTime" type="Date" />
-		<field name="version" type="String" />
 	</model>
 	<model name="com.liferay.batch.engine.model.BatchEngineImportTask">
 		<field name="mvccVersion" type="long" />
@@ -45,6 +44,5 @@
 		<field name="operation" type="String" />
 		<field name="parameters" type="Map" />
 		<field name="startTime" type="Date" />
-		<field name="version" type="String" />
 	</model>
 </model-hints>

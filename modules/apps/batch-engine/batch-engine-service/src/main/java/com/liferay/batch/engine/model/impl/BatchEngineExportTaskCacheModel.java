@@ -80,7 +80,7 @@ public class BatchEngineExportTaskCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -114,8 +114,6 @@ public class BatchEngineExportTaskCacheModel
 		sb.append(parameters);
 		sb.append(", startTime=");
 		sb.append(startTime);
-		sb.append(", version=");
-		sb.append(version);
 		sb.append("}");
 
 		return sb.toString();
@@ -212,13 +210,6 @@ public class BatchEngineExportTaskCacheModel
 			batchEngineExportTaskImpl.setStartTime(new Date(startTime));
 		}
 
-		if (version == null) {
-			batchEngineExportTaskImpl.setVersion("");
-		}
-		else {
-			batchEngineExportTaskImpl.setVersion(version);
-		}
-
 		batchEngineExportTaskImpl.resetOriginalValues();
 
 		return batchEngineExportTaskImpl;
@@ -247,7 +238,6 @@ public class BatchEngineExportTaskCacheModel
 		executeStatus = objectInput.readUTF();
 		parameters = (Map<String, Serializable>)objectInput.readObject();
 		startTime = objectInput.readLong();
-		version = objectInput.readUTF();
 	}
 
 	@Override
@@ -315,13 +305,6 @@ public class BatchEngineExportTaskCacheModel
 
 		objectOutput.writeObject(parameters);
 		objectOutput.writeLong(startTime);
-
-		if (version == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(version);
-		}
 	}
 
 	public long mvccVersion;
@@ -340,6 +323,5 @@ public class BatchEngineExportTaskCacheModel
 	public String executeStatus;
 	public Map<String, Serializable> parameters;
 	public long startTime;
-	public String version;
 
 }

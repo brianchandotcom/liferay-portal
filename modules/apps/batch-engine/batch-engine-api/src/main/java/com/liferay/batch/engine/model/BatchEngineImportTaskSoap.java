@@ -56,7 +56,6 @@ public class BatchEngineImportTaskSoap implements Serializable {
 		soapModel.setOperation(model.getOperation());
 		soapModel.setParameters(model.getParameters());
 		soapModel.setStartTime(model.getStartTime());
-		soapModel.setVersion(model.getVersion());
 
 		return soapModel;
 	}
@@ -273,14 +272,6 @@ public class BatchEngineImportTaskSoap implements Serializable {
 		_startTime = startTime;
 	}
 
-	public String getVersion() {
-		return _version;
-	}
-
-	public void setVersion(String version) {
-		_version = version;
-	}
-
 	private long _mvccVersion;
 	private String _uuid;
 	private long _batchEngineImportTaskId;
@@ -300,6 +291,5 @@ public class BatchEngineImportTaskSoap implements Serializable {
 	private String _operation;
 	private Map<String, Serializable> _parameters;
 	private Date _startTime;
-	private String _version;
 
 }

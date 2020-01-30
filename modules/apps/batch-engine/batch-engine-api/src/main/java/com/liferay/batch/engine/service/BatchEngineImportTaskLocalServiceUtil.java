@@ -58,13 +58,12 @@ public class BatchEngineImportTaskLocalServiceUtil {
 			String className, byte[] content, String contentType,
 			String executeStatus,
 			java.util.Map<String, String> fieldNameMappingMap, String operation,
-			java.util.Map<String, java.io.Serializable> parameters,
-			String version) {
+			java.util.Map<String, java.io.Serializable> parameters) {
 
 		return getService().addBatchEngineImportTask(
 			companyId, userId, batchSize, callbackURL, className, content,
 			contentType, executeStatus, fieldNameMappingMap, operation,
-			parameters, version);
+			parameters);
 	}
 
 	/**

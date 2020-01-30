@@ -54,7 +54,6 @@ public class BatchEngineExportTaskSoap implements Serializable {
 		soapModel.setExecuteStatus(model.getExecuteStatus());
 		soapModel.setParameters(model.getParameters());
 		soapModel.setStartTime(model.getStartTime());
-		soapModel.setVersion(model.getVersion());
 
 		return soapModel;
 	}
@@ -253,14 +252,6 @@ public class BatchEngineExportTaskSoap implements Serializable {
 		_startTime = startTime;
 	}
 
-	public String getVersion() {
-		return _version;
-	}
-
-	public void setVersion(String version) {
-		_version = version;
-	}
-
 	private long _mvccVersion;
 	private String _uuid;
 	private long _batchEngineExportTaskId;
@@ -278,6 +269,5 @@ public class BatchEngineExportTaskSoap implements Serializable {
 	private String _executeStatus;
 	private Map<String, Serializable> _parameters;
 	private Date _startTime;
-	private String _version;
 
 }

@@ -68,7 +68,6 @@ public class BatchEngineImportTaskWrapper
 		attributes.put("operation", getOperation());
 		attributes.put("parameters", getParameters());
 		attributes.put("startTime", getStartTime());
-		attributes.put("version", getVersion());
 
 		return attributes;
 	}
@@ -190,12 +189,6 @@ public class BatchEngineImportTaskWrapper
 
 		if (startTime != null) {
 			setStartTime(startTime);
-		}
-
-		String version = (String)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
 		}
 	}
 
@@ -407,16 +400,6 @@ public class BatchEngineImportTaskWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
-	}
-
-	/**
-	 * Returns the version of this batch engine import task.
-	 *
-	 * @return the version of this batch engine import task
-	 */
-	@Override
-	public String getVersion() {
-		return model.getVersion();
 	}
 
 	@Override
@@ -634,16 +617,6 @@ public class BatchEngineImportTaskWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
-	}
-
-	/**
-	 * Sets the version of this batch engine import task.
-	 *
-	 * @param version the version of this batch engine import task
-	 */
-	@Override
-	public void setVersion(String version) {
-		model.setVersion(version);
 	}
 
 	@Override

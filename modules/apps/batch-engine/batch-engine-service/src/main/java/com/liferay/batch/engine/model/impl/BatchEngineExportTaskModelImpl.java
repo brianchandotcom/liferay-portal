@@ -81,7 +81,7 @@ public class BatchEngineExportTaskModelImpl
 		{"contentType", Types.VARCHAR}, {"endTime", Types.TIMESTAMP},
 		{"errorMessage", Types.VARCHAR}, {"fieldNames", Types.VARCHAR},
 		{"executeStatus", Types.VARCHAR}, {"parameters", Types.CLOB},
-		{"startTime", Types.TIMESTAMP}, {"version", Types.VARCHAR}
+		{"startTime", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -105,11 +105,10 @@ public class BatchEngineExportTaskModelImpl
 		TABLE_COLUMNS_MAP.put("executeStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("parameters", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("startTime", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchEngineExportTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineExportTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,callbackURL VARCHAR(75) null,className VARCHAR(75) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage VARCHAR(1000) null,fieldNames VARCHAR(75) null,executeStatus VARCHAR(75) null,parameters TEXT null,startTime DATE null,version VARCHAR(75) null)";
+		"create table BatchEngineExportTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineExportTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,callbackURL VARCHAR(75) null,className VARCHAR(75) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage VARCHAR(1000) null,fieldNames VARCHAR(75) null,executeStatus VARCHAR(75) null,parameters TEXT null,startTime DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table BatchEngineExportTask";
@@ -376,12 +375,6 @@ public class BatchEngineExportTaskModelImpl
 			"startTime",
 			(BiConsumer<BatchEngineExportTask, Date>)
 				BatchEngineExportTask::setStartTime);
-		attributeGetterFunctions.put(
-			"version", BatchEngineExportTask::getVersion);
-		attributeSetterBiConsumers.put(
-			"version",
-			(BiConsumer<BatchEngineExportTask, String>)
-				BatchEngineExportTask::setVersion);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -671,21 +664,6 @@ public class BatchEngineExportTaskModelImpl
 	}
 
 	@Override
-	public String getVersion() {
-		if (_version == null) {
-			return "";
-		}
-		else {
-			return _version;
-		}
-	}
-
-	@Override
-	public void setVersion(String version) {
-		_version = version;
-	}
-
-	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(BatchEngineExportTask.class.getName()));
@@ -746,7 +724,6 @@ public class BatchEngineExportTaskModelImpl
 		batchEngineExportTaskImpl.setExecuteStatus(getExecuteStatus());
 		batchEngineExportTaskImpl.setParameters(getParameters());
 		batchEngineExportTaskImpl.setStartTime(getStartTime());
-		batchEngineExportTaskImpl.setVersion(getVersion());
 
 		batchEngineExportTaskImpl.resetOriginalValues();
 
@@ -937,20 +914,12 @@ public class BatchEngineExportTaskModelImpl
 			batchEngineExportTaskCacheModel.startTime = Long.MIN_VALUE;
 		}
 
-		batchEngineExportTaskCacheModel.version = getVersion();
-
-		String version = batchEngineExportTaskCacheModel.version;
-
-		if ((version != null) && (version.length() == 0)) {
-			batchEngineExportTaskCacheModel.version = null;
-		}
-
 		return batchEngineExportTaskCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -984,8 +953,6 @@ public class BatchEngineExportTaskModelImpl
 		sb.append(getParameters());
 		sb.append(", startTime=");
 		sb.append(getStartTime());
-		sb.append(", version=");
-		sb.append(getVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -993,7 +960,7 @@ public class BatchEngineExportTaskModelImpl
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.batch.engine.model.BatchEngineExportTask");
@@ -1063,10 +1030,6 @@ public class BatchEngineExportTaskModelImpl
 			"<column><column-name>startTime</column-name><column-value><![CDATA[");
 		sb.append(getStartTime());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>version</column-name><column-value><![CDATA[");
-		sb.append(getVersion());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1105,7 +1068,6 @@ public class BatchEngineExportTaskModelImpl
 	private String _originalExecuteStatus;
 	private Map<String, Serializable> _parameters;
 	private Date _startTime;
-	private String _version;
 	private long _columnBitmask;
 	private BatchEngineExportTask _escapedModel;
 

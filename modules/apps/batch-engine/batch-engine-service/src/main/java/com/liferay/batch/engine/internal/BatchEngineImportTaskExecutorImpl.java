@@ -19,8 +19,8 @@ import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
-import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegate;
-import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegateFactory;
+import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
+import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorFactory;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReader;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReaderFactory;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReaderUtil;
@@ -30,7 +30,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -101,23 +100,26 @@ public class BatchEngineImportTaskExecutorImpl
 					batchEngineTaskConfiguration.csvFileColumnDelimiter(),
 					StringPool.COMMA));
 
-		_batchEngineTaskItemResourceDelegateFactory =
-			new BatchEngineTaskItemResourceDelegateFactory(
-				_batchEngineTaskMethodRegistry, _companyLocalService, null,
-				null, null, _userLocalService);
+		_batchEngineTaskItemDelegateExecutorFactory =
+			new BatchEngineTaskItemDelegateExecutorFactory(
+				_batchEngineTaskMethodRegistry, null, null, null,
+				_userLocalService);
 	}
 
 	private void _commitItems(
 			BatchEngineImportTask batchEngineImportTask,
-			BatchEngineTaskItemResourceDelegate
-				batchEngineTaskItemResourceDelegate,
+			BatchEngineTaskItemDelegateExecutor
+				batchEngineTaskItemDelegateExecutor,
 			List<Object> items)
 		throws Throwable {
 
 		TransactionInvokerUtil.invoke(
 			_transactionConfig,
 			() -> {
-				batchEngineTaskItemResourceDelegate.addItems(items);
+				batchEngineTaskItemDelegateExecutor.saveItems(
+					BatchEngineTaskOperation.valueOf(
+						batchEngineImportTask.getOperation()),
+					items);
 
 				_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
 					batchEngineImportTask);
@@ -135,16 +137,13 @@ public class BatchEngineImportTaskExecutorImpl
 						batchEngineImportTask.getContentType()),
 					_batchEngineImportTaskLocalService.openContentInputStream(
 						batchEngineImportTask.getBatchEngineImportTaskId()));
-			BatchEngineTaskItemResourceDelegate
-				batchEngineTaskItemResourceDelegate =
-					_batchEngineTaskItemResourceDelegateFactory.create(
-						BatchEngineTaskOperation.valueOf(
-							batchEngineImportTask.getOperation()),
+			BatchEngineTaskItemDelegateExecutor
+				batchEngineTaskItemDelegateExecutor =
+					_batchEngineTaskItemDelegateExecutorFactory.create(
 						batchEngineImportTask.getClassName(),
 						batchEngineImportTask.getCompanyId(),
 						batchEngineImportTask.getParameters(),
-						batchEngineImportTask.getUserId(),
-						batchEngineImportTask.getVersion())) {
+						batchEngineImportTask.getUserId())) {
 
 			List<Object> items = new ArrayList<>();
 
@@ -170,7 +169,7 @@ public class BatchEngineImportTaskExecutorImpl
 				if (items.size() == batchEngineImportTask.getBatchSize()) {
 					_commitItems(
 						batchEngineImportTask,
-						batchEngineTaskItemResourceDelegate, items);
+						batchEngineTaskItemDelegateExecutor, items);
 
 					items.clear();
 				}
@@ -178,7 +177,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 			if (!items.isEmpty()) {
 				_commitItems(
-					batchEngineImportTask, batchEngineTaskItemResourceDelegate,
+					batchEngineImportTask, batchEngineTaskItemDelegateExecutor,
 					items);
 			}
 		}
@@ -216,14 +215,11 @@ public class BatchEngineImportTaskExecutorImpl
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
 
-	private BatchEngineTaskItemResourceDelegateFactory
-		_batchEngineTaskItemResourceDelegateFactory;
+	private BatchEngineTaskItemDelegateExecutorFactory
+		_batchEngineTaskItemDelegateExecutorFactory;
 
 	@Reference
 	private BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

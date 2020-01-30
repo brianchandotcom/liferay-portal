@@ -181,8 +181,7 @@ public class BatchEngineAutoDeployListener implements AutoDeployListener {
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				batchEngineImportConfiguration.fieldNameMappingMap,
 				BatchEngineTaskOperation.CREATE.name(),
-				batchEngineImportConfiguration.parameters,
-				batchEngineImportConfiguration.version);
+				batchEngineImportConfiguration.parameters);
 
 		executorService.submit(
 			() -> {

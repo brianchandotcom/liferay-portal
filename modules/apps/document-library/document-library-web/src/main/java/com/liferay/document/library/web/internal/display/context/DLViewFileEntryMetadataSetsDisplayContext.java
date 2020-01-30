@@ -25,10 +25,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,7 +47,6 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderURL;
 
@@ -75,15 +70,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 
 		_dlRequestHelper = new DLRequestHelper(
 			_portal.getHttpServletRequest(liferayPortletRequest));
-	}
-
-	public String getClearResultsURL() throws PortletException {
-		PortletURL clearResultsURL = PortletURLUtil.clone(
-			getPortletURL(), _liferayPortletResponse);
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
 	}
 
 	public PortletURL getCopyDDMStructurePortletURL(DDMStructure ddmStructure) {
@@ -180,35 +166,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		return orderByType;
 	}
 
-	public CreationMenu getSelectStructureCreationMenu()
-		throws PortalException {
-
-		if (!isShowAddStructureButton()) {
-			return null;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_liferayPortletResponse.createRenderURL(),
-							"mvcRenderCommandName",
-							"/document_library/ddm/edit_ddm_structure",
-							"redirect", themeDisplay.getURLCurrent(), "groupId",
-							String.valueOf(_dlRequestHelper.getScopeGroupId()));
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_dlRequestHelper.getRequest(), "add"));
-					});
-			}
-		};
-	}
-
 	public SearchContainer<DDMStructure> getStructureSearch() throws Exception {
 		StructureSearch structureSearch = new StructureSearch(
 			_liferayPortletRequest, getPortletURL());
@@ -243,41 +200,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		return structureSearch;
 	}
 
-	public String getStructureSearchActionURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter(
-			"tabs1",
-			ParamUtil.getString(_liferayPortletRequest, "tabs1", "structures"));
-		portletURL.setParameter(
-			"groupId", String.valueOf(_dlRequestHelper.getScopeGroupId()));
-
-		return portletURL.toString();
-	}
-
-	public int getTotalItems() throws Exception {
-		SearchContainer<?> searchContainer = getStructureSearch();
-
-		return searchContainer.getTotal();
-	}
-
-	public boolean isDisabledManagementBar() throws Exception {
-		if (hasResults() || isSearch()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isShowAddStructureButton() throws PortalException {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
@@ -308,17 +230,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 
 	protected String getKeywords() {
 		return ParamUtil.getString(_liferayPortletRequest, "keywords");
-	}
-
-	protected UnsafeConsumer<DropdownItem, Exception> getOrderByDropdownItem(
-		String orderByCol) {
-
-		return dropdownItem -> {
-			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
-			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
-			dropdownItem.setLabel(
-				LanguageUtil.get(_dlRequestHelper.getRequest(), orderByCol));
-		};
 	}
 
 	protected PortletURL getPortletURL() {
@@ -425,14 +336,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 
 	protected long getStructureClassNameId() {
 		return _portal.getClassNameId(DLFileEntryMetadata.class.getName());
-	}
-
-	protected boolean hasResults() throws Exception {
-		if (getTotalItems() > 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected void setDDMStructureSearchResults(StructureSearch structureSearch)

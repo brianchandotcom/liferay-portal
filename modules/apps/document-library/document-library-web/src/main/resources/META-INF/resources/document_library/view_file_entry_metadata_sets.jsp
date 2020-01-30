@@ -24,13 +24,7 @@ DLViewFileEntryMetadataSetsDisplayContext
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
-	clearResultsURL="<%= dLViewFileEntryMetadataSetsDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= dLViewFileEntryMetadataSetsDisplayContext.getSelectStructureCreationMenu() %>"
-	disabled="<%= dLViewFileEntryMetadataSetsDisplayContext.isDisabledManagementBar() %>"
-	itemsTotal="<%= dLViewFileEntryMetadataSetsDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= dLViewFileEntryMetadataSetsDisplayContext.getStructureSearchActionURL() %>"
-	searchFormName="fm"
-	selectable="<%= false %>"
+	displayContext="<%= new DLViewFileEntryMetadataSetsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dLViewFileEntryMetadataSetsDisplayContext) %>"
 />
 
 <div class="container-fluid container-fluid-max-xl main-content-body">

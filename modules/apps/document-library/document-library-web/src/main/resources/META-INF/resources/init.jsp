@@ -110,6 +110,7 @@ page import="com.liferay.document.library.web.internal.display.context.DLSelectD
 page import="com.liferay.document.library.web.internal.display.context.DLSelectDDMStructureManagementToolbarDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLSelectRestrictedFileEntryTypesDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewFileEntryMetadataSetsDisplayContext" %><%@
+page import="com.liferay.document.library.web.internal.display.context.DLViewFileEntryMetadataSetsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewFileEntryTypesDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewMoreMenuItemsDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.IGDisplayContextProvider" %><%@

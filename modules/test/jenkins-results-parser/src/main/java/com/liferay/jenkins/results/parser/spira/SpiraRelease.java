@@ -44,16 +44,14 @@ public class SpiraRelease {
 	public String getPath() {
 		String name = getName();
 
-		String parentPath = "";
+		name = name.replace("/", "\\/");
 
-		SpiraRelease parentSpiraRelease = _getParentSpiraRelease();
-
-		if (parentSpiraRelease != null) {
-			parentPath = parentSpiraRelease.getPath();
+		if (_parentSpiraRelease == null) {
+			return "/" + name;
 		}
 
 		return JenkinsResultsParserUtil.combine(
-			parentPath, "/", name.replace("/", "\\/"));
+			_parentSpiraRelease.getPath(), "/", name.replace("/", "\\/"));
 	}
 
 	public JSONObject toJSONObject() {
@@ -182,36 +180,28 @@ public class SpiraRelease {
 		_spiraProject = SpiraProject.getSpiraProjectById(
 			jsonObject.getInt("ProjectId"));
 
+		SpiraRelease parentSpiraRelease = null;
+
 		String indentLevel = getIndentLevel();
 
-		int parentSpiraReleaseCount = (indentLevel.length() / 3) - 1;
-
-		_parentSpiraReleases = new SpiraRelease[parentSpiraReleaseCount];
-
-		for (int i = 1; i <= parentSpiraReleaseCount; i++) {
-			String parentIndentLevel = indentLevel.substring(0, i * 3);
+		if (indentLevel.length() > 3) {
+			String parentIndentLevel = indentLevel.substring(
+				0, indentLevel.length() - 3);
 
 			try {
-				SpiraRelease parentSpiraRelease =
-					_spiraProject.getSpiraReleaseByIndentLevel(
-						parentIndentLevel);
-
-				_parentSpiraReleases[i - 1] = parentSpiraRelease;
+				parentSpiraRelease = _spiraProject.getSpiraReleaseByIndentLevel(
+					parentIndentLevel);
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
 			}
 		}
+
+		_parentSpiraRelease = parentSpiraRelease;
 	}
 
 	protected String getIndentLevel() {
 		return _jsonObject.getString("IndentLevel");
-	}
-
-	protected boolean isParentSpiraRelease(SpiraRelease parentSpiraRelease) {
-		String indentLevel = getIndentLevel();
-
-		return indentLevel.startsWith(parentSpiraRelease.getIndentLevel());
 	}
 
 	protected boolean matches(SearchParameter... searchParameters) {
@@ -232,14 +222,6 @@ public class SpiraRelease {
 		return projectID + "-" + releaseID;
 	}
 
-	private SpiraRelease _getParentSpiraRelease() {
-		if (_parentSpiraReleases.length > 0) {
-			return _parentSpiraReleases[_parentSpiraReleases.length - 1];
-		}
-
-		return null;
-	}
-
 	private static final int _NUMBER_ROWS = 15000;
 
 	private static final int _START_ROW = 1;
@@ -248,7 +230,7 @@ public class SpiraRelease {
 		new HashMap<>();
 
 	private final JSONObject _jsonObject;
-	private final SpiraRelease[] _parentSpiraReleases;
+	private final SpiraRelease _parentSpiraRelease;
 	private final SpiraProject _spiraProject;
 
 }

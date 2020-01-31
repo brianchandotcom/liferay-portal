@@ -31,31 +31,32 @@ public class HypersonicDBTest extends BaseDBTestCase {
 	@Test
 	public void testRewordAlterColumnType() throws IOException {
 		Assert.assertEquals(
-			"alter table DLFolder alter column name varchar(255);\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255);"));
+			"alter table DLFolder alter column userName varchar(75);\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75);"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeNoSemicolon() throws IOException {
 		Assert.assertEquals(
-			"alter table DLFolder alter column name varchar(255);\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255)"));
+			"alter table DLFolder alter column userName varchar(75);\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75)"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeNotNull() throws IOException {
 		Assert.assertEquals(
-			"alter table DLFolder alter column name varchar(255);alter table " +
-				"DLFolder alter column name set not null;\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255) not null;"));
+			"alter table DLFolder alter column userName varchar(75);alter " +
+				"table DLFolder alter column userName set not null;\n",
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) not null;"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeNull() throws IOException {
 		Assert.assertEquals(
-			"alter table DLFolder alter column name varchar(255);alter table " +
-				"DLFolder alter column name set null;\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255) null;"));
+			"alter table DLFolder alter column userName varchar(75);alter " +
+				"table DLFolder alter column userName set null;\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
 	}
 
 	@Test

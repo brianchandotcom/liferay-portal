@@ -43,22 +43,22 @@ public class OracleDBTest extends BaseDBTestCase {
 	@Test
 	public void testRewordAlterColumnType() throws IOException {
 		Assert.assertEquals(
-			"alter table DLFolder modify name VARCHAR2(255 CHAR);\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255);"));
+			"alter table DLFolder modify userName VARCHAR2(75 CHAR);\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75);"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeLowerCase() throws IOException {
 		Assert.assertEquals(
-			"alter table DLFolder modify name VARCHAR2(255 CHAR);\n",
-			buildSQL("alter_column_type DLFolder name varchar(255);"));
+			"alter table DLFolder modify userName VARCHAR2(75 CHAR);\n",
+			buildSQL("alter_column_type DLFolder userName varchar(75);"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeNoSemicolon() throws IOException {
 		Assert.assertEquals(
-			"alter table DLFolder modify name VARCHAR2(255 CHAR);\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255)"));
+			"alter table DLFolder modify userName VARCHAR2(75 CHAR);\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75)"));
 	}
 
 	@Test
@@ -66,8 +66,9 @@ public class OracleDBTest extends BaseDBTestCase {
 		_mockIsNullable(false);
 
 		Assert.assertEquals(
-			"alter table DLFolder modify name VARCHAR2(255 CHAR);\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255) not null;"));
+			"alter table DLFolder modify userName VARCHAR2(75 CHAR);\n",
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) not null;"));
 	}
 
 	@Test
@@ -75,8 +76,10 @@ public class OracleDBTest extends BaseDBTestCase {
 		_mockIsNullable(true);
 
 		Assert.assertEquals(
-			"alter table DLFolder modify name VARCHAR2(255 CHAR) not null;\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255) not null;"));
+			"alter table DLFolder modify userName VARCHAR2(75 CHAR) not " +
+				"null;\n",
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) not null;"));
 	}
 
 	@Test
@@ -84,8 +87,8 @@ public class OracleDBTest extends BaseDBTestCase {
 		_mockIsNullable(false);
 
 		Assert.assertEquals(
-			"alter table DLFolder modify name VARCHAR2(255 CHAR) null;\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255) null;"));
+			"alter table DLFolder modify userName VARCHAR2(75 CHAR) null;\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
 	}
 
 	@Test
@@ -93,8 +96,8 @@ public class OracleDBTest extends BaseDBTestCase {
 		_mockIsNullable(true);
 
 		Assert.assertEquals(
-			"alter table DLFolder modify name VARCHAR2(255 CHAR);\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255) null;"));
+			"alter table DLFolder modify userName VARCHAR2(75 CHAR);\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
 	}
 
 	@Test
@@ -130,7 +133,7 @@ public class OracleDBTest extends BaseDBTestCase {
 		dbInspectorOngoingStubbing.thenReturn(dbInspector);
 
 		PowerMockito.when(
-			dbInspector.isNullable("DLFolder", "name")
+			dbInspector.isNullable("DLFolder", "userName")
 		).thenReturn(
 			nullable
 		);

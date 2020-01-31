@@ -31,29 +31,31 @@ public class SQLServerDBTest extends BaseDBTestCase {
 	@Test
 	public void testRewordAlterColumnType() throws IOException {
 		Assert.assertEquals(
-			"alter table DLFolder alter column name nvarchar(255);\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255);"));
+			"alter table DLFolder alter column userName nvarchar(75);\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75);"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeNoSemicolon() throws IOException {
 		Assert.assertEquals(
-			"alter table DLFolder alter column name nvarchar(255);\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255)"));
+			"alter table DLFolder alter column userName nvarchar(75);\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75)"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeNotNull() throws IOException {
 		Assert.assertEquals(
-			"alter table DLFolder alter column name nvarchar(255) not null;\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255) not null;"));
+			"alter table DLFolder alter column userName nvarchar(75) not " +
+				"null;\n",
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) not null;"));
 	}
 
 	@Test
 	public void testRewordAlterColumnTypeNull() throws IOException {
 		Assert.assertEquals(
-			"alter table DLFolder alter column name nvarchar(255) null;\n",
-			buildSQL("alter_column_type DLFolder name VARCHAR(255) null;"));
+			"alter table DLFolder alter column userName nvarchar(75) null;\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
 	}
 
 	@Test

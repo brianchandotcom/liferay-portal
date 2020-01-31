@@ -18,8 +18,6 @@ import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.portlet.util.ExportUtil;
 import com.liferay.layout.page.template.admin.web.internal.util.PageDefinitionConverterUtil;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -79,15 +77,10 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 			for (long exportLayoutPageTemplateEntryId :
 					exportLayoutPageTemplateEntryIds) {
 
-				LayoutPageTemplateEntry layoutPageTemplateEntryEntry =
-					_layoutPageTemplateEntryService.
-						fetchLayoutPageTemplateEntry(
-							exportLayoutPageTemplateEntryId);
-
 				pageDefinitionsMap.put(
-					layoutPageTemplateEntryEntry.getPlid(),
+					exportLayoutPageTemplateEntryId,
 					PageDefinitionConverterUtil.toPageDefinition(
-						layoutPageTemplateEntryEntry.getPlid()));
+						exportLayoutPageTemplateEntryId));
 			}
 
 			File file = _exportUtil.exportPageDefinitions(pageDefinitionsMap);
@@ -106,8 +99,5 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 
 	@Reference
 	private ExportUtil _exportUtil;
-
-	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 }

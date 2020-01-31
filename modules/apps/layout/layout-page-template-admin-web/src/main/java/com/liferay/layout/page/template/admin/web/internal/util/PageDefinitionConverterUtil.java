@@ -27,12 +27,15 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
  */
 public class PageDefinitionConverterUtil {
 
-	public static PageDefinition toPageDefinition(long plid) {
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+	public static PageDefinition toPageDefinition(
+		long layoutPageTemplateEntryId) {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
-				fetchLayoutPageTemplateEntryByPlid(plid);
+				fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
 
 		return new PageDefinition() {
 			{

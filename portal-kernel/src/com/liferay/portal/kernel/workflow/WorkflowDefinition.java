@@ -27,6 +27,10 @@ import java.util.Map;
  */
 public interface WorkflowDefinition {
 
+	public default long getCompanyId() {
+		return 0;
+	}
+
 	public String getContent();
 
 	public default String getDescription() {
@@ -52,6 +56,10 @@ public interface WorkflowDefinition {
 	}
 
 	public int getVersion();
+
+	public default long getWorkflowDefinitionId() {
+		return 0;
+	}
 
 	public boolean isActive();
 

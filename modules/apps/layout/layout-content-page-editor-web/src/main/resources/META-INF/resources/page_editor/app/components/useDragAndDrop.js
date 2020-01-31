@@ -25,6 +25,15 @@ export const TARGET_POSITION = {
 	TOP: 2
 };
 
+const NESTING_LEVEL = {
+	[LAYOUT_DATA_ITEM_TYPES.column]: 0,
+	[LAYOUT_DATA_ITEM_TYPES.container]: 1,
+	[LAYOUT_DATA_ITEM_TYPES.dropZone]: Infinity,
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: Infinity,
+	[LAYOUT_DATA_ITEM_TYPES.root]: 0,
+	[LAYOUT_DATA_ITEM_TYPES.row]: Infinity
+};
+
 export default function useDragAndDrop({
 	accept,
 	containerRef,
@@ -93,6 +102,7 @@ export default function useDragAndDrop({
 		},
 		hover(_item, _monitor) {
 			if (_item.itemId === item.itemId || rootVoid(item)) {
+				setTargetPosition(null);
 				return;
 			}
 
@@ -131,6 +141,8 @@ export default function useDragAndDrop({
 				})
 			) {
 				setTargetPosition(newTargetPosition);
+			} else {
+				setTargetPosition(null);
 			}
 		}
 	});
@@ -146,6 +158,34 @@ export default function useDragAndDrop({
 		drop,
 		targetPosition
 	};
+}
+
+function getLevel(item, items, siblingOrParent) {
+	const {type} = item;
+
+	let counter = 0;
+
+	const traverse = currentItem => {
+		const node = items[currentItem.parentId];
+
+		if (!node) {
+			return;
+		}
+
+		if (node.type === type) {
+			counter++;
+		}
+
+		if (node.parentId === '') {
+			return;
+		}
+
+		traverse(items[node.parentId]);
+	};
+
+	traverse(siblingOrParent);
+
+	return counter;
 }
 
 function isValidMoveToMiddle(enable, item, dragItem) {
@@ -167,6 +207,14 @@ function isValidMoveToTargetPosition({
 			? siblingOrParent.parentId
 			: siblingOrParent.itemId
 	];
+
+	if (NESTING_LEVEL[item.type] !== Infinity) {
+		if (
+			getLevel(item, items, siblingOrParent) >= NESTING_LEVEL[item.type]
+		) {
+			return false;
+		}
+	}
 
 	if (typeof targetPosition !== 'number' && !rootVoid(siblingOrParent)) {
 		return false;

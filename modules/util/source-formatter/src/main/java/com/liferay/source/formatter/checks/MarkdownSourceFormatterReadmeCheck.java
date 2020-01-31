@@ -60,15 +60,82 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		return _getReadmeContent(absolutePath, _getCheckInfoMap());
 	}
 
+	private Map<String, CheckInfo> _addCheckstyleChecks(
+		Map<String, CheckInfo> checkInfoMap, Element moduleElement,
+		SourceProcessorInfo sourceProcessorInfo) {
+
+		String checkName = moduleElement.attributeValue("name");
+
+		if (!checkName.endsWith("Check")) {
+			for (Element childModuleElement :
+					(List<Element>)moduleElement.elements("module")) {
+
+				checkInfoMap = _addCheckstyleChecks(
+					checkInfoMap, childModuleElement, sourceProcessorInfo);
+			}
+
+			return checkInfoMap;
+		}
+
+		int x = checkName.lastIndexOf(CharPool.PERIOD);
+
+		if (x != -1) {
+			checkName = checkName.substring(x + 1);
+		}
+
+		CheckInfo checkInfo = checkInfoMap.get(checkName);
+
+		if (checkInfo != null) {
+			checkInfo.addSourceProcessorInfo(sourceProcessorInfo);
+
+			checkInfoMap.put(checkName, checkInfo);
+
+			return checkInfoMap;
+		}
+
+		String category = _getPropertyValue(moduleElement, "category");
+
+		if (Validator.isNull(category)) {
+			category = "Miscellaneous";
+		}
+
+		checkInfoMap.put(
+			checkName,
+			new CheckInfo(
+				checkName, category,
+				_getPropertyValue(moduleElement, "description"),
+				sourceProcessorInfo));
+
+		return checkInfoMap;
+	}
+
+	private Map<String, CheckInfo> _addCheckstyleChecks(
+			Map<String, CheckInfo> checkInfoMap,
+			String configurationFileLocation, String sourceProcessorName)
+		throws DocumentException, IOException {
+
+		String checkstyleConfigurationContent = getContent(
+			configurationFileLocation, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		SourceProcessorInfo sourceProcessorInfo = new SourceProcessorInfo(
+			sourceProcessorName);
+
+		Document document = SourceUtil.readXML(checkstyleConfigurationContent);
+
+		return _addCheckstyleChecks(
+			checkInfoMap, document.getRootElement(), sourceProcessorInfo);
+	}
+
 	private Map<String, CheckInfo> _addSourceChecks(
 			Map<String, CheckInfo> checkInfoMap,
 			String configurationFileLocation)
 		throws DocumentException, IOException {
 
-		String sourceChecksContent = getContent(
+		String sourceChecksConfigurationContent = getContent(
 			configurationFileLocation, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
-		Document document = SourceUtil.readXML(sourceChecksContent);
+		Document document = SourceUtil.readXML(
+			sourceChecksConfigurationContent);
 
 		Element rootElement = document.getRootElement();
 
@@ -247,6 +314,12 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		String resourcesDirLocation =
 			"modules/util/source-formatter/src/main/resources/";
 
+		checkInfoMap = _addCheckstyleChecks(
+			checkInfoMap, resourcesDirLocation + "checkstyle.xml",
+			"JavaSourceProcessor");
+		checkInfoMap = _addCheckstyleChecks(
+			checkInfoMap, resourcesDirLocation + "checkstyle-jsp.xml",
+			"JSPSourceProcessor");
 		checkInfoMap = _addSourceChecks(
 			checkInfoMap, resourcesDirLocation + "sourceChecks.xml");
 
@@ -278,6 +351,20 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		}
 
 		return sb.toString();
+	}
+
+	private String _getPropertyValue(
+		Element moduleElement, String propertyName) {
+
+		for (Element propertyElement :
+				(List<Element>)moduleElement.elements("property")) {
+
+			if (propertyName.equals(propertyElement.attributeValue("name"))) {
+				return propertyElement.attributeValue("value");
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getReadmeContent(

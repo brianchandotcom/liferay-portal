@@ -54,6 +54,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Iván Zaera
@@ -406,8 +407,13 @@ public class ItemSelectorImpl implements ItemSelector {
 			_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
 	private ItemSelectorCriterionSerializer _itemSelectionCriterionSerializer;
 
-	@Reference
-	private ItemSelectorViewRendererProvider _itemSelectorViewRendererProvider;
+	@Reference(
+		cardinality = ReferenceCardinality.MANDATORY,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ItemSelectorViewRendererProvider
+		_itemSelectorViewRendererProvider;
 
 	@Reference
 	private Portal _portal;

@@ -116,7 +116,7 @@
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.frontend.taglib</artifactId>
-			<version>5.0.3</version>
+			<version>5.1.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

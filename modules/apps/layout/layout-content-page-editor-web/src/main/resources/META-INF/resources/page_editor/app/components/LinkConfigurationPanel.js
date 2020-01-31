@@ -81,6 +81,22 @@ export default function LinkConfigurationPanel({item}) {
 		isMapped ? SOURCE_TYPES.fromContentField : SOURCE_TYPES.manual
 	);
 
+	const [href, setHref] = useState(editableConfig.href);
+
+	useEffect(() => {
+		updateMappedHrefValue({
+			classNameId: editableConfig.classNameId,
+			classPK: editableConfig.classPK,
+			config,
+			fieldId: editableConfig.fieldId
+		});
+	}, [
+		config,
+		editableConfig.classNameId,
+		editableConfig.classPK,
+		editableConfig.fieldId
+	]);
+
 	const updateRowConfig = newConfig => {
 		const editableValues =
 			fragmentEntryLinks[fragmentEntryLinkId].editableValues;
@@ -95,7 +111,6 @@ export default function LinkConfigurationPanel({item}) {
 				[editableId]: {
 					...editableProcessorValues[editableId],
 					config: {
-						...editableConfig,
 						...newConfig
 					}
 				}
@@ -112,17 +127,21 @@ export default function LinkConfigurationPanel({item}) {
 		);
 	};
 
-	const updateMapping = mappedItem => {
-		InfoItemService.getAssetFieldValue({
-			classNameId: mappedItem.classNameId,
-			classPK: mappedItem.classPK,
-			config,
-			fieldId: mappedItem.fieldId,
-			onNetworkStatus: dispatch
-		}).then(response => {
-			const {fieldValue} = response;
+	const updateMappedHrefValue = ({classNameId, classPK, config, fieldId}) => {
+		if (!classNameId || !classPK || !fieldId) {
+			return;
+		}
 
-			updateRowConfig({href: fieldValue, ...mappedItem});
+		InfoItemService.getAssetFieldValue({
+			classNameId,
+			classPK,
+			config,
+			fieldId,
+			onNetworkStatus: () => {}
+		}).then(response => {
+			const {fieldValue = ''} = response;
+
+			setHref(fieldValue);
 		});
 	};
 
@@ -135,13 +154,8 @@ export default function LinkConfigurationPanel({item}) {
 				<ClaySelectWithOption
 					id="floatingToolbarLinkSourceOption"
 					onChange={event => {
-						updateRowConfig({
-							classNameId: '',
-							classPK: '',
-							fieldId: '',
-							href: '',
-							mappedField: ''
-						});
+						updateRowConfig({});
+						setHref('');
 						setSourceType(event.target.value);
 					}}
 					options={SOURCE_TYPES_OPTIONS}
@@ -154,30 +168,36 @@ export default function LinkConfigurationPanel({item}) {
 				<MappingSelector
 					fieldType={EDITABLE_TYPES.text}
 					mappedItem={editableConfig}
-					onMappingSelect={updateMapping}
-				/>
-			)}
-			{sourceType === SOURCE_TYPES.manual ? (
-				<ManualHrefInput
-					initialHref={editableConfig.href}
-					onChange={href => {
-						updateRowConfig({href});
+					onMappingSelect={mappedItem => {
+						updateRowConfig(mappedItem);
+
+						updateMappedHrefValue({
+							classNameId: mappedItem.classNameId,
+							classPK: mappedItem.classPK,
+							config,
+							fieldId: mappedItem.fieldId
+						});
 					}}
 				/>
-			) : (
-				editableConfig.href && (
-					<ClayForm.Group small>
-						<label htmlFor="floatingToolbarLinkHrefOption">
-							{Liferay.Language.get('url')}
-						</label>
-						<ClayInput
-							id="floatingToolbarLinkHrefOption"
-							readOnly
-							type="text"
-							value={editableConfig.href}
-						/>
-					</ClayForm.Group>
-				)
+			)}
+			{(sourceType === SOURCE_TYPES.manual || href) && (
+				<ClayForm.Group small>
+					<label htmlFor="floatingToolbarLinkHrefOption">
+						{Liferay.Language.get('url')}
+					</label>
+					<ClayInput
+						id="floatingToolbarLinkHrefOption"
+						onBlur={() => {
+							updateRowConfig({href});
+						}}
+						onChange={event => {
+							setHref(event.target.value);
+						}}
+						readOnly={sourceType !== SOURCE_TYPES.manual}
+						type="text"
+						value={href || ''}
+					/>
+				</ClayForm.Group>
 			)}
 
 			<ClayForm.Group small>
@@ -187,7 +207,10 @@ export default function LinkConfigurationPanel({item}) {
 				<ClaySelectWithOption
 					id="floatingToolbarLinkTargetOption"
 					onChange={event => {
-						updateRowConfig({target: event.target.value});
+						updateRowConfig({
+							...editableConfig,
+							target: event.target.value
+						});
 					}}
 					options={TARGET_OPTIONS}
 					type="text"
@@ -195,30 +218,5 @@ export default function LinkConfigurationPanel({item}) {
 				/>
 			</ClayForm.Group>
 		</>
-	);
-}
-
-function ManualHrefInput({initialHref, onChange}) {
-	const [href, setHref] = useState(initialHref);
-
-	useEffect(() => {
-		setHref(initialHref);
-	}, [initialHref]);
-
-	return (
-		<ClayForm.Group small>
-			<label htmlFor="floatingToolbarLinkHrefOption">
-				{Liferay.Language.get('url')}
-			</label>
-			<ClayInput
-				id="floatingToolbarLinkHrefOption"
-				onBlur={() => {
-					onChange(href);
-				}}
-				onChange={event => setHref(event.target.value)}
-				type="text"
-				value={href}
-			/>
-		</ClayForm.Group>
 	);
 }

@@ -250,17 +250,16 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			if (parameterType.isInstance(value)) {
 				return value;
 			}
-			else if (value instanceof File) {
-				byte[] valueBytes = null;
 
+			if (value instanceof File) {
 				try {
-					valueBytes = FileUtil.getBytes((File)value);
+					return FileUtil.getBytes((File)value);
 				}
-				catch (IOException ioe) {
-					_log.error(ioe);
-				}
+				catch (IOException ioException) {
+					_log.error(ioException, ioException);
 
-				return valueBytes;
+					return null;
+				}
 			}
 
 			List<?> list = null;

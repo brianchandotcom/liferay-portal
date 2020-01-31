@@ -20,6 +20,7 @@ import {
 	act,
 	getByLabelText
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../src/main/resources/META-INF/resources/js/utils/constants';
@@ -27,11 +28,24 @@ import LinkConfigurationPanel from '../../../../src/main/resources/META-INF/reso
 import {ConfigContext} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import serviceFetch from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import updateEditableValues from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues';
+
+jest.useFakeTimers();
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
-	() => jest.fn(() => {})
+	() => jest.fn(() => Promise.resolve({fieldValue: 'fieldValue'}))
 );
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues',
+	() => jest.fn()
+);
+
+const getEditableConfig = editableValues => {
+	return editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]['editable-id-0']
+		.config;
+};
 
 function getStateWithConfig(config = {}) {
 	return {
@@ -51,10 +65,13 @@ function getStateWithConfig(config = {}) {
 	};
 }
 
-function renderLinkConfigurationPanel({state = getStateWithConfig()} = {}) {
+function renderLinkConfigurationPanel(
+	{state = getStateWithConfig()} = {},
+	dispatch = () => {}
+) {
 	return render(
 		<ConfigContext.Provider value={{}}>
-			<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
+			<StoreAPIContextProvider dispatch={dispatch} getState={() => state}>
 				<LinkConfigurationPanel
 					item={{editableId: 'editable-id-0', fragmentEntryLinkId: 0}}
 				/>
@@ -69,7 +86,9 @@ function renderLinkConfigurationPanel({state = getStateWithConfig()} = {}) {
 describe('LinkConfigurationPanel', () => {
 	afterEach(() => {
 		cleanup();
-		serviceFetch.mockReset();
+
+		serviceFetch.mockClear();
+		updateEditableValues.mockClear();
 	});
 
 	it('renders manual selection panel', () => {
@@ -142,7 +161,34 @@ describe('LinkConfigurationPanel', () => {
 		expect(getByLabelText(document.body, 'target')).toHaveValue('_blank');
 	});
 
+	it('shows mapped url when is available', async () => {
+		serviceFetch.mockImplementation(() =>
+			Promise.resolve({fieldValue: 'value'})
+		);
+
+		await act(async () => {
+			renderLinkConfigurationPanel({
+				state: getStateWithConfig({
+					classNameId: 1,
+					classPK: 1,
+					fieldId: 'text',
+					target: '_blank'
+				})
+			});
+		});
+
+		expect(getByLabelText(document.body, 'content')).toBeInTheDocument();
+		expect(getByLabelText(document.body, 'url')).toBeInTheDocument();
+		expect(getByLabelText(document.body, 'url')).toHaveValue('value');
+		expect(getByLabelText(document.body, 'target')).toHaveValue('_blank');
+	});
+
 	it('clear the config when changing source type', async () => {
+		let editableConfig;
+		updateEditableValues.mockImplementation(({editableValues}) => {
+			editableConfig = getEditableConfig(editableValues);
+		});
+
 		await act(async () => {
 			renderLinkConfigurationPanel({
 				state: getStateWithConfig({
@@ -160,7 +206,30 @@ describe('LinkConfigurationPanel', () => {
 			target: {value: 'manual'}
 		});
 
+		expect(editableConfig).toEqual({});
+
 		expect(getByLabelText(document.body, 'url')).toHaveValue('');
 		expect(getByLabelText(document.body, 'target')).toHaveValue('_blank');
+	});
+
+	it('calls dispatch with the href value typed in manual mode', async () => {
+		let editableConfig;
+		updateEditableValues.mockImplementation(({editableValues}) => {
+			editableConfig = getEditableConfig(editableValues);
+		});
+
+		const {getByLabelText} = renderLinkConfigurationPanel({
+			state: getStateWithConfig({})
+		});
+
+		const hrefInput = getByLabelText('url');
+
+		userEvent.type(hrefInput, 'http://google.com');
+
+		jest.runAllTimers();
+
+		expect(updateEditableValues).toHaveBeenCalled();
+
+		expect(editableConfig).toEqual({href: 'http://google.com'});
 	});
 });

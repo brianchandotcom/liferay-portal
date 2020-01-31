@@ -63,15 +63,13 @@ public class ExportUtil {
 			for (Map.Entry<Long, PageDefinition> entry :
 					pageDefinitionsMap.entrySet()) {
 
-				PageDefinition pageDefinition = entry.getValue();
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					_layoutPageTemplateEntryLocalService.
 						fetchLayoutPageTemplateEntryByPlid(entry.getKey());
 
 				_populateZipWriter(
-					pageDefinition,
-					layoutPageTemplateEntry.getPreviewFileEntryId(), zipWriter,
-					pageDefinition.getCollectionName());
+					entry.getValue(),
+					layoutPageTemplateEntry.getPreviewFileEntryId(), zipWriter);
 			}
 
 			zipWriter.finish();
@@ -103,10 +101,12 @@ public class ExportUtil {
 
 	private void _populateZipWriter(
 			PageDefinition pageDefinition, long previewFileEntryId,
-			ZipWriter zipWriter, String path)
+			ZipWriter zipWriter)
 		throws Exception {
 
-		path = path + StringPool.SLASH + pageDefinition.getName();
+		String path =
+			pageDefinition.getCollectionName() + StringPool.SLASH +
+				pageDefinition.getName();
 
 		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
 

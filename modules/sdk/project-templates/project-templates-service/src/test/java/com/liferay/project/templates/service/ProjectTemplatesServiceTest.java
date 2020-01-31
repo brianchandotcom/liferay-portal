@@ -184,9 +184,9 @@ public class ProjectTemplatesServiceTest
 
 	@Test
 	public void testBuildTemplateServiceInWorkspace() throws Exception {
-		File workspaceDir = buildWorkspace(temporaryFolder);
+		File workspaceDir = buildWorkspace(temporaryFolder, "7.3.0");
 
-		enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
+		enableTargetPlatformInWorkspace(workspaceDir, "7.3.0");
 
 		File modulesDir = new File(workspaceDir, "modules");
 

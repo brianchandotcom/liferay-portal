@@ -205,7 +205,7 @@ public class ProjectTemplatesThemeContributorTest
 			temporaryFolder, _gradleDistribution, "theme-contributor",
 			"my-contributor", "build/libs/my.contributor-1.0.0.jar",
 			"--contributor-type", "my-contributor",
-			"--dependency-management-enabled", "--liferay-version", "7.2.1");
+			"--dependency-management-enabled", "--liferay-version", "7.3.0");
 	}
 
 	@Rule

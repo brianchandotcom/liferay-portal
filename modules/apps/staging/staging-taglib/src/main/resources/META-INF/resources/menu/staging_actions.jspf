@@ -150,19 +150,6 @@
 							</span>
 						</button>
 
-<<<<<<< HEAD
-						<c:if test="<%= branchingEnabled %>">
-							<button aria-expanded="false" class="btn btn-primary btn-sm d-block d-sm-none dropdown-toggle" data-toggle="liferay-dropdown" type="button">
-								<aui:icon image="angle-down" markupView="lexicon" />
-
-								<span class="sr-only">
-									<liferay-ui:message key="toggle-dropdown" />
-								</span>
-							</button>
-
-							<ul class="dropdown-menu" role="menu">
-								<c:if test="<%= !layoutRevision.isIncomplete() %>">
-=======
 						<ul class="dropdown-menu" role="menu">
 							<c:if test="<%= !layoutRevision.isIncomplete() %>">
 								<li>
@@ -174,7 +161,7 @@
 
 							<c:if test="<%= !hasWorkflowTask %>">
 								<c:if test="<%= !layoutRevision.isMajor() && (layoutRevision.getParentLayoutRevisionId() != LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID) %>">
->>>>>>> LPS-107487 Fix staging bar styles
+
 									<li>
 										<a class="dropdown-icon" href="javascript:Liferay.fire('<%= liferayPortletResponse.getNamespace() %>undo', {layoutRevisionId: '<%= layoutRevision.getLayoutRevisionId() %>', layoutSetBranchId: '<%= layoutRevision.getLayoutSetBranchId() %>'}); void(0);">
 											<liferay-ui:message key="undo" />

@@ -245,6 +245,12 @@
 	<td></td>
 </tr>
 
+ <tr>
+ 	<td>ENTRY_SUCCESS_MESSAGE</td>
+ 	<td>//div[contains(text(),'An entry was added.')]</td>
+ 	<td></td>
+ </tr>
+ 
 </tbody>
 </table>
 </body>

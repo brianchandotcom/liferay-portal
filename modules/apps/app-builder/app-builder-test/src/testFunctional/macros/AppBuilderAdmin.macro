@@ -293,6 +293,8 @@ definition {
 		AssertTextEquals(
 			locator1 = "AppBuilder#WIDGET_DEPLOYED",
 			value1 = "${appName}");
+	macro validateSuccessMessage {
+		AssertElementPresent(locator1 = "AppBuilder#ENTRY_SUCCESS_MESSAGE");
 	}
 
 	macro viewCheckboxChecked {

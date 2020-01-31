@@ -1448,7 +1448,35 @@ definition {
 			deployOption = "Widget",
 			formViewName = "${myFormViewName}",
 			tableViewName = "${myTableViewName}");
+		
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page");
 
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
+
+		Portlet.addPG(
+			pageName = "App Builder Test Page",
+			portletName = "My Registration app (Form View)");
+		
+		FormViewBuilder.editText(
+			fieldName = "FullName",
+			fieldValue = "Test");
+
+		FormViewBuilder.editText(
+			fieldName = "Nickname",
+			fieldValue = "Tester");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateSuccessMessage();
 	}
 
 	@description = "Publish my app as a widget and submit entry"

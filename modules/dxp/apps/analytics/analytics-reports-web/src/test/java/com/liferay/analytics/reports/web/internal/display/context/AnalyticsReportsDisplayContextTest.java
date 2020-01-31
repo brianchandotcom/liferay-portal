@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
@@ -74,7 +75,8 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsInfoItem, Mockito.mock(Object.class),
-				httpServletRequest, Mockito.mock(RenderResponse.class));
+				httpServletRequest, Mockito.mock(Portal.class),
+				Mockito.mock(RenderResponse.class));
 
 		Map<String, Object> props = analyticsReportsDisplayContext.getProps();
 

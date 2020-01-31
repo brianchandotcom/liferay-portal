@@ -48,6 +48,11 @@ public class AccountResourceImpl
 	extends BaseAccountResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteAccount(Long accountId) throws Exception {
+		super.deleteAccount(accountId);
+	}
+
+	@Override
 	public Account getAccount(Long accountId) throws Exception {
 		return _toAccount(_accountEntryLocalService.getAccountEntry(accountId));
 	}

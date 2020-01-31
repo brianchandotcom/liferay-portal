@@ -194,5 +194,8 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.StringCastCheck">
 			<message key="string.cast.unneeded" value="No need to call ''.toString()'' on type String" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.TernaryOperatorCheck">
+			<message key="ternary.operator.avoid" value="Use if-else-statement instead of ternary conditional operator for better readability" />
+		</module>
 	</module>
 </module>

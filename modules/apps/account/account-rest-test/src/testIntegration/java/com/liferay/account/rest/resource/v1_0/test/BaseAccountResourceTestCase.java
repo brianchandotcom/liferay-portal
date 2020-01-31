@@ -47,6 +47,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -74,6 +76,7 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -215,6 +218,10 @@ public abstract class BaseAccountResourceTestCase {
 		assertEqualsIgnoringOrder(
 			Arrays.asList(account1, account2), (List<Account>)page.getItems());
 		assertValid(page);
+
+		accountResource.deleteAccount(account1.getId());
+
+		accountResource.deleteAccount(account2.getId());
 	}
 
 	@Test
@@ -448,6 +455,71 @@ public abstract class BaseAccountResourceTestCase {
 		assertEqualsJSONArray(
 			Arrays.asList(account1, account2),
 			accountsJSONObject.getJSONArray("items"));
+	}
+
+	@Test
+	public void testDeleteAccount() throws Exception {
+		Account account = testDeleteAccount_addAccount();
+
+		assertHttpResponseStatusCode(
+			204, accountResource.deleteAccountHttpResponse(account.getId()));
+
+		assertHttpResponseStatusCode(
+			404, accountResource.getAccountHttpResponse(account.getId()));
+
+		assertHttpResponseStatusCode(
+			404, accountResource.getAccountHttpResponse(0L));
+	}
+
+	protected Account testDeleteAccount_addAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAccount() throws Exception {
+		Account account = testGraphQLAccount_addAccount();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteAccount",
+				new HashMap<String, Object>() {
+					{
+						put("accountId", account.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(dataJSONObject.getBoolean("deleteAccount"));
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"graphql.execution.SimpleDataFetcherExceptionHandler",
+					Level.WARN)) {
+
+			graphQLField = new GraphQLField(
+				"query",
+				new GraphQLField(
+					"account",
+					new HashMap<String, Object>() {
+						{
+							put("accountId", account.getId());
+						}
+					},
+					new GraphQLField("id")));
+
+			jsonObject = JSONFactoryUtil.createJSONObject(
+				invoke(graphQLField.toString()));
+
+			JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+			Assert.assertTrue(errorsJSONArray.length() > 0);
+		}
 	}
 
 	@Test

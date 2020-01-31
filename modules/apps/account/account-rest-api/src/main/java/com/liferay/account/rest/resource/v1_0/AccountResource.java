@@ -46,6 +46,8 @@ public interface AccountResource {
 			String keywords, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public void deleteAccount(Long accountId) throws Exception;
+
 	public Account getAccount(Long accountId) throws Exception;
 
 	public default void setContextAcceptLanguage(

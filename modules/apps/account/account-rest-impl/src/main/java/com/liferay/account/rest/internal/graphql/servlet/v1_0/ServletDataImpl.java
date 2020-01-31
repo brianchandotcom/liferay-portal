@@ -38,6 +38,9 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setAccountResourceComponentServiceObjects(
+			_accountResourceComponentServiceObjects);
+
 		Query.setAccountResourceComponentServiceObjects(
 			_accountResourceComponentServiceObjects);
 	}

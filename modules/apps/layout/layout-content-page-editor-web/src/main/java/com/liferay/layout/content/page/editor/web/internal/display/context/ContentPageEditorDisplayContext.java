@@ -312,12 +312,6 @@ public class ContentPageEditorDisplayContext {
 				"hasEditSegmentsEntryPermission",
 				editorSoyContext.get("hasEditSegmentsEntryPermission")
 			).put(
-				"hasUpdateContentPermissions",
-				editorSoyContext.get("hasUpdateContentPermissions")
-			).put(
-				"hasUpdatePermissions",
-				editorSoyContext.get("hasUpdatePermissions")
-			).put(
 				"imageSelectorURL", editorSoyContext.get("imageSelectorURL")
 			).put(
 				"infoItemSelectorURL",
@@ -384,9 +378,6 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"fragmentEntryLinks", editorSoyContext.get("fragmentEntryLinks")
 			).put(
-				"hasLockedSegmentsExperiment",
-				editorSoyContext.get("hasLockedSegmentsExperiment")
-			).put(
 				"languageId", editorSoyContext.get("languageId")
 			).put(
 				"layoutData", editorSoyContext.get("layoutData")
@@ -398,6 +389,18 @@ public class ContentPageEditorDisplayContext {
 				"masterLayoutData", editorSoyContext.get("masterLayoutData")
 			).put(
 				"pageContents", editorSoyContext.get("pageContents")
+			).put(
+				"permissions",
+				HashMapBuilder.<String, Object>put(
+					ActionKeys.UPDATE,
+					editorSoyContext.get("hasUpdatePermissions")
+				).put(
+					ActionKeys.UPDATE_LAYOUT_CONTENT,
+					editorSoyContext.get("hasUpdateContentPermissions")
+				).put(
+					"UPDATE_SEGMENTS_EXPERIENCE",
+					editorSoyContext.get("hasLockedSegmentsExperiment")
+				).build()
 			).put(
 				"segmentsExperienceId",
 				editorSoyContext.get("segmentsExperienceId")

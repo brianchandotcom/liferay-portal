@@ -49,14 +49,14 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 			>
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
-					name="id"
-					property="organizationId"
+					name="name"
+					property="name"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand table-cell-minw-150"
-					name="name"
-					property="name"
+					cssClass="table-cell-expand-small table-cell-minw-150"
+					name="parent-organization"
+					property="parentOrganizationName"
 				/>
 			</liferay-ui:search-container-row>
 

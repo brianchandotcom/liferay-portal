@@ -15,7 +15,13 @@ import React from 'react';
 
 import Popover from './Popover.es';
 
-function TotalCount({dataProvider, label}) {
+function TotalCount({
+	className,
+	dataProvider,
+	label,
+	popoverHeader,
+	popoverMessage
+}) {
 	const iconRef = React.useRef();
 	const [showTooltip, setShowTooltip] = React.useState(false);
 	const [value, setValue] = React.useState(null);
@@ -29,7 +35,7 @@ function TotalCount({dataProvider, label}) {
 	}, [dataProvider]);
 
 	return (
-		<div className="mt-4">
+		<div className={className}>
 			<span className="text-secondary">
 				{label}
 				<ClayIcon
@@ -42,13 +48,8 @@ function TotalCount({dataProvider, label}) {
 				/>
 
 				{showTooltip && (
-					<Popover
-						anchor={iconRef.current}
-						header={Liferay.Language.get('views')}
-					>
-						{Liferay.Language.get(
-							'the-total-amount-of-views-since-the-content-was-published'
-						)}
+					<Popover anchor={iconRef.current} header={popoverHeader}>
+						{popoverMessage}
 					</Popover>
 				)}
 			</span>
@@ -59,7 +60,9 @@ function TotalCount({dataProvider, label}) {
 
 TotalCount.propTypes = {
 	dataProvider: PropTypes.func.isRequired,
-	label: PropTypes.string.isRequired
+	label: PropTypes.string.isRequired,
+	popoverHeader: PropTypes.string.isRequired,
+	popoverMessage: PropTypes.string.isRequired
 };
 
 export default TotalCount;

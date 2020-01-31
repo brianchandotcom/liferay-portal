@@ -104,6 +104,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			new CheckInfo(
 				checkName, category,
 				_getPropertyValue(moduleElement, "description"),
+				_getPropertyValue(moduleElement, "documentationLocation"),
 				sourceProcessorInfo));
 
 		return checkInfoMap;
@@ -180,7 +181,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 				checkInfoMap.put(
 					checkName,
 					new CheckInfo(
-						checkName, category, description, sourceProcessorInfo));
+						checkName, category, description, StringPool.BLANK,
+						sourceProcessorInfo));
 			}
 		}
 
@@ -226,18 +228,31 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		for (CheckInfo checkInfo : checkInfos) {
 			String checkName = checkInfo.getName();
 
-			String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
-				checkName);
+			String link = null;
 
-			File markdownFile = new File(
-				documentationChecksDir, markdownFileName);
+			String documentationLocation = checkInfo.getDocumentationLocation();
 
-			if (markdownFile.exists()) {
+			if (Validator.isNotNull(documentationLocation)) {
+				link =
+					_CHECKSTYLE_DOCUMENTATION_URL_BASE + documentationLocation;
+			}
+			else {
+				String markdownFileName =
+					SourceFormatterUtil.getMarkdownFileName(checkName);
+
+				File markdownFile = new File(
+					documentationChecksDir, markdownFileName);
+
+				if (markdownFile.exists()) {
+					link = _DOCUMENTATION_CHECKS_DIR_NAME + markdownFileName;
+				}
+			}
+
+			if (link != null) {
 				sb.append("[");
 				sb.append(checkName);
 				sb.append("](");
-				sb.append(_DOCUMENTATION_CHECKS_DIR_NAME);
-				sb.append(markdownFileName);
+				sb.append(link);
 				sb.append(") | ");
 			}
 			else {
@@ -496,6 +511,9 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		return sourceProcessorInfos;
 	}
 
+	private static final String _CHECKSTYLE_DOCUMENTATION_URL_BASE =
+		"https://checkstyle.sourceforge.io/";
+
 	private static final String _DOCUMENTATION_CHECKS_DIR_NAME = "checks/";
 
 	private static final String _DOCUMENTATION_DIR_LOCATION =
@@ -505,11 +523,13 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		public CheckInfo(
 			String name, String category, String description,
+			String documentationLocation,
 			SourceProcessorInfo sourceProcessorInfo) {
 
 			_name = name;
 			_category = category;
 			_description = description;
+			_documentationLocation = documentationLocation;
 
 			_sourceProcessorInfos.add(sourceProcessorInfo);
 		}
@@ -533,6 +553,10 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			return _description;
 		}
 
+		public String getDocumentationLocation() {
+			return _documentationLocation;
+		}
+
 		public String getName() {
 			return _name;
 		}
@@ -543,7 +567,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		private final String _category;
 		private final String _description;
-		private String _name;
+		private final String _documentationLocation;
+		private final String _name;
 		private final List<SourceProcessorInfo> _sourceProcessorInfos =
 			new ArrayList<>();
 

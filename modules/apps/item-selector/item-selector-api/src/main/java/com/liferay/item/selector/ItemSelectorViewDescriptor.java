@@ -15,6 +15,7 @@
 package com.liferay.item.selector;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alejandro Tardín
@@ -29,7 +30,7 @@ public interface ItemSelectorViewDescriptor<T> {
 		return null;
 	}
 
-	public SearchContainer getSearchContainer();
+	public SearchContainer getSearchContainer() throws PortalException;
 
 	public default boolean isShowBreadcrumb() {
 		return true;

@@ -16,6 +16,7 @@ package com.liferay.portal.dao.db;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -647,7 +648,7 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected String[] buildColumnNameTokens(String line) {
-		String[] words = StringUtil.split(line, ' ');
+		String[] words = StringUtil.split(line, CharPool.SPACE);
 
 		String nullable = "";
 
@@ -659,7 +660,7 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected String[] buildColumnTypeTokens(String line) {
-		String[] words = StringUtil.split(line, ' ');
+		String[] words = StringUtil.split(line, CharPool.SPACE);
 
 		String nullable = "";
 
@@ -679,7 +680,7 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected String[] buildTableNameTokens(String line) {
-		String[] words = StringUtil.split(line, StringPool.SPACE);
+		String[] words = StringUtil.split(line, CharPool.SPACE);
 
 		return new String[] {words[1], words[2]};
 	}

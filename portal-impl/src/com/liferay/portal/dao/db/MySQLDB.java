@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
@@ -187,7 +188,7 @@ public class MySQLDB extends BaseDB {
 						RENAME_TABLE_TEMPLATE, template);
 				}
 
-				int pos = line.indexOf(";");
+				int pos = line.indexOf(CharPool.SEMICOLON);
 
 				if (createTable && (pos != -1)) {
 					createTable = false;

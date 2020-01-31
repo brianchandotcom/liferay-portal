@@ -14,8 +14,10 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.util.LayoutDataConverter;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,6 +157,70 @@ public class PageDefinitionConverterUtil {
 		}
 
 		return pageElements.toArray(new PageElement[0]);
+	}
+
+	private SectionDefinition _toSectionDefinition(
+		JSONObject configJSONObject) {
+
+		return new SectionDefinition() {
+			{
+				backgroundColorCssClass = configJSONObject.getString(
+					"backgroundColorCssClass", null);
+
+				containerType = ContainerType.valueOf(
+					StringUtil.toUpperCase(configJSONObject.getString("type")));
+
+				setBackgroundImage(
+					() -> {
+						JSONObject backgroundImageJSONObject =
+							configJSONObject.getJSONObject("backgroundImage");
+
+						if ((backgroundImageJSONObject == null) ||
+							(backgroundImageJSONObject.length() == 0)) {
+
+							return null;
+						}
+
+						return new FragmentImage() {
+							{
+								setTitle(
+									_toValueMap(
+										backgroundImageJSONObject, "title"));
+								setUrl(
+									_toValueMap(
+										backgroundImageJSONObject, "url"));
+							}
+						};
+					});
+
+				setPaddingBottom(
+					() -> {
+						if (configJSONObject.isNull("paddingBottom")) {
+							return null;
+						}
+
+						return configJSONObject.getInt("paddingBottom");
+					});
+
+				setPaddingHorizontal(
+					() -> {
+						if (configJSONObject.isNull("paddingHorizontal")) {
+							return null;
+						}
+
+						return configJSONObject.getInt("paddingHorizontal");
+					});
+
+				setPaddingTop(
+					() -> {
+						if (configJSONObject.isNull("paddingTop")) {
+							return null;
+						}
+
+						return configJSONObject.getInt("paddingTop");
+					});
+			}
+		};
 	}
 
 	private Map<String, String> _toValueMap(

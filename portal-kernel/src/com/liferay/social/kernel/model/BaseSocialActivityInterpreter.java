@@ -293,9 +293,16 @@ public abstract class BaseSocialActivityInterpreter
 			return viewEntryInTrashURL;
 		}
 
-		String path = getPath(activity, serviceContext);
+		String path = null;
 
-		if (Validator.isNull(path)) {
+		try {
+			path = getPath(activity, serviceContext);
+
+			if (Validator.isNull(path)) {
+				return null;
+			}
+		}
+		catch (NullPointerException npe) {
 			return null;
 		}
 

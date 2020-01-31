@@ -83,6 +83,7 @@ public class InitBundleMojo extends AbstractLiferayMojo {
 			initBundleCommand.setPassword(password);
 			initBundleCommand.setStripComponents(stripComponents);
 			initBundleCommand.setToken(token);
+			initBundleCommand.setTokenFile(tokenFile);
 			initBundleCommand.setUrl(url);
 			initBundleCommand.setUserName(userName);
 

@@ -20,6 +20,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 import {ConfigContext} from '../../config/index';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
+import {useSelectItem} from '../Controls';
 import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
 import Container from './Container';
@@ -31,6 +32,7 @@ const ContainerWithControls = React.forwardRef(
 		const segmentsExperienceId = useSelector(
 			state => state.segmentsExperienceId
 		);
+		const selectItem = useSelectItem();
 
 		const handleButtonClick = id => {
 			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
@@ -38,6 +40,7 @@ const ContainerWithControls = React.forwardRef(
 					duplicateItem({
 						config,
 						itemId: item.itemId,
+						selectItem,
 						store: {segmentsExperienceId}
 					})
 				);

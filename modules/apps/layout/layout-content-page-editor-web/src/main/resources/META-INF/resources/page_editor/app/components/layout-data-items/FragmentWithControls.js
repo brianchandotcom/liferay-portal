@@ -33,6 +33,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 import {ConfigContext} from '../../config/index';
 import {useSelector, useDispatch} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
+import {useSelectItem} from '../Controls';
 import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
 import FragmentContent from './FragmentContent';
@@ -40,6 +41,7 @@ import FragmentContent from './FragmentContent';
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
+	const selectItem = useSelectItem();
 	const state = useSelector(state => state);
 
 	const {fragmentEntryLinks} = state;
@@ -54,6 +56,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 					config,
 					fragmentEntryLinkId: item.config.fragmentEntryLinkId,
 					itemId: item.itemId,
+					selectItem,
 					store: state
 				})
 			);

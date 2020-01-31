@@ -60,6 +60,66 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		return _getReadmeContent(absolutePath, _getCheckInfoMap());
 	}
 
+	private Map<String, CheckInfo> _addSourceChecks(
+			Map<String, CheckInfo> checkInfoMap,
+			String configurationFileLocation)
+		throws DocumentException, IOException {
+
+		String sourceChecksContent = getContent(
+			configurationFileLocation, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		Document document = SourceUtil.readXML(sourceChecksContent);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element sourceProcessorElement :
+				(List<Element>)rootElement.elements("source-processor")) {
+
+			SourceProcessorInfo sourceProcessorInfo = new SourceProcessorInfo(
+				sourceProcessorElement.attributeValue("name"));
+
+			for (Element checkElement :
+					(List<Element>)sourceProcessorElement.elements("check")) {
+
+				String checkName = checkElement.attributeValue("name");
+
+				CheckInfo checkInfo = checkInfoMap.get(checkName);
+
+				if (checkInfo != null) {
+					checkInfo.addSourceProcessorInfo(sourceProcessorInfo);
+
+					checkInfoMap.put(checkName, checkInfo);
+
+					continue;
+				}
+
+				Element categoryElement = checkElement.element("category");
+
+				String category = "Miscellaneous";
+
+				if (categoryElement != null) {
+					category = categoryElement.attributeValue("name");
+				}
+
+				Element descriptionElement = checkElement.element(
+					"description");
+
+				String description = StringPool.BLANK;
+
+				if (descriptionElement != null) {
+					description = descriptionElement.attributeValue("name");
+				}
+
+				checkInfoMap.put(
+					checkName,
+					new CheckInfo(
+						checkName, category, description, sourceProcessorInfo));
+			}
+		}
+
+		return checkInfoMap;
+	}
+
 	private void _createChecksTableMarkdown(
 			String header, File file, Collection<CheckInfo> checkInfos,
 			File documentationChecksDir, boolean displayCategory,
@@ -184,58 +244,11 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		Map<String, CheckInfo> checkInfoMap = new TreeMap<>();
 
-		String sourceChecksContent = getContent(
-			"modules/util/source-formatter/src/main/resources/sourcechecks.xml",
-			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+		String resourcesDirLocation =
+			"modules/util/source-formatter/src/main/resources/";
 
-		Document document = SourceUtil.readXML(sourceChecksContent);
-
-		Element rootElement = document.getRootElement();
-
-		for (Element sourceProcessorElement :
-				(List<Element>)rootElement.elements("source-processor")) {
-
-			SourceProcessorInfo sourceProcessorInfo = new SourceProcessorInfo(
-				sourceProcessorElement.attributeValue("name"));
-
-			for (Element checkElement :
-					(List<Element>)sourceProcessorElement.elements("check")) {
-
-				String checkName = checkElement.attributeValue("name");
-
-				CheckInfo checkInfo = checkInfoMap.get(checkName);
-
-				if (checkInfo != null) {
-					checkInfo.addSourceProcessorInfo(sourceProcessorInfo);
-
-					checkInfoMap.put(checkName, checkInfo);
-
-					continue;
-				}
-
-				Element categoryElement = checkElement.element("category");
-
-				String category = "Miscellaneous";
-
-				if (categoryElement != null) {
-					category = categoryElement.attributeValue("name");
-				}
-
-				Element descriptionElement = checkElement.element(
-					"description");
-
-				String description = StringPool.BLANK;
-
-				if (descriptionElement != null) {
-					description = descriptionElement.attributeValue("name");
-				}
-
-				checkInfoMap.put(
-					checkName,
-					new CheckInfo(
-						checkName, category, description, sourceProcessorInfo));
-			}
-		}
+		checkInfoMap = _addSourceChecks(
+			checkInfoMap, resourcesDirLocation + "sourceChecks.xml");
 
 		return checkInfoMap;
 	}

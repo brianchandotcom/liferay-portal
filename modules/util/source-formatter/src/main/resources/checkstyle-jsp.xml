@@ -188,5 +188,8 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.SemiColonCheck">
 			<message key="semi.colon.unnecessary" value="Unnecessary semi colon" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.StringBundlerNamingCheck">
+			<message key="variable.name.incorrect" value="StringBundler {0} ''{1}'' should end with either ''sb'' or ''SB''" />
+		</module>
 	</module>
 </module>

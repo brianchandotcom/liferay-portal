@@ -72,7 +72,9 @@ public class PageDefinitionConverterUtil {
 
 			if (grandChildrenJSONArray.length() == 0) {
 				childrenPageElements.add(
-					_toPageElement(childJSONObject.getString("type")));
+					_toPageElement(
+						childJSONObject.getJSONObject("config"),
+						childJSONObject.getString("type")));
 			}
 			else {
 				childrenPageElements.add(
@@ -80,7 +82,8 @@ public class PageDefinitionConverterUtil {
 			}
 		}
 
-		PageElement pageElement = _toPageElement(jsonObject.getString("type"));
+		PageElement pageElement = _toPageElement(
+			jsonObject.getJSONObject("config"), jsonObject.getString("type"));
 
 		pageElement.setPageElements(
 			childrenPageElements.toArray(new PageElement[0]));
@@ -88,7 +91,9 @@ public class PageDefinitionConverterUtil {
 		return pageElement;
 	}
 
-	private PageElement _toPageElement(String type) {
+	private PageElement _toPageElement(
+		JSONObject configJSONObject, String type) {
+
 		if (type.equals("column")) {
 			return new PageElement() {
 				{
@@ -99,6 +104,7 @@ public class PageDefinitionConverterUtil {
 		else if (type.equals("container")) {
 			return new PageElement() {
 				{
+					definition = _toSectionDefinition(configJSONObject);
 					type = PageElement.Type.SECTION;
 				}
 			};

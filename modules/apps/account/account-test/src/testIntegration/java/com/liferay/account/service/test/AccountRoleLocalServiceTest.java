@@ -348,8 +348,12 @@ public class AccountRoleLocalServiceTest {
 	public void testSearchAccountRolesWithPagination() throws Exception {
 		String keywords = RandomTestUtil.randomString();
 
+		List<AccountRole> expectedAccountRoles = new ArrayList<>();
+
 		for (int i = 0; i < 5; i++) {
-			_addAccountRole(_accountEntry1.getAccountEntryId(), keywords + i);
+			expectedAccountRoles.add(
+				_addAccountRole(
+					_accountEntry1.getAccountEntryId(), keywords + i));
 		}
 
 		BaseModelSearchResult<AccountRole> baseModelSearchResult =
@@ -357,19 +361,20 @@ public class AccountRoleLocalServiceTest {
 				_accountEntry1.getAccountEntryId(), keywords, 0, 2, null);
 
 		Assert.assertEquals(
-			_accountRoles.toString(), 5, baseModelSearchResult.getLength());
+			expectedAccountRoles.toString(), 5,
+			baseModelSearchResult.getLength());
 
 		List<AccountRole> accountRoles = baseModelSearchResult.getBaseModels();
 
 		Assert.assertEquals(accountRoles.toString(), 2, accountRoles.size());
-		Assert.assertEquals(_accountRoles.subList(0, 2), accountRoles);
+		Assert.assertEquals(expectedAccountRoles.subList(0, 2), accountRoles);
 
 		baseModelSearchResult = AccountRoleLocalServiceUtil.searchAccountRoles(
 			_accountEntry1.getAccountEntryId(), keywords, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new RoleNameComparator(false));
 
-		List<AccountRole> expectedAccountRoles = ListUtil.sort(
-			_accountRoles, Collections.reverseOrder());
+		expectedAccountRoles = ListUtil.sort(
+			expectedAccountRoles, Collections.reverseOrder());
 
 		Assert.assertEquals(
 			expectedAccountRoles, baseModelSearchResult.getBaseModels());
@@ -378,12 +383,8 @@ public class AccountRoleLocalServiceTest {
 	private AccountRole _addAccountRole(long accountEntryId, String name)
 		throws Exception {
 
-		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+		return _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), accountEntryId, name, null, null);
-
-		_accountRoles.add(accountRole);
-
-		return accountRole;
 	}
 
 	private void _assertHasPermission(
@@ -442,8 +443,6 @@ public class AccountRoleLocalServiceTest {
 
 		deleteAccountRoleFunction.apply(accountRole);
 
-		_accountRoles.remove(accountRole);
-
 		Assert.assertFalse(
 			ArrayUtil.contains(
 				_getRoleIds(_users.get(0)), accountRole.getRoleId()));
@@ -470,9 +469,6 @@ public class AccountRoleLocalServiceTest {
 
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;
-
-	@DeleteAfterTestRun
-	private final List<AccountRole> _accountRoles = new ArrayList<>();
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

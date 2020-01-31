@@ -116,12 +116,12 @@ public class RoleModelListenerTest {
 		_accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService, WorkflowConstants.STATUS_APPROVED);
 
-		_accountRole = _accountRoleLocalService.addAccountRole(
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), _accountEntry.getAccountEntryId(),
 			RandomTestUtil.randomString(), null, null);
 
 		try {
-			_roleLocalService.deleteRole(_accountRole.getRoleId());
+			_roleLocalService.deleteRole(accountRole.getRoleId());
 
 			Assert.fail(
 				"Allowed to delete a role associated with an account role");
@@ -145,9 +145,6 @@ public class RoleModelListenerTest {
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
-
-	@DeleteAfterTestRun
-	private AccountRole _accountRole;
 
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;

@@ -94,6 +94,13 @@ public class SpiraProject {
 		return spiraReleases.get(0);
 	}
 
+	public List<SpiraRelease> getSpiraReleasesByPath(String releasePath)
+		throws IOException {
+
+		return SpiraRelease.getSpiraReleases(
+			this, new SpiraRelease.SearchParameter("Path", releasePath));
+	}
+
 	public JSONObject toJSONObject() {
 		return _jsonObject;
 	}
@@ -122,13 +129,6 @@ public class SpiraProject {
 		}
 
 		return spiraReleases.get(0);
-	}
-
-	protected List<SpiraRelease> getSpiraReleasesByName(String releaseName)
-		throws IOException {
-
-		return SpiraRelease.getSpiraReleases(
-			this, new SpiraRelease.SearchParameter("Name", releaseName));
 	}
 
 	private static final Map<Integer, SpiraProject> _spiraProjects =

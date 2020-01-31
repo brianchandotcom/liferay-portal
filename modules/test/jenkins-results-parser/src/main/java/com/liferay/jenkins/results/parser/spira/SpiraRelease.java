@@ -33,26 +33,6 @@ import org.json.JSONObject;
  */
 public class SpiraRelease {
 
-	public static SpiraRelease getSpiraReleaseByID(
-			SpiraProject spiraProject, Integer releaseID)
-		throws IOException {
-
-		if (releaseID == null) {
-			throw new RuntimeException("Release ID is null");
-		}
-
-		List<SpiraRelease> spiraReleases = getSpiraReleases(
-			spiraProject, new SearchParameter("ReleaseId", releaseID));
-
-		SpiraRelease spiraRelease = spiraReleases.get(0);
-
-		if (spiraRelease == null) {
-			throw new RuntimeException("Invalid release ID " + releaseID);
-		}
-
-		return spiraRelease;
-	}
-
 	public int getID() {
 		return _jsonObject.getInt("ReleaseId");
 	}

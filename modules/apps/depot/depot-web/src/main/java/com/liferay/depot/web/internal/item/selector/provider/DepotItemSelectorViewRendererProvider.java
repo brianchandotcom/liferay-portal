@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "service.ranking:Integer=100",
 	service = ItemSelectorViewRendererProvider.class
 )
-public class ItemSelectorViewRendererProviderImpl
+public class DepotItemSelectorViewRendererProvider
 	implements ItemSelectorViewRendererProvider {
 
 	@Override
@@ -127,7 +127,7 @@ public class ItemSelectorViewRendererProviderImpl
 			).build();
 
 	@Reference(
-		target = "(!(component.name=com.liferay.depot.web.internal.item.selector.provider.ItemSelectorViewRendererProviderImpl))"
+		target = "(!(component.name=com.liferay.depot.web.internal.item.selector.provider.DepotItemSelectorViewRendererProvider))"
 	)
 	private ItemSelectorViewRendererProvider _itemSelectorViewRendererProvider;
 

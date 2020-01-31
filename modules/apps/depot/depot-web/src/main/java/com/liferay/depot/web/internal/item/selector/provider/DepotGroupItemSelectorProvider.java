@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(service = GroupItemSelectorProvider.class)
-public class GroupItemSelectorProviderImpl
+public class DepotGroupItemSelectorProvider
 	implements GroupItemSelectorProvider {
 
 	@Override
@@ -137,7 +137,7 @@ public class GroupItemSelectorProviderImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GroupItemSelectorProviderImpl.class);
+		DepotGroupItemSelectorProvider.class);
 
 	@Reference
 	private DepotEntryGroupRelService _depotEntryGroupRelService;

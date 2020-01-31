@@ -15,23 +15,15 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.search.document.Document;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.hits.SearchHit;
-import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.util.NodeUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import com.liferay.portal.workflow.metrics.rest.spi.resource.SPINodeResource;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,59 +40,25 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 
 	@Override
 	public Page<Node> getProcessNodesPage(Long processId) throws Exception {
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+		SPINodeResource<Node> spiNodeResource = _getSPINodeResource();
 
-		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		searchSearchRequest.setQuery(
-			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", contextCompany.getCompanyId()),
-				_queries.term("deleted", Boolean.FALSE),
-				_queries.term("processId", processId),
-				_queries.term(
-					"version",
-					_resourceHelper.getLatestProcessVersion(
-						contextCompany.getCompanyId(), processId))));
-
-		searchSearchRequest.setSize(10000);
-
-		return Page.of(
-			Stream.of(
-				_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-			).map(
-				SearchSearchResponse::getSearchHits
-			).map(
-				SearchHits::getSearchHits
-			).flatMap(
-				List::stream
-			).map(
-				SearchHit::getDocument
-			).map(
-				this::_toNode
-			).collect(
-				Collectors.toList()
-			));
+		return spiNodeResource.getProcessNodesPage(processId);
 	}
 
-	private Node _toNode(Document document) {
-		return new Node() {
-			{
-				id = document.getLong("nodeId");
-				initial = GetterUtil.getBoolean(document.getValue("initial"));
-				name = _language.get(
-					_resourceHelper.getResourceBundle(
-						contextAcceptLanguage.getPreferredLocale()),
-					document.getString("name"));
-				terminal = GetterUtil.getBoolean(document.getValue("terminal"));
-				type = document.getString("type");
-			}
-		};
+	private SPINodeResource<Node> _getSPINodeResource() {
+		return new SPINodeResource<>(
+			contextCompany.getCompanyId(), _queries, _searchRequestExecutor,
+			document -> NodeUtil.toNode(
+				document, _language,
+				_resourceHelper.getResourceBundle(
+					contextAcceptLanguage.getPreferredLocale())));
 	}
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private Queries _queries;

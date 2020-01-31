@@ -13,7 +13,14 @@
  */
 
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
-import React, {useState, useContext, useEffect} from 'react';
+import {cancelDebounce, debounce} from 'frontend-js-web';
+import React, {
+	useState,
+	useContext,
+	useEffect,
+	useCallback,
+	useRef
+} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
 import {EDITABLE_TYPES} from '../config/constants/editableTypes';
@@ -57,6 +64,18 @@ const TARGET_OPTIONS = [
 		value: '_top'
 	}
 ];
+
+export function useDebounceCallback(callback, milliseconds) {
+	const callbackRef = useRef(debounce(callback, milliseconds));
+
+	useEffect(() => {
+		cancelDebounce(callbackRef.current);
+
+		callbackRef.current = debounce(callback, milliseconds);
+	}, [callback, milliseconds]);
+
+	return [callbackRef.current, () => cancelDebounce(callbackRef.current)];
+}
 
 export default function LinkConfigurationPanel({item}) {
 	const {editableId, fragmentEntryLinkId} = item;

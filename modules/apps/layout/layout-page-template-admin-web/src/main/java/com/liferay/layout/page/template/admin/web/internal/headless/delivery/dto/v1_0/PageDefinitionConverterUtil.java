@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
@@ -51,6 +52,21 @@ public class PageDefinitionConverterUtil {
 				dateModified = layout.getModifiedDate();
 				name = layout.getName();
 				pageElements = _toPageElements(layout);
+			}
+		};
+	}
+
+	private ColumnDefinition _toColumnDefinition(JSONObject configJSONObject) {
+		return new ColumnDefinition() {
+			{
+				setSize(
+					() -> {
+						if (configJSONObject.isNull("size")) {
+							return null;
+						}
+
+						return configJSONObject.getInt("size");
+					});
 			}
 		};
 	}
@@ -98,6 +114,7 @@ public class PageDefinitionConverterUtil {
 		if (type.equals("column")) {
 			return new PageElement() {
 				{
+					definition = _toColumnDefinition(configJSONObject);
 					type = PageElement.Type.COLUMN;
 				}
 			};

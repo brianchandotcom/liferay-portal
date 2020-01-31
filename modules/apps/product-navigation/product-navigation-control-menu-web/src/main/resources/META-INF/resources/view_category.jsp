@@ -29,13 +29,13 @@ Pattern pattern = Pattern.compile(".*");
 
 Matcher matcher = pattern.matcher(newCategoryPath);
 
-StringBundler divId = new StringBundler();
+StringBundler sb = new StringBundler();
 
 while (matcher.find()) {
-	divId.append(matcher.group());
+	sb.append(matcher.group());
 }
 
-newCategoryPath = divId.toString();
+newCategoryPath = sb.toString();
 
 if (Validator.isNotNull(oldCategoryPath)) {
 	newCategoryPath = oldCategoryPath + ":" + newCategoryPath;
@@ -113,15 +113,15 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 					}
 
 					for (Portlet portlet : portlets) {
-						divId.setIndex(0);
+						sb.setIndex(0);
 
-						divId.append(newCategoryPath);
-						divId.append(":");
+						sb.append(newCategoryPath);
+						sb.append(":");
 
 						matcher = pattern.matcher(PortalUtil.getPortletTitle(portlet, application, locale));
 
 						while (matcher.find()) {
-							divId.append(matcher.group());
+							sb.append(matcher.group());
 						}
 
 						boolean portletInstanceable = portlet.isInstanceable();
@@ -146,7 +146,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 								data.put("instanceable", portletInstanceable);
 								data.put("plid", plid);
 								data.put("portlet-id", portlet.getPortletId());
-								data.put("search", divId.toString().replace(':', '-'));
+								data.put("search", sb.toString().replace(':', '-'));
 								data.put("title", PortalUtil.getPortletTitle(portlet, application, locale));
 
 								String cssClass = "drag-content-item";
@@ -179,17 +179,17 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 
 										<%
 										for (PortletItem portletItem : portletItems) {
-											divId.setIndex(0);
+											sb.setIndex(0);
 
-											divId.append(newCategoryPath);
-											divId.append(":");
-											divId.append(PortalUtil.getPortletTitle(portlet, application, locale));
-											divId.append(":");
+											sb.append(newCategoryPath);
+											sb.append(":");
+											sb.append(PortalUtil.getPortletTitle(portlet, application, locale));
+											sb.append(":");
 
 											matcher = pattern.matcher(HtmlUtil.escape(portletItem.getName()));
 
 											while (matcher.find()) {
-												divId.append(matcher.group());
+												sb.append(matcher.group());
 											}
 
 											Map<String, Object> portletItemData = new HashMap<String, Object>();
@@ -200,7 +200,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 											portletItemData.put("plid", plid);
 											portletItemData.put("portlet-id", portlet.getPortletId());
 											portletItemData.put("portlet-item-id", portletItem.getPortletItemId());
-											portletItemData.put("search", divId.toString().replace(':', '-'));
+											portletItemData.put("search", sb.toString().replace(':', '-'));
 											portletItemData.put("title", HtmlUtil.escape(portletItem.getName()));
 										%>
 

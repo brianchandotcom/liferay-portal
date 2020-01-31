@@ -66,37 +66,37 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 			long paddingHorizontal = childItemConfigJSONObject.getLong("paddingHorizontal", 3);
 			long paddingTop = childItemConfigJSONObject.getLong("paddingTop", 3);
 
-			StringBundler cssClasses = new StringBundler();
+			StringBundler sb = new StringBundler();
 
 			if (Validator.isNotNull(backgroundColorCssClass)) {
-				cssClasses.append("bg-");
-				cssClasses.append(backgroundColorCssClass);
+				sb.append("bg-");
+				sb.append(backgroundColorCssClass);
 			}
 
 			if (Objects.equals(containerType, "fluid")) {
-				cssClasses.append(" container-fluid");
+				sb.append(" container-fluid");
 			}
 			else {
-				cssClasses.append(" container");
+				sb.append(" container");
 			}
 
 			if (paddingBottom != -1L) {
-				cssClasses.append(" pb-");
-				cssClasses.append(paddingBottom);
+				sb.append(" pb-");
+				sb.append(paddingBottom);
 			}
 
 			if (paddingHorizontal != -1L) {
-				cssClasses.append(" px-");
-				cssClasses.append(paddingHorizontal);
+				sb.append(" px-");
+				sb.append(paddingHorizontal);
 			}
 
 			if (paddingTop != -1L) {
-				cssClasses.append(" pt-");
-				cssClasses.append(paddingTop);
+				sb.append(" pt-");
+				sb.append(paddingTop);
 			}
 			%>
 
-			<div class="<%= cssClasses.toString() %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : "" %>">
+			<div class="<%= sb.toString() %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : "" %>">
 
 				<%
 				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));

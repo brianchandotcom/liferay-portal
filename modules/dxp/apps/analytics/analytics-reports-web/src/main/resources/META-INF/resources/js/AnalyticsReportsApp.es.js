@@ -58,7 +58,7 @@ export default function({context, props}) {
 				label={Liferay.Util.sub(Liferay.Language.get('total-views'))}
 				popoverHeader={Liferay.Language.get('views')}
 				popoverMessage={Liferay.Language.get(
-					'the-total-amount-of-views-since-the-content-was-published'
+					'this-number-is-the-total-amount-of-views-since-the-content-was-published'
 				)}
 			/>
 			<TotalCount
@@ -67,7 +67,7 @@ export default function({context, props}) {
 				label={Liferay.Util.sub(Liferay.Language.get('total-reads'))}
 				popoverHeader={Liferay.Language.get('reads')}
 				popoverMessage={Liferay.Language.get(
-					'the-total-amount-of-reads-since-the-content-was-published'
+					'this-number-is-the-total-amount-of-reads-since-the-content-was-published'
 				)}
 			/>
 		</div>

@@ -14,6 +14,7 @@ dependencies {
 	compileOnly project(":apps:asset:asset-auto-tagger-api")
 	compileOnly project(":apps:asset:asset-display-page-api")
 	compileOnly project(":apps:bulk:bulk-selection-api")
+	compileOnly project(":apps:change-tracking:change-tracking-api")
 	compileOnly project(":apps:changeset:changeset-api")
 	compileOnly project(":apps:comment:comment-api")
 	compileOnly project(":apps:document-library:document-library-api")

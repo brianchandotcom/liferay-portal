@@ -1448,7 +1448,7 @@ definition {
 			deployOption = "Widget",
 			formViewName = "${myFormViewName}",
 			tableViewName = "${myTableViewName}");
-		
+
 		JSONLayout.addPublicLayout(
 			groupName = "App Builder Site Name",
 			layoutName = "App Builder Test Page");
@@ -1465,7 +1465,7 @@ definition {
 		Portlet.addPG(
 			pageName = "App Builder Test Page",
 			portletName = "My Registration app (Form View)");
-		
+
 		FormViewBuilder.editText(
 			fieldName = "FullName",
 			fieldValue = "Test");

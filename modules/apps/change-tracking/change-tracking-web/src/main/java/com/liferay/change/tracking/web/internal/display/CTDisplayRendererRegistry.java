@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.display;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.display.CTDisplayRenderer;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -22,6 +23,7 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
@@ -79,15 +81,50 @@ public class CTDisplayRendererRegistry {
 		}
 	}
 
-	public String getTypeName(Locale locale, CTEntry ctEntry) {
-		CTDisplayRenderer<?> ctDisplayRenderer =
+	public <T extends CTModel<T>> String getTypeName(
+		Locale locale, CTEntry ctEntry) {
+
+		CTDisplayRenderer<T> ctDisplayRenderer =
 			_ctDisplayServiceTrackerMap.getService(
 				ctEntry.getModelClassNameId());
 
 		String name = null;
 
 		if (ctDisplayRenderer != null) {
-			name = ctDisplayRenderer.getTypeName(locale);
+			CTService<T> ctService = _ctServiceServiceTrackerMap.getService(
+				ctEntry.getModelClassNameId());
+
+			long ctCollectionId = ctEntry.getCtCollectionId();
+
+			if (ctEntry.getChangeType() ==
+					CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+				ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+			}
+
+			try (SafeClosable safeClosable =
+					CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
+
+				T ctModel = ctService.updateWithUnsafeFunction(
+					ctPersistence -> ctPersistence.fetchByPrimaryKey(
+						ctEntry.getModelClassPK()));
+
+				if (ctModel == null) {
+					name = ctDisplayRenderer.getTypeName(locale);
+				}
+				else {
+					try {
+						name = ctDisplayRenderer.getTypeName(locale, ctModel);
+					}
+					catch (PortalException portalException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(portalException, portalException);
+						}
+
+						name = ctDisplayRenderer.getTypeName(locale);
+					}
+				}
+			}
 		}
 
 		if (name == null) {

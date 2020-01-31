@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.display;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Locale;
@@ -32,6 +33,12 @@ public interface CTDisplayRenderer<T extends CTModel<T>> {
 	public Class<T> getModelClass();
 
 	public String getTypeName(Locale locale);
+
+	public default String getTypeName(Locale locale, T ctModel)
+		throws PortalException {
+
+		return getTypeName(locale);
+	}
 
 	public void render(
 			HttpServletRequest httpServletRequest,

@@ -1,0 +1,46 @@
+@import '../variables';
+
+@keyframes ColumnOverlayGridFadeIn {
+	to {
+		opacity: 1;
+	}
+}
+
+.column-overlay-grid {
+	animation: ColumnOverlayGridFadeIn ease 0.3s;
+	animation-fill-mode: forwards;
+	height: 200vh;
+	left: 0;
+	opacity: 0;
+	outline: none;
+	top: -100vh;
+	z-index: 1;
+
+	&__column {
+		position: relative;
+
+		&:after {
+			border-right: solid fade_out($columnOverlayGridColor, 0.92) thin;
+			content: '';
+			height: 100%;
+			position: absolute;
+			right: 0;
+			top: 0;
+			transition: border-color ease 0.3s;
+			width: 0;
+		}
+
+		&--highlighted:after {
+			border-right-color: $columnOverlayGridColor;
+			border-right-style: dashed;
+		}
+	}
+
+	&__column:last-child:after {
+		border-right: none;
+	}
+
+	&__column-content {
+		background-color: fade_out($columnOverlayGridColor, 0.96);
+	}
+}

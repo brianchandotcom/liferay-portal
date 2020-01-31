@@ -79,11 +79,6 @@ public abstract class BaseTable<T extends BaseTable<T>> implements Table<T> {
 	}
 
 	@Override
-	public String getAlias() {
-		return _alias;
-	}
-
-	@Override
 	public Column<T, ?> getColumn(String name) {
 		return _columnMap.get(name);
 	}

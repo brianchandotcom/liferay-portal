@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -91,11 +92,15 @@ public class HypersonicDB extends BaseDB {
 						"alter table @table@ alter column @old-column@ @type@;",
 						REWORD_TEMPLATE, template);
 
-					line = line.concat(
-						StringUtil.replace(
-							"alter table @table@ alter column @old-column@ " +
-								"set @nullable@;",
-							REWORD_TEMPLATE, template));
+					String nullable = template[template.length - 1];
+
+					if (!Validator.isBlank(nullable)) {
+						line = line.concat(
+							StringUtil.replace(
+								"alter table @table@ alter column " +
+									"@old-column@ set @nullable@;",
+								REWORD_TEMPLATE, template));
+					}
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {
 					String[] template = buildTableNameTokens(line);

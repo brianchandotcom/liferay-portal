@@ -13,15 +13,19 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
+import {useSelector} from '../../app/store/index';
 import {openInfoItemSelector} from '../../core/openInfoItemSelector';
 
 export default function ItemSelector({label, onItemSelect, selectedItemTitle}) {
 	const config = useContext(ConfigContext);
+	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
+	const [active, setActive] = useState(false);
 
 	return (
 		<>
@@ -37,7 +41,43 @@ export default function ItemSelector({label, onItemSelect, selectedItemTitle}) {
 					value={selectedItemTitle || ''}
 				/>
 
-				<ClayButton.Group>
+				{mappedInfoItems.length > 0 ? (
+					<ClayDropDown
+						active={active}
+						onActiveChange={setActive}
+						trigger={
+							<ClayButton
+								displayType="secondary"
+								onClick={() => setActive(true)}
+								small
+							>
+								<ClayIcon symbol="plus" />
+							</ClayButton>
+						}
+					>
+						<ClayDropDown.ItemList>
+							{mappedInfoItems.map(item => (
+								<ClayDropDown.Item
+									key={item.classNameId}
+									onClick={() => {
+										onItemSelect(item);
+										setActive(false);
+									}}
+								>
+									{item.title}
+								</ClayDropDown.Item>
+							))}
+							<ClayDropDown.Divider />
+							<ClayDropDown.Item
+								onClick={() =>
+									openInfoItemSelector(onItemSelect, config)
+								}
+							>
+								{Liferay.Language.get('select-content')} ...
+							</ClayDropDown.Item>
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				) : (
 					<ClayButton
 						displayType="secondary"
 						onClick={() =>
@@ -47,7 +87,7 @@ export default function ItemSelector({label, onItemSelect, selectedItemTitle}) {
 					>
 						<ClayIcon symbol="plus" />
 					</ClayButton>
-				</ClayButton.Group>
+				)}
 			</div>
 		</>
 	);

@@ -103,10 +103,10 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 
 			</div>
 
-			<liferay-util:dynamic-include key="com.liferay.product.navigation.taglib#/page.jsp#post" />
-
 			<div id="controlMenuAlertsContainer"></div>
 		</div>
+
+		<liferay-util:dynamic-include key="com.liferay.product.navigation.taglib#/page.jsp#post" />
 	</div>
 
 	<aui:script use="liferay-product-navigation-control-menu">

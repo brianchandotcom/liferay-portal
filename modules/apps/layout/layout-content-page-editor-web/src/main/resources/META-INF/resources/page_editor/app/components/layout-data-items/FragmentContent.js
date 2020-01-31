@@ -41,7 +41,23 @@ import UnsafeHTML from '../UnsafeHTML';
 import EditableDecoration from './EditableDecoration';
 
 const editableIsMappedToInfoItem = editableValue =>
-	editableValue.classNameId && editableValue.classPK && editableValue.fieldId;
+	editableValue &&
+	editableValue.classNameId &&
+	editableValue.classPK &&
+	editableValue.fieldId;
+
+const getMappingValue = ({classNameId, classPK, config, fieldId}) =>
+	InfoItemService.getAssetFieldValue({
+		classNameId,
+		classPK,
+		config,
+		fieldId,
+		onNetworkStatus: () => {}
+	}).then(response => {
+		const {fieldValue = ''} = response;
+
+		return fieldValue;
+	});
 
 const resolveEditableValue = (
 	state,
@@ -57,37 +73,50 @@ const resolveEditableValue = (
 		processorType
 	);
 
+	let valuePromise;
+
 	if (editableIsMappedToInfoItem(editableValue)) {
-		return InfoItemService.getAssetFieldValue({
+		valuePromise = getMappingValue({
 			classNameId: editableValue.classNameId,
 			classPK: editableValue.classPK,
 			config,
-			fieldId: editableValue.fieldId,
-			onNetworkStatus: () => {}
-		}).then(response => {
-			const {fieldValue} = response;
-
-			return [fieldValue, editableValue.config];
+			fieldId: editableValue.fieldId
 		});
-	}
-
-	return new Promise(resolve => {
-		resolve([
+	} else {
+		valuePromise = Promise.resolve(
 			selectEditableValueContent(
 				state,
 				config,
 				fragmentEntryLinkId,
 				editableId,
 				processorType
-			),
+			)
+		);
+	}
+
+	let configPromise;
+
+	if (editableIsMappedToInfoItem(editableValue.config)) {
+		configPromise = getMappingValue({
+			classNameId: editableValue.config.classNameId,
+			classPK: editableValue.config.classPK,
+			config,
+			fieldId: editableValue.config.fieldId
+		}).then(href => {
+			return {...editableValue.config, href};
+		});
+	} else {
+		configPromise = Promise.resolve(
 			selectEditableValueConfig(
 				state,
 				fragmentEntryLinkId,
 				editableId,
 				processorType
 			)
-		]);
-	});
+		);
+	}
+
+	return Promise.all([valuePromise, configPromise]);
 };
 
 function FragmentContent({fragmentEntryLink, itemId}, ref) {

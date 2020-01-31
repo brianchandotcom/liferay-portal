@@ -15,11 +15,13 @@
 package com.liferay.analytics.reports.web.internal.display.context;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
+import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -40,11 +42,13 @@ public class AnalyticsReportsDisplayContext {
 	public AnalyticsReportsDisplayContext(
 		AnalyticsReportsInfoItem analyticsReportsInfoItem,
 		Object analyticsReportsInfoItemObject,
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, Portal portal,
+		RenderResponse renderResponse) {
 
 		_analyticsReportsInfoItem = analyticsReportsInfoItem;
 		_analyticsReportsInfoItemObject = analyticsReportsInfoItemObject;
 		_httpServletRequest = httpServletRequest;
+		_portal = portal;
 		_renderResponse = renderResponse;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -81,6 +85,20 @@ public class AnalyticsReportsDisplayContext {
 							"/analytics_reports/get_total_views");
 
 						return resourceURL.toString();
+					}
+				).build()
+			).put(
+				"namespace",
+				_portal.getPortletNamespace(
+					AnalyticsReportsPortletKeys.ANALYTICS_REPORTS)
+			).put(
+				"page",
+				HashMapBuilder.<String, Object>put(
+					"plid",
+					() -> {
+						Layout layout = _themeDisplay.getLayout();
+
+						return layout.getPlid();
 					}
 				).build()
 			).build()
@@ -131,6 +149,7 @@ public class AnalyticsReportsDisplayContext {
 	private final Object _analyticsReportsInfoItemObject;
 	private Map<String, Object> _data;
 	private final HttpServletRequest _httpServletRequest;
+	private final Portal _portal;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 

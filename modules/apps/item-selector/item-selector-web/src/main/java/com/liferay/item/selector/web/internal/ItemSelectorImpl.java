@@ -23,6 +23,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
+import com.liferay.item.selector.provider.ItemSelectorViewRendererProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -180,9 +181,10 @@ public class ItemSelectorImpl implements ItemSelector {
 					itemSelectorCriteriaArray, themeDisplay);
 
 				itemSelectorViewRenderers.add(
-					new ItemSelectorViewRendererImpl(
-						itemSelectorView, itemSelectorCriterion, portletURL,
-						itemSelectedEventName, isSearch(parameters)));
+					_itemSelectorViewRendererProvider.
+						getItemSelectorViewRenderer(
+							itemSelectorView, itemSelectorCriterion, portletURL,
+							itemSelectedEventName, isSearch(parameters)));
 			}
 		}
 
@@ -403,6 +405,9 @@ public class ItemSelectorImpl implements ItemSelector {
 		<String, ItemSelectorCriterionHandler<ItemSelectorCriterion>>
 			_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
 	private ItemSelectorCriterionSerializer _itemSelectionCriterionSerializer;
+
+	@Reference
+	private ItemSelectorViewRendererProvider _itemSelectorViewRendererProvider;
 
 	@Reference
 	private Portal _portal;

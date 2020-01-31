@@ -35,24 +35,26 @@ import org.json.JSONObject;
 public class SpiraProject {
 
 	public static SpiraProject getSpiraProjectById(int projectID) {
-		if (!_spiraProjects.containsKey(projectID)) {
-			Map<String, String> urlPathReplacements = new HashMap<>();
+		if (_spiraProjects.containsKey(projectID)) {
+			return _spiraProjects.get(projectID);
+		}
 
-			urlPathReplacements.put("project_id", String.valueOf(projectID));
+		Map<String, String> urlPathReplacements = new HashMap<>();
 
-			try {
-				SpiraProject spiraProject = new SpiraProject(
-					SpiraRestAPIUtil.requestJSONObject(
-						"projects/{project_id}", null, urlPathReplacements,
-						HttpRequestMethod.GET, null));
+		urlPathReplacements.put("project_id", String.valueOf(projectID));
 
-				if (spiraProject != null) {
-					_spiraProjects.put(spiraProject.getID(), spiraProject);
-				}
+		try {
+			SpiraProject spiraProject = new SpiraProject(
+				SpiraRestAPIUtil.requestJSONObject(
+					"projects/{project_id}", null, urlPathReplacements,
+					HttpRequestMethod.GET, null));
+
+			if (spiraProject != null) {
+				_spiraProjects.put(spiraProject.getID(), spiraProject);
 			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 
 		return _spiraProjects.get(projectID);

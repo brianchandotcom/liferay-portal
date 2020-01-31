@@ -16,12 +16,16 @@ import classNames from 'classnames';
 import React, {useLayoutEffect, useState, useCallback} from 'react';
 import {createPortal} from 'react-dom';
 
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
+import selectEditableValue from '../../selectors/selectEditableValue';
 import {useSelector} from '../../store/index';
-import {useIsActive, useIsHovered} from '../Controls';
+import {useEditableIsTranslated, useIsActive, useIsHovered} from '../Controls';
 
 const ACTIVE_CLASS = 'page-editor__editable-decoration--active';
 const HIGHLIGHTED_CLASS = 'page-editor__editable-decoration--highlighted';
 const HOVERED_CLASS = 'page-editor__editable-decoration--hovered';
+const MAPPED_CLASS = 'page-editor__editable-decoration--mapped';
+const TRANSLATED_CLASS = 'page-editor__editable-decoration--translated';
 
 const useIsHighlighted = () => {
 	const isActive = useIsActive();
@@ -34,6 +38,12 @@ const useIsHighlighted = () => {
 	);
 };
 
+const isMapped = editableValue =>
+	(editableValue.classNameId &&
+		editableValue.classPK &&
+		editableValue.fieldId) ||
+	editableValue.mappedField;
+
 export default function EditableDecoration({
 	editableId,
 	editableUniqueId,
@@ -44,11 +54,28 @@ export default function EditableDecoration({
 	const isActive = useIsActive();
 	const isHighlighted = useIsHighlighted();
 	const isHovered = useIsHovered();
+	const isTranslated = useEditableIsTranslated();
+
 	const sidebarOpen = useSelector(
 		state => state.sidebarPanelId && state.sidebarOpen
 	);
 	const [style, setStyle] = useState({});
 	const wrapper = document.getElementById('wrapper');
+
+	const editableValue = useSelector(state => {
+		const parentItem = state.layoutData.items[parentItemId];
+
+		if (parentItem) {
+			return selectEditableValue(
+				state,
+				state.layoutData.items[parentItemId].config.fragmentEntryLinkId,
+				editableId,
+				EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+			);
+		}
+
+		return {};
+	});
 
 	const hideDecoration = useCallback(() => {
 		setStyle({
@@ -145,7 +172,9 @@ export default function EditableDecoration({
 			className={classNames('page-editor__editable-decoration', {
 				[ACTIVE_CLASS]: isActive(editableUniqueId),
 				[HIGHLIGHTED_CLASS]: isHighlighted(parentItemId, siblingsIds),
-				[HOVERED_CLASS]: isHovered(editableUniqueId)
+				[HOVERED_CLASS]: isHovered(editableUniqueId),
+				[MAPPED_CLASS]: isMapped(editableValue),
+				[TRANSLATED_CLASS]: isTranslated(editableValue)
 			})}
 			style={style}
 		></div>,

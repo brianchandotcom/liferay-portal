@@ -25,7 +25,9 @@ data.put("isAmPm", DateUtil.isFormatAmPm(locale));
 data.put("maxPages", PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES);
 %>
 
-<react:component
-	data="<%= data %>"
-	module="js/index.es"
-/>
+<div>
+	<react:component
+		data="<%= data %>"
+		module="js/index.es"
+	/>
+</div>

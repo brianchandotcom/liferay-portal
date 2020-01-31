@@ -8,5 +8,6 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-web-api")
+	testIntegrationCompile project(":apps:site:site-memberships-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

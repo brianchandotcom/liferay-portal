@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -71,14 +72,6 @@ public class DepotPanelAppControllerTest {
 				LocaleUtil.getDefault(), "name"
 			).build(),
 			new HashMap<>(), ServiceContextTestUtil.getServiceContext());
-	}
-
-	@Test
-	public void testGetPanelAppsDoesNotShowThePeopleCategoryForADepotGroup()
-		throws Exception {
-
-		_assertIsHiddenForADepotGroup(
-			PanelCategoryKeys.SITE_ADMINISTRATION_MEMBERS);
 	}
 
 	@Test
@@ -121,6 +114,28 @@ public class DepotPanelAppControllerTest {
 		_assertPanelAppsContain(
 			panelApps, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
 		_assertPanelAppsContain(panelApps, JournalPortletKeys.JOURNAL);
+
+		panelApps = _panelAppRegistry.getPanelApps(
+			PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
+			PermissionThreadLocal.getPermissionChecker(),
+			_groupLocalService.getGroup(TestPropsValues.getGroupId()));
+
+		Assert.assertTrue(panelApps.size() > 1);
+	}
+
+	@Test
+	public void testGetPanelAppsShowsOnlyMembersInThePeopleCategoryForADepotGroup()
+		throws Exception {
+
+		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			PanelCategoryKeys.SITE_ADMINISTRATION_MEMBERS,
+			PermissionThreadLocal.getPermissionChecker(),
+			_groupLocalService.getGroup(_depotEntry.getGroupId()));
+
+		Assert.assertEquals(panelApps.toString(), 1, panelApps.size());
+
+		_assertPanelAppsContain(
+			panelApps, SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN);
 
 		panelApps = _panelAppRegistry.getPanelApps(
 			PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,

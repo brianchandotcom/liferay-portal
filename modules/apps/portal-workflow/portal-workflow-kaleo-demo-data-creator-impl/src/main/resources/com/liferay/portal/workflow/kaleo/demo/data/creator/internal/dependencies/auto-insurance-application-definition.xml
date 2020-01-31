@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.3.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.3.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_3_0.xsd"
+>
+	<name>Auto Insurance Application</name>
+	<version>1</version>
+	<condition>
+		<name>Proceed to full aplication</name>
+		<metadata>
+			<![CDATA[{"xy":[95,37]}]]>
+		</metadata>
+		<script>
+			<![CDATA[returnValue = "Yes";]]>
+		</script>
+		<script-language>groovy</script-language>
+		<transitions>
+			<transition>
+				<name>Cancel</name>
+				<target>Application canceled</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<name>Yes</name>
+				<target>Additional rating questions</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</condition>
+	<state>
+		<name>Start online application</name>
+		<metadata>
+			<![CDATA[{"xy":[10,8]}]]>
+		</metadata>
+		<initial>true</initial>
+		<transitions>
+			<transition>
+				<name>Proceed</name>
+				<target>Proceed to full aplication</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>Application Complete</name>
+		<metadata>
+			<![CDATA[{"terminal":true,"xy":[752,447]}]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Approve</name>
+				<description>Approve</description>
+				<script>
+					<![CDATA[com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("approved"), workflowContext);]]>
+				</script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+	<state>
+		<name>Application canceled</name>
+		<metadata>
+			<![CDATA[{"terminal":true,"xy":[100,444]}]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Denied</name>
+				<description>Denied</description>
+				<script>
+					<![CDATA[com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("denied"), workflowContext);]]>
+				</script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+	<state>
+		<name>Deliver temporary policy terms</name>
+		<metadata>
+			<![CDATA[{"xy":[426,235]}]]>
+		</metadata>
+		<transitions>
+			<transition>
+				<name>review</name>
+				<target>Underwriter final review</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>Deliver policy docs</name>
+		<metadata>
+			<![CDATA[{"xy":[613,393]}]]>
+		</metadata>
+		<transitions>
+			<transition>
+				<name>Complete</name>
+				<target>Application Complete</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<task>
+		<name>Additional rating questions</name>
+		<metadata>
+			<![CDATA[{"xy":[238,13]}]]>
+		</metadata>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Insurance agent</name>
+					<auto-create>true</auto-create>
+				</role>
+			</roles>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>Payment</name>
+				<target>Insurance payment</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<name>Review</name>
+				<target>Underwriter review</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>Underwriter review</name>
+		<metadata>
+			<![CDATA[{"xy":[268,194]}]]>
+		</metadata>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Underwriter</name>
+					<auto-create>true</auto-create>
+				</role>
+			</roles>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>Cancel</name>
+				<target>Application canceled</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<name>Approved</name>
+				<target>Manual billing process</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>Insurance payment</name>
+		<metadata>
+			<![CDATA[{"xy":[498,14]}]]>
+		</metadata>
+		<assignments>
+			<user/>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>Deliver temporary policy docs</name>
+				<target>Deliver temporary policy terms</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>Manual billing process</name>
+		<metadata>
+			<![CDATA[{"xy":[601,194]}]]>
+		</metadata>
+		<assignments>
+			<user/>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>Deliver policy docs</name>
+				<target>Deliver policy docs</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>Underwriter final review</name>
+		<metadata>
+			<![CDATA[{"xy":[327,409]}]]>
+		</metadata>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Underwriter</name>
+					<auto-create>true</auto-create>
+				</role>
+			</roles>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>Cancel</name>
+				<target>Application canceled</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<name>Deliver policy docs</name>
+				<target>Deliver policy docs</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>

@@ -14,18 +14,13 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
-
-import org.apache.commons.lang.StringEscapeUtils;
 
 import org.json.JSONObject;
 
@@ -68,60 +63,35 @@ public class SpiraProject {
 		return _jsonObject.getString("Name");
 	}
 
-	public SpiraRelease getSpiraReleaseById(int releaseID) throws IOException {
-		return SpiraRelease.getSpiraReleaseByID(this, releaseID);
+	public SpiraRelease getSpiraReleaseByID(int releaseID) throws IOException {
+		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
+			this, new SpiraRelease.SearchParameter("ReleaseId", releaseID));
+
+		if (spiraReleases.size() > 1) {
+			throw new RuntimeException("Duplicate Release ID " + releaseID);
+		}
+
+		if (spiraReleases.isEmpty()) {
+			throw new RuntimeException("Missing Release ID " + releaseID);
+		}
+
+		return spiraReleases.get(0);
 	}
 
 	public SpiraRelease getSpiraReleaseByPath(String releasePath)
 		throws IOException {
 
-		if (!releasePath.matches("/.+[^/]")) {
-			throw new RuntimeException("Invalid path " + releasePath);
+		List<SpiraRelease> spiraReleases = getSpiraReleasesByPath(releasePath);
+
+		if (spiraReleases.size() > 1) {
+			throw new RuntimeException("Duplicate Release Path " + releasePath);
 		}
 
-		String[] releasePathNames = releasePath.split("(?<!\\\\)\\/");
-
-		Stack<SpiraRelease> spiraReleaseStack = new Stack<>();
-
-		for (int i = 1; i < releasePathNames.length; i++) {
-			String releasePathName = StringEscapeUtils.unescapeJava(
-				releasePathNames[i]);
-
-			List<SpiraRelease> candidateSpiraReleases = new ArrayList<>();
-
-			for (SpiraRelease candidateSpiraRelease :
-					getSpiraReleasesByName(releasePathName)) {
-
-				if (!spiraReleaseStack.empty()) {
-					SpiraRelease parentSpiraRelease = spiraReleaseStack.peek();
-
-					if (!candidateSpiraRelease.isParentSpiraRelease(
-							parentSpiraRelease)) {
-
-						continue;
-					}
-				}
-
-				candidateSpiraReleases.add(candidateSpiraRelease);
-			}
-
-			if (candidateSpiraReleases.isEmpty()) {
-				throw new RuntimeException("Could not find " + releasePath);
-			}
-
-			if (candidateSpiraReleases.size() > 1) {
-				SpiraRelease parentSpiraRelease = spiraReleaseStack.peek();
-
-				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"Duplicate paths at ", parentSpiraRelease.getPath(),
-						"/", releasePathName));
-			}
-
-			spiraReleaseStack.push(candidateSpiraReleases.get(0));
+		if (spiraReleases.isEmpty()) {
+			throw new RuntimeException("Missing Release Path " + releasePath);
 		}
 
-		return spiraReleaseStack.peek();
+		return spiraReleases.get(0);
 	}
 
 	public JSONObject toJSONObject() {
@@ -144,14 +114,14 @@ public class SpiraProject {
 			this, new SpiraRelease.SearchParameter("IndentLevel", indentLevel));
 
 		if (spiraReleases.size() > 1) {
-			throw new RuntimeException("Duplicate indent level found");
+			throw new RuntimeException("Duplicate Indent Level " + indentLevel);
 		}
 
-		if (spiraReleases.size() == 1) {
-			return spiraReleases.get(0);
+		if (spiraReleases.isEmpty()) {
+			throw new RuntimeException("Missing Indent Level " + indentLevel);
 		}
 
-		return null;
+		return spiraReleases.get(0);
 	}
 
 	protected List<SpiraRelease> getSpiraReleasesByName(String releaseName)

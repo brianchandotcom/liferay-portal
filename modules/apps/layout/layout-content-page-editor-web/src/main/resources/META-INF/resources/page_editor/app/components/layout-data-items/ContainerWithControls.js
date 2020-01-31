@@ -18,6 +18,7 @@ import React, {useContext} from 'react';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../config/index';
+import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {useSelectItem} from '../Controls';
@@ -33,6 +34,7 @@ const ContainerWithControls = React.forwardRef(
 			state => state.segmentsExperienceId
 		);
 		const selectItem = useSelectItem();
+		const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
 
 		const handleButtonClick = id => {
 			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
@@ -47,7 +49,32 @@ const ContainerWithControls = React.forwardRef(
 			}
 		};
 
-		return (
+		const content = (
+			<Container
+				className={classNames(
+					'container-fluid page-editor__container',
+					{
+						empty: !item.children.length
+					}
+				)}
+				item={item}
+				ref={ref}
+			>
+				<FloatingToolbar
+					buttons={[
+						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
+						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
+					]}
+					item={item}
+					itemRef={ref}
+					onButtonClick={handleButtonClick}
+				/>
+
+				{children}
+			</Container>
+		);
+
+		return showLayoutItemTopper ? (
 			<Topper
 				acceptDrop={[
 					LAYOUT_DATA_ITEM_TYPES.dropZone,
@@ -60,31 +87,10 @@ const ContainerWithControls = React.forwardRef(
 				layoutData={layoutData}
 				name={Liferay.Language.get('container')}
 			>
-				{() => (
-					<Container
-						className={classNames(
-							'container-fluid page-editor__container',
-							{
-								empty: !item.children.length
-							}
-						)}
-						item={item}
-						ref={ref}
-					>
-						<FloatingToolbar
-							buttons={[
-								LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
-								LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
-							]}
-							item={item}
-							itemRef={ref}
-							onButtonClick={handleButtonClick}
-						/>
-
-						{children}
-					</Container>
-				)}
+				{() => content}
 			</Topper>
+		) : (
+			content
 		);
 	}
 );

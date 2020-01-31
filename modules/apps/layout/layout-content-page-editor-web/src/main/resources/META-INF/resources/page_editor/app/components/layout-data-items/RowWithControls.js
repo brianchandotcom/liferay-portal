@@ -31,6 +31,7 @@ import React, {useContext} from 'react';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../config/index';
+import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import FloatingToolbar from '../FloatingToolbar';
@@ -42,6 +43,7 @@ const RowWithControls = React.forwardRef(
 		const config = useContext(ConfigContext);
 		const dispatch = useDispatch();
 		const state = useSelector(state => state);
+		const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
 
 		const handleButtonClick = id => {
 			if (id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem.id) {
@@ -56,34 +58,38 @@ const RowWithControls = React.forwardRef(
 			}
 		};
 
-		return (
+		const content = (
+			<Row
+				className="page-editor__row"
+				item={item}
+				layoutData={layoutData}
+				ref={ref}
+			>
+				<FloatingToolbar
+					buttons={[
+						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
+						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
+					]}
+					item={item}
+					itemRef={ref}
+					onButtonClick={handleButtonClick}
+				/>
+
+				{children}
+			</Row>
+		);
+
+		return showLayoutItemTopper ? (
 			<Topper
 				acceptDrop={[LAYOUT_DATA_ITEM_TYPES.column]}
 				item={item}
 				layoutData={layoutData}
 				name={Liferay.Language.get('row')}
 			>
-				{() => (
-					<Row
-						className="page-editor__row"
-						item={item}
-						layoutData={layoutData}
-						ref={ref}
-					>
-						<FloatingToolbar
-							buttons={[
-								LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
-								LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
-							]}
-							item={item}
-							itemRef={ref}
-							onButtonClick={handleButtonClick}
-						/>
-
-						{children}
-					</Row>
-				)}
+				{() => content}
 			</Topper>
+		) : (
+			content
 		);
 	}
 );

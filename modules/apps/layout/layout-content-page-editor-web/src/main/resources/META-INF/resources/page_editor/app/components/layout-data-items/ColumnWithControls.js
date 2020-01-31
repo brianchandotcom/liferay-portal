@@ -29,12 +29,22 @@
 import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
+import {useSelector} from '../../store/index';
 import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
 
 const ColumnWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
-		return (
+		const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
+
+		const content = (
+			<Column className="page-editor__col" item={item} ref={ref}>
+				{children}
+			</Column>
+		);
+
+		return showLayoutItemTopper ? (
 			<TopperEmpty
 				acceptDrop={[
 					LAYOUT_DATA_ITEM_TYPES.dropZone,
@@ -44,12 +54,10 @@ const ColumnWithControls = React.forwardRef(
 				item={item}
 				layoutData={layoutData}
 			>
-				{() => (
-					<Column className="page-editor__col" item={item} ref={ref}>
-						{children}
-					</Column>
-				)}
+				{() => content}
 			</TopperEmpty>
+		) : (
+			content
 		);
 	}
 );

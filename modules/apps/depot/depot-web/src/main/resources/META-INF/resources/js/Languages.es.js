@@ -134,7 +134,7 @@ const Languages = ({
 
 	const LanguagesList = ({defaultLocaleId, locales, showActions = false}) => {
 		return (
-			<ClayTable borderless headVerticalAlignment="middle">
+			<ClayTable borderless headVerticalAlignment="middle" hover={showActions}>
 				<ClayTable.Head>
 					<ClayTable.Row>
 						<ClayTable.Cell expanded headingCell headingTitle>

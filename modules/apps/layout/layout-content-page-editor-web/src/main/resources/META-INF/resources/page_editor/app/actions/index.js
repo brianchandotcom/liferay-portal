@@ -21,6 +21,7 @@ export {default as loadReducer} from './loadReducer';
 export {default as switchSidebarPanel} from './switchSidebarPanel';
 export {default as toggleShowResolvedComments} from './toggleShowResolvedComments';
 export {default as unloadReducer} from './unloadReducer';
+export {default as updateColSize} from './updateColSize';
 export {default as updateEditableValues} from './updateEditableValues';
 export {default as updateFragmentEntryLinkContent} from './updateFragmentEntryLinkContent';
 export {default as updateLanguageId} from './updateLanguageId';

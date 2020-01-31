@@ -14,8 +14,51 @@
 
 import {TYPES} from '../actions/index';
 
+function updateColSize(items, action) {
+	const {itemId, nextColumnItemId, nextColumnSize, size} = action;
+
+	if (itemId in items) {
+		if (nextColumnItemId in items) {
+			return {
+				...items,
+				[itemId]: {
+					...items[itemId],
+					config: {
+						...items[itemId].config,
+						size
+					}
+				},
+				[nextColumnItemId]: {
+					...items[nextColumnItemId],
+					config: {
+						...items[nextColumnItemId].config,
+						size: nextColumnSize
+					}
+				}
+			};
+		}
+
+		return {
+			...items,
+			[itemId]: {
+				...items[itemId],
+				config: {
+					...items[itemId].config,
+					size
+				}
+			}
+		};
+	}
+}
+
 export default function layoutDataReducer(state, action) {
 	switch (action.type) {
+		case TYPES.UPDATE_COL_SIZE:
+			return {
+				...state,
+				items: updateColSize(state.items, action)
+			};
+
 		case TYPES.UPDATE_LAYOUT_DATA:
 		case TYPES.ADD_FRAGMENT_ENTRY_LINK:
 			return action.layoutData;

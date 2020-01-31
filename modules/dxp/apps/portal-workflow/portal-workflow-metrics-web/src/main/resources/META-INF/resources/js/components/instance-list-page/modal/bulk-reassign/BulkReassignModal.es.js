@@ -72,7 +72,12 @@ const BulkReassignModal = () => {
 
 					setSuccessToast([
 						...successToast,
-						Liferay.Language.get('these-tasks-have-been-reassigned')
+						sub(
+							Liferay.Language.get(
+								'x-tasks-have-been-reassigned'
+							),
+							[reassignedTasks.length]
+						)
 					]);
 
 					setSelectedItems([]);

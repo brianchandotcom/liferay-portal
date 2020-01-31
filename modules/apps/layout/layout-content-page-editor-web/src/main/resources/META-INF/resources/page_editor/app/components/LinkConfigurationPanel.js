@@ -116,35 +116,47 @@ export default function LinkConfigurationPanel({item}) {
 		editableConfig.fieldId
 	]);
 
-	const updateRowConfig = newConfig => {
-		const editableValues =
-			fragmentEntryLinks[fragmentEntryLinkId].editableValues;
-		const editableProcessorValues =
-			editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
+	const updateRowConfig = useCallback(
+		newConfig => {
+			const editableValues =
+				fragmentEntryLinks[fragmentEntryLinkId].editableValues;
+			const editableProcessorValues =
+				editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
 
-		const nextEditableValues = {
-			...editableValues,
+			const nextEditableValues = {
+				...editableValues,
 
-			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
-				...editableProcessorValues,
-				[editableId]: {
-					...editableProcessorValues[editableId],
-					config: {
-						...newConfig
+				[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
+					...editableProcessorValues,
+					[editableId]: {
+						...editableProcessorValues[editableId],
+						config: {
+							...newConfig
+						}
 					}
 				}
-			}
-		};
+			};
 
-		dispatch(
-			updateEditableValues({
-				config,
-				editableValues: nextEditableValues,
-				fragmentEntryLinkId,
-				segmentsExperienceId
-			})
-		);
-	};
+			dispatch(
+				updateEditableValues({
+					config,
+					editableValues: nextEditableValues,
+					fragmentEntryLinkId,
+					segmentsExperienceId
+				})
+			);
+		},
+		[
+			config,
+			dispatch,
+			editableId,
+			fragmentEntryLinkId,
+			fragmentEntryLinks,
+			segmentsExperienceId
+		]
+	);
+
+	const [debounceUpdateRowConfig] = useDebounceCallback(updateRowConfig, 500);
 
 	const updateMappedHrefValue = ({classNameId, classPK, config, fieldId}) => {
 		if (!classNameId || !classPK || !fieldId) {
@@ -206,11 +218,10 @@ export default function LinkConfigurationPanel({item}) {
 					</label>
 					<ClayInput
 						id="floatingToolbarLinkHrefOption"
-						onBlur={() => {
-							updateRowConfig({href});
-						}}
 						onChange={event => {
 							setHref(event.target.value);
+
+							debounceUpdateRowConfig({href: event.target.value});
 						}}
 						readOnly={sourceType !== SOURCE_TYPES.manual}
 						type="text"

@@ -86,7 +86,7 @@ const ManageLanguages = ({
 	};
 
 	return (
-		<ClayModal observer={observer}>
+		<ClayModal observer={observer} size="md">
 			<ClayModal.Header>
 				{Liferay.Language.get('language-selection')}
 			</ClayModal.Header>

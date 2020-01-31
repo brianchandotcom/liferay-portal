@@ -30,12 +30,12 @@ CSSImportsCheck | .css or .scss | |
 CSSPropertiesOrderCheck | .css or .scss | |
 CodeownersFileLocationCheck | CODEOWNERS | |
 CodeownersWhitespaceCheck | CODEOWNERS | |
-CompatClassImportsCheck | .java | |
+CompatClassImportsCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 ConfigDefinitionKeysCheck | .cfg or .config | |
-CopyrightCheck | .java | |
+CopyrightCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 DockerfileEmptyLinesCheck | Dockerfile | |
 DockerfileInstructionCheck | Dockerfile | |
-EmptyCollectionCheck | .java | |
+EmptyCollectionCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 FTLEmptyLinesCheck | .ftl | |
 FTLIfStatementCheck | .ftl | |
 FTLImportsCheck | .ftl | |
@@ -45,7 +45,7 @@ FTLStylingCheck | .ftl | |
 FTLTagAttributesCheck | .ftl | |
 FTLTagCheck | .ftl | |
 FTLWhitespaceCheck | .ftl | |
-GetterUtilCheck | .java | |
+GetterUtilCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 GradleBlockOrderCheck | .gradle | |
 GradleBodyCheck | .gradle | |
 GradleDependenciesCheck | .gradle | |
@@ -203,13 +203,13 @@ JavaVerifyUpgradeConnectionCheck | .java | |
 JavaXMLSecurityCheck | .java | |
 LFRBuildContentCheck | .lfrbuild-* | |
 LFRBuildReadmeCheck | .lfrbuild-* | |
-LanguageKeysCheck | .java | |
-LocaleUtilCheck | .java | |
+LanguageKeysCheck | .java, .js or .jsx | |
+LocaleUtilCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 MarkdownFileExtensionCheck | .markdown or .md | |
 MarkdownSourceFormatterReadmeCheck | .markdown or .md | |
 MarkdownStylingCheck | .markdown or .md | |
 MarkdownWhitespaceCheck | .markdown or .md | |
-MethodCallsOrderCheck | .java | |
+MethodCallsOrderCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 NewFileCheck | | |
 NonbreakingSpaceCheck | | |
 PackageinfoBNDExportPackageCheck | packageinfo | |
@@ -220,8 +220,8 @@ PoshiIndentationCheck | .function, .macro or .testcase | |
 PoshiParametersOrderCheck | .function, .macro or .testcase | |
 PoshiStylingCheck | .function, .macro or .testcase | |
 PoshiWhitespaceCheck | .function, .macro or .testcase | |
-PrimitiveWrapperInstantiationCheck | .java | |
-PrincipalExceptionCheck | .java | |
+PrimitiveWrapperInstantiationCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+PrincipalExceptionCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 PropertiesBuildIncludeDirsCheck | .properties | |
 PropertiesCommentsCheck | .properties | |
 PropertiesDefinitionKeysCheck | .properties | |
@@ -242,18 +242,18 @@ PropertiesSourceFormatterFileCheck | .properties | |
 PropertiesStylingCheck | .properties | |
 PropertiesVerifyPropertiesCheck | .properties | |
 PropertiesWhitespaceCheck | .properties | |
-ResourceBundleCheck | .java | |
+ResourceBundleCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 SQLEmptyLinesCheck | .sql | |
 SQLStylingCheck | .sql | |
 SessionKeysCheck | .java | |
 SlantedQuotesCheck | | |
 SoyEmptyLinesCheck | .soy | |
-SubstringCheck | .java | |
+SubstringCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 TLDElementOrderCheck | .tld | |
 TLDTypeCheck | .tld | |
-UnparameterizedClassCheck | .java | |
-ValidatorEqualsCheck | .java | |
-WhitespaceCheck | .cfg or .config | |
+UnparameterizedClassCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+ValidatorEqualsCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+WhitespaceCheck | .cfg, .config, .cql, .css, .dtd, .gradle, .groovy, .scss, .soy, .sql, .tld, .ts, Dockerfile or packageinfo | |
 XMLBuildFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLCheckstyleFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLCustomSQLOrderCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
@@ -263,7 +263,7 @@ XMLEmptyLinesCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggl
 XMLFSBExcludeFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLFriendlyURLRoutesFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLHBMFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
-XMLIndentationCheck | .tld | |
+XMLIndentationCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .tld, .toggle, .wsdl, .xml or .xsd | |
 XMLIvyFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLLog4jFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLLookAndFeelCompatibilityVersionCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
@@ -284,7 +284,7 @@ XMLSpringFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggl
 XMLStrutsConfigFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLStylingCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLSuppressionsFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
-XMLTagAttributesCheck | .html | |
+XMLTagAttributesCheck | .action, .function, .html, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLTestIgnorableErrorLinesFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLTilesDefsFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLToggleFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |

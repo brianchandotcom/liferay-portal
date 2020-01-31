@@ -2,7 +2,7 @@
 
 Check | Category | File Extensions | Description
 ----- | -------- | --------------- | -----------
-[ArrayCheck](checks/array_check.markdown) | Performance | .java | Checks if performance can be improved by using different mehods that can be used by collections |
+[ArrayCheck](checks/array_check.markdown) | Performance | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks if performance can be improved by using different mehods that can be used by collections |
 BNDBundleActivatorCheck | Miscellaneous | .bnd | |
 BNDBundleCheck | Miscellaneous | .bnd | |
 BNDBundleInformationCheck | Miscellaneous | .bnd | |
@@ -31,12 +31,12 @@ CSSImportsCheck | Miscellaneous | .css or .scss | |
 CSSPropertiesOrderCheck | Miscellaneous | .css or .scss | |
 CodeownersFileLocationCheck | Miscellaneous | CODEOWNERS | |
 CodeownersWhitespaceCheck | Miscellaneous | CODEOWNERS | |
-CompatClassImportsCheck | Miscellaneous | .java | |
+CompatClassImportsCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 ConfigDefinitionKeysCheck | Miscellaneous | .cfg or .config | |
-CopyrightCheck | Miscellaneous | .java | |
+CopyrightCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 DockerfileEmptyLinesCheck | Miscellaneous | Dockerfile | |
 DockerfileInstructionCheck | Miscellaneous | Dockerfile | |
-EmptyCollectionCheck | Miscellaneous | .java | |
+EmptyCollectionCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 FTLEmptyLinesCheck | Miscellaneous | .ftl | |
 FTLIfStatementCheck | Miscellaneous | .ftl | |
 FTLImportsCheck | Miscellaneous | .ftl | |
@@ -46,7 +46,7 @@ FTLStylingCheck | Miscellaneous | .ftl | |
 FTLTagAttributesCheck | Miscellaneous | .ftl | |
 FTLTagCheck | Miscellaneous | .ftl | |
 FTLWhitespaceCheck | Miscellaneous | .ftl | |
-GetterUtilCheck | Miscellaneous | .java | |
+GetterUtilCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 GradleBlockOrderCheck | Miscellaneous | .gradle | |
 GradleBodyCheck | Miscellaneous | .gradle | |
 GradleDependenciesCheck | Miscellaneous | .gradle | |
@@ -207,13 +207,13 @@ JavaVerifyUpgradeConnectionCheck | Miscellaneous | .java | |
 JavaXMLSecurityCheck | Miscellaneous | .java | |
 LFRBuildContentCheck | Miscellaneous | .lfrbuild-* | |
 LFRBuildReadmeCheck | Miscellaneous | .lfrbuild-* | |
-LanguageKeysCheck | Miscellaneous | .java | |
-LocaleUtilCheck | Miscellaneous | .java | |
+LanguageKeysCheck | Miscellaneous | .java, .js or .jsx | |
+LocaleUtilCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 MarkdownFileExtensionCheck | Miscellaneous | .markdown or .md | |
 MarkdownSourceFormatterReadmeCheck | Miscellaneous | .markdown or .md | |
 MarkdownStylingCheck | Miscellaneous | .markdown or .md | |
 MarkdownWhitespaceCheck | Miscellaneous | .markdown or .md | |
-MethodCallsOrderCheck | Miscellaneous | .java | |
+MethodCallsOrderCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 NewFileCheck | Miscellaneous | | |
 NonbreakingSpaceCheck | Miscellaneous | | |
 PackageinfoBNDExportPackageCheck | Miscellaneous | packageinfo | |
@@ -224,8 +224,8 @@ PoshiIndentationCheck | Miscellaneous | .function, .macro or .testcase | |
 PoshiParametersOrderCheck | Miscellaneous | .function, .macro or .testcase | |
 PoshiStylingCheck | Miscellaneous | .function, .macro or .testcase | |
 PoshiWhitespaceCheck | Miscellaneous | .function, .macro or .testcase | |
-PrimitiveWrapperInstantiationCheck | Miscellaneous | .java | |
-PrincipalExceptionCheck | Miscellaneous | .java | |
+PrimitiveWrapperInstantiationCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+PrincipalExceptionCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 PropertiesBuildIncludeDirsCheck | Miscellaneous | .properties | |
 PropertiesCommentsCheck | Miscellaneous | .properties | |
 PropertiesDefinitionKeysCheck | Miscellaneous | .properties | |
@@ -246,7 +246,7 @@ PropertiesSourceFormatterFileCheck | Miscellaneous | .properties | |
 PropertiesStylingCheck | Miscellaneous | .properties | |
 PropertiesVerifyPropertiesCheck | Miscellaneous | .properties | |
 PropertiesWhitespaceCheck | Miscellaneous | .properties | |
-ResourceBundleCheck | Miscellaneous | .java | |
+ResourceBundleCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 SQLEmptyLinesCheck | Miscellaneous | .sql | |
 [SQLLongNamesCheck](checks/sql_long_names_check.markdown) | Bug Prevention | .sql | Checks for table and column names that exceed 30 characters |
 SQLStylingCheck | Miscellaneous | .sql | |
@@ -254,12 +254,12 @@ SessionKeysCheck | Miscellaneous | .java | |
 SlantedQuotesCheck | Miscellaneous | | |
 SoyEmptyLinesCheck | Miscellaneous | .soy | |
 [StringMethodsCheck](checks/string_methods_check.markdown) | Performance | .java | Checks if performance can be improved by using different String operation methods |
-SubstringCheck | Miscellaneous | .java | |
+SubstringCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 TLDElementOrderCheck | Miscellaneous | .tld | |
 TLDTypeCheck | Miscellaneous | .tld | |
-UnparameterizedClassCheck | Miscellaneous | .java | |
-ValidatorEqualsCheck | Miscellaneous | .java | |
-WhitespaceCheck | Miscellaneous | .cfg or .config | |
+UnparameterizedClassCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+ValidatorEqualsCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+WhitespaceCheck | Miscellaneous | .cfg, .config, .cql, .css, .dtd, .gradle, .groovy, .scss, .soy, .sql, .tld, .ts, Dockerfile or packageinfo | |
 XMLBuildFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLCheckstyleFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLCustomSQLOrderCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
@@ -269,7 +269,7 @@ XMLEmptyLinesCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .
 XMLFSBExcludeFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLFriendlyURLRoutesFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLHBMFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
-XMLIndentationCheck | Miscellaneous | .tld | |
+XMLIndentationCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .tld, .toggle, .wsdl, .xml or .xsd | |
 XMLIvyFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLLog4jFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLLookAndFeelCompatibilityVersionCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
@@ -290,7 +290,7 @@ XMLSpringFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .
 XMLStrutsConfigFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLStylingCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLSuppressionsFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
-XMLTagAttributesCheck | Miscellaneous | .html | |
+XMLTagAttributesCheck | Miscellaneous | .action, .function, .html, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLTestIgnorableErrorLinesFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLTilesDefsFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLToggleFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |

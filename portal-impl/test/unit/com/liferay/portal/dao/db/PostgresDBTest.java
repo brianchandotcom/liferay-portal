@@ -24,8 +24,43 @@ import org.junit.Test;
 
 /**
  * @author Miguel Pastor
+ * @author Alberto Chaparro
  */
 public class PostgresDBTest extends BaseDBTestCase {
+
+	@Test
+	public void testRewordAlterColumnType() throws IOException {
+		Assert.assertEquals(
+			"alter table DLFolder alter name type varchar(255) using " +
+				"name::varchar(255);\n",
+			buildSQL("alter_column_type DLFolder name VARCHAR(255);"));
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeNoSemicolon() throws IOException {
+		Assert.assertEquals(
+			"alter table DLFolder alter name type varchar(255) using " +
+				"name::varchar(255);\n",
+			buildSQL("alter_column_type DLFolder name VARCHAR(255)"));
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeNotNull() throws IOException {
+		Assert.assertEquals(
+			"alter table DLFolder alter name type varchar(255) using " +
+				"name::varchar(255);alter table DLFolder alter column name " +
+					"set not null;\n",
+			buildSQL("alter_column_type DLFolder name VARCHAR(255) not null;"));
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeNull() throws IOException {
+		Assert.assertEquals(
+			"alter table DLFolder alter name type varchar(255) using " +
+				"name::varchar(255);alter table DLFolder alter column name " +
+					"drop not null;\n",
+			buildSQL("alter_column_type DLFolder name VARCHAR(255) null;"));
+	}
 
 	@Test
 	public void testRewordRenameTable() throws IOException {

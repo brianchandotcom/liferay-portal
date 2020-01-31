@@ -33,6 +33,7 @@ import org.junit.Test;
 
 /**
  * @author Miguel Pastor
+ * @author Alberto Chaparro
  */
 public class SybaseDBTest extends BaseDBTestCase {
 
@@ -64,6 +65,34 @@ public class SybaseDBTest extends BaseDBTestCase {
 		Assert.assertNull(
 			method.invoke(
 				db, "create index 0 on Test (test[$COLUMN_LENGTH:1251$]);"));
+	}
+
+	@Test
+	public void testRewordAlterColumnType() throws IOException {
+		Assert.assertEquals(
+			"alter table DLFolder modify name varchar(255)\ngo\n",
+			buildSQL("alter_column_type DLFolder name VARCHAR(255);"));
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeNoSemicolon() throws IOException {
+		Assert.assertEquals(
+			"alter table DLFolder modify name varchar(255)\ngo\n",
+			buildSQL("alter_column_type DLFolder name VARCHAR(255)"));
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeNotNull() throws IOException {
+		Assert.assertEquals(
+			"alter table DLFolder modify name varchar(255) not null;\n",
+			buildSQL("alter_column_type DLFolder name VARCHAR(255) not null;"));
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeNull() throws IOException {
+		Assert.assertEquals(
+			"alter table DLFolder modify name varchar(255) null;\n",
+			buildSQL("alter_column_type DLFolder name VARCHAR(255) null;"));
 	}
 
 	@Test

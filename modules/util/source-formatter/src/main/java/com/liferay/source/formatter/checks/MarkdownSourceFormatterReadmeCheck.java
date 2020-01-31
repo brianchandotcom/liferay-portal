@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
@@ -29,6 +30,9 @@ import java.io.IOException;
 
 import java.lang.reflect.Field;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -53,13 +57,11 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_populateMaps();
-
-		return _getReadmeContent(absolutePath);
+		return _getReadmeContent(absolutePath, _getCheckInfoMap());
 	}
 
 	private void _createChecksTableMarkdown(
-			String header, File file, Set<CheckInfo> checkInfoSet,
+			String header, File file, Collection<CheckInfo> checkInfos,
 			File documentationChecksDir, boolean displayCategory,
 			boolean displayFileExtensions)
 		throws IOException {
@@ -94,7 +96,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		sb.append("-----------\n");
 
-		for (CheckInfo checkInfo : checkInfoSet) {
+		for (CheckInfo checkInfo : checkInfos) {
 			String checkName = checkInfo.getName();
 
 			String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
@@ -127,8 +129,11 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			}
 
 			if (displayFileExtensions) {
-				if (Validator.isNotNull(checkInfo.getFileExtensions())) {
-					sb.append(checkInfo.getFileExtensions());
+				String fileExtensionsString = _getFileExtensionsString(
+					checkInfo.getSourceProcessorInfos());
+
+				if (Validator.isNotNull(fileExtensionsString)) {
+					sb.append(fileExtensionsString);
 					sb.append(" | ");
 				}
 				else {
@@ -150,19 +155,120 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		FileUtil.write(file, StringUtil.trim(sb.toString()));
 	}
 
-	private Set<CheckInfo> _getAllChecks() {
-		Set<CheckInfo> allChecks = new TreeSet<>();
+	private Set<String> _getCategories(Map<String, CheckInfo> checkInfoMap) {
+		Set<String> categories = new TreeSet<>();
 
-		for (Map.Entry<String, Set<CheckInfo>> entry :
-				_categoryCheckInfoMap.entrySet()) {
-
-			allChecks.addAll(entry.getValue());
+		for (CheckInfo checkInfo : checkInfoMap.values()) {
+			categories.add(checkInfo.getCategory());
 		}
 
-		return allChecks;
+		return categories;
 	}
 
-	private String _getReadmeContent(String absolutePath)
+	private List<CheckInfo> _getCategoryCheckInfos(
+		String category, Map<String, CheckInfo> checkInfoMap) {
+
+		List<CheckInfo> checkInfos = new ArrayList<>();
+
+		for (CheckInfo checkInfo : checkInfoMap.values()) {
+			if (category.equals(checkInfo.getCategory())) {
+				checkInfos.add(checkInfo);
+			}
+		}
+
+		return checkInfos;
+	}
+
+	private Map<String, CheckInfo> _getCheckInfoMap()
+		throws DocumentException, IOException {
+
+		Map<String, CheckInfo> checkInfoMap = new TreeMap<>();
+
+		String sourceChecksContent = getContent(
+			"modules/util/source-formatter/src/main/resources/sourcechecks.xml",
+			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		Document document = SourceUtil.readXML(sourceChecksContent);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element sourceProcessorElement :
+				(List<Element>)rootElement.elements("source-processor")) {
+
+			SourceProcessorInfo sourceProcessorInfo = new SourceProcessorInfo(
+				sourceProcessorElement.attributeValue("name"));
+
+			for (Element checkElement :
+					(List<Element>)sourceProcessorElement.elements("check")) {
+
+				String checkName = checkElement.attributeValue("name");
+
+				CheckInfo checkInfo = checkInfoMap.get(checkName);
+
+				if (checkInfo != null) {
+					checkInfo.addSourceProcessorInfo(sourceProcessorInfo);
+
+					checkInfoMap.put(checkName, checkInfo);
+
+					continue;
+				}
+
+				Element categoryElement = checkElement.element("category");
+
+				String category = "Miscellaneous";
+
+				if (categoryElement != null) {
+					category = categoryElement.attributeValue("name");
+				}
+
+				Element descriptionElement = checkElement.element(
+					"description");
+
+				String description = StringPool.BLANK;
+
+				if (descriptionElement != null) {
+					description = descriptionElement.attributeValue("name");
+				}
+
+				checkInfoMap.put(
+					checkName,
+					new CheckInfo(
+						checkName, category, description, sourceProcessorInfo));
+			}
+		}
+
+		return checkInfoMap;
+	}
+
+	private String _getFileExtensionsString(
+		List<SourceProcessorInfo> sourceProcessorInfos) {
+
+		List<String> fileExtensions = new ArrayList<>();
+
+		for (SourceProcessorInfo sourceProcessorInfo : sourceProcessorInfos) {
+			fileExtensions.addAll(sourceProcessorInfo.getFileExtensions());
+		}
+
+		Collections.sort(fileExtensions);
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 0; i < fileExtensions.size(); i++) {
+			sb.append(fileExtensions.get(i));
+
+			if (i == (fileExtensions.size() - 2)) {
+				sb.append(" or ");
+			}
+			else if (i < (fileExtensions.size() - 1)) {
+				sb.append(", ");
+			}
+		}
+
+		return sb.toString();
+	}
+
+	private String _getReadmeContent(
+			String absolutePath, Map<String, CheckInfo> checkInfoMap)
 		throws DocumentException, IOException {
 
 		int x = absolutePath.lastIndexOf(StringPool.SLASH);
@@ -189,15 +295,11 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		_createChecksTableMarkdown(
 			"All Checks", new File(documentationDir, allChecksMarkdownFileName),
-			_getAllChecks(), documentationChecksDir, true, true);
+			checkInfoMap.values(), documentationChecksDir, true, true);
 
 		sb.append("## Categories:\n");
 
-		for (Map.Entry<String, Set<CheckInfo>> entry :
-				_categoryCheckInfoMap.entrySet()) {
-
-			String category = entry.getKey();
-
+		for (String category : _getCategories(checkInfoMap)) {
 			String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
 				StringUtil.removeChar(category, CharPool.SPACE) + "Checks");
 
@@ -210,7 +312,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 			_createChecksTableMarkdown(
 				category + " Checks",
-				new File(documentationDir, markdownFileName), entry.getValue(),
+				new File(documentationDir, markdownFileName),
+				_getCategoryCheckInfos(category, checkInfoMap),
 				documentationChecksDir, false, true);
 		}
 
@@ -218,10 +321,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		sb.append("## File Extensions:\n");
 
-		for (Map.Entry<SourceProcessorInfo, Set<CheckInfo>> entry :
-				_sourceProcessorCheckInfoMap.entrySet()) {
-
-			SourceProcessorInfo sourceProcessorInfo = entry.getKey();
+		for (SourceProcessorInfo sourceProcessorInfo :
+				_getSourceProcessorInfos(checkInfoMap)) {
 
 			String sourceProcessorName = sourceProcessorInfo.getName();
 
@@ -229,88 +330,76 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 				continue;
 			}
 
+			sb.append("- [");
+
+			String fileExtensionsString = _getFileExtensionsString(
+				ListUtil.fromArray(sourceProcessorInfo));
+
+			sb.append(fileExtensionsString);
+
+			sb.append("](");
+			sb.append(_DOCUMENTATION_DIR_LOCATION);
+
 			String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
 				sourceProcessorName + "Checks");
 
-			sb.append("- [");
-			sb.append(sourceProcessorInfo.getFileExtensions());
-			sb.append("](");
-			sb.append(_DOCUMENTATION_DIR_LOCATION);
 			sb.append(markdownFileName);
+
 			sb.append(")\n");
 
 			_createChecksTableMarkdown(
-				"Checks for " + sourceProcessorInfo.getFileExtensions(),
-				new File(documentationDir, markdownFileName), entry.getValue(),
+				"Checks for " + fileExtensionsString,
+				new File(documentationDir, markdownFileName),
+				_getSourceProcessorInfoCheckInfos(
+					sourceProcessorInfo, checkInfoMap),
 				documentationChecksDir, true, false);
 		}
 
 		return StringUtil.trim(sb.toString());
 	}
 
-	private void _populateMaps() throws DocumentException, IOException {
-		String sourceChecksContent = getContent(
-			"modules/util/source-formatter/src/main/resources/sourcechecks.xml",
-			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+	private List<CheckInfo> _getSourceProcessorInfoCheckInfos(
+		SourceProcessorInfo sourceProcessorInfo,
+		Map<String, CheckInfo> checkInfoMap) {
 
-		Document document = SourceUtil.readXML(sourceChecksContent);
+		List<CheckInfo> checkInfos = new ArrayList<>();
 
-		Element rootElement = document.getRootElement();
+		for (CheckInfo checkInfo : checkInfoMap.values()) {
+			List<SourceProcessorInfo> sourceProcessorInfos =
+				checkInfo.getSourceProcessorInfos();
 
-		for (Element sourceProcessorElement :
-				(List<Element>)rootElement.elements("source-processor")) {
-
-			SourceProcessorInfo sourceProcessorInfo = new SourceProcessorInfo(
-				sourceProcessorElement.attributeValue("name"));
-
-			for (Element checkElement :
-					(List<Element>)sourceProcessorElement.elements("check")) {
-
-				String checkName = checkElement.attributeValue("name");
-
-				Element categoryElement = checkElement.element("category");
-
-				String category = "Miscellaneous";
-
-				if (categoryElement != null) {
-					category = categoryElement.attributeValue("name");
-				}
-
-				Element descriptionElement = checkElement.element(
-					"description");
-
-				String description = StringPool.BLANK;
-
-				if (descriptionElement != null) {
-					description = descriptionElement.attributeValue("name");
-				}
-
-				CheckInfo checkInfo = new CheckInfo(
-					checkName, category, description, sourceProcessorInfo);
-
-				Set<CheckInfo> checkInfoSet =
-					_categoryCheckInfoMap.computeIfAbsent(
-						category, key -> new TreeSet<>());
-
-				checkInfoSet.add(checkInfo);
-
-				checkInfoSet = _sourceProcessorCheckInfoMap.computeIfAbsent(
-					sourceProcessorInfo, key -> new TreeSet<>());
-
-				checkInfoSet.add(checkInfo);
+			if (sourceProcessorInfos.contains(sourceProcessorInfo)) {
+				checkInfos.add(checkInfo);
 			}
 		}
+
+		return checkInfos;
+	}
+
+	private Set<SourceProcessorInfo> _getSourceProcessorInfos(
+		Map<String, CheckInfo> checkInfoMap) {
+
+		Set<SourceProcessorInfo> sourceProcessorInfos = new TreeSet<>();
+
+		for (CheckInfo checkInfo : checkInfoMap.values()) {
+			for (SourceProcessorInfo sourceProcessorInfo :
+					checkInfo.getSourceProcessorInfos()) {
+
+				if (!ListUtil.isEmpty(
+						sourceProcessorInfo.getFileExtensions())) {
+
+					sourceProcessorInfos.add(sourceProcessorInfo);
+				}
+			}
+		}
+
+		return sourceProcessorInfos;
 	}
 
 	private static final String _DOCUMENTATION_CHECKS_DIR_NAME = "checks/";
 
 	private static final String _DOCUMENTATION_DIR_LOCATION =
 		"src/main/resources/documentation/";
-
-	private final Map<String, Set<CheckInfo>> _categoryCheckInfoMap =
-		new TreeMap<>();
-	private final Map<SourceProcessorInfo, Set<CheckInfo>>
-		_sourceProcessorCheckInfoMap = new TreeMap<>();
 
 	private class CheckInfo implements Comparable<CheckInfo> {
 
@@ -321,7 +410,14 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			_name = name;
 			_category = category;
 			_description = description;
-			_sourceProcessorInfo = sourceProcessorInfo;
+
+			_sourceProcessorInfos.add(sourceProcessorInfo);
+		}
+
+		public void addSourceProcessorInfo(
+			SourceProcessorInfo sourceProcessorInfo) {
+
+			_sourceProcessorInfos.add(sourceProcessorInfo);
 		}
 
 		@Override
@@ -337,18 +433,19 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			return _description;
 		}
 
-		public String getFileExtensions() {
-			return _sourceProcessorInfo.getFileExtensions();
-		}
-
 		public String getName() {
 			return _name;
+		}
+
+		public List<SourceProcessorInfo> getSourceProcessorInfos() {
+			return _sourceProcessorInfos;
 		}
 
 		private final String _category;
 		private final String _description;
 		private String _name;
-		private final SourceProcessorInfo _sourceProcessorInfo;
+		private final List<SourceProcessorInfo> _sourceProcessorInfos =
+			new ArrayList<>();
 
 	}
 
@@ -363,11 +460,15 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		@Override
 		public int compareTo(SourceProcessorInfo sourceProcessorInfo) {
-			return _fileExtensions.compareTo(
-				sourceProcessorInfo.getFileExtensions());
+			String fileExtensionsString = _getFileExtensionsString(
+				ListUtil.fromArray(this));
+
+			return fileExtensionsString.compareTo(
+				_getFileExtensionsString(
+					ListUtil.fromArray(sourceProcessorInfo)));
 		}
 
-		public String getFileExtensions() {
+		public List<String> getFileExtensions() {
 			return _fileExtensions;
 		}
 
@@ -375,8 +476,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			return _name;
 		}
 
-		private String _getFileExtensions() {
-			String[] includes = null;
+		private List<String> _getFileExtensions() {
+			List<String> fileExtensions = new ArrayList<>();
 
 			try {
 				Class<?> clazz = Class.forName(
@@ -386,39 +487,27 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 				field.setAccessible(true);
 
-				includes = (String[])field.get(null);
+				String[] includes = (String[])field.get(null);
+
+				for (String include : includes) {
+					int x = include.lastIndexOf(CharPool.PERIOD);
+					int y = include.lastIndexOf(CharPool.SLASH);
+
+					if (x < y) {
+						fileExtensions.add(include.substring(y + 1));
+					}
+					else {
+						fileExtensions.add(include.substring(x));
+					}
+				}
 			}
 			catch (Exception exception) {
-				return StringPool.BLANK;
 			}
 
-			StringBundler sb = new StringBundler();
-
-			for (int i = 0; i < includes.length; i++) {
-				String includeExtension = includes[i];
-
-				int x = includeExtension.lastIndexOf(CharPool.PERIOD);
-				int y = includeExtension.lastIndexOf(CharPool.SLASH);
-
-				if (x < y) {
-					sb.append(includeExtension.substring(y + 1));
-				}
-				else {
-					sb.append(includeExtension.substring(x));
-				}
-
-				if (i == (includes.length - 2)) {
-					sb.append(" or ");
-				}
-				else if (i < (includes.length - 1)) {
-					sb.append(", ");
-				}
-			}
-
-			return sb.toString();
+			return fileExtensions;
 		}
 
-		private final String _fileExtensions;
+		private final List<String> _fileExtensions;
 		private String _name;
 
 	}

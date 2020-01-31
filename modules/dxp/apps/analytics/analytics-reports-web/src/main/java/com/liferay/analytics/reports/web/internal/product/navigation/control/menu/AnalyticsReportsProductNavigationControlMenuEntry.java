@@ -143,6 +143,17 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 				ReflectionUtil.throwException(windowStateException);
 			}
 
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				(InfoDisplayObjectProvider)httpServletRequest.getAttribute(
+					AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+
+			portletURL.setParameter(
+				"classNameId",
+				String.valueOf(infoDisplayObjectProvider.getClassNameId()));
+			portletURL.setParameter(
+				"classPK",
+				String.valueOf(infoDisplayObjectProvider.getClassPK()));
+
 			values.put("analyticsReportsPanelURL", portletURL.toString());
 
 			values.put("cssClass", StringPool.BLANK);

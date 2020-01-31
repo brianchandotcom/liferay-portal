@@ -30,7 +30,7 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 
 if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL.toString());
+	portletDisplay.setURLBack(backURL);
 
 	renderResponse.setTitle(LanguageUtil.get(resourceBundle, "compare-versions"));
 }

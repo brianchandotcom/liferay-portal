@@ -38,7 +38,7 @@ context.put("eventName", itemSelectorUploadViewDisplayContext.getItemSelectedEve
 context.put("maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize());
 context.put("rootNode", "#itemSelectorUploadContainer");
 context.put("uploadItemReturnType", HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName()));
-context.put("uploadItemURL", uploadURL.toString());
+context.put("uploadItemURL", uploadURL);
 context.put("validExtensions", ArrayUtil.isEmpty(itemSelectorUploadViewDisplayContext.getExtensions()) ? "*" : StringUtil.merge(itemSelectorUploadViewDisplayContext.getExtensions()));
 %>
 

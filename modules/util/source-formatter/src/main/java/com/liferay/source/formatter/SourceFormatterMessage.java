@@ -18,6 +18,9 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.source.formatter.util.CheckType;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
+
+import java.io.InputStream;
 
 /**
  * @author Hugo Huijser
@@ -84,11 +87,23 @@ public class SourceFormatterMessage
 	}
 
 	public String getMarkdownFilePath() {
-		if (_markdownFileName == null) {
-			return null;
+		if (_markdownFileName != null) {
+			return _OLD_DOCUMENTATION_URL + _markdownFileName;
 		}
 
-		return _DOCUMENTATION_URL + _markdownFileName;
+		String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
+			_checkName);
+
+		ClassLoader classLoader = SourceFormatterMessage.class.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"documentation/checks/" + markdownFileName);
+
+		if (inputStream != null) {
+			return _DOCUMENTATION_URL + markdownFileName;
+		}
+
+		return null;
 	}
 
 	public String getMessage() {
@@ -97,14 +112,15 @@ public class SourceFormatterMessage
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append(_message);
 
-		if (_markdownFileName != null) {
+		String markdownFilePath = getMarkdownFilePath();
+
+		if (markdownFilePath != null) {
 			sb.append(", see ");
-			sb.append(_DOCUMENTATION_URL);
-			sb.append(_markdownFileName);
+			sb.append(markdownFilePath);
 		}
 
 		sb.append(": ");
@@ -132,6 +148,10 @@ public class SourceFormatterMessage
 	}
 
 	private static final String _DOCUMENTATION_URL =
+		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
+			"/source-formatter/src/main/resources/documentation/checks/";
+
+	private static final String _OLD_DOCUMENTATION_URL =
 		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
 			"/source-formatter/documentation/";
 

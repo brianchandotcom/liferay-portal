@@ -30,9 +30,14 @@
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="updateVirtualHost" qname="operNS:updateVirtualHost" returnQName="updateVirtualHostReturn" returnType="rtns:LayoutSetSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="privateLayout" type="tns:boolean"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="virtualHost" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="virtualHostname" type="tns:string"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="updateLayoutSetPrototypeLinkEnabled updateLogo updateLookAndFeel updateSettings updateVirtualHost" />
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="updateVirtualHosts" qname="operNS:updateVirtualHosts" returnQName="updateVirtualHostsReturn" returnType="rtns:LayoutSetSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="privateLayout" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="virtualHostnames" type="tns:anyType"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="updateLayoutSetPrototypeLinkEnabled updateLogo updateLookAndFeel updateSettings updateVirtualHost updateVirtualHosts" />
 		<parameter name="className" value="com.liferay.portal.service.http.LayoutSetServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.kernel.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

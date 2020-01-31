@@ -14,7 +14,7 @@
 
 import './EditablePageHeader.soy';
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';

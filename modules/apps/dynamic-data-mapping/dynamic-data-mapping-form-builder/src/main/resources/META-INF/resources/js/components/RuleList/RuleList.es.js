@@ -15,7 +15,7 @@
 import 'clay-button';
 
 import 'clay-dropdown';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';

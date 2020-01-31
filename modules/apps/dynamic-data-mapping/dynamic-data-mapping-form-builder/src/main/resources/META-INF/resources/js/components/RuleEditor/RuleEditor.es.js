@@ -21,8 +21,8 @@ import 'clay-button';
 import 'clay-modal';
 
 import 'dynamic-data-mapping-form-renderer/js/components/PageRenderer/PageRenderer.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';

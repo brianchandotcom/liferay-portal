@@ -14,9 +14,8 @@
 
 import '../SuccessPage/SuccessPage.es';
 
+import {PagesVisitor, compose} from 'dynamic-data-mapping-form-renderer';
 import FormRenderer from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormRenderer.es';
-import compose from 'dynamic-data-mapping-form-renderer/js/util/compose.es';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 

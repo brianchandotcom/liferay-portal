@@ -13,7 +13,7 @@
  */
 
 import FormBuilderWithLayoutProvider from 'dynamic-data-mapping-form-builder';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import core from 'metal';
 import React from 'react';
 

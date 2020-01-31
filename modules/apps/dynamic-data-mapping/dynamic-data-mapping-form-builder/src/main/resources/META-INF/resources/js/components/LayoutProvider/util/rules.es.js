@@ -12,7 +12,7 @@
  * details.
  */
 
-import {RulesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import {RulesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import Token from '../../../expressions/Token.es';
 import Tokenizer from '../../../expressions/Tokenizer.es';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
+import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 
 const findFieldByName = (dataDefinitionFields, fieldName) =>
 	dataDefinitionFields.find(({name}) => name === fieldName);

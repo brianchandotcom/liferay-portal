@@ -12,7 +12,7 @@
  * details.
  */
 
-import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
+import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 
 import {updateFocusedField} from '../util/focusedField.es';
 import {updateRulesReferences} from '../util/rules.es';

@@ -91,7 +91,7 @@ const ManageLanguages = ({
 				{Liferay.Language.get('language-selection')}
 			</ClayModal.Header>
 
-			<ClayModal.Body>
+			<ClayModal.Body scrollable>
 				<ClayTable borderless headVerticalAlignment="middle">
 					<ClayTable.Body>
 						{availableLocales.map(locale => {

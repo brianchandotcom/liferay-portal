@@ -20,7 +20,6 @@
 DepotAdminMembershipsDisplayContext
 	depotAdminMembershipsDisplayContext = new DepotAdminMembershipsDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-User selUser = depotAdminMembershipsDisplayContext.getUser();
 List<Group> groups = depotAdminMembershipsDisplayContext.getDepots();
 
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "repositories");
@@ -77,22 +76,11 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "reposi
 			name="name"
 		/>
 
-		<%
-		List<UserGroupRole> userGroupRoles = new ArrayList<>();
-		int userGroupRolesCount = 0;
-
-		if (selUser != null) {
-			userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), group.getGroupId(), 0, PropsValues.USERS_ADMIN_ROLE_COLUMN_LIMIT);
-			userGroupRolesCount = UserGroupRoleLocalServiceUtil.getUserGroupRolesCount(selUser.getUserId(), group.getGroupId());
-		}
-		%>
-
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
 			name="roles"
-			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount)) %>"
+			value="<%= HtmlUtil.escape(depotAdminMembershipsDisplayContext.getRoles(group)) %>"
 		/>
-
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator

@@ -17,26 +17,15 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
-import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
-import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
-import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
 import java.io.IOException;
 
@@ -51,8 +40,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Chema Balsas
  */
 @Component(service = DynamicInclude.class)
-public class CustomizationSettingsControlMenuJSPDynamicInclude extends
-	BaseJSPDynamicInclude {
+public class CustomizationSettingsControlMenuJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	public static final String CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION =
 		"CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION";

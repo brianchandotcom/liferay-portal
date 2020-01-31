@@ -65,6 +65,8 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
+		String fileDescription = uploadPortletRequest.getParameter(
+			"description");
 
 		_dlValidator.validateFileSize(fileName, size);
 
@@ -84,7 +86,7 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 			return _dlAppService.addFileEntry(
 				themeDisplay.getScopeGroupId(), folderId, uniqueFileName,
-				contentType, uniqueFileName, StringPool.BLANK, StringPool.BLANK,
+				contentType, uniqueFileName, fileDescription, StringPool.BLANK,
 				inputStream, size, serviceContext);
 		}
 	}

@@ -322,6 +322,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										data.put("href", themeDisplay.getPathThemeImages() + "/file_system/large/default.png");
 									}
 
+									data.put("description", fileEntry.getDescription());
 									data.put("metadata", itemMedatadaJSONObject.toString());
 									data.put("returnType", ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType));
 									data.put("title", title);

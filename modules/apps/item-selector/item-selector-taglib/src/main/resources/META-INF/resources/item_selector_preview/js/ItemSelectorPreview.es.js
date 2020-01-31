@@ -89,6 +89,7 @@ const ItemSelectorPreview = ({
 
 	const handleClickEdit = () => {
 		const itemTitle = currentItem.title;
+		const itemDescription = currentItem.description;
 		const editDialogTitle = `${Liferay.Language.get(
 			'edit'
 		)} ${itemTitle} (${Liferay.Language.get('copy')})`;
@@ -117,6 +118,7 @@ const ItemSelectorPreview = ({
 				uri: editItemURL,
 				urlParams: {
 					entityURL: currentItem.url,
+					saveFileDescription: itemDescription,
 					saveFileName: itemTitle,
 					saveParamName: 'imageSelectorFileName',
 					saveURL: uploadItemURL

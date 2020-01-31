@@ -393,11 +393,13 @@ class ImageEditor extends PortletBase {
 	submitBlob_(imageBlob) {
 		const saveFileName = this.saveFileName;
 		const saveParamName = this.saveParamName;
+		const saveFileDescription = this.saveFileDescription;
 
 		const promise = new Promise((resolve, reject) => {
 			const formData = new FormData();
 
 			formData.append(saveParamName, imageBlob, saveFileName);
+			formData.append('description', saveFileDescription);
 
 			this.fetch(this.saveURL, formData)
 				.then(response => response.json())
@@ -526,6 +528,14 @@ ImageEditor.STATE = {
 	 * @type {String}
 	 */
 	saveEventName: {
+		validator: core.isString
+	},
+
+	/**
+	 * Description of the saved image to send to the server for the save action.
+	 * @type {String}
+	 */
+	saveFileDescription: {
 		validator: core.isString
 	},
 

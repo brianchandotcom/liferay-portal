@@ -333,7 +333,7 @@
 	<source-processor name="JSPSourceProcessor">
 		<check name="ArrayCheck">
 			<category name="Performance" />
-			<description name="Checks if performance can be improved by using different mehods that can be used by collections" />
+			<description name="Checks if performance can be improved by using different methods that can be used by collections" />
 		</check>
 		<check name="CopyrightCheck">
 			<property name="copyrightFileName" value="copyright.txt" />

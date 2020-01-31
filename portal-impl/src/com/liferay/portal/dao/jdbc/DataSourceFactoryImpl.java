@@ -133,10 +133,10 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			ClassLoader classLoader = currentThread.getContextClassLoader();
 
-			try {
-				currentThread.setContextClassLoader(
-					PortalClassLoaderUtil.getClassLoader());
+			currentThread.setContextClassLoader(
+				PortalClassLoaderUtil.getClassLoader());
 
+			try {
 				Properties jndiEnvironmentProperties = PropsUtil.getProperties(
 					PropsKeys.JNDI_ENVIRONMENT, true);
 

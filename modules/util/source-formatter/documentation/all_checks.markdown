@@ -197,7 +197,7 @@ JavaTermDividersCheck | Miscellaneous | .java | |
 JavaTermOrderCheck | Miscellaneous | .java | |
 JavaTermStylingCheck | Miscellaneous | .java | |
 [JavaTestMethodAnnotationsCheck](checks/java_test_method_annotations_check.markdown) | Naming Conventions | .java | Checks if methods with test annotations follow the naming conventions |
-JavaUnsafeCastingCheck | Bug Prevention | .java | Checks for potential ClassCastException |
+[JavaUnsafeCastingCheck](checks/java_unsafe_casting_check.markdown) | Bug Prevention | .java | Checks for potential ClassCastException |
 JavaUnusedSourceFormatterChecksCheck | Miscellaneous | .java | |
 JavaUpgradeClassCheck | Miscellaneous | .java | |
 JavaUpgradeConnectionCheck | Miscellaneous | .java | |

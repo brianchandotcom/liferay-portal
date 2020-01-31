@@ -148,8 +148,8 @@ public class AssetPublisherConfigurationAction
 				assetEntryActionRegistry, assetHelper,
 				assetListAssetEntryProvider, assetPublisherCustomizer,
 				assetPublisherHelper, assetPublisherWebConfiguration,
-				assetPublisherWebUtil, infoListProviderTracker, renderRequest,
-				renderResponse, renderRequest.getPreferences());
+				assetPublisherWebUtil, infoListProviderTracker, itemSelector,
+				renderRequest, renderResponse, renderRequest.getPreferences());
 
 		httpServletRequest.setAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,

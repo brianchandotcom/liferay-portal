@@ -34,6 +34,10 @@ public class PageDefinitionConverterUtil {
 			LayoutPageTemplateEntryLocalServiceUtil.
 				fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
+		if (layoutPageTemplateEntry == null) {
+			return null;
+		}
+
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
@@ -43,10 +47,6 @@ public class PageDefinitionConverterUtil {
 				dateModified = layout.getModifiedDate();
 				setCollectionName(
 					() -> {
-						if (layoutPageTemplateEntry == null) {
-							return null;
-						}
-
 						LayoutPageTemplateCollection
 							layoutPageTemplateCollection =
 								LayoutPageTemplateCollectionServiceUtil.
@@ -54,16 +54,13 @@ public class PageDefinitionConverterUtil {
 										layoutPageTemplateEntry.
 											getLayoutPageTemplateCollectionId());
 
-						return layoutPageTemplateCollection.getName();
-					});
-				setName(
-					() -> {
-						if (layoutPageTemplateEntry == null) {
-							return layout.getName();
+						if (layoutPageTemplateCollection == null) {
+							return null;
 						}
 
-						return layoutPageTemplateEntry.getName();
+						return layoutPageTemplateCollection.getName();
 					});
+				setName(layoutPageTemplateEntry.getName());
 			}
 		};
 	}

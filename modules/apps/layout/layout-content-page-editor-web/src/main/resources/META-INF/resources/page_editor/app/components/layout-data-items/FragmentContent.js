@@ -40,11 +40,8 @@ import FloatingToolbar from '../FloatingToolbar';
 import UnsafeHTML from '../UnsafeHTML';
 import EditableDecoration from './EditableDecoration';
 
-const editableIsMapped = editableValue =>
-	(editableValue.classNameId &&
-		editableValue.classPK &&
-		editableValue.fieldId) ||
-	editableValue.mappedField;
+const editableIsMappedToInfoItem = editableValue =>
+	editableValue.classNameId && editableValue.classPK && editableValue.fieldId;
 
 const resolveEditableValue = (
 	state,
@@ -60,7 +57,7 @@ const resolveEditableValue = (
 		processorType
 	);
 
-	if (editableIsMapped(editableValue)) {
+	if (editableIsMappedToInfoItem(editableValue)) {
 		return InfoItemService.getAssetFieldValue({
 			classNameId: editableValue.classNameId,
 			classPK: editableValue.classPK,

@@ -39,7 +39,7 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 	<aui:button name="clearAssetListButton" value="clear" />
 </div>
 
-<script>
+<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
 	var assetListEntryId = document.getElementById(
 		'<portlet:namespace />assetListEntryId'
 	);
@@ -53,33 +53,25 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 
 	if (selectAssetListButton) {
 		selectAssetListButton.addEventListener('click', function(event) {
-			var uri =
-				'<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>';
+			var itemSelectorDialog = new ItemSelectorDialog.default({
+				eventName:
+					'<%= assetPublisherDisplayContext.getSelectAssetListEventName() %>',
+				singleSelect: true,
+				title: '<liferay-ui:message key="select-content-set" />',
+				url: '<%= assetPublisherDisplayContext.getAssetListSelectorURL() %>'
+			});
 
-			uri = Liferay.Util.addParams(
-				'<%= assetPublisherDisplayContext.getAssetListPortletNamespace() %>assetListEntryId=' +
-					assetListEntryId.value,
-				uri
-			);
+			itemSelectorDialog.on('selectedItemChange', function(event) {
+				if (event.selectedItem) {
+					var itemValue = JSON.parse(event.selectedItem.value);
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true
-					},
-					eventName:
-						'<%= assetPublisherDisplayContext.getSelectAssetListEventName() %>',
-					id: '<portlet:namespace />selectAssetList',
-					title: '<liferay-ui:message key="select-content-set" />',
-					uri: uri
-				},
-				function(event) {
-					assetListEntryId.value = event.assetlistentryid;
+					assetListEntryId.value = itemValue.assetListEntryId;
 
-					assetListTitle.innerHTML = event.assetlistentrytitle;
+					assetListTitle.innerHTML = itemValue.assetListEntryTitle;
 				}
-			);
+			});
+
+			itemSelectorDialog.open();
 		});
 	}
 
@@ -94,4 +86,4 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 			assetListEntryId.value = '';
 		});
 	}
-</script>
+</aui:script>

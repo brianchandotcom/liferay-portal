@@ -33,6 +33,11 @@ export default function({context, props}) {
 		page
 	});
 
+	function _handleTotalReads() {
+		return api.getTotalReads().then(response => {
+			return response.analyticsReportsTotalReads;
+		});
+	}
 	function _handleTotalViews() {
 		return api.getTotalViews().then(response => {
 			return response.analyticsReportsTotalViews;
@@ -48,8 +53,22 @@ export default function({context, props}) {
 			/>
 
 			<TotalCount
+				className="mt-4"
 				dataProvider={_handleTotalViews}
 				label={Liferay.Util.sub(Liferay.Language.get('total-views'))}
+				popoverHeader={Liferay.Language.get('views')}
+				popoverMessage={Liferay.Language.get(
+					'the-total-amount-of-views-since-the-content-was-published'
+				)}
+			/>
+			<TotalCount
+				className="mt-2"
+				dataProvider={_handleTotalReads}
+				label={Liferay.Util.sub(Liferay.Language.get('total-reads'))}
+				popoverHeader={Liferay.Language.get('reads')}
+				popoverMessage={Liferay.Language.get(
+					'the-total-amount-of-reads-since-the-content-was-published'
+				)}
 			/>
 		</div>
 	);

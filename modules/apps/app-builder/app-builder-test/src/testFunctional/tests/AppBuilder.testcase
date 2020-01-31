@@ -1598,6 +1598,115 @@ definition {
 		DetailsView.validateEntry(entry = "1987");
 	}
 
+	@description = "Publish apps in the product menu and reuse its views"
+	@priority = "5"
+	test PublishAppsInProductMenuAndReuseItsViews {
+
+		var myFormViewName_1 = "My Form View 1";
+		var myFormViewName_2 = "My Form View 2";
+
+		var myTextFieldName_1 = "Text1";
+		var myTextFieldName_2 = "Text2";
+
+		var myTableViewName_1 = "My Table View 1";
+		var myTableViewName_2 = "My Table View 2";
+
+		var myAppName_1 = "Product Menu App 1";
+		var myAppName_2 = "Product Menu App 2";
+		var myAppName_3 = "Product Menu App 3";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.setFieldLabel(fieldLabel = "${myTextFieldName_1}");
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.setName(formViewName = "${myFormViewName_1}");
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.add();
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.setFieldLabel(fieldLabel = "${myTextFieldName_2}");
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.setName(formViewName = "${myFormViewName_2}");
+		FormViewBuilder.save();
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "${myTextFieldName_1}",
+			tableViewName = "${myTableViewName_1}");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "${myTextFieldName_2}",
+			tableViewName = "${myTableViewName_2}");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+		AppBuilderAdmin.add();
+		AppBuilderAdmin.setName(title = "${myAppName_1}");
+		App.selectFormView(formViewName = "${myFormViewName_1}");
+		App.selectTableView(tableViewName = "${myTableViewName_1}");
+		App.toggleDeploy(deployOption = "Product Menu");
+		App.openProductMenuPlaceItDropdown();
+		App.validadeProductMenuPlaceItDropdownList(itemName = "Control Panel");
+		App.validadeProductMenuPlaceItDropdownList(itemName = "Site Menu");
+		App.validadeProductMenuPlaceItDropdownList(itemName = "Control Panel and Site Menu");
+
+		App.selectProductMenuPlaceItDropdownOption(itemName = "Site Menu");
+		App.validadeProductMenuSiteDropdownPresent();
+		App.selectProductMenuPlaceItDropdownOption(itemName = "Control Panel and Site Menu");
+		App.validadeProductMenuSiteDropdownPresent();
+
+		App.selectProductMenuPlaceItDropdownOption(itemName = "Control Panel");
+		Button.click(button = "Deploy");
+
+		App.add(
+			appTitle = "${myAppName_2}",
+			deployOption = "Product Menu",
+			formViewName = "${myFormViewName_2}",
+			tableViewName = "${myTableViewName_2}");
+
+		App.add(
+			appTitle = "${myAppName_3}",
+			deployOption = "Product Menu",
+			formViewName = "${myFormViewName_1}",
+			tableViewName = "${myTableViewName_2}");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "${myAppName_1}");
+
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.editText(
+			fieldName = "${myTextFieldName_1}",
+			fieldValue = "Content from Form 1");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "${myAppName_2}");
+
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.editText(
+			fieldName = "${myTextFieldName_2}",
+			fieldValue = "Content from Form 2");
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "${myAppName_3}");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
+
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "${myTextFieldName_1}");
+	}
+
 	@description = "Search for a deployment in the deployment lists"
 	@priority = "5"
 	test SearchForDeployedItem {

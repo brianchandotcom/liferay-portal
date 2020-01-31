@@ -11,11 +11,13 @@ definition {
 
 		AppBuilderAdmin.setName(title = "${appTitle}");
 
-		Check.checkToggleSwitch(
-			key_deployOption = "${deployOption}",
-			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
+		App.toggleDeploy(deployOption = "${deployOption}");
 
 		Button.click(button = "Deploy");
+	}
+
+	macro openProductMenuPlaceItDropdown {
+		Click(locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN");
 	}
 
 	macro saveApp {
@@ -28,6 +30,13 @@ definition {
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 
 		Button.clickNext();
+	}
+
+	macro selectProductMenuPlaceItDropdownOption {
+		App.openProductMenuPlaceItDropdown();
+		Click(
+			key_dropdownOption = "${itemName}",
+			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 	}
 
 	macro selectTableView {
@@ -52,6 +61,17 @@ definition {
 		Uncheck.uncheckToggleSwitch(
 			key_deployOption = "${deployOption}",
 			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
+	}
+
+	macro validadeProductMenuPlaceItDropdownList {
+		AssertTextEquals(
+			key_dropdownOption = "${itemName}",
+			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION",
+			value1 = "${itemName}");
+	}
+
+	macro validadeProductMenuSiteDropdownPresent {
+		AssertElementPresent(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
 	}
 
 	macro validateDeployedAs {

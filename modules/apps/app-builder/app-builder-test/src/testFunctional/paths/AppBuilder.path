@@ -189,6 +189,24 @@
 	<td></td>
 </tr>
 
+<tr>
+	<td>PRODUCT_MENU_PLACE_IT_DROPDOWN</td>
+	<td>//select[@id='scope']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION</td>
+	<td>//option[text()='${key_dropdownOption}']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>PRODUCT_MENU_SITE_DROPDOWN</td>
+	<td>//button[@id='site']</td>
+	<td></td>
+</tr>
+
 <!--CONTROL_PANEL-->
 <tr>
 	<td>CUSTOM_PORTLET</td>
@@ -256,7 +274,7 @@
  	<td>//div[contains(text(),'An entry was added.')]</td>
  	<td></td>
  </tr>
- 
+
 </tbody>
 </table>
 </body>

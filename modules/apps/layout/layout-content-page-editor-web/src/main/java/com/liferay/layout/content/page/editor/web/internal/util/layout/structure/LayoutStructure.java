@@ -382,13 +382,13 @@ public class LayoutStructure {
 
 		_updateLayoutStructure(newLayoutStructureItem, position);
 
+		duplicatedLayoutStructureItems.add(newLayoutStructureItem);
+
 		for (String childrenItemId : layoutStructureItem.getChildrenItemIds()) {
 			duplicatedLayoutStructureItems.addAll(
 				_duplicateLayoutStructureItem(
 					childrenItemId, newLayoutStructureItem.getItemId(), -1));
 		}
-
-		duplicatedLayoutStructureItems.add(newLayoutStructureItem);
 
 		return duplicatedLayoutStructureItems;
 	}

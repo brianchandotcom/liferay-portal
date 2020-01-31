@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -103,6 +104,8 @@ public class DocumentResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		Folder folder = _dlAppService.getFolder(documentFolderId);
+
 		return _getDocumentsPage(
 			booleanQuery -> {
 				if (documentFolderId != null) {
@@ -120,7 +123,8 @@ public class DocumentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			search, filter, pagination, sorts);
+			search, filter, pagination, sorts,
+			_getDocumentFolderListActions(folder.getGroupId()));
 	}
 
 	public Rating getDocumentMyRating(Long documentId) throws Exception {
@@ -164,7 +168,7 @@ public class DocumentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			search, filter, pagination, sorts);
+			search, filter, pagination, sorts, _getSiteListActions(siteId));
 	}
 
 	@Override
@@ -380,9 +384,54 @@ public class DocumentResourceImpl
 					))));
 	}
 
+	private Map<String, Map<String, String>> _getActions(FileEntry fileEntry) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				"DELETE", fileEntry.getPrimaryKey(), "deleteDocument",
+				"com.liferay.document.library.kernel.model.DLFileEntry",
+				fileEntry.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", fileEntry.getPrimaryKey(), "getDocument",
+				"com.liferay.document.library.kernel.model.DLFileEntry",
+				fileEntry.getGroupId())
+		).put(
+			"replace",
+			addAction(
+				"UPDATE", fileEntry.getPrimaryKey(), "putDocument",
+				"com.liferay.document.library.kernel.model.DLFileEntry",
+				fileEntry.getGroupId())
+		).put(
+			"update",
+			addAction(
+				"UPDATE", fileEntry.getPrimaryKey(), "patchDocument",
+				"com.liferay.document.library.kernel.model.DLFileEntry",
+				fileEntry.getGroupId())
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getDocumentFolderListActions(
+		Long groupId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_DOCUMENT", "postDocumentFolderDocument",
+				"com.liferay.document.library", groupId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getDocumentFolderDocumentsPage",
+				"com.liferay.document.library", groupId)
+		).build();
+	}
+
 	private Page<Document> _getDocumentsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Map<String, String>> actions)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -395,7 +444,7 @@ public class DocumentResourceImpl
 			document -> _toDocument(
 				_dlAppService.getFileEntry(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+			sorts, (Map)actions);
 	}
 
 	private CustomField[] _getExpandoBridgeAttributes(
@@ -417,6 +466,20 @@ public class DocumentResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
+	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_DOCUMENT", "postSiteDocument",
+				"com.liferay.document.library", siteId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getSiteDocumentsPage", "com.liferay.document.library",
+				siteId)
+		).build();
+	}
+
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
 		return new SPIRatingResource<>(
 			DLFileEntry.class.getName(), _ratingsEntryLocalService,
@@ -428,8 +491,9 @@ public class DocumentResourceImpl
 	private Document _toDocument(FileEntry fileEntry) throws Exception {
 		return _documentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				_dtoConverterRegistry, fileEntry.getFileEntryId(), null,
-				contextUriInfo, contextUser));
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				(Map)_getActions(fileEntry), _dtoConverterRegistry,
+				fileEntry.getFileEntryId(), null, contextUriInfo, contextUser));
 	}
 
 	@Reference

@@ -82,6 +82,7 @@ public class DocumentDTOConverter
 
 		return new Document() {
 			{
+				actions = dtoConverterContext.getActions();
 				adaptedImages = _getAdaptiveMedias(fileEntry);
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(

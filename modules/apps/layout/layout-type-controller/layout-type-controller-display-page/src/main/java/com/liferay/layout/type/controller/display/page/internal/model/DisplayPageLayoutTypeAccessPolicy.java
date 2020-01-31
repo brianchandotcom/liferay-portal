@@ -14,24 +14,11 @@
 
 package com.liferay.layout.type.controller.display.page.internal.model;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
+import com.liferay.layout.type.controller.BaseLayoutTypeAccessPolicyImpl;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -42,42 +29,5 @@ import org.osgi.service.component.annotations.Reference;
 	service = LayoutTypeAccessPolicy.class
 )
 public class DisplayPageLayoutTypeAccessPolicy
-	extends DefaultLayoutTypeAccessPolicyImpl {
-
-	@Override
-	protected boolean hasAccessPermission(
-			HttpServletRequest httpServletRequest, Layout layout,
-			Portlet portlet)
-		throws PortalException {
-
-		if (layout.getMasterLayoutPlid() > 0) {
-			Layout masterLayout = _layoutLocalService.fetchLayout(
-				layout.getMasterLayoutPlid());
-
-			if (masterLayout != null) {
-				String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-					masterLayout.getPlid(), portlet.getPortletId());
-
-				List<ResourcePermission> resourcePermissions =
-					_resourcePermissionLocalService.
-						getResourceResourcePermissions(
-							masterLayout.getCompanyId(),
-							masterLayout.getGroupId(), portlet.getPortletName(),
-							resourcePrimKey);
-
-				if (ListUtil.isNotEmpty(resourcePermissions)) {
-					layout = masterLayout;
-				}
-			}
-		}
-
-		return super.hasAccessPermission(httpServletRequest, layout, portlet);
-	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
+	extends BaseLayoutTypeAccessPolicyImpl {
 }

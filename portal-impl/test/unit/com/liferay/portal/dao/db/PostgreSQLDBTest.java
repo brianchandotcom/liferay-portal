@@ -26,7 +26,7 @@ import org.junit.Test;
  * @author Miguel Pastor
  * @author Alberto Chaparro
  */
-public class PostgresDBTest extends BaseDBTestCase {
+public class PostgreSQLDBTest extends BaseDBTestCase {
 
 	@Test
 	public void testRewordAlterColumnType() throws IOException {

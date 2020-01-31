@@ -55,7 +55,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 #elseif (${liferayVersion.startsWith("7.1")} || (${liferayVersion.startsWith("7.2")} && ${dependencyInjector} == "spring"))
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender.api", version: "3.0.0"
-#elseif (${liferayVersion.startsWith("7.3")} && ${dependencyInjector} == "spring"))
+#elseif (${liferayVersion.startsWith("7.3")} && ${dependencyInjector} == "spring")
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender.api", version: "5.0.0"
 #end
 #if (${liferayVersion.startsWith("7.0")})

@@ -4,88 +4,166 @@
 <module name="Checker">
 	<module name="TreeWalker">
 		<property name="tabWidth" value="4" />
-		<module name="AnnotationUseStyleCheck" />
-		<module name="ArrayTypeStyleCheck" />
-		<module name="AvoidNestedBlocksCheck" />
-		<module name="AvoidStarImportCheck" />
-		<module name="DefaultComesLastCheck" />
+		<module name="AnnotationUseStyleCheck">
+			<property name="description" value="Checks the style of elements in annotations." />
+			<property name="documentationLocation" value="config_annotation.html#AnnotationUseStyle" />
+		</module>
+		<module name="ArrayTypeStyleCheck">
+			<property name="description" value="Checks the style of array type definitions." />
+			<property name="documentationLocation" value="config_misc.html#ArrayTypeStyle" />
+		</module>
+		<module name="AvoidNestedBlocksCheck">
+			<property name="description" value="Finds nested blocks (blocks that are used freely in the code)." />
+			<property name="documentationLocation" value="config_blocks.html#AvoidNestedBlocks" />
+		</module>
+		<module name="AvoidStarImportCheck">
+			<property name="description" value="Checks that there are no import statements that use the * notation." />
+			<property name="documentationLocation" value="config_imports.html#AvoidStarImport" />
+		</module>
+		<module name="DefaultComesLastCheck">
+			<property name="description" value="Check that the default is after all the cases in a switch statement." />
+			<property name="documentationLocation" value="config_coding.html#DefaultComesLast" />
+		</module>
 		<module name="JavadocStyleCheck">
 			<property name="checkFirstSentence" value="false" />
+			<property name="description" value="Validates Javadoc comments to help ensure they are well formed." />
+			<property name="documentationLocation" value="config_javadoc.html#JavadocStyle" />
 		</module>
 		<module name="LocalFinalVariableNameCheck">
+			<property name="description" value="Checks that local final variable names conform to a specified pattern." />
+			<property name="documentationLocation" value="config_naming.html#LocalFinalVariableName" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
 			<message key="name.invalidPattern" value="Local final variable ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="LocalVariableNameCheck">
+			<property name="description" value="Checks that local, non-final variable names conform to a specified pattern." />
+			<property name="documentationLocation" value="config_naming.html#LocalVariableName" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
 			<message key="name.invalidPattern" value="Local non-final variable ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="MemberNameCheck">
 			<property name="applyToPackage" value="false" />
 			<property name="applyToPrivate" value="false" />
+			<property name="description" value="Checks that instance variable names conform to a specified pattern." />
+			<property name="documentationLocation" value="config_naming.html#MemberName" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
 			<message key="name.invalidPattern" value="Protected or public non-static field ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="MemberNameCheck">
 			<property name="applyToProtected" value="false" />
 			<property name="applyToPublic" value="false" />
+			<property name="description" value="Checks that instance variable names conform to a specified pattern." />
+			<property name="documentationLocation" value="config_naming.html#MemberName" />
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$" />
 			<message key="name.invalidPattern" value="Private non-static field ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="MethodNameCheck">
 			<property name="applyToPackage" value="false" />
 			<property name="applyToPrivate" value="false" />
+			<property name="description" value="Checks that method names conform to a specified pattern." />
+			<property name="documentationLocation" value="config_naming.html#MethodName" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
 			<message key="name.invalidPattern" value="Protected or public method ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="MethodNameCheck">
 			<property name="applyToProtected" value="false" />
 			<property name="applyToPublic" value="false" />
+			<property name="description" value="Checks that method names conform to a specified pattern." />
+			<property name="documentationLocation" value="config_naming.html#MethodName" />
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$|readObject|writeObject" />
 			<message key="name.invalidPattern" value="Private method ''{0}'' must match pattern ''{1}''" />
 		</module>
-		<module name="MethodParamPadCheck" />
-		<module name="MissingDeprecatedCheck" />
-		<module name="ModifierOrderCheck" />
-		<module name="MultipleVariableDeclarationsCheck" />
-		<module name="NoLineWrapCheck" />
+		<module name="MethodParamPadCheck">
+			<property name="description" value="Checks the padding between the identifier of a method definition, constructor definition, method call, or constructor invocation; and the left parenthesis of the parameter list." />
+			<property name="documentationLocation" value="config_whitespace.html#MethodParamPad" />
+		</module>
+		<module name="MissingDeprecatedCheck">
+			<property name="description" value="Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present." />
+			<property name="documentationLocation" value="config_annotation.html#MissingDeprecated" />
+		</module>
+		<module name="ModifierOrderCheck">
+			<property name="description" value="Checks that the order of modifiers conforms to the suggestions in the Java Language specification, § 8.1.1, 8.3.1, 8.4.3 and 9.4." />
+			<property name="documentationLocation" value="config_modifier.html#ModifierOrder" />
+		</module>
+		<module name="MultipleVariableDeclarationsCheck">
+			<property name="description" value="Checks that each variable declaration is in its own statement and on its own line." />
+			<property name="documentationLocation" value="config_coding.html#MultipleVariableDeclarations" />
+		</module>
+		<module name="NoLineWrapCheck">
+			<property name="description" value="Checks that chosen statements are not line-wrapped." />
+			<property name="documentationLocation" value="config_whitespace.html#NoLineWrap" />
+		</module>
 		<module name="NoWhitespaceAfterCheck">
+			<property name="description" value="Checks that there is no whitespace after a token." />
+			<property name="documentationLocation" value="config_whitespace.html#NoWhitespaceAfter" />
 			<property name="tokens" value="ARRAY_DECLARATOR, ARRAY_INIT, BNOT, DEC, DOT, INC, INDEX_OP, LNOT, TYPECAST, UNARY_MINUS, UNARY_PLUS" />
 		</module>
-		<module name="NoWhitespaceBeforeCheck" />
-		<module name="OneStatementPerLineCheck" />
+		<module name="NoWhitespaceBeforeCheck">
+			<property name="description" value="Checks that there is no whitespace before a token." />
+			<property name="documentationLocation" value="config_whitespace.html#NoWhitespaceBefore" />
+		</module>
+		<module name="OneStatementPerLineCheck">
+			<property name="description" value="Checks that there is only one statement per line." />
+			<property name="documentationLocation" value="config_coding.html#OneStatementPerLine" />
+		</module>
 		<module name="OperatorWrapCheck">
+			<property name="description" value="Checks the policy on how to wrap lines on operators." />
+			<property name="documentationLocation" value="config_whitespace.html#OperatorWrap" />
 			<property name="option" value="eol" />
 			<property name="tokens" value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, SL, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN, TYPE_EXTENSION_AND" />
 		</module>
-		<module name="PackageNameCheck" />
+		<module name="PackageNameCheck">
+			<property name="description" value="Checks that package names conform to a specified pattern." />
+			<property name="documentationLocation" value="config_naming.html#PackageName" />
+		</module>
 		<module name="ParameterNameCheck">
+			<property name="description" value="Checks that method parameter names conform to a specified pattern." />
+			<property name="documentationLocation" value="config_naming.html#ParameterName" />
 			<message key="name.invalidPattern" value="Parameter ''{0}'' must match pattern ''{1}''" />
 		</module>
-		<module name="RequireThisCheck" />
+		<module name="RequireThisCheck">
+			<property name="description" value="Checks that references to instance variables and methods of the present object are explicitly of the form 'this.varName' or 'this.methodName(args)' and that those references don't rely on the default behavior when 'this.' is absent." />
+			<property name="documentationLocation" value="config_coding.html#RequireThis" />
+		</module>
 		<module name="StaticVariableNameCheck">
 			<property name="applyToPackage" value="false" />
 			<property name="applyToPrivate" value="false" />
+			<property name="description" value="Checks that static, non-final variable names conform to a specified pattern." />
+			<property name="documentationLocation" value="config_naming.html#StaticVariableName" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
 			<message key="name.invalidPattern" value="Protected or public static non-final field ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="StaticVariableNameCheck">
 			<property name="applyToProtected" value="false" />
 			<property name="applyToPublic" value="false" />
+			<property name="description" value="Checks that static, non-final variable names conform to a specified pattern." />
+			<property name="documentationLocation" value="config_naming.html#StaticVariableName" />
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$" />
 			<message key="name.invalidPattern" value="Private static non-final field ''{0}'' must match pattern ''{1}''" />
 		</module>
-		<module name="StringLiteralEqualityCheck" />
+		<module name="StringLiteralEqualityCheck">
+			<property name="description" value="Checks that string literals are not used with == or !=." />
+			<property name="documentationLocation" value="config_coding.html#StringLiteralEquality" />
+		</module>
 		<module name="TypeNameCheck">
+			<property name="description" value="Checks that type names conform to a specified pattern." />
+			<property name="documentationLocation" value="config_naming.html#TypeName" />
 			<property name="format" value="^[A-Z][_a-zA-Z0-9]*" />
 			<message key="name.invalidPattern" value="Class, interface, enum or annotation ''{0}'' must match pattern ''{1}''" />
 		</module>
-		<module name="UnnecessaryParenthesesCheck" />
+		<module name="UnnecessaryParenthesesCheck">
+			<property name="description" value="Checks if unnecessary parentheses are used in a statement or expression." />
+			<property name="documentationLocation" value="config_coding.html#UnnecessaryParentheses" />
+		</module>
 		<module name="WhitespaceAfterCheck">
+			<property name="description" value="Checks that a token is followed by whitespace, with the exception that it does not check for whitespace after the semicolon of an empty for iterator." />
+			<property name="documentationLocation" value="config_whitespace.html#WhitespaceAfter" />
 			<property name="tokens" value="COMMA, SEMI" />
 		</module>
 		<module name="WhitespaceAroundCheck">
 			<property name="allowEmptyTypes" value="true" />
+			<property name="description" value="Checks that a token is surrounded by whitespace." />
+			<property name="documentationLocation" value="config_whitespace.html#WhitespaceAround" />
 		</module>
 
 		<!-- Custom checks -->

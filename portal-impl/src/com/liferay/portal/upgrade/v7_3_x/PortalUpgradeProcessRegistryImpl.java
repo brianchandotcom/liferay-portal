@@ -63,6 +63,11 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version(8, 2, 0), new UpgradeAssetEntryMappingTables());
+
+		upgradeProcesses.put(
+			new Version(8, 3, 0), new UpgradeUserGroupGroupRole());
+
+		upgradeProcesses.put(new Version(8, 4, 0), new UpgradeUserGroupRole());
 	}
 
 }

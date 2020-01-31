@@ -70,8 +70,8 @@ const RemoveButton = ({node}) => {
 export default function StructureTreeNode({node}) {
 	const hoverItem = useHoverItem();
 	const isHovered = useIsHovered();
-	const selectItem = useSelectItem();
 	const isSelected = useIsSelected();
+	const selectItem = useSelectItem();
 
 	return (
 		<div

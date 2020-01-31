@@ -200,7 +200,11 @@ export default function LinkConfigurationPanel({item}) {
 					fieldType={EDITABLE_TYPES.text}
 					mappedItem={editableConfig}
 					onMappingSelect={mappedItem => {
-						updateRowConfig({...mappedItem, mapperType: 'link'});
+						updateRowConfig({
+							...mappedItem,
+							mapperType: 'link',
+							target: editableConfig.target
+						});
 
 						updateMappedHrefValue({
 							classNameId: mappedItem.classNameId,

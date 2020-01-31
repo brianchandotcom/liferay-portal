@@ -89,9 +89,7 @@ describe('The SingleReassignModal component should', () => {
 		const emptyState = getByTestId('emptyState');
 		const retryBtn = getByTestId('retryButton');
 
-		expect(alertError).toHaveTextContent(
-			'your-connection-was-unexpectedly-lost'
-		);
+		expect(alertError).toHaveTextContent('your-request-has-failed');
 		expect(retryBtn).toHaveTextContent('retry');
 		expect(emptyState.children[0]).toHaveTextContent(
 			'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
@@ -132,9 +130,7 @@ describe('The SingleReassignModal component should', () => {
 		const alertError = getByTestId('alertError');
 		const reassignBtn = getByTestId('reassignButton');
 
-		expect(alertError).toHaveTextContent(
-			'your-connection-was-unexpectedly-lost'
-		);
+		expect(alertError).toHaveTextContent('your-request-has-failed');
 		expect(reassignBtn).not.toHaveAttribute('disabled');
 
 		fireEvent.click(reassignBtn);

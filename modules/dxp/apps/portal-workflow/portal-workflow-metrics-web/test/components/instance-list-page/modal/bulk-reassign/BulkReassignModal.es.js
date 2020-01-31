@@ -148,9 +148,7 @@ describe('The BulkReassignModal component should', () => {
 
 		const retryBtn = emptyState.children[0].children[1];
 
-		expect(alertError).toHaveTextContent(
-			'your-connection-was-unexpectedly-lost'
-		);
+		expect(alertError).toHaveTextContent('your-request-has-failed');
 
 		expect(emptyState.children[0].children[1]).toHaveTextContent('retry');
 		expect(emptyState.children[0].children[0]).toHaveTextContent(
@@ -238,13 +236,11 @@ describe('The BulkReassignModal component should', () => {
 
 		const retryBtn = emptyState.children[0].children[1];
 
-		expect(alertError).toHaveTextContent(
-			'your-connection-was-unexpectedly-lost'
-		);
+		expect(alertError).toHaveTextContent('your-request-has-failed');
 
 		expect(emptyState.children[0].children[1]).toHaveTextContent('retry');
 		expect(emptyState.children[0].children[0]).toHaveTextContent(
-			'unable-to-retrieve-assignees'
+			'failed-to-retrieve-assignees'
 		);
 
 		fireEvent.click(retryBtn);
@@ -346,7 +342,7 @@ describe('The BulkReassignModal component should', () => {
 		const nextBtn = getByTestId('nextButton');
 
 		expect(alertError).toHaveTextContent(
-			'your-connection-was-unexpectedly-lost select-reassign-to-retry'
+			'your-request-has-failed select-reassign-to-retry'
 		);
 
 		await fireEvent.click(nextBtn);

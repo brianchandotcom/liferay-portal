@@ -112,8 +112,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MASTER_LAYOUT_NAME</td>
+	<td>//div[@class='sheet-section']//span[contains(@id,'masterLayoutName')][contains(.,'${key_masterLayoutName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REGULAR_UNIQUE_LOOK_AND_FEEL</td>
 	<td>//input[contains(@id,'regularUniqueLookAndFeel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SECTION_TITLE</td>
+	<td>//div[@class='sheet-section']/h3[contains(.,'${key_sectionTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

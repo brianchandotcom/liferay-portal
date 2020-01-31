@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -135,6 +136,8 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 		JSONArray duplicatedFragmentEntryLinksJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
+		List<String> duplicatedLayoutStructureItemIds = new ArrayList<>();
+
 		JSONObject layoutDataJSONObject =
 			LayoutStructureUtil.updateLayoutPageTemplateData(
 				themeDisplay.getScopeGroupId(), segmentsExperienceId,
@@ -145,6 +148,9 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 
 					for (LayoutStructureItem duplicatedLayoutStructureItem :
 							duplicatedLayoutStructureItems) {
+
+						duplicatedLayoutStructureItemIds.add(
+							duplicatedLayoutStructureItem.getItemId());
 
 						if (!Objects.equals(
 								LayoutDataItemTypeConstants.TYPE_FRAGMENT,
@@ -177,12 +183,16 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 					}
 				});
 
-		return JSONUtil.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"duplicatedFragmentEntryLinks",
-			duplicatedFragmentEntryLinksJSONArray
-		).put(
-			"layoutData", layoutDataJSONObject
-		);
+			duplicatedFragmentEntryLinksJSONArray);
+
+		if (!duplicatedLayoutStructureItemIds.isEmpty()) {
+			jsonObject.put(
+				"duplicatedItemId", duplicatedLayoutStructureItemIds.get(0));
+		}
+
+		return jsonObject.put("layoutData", layoutDataJSONObject);
 	}
 
 	private void _copyPortletPreferences(

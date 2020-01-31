@@ -131,41 +131,38 @@ export default function FloatingToolbar({
 	}, [panelId, show]);
 
 	return (
-		show && (
+		show &&
+		buttons.length > 0 && (
 			<div onClick={event => event.stopPropagation()}>
-				{buttons.length &&
-					createPortal(
-						<div className="p-2 position-fixed" ref={toolbarRef}>
-							<div className="popover position-static">
-								<div className="p-2 popover-body">
-									{buttons.map(button => (
-										<ClayButtonWithIcon
-											borderless
-											className={classNames({
-												active:
-													button.panelId === panelId,
-												'lfr-portal-tooltip':
-													button.title
-											})}
-											displayType="secondary"
-											key={button.id}
-											onClick={() =>
-												handleButtonClick(
-													button.id,
-													button.panelId
-												)
-											}
-											small
-											symbol={button.icon}
-											title={button.title}
-										/>
-									))}
-								</div>
+				{createPortal(
+					<div className="p-2 position-fixed" ref={toolbarRef}>
+						<div className="popover position-static">
+							<div className="p-2 popover-body">
+								{buttons.map(button => (
+									<ClayButtonWithIcon
+										borderless
+										className={classNames({
+											active: button.panelId === panelId,
+											'lfr-portal-tooltip': button.title
+										})}
+										displayType="secondary"
+										key={button.id}
+										onClick={() =>
+											handleButtonClick(
+												button.id,
+												button.panelId
+											)
+										}
+										small
+										symbol={button.icon}
+										title={button.title}
+									/>
+								))}
 							</div>
-						</div>,
-						document.body
-					)}
-
+						</div>
+					</div>,
+					document.body
+				)}
 				{PanelComponent &&
 					createPortal(
 						<div

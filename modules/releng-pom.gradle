@@ -50,6 +50,8 @@ dependencies {
 	pomProjectTemplates group: "com.liferay", name: "com.liferay.project.templates", version: "4.5.6"
 }
 
+ext.compileOnlyModel = new Model()
+
 generatePom {
 	dependsOn generatePomCompileOnly
 	dependsOn generatePomRelease
@@ -158,6 +160,8 @@ generatePomCompileOnly {
 		model.setDependencyManagement(dependencyManagement)
 
 		_write(model)
+
+		compileOnlyModel = model
 	}
 }
 
@@ -257,6 +261,8 @@ generatePomRelease {
 }
 
 generatePomThirdParty {
+	dependsOn generatePomCompileOnly
+
 	doLast {
 		Model model = _getModel(pomThirdPartyArtifactId)
 
@@ -282,6 +288,8 @@ generatePomThirdParty {
 			dependenciesProperties.load(it)
 		}
 
+		List<Map> duplicateDependencies = []
+
 		dependenciesProperties.each {
 			String[] dependencyInfo = it.value.split(":")
 
@@ -295,7 +303,36 @@ generatePomThirdParty {
 				dependency.setClassifier(dependencyInfo[3])
 			}
 
-			dependencyManagement.addDependency(dependency)
+			Boolean isDuplicate = false
+
+			compileOnlyModel.dependencyManagement.dependencies.each {
+				compileOnlyDependency ->
+
+				if ((compileOnlyDependency.artifactId == dependency.artifactId) &&
+					(compileOnlyDependency.groupId == dependency.groupId) &&
+					!(duplicateDependenciesWhitelist =~ "${dependency.groupId}:${dependency.artifactId}")) {
+
+					duplicateDependencies.add(["compileOnly":compileOnlyDependency])
+
+					duplicateDependencies.add(["thirdParty":dependency])
+
+					isDuplicate = true
+				}
+			}
+
+			if (!isDuplicate) {
+				dependencyManagement.addDependency(dependency)
+			}
+		}
+
+		if (duplicateDependencies.size > 0) {
+			String duplicateErrorMessage = "Duplicate dependencies detected:"
+
+			duplicateDependencies.each {
+				duplicateErrorMessage += "\n" + it.toString()
+			}
+
+			throw new GradleException(duplicateErrorMessage)
 		}
 
 		model.setDependencyManagement(dependencyManagement)

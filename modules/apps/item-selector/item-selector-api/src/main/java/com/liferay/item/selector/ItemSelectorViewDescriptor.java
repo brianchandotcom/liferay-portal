@@ -16,6 +16,9 @@ package com.liferay.item.selector;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.Locale;
 
 /**
  * @author Alejandro Tardín
@@ -48,9 +51,27 @@ public interface ItemSelectorViewDescriptor<T> {
 
 		public String getPayload();
 
-		public String getSubtitle();
+		/**
+		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+		 * #getSubtitle(Locale)}
+		 */
+		@Deprecated
+		public default String getSubtitle() {
+			return getSubtitle(LocaleUtil.getDefault());
+		}
 
-		public String getTitle();
+		public String getSubtitle(Locale locale);
+
+		/**
+		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+		 *             #getTitle(Locale)}
+		 */
+		@Deprecated
+		public default String getTitle() {
+			return getTitle(LocaleUtil.getDefault());
+		}
+
+		public String getTitle(Locale locale);
 
 		public default boolean isCompact() {
 			return false;

@@ -110,14 +110,13 @@ public class SharedAssetsFilterItemItemSelectorView
 						}
 
 						@Override
-						public String getSubtitle() {
+						public String getSubtitle(Locale locale) {
 							return null;
 						}
 
 						@Override
-						public String getTitle() {
-							return sharedAssetsFilterItem.getLabel(
-								servletRequest.getLocale());
+						public String getTitle(Locale locale) {
+							return sharedAssetsFilterItem.getLabel(locale);
 						}
 
 						@Override

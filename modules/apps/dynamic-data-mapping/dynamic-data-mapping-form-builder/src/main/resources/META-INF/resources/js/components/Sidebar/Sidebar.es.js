@@ -33,7 +33,7 @@ import {
 	getFieldProperties,
 	normalizeSettingsContextPages
 } from '../../util/fieldSupport.es';
-import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
+import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es';
 
 /**
  * Sidebar is a tooling to mount forms.

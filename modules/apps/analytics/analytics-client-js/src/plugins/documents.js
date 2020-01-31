@@ -12,8 +12,8 @@
  * details.
  */
 
-import {closest, getClosestAssetElement} from '../utils/assets.js';
-import {onReady} from '../utils/events.js';
+import {closest, getClosestAssetElement} from '../utils/assets';
+import {onReady} from '../utils/events';
 
 const applicationId = 'Document';
 

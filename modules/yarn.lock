@@ -6697,10 +6697,10 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dom-align@^1.10.2:
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/dom-align/-/dom-align-1.10.2.tgz#540ea1c9e20462bd11b9fc28c561dc8351ece4c6"
-  integrity sha512-AYZUzLepy05E9bCY4ExoqHrrIlM49PEak9oF93JEFoibqKL0F7w5DLM70/rosLOawerWZ3MlepQcl+EmHskOyw==
+dom-align@1.10.4, dom-align@^1.10.2:
+  version "1.10.4"
+  resolved "https://registry.yarnpkg.com/dom-align/-/dom-align-1.10.4.tgz#862ae4de0d11d6495c1c8ee1b195427e7caa727d"
+  integrity sha512-wytDzaru67AmqFOY4B9GUb/hrwWagezoYYK97D/vpK+ezg+cnuZO0Q2gltUPa7KfNmIqfRIYVCF8UhRDEHAmgQ==
 
 dom-converter@^0.2:
   version "0.2.0"
@@ -7137,10 +7137,10 @@ escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-liferay@17.0.0:
-  version "17.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-17.0.0.tgz#3a642a7e59f195688c0722a879c311b103ecbbb3"
-  integrity sha512-jzYJM6VhzFofUvw7LWkya536qrCxGwdU9p/E62lC3Wnd8UOJLKLYybyPfUU90UCsP9LpyZVtjbD1d14E+IfaQA==
+eslint-config-liferay@18.0.0:
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-liferay/-/eslint-config-liferay-18.0.0.tgz#13c093ddec1b67c9c8b3899c282e1a843cdab859"
+  integrity sha512-plAxtxXkt19s4+b6r+I0NuiWKJDoZY7v1x9wrEa2mjVqMQeZ9YhiQ9fy48rnLAp8e/o7iW0yo9jlrXD32zFutw==
   dependencies:
     eslint-config-prettier "^6.5.0"
     eslint-plugin-no-for-of-loops "^1.0.0"
@@ -11194,10 +11194,10 @@ liferay-npm-bundler@2.17.0:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-npm-scripts@21.0.1-beta.2:
-  version "21.0.1-beta.2"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-21.0.1-beta.2.tgz#2fbf4c6b90bb3627fd761db8107a1357451d5183"
-  integrity sha512-MXn8n/v30ftmUYgJ0fLMydq4OcdxiXRqLs8DQiRcrn92c5q6qVQYborLyE9Uj0B2r1gCVmtZUqRhvUZlWBLmSw==
+liferay-npm-scripts@22.0.1:
+  version "22.0.1"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-22.0.1.tgz#071c68ca88f983c7ddb80580bbadf9b9813d1c31"
+  integrity sha512-LMViCDT25k9jgkdwYIgL+W+iOqufmuuWgnolGrIwSGiV9+E8uJ1iFcOD+DkLW6yME65Y0+rhjmJgvGFcVqKUyA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -11226,7 +11226,7 @@ liferay-npm-scripts@21.0.1-beta.2:
     css-loader "^3.0.0"
     deepmerge "^4.0.0"
     eslint "6.8.0"
-    eslint-config-liferay "17.0.0"
+    eslint-config-liferay "18.0.0"
     fs-extra "^8.1.0"
     globby "11.0.0"
     http-proxy-middleware "0.20.0"

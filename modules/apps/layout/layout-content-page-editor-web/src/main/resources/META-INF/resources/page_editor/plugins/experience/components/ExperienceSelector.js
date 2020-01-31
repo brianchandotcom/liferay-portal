@@ -30,7 +30,7 @@ import {
 	storeModalExperienceState,
 	recoverModalExperienceState,
 	useDebounceCallback
-} from '../utils.js';
+} from '../utils';
 import ExperienceModal from './ExperienceModal';
 import ExperiencesList from './ExperiencesList';
 

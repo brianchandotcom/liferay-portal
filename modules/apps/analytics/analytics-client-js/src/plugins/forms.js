@@ -12,7 +12,7 @@
  * details.
  */
 
-import {onReady} from '../utils/events.js';
+import {onReady} from '../utils/events';
 
 const applicationId = 'Form';
 

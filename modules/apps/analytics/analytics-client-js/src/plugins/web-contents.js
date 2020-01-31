@@ -13,7 +13,7 @@
  */
 
 import {getNumberOfWords} from '../utils/assets';
-import {onReady, clickEvent} from '../utils/events.js';
+import {onReady, clickEvent} from '../utils/events';
 
 const applicationId = 'WebContent';
 

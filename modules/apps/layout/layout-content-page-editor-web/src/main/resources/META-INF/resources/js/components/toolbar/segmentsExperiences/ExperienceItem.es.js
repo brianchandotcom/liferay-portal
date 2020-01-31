@@ -21,7 +21,7 @@ import React from 'react';
 import {STATUS_DRAFT} from '../../../utils/ExperimentsStatus.es';
 import ExperimentLabel from './ExperimentLabel.es';
 import Popover from './Popover.es';
-import {ExperienceType} from './types.es.js';
+import {ExperienceType} from './types.es';
 
 const ExperienceItem = ({
 	active,

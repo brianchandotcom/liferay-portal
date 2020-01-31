@@ -20,7 +20,7 @@ import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
-import {sub} from '../../util/strings.es.js';
+import {sub} from '../../util/strings.es';
 
 const withEditablePageHeader = ChildComponent => {
 	class EditablePageHeader extends Component {

@@ -15,7 +15,7 @@
 import {getNumberOfWords} from '../utils/assets';
 import {DEBOUNCE} from '../utils/constants';
 import {debounce} from '../utils/debounce';
-import {clickEvent, onReady} from '../utils/events.js';
+import {clickEvent, onReady} from '../utils/events';
 import {ScrollTracker} from '../utils/scroll';
 
 const applicationId = 'Blog';

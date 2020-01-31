@@ -212,6 +212,9 @@ public class AssetTagNamesMultiLanguageSearchTest {
 
 		SearchContext searchContext = getSearchContext(tagName, locale);
 
+		searchContext.setEntryClassNames(
+			new String[] {DLFileEntry.class.getName()});
+
 		Hits hits = facetedSearcher.search(searchContext);
 
 		assertHits(tagName, hits, searchContext);

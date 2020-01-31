@@ -47,8 +47,7 @@ public abstract class BaseTable<T extends BaseTable<T>> implements Table<T> {
 		table.setAlias(_alias);
 
 		column = _COLUMN_FACTORY.createColumn(
-			table, column.getColumnName(), column.getColumnType(),
-			column.getSQLType());
+			table, column.getName(), column.getJavaType(), column.getSQLType());
 
 		table.putColumn(columnAlias, column);
 
@@ -85,18 +84,16 @@ public abstract class BaseTable<T extends BaseTable<T>> implements Table<T> {
 	}
 
 	@Override
-	public Column<T, ?> getColumn(String columnName) {
-		return _columnMap.get(columnName);
+	public Column<T, ?> getColumn(String name) {
+		return _columnMap.get(name);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <C> Column<T, C> getColumn(String columnName, Class<C> clazz) {
-		Column<T, ?> column = _columnMap.get(columnName);
+	public <C> Column<T, C> getColumn(String name, Class<C> clazz) {
+		Column<T, ?> column = _columnMap.get(name);
 
-		if ((column == null) ||
-			!clazz.isAssignableFrom(column.getColumnType())) {
-
+		if ((column == null) || !clazz.isAssignableFrom(column.getJavaType())) {
 			return null;
 		}
 
@@ -149,19 +146,19 @@ public abstract class BaseTable<T extends BaseTable<T>> implements Table<T> {
 	}
 
 	protected <C> Column<T, C> createColumn(
-		String columnName, Class<C> columnType, int sqlType) {
+		String name, Class<C> javaType, int sqlType) {
 
 		@SuppressWarnings("unchecked")
 		Column<T, C> column = _COLUMN_FACTORY.createColumn(
-			(T)this, columnName, columnType, sqlType);
+			(T)this, name, javaType, sqlType);
 
-		_columnMap.put(columnName, column);
+		_columnMap.put(name, column);
 
 		return column;
 	}
 
-	protected <C> void putColumn(String columnName, Column<T, C> column) {
-		_columnMap.put(columnName, column);
+	protected <C> void putColumn(String name, Column<T, C> column) {
+		_columnMap.put(name, column);
 	}
 
 	protected void setAlias(String alias) {

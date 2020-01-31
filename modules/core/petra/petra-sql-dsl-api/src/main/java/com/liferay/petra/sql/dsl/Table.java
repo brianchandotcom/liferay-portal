@@ -27,9 +27,9 @@ public interface Table<T extends Table<T>> extends ASTNode {
 
 	public String getAlias();
 
-	public Column<T, ?> getColumn(String columnName);
+	public Column<T, ?> getColumn(String name);
 
-	public <C> Column<T, C> getColumn(String columnName, Class<C> clazz);
+	public <C> Column<T, C> getColumn(String name, Class<C> clazz);
 
 	public Collection<Column<T, ?>> getColumns();
 

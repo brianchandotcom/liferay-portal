@@ -743,9 +743,7 @@ public class SQLDSLTest {
 
 			@Override
 			public String[] getOrderByFields() {
-				return new String[] {
-					MainExampleTable.TABLE.flag.getColumnName()
-				};
+				return new String[] {MainExampleTable.TABLE.flag.getName()};
 			}
 
 			@Override
@@ -1129,11 +1127,11 @@ public class SQLDSLTest {
 		Assert.assertSame(
 			MainExampleTable.TABLE.name,
 			MainExampleTable.TABLE.getColumn(
-				MainExampleTable.TABLE.name.getColumnName(),
-				MainExampleTable.TABLE.name.getColumnType()));
+				MainExampleTable.TABLE.name.getName(),
+				MainExampleTable.TABLE.name.getJavaType()));
 		Assert.assertNull(
 			MainExampleTable.TABLE.getColumn(
-				MainExampleTable.TABLE.name.getColumnName(), Long.class));
+				MainExampleTable.TABLE.name.getName(), Long.class));
 
 		Alias<String> nameAlias = aliasMainExampleTable.name.as("nameAlias");
 
@@ -1152,13 +1150,13 @@ public class SQLDSLTest {
 		Assert.assertEquals(
 			MainExampleTable.TABLE.name,
 			aliasMainExampleTable.getColumn(
-				nameAlias.getName(), column.getColumnType()));
+				nameAlias.getName(), column.getJavaType()));
 
 		Assert.assertNull(
 			MainExampleTable.TABLE.getColumn(nameAlias.getName()));
 		Assert.assertNull(
 			MainExampleTable.TABLE.getColumn(
-				nameAlias.getName(), column.getColumnType()));
+				nameAlias.getName(), column.getJavaType()));
 
 		Collection<Column<MainExampleTable, ?>> columns =
 			MainExampleTable.TABLE.getColumns();

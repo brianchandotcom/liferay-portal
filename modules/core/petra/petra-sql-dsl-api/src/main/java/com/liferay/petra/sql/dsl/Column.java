@@ -21,9 +21,9 @@ import com.liferay.petra.sql.dsl.expression.Expression;
  */
 public interface Column<T extends Table<T>, C> extends Expression<C> {
 
-	public String getColumnName();
+	public Class<C> getJavaType();
 
-	public Class<C> getColumnType();
+	public String getName();
 
 	public int getSQLType();
 

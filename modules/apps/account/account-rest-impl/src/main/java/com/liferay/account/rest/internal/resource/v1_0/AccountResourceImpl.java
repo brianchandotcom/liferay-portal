@@ -49,7 +49,7 @@ public class AccountResourceImpl
 
 	@Override
 	public void deleteAccount(Long accountId) throws Exception {
-		super.deleteAccount(accountId);
+		_accountEntryLocalService.deleteAccountEntry(accountId);
 	}
 
 	@Override

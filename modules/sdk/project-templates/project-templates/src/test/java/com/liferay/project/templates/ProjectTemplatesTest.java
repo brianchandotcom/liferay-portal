@@ -2725,7 +2725,8 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 	@Test
 	public void testBuildTemplateWarCoreExtInWorkspace() throws Exception {
-		File modulesDir = new File(buildWorkspace(temporaryFolder), "modules");
+		File modulesDir = new File(
+			buildWorkspace(temporaryFolder, "7.3.0"), "modules");
 
 		File projectDir = buildTemplateWithGradle(
 			modulesDir, "war-core-ext", "test-war-core-ext");
@@ -3296,7 +3297,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 
 		File gradleProjectDir = _buildTemplateWithGradle(template, name);
 
-		File workspaceDir = buildWorkspace(temporaryFolder);
+		File workspaceDir = buildWorkspace(temporaryFolder, "7.3.0");
 
 		File modulesDir = new File(workspaceDir, "modules");
 
@@ -4520,25 +4521,34 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			String template, String name, String liferayVersion)
 		throws Exception {
 
-		File workspaceDir = buildWorkspace(temporaryFolder);
+		File workspaceDir;
 
 		if (liferayVersion.equals("7.0.6")) {
-			enableTargetPlatformInWorkspace(workspaceDir, "7.0.6");
+			workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
+
+			enableTargetPlatformInWorkspace(workspaceDir, liferayVersion);
 		}
 		else if (liferayVersion.equals("7.1.3")) {
-			enableTargetPlatformInWorkspace(workspaceDir, "7.1.3");
+			workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
+
+			enableTargetPlatformInWorkspace(workspaceDir, liferayVersion);
 		}
 		else if (liferayVersion.equals("7.2.1")) {
-			enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
+			workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
+
+			enableTargetPlatformInWorkspace(workspaceDir, liferayVersion);
 		}
 		else {
-			enableTargetPlatformInWorkspace(workspaceDir, "7.3.0");
+			workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
+
+			enableTargetPlatformInWorkspace(workspaceDir, liferayVersion);
 		}
 
 		File warsDir = new File(workspaceDir, "wars");
 
 		File workspaceProjectDir = buildTemplateWithGradle(
-			warsDir, template, name, "--dependency-management-enabled");
+			warsDir, template, name, "--dependency-management-enabled",
+			"--liferay-version", liferayVersion);
 
 		if (!template.equals("war-hook") && !template.equals("theme")) {
 			testContains(

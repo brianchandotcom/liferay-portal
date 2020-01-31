@@ -27,13 +27,13 @@ data.put("qa-id", "customizations");
 %>
 
 <div id="<%= portletNamespace %>customizationBar">
-	<div class="active control-menu-link customization-link d-block d-sm-none">
+	<div class="active control-menu-link customization-link d-block d-md-none">
 		<liferay-ui:icon
 			data="<%= data %>"
 			icon="pencil"
 			id='<%= portletNamespace + "customizationButton" %>'
 			label="<%= false %>"
-			linkCssClass="control-menu-icon"
+			linkCssClass="btn btn-monospaced btn-sm control-menu-icon"
 			markupView="lexicon"
 			message="this-page-can-be-customized"
 			url="javascript:;"
@@ -42,7 +42,7 @@ data.put("qa-id", "customizations");
 
 	<div class="control-menu-level-2">
 		<div class="container-fluid container-fluid-max-xl">
-			<div class="control-menu-level-2-heading d-block d-sm-none">
+			<div class="control-menu-level-2-heading d-block d-md-none">
 				<liferay-ui:message key="customization-options" />
 
 				<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" id="<%= portletNamespace %>closeCustomizationOptions" type="button">
@@ -50,8 +50,8 @@ data.put("qa-id", "customizations");
 				</button>
 			</div>
 
-			<ul class="control-menu-level-2-nav control-menu-nav">
-				<li class="control-menu-nav-item">
+			<ul class="control-menu-level-2-nav control-menu-nav flex-column flex-md-row">
+				<li class="control-menu-nav-item mb-0">
 					<span class="text-info">
 						<liferay-ui:icon
 							data="<%= data %>"
@@ -80,7 +80,7 @@ data.put("qa-id", "customizations");
 				</li>
 
 				<c:if test="<%= hasUpdateLayoutPermission %>">
-					<li class="control-menu-nav-item">
+					<li class="control-menu-nav-item mb-0">
 						<aui:input id='<%= portletNamespace + "manageCustomization" %>' inlineField="<%= true %>" label="<%= StringPool.BLANK %>" labelOff='<%= LanguageUtil.get(resourceBundle, "hide-customizable-zones") %>' labelOn='<%= LanguageUtil.get(resourceBundle, "view-customizable-zones") %>' name="manageCustomization" type="toggle-switch" useNamespace="<%= false %>" wrappedField="<%= true %>" />
 
 						<div class="hide layout-customizable-controls-container" id="<%= portletNamespace %>layoutCustomizableControls">
@@ -128,7 +128,7 @@ data.put("qa-id", "customizations");
 				String toggleCustomizationViewURL = HttpUtil.addParameter(toggleCustomizationViewPortletURL.toString(), "customized_view", !layoutTypePortlet.isCustomizedView());
 				%>
 
-				<li class="control-menu-nav-item d-none d-sm-block">
+				<li class="control-menu-nav-item d-md-block d-none">
 					<liferay-ui:icon-menu
 						direction="left-side"
 						icon="<%= StringPool.BLANK %>"
@@ -149,12 +149,12 @@ data.put("qa-id", "customizations");
 						</c:if>
 					</liferay-ui:icon-menu>
 				</li>
-				<li class="control-menu-nav-item d-block d-sm-none">
-					<div class="btn-group btn-group-item dropdown">
-						<aui:a cssClass="btn btn-primary" href="<%= toggleCustomizationViewURL %>" label="<%= toggleCustomizedViewMessage %>" />
+				<li class="control-menu-nav-item d-block d-md-none mb-0 mt-3">
+					<div class="btn-group dropdown flex-nowrap">
+						<aui:a cssClass="btn btn-primary text-white" href="<%= toggleCustomizationViewURL %>" label="<%= toggleCustomizedViewMessage %>" />
 
 						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-							<button aria-expanded="false" class="btn btn-primary dropdown-toggle" data-toggle="liferay-dropdown" type="button">
+							<button aria-expanded="false" class="btn btn-primary dropdown-toggle flex-grow-0 h-auto" data-toggle="dropdown" type="button">
 								<span class="caret"></span>
 
 								<span class="sr-only"><liferay-ui:message key="toggle-dropdown" /></span>

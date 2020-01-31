@@ -122,7 +122,6 @@ a.control-menu-icon,
 
 	&.open {
 		@include media-breakpoint-down(sm) {
-			background-color: transparentize($dark-l1, 0.1);
 			display: block;
 			overflow: auto;
 		}
@@ -135,7 +134,7 @@ a.control-menu-icon,
 	padding: 20px 0;
 	text-align: center;
 
-	.close {
+	button.close {
 		color: $control-menu-level-2-color;
 		opacity: 1;
 	}

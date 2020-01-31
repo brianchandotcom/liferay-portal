@@ -447,13 +447,15 @@ public interface BaseProjectTemplatesTestCase {
 			mavenDir, mavenDir, template, name, groupId, mavenExecutor, args);
 	}
 
-	public default File buildWorkspace(TemporaryFolder temporaryFolder)
+	public default File buildWorkspace(
+			TemporaryFolder temporaryFolder, String liferayVersion)
 		throws Exception {
 
 		File destinationDir = temporaryFolder.newFolder("workspace");
 
 		return buildTemplateWithGradle(
-			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace");
+			destinationDir, WorkspaceUtil.WORKSPACE, "test-workspace",
+			"--liferay-version", liferayVersion);
 	}
 
 	public default void editXml(File xmlFile, Consumer<Document> consumer)
@@ -726,18 +728,29 @@ public interface BaseProjectTemplatesTestCase {
 			String template, String name, String jarFilePath, String... args)
 		throws Exception {
 
-		File workspaceDir = buildWorkspace(temporaryFolder);
-
 		List<String> argsList = Arrays.asList(args);
 
+		File workspaceDir;
+
 		if (argsList.contains("7.0.6")) {
+			workspaceDir = buildWorkspace(temporaryFolder, "7.0.6");
+
 			enableTargetPlatformInWorkspace(workspaceDir, "7.0.6");
 		}
 		else if (argsList.contains("7.1.3")) {
+			workspaceDir = buildWorkspace(temporaryFolder, "7.1.3");
+
 			enableTargetPlatformInWorkspace(workspaceDir, "7.1.3");
 		}
-		else {
+		else if (argsList.contains("7.2.1")) {
+			workspaceDir = buildWorkspace(temporaryFolder, "7.2.1");
+
 			enableTargetPlatformInWorkspace(workspaceDir, "7.2.1");
+		}
+		else {
+			workspaceDir = buildWorkspace(temporaryFolder, "7.3.0");
+
+			enableTargetPlatformInWorkspace(workspaceDir, "7.3.0");
 		}
 
 		File modulesDir = new File(workspaceDir, "modules");

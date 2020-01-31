@@ -184,15 +184,15 @@ public class BlogsEntryItemSelectorView
 		}
 
 		@Override
-		public String getSubtitle() {
+		public String getSubtitle(Locale locale) {
 			Date modifiedDate = _blogsEntry.getModifiedDate();
 
-			String modifiedDateDescription = LanguageUtil.getTimeDescription(
-				_httpServletRequest,
-				System.currentTimeMillis() - modifiedDate.getTime(), true);
+			String modifiedDateDescription = _language.getTimeDescription(
+				locale, System.currentTimeMillis() - modifiedDate.getTime(),
+				true);
 
 			return _language.format(
-				_httpServletRequest.getLocale(), "x-ago-by-x",
+				locale, "x-ago-by-x",
 				new Object[] {
 					modifiedDateDescription,
 					HtmlUtil.escape(_blogsEntry.getUserName())
@@ -200,7 +200,7 @@ public class BlogsEntryItemSelectorView
 		}
 
 		@Override
-		public String getTitle() {
+		public String getTitle(Locale locale) {
 			return BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry);
 		}
 

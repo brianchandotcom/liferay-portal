@@ -45,7 +45,7 @@ public class ItemDescriptorHorizontalCard extends BaseHorizontalCard {
 
 	@Override
 	public String getTitle() {
-		return _itemDescriptor.getTitle();
+		return _itemDescriptor.getTitle(themeDisplay.getLocale());
 	}
 
 	private final ItemSelectorViewDescriptor.ItemDescriptor _itemDescriptor;

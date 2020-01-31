@@ -56,12 +56,12 @@ public class ItemDescriptorVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getSubtitle() {
-		return _itemDescriptor.getSubtitle();
+		return _itemDescriptor.getSubtitle(themeDisplay.getLocale());
 	}
 
 	@Override
 	public String getTitle() {
-		return _itemDescriptor.getTitle();
+		return _itemDescriptor.getTitle(themeDisplay.getLocale());
 	}
 
 	private final ItemSelectorViewDescriptor.ItemDescriptor _itemDescriptor;

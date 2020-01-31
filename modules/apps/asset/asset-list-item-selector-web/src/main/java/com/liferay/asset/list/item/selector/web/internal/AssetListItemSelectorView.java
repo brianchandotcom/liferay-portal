@@ -23,6 +23,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -155,13 +156,22 @@ public class AssetListItemSelectorView
 				}
 
 				@Override
-				public String getSubtitle() {
-					return assetListEntry.getTypeLabel();
+				public String getSubtitle(Locale locale) {
+					ResourceBundle resourceBundle =
+						_resourceBundleLoader.loadResourceBundle(locale);
+
+					return _language.get(
+						resourceBundle, assetListEntry.getTypeLabel());
 				}
 
 				@Override
-				public String getTitle() {
-					return assetListEntry.getTitle();
+				public String getTitle(Locale locale) {
+					try {
+						return assetListEntry.getUnambiguousTitle(locale);
+					}
+					catch (PortalException portalException) {
+						return ReflectionUtil.throwException(portalException);
+					}
 				}
 
 			};

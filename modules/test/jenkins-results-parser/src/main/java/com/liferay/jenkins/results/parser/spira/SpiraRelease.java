@@ -20,10 +20,13 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import org.apache.commons.lang.StringEscapeUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,6 +35,119 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class SpiraRelease {
+
+	public static SpiraRelease createSpiraRelease(
+			SpiraProject spiraProject, String releaseName)
+		throws IOException {
+
+		return createSpiraRelease(spiraProject, releaseName, null);
+	}
+
+	public static SpiraRelease createSpiraRelease(
+			SpiraProject spiraProject, String releaseName,
+			Integer parentReleaseId)
+		throws IOException {
+
+		String urlPath = "projects/{project_id}/releases/{parent_release_id}";
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"parent_release_id", String.valueOf(parentReleaseId));
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		if ((parentReleaseId == null) || (parentReleaseId == 0)) {
+			urlPath = urlPath.replace("/{parent_release_id}", "");
+		}
+
+		JSONObject requestJSONObject = new JSONObject();
+
+		requestJSONObject.put(
+			"Name", StringEscapeUtils.unescapeJava(releaseName));
+		requestJSONObject.put("ReleaseStatusId", SpiraRelease.STATUS_PLANNED);
+		requestJSONObject.put("ReleaseTypeId", SpiraRelease.TYPE_MAJOR_RELEASE);
+
+		Calendar calendar = Calendar.getInstance();
+
+		requestJSONObject.put("StartDate", _toDateString(calendar));
+
+		calendar.add(Calendar.MONTH, 1);
+
+		requestJSONObject.put("EndDate", _toDateString(calendar));
+
+		JSONObject responseJSONObject = SpiraRestAPIUtil.requestJSONObject(
+			urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
+			requestJSONObject.toString());
+
+		return spiraProject.getSpiraReleaseByID(
+			responseJSONObject.getInt("ReleaseId"));
+	}
+
+	public static SpiraRelease createSpiraReleaseByPath(
+			SpiraProject spiraProject, String releasePath)
+		throws IOException {
+
+		List<SpiraRelease> spiraReleases = spiraProject.getSpiraReleasesByPath(
+			releasePath);
+
+		if (!spiraReleases.isEmpty()) {
+			return spiraReleases.get(0);
+		}
+
+		String[] releasePathNames = releasePath.split("(?<!\\\\)\\/");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 1; i < (releasePathNames.length - 1); i++) {
+			sb.append("/");
+			sb.append(releasePathNames[i]);
+		}
+
+		String releaseName = releasePathNames[releasePathNames.length - 1];
+
+		String parentReleasePath = sb.toString();
+
+		if (parentReleasePath.isEmpty()) {
+			return createSpiraRelease(spiraProject, releaseName);
+		}
+
+		SpiraRelease parentSpiraRelease = createSpiraReleaseByPath(
+			spiraProject, parentReleasePath);
+
+		return createSpiraRelease(
+			spiraProject, releaseName, parentSpiraRelease.getID());
+	}
+
+	public static void deleteSpiraReleaseById(
+			SpiraProject spiraProject, int releaseID)
+		throws IOException {
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+		urlPathReplacements.put("release_id", String.valueOf(releaseID));
+
+		SpiraRestAPIUtil.request(
+			"projects/{project_id}/releases/{release_id}", null,
+			urlPathReplacements, HttpRequestMethod.DELETE, null);
+
+		_spiraReleases.remove(
+			_createSpiraReleaseKey(spiraProject.getID(), releaseID));
+	}
+
+	public static void deleteSpiraReleasesByPath(
+			SpiraProject spiraProject, String releasePath)
+		throws IOException {
+
+		List<SpiraRelease> spiraReleases = spiraProject.getSpiraReleasesByPath(
+			releasePath);
+
+		for (SpiraRelease spiraRelease : spiraReleases) {
+			deleteSpiraReleaseById(spiraProject, spiraRelease.getID());
+		}
+	}
 
 	public int getID() {
 		return _jsonObject.getInt("ReleaseId");
@@ -216,8 +332,31 @@ public class SpiraRelease {
 		return true;
 	}
 
+	protected static final int STATUS_CANCELED = 5;
+
+	protected static final int STATUS_CLOSED = 3;
+
+	protected static final int STATUS_DEFERRED = 4;
+
+	protected static final int STATUS_IN_PROGRESS = 2;
+
+	protected static final int STATUS_PLANNED = 1;
+
+	protected static final int TYPE_MAJOR_RELEASE = 1;
+
+	protected static final int TYPE_MINOR_RELEASE = 2;
+
+	protected static final int TYPE_PHASE = 4;
+
+	protected static final int TYPE_SPRINT = 3;
+
 	private static String _createSpiraReleaseKey(int projectID, int releaseID) {
 		return projectID + "-" + releaseID;
+	}
+
+	private static String _toDateString(Calendar calendar) {
+		return JenkinsResultsParserUtil.combine(
+			"/Date(", String.valueOf(calendar.getTimeInMillis()), ")/");
 	}
 
 	private static final int _NUMBER_ROWS = 15000;

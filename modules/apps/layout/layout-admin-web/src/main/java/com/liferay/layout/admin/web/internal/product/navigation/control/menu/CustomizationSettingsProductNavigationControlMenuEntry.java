@@ -12,39 +12,48 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
+package com.liferay.layout.admin.web.internal.product.navigation.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
-import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
+import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Chema Balsas
+ * @author Julio Camarero
  */
-@Component(service = DynamicInclude.class)
-public class CustomizationSettingsControlMenuJSPDynamicInclude
-	extends BaseJSPDynamicInclude {
+@Component(
+	immediate = true,
+	property = {
+		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
+		"product.navigation.control.menu.entry.order:Integer=400"
+	},
+	service = {
+		CustomizationSettingsProductNavigationControlMenuEntry.class,
+		ProductNavigationControlMenuEntry.class
+	}
+)
+public class CustomizationSettingsProductNavigationControlMenuEntry
+	extends BaseJSPProductNavigationControlMenuEntry
+	implements ProductNavigationControlMenuEntry {
 
-	public static final String CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION =
-		"CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION";
+	@Override
+	public String getIconJspPath() {
+		return "/control/menu/customization_settings.jsp";
+	}
 
 	public boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -60,33 +69,6 @@ public class CustomizationSettingsControlMenuJSPDynamicInclude
 	}
 
 	@Override
-	public void include(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String key)
-		throws IOException {
-
-		try {
-			if (!isShow(httpServletRequest)) {
-				return;
-			}
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			httpServletRequest.setAttribute(
-				CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION,
-				hasUpdateLayoutPermission(themeDisplay));
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-		}
-
-		super.include(httpServletRequest, httpServletResponse, key);
-	}
-
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -104,19 +86,12 @@ public class CustomizationSettingsControlMenuJSPDynamicInclude
 	}
 
 	@Override
-	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register(
-			"com.liferay.product.navigation.taglib#/page.jsp#post");
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/dynamic_include/customization_settings.jsp";
-	}
-
-	@Override
-	protected Log getLog() {
-		return _log;
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	protected boolean isCustomizableLayout(ThemeDisplay themeDisplay)
@@ -159,15 +134,6 @@ public class CustomizationSettingsControlMenuJSPDynamicInclude
 		return true;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private boolean _isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -189,13 +155,10 @@ public class CustomizationSettingsControlMenuJSPDynamicInclude
 			return false;
 		}
 
-		return true;
+		return super.isShow(httpServletRequest);
 	}
 
 	private static final String _SHOW =
-		CustomizationSettingsControlMenuJSPDynamicInclude.class + "#_SHOW";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CustomizationSettingsControlMenuJSPDynamicInclude.class);
+		CustomizationSettingsProductNavigationControlMenuEntry.class + "#_SHOW";
 
 }

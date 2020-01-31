@@ -27,19 +27,6 @@ data.put("qa-id", "customizations");
 %>
 
 <div id="<%= portletNamespace %>customizationBar">
-	<div class="active control-menu-link customization-link d-block d-md-none">
-		<liferay-ui:icon
-			data="<%= data %>"
-			icon="pencil"
-			id='<%= portletNamespace + "customizationButton" %>'
-			label="<%= false %>"
-			linkCssClass="btn btn-monospaced btn-sm control-menu-icon"
-			markupView="lexicon"
-			message="this-page-can-be-customized"
-			url="javascript:;"
-		/>
-	</div>
-
 	<div class="control-menu-level-2">
 		<div class="container-fluid container-fluid-max-xl">
 			<div class="control-menu-level-2-heading d-block d-md-none">

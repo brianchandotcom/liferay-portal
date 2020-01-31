@@ -66,20 +66,17 @@ const ManageLanguages = ({
 					<ClayCheckbox
 						checked={checked}
 						disabled={isDefault}
+						label={displayName}
 						onChange={() => {
 							onChangeLocale(!checked, displayName, localeId);
 						}}
-					/>
-				</ClayTable.Cell>
-
-				<ClayTable.Cell expanded>
-					{displayName}
-
-					{isDefault && (
-						<ClayLabel className="ml-3" displayType="info">
-							{Liferay.Language.get('default')}
-						</ClayLabel>
-					)}
+					>
+						{isDefault && (
+							<ClayLabel className="ml-3" displayType="info">
+								{Liferay.Language.get('default')}
+							</ClayLabel>
+						)}
+					</ClayCheckbox>
 				</ClayTable.Cell>
 			</ClayTable.Row>
 		);

@@ -455,9 +455,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final ReplaceRegexTask updateVersionTask = _addTaskUpdateVersion(
 			project);
 
+		File appBndFile = _getAppBndFile(project, portalRootDir);
+
 		_configureBasePlugin(project, portalRootDir);
-		_configureBundleDefaultInstructions(project, portalRootDir, publishing);
-		_configureConfigurations(project, liferayExtension, publishing);
+		_configureBundleDefaultInstructions(
+			project, portalRootDir, appBndFile, publishing);
+		_configureConfigurations(
+			project, appBndFile, liferayExtension, publishing);
 		_configureDependencyChecker(project);
 		_configureDeployDir(
 			project, liferayExtension, deployToAppServerLibs, deployToTools);
@@ -2023,7 +2027,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureBundleDefaultInstructions(
-		Project project, File portalRootDir, boolean publishing) {
+		Project project, File portalRootDir, File appBndFile,
+		boolean publishing) {
 
 		LiferayOSGiExtension liferayOSGiExtension = GradleUtil.getExtension(
 			project, LiferayOSGiExtension.class);
@@ -2043,8 +2048,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			bundleDefaultInstructions.put(
 				"Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
 		}
-
-		File appBndFile = _getAppBndFile(project, portalRootDir);
 
 		if (appBndFile != null) {
 			List<String> relativePaths = new ArrayList<>(2);
@@ -2390,7 +2393,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureConfigurations(
-		Project project, LiferayExtension liferayExtension,
+		Project project, File appBndFile, LiferayExtension liferayExtension,
 		boolean publishing) {
 
 		_configureConfigurationDefault(project);
@@ -2412,10 +2415,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				false);
 
 			_configureDependenciesGroupPortal(
-				project, JavaPlugin.COMPILE_CONFIGURATION_NAME, publishing);
-			_configureDependenciesGroupPortal(
-				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
+				project, appBndFile, JavaPlugin.COMPILE_CONFIGURATION_NAME,
 				publishing);
+			_configureDependenciesGroupPortal(
+				project, appBndFile,
+				JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME, publishing);
 		}
 
 		_configureDependenciesTransitive(
@@ -2502,7 +2506,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureDependenciesGroupPortal(
-		final Project project, String configurationName, boolean publishing) {
+		final Project project, final File appBndFile, String configurationName,
+		boolean publishing) {
 
 		final Logger logger = project.getLogger();
 
@@ -2539,17 +2544,34 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						project, "build.compat.version." + name, (String)null);
 
 					if (Validator.isNotNull(compatVersion)) {
-						StringBuilder sb = new StringBuilder();
+						boolean fixDeliveryMethodCore = false;
 
-						sb.append(group);
-						sb.append(':');
-						sb.append(name);
-						sb.append(':');
-						sb.append(compatVersion);
+						if (appBndFile != null) {
+							Properties properties = GUtil.loadProperties(
+								appBndFile);
 
-						newNotation = sb.toString();
+							String value = properties.getProperty(
+								"Liferay-Releng-Fix-Delivery-Method");
+
+							if (Objects.equals(value, "core")) {
+								fixDeliveryMethodCore = true;
+							}
+						}
+
+						if (!fixDeliveryMethodCore) {
+							StringBuilder sb = new StringBuilder();
+
+							sb.append(group);
+							sb.append(':');
+							sb.append(name);
+							sb.append(':');
+							sb.append(compatVersion);
+
+							newNotation = sb.toString();
+						}
 					}
-					else if (publishing) {
+
+					if (Validator.isNull(newNotation) && publishing) {
 						String newVersion = GradleUtil.getProperty(
 							project, name + ".version", (String)null);
 

@@ -1268,6 +1268,8 @@
 				buttonNodes.push(buttons.getDOM());
 			} else if (buttons._nodes) {
 				buttonNodes = buttons.getDOM();
+			} else {
+				buttonNodes = [buttons];
 			}
 
 			buttonNodes.forEach(buttonNode => {

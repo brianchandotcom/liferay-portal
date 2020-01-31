@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
 import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -119,6 +120,7 @@ public class PageDefinitionConverterUtil {
 		else if (type.equals("row")) {
 			return new PageElement() {
 				{
+					definition = _toRowDefinition(configJSONObject);
 					type = PageElement.Type.ROW;
 				}
 			};
@@ -163,6 +165,29 @@ public class PageDefinitionConverterUtil {
 		}
 
 		return pageElements.toArray(new PageElement[0]);
+	}
+
+	private RowDefinition _toRowDefinition(JSONObject configJSONObject) {
+		return new RowDefinition() {
+			{
+				setGutters(
+					() -> {
+						if (configJSONObject.isNull("gutters")) {
+							return null;
+						}
+
+						return configJSONObject.getBoolean("gutters");
+					});
+				setNumberOfColumns(
+					() -> {
+						if (configJSONObject.isNull("numberOfColumns")) {
+							return null;
+						}
+
+						return configJSONObject.getInt("numberOfColumns");
+					});
+			}
+		};
 	}
 
 	private SectionDefinition _toSectionDefinition(

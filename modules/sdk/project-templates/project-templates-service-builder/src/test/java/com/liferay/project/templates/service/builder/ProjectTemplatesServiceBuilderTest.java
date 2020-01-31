@@ -229,6 +229,49 @@ public class ProjectTemplatesServiceBuilderTest
 	}
 
 	@Test
+	public void testBuildTemplateServiceBuilder72Spring() throws Exception {
+		String name = "guestbook";
+		String packageName = "com.liferay.docs.guestbook";
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-builder", name, "--package-name", packageName,
+			"--liferay-version", "7.2.1", "--dependency-injector", "spring");
+
+		testNotContains(
+			gradleProjectDir, name + "-api/build.gradle", "biz.aQute.bnd");
+		testNotContains(
+			gradleProjectDir, name + "-service/build.gradle", "biz.aQute.bnd");
+
+		testContains(
+			gradleProjectDir, name + "-api/build.gradle",
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0",
+			"org.osgi.annotation.versioning\", version: \"1.1.0");
+		testContains(
+			gradleProjectDir, name + "-service/build.gradle",
+			"com.liferay.petra.io\", version: \"3.0.0",
+			"com.liferay.petra.lang\", version: \"3.0.0\"",
+			"com.liferay.petra.string\", version: \"3.0.0\"",
+			"com.liferay.portal.aop.api\", version: \"1.0.0\"",
+			"com.liferay.portal.spring.extender.api\", version: \"3.0.0",
+			DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0",
+			"org.osgi.annotation.versioning\", version: \"1.1.0");
+		testNotContains(
+			gradleProjectDir, name + "-service/bnd.bnd",
+			"-dsannotations-options: inherit");
+
+		File mavenProjectDir = buildTemplateWithMaven(
+			temporaryFolder, "service-builder", name, "com.test", mavenExecutor,
+			"-Dpackage=" + packageName, "-DliferayVersion=7.2.1",
+			"-DdependencyInjector=spring");
+
+		if (isBuildProjects()) {
+			_testBuildTemplateServiceBuilder(
+				gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
+				packageName, "");
+		}
+	}
+
+	@Test
 	public void testBuildTemplateServiceBuilder73() throws Exception {
 		String name = "guestbook";
 		String packageName = "com.liferay.docs.guestbook";
@@ -266,49 +309,6 @@ public class ProjectTemplatesServiceBuilderTest
 		File mavenProjectDir = buildTemplateWithMaven(
 			temporaryFolder, "service-builder", name, "com.test", mavenExecutor,
 			"-Dpackage=" + packageName, "-DliferayVersion=7.3.0");
-
-		if (isBuildProjects()) {
-			_testBuildTemplateServiceBuilder(
-				gradleProjectDir, mavenProjectDir, gradleProjectDir, name,
-				packageName, "");
-		}
-	}
-
-	@Test
-	public void testBuildTemplateServiceBuilder72Spring() throws Exception {
-		String name = "guestbook";
-		String packageName = "com.liferay.docs.guestbook";
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-builder", name, "--package-name", packageName,
-			"--liferay-version", "7.2.1", "--dependency-injector", "spring");
-
-		testNotContains(
-			gradleProjectDir, name + "-api/build.gradle", "biz.aQute.bnd");
-		testNotContains(
-			gradleProjectDir, name + "-service/build.gradle", "biz.aQute.bnd");
-
-		testContains(
-			gradleProjectDir, name + "-api/build.gradle",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0",
-			"org.osgi.annotation.versioning\", version: \"1.1.0");
-		testContains(
-			gradleProjectDir, name + "-service/build.gradle",
-			"com.liferay.petra.io\", version: \"3.0.0",
-			"com.liferay.petra.lang\", version: \"3.0.0\"",
-			"com.liferay.petra.string\", version: \"3.0.0\"",
-			"com.liferay.portal.aop.api\", version: \"1.0.0\"",
-			"com.liferay.portal.spring.extender.api\", version: \"3.0.0",
-			DEPENDENCY_PORTAL_KERNEL + ", version: \"4.4.0",
-			"org.osgi.annotation.versioning\", version: \"1.1.0");
-		testNotContains(
-			gradleProjectDir, name + "-service/bnd.bnd",
-			"-dsannotations-options: inherit");
-
-		File mavenProjectDir = buildTemplateWithMaven(
-			temporaryFolder, "service-builder", name, "com.test", mavenExecutor,
-			"-Dpackage=" + packageName, "-DliferayVersion=7.2.1",
-			"-DdependencyInjector=spring");
 
 		if (isBuildProjects()) {
 			_testBuildTemplateServiceBuilder(

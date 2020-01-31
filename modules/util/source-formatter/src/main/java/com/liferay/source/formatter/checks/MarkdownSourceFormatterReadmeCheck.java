@@ -106,7 +106,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 				sb.append("[");
 				sb.append(checkName);
 				sb.append("](");
-				sb.append(_DOCUMENTATION_CHECKS_DIR_LOCATION);
+				sb.append(_DOCUMENTATION_CHECKS_DIR_NAME);
 				sb.append(markdownFileName);
 				sb.append(") | ");
 			}
@@ -182,7 +182,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			rootFolderLocation + _DOCUMENTATION_DIR_LOCATION);
 
 		File documentationChecksDir = new File(
-			documentationDir, _DOCUMENTATION_CHECKS_DIR_LOCATION);
+			documentationDir, _DOCUMENTATION_CHECKS_DIR_NAME);
 
 		StringBundler sb = new StringBundler();
 
@@ -310,9 +310,10 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		}
 	}
 
-	private static final String _DOCUMENTATION_CHECKS_DIR_LOCATION = "checks/";
+	private static final String _DOCUMENTATION_CHECKS_DIR_NAME = "checks/";
 
-	private static final String _DOCUMENTATION_DIR_LOCATION = "documentation/";
+	private static final String _DOCUMENTATION_DIR_LOCATION =
+		"src/main/resources/documentation/";
 
 	private final Map<String, Set<CheckInfo>> _categoryCheckInfoMap =
 		new TreeMap<>();

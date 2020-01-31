@@ -15,7 +15,9 @@
 package com.liferay.layout.page.template.admin.web.internal.util;
 
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -40,6 +42,21 @@ public class PageDefinitionConverterUtil {
 			{
 				dateCreated = layout.getCreateDate();
 				dateModified = layout.getModifiedDate();
+				setCollectionName(
+					() -> {
+						if (layoutPageTemplateEntry == null) {
+							return null;
+						}
+
+						LayoutPageTemplateCollection
+							layoutPageTemplateCollection =
+								_layoutPageTemplateCollectionService.
+									fetchLayoutPageTemplateCollection(
+										layoutPageTemplateEntry.
+											getLayoutPageTemplateCollectionId());
+
+						return layoutPageTemplateCollection.getName();
+					});
 				setName(
 					() -> {
 						if (layoutPageTemplateEntry == null) {
@@ -54,6 +71,10 @@ public class PageDefinitionConverterUtil {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateCollectionService
+		_layoutPageTemplateCollectionService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

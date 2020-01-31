@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.ExcludeSyntax;
@@ -200,6 +201,16 @@ public class SourceFormatterUtil {
 		catch (IOException ioException) {
 			return null;
 		}
+	}
+
+	public static String getMarkdownFileName(String camelCaseName) {
+		String markdownFileName = TextFormatter.format(
+			camelCaseName, TextFormatter.K);
+
+		markdownFileName = TextFormatter.format(
+			markdownFileName, TextFormatter.N);
+
+		return markdownFileName + ".markdown";
 	}
 
 	public static File getPortalDir(String baseDirName) {

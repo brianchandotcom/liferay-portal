@@ -18,11 +18,11 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,7 +97,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		for (CheckInfo checkInfo : checkInfoSet) {
 			String checkName = checkInfo.getName();
 
-			String markdownFileName = _getMarkdownFileName(checkName);
+			String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
+				checkName);
 
 			File markdownFile = new File(
 				documentationChecksDir, markdownFileName);
@@ -161,16 +162,6 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		return allChecks;
 	}
 
-	private String _getMarkdownFileName(String camelCaseName) {
-		String markdownFileName = TextFormatter.format(
-			camelCaseName, TextFormatter.K);
-
-		markdownFileName = TextFormatter.format(
-			markdownFileName, TextFormatter.N);
-
-		return markdownFileName + ".markdown";
-	}
-
 	private String _getReadmeContent(String absolutePath)
 		throws DocumentException, IOException {
 
@@ -188,7 +179,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		sb.append("# Source Formatter\n\n");
 
-		String allChecksMarkdownFileName = _getMarkdownFileName("AllChecks");
+		String allChecksMarkdownFileName =
+			SourceFormatterUtil.getMarkdownFileName("AllChecks");
 
 		sb.append("### [All Checks](");
 		sb.append(_DOCUMENTATION_DIR_LOCATION);
@@ -206,7 +198,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 			String category = entry.getKey();
 
-			String markdownFileName = _getMarkdownFileName(
+			String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
 				StringUtil.removeChar(category, CharPool.SPACE) + "Checks");
 
 			sb.append("- [");
@@ -237,7 +229,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String markdownFileName = _getMarkdownFileName(
+			String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
 				sourceProcessorName + "Checks");
 
 			sb.append("- [");

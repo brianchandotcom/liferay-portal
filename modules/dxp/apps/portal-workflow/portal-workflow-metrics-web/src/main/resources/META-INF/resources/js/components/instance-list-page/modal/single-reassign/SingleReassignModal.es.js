@@ -176,7 +176,7 @@ const SingleReassignModal = () => {
 								title={Liferay.Language.get('error')}
 							>
 								{Liferay.Language.get(
-									'your-connection-was-unexpectedly-lost'
+									'your-request-has-failed'
 								)}
 							</ClayAlert>
 						)}

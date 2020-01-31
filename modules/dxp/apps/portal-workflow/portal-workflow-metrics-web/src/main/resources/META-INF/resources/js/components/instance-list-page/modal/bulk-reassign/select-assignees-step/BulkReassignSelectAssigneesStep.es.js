@@ -37,11 +37,7 @@ const BulkReassignSelectAssigneesStep = ({setErrorToast}) => {
 
 		return [
 			fetchData().catch(err => {
-				setErrorToast(
-					Liferay.Language.get(
-						'your-connection-was-unexpectedly-lost'
-					)
-				);
+				setErrorToast(Liferay.Language.get('your-request-has-failed'));
 				return Promise.reject(err);
 			})
 		];

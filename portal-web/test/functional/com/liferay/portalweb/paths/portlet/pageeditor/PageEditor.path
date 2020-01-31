@@ -287,6 +287,18 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--FOOTER_FRAGMENT-->
+<tr>
+	<td>FOOTERS</td>
+	<td>//footer[contains(@class,'navbar-${key_type}')]</td>
+	<td></td>
+</tr>
+<!--HEADER_FRAGMENT-->
+<tr>
+	<td>NAVIGATION_BARS</td>
+	<td>//header[contains(@class,'navbar-${key_type}')]</td>
+	<td></td>
+</tr>
 <!--SECTION-->
 <tr>
 	<td>SECTION</td>

@@ -32,18 +32,16 @@ import java.util.function.Consumer;
 public class DefaultColumn<T extends BaseTable<T>, C>
 	extends BaseASTNode implements Column<T, C>, DefaultExpression<C> {
 
-	public DefaultColumn(
-		T table, String columnName, Class<C> columnType, int sqlType) {
-
+	public DefaultColumn(T table, String name, Class<C> javaType, int sqlType) {
 		_table = Objects.requireNonNull(table);
-		_columnName = Objects.requireNonNull(columnName);
-		_columnType = Objects.requireNonNull(columnType);
+		_name = Objects.requireNonNull(name);
+		_javaType = Objects.requireNonNull(javaType);
 		_sqlType = sqlType;
 	}
 
 	@Override
 	public Alias<C> as(String name) {
-		if (_columnName.equals(name)) {
+		if (_name.equals(name)) {
 			return new DefaultAlias<>(this, name);
 		}
 
@@ -62,9 +60,7 @@ public class DefaultColumn<T extends BaseTable<T>, C>
 
 		DefaultColumn<?, ?> column = (DefaultColumn<?, ?>)object;
 
-		if (_columnName.equals(column.getColumnName()) &&
-			_table.equals(column._table)) {
-
+		if (_name.equals(column.getName()) && _table.equals(column._table)) {
 			return true;
 		}
 
@@ -72,13 +68,13 @@ public class DefaultColumn<T extends BaseTable<T>, C>
 	}
 
 	@Override
-	public String getColumnName() {
-		return _columnName;
+	public Class<C> getJavaType() {
+		return _javaType;
 	}
 
 	@Override
-	public Class<C> getColumnType() {
-		return _columnType;
+	public String getName() {
+		return _name;
 	}
 
 	@Override
@@ -93,7 +89,7 @@ public class DefaultColumn<T extends BaseTable<T>, C>
 
 	@Override
 	public int hashCode() {
-		int hash = HashUtil.hash(0, _columnName);
+		int hash = HashUtil.hash(0, _name);
 
 		return HashUtil.hash(hash, _table);
 	}
@@ -105,11 +101,11 @@ public class DefaultColumn<T extends BaseTable<T>, C>
 		consumer.accept(_table.getName());
 
 		consumer.accept(".");
-		consumer.accept(_columnName);
+		consumer.accept(_name);
 	}
 
-	private final String _columnName;
-	private final Class<C> _columnType;
+	private final Class<C> _javaType;
+	private final String _name;
 	private final int _sqlType;
 	private final T _table;
 

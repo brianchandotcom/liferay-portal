@@ -26,9 +26,9 @@ public class DefaultColumnFactory implements ColumnFactory {
 
 	@Override
 	public <T extends BaseTable<T>, C> Column<T, C> createColumn(
-		T table, String columnName, Class<C> columnType, int sqlType) {
+		T table, String name, Class<C> javaType, int sqlType) {
 
-		return new DefaultColumn<>(table, columnName, columnType, sqlType);
+		return new DefaultColumn<>(table, name, javaType, sqlType);
 	}
 
 }

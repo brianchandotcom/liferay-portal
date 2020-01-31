@@ -19,10 +19,14 @@ export default function({context, props}) {
 	const {endpoints, namespace, page} = context;
 	const {authorName, publishDate, title} = props;
 
-	const {getAnalyticsReportsTotalViewsURL} = endpoints;
+	const {
+		getAnalyticsReportsTotalReadsURL,
+		getAnalyticsReportsTotalViewsURL
+	} = endpoints;
 
 	const api = APIService({
 		endpoints: {
+			getAnalyticsReportsTotalReadsURL,
 			getAnalyticsReportsTotalViewsURL
 		},
 		namespace,

@@ -13,8 +13,21 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 
 function APIService({endpoints, namespace, page}) {
-	const {getAnalyticsReportsTotalViewsURL} = endpoints;
+	const {
+		getAnalyticsReportsTotalReadsURL,
+		getAnalyticsReportsTotalViewsURL
+	} = endpoints;
 	const {plid} = page;
+
+	function getTotalReads() {
+		const body = {plid};
+
+		return _fetchWithError(getAnalyticsReportsTotalReadsURL, {
+			body: _getFormDataRequest(body, namespace),
+			credentials: 'include',
+			method: 'POST'
+		});
+	}
 
 	function getTotalViews() {
 		const body = {plid};
@@ -27,6 +40,7 @@ function APIService({endpoints, namespace, page}) {
 	}
 
 	return {
+		getTotalReads,
 		getTotalViews
 	};
 }

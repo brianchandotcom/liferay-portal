@@ -69,11 +69,15 @@ public class SpiraRelease {
 			return spiraReleases;
 		}
 
-		Map<String, String> urlReplacements = new HashMap<>();
+		Map<String, String> urlParameters = new HashMap<>();
 
-		urlReplacements.put("number_rows", String.valueOf(_NUMBER_ROWS));
-		urlReplacements.put("project_id", String.valueOf(spiraProject.getID()));
-		urlReplacements.put("start_row", String.valueOf(_START_ROW));
+		urlParameters.put("number_rows", String.valueOf(_NUMBER_ROWS));
+		urlParameters.put("start_row", String.valueOf(_START_ROW));
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
 
 		JSONArray requestJSONArray = new JSONArray();
 
@@ -82,9 +86,8 @@ public class SpiraRelease {
 		}
 
 		JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-			"projects/{project_id}/releases/search?number_rows={number_rows}&" +
-				"start_row={start_row}",
-			urlReplacements, HttpRequestMethod.POST,
+			"projects/{project_id}/releases/search", urlParameters,
+			urlPathReplacements, HttpRequestMethod.POST,
 			requestJSONArray.toString());
 
 		for (int i = 0; i < responseJSONArray.length(); i++) {

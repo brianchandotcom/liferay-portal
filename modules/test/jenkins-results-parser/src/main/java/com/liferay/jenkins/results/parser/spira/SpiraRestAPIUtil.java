@@ -19,6 +19,8 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -30,45 +32,90 @@ import org.json.JSONObject;
 public class SpiraRestAPIUtil {
 
 	protected static String request(
-			String urlPath, Map<String, String> urlReplacements,
+			String urlPath, Map<String, String> urlParameters,
+			Map<String, String> urlPathReplacements,
 			HttpRequestMethod httpRequestMethod, String requestData)
 		throws IOException {
 
-		if (urlReplacements != null) {
-			for (Map.Entry<String, String> urlReplacement :
-					urlReplacements.entrySet()) {
+		return JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.combine(
+				_SPIRA_BASE_URL,
+				_applyURLPathReplacements(urlPath, urlPathReplacements),
+				_toURLParametersString(urlParameters)),
+			false, httpRequestMethod, requestData);
+	}
+
+	protected static JSONArray requestJSONArray(
+			String urlPath, Map<String, String> urlParameters,
+			Map<String, String> urlPathReplacements,
+			HttpRequestMethod httpRequestMethod, String requestData)
+		throws IOException {
+
+		return JenkinsResultsParserUtil.createJSONArray(
+			request(
+				urlPath, urlParameters, urlPathReplacements, httpRequestMethod,
+				requestData));
+	}
+
+	protected static JSONObject requestJSONObject(
+			String urlPath, Map<String, String> urlParameters,
+			Map<String, String> urlPathReplacements,
+			HttpRequestMethod httpRequestMethod, String requestData)
+		throws IOException {
+
+		return JenkinsResultsParserUtil.createJSONObject(
+			request(
+				urlPath, urlParameters, urlPathReplacements, httpRequestMethod,
+				requestData));
+	}
+
+	private static String _applyURLPathReplacements(
+		String urlPath, Map<String, String> urlPathReplacements) {
+
+		if (urlPath == null) {
+			return "";
+		}
+
+		if (urlPathReplacements != null) {
+			for (Map.Entry<String, String> urlPathReplacement :
+					urlPathReplacements.entrySet()) {
 
 				urlPath = urlPath.replace(
-					JenkinsResultsParserUtil.combine(
-						"{", urlReplacement.getKey(), "}"),
-					urlReplacement.getValue());
+					"{" + urlPathReplacement.getKey() + "}",
+					urlPathReplacement.getValue());
 			}
+		}
+
+		if (urlPath.matches(".*\\{[^\\}]+\\}.*")) {
+			throw new RuntimeException("Invalid url path " + urlPath);
+		}
+
+		if (urlPath.contains("?")) {
+			throw new RuntimeException("Invalid url path " + urlPath);
 		}
 
 		if (!urlPath.startsWith("/")) {
 			urlPath = "/" + urlPath;
 		}
 
-		return JenkinsResultsParserUtil.toString(
-			_SPIRA_BASE_URL + urlPath, false, httpRequestMethod, requestData);
+		return urlPath;
 	}
 
-	protected static JSONArray requestJSONArray(
-			String urlPath, Map<String, String> urlReplacements,
-			HttpRequestMethod httpRequestMethod, String requestData)
-		throws IOException {
+	private static String _toURLParametersString(
+		Map<String, String> urlParameters) {
 
-		return JenkinsResultsParserUtil.createJSONArray(
-			request(urlPath, urlReplacements, httpRequestMethod, requestData));
-	}
+		if ((urlParameters == null) || urlParameters.isEmpty()) {
+			return "";
+		}
 
-	protected static JSONObject requestJSONObject(
-			String urlPath, Map<String, String> urlReplacements,
-			HttpRequestMethod httpRequestMethod, String requestData)
-		throws IOException {
+		List<String> urlParameterStrings = new ArrayList<>();
 
-		return JenkinsResultsParserUtil.createJSONObject(
-			request(urlPath, urlReplacements, httpRequestMethod, requestData));
+		for (Map.Entry urlParameter : urlParameters.entrySet()) {
+			urlParameterStrings.add(
+				urlParameter.getKey() + "=" + urlParameter.getValue());
+		}
+
+		return "?" + JenkinsResultsParserUtil.join("&", urlParameterStrings);
 	}
 
 	private static final String _SPIRA_BASE_URL =

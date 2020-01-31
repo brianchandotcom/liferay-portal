@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.spira;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
 
@@ -35,15 +36,15 @@ public class SpiraProject {
 
 	public static SpiraProject getSpiraProjectById(int projectID) {
 		if (!_spiraProjects.containsKey(projectID)) {
-			Map<String, String> urlReplacements = new HashMap<>();
+			Map<String, String> urlPathReplacements = new HashMap<>();
 
-			urlReplacements.put("project_id", String.valueOf(projectID));
+			urlPathReplacements.put("project_id", String.valueOf(projectID));
 
 			try {
 				SpiraProject spiraProject = new SpiraProject(
 					SpiraRestAPIUtil.requestJSONObject(
-						"projects/{project_id}", urlReplacements,
-						JenkinsResultsParserUtil.HttpRequestMethod.GET, null));
+						"projects/{project_id}", null, urlPathReplacements,
+						HttpRequestMethod.GET, null));
 
 				if (spiraProject != null) {
 					_spiraProjects.put(spiraProject.getID(), spiraProject);

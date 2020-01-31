@@ -48,7 +48,7 @@ public class QueryTable extends BaseTable<QueryTable> {
 
 		consumer.accept(") ");
 
-		consumer.accept(getAlias());
+		consumer.accept(getName());
 	}
 
 	private final DSLQuery _dslQuery;

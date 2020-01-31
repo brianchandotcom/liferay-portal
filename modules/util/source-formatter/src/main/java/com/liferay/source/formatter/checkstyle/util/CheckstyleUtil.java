@@ -105,12 +105,6 @@ public class CheckstyleUtil {
 				continue;
 			}
 
-			if (!checkName.startsWith("com.liferay.")) {
-				continue;
-			}
-
-			checkNames.add(checkSimpleName);
-
 			DefaultConfiguration defaultConfiguration =
 				new DefaultConfiguration(checkName);
 
@@ -121,17 +115,34 @@ public class CheckstyleUtil {
 					entry.getKey(), entry.getValue());
 			}
 
-			if (excludesJSONObject.length() != 0) {
+			if (checkName.startsWith("com.liferay.")) {
+				checkNames.add(checkSimpleName);
+
+				if (excludesJSONObject.length() != 0) {
+					defaultConfiguration.addAttribute(
+						_EXCLUDES_KEY, excludesJSONObject.toString());
+				}
+
+				JSONObject attributesJSONObject = _getAttributesJSONObject(
+					propertiesMap, checkSimpleName, checkConfiguration,
+					sourceFormatterArgs);
+
 				defaultConfiguration.addAttribute(
-					_EXCLUDES_KEY, excludesJSONObject.toString());
+					_ATTRIBUTES_KEY, attributesJSONObject.toString());
 			}
+			else {
+				for (String attributeName :
+						checkConfiguration.getAttributeNames()) {
 
-			JSONObject attributesJSONObject = _getAttributesJSONObject(
-				propertiesMap, checkSimpleName, checkConfiguration,
-				sourceFormatterArgs);
+					if (!attributeName.equals("description") &&
+						!attributeName.equals("documentationLocation")) {
 
-			defaultConfiguration.addAttribute(
-				_ATTRIBUTES_KEY, attributesJSONObject.toString());
+						defaultConfiguration.addAttribute(
+							attributeName,
+							checkConfiguration.getAttribute(attributeName));
+					}
+				}
+			}
 
 			treeWalkerConfiguration.removeChild(checkConfiguration);
 

@@ -347,7 +347,7 @@ definition {
 		Type(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD",
 			value1 = "${userTag}");
-			
+
 		KeyPress(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_TAG_FIELD",
 			value1 = "\ENTER");
@@ -395,11 +395,10 @@ definition {
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
 				value1 = "${userLastName}");
 		}
-		
+
 		AssertClick(
 			locator1 = "Button#SUBMIT",
 			value1 = "Save");
-	
 	}
 
 	macro addCreateAccountPG {

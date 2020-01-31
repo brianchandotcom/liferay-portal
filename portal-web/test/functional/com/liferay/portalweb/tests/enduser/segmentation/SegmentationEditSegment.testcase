@@ -68,6 +68,52 @@ definition {
 		Button.clickSave();
 	}
 
+	@description = "Validate if the user can edit a segment with Organization Tag"
+	@priority = "5"
+	test EditSegmentUserByOrganizationTag {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCPWithTag(
+			userEmailAddress = "OrganizationTag@liferay.com",
+			userFirstName = "OrganizationTag",
+			userLastName = "OrganizationTag",
+			userScreenName = "OrganizationTag",
+			userTag = "organizationtagtest");
+
+		ProductMenu.gotoPortlet(
+			category = "People",
+			panel = "Site Administration",
+			portlet = "Segments");
+
+		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
+			Segmentation.editSegment();
+		}
+
+		Segmentation.fillTitle(titleField = "EditSegmentUserByOrganizationTag Test");
+
+		Segmentation.deleteProperties();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Tag");
+
+		Segmentation.selectTag(tagOption = "organizationtagtest");
+
+		Button.clickSave();
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deactivateCP(userFirstName = "OrganizationTag");
+
+		User.deleteCP();
+	}
+
 	@description = "Validate if the user can edit a segment with Properties Session Hostname"
 	@priority = "5"
 	test EditSegmentUserBySessionHostname {
@@ -108,20 +154,6 @@ definition {
 		Button.clickSave();
 	}
 
-	@description = "Validate if the user can edit a segment with Properties User and Email Segment with Contains to Equals Option"
-	@priority = "5"
-	test EditSegmentUserEmailAddressContainsToEquals {
-		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
-			Segmentation.editSegment();
-		}
-
-		Segmentation.fillTitle(titleField = "EditSegmentUserEmailAddressContainsToEquals Test");
-
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
-
-		Button.clickSave();
-	}
-
 	@description = "Validate if the user can edit a segment with User Tag"
 	@priority = "5"
 	test EditSegmentUserByUserTag {
@@ -152,8 +184,7 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "Tag");
 
-		Segmentation.selectTag(
-			tagOption = "tagtest");
+		Segmentation.selectTag(tagOption = "tagtest");
 
 		Button.clickSave();
 
@@ -162,57 +193,23 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.deactivateCP(
-			userFirstName= "UserTag");
-		
+		User.deactivateCP(userFirstName = "UserTag");
+
 		User.deleteCP();
 	}
 
-	@description = "Validate if the user can edit a segment with Organization Tag"
+	@description = "Validate if the user can edit a segment with Properties User and Email Segment with Contains to Equals Option"
 	@priority = "5"
-	test EditSegmentUserByOrganizationTag {
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCPWithTag(
-			userEmailAddress = "OrganizationTag@liferay.com",
-			userFirstName = "OrganizationTag",
-			userLastName = "OrganizationTag",
-			userScreenName = "OrganizationTag",
-			userTag = "organizationtagtest");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Segments");
-
+	test EditSegmentUserEmailAddressContainsToEquals {
 		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 			Segmentation.editSegment();
 		}
 
-		Segmentation.fillTitle(titleField = "EditSegmentUserByOrganizationTag Test");
+		Segmentation.fillTitle(titleField = "EditSegmentUserEmailAddressContainsToEquals Test");
 
-		Segmentation.deleteProperties();
-
-		Segmentation.selectOrganization();
-
-		Segmentation.addProperties(propertyOption = "Tag");
-
-		Segmentation.selectTag(
-			tagOption = "organizationtagtest");
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
 
 		Button.clickSave();
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.deactivateCP(
-			userFirstName= "OrganizationTag");
-		
-		User.deleteCP();
 	}
+
 }

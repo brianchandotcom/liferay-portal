@@ -75,7 +75,7 @@ definition {
 		Type(
 			locator1 = "Segmentation#SEARCH_TAG_FIELD",
 			value1 = "${tagOption}");
-		
+
 		KeyPress(
 			locator1 = "Segmentation#SEARCH_TAG_FIELD",
 			value1 = "\ENTER");

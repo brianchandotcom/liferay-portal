@@ -216,9 +216,7 @@ public class SpiraRelease {
 		return true;
 	}
 
-	private static String _createSpiraReleaseKey(
-		Integer projectID, Integer releaseID) {
-
+	private static String _createSpiraReleaseKey(int projectID, int releaseID) {
 		return projectID + "-" + releaseID;
 	}
 

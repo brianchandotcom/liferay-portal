@@ -140,6 +140,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 
 	const [content, setContent] = useState(defaultContent);
 	const [editablesIds, setEditablesIds] = useState([]);
+	const [editing, setEditing] = useState(false);
 
 	const getEditableId = editableUniqueId => {
 		const [, ...editableId] = editableUniqueId.split('-');
@@ -316,6 +317,8 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		element,
 		processorType
 	}) => {
+		setEditing(true);
+
 		const processor = Processors[editableType] || Processors.fallback;
 
 		const id =
@@ -358,6 +361,8 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	};
 
 	const destroyProcessor = (element, editableType) => {
+		setEditing(false);
+
 		const processor = Processors[editableType] || Processors.fallback;
 
 		processor.destroyEditor(element);
@@ -413,10 +418,11 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 					);
 				})}
 
-			{(isActive(itemId) ||
-				editablesIds.some(editableId =>
-					isActive(getEditableUniqueId(editableId))
-				)) &&
+			{!editing &&
+				(isActive(itemId) ||
+					editablesIds.some(editableId =>
+						isActive(getEditableUniqueId(editableId))
+					)) &&
 				editablesIds.map(editableId => (
 					<EditableDecoration
 						editableId={editableId}

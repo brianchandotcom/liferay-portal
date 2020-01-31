@@ -18,7 +18,7 @@
 
 <%
 User selUser = userDisplayContext.getSelectedUser();
-List<Group> groups = userDisplayContext.getGroups();
+List<Group> groups = userDisplayContext.getSites();
 List<Group> inheritedSites = userDisplayContext.getInheritedSites();
 
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites");

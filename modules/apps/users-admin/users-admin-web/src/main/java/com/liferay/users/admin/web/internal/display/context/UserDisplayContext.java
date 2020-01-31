@@ -210,6 +210,21 @@ public class UserDisplayContext {
 		return ListUtil.filter(getUserGroupRoles(), this::_isSiteRole);
 	}
 
+	public List<Group> getSites() throws PortalException {
+		List<Group> groups = Collections.emptyList();
+
+		if (_selUser != null) {
+			groups = _selUser.getSiteGroups();
+
+			if (_initDisplayContext.isFilterManageableGroups()) {
+				groups = UsersAdminUtil.filterGroups(
+					_themeDisplay.getPermissionChecker(), groups);
+			}
+		}
+
+		return groups;
+	}
+
 	public List<UserGroupRole> getUserGroupRoles() throws PortalException {
 		List<UserGroupRole> userGroupRoles = Collections.emptyList();
 

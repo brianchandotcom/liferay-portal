@@ -55,7 +55,10 @@ public class Select extends BaseASTNode implements DefaultFromStep {
 			consumer.accept("select ");
 		}
 
-		if (_expressions.size() > 0) {
+		if (_expressions.isEmpty()) {
+			consumer.accept("*");
+		}
+		else {
 			Iterator<? extends Expression<?>> iterator =
 				_expressions.iterator();
 
@@ -78,9 +81,6 @@ public class Select extends BaseASTNode implements DefaultFromStep {
 					consumer.accept(", ");
 				}
 			}
-		}
-		else {
-			consumer.accept("*");
 		}
 	}
 

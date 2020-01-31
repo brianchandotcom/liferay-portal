@@ -135,7 +135,6 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONArray duplicatedFragmentEntryLinksJSONArray =
 			JSONFactoryUtil.createJSONArray();
-
 		List<String> duplicatedLayoutStructureItemIds = new ArrayList<>();
 
 		JSONObject layoutDataJSONObject =

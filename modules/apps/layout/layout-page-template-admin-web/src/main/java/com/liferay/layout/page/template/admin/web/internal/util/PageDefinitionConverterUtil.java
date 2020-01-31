@@ -17,25 +17,21 @@ package com.liferay.layout.page.template.admin.web.internal.util;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 
 /**
  * @author Rubén Pulido
  */
-@Component(immediate = true, service = PageDefinitionConverterUtil.class)
 public class PageDefinitionConverterUtil {
 
-	public PageDefinition toPageDefinition(long plid) {
-		Layout layout = _layoutLocalService.fetchLayout(plid);
+	public static PageDefinition toPageDefinition(long plid) {
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
+			LayoutPageTemplateEntryLocalServiceUtil.
 				fetchLayoutPageTemplateEntryByPlid(plid);
 
 		return new PageDefinition() {
@@ -50,7 +46,7 @@ public class PageDefinitionConverterUtil {
 
 						LayoutPageTemplateCollection
 							layoutPageTemplateCollection =
-								_layoutPageTemplateCollectionService.
+								LayoutPageTemplateCollectionServiceUtil.
 									fetchLayoutPageTemplateCollection(
 										layoutPageTemplateEntry.
 											getLayoutPageTemplateCollectionId());
@@ -68,16 +64,5 @@ public class PageDefinitionConverterUtil {
 			}
 		};
 	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutPageTemplateCollectionService
-		_layoutPageTemplateCollectionService;
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 }

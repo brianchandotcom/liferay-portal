@@ -86,7 +86,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 
 				pageDefinitionsMap.put(
 					layoutPageTemplateEntryEntry.getPlid(),
-					_pageDefinitionConverterUtil.toPageDefinition(
+					PageDefinitionConverterUtil.toPageDefinition(
 						layoutPageTemplateEntryEntry.getPlid()));
 			}
 
@@ -109,8 +109,5 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
-
-	@Reference
-	private PageDefinitionConverterUtil _pageDefinitionConverterUtil;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.sql.dsl.query.sort.OrderByInfo;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 
@@ -26,7 +27,7 @@ import java.util.Comparator;
  * @author Shuyang Zhou
  */
 public abstract class OrderByComparator<T>
-	implements Comparator<T>, Serializable {
+	implements Comparator<T>, OrderByInfo, Serializable {
 
 	public String getOrderBy() {
 		return null;
@@ -48,6 +49,7 @@ public abstract class OrderByComparator<T>
 		return values;
 	}
 
+	@Override
 	public String[] getOrderByFields() {
 		String orderBy = getOrderBy();
 
@@ -86,6 +88,7 @@ public abstract class OrderByComparator<T>
 		return true;
 	}
 
+	@Override
 	public boolean isAscending(String field) {
 		return isAscending();
 	}

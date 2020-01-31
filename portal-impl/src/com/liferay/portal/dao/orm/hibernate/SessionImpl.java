@@ -14,17 +14,22 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 
 import java.io.Serializable;
 
 import java.sql.Connection;
+
+import java.util.List;
 
 import org.hibernate.LockOptions;
 
@@ -128,6 +133,30 @@ public class SessionImpl implements Session {
 	}
 
 	@Override
+	public SQLQuery createSynchronizedSQLQuery(DSLQuery dslQuery)
+		throws ORMException {
+
+		DefaultASTNodeListener defaultASTNodeListener =
+			new DefaultASTNodeListener();
+
+		SQLQuery q = _createSynchronizedSQLQuery(
+			dslQuery.toSQL(defaultASTNodeListener), true,
+			defaultASTNodeListener.getTableNames());
+
+		List<Object> scalarValues = defaultASTNodeListener.getScalarValues();
+
+		if (!scalarValues.isEmpty()) {
+			QueryPos queryPos = QueryPos.getInstance(q);
+
+			for (Object value : scalarValues) {
+				queryPos.add(value);
+			}
+		}
+
+		return q;
+	}
+
+	@Override
 	public SQLQuery createSynchronizedSQLQuery(String queryString)
 		throws ORMException {
 
@@ -139,20 +168,9 @@ public class SessionImpl implements Session {
 			String queryString, boolean strictName)
 		throws ORMException {
 
-		try {
-			queryString = SQLTransformer.transformFromJPQLToHQL(queryString);
-
-			SQLQuery sqlQuery = new SQLQueryImpl(
-				_session.createSQLQuery(queryString), strictName);
-
-			sqlQuery.addSynchronizedQuerySpaces(
-				SQLQueryTableNamesUtil.getTableNames(queryString));
-
-			return sqlQuery;
-		}
-		catch (Exception exception) {
-			throw ExceptionTranslator.translate(exception);
-		}
+		return _createSynchronizedSQLQuery(
+			queryString, strictName,
+			SQLQueryTableNamesUtil.getTableNames(queryString));
 	}
 
 	@Override
@@ -283,6 +301,25 @@ public class SessionImpl implements Session {
 			queryString = SQLTransformer.transformFromJPQLToHQL(queryString);
 
 			return new QueryImpl(_session.createQuery(queryString), strictName);
+		}
+		catch (Exception exception) {
+			throw ExceptionTranslator.translate(exception);
+		}
+	}
+
+	private SQLQuery _createSynchronizedSQLQuery(
+			String queryString, boolean strictName, String[] tableNames)
+		throws ORMException {
+
+		try {
+			queryString = SQLTransformer.transformFromJPQLToHQL(queryString);
+
+			SQLQuery sqlQuery = new SQLQueryImpl(
+				_session.createSQLQuery(queryString), strictName);
+
+			sqlQuery.addSynchronizedQuerySpaces(tableNames);
+
+			return sqlQuery;
 		}
 		catch (Exception exception) {
 			throw ExceptionTranslator.translate(exception);

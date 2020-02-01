@@ -65,7 +65,7 @@ public class SpiraProject {
 
 	public SpiraRelease getSpiraReleaseByID(int releaseID) throws IOException {
 		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
-			this, new SpiraRelease.SearchParameter("ReleaseId", releaseID));
+			this, new SearchParameter("ReleaseId", releaseID));
 
 		if (spiraReleases.size() > 1) {
 			throw new RuntimeException("Duplicate release ID " + releaseID);
@@ -98,7 +98,7 @@ public class SpiraProject {
 		throws IOException {
 
 		return SpiraRelease.getSpiraReleases(
-			this, new SpiraRelease.SearchParameter("Path", releasePath));
+			this, new SearchParameter("Path", releasePath));
 	}
 
 	public JSONObject toJSONObject() {
@@ -118,7 +118,7 @@ public class SpiraProject {
 		throws IOException {
 
 		List<SpiraRelease> spiraReleases = SpiraRelease.getSpiraReleases(
-			this, new SpiraRelease.SearchParameter("IndentLevel", indentLevel));
+			this, new SearchParameter("IndentLevel", indentLevel));
 
 		if (spiraReleases.size() > 1) {
 			throw new RuntimeException("Duplicate indent level " + indentLevel);

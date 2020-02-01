@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -67,58 +66,6 @@ public class SpiraRelease {
 		JSONObject jsonObject = toJSONObject();
 
 		return jsonObject.toString();
-	}
-
-	public static class SearchParameter {
-
-		public SearchParameter(String name, Object value) {
-			_name = name;
-			_value = value;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public Object getValue() {
-			return _value;
-		}
-
-		public boolean matches(JSONObject jsonObject) {
-			if (!Objects.equals(getValue(), jsonObject.get(getName()))) {
-				return false;
-			}
-
-			return true;
-		}
-
-		public JSONObject toFilterJSONObject() {
-			JSONObject filterJSONObject = new JSONObject();
-
-			filterJSONObject.put("PropertyName", _name);
-
-			if (_value instanceof Integer) {
-				Integer intValue = (Integer)_value;
-
-				filterJSONObject.put("IntValue", intValue);
-			}
-			else if (_value instanceof String) {
-				String stringValue = (String)_value;
-
-				stringValue = stringValue.replaceAll("\\[", "[[]");
-
-				filterJSONObject.put("StringValue", stringValue);
-			}
-			else {
-				throw new RuntimeException("Invalid value type");
-			}
-
-			return filterJSONObject;
-		}
-
-		private final String _name;
-		private final Object _value;
-
 	}
 
 	protected static List<SpiraRelease> getSpiraReleases(
@@ -205,15 +152,7 @@ public class SpiraRelease {
 	}
 
 	protected boolean matches(SearchParameter... searchParameters) {
-		JSONObject jsonObject = toJSONObject();
-
-		for (SearchParameter searchParameter : searchParameters) {
-			if (!searchParameter.matches(jsonObject)) {
-				return false;
-			}
-		}
-
-		return true;
+		return SearchParameter.matches(toJSONObject(), searchParameters);
 	}
 
 	private static String _createSpiraReleaseKey(int projectID, int releaseID) {

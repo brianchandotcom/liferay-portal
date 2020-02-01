@@ -15,7 +15,6 @@
 package com.liferay.account.retriever.test;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
@@ -71,9 +70,8 @@ public class AccountUserRetrieverTest {
 		_users.add(UserTestUtil.addUser());
 
 		for (User user : _users) {
-			_accountEntryUserRels.add(
-				_accountEntryUserRelLocalService.addAccountEntryUserRel(
-					_accountEntry.getAccountEntryId(), user.getUserId()));
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId());
 		}
 
 		long[] expectedUserIds = ListUtil.toLongArray(
@@ -109,9 +107,8 @@ public class AccountUserRetrieverTest {
 				keywords + RandomTestUtil.randomString(), null));
 
 		for (User user : _users) {
-			_accountEntryUserRels.add(
-				_accountEntryUserRelLocalService.addAccountEntryUserRel(
-					_accountEntry.getAccountEntryId(), user.getUserId()));
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId());
 		}
 
 		// Assert that null keyword search hits only account users
@@ -196,9 +193,8 @@ public class AccountUserRetrieverTest {
 
 			_users.add(user);
 
-			_accountEntryUserRels.add(
-				_accountEntryUserRelLocalService.addAccountEntryUserRel(
-					_accountEntry.getAccountEntryId(), user.getUserId()));
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId());
 		}
 
 		// Assert unpaginated search
@@ -311,10 +307,6 @@ public class AccountUserRetrieverTest {
 
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
-
-	@DeleteAfterTestRun
-	private final List<AccountEntryUserRel> _accountEntryUserRels =
-		new ArrayList<>();
 
 	@Inject
 	private AccountUserRetriever _accountUserRetriever;

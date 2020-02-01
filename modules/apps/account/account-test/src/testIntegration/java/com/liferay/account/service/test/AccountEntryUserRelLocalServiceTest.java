@@ -78,8 +78,6 @@ public class AccountEntryUserRelLocalServiceTest {
 			_accountEntryUserRelLocalService.addAccountEntryUserRel(
 				_accountEntry.getAccountEntryId(), _user.getUserId());
 
-		_accountEntryUserRels.add(accountEntryUserRel);
-
 		Assert.assertNotNull(accountEntryUserRel);
 		Assert.assertNotNull(
 			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
@@ -90,9 +88,8 @@ public class AccountEntryUserRelLocalServiceTest {
 	public void testAddAccountEntryUserRel1ThrowsDuplicateAccountEntryUserRelException()
 		throws Exception {
 
-		_accountEntryUserRels.add(
-			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				_accountEntry.getAccountEntryId(), _user.getUserId()));
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			_accountEntry.getAccountEntryId(), _user.getUserId());
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			_accountEntry.getAccountEntryId(), _user.getUserId());
@@ -257,9 +254,8 @@ public class AccountEntryUserRelLocalServiceTest {
 		_users.add(UserTestUtil.addUser());
 
 		for (User user : _users) {
-			_accountEntryUserRels.add(
-				_accountEntryUserRelLocalService.addAccountEntryUserRel(
-					_accountEntry.getAccountEntryId(), user.getUserId()));
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId());
 		}
 
 		List<AccountEntryUserRel> accountEntryUserRels =
@@ -304,10 +300,6 @@ public class AccountEntryUserRelLocalServiceTest {
 
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
-
-	@DeleteAfterTestRun
-	private final List<AccountEntryUserRel> _accountEntryUserRels =
-		new ArrayList<>();
 
 	@Inject
 	private AccountUserRetriever _accountUserRetriever;

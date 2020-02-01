@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
@@ -54,6 +55,12 @@ public class AccountEntryUserRelModelListener
 	@Override
 	public void onAfterRemove(AccountEntryUserRel accountEntryUserRel)
 		throws ModelListenerException {
+
+		if (accountEntryUserRel.getAccountUserId() ==
+				UserConstants.USER_ID_DEFAULT) {
+
+			return;
+		}
 
 		_updateDefaultAccountEntry(accountEntryUserRel.getAccountUserId());
 

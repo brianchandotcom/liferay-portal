@@ -57,13 +57,13 @@ public class CompanyModelListenerTest {
 	public void testCleanUpAccountRoles() throws Exception {
 		User defaultUser = _company.getDefaultUser();
 
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+		_accountEntry = _accountEntryLocalService.addAccountEntry(
 			defaultUser.getUserId(), 0L, RandomTestUtil.randomString(50),
 			RandomTestUtil.randomString(50), null, null,
 			WorkflowConstants.STATUS_APPROVED);
 
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-			defaultUser.getUserId(), accountEntry.getAccountEntryId(),
+			defaultUser.getUserId(), _accountEntry.getAccountEntryId(),
 			RandomTestUtil.randomString(), null, null);
 
 		_companyLocalService.deleteCompany(_company);
@@ -74,6 +74,9 @@ public class CompanyModelListenerTest {
 			_accountRoleLocalService.fetchAccountRole(
 				accountRole.getAccountRoleId()));
 	}
+
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;

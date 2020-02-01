@@ -207,6 +207,8 @@ public class AccountRoleLocalServiceTest {
 		_assertHasPermission(user, ActionKeys.DELETE, true);
 		_assertHasPermission(user, ActionKeys.MANAGE_USERS, true);
 		_assertHasPermission(user, ActionKeys.UPDATE, true);
+
+		_accountRoleLocalService.deleteAccountRole(defaultAccountRole);
 	}
 
 	@Test

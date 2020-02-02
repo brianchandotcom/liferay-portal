@@ -167,7 +167,7 @@ int index = 0;
 					<%
 					Calendar fromCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
-					if (Validator.isNotNull(fromDate)) {
+					if (fromDate != null) {
 						fromCalendar.setTime(fromDate);
 					}
 					else {
@@ -176,7 +176,7 @@ int index = 0;
 
 					Calendar toCalendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
-					if (Validator.isNotNull(toDate)) {
+					if (toDate != null) {
 						toCalendar.setTime(toDate);
 					}
 					%>

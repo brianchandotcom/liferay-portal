@@ -39,7 +39,7 @@ String fontColor = StringPool.BLANK;
 String fontFamily = StringPool.BLANK;
 String fontSize = StringPool.BLANK;
 
-if (Validator.isNotNull(messageDisplayConfiguration)) {
+if (messageDisplayConfiguration != null) {
 	fontColor = portletPreferences.getValue("fontColor", messageDisplayConfiguration.fontColor());
 	fontFamily = portletPreferences.getValue("fontFamily", messageDisplayConfiguration.fontFamily());
 	fontSize = portletPreferences.getValue("fontSize", String.valueOf(messageDisplayConfiguration.fontSize()));

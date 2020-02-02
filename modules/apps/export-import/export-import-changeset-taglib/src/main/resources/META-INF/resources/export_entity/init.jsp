@@ -22,7 +22,7 @@ long classNameId = GetterUtil.getLong(request.getAttribute("liferay-export-impor
 
 ClassName classNameModel = null;
 
-if (Validator.isNotNull(classNameId)) {
+if (classNameId != 0) {
 	classNameModel = ClassNameLocalServiceUtil.getClassName(classNameId);
 }
 else if (Validator.isNotNull(className)) {

@@ -27,7 +27,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 if (Validator.isNotNull(themeId) && Validator.isNotNull(companyId)) {
 	selTheme = ThemeLocalServiceUtil.getTheme(companyId, themeId);
 }
-else if (Validator.isNull(selLayout)) {
+else if (selLayout == null) {
 	selTheme = selLayout.getTheme();
 }
 

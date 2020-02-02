@@ -258,5 +258,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.TernaryOperatorCheck">
 			<message key="ternary.operator.avoid" value="Use if-else-statement instead of ternary conditional operator for better readability" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.ValidatorIsNullCheck">
+			<message key="method.invalidName" value="Avoid using method ''{0}''" />
+			<message key="method.reserved" value="Method ''{0}'' should only be used for type ''Long'', ''Serializable'' or ''String''" />
+		</module>
 	</module>
 </module>

@@ -26,12 +26,8 @@ AUI.add(
 				'.search-bar-empty-search-input'
 			);
 
-			if (emptySearchInput.val() === 'true') {
-				instance.emptySearchEnabled = true;
-			}
-			else {
-				instance.emptySearchEnabled = false;
-			}
+			instance.emptySearchEnabled =
+				emptySearchInput && emptySearchInput.val() === 'true';
 
 			instance.keywordsInput = instance.form.one(
 				'.search-bar-keywords-input'

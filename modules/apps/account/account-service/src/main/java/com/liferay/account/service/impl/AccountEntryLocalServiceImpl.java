@@ -263,7 +263,11 @@ public class AccountEntryLocalServiceImpl
 			accountEntryId);
 
 		accountEntry.setParentAccountEntryId(parentAccountEntryId);
+
+		_validateName(name);
+
 		accountEntry.setName(name);
+
 		accountEntry.setDescription(description);
 
 		domains = _validateDomains(domains);

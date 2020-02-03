@@ -37,6 +37,18 @@ ext {
 	]
 }
 
+if (System.getProperty("gradle.build.scan.server.url")) {
+	apply plugin: "com.gradle.build-scan"
+
+	buildScan {
+		allowUntrustedServer = true
+		server = System.getProperty("gradle.build.scan.server.url")
+
+		publishAlwaysIf true
+		tag System.getenv("JENKINS_HOME") ? "CI" : "LOCAL"
+	}
+}
+
 Set<File> bndPrintJarFiles = null
 
 if (Boolean.getBoolean("build.bnd.print.enabled")) {

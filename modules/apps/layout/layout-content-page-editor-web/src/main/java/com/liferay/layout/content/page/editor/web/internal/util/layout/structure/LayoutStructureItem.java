@@ -25,7 +25,7 @@ import java.util.UUID;
 /**
  * @author Víctor Galán
  */
-public class LayoutStructureItem {
+public abstract class LayoutStructureItem {
 
 	public static LayoutStructureItem of(JSONObject jsonObject) {
 		JSONObject configJSONObject = jsonObject.getJSONObject("config");

@@ -213,16 +213,19 @@ public class JournalEditDDMStructuresDisplayContext {
 
 	public String getScript() throws PortalException {
 		if (_script != null) {
-			DDMStructure ddmStructure = getDDMStructure();
-
-			_script = BeanParamUtil.getString(
-				ddmStructure.getLatestStructureVersion(), _httpServletRequest,
-				"definition");
-
 			return _script;
 		}
 
-		_script = ParamUtil.getString(_httpServletRequest, "definition");
+		DDMStructure ddmStructure = getDDMStructure();
+
+		if (ddmStructure != null) {
+			_script = BeanParamUtil.getString(
+				ddmStructure.getLatestStructureVersion(), _httpServletRequest,
+				"definition");
+		}
+		else {
+			_script = ParamUtil.getString(_httpServletRequest, "definition");
+		}
 
 		return _script;
 	}

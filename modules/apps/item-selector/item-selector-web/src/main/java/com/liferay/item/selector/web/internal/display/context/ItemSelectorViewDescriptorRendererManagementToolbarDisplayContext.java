@@ -82,6 +82,11 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 		return _itemSelectorViewDescriptor.isShowSearch();
 	}
 
+	@Override
+	protected String getDefaultDisplayStyle() {
+		return "icon";
+	}
+
 	private final ItemSelectorViewDescriptor _itemSelectorViewDescriptor;
 
 }

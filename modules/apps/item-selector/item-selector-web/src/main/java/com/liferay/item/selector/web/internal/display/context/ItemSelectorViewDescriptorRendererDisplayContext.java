@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -59,6 +60,21 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 			_getCurrentGroupBreadcrumbEntry(currentURL));
 	}
 
+	public String getDisplayStyle() {
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
+
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
+
+		if (Validator.isNull(_displayStyle)) {
+			_displayStyle = "icon";
+		}
+
+		return _displayStyle;
+	}
+
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}
@@ -78,10 +94,7 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 	}
 
 	public boolean isIconDisplayStyle() {
-		String displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		if (Validator.isNull(displayStyle) || displayStyle.equals("icon")) {
+		if (Objects.equals(getDisplayStyle(), "icon")) {
 			return true;
 		}
 
@@ -127,6 +140,7 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		return breadcrumbEntry;
 	}
 
+	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private final ItemSelectorViewDescriptor _itemSelectorViewDescriptor;

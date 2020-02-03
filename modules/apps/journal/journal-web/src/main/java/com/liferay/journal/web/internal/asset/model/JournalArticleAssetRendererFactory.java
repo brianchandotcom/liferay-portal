@@ -24,12 +24,14 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -117,8 +119,14 @@ public class JournalArticleAssetRendererFactory
 			}
 
 			if ((article == null) && (type == TYPE_LATEST)) {
-				article = _journalArticleLocalService.fetchLatestArticle(
+				article = _journalArticleLocalService.getLatestArticle(
 					classPK, WorkflowConstants.STATUS_ANY);
+			}
+
+			if (article == null) {
+				throw new NoSuchArticleException(
+					"No JournalArticle exists with the key {resourcePrimKey=" +
+						classPK + "}");
 			}
 		}
 

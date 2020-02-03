@@ -131,7 +131,7 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="icon"
+			displayStyle="<%= itemSelectorViewDescriptorRendererDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 			searchContainer="<%= searchContainer %>"
 		/>

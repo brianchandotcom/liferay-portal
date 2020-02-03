@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
+import com.liferay.portal.search.web.internal.folder.facet.configuration.FolderFacetPortletInstanceConfiguration;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -22,6 +24,16 @@ import java.util.List;
  * @author Lino Alves
  */
 public class FolderSearchFacetDisplayContext implements Serializable {
+
+	public long getDisplayStyleGroupId() {
+		return _displayStyleGroupId;
+	}
+
+	public FolderFacetPortletInstanceConfiguration
+		getFolderFacetPortletInstanceConfiguration() {
+
+		return _folderFacetPortletInstanceConfiguration;
+	}
 
 	public List<FolderSearchFacetTermDisplayContext>
 		getFolderSearchFacetTermDisplayContexts() {
@@ -47,6 +59,18 @@ public class FolderSearchFacetDisplayContext implements Serializable {
 
 	public boolean isRenderNothing() {
 		return _renderNothing;
+	}
+
+	public void setDisplayStyleGroupId(long displayStyleGroupId) {
+		_displayStyleGroupId = displayStyleGroupId;
+	}
+
+	public void setFolderFacetPortletInstanceConfiguration(
+		FolderFacetPortletInstanceConfiguration
+			folderFacetPortletInstanceConfiguration) {
+
+		_folderFacetPortletInstanceConfiguration =
+			folderFacetPortletInstanceConfiguration;
 	}
 
 	public void setFolderSearchFacetTermDisplayContexts(
@@ -77,6 +101,9 @@ public class FolderSearchFacetDisplayContext implements Serializable {
 		_renderNothing = renderNothing;
 	}
 
+	private long _displayStyleGroupId;
+	private FolderFacetPortletInstanceConfiguration
+		_folderFacetPortletInstanceConfiguration;
 	private List<FolderSearchFacetTermDisplayContext>
 		_folderSearchFacetTermDisplayContexts;
 	private boolean _nothingSelected;

@@ -17,7 +17,14 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
-FolderSearchFacetDisplayBuilder folderSearchFacetDisplayBuilder = new FolderSearchFacetDisplayBuilder();
+FolderSearchFacetDisplayBuilder folderSearchFacetDisplayBuilder = null;
+
+try {
+	folderSearchFacetDisplayBuilder = new FolderSearchFacetDisplayBuilder(renderRequest);
+}
+catch (ConfigurationException configurationException) {
+	throw new RuntimeException(configurationException);
+}
 
 folderSearchFacetDisplayBuilder.setFacet(facet);
 folderSearchFacetDisplayBuilder.setFolderTitleLookup(new FolderTitleLookupImpl(new FolderSearcher(), request));

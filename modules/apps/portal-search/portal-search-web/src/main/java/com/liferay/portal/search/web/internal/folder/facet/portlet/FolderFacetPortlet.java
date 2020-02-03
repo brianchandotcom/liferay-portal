@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.folder.facet.portlet;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
@@ -109,7 +110,7 @@ public class FolderFacetPortlet extends MVCPortlet {
 					renderRequest));
 
 		FolderSearchFacetDisplayBuilder folderSearchFacetDisplayBuilder =
-			new FolderSearchFacetDisplayBuilder();
+			createFolderSearchFacetDisplayBuilder(renderRequest);
 
 		folderSearchFacetDisplayBuilder.setFacet(facet);
 		folderSearchFacetDisplayBuilder.setFolderTitleLookup(folderTitleLookup);
@@ -130,6 +131,17 @@ public class FolderFacetPortlet extends MVCPortlet {
 			folderSearchFacetDisplayBuilder::setParameterValues);
 
 		return folderSearchFacetDisplayBuilder.build();
+	}
+
+	protected FolderSearchFacetDisplayBuilder
+		createFolderSearchFacetDisplayBuilder(RenderRequest renderRequest) {
+
+		try {
+			return new FolderSearchFacetDisplayBuilder(renderRequest);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
 	}
 
 	protected String getAggregationName(RenderRequest renderRequest) {

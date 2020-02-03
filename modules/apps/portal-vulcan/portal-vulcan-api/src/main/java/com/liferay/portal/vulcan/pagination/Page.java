@@ -43,6 +43,12 @@ public class Page<T> {
 	}
 
 	public static <T> Page<T> of(
+		Map<String, Map> actions, Collection<T> items) {
+
+		return new Page<>(actions, items);
+	}
+
+	public static <T> Page<T> of(
 		Map<String, Map> actions, Collection<T> items, Pagination pagination,
 		long totalCount) {
 
@@ -99,16 +105,19 @@ public class Page<T> {
 	}
 
 	private Page(Collection<T> items) {
-		_items = items;
-
-		_actions = new HashMap<>();
-		_page = 1;
-		_pageSize = items.size();
-		_totalCount = items.size();
+		this(new HashMap<>(), items);
 	}
 
 	private Page(Collection<T> items, Pagination pagination, long totalCount) {
 		this(new HashMap<>(), items, pagination, totalCount);
+	}
+
+	private Page(Map<String, Map> actions, Collection<T> items) {
+		_actions = actions;
+		_items = items;
+		_page = 1;
+		_pageSize = items.size();
+		_totalCount = items.size();
 	}
 
 	private Page(

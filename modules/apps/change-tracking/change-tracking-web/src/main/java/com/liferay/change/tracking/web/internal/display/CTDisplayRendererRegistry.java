@@ -134,6 +134,12 @@ public class CTDisplayRendererRegistry {
 			if (className != null) {
 				name = _resourceActions.getModelResource(
 					locale, className.getClassName());
+
+				if (name.startsWith(
+						_resourceActions.getModelResourceNamePrefix())) {
+
+					name = className.getClassName();
+				}
 			}
 		}
 

@@ -129,7 +129,17 @@ export default function MappingSelector({
 				: {mappedField: event.target.value};
 
 		if (selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content) {
-			dispatch(addMappedInfoItem({title: selectedItem.title, ...data}));
+			const mappedInfoItem = mappedInfoItems.find(
+				item =>
+					item.classNameId === selectedItem.classNameId &&
+					item.classPK === selectedItem.classPK
+			);
+			
+			if (!mappedInfoItem) {
+				dispatch(
+					addMappedInfoItem({title: selectedItem.title, ...data})
+				);
+			}
 		}
 
 		onMappingSelect(data);

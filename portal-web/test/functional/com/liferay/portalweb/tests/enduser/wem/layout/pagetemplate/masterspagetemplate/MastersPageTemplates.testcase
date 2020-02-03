@@ -109,6 +109,411 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-102200. Can change master of a content page among any existing masters."
+	@priority = "5"
+	test ChangeMasterOfContentPageAmongExistingMasters {
+		task ("Delete the existing custom masters") {
+			if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE_FLOAT")) {
+				Click(locator1 = "Button#CLOSE_MESSAGE_FLOAT");
+			}
+
+			MastersPageTemplatesAdmin.deleteMasters(masterLayoutName = "Custom Masters Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Import the site template with custom masters") {
+			LAR.importSiteCP(
+				larFileName = "custom-masters-site-template.lar",
+				siteName = "Test Site Name",
+				uploadFrom = "dependencies");
+		}
+
+		task ("Add a content page based on Blank") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Page Name 1");
+		}
+
+		task ("Assert can change master from Blank to custom master") {
+			PageEditor.gotoTab(tabName = "Look and Feel");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Blank",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			Alert.viewSuccessMessage();
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			AssertElementNotPresent(
+				key_sectionTitle = "Theme",
+				locator1 = "SitePagesEditPage#SECTION_TITLE");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			AssertVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			Navigator.gotoBack();
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+
+			PageEditor.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a content page based on custom master") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name 2");
+		}
+
+		task ("Assert can change master from custom master to Blank") {
+			PageEditor.gotoTab(tabName = "Look and Feel");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			AssertVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			Alert.viewSuccessMessage();
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Blank",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
+
+			AssertVisible(
+				key_sectionTitle = "Theme",
+				locator1 = "SitePagesEditPage#SECTION_TITLE");
+
+			AssertNotVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoBack();
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+	}
+
+	@description = "This is for LPS-102200. Can change master of a content page template among any existing masters"
+	@priority = "5"
+	test ChangeMasterOfContentPageTemplateAmongExistingMasters {
+		task ("Delete the existing custom masters") {
+			if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE_FLOAT")) {
+				Click(locator1 = "Button#CLOSE_MESSAGE_FLOAT");
+			}
+
+			MastersPageTemplatesAdmin.deleteMasters(masterLayoutName = "Custom Masters Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Import the site template with custom masters") {
+			LAR.importSiteCP(
+				larFileName = "custom-masters-site-template.lar",
+				siteName = "Test Site Name",
+				uploadFrom = "dependencies");
+		}
+
+		task ("Add a page template collection") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+		}
+
+		task ("Add a content page template based on Blank") {
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name 1");
+		}
+
+		task ("Assert can change master from Blank to custom master") {
+			PageEditor.gotoTab(tabName = "Look and Feel");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Blank",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			Alert.viewSuccessMessage();
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			AssertElementNotPresent(
+				key_sectionTitle = "Theme",
+				locator1 = "SitePagesEditPage#SECTION_TITLE");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			AssertVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			Navigator.gotoBack();
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+
+			PageEditor.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a content page template based on custom master") {
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				masterLayoutName = "Custom Masters Page Template",
+				pageTemplateName = "Page Template Name 2");
+		}
+
+		task ("Assert can change master from custom master to Blank") {
+			PageEditor.gotoTab(tabName = "Look and Feel");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			AssertVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			Alert.viewSuccessMessage();
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Blank",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
+
+			AssertVisible(
+				key_sectionTitle = "Theme",
+				locator1 = "SitePagesEditPage#SECTION_TITLE");
+
+			AssertNotVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoBack();
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+	}
+
+	@description = "This is for LPS-102200. Can change master of a display page template among any existing masters."
+	@priority = "5"
+	test ChangeMasterOfDisplayPageTemplateAmongExistingMasters {
+		task ("Delete the existing custom masters") {
+			if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE_FLOAT")) {
+				Click(locator1 = "Button#CLOSE_MESSAGE_FLOAT");
+			}
+
+			MastersPageTemplatesAdmin.deleteMasters(masterLayoutName = "Custom Masters Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Import the site template with custom masters") {
+			LAR.importSiteCP(
+				larFileName = "custom-masters-site-template.lar",
+				siteName = "Test Site Name",
+				uploadFrom = "dependencies");
+		}
+
+		task ("Add a display page template based on Blank") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name 1");
+		}
+
+		task ("Assert can change master from Blank to custom master") {
+			PageEditor.gotoTab(tabName = "Look and Feel");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Blank",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			Alert.viewSuccessMessage();
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Custom Masters Page Template");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			AssertElementNotPresent(
+				key_sectionTitle = "Theme",
+				locator1 = "SitePagesEditPage#SECTION_TITLE");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			AssertVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			Navigator.gotoBack();
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+
+			PageEditor.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a display page template based on custom masters") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				displayPageName = "Display Page Name 2",
+				masterLayoutName = "Custom Masters Page Template");
+		}
+
+		task ("Assert can change master from custom master to Blank") {
+			PageEditor.gotoTab(tabName = "Look and Feel");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Custom Masters Page Template",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Custom Masters Page Template");
+
+			AssertVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			Alert.viewSuccessMessage();
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
+
+			AssertTextEquals(
+				key_masterLayoutName = "Blank",
+				locator1 = "SitePagesEditPage#MASTER_LAYOUT_NAME",
+				value1 = "Blank");
+
+			AssertVisible(
+				key_sectionTitle = "Theme",
+				locator1 = "SitePagesEditPage#SECTION_TITLE");
+
+			AssertNotVisible(
+				key_text = "Edit Master",
+				locator1 = "Button#ANY");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Navigator.gotoBack();
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+	}
+
 	@description = "This is for LPS-102200. Can edit master page template elements from  "Look and Feel" of page editor."
 	@priority = "5"
 	test EditMasterPageTemplateViaPageEditorLookAndFeel {

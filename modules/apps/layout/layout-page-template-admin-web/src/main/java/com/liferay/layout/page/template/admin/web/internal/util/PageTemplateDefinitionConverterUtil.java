@@ -14,20 +14,18 @@
 
 package com.liferay.layout.page.template.admin.web.internal.util;
 
-import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageTemplateDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 
 /**
  * @author Rubén Pulido
  */
-public class PageDefinitionConverterUtil {
+public class PageTemplateDefinitionConverterUtil {
 
-	public static PageDefinition toPageDefinition(
+	public static PageTemplateDefinition toPageTemplateDefinition(
 		long layoutPageTemplateEntryId) {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -38,13 +36,11 @@ public class PageDefinitionConverterUtil {
 			return null;
 		}
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		return new PageDefinition() {
+		return new PageTemplateDefinition() {
 			{
-				dateCreated = layout.getCreateDate();
-				dateModified = layout.getModifiedDate();
+				dateCreated = layoutPageTemplateEntry.getCreateDate();
+				dateModified = layoutPageTemplateEntry.getModifiedDate();
+				name = layoutPageTemplateEntry.getName();
 				setCollectionName(
 					() -> {
 						LayoutPageTemplateCollection
@@ -60,7 +56,6 @@ public class PageDefinitionConverterUtil {
 
 						return layoutPageTemplateCollection.getName();
 					});
-				setName(layoutPageTemplateEntry.getName());
 			}
 		};
 	}

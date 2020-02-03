@@ -14,10 +14,10 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
-import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageTemplateDefinition;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.portlet.util.ExportUtil;
-import com.liferay.layout.page.template.admin.web.internal.util.PageDefinitionConverterUtil;
+import com.liferay.layout.page.template.admin.web.internal.util.PageTemplateDefinitionConverterUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -72,18 +72,23 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommand
 		}
 
 		try {
-			Map<Long, PageDefinition> pageDefinitionsMap = new HashMap<>();
+			Map<Long, PageTemplateDefinition> pageTemplateDefinitionsMap =
+				new HashMap<>();
 
 			for (long exportLayoutPageTemplateEntryId :
 					exportLayoutPageTemplateEntryIds) {
 
-				pageDefinitionsMap.put(
-					exportLayoutPageTemplateEntryId,
-					PageDefinitionConverterUtil.toPageDefinition(
-						exportLayoutPageTemplateEntryId));
+				PageTemplateDefinition pageTemplateDefinition =
+					PageTemplateDefinitionConverterUtil.
+						toPageTemplateDefinition(
+							exportLayoutPageTemplateEntryId);
+
+				pageTemplateDefinitionsMap.put(
+					exportLayoutPageTemplateEntryId, pageTemplateDefinition);
 			}
 
-			File file = _exportUtil.exportPageDefinitions(pageDefinitionsMap);
+			File file = _exportUtil.exportPageTemplateDefinitions(
+				pageTemplateDefinitionsMap);
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,

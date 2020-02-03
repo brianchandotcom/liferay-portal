@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageTemplateDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -53,15 +53,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ExportUtil.class)
 public class ExportUtil {
 
-	public File exportPageDefinitions(
-			Map<Long, PageDefinition> pageDefinitionsMap)
+	public File exportPageTemplateDefinitions(
+			Map<Long, PageTemplateDefinition> pageTemplateDefinitionsMap)
 		throws PortletException {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 		try {
-			for (Map.Entry<Long, PageDefinition> entry :
-					pageDefinitionsMap.entrySet()) {
+			for (Map.Entry<Long, PageTemplateDefinition> entry :
+					pageTemplateDefinitionsMap.entrySet()) {
 
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					_layoutPageTemplateEntryLocalService.
@@ -100,13 +100,13 @@ public class ExportUtil {
 	}
 
 	private void _populateZipWriter(
-			PageDefinition pageDefinition, long previewFileEntryId,
-			ZipWriter zipWriter)
+			PageTemplateDefinition pageTemplateDefinition,
+			long previewFileEntryId, ZipWriter zipWriter)
 		throws Exception {
 
 		String path =
-			pageDefinition.getCollectionName() + StringPool.SLASH +
-				pageDefinition.getName();
+			pageTemplateDefinition.getCollectionName() + StringPool.SLASH +
+				pageTemplateDefinition.getName();
 
 		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
 
@@ -116,8 +116,8 @@ public class ExportUtil {
 		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
 
 		zipWriter.addEntry(
-			path + "/page-definition.json",
-			objectWriter.writeValueAsString(pageDefinition));
+			path + "/page-template-definition.json",
+			objectWriter.writeValueAsString(pageTemplateDefinition));
 
 		FileEntry previewFileEntry = _getPreviewFileEntry(previewFileEntryId);
 

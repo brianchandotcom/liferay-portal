@@ -50,7 +50,6 @@ public class DepotAdminMembershipsDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
 		_user = PortalUtil.getSelectedUser(
 			_liferayPortletRequest.getHttpServletRequest());
 	}

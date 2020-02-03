@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
@@ -39,9 +41,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ItemSelectorViewDescriptorRendererDisplayContext {
 
 	public ItemSelectorViewDescriptorRendererDisplayContext(
-		String itemSelectedEventName,
+		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		ItemSelectorViewDescriptor itemSelectorViewDescriptor) {
 
+		_httpServletRequest = httpServletRequest;
 		_itemSelectedEventName = itemSelectedEventName;
 		_itemSelectorViewDescriptor = itemSelectorViewDescriptor;
 	}
@@ -73,6 +76,17 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 			itemSelectorReturnType.getClass();
 
 		return itemSelectorReturnTypeClass.getName();
+	}
+
+	public boolean isIconDisplayStyle() {
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
+
+		if (Validator.isNull(displayStyle) || displayStyle.equals("icon")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private BreadcrumbEntry _getCurrentGroupBreadcrumbEntry(
@@ -114,6 +128,7 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		return breadcrumbEntry;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private final ItemSelectorViewDescriptor _itemSelectorViewDescriptor;
 

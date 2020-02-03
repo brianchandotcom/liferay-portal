@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -169,6 +168,11 @@ public class BlogsEntryItemSelectorView
 		}
 
 		@Override
+		public Date getModifiedDate() {
+			return _blogsEntry.getModifiedDate();
+		}
+
+		@Override
 		public String getPayload() {
 			return JSONUtil.put(
 				"className", BlogsEntry.class.getName()
@@ -202,6 +206,16 @@ public class BlogsEntryItemSelectorView
 		@Override
 		public String getTitle(Locale locale) {
 			return BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry);
+		}
+
+		@Override
+		public long getUserId() {
+			return _blogsEntry.getUserId();
+		}
+
+		@Override
+		public String getUserName() {
+			return _blogsEntry.getUserName();
 		}
 
 		private final BlogsEntry _blogsEntry;

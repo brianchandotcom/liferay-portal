@@ -14,10 +14,13 @@
 
 package com.liferay.item.selector;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -49,6 +52,10 @@ public interface ItemSelectorViewDescriptor<T> {
 
 		public String getImageURL();
 
+		public default Date getModifiedDate() {
+			return null;
+		}
+
 		public String getPayload();
 
 		/**
@@ -72,6 +79,14 @@ public interface ItemSelectorViewDescriptor<T> {
 		}
 
 		public String getTitle(Locale locale);
+
+		public default long getUserId() {
+			return UserConstants.USER_ID_DEFAULT;
+		}
+
+		public default String getUserName() {
+			return StringPool.BLANK;
+		}
 
 		public default boolean isCompact() {
 			return false;

@@ -15,10 +15,14 @@
 package com.liferay.item.selector.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,6 +49,17 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 	@Override
 	public String[] getOrderByKeys() {
 		return _itemSelectorViewDescriptor.getOrderByKeys();
+	}
+
+	@Override
+	public List<ViewTypeItem> getViewTypeItems() {
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
+			{
+				addCardViewTypeItem();
+
+				addListViewTypeItem();
+			}
+		};
 	}
 
 	@Override

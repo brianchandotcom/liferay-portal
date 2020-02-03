@@ -15,6 +15,8 @@
 package com.liferay.depot.web.internal.item.selector.provider;
 
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
+import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
+import com.liferay.depot.web.internal.display.context.DepotApplicationDisplayContext;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
@@ -126,6 +128,21 @@ public class DepotItemSelectorViewRendererProvider
 								_servletContext.getRequestDispatcher(
 									"/item/selector/application_disabled.jsp");
 
+							DepotApplicationDisplayContext
+								depotApplicationDisplayContext =
+									new DepotApplicationDisplayContext(
+										httpServletRequest, _portal);
+
+							depotApplicationDisplayContext.setPortletId(
+								portletId);
+							depotApplicationDisplayContext.setPortletURL(
+								portletURL);
+
+							httpServletRequest.setAttribute(
+								DepotAdminWebKeys.
+									DEPOT_APPLICATION_DISPLAY_CONTEXT,
+								depotApplicationDisplayContext);
+
 							requestDispatcher.include(
 								httpServletRequest, httpServletResponse);
 						});
@@ -169,6 +186,9 @@ public class DepotItemSelectorViewRendererProvider
 		target = "(!(component.name=com.liferay.depot.web.internal.item.selector.provider.DepotItemSelectorViewRendererProvider))"
 	)
 	private ItemSelectorViewRendererProvider _itemSelectorViewRendererProvider;
+
+	@Reference
+	private Portal _portal;
 
 	private ServletContext _servletContext;
 

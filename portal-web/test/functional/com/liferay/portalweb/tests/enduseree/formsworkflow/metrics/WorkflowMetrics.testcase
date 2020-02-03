@@ -817,7 +817,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12");
+		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12", key_expectedValue = "0");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -857,7 +857,7 @@ definition {
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPendingItems";
 
 		var key_testSLADefinitionDays = "0";
-		var key_testSLADefinitionHours = "0001";
+		var key_testSLADefinitionHours = "0002";
 		var key_testSLADefinitionDescription = "SLA Description";
 		var key_testSLADefinitionEnd = "Process Ends: Approved";
 		var key_testSLADefinitionName = "SLA Name";
@@ -922,7 +922,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12");
+		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12", key_expectedValue = "0");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = "0",
@@ -1135,7 +1135,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12");
+		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12", key_expectedValue = "0");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

@@ -744,7 +744,7 @@ definition {
 	macro waitForSLAtoBecomeOverdue {
 		var count = "0";
 
-		while (IsElementPresent(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE_NONE") && ("${count}" != "${timesToRun}")) {
+		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE", value1 = "${key_expectedValue}") && ("${count}" != "${timesToRun}")) {
 
 			echo("Waiting 5 seconds, until the SLA becomes overdue");
 

@@ -1259,24 +1259,24 @@
 			}
 		},
 
-		toggleDisabled(buttons, state) {
-			if (typeof buttons === 'string') {
-				buttons = document.querySelectorAll(buttons);
-			} else if (buttons._node) {
-				buttons = [buttons.getDOM()];
-			} else if (buttons._nodes) {
-				buttons = buttons.getDOM();
-			} else if (buttons.nodeType === 1) {
-				buttons = [buttons];
+		toggleDisabled(nodes, state) {
+			if (typeof nodes === 'string') {
+				nodes = document.querySelectorAll(nodes);
+			} else if (nodes._node) {
+				nodes = [nodes.getDOM()];
+			} else if (nodes._nodes) {
+				nodes = nodes.getDOM();
+			} else if (nodes.nodeType === 1) {
+				nodes = [nodes];
 			}
 
-			buttons.forEach(buttonNode => {
-				buttonNode.disabled = state;
+			nodes.forEach(node => {
+				node.disabled = state;
 
 				if (state) {
-					buttonNode.classList.add('disabled');
+					node.classList.add('disabled');
 				} else {
-					buttonNode.classList.remove('disabled');
+					node.classList.remove('disabled');
 				}
 			});
 		},

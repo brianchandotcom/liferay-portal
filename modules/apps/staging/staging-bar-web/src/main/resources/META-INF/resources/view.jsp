@@ -188,7 +188,7 @@ if (liveLayout != null) {
 												</c:choose>
 											</div>
 
-											<div class="col-sm-3 col-md-2 staging-button-container">
+											<div class="col-md-2 col-sm-3 staging-button-container">
 												<liferay-staging:menu
 													cssClass="publish-link test5"
 													onlyActions="<%= true %>"

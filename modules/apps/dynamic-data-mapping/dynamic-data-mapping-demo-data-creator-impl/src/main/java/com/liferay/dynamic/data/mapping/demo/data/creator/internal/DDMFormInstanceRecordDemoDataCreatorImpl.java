@@ -124,7 +124,7 @@ public class DDMFormInstanceRecordDemoDataCreatorImpl
 	}
 
 	@Override
-	public void deleted() throws PortalException {
+	public void delete() throws PortalException {
 		for (Long formInstanceRecordId : _formInstanceRecordIds) {
 			_formInstanceRecordIds.remove(formInstanceRecordId);
 
@@ -132,7 +132,7 @@ public class DDMFormInstanceRecordDemoDataCreatorImpl
 				formInstanceRecordId);
 		}
 
-		_ddmStructureDemoDataCreator.deleted();
+		_ddmStructureDemoDataCreator.delete();
 	}
 
 	@Reference

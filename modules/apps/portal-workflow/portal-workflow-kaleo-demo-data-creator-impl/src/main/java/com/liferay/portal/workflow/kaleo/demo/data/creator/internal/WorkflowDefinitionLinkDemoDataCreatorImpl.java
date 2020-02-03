@@ -84,7 +84,7 @@ public class WorkflowDefinitionLinkDemoDataCreatorImpl
 	}
 
 	@Override
-	public void deleted() throws PortalException {
+	public void delete() throws PortalException {
 		for (WorkflowDefinitionLink workflowDefinitionLink :
 				_workflowDefinitionLinks) {
 

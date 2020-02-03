@@ -182,6 +182,7 @@ ${oversize.files.jsp}</fail>
 		<javac
 			classpathref="jspc.classpath"
 			compiler="${javac.compiler}"
+			debug="${javac.debug}"
 			deprecation="${javac.deprecation}"
 			destdir="${jspc.classes.dir}"
 			encoding="${javac.encoding}"

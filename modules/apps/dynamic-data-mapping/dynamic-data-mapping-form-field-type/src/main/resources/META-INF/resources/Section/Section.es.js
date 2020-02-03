@@ -17,7 +17,6 @@ import '../FieldBase/FieldBase.es';
 import './SectionRegister.soy.js';
 
 import 'dynamic-data-mapping-form-renderer/js/components/PageRenderer/PageRenderer.es';
-
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -31,6 +30,27 @@ class Section extends Component {
 			originalEvent: event,
 			value
 		});
+	}
+
+	prepareStateForRender(state) {
+		const {nestedFields} = this;
+
+		const newState = {
+			...state,
+			rows: state.rows.map(row => ({
+				...row,
+				columns: row.columns.map(column => ({
+					...column,
+					fields: column.fields.map(fieldName => {
+						return nestedFields.find(
+							nestedField => nestedField.fieldName === fieldName
+						);
+					})
+				}))
+			}))
+		};
+
+		return newState;
 	}
 
 	_handleOnDispatch(event) {
@@ -56,6 +76,18 @@ class Section extends Component {
 				console.error(new TypeError(`There is no type ${event.type}`));
 				break;
 		}
+	}
+
+	_setRows(rows) {
+		if (typeof rows === 'string') {
+			try {
+				return JSON.parse(rows);
+			} catch (e) {
+				return [];
+			}
+		}
+
+		return rows;
 	}
 }
 
@@ -106,6 +138,15 @@ Section.STATE = {
 	name: Config.string().required(),
 
 	/**
+	 * @default []
+	 * @instance
+	 * @memberof Section
+	 * @type {?(Array)}
+	 */
+
+	nestedFields: Config.array().value([]),
+
+	/**
 	 * @default '000000'
 	 * @instance
 	 * @memberof Section
@@ -140,6 +181,17 @@ Section.STATE = {
 	 */
 
 	required: Config.bool().value(false),
+
+	/**
+	 * @default []
+	 * @instance
+	 * @memberof Section
+	 * @type {?(Array|string)}
+	 */
+
+	rows: Config.oneOfType([Config.array(), Config.string()])
+		.setter('_setRows')
+		.value([]),
 
 	/**
 	 * @default true

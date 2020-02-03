@@ -79,53 +79,97 @@ const createField = (props, event) => {
 	};
 };
 
-const createSection = (props, event, sectionFields) => {
+const createSection = (props, event, fields) => {
 	const {fieldTypes} = props;
 
 	const fieldType = fieldTypes.find(fieldType => {
 		return fieldType.name === 'section';
 	});
 
-	const sectionField = createField(props, {...event, fieldType});
+	const sectionField = createField(
+		{
+			...props,
+			nestedFields: fields
+		},
+		{...event, fieldType}
+	);
 
 	let sectionFieldRows = {rows: []};
 
-	sectionFields.reverse().forEach(field => {
+	fields.reverse().forEach(field => {
 		sectionFieldRows = FormSupport.addFieldToColumn(
 			[sectionFieldRows],
 			0,
 			0,
 			0,
-			field
+			field.fieldName
 		)[0];
 	});
 
-	return updateFocusedField(
+	let focusedField = updateFocusedField(
 		props,
 		{focusedField: sectionField},
+		'nestedFields',
+		fields
+	);
+
+	focusedField = updateFocusedField(
+		props,
+		{focusedField},
 		'rows',
 		sectionFieldRows.rows
 	);
+
+	return focusedField;
 };
 
-const getColumn = (pages, nestedIndexes = []) => {
-	let column;
-	let context = pages;
+const getColumn = (context, nestedIndexes = []) => {
+	const {columnIndex, pageIndex, rowIndex} = nestedIndexes[nestedIndexes.length-1];
 
-	nestedIndexes.forEach(indexes => {
-		const {columnIndex, pageIndex, rowIndex} = indexes;
+	return FormSupport.getColumn(
+		context,
+		nestedIndexes.length > 1 ? 0 : pageIndex,
+		rowIndex,
+		columnIndex
+	);
+};
 
-		column = FormSupport.getColumn(
-			context,
-			column ? 0 : pageIndex,
-			rowIndex,
-			columnIndex
-		);
+const getContext = (context, nestedIndexes = []) => {
+	if (nestedIndexes.length) {
+		nestedIndexes.forEach((indexes, i) => {
+			const {columnIndex, pageIndex, rowIndex} = indexes;
 
-		context = column.fields;
-	});
+			let fields =
+				context[i > 0 ? 0 : pageIndex].rows[rowIndex].columns[
+					columnIndex
+				].fields;
 
-	return column;
+			if (context[0].nestedFields) {
+				fields = fields.map(field => context[0].nestedFields.find(nestedField => nestedField.fieldName === field))
+			}
+
+			context = fields;
+		});
+	}
+
+	return context;
+};
+
+const getFields = (context, nestedIndexes) => {
+	const {columnIndex, pageIndex, rowIndex} = nestedIndexes[nestedIndexes.length-1];
+
+	let fields = FormSupport.getColumn(
+		context,
+		nestedIndexes.length > 1 ? 0 : pageIndex,
+		rowIndex,
+		columnIndex
+	).fields;
+
+	if (context[0].nestedFields) {
+		fields = fields.map(field => context[0].nestedFields.find(nestedField => nestedField.fieldName === field))
+	}
+
+	return fields;
 };
 
 export default (props, state, event) => {
@@ -135,16 +179,53 @@ export default (props, state, event) => {
 		event.data.target.parentElement
 	);
 
-	const targetColumn = getColumn(pages, nestedIndexes);
+	let currentContext = getContext(pages, nestedIndexes.slice(0,-1));
+
+	const currentColumn = getColumn(currentContext, nestedIndexes);
+
+	const currentFields = getFields(currentContext, nestedIndexes);
 
 	const newField = createField(props, event);
 
 	const sectionField = createSection(props, event, [
-		...targetColumn.fields,
+		...currentFields,
 		newField
 	]);
 
-	targetColumn.fields = [sectionField];
+	if (currentContext[0].nestedFields) {
+		let newContext = [...currentContext][0];
+
+		currentFields.forEach(field => {
+			newContext.nestedFields.splice(
+				newContext.nestedFields.indexOf(field),
+				1
+			)
+		});
+
+		newContext = updateFocusedField(
+			props,
+			{focusedField: newContext},
+			'nestedFields',
+			[
+				...newContext.nestedFields,
+				sectionField
+			]
+		);
+
+		currentColumn.fields = [sectionField.fieldName];
+
+		newContext = updateFocusedField(
+			props,
+			{focusedField: newContext},
+			'rows',
+			newContext.rows
+		);
+
+		currentContext[0].nestedFields = newContext.nestedFields;
+
+	} else {
+		currentColumn.fields = [sectionField];
+	}
 
 	const {columnIndex, fieldIndex, pageIndex, rowIndex} = nestedIndexes.pop();
 

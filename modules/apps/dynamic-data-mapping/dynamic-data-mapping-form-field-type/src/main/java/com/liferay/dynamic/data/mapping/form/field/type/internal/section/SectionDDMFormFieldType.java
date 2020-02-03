@@ -46,8 +46,7 @@ public class SectionDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/Section" +
-			"/Section.es";
+		return "dynamic-data-mapping-form-field-type/Section/Section.es";
 	}
 
 	@Override

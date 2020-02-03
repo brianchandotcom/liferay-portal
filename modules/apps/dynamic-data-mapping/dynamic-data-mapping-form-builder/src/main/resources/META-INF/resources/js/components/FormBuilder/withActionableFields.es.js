@@ -37,29 +37,32 @@ const getFieldIndexes = (pages, fieldName) => {
 const getNestedFieldIndexes = (context, fieldName) => {
 	let indexes = [];
 
-	const mapper = (field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
-		const indexesRef = [...indexes];
-
-		if (field.fieldName !== fieldName && field.rows) {
-			const visitor = new PagesVisitor([field]);
-
-			visitor.mapFields(mapper);
-		}
-
-		if (
-			field.fieldName === fieldName ||
-			indexesRef.length !== indexes.length
-		) {
-			indexes = [{columnIndex, pageIndex, rowIndex}, ...indexes];
-		}
-	};
-
 	const visitor = new PagesVisitor(context);
 
-	visitor.mapFields(mapper);
+	visitor.mapFields((field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+		let nestedIndexes = [];
+
+		if (typeof field === 'string') {
+			field = context[0].nestedFields.find(
+				nestedField =>
+					nestedField.fieldName === field
+			);
+		}
+
+		if (field && field.fieldName === fieldName) {
+			indexes = [{columnIndex, pageIndex, rowIndex}];
+		} else if (field && field.fieldName !== fieldName && field.nestedFields) {
+			nestedIndexes = getNestedFieldIndexes([field], fieldName);
+
+			if (nestedIndexes.length) {
+				indexes = [{columnIndex, pageIndex, rowIndex}, ...nestedIndexes]
+			}
+		}
+
+	});
 
 	return indexes;
-};
+}
 
 const getFieldContainer = (pages, fieldName) => {
 	const nestedFieldIndexes = getNestedFieldIndexes(pages, fieldName);
@@ -357,23 +360,23 @@ const withActionableFields = ChildComponent => {
 		_getColumnField(nestedIndexes) {
 			const {pages} = this.props;
 
-			let column;
 			let context = pages;
+			let field;
 
 			nestedIndexes.forEach(indexes => {
 				const {columnIndex, pageIndex, rowIndex} = indexes;
 
-				column = FormSupport.getColumn(
+				field = FormSupport.getField(
 					context,
-					column ? 0 : pageIndex,
+					field ? 0 : pageIndex,
 					rowIndex,
 					columnIndex
 				);
 
-				context = column.fields;
+				context = [field];
 			});
 
-			return column.fields[0];
+			return field;
 		}
 
 		_getFieldType(fieldName, field) {
@@ -406,7 +409,9 @@ const withActionableFields = ChildComponent => {
 				);
 				const field = this._getColumnField(indexes);
 
-				this.showActions(hoveredFieldActions, field.fieldName, field);
+				if (field) {
+					this.showActions(hoveredFieldActions, field.fieldName, field);
+				}
 			}
 		}
 

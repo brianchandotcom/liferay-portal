@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
  * @author Carlos Lancha
@@ -47,8 +46,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 public interface SectionDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField(
-		type = "object", visibilityExpression = "FALSE"
-	)
-	public Object[] rows();
+	@DDMFormField(type = "text", visibilityExpression = "FALSE")
+	public String rows();
+
 }

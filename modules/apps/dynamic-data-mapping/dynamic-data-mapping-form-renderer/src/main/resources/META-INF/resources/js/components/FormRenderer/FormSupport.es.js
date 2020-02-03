@@ -264,8 +264,16 @@ export const getColumnPosition = (pages, pageIndex, rowIndex, columnIndex) => {
 		: 0;
 };
 
-export const getField = (pages, pageIndex, rowIndex, columnIndex) => {
-	return getColumn(pages, pageIndex, rowIndex, columnIndex).fields[0];
+export const getField = (context, pageIndex, rowIndex, columnIndex) => {
+	let field = getColumn(context, pageIndex, rowIndex, columnIndex).fields[0];
+
+	if (context[pageIndex].nestedFields) {
+		field = context[pageIndex].nestedFields.find(
+			nestedField => nestedField.fieldName === field
+		);
+	}
+
+	return field;
 };
 
 export const getRow = (pages, pageIndex, rowIndex) => {

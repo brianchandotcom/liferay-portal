@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
@@ -41,7 +42,7 @@ public class StringMethodsCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws ReflectiveOperationException {
 
-		_checkStringUtilReplaceCalls(fileName, content);
+		content = _checkStringUtilReplaceCalls(fileName, content);
 
 		if (isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
 			_checkStringReplaceCalls(fileName, content);
@@ -133,13 +134,13 @@ public class StringMethodsCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkStringUtilReplaceCalls(String fileName, String content)
+	private String _checkStringUtilReplaceCalls(String fileName, String content)
 		throws ReflectiveOperationException {
 
 		if (content.contains("com.liferay.poshi.runner.util.StringUtil") ||
 			content.contains("package com.liferay.poshi.runner.util;")) {
 
-			return;
+			return content;
 		}
 
 		Matcher matcher = _stringUtilReplacePattern.matcher(content);
@@ -152,9 +153,25 @@ public class StringMethodsCheck extends BaseFileCheck {
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				content.substring(matcher.start()));
 
-			if ((parameterList.size() != 3) ||
-				!_isSingleLenghtString(parameterList.get(1))) {
+			if (parameterList.size() != 3) {
+				continue;
+			}
 
+			if (matcher.group(2) == null) {
+				String lastParameter = parameterList.get(2);
+				String middleParameter = parameterList.get(1);
+
+				if ((lastParameter.equals("\"\"") ||
+					 lastParameter.equals("StringPool.BLANK")) &&
+					!middleParameter.startsWith(StringPool.APOSTROPHE) &&
+					!middleParameter.startsWith("CharPool.")) {
+
+					return _fixReplaceWithBlankCall(
+						content, parameterList, matcher.start());
+				}
+			}
+
+			if (!_isSingleLenghtString(parameterList.get(1))) {
 				continue;
 			}
 
@@ -171,6 +188,30 @@ public class StringMethodsCheck extends BaseFileCheck {
 			addMessage(
 				fileName, sb.toString(), "string_methods.markdown",
 				getLineNumber(content, matcher.start()));
+		}
+
+		return content;
+	}
+
+	private String _fixReplaceWithBlankCall(
+		String content, List<String> parameterList, int pos) {
+
+		int x = pos;
+
+		while (true) {
+			x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
+
+			String call = content.substring(pos, x + 1);
+
+			if ((ToolsUtil.getLevel(call, "(", ")") == 0) &&
+				(ToolsUtil.getLevel(call, "{", "}") == 0)) {
+
+				String replacement = StringBundler.concat(
+					"StringUtil.removeSubstring(", parameterList.get(0), ", ",
+					parameterList.get(1), ")");
+
+				return StringUtil.replaceFirst(content, call, replacement);
+			}
 		}
 	}
 

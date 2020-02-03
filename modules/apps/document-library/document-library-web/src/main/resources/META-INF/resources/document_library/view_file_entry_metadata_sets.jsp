@@ -17,8 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-DLViewFileEntryMetadataSetsDisplayContext
-	dLViewFileEntryMetadataSetsDisplayContext = (DLViewFileEntryMetadataSetsDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT);
+DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayContext = (DLViewFileEntryMetadataSetsDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT);
 %>
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />

@@ -6,4 +6,18 @@ definition {
 		AssertConfirm(value1 = "Changes made to this master are going to be propagated to all page templates, display page templates, and pages using it. Are you sure you want to proceed?");
 	}
 
+	macro selectMaster {
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		LexiconCard.clickCardTitle(card = "${masterLayoutName}");
+
+		AssertElementPresent(
+			key_card = "${masterLayoutName}",
+			locator1 = "LexiconCard#CARD_SELECTED");
+
+		SelectFrameTop();
+
+		Button.clickDone();
+	}
+
 }

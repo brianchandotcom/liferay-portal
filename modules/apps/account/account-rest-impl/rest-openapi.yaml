@@ -27,7 +27,6 @@ components:
                     format: int64
                     type: integer
                 status:
-                    readOnly: true
                     type: integer
             type: object
 info:

@@ -98,7 +98,7 @@ generatePomCompileOnly {
 				return
 			}
 			else if (project.property("gradle.releng.pom.project.templates.version").startsWith("7.2") &&
-					 (it.equals("content-targeting-report") ||
+				(it.equals("content-targeting-report") ||
 					  it.equals("content-targeting-rule") ||
 					  it.equals("content-targeting-tracking-action") ||
 					  it.equals("form-field") ||

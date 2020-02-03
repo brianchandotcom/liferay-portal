@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>DETAIL_PAGE_CLOSE</td>
-	<td>//div[contains(@class,'modal-header')]//button[@class='close']</td>
+	<td>//div[contains(@class,'modal-header')]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>

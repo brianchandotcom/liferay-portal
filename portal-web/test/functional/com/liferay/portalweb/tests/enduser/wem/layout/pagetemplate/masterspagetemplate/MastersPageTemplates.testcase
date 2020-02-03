@@ -142,7 +142,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 
-		MastersPageTemplates.clickPublishMaster();
+		MastersPageTemplates.propagateChange();
 
 		WebContentDisplayPortlet.viewDefaultMessage();
 
@@ -270,7 +270,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			MastersPageTemplates.clickPublishMaster();
+			MastersPageTemplates.propagateChange();
 		}
 
 		task ("Assert the Heading fragment exist in page based on custom masters") {

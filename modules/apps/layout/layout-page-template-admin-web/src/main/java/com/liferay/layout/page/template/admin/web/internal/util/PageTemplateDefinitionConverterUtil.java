@@ -18,7 +18,6 @@ import com.liferay.headless.delivery.dto.v1_0.PageTemplateDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 
 /**
  * @author Rubén Pulido
@@ -26,15 +25,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 public class PageTemplateDefinitionConverterUtil {
 
 	public static PageTemplateDefinition toPageTemplateDefinition(
-		long layoutPageTemplateEntryId) {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryLocalServiceUtil.
-				fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
-
-		if (layoutPageTemplateEntry == null) {
-			return null;
-		}
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
 		return new PageTemplateDefinition() {
 			{

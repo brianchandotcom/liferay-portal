@@ -27,8 +27,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.delivery.dto.v1_0.PageTemplateDefinition;
+import com.liferay.layout.page.template.admin.web.internal.util.PageTemplateDefinitionConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -40,12 +40,11 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
 import java.io.File;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rubén Pulido
@@ -54,22 +53,16 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportUtil {
 
 	public File exportPageTemplateDefinitions(
-			Map<Long, PageTemplateDefinition> pageTemplateDefinitionsMap)
+			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
 		throws PortletException {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 		try {
-			for (Map.Entry<Long, PageTemplateDefinition> entry :
-					pageTemplateDefinitionsMap.entrySet()) {
+			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+					layoutPageTemplateEntries) {
 
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
-					_layoutPageTemplateEntryLocalService.
-						fetchLayoutPageTemplateEntryByPlid(entry.getKey());
-
-				_populateZipWriter(
-					entry.getValue(),
-					layoutPageTemplateEntry.getPreviewFileEntryId(), zipWriter);
+				_populateZipWriter(layoutPageTemplateEntry, zipWriter);
 			}
 
 			zipWriter.finish();
@@ -100,9 +93,13 @@ public class ExportUtil {
 	}
 
 	private void _populateZipWriter(
-			PageTemplateDefinition pageTemplateDefinition,
-			long previewFileEntryId, ZipWriter zipWriter)
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			ZipWriter zipWriter)
 		throws Exception {
+
+		PageTemplateDefinition pageTemplateDefinition =
+			PageTemplateDefinitionConverterUtil.toPageTemplateDefinition(
+				layoutPageTemplateEntry);
 
 		String path =
 			pageTemplateDefinition.getCollectionName() + StringPool.SLASH +
@@ -119,7 +116,8 @@ public class ExportUtil {
 			path + "/page-template-definition.json",
 			objectWriter.writeValueAsString(pageTemplateDefinition));
 
-		FileEntry previewFileEntry = _getPreviewFileEntry(previewFileEntryId);
+		FileEntry previewFileEntry = _getPreviewFileEntry(
+			layoutPageTemplateEntry.getPreviewFileEntryId());
 
 		if (previewFileEntry != null) {
 			zipWriter.addEntry(
@@ -143,9 +141,5 @@ public class ExportUtil {
 				PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 		}
 	};
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 }

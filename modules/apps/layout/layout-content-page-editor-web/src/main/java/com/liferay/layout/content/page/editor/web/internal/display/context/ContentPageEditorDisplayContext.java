@@ -48,6 +48,7 @@ import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSid
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorTypeConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
+import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -392,14 +393,14 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"permissions",
 				HashMapBuilder.<String, Object>put(
-					ActionKeys.UPDATE,
+					ContentPageEditorActionKeys.LOCKED_SEGMENTS_EXPERIMENT,
+					editorSoyContext.get("hasLockedSegmentsExperiment")
+				).put(
+					ContentPageEditorActionKeys.UPDATE,
 					editorSoyContext.get("hasUpdatePermissions")
 				).put(
-					ActionKeys.UPDATE_LAYOUT_CONTENT,
+					ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT,
 					editorSoyContext.get("hasUpdateContentPermissions")
-				).put(
-					"LOCKED_SEGMENTS_EXPERIMENT",
-					editorSoyContext.get("hasLockedSegmentsExperiment")
 				).build()
 			).put(
 				"segmentsExperienceId",

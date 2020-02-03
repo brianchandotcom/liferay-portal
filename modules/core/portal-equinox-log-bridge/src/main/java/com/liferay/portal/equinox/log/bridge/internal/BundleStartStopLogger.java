@@ -16,6 +16,7 @@ package com.liferay.portal.equinox.log.bridge.internal;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.SynchronousBundleListener;
 
@@ -33,22 +34,28 @@ public class BundleStartStopLogger implements SynchronousBundleListener {
 
 	@Override
 	public void bundleChanged(BundleEvent bundleEvent) {
+		Bundle bundle = bundleEvent.getBundle();
+
+		if (bundle.getSymbolicName() == null) {
+			_log.error("{} has a null symbolicName", bundle.getLocation());
+		}
+
 		if (_portalStarted.get()) {
 			if (_log.isInfoEnabled()) {
 				if (bundleEvent.getType() == BundleEvent.STARTED) {
-					_log.info("STARTED {}", bundleEvent.getBundle());
+					_log.info("STARTED {}", bundle);
 				}
 				else if (bundleEvent.getType() == BundleEvent.STOPPED) {
-					_log.info("STOPPED {}", bundleEvent.getBundle());
+					_log.info("STOPPED {}", bundle);
 				}
 			}
 		}
 		else if (_log.isDebugEnabled()) {
 			if (bundleEvent.getType() == BundleEvent.STARTED) {
-				_log.debug("STARTED {}", bundleEvent.getBundle());
+				_log.debug("STARTED {}", bundle);
 			}
 			else if (bundleEvent.getType() == BundleEvent.STOPPED) {
-				_log.debug("STOPPED {}", bundleEvent.getBundle());
+				_log.debug("STOPPED {}", bundle);
 			}
 		}
 	}

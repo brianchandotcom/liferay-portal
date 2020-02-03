@@ -219,10 +219,11 @@ const Sharing = ({
 
 	const multiSelectFilter = useCallback(() => true, []);
 
-	const resource = useResource({
+	const {resource} = useResource({
 		fetchOptions: {
 			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken})
+			headers: new Headers({'x-csrf-token': Liferay.authToken}),
+			method: 'GET'
 		},
 		fetchRetry: {
 			attempts: 0
@@ -233,7 +234,7 @@ const Sharing = ({
 		}
 	});
 
-	const users = resource.resource;
+	const users = resource;
 
 	return (
 		<ClayForm className="sharing-modal-content" onSubmit={handleSubmit}>

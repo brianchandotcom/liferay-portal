@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DepotAdminMembershipsDisplayContext depotAdminMembershipsDisplayContext = new DepotAdminMembershipsDisplayContext(liferayPortletRequest, liferayPortletResponse);
-
-List<Group> groups = depotAdminMembershipsDisplayContext.getDepots();
+DepotAdminMembershipsDisplayContext depotAdminMembershipsDisplayContext = new DepotAdminMembershipsDisplayContext(liferayPortletRequest);
 
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "repositories");
 %>
@@ -57,10 +55,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "reposi
 	emptyResultsMessage="this-user-does-not-belong-to-a-repository"
 	headerNames="name,roles,null"
 	iteratorURL="<%= currentURLObj %>"
-	total="<%= groups.size() %>"
+	total="<%= depotAdminMembershipsDisplayContext.getDepotsCount() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= groups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+		results="<%= depotAdminMembershipsDisplayContext.getDepots(searchContainer.getStart(), searchContainer.getEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row

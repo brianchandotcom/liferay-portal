@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
@@ -44,12 +43,10 @@ import java.util.List;
 public class DepotAdminMembershipsDisplayContext {
 
 	public DepotAdminMembershipsDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+			LiferayPortletRequest liferayPortletRequest)
 		throws PortalException {
 
 		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 
 		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -58,33 +55,16 @@ public class DepotAdminMembershipsDisplayContext {
 			_liferayPortletRequest.getHttpServletRequest());
 	}
 
-	public List<Group> getDepots() throws PortalException {
-		if (_user == null) {
-			return Collections.emptyList();
-		}
+	public List<Group> getDepots(int start, int end) throws PortalException {
+		List<Group> groups = _getGroups();
 
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
+		return groups.subList(start, end);
+	}
 
-		List<Group> groups = ListUtil.copy(_user.getGroups());
+	public int getDepotsCount() throws PortalException {
+		List<Group> groups = _getGroups();
 
-		Iterator<Group> itr = groups.iterator();
-
-		while (itr.hasNext()) {
-			Group group = itr.next();
-
-			if (group.getType() != GroupConstants.TYPE_DEPOT) {
-				itr.remove();
-			}
-			else if (!permissionChecker.isCompanyAdmin() &&
-					 !GroupPermissionUtil.contains(
-						 permissionChecker, group, ActionKeys.ASSIGN_MEMBERS)) {
-
-				itr.remove();
-			}
-		}
-
-		return groups;
+		return groups.size();
 	}
 
 	public String getRoles(Group group) {
@@ -110,8 +90,45 @@ public class DepotAdminMembershipsDisplayContext {
 		return _user;
 	}
 
+	private List<Group> _getGroups() throws PortalException {
+		if (_groups != null) {
+			return _groups;
+		}
+
+		if (_user == null) {
+			_groups = Collections.emptyList();
+
+			return _groups;
+		}
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		List<Group> groups = ListUtil.copy(_user.getGroups());
+
+		Iterator<Group> itr = groups.iterator();
+
+		while (itr.hasNext()) {
+			Group group = itr.next();
+
+			if (group.getType() != GroupConstants.TYPE_DEPOT) {
+				itr.remove();
+			}
+			else if (!permissionChecker.isCompanyAdmin() &&
+					 !GroupPermissionUtil.contains(
+						 permissionChecker, group, ActionKeys.ASSIGN_MEMBERS)) {
+
+				itr.remove();
+			}
+		}
+
+		_groups = groups;
+
+		return _groups;
+	}
+
+	private List<Group> _groups;
 	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;
 	private final User _user;
 

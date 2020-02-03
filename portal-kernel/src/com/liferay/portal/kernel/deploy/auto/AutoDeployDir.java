@@ -28,7 +28,6 @@ import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -38,7 +37,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.jar.Attributes;
-import java.util.jar.JarInputStream;
+import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -345,10 +344,8 @@ public class AutoDeployDir {
 	private static boolean _isModule(File file) throws AutoDeployException {
 		Manifest manifest = null;
 
-		try (JarInputStream jarInputStream = new JarInputStream(
-				new FileInputStream(file))) {
-
-			manifest = jarInputStream.getManifest();
+		try (JarFile jarFile = new JarFile(file)) {
+			manifest = jarFile.getManifest();
 		}
 		catch (IOException ioException) {
 			throw new AutoDeployException(ioException);

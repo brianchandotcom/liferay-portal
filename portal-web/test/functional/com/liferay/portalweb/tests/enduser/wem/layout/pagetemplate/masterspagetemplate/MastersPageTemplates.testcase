@@ -514,6 +514,70 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-102200. Assert the content in Drop Zone is not changed when change master of page."
+	@priority = "3"
+	test ContentInDropZoneIsNotChangedWhenChangeMasterofPage {
+		task ("Delete the existing custom masters") {
+			MastersPageTemplatesAdmin.deleteMasters(masterLayoutName = "Custom Masters Page Template");
+		}
+
+		task ("Import the site template with custom masters") {
+			LAR.importSiteCP(
+				larFileName = "custom-masters-site-template.lar",
+				siteName = "Test Site Name",
+				uploadFrom = "dependencies");
+		}
+
+		task ("Add a content page based on custom master") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Page Name");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertVisible(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+
+		task ("Add a Heading fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Change master from custom master to Blank") {
+			PageEditor.gotoTab(tabName = "Look and Feel");
+
+			AssertClick(
+				key_text = "Change Master",
+				locator1 = "Button#ANY",
+				value1 = "Change Master");
+
+			MastersPageTemplates.selectMaster(masterLayoutName = "Blank");
+
+			Button.clickSave();
+
+			Navigator.gotoBack();
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#NAVIGATION_BARS");
+
+			AssertElementNotPresent(
+				key_type = "dark",
+				locator1 = "PageEditor#FOOTERS");
+		}
+
+		task ("Assert the content in drop zone is not changed") {
+			PageEditor.viewFragment(fragmentName = "Heading");
+		}
+	}
+
 	@description = "This is for LPS-102200. Can edit master page template elements from  "Look and Feel" of page editor."
 	@priority = "5"
 	test EditMasterPageTemplateViaPageEditorLookAndFeel {

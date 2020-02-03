@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttribute(PortletLayoutTypeControllerWebKeys.ORIGINAL_HTTP_SERVLET_REQUEST);
+%>
+
 <c:choose>
 	<c:when test="<%= themeDisplay.isStatePopUp() || themeDisplay.isWidget() || layoutTypePortlet.hasStateMax() %>">
 
@@ -40,7 +44,7 @@
 		}
 
 		if (Validator.isNotNull(templateContent)) {
-			RuntimePageUtil.processTemplate(PortalUtil.getOriginalServletRequest(request), response, ppid, new StringTemplateResource(templateId, templateContent), langType);
+			RuntimePageUtil.processTemplate(originalServletRequest, response, ppid, new StringTemplateResource(templateId, templateContent), langType);
 		}
 		%>
 
@@ -125,7 +129,7 @@
 													String langType = LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
 
 													if (Validator.isNotNull(templateContent)) {
-														RuntimePageUtil.processTemplate(PortalUtil.getOriginalServletRequest(request), response, new StringTemplateResource(templateId, templateContent), langType);
+														RuntimePageUtil.processTemplate(originalServletRequest, response, new StringTemplateResource(templateId, templateContent), langType);
 													}
 													%>
 

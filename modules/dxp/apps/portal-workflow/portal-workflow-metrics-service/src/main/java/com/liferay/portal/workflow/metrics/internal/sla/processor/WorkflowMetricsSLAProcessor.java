@@ -135,6 +135,10 @@ public class WorkflowMetricsSLAProcessor {
 			workflowMetricsSLAStatus =
 				workflowMetricsSLAStopwatch.getWorkflowMetricsSLAStatus();
 
+			if (completionLocalDateTime != null) {
+				workflowMetricsSLAStatus = WorkflowMetricsSLAStatus.COMPLETED;
+			}
+
 			if (Objects.equals(
 					workflowMetricsSLAStatus,
 					WorkflowMetricsSLAStatus.RUNNING)) {
@@ -468,14 +472,7 @@ public class WorkflowMetricsSLAProcessor {
 					setSLADefinitionId(
 						workflowMetricsSLADefinitionVersion.
 							getWorkflowMetricsSLADefinitionId());
-
-					if (completionLocalDateTime != null) {
-						setWorkflowMetricsSLAStatus(
-							WorkflowMetricsSLAStatus.COMPLETED);
-					}
-					else {
-						setWorkflowMetricsSLAStatus(workflowMetricsSLAStatus);
-					}
+					setWorkflowMetricsSLAStatus(workflowMetricsSLAStatus);
 				}
 			};
 

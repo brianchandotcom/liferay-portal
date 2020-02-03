@@ -1260,19 +1260,17 @@
 		},
 
 		toggleDisabled(buttons, state) {
-			let buttonNodes = [];
-
 			if (typeof buttons === 'string') {
-				buttonNodes = document.querySelectorAll(buttons);
+				buttons = document.querySelectorAll(buttons);
 			} else if (buttons._node) {
-				buttonNodes.push(buttons.getDOM());
+				buttons = [buttons.getDOM()];
 			} else if (buttons._nodes) {
-				buttonNodes = buttons.getDOM();
-			} else {
-				buttonNodes = [buttons];
+				buttons = buttons.getDOM();
+			} else if (buttons.nodeType === 1) {
+				buttons = [buttons];
 			}
 
-			buttonNodes.forEach(buttonNode => {
+			buttons.forEach(buttonNode => {
 				buttonNode.disabled = state;
 
 				if (state) {

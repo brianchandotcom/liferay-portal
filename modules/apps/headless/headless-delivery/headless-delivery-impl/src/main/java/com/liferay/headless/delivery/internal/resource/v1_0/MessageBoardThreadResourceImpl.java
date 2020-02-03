@@ -155,7 +155,8 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			mbCategory.getGroupId(), search, filter, pagination, sorts);
+			mbCategory.getGroupId(), search, filter, pagination, sorts,
+			_getMessageBoardSectionListActions(mbCategory));
 	}
 
 	@Override
@@ -216,7 +217,8 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			siteId, search, filter, pagination, sorts);
+			siteId, search, filter, pagination, sorts,
+			_getSiteListActions(siteId));
 	}
 
 	@Override
@@ -410,11 +412,29 @@ public class MessageBoardThreadResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private Map<String, Map<String, String>> _getListActions(long groupId) {
+	private Map<String, Map<String, String>> _getMessageBoardSectionListActions(
+		MBCategory mbCategory) {
+
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
 			addAction(
-				"ADD_MESSAGE", "postMessageBoardSectionMessageBoardThread",
+				"ADD_MESSAGE", mbCategory.getCategoryId(),
+				"postMessageBoardSectionMessageBoardThread",
+				"com.liferay.message.boards", mbCategory.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", mbCategory.getCategoryId(),
+				"getMessageBoardSectionMessageBoardThreadsPage",
+				"com.liferay.message.boards", mbCategory.getGroupId())
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getSiteListActions(long groupId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_MESSAGE", "postSiteMessageBoardThread",
 				"com.liferay.message.boards", groupId)
 		).put(
 			"get",
@@ -427,7 +447,7 @@ public class MessageBoardThreadResourceImpl
 	private Page<MessageBoardThread> _getSiteMessageBoardThreadsPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Sort[] sorts, Map<String, Map<String, String>> actions)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -442,7 +462,7 @@ public class MessageBoardThreadResourceImpl
 			document -> _toMessageBoardThread(
 				_mbMessageService.getMessage(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts, (Map)_getListActions(siteId));
+			sorts, (Map)actions);
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {

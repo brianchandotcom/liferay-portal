@@ -15,6 +15,7 @@
 
 		<!-- Audit fields -->
 
+		<column name="companyId" type="long" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -57,6 +58,7 @@
 
 		<!-- References -->
 
+		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Layout" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>

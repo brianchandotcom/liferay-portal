@@ -1,9 +1,10 @@
 Bundle-Name: Liferay Item Selector Taglib
 Bundle-SymbolicName: com.liferay.item.selector.taglib
-Bundle-Version: 4.0.7
+Bundle-Version: 4.1.0
 Export-Package:\
 	com.liferay.item.selector.taglib,\
-	com.liferay.item.selector.taglib.servlet.taglib
+	com.liferay.item.selector.taglib.servlet.taglib,\
+	com.liferay.item.selector.taglib.servlet.taglib.util
 Liferay-JS-Config: /META-INF/resources/config.js
 Provide-Capability:\
 	osgi.extender;\

@@ -14,14 +14,19 @@
 
 package com.liferay.wiki.web.internal.item.selector.view.display.context;
 
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
+import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrowserTagUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.wiki.configuration.WikiFileUploadConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
@@ -43,12 +48,14 @@ import javax.servlet.http.HttpServletRequest;
 public class WikiAttachmentItemSelectorViewDisplayContext {
 
 	public WikiAttachmentItemSelectorViewDisplayContext(
+		HttpServletRequest httpServletRequest,
 		WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion,
 		WikiAttachmentItemSelectorView wikiAttachmentItemSelectorView,
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
+		_httpServletRequest = httpServletRequest;
 		_wikiAttachmentItemSelectorCriterion =
 			wikiAttachmentItemSelectorCriterion;
 		_wikiAttachmentItemSelectorView = wikiAttachmentItemSelectorView;
@@ -57,6 +64,9 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
+
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			_httpServletRequest);
 	}
 
 	public String getItemSelectedEventName() {
@@ -82,6 +92,14 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 			_getWikiFileUploadsConfiguration();
 
 		return wikiFileUploadConfiguration.attachmentMimeTypes();
+	}
+
+	public OrderByComparator<FileEntry> getOrderByComparator() {
+		return DLUtil.getRepositoryModelOrderByComparator(
+			RepositoryEntryBrowserTagUtil.getOrderByCol(
+				_httpServletRequest, _portalPreferences),
+			RepositoryEntryBrowserTagUtil.getOrderByType(
+				_httpServletRequest, _portalPreferences));
 	}
 
 	public PortletURL getPortletURL(
@@ -155,9 +173,11 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		return _wikiFileUploadConfiguration;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private final ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
+	private final PortalPreferences _portalPreferences;
 	private final PortletURL _portletURL;
 	private final boolean _search;
 	private final WikiAttachmentItemSelectorCriterion

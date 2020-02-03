@@ -33,12 +33,7 @@ List portletFileEntries = null;
 int portletFileEntriesCount = 0;
 
 if (journalArticle != null) {
-	String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-	String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-	OrderByComparator<FileEntry> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
-
-	portletFileEntries = journalArticle.getImagesFileEntries(start, end, orderByComparator);
+	portletFileEntries = journalArticle.getImagesFileEntries(start, end, journalItemSelectorViewDisplayContext.getOrderByComparator());
 	portletFileEntriesCount = journalArticle.getImagesFileEntriesCount();
 }
 %>

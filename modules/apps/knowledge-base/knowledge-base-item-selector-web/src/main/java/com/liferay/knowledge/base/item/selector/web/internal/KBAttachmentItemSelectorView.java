@@ -40,6 +40,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,6 +92,7 @@ public class KBAttachmentItemSelectorView
 		KBAttachmentItemSelectorViewDisplayContext
 			kbAttachmentItemSelectorViewDisplayContext =
 				new KBAttachmentItemSelectorViewDisplayContext(
+					(HttpServletRequest)servletRequest,
 					kbAttachmentItemSelectorCriterion, this,
 					_itemSelectorReturnTypeResolverHandler,
 					itemSelectedEventName, search, portletURL);

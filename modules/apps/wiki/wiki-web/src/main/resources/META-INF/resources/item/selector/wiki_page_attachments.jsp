@@ -76,17 +76,12 @@ if (wikiPage.getAttachmentsFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER
 		}
 	}
 	else {
-		String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-		OrderByComparator<FileEntry> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
-
 		if (ArrayUtil.isNotEmpty(mimeTypes)) {
-			portletFileEntries = wikiPage.getAttachmentsFileEntries(mimeTypes, start, end, orderByComparator);
+			portletFileEntries = wikiPage.getAttachmentsFileEntries(mimeTypes, start, end, wikiAttachmentItemSelectorViewDisplayContext.getOrderByComparator());
 			portletFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount(mimeTypes);
 		}
 		else {
-			portletFileEntries = wikiPage.getAttachmentsFileEntries(start, end, orderByComparator);
+			portletFileEntries = wikiPage.getAttachmentsFileEntries(start, end, wikiAttachmentItemSelectorViewDisplayContext.getOrderByComparator());
 			portletFileEntriesCount = wikiPage.getAttachmentsFileEntriesCount();
 		}
 	}

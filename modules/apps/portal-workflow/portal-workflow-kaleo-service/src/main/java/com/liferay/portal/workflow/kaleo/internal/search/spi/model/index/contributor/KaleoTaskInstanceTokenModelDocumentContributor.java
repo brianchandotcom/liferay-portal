@@ -123,7 +123,7 @@ public class KaleoTaskInstanceTokenModelDocumentContributor
 			}
 		}
 
-		document.addKeyword(
+		document.addNumberSortable(
 			KaleoTaskInstanceTokenField.KALEO_INSTANCE_ID,
 			kaleoTaskInstanceToken.getKaleoInstanceId());
 		document.addNumberSortable(

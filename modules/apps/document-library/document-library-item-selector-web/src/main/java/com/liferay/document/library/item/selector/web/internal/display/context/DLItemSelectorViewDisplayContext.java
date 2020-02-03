@@ -28,11 +28,14 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrowserTagUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
@@ -48,6 +51,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -91,6 +95,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_classNameLocalService = classNameLocalService;
 		_stagingGroupHelper = stagingGroupHelper;
 
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			_httpServletRequest);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -201,10 +207,13 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			return repositoryEntries;
 		}
 
-		String orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "title");
-		String orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
+		OrderByComparator<Object> repositoryModelOrderByComparator =
+			DLUtil.getRepositoryModelOrderByComparator(
+				RepositoryEntryBrowserTagUtil.getOrderByCol(
+					_httpServletRequest, _portalPreferences),
+				RepositoryEntryBrowserTagUtil.getOrderByType(
+					_httpServletRequest, _portalPreferences),
+				true);
 
 		int[] startAndEnd = _getStartAndEnd();
 
@@ -222,17 +231,13 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 						getStagingAwareGroupId(), getFolderId(), getMimeTypes(),
 						_getFileEntryTypeId(), false,
 						WorkflowConstants.STATUS_APPROVED, startAndEnd[0],
-						startAndEnd[1],
-						DLUtil.getRepositoryModelOrderByComparator(
-							orderByCol, orderByType, true));
+						startAndEnd[1], repositoryModelOrderByComparator);
 		}
 
 		return DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
 			getStagingAwareGroupId(), getFolderId(),
 			WorkflowConstants.STATUS_APPROVED, getMimeTypes(), false, false,
-			startAndEnd[0], startAndEnd[1],
-			DLUtil.getRepositoryModelOrderByComparator(
-				orderByCol, orderByType, true));
+			startAndEnd[0], startAndEnd[1], repositoryModelOrderByComparator);
 	}
 
 	public int getRepositoryEntriesCount() throws PortalException {
@@ -482,6 +487,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	private final ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 	private String[] _mimeTypes;
+	private final PortalPreferences _portalPreferences;
 	private final PortletURL _portletURL;
 	private Repository _repository;
 	private final boolean _search;

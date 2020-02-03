@@ -28,22 +28,26 @@ import java.util.UUID;
 public abstract class LayoutStructureItem {
 
 	public static LayoutStructureItem of(JSONObject jsonObject) {
-		JSONObject configJSONObject = jsonObject.getJSONObject("config");
-		String itemId = jsonObject.getString("itemId");
 		String parentId = jsonObject.getString("parentId");
 		String type = jsonObject.getString("type");
+
+		LayoutStructureItem layoutStructureItem =
+			LayoutStructureItemUtil.create(type, parentId);
+
+		if (layoutStructureItem == null) {
+			return null;
+		}
 
 		List<String> childrenItemIds = new ArrayList<>();
 
 		JSONUtil.addToStringCollection(
 			childrenItemIds, jsonObject.getJSONArray("children"));
 
-		LayoutStructureItem layoutStructureItem = new LayoutStructureItem();
-
 		layoutStructureItem.setChildrenItemIds(childrenItemIds);
-		layoutStructureItem.setItemConfigJSONObject(configJSONObject);
-		layoutStructureItem.setItemId(itemId);
-		layoutStructureItem.setItemType(type);
+
+		layoutStructureItem.setItemId(jsonObject.getString("itemId"));
+        layoutStructureItem.setItemConfigJSONObject(
+            jsonObject.getJSONObject("config"));
 		layoutStructureItem.setParentItemId(parentId);
 
 		return layoutStructureItem;

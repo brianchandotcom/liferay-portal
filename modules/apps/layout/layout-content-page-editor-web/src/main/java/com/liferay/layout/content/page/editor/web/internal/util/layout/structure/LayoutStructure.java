@@ -92,8 +92,8 @@ public class LayoutStructure {
 	public LayoutStructureItem addLayoutStructureItem(
 		String itemType, String parentItemId, int position) {
 
-		LayoutStructureItem layoutStructureItem = new LayoutStructureItem(
-			itemType, parentItemId);
+		LayoutStructureItem layoutStructureItem =
+			LayoutStructureItemUtil.create(itemType, parentItemId);
 
 		_updateLayoutStructure(layoutStructureItem, position);
 
@@ -357,13 +357,19 @@ public class LayoutStructure {
 	private List<LayoutStructureItem> _duplicateLayoutStructureItem(
 		String itemId, String parentItemId, int position) {
 
-		List<LayoutStructureItem> duplicatedLayoutStructureItems =
-			new ArrayList<>();
-
 		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
 			itemId);
 
-		LayoutStructureItem newLayoutStructureItem = new LayoutStructureItem();
+		LayoutStructureItem newLayoutStructureItem =
+			LayoutStructureItemUtil.create(
+				layoutStructureItem.getItemType(), parentItemId);
+
+		if (newLayoutStructureItem == null) {
+			return Collections.emptyList();
+		}
+
+		List<LayoutStructureItem> duplicatedLayoutStructureItems =
+			new ArrayList<>();
 
 		JSONObject newItemConfigJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -377,7 +383,6 @@ public class LayoutStructure {
 		newLayoutStructureItem.setItemConfigJSONObject(newItemConfigJSONObject);
 
 		newLayoutStructureItem.setItemId(String.valueOf(UUID.randomUUID()));
-		newLayoutStructureItem.setItemType(layoutStructureItem.getItemType());
 		newLayoutStructureItem.setParentItemId(parentItemId);
 
 		_updateLayoutStructure(newLayoutStructureItem, position);

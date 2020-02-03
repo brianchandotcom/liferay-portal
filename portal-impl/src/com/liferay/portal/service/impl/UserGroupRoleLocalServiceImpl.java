@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.service.base.UserGroupRoleLocalServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -50,6 +52,19 @@ public class UserGroupRoleLocalServiceImpl
 		}
 
 		return userGroupRole;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public UserGroupRole addUserGroupRole(UserGroupRole userGroupRole) {
+		if (userGroupRole.getUserGroupRoleId() == 0) {
+			userGroupRole.setUserGroupRoleId(
+				counterLocalService.increment(UserGroupRole.class.getName()));
+		}
+
+		userGroupRole.setNew(true);
+
+		return userGroupRolePersistence.update(userGroupRole);
 	}
 
 	@Override
@@ -185,6 +200,13 @@ public class UserGroupRoleLocalServiceImpl
 	}
 
 	@Override
+	public UserGroupRole fetchUserGroupRole(
+		long userId, long groupId, long roleId) {
+
+		return userGroupRolePersistence.fetchByU_G_R(userId, groupId, roleId);
+	}
+
+	@Override
 	public List<UserGroupRole> getUserGroupRoles(long userId) {
 		return userGroupRolePersistence.findByUserId(userId);
 	}
@@ -270,6 +292,17 @@ public class UserGroupRoleLocalServiceImpl
 		}
 
 		return hasUserGroupRole(userId, groupId, role.getRoleId(), inherit);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public UserGroupRole updateUserGroupRole(UserGroupRole userGroupRole) {
+		if (userGroupRole.getUserGroupRoleId() == 0) {
+			userGroupRole.setUserGroupRoleId(
+				counterLocalService.increment(UserGroupRole.class.getName()));
+		}
+
+		return userGroupRolePersistence.update(userGroupRole);
 	}
 
 }

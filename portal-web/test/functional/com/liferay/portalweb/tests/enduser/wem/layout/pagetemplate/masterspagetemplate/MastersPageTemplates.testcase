@@ -47,7 +47,7 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Button");
 
-			PageEditor.clickPublish();
+			Button.click(button = "Publish Master");
 		}
 
 		task ("Assert custom masters as an option when add a new page") {
@@ -122,7 +122,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Asset Publisher");
 
-		PageEditor.clickPublish();
+		Button.click(button = "Publish Master");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -163,7 +163,7 @@ definition {
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
-			PageEditor.clickPublish();
+			Button.click(button = "Publish Master");
 		}
 
 		task ("Assert elements inherited from custom masters are changeless") {

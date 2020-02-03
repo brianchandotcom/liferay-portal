@@ -9,7 +9,7 @@ definition {
 
 		PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.clickPublish();
+		Button.click(button = "Publish Master");
 	}
 
 	macro gotoMastersEllipsisItem {

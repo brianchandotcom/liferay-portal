@@ -62,7 +62,7 @@ public class LiferayReader implements Reader<IndexedRecord> {
 
 		_jsonObjectIndexedRecordConverter =
 			new JsonObjectIndexedRecordConverter(
-				liferayInputProperties.getSchema());
+				liferayInputProperties.getOutboundSchema());
 	}
 
 	@Override

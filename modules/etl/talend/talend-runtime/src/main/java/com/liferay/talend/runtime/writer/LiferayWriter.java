@@ -62,15 +62,15 @@ public class LiferayWriter
 		_indexedRecordJsonObjectConverter =
 			new IndexedRecordJsonObjectConverter(
 				_dieOnError,
-				_liferayOutputProperties.resource.mainSchemaProperties.schema.
-					getValue(),
+				_liferayOutputProperties.resource.inboundSchemaProperties.
+					schema.getValue(),
 				_liferayOutputProperties.resource.rejectSchemaProperties.schema.
 					getValue(),
 				_result);
 		_jsonObjectIndexedRecordConverter =
 			new JsonObjectIndexedRecordConverter(
-				_liferayOutputProperties.resource.flowSchemaProperties.schema.
-					getValue());
+				_liferayOutputProperties.resource.outboundSchemaProperties.
+					schema.getValue());
 	}
 
 	@Override

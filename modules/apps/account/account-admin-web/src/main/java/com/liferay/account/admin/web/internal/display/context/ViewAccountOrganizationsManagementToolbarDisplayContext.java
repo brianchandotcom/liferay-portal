@@ -145,7 +145,7 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"id", "name"};
+		return new String[] {"name"};
 	}
 
 }

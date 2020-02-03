@@ -199,7 +199,7 @@ public class RatingsEntryLocalServiceImpl
 			stats.setAverageScore(
 				stats.getTotalScore() / stats.getTotalEntries());
 
-			stats = ratingsStatsPersistence.update(stats);
+			ratingsStatsPersistence.update(stats);
 		}
 		else {
 			User user = userPersistence.findByPrimaryKey(userId);

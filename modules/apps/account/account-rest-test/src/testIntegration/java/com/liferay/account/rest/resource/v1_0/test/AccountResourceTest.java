@@ -73,6 +73,13 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		return _addAccount();
 	}
 
+	@Override
+	protected Account testPostAccount_addAccount(Account account)
+		throws Exception {
+
+		return _addAccount(account);
+	}
+
 	private Account _addAccount() throws Exception {
 		return _toAccount(_addAccountEntry());
 	}

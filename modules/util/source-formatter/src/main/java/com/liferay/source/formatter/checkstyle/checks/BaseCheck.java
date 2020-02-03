@@ -511,12 +511,20 @@ public abstract class BaseCheck extends AbstractCheck {
 	protected DetailAST getVariableTypeDetailAST(
 		DetailAST detailAST, String variableName) {
 
+		return getVariableTypeDetailAST(detailAST, variableName, true);
+	}
+
+	protected DetailAST getVariableTypeDetailAST(
+		DetailAST detailAST, String variableName,
+		boolean includeGlobalVariables) {
+
 		DetailAST previousDetailAST = detailAST;
 
 		while (true) {
-			if ((previousDetailAST.getType() == TokenTypes.CLASS_DEF) ||
-				(previousDetailAST.getType() == TokenTypes.ENUM_DEF) ||
-				(previousDetailAST.getType() == TokenTypes.INTERFACE_DEF)) {
+			if (includeGlobalVariables &&
+				((previousDetailAST.getType() == TokenTypes.CLASS_DEF) ||
+				 (previousDetailAST.getType() == TokenTypes.ENUM_DEF) ||
+				 (previousDetailAST.getType() == TokenTypes.INTERFACE_DEF))) {
 
 				DetailAST objBlockDetailAST = previousDetailAST.findFirstToken(
 					TokenTypes.OBJBLOCK);
@@ -592,8 +600,14 @@ public abstract class BaseCheck extends AbstractCheck {
 					}
 				}
 			}
-			else if (previousDetailAST.getType() == TokenTypes.VARIABLE_DEF) {
-				if (variableName.equals(_getVariableName(previousDetailAST))) {
+			else if ((previousDetailAST.getType() == TokenTypes.VARIABLE_DEF) &&
+					 variableName.equals(_getVariableName(previousDetailAST))) {
+
+				DetailAST parentDetailAST = previousDetailAST.getParent();
+
+				if (includeGlobalVariables ||
+					(parentDetailAST.getType() != TokenTypes.OBJBLOCK)) {
+
 					return previousDetailAST.findFirstToken(TokenTypes.TYPE);
 				}
 			}

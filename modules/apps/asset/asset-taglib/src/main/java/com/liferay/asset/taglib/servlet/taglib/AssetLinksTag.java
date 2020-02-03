@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
@@ -197,7 +198,7 @@ public class AssetLinksTag extends IncludeTag {
 		List<Tuple> assetLinkEntries = new ArrayList<>();
 
 		List<AssetLink> assetLinks = AssetLinkLocalServiceUtil.getDirectLinks(
-			_assetEntryId);
+			_assetEntryId, false);
 
 		for (AssetLink assetLink : assetLinks) {
 			AssetEntry assetLinkEntry = null;
@@ -209,10 +210,6 @@ public class AssetLinksTag extends IncludeTag {
 			else {
 				assetLinkEntry = AssetEntryLocalServiceUtil.getEntry(
 					assetLink.getEntryId1());
-			}
-
-			if (!assetLinkEntry.isVisible()) {
-				continue;
 			}
 
 			AssetRendererFactory<?> assetRendererFactory =
@@ -243,6 +240,13 @@ public class AssetLinksTag extends IncludeTag {
 
 			if (!assetRenderer.hasViewPermission(
 					themeDisplay.getPermissionChecker())) {
+
+				continue;
+			}
+
+			if (!(assetLinkEntry.isVisible() ||
+				  (assetRenderer.getStatus() ==
+					  WorkflowConstants.STATUS_SCHEDULED))) {
 
 				continue;
 			}

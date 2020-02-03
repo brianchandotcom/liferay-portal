@@ -29,27 +29,6 @@ import javax.annotation.Generated;
 @Generated("")
 public class PageDefinition {
 
-	public String getCollectionName() {
-		return collectionName;
-	}
-
-	public void setCollectionName(String collectionName) {
-		this.collectionName = collectionName;
-	}
-
-	public void setCollectionName(
-		UnsafeSupplier<String, Exception> collectionNameUnsafeSupplier) {
-
-		try {
-			collectionName = collectionNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String collectionName;
-
 	public Creator getCreator() {
 		return creator;
 	}

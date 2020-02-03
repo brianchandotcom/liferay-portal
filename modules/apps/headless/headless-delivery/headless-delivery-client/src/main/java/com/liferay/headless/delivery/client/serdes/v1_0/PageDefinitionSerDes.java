@@ -64,20 +64,6 @@ public class PageDefinitionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (pageDefinition.getCollectionName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"collectionName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(pageDefinition.getCollectionName()));
-
-			sb.append("\"");
-		}
-
 		if (pageDefinition.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -293,15 +279,6 @@ public class PageDefinitionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (pageDefinition.getCollectionName() == null) {
-			map.put("collectionName", null);
-		}
-		else {
-			map.put(
-				"collectionName",
-				String.valueOf(pageDefinition.getCollectionName()));
-		}
-
 		if (pageDefinition.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -409,13 +386,7 @@ public class PageDefinitionSerDes {
 			PageDefinition pageDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "collectionName")) {
-				if (jsonParserFieldValue != null) {
-					pageDefinition.setCollectionName(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "creator")) {
+			if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
 					pageDefinition.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));

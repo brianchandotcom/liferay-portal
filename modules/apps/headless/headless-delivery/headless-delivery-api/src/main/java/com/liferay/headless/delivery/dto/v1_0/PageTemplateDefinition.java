@@ -45,10 +45,38 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageDefinition")
+@GraphQLName("PageTemplateDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageDefinition")
-public class PageDefinition {
+@XmlRootElement(name = "PageTemplateDefinition")
+public class PageTemplateDefinition {
+
+	@Schema
+	public String getCollectionName() {
+		return collectionName;
+	}
+
+	public void setCollectionName(String collectionName) {
+		this.collectionName = collectionName;
+	}
+
+	@JsonIgnore
+	public void setCollectionName(
+		UnsafeSupplier<String, Exception> collectionNameUnsafeSupplier) {
+
+		try {
+			collectionName = collectionNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String collectionName;
 
 	@Schema
 	@Valid
@@ -136,34 +164,6 @@ public class PageDefinition {
 	protected Date dateModified;
 
 	@Schema
-	public String getFriendlyURLPath() {
-		return friendlyURLPath;
-	}
-
-	public void setFriendlyURLPath(String friendlyURLPath) {
-		this.friendlyURLPath = friendlyURLPath;
-	}
-
-	@JsonIgnore
-	public void setFriendlyURLPath(
-		UnsafeSupplier<String, Exception> friendlyURLPathUnsafeSupplier) {
-
-		try {
-			friendlyURLPath = friendlyURLPathUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String friendlyURLPath;
-
-	@Schema
 	public Long getId() {
 		return id;
 	}
@@ -188,34 +188,6 @@ public class PageDefinition {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
-
-	@Schema
-	public String[] getKeywords() {
-		return keywords;
-	}
-
-	public void setKeywords(String[] keywords) {
-		this.keywords = keywords;
-	}
-
-	@JsonIgnore
-	public void setKeywords(
-		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
-
-		try {
-			keywords = keywordsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] keywords;
 
 	@Schema
 	public String getName() {
@@ -245,20 +217,21 @@ public class PageDefinition {
 
 	@Schema
 	@Valid
-	public PageElement[] getPageElements() {
-		return pageElements;
+	public PageDefinition getPageDefinition() {
+		return pageDefinition;
 	}
 
-	public void setPageElements(PageElement[] pageElements) {
-		this.pageElements = pageElements;
+	public void setPageDefinition(PageDefinition pageDefinition) {
+		this.pageDefinition = pageDefinition;
 	}
 
 	@JsonIgnore
-	public void setPageElements(
-		UnsafeSupplier<PageElement[], Exception> pageElementsUnsafeSupplier) {
+	public void setPageDefinition(
+		UnsafeSupplier<PageDefinition, Exception>
+			pageDefinitionUnsafeSupplier) {
 
 		try {
-			pageElements = pageElementsUnsafeSupplier.get();
+			pageDefinition = pageDefinitionUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -270,124 +243,7 @@ public class PageDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PageElement[] pageElements;
-
-	@Schema
-	@Valid
-	public Settings getSettings() {
-		return settings;
-	}
-
-	public void setSettings(Settings settings) {
-		this.settings = settings;
-	}
-
-	@JsonIgnore
-	public void setSettings(
-		UnsafeSupplier<Settings, Exception> settingsUnsafeSupplier) {
-
-		try {
-			settings = settingsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Settings settings;
-
-	@Schema
-	@Valid
-	public TaxonomyCategory[] getTaxonomyCategories() {
-		return taxonomyCategories;
-	}
-
-	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
-		this.taxonomyCategories = taxonomyCategories;
-	}
-
-	@JsonIgnore
-	public void setTaxonomyCategories(
-		UnsafeSupplier<TaxonomyCategory[], Exception>
-			taxonomyCategoriesUnsafeSupplier) {
-
-		try {
-			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected TaxonomyCategory[] taxonomyCategories;
-
-	@Schema
-	public Long[] getTaxonomyCategoryIds() {
-		return taxonomyCategoryIds;
-	}
-
-	public void setTaxonomyCategoryIds(Long[] taxonomyCategoryIds) {
-		this.taxonomyCategoryIds = taxonomyCategoryIds;
-	}
-
-	@JsonIgnore
-	public void setTaxonomyCategoryIds(
-		UnsafeSupplier<Long[], Exception> taxonomyCategoryIdsUnsafeSupplier) {
-
-		try {
-			taxonomyCategoryIds = taxonomyCategoryIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Long[] taxonomyCategoryIds;
-
-	@Schema(
-		description = "A valid external identifier to reference this structured content."
-	)
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-
-	@JsonIgnore
-	public void setUuid(UnsafeSupplier<String, Exception> uuidUnsafeSupplier) {
-		try {
-			uuid = uuidUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "A valid external identifier to reference this structured content."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String uuid;
+	protected PageDefinition pageDefinition;
 
 	@Override
 	public boolean equals(Object object) {
@@ -395,13 +251,14 @@ public class PageDefinition {
 			return true;
 		}
 
-		if (!(object instanceof PageDefinition)) {
+		if (!(object instanceof PageTemplateDefinition)) {
 			return false;
 		}
 
-		PageDefinition pageDefinition = (PageDefinition)object;
+		PageTemplateDefinition pageTemplateDefinition =
+			(PageTemplateDefinition)object;
 
-		return Objects.equals(toString(), pageDefinition.toString());
+		return Objects.equals(toString(), pageTemplateDefinition.toString());
 	}
 
 	@Override
@@ -418,6 +275,20 @@ public class PageDefinition {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (collectionName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(collectionName));
+
+			sb.append("\"");
+		}
 
 		if (creator != null) {
 			if (sb.length() > 1) {
@@ -457,20 +328,6 @@ public class PageDefinition {
 			sb.append("\"");
 		}
 
-		if (friendlyURLPath != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"friendlyURLPath\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(friendlyURLPath));
-
-			sb.append("\"");
-		}
-
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -479,30 +336,6 @@ public class PageDefinition {
 			sb.append("\"id\": ");
 
 			sb.append(id);
-		}
-
-		if (keywords != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"keywords\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < keywords.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(keywords[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < keywords.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		if (name != null) {
@@ -519,88 +352,14 @@ public class PageDefinition {
 			sb.append("\"");
 		}
 
-		if (pageElements != null) {
+		if (pageDefinition != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"pageElements\": ");
+			sb.append("\"pageDefinition\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < pageElements.length; i++) {
-				sb.append(String.valueOf(pageElements[i]));
-
-				if ((i + 1) < pageElements.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (settings != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"settings\": ");
-
-			sb.append(String.valueOf(settings));
-		}
-
-		if (taxonomyCategories != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taxonomyCategories\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < taxonomyCategories.length; i++) {
-				sb.append(String.valueOf(taxonomyCategories[i]));
-
-				if ((i + 1) < taxonomyCategories.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (taxonomyCategoryIds != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"taxonomyCategoryIds\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < taxonomyCategoryIds.length; i++) {
-				sb.append(taxonomyCategoryIds[i]);
-
-				if ((i + 1) < taxonomyCategoryIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (uuid != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"uuid\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(uuid));
-
-			sb.append("\"");
+			sb.append(String.valueOf(pageDefinition));
 		}
 
 		sb.append("}");
@@ -609,7 +368,7 @@ public class PageDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageTemplateDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

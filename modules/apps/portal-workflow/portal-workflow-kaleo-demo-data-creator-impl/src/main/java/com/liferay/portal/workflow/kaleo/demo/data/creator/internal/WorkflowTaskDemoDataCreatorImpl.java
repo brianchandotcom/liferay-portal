@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.workflow.kaleo.demo.data.creator.WorkflowTaskDemoDataCreator;
+import com.liferay.portal.workflow.kaleo.demo.data.creator.internal.util.WorkflowDemoDataCreatorUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
@@ -90,51 +91,41 @@ public class WorkflowTaskDemoDataCreatorImpl
 	public WorkflowTask getWorkflowTask(long companyId, long workflowInstanceId)
 		throws Exception {
 
-		long deadline = System.currentTimeMillis() + 30000;
+		return WorkflowDemoDataCreatorUtil.retry(
+			() -> {
+				List<WorkflowTask> workflowTasks =
+					_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
+						companyId, null, workflowInstanceId, false, 0, 1, null);
 
-		while (true) {
-			List<WorkflowTask> workflowTasks =
-				_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
-					companyId, null, workflowInstanceId, false, 0, 1, null);
+				if (workflowTasks.isEmpty()) {
+					return null;
+				}
 
-			if (!workflowTasks.isEmpty()) {
 				return workflowTasks.get(0);
-			}
-
-			if (System.currentTimeMillis() > deadline) {
-				return null;
-			}
-
-			Thread.sleep(1000);
-		}
+			});
 	}
 
 	@Override
 	public void updateCompletionDate(long workflowTaskId, Date completionDate)
 		throws Exception {
 
-		long deadline = System.currentTimeMillis() + 30000;
+		WorkflowDemoDataCreatorUtil.retry(
+			() -> {
+				KaleoTaskInstanceToken kaleoTaskInstanceToken =
+					_kaleoTaskInstanceTokenLocalService.
+						getKaleoTaskInstanceToken(workflowTaskId);
 
-		while (true) {
-			KaleoTaskInstanceToken kaleoTaskInstanceToken =
-				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
-					workflowTaskId);
+				if (!kaleoTaskInstanceToken.isCompleted()) {
+					return null;
+				}
 
-			if (kaleoTaskInstanceToken.isCompleted()) {
 				kaleoTaskInstanceToken.setCompletionDate(completionDate);
 
 				_kaleoTaskInstanceTokenLocalService.
 					updateKaleoTaskInstanceToken(kaleoTaskInstanceToken);
 
-				return;
-			}
-
-			if (System.currentTimeMillis() > deadline) {
-				return;
-			}
-
-			Thread.sleep(1000);
-		}
+				return kaleoTaskInstanceToken;
+			});
 	}
 
 	@Override

@@ -34,7 +34,7 @@ import org.talend.daikon.properties.ValidationResult;
 /**
  * @author Igor Beslic
  */
-public class LiferayBatchFileSink implements Sink {
+public class LiferayBatchFileSink extends LiferaySourceOrSink implements Sink {
 
 	@Override
 	public WriteOperation<?> createWriteOperation() {
@@ -99,6 +99,11 @@ public class LiferayBatchFileSink implements Sink {
 		}
 
 		return ValidationResult.OK;
+	}
+
+	@Override
+	protected String getLiferayConnectionPropertiesPath() {
+		return "resource." + super.getLiferayConnectionPropertiesPath();
 	}
 
 	private ValidationResult _getErrorValidationResult(String message) {

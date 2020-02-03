@@ -135,6 +135,12 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		return endpointURI.toASCIIString();
 	}
 
+	public Schema getInboundSchema() {
+		Property<Schema> inboundSchemaProperty = inboundSchemaProperties.schema;
+
+		return inboundSchemaProperty.getValue();
+	}
+
 	public LiferayConnectionProperties getLiferayConnectionProperties() {
 		return connection.getEffectiveLiferayConnectionProperties();
 	}
@@ -168,8 +174,21 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		_displayOperations = display;
 	}
 
+	public void setInboundSchema(Schema schema) {
+		Property<Schema> inboundSchemaProperty = inboundSchemaProperties.schema;
+
+		inboundSchemaProperty.setValue(schema);
+	}
+
 	public void setIncludeLiferayOASParameters(boolean include) {
 		_includeLiferayOASParameters = include;
+	}
+
+	public void setOutboundSchema(Schema schema) {
+		Property<Schema> outboundSchemaProperty =
+			outboundSchemaProperties.schema;
+
+		outboundSchemaProperty.setValue(schema);
 	}
 
 	@Override
@@ -206,6 +225,8 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		mainForm.addRow(requestParametersWidget);
 
 		mainForm.addRow(outboundSchemaProperties.getForm(Form.REFERENCE));
+
+		_setupEndpointInfoForm();
 	}
 
 	@Override
@@ -394,6 +415,18 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		operations.setValue(null);
 
 		_setupRequestParameterProperties();
+	}
+
+	private void _setupEndpointInfoForm() {
+		Form mainForm = new Form(this, "EndpointInfo");
+
+		Widget openAPIModuleWidget = Widget.widget(openAPIModule);
+
+		openAPIModuleWidget.setWidgetType(Widget.DEFAULT_WIDGET_TYPE);
+
+		mainForm.addRow(openAPIModuleWidget);
+
+		mainForm.addRow(inboundSchemaProperties.getForm(Form.REFERENCE));
 	}
 
 	private void _setupOperations() throws TalendRuntimeException {

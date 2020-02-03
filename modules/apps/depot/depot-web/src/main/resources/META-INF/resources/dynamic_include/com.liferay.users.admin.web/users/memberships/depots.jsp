@@ -17,8 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DepotAdminMembershipsDisplayContext
-	depotAdminMembershipsDisplayContext = new DepotAdminMembershipsDisplayContext(liferayPortletRequest, liferayPortletResponse);
+DepotAdminMembershipsDisplayContext depotAdminMembershipsDisplayContext = new DepotAdminMembershipsDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
 List<Group> groups = depotAdminMembershipsDisplayContext.getDepots();
 

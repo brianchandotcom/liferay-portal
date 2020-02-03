@@ -154,6 +154,13 @@ public class WorkflowComparatorFactoryUtil {
 			ascending);
 	}
 
+	public static OrderByComparator<WorkflowTask> getTaskInstanceIdComparator(
+		boolean ascending) {
+
+		return getWorkflowComparatorFactory().getTaskInstanceIdComparator(
+			ascending);
+	}
+
 	public static OrderByComparator<WorkflowTask>
 		getTaskModifiedDateComparator() {
 

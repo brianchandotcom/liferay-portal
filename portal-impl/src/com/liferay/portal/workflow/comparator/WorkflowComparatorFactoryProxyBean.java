@@ -103,6 +103,13 @@ public class WorkflowComparatorFactoryProxyBean
 	}
 
 	@Override
+	public OrderByComparator<WorkflowTask> getTaskInstanceIdComparator(
+		boolean ascending) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public OrderByComparator<WorkflowTask> getTaskModifiedDateComparator(
 		boolean ascending) {
 

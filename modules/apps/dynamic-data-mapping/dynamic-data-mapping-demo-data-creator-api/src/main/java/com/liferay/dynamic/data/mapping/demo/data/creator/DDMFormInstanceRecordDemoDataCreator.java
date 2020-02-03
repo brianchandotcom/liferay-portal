@@ -33,6 +33,6 @@ public interface DDMFormInstanceRecordDemoDataCreator {
 			long groupId, long userId)
 		throws PortalException;
 
-	public void deleted() throws PortalException;
+	public void delete() throws PortalException;
 
 }

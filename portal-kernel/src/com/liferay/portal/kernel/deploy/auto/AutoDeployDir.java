@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.deploy.auto;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
@@ -27,6 +28,8 @@ import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,6 +37,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.jar.Attributes;
+import java.util.jar.JarInputStream;
+import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,6 +99,10 @@ public class AutoDeployDir {
 					break;
 				}
 			}
+		}
+		else if (StringUtil.endsWith(fileName, ".jar") && !_isModule(file)) {
+			throw new AutoDeployException(
+				fileName + " cannot be deployed because is not a valid module");
 		}
 		else if (StringUtil.endsWith(fileName, ".lpkg")) {
 			for (String curDirName : dirNames) {
@@ -330,6 +340,39 @@ public class AutoDeployDir {
 				processFile(file);
 			}
 		}
+	}
+
+	private static boolean _isModule(File file) throws AutoDeployException {
+		Manifest manifest = null;
+
+		try (JarInputStream jarInputStream = new JarInputStream(
+				new FileInputStream(file))) {
+
+			manifest = jarInputStream.getManifest();
+		}
+		catch (IOException ioException) {
+			throw new AutoDeployException(ioException);
+		}
+
+		if (manifest == null) {
+			return false;
+		}
+
+		Attributes attributes = manifest.getMainAttributes();
+
+		String bundleSymbolicName = attributes.getValue("Bundle-SymbolicName");
+
+		if (bundleSymbolicName == null) {
+			return false;
+		}
+
+		int index = bundleSymbolicName.indexOf(CharPool.SEMICOLON);
+
+		if (index != -1) {
+			bundleSymbolicName = bundleSymbolicName.substring(0, index);
+		}
+
+		return !bundleSymbolicName.isEmpty();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);

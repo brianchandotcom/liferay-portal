@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -147,6 +148,11 @@ public class AssetListItemSelectorView
 				}
 
 				@Override
+				public Date getModifiedDate() {
+					return assetListEntry.getModifiedDate();
+				}
+
+				@Override
 				public String getPayload() {
 					return JSONUtil.put(
 						"assetListEntryId", assetListEntry.getAssetListEntryId()
@@ -172,6 +178,16 @@ public class AssetListItemSelectorView
 					catch (PortalException portalException) {
 						return ReflectionUtil.throwException(portalException);
 					}
+				}
+
+				@Override
+				public long getUserId() {
+					return assetListEntry.getUserId();
+				}
+
+				@Override
+				public String getUserName() {
+					return assetListEntry.getUserName();
 				}
 
 			};

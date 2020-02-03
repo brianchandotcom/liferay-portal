@@ -49,8 +49,6 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 		>
 
 			<%
-			row.setCssClass("entry entry-card lfr-asset-item " + row.getCssClass());
-
 			ItemSelectorViewDescriptor.ItemDescriptor itemDescriptor = itemSelectorViewDescriptor.getItemDescriptor(row.getObject());
 
 			row.setData(
@@ -60,20 +58,71 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 				).build());
 			%>
 
-			<liferay-ui:search-container-column-text>
-				<c:choose>
-					<c:when test="<%= itemDescriptor.isCompact() %>">
-						<clay:horizontal-card
-							horizontalCard="<%= new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest) %>"
+			<c:choose>
+				<c:when test="<%= itemSelectorViewDescriptorRendererDisplayContext.isIconDisplayStyle() %>">
+
+					<%
+					row.setCssClass("entry entry-card lfr-asset-item " + row.getCssClass());
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<c:choose>
+							<c:when test="<%= itemDescriptor.isCompact() %>">
+								<clay:horizontal-card
+									horizontalCard="<%= new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest) %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<clay:vertical-card
+									verticalCard="<%= new ItemDescriptorVerticalCard(itemDescriptor, renderRequest) %>"
+								/>
+							</c:otherwise>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:otherwise>
+					<c:if test="<%= itemDescriptor.getUserId() != UserConstants.USER_ID_DEFAULT %>">
+						<liferay-ui:search-container-column-user
+							showDetails="<%= false %>"
+							userId="<%= itemDescriptor.getUserId() %>"
 						/>
-					</c:when>
-					<c:otherwise>
-						<clay:vertical-card
-							verticalCard="<%= new ItemDescriptorVerticalCard(itemDescriptor, renderRequest) %>"
-						/>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+					</c:if>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<c:if test="<%= Objects.nonNull(itemDescriptor.getModifiedDate()) %>">
+
+							<%
+							Date modifiedDate = itemDescriptor.getModifiedDate();
+
+							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+							%>
+
+							<c:choose>
+								<c:when test="<%= Validator.isNull(itemDescriptor.getUserName()) %>">
+									<span class="text-default">
+										<liferay-ui:message arguments="<%= new String[] {itemDescriptor.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+									</span>
+								</c:when>
+								<c:otherwise>
+									<span class="text-default">
+										<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription} %>" key="modified-x-ago" />
+									</span>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+
+						<p class="font-weight-bold h5">
+							<%= itemDescriptor.getTitle(locale) %>
+						</p>
+
+						<p class="h6 text-default">
+							<%= itemDescriptor.getSubtitle(locale) %>
+						</p>
+					</liferay-ui:search-container-column-text>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

@@ -36,6 +36,6 @@ public interface WorkflowDefinitionLinkDemoDataCreator {
 			long typePK, long userId, WorkflowDefinition workflowDefinition)
 		throws PortalException;
 
-	public void deleted() throws PortalException;
+	public void delete() throws PortalException;
 
 }

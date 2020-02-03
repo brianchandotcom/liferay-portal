@@ -82,6 +82,8 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 
 		accountEntryOrganizationRelPersistence.removeByA_O(
 			accountEntryId, organizationId);
+
+		_reindexOrganization(organizationId);
 	}
 
 	@Override

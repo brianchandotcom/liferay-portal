@@ -28,6 +28,6 @@ public interface DDMStructureDemoDataCreator {
 	public DDMStructure create(long groupId, long userId)
 		throws PortalException;
 
-	public void deleted() throws PortalException;
+	public void delete() throws PortalException;
 
 }

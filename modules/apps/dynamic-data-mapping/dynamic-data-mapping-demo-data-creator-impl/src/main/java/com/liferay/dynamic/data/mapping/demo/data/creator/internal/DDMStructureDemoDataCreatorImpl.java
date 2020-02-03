@@ -75,7 +75,7 @@ public class DDMStructureDemoDataCreatorImpl
 	}
 
 	@Override
-	public void deleted() throws PortalException {
+	public void delete() throws PortalException {
 		for (Long structureId : _structureIds) {
 			_structureIds.remove(structureId);
 

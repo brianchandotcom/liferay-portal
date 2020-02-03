@@ -987,36 +987,42 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 
 	private static final Map<String, String> _fieldNameOrderByCols =
 		HashMapBuilder.put(
-			"completed",
+			Field.CREATE_DATE,
+			_getSortableFieldName(Field.CREATE_DATE, "Number")
+		).put(
+			Field.MODIFIED_DATE,
+			_getSortableFieldName(Field.MODIFIED_DATE, "Number")
+		).put(
+			Field.USER_ID, _getSortableFieldName(Field.USER_ID, "Number")
+		).put(
+			KaleoTaskInstanceTokenField.COMPLETED,
 			_getSortableFieldName(
 				KaleoTaskInstanceTokenField.COMPLETED, "String")
 		).put(
-			"completionDate",
+			KaleoTaskInstanceTokenField.COMPLETION_DATE,
 			_getSortableFieldName(
 				KaleoTaskInstanceTokenField.COMPLETION_DATE, "Number")
 		).put(
-			"createDate", _getSortableFieldName(Field.CREATE_DATE, "Number")
-		).put(
-			"dueDate",
+			KaleoTaskInstanceTokenField.DUE_DATE,
 			_getSortableFieldName(
 				KaleoTaskInstanceTokenField.DUE_DATE, "Number")
 		).put(
-			"kaleoTaskId",
+			KaleoTaskInstanceTokenField.KALEO_INSTANCE_ID,
+			_getSortableFieldName(
+				KaleoTaskInstanceTokenField.KALEO_INSTANCE_ID, "Number")
+		).put(
+			KaleoTaskInstanceTokenField.KALEO_TASK_ID,
 			_getSortableFieldName(
 				KaleoTaskInstanceTokenField.KALEO_TASK_ID, "Number")
 		).put(
-			"kaleoTaskInstanceTokenId",
+			KaleoTaskInstanceTokenField.KALEO_TASK_INSTANCE_TOKEN_ID,
 			_getSortableFieldName(
 				KaleoTaskInstanceTokenField.KALEO_TASK_INSTANCE_TOKEN_ID,
 				"Number")
 		).put(
-			"modifiedDate", _getSortableFieldName(Field.MODIFIED_DATE, "Number")
-		).put(
 			"name",
 			_getSortableFieldName(
 				KaleoTaskInstanceTokenField.TASK_NAME, "String")
-		).put(
-			"userId", _getSortableFieldName(Field.USER_ID, "Number")
 		).build();
 	private static final Map<String, Integer> _fieldNameSortTypes =
 		HashMapBuilder.put(

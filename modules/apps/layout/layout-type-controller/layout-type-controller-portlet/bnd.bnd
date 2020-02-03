@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Layout Type Controller Portlet
 Bundle-SymbolicName: com.liferay.layout.type.controller.portlet
 Bundle-Version: 1.0.4
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.impl)";\
+		resource.bundle.base.name="content.Language"
 Web-ContextPath: /layout-type-controller-portlet

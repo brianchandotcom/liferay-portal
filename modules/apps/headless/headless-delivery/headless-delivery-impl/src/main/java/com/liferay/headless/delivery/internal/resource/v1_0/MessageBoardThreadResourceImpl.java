@@ -142,6 +142,7 @@ public class MessageBoardThreadResourceImpl
 			messageBoardSectionId);
 
 		return _getSiteMessageBoardThreadsPage(
+			_getMessageBoardSectionListActions(mbCategory),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -155,8 +156,7 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			mbCategory.getGroupId(), search, filter, pagination, sorts,
-			_getMessageBoardSectionListActions(mbCategory));
+			mbCategory.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -203,6 +203,7 @@ public class MessageBoardThreadResourceImpl
 		throws Exception {
 
 		return _getSiteMessageBoardThreadsPage(
+			_getSiteListActions(siteId),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -217,8 +218,7 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			siteId, search, filter, pagination, sorts,
-			_getSiteListActions(siteId));
+			siteId, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -445,9 +445,10 @@ public class MessageBoardThreadResourceImpl
 	}
 
 	private Page<MessageBoardThread> _getSiteMessageBoardThreadsPage(
+			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts, Map<String, Map<String, String>> actions)
+			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

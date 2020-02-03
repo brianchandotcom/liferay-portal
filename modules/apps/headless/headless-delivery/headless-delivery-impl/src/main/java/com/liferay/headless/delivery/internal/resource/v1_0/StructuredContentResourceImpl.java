@@ -159,6 +159,7 @@ public class StructuredContentResourceImpl
 			contentStructureId);
 
 		return _getStructuredContentsPage(
+			_getContentStructureListActions(ddmStructure),
 			booleanQuery -> {
 				if (contentStructureId != null) {
 					BooleanFilter booleanFilter =
@@ -172,8 +173,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			ddmStructure.getGroupId(), search, filter, pagination, sorts,
-			_getContentStructureListActions(ddmStructure));
+			ddmStructure.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -234,6 +234,7 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		return _getStructuredContentsPage(
+			_getSiteListActions(siteId),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -248,8 +249,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			siteId, search, filter, pagination, sorts,
-			_getSiteListActions(siteId));
+			siteId, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -273,6 +273,7 @@ public class StructuredContentResourceImpl
 			structuredContentFolderId);
 
 		return _getStructuredContentsPage(
+			_getStructuredContentFolderListActions(journalFolder),
 			booleanQuery -> {
 				if (structuredContentFolderId != null) {
 					BooleanFilter booleanFilter =
@@ -291,8 +292,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			journalFolder.getGroupId(), search, filter, pagination, sorts,
-			_getStructuredContentFolderListActions(journalFolder));
+			journalFolder.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -814,9 +814,10 @@ public class StructuredContentResourceImpl
 	}
 
 	private Page<StructuredContent> _getStructuredContentsPage(
+			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts, Map<String, Map<String, String>> actions)
+			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

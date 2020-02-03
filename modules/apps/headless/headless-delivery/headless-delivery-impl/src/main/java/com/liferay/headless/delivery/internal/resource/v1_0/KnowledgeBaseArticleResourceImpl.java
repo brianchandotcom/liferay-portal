@@ -122,6 +122,7 @@ public class KnowledgeBaseArticleResourceImpl
 			parentKnowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
 		return _getKnowledgeBaseArticlesPage(
+			_getKnowledgeBaseArticleListActions(kbArticle.getGroupId()),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -132,8 +133,7 @@ public class KnowledgeBaseArticleResourceImpl
 						String.valueOf(kbArticle.getResourcePrimKey())),
 					BooleanClauseOccur.MUST);
 			},
-			kbArticle.getGroupId(), search, filter, pagination, sorts,
-			_getKnowledgeBaseArticleListActions(kbArticle.getGroupId()));
+			kbArticle.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -155,6 +155,7 @@ public class KnowledgeBaseArticleResourceImpl
 		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
 
 		return _getKnowledgeBaseArticlesPage(
+			_getKnowledgeFolderListActions(kbFolder.getGroupId()),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -173,8 +174,7 @@ public class KnowledgeBaseArticleResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			kbFolder.getGroupId(), search, filter, pagination, sorts,
-			_getKnowledgeFolderListActions(kbFolder.getGroupId()));
+			kbFolder.getGroupId(), search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -184,6 +184,7 @@ public class KnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return _getKnowledgeBaseArticlesPage(
+			_getSiteListActions(siteId),
 			booleanQuery -> {
 				if (!GetterUtil.getBoolean(flatten)) {
 					BooleanFilter booleanFilter =
@@ -197,8 +198,7 @@ public class KnowledgeBaseArticleResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			siteId, search, filter, pagination, sorts,
-			_getSiteListActions(siteId));
+			siteId, search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -409,9 +409,10 @@ public class KnowledgeBaseArticleResourceImpl
 	}
 
 	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlesPage(
+			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts, Map<String, Map<String, String>> actions)
+			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

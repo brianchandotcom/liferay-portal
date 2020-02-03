@@ -1760,9 +1760,6 @@ components:
             description:
                 ""
             properties:
-                collectionName:
-                    readOnly: true
-                    type: string
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1850,6 +1847,34 @@ components:
                 type:
                     enum: [Column, Fragment, Row, Section]
                     type: string
+        PageTemplateDefinition:
+            description:
+                ""
+            properties:
+                collectionName:
+                    readOnly: true
+                    type: string
+                creator:
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    readOnly: true
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                pageDefinition:
+                    $ref: "#/components/schemas/PageDefinition"
+            type: object
         Rating:
             description:
                 Represents a rating/score received by any kind of asset. Properties follow the

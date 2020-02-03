@@ -47,6 +47,7 @@ const isMapped = editableValue =>
 export default function EditableDecoration({
 	editableId,
 	editableUniqueId,
+	parentContent,
 	parentItemId,
 	parentRef,
 	siblingsIds
@@ -101,6 +102,10 @@ export default function EditableDecoration({
 			width: editableElementRect.width
 		});
 	}, [editableId, parentRef, wrapper.scrollTop]);
+
+	useLayoutEffect(() => {
+		showDecoration();
+	}, [parentContent, showDecoration]);
 
 	useLayoutEffect(() => {
 		window.addEventListener('resize', showDecoration);

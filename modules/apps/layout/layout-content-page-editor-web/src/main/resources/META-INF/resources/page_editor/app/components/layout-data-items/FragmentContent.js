@@ -428,6 +428,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 						editableId={editableId}
 						editableUniqueId={getEditableUniqueId(editableId)}
 						key={getEditableUniqueId(editableId)}
+						parentContent={content}
 						parentItemId={itemId}
 						parentRef={ref}
 						siblingsIds={editablesIds

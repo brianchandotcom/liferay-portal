@@ -290,7 +290,7 @@ generatePomThirdParty {
 			dependenciesProperties.load(it)
 		}
 
-		List<Map> duplicateDependencies = []
+		List<String> unexpectedDuplicates = []
 
 		dependenciesProperties.each {
 			String[] dependencyInfo = it.value.split(":")
@@ -311,14 +311,12 @@ generatePomThirdParty {
 				compileOnlyDependency ->
 
 				if ((compileOnlyDependency.artifactId == dependency.artifactId) &&
-					(compileOnlyDependency.groupId == dependency.groupId) &&
-					!(duplicateDependenciesWhitelist =~ "${dependency.groupId}:${dependency.artifactId}")) {
-
-					duplicateDependencies.add(["compileOnly":compileOnlyDependency])
-
-					duplicateDependencies.add(["thirdParty":dependency])
-
+					(compileOnlyDependency.groupId == dependency.groupId)) {
 					isDuplicate = true
+
+					if (duplicateDependenciesWhitelist.contains("${dependency.groupId}:${dependency.artifactId}")) {
+						unexpectedDuplicates << "${dependency.groupId}:${dependency.artifactId}"
+					}
 				}
 			}
 
@@ -327,14 +325,14 @@ generatePomThirdParty {
 			}
 		}
 
-		if (duplicateDependencies.size > 0) {
-			String duplicateErrorMessage = "Duplicate dependencies detected:"
+		if (unexpectedDuplicates.size > 0) {
+			String unexpectedDuplicatesErrorMessage = "Duplicate dependencies detected:"
 
-			duplicateDependencies.each {
-				duplicateErrorMessage += "\n" + it.toString()
+			unexpectedDuplicates.each {
+				unexpectedDuplicatesErrorMessage += "\n" + it.toString()
 			}
 
-			throw new GradleException(duplicateErrorMessage)
+			throw new GradleException(unexpectedDuplicatesErrorMessage)
 		}
 
 		model.setDependencyManagement(dependencyManagement)

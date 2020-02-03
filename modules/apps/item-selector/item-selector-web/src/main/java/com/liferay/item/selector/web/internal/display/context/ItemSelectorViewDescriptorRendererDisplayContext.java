@@ -42,22 +42,21 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 
 	public ItemSelectorViewDescriptorRendererDisplayContext(
 		HttpServletRequest httpServletRequest, String itemSelectedEventName,
-		ItemSelectorViewDescriptor itemSelectorViewDescriptor) {
+		ItemSelectorViewDescriptor itemSelectorViewDescriptor,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
 		_itemSelectedEventName = itemSelectedEventName;
 		_itemSelectorViewDescriptor = itemSelectorViewDescriptor;
+		_liferayPortletResponse = liferayPortletResponse;
 	}
 
-	public List<BreadcrumbEntry> getBreadcrumbEntries(
-			PortletURL currentURL, HttpServletRequest httpServletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+	public List<BreadcrumbEntry> getBreadcrumbEntries(PortletURL currentURL)
 		throws PortalException, PortletException {
 
 		return Arrays.asList(
-			_getGroupSelectorBreadcrumbEntry(
-				currentURL, httpServletRequest, liferayPortletResponse),
-			_getCurrentGroupBreadcrumbEntry(currentURL, httpServletRequest));
+			_getGroupSelectorBreadcrumbEntry(currentURL),
+			_getCurrentGroupBreadcrumbEntry(currentURL));
 	}
 
 	public String getItemSelectedEventName() {
@@ -90,11 +89,11 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 	}
 
 	private BreadcrumbEntry _getCurrentGroupBreadcrumbEntry(
-			PortletURL currentURL, HttpServletRequest httpServletRequest)
+			PortletURL currentURL)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
+			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
@@ -102,19 +101,18 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
 		breadcrumbEntry.setTitle(
-			scopeGroup.getDescriptiveName(httpServletRequest.getLocale()));
+			scopeGroup.getDescriptiveName(_httpServletRequest.getLocale()));
 		breadcrumbEntry.setURL(currentURL.toString());
 
 		return breadcrumbEntry;
 	}
 
 	private BreadcrumbEntry _getGroupSelectorBreadcrumbEntry(
-			PortletURL currentURL, HttpServletRequest httpServletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+			PortletURL currentURL)
 		throws PortletException {
 
 		PortletURL viewGroupSelectorURL = PortletURLUtil.clone(
-			currentURL, liferayPortletResponse);
+			currentURL, _liferayPortletResponse);
 
 		viewGroupSelectorURL.setParameter("groupType", "site");
 		viewGroupSelectorURL.setParameter(
@@ -122,7 +120,8 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		breadcrumbEntry.setTitle(LanguageUtil.get(httpServletRequest, "sites"));
+		breadcrumbEntry.setTitle(
+			LanguageUtil.get(_httpServletRequest, "sites"));
 		breadcrumbEntry.setURL(viewGroupSelectorURL.toString());
 
 		return breadcrumbEntry;
@@ -131,5 +130,6 @@ public class ItemSelectorViewDescriptorRendererDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private final ItemSelectorViewDescriptor _itemSelectorViewDescriptor;
+	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

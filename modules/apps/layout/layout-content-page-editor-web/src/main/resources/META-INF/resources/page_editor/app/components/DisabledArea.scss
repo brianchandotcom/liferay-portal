@@ -17,4 +17,8 @@
 	&:hover:after {
 		background-color: rgba(255, 255, 255, 0.4);
 	}
+
+	&.collapsed {
+		width: calc(100vw - 320px);
+	}
 }

@@ -233,9 +233,12 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 	@Deactivate
 	protected void deactivate() throws PortalException {
 		_ddmFormInstanceRecordDemoDataCreator.deleted();
+
 		_ddmFormInstanceDemoDataCreator.deleted();
 		_workflowMetricsSLADefinitionDemoDataCreator.deleted();
+
 		_workflowDefinitionDemoDataCreator.deleted();
+
 		_omniAdminUserDemoDataCreator.delete();
 	}
 

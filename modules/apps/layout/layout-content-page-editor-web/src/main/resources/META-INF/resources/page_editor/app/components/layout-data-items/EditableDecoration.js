@@ -172,7 +172,8 @@ export default function EditableDecoration({
 			className={classNames('page-editor__editable-decoration', {
 				[ACTIVE_CLASS]: isActive(editableUniqueId),
 				[HIGHLIGHTED_CLASS]: isHighlighted(parentItemId, siblingsIds),
-				[HOVERED_CLASS]: isHovered(editableUniqueId),
+				[HOVERED_CLASS]:
+					!isActive(editableUniqueId) && isHovered(editableUniqueId),
 				[MAPPED_CLASS]: isMapped(editableValue),
 				[TRANSLATED_CLASS]: isTranslated(editableValue)
 			})}

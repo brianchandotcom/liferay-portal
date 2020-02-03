@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -131,7 +132,8 @@ public class KnowledgeBaseArticleResourceImpl
 						String.valueOf(kbArticle.getResourcePrimKey())),
 					BooleanClauseOccur.MUST);
 			},
-			kbArticle.getGroupId(), search, filter, pagination, sorts);
+			kbArticle.getGroupId(), search, filter, pagination, sorts,
+			_getKnowledgeBaseArticleListActions(kbArticle.getGroupId()));
 	}
 
 	@Override
@@ -171,7 +173,8 @@ public class KnowledgeBaseArticleResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			kbFolder.getGroupId(), search, filter, pagination, sorts);
+			kbFolder.getGroupId(), search, filter, pagination, sorts,
+			_getKnowledgeFolderListActions(kbFolder.getGroupId()));
 	}
 
 	@Override
@@ -194,7 +197,8 @@ public class KnowledgeBaseArticleResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			siteId, search, filter, pagination, sorts);
+			siteId, search, filter, pagination, sorts,
+			_getSiteListActions(siteId));
 	}
 
 	@Override
@@ -319,6 +323,45 @@ public class KnowledgeBaseArticleResourceImpl
 			siteId, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
 	}
 
+	private Map<String, Map<String, String>> _getActions(KBArticle kbArticle) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				"DELETE", kbArticle.getResourcePrimKey(),
+				"deleteKnowledgeBaseArticle",
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", kbArticle.getResourcePrimKey(),
+				"getKnowledgeBaseArticle",
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).put(
+			"replace",
+			addAction(
+				"UPDATE", kbArticle.getResourcePrimKey(),
+				"putKnowledgeBaseArticle",
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).put(
+			"subscribe",
+			addAction(
+				"SUBSCRIBE", kbArticle.getResourcePrimKey(),
+				"putKnowledgeBaseArticleSubscribe",
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).put(
+			"unsubscribe",
+			addAction(
+				"SUBSCRIBE", kbArticle.getResourcePrimKey(),
+				"putKnowledgeBaseArticleUnsubscribe",
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).build();
+	}
+
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		KnowledgeBaseArticle knowledgeBaseArticle) {
 
@@ -348,10 +391,27 @@ public class KnowledgeBaseArticleResourceImpl
 					knowledgeBaseArticle.getViewableByAsString())));
 	}
 
+	private Map<String, Map<String, String>>
+		_getKnowledgeBaseArticleListActions(Long groupId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_KB_ARTICLE",
+				"postKnowledgeBaseArticleKnowledgeBaseArticle",
+				"com.liferay.knowledge.base.admin", groupId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getKnowledgeBaseArticleKnowledgeBaseArticlesPage",
+				"com.liferay.knowledge.base.admin", groupId)
+		).build();
+	}
+
 	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlesPage(
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Sort[] sorts, Map<String, Map<String, String>> actions)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -370,8 +430,50 @@ public class KnowledgeBaseArticleResourceImpl
 				}
 			},
 			document -> _toKnowledgeBaseArticle(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-			sorts);
+				_kbArticleService.getLatestKBArticle(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
+					WorkflowConstants.STATUS_APPROVED)),
+			sorts, (Map)actions);
+	}
+
+	private Map<String, Map<String, String>> _getKnowledgeFolderListActions(
+		long groupId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_KB_ARTICLE", "postKnowledgeBaseFolderKnowledgeBaseArticle",
+				"com.liferay.knowledge.base.admin", groupId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getKnowledgeBaseFolderKnowledgeBaseArticlesPage",
+				"com.liferay.knowledge.base.admin", groupId)
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_KB_ARTICLE", "postSiteKnowledgeBaseArticle",
+				"com.liferay.knowledge.base.admin", siteId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getSiteKnowledgeBaseArticlesPage",
+				"com.liferay.knowledge.base.admin", siteId)
+		).put(
+			"subscribe",
+			addAction(
+				"SUBSCRIBE", "putSiteKnowledgeBaseArticleSubscribe",
+				"com.liferay.knowledge.base.admin", siteId)
+		).put(
+			"unsubscribe",
+			addAction(
+				"SUBSCRIBE", "putSiteKnowledgeBaseArticleUnsubscribe",
+				"com.liferay.knowledge.base.admin", siteId)
+		).build();
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
@@ -389,16 +491,11 @@ public class KnowledgeBaseArticleResourceImpl
 			return null;
 		}
 
-		return _toKnowledgeBaseArticle(kbArticle.getResourcePrimKey());
-	}
-
-	private KnowledgeBaseArticle _toKnowledgeBaseArticle(
-			long knowledgeBaseArticleResourcePrimKey)
-		throws Exception {
-
 		return _knowledgeBaseArticleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				_dtoConverterRegistry, knowledgeBaseArticleResourcePrimKey,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				(Map)_getActions(kbArticle), _dtoConverterRegistry,
+				kbArticle.getResourcePrimKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}

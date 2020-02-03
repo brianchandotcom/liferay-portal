@@ -75,6 +75,7 @@ public class KnowledgeBaseArticleDTOConverter
 
 		return new KnowledgeBaseArticle() {
 			{
+				actions = dtoConverterContext.getActions();
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						KBArticle.class.getName(),

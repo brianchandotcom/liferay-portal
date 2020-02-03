@@ -168,7 +168,7 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 	}
 
 	@Override
-	public void deleted() throws PortalException {
+	public void delete() throws PortalException {
 		for (Long workflowMetricsSLADefinitionId :
 				_workflowMetricsSLADefinitionIds) {
 

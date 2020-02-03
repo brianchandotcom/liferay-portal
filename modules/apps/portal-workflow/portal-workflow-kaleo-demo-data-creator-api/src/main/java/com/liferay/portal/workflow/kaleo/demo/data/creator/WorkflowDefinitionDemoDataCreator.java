@@ -37,6 +37,6 @@ public interface WorkflowDefinitionDemoDataCreator {
 			long companyId, Date createDate, long userId)
 		throws PortalException;
 
-	public void deleted() throws PortalException;
+	public void delete() throws PortalException;
 
 }

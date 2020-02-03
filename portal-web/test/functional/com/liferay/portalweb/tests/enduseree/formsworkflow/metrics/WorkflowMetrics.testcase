@@ -258,7 +258,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
-			value1 = "Once there are active processes, metrics will appear here.");
+			value1 = "No results were found.");
 
 		Navigator.gotoBack();
 
@@ -1054,6 +1054,96 @@ definition {
 			workflowProcess = "Single Approver");
 
 		WorkflowMetrics.validateInstanceDetails(processStatus = "Completed");
+	}
+
+	@description = "LRQA-53640 Automate LPS-100674: [Performance] View SLA breaches of top steps performance"
+	@priority = "5"
+	test ViewSLABreachesOfTopSteps {
+		property portal.acceptance = "true";
+
+		var key_testSLADefinitionDays = "0";
+		var key_testSLADefinitionHours = "0001";
+		var key_testSLADefinitionHoursCheck = "00:01";
+		var key_testSLADefinitionDescription = "SLA Description";
+		var key_testSLADefinitionEnd = "Process Ends: Approved";
+		var key_testSLADefinitionName = "SLA Name";
+		var key_testSLADefinitionStart = "Process Begins";
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "${key_testSLADefinitionDays}",
+			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
+			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
+			slaDefinitionHours = "${key_testSLADefinitionHours}",
+			slaDefinitionName = "${key_testSLADefinitionName}",
+			slaDefinitionStart = "${key_testSLADefinitionStart}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
+			numberOfBlogInstances = "1",
+			numberOfUsers = "1");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "CompleteTasksAssignedToUsers.groovy");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "assignOpenTasksToUsers.groovy");
+
+		WorkflowMetrics.executeWorkflowScript(scriptName = "CompleteTasksAssignedToUsers.groovy");
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		WorkflowMetrics.waitForCompletedSLAtoBecomeOverdue(timesToRun = "12");
+
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			rowName = "Review",
+			slaBreachedValue = "1 (50%)");
+
+		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
+			rowName = "Update",
+			slaBreachedValue = "0 (0%)");
+
+		AssertElementPresent(
+			key_avgTime = "0min",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_CHECK",
+			rowNumber = "2");
+
+		AssertElementPresent(
+			key_avgTime = "1min",
+			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_CHECK",
+			rowNumber = "1");
 	}
 
 	@description = "LRQA-53631 Automate LPS-97666: [Performance] View top assignee performance"

@@ -39,6 +39,6 @@ public interface WorkflowMetricsSLADefinitionDemoDataCreator {
 			String[] stopNodeKeys, long userId)
 		throws PortalException;
 
-	public void deleted() throws PortalException;
+	public void delete() throws PortalException;
 
 }

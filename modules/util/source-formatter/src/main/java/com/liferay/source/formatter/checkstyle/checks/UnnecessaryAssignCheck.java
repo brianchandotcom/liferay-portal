@@ -77,8 +77,6 @@ public class UnnecessaryAssignCheck extends BaseCheck {
 				variableDefinitionDetailAST, variableName);
 
 		if (variableCallerDetailASTList.isEmpty()) {
-			log(detailAST, variableName + ": EMPTY");
-
 			return;
 		}
 
@@ -98,10 +96,10 @@ public class UnnecessaryAssignCheck extends BaseCheck {
 		if (ancestorDetailAST.getLineNo() <=
 				variableDefinitionDetailAST.getLineNo()) {
 
-			log(detailAST, variableName);
+			log(detailAST, _MSG_UNNECESSARY_ASSIGN, variableName);
 		}
 	}
 
-	private static final String _MSG_UNUSED_METHOD = "method.unused";
+	private static final String _MSG_UNNECESSARY_ASSIGN = "assign.unnecessary";
 
 }

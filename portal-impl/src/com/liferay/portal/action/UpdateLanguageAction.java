@@ -118,7 +118,9 @@ public class UpdateLanguageAction implements Action {
 		if (themeDisplay.isI18n()) {
 			String i18nPath = themeDisplay.getI18nPath();
 
-			layoutURL = layoutURL.substring(i18nPath.length());
+			if (layoutURL.startsWith(i18nPath)) {
+				layoutURL = layoutURL.substring(i18nPath.length());
+			}
 		}
 
 		Layout layout = themeDisplay.getLayout();

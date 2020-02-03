@@ -71,7 +71,7 @@ if (Validator.isNotNull(searchDisplayContext.getKeywords())) {
 	pageKeywords = searchDisplayContext.getKeywords();
 
 	if (StringUtil.startsWith(pageKeywords, Field.ASSET_TAG_NAMES + StringPool.COLON)) {
-		pageKeywords = StringUtil.replace(pageKeywords, Field.ASSET_TAG_NAMES + StringPool.COLON, StringPool.BLANK);
+		pageKeywords = StringUtil.removeSubstring(pageKeywords, Field.ASSET_TAG_NAMES + StringPool.COLON);
 	}
 }
 

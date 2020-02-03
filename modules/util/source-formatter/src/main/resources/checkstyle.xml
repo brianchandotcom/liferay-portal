@@ -371,7 +371,6 @@
 			<message key="persistence.call.illegal" value="Illegal call to class ''{0}'', see LPS-68923" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.PersistenceUpdateCheck">
-			<property name="enabled" value="false" />
 			<message key="update.call.reassign" value="Update call should be reassigned to variable ''{0}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/persistence_update.markdown" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.PlusStatementCheck">

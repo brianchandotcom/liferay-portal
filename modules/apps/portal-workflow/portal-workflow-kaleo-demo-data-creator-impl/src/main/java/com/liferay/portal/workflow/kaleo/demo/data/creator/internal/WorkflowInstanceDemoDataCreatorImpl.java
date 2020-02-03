@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.workflow.kaleo.demo.data.creator.WorkflowInstanceDemoDataCreator;
+import com.liferay.portal.workflow.kaleo.demo.data.creator.internal.util.WorkflowDemoDataCreatorUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
@@ -49,24 +50,19 @@ public class WorkflowInstanceDemoDataCreatorImpl
 			String assetClassName, long assetClassPK, long companyId)
 		throws Exception {
 
-		long deadline = System.currentTimeMillis() + 30000;
-
-		while (true) {
+		return WorkflowDemoDataCreatorUtil.retry(() -> { 
 			List<WorkflowInstance> workflowInstances =
 				_workflowInstanceManager.getWorkflowInstances(
 					companyId, null, assetClassName, assetClassPK, false, 0, 1,
 					null);
 
-			if (!workflowInstances.isEmpty()) {
-				return workflowInstances.get(0);
-			}
-
-			if (System.currentTimeMillis() > deadline) {
+			if (workflowInstances.isEmpty()) {
 				return null;
 			}
 
-			Thread.sleep(1000);
-		}
+			return workflowInstances.get(0);
+		});
+
 	}
 
 	@Override
@@ -74,26 +70,21 @@ public class WorkflowInstanceDemoDataCreatorImpl
 			long workflowInstanceId, Date completionDate)
 		throws Exception {
 
-		long deadline = System.currentTimeMillis() + 30000;
-
-		while (true) {
+		WorkflowDemoDataCreatorUtil.retry(() -> { 
 			KaleoInstance kaleoInstance =
 				_kaleoInstanceLocalService.getKaleoInstance(workflowInstanceId);
 
-			if (kaleoInstance.isCompleted()) {
-				kaleoInstance.setCompletionDate(completionDate);
-
-				_kaleoInstanceLocalService.updateKaleoInstance(kaleoInstance);
-
-				return;
+			if (!kaleoInstance.isCompleted()) {
+				return null;
 			}
 
-			if (System.currentTimeMillis() > deadline) {
-				return;
-			}
+			kaleoInstance.setCompletionDate(completionDate);
 
-			Thread.sleep(1000);
-		}
+			_kaleoInstanceLocalService.updateKaleoInstance(kaleoInstance);
+
+			return kaleoInstance;
+		});
+
 	}
 
 	@Override

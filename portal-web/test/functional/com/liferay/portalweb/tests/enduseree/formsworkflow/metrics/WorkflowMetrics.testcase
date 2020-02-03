@@ -817,7 +817,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12", key_expectedValue = "0");
+		WorkflowMetrics.waitForSLAtoBecomeOverdue(
+			key_expectedValue = "0",
+			timesToRun = "12");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -922,7 +924,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12", key_expectedValue = "0");
+		WorkflowMetrics.waitForSLAtoBecomeOverdue(
+			key_expectedValue = "0",
+			timesToRun = "12");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = "0",
@@ -1135,7 +1139,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.waitForSLAtoBecomeOverdue(timesToRun = "12", key_expectedValue = "0");
+		WorkflowMetrics.waitForSLAtoBecomeOverdue(
+			key_expectedValue = "0",
+			timesToRun = "12");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

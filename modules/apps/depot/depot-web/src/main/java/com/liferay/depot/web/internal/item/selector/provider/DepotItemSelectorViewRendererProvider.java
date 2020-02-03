@@ -14,15 +14,25 @@
 
 package com.liferay.depot.web.internal.item.selector.provider;
 
+import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
+import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCriterion;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
 import com.liferay.item.selector.provider.ItemSelectorViewRendererProvider;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.PortalIncludeUtil;
 
 import java.io.IOException;
@@ -58,9 +68,12 @@ public class DepotItemSelectorViewRendererProvider
 		String portletId = _itemSelectorCriterionMap.get(
 			itemSelectorCriterion.getClass());
 
-		if (StringUtil.equals(
-				portletId, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		ItemSelectorViewRenderer itemSelectorViewRenderer =
+			_itemSelectorViewRendererProvider.getItemSelectorViewRenderer(
+				itemSelectorView, itemSelectorCriterion, portletURL,
+				itemSelectedEventName, search);
 
+		if (Validator.isNotNull(portletId)) {
 			return new ItemSelectorViewRenderer() {
 
 				@Override
@@ -92,9 +105,26 @@ public class DepotItemSelectorViewRendererProvider
 					PortalIncludeUtil.include(
 						pageContext,
 						(httpServletRequest, httpServletResponse) -> {
+							ThemeDisplay themeDisplay =
+								(ThemeDisplay)httpServletRequest.getAttribute(
+									WebKeys.THEME_DISPLAY);
+
+							Group scopeGroup = themeDisplay.getScopeGroup();
+
+							if ((scopeGroup.getType() !=
+									GroupConstants.TYPE_DEPOT) ||
+								_depotApplicationController.isEnabled(
+									portletId, scopeGroup.getGroupId())) {
+
+								itemSelectorViewRenderer.renderHTML(
+									pageContext);
+
+								return;
+							}
+
 							RequestDispatcher requestDispatcher =
 								_servletContext.getRequestDispatcher(
-									"/item/selector/disabled.jsp");
+									"/item/selector/application_disabled.jsp");
 
 							requestDispatcher.include(
 								httpServletRequest, httpServletResponse);
@@ -104,9 +134,7 @@ public class DepotItemSelectorViewRendererProvider
 			};
 		}
 
-		return _itemSelectorViewRendererProvider.getItemSelectorViewRenderer(
-			itemSelectorView, itemSelectorCriterion, portletURL,
-			itemSelectedEventName, search);
+		return itemSelectorViewRenderer;
 	}
 
 	@Reference(
@@ -116,13 +144,24 @@ public class DepotItemSelectorViewRendererProvider
 		_servletContext = servletContext;
 	}
 
+	@Reference
+	private DepotApplicationController _depotApplicationController;
+
 	private final Map<Class<? extends ItemSelectorCriterion>, String>
 		_itemSelectorCriterionMap =
 			HashMapBuilder.<Class<? extends ItemSelectorCriterion>, String>put(
+				AudioItemSelectorCriterion.class,
+				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
+			).put(
 				FileItemSelectorCriterion.class,
 				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
 			).put(
 				ImageItemSelectorCriterion.class,
+				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
+			).put(
+				LayoutItemSelectorCriterion.class, JournalPortletKeys.JOURNAL
+			).put(
+				VideoItemSelectorCriterion.class,
 				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
 			).build();
 

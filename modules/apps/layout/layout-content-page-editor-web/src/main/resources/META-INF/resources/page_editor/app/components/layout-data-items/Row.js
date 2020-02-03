@@ -13,7 +13,6 @@
  */
 
 import classNames from 'classnames';
-import dom from 'metal-dom';
 import React, {useContext, useRef, useState} from 'react';
 
 import updateColSize from '../../actions/updateColSize';
@@ -104,6 +103,27 @@ function getGridSizes(rowOffsetWidth) {
 	return getGridRanges(colWidth);
 }
 
+/**
+ *
+ * @param {!Element} An element
+ *
+ * @returns {!DOMRect} The DOMRect of the given element.
+ */
+function getRect(element) {
+	if (!element) {
+		return {
+			bottom: 0,
+			height: 0,
+			left: 0,
+			right: 0,
+			top: 0,
+			width: 0
+		};
+	}
+
+	return element.getBoundingClientRect();
+}
+
 const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	const {gutters} = {
 		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[LAYOUT_DATA_ITEM_TYPES.row],
@@ -120,16 +140,13 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 
 	const onResizeStart = () => setShowOverlay(true);
 
+	const {left} = getRect(rowRef.current);
+
 	const onResizing = ({clientX}, columnInfo) => {
 		if (rowRef.current) {
 			const gridSizes = getGridSizes(rowRef.current.offsetWidth);
 
-			const sectionRef = dom.closest(
-				rowRef.current,
-				'.container, .container-fluid'
-			);
-
-			const mousePosition = clientX - sectionRef.offsetLeft;
+			const mousePosition = clientX - left;
 
 			const index = getClosestGridIndexPosition(mousePosition, gridSizes);
 

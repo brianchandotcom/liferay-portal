@@ -83,9 +83,11 @@ public class DLAdminNavigationDisplayContext {
 	private void _populateDocumentLibraryNavigationItem(
 		NavigationItem navigationItem, String navigation) {
 
-		navigationItem.setActive(
-			!navigation.equals("file_entry_types") &&
-			!navigation.equals("file_entry_metadata_sets"));
+		if (!navigation.equals("file_entry_types") &&
+			!navigation.equals("file_entry_metadata_sets")) {
+
+			navigationItem.setActive(true);
+		}
 
 		PortletURL viewDocumentLibraryURL =
 			_liferayPortletResponse.createRenderURL();
@@ -126,7 +128,9 @@ public class DLAdminNavigationDisplayContext {
 	private void _populateMetadataSetsNavigationItem(
 		NavigationItem navigationItem, String navigation) {
 
-		navigationItem.setActive(navigation.equals("file_entry_metadata_sets"));
+		if (navigation.equals("file_entry_metadata_sets")) {
+			navigationItem.setActive(true);
+		}
 
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 

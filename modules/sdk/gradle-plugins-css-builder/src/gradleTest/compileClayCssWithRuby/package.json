@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"clay-css": "2.18.4"
+		"@clayui/css": "3.4.0"
 	},
 	"name": "sample",
 	"version": "1.0.0"

@@ -22,6 +22,7 @@ import com.liferay.layout.service.base.LayoutClassedModelUsageLocalServiceBaseIm
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -63,8 +64,17 @@ public class LayoutClassedModelUsageLocalServiceImpl
 			layoutClassedModelUsagePersistence.create(
 				layoutClassedModelUsageId);
 
+		long companyId = serviceContext.getCompanyId();
+
+		Group group = groupLocalService.fetchGroup(groupId);
+
+		if (group != null) {
+			companyId = group.getCompanyId();
+		}
+
 		layoutClassedModelUsage.setUuid(serviceContext.getUuid());
 		layoutClassedModelUsage.setGroupId(groupId);
+		layoutClassedModelUsage.setCompanyId(companyId);
 		layoutClassedModelUsage.setCreateDate(new Date());
 		layoutClassedModelUsage.setModifiedDate(new Date());
 		layoutClassedModelUsage.setClassNameId(classNameId);

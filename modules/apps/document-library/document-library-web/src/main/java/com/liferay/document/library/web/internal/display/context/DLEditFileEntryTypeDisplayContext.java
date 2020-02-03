@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
@@ -56,7 +57,7 @@ public class DLEditFileEntryTypeDisplayContext {
 	}
 
 	public String getAvailableFields() {
-		return "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE";
+		return DDMConstants.DEFAULT_AVAILABLE_FIELDS;
 	}
 
 	public Locale[] getAvailableLocales() throws PortalException {

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -64,7 +65,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 	@Override
 	public String getAvailableFields() {
-		return "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE";
+		return DDMConstants.DEFAULT_AVAILABLE_FIELDS;
 	}
 
 	@Override

@@ -2,6 +2,7 @@
 
 Check | Category | Description
 ----- | -------- | -----------
+JSJQueryDependencyCheck | Miscellaneous | |
 JSLodashDependencyCheck | Miscellaneous | |
 JSStylingCheck | Miscellaneous | |
 JSWhitespaceCheck | Miscellaneous | |

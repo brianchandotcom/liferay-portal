@@ -392,6 +392,9 @@
 		<check name="CompatClassImportsCheck" />
 	</source-processor>
 	<source-processor name="JSSourceProcessor">
+		<check name="JSJQueryDependencyCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JSLodashDependencyCheck">
 			<property name="enabled" value="false" />
 		</check>

@@ -95,6 +95,7 @@ HTMLWhitespaceCheck | Miscellaneous | .html | |
 IfStatementCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 IncorrectFileLocationCheck | Miscellaneous | | |
 InstanceofOrderCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+JSJqueryDependencyCheck | Miscellaneous | .js or .jsx | |
 JSLodashDependencyCheck | Miscellaneous | .js or .jsx | |
 JSONDeprecatedPackagesCheck | Miscellaneous | .json or .npmbridgerc | |
 JSONIndentationCheck | Miscellaneous | .json or .npmbridgerc | |

@@ -94,6 +94,7 @@ HTMLWhitespaceCheck | .html | |
 IfStatementCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 IncorrectFileLocationCheck | | |
 InstanceofOrderCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+JSJQueryDependencyCheck | .js or .jsx | |
 JSLodashDependencyCheck | .js or .jsx | |
 JSONDeprecatedPackagesCheck | .json or .npmbridgerc | |
 JSONIndentationCheck | .json or .npmbridgerc | |

@@ -81,7 +81,7 @@ public class WorkflowDefinitionDemoDataCreatorImpl
 	}
 
 	@Override
-	public void deleted() throws PortalException {
+	public void delete() throws PortalException {
 		for (WorkflowDefinition workflowDefinition : _workflowDefinitions) {
 			_workflowDefinitionManager.updateActive(
 				workflowDefinition.getCompanyId(),

@@ -90,14 +90,14 @@ public class DDMFormInstanceDemoDataCreatorImpl
 	}
 
 	@Override
-	public void deleted() throws PortalException {
+	public void delete() throws PortalException {
 		for (Long formInstanceId : _formInstanceIds) {
 			_formInstanceIds.remove(formInstanceId);
 
 			_ddmFormInstanceLocalService.deleteFormInstance(formInstanceId);
 		}
 
-		_ddmStructureDemoDataCreator.deleted();
+		_ddmStructureDemoDataCreator.delete();
 	}
 
 	@Reference

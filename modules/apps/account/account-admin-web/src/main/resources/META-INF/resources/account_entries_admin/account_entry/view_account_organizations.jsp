@@ -58,6 +58,22 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 					name="parent-organization"
 					property="parentOrganizationName"
 				/>
+
+				<liferay-ui:search-container-column-text>
+					<portlet:actionURL name="/account_admin/remove_account_organizations" var="removeAccountOrganizationsURL">
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+						<portlet:param name="accountOrganizationIds" value="<%= String.valueOf(accountOrganization.getOrganizationId()) %>" />
+					</portlet:actionURL>
+
+					<liferay-ui:icon-delete
+						confirmation="are-you-sure-you-want-to-remove-this-organization"
+						icon="times-circle"
+						message="remove"
+						showIcon="<%= true %>"
+						url="<%= removeAccountOrganizationsURL %>"
+					/>
+				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator

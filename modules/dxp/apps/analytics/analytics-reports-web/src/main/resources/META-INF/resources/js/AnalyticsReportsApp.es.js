@@ -56,18 +56,18 @@ export default function({context, props}) {
 				className="mt-4"
 				dataProvider={_handleTotalViews}
 				label={Liferay.Util.sub(Liferay.Language.get('total-views'))}
-				popoverHeader={Liferay.Language.get('views')}
+				popoverHeader={Liferay.Language.get('total-views')}
 				popoverMessage={Liferay.Language.get(
-					'this-number-is-the-total-amount-of-views-since-the-content-was-published'
+					'this-number-refers-to-the-total-number-of-views-since-the-content-was-published'
 				)}
 			/>
 			<TotalCount
 				className="mt-2"
 				dataProvider={_handleTotalReads}
 				label={Liferay.Util.sub(Liferay.Language.get('total-reads'))}
-				popoverHeader={Liferay.Language.get('reads')}
+				popoverHeader={Liferay.Language.get('total-reads')}
 				popoverMessage={Liferay.Language.get(
-					'this-number-is-the-total-amount-of-reads-since-the-content-was-published'
+					'this-number-refers-to-the-total-number-of-reads-since-the-content-was-published'
 				)}
 			/>
 		</div>

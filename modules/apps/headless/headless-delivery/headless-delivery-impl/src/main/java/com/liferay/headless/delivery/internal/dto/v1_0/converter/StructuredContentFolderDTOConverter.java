@@ -57,6 +57,7 @@ public class StructuredContentFolderDTOConverter
 
 		return new StructuredContentFolder() {
 			{
+				actions = dtoConverterContext.getActions();
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUser(journalFolder.getUserId()));

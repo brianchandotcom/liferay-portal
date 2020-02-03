@@ -398,7 +398,7 @@ public class ContentPageEditorDisplayContext {
 					ActionKeys.UPDATE_LAYOUT_CONTENT,
 					editorSoyContext.get("hasUpdateContentPermissions")
 				).put(
-					"UPDATE_SEGMENTS_EXPERIENCE",
+					"LOCKED_SEGMENTS_EXPERIMENT",
 					editorSoyContext.get("hasLockedSegmentsExperiment")
 				).build()
 			).put(

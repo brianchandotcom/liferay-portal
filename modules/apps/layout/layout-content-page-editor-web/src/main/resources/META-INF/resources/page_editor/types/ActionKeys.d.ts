@@ -13,9 +13,9 @@
  */
 
 export type ACTION_KEYS =
+	| 'LOCKED_SEGMENTS_EXPERIMENT'
 	| 'UPDATE'
-	| 'UPDATE_LAYOUT_CONTENT'
-	| 'UPDATE_SEGMENTS_EXPERIENCE';
+	| 'UPDATE_LAYOUT_CONTENT';
 
 export type ActionKeysMap = {
 	[key in ACTION_KEYS]: boolean;

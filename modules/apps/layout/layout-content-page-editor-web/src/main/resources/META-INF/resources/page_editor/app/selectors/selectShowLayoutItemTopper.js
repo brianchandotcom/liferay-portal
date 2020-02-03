@@ -17,7 +17,7 @@
  */
 export default function selectShowLayoutItemTopper({permissions}) {
 	return (
-		permissions.UPDATE_LAYOUT_CONTENT &&
-		permissions.UPDATE_SEGMENTS_EXPERIENCE
+		permissions.LOCKED_SEGMENTS_EXPERIMENT &&
+		permissions.UPDATE_LAYOUT_CONTENT
 	);
 }

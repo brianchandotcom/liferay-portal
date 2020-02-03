@@ -47,8 +47,18 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getClearResultsURL() {
+		return String.valueOf(getPortletURL());
+	}
+
+	@Override
 	public String[] getOrderByKeys() {
 		return _itemSelectorViewDescriptor.getOrderByKeys();
+	}
+
+	@Override
+	public String getSearchActionURL() {
+		return String.valueOf(getPortletURL());
 	}
 
 	@Override
@@ -65,6 +75,11 @@ public class ItemSelectorViewDescriptorRendererManagementToolbarDisplayContext
 	@Override
 	public Boolean isSelectable() {
 		return false;
+	}
+
+	@Override
+	public Boolean isShowSearch() {
+		return _itemSelectorViewDescriptor.isShowSearch();
 	}
 
 	private final ItemSelectorViewDescriptor _itemSelectorViewDescriptor;

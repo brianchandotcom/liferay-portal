@@ -285,6 +285,11 @@ public class AssetListItemSelectorView
 			return true;
 		}
 
+		@Override
+		public boolean isShowSearch() {
+			return true;
+		}
+
 		private final HttpServletRequest _httpServletRequest;
 		private final PortletURL _portletURL;
 

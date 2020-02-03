@@ -170,26 +170,8 @@ public class FreeMarkerTool {
 		Map<String, String> properties = getDTOProperties(
 			configYAML, openAPIYAML, schemaName);
 
-		String parameterName = StringUtil.toLowerCase(
-			javaMethodParameter.getParameterName());
-
-		schemaName = StringUtil.toLowerCase(schemaName);
-
-		String shortParameterName = StringUtil.removeSubstring(
-			parameterName, schemaName);
-
-		shortParameterName = StringUtil.removeSubstring(
-			shortParameterName, "parent");
-
-		for (String propertyKey : properties.keySet()) {
-			if (StringUtil.equalsIgnoreCase(parameterName, propertyKey) ||
-				StringUtil.equalsIgnoreCase(shortParameterName, propertyKey)) {
-
-				return StringUtil.upperCaseFirstLetter(propertyKey);
-			}
-		}
-
-		return null;
+		return _getParentProperty(
+			schemaName, javaMethodParameter, properties.keySet());
 	}
 
 	public String getGraphQLMethodAnnotations(
@@ -801,6 +783,25 @@ public class FreeMarkerTool {
 					return null;
 				}
 
+				if ((relationJavaMethodSignature.getParentSchemaName() !=
+						null) &&
+					!returnType.contains("Collection<")) {
+
+					Schema parentSchema = schemas.get(
+						relationJavaMethodSignature.getParentSchemaName());
+
+					Map<String, Schema> parentPropertySchemas =
+						parentSchema.getPropertySchemas();
+
+					String parentProperty = _getParentProperty(
+						relationJavaMethodSignature.getParentSchemaName(),
+						javaMethodParameter, parentPropertySchemas.keySet());
+
+					if (parentProperty == null) {
+						continue;
+					}
+				}
+
 				return relationJavaMethodSignature;
 			}
 		}
@@ -819,6 +820,32 @@ public class FreeMarkerTool {
 			javaMethodSignature.getJavaMethodParameters(),
 			javaMethodSignature.getMethodName(),
 			javaMethodSignature.getReturnType(), parentSchemaName);
+	}
+
+	private String _getParentProperty(
+		String schemaName, JavaMethodParameter javaMethodParameter,
+		Set<String> properties) {
+
+		String parameterName = StringUtil.toLowerCase(
+			javaMethodParameter.getParameterName());
+
+		schemaName = StringUtil.toLowerCase(schemaName);
+
+		String shortParameterName = StringUtil.removeSubstring(
+			parameterName, schemaName);
+
+		shortParameterName = StringUtil.removeSubstring(
+			shortParameterName, "parent");
+
+		for (String propertyKey : properties) {
+			if (StringUtil.equalsIgnoreCase(parameterName, propertyKey) ||
+				StringUtil.equalsIgnoreCase(shortParameterName, propertyKey)) {
+
+				return StringUtil.upperCaseFirstLetter(propertyKey);
+			}
+		}
+
+		return null;
 	}
 
 	private String _getRESTBody(

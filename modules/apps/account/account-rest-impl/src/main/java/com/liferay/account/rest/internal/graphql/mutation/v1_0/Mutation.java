@@ -14,6 +14,7 @@
 
 package com.liferay.account.rest.internal.graphql.mutation.v1_0;
 
+import com.liferay.account.rest.dto.v1_0.Account;
 import com.liferay.account.rest.resource.v1_0.AccountResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -43,6 +44,16 @@ public class Mutation {
 
 		_accountResourceComponentServiceObjects =
 			accountResourceComponentServiceObjects;
+	}
+
+	@GraphQLField(description = "Creates a new account")
+	public Account createAccount(@GraphQLName("account") Account account)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource -> accountResource.postAccount(account));
 	}
 
 	@GraphQLField(description = "Deletes an account.")

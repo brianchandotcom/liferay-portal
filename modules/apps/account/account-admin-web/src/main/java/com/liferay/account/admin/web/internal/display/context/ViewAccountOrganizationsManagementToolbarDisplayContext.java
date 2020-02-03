@@ -20,6 +20,8 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -48,6 +52,35 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemList.of(
+			() -> {
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.putData("action", "removeOrganizations");
+
+				PortletURL removeOrganizationsURL =
+					liferayPortletResponse.createActionURL();
+
+				removeOrganizationsURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/account_admin/remove_account_organizations");
+				removeOrganizationsURL.setParameter(
+					"redirect", currentURLObj.toString());
+
+				dropdownItem.putData(
+					"removeOrganizationsURL",
+					removeOrganizationsURL.toString());
+
+				dropdownItem.setIcon("minus-circle");
+				dropdownItem.setLabel(LanguageUtil.get(request, "remove"));
+				dropdownItem.setQuickAction(true);
+
+				return dropdownItem;
+			});
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.retriever.AccountOrganizationRetriever;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
@@ -73,6 +74,9 @@ public class AccountOrganizationSearchContainerFactory {
 			liferayPortletRequest, "orderByType", "asc");
 
 		searchContainer.setOrderByType(orderByType);
+
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords", null);

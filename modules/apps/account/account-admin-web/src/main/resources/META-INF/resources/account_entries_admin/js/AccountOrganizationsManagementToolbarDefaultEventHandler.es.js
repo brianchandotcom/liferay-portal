@@ -15,6 +15,28 @@
 import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
 
 class AccountOrganizationsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
+	removeOrganizations(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-remove-the-selected-organizations'
+				)
+			)
+		) {
+			const form = this.one('#fm');
+
+			Liferay.Util.postForm(form, {
+				data: {
+					accountOrganizationIds: Liferay.Util.listCheckedExcept(
+						form,
+						this.ns('allRowIds')
+					)
+				},
+				url: itemData.removeOrganizationsURL
+			});
+		}
+	}
+
 	selectAccountOrganizations(itemData) {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('assign'),

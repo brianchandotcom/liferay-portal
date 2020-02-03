@@ -31,7 +31,6 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 
 <clay:management-toolbar
 	displayContext="<%= viewAccountOrganizationsManagementToolbarDisplayContext %>"
-	selectable="<%= false %>"
 />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">

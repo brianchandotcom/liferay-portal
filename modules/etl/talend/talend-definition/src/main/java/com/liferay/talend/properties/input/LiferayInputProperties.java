@@ -72,8 +72,8 @@ public class LiferayInputProperties extends FixedConnectorsComponentProperties {
 		return liferayConnectionProperties.getItemsPerPage();
 	}
 
-	public Schema getSchema() {
-		return resource.getSchema();
+	public Schema getOutboundSchema() {
+		return resource.getOutboundSchema();
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class LiferayInputProperties extends FixedConnectorsComponentProperties {
 
 		schemaPropertiesConnectors.add(
 			new PropertyPathConnector(
-				Connector.MAIN_NAME, "resource.flowSchemaProperties"));
+				Connector.MAIN_NAME, "resource.outboundSchemaProperties"));
 
 		return Collections.unmodifiableSet(schemaPropertiesConnectors);
 	}

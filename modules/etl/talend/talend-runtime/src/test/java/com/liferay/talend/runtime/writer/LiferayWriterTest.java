@@ -59,9 +59,9 @@ public class LiferayWriterTest extends BaseTestCase {
 		Schema postContentSchema = getSchema(
 			"/v1.0/catalogs/{siteId}/product", "POST", oasJsonObject);
 
-		testLiferayOutputProperties.resource.mainSchemaProperties.schema.
+		testLiferayOutputProperties.resource.entitySchemaProperties.schema.
 			setValue(postContentSchema);
-		testLiferayOutputProperties.resource.flowSchemaProperties.schema.
+		testLiferayOutputProperties.resource.outboundSchemaProperties.schema.
 			setValue(postContentSchema);
 
 		LiferayWriter liferayWriter = new LiferayWriter(
@@ -108,9 +108,9 @@ public class LiferayWriterTest extends BaseTestCase {
 		Schema patchContentSchema = getSchema(
 			"/v1.0/bigdecimal/{id}", "PATCH", oasJsonObject);
 
-		testLiferayOutputProperties.resource.mainSchemaProperties.schema.
+		testLiferayOutputProperties.resource.entitySchemaProperties.schema.
 			setValue(patchContentSchema);
-		testLiferayOutputProperties.resource.flowSchemaProperties.schema.
+		testLiferayOutputProperties.resource.outboundSchemaProperties.schema.
 			setValue(patchContentSchema);
 
 		LiferayWriter liferayWriter = new LiferayWriter(

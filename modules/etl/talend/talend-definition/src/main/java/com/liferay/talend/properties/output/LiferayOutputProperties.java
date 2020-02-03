@@ -124,14 +124,14 @@ public class LiferayOutputProperties
 		if (!outputConnection) {
 			schemaPropertiesConnectors.add(
 				new PropertyPathConnector(
-					Connector.MAIN_NAME, "resource.mainSchemaProperties"));
+					Connector.MAIN_NAME, "resource.inboundSchemaProperties"));
 
 			return Collections.unmodifiableSet(schemaPropertiesConnectors);
 		}
 
 		schemaPropertiesConnectors.add(
 			new PropertyPathConnector(
-				Connector.MAIN_NAME, "resource.flowSchemaProperties"));
+				Connector.MAIN_NAME, "resource.outboundSchemaProperties"));
 		schemaPropertiesConnectors.add(
 			new PropertyPathConnector(
 				Connector.REJECT_NAME, "resource.rejectSchemaProperties"));

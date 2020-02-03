@@ -145,10 +145,11 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 		return openAPIURI.toASCIIString();
 	}
 
-	public Schema getSchema() {
-		Property<Schema> schemaProperty = flowSchemaProperties.schema;
+	public Schema getOutboundSchema() {
+		Property<Schema> outboundSchemaProperty =
+			outboundSchemaProperties.schema;
 
-		return schemaProperty.getValue();
+		return outboundSchemaProperty.getValue();
 	}
 
 	public void setAllowedOperations(String... operations) {
@@ -204,7 +205,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 
 		mainForm.addRow(requestParametersWidget);
 
-		mainForm.addRow(flowSchemaProperties.getForm(Form.REFERENCE));
+		mainForm.addRow(outboundSchemaProperties.getForm(Form.REFERENCE));
 	}
 
 	@Override
@@ -227,13 +228,15 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 	public LiferayConnectionProperties connection =
 		new LiferayConnectionProperties("connection");
 	public StringProperty endpoint = new StringProperty("endpoint");
-	public SchemaProperties flowSchemaProperties = new SchemaProperties(
-		"flowSchemaProperties");
-	public SchemaProperties mainSchemaProperties = new SchemaProperties(
-		"mainSchemaProperties");
+	public SchemaProperties entitySchemaProperties = new SchemaProperties(
+		"entitySchemaProperties");
+	public SchemaProperties inboundSchemaProperties = new SchemaProperties(
+		"inboundSchemaProperties");
 	public StringProperty openAPIModule = new StringProperty("openAPIModule");
 	public Property<Operation> operations = new EnumProperty<>(
 		Operation.class, "operations");
+	public SchemaProperties outboundSchemaProperties = new SchemaProperties(
+		"outboundSchemaProperties");
 	public RequestParameterProperties parameters =
 		new RequestParameterProperties("parameters");
 	public SchemaProperties rejectSchemaProperties = new SchemaProperties(
@@ -382,9 +385,9 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 	}
 
 	private void _resetProperties() {
-		mainSchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
+		entitySchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
 
-		flowSchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
+		outboundSchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
 
 		rejectSchemaProperties.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
 
@@ -461,13 +464,13 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 			openAPIEntityOperationPath, operation.getHttpMethod(),
 			oasJsonObject);
 
-		flowSchemaProperties.schema.setValue(endpointSchema);
+		outboundSchemaProperties.schema.setValue(endpointSchema);
 
 		if (!_displayOperations) {
 			return;
 		}
 
-		mainSchemaProperties.schema.setValue(endpointSchema);
+		entitySchemaProperties.schema.setValue(endpointSchema);
 
 		rejectSchemaProperties.schema.setValue(
 			SchemaUtils.createRejectSchema(endpointSchema));

@@ -458,6 +458,23 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
+	public void testPostAccount() throws Exception {
+		Account randomAccount = randomAccount();
+
+		Account postAccount = testPostAccount_addAccount(randomAccount);
+
+		assertEquals(randomAccount, postAccount);
+		assertValid(postAccount);
+	}
+
+	protected Account testPostAccount_addAccount(Account account)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteAccount() throws Exception {
 		Account account = testDeleteAccount_addAccount();
 

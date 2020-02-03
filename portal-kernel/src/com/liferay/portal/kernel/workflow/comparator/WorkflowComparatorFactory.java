@@ -58,6 +58,12 @@ public interface WorkflowComparatorFactory {
 	public OrderByComparator<WorkflowTask> getTaskDueDateComparator(
 		boolean ascending);
 
+	public default OrderByComparator<WorkflowTask> getTaskInstanceIdComparator(
+		boolean ascending) {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public default OrderByComparator<WorkflowTask>
 		getTaskModifiedDateComparator(boolean ascending) {
 

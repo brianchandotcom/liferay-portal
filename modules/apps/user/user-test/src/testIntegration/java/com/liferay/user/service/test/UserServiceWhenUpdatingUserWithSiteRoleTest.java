@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -77,11 +76,12 @@ public class UserServiceWhenUpdatingUserWithSiteRoleTest {
 
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
-		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-			_user.getUserId(), _group.getGroupId(), _role.getRoleId());
-
 		UserGroupRole userGroupRole =
-			_userGroupRoleLocalService.createUserGroupRole(userGroupRolePK);
+			_userGroupRoleLocalService.createUserGroupRole(0);
+
+		userGroupRole.setUserId(_user.getUserId());
+		userGroupRole.setGroupId(_group.getGroupId());
+		userGroupRole.setRoleId(_role.getRoleId());
 
 		_user = _updateUser(_user, Collections.singletonList(userGroupRole));
 

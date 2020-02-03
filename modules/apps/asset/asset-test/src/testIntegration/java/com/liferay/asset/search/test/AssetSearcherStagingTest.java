@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -151,10 +150,7 @@ public class AssetSearcherStagingTest {
 	protected UserGroupRole addUserGroupRole(User user, Role role) {
 		UserGroupRole userGroupRole =
 			_userGroupRoleLocalService.addUserGroupRole(
-				_userGroupRoleLocalService.createUserGroupRole(
-					new UserGroupRolePK(
-						user.getUserId(), _group.getGroupId(),
-						role.getRoleId())));
+				user.getUserId(), _group.getGroupId(), role.getRoleId());
 
 		_userGroupRoles.add(userGroupRole);
 

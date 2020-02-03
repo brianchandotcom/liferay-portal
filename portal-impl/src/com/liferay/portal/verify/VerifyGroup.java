@@ -205,8 +205,7 @@ public class VerifyGroup extends VerifyProcess {
 			UserGroupGroupRoleLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"id.groupId", stagingGroup.getGroupId()));
+			RestrictionsFactoryUtil.eq("groupId", stagingGroup.getGroupId()));
 
 		List<UserGroupGroupRole> stagingUserGroupGroupRoles =
 			UserGroupGroupRoleLocalServiceUtil.dynamicQuery(dynamicQuery);
@@ -219,7 +218,7 @@ public class VerifyGroup extends VerifyProcess {
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"id.groupId", stagingGroup.getLiveGroupId()));
+				"groupId", stagingGroup.getLiveGroupId()));
 
 		List<UserGroupGroupRole> liveUserGroupGroupRoles =
 			UserGroupGroupRoleLocalServiceUtil.dynamicQuery(dynamicQuery);

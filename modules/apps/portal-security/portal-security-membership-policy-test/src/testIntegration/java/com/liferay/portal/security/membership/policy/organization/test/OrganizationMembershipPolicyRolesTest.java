@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -86,11 +85,12 @@ public class OrganizationMembershipPolicyRolesTest
 		long[] userIds = addUsers();
 		long[] forbiddenRoleIds = addForbiddenRoles();
 
-		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-			userIds[0], organization.getGroupId(), forbiddenRoleIds[0]);
-
 		UserGroupRole userGroupRole =
-			UserGroupRoleLocalServiceUtil.createUserGroupRole(userGroupRolePK);
+			UserGroupRoleLocalServiceUtil.createUserGroupRole(0);
+
+		userGroupRole.setUserId(userIds[0]);
+		userGroupRole.setGroupId(organization.getGroupId());
+		userGroupRole.setRoleId(forbiddenRoleIds[0]);
 
 		userGroupRoles.add(userGroupRole);
 
@@ -115,11 +115,12 @@ public class OrganizationMembershipPolicyRolesTest
 		long[] userIds = addUsers();
 		long[] standardRoleIds = addStandardRoles();
 
-		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-			userIds[0], organization.getGroupId(), standardRoleIds[0]);
-
 		UserGroupRole userGroupRole =
-			UserGroupRoleLocalServiceUtil.createUserGroupRole(userGroupRolePK);
+			UserGroupRoleLocalServiceUtil.createUserGroupRole(0);
+
+		userGroupRole.setUserId(userIds[0]);
+		userGroupRole.setGroupId(organization.getGroupId());
+		userGroupRole.setRoleId(standardRoleIds[0]);
 
 		userGroupRoles.add(userGroupRole);
 

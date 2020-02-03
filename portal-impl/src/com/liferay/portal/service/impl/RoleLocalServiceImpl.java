@@ -610,13 +610,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			DynamicQuery userGroupGroupRoleDynamicQuery =
 				userGroupGroupRoleLocalService.dynamicQuery();
 
-			Property property = PropertyFactoryUtil.forName(
-				"primaryKey.roleId");
+			Property property = PropertyFactoryUtil.forName("roleId");
 
 			userGroupGroupRoleDynamicQuery.add(property.eq(roleId));
 
 			userGroupGroupRoleDynamicQuery.setProjection(
-				ProjectionFactoryUtil.countDistinct("primaryKey.userGroupId"));
+				ProjectionFactoryUtil.countDistinct("userGroupId"));
 
 			List<?> list = userGroupRoleLocalService.dynamicQuery(
 				userGroupGroupRoleDynamicQuery);
@@ -632,13 +631,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			DynamicQuery userGroupRoleDynamicQuery =
 				userGroupRoleLocalService.dynamicQuery();
 
-			Property property = PropertyFactoryUtil.forName(
-				"primaryKey.roleId");
+			Property property = PropertyFactoryUtil.forName("roleId");
 
 			userGroupRoleDynamicQuery.add(property.eq(roleId));
 
 			userGroupRoleDynamicQuery.setProjection(
-				ProjectionFactoryUtil.countDistinct("primaryKey.userId"));
+				ProjectionFactoryUtil.countDistinct("userId"));
 
 			List<?> list = userGroupRoleLocalService.dynamicQuery(
 				userGroupRoleDynamicQuery);

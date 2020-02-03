@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 
 import java.io.Serializable;
 
@@ -125,11 +124,12 @@ public abstract class BaseOrganizationMembershipPolicy
 		Organization organization =
 			OrganizationLocalServiceUtil.getOrganization(organizationId);
 
-		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-			userId, organization.getGroupId(), roleId);
-
 		UserGroupRole userGroupRole =
-			UserGroupRoleLocalServiceUtil.createUserGroupRole(userGroupRolePK);
+			UserGroupRoleLocalServiceUtil.createUserGroupRole(0);
+
+		userGroupRole.setUserId(userId);
+		userGroupRole.setGroupId(organization.getGroupId());
+		userGroupRole.setRoleId(roleId);
 
 		userGroupRoles.add(userGroupRole);
 
@@ -186,11 +186,12 @@ public abstract class BaseOrganizationMembershipPolicy
 		Organization organization =
 			OrganizationLocalServiceUtil.getOrganization(organizationId);
 
-		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-			userId, organization.getGroupId(), roleId);
-
 		UserGroupRole userGroupRole =
-			UserGroupRoleLocalServiceUtil.createUserGroupRole(userGroupRolePK);
+			UserGroupRoleLocalServiceUtil.createUserGroupRole(0);
+
+		userGroupRole.setUserId(userId);
+		userGroupRole.setGroupId(organization.getGroupId());
+		userGroupRole.setRoleId(roleId);
 
 		userGroupRoles.add(userGroupRole);
 

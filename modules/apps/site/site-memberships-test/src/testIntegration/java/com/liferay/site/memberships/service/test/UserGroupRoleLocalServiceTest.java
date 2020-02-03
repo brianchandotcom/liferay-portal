@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -60,11 +59,9 @@ public class UserGroupRoleLocalServiceTest {
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
-		UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-			_user.getUserId(), _group.getGroupId(), role.getRoleId());
-
 		Assert.assertNull(
-			_userGroupRoleLocalService.fetchUserGroupRole(userGroupRolePK));
+			_userGroupRoleLocalService.fetchUserGroupRole(
+				_user.getUserId(), _group.getGroupId(), role.getRoleId()));
 
 		List<UserGroupRole> userGroupRoles =
 			_userGroupRoleLocalService.addUserGroupRoles(
@@ -78,7 +75,8 @@ public class UserGroupRoleLocalServiceTest {
 
 		Assert.assertEquals(
 			userGroupRoles.get(0),
-			_userGroupRoleLocalService.fetchUserGroupRole(userGroupRolePK));
+			_userGroupRoleLocalService.fetchUserGroupRole(
+				_user.getUserId(), _group.getGroupId(), role.getRoleId()));
 	}
 
 	@Inject

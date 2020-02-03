@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupRolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1492,12 +1491,12 @@ public class UsersAdminImpl implements UsersAdmin {
 				continue;
 			}
 
-			UserGroupRolePK userGroupRolePK = new UserGroupRolePK(
-				userId, groupRolesGroupIds[i], groupRolesRoleIds[i]);
-
 			UserGroupRole userGroupRole =
-				UserGroupRoleLocalServiceUtil.createUserGroupRole(
-					userGroupRolePK);
+				UserGroupRoleLocalServiceUtil.createUserGroupRole(0);
+
+			userGroupRole.setUserId(userId);
+			userGroupRole.setGroupId(groupRolesGroupIds[i]);
+			userGroupRole.setRoleId(groupRolesRoleIds[i]);
 
 			userGroupRoles.add(userGroupRole);
 		}

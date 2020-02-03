@@ -108,7 +108,7 @@ export default function MappingSelector({
 			setFields(newFields);
 		});
 
-		setSelectedItem(selectedItem);
+		setSelectedItem({...selectedItem, fieldId: ''});
 	};
 
 	const onFieldSelect = event => {
@@ -134,7 +134,7 @@ export default function MappingSelector({
 					item.classNameId === selectedItem.classNameId &&
 					item.classPK === selectedItem.classPK
 			);
-			
+
 			if (!mappedInfoItem) {
 				dispatch(
 					addMappedInfoItem({title: selectedItem.title, ...data})

@@ -135,6 +135,8 @@ public class LayoutClassedModelUsagePersistenceTest {
 
 		newLayoutClassedModelUsage.setGroupId(RandomTestUtil.nextLong());
 
+		newLayoutClassedModelUsage.setCompanyId(RandomTestUtil.nextLong());
+
 		newLayoutClassedModelUsage.setCreateDate(RandomTestUtil.nextDate());
 
 		newLayoutClassedModelUsage.setModifiedDate(RandomTestUtil.nextDate());
@@ -174,6 +176,9 @@ public class LayoutClassedModelUsagePersistenceTest {
 		Assert.assertEquals(
 			existingLayoutClassedModelUsage.getGroupId(),
 			newLayoutClassedModelUsage.getGroupId());
+		Assert.assertEquals(
+			existingLayoutClassedModelUsage.getCompanyId(),
+			newLayoutClassedModelUsage.getCompanyId());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingLayoutClassedModelUsage.getCreateDate()),
@@ -224,6 +229,15 @@ public class LayoutClassedModelUsagePersistenceTest {
 		_persistence.countByUUID_G("null", 0L);
 
 		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -302,10 +316,10 @@ public class LayoutClassedModelUsagePersistenceTest {
 
 		return OrderByComparatorFactoryUtil.create(
 			"LayoutClassedModelUsage", "mvccVersion", true, "uuid", true,
-			"layoutClassedModelUsageId", true, "groupId", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"containerKey", true, "containerType", true, "plid", true, "type",
-			true, "lastPublishDate", true);
+			"layoutClassedModelUsageId", true, "groupId", true, "companyId",
+			true, "createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "containerKey", true, "containerType", true,
+			"plid", true, "type", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -608,6 +622,8 @@ public class LayoutClassedModelUsagePersistenceTest {
 		layoutClassedModelUsage.setUuid(RandomTestUtil.randomString());
 
 		layoutClassedModelUsage.setGroupId(RandomTestUtil.nextLong());
+
+		layoutClassedModelUsage.setCompanyId(RandomTestUtil.nextLong());
 
 		layoutClassedModelUsage.setCreateDate(RandomTestUtil.nextDate());
 

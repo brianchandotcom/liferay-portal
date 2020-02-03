@@ -3,6 +3,7 @@ create table LayoutClassedModelUsage (
 	uuid_ VARCHAR(75) null,
 	layoutClassedModelUsageId LONG not null primary key,
 	groupId LONG,
+	companyId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
 	classNameId LONG,

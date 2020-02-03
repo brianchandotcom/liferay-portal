@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedModel;
 
 import java.util.Date;
 
@@ -36,7 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutClassedModelUsageModel
-	extends AttachedModel, BaseModel<LayoutClassedModelUsage>, MVCCModel {
+	extends AttachedModel, BaseModel<LayoutClassedModelUsage>, MVCCModel,
+			ShardedModel, StagedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -80,6 +83,7 @@ public interface LayoutClassedModelUsageModel
 	 * @return the uuid of this layout classed model usage
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -87,6 +91,7 @@ public interface LayoutClassedModelUsageModel
 	 *
 	 * @param uuid the uuid of this layout classed model usage
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -118,10 +123,27 @@ public interface LayoutClassedModelUsageModel
 	public void setGroupId(long groupId);
 
 	/**
+	 * Returns the company ID of this layout classed model usage.
+	 *
+	 * @return the company ID of this layout classed model usage
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this layout classed model usage.
+	 *
+	 * @param companyId the company ID of this layout classed model usage
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
 	 * Returns the create date of this layout classed model usage.
 	 *
 	 * @return the create date of this layout classed model usage
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -129,6 +151,7 @@ public interface LayoutClassedModelUsageModel
 	 *
 	 * @param createDate the create date of this layout classed model usage
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -136,6 +159,7 @@ public interface LayoutClassedModelUsageModel
 	 *
 	 * @return the modified date of this layout classed model usage
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -143,6 +167,7 @@ public interface LayoutClassedModelUsageModel
 	 *
 	 * @param modifiedDate the modified date of this layout classed model usage
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**

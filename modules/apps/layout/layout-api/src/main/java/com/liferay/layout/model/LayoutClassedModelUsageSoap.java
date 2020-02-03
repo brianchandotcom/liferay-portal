@@ -39,6 +39,7 @@ public class LayoutClassedModelUsageSoap implements Serializable {
 		soapModel.setLayoutClassedModelUsageId(
 			model.getLayoutClassedModelUsageId());
 		soapModel.setGroupId(model.getGroupId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
@@ -143,6 +144,14 @@ public class LayoutClassedModelUsageSoap implements Serializable {
 		_groupId = groupId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -219,6 +228,7 @@ public class LayoutClassedModelUsageSoap implements Serializable {
 	private String _uuid;
 	private long _layoutClassedModelUsageId;
 	private long _groupId;
+	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _classNameId;

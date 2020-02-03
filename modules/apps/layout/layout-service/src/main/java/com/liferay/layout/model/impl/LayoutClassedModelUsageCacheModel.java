@@ -78,7 +78,7 @@ public class LayoutClassedModelUsageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -88,6 +88,8 @@ public class LayoutClassedModelUsageCacheModel
 		sb.append(layoutClassedModelUsageId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -128,6 +130,7 @@ public class LayoutClassedModelUsageCacheModel
 		layoutClassedModelUsageImpl.setLayoutClassedModelUsageId(
 			layoutClassedModelUsageId);
 		layoutClassedModelUsageImpl.setGroupId(groupId);
+		layoutClassedModelUsageImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
 			layoutClassedModelUsageImpl.setCreateDate(null);
@@ -178,6 +181,8 @@ public class LayoutClassedModelUsageCacheModel
 		layoutClassedModelUsageId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
@@ -208,6 +213,8 @@ public class LayoutClassedModelUsageCacheModel
 		objectOutput.writeLong(layoutClassedModelUsageId);
 
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
@@ -234,6 +241,7 @@ public class LayoutClassedModelUsageCacheModel
 	public String uuid;
 	public long layoutClassedModelUsageId;
 	public long groupId;
+	public long companyId;
 	public long createDate;
 	public long modifiedDate;
 	public long classNameId;

@@ -16,6 +16,7 @@ package com.liferay.layout.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.model.LayoutClassedModelUsageModel;
 import com.liferay.petra.string.StringBundler;
@@ -69,11 +70,11 @@ public class LayoutClassedModelUsageModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"layoutClassedModelUsageId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"containerKey", Types.VARCHAR}, {"containerType", Types.BIGINT},
-		{"plid", Types.BIGINT}, {"type_", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"containerKey", Types.VARCHAR},
+		{"containerType", Types.BIGINT}, {"plid", Types.BIGINT},
+		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -84,6 +85,7 @@ public class LayoutClassedModelUsageModelImpl
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutClassedModelUsageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
@@ -96,7 +98,7 @@ public class LayoutClassedModelUsageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutClassedModelUsage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutClassedModelUsageId LONG not null primary key,groupId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,containerKey VARCHAR(200) null,containerType LONG,plid LONG,type_ INTEGER,lastPublishDate DATE null)";
+		"create table LayoutClassedModelUsage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutClassedModelUsageId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,containerKey VARCHAR(200) null,containerType LONG,plid LONG,type_ INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutClassedModelUsage";
@@ -117,19 +119,21 @@ public class LayoutClassedModelUsageModelImpl
 
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 
-	public static final long CONTAINERKEY_COLUMN_BITMASK = 4L;
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
-	public static final long CONTAINERTYPE_COLUMN_BITMASK = 8L;
+	public static final long CONTAINERKEY_COLUMN_BITMASK = 8L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long CONTAINERTYPE_COLUMN_BITMASK = 16L;
 
-	public static final long PLID_COLUMN_BITMASK = 32L;
+	public static final long GROUPID_COLUMN_BITMASK = 32L;
 
-	public static final long TYPE_COLUMN_BITMASK = 64L;
+	public static final long PLID_COLUMN_BITMASK = 64L;
 
-	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long TYPE_COLUMN_BITMASK = 128L;
 
-	public static final long LAYOUTCLASSEDMODELUSAGEID_COLUMN_BITMASK = 256L;
+	public static final long UUID_COLUMN_BITMASK = 256L;
+
+	public static final long LAYOUTCLASSEDMODELUSAGEID_COLUMN_BITMASK = 512L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -297,6 +301,12 @@ public class LayoutClassedModelUsageModelImpl
 			(BiConsumer<LayoutClassedModelUsage, Long>)
 				LayoutClassedModelUsage::setGroupId);
 		attributeGetterFunctions.put(
+			"companyId", LayoutClassedModelUsage::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<LayoutClassedModelUsage, Long>)
+				LayoutClassedModelUsage::setCompanyId);
+		attributeGetterFunctions.put(
 			"createDate", LayoutClassedModelUsage::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
@@ -420,6 +430,28 @@ public class LayoutClassedModelUsageModelImpl
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -613,6 +645,13 @@ public class LayoutClassedModelUsageModelImpl
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(LayoutClassedModelUsage.class.getName()),
+			getClassNameId());
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -620,7 +659,8 @@ public class LayoutClassedModelUsageModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, LayoutClassedModelUsage.class.getName(), getPrimaryKey());
+			getCompanyId(), LayoutClassedModelUsage.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -655,6 +695,7 @@ public class LayoutClassedModelUsageModelImpl
 		layoutClassedModelUsageImpl.setLayoutClassedModelUsageId(
 			getLayoutClassedModelUsageId());
 		layoutClassedModelUsageImpl.setGroupId(getGroupId());
+		layoutClassedModelUsageImpl.setCompanyId(getCompanyId());
 		layoutClassedModelUsageImpl.setCreateDate(getCreateDate());
 		layoutClassedModelUsageImpl.setModifiedDate(getModifiedDate());
 		layoutClassedModelUsageImpl.setClassNameId(getClassNameId());
@@ -736,6 +777,11 @@ public class LayoutClassedModelUsageModelImpl
 
 		layoutClassedModelUsageModelImpl._setOriginalGroupId = false;
 
+		layoutClassedModelUsageModelImpl._originalCompanyId =
+			layoutClassedModelUsageModelImpl._companyId;
+
+		layoutClassedModelUsageModelImpl._setOriginalCompanyId = false;
+
 		layoutClassedModelUsageModelImpl._setModifiedDate = false;
 
 		layoutClassedModelUsageModelImpl._originalClassNameId =
@@ -788,6 +834,8 @@ public class LayoutClassedModelUsageModelImpl
 			getLayoutClassedModelUsageId();
 
 		layoutClassedModelUsageCacheModel.groupId = getGroupId();
+
+		layoutClassedModelUsageCacheModel.companyId = getCompanyId();
 
 		Date createDate = getCreateDate();
 
@@ -923,6 +971,9 @@ public class LayoutClassedModelUsageModelImpl
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;

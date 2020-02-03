@@ -14,6 +14,7 @@
 
 package com.liferay.layout.model;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -49,6 +50,7 @@ public class LayoutClassedModelUsageWrapper
 		attributes.put(
 			"layoutClassedModelUsageId", getLayoutClassedModelUsageId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
@@ -87,6 +89,12 @@ public class LayoutClassedModelUsageWrapper
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -172,6 +180,16 @@ public class LayoutClassedModelUsageWrapper
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
+	}
+
+	/**
+	 * Returns the company ID of this layout classed model usage.
+	 *
+	 * @return the company ID of this layout classed model usage
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -325,6 +343,16 @@ public class LayoutClassedModelUsageWrapper
 	}
 
 	/**
+	 * Sets the company ID of this layout classed model usage.
+	 *
+	 * @param companyId the company ID of this layout classed model usage
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
+	}
+
+	/**
 	 * Sets the container key of this layout classed model usage.
 	 *
 	 * @param containerKey the container key of this layout classed model usage
@@ -442,6 +470,11 @@ public class LayoutClassedModelUsageWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override

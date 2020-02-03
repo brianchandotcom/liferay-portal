@@ -6,6 +6,7 @@
 		<field name="uuid" type="String" />
 		<field name="layoutClassedModelUsageId" type="long" />
 		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />

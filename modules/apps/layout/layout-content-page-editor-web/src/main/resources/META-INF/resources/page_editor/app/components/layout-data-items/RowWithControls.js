@@ -220,7 +220,11 @@ const RowWithControls = React.forwardRef(
 
 		return showLayoutItemTopper ? (
 			<Topper
-				acceptDrop={[LAYOUT_DATA_ITEM_TYPES.column]}
+				acceptDrop={[
+					LAYOUT_DATA_ITEM_TYPES.column,
+					LAYOUT_DATA_ITEM_TYPES.fragment,
+					LAYOUT_DATA_ITEM_TYPES.row
+				]}
 				item={item}
 				layoutData={layoutData}
 			>

@@ -83,6 +83,30 @@ paths:
                     description:
                         ""
             tags: ["Account"]
+        post:
+            description:
+                Creates a new account
+            operationId: postAccount
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Account"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Account"
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                    description:
+                        "Account successfully created"
+            tags: ["Account"]
     "/accounts/{accountId}":
         delete:
             # @review

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=text",
 		"ddm.form.field.type.label=localizable-text-field-type-label",
 		"ddm.form.field.type.name=localizable_text",
-		"ddm.form.field.type.scope=forms"
+		"ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class
 )

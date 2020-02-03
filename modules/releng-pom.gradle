@@ -47,7 +47,7 @@ configurations {
 }
 
 dependencies {
-	pomProjectTemplates group: "com.liferay", name: "com.liferay.project.templates", version: "4.5.6"
+	pomProjectTemplates group: "com.liferay", name: "com.liferay.project.templates", version: "5.0.18"
 }
 
 ext.compileOnlyModel = new Model()

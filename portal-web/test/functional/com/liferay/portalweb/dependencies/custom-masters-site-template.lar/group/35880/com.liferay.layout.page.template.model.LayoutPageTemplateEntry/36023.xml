@@ -1,0 +1,50 @@
+<LayoutPageTemplateEntry>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>1</__mvccVersion>
+  <__uuid>0d2c234b-1ff2-08ea-5b1d-6184ae0d18f0</__uuid>
+  <__originalUuid>0d2c234b-1ff2-08ea-5b1d-6184ae0d18f0</__originalUuid>
+  <__layoutPageTemplateEntryId>36023</__layoutPageTemplateEntryId>
+  <__groupId>35880</__groupId>
+  <__originalGroupId>35880</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20095</__companyId>
+  <__originalCompanyId>20095</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2020-02-03 05:59:21.592</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-02-03 05:59:42.466</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__layoutPageTemplateCollectionId>0</__layoutPageTemplateCollectionId>
+  <__originalLayoutPageTemplateCollectionId>0</__originalLayoutPageTemplateCollectionId>
+  <__setOriginalLayoutPageTemplateCollectionId>false</__setOriginalLayoutPageTemplateCollectionId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classTypeId>0</__classTypeId>
+  <__originalClassTypeId>0</__originalClassTypeId>
+  <__setOriginalClassTypeId>false</__setOriginalClassTypeId>
+  <__name>Custom Masters Page Template</__name>
+  <__originalName>Custom Masters Page Template</__originalName>
+  <__type>3</__type>
+  <__originalType>3</__originalType>
+  <__setOriginalType>false</__setOriginalType>
+  <__previewFileEntryId>0</__previewFileEntryId>
+  <__defaultTemplate>false</__defaultTemplate>
+  <__originalDefaultTemplate>false</__originalDefaultTemplate>
+  <__setOriginalDefaultTemplate>false</__setOriginalDefaultTemplate>
+  <__layoutPrototypeId>0</__layoutPrototypeId>
+  <__originalLayoutPrototypeId>0</__originalLayoutPrototypeId>
+  <__setOriginalLayoutPrototypeId>false</__setOriginalLayoutPrototypeId>
+  <__plid>28</__plid>
+  <__originalPlid>28</__originalPlid>
+  <__setOriginalPlid>false</__setOriginalPlid>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20125</__statusByUserId>
+  <__statusByUserName>test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2020-02-03 05:59:42.466</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</LayoutPageTemplateEntry>

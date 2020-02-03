@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<GroupPagesPortletDataHandler self-path="/group/35880/portlet/com_liferay_layout_admin_web_portlet_GroupPagesPortlet/0/portlet-data.xml" group-id="35880">
+	<LayoutPageTemplateEntry>
+		<staged-model group-id="35880" uuid="0d2c234b-1ff2-08ea-5b1d-6184ae0d18f0" type="3" path="/group/35880/com.liferay.layout.page.template.model.LayoutPageTemplateEntry/36023.xml" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="29" attached-class-name="com.liferay.portal.kernel.model.Layout" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="30b76b22-193f-e00f-bcf6-5118748491ef" company-id="20095" layout-id="4" private-layout="true" missing="false"/>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="28" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="8f97ff90-49f5-b430-093c-139ab6c55cf5" company-id="20095" layout-id="3" private-layout="true" missing="false"/>
+			</references>
+		</staged-model>
+	</LayoutPageTemplateEntry>
+	<Layout>
+		<staged-model group-id="35880" uuid="30b76b22-193f-e00f-bcf6-5118748491ef" layout-uuid="30b76b22-193f-e00f-bcf6-5118748491ef" layout-id="4" layout-parent-layout-id="0" layout-priority="2147483647" action="add" path="/group/35880/com.liferay.portal.kernel.model.Layout/29.xml" attached-class-name="com.liferay.portal.kernel.model.Layout" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.LayoutFriendlyURL" class-pk="36026" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="0ddf40ee-5751-ade5-2877-6b3ec2cd1635" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.fragment.model.FragmentEntryLink" class-pk="36033" attached-class-name="com.liferay.portal.kernel.model.Layout" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="2649395a-81d4-763e-6e73-aeb0db015d0b" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.fragment.model.FragmentEntryLink" class-pk="36037" attached-class-name="com.liferay.portal.kernel.model.Layout" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="300e6615-b956-b56d-99a7-540df0a6e82f" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.layout.page.template.model.LayoutPageTemplateStructure" class-pk="36029" attached-class-name="com.liferay.portal.kernel.model.Layout" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="a0fa23bf-ba85-0056-d709-64ec62ceae7d" company-id="20095" missing="false"/>
+			</references>
+			<portlets>
+				<portlet portlet-id="com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet" layout-id="4" path="/group/35880/portlet/com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet/29/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageToolbarPortlet" layout-id="4" path="/group/35880/portlet/com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageToolbarPortlet/29/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_hhut" layout-id="4" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_hhut/29/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_yfkz" layout-id="4" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_yfkz/29/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_kpzf" layout-id="4" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_kpzf/29/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_vhcq" layout-id="4" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_vhcq/29/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet" layout-id="4" path="/group/35880/portlet/com_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet/29/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_cypc" layout-id="4" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_cypc/29/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_dxnf" layout-id="4" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_dxnf/29/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+			</portlets>
+		</staged-model>
+		<staged-model group-id="35880" uuid="8f97ff90-49f5-b430-093c-139ab6c55cf5" layout-uuid="8f97ff90-49f5-b430-093c-139ab6c55cf5" layout-id="3" layout-parent-layout-id="0" layout-priority="2147483647" action="add" draft-layout-uuid="30b76b22-193f-e00f-bcf6-5118748491ef" draft-layout-id="4" path="/group/35880/com.liferay.portal.kernel.model.Layout/28.xml" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="29" attached-class-name="com.liferay.portal.kernel.model.Layout" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="parent" uuid="30b76b22-193f-e00f-bcf6-5118748491ef" company-id="20095" layout-id="4" private-layout="true" missing="false"/>
+				<reference class-name="com.liferay.portal.kernel.model.LayoutFriendlyURL" class-pk="36024" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="6f7f23cb-f2ba-76e8-60c2-281a3ded06ba" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.fragment.model.FragmentEntryLink" class-pk="36052" attached-class-name="com.liferay.portal.kernel.model.Layout" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="a2d8321d-0952-322a-c649-5ff040e3894f" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.fragment.model.FragmentEntryLink" class-pk="36053" attached-class-name="com.liferay.portal.kernel.model.Layout" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="b77cf889-3f6e-01e6-e9e8-6f75e31e59cc" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.layout.page.template.model.LayoutPageTemplateStructure" class-pk="36050" attached-class-name="com.liferay.portal.kernel.model.Layout" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="a7a5c94c-2cd1-aaee-b4dc-76bdb3990221" company-id="20095" missing="false"/>
+			</references>
+			<portlets>
+				<portlet portlet-id="com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageToolbarPortlet" layout-id="3" path="/group/35880/portlet/com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageToolbarPortlet/28/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet" layout-id="3" path="/group/35880/portlet/com_liferay_product_navigation_product_menu_web_portlet_ProductMenuPortlet/28/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_hhut" layout-id="3" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_hhut/28/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet" layout-id="3" path="/group/35880/portlet/com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet/28/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_dxnf" layout-id="3" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_dxnf/28/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_kpzf" layout-id="3" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_kpzf/28/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_cypc" layout-id="3" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_cypc/28/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_yfkz" layout-id="3" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_yfkz/28/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+				<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_vhcq" layout-id="3" path="/group/35880/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_vhcq/28/portlet.xml" portlet-data="true" schema-version="1.0.0" portlet-configuration="setup,archived-setups,user-preferences"/>
+			</portlets>
+		</staged-model>
+	</Layout>
+	<LayoutFriendlyURL>
+		<staged-model group-id="35880" uuid="0ddf40ee-5751-ade5-2877-6b3ec2cd1635" path="/group/35880/com.liferay.portal.kernel.model.LayoutFriendlyURL/36026.xml" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0"/>
+		<staged-model group-id="35880" uuid="6f7f23cb-f2ba-76e8-60c2-281a3ded06ba" path="/group/35880/com.liferay.portal.kernel.model.LayoutFriendlyURL/36024.xml" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0"/>
+	</LayoutFriendlyURL>
+	<FragmentEntryLink>
+		<staged-model group-id="35880" uuid="2649395a-81d4-763e-6e73-aeb0db015d0b" path="/group/35880/com.liferay.fragment.model.FragmentEntryLink/36033.xml" attached-class-name="com.liferay.portal.kernel.model.Layout" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="29" attached-class-name="com.liferay.portal.kernel.model.Layout" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="30b76b22-193f-e00f-bcf6-5118748491ef" company-id="20095" layout-id="4" private-layout="true" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="35880" uuid="300e6615-b956-b56d-99a7-540df0a6e82f" path="/group/35880/com.liferay.fragment.model.FragmentEntryLink/36037.xml" attached-class-name="com.liferay.portal.kernel.model.Layout" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="29" attached-class-name="com.liferay.portal.kernel.model.Layout" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="30b76b22-193f-e00f-bcf6-5118748491ef" company-id="20095" layout-id="4" private-layout="true" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="35880" uuid="a2d8321d-0952-322a-c649-5ff040e3894f" path="/group/35880/com.liferay.fragment.model.FragmentEntryLink/36052.xml" attached-class-name="com.liferay.portal.kernel.model.Layout" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="28" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="8f97ff90-49f5-b430-093c-139ab6c55cf5" company-id="20095" layout-id="3" private-layout="true" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="35880" uuid="b77cf889-3f6e-01e6-e9e8-6f75e31e59cc" path="/group/35880/com.liferay.fragment.model.FragmentEntryLink/36053.xml" attached-class-name="com.liferay.portal.kernel.model.Layout" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Layout" class-pk="28" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="dependency" uuid="8f97ff90-49f5-b430-093c-139ab6c55cf5" company-id="20095" layout-id="3" private-layout="true" missing="false"/>
+			</references>
+		</staged-model>
+	</FragmentEntryLink>
+	<LayoutPageTemplateStructure>
+		<staged-model uuid="a0fa23bf-ba85-0056-d709-64ec62ceae7d" group-id="35880" path="/company/20095/com.liferay.layout.page.template.model.LayoutPageTemplateStructure/36029.xml" attached-class-name="com.liferay.portal.kernel.model.Layout" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel" class-pk="36030" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="child" uuid="8946ffc1-49e8-a0e4-b42d-9fe933b51bab" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model uuid="a7a5c94c-2cd1-aaee-b4dc-76bdb3990221" group-id="35880" path="/company/20095/com.liferay.layout.page.template.model.LayoutPageTemplateStructure/36050.xml" attached-class-name="com.liferay.portal.kernel.model.Layout" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel" class-pk="36051" group-id="35880" group-key="Test Site Name" live-group-id="35880" type="child" uuid="f6121162-445e-1b26-36af-4cd683a6cec4" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+	</LayoutPageTemplateStructure>
+	<LayoutPageTemplateStructureRel>
+		<staged-model uuid="8946ffc1-49e8-a0e4-b42d-9fe933b51bab" group-id="35880" path="/company/20095/com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel/36030.xml" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0"/>
+		<staged-model uuid="f6121162-445e-1b26-36af-4cd683a6cec4" group-id="35880" path="/company/20095/com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel/36051.xml" user-uuid="c25c5cf2-2faf-13a0-516b-ee530ad26718" asset-entry-priority="0.0"/>
+	</LayoutPageTemplateStructureRel>
+</GroupPagesPortletDataHandler>

@@ -81,6 +81,11 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
+
+					<%
+					row.setCssClass("entry " + row.getCssClass());
+					%>
+
 					<c:if test="<%= itemDescriptor.getUserId() != UserConstants.USER_ID_DEFAULT %>">
 						<liferay-ui:search-container-column-user
 							showDetails="<%= false %>"

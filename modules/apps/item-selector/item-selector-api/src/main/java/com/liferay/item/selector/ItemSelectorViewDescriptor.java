@@ -46,6 +46,10 @@ public interface ItemSelectorViewDescriptor<T> {
 		return true;
 	}
 
+	public default boolean isShowSearch() {
+		return false;
+	}
+
 	public interface ItemDescriptor {
 
 		public String getIcon();

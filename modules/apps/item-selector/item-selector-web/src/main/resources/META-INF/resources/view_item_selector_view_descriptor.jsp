@@ -33,7 +33,7 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 <div class="container-fluid container-fluid-max-xl item-selector lfr-item-viewer" id="<portlet:namespace />entriesContainer">
 	<c:if test="<%= itemSelectorViewDescriptor.isShowBreadcrumb() %>">
 		<liferay-site-navigation:breadcrumb
-			breadcrumbEntries="<%= itemSelectorViewDescriptorRendererDisplayContext.getBreadcrumbEntries(currentURLObj, request, liferayPortletResponse) %>"
+			breadcrumbEntries="<%= itemSelectorViewDescriptorRendererDisplayContext.getBreadcrumbEntries(currentURLObj) %>"
 		/>
 	</c:if>
 

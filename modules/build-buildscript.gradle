@@ -4,6 +4,10 @@ dependencies {
 	classpath group: "de.undercouch", name: "gradle-download-task", version: "3.3.0"
 	classpath group: "gradle.plugin.org.ysb33r.gradle", name: "gradletest", version: "2.0"
 	classpath group: "xalan", name: "xalan", version: "2.7.2"
+
+	if (System.getProperty("gradle.build.scan.server.url")) {
+		classpath group: "com.gradle", name: "gradle-enterprise-gradle-plugin", version: "3.1.1"
+	}
 }
 
 repositories {

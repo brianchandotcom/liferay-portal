@@ -86,9 +86,9 @@ public class DocumentFolderResourceImpl
 			_dlAppService.getFolder(parentDocumentFolderId));
 
 		return _getDocumentFoldersPage(
+			_getDocumentFolderListActions(parentDocumentFolder.getSiteId()),
 			parentDocumentFolder.getSiteId(), flatten, search, filter,
-			parentDocumentFolder.getId(), pagination, sorts,
-			_getDocumentFolderListActions(parentDocumentFolder.getSiteId()));
+			parentDocumentFolder.getId(), pagination, sorts);
 	}
 
 	@Override
@@ -113,8 +113,8 @@ public class DocumentFolderResourceImpl
 		}
 
 		return _getDocumentFoldersPage(
-			siteId, flatten, search, filter, documentFolderId, pagination,
-			sorts, _getSiteListActions(siteId));
+			_getSiteListActions(siteId), siteId, flatten, search, filter,
+			documentFolderId, pagination, sorts);
 	}
 
 	@Override
@@ -264,9 +264,9 @@ public class DocumentFolderResourceImpl
 	}
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(
-			Long siteId, Boolean flatten, String search, Filter filter,
-			Long parentDocumentFolderId, Pagination pagination, Sort[] sorts,
-			Map<String, Map<String, String>> actions)
+			Map<String, Map<String, String>> actions, Long siteId,
+			Boolean flatten, String search, Filter filter,
+			Long parentDocumentFolderId, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

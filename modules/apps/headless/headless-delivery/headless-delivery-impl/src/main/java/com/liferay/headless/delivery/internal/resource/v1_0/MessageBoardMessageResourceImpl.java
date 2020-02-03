@@ -118,8 +118,8 @@ public class MessageBoardMessageResourceImpl
 			parentMessageBoardMessageId);
 
 		return _getMessageBoardMessagesPage(
-			parentMessageBoardMessageId, search, filter, pagination, sorts,
-			flatten, null, _getMessageBoardListActions(mbMessage));
+			_getMessageBoardListActions(mbMessage), parentMessageBoardMessageId,
+			search, filter, pagination, sorts, flatten, null);
 	}
 
 	@Override
@@ -142,8 +142,9 @@ public class MessageBoardMessageResourceImpl
 			messageBoardThreadId);
 
 		return _getMessageBoardMessagesPage(
+			_getMessageBoardThreadListActions(mbThread),
 			mbThread.getRootMessageId(), search, filter, pagination, sorts,
-			false, null, _getMessageBoardThreadListActions(mbThread));
+			false, null);
 	}
 
 	@Override
@@ -153,8 +154,8 @@ public class MessageBoardMessageResourceImpl
 		throws Exception {
 
 		return _getMessageBoardMessagesPage(
-			null, search, filter, pagination, sorts, flatten, siteId,
-			_getSiteListActions(siteId));
+			_getSiteListActions(siteId), null, search, filter, pagination,
+			sorts, flatten, siteId);
 	}
 
 	@Override
@@ -345,9 +346,9 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	private Page<MessageBoardMessage> _getMessageBoardMessagesPage(
+			Map<String, Map<String, String>> actions,
 			Long messageBoardMessageId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts, Boolean flatten, Long siteId,
-			Map<String, Map<String, String>> actions)
+			Pagination pagination, Sort[] sorts, Boolean flatten, Long siteId)
 		throws Exception {
 
 		if (messageBoardMessageId != null) {

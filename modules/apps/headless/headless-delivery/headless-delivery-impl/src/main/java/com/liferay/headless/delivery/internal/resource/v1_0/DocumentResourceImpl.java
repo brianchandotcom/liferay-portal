@@ -107,6 +107,7 @@ public class DocumentResourceImpl
 		Folder folder = _dlAppService.getFolder(documentFolderId);
 
 		return _getDocumentsPage(
+			_getDocumentFolderListActions(folder.getGroupId()),
 			booleanQuery -> {
 				if (documentFolderId != null) {
 					BooleanFilter booleanFilter =
@@ -123,8 +124,7 @@ public class DocumentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			search, filter, pagination, sorts,
-			_getDocumentFolderListActions(folder.getGroupId()));
+			search, filter, pagination, sorts);
 	}
 
 	public Rating getDocumentMyRating(Long documentId) throws Exception {
@@ -149,6 +149,7 @@ public class DocumentResourceImpl
 		throws Exception {
 
 		return _getDocumentsPage(
+			_getSiteListActions(siteId),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -168,7 +169,7 @@ public class DocumentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			search, filter, pagination, sorts, _getSiteListActions(siteId));
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -429,9 +430,9 @@ public class DocumentResourceImpl
 	}
 
 	private Page<Document> _getDocumentsPage(
+			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			String search, Filter filter, Pagination pagination, Sort[] sorts,
-			Map<String, Map<String, String>> actions)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(

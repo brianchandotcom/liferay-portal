@@ -16,6 +16,7 @@ package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryDomainsException;
+import com.liferay.account.exception.AccountEntryNameException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
@@ -114,7 +115,11 @@ public class AccountEntryLocalServiceImpl
 		int nameMaxLength = ModelHintsUtil.getMaxLength(
 			AccountEntry.class.getName(), "name");
 
-		accountEntry.setName(StringUtil.shorten(name, nameMaxLength));
+		name = StringUtil.shorten(name, nameMaxLength);
+
+		_validateName(name);
+
+		accountEntry.setName(name);
 
 		accountEntry.setDescription(description);
 
@@ -397,6 +402,12 @@ public class AccountEntryLocalServiceImpl
 		}
 
 		return ArrayUtil.distinct(domains);
+	}
+
+	private void _validateName(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new AccountEntryNameException();
+		}
 	}
 
 	@Reference

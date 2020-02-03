@@ -1056,6 +1056,41 @@ definition {
 		WorkflowMetrics.validateInstanceDetails(processStatus = "Completed");
 	}
 
+	@description = "LRQA-53659 Automate LPS-86652 [Reports] View all items for a certain process"
+	test ViewReports {
+		property portal.acceptance = "false";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry2 Content",
+			entryTitle = "Blogs Entry2 Title");
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry1 Content",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+
+		AssertTextEquals(
+			key_rowNumber = "1",
+			locator1 = "WorkflowAllItems#METRICS_ALL_ITEMS_TABLE_ROW",
+			value1 = "Blogs Entry: Blogs Entry2 Title");
+
+		AssertTextEquals(
+			key_rowNumber = "2",
+			locator1 = "WorkflowAllItems#METRICS_ALL_ITEMS_TABLE_ROW",
+			value1 = "Blogs Entry: Blogs Entry Title");
+	}
+
 	@description = "LRQA-53640 Automate LPS-100674: [Performance] View SLA breaches of top steps performance"
 	@priority = "5"
 	test ViewSLABreachesOfTopSteps {

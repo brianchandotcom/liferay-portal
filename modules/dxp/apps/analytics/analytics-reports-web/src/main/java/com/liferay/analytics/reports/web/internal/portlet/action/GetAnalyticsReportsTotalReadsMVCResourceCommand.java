@@ -15,16 +15,19 @@
 package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
+import com.liferay.analytics.reports.web.internal.provider.AnalyticsReportDataProvider;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Arques
@@ -45,11 +48,17 @@ public class GetAnalyticsReportsTotalReadsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		long plid = ParamUtil.getLong(resourceRequest, "plid");
+
 		JSONObject jsonObject = JSONUtil.put(
-			"analyticsReportsTotalReads", 9999);
+			"analyticsReportsTotalReads",
+			_analyticsReportDataProvider.getTotalReads(plid));
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);
 	}
+
+	@Reference
+	private AnalyticsReportDataProvider _analyticsReportDataProvider;
 
 }

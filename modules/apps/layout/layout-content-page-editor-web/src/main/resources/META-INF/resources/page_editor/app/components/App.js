@@ -12,7 +12,7 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {useSelector} from '../store/index';
 import DisabledArea from './DisabledArea';
@@ -23,6 +23,17 @@ import Toolbar from './Toolbar';
 
 export default function App() {
 	const masterLayoutData = useSelector(state => state.masterLayoutData);
+	const languageId = useSelector(state => state.languageId);
+
+	useEffect(() => {
+		const languageDirection = Liferay.Language.direction[languageId];
+		const wrapper = document.getElementById('wrapper');
+
+		if (wrapper) {
+			wrapper.dir = languageDirection;
+			wrapper.lang = languageId;
+		}
+	}, [languageId]);
 
 	return (
 		<>

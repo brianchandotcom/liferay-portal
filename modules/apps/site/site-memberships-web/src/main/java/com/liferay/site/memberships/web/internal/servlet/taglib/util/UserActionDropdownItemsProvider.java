@@ -18,7 +18,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -93,6 +97,16 @@ public class UserActionDropdownItemsProvider {
 		assignRolesURL.setParameter(
 			"groupId",
 			String.valueOf(_themeDisplay.getSiteGroupIdOrLiveGroupId()));
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (!group.isSite() &&
+			Objects.equals(group.getType(), GroupConstants.TYPE_DEPOT)) {
+
+			assignRolesURL.setParameter(
+				"roleType", String.valueOf(RoleConstants.TYPE_DEPOT));
+		}
+
 		assignRolesURL.setWindowState(LiferayWindowState.POP_UP);
 
 		PortletURL editUserGroupRoleURL = _renderResponse.createActionURL();

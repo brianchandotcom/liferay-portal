@@ -157,6 +157,12 @@ public class UserRolesDisplayContext {
 			portletURL.setParameter("orderByType", orderByType);
 		}
 
+		int roleType = getRoleType();
+
+		if (roleType > 0) {
+			portletURL.setParameter("roleType", String.valueOf(roleType));
+		}
+
 		return portletURL;
 	}
 
@@ -185,8 +191,8 @@ public class UserRolesDisplayContext {
 
 		List<Role> roles = RoleLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, roleSearch.getOrderByComparator());
+			new Integer[] {getRoleType()}, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			roleSearch.getOrderByComparator());
 
 		roles = UsersAdminUtil.filterGroupRoles(
 			themeDisplay.getPermissionChecker(), getGroupId(), roles);
@@ -203,6 +209,17 @@ public class UserRolesDisplayContext {
 		_roleSearch = roleSearch;
 
 		return _roleSearch;
+	}
+
+	public int getRoleType() {
+		if (_roleType != null) {
+			return _roleType;
+		}
+
+		_roleType = ParamUtil.getInteger(
+			_httpServletRequest, "roleType", RoleConstants.TYPE_SITE);
+
+		return _roleType;
 	}
 
 	public long getUserId() throws PortalException {
@@ -225,5 +242,6 @@ public class UserRolesDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private RoleSearch _roleSearch;
+	private Integer _roleType;
 
 }

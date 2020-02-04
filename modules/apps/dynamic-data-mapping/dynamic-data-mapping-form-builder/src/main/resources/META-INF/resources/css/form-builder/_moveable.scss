@@ -50,6 +50,10 @@ $c: '.ddm-form-builder';
 		z-index: 20;
 	}
 
+	.col.col-empty.lfr-initial-col {
+		padding: 0 24px;
+	}
+
 	.col.col-empty.lfr-initial-col .ddm-target,
 	.dragging {
 		background-color: #f7f8f9;

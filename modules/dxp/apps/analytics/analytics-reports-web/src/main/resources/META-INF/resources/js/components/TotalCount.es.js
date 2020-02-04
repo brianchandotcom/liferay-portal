@@ -10,6 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -25,13 +26,21 @@ function TotalCount({
 	const iconRef = React.useRef();
 	const [showTooltip, setShowTooltip] = React.useState(false);
 	const [value, setValue] = React.useState(null);
+	const isMounted = useIsMounted();
 
 	React.useEffect(() => {
 		dataProvider()
 			.then(value => {
-				setValue(value);
+				if (isMounted()) {
+					setValue(value);
+				}
 			})
-			.catch(() => setValue('-'));
+			.catch(() => {
+				if (isMounted()) {
+					setValue('-');
+				}
+			});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dataProvider]);
 
 	return (
@@ -46,9 +55,9 @@ function TotalCount({
 				>
 					<ClayIcon
 						className="mr-1"
-					small="true"
-					symbol="question-circle"
-				/>
+						small="true"
+						symbol="question-circle"
+					/>
 				</span>
 
 				{showTooltip && (

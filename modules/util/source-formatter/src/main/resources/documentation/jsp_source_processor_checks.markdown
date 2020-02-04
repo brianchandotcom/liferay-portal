@@ -84,9 +84,13 @@ PlusStatementCheck | Miscellaneous | |
 PrimitiveWrapperInstantiationCheck | Miscellaneous | |
 PrincipalExceptionCheck | Miscellaneous | |
 ResourceBundleCheck | Miscellaneous | |
+SemiColonCheck | Miscellaneous | |
 [StaticVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#StaticVariableName) | Miscellaneous | Checks that static, non-final variable names conform to a specified pattern. |
+StringBundlerNamingCheck | Naming Conventions | Checks for consistent naming on variables of type 'StringBundler' |
+StringCastCheck | Miscellaneous | |
 [StringLiteralEqualityCheck](https://checkstyle.sourceforge.io/config_coding.html#StringLiteralEquality) | Miscellaneous | Checks that string literals are not used with == or !=. |
 SubstringCheck | Miscellaneous | |
+TernaryOperatorCheck | Miscellaneous | |
 [TypeNameCheck](https://checkstyle.sourceforge.io/config_naming.html#TypeName) | Miscellaneous | Checks that type names conform to a specified pattern. |
 [UnnecessaryParenthesesCheck](https://checkstyle.sourceforge.io/config_coding.html#UnnecessaryParentheses) | Miscellaneous | Checks if unnecessary parentheses are used in a statement or expression. |
 UnparameterizedClassCheck | Miscellaneous | |

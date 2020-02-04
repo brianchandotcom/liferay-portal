@@ -158,6 +158,7 @@ MethodNamingCheck | Miscellaneous | |
 [MethodParamPadCheck](https://checkstyle.sourceforge.io/config_whitespace.html#MethodParamPad) | Miscellaneous | Checks the padding between the identifier of a method definition, constructor definition, method call, or constructor invocation; and the left parenthesis of the parameter list. |
 MissingAuthorCheck | Miscellaneous | |
 [MissingDeprecatedCheck](https://checkstyle.sourceforge.io/config_annotation.html#MissingDeprecated) | Miscellaneous | Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present. |
+MissingDeprecatedJavadocCheck | Miscellaneous | |
 MissingDiamondOperatorCheck | Miscellaneous | |
 MissingEmptyLineCheck | Miscellaneous | |
 MissingModifierCheck | Miscellaneous | |
@@ -205,6 +206,7 @@ ThreadLocalUtilCheck | Miscellaneous | |
 ThreadNameCheck | Miscellaneous | |
 TransactionalTestRuleCheck | Miscellaneous | |
 [TypeNameCheck](https://checkstyle.sourceforge.io/config_naming.html#TypeName) | Miscellaneous | Checks that type names conform to a specified pattern. |
+UnnecessaryAssignCheck | Miscellaneous | |
 [UnnecessaryParenthesesCheck](https://checkstyle.sourceforge.io/config_coding.html#UnnecessaryParentheses) | Miscellaneous | Checks if unnecessary parentheses are used in a statement or expression. |
 UnparameterizedClassCheck | Miscellaneous | |
 UnprocessedExceptionCheck | Miscellaneous | |

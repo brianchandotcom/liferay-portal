@@ -23,27 +23,26 @@ import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.util.LayoutDataConverter;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
+import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RootLayoutStructureItem;
+import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Rubén Pulido
  */
 public class PageDefinitionConverterUtil {
 
-	public static PageDefinition toPageDefinition(Layout layout)
-		throws JSONException {
-
+	public static PageDefinition toPageDefinition(Layout layout) {
 		return new PageDefinition() {
 			{
 				dateCreated = layout.getCreateDate();
@@ -54,82 +53,76 @@ public class PageDefinitionConverterUtil {
 		};
 	}
 
-	private static ColumnDefinition _toColumnDefinition(
-		JSONObject configJSONObject) {
-
-		return new ColumnDefinition() {
-			{
-				setSize(
-					() -> {
-						if (configJSONObject.isNull("size")) {
-							return null;
-						}
-
-						return configJSONObject.getInt("size");
-					});
-			}
-		};
-	}
-
 	private static PageElement _toPageElement(
-		JSONObject itemsJSONObject, JSONObject jsonObject) {
+		LayoutStructureItem layoutStructureItem) {
 
-		List<PageElement> childrenPageElements = new ArrayList<>();
+		if (layoutStructureItem instanceof ColumnLayoutStructureItem) {
+			ColumnLayoutStructureItem columnLayoutStructureItem =
+				(ColumnLayoutStructureItem)layoutStructureItem;
 
-		JSONArray childrenJSONArray = jsonObject.getJSONArray("children");
-
-		for (int i = 0; i < childrenJSONArray.length(); i++) {
-			String childUUID = childrenJSONArray.getString(i);
-
-			JSONObject childJSONObject = itemsJSONObject.getJSONObject(
-				childUUID);
-
-			JSONArray grandChildrenJSONArray = childJSONObject.getJSONArray(
-				"children");
-
-			if (grandChildrenJSONArray.length() == 0) {
-				childrenPageElements.add(
-					_toPageElement(
-						childJSONObject.getJSONObject("config"),
-						childJSONObject.getString("type")));
-			}
-			else {
-				childrenPageElements.add(
-					_toPageElement(itemsJSONObject, childJSONObject));
-			}
-		}
-
-		PageElement pageElement = _toPageElement(
-			jsonObject.getJSONObject("config"), jsonObject.getString("type"));
-
-		pageElement.setPageElements(
-			childrenPageElements.toArray(new PageElement[0]));
-
-		return pageElement;
-	}
-
-	private static PageElement _toPageElement(
-		JSONObject configJSONObject, String type) {
-
-		if (type.equals("column")) {
 			return new PageElement() {
 				{
-					definition = _toColumnDefinition(configJSONObject);
+					definition = new ColumnDefinition() {
+						{
+							size = columnLayoutStructureItem.getSize();
+						}
+					};
 					type = PageElement.Type.COLUMN;
 				}
 			};
 		}
 
-		if (type.equals("container")) {
+		if (layoutStructureItem instanceof ContainerLayoutStructureItem) {
+			ContainerLayoutStructureItem containerLayoutStructureItem =
+				(ContainerLayoutStructureItem)layoutStructureItem;
+
 			return new PageElement() {
 				{
-					definition = _toSectionDefinition(configJSONObject);
+					definition = new SectionDefinition() {
+						{
+							backgroundColorCssClass = GetterUtil.getString(
+								containerLayoutStructureItem.
+									getBackgroundColorCssClass(),
+								null);
+							paddingBottom =
+								containerLayoutStructureItem.getPaddingBottom();
+							paddingHorizontal =
+								containerLayoutStructureItem.
+									getPaddingHorizontal();
+							paddingTop =
+								containerLayoutStructureItem.getPaddingTop();
+							setBackgroundImage(
+								() -> {
+									String backgroundImageTitle =
+										containerLayoutStructureItem.
+											getBackgroundImageTitle();
+
+									String backgroundImageURL =
+										containerLayoutStructureItem.
+											getBackgroundImageURL();
+
+									if (Validator.isNull(
+											backgroundImageTitle) ||
+										Validator.isNull(backgroundImageURL)) {
+
+										return null;
+									}
+
+									return new FragmentImage() {
+										{
+											title = backgroundImageTitle;
+											url = backgroundImageURL;
+										}
+									};
+								});
+						}
+					};
 					type = PageElement.Type.SECTION;
 				}
 			};
 		}
 
-		if (type.equals("fragment")) {
+		if (layoutStructureItem instanceof RootLayoutStructureItem) {
 			return new PageElement() {
 				{
 					type = PageElement.Type.FRAGMENT;
@@ -137,10 +130,19 @@ public class PageDefinitionConverterUtil {
 			};
 		}
 
-		if (type.equals("row")) {
+		if (layoutStructureItem instanceof RowLayoutStructureItem) {
+			RowLayoutStructureItem rowLayoutStructureItem =
+				(RowLayoutStructureItem)layoutStructureItem;
+
 			return new PageElement() {
 				{
-					definition = _toRowDefinition(configJSONObject);
+					definition = new RowDefinition() {
+						{
+							gutters = rowLayoutStructureItem.isGutters();
+							numberOfColumns =
+								rowLayoutStructureItem.getNumberOfColumns();
+						}
+					};
 					type = PageElement.Type.ROW;
 				}
 			};
@@ -149,9 +151,7 @@ public class PageDefinitionConverterUtil {
 		return null;
 	}
 
-	private static PageElement[] _toPageElements(Layout layout)
-		throws JSONException {
-
+	private static PageElement[] _toPageElements(Layout layout) {
 		List<PageElement> pageElements = new ArrayList<>();
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -163,124 +163,15 @@ public class PageDefinitionConverterUtil {
 		String layoutData = LayoutDataConverter.convert(
 			layoutPageTemplateStructure.getData(0L));
 
-		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
-			layoutData);
+		LayoutStructure layoutStructure = LayoutStructure.of(layoutData);
 
-		JSONObject rootItemsJSONObject = layoutDataJSONObject.getJSONObject(
-			"rootItems");
+		for (LayoutStructureItem layoutStructureItem :
+				layoutStructure.getLayoutStructureItems()) {
 
-		String mainUUID = rootItemsJSONObject.getString("main");
-
-		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
-			"items");
-
-		JSONObject mainJSONObject = itemsJSONObject.getJSONObject(mainUUID);
-
-		JSONArray childrenJSONArray = mainJSONObject.getJSONArray("children");
-
-		for (int i = 0; i < childrenJSONArray.length(); i++) {
-			String childUUID = childrenJSONArray.getString(i);
-
-			pageElements.add(
-				_toPageElement(
-					itemsJSONObject, itemsJSONObject.getJSONObject(childUUID)));
+			pageElements.add(_toPageElement(layoutStructureItem));
 		}
 
 		return pageElements.toArray(new PageElement[0]);
-	}
-
-	private static RowDefinition _toRowDefinition(JSONObject configJSONObject) {
-		return new RowDefinition() {
-			{
-				setGutters(
-					() -> {
-						if (configJSONObject.isNull("gutters")) {
-							return null;
-						}
-
-						return configJSONObject.getBoolean("gutters");
-					});
-				setNumberOfColumns(
-					() -> {
-						if (configJSONObject.isNull("numberOfColumns")) {
-							return null;
-						}
-
-						return configJSONObject.getInt("numberOfColumns");
-					});
-			}
-		};
-	}
-
-	private static SectionDefinition _toSectionDefinition(
-		JSONObject configJSONObject) {
-
-		return new SectionDefinition() {
-			{
-				backgroundColorCssClass = configJSONObject.getString(
-					"backgroundColorCssClass", null);
-				containerType = ContainerType.valueOf(
-					StringUtil.toUpperCase(configJSONObject.getString("type")));
-				setBackgroundImage(
-					() -> {
-						JSONObject backgroundImageJSONObject =
-							configJSONObject.getJSONObject("backgroundImage");
-
-						if ((backgroundImageJSONObject == null) ||
-							(backgroundImageJSONObject.length() == 0)) {
-
-							return null;
-						}
-
-						return new FragmentImage() {
-							{
-								setTitle(
-									_toValueMap(
-										backgroundImageJSONObject, "title"));
-								setUrl(
-									_toValueMap(
-										backgroundImageJSONObject, "url"));
-							}
-						};
-					});
-				setPaddingBottom(
-					() -> {
-						if (configJSONObject.isNull("paddingBottom")) {
-							return null;
-						}
-
-						return configJSONObject.getInt("paddingBottom");
-					});
-				setPaddingHorizontal(
-					() -> {
-						if (configJSONObject.isNull("paddingHorizontal")) {
-							return null;
-						}
-
-						return configJSONObject.getInt("paddingHorizontal");
-					});
-				setPaddingTop(
-					() -> {
-						if (configJSONObject.isNull("paddingTop")) {
-							return null;
-						}
-
-						return configJSONObject.getInt("paddingTop");
-					});
-			}
-		};
-	}
-
-	private static Map<String, String> _toValueMap(
-		JSONObject jsonObject, String name) {
-
-		if (jsonObject == null) {
-			return null;
-		}
-
-		return HashMapBuilder.put(
-			"value", jsonObject.getString(name)
-		).build();
 	}
 
 }

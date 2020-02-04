@@ -26,7 +26,6 @@ const Item = ({
 	workflowInstanceId
 }) => {
 	const {bulkModal, setBulkModal} = useContext(ModalContext);
-
 	const {
 		reassignedTasks,
 		reassigning,

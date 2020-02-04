@@ -12,7 +12,13 @@
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React, {useState, useEffect, useMemo, useContext} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState
+} from 'react';
 
 import {Autocomplete} from '../../../../shared/components/autocomplete/Autocomplete.es';
 import {useFetch} from '../../../../shared/hooks/useFetch.es';
@@ -26,6 +32,12 @@ const AssigneeInput = ({reassignedTasks, setReassignedTasks, taskId}) => {
 		params: {page: -1, pageSize: -1},
 		url: `/workflow-tasks/${taskId}/assignable-users`
 	});
+	const handleSelect = useCallback(
+		value => {
+			setNewAssignee(value);
+		},
+		[setNewAssignee]
+	);
 
 	const tasks = useMemo(() => reassignedTasks.tasks, [reassignedTasks.tasks]);
 
@@ -49,6 +61,11 @@ const AssigneeInput = ({reassignedTasks, setReassignedTasks, taskId}) => {
 				});
 			}
 		}
+		else {
+			setReassignedTasks(() => ({
+				tasks: []
+			}));
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [newAssignee]);
 
@@ -57,7 +74,7 @@ const AssigneeInput = ({reassignedTasks, setReassignedTasks, taskId}) => {
 	return (
 		<Autocomplete
 			items={data.items}
-			onSelect={setNewAssignee}
+			onSelect={handleSelect}
 			promises={promises}
 		/>
 	);

@@ -265,6 +265,9 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 				formInstanceRecordVersion.getFormInstanceRecordVersionId(),
 				companyId);
 
+		_workflowTaskDemoDataCreator.getWorkflowTask(
+			companyId, workflowInstance.getWorkflowInstanceId());
+
 		_workflowInstanceDemoDataCreator.updateCreateDate(
 			workflowInstance.getWorkflowInstanceId(), createDate);
 

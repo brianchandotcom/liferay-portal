@@ -34,6 +34,14 @@ const getFieldIndexes = (pages, fieldName) => {
 	return indexes;
 };
 
+const getFieldRows = ({rows = []}) => {
+	if (typeof rows === 'string') {
+		return JSON.parse(rows);
+	}
+
+	return rows;
+};
+
 const getNestedFieldIndexes = (context, fieldName) => {
 	let indexes = [];
 
@@ -56,7 +64,15 @@ const getNestedFieldIndexes = (context, fieldName) => {
 			field.fieldName !== fieldName &&
 			field.nestedFields
 		) {
-			nestedIndexes = getNestedFieldIndexes([field], fieldName);
+			nestedIndexes = getNestedFieldIndexes(
+				[
+					{
+						...field,
+						rows: getFieldRows(field)
+					}
+				],
+				fieldName
+			);
 
 			if (nestedIndexes.length) {
 				indexes = [
@@ -379,7 +395,12 @@ const withActionableFields = ChildComponent => {
 					columnIndex
 				);
 
-				context = [field];
+				context = [
+					{
+						...field,
+						rows: getFieldRows(field)
+					}
+				];
 			});
 
 			return field;

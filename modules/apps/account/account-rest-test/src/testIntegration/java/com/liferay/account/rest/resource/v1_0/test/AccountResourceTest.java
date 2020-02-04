@@ -20,6 +20,8 @@ import com.liferay.account.rest.client.dto.v1_0.Account;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,17 +41,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	@Override
 	public void tearDown() throws Exception {
-		super.tearDown();
-
-		for (AccountEntry accountEntry : _accountEntries) {
-			AccountEntry curAccountEntry =
-				_accountEntryLocalService.fetchAccountEntry(
-					accountEntry.getAccountEntryId());
-
-			if (curAccountEntry != null) {
-				_accountEntryLocalService.deleteAccountEntry(curAccountEntry);
-			}
-		}
+		_deleteAccountEntries(_accountEntries);
 	}
 
 	@Override
@@ -115,6 +107,19 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		return accountEntry;
 	}
 
+	private void _deleteAccountEntries(List<AccountEntry> accountEntries) {
+		for (AccountEntry accountEntry : accountEntries) {
+			try {
+				_accountEntryLocalService.deleteAccountEntry(accountEntry);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
+		}
+	}
+
 	private Account _toAccount(AccountEntry accountEntry) throws Exception {
 		return new Account() {
 			{
@@ -127,6 +132,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			}
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountResourceTest.class);
 
 	private final List<AccountEntry> _accountEntries = new ArrayList<>();
 

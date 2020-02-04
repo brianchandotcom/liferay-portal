@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DepotAdminMembershipsDisplayContext depotAdminMembershipsDisplayContext = new DepotAdminMembershipsDisplayContext(liferayPortletRequest);
+DepotAdminMembershipsDisplayContext depotAdminMembershipsDisplayContext = new DepotAdminMembershipsDisplayContext(request);
 
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "repositories");
 %>

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
@@ -37,21 +36,20 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Cristina González
  */
 public class DepotAdminMembershipsDisplayContext {
 
 	public DepotAdminMembershipsDisplayContext(
-			LiferayPortletRequest liferayPortletRequest)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		_liferayPortletRequest = liferayPortletRequest;
-
-		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-		_user = PortalUtil.getSelectedUser(
-			_liferayPortletRequest.getHttpServletRequest());
+		_user = PortalUtil.getSelectedUser(httpServletRequest);
 	}
 
 	public List<Group> getDepotGroups(int start, int end)
@@ -129,7 +127,6 @@ public class DepotAdminMembershipsDisplayContext {
 	}
 
 	private List<Group> _depotGroups;
-	private final LiferayPortletRequest _liferayPortletRequest;
 	private final ThemeDisplay _themeDisplay;
 	private final User _user;
 

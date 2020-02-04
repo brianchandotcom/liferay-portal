@@ -51,7 +51,8 @@ public class PageElement {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		COLUMN("Column"), FRAGMENT("Fragment"), ROW("Row"), SECTION("Section");
+		COLUMN("Column"), DROP_ZONE("DropZone"), FRAGMENT("Fragment"),
+		ROOT("Root"), ROW("Row"), SECTION("Section");
 
 		@JsonCreator
 		public static Type create(String value) {

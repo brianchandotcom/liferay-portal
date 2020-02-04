@@ -73,10 +73,25 @@ public interface DB {
 
 	public String getVersionString();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             CounterLocalServiceUtil#increment()}
+	 */
+	@Deprecated
 	public long increment();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             CounterLocalServiceUtil#increment(String)}
+	 */
+	@Deprecated
 	public long increment(String name);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             CounterLocalServiceUtil#increment(String, int)}
+	 */
+	@Deprecated
 	public long increment(String name, int size);
 
 	public boolean isSupportsAlterColumnName();

@@ -258,16 +258,31 @@ public abstract class BaseDB implements DB {
 		return _majorVersion + StringPool.PERIOD + _minorVersion;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             CounterLocalServiceUtil#increment()}
+	 */
+	@Deprecated
 	@Override
 	public long increment() {
 		return CounterLocalServiceUtil.increment();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             CounterLocalServiceUtil#increment(String)}
+	 */
+	@Deprecated
 	@Override
 	public long increment(String name) {
 		return CounterLocalServiceUtil.increment(name);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             CounterLocalServiceUtil#increment(String, int)}
+	 */
+	@Deprecated
 	@Override
 	public long increment(String name, int size) {
 		return CounterLocalServiceUtil.increment(name, size);

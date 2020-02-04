@@ -14,21 +14,25 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutReference;
 import com.liferay.portal.kernel.model.LayoutSoap;
+import com.liferay.portal.kernel.model.LayoutTable;
+import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,15 +44,6 @@ import java.util.List;
 public class LayoutFinderImpl
 	extends LayoutFinderBaseImpl implements LayoutFinder {
 
-	public static final String FIND_BY_NULL_FRIENDLY_URL =
-		LayoutFinder.class.getName() + ".findByNullFriendlyURL";
-
-	public static final String FIND_BY_SCOPE_GROUP =
-		LayoutFinder.class.getName() + ".findByScopeGroup";
-
-	public static final String FIND_BY_C_P_P =
-		LayoutFinder.class.getName() + ".findByC_P_P";
-
 	@Override
 	public List<Layout> findByNullFriendlyURL() {
 		Session session = null;
@@ -56,9 +51,17 @@ public class LayoutFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_NULL_FRIENDLY_URL);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
+				DSLQueryFactoryUtil.select(
+				).from(
+					LayoutTable.INSTANCE
+				).where(
+					LayoutTable.INSTANCE.friendlyURL.eq(
+						""
+					).or(
+						LayoutTable.INSTANCE.friendlyURL.isNull()
+					)
+				));
 
 			sqlQuery.addEntity("Layout", LayoutImpl.class);
 
@@ -74,63 +77,23 @@ public class LayoutFinderImpl
 
 	@Override
 	public List<Layout> findByScopeGroup(long groupId) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_SCOPE_GROUP);
-
-			sql = StringUtil.removeSubstring(
-				sql, "AND (Layout.privateLayout = ?)");
-
-			sql = InlineSQLHelperUtil.replacePermissionCheck(
-				sql, Layout.class.getName(), "Layout.plid", groupId);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity("Layout", LayoutImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			return sqlQuery.list(true);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _findByScopeGroup(
+			LayoutTable.INSTANCE.groupId.eq(
+				groupId
+			).and(
+				InlineSQLHelperUtil.getPermissionWherePredicate(
+					Layout.class, LayoutTable.INSTANCE.plid, groupId)
+			));
 	}
 
 	@Override
 	public List<Layout> findByScopeGroup(long groupId, boolean privateLayout) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_SCOPE_GROUP);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity("Layout", LayoutImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-			queryPos.add(privateLayout);
-
-			return sqlQuery.list(true);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _findByScopeGroup(
+			LayoutTable.INSTANCE.groupId.eq(
+				groupId
+			).and(
+				LayoutTable.INSTANCE.privateLayout.eq(privateLayout)
+			));
 	}
 
 	@Override
@@ -138,28 +101,45 @@ public class LayoutFinderImpl
 		long companyId, String portletId, String preferencesKey,
 		String preferencesValue) {
 
-		String preferences = StringBundler.concat(
-			"%<preference><name>", preferencesKey, "</name><value>",
-			preferencesValue, "</value>%");
-
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_P_P);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					LayoutTable.INSTANCE.plid.as("layoutPlid"),
+					PortletPreferencesTable.INSTANCE.portletId.as(
+						"preferencesPortletId")
+				).from(
+					LayoutTable.INSTANCE
+				).innerJoinON(
+					PortletPreferencesTable.INSTANCE,
+					PortletPreferencesTable.INSTANCE.plid.eq(
+						LayoutTable.INSTANCE.plid)
+				).where(
+					LayoutTable.INSTANCE.companyId.eq(
+						companyId
+					).and(
+						PortletPreferencesTable.INSTANCE.portletId.eq(
+							portletId
+						).or(
+							PortletPreferencesTable.INSTANCE.portletId.like(
+								portletId.concat("_INSTANCE_%"))
+						).withParentheses()
+					).and(
+						DSLFunctionFactoryUtil.castClobText(
+							PortletPreferencesTable.INSTANCE.preferences
+						).like(
+							StringBundler.concat(
+								"%<preference><name>", preferencesKey,
+								"</name><value>", preferencesValue, "</value>%")
+						)
+					)
+				));
 
 			sqlQuery.addScalar("layoutPlid", Type.LONG);
 			sqlQuery.addScalar("preferencesPortletId", Type.STRING);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-			queryPos.add(portletId);
-			queryPos.add(portletId.concat("_INSTANCE_%"));
-			queryPos.add(preferences);
 
 			List<LayoutReference> layoutReferences = new ArrayList<>();
 
@@ -180,6 +160,43 @@ public class LayoutFinderImpl
 			}
 
 			return layoutReferences;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private List<Layout> _findByScopeGroup(Predicate wherePredicate) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
+				DSLQueryFactoryUtil.select(
+				).from(
+					LayoutTable.INSTANCE
+				).innerJoinON(
+					GroupTable.INSTANCE,
+					GroupTable.INSTANCE.companyId.eq(
+						LayoutTable.INSTANCE.companyId
+					).and(
+						GroupTable.INSTANCE.classNameId.eq(
+							PortalUtil.getClassNameId(Layout.class))
+					).and(
+						GroupTable.INSTANCE.classPK.eq(
+							LayoutTable.INSTANCE.plid)
+					)
+				).where(
+					wherePredicate
+				));
+
+			sqlQuery.addEntity("Layout", LayoutImpl.class);
+
+			return sqlQuery.list(true);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

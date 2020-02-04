@@ -12,47 +12,32 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
+package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-public class FragmentLayoutStructureItem extends LayoutStructureItem {
+public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 
-	public FragmentLayoutStructureItem(String parentItemId) {
+	public DropZoneLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
-	}
-
-	public long getFragmentEntryLinkId() {
-		return _fragmentEntryLinkId;
 	}
 
 	@Override
 	public String getItemType() {
-		return LayoutDataItemTypeConstants.TYPE_FRAGMENT;
-	}
-
-	public void setFragmentEntryLinkId(long fragmentEntryLinkId) {
-		_fragmentEntryLinkId = fragmentEntryLinkId;
+		return LayoutDataItemTypeConstants.TYPE_DROP_ZONE;
 	}
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
-		if (itemConfigJSONObject.has("fragmentEntryLinkId")) {
-			setFragmentEntryLinkId(
-				itemConfigJSONObject.getLong("fragmentEntryLinkId"));
-		}
 	}
 
 	@Override
 	protected JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put("fragmentEntryLinkId", _fragmentEntryLinkId);
+		return null;
 	}
-
-	private long _fragmentEntryLinkId;
 
 }

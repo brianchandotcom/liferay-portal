@@ -12,46 +12,33 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
+package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-public class ColumnLayoutStructureItem extends LayoutStructureItem {
+public class RootLayoutStructureItem extends LayoutStructureItem {
 
-	public ColumnLayoutStructureItem(String parentItemId) {
-		super(parentItemId);
+	public RootLayoutStructureItem() {
+		super(StringPool.BLANK);
 	}
 
 	@Override
 	public String getItemType() {
-		return LayoutDataItemTypeConstants.TYPE_COLUMN;
-	}
-
-	public int getSize() {
-		return _size;
-	}
-
-	public void setSize(int size) {
-		_size = size;
+		return LayoutDataItemTypeConstants.TYPE_ROOT;
 	}
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
-		if (itemConfigJSONObject.has("size")) {
-			setSize(itemConfigJSONObject.getInt("size"));
-		}
 	}
 
 	@Override
 	protected JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put("size", _size);
+		return null;
 	}
-
-	private int _size;
 
 }

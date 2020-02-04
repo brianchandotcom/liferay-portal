@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
+package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -21,54 +21,37 @@ import com.liferay.portal.kernel.json.JSONUtil;
 /**
  * @author Eudaldo Alonso
  */
-public class RowLayoutStructureItem extends LayoutStructureItem {
+public class ColumnLayoutStructureItem extends LayoutStructureItem {
 
-	public RowLayoutStructureItem(String parentItemId) {
+	public ColumnLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
 	}
 
 	@Override
 	public String getItemType() {
-		return LayoutDataItemTypeConstants.TYPE_ROW;
+		return LayoutDataItemTypeConstants.TYPE_COLUMN;
 	}
 
-	public int getNumberOfColumns() {
-		return _numberOfColumns;
+	public int getSize() {
+		return _size;
 	}
 
-	public boolean isGutters() {
-		return _gutters;
-	}
-
-	public void setGutters(boolean gutters) {
-		_gutters = gutters;
-	}
-
-	public void setNumberOfColumns(int numberOfColumns) {
-		_numberOfColumns = numberOfColumns;
+	public void setSize(int size) {
+		_size = size;
 	}
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
-		if (itemConfigJSONObject.has("gutters")) {
-			setGutters(itemConfigJSONObject.getBoolean("gutters"));
-		}
-
-		if (itemConfigJSONObject.has("numberOfColumns")) {
-			setNumberOfColumns(itemConfigJSONObject.getInt("numberOfColumns"));
+		if (itemConfigJSONObject.has("size")) {
+			setSize(itemConfigJSONObject.getInt("size"));
 		}
 	}
 
 	@Override
 	protected JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put(
-			"gutters", _gutters
-		).put(
-			"numberOfColumns", _numberOfColumns
-		);
+		return JSONUtil.put("size", _size);
 	}
 
-	private boolean _gutters;
-	private int _numberOfColumns;
+	private int _size;
 
 }

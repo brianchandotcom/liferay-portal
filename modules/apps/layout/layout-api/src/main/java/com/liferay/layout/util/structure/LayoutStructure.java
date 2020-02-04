@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
+package com.liferay.layout.util.structure;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;

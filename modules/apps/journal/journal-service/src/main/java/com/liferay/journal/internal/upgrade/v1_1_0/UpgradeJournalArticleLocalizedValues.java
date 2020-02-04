@@ -14,10 +14,9 @@
 
 package com.liferay.journal.internal.upgrade.v1_1_0;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -52,6 +51,12 @@ import java.util.concurrent.Future;
  * @author Jürgen Kappler
  */
 public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
+
+	public UpgradeJournalArticleLocalizedValues(
+		CounterLocalService counterLocalService) {
+
+		_counterLocalService = counterLocalService;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -175,12 +180,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		).build();
 	}
 
-	private static long _increment() {
-		DB db = DBManagerUtil.getDB();
-
-		return db.increment();
-	}
-
 	private void _log(long articleId, String columnName) {
 		if (!_log.isWarnEnabled()) {
 			return;
@@ -273,6 +272,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeJournalArticleLocalizedValues.class);
 
+	private final CounterLocalService _counterLocalService;
 	private final Map<Long, Locale> _defaultSiteLocales = new HashMap<>();
 
 	private class UpdateDefaultLanguageCallable implements Callable<Boolean> {
@@ -373,7 +373,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 						localizedDescription = safeLocalizedDescription;
 					}
 
-					ps.setLong(1, _increment());
+					ps.setLong(1, _counterLocalService.increment());
 					ps.setLong(2, _companyId);
 					ps.setLong(3, _id);
 					ps.setString(4, localizedTitle);

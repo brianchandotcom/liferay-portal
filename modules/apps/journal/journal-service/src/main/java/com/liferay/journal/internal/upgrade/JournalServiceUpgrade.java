@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
@@ -170,7 +171,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeImageTypeContent(
 				_imageLocalService, _journalArticleImageUpgradeHelper,
 				_portletFileRepository),
-			new UpgradeJournalArticleLocalizedValues());
+			new UpgradeJournalArticleLocalizedValues(_counterLocalService));
 
 		registry.register(
 			"1.1.0", "1.1.1",
@@ -291,6 +292,9 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private CTStoreFactory _ctStoreFactory;

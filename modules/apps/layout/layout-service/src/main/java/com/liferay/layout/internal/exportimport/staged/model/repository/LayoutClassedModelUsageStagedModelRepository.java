@@ -20,6 +20,7 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 
@@ -43,7 +44,20 @@ public class LayoutClassedModelUsageStagedModelRepository
 			LayoutClassedModelUsage layoutClassedModelUsage)
 		throws PortalException {
 
-		return null;
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			layoutClassedModelUsage);
+
+		if (portletDataContext.isDataStrategyMirror()) {
+			serviceContext.setUuid(layoutClassedModelUsage.getUuid());
+		}
+
+		return _layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
+			layoutClassedModelUsage.getGroupId(),
+			layoutClassedModelUsage.getClassNameId(),
+			layoutClassedModelUsage.getClassPK(),
+			layoutClassedModelUsage.getContainerKey(),
+			layoutClassedModelUsage.getContainerType(),
+			layoutClassedModelUsage.getPlid(), serviceContext);
 	}
 
 	@Override
@@ -60,6 +74,12 @@ public class LayoutClassedModelUsageStagedModelRepository
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			fetchStagedModelByUuidAndGroupId(uuid, groupId);
+
+		if (layoutClassedModelUsage != null) {
+			deleteStagedModel(layoutClassedModelUsage);
+		}
 	}
 
 	@Override
@@ -96,18 +116,18 @@ public class LayoutClassedModelUsageStagedModelRepository
 			LayoutClassedModelUsage layoutClassedModelUsage)
 		throws PortalException {
 
-		return
-			_layoutClassedModelUsageLocalService.updateLayoutClassedModelUsage(
-				layoutClassedModelUsage);
+		return _layoutClassedModelUsageLocalService.
+			updateLayoutClassedModelUsage(layoutClassedModelUsage);
 	}
 
 	@Override
 	public LayoutClassedModelUsage updateStagedModel(
 			PortletDataContext portletDataContext,
-			LayoutClassedModelUsage stagedModel)
+			LayoutClassedModelUsage layoutClassedModelUsage)
 		throws PortalException {
 
-		return null;
+		return _layoutClassedModelUsageLocalService.
+			updateLayoutClassedModelUsage(layoutClassedModelUsage);
 	}
 
 	@Reference

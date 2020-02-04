@@ -52,6 +52,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -147,6 +148,30 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 	public Account getAccount(
 			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
 				accountId)
+		throws Exception {
+
+		return new Account();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}' -d $'{"description": ___, "domains": ___, "name": ___, "parentAccountId": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Replaces the account with information sent in the request body. Any missing fields are deleted unless they are required."
+	)
+	@PUT
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
+	@Path("/accounts/{accountId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Account")})
+	public Account putAccount(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			Account account)
 		throws Exception {
 
 		return new Account();

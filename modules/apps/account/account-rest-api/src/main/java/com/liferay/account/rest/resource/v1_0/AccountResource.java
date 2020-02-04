@@ -52,6 +52,8 @@ public interface AccountResource {
 
 	public Account getAccount(Long accountId) throws Exception;
 
+	public Account putAccount(Long accountId, Account account) throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

@@ -580,6 +580,29 @@ public abstract class BaseAccountResourceTestCase {
 			equalsJSONObject(account, dataJSONObject.getJSONObject("account")));
 	}
 
+	@Test
+	public void testPutAccount() throws Exception {
+		Account postAccount = testPutAccount_addAccount();
+
+		Account randomAccount = randomAccount();
+
+		Account putAccount = accountResource.putAccount(
+			postAccount.getId(), randomAccount);
+
+		assertEquals(randomAccount, putAccount);
+		assertValid(putAccount);
+
+		Account getAccount = accountResource.getAccount(putAccount.getId());
+
+		assertEquals(randomAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	protected Account testPutAccount_addAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Account testGraphQLAccount_addAccount() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

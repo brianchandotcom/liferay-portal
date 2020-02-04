@@ -84,19 +84,6 @@ public class UserDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	private List<Group> _getAllGroups() throws PortalException {
-		List<Group> allGroups = new ArrayList<>();
-
-		allGroups.addAll(getGroups());
-		allGroups.addAll(getInheritedSites());
-		allGroups.addAll(
-			GroupLocalServiceUtil.getOrganizationsGroups(getOrganizations()));
-		allGroups.addAll(
-			GroupLocalServiceUtil.getUserGroupsGroups(getUserGroups()));
-
-		return allGroups;
-	}
-
 	public Contact getContact() throws PortalException {
 		if (_selUser != null) {
 			return _selUser.getContact();
@@ -225,22 +212,6 @@ public class UserDisplayContext {
 		return sites;
 	}
 
-	private List<UserGroupRole> _getUserGroupRoles() throws PortalException {
-		List<UserGroupRole> userGroupRoles = Collections.emptyList();
-
-		if (_selUser != null) {
-			userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(
-				_selUser.getUserId());
-
-			if (_initDisplayContext.isFilterManageableUserGroupRoles()) {
-				userGroupRoles = UsersAdminUtil.filterUserGroupRoles(
-					_permissionChecker, userGroupRoles);
-			}
-		}
-
-		return userGroupRoles;
-	}
-
 	public List<UserGroup> getUserGroups() {
 		List<UserGroup> userGroups = Collections.emptyList();
 
@@ -292,6 +263,19 @@ public class UserDisplayContext {
 		};
 	}
 
+	private List<Group> _getAllGroups() throws PortalException {
+		List<Group> allGroups = new ArrayList<>();
+
+		allGroups.addAll(getGroups());
+		allGroups.addAll(getInheritedSites());
+		allGroups.addAll(
+			GroupLocalServiceUtil.getOrganizationsGroups(getOrganizations()));
+		allGroups.addAll(
+			GroupLocalServiceUtil.getUserGroupsGroups(getUserGroups()));
+
+		return allGroups;
+	}
+
 	private List<Group> _getOrganizationRelatedGroups() throws PortalException {
 		List<Group> organizationsRelatedGroups = Collections.emptyList();
 		List<Organization> organizations = getOrganizations();
@@ -303,6 +287,22 @@ public class UserDisplayContext {
 		}
 
 		return organizationsRelatedGroups;
+	}
+
+	private List<UserGroupRole> _getUserGroupRoles() throws PortalException {
+		List<UserGroupRole> userGroupRoles = Collections.emptyList();
+
+		if (_selUser != null) {
+			userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+				_selUser.getUserId());
+
+			if (_initDisplayContext.isFilterManageableUserGroupRoles()) {
+				userGroupRoles = UsersAdminUtil.filterUserGroupRoles(
+					_permissionChecker, userGroupRoles);
+			}
+		}
+
+		return userGroupRoles;
 	}
 
 	private boolean _isOrganizationRole(UserGroupRole userGroupRole) {

@@ -25,9 +25,9 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -122,7 +122,7 @@ public class PageDefinitionConverterUtil {
 			};
 		}
 
-		if (layoutStructureItem instanceof RootLayoutStructureItem) {
+		if (layoutStructureItem instanceof FragmentLayoutStructureItem) {
 			return new PageElement() {
 				{
 					type = PageElement.Type.FRAGMENT;

@@ -115,11 +115,11 @@ public class BatchEngineTaskMethodRegistryImpl
 
 			_batchEngineTaskItemDelegateExecutorCreators.put(
 				itemClass,
-				(expressionConvert, filterParserProvider, parameters,
+				(company, expressionConvert, filterParserProvider, parameters,
 				 sortParserProvider, user) ->
 					new BatchEngineTaskItemDelegateExecutor(
-						expressionConvert, filterParserProvider, parameters,
-						serviceObjects, sortParserProvider, user));
+						company, expressionConvert, filterParserProvider,
+						parameters, serviceObjects, sortParserProvider, user));
 
 			_itemClasses.put(itemClass.getName(), itemClass);
 

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -111,8 +112,9 @@ public class BatchEngineExportTaskExecutorImpl
 
 		_batchEngineTaskItemDelegateExecutorFactory =
 			new BatchEngineTaskItemDelegateExecutorFactory(
-				_batchEngineTaskMethodRegistry, _expressionConvert,
-				_filterParserProvider, _sortParserProvider, _userLocalService);
+				_batchEngineTaskMethodRegistry, _companyLocalService,
+				_expressionConvert, _filterParserProvider, _sortParserProvider,
+				_userLocalService);
 	}
 
 	private void _exportItems(BatchEngineExportTask batchEngineExportTask)
@@ -125,6 +127,7 @@ public class BatchEngineExportTaskExecutorImpl
 				batchEngineTaskItemDelegateExecutor =
 					_batchEngineTaskItemDelegateExecutorFactory.create(
 						batchEngineExportTask.getClassName(),
+						batchEngineExportTask.getCompanyId(),
 						batchEngineExportTask.getParameters(),
 						batchEngineExportTask.getUserId());
 			ZipOutputStream zipOutputStream = _getZipOutputStream(
@@ -226,6 +229,9 @@ public class BatchEngineExportTaskExecutorImpl
 	private BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;
 
 	private int _batchSize;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"

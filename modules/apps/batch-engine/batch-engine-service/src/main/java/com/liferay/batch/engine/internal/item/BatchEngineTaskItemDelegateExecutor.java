@@ -16,6 +16,7 @@ package com.liferay.batch.engine.internal.item;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -28,6 +29,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -38,6 +40,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.framework.ServiceObjects;
@@ -48,12 +51,13 @@ import org.osgi.framework.ServiceObjects;
 public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 
 	public BatchEngineTaskItemDelegateExecutor(
-		ExpressionConvert<Filter> expressionConvert,
+		Company company, ExpressionConvert<Filter> expressionConvert,
 		FilterParserProvider filterParserProvider,
 		Map<String, Serializable> parameters,
 		ServiceObjects<BatchEngineTaskItemDelegate<Object>> serviceObjects,
 		SortParserProvider sortParserProvider, User user) {
 
+		_company = company;
 		_expressionConvert = expressionConvert;
 		_filterParserProvider = filterParserProvider;
 		_parameters = parameters;
@@ -70,9 +74,11 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 	}
 
 	public Page<?> getItems(int page, int pageSize) throws Exception {
+		_setContextFields(_batchEngineTaskItemDelegate);
+
 		return _batchEngineTaskItemDelegate.read(
 			_getFilter(), Pagination.of(page, pageSize), _getSorts(),
-			_getFilteredParameters(), (String)_parameters.get("search"), _user);
+			_getFilteredParameters(), (String)_parameters.get("search"));
 	}
 
 	public void saveItems(
@@ -80,14 +86,16 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 			Collection<Object> items)
 		throws Exception {
 
+		_setContextFields(_batchEngineTaskItemDelegate);
+
 		if (batchEngineTaskOperation == BatchEngineTaskOperation.CREATE) {
-			_batchEngineTaskItemDelegate.create(items, _parameters, _user);
+			_batchEngineTaskItemDelegate.create(items, _parameters);
 		}
 		else if (batchEngineTaskOperation == BatchEngineTaskOperation.DELETE) {
-			_batchEngineTaskItemDelegate.delete(items, _parameters, _user);
+			_batchEngineTaskItemDelegate.delete(items, _parameters);
 		}
 		else {
-			_batchEngineTaskItemDelegate.update(items, _parameters, _user);
+			_batchEngineTaskItemDelegate.update(items, _parameters);
 		}
 	}
 
@@ -167,6 +175,32 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 		return sorts;
 	}
 
+	private void _setContextFields(
+		BatchEngineTaskItemDelegate<Object> batchEngineTaskItemDelegate) {
+
+		batchEngineTaskItemDelegate.setContextAcceptLanguage(
+			new AcceptLanguage() {
+
+				@Override
+				public List<Locale> getLocales() {
+					return null;
+				}
+
+				@Override
+				public String getPreferredLanguageId() {
+					return _user.getLanguageId();
+				}
+
+				@Override
+				public Locale getPreferredLocale() {
+					return LocaleUtil.fromLanguageId(_user.getLanguageId());
+				}
+
+			});
+		batchEngineTaskItemDelegate.setContextCompany(_company);
+		batchEngineTaskItemDelegate.setContextUser(_user);
+	}
+
 	private Map<String, List<String>> _toMultivaluedMap(
 		Map<String, Serializable> parameterMap) {
 
@@ -181,6 +215,7 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 
 	private final BatchEngineTaskItemDelegate<Object>
 		_batchEngineTaskItemDelegate;
+	private final Company _company;
 	private final ExpressionConvert<Filter> _expressionConvert;
 	private final FilterParserProvider _filterParserProvider;
 	private final Map<String, Serializable> _parameters;

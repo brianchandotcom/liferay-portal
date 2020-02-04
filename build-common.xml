@@ -1457,13 +1457,31 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 						</then>
 					</if>
 
-					<exec executable="ant" failonerror="true">
-						<arg value="deploy" />
-					</exec>
+					<if>
+						<os family="windows" />
+						<then>
+							<exec executable="cmd" failonerror="true">
+								<arg value="/c" />
+								<arg value="ant.bat" />
+								<arg value="deploy" />
+							</exec>
 
-					<exec executable="ant" failonerror="true">
-						<arg value="install-portal-snapshot" />
-					</exec>
+							<exec executable="cmd" failonerror="true">
+								<arg value="/c" />
+								<arg value="ant.bat" />
+								<arg value="install-portal-snapshot" />
+							</exec>
+						</then>
+						<else>
+							<exec executable="ant" failonerror="true">
+								<arg value="deploy" />
+							</exec>
+
+							<exec executable="ant" failonerror="true">
+								<arg value="install-portal-snapshot" />
+							</exec>
+						</else>
+					</if>
 
 					<propertyfile file="../.gradle/gradle.properties">
 						<entry key="com.liferay.${processed.artifact.name}.version" value="${artifact.version}${snapshot.version.suffix}" />

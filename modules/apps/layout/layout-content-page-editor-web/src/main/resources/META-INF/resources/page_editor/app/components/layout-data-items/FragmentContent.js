@@ -37,6 +37,7 @@ import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 import {
+	useEditableIsTranslated,
 	useSelectItem,
 	useHoverItem,
 	useIsActive,
@@ -130,6 +131,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const dispatch = useDispatch();
 	const hoverItem = useHoverItem();
 	const activeItemId = useActiveItemId();
+	const editableIsTranslated = useEditableIsTranslated();
 	const isActive = useIsActive();
 	const isMounted = useIsMounted();
 	const selectItem = useSelectItem();
@@ -372,9 +374,21 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		return (
 			!editing &&
 			(isActive(itemId) ||
-				editablesIds.some(editableId =>
-					isActive(getEditableUniqueId(editableId))
-				))
+				editablesIds.some(editableId => {
+					const editableValue = selectEditableValue(
+						state,
+						fragmentEntryLinkId,
+						editableId,
+						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+					);
+
+					return (
+						isActive(getEditableUniqueId(editableId)) ||
+						editableIsMappedToInfoItem(editableValue) ||
+						editableValue.mappedField ||
+						editableIsTranslated(editableValue)
+					);
+				}))
 		);
 	};
 

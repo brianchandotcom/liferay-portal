@@ -20,6 +20,7 @@ import React, {useContext, useRef, useMemo} from 'react';
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
+import selectShowLayoutItemRemoveButton from '../selectors/selectShowLayoutItemRemoveButton';
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
@@ -91,10 +92,12 @@ export default function Topper({
 			)
 	});
 
-	const showDeleteButton = useMemo(() => isRemovable(item, layoutData), [
+	const itemIsRemovable = useMemo(() => isRemovable(item, layoutData), [
 		item,
 		layoutData
 	]);
+	const showRemoveButton =
+		useSelector(selectShowLayoutItemRemoveButton) && itemIsRemovable;
 
 	const childrenElement = children({canDrop, isOver});
 
@@ -230,7 +233,7 @@ export default function Topper({
 							</ClayButton>
 						</TopperListItem>
 					)}
-					{showDeleteButton && (
+					{showRemoveButton && (
 						<TopperListItem>
 							<ClayButton
 								displayType="unstyled"

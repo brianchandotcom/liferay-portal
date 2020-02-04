@@ -48,22 +48,22 @@ import javax.servlet.http.HttpServletRequest;
 public class WikiAttachmentItemSelectorViewDisplayContext {
 
 	public WikiAttachmentItemSelectorViewDisplayContext(
-		HttpServletRequest httpServletRequest,
-		WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion,
-		WikiAttachmentItemSelectorView wikiAttachmentItemSelectorView,
+		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler,
-		String itemSelectedEventName, boolean search, PortletURL portletURL) {
+		PortletURL portletURL, boolean search,
+		WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion,
+		WikiAttachmentItemSelectorView wikiAttachmentItemSelectorView) {
 
 		_httpServletRequest = httpServletRequest;
+		_itemSelectedEventName = itemSelectedEventName;
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
+		_portletURL = portletURL;
+		_search = search;
 		_wikiAttachmentItemSelectorCriterion =
 			wikiAttachmentItemSelectorCriterion;
 		_wikiAttachmentItemSelectorView = wikiAttachmentItemSelectorView;
-		_itemSelectorReturnTypeResolverHandler =
-			itemSelectorReturnTypeResolverHandler;
-		_itemSelectedEventName = itemSelectedEventName;
-		_search = search;
-		_portletURL = portletURL;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);

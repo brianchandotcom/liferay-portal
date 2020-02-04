@@ -46,21 +46,21 @@ import javax.servlet.http.HttpServletRequest;
 public class KBAttachmentItemSelectorViewDisplayContext {
 
 	public KBAttachmentItemSelectorViewDisplayContext(
-		HttpServletRequest httpServletRequest,
-		KBAttachmentItemSelectorCriterion kbAttachmentItemSelectorCriterion,
-		KBAttachmentItemSelectorView kbAttachmentItemSelectorView,
+		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler,
-		String itemSelectedEventName, boolean search, PortletURL portletURL) {
+		KBAttachmentItemSelectorCriterion kbAttachmentItemSelectorCriterion,
+		KBAttachmentItemSelectorView kbAttachmentItemSelectorView,
+		PortletURL portletURL, boolean search) {
 
 		_httpServletRequest = httpServletRequest;
-		_kbAttachmentItemSelectorCriterion = kbAttachmentItemSelectorCriterion;
-		_kbAttachmentItemSelectorView = kbAttachmentItemSelectorView;
+		_itemSelectedEventName = itemSelectedEventName;
 		_itemSelectorReturnTypeResolverHandler =
 			itemSelectorReturnTypeResolverHandler;
-		_itemSelectedEventName = itemSelectedEventName;
-		_search = search;
+		_kbAttachmentItemSelectorCriterion = kbAttachmentItemSelectorCriterion;
+		_kbAttachmentItemSelectorView = kbAttachmentItemSelectorView;
 		_portletURL = portletURL;
+		_search = search;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);

@@ -90,11 +90,9 @@ public class BlogsItemSelectorView
 		BlogsItemSelectorViewDisplayContext
 			blogsItemSelectorViewDisplayContext =
 				new BlogsItemSelectorViewDisplayContext(
-					(HttpServletRequest)servletRequest,
-					blogsItemSelectorCriterion, this,
-					_itemSelectorReturnTypeResolverHandler,
-					itemSelectedEventName, search, portletURL,
-					_blogsEntryLocalService);
+					_blogsEntryLocalService, blogsItemSelectorCriterion, this,
+					(HttpServletRequest)servletRequest, itemSelectedEventName,
+					_itemSelectorReturnTypeResolverHandler, portletURL, search);
 
 		servletRequest.setAttribute(
 			BlogsItemSelectorWebKeys.BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,

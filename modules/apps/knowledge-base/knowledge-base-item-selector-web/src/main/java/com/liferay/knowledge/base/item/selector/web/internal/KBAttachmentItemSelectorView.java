@@ -92,10 +92,10 @@ public class KBAttachmentItemSelectorView
 		KBAttachmentItemSelectorViewDisplayContext
 			kbAttachmentItemSelectorViewDisplayContext =
 				new KBAttachmentItemSelectorViewDisplayContext(
-					(HttpServletRequest)servletRequest,
-					kbAttachmentItemSelectorCriterion, this,
+					(HttpServletRequest)servletRequest, itemSelectedEventName,
 					_itemSelectorReturnTypeResolverHandler,
-					itemSelectedEventName, search, portletURL);
+					kbAttachmentItemSelectorCriterion, this, portletURL,
+					search);
 
 		servletRequest.setAttribute(
 			KBItemSelectorWebKeys.

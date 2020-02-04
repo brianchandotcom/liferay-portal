@@ -91,10 +91,9 @@ public class WikiAttachmentItemSelectorView
 		WikiAttachmentItemSelectorViewDisplayContext
 			wikiAttachmentItemSelectorViewDisplayContext =
 				new WikiAttachmentItemSelectorViewDisplayContext(
-					(HttpServletRequest)servletRequest,
-					wikiAttachmentItemSelectorCriterion, this,
-					_itemSelectorReturnTypeResolverHandler,
-					itemSelectedEventName, search, portletURL);
+					(HttpServletRequest)servletRequest, itemSelectedEventName,
+					_itemSelectorReturnTypeResolverHandler, portletURL, search,
+					wikiAttachmentItemSelectorCriterion, this);
 
 		servletRequest.setAttribute(
 			WikiItemSelectorWebKeys.

@@ -47,23 +47,23 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogsItemSelectorViewDisplayContext {
 
 	public BlogsItemSelectorViewDisplayContext(
-		HttpServletRequest httpServletRequest,
+		BlogsEntryLocalService blogsEntryLocalService,
 		BlogsItemSelectorCriterion blogsItemSelectorCriterion,
 		BlogsItemSelectorView blogsItemSelectorView,
+		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler,
-		String itemSelectedEventName, boolean search, PortletURL portletURL,
-		BlogsEntryLocalService blogsEntryLocalService) {
+		PortletURL portletURL, boolean search) {
 
-		_httpServletRequest = httpServletRequest;
+		_blogsEntryLocalService = blogsEntryLocalService;
 		_blogsItemSelectorCriterion = blogsItemSelectorCriterion;
 		_blogsItemSelectorView = blogsItemSelectorView;
+		_httpServletRequest = httpServletRequest;
+		_itemSelectedEventName = itemSelectedEventName;
 		_itemSelectorReturnTypeResolverHandler =
 			itemSelectorReturnTypeResolverHandler;
-		_itemSelectedEventName = itemSelectedEventName;
-		_search = search;
 		_portletURL = portletURL;
-		_blogsEntryLocalService = blogsEntryLocalService;
+		_search = search;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);
@@ -71,10 +71,6 @@ public class BlogsItemSelectorViewDisplayContext {
 
 	public Folder fetchAttachmentsFolder(long userId, long groupId) {
 		return _blogsEntryLocalService.fetchAttachmentsFolder(userId, groupId);
-	}
-
-	public BlogsItemSelectorCriterion getBlogsItemSelectorCriterion() {
-		return _blogsItemSelectorCriterion;
 	}
 
 	public String[] getImageExtensions() throws ConfigurationException {

@@ -837,6 +837,7 @@ information.
 						<arg value="--stacktrace" />
 						<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 						<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
+						<arg if:set="env.JENKINS_HOME" value="-Dgradle.build.scan.enabled=true" />
 						<arg value="-Dliferay.home=${liferay.home}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
@@ -949,6 +950,7 @@ information.
 								<arg value="--stacktrace" />
 								<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 								<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
+								<arg if:set="env.JENKINS_HOME" value="-Dgradle.build.scan.enabled=true" />
 								<arg value="-Dliferay.home=${liferay.home}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
@@ -985,6 +987,7 @@ information.
 									<arg value="--stacktrace" />
 									<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 									<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
+									<arg if:set="env.JENKINS_HOME" value="-Dgradle.build.scan.enabled=true" />
 									<arg value="-Dliferay.home=${liferay.home}" />
 									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />

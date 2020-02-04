@@ -14,14 +14,22 @@
 
 package com.liferay.layout.internal.exportimport.data.handler;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.Map;
 
@@ -75,6 +83,28 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 
 		Element element = portletDataContext.getExportDataElement(
 			layoutClassedModelUsage);
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				layoutClassedModelUsage.getClassName());
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			(assetRendererFactory != null) &&
+			stagingGroupHelper.isStagedPortlet(
+				portletDataContext.getScopeGroupId(),
+				assetRendererFactory.getPortletId())) {
+
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+				layoutClassedModelUsage.getClassPK());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layoutClassedModelUsage,
+				(StagedModel)assetRenderer.getAssetObject(),
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
 
 		portletDataContext.addClassedModel(
 			element, ExportImportPathUtil.getModelPath(layoutClassedModelUsage),

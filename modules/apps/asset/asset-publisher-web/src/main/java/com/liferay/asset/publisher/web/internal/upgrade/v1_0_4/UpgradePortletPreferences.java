@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.internal.upgrade.v1_1_0;
+package com.liferay.asset.publisher.web.internal.upgrade.v1_0_4;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.petra.string.StringPool;

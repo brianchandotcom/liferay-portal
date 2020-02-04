@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.internal.upgrade.v1_2_0;
+package com.liferay.asset.publisher.web.internal.upgrade.v1_0_3;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;

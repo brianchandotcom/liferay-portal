@@ -14,13 +14,13 @@
 
 import '../FieldBase/FieldBase.es';
 
-import './LocalizableTextRegister.soy.js';
+import './LocalizableTextRegister.soy';
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import templates from './LocalizableText.soy.js';
+import templates from './LocalizableText.soy';
 
 class LocalizableText extends Component {
 	dispatchEvent(event, name, value) {
@@ -32,9 +32,9 @@ class LocalizableText extends Component {
 	}
 
 	prepareStateForRender(state) {
+		const {value} = state;
 		return {
 			...state,
-			_value: this.getEditingValue(),
 			availableLocales: state.availableLocales.map(availableLocale => {
 				return {
 					...availableLocale,
@@ -44,16 +44,39 @@ class LocalizableText extends Component {
 					isDefault: this._isDefaultLocale(availableLocale.localeId),
 					isTranslated: this._isTranslated(availableLocale.localeId)
 				};
-			})
+			}),
+			value: this._convertValueToString(value)
 		};
 	}
 
 	getEditingValue() {
 		const {defaultLocale, editingLocale, value} = this;
+		const valueJSON = this._convertValueToJSON(value);
 
 		return (
-			value[editingLocale.localeId] || value[defaultLocale.localeId] || ''
+			valueJSON[editingLocale.localeId] ||
+			valueJSON[defaultLocale.localeId] ||
+			''
 		);
+	}
+
+	_convertValueToJSON(value) {
+		if (value && typeof value === 'string') {
+			try {
+				return JSON.parse(value);
+			} catch (e) {
+				console.warn('Unable to parse JSON', value);
+			}
+		}
+
+		return value;
+	}
+
+	_convertValueToString(value) {
+		if (value && typeof value === 'object') {
+			return JSON.stringify(value);
+		}
+		return value;
 	}
 
 	_handleFieldBlurred(event) {
@@ -63,14 +86,16 @@ class LocalizableText extends Component {
 	_handleFieldChanged(event) {
 		const {editingLocale, value} = this;
 		const {target} = event;
+		const valueJSON = this._convertValueToJSON(value);
 
-		const newValue = {
-			...value,
+		const newValue = JSON.stringify({
+			...valueJSON,
 			[editingLocale.localeId]: target.value
-		};
+		});
 
 		this.setState(
 			{
+				_value: target.value,
 				value: newValue
 			},
 			() => this.dispatchEvent(event, 'fieldEdited', newValue)
@@ -94,12 +119,17 @@ class LocalizableText extends Component {
 				icon: editingLocale.localeId.replace('_', '-').toLowerCase()
 			}
 		});
+
+		this.setState({
+			_value: this.getEditingValue()
+		});
 	}
 
 	_internalValueFn() {
 		const {editingLocale, value} = this;
+		const valueJSON = this._convertValueToJSON(value);
 
-		return value[editingLocale.localeId] || '';
+		return valueJSON[editingLocale.localeId] || '';
 	}
 
 	_isDefaultLocale(localeId) {
@@ -110,8 +140,9 @@ class LocalizableText extends Component {
 
 	_isTranslated(localeId) {
 		const {value} = this;
+		const valueJSON = this._convertValueToJSON(value);
 
-		return !!value[localeId];
+		return !!valueJSON[localeId];
 	}
 }
 
@@ -126,6 +157,15 @@ LocalizableText.STATE = {
 	_value: Config.string()
 		.internal()
 		.valueFn('_internalValueFn'),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LocalizableText
+	 * @type {?(array|undefined)}
+	 */
+
+	availableLocales: Config.array().value([]),
 
 	/**
 	 * @default 'string'
@@ -176,6 +216,10 @@ LocalizableText.STATE = {
 	editingLocale: Config.object()
 		.internal()
 		.value({
+			icon: themeDisplay
+				.getDefaultLanguageId()
+				.replace('_', '-')
+				.toLowerCase(),
 			localeId: themeDisplay.getDefaultLanguageId()
 		}),
 
@@ -321,7 +365,7 @@ LocalizableText.STATE = {
 	 * @type {?(string|undefined)}
 	 */
 
-	value: Config.object().value({})
+	value: Config.oneOfType([Config.object(), Config.string()]).value({})
 };
 
 Soy.register(LocalizableText, templates);

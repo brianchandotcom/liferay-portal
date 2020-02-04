@@ -536,6 +536,17 @@ body .ddm-user-view-content {
 	}
 }
 
+.liferay-ddm-form-field-localizable-text {
+	.custom-dropdown-menu {
+		max-width: 340px !important;
+		width: 100% !important;
+	}
+
+	.custom-dropdown-item-row {
+		display: flex;
+	}
+}
+
 .ddm-tooltip {
 	color: #a7a9bc;
 	display: inline-block;

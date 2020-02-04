@@ -2093,7 +2093,11 @@ definition {
 	@description = "Reuse my object's existing fields when creating a new form view"
 	@priority = "5"
 	test ReuseExistingFormViewFields {
-		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
 		FormViewBuilder.setFieldLabel(fieldLabel = "Full name");

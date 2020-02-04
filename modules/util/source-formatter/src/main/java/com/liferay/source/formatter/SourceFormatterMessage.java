@@ -34,12 +34,13 @@ public class SourceFormatterMessage
 
 	public SourceFormatterMessage(
 		String fileName, String message, CheckType checkType, String checkName,
-		String markdownFileName, int lineNumber) {
+		String checkSuperclassName, String markdownFileName, int lineNumber) {
 
 		_fileName = fileName;
 		_message = message;
 		_checkType = checkType;
 		_checkName = checkName;
+		_checkSuperclassName = checkSuperclassName;
 		_markdownFileName = markdownFileName;
 		_lineNumber = lineNumber;
 	}
@@ -54,7 +55,7 @@ public class SourceFormatterMessage
 		String fileName, String message, String markdownFileName,
 		int lineNumber) {
 
-		this(fileName, message, null, null, markdownFileName, lineNumber);
+		this(fileName, message, null, null, null, markdownFileName, lineNumber);
 	}
 
 	@Override
@@ -91,19 +92,13 @@ public class SourceFormatterMessage
 			return _OLD_DOCUMENTATION_URL + _markdownFileName;
 		}
 
-		String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
-			_checkName);
+		String markdownFilePath = _getMarkdownFilePath(_checkName);
 
-		ClassLoader classLoader = SourceFormatterMessage.class.getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"documentation/checks/" + markdownFileName);
-
-		if (inputStream != null) {
-			return _DOCUMENTATION_URL + markdownFileName;
+		if (markdownFilePath != null) {
+			return markdownFilePath;
 		}
 
-		return null;
+		return _getMarkdownFilePath(_checkSuperclassName);
 	}
 
 	public String getMessage() {
@@ -147,6 +142,22 @@ public class SourceFormatterMessage
 		return sb.toString();
 	}
 
+	private String _getMarkdownFilePath(String checkName) {
+		String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
+			checkName);
+
+		ClassLoader classLoader = SourceFormatterMessage.class.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"documentation/checks/" + markdownFileName);
+
+		if (inputStream != null) {
+			return _DOCUMENTATION_URL + markdownFileName;
+		}
+
+		return null;
+	}
+
 	private static final String _DOCUMENTATION_URL =
 		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
 			"/source-formatter/src/main/resources/documentation/checks/";
@@ -156,6 +167,7 @@ public class SourceFormatterMessage
 			"/source-formatter/documentation/";
 
 	private final String _checkName;
+	private final String _checkSuperclassName;
 	private final CheckType _checkType;
 	private final String _fileName;
 	private final int _lineNumber;

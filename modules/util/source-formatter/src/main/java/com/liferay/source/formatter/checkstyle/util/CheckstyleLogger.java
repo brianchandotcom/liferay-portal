@@ -60,7 +60,7 @@ public class CheckstyleLogger extends DefaultLogger {
 		_sourceFormatterMessages.add(
 			new SourceFormatterMessage(
 				fileName, auditEvent.getMessage(), CheckType.CHECKSTYLE,
-				checkName, null, auditEvent.getLine()));
+				checkName, null, null, auditEvent.getLine()));
 
 		super.addError(auditEvent);
 	}

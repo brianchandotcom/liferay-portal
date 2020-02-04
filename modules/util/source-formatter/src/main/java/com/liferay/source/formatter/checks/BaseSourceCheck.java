@@ -173,10 +173,13 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		Class<?> clazz = getClass();
 
+		Class<?> superClass = clazz.getSuperclass();
+
 		sourceFormatterMessages.add(
 			new SourceFormatterMessage(
 				fileName, message, CheckType.SOURCE_CHECK,
-				clazz.getSimpleName(), markdownFileName, lineNumber));
+				clazz.getSimpleName(), superClass.getSimpleName(),
+				markdownFileName, lineNumber));
 
 		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}

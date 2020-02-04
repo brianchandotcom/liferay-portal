@@ -110,7 +110,7 @@ public class UpgradeCTModel extends UpgradeProcess {
 			runSQL(
 				StringBundler.concat(
 					"alter table ", normalizedTableName,
-					" add changeType BOOLEAN default null"));
+					" add ctChangeType BOOLEAN default null"));
 		}
 
 		DB db = DBManagerUtil.getDB();

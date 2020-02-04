@@ -34,11 +34,23 @@ public class ParametersUtil {
 
 		Map<String, Serializable> parameters = new HashMap<>();
 
-		MultivaluedMap<String, String> queryParameters =
-			contextUriInfo.getQueryParameters();
+		parameters.putAll(
+			_toMap(ignoredParameters, contextUriInfo.getPathParameters()));
+
+		parameters.putAll(
+			_toMap(ignoredParameters, contextUriInfo.getQueryParameters()));
+
+		return parameters;
+	}
+
+	private static Map<String, Serializable> _toMap(
+		Set<String> ignoredParameters,
+		MultivaluedMap<String, String> uriInfoParameters) {
+
+		Map<String, Serializable> parameters = new HashMap<>();
 
 		for (Map.Entry<String, List<String>> entry :
-				queryParameters.entrySet()) {
+				uriInfoParameters.entrySet()) {
 
 			String key = entry.getKey();
 

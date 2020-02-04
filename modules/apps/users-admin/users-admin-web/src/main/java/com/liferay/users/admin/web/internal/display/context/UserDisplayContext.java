@@ -84,7 +84,7 @@ public class UserDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	public List<Group> getAllGroups() throws PortalException {
+	private List<Group> _getAllGroups() throws PortalException {
 		List<Group> allGroups = new ArrayList<>();
 
 		allGroups.addAll(getGroups());
@@ -143,7 +143,7 @@ public class UserDisplayContext {
 	}
 
 	public List<UserGroupRole> getOrganizationRoles() throws PortalException {
-		return ListUtil.filter(getUserGroupRoles(), this::_isOrganizationRole);
+		return ListUtil.filter(_getUserGroupRoles(), this::_isOrganizationRole);
 	}
 
 	public List<Organization> getOrganizations() throws PortalException {
@@ -184,7 +184,7 @@ public class UserDisplayContext {
 
 	public List<Group> getRoleGroups() throws PortalException {
 		return ListUtil.filter(
-			getAllGroups(),
+			_getAllGroups(),
 			group -> RoleLocalServiceUtil.hasGroupRoles(group.getGroupId()));
 	}
 
@@ -207,7 +207,7 @@ public class UserDisplayContext {
 	}
 
 	public List<UserGroupRole> getSiteRoles() throws PortalException {
-		return ListUtil.filter(getUserGroupRoles(), this::_isSiteRole);
+		return ListUtil.filter(_getUserGroupRoles(), this::_isSiteRole);
 	}
 
 	public List<Group> getSites() throws PortalException {
@@ -225,7 +225,7 @@ public class UserDisplayContext {
 		return sites;
 	}
 
-	public List<UserGroupRole> getUserGroupRoles() throws PortalException {
+	private List<UserGroupRole> _getUserGroupRoles() throws PortalException {
 		List<UserGroupRole> userGroupRoles = Collections.emptyList();
 
 		if (_selUser != null) {

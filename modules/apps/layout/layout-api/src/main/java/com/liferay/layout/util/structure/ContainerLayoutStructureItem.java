@@ -31,8 +31,12 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		return _backgroundColorCssClass;
 	}
 
-	public String getBackgroundImage() {
-		return _backgroundImage;
+	public String getBackgroundImageTitle() {
+		return _backgroundImageTitle;
+	}
+
+	public String getBackgroundImageURL() {
+		return _backgroundImageURL;
 	}
 
 	public String getContainerType() {
@@ -60,8 +64,12 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		_backgroundColorCssClass = backgroundColorCssClass;
 	}
 
-	public void setBackgroundImage(String backgroundImage) {
-		_backgroundImage = backgroundImage;
+	public void setBackgroundImageTitle(String backgroundImageTitle) {
+		_backgroundImageTitle = backgroundImageTitle;
+	}
+
+	public void setBackgroundImageURL(String backgroundImageURL) {
+		_backgroundImageURL = backgroundImageURL;
 	}
 
 	public void setContainerType(String containerType) {
@@ -88,8 +96,12 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		}
 
 		if (itemConfigJSONObject.has("backgroundImage")) {
-			setBackgroundImage(
-				itemConfigJSONObject.getString("backgroundImage"));
+			JSONObject backgroundImageJSONObject =
+				itemConfigJSONObject.getJSONObject("backgroundImage");
+
+			setBackgroundImageTitle(
+				backgroundImageJSONObject.getString("title"));
+			setBackgroundImageURL(backgroundImageJSONObject.getString("url"));
 		}
 
 		if (itemConfigJSONObject.has("containerType")) {
@@ -115,7 +127,12 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		return JSONUtil.put(
 			"backgroundColorCssClass", _backgroundColorCssClass
 		).put(
-			"backgroundImage", _backgroundImage
+			"backgroundImage",
+			JSONUtil.put(
+				"title", _backgroundImageTitle
+			).put(
+				"url", _backgroundImageURL
+			)
 		).put(
 			"containerType", _containerType
 		).put(
@@ -128,7 +145,8 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	private String _backgroundColorCssClass;
-	private String _backgroundImage;
+	private String _backgroundImageTitle;
+	private String _backgroundImageURL;
 	private String _containerType = "fluid";
 	private int _paddingBottom = 3;
 	private int _paddingHorizontal = 3;

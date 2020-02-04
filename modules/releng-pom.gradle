@@ -32,7 +32,6 @@ buildscript {
 
 ext {
 	compileOnlyModel = new Model()
-
 	duplicateDependenciesWhitelist = ["javax.portlet:portlet-api", "javax.servlet:javax.servlet-api", "javax.ws.rs:javax.ws.rs-api"]
 }
 
@@ -103,7 +102,7 @@ generatePomCompileOnly {
 				return
 			}
 			else if (project.property("gradle.releng.pom.project.templates.version").startsWith("7.2") &&
-				(it.equals("content-targeting-report") ||
+					 (it.equals("content-targeting-report") ||
 					  it.equals("content-targeting-rule") ||
 					  it.equals("content-targeting-tracking-action") ||
 					  it.equals("form-field") ||

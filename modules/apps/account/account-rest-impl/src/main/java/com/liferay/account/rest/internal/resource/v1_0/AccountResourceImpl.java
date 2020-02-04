@@ -105,6 +105,17 @@ public class AccountResourceImpl
 				_getDomains(account), null, _getStatus(account)));
 	}
 
+	@Override
+	public Account putAccount(Long accountId, Account account)
+		throws Exception {
+
+		return _toAccount(
+			_accountEntryLocalService.updateAccountEntry(
+				accountId, _getParentAccountId(account), account.getName(),
+				account.getDescription(), false, _getDomains(account), null,
+				_getStatus(account)));
+	}
+
 	private String[] _getDomains(Account account) {
 		return Optional.ofNullable(
 			account.getDomains()

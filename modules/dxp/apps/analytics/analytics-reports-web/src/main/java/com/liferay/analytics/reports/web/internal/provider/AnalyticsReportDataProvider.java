@@ -14,6 +14,14 @@
 
 package com.liferay.analytics.reports.web.internal.provider;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -21,6 +29,21 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = AnalyticsReportDataProvider.class)
 public class AnalyticsReportDataProvider {
+
+	public JSONObject getHistoricalViews(long plid) throws PortalException {
+		try {
+			Class<?> clazz = getClass();
+
+			InputStream inputStream = clazz.getResourceAsStream(
+				"dependencies/analytics-reports-historical-views.json");
+
+			return JSONFactoryUtil.createJSONObject(
+				StringUtil.read(inputStream));
+		}
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
+		}
+	}
 
 	public Long getTotalReads(long plid) {
 		return 9999L;

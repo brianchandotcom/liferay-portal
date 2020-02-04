@@ -151,3 +151,37 @@ paths:
                     description:
                         ""
             tags: ["Account"]
+        put:
+            # @review
+            description:
+                Replaces the account with information sent in the request body. Any missing fields are deleted
+                unless they are required.
+            operationId: putAccount
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Account"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Account"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                    # @review
+                    description:
+                        "Account successfully replaced"
+            tags: ["Account"]

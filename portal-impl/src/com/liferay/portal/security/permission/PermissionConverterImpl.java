@@ -69,7 +69,8 @@ public class PermissionConverterImpl implements PermissionConverter {
 				ResourceConstants.SCOPE_COMPANY, ResourceConstants.SCOPE_GROUP
 			};
 		}
-		else if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
+		else if ((role.getType() == RoleConstants.TYPE_DEPOT) ||
+				 (role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
 				 (role.getType() == RoleConstants.TYPE_PROVIDER) ||
 				 (role.getType() == RoleConstants.TYPE_SITE)) {
 

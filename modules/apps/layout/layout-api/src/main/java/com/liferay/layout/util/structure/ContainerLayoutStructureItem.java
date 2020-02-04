@@ -44,15 +44,15 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		return LayoutDataItemTypeConstants.TYPE_CONTAINER;
 	}
 
-	public long getPaddingBottom() {
+	public int getPaddingBottom() {
 		return _paddingBottom;
 	}
 
-	public long getPaddingHorizontal() {
+	public int getPaddingHorizontal() {
 		return _paddingHorizontal;
 	}
 
-	public long getPaddingTop() {
+	public int getPaddingTop() {
 		return _paddingTop;
 	}
 
@@ -68,15 +68,15 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		_containerType = containerType;
 	}
 
-	public void setPaddingBottom(long paddingBottom) {
+	public void setPaddingBottom(int paddingBottom) {
 		_paddingBottom = paddingBottom;
 	}
 
-	public void setPaddingHorizontal(long paddingHorizontal) {
+	public void setPaddingHorizontal(int paddingHorizontal) {
 		_paddingHorizontal = paddingHorizontal;
 	}
 
-	public void setPaddingTop(long paddingTop) {
+	public void setPaddingTop(int paddingTop) {
 		_paddingTop = paddingTop;
 	}
 
@@ -130,8 +130,8 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 	private String _backgroundColorCssClass;
 	private String _backgroundImage;
 	private String _containerType = "fluid";
-	private long _paddingBottom = 3;
-	private long _paddingHorizontal = 3;
-	private long _paddingTop = 3;
+	private int _paddingBottom = 3;
+	private int _paddingHorizontal = 3;
+	private int _paddingTop = 3;
 
 }

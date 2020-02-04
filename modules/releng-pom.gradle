@@ -30,6 +30,12 @@ buildscript {
 	}
 }
 
+ext {
+	compileOnlyModel = new Model()
+
+	duplicateDependenciesWhitelist = ["javax.portlet:portlet-api", "javax.servlet:javax.servlet-api", "javax.ws.rs:javax.ws.rs-api"]
+}
+
 task generatePom
 task generatePomCompileOnly
 task generatePomRelease
@@ -48,12 +54,6 @@ configurations {
 
 dependencies {
 	pomProjectTemplates group: "com.liferay", name: "com.liferay.project.templates", version: "5.0.18"
-}
-
-ext {
-	compileOnlyModel = new Model()
-
-	duplicateDependenciesWhitelist = ["javax.portlet:portlet-api", "javax.servlet:javax.servlet-api", "javax.ws.rs:javax.ws.rs-api"]
 }
 
 generatePom {

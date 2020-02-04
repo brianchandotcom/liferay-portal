@@ -188,7 +188,7 @@ public class UserDisplayContext {
 			group -> RoleLocalServiceUtil.hasGroupRoles(group.getGroupId()));
 	}
 
-	public List<Role> getRoles() throws PortalException {
+	public List<Role> getRoles() {
 		List<Role> roles = Collections.emptyList();
 
 		if (_selUser != null) {
@@ -241,7 +241,7 @@ public class UserDisplayContext {
 		return userGroupRoles;
 	}
 
-	public List<UserGroup> getUserGroups() throws PortalException {
+	public List<UserGroup> getUserGroups() {
 		List<UserGroup> userGroups = Collections.emptyList();
 
 		if (_selUser != null) {

@@ -42,7 +42,7 @@ public class UsersMembershipsPostJSPDynamicInclude
 	@Override
 	protected String getJspPath() {
 		return "/dynamic_include/com.liferay.users.admin.web/users" +
-			"/memberships/depots.jsp";
+			"/memberships/depot_groups.jsp";
 	}
 
 	@Override

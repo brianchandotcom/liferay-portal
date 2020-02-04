@@ -38,14 +38,18 @@ function TotalCount({
 		<div className={className}>
 			<span className="text-secondary">
 				{label}
-				<ClayIcon
-					className="ml-1 mr-2"
+				<span
+					className="p-1"
 					onMouseEnter={() => setShowTooltip(true)}
 					onMouseLeave={() => setShowTooltip(false)}
 					ref={iconRef}
+				>
+					<ClayIcon
+						className="mr-1"
 					small="true"
 					symbol="question-circle"
 				/>
+				</span>
 
 				{showTooltip && (
 					<Popover anchor={iconRef.current} header={popoverHeader}>

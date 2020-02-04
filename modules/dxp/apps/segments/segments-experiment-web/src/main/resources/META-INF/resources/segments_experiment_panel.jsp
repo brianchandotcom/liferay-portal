@@ -36,7 +36,7 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 	<c:otherwise>
 		<div class="p-3 pt-5 text-center">
 			<liferay-ui:icon
-				alt="connect-to-analytics-cloud"
+				alt="connect-to-liferay-analytics-cloud"
 				src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'
 			/>
 
@@ -44,11 +44,11 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 				<c:when test="<%= SegmentsExperimentUtil.isAnalyticsEnabled(themeDisplay.getCompanyId()) %>">
 					<h4 class="mt-3"><liferay-ui:message key="sync-to-analytics-cloud" /></h4>
 
-					<p><liferay-ui:message key="sync-to-analytics-cloud-help" /></p>
+					<p class="text-secondary"><liferay-ui:message key="sync-to-analytics-cloud-help" /></p>
 
 					<liferay-ui:icon
 						label="<%= true %>"
-						linkCssClass="btn btn-primary btn-sm mb-4"
+						linkCssClass="btn btn-primary btn-sm mb-3"
 						markupView="lexicon"
 						message="open-analytics-cloud"
 						target="_blank"
@@ -56,13 +56,13 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 					/>
 				</c:when>
 				<c:otherwise>
-					<h4 class="mt-3"><liferay-ui:message key="connect-to-analytics-cloud" /></h4>
+					<h4 class="mt-3"><liferay-ui:message key="connect-to-liferay-analytics-cloud" /></h4>
 
-					<p><liferay-ui:message key="connect-to-analytics-cloud-help" /></p>
+					<p class="text-secondary"><liferay-ui:message key="connect-to-liferay-analytics-cloud-help" /></p>
 
 					<liferay-ui:icon
 						label="<%= true %>"
-						linkCssClass="btn btn-primary btn-sm mb-4"
+						linkCssClass="btn btn-primary btn-sm mb-3"
 						markupView="lexicon"
 						message="start-free-trial"
 						target="_blank"

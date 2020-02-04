@@ -261,6 +261,7 @@ MethodNamingCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [MethodParamPadCheck](https://checkstyle.sourceforge.io/config_whitespace.html#MethodParamPad) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks the padding between the identifier of a method definition, constructor definition, method call, or constructor invocation; and the left parenthesis of the parameter list. |
 MissingAuthorCheck | .java | |
 [MissingDeprecatedCheck](https://checkstyle.sourceforge.io/config_annotation.html#MissingDeprecated) | .java | Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present. |
+MissingDeprecatedJavadocCheck | .java | |
 MissingDiamondOperatorCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 MissingEmptyLineCheck | .java | |
 MissingModifierCheck | .java | |
@@ -323,7 +324,7 @@ ResourceBundleCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 SQLEmptyLinesCheck | .sql | |
 SQLStylingCheck | .sql | |
 SelfReferenceCheck | .java | |
-SemiColonCheck | .java | |
+SemiColonCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 SessionKeysCheck | .java | |
 SingleStatementClauseCheck | .java | |
 SizeIsZeroCheck | .java | |
@@ -331,17 +332,18 @@ SlantedQuotesCheck | | |
 SoyEmptyLinesCheck | .soy | |
 StaticBlockCheck | .java | |
 [StaticVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#StaticVariableName) | .java, .java, .jsp, .jsp, .jspf, .jspf, .tag, .tag, .tpl, .tpl, .vm or .vm | Checks that static, non-final variable names conform to a specified pattern. |
-StringCastCheck | .java | |
+StringCastCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [StringLiteralEqualityCheck](https://checkstyle.sourceforge.io/config_coding.html#StringLiteralEquality) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that string literals are not used with == or !=. |
 SubstringCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 TLDElementOrderCheck | .tld | |
 TLDTypeCheck | .tld | |
-TernaryOperatorCheck | .java | |
+TernaryOperatorCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 TestClassCheck | .java | |
 ThreadLocalUtilCheck | .java | |
 ThreadNameCheck | .java | |
 TransactionalTestRuleCheck | .java | |
 [TypeNameCheck](https://checkstyle.sourceforge.io/config_naming.html#TypeName) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that type names conform to a specified pattern. |
+UnnecessaryAssignCheck | .java | |
 [UnnecessaryParenthesesCheck](https://checkstyle.sourceforge.io/config_coding.html#UnnecessaryParentheses) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks if unnecessary parentheses are used in a statement or expression. |
 UnparameterizedClassCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 UnprocessedExceptionCheck | .java | |
@@ -350,7 +352,7 @@ UnusedParameterCheck | .java | |
 UnusedVariableCheck | .java | |
 UnwrappedVariableInfoCheck | .java | |
 ValidatorEqualsCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-ValidatorIsNullCheck | .java | |
+ValidatorIsNullCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 VariableDeclarationAsUsedCheck | .java | |
 VariableNameCheck | .java | |
 [WhitespaceAfterCheck](https://checkstyle.sourceforge.io/config_whitespace.html#WhitespaceAfter) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that a token is followed by whitespace, with the exception that it does not check for whitespace after the semicolon of an empty for iterator. |

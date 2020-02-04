@@ -265,6 +265,7 @@ MethodNamingCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [MethodParamPadCheck](https://checkstyle.sourceforge.io/config_whitespace.html#MethodParamPad) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks the padding between the identifier of a method definition, constructor definition, method call, or constructor invocation; and the left parenthesis of the parameter list. |
 MissingAuthorCheck | Miscellaneous | .java | |
 [MissingDeprecatedCheck](https://checkstyle.sourceforge.io/config_annotation.html#MissingDeprecated) | Miscellaneous | .java | Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present. |
+MissingDeprecatedJavadocCheck | Miscellaneous | .java | |
 MissingDiamondOperatorCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 MissingEmptyLineCheck | Miscellaneous | .java | |
 MissingModifierCheck | Miscellaneous | .java | |
@@ -328,7 +329,7 @@ SQLEmptyLinesCheck | Miscellaneous | .sql | |
 [SQLLongNamesCheck](checks/sql_long_names_check.markdown) | Bug Prevention | .sql | Checks for table and column names that exceed 30 characters |
 SQLStylingCheck | Miscellaneous | .sql | |
 SelfReferenceCheck | Miscellaneous | .java | |
-SemiColonCheck | Miscellaneous | .java | |
+SemiColonCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 SessionKeysCheck | Miscellaneous | .java | |
 SingleStatementClauseCheck | Miscellaneous | .java | |
 SizeIsZeroCheck | Miscellaneous | .java | |
@@ -336,19 +337,20 @@ SlantedQuotesCheck | Miscellaneous | | |
 SoyEmptyLinesCheck | Miscellaneous | .soy | |
 StaticBlockCheck | Miscellaneous | .java | |
 [StaticVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#StaticVariableName) | Miscellaneous | .java, .java, .jsp, .jsp, .jspf, .jspf, .tag, .tag, .tpl, .tpl, .vm or .vm | Checks that static, non-final variable names conform to a specified pattern. |
-StringBundlerNamingCheck | Naming Conventions | .java | Checks for consistent naming on variables of type 'StringBundler' |
-StringCastCheck | Miscellaneous | .java | |
+StringBundlerNamingCheck | Naming Conventions | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks for consistent naming on variables of type 'StringBundler' |
+StringCastCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [StringLiteralEqualityCheck](https://checkstyle.sourceforge.io/config_coding.html#StringLiteralEquality) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that string literals are not used with == or !=. |
 [StringMethodsCheck](checks/string_methods_check.markdown) | Performance | .java | Checks if performance can be improved by using different String operation methods |
 SubstringCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 TLDElementOrderCheck | Miscellaneous | .tld | |
 TLDTypeCheck | Miscellaneous | .tld | |
-TernaryOperatorCheck | Miscellaneous | .java | |
+TernaryOperatorCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 TestClassCheck | Miscellaneous | .java | |
 ThreadLocalUtilCheck | Miscellaneous | .java | |
 ThreadNameCheck | Miscellaneous | .java | |
 TransactionalTestRuleCheck | Miscellaneous | .java | |
 [TypeNameCheck](https://checkstyle.sourceforge.io/config_naming.html#TypeName) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that type names conform to a specified pattern. |
+UnnecessaryAssignCheck | Miscellaneous | .java | |
 [UnnecessaryParenthesesCheck](https://checkstyle.sourceforge.io/config_coding.html#UnnecessaryParentheses) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks if unnecessary parentheses are used in a statement or expression. |
 UnparameterizedClassCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 UnprocessedExceptionCheck | Miscellaneous | .java | |
@@ -357,7 +359,7 @@ UnusedParameterCheck | Miscellaneous | .java | |
 UnusedVariableCheck | Miscellaneous | .java | |
 UnwrappedVariableInfoCheck | Miscellaneous | .java | |
 ValidatorEqualsCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-ValidatorIsNullCheck | Miscellaneous | .java | |
+ValidatorIsNullCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 VariableDeclarationAsUsedCheck | Miscellaneous | .java | |
 VariableNameCheck | Miscellaneous | .java | |
 [WhitespaceAfterCheck](https://checkstyle.sourceforge.io/config_whitespace.html#WhitespaceAfter) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that a token is followed by whitespace, with the exception that it does not check for whitespace after the semicolon of an empty for iterator. |

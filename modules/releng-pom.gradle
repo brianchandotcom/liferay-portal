@@ -40,7 +40,7 @@ task testPomRelease
 task testPomThirdParty
 
 List<String> compileOnlyAllIdentifiers = []
-List<String> duplicateDependenciesWhitelist = ["javax.portlet:portlet-api", "javax.servlet:javax.servlet-api", "javax.ws.rs:javax.ws.rs-api"]
+List<String> thirdPartyCheckedIdentifiers = ["javax.portlet:portlet-api", "javax.servlet:javax.servlet-api", "javax.ws.rs:javax.ws.rs-api"]
 
 String pomCompileOnlyArtifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.compile.only"
 String pomReleaseArtifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom"
@@ -297,7 +297,7 @@ generatePomThirdParty {
 			dependenciesProperties.load(it)
 		}
 
-		List<String> unexpectedDuplicates = []
+		List<String> duplicateIdentifiers = []
 
 		dependenciesProperties.each {
 			String[] dependencyInfo = it.value.split(":")
@@ -305,8 +305,8 @@ generatePomThirdParty {
 			String identifier = dependencyInfo[0] + ":" + dependencyInfo[1]
 
 			if (compileOnlyAllIdentifiers.contains(identifier)) {
-				if (duplicateDependenciesWhitelist.contains(identifier)) {
-					unexpectedDuplicates.add identifier
+				if (thirdPartyCheckedIdentifiers.contains(identifier)) {
+					duplicateIdentifiers.add identifier
 				}
 			}
 			else {
@@ -324,8 +324,8 @@ generatePomThirdParty {
 			}
 		}
 
-		if (unexpectedDuplicates.size > 0) {
-			throw new GradleException("Duplicate dependencies:\n" + StringUtil.merge(unexpectedDuplicates as String[], "\n"))
+		if (duplicateIdentifiers.size > 0) {
+			throw new GradleException("Duplicate dependencies:\n" + StringUtil.merge(duplicateIdentifiers as String[], "\n"))
 		}
 
 		model.setDependencyManagement(dependencyManagement)

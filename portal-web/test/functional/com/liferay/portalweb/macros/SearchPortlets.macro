@@ -398,6 +398,22 @@ definition {
 		}
 	}
 
+	macro setupSimilarResultsPage {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Similar Results Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		Portlet.addPG(portletName = "Similar Results");
+	}
+
 	macro viewResultDetails {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",

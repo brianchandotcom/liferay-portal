@@ -57,6 +57,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
@@ -467,6 +468,40 @@ public class DocumentResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
+	private Map<String, Map<String, String>> _getRatingActions(
+			RatingsEntry ratingsEntry)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(
+			ratingsEntry.getClassPK());
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"UPDATE", fileEntry.getPrimaryKey(), "postDocumentMyRating",
+				"com.liferay.document.library.kernel.model.DLFileEntry",
+				fileEntry.getGroupId())
+		).put(
+			"delete",
+			addAction(
+				"UPDATE", fileEntry.getPrimaryKey(), "deleteDocumentMyRating",
+				"com.liferay.document.library.kernel.model.DLFileEntry",
+				fileEntry.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", fileEntry.getPrimaryKey(), "getDocumentMyRating",
+				"com.liferay.document.library.kernel.model.DLFileEntry",
+				fileEntry.getGroupId())
+		).put(
+			"replace",
+			addAction(
+				"UPDATE", fileEntry.getPrimaryKey(), "putDocumentMyRating",
+				"com.liferay.document.library.kernel.model.DLFileEntry",
+				fileEntry.getGroupId())
+		).build();
+	}
+
 	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
@@ -485,7 +520,8 @@ public class DocumentResourceImpl
 		return new SPIRatingResource<>(
 			DLFileEntry.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
+				_getRatingActions(ratingsEntry), _portal, ratingsEntry,
+				_userLocalService),
 			contextUser);
 	}
 

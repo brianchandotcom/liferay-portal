@@ -19,17 +19,19 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 
+import java.util.Map;
+
 /**
  * @author Javier Gamarra
  */
 public class RatingUtil {
 
 	public static Rating toRating(
-			Portal portal, RatingsEntry ratingsEntry,
-			UserLocalService userLocalService)
+			Map<String, Map<String, String>> actions, Portal portal,
+			RatingsEntry ratingsEntry, UserLocalService userLocalService)
 		throws Exception {
 
-		return new Rating() {
+		Rating rating = new Rating() {
 			{
 				bestRating = 1D;
 				creator = CreatorUtil.toCreator(
@@ -41,6 +43,10 @@ public class RatingUtil {
 				worstRating = 0D;
 			}
 		};
+
+		rating.setActions(actions);
+
+		return rating;
 	}
 
 }

@@ -95,6 +95,7 @@ import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
@@ -753,6 +754,40 @@ public class StructuredContentResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
+	private Map<String, Map<String, String>> _getRatingActions(
+			RatingsEntry ratingsEntry)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
+			ratingsEntry.getClassPK());
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"UPDATE", journalArticle.getResourcePrimKey(),
+				"postStructuredContentMyRating", JournalArticle.class.getName(),
+				journalArticle.getGroupId())
+		).put(
+			"delete",
+			addAction(
+				"UPDATE", journalArticle.getResourcePrimKey(),
+				"deleteStructuredContentMyRating",
+				JournalArticle.class.getName(), journalArticle.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", journalArticle.getResourcePrimKey(),
+				"getStructuredContentMyRating", JournalArticle.class.getName(),
+				journalArticle.getGroupId())
+		).put(
+			"replace",
+			addAction(
+				"UPDATE", journalArticle.getResourcePrimKey(),
+				"putStructuredContentMyRating", JournalArticle.class.getName(),
+				journalArticle.getGroupId())
+		).build();
+	}
+
 	private List<DDMFormField> _getRootDDMFormFields(
 		DDMStructure ddmStructure) {
 
@@ -779,7 +814,8 @@ public class StructuredContentResourceImpl
 		return new SPIRatingResource<>(
 			JournalArticle.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
+				_getRatingActions(ratingsEntry), _portal, ratingsEntry,
+				_userLocalService),
 			contextUser);
 	}
 

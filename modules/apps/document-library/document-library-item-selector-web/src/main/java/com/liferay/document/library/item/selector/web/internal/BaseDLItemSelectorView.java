@@ -90,11 +90,11 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 			servletContext.getRequestDispatcher("/documents.jsp");
 
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
-			new DLItemSelectorViewDisplayContext(
-				(HttpServletRequest)servletRequest, t, this,
-				_itemSelectorReturnTypeResolverHandler, itemSelectedEventName,
-				search, portletURL, _assetVocabularyService,
-				_classNameLocalService, stagingGroupHelper);
+			new DLItemSelectorViewDisplayContext<>(
+				_assetVocabularyService, _classNameLocalService, this,
+				(HttpServletRequest)servletRequest, t, itemSelectedEventName,
+				_itemSelectorReturnTypeResolverHandler, portletURL, search,
+				stagingGroupHelper);
 
 		servletRequest.setAttribute(
 			DLItemSelectorWebKeys.DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,

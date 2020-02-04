@@ -74,25 +74,26 @@ import javax.servlet.http.HttpServletRequest;
 public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public DLItemSelectorViewDisplayContext(
-		HttpServletRequest httpServletRequest, T itemSelectorCriterion,
-		DLItemSelectorView<T> dlItemSelectorView,
-		ItemSelectorReturnTypeResolverHandler
-			itemSelectorReturnTypeResolverHandler,
-		String itemSelectedEventName, boolean search, PortletURL portletURL,
 		AssetVocabularyService assetVocabularyService,
 		ClassNameLocalService classNameLocalService,
+		DLItemSelectorView<T> dlItemSelectorView,
+		HttpServletRequest httpServletRequest, T itemSelectorCriterion,
+		String itemSelectedEventName,
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler,
+		PortletURL portletURL, boolean search,
 		StagingGroupHelper stagingGroupHelper) {
 
-		_httpServletRequest = httpServletRequest;
-		_itemSelectorCriterion = itemSelectorCriterion;
-		_dlItemSelectorView = dlItemSelectorView;
-		_itemSelectorReturnTypeResolverHandler =
-			itemSelectorReturnTypeResolverHandler;
-		_itemSelectedEventName = itemSelectedEventName;
-		_search = search;
-		_portletURL = portletURL;
 		_assetVocabularyService = assetVocabularyService;
 		_classNameLocalService = classNameLocalService;
+		_dlItemSelectorView = dlItemSelectorView;
+		_httpServletRequest = httpServletRequest;
+		_itemSelectorCriterion = itemSelectorCriterion;
+		_itemSelectedEventName = itemSelectedEventName;
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
+		_portletURL = portletURL;
+		_search = search;
 		_stagingGroupHelper = stagingGroupHelper;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(

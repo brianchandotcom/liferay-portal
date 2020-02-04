@@ -23,7 +23,6 @@ import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import com.liferay.journal.item.selector.web.internal.JournalItemSelectorView;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -46,21 +45,21 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalItemSelectorViewDisplayContext {
 
 	public JournalItemSelectorViewDisplayContext(
-		HttpServletRequest httpServletRequest,
-		JournalItemSelectorCriterion journalItemSelectorCriterion,
-		JournalItemSelectorView journalItemSelectorView,
+		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler,
-		String itemSelectedEventName, boolean search, PortletURL portletURL) {
+		JournalItemSelectorCriterion journalItemSelectorCriterion,
+		JournalItemSelectorView journalItemSelectorView, PortletURL portletURL,
+		boolean search) {
 
 		_httpServletRequest = httpServletRequest;
-		_journalItemSelectorCriterion = journalItemSelectorCriterion;
-		_journalItemSelectorView = journalItemSelectorView;
+		_itemSelectedEventName = itemSelectedEventName;
 		_itemSelectorReturnTypeResolverHandler =
 			itemSelectorReturnTypeResolverHandler;
-		_itemSelectedEventName = itemSelectedEventName;
-		_search = search;
+		_journalItemSelectorCriterion = journalItemSelectorCriterion;
+		_journalItemSelectorView = journalItemSelectorView;
 		_portletURL = portletURL;
+		_search = search;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);
@@ -81,7 +80,7 @@ public class JournalItemSelectorViewDisplayContext {
 				FileEntry.class);
 	}
 
-	public JournalArticle getJournalArticle() throws PortalException {
+	public JournalArticle getJournalArticle() {
 		return JournalArticleLocalServiceUtil.fetchLatestArticle(
 			_journalItemSelectorCriterion.getResourcePrimKey());
 	}

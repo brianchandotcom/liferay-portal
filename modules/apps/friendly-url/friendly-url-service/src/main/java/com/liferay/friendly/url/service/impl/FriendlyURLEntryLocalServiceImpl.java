@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -100,7 +101,11 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryMapping.setClassNameId(classNameId);
 			friendlyURLEntryMapping.setClassPK(classPK);
 		}
-		else if (_containsAllURLTitles(friendlyURLEntryMapping, urlTitleMap)) {
+
+		Map<String, String> existingUrlTitleMap = _getURLTitleMap(
+			friendlyURLEntryMapping);
+
+		if (_containsAllURLTitles(existingUrlTitleMap, urlTitleMap)) {
 			return friendlyURLEntryPersistence.fetchByPrimaryKey(
 				friendlyURLEntryMapping.getFriendlyURLEntryId());
 		}
@@ -128,7 +133,8 @@ public class FriendlyURLEntryLocalServiceImpl
 		friendlyURLEntry = friendlyURLEntryPersistence.update(friendlyURLEntry);
 
 		_updateFriendlyURLEntryLocalizations(
-			friendlyURLEntry, classNameId, classPK, urlTitleMap);
+			friendlyURLEntry, classNameId, classPK,
+			_merge(urlTitleMap, existingUrlTitleMap));
 
 		return friendlyURLEntry;
 	}
@@ -487,26 +493,14 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	private boolean _containsAllURLTitles(
-		FriendlyURLEntryMapping friendlyURLEntryMapping,
+		Map<String, String> existingUrlTitleMap,
 		Map<String, String> urlTitleMap) {
-
-		Map<String, String> existUrlTitleMap = new HashMap<>();
-
-		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
-				friendlyURLEntryLocalizationPersistence.
-					findByFriendlyURLEntryId(
-						friendlyURLEntryMapping.getFriendlyURLEntryId())) {
-
-			existUrlTitleMap.put(
-				friendlyURLEntryLocalization.getLanguageId(),
-				friendlyURLEntryLocalization.getUrlTitle());
-		}
 
 		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
 			String urlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(
 				entry.getValue());
 
-			if (!urlTitle.equals(existUrlTitleMap.get(entry.getKey()))) {
+			if (!urlTitle.equals(existingUrlTitleMap.get(entry.getKey()))) {
 				return false;
 			}
 		}
@@ -533,6 +527,34 @@ public class FriendlyURLEntryLocalServiceImpl
 		}
 
 		return encodedString;
+	}
+
+	private Map<String, String> _getURLTitleMap(
+		FriendlyURLEntryMapping friendlyURLEntryMapping) {
+
+		Map<String, String> urlTitleMap = new HashMap<>();
+
+		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+				friendlyURLEntryLocalizationPersistence.
+					findByFriendlyURLEntryId(
+						friendlyURLEntryMapping.getFriendlyURLEntryId())) {
+
+			urlTitleMap.put(
+				friendlyURLEntryLocalization.getLanguageId(),
+				friendlyURLEntryLocalization.getUrlTitle());
+		}
+
+		return urlTitleMap;
+	}
+
+	private Map<String, String> _merge(
+		Map<String, String> master, Map<String, String> copy) {
+
+		Map<String, String> map = new HashMap<>(copy);
+
+		MapUtil.merge(master, map);
+
+		return map;
 	}
 
 	private void _updateFriendlyURLEntryLocalizations(

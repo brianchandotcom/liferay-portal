@@ -104,6 +104,47 @@ public class GroupSelectorTagTest {
 	}
 
 	@Test
+	public void testGetGroupsCountWithSiteGroupTypeAndRefererGroup()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setParameter("groupType", "site");
+
+		GroupSelectorTag groupSelectorTag = _getGroupSelectorTag(
+			mockHttpServletRequest);
+
+		groupSelectorTag.doEndTag();
+
+		int initialGroupsCount = (Integer)mockHttpServletRequest.getAttribute(
+			"liferay-item-selector:group-selector:groupsCount");
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			themeDisplay.setRefererGroupId(group.getGroupId());
+
+			groupSelectorTag.doEndTag();
+
+			List<Group> groups =
+				(List<Group>)mockHttpServletRequest.getAttribute(
+					"liferay-item-selector:group-selector:groups");
+
+			Assert.assertEquals(
+				groups.toString(), initialGroupsCount + 1, groups.size());
+		}
+		finally {
+			GroupTestUtil.deleteGroup(group);
+		}
+	}
+
+	@Test
 	public void testGetGroupsWithoutGroupType() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

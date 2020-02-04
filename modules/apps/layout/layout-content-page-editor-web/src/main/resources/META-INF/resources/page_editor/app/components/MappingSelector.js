@@ -108,7 +108,7 @@ export default function MappingSelector({
 			setFields(newFields);
 		});
 
-		setSelectedItem({...selectedItem, fieldId: ''});
+		setSelectedItem({...selectedItem, fieldId: '', mappedField: ''});
 	};
 
 	const onFieldSelect = event => {

@@ -1,0 +1,48 @@
+{
+	"histogram": [
+		{
+			"key": "2020-01-27T00:00",
+			"previousKey": "2020-01-20T00:00",
+			"previousValue": 32.0,
+			"value": 42.0
+		},
+		{
+			"key": "2020-01-28T00:00",
+			"previousKey": "2020-01-21T00:00",
+			"previousValue": 33.0,
+			"value": 43.0
+		},
+		{
+			"key": "2020-01-29T00:00",
+			"previousKey": "2020-01-22T00:00",
+			"previousValue": 34.0,
+			"value": 44.0
+		},
+		{
+			"key": "2020-01-30T00:00",
+			"previousKey": "2020-01-23T00:00",
+			"previousValue": 35.0,
+			"value": 43.0
+		},
+		{
+			"key": "2020-01-31T00:00",
+			"previousKey": "2020-01-24T00:00",
+			"previousValue": 36.0,
+			"value": 42.0
+		},
+		{
+			"key": "2020-02-01T00:00",
+			"previousKey": "2020-01-25T00:00",
+			"previousValue": 37.0,
+			"value": 41.0
+		},
+		{
+			"key": "2020-02-02T00:00",
+			"previousKey": "2020-01-26T00:00",
+			"previousValue": 38.0,
+			"value": 40.0
+		}
+	],
+	"previousValue": 245.0,
+	"value": 295.0
+}

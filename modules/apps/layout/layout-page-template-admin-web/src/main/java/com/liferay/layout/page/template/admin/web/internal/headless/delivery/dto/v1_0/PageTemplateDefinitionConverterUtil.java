@@ -18,6 +18,8 @@ import com.liferay.headless.delivery.dto.v1_0.PageTemplateDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 
 /**
  * @author Rubén Pulido
@@ -46,6 +48,18 @@ public class PageTemplateDefinitionConverterUtil {
 						}
 
 						return layoutPageTemplateCollection.getName();
+					});
+				setPageDefinition(
+					() -> {
+						Layout layout = LayoutLocalServiceUtil.fetchLayout(
+							layoutPageTemplateEntry.getPlid());
+
+						if (layout == null) {
+							return null;
+						}
+
+						return PageDefinitionConverterUtil.toPageDefinition(
+							layout);
 					});
 			}
 		};

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.configuration;
+package com.liferay.document.library.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.document.library.configuration.FFDocumentLibraryDDMEditorConfiguration"
+	id = "com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfiguration"
 )
 public interface FFDocumentLibraryDDMEditorConfiguration {
 

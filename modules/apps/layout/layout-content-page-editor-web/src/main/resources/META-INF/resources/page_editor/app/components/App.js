@@ -13,6 +13,7 @@
  */
 
 import React, {useEffect} from 'react';
+import {createPortal} from 'react-dom';
 
 import {useSelector} from '../store/index';
 import DisabledArea from './DisabledArea';
@@ -40,7 +41,7 @@ export default function App() {
 			<DisabledArea />
 			<Toolbar />
 			{masterLayoutData.items ? <MasterLayout /> : <PageEditor />}
-			<Sidebar />
+			{createPortal(<Sidebar />, document.body)}
 		</>
 	);
 }

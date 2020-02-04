@@ -118,6 +118,10 @@ export const getFieldProperties = (
 export const localizeField = (field, defaultLanguageId, editingLanguageId) => {
 	let value = field.value;
 
+	if (field.dataType === 'json' && typeof value === 'object') {
+		value = JSON.stringify(value);
+	}
+
 	if (field.localizable && field.localizedValue) {
 		let localizedValue = field.localizedValue[editingLanguageId];
 

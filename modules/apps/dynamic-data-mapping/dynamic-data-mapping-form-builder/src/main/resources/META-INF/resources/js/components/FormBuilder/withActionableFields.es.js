@@ -44,25 +44,31 @@ const getNestedFieldIndexes = (context, fieldName) => {
 
 		if (typeof field === 'string') {
 			field = context[0].nestedFields.find(
-				nestedField =>
-					nestedField.fieldName === field
+				nestedField => nestedField.fieldName === field
 			);
 		}
 
 		if (field && field.fieldName === fieldName) {
 			indexes = [{columnIndex, pageIndex, rowIndex}];
-		} else if (field && field.fieldName !== fieldName && field.nestedFields) {
+		}
+		else if (
+			field &&
+			field.fieldName !== fieldName &&
+			field.nestedFields
+		) {
 			nestedIndexes = getNestedFieldIndexes([field], fieldName);
 
 			if (nestedIndexes.length) {
-				indexes = [{columnIndex, pageIndex, rowIndex}, ...nestedIndexes]
+				indexes = [
+					{columnIndex, pageIndex, rowIndex},
+					...nestedIndexes
+				];
 			}
 		}
-
 	});
 
 	return indexes;
-}
+};
 
 const getFieldContainer = (pages, fieldName) => {
 	const nestedFieldIndexes = getNestedFieldIndexes(pages, fieldName);
@@ -410,7 +416,11 @@ const withActionableFields = ChildComponent => {
 				const field = this._getColumnField(indexes);
 
 				if (field) {
-					this.showActions(hoveredFieldActions, field.fieldName, field);
+					this.showActions(
+						hoveredFieldActions,
+						field.fieldName,
+						field
+					);
 				}
 			}
 		}

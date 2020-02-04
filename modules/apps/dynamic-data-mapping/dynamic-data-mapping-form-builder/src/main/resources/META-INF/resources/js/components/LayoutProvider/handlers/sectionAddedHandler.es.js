@@ -124,7 +124,9 @@ const createSection = (props, event, fields) => {
 };
 
 const getColumn = (context, nestedIndexes = []) => {
-	const {columnIndex, pageIndex, rowIndex} = nestedIndexes[nestedIndexes.length-1];
+	const {columnIndex, pageIndex, rowIndex} = nestedIndexes[
+		nestedIndexes.length - 1
+	];
 
 	return FormSupport.getColumn(
 		context,
@@ -145,7 +147,11 @@ const getContext = (context, nestedIndexes = []) => {
 				].fields;
 
 			if (context[0].nestedFields) {
-				fields = fields.map(field => context[0].nestedFields.find(nestedField => nestedField.fieldName === field))
+				fields = fields.map(field =>
+					context[0].nestedFields.find(
+						nestedField => nestedField.fieldName === field
+					)
+				);
 			}
 
 			context = fields;
@@ -156,7 +162,9 @@ const getContext = (context, nestedIndexes = []) => {
 };
 
 const getFields = (context, nestedIndexes) => {
-	const {columnIndex, pageIndex, rowIndex} = nestedIndexes[nestedIndexes.length-1];
+	const {columnIndex, pageIndex, rowIndex} = nestedIndexes[
+		nestedIndexes.length - 1
+	];
 
 	let fields = FormSupport.getColumn(
 		context,
@@ -166,7 +174,11 @@ const getFields = (context, nestedIndexes) => {
 	).fields;
 
 	if (context[0].nestedFields) {
-		fields = fields.map(field => context[0].nestedFields.find(nestedField => nestedField.fieldName === field))
+		fields = fields.map(field =>
+			context[0].nestedFields.find(
+				nestedField => nestedField.fieldName === field
+			)
+		);
 	}
 
 	return fields;
@@ -179,7 +191,7 @@ export default (props, state, event) => {
 		event.data.target.parentElement
 	);
 
-	let currentContext = getContext(pages, nestedIndexes.slice(0,-1));
+	const currentContext = getContext(pages, nestedIndexes.slice(0, -1));
 
 	const currentColumn = getColumn(currentContext, nestedIndexes);
 
@@ -199,17 +211,14 @@ export default (props, state, event) => {
 			newContext.nestedFields.splice(
 				newContext.nestedFields.indexOf(field),
 				1
-			)
+			);
 		});
 
 		newContext = updateFocusedField(
 			props,
 			{focusedField: newContext},
 			'nestedFields',
-			[
-				...newContext.nestedFields,
-				sectionField
-			]
+			[...newContext.nestedFields, sectionField]
 		);
 
 		currentColumn.fields = [sectionField.fieldName];
@@ -222,8 +231,8 @@ export default (props, state, event) => {
 		);
 
 		currentContext[0].nestedFields = newContext.nestedFields;
-
-	} else {
+	}
+	else {
 		currentColumn.fields = [sectionField];
 	}
 

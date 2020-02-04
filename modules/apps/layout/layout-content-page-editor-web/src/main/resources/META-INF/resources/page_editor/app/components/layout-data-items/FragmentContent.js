@@ -332,6 +332,16 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		processor.destroyEditor(element);
 	};
 
+	const shouldShowEditablesDecoration = () => {
+		return (
+			!editing &&
+			(isActive(itemId) ||
+				editablesIds.some(editableId =>
+					isActive(getEditableUniqueId(editableId))
+				))
+		);
+	};
+
 	return (
 		<>
 			<UnsafeHTML
@@ -382,11 +392,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 					);
 				})}
 
-			{!editing &&
-				(isActive(itemId) ||
-					editablesIds.some(editableId =>
-						isActive(getEditableUniqueId(editableId))
-					)) &&
+			{shouldShowEditablesDecoration() &&
 				editablesIds.map(editableId => (
 					<EditableDecoration
 						editableId={editableId}

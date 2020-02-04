@@ -28,7 +28,9 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -242,8 +244,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
 		if (LayoutDataConverter.isLatestVersion(dataJSONObject)) {
-			_processLatestDataJSONObject(
-				dataJSONObject, classNameId, targetLayout, fragmentEntryLinkMap,
+			dataJSONObject = _processLatestDataJSONObject(
+				data, classNameId, targetLayout, fragmentEntryLinkMap,
 				serviceContext);
 		}
 		else {
@@ -436,78 +438,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		return true;
 	}
 
-	private void _processChildrenJSONArray(
-			JSONArray childrenJSONArray, JSONObject itemsJSONObject,
-			long classNameId, Layout targetLayout,
-			Map<Long, FragmentEntryLink> fragmentEntryLinkMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		for (int i = 0; i < childrenJSONArray.length(); i++) {
-			String childItemId = childrenJSONArray.getString(i);
-
-			JSONObject childItemJSONObject = itemsJSONObject.getJSONObject(
-				childItemId);
-
-			String childItemType = childItemJSONObject.getString("type");
-
-			if (Objects.equals(
-					childItemType, LayoutDataItemTypeConstants.TYPE_FRAGMENT)) {
-
-				JSONObject childItemConfigJSONObject =
-					childItemJSONObject.getJSONObject("config");
-
-				long fragmentEntryLinkId = childItemConfigJSONObject.getLong(
-					"fragmentEntryLinkId");
-
-				FragmentEntryLink fragmentEntryLink = fragmentEntryLinkMap.get(
-					fragmentEntryLinkId);
-
-				if (fragmentEntryLink == null) {
-					continue;
-				}
-
-				FragmentEntryLink newFragmentEntryLink =
-					(FragmentEntryLink)fragmentEntryLink.clone();
-
-				newFragmentEntryLink.setUuid(serviceContext.getUuid());
-				newFragmentEntryLink.setFragmentEntryLinkId(
-					_counterLocalService.increment());
-				newFragmentEntryLink.setUserId(targetLayout.getUserId());
-				newFragmentEntryLink.setUserName(targetLayout.getUserName());
-				newFragmentEntryLink.setCreateDate(
-					serviceContext.getCreateDate(new Date()));
-				newFragmentEntryLink.setModifiedDate(
-					serviceContext.getModifiedDate(new Date()));
-				newFragmentEntryLink.setOriginalFragmentEntryLinkId(0);
-				newFragmentEntryLink.setClassNameId(classNameId);
-				newFragmentEntryLink.setClassPK(targetLayout.getPlid());
-				newFragmentEntryLink.setLastPropagationDate(
-					serviceContext.getCreateDate(new Date()));
-
-				newFragmentEntryLink =
-					_fragmentEntryLinkLocalService.addFragmentEntryLink(
-						newFragmentEntryLink);
-
-				childItemConfigJSONObject.put(
-					"fragmentEntryLinkId",
-					newFragmentEntryLink.getFragmentEntryLinkId());
-
-				_commentManager.copyDiscussion(
-					targetLayout.getUserId(), targetLayout.getGroupId(),
-					FragmentEntryLink.class.getName(),
-					fragmentEntryLink.getFragmentEntryLinkId(),
-					newFragmentEntryLink.getFragmentEntryLinkId(),
-					className -> serviceContext);
-			}
-
-			_processChildrenJSONArray(
-				childItemJSONObject.getJSONArray("children"), itemsJSONObject,
-				classNameId, targetLayout, fragmentEntryLinkMap,
-				serviceContext);
-		}
-	}
-
 	private void _processDataJSONObject(
 			JSONObject dataJSONObject, long classNameId, Layout targetLayout,
 			Map<Long, FragmentEntryLink> fragmentEntryLinkMap,
@@ -595,23 +525,65 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 	}
 
-	private void _processLatestDataJSONObject(
-			JSONObject dataJSONObject, long classNameId, Layout targetLayout,
+	private JSONObject _processLatestDataJSONObject(
+			String data, long classNameId, Layout targetLayout,
 			Map<Long, FragmentEntryLink> fragmentEntryLinkMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		JSONObject itemsJSONObject = dataJSONObject.getJSONObject("items");
+		LayoutStructure layoutStructure = LayoutStructure.of(data);
 
-		JSONObject rootItemsJSONObject = dataJSONObject.getJSONObject(
-			"rootItems");
+		for (LayoutStructureItem layoutStructureItem :
+				layoutStructure.getLayoutStructureItems()) {
 
-		JSONObject mainJSONObject = itemsJSONObject.getJSONObject(
-			rootItemsJSONObject.getString("main"));
+			if (!(layoutStructureItem instanceof FragmentLayoutStructureItem)) {
+				continue;
+			}
 
-		_processChildrenJSONArray(
-			mainJSONObject.getJSONArray("children"), itemsJSONObject,
-			classNameId, targetLayout, fragmentEntryLinkMap, serviceContext);
+			FragmentLayoutStructureItem fragmentLayoutStructureItem =
+				(FragmentLayoutStructureItem)layoutStructureItem;
+
+			FragmentEntryLink fragmentEntryLink = fragmentEntryLinkMap.get(
+				fragmentLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink == null) {
+				continue;
+			}
+
+			FragmentEntryLink newFragmentEntryLink =
+				(FragmentEntryLink)fragmentEntryLink.clone();
+
+			newFragmentEntryLink.setUuid(serviceContext.getUuid());
+			newFragmentEntryLink.setFragmentEntryLinkId(
+				_counterLocalService.increment());
+			newFragmentEntryLink.setUserId(targetLayout.getUserId());
+			newFragmentEntryLink.setUserName(targetLayout.getUserName());
+			newFragmentEntryLink.setCreateDate(
+				serviceContext.getCreateDate(new Date()));
+			newFragmentEntryLink.setModifiedDate(
+				serviceContext.getModifiedDate(new Date()));
+			newFragmentEntryLink.setOriginalFragmentEntryLinkId(0);
+			newFragmentEntryLink.setClassNameId(classNameId);
+			newFragmentEntryLink.setClassPK(targetLayout.getPlid());
+			newFragmentEntryLink.setLastPropagationDate(
+				serviceContext.getCreateDate(new Date()));
+
+			newFragmentEntryLink =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					newFragmentEntryLink);
+
+			fragmentLayoutStructureItem.setFragmentEntryLinkId(
+				newFragmentEntryLink.getFragmentEntryLinkId());
+
+			_commentManager.copyDiscussion(
+				targetLayout.getUserId(), targetLayout.getGroupId(),
+				FragmentEntryLink.class.getName(),
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				newFragmentEntryLink.getFragmentEntryLinkId(),
+				className -> serviceContext);
+		}
+
+		return layoutStructure.toJSONObject();
 	}
 
 	private static final TransactionConfig _transactionConfig =

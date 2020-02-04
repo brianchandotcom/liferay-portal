@@ -319,7 +319,7 @@ generatePomThirdParty {
 					(compileOnlyDependency.groupId == dependency.groupId)) {
 					isDuplicate = true
 
-					if (duplicateDependenciesWhitelist.contains("${dependency.groupId}:${dependency.artifactId}")) {
+					if (duplicateDependenciesWhitelist.contains(dependency.groupId + ":" + dependency.artifactId)) {
 						unexpectedDuplicates << "${dependency.groupId}:${dependency.artifactId}"
 					}
 				}

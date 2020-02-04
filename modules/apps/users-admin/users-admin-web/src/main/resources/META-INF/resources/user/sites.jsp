@@ -18,7 +18,7 @@
 
 <%
 User selUser = userDisplayContext.getSelectedUser();
-List<Group> groups = userDisplayContext.getSites();
+List<Group> sites = userDisplayContext.getSites();
 List<Group> inheritedSites = userDisplayContext.getInheritedSites();
 
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites");
@@ -72,10 +72,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	emptyResultsMessage="this-user-does-not-belong-to-a-site"
 	headerNames="name,roles,null"
 	iteratorURL="<%= currentURLObj %>"
-	total="<%= groups.size() %>"
+	total="<%= sites.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= groups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+		results="<%= sites.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row

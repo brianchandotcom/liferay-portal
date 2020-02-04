@@ -211,18 +211,18 @@ public class UserDisplayContext {
 	}
 
 	public List<Group> getSites() throws PortalException {
-		List<Group> groups = Collections.emptyList();
+		List<Group> sites = Collections.emptyList();
 
 		if (_selUser != null) {
-			groups = _selUser.getSiteGroups();
+			sites = _selUser.getSiteGroups();
 
 			if (_initDisplayContext.isFilterManageableGroups()) {
-				groups = UsersAdminUtil.filterGroups(
-					_themeDisplay.getPermissionChecker(), groups);
+				sites = UsersAdminUtil.filterGroups(
+					_themeDisplay.getPermissionChecker(), sites);
 			}
 		}
 
-		return groups;
+		return sites;
 	}
 
 	public List<UserGroupRole> getUserGroupRoles() throws PortalException {

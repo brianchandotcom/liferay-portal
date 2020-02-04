@@ -169,6 +169,29 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 				classPKs, layoutClassedModelUsage.getClassPK(),
 				layoutClassedModelUsage.getClassPK()));
 
+		LayoutClassedModelUsage existingLayoutClassedModelUsage =
+			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+				layoutClassedModelUsage.getUuid(),
+				portletDataContext.getScopeGroupId());
+
+		if ((existingLayoutClassedModelUsage == null) ||
+			!portletDataContext.isDataStrategyMirror()) {
+
+			importedLayoutClassedModelUsage =
+				_stagedModelRepository.addStagedModel(
+					portletDataContext, importedLayoutClassedModelUsage);
+		}
+		else {
+			importedLayoutClassedModelUsage.setMvccVersion(
+				existingLayoutClassedModelUsage.getMvccVersion());
+			importedLayoutClassedModelUsage.setLayoutClassedModelUsageId(
+				existingLayoutClassedModelUsage.getLayoutClassedModelUsageId());
+
+			importedLayoutClassedModelUsage =
+				_stagedModelRepository.updateStagedModel(
+					portletDataContext, importedLayoutClassedModelUsage);
+		}
+
 		portletDataContext.importClassedModel(
 			layoutClassedModelUsage, importedLayoutClassedModelUsage);
 	}

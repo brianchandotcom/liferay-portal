@@ -881,6 +881,8 @@ public class LayoutStagedModelDataHandler
 
 		importLayoutSEOEntries(portletDataContext, layout);
 
+		importLayoutClassedModelUsages(portletDataContext, layout);
+
 		portletDataContext.importClassedModel(layout, importedLayout);
 	}
 
@@ -1387,6 +1389,29 @@ public class LayoutStagedModelDataHandler
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, fragmentEntryLink);
+		}
+	}
+
+	protected void importLayoutClassedModelUsages(
+			PortletDataContext portletDataContext, Layout layout)
+		throws PortletDataException {
+
+		List<Element> layoutClassedModelUsageElements =
+			portletDataContext.getReferenceDataElements(
+				layout, LayoutClassedModelUsage.class);
+
+		for (Element layoutClassedModelUsageElement :
+				layoutClassedModelUsageElements) {
+
+			String layoutClassedModelUsagePath =
+				layoutClassedModelUsageElement.attributeValue("path");
+
+			LayoutClassedModelUsage layoutClassedModelUsage =
+				(LayoutClassedModelUsage)portletDataContext.getZipEntryAsObject(
+					layoutClassedModelUsagePath);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, layoutClassedModelUsage);
 		}
 	}
 

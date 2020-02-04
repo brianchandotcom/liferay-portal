@@ -194,6 +194,12 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			boolean displayFileExtensions)
 		throws IOException {
 
+		String content = StringPool.BLANK;
+
+		if (file.exists()) {
+			content = FileUtil.read(file);
+		}
+
 		StringBundler sb = new StringBundler();
 
 		sb.append("# ");
@@ -291,6 +297,21 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			}
 
 			sb.append("\n");
+		}
+
+		String newContent = StringUtil.trim(sb.toString());
+
+		if (content.equals(newContent)) {
+			return;
+		}
+
+		String absolutePath = SourceUtil.getAbsolutePath(file);
+
+		if (Validator.isNull(content)) {
+			System.out.println("Added " + absolutePath);
+		}
+		else {
+			System.out.println("Updated " + absolutePath);
 		}
 
 		FileUtil.write(file, StringUtil.trim(sb.toString()));

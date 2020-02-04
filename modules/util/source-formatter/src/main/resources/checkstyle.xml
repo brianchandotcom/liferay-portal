@@ -328,6 +328,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingAuthorCheck">
 			<message key="author.missing" value="Missing author" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.MissingDeprecatedJavadocCheck">
+			<message key="javadoc.missing.deprecated" value="Must include both @java.lang.Deprecated annotation and @deprecated Javadoc tag with description" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingDiamondOperatorCheck">
 			<property name="enforceDiamondOperatorClassNames" value="" />
 			<message key="diamond.operator.missing" value="Missing diamond operator ''&lt;&gt;'' for type ''{0}''" />

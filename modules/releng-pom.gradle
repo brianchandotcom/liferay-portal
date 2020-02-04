@@ -91,6 +91,9 @@ generatePomCompileOnly {
 			else if (it.equals("service-wrapper")) {
 				mainArgs += ["--service", "com.liferay.portal.kernel.service.UserLocalServiceWrapper"]
 			}
+			else if (it.equals("theme-contributor")) {
+				mainArgs += ["--contributor-type", "sample"]
+			}
 			else if (it.equals("social-bookmark") && project.property("gradle.releng.pom.project.templates.version").startsWith("7.0")) {
 				return
 			}

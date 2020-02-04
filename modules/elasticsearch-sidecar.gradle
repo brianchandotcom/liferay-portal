@@ -6,7 +6,7 @@ buildscript {
 }
 
 task build
-task deploy(type: Zip)
+task deploy(type: Copy)
 
 build {
 	description = "Assembles the Elasticsearch sidecar."
@@ -41,8 +41,7 @@ deploy {
 	description = "Assembles the Elasticsearch sidecar and deploys it to Liferay."
 	group = "build"
 
-	baseName = "elasticsearch-sidecar"
-	destinationDir = file("${project.'liferay.home'}/tools")
+	destinationDir = file("${project.'liferay.home'}/elasticsearch" + "${project.'elasticsearch.sidecar.version'}".substring(0, 1))
 
 	from {
 		file("${buildDir}/elasticsearch-${project.'elasticsearch.sidecar.version'}")

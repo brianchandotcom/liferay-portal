@@ -26,7 +26,10 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
@@ -142,6 +145,30 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 		LayoutClassedModelUsage importedLayoutClassedModelUsage =
 			(LayoutClassedModelUsage)layoutClassedModelUsage.clone();
 
+		importedLayoutClassedModelUsage.setGroupId(
+			portletDataContext.getScopeGroupId());
+
+		Map<Long, Long> plids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class);
+
+		importedLayoutClassedModelUsage.setPlid(
+			MapUtil.getLong(
+				plids, layoutClassedModelUsage.getPlid(),
+				layoutClassedModelUsage.getPlid()));
+
+		importedLayoutClassedModelUsage.setClassNameId(
+			_portal.getClassNameId(layoutClassedModelUsage.getClassName()));
+
+		Map<Long, Long> classPKs =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				layoutClassedModelUsage.getClassName());
+
+		importedLayoutClassedModelUsage.setClassPK(
+			MapUtil.getLong(
+				classPKs, layoutClassedModelUsage.getClassPK(),
+				layoutClassedModelUsage.getClassPK()));
+
 		portletDataContext.importClassedModel(
 			layoutClassedModelUsage, importedLayoutClassedModelUsage);
 	}
@@ -152,6 +179,9 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 
 		return _stagedModelRepository;
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.layout.model.LayoutClassedModelUsage)",

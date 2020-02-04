@@ -14,8 +14,10 @@
 
 package com.liferay.batch.engine;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.io.Serializable;
 
@@ -31,33 +33,29 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 
 	@Override
 	public void create(
-			Collection<T> items, Map<String, Serializable> queryParameters,
-			User user)
+			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
 		for (T item : items) {
-			createItem(item, queryParameters, user);
+			createItem(item, parameters);
 		}
 	}
 
-	public void createItem(
-			T item, Map<String, Serializable> queryParameters, User user)
+	public void createItem(T item, Map<String, Serializable> parameters)
 		throws Exception {
 	}
 
 	@Override
 	public void delete(
-			Collection<T> items, Map<String, Serializable> queryParameters,
-			User user)
+			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
 		for (T item : items) {
-			deleteItem(item, queryParameters, user);
+			deleteItem(item, parameters);
 		}
 	}
 
-	public void deleteItem(
-			T item, Map<String, Serializable> queryParameters, User user)
+	public void deleteItem(T item, Map<String, Serializable> parameters)
 		throws Exception {
 	}
 
@@ -68,20 +66,34 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 		return null;
 	}
 
+	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
+		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextCompany(Company contextCompany) {
+		this.contextCompany = contextCompany;
+	}
+
+	public void setContextUser(User contextUser) {
+		this.contextUser = contextUser;
+	}
+
 	@Override
 	public void update(
-			Collection<T> items, Map<String, Serializable> queryParameters,
-			User user)
+			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
 		for (T item : items) {
-			updateItem(item, queryParameters, user);
+			updateItem(item, parameters);
 		}
 	}
 
-	public void updateItem(
-			T item, Map<String, Serializable> queryParameters, User user)
+	public void updateItem(T item, Map<String, Serializable> parameters)
 		throws Exception {
 	}
+
+	protected AcceptLanguage contextAcceptLanguage;
+	protected Company contextCompany;
+	protected User contextUser;
 
 }

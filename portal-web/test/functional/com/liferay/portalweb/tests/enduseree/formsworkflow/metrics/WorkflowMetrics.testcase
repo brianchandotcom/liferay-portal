@@ -1062,7 +1062,7 @@ definition {
 
 	@description = "LRQA-53659 Automate LPS-86652 [Reports] View all items for a certain process"
 	test ViewReports {
-		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ViewReports";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -1099,6 +1099,7 @@ definition {
 	@priority = "5"
 	test ViewSLABreachesOfTopSteps {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetrics#ViewSLABreachesOfTopSteps";
 
 		var key_testSLADefinitionDays = "0";
 		var key_testSLADefinitionHours = "0001";

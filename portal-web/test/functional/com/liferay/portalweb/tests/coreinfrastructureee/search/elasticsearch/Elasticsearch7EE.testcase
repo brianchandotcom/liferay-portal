@@ -39,19 +39,7 @@ definition {
 				title = "WC Title ${count}");
 		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoPage(pageName = "Similar Results Page");
-
-		Portlet.addPG(portletName = "Similar Results");
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
@@ -112,16 +100,6 @@ definition {
 				title = "Similar Results WC Title ${count}");
 		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
-
 		// Workaround for LPS-107399
 
 		/*WikiNavigator.openWikiAdmin(siteURLKey = "guest");
@@ -134,9 +112,7 @@ definition {
 				wikiPageTitle = "Similar Results Wiki Title ${count}");
 		}*/
 
-		Navigator.gotoPage(pageName = "Similar Results Page");
-
-		Portlet.addPG(portletName = "Similar Results");
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
@@ -311,19 +287,7 @@ definition {
 			groupName = "Guest",
 			title = "Charlie");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoPage(pageName = "Similar Results Page");
-
-		Portlet.addPG(portletName = "Similar Results");
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
@@ -367,16 +331,6 @@ definition {
 			entryContent = "Content",
 			entryTitle = "No Match Content");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -392,9 +346,7 @@ definition {
 			entryTitle = "Similar Results Blogs Title",
 			tagName = "Apple");
 
-		Navigator.gotoPage(pageName = "Similar Results Page");
-
-		Portlet.addPG(portletName = "Similar Results");
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
@@ -436,19 +388,7 @@ definition {
 			groupName = "Guest",
 			title = "Alpha Bravo Charlie Delta Echo Foxtrot");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoPage(pageName = "Similar Results Page");
-
-		Portlet.addPG(portletName = "Similar Results");
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
@@ -488,19 +428,7 @@ definition {
 			groupName = "Guest",
 			title = "One Two Three");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoPage(pageName = "Similar Results Page");
-
-		Portlet.addPG(portletName = "Similar Results");
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
@@ -541,19 +469,7 @@ definition {
 			groupName = "Guest",
 			title = "Similar Results Web Content");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoPage(pageName = "Similar Results Page");
-
-		Portlet.addPG(portletName = "Similar Results");
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
@@ -612,19 +528,7 @@ definition {
 			groupName = "Guest",
 			title = "No Match");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoPage(pageName = "Similar Results Page");
-
-		Portlet.addPG(portletName = "Similar Results");
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
@@ -675,19 +579,7 @@ definition {
 			groupName = "Guest",
 			title = "One Two Two Three Three Three");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoPage(pageName = "Similar Results Page");
-
-		Portlet.addPG(portletName = "Similar Results");
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
@@ -748,19 +640,7 @@ definition {
 			groupName = "Guest",
 			title = "Charlie");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoPage(pageName = "Similar Results Page");
-
-		Portlet.addPG(portletName = "Similar Results");
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",

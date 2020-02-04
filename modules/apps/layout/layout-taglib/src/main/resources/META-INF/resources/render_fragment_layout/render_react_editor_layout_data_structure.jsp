@@ -26,100 +26,91 @@ long[] segmentsExperienceIds = (long[])request.getAttribute("liferay-layout:rend
 
 RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("render_layout_data_structure.jsp-renderFragmentLayoutDisplayContext");
 
-JSONObject itemsJSONObject = (JSONObject)request.getAttribute("render_react_editor_layout_data_structure.jsp-itemsJSONObject");
+LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("render_react_editor_layout_data_structure.jsp-layoutStructure");
 
-JSONArray childrenJSONArray = (JSONArray)request.getAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray");
+List<String> childrenItemIds = (List<String>)request.getAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds");
 
-for (int i = 0; i < childrenJSONArray.length(); i++) {
-	String childItemId = childrenJSONArray.getString(i);
-
-	JSONObject childItemJSONObject = itemsJSONObject.getJSONObject(childItemId);
-
-	String childItemType = childItemJSONObject.getString("type");
-
-	JSONObject childItemConfigJSONObject = childItemJSONObject.getJSONObject("config");
+for (String childrenItemId : childrenItemIds) {
+	LayoutStructureItem layoutStructureItem = layoutStructure.getLayoutStructureItem(childrenItemId);
 %>
 
 	<c:choose>
-		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_COLUMN) %>">
+		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
 
 			<%
-			String size = childItemConfigJSONObject.getString("size");
+			ColumnLayoutStructureItem columnLayoutStructureItem = (ColumnLayoutStructureItem)layoutStructureItem;
 			%>
 
-			<div class="<%= Validator.isNotNull(size) ? "col-md-" + size : StringPool.BLANK %>">
+			<div class="<%= (columnLayoutStructureItem.getSize() > 0) ? "col-md-" + columnLayoutStructureItem.getSize() : StringPool.BLANK %>">
 
 				<%
-				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));
+				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 				%>
 
 				<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 			</div>
 		</c:when>
-		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_CONTAINER) %>">
+		<c:when test="<%= layoutStructureItem instanceof ContainerLayoutStructureItem %>">
 
 			<%
-			String backgroundColorCssClass = childItemConfigJSONObject.getString("backgroundColorCssClass");
-			String backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(childItemConfigJSONObject);
-			String containerType = childItemConfigJSONObject.getString("containerType", "fluid");
-			long paddingBottom = childItemConfigJSONObject.getLong("paddingBottom", 3);
-			long paddingHorizontal = childItemConfigJSONObject.getLong("paddingHorizontal", 3);
-			long paddingTop = childItemConfigJSONObject.getLong("paddingTop", 3);
+			ContainerLayoutStructureItem containerLayoutStructureItem = (ContainerLayoutStructureItem)layoutStructureItem;
+
+			String backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(containerLayoutStructureItem.getBackgroundImageJSONObject());
 
 			StringBundler sb = new StringBundler();
 
-			if (Validator.isNotNull(backgroundColorCssClass)) {
+			if (Validator.isNotNull(containerLayoutStructureItem.getBackgroundColorCssClass())) {
 				sb.append("bg-");
-				sb.append(backgroundColorCssClass);
+				sb.append(containerLayoutStructureItem.getBackgroundColorCssClass());
 			}
 
-			if (Objects.equals(containerType, "fluid")) {
+			if (Objects.equals(containerLayoutStructureItem.getContainerType(), "fluid")) {
 				sb.append(" container-fluid");
 			}
 			else {
 				sb.append(" container");
 			}
 
-			if (paddingBottom != -1L) {
+			if (containerLayoutStructureItem.getPaddingBottom() != -1L) {
 				sb.append(" pb-");
-				sb.append(paddingBottom);
+				sb.append(containerLayoutStructureItem.getPaddingBottom());
 			}
 
-			if (paddingHorizontal != -1L) {
+			if (containerLayoutStructureItem.getPaddingHorizontal() != -1L) {
 				sb.append(" px-");
-				sb.append(paddingHorizontal);
+				sb.append(containerLayoutStructureItem.getPaddingHorizontal());
 			}
 
-			if (paddingTop != -1L) {
+			if (containerLayoutStructureItem.getPaddingTop() != -1L) {
 				sb.append(" pt-");
-				sb.append(paddingTop);
+				sb.append(containerLayoutStructureItem.getPaddingTop());
 			}
 			%>
 
 			<div class="<%= sb.toString() %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : "" %>">
 
 				<%
-				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));
+				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 				%>
 
 				<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 			</div>
 		</c:when>
-		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_DROP_ZONE) %>">
+		<c:when test="<%= layoutStructureItem instanceof DropZoneLayoutStructureItem %>">
 
 			<%
-			request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));
+			request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 			%>
 
 			<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_FRAGMENT) %>">
+		<c:when test="<%= layoutStructureItem instanceof FragmentLayoutStructureItem %>">
 
 			<%
-			long fragmentEntryLinkId = childItemConfigJSONObject.getLong("fragmentEntryLinkId");
+			FragmentLayoutStructureItem fragmentLayoutStructureItem = (FragmentLayoutStructureItem)layoutStructureItem;
 
-			if (fragmentEntryLinkId > 0) {
-				FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentEntryLinkId);
+			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() > 0) {
+				FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentLayoutStructureItem.getFragmentEntryLinkId());
 
 				if (fragmentEntryLink != null) {
 					FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
@@ -143,24 +134,24 @@ for (int i = 0; i < childrenJSONArray.length(); i++) {
 			%>
 
 		</c:when>
-		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_ROOT) %>">
+		<c:when test="<%= layoutStructureItem instanceof RootLayoutStructureItem %>">
 
 			<%
-			request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));
+			request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 			%>
 
 			<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test="<%= Objects.equals(childItemType, LayoutDataItemTypeConstants.TYPE_ROW) %>">
+		<c:when test="<%= layoutStructureItem instanceof RowLayoutStructureItem %>">
 
 			<%
-			boolean gutters = childItemConfigJSONObject.getBoolean("gutters", true);
+			RowLayoutStructureItem rowLayoutStructureItem = (RowLayoutStructureItem)layoutStructureItem;
 			%>
 
-			<div class="row <%= !gutters ? "no-gutters" : StringPool.BLANK %>">
+			<div class="row <%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>">
 
 				<%
-				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", childItemJSONObject.getJSONArray("children"));
+				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 				%>
 
 				<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />

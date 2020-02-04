@@ -38,17 +38,15 @@ JSONObject dataJSONObject = (JSONObject)request.getAttribute("liferay-layout:ren
 				<c:when test="<%= LayoutDataConverter.isLatestVersion(dataJSONObject) %>">
 
 					<%
-					JSONObject rootItemsJSONObject = dataJSONObject.getJSONObject("rootItems");
+					LayoutStructure layoutStructure = LayoutStructure.of(dataJSONObject.toString());
 
-					String mainItemId = rootItemsJSONObject.getString("main");
+					request.setAttribute("render_react_editor_layout_data_structure.jsp-layoutStructure", layoutStructure);
 
-					JSONObject itemsJSONObject = dataJSONObject.getJSONObject("items");
+					String mainItemId = layoutStructure.getMainItemId();
 
-					request.setAttribute("render_react_editor_layout_data_structure.jsp-itemsJSONObject", itemsJSONObject);
+					LayoutStructureItem layoutStructureItem = layoutStructure.getLayoutStructureItem(mainItemId);
 
-					JSONObject mainJSONObject = itemsJSONObject.getJSONObject(mainItemId);
-
-					request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenJSONArray", mainJSONObject.getJSONArray("children"));
+					request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 					%>
 
 					<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />

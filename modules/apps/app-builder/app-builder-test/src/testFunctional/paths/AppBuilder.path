@@ -189,36 +189,6 @@
 	<td></td>
 </tr>
 
-<tr>
-	<td>UNDEPLOY_APP_BUTTON</td>
-	<td>//button[@class='btn btn-primary']</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>PRODUCT_MENU_DEPLOYED</td>
-	<td>//span[@class='control-menu-level-1-heading text-truncate']</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>STANDALONE_DEPLOYED</td>
-	<td>//h1[contains(@class,'app-builder-standalone-name')]</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>PORTLET_UNDEPLOYED</td>
-	<td>//div[@class='alert alert-info']</td>
-	<td></td>
-</tr>
-
-<tr>
-	<td>WIDGET_DEPLOYED</td>
-	<td>//*[contains(@class,'portlet-title-text')]</td>
-	<td></td>
-</tr>
-
 <!--CONTROL_PANEL-->
 <tr>
 	<td>CUSTOM_PORTLET</td>

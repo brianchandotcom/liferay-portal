@@ -160,7 +160,7 @@ public class BaseBatchEngineTaskExecutorTest {
 		@Override
 		public void createItem(
 				BlogPosting blogPosting,
-				Map<String, Serializable> queryParameters, User user)
+				Map<String, Serializable> queryParameters)
 			throws Exception {
 
 			LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
@@ -185,7 +185,7 @@ public class BaseBatchEngineTaskExecutorTest {
 		@Override
 		public void deleteItem(
 				BlogPosting blogPosting,
-				Map<String, Serializable> queryParameters, User user)
+				Map<String, Serializable> queryParameters)
 			throws Exception {
 
 			_blogsEntryService.deleteEntry(blogPosting.getId());
@@ -202,7 +202,7 @@ public class BaseBatchEngineTaskExecutorTest {
 		@Override
 		public Page<BlogPosting> read(
 				Filter filter, Pagination pagination, Sort[] sorts,
-				Map<String, Serializable> parameters, String search, User user)
+				Map<String, Serializable> parameters, String search)
 			throws Exception {
 
 			long siteId = GetterUtil.getLong(parameters.get("siteId"));
@@ -216,20 +216,19 @@ public class BaseBatchEngineTaskExecutorTest {
 				searchContext -> {
 					searchContext.setAttribute(
 						Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-					searchContext.setCompanyId(user.getCompanyId());
+					searchContext.setCompanyId(contextCompany.getCompanyId());
 					searchContext.setGroupIds(new long[] {siteId});
 				},
 				document -> _toBlogPosting(
 					_blogsEntryService.getEntry(
 						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-					user),
+					contextUser),
 				sorts, Collections.emptyMap());
 		}
 
 		@Override
 		public void updateItem(
-				BlogPosting blogPosting, Map<String, Serializable> parameters,
-				User user)
+				BlogPosting blogPosting, Map<String, Serializable> parameters)
 			throws Exception {
 
 			LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(

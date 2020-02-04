@@ -75,7 +75,7 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 					"removeOrganizationsURL",
 					removeOrganizationsURL.toString());
 
-				dropdownItem.setIcon("minus-circle");
+				dropdownItem.setIcon("times-circle");
 				dropdownItem.setLabel(LanguageUtil.get(request, "remove"));
 				dropdownItem.setQuickAction(true);
 

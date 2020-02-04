@@ -37,12 +37,12 @@ ext {
 	]
 }
 
-if (System.getProperty("gradle.build.scan.server.url")) {
+if (Boolean.getBoolean("gradle.build.scan.enabled")) {
 	apply plugin: "com.gradle.build-scan"
 
 	buildScan {
 		allowUntrustedServer = true
-		server = System.getProperty("gradle.build.scan.server.url")
+		server = System.getProperty("gradle.build.scan.server.url") ?: null
 
 		publishAlwaysIf true
 		tag System.getenv("JENKINS_HOME") ? "CI" : "LOCAL"

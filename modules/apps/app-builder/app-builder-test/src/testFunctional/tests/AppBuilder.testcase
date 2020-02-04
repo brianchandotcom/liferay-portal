@@ -1528,6 +1528,76 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 	}
 
+	@description = "Publish my app as a widget with only a Table View"
+	@priority = "5"
+	test PublishAppAsWidgetWithOnlyTableView {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+		FormViewBuilder.save();
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Widget App",
+			deployOption = "Widget",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "App Builder Page");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		Portlet.addPG(
+			pageName = "App Builder Page",
+			portletName = "Widget App");
+
+		AppBuilderAdmin.add();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Content of form deployed as widget");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "1987");
+
+		AppBuilderAdmin.save();
+
+		Portlet.deletePG(portletName = "Widget App");
+
+		Portlet.addPG(
+			pageName = "App Builder Page",
+			portletName = "Widget App (Table View)");
+
+		Portlet.viewSpecificPG(portletName = "Widget App (Table View)");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget");
+		AppBuilderAdmin.validateNewButtonIsNotPresent(buttonValue = "New Entry");
+		AppBuilderAdmin.validateNewButtonIconIsNotPresent();
+
+		AppBuilderAdmin.openItem(itemName = "Content of form deployed as widget");
+
+		DetailsView.validateEntry(entry = "Content of form deployed as widget");
+		DetailsView.validateEntry(entry = "1987");
+	}
+
 	@description = "Search for a deployment in the deployment lists"
 	@priority = "5"
 	test SearchForDeployedItem {

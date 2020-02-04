@@ -46,6 +46,10 @@ if (Boolean.getBoolean("gradle.build.scan.enabled")) {
 
 		publishAlwaysIf true
 		tag System.getenv("JENKINS_HOME") ? "CI" : "LOCAL"
+
+		if (System.getProperty("gradle.build.scan.tag")) {
+			tag System.getProperty("gradle.build.scan.tag")
+		}
 	}
 }
 

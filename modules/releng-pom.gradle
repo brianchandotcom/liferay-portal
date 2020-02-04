@@ -1,4 +1,5 @@
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.StringUtil
 import com.liferay.project.templates.ProjectTemplates
 
 import groovy.io.FileType
@@ -330,13 +331,7 @@ generatePomThirdParty {
 		}
 
 		if (unexpectedDuplicates.size > 0) {
-			String unexpectedDuplicatesErrorMessage = "Duplicate dependencies detected:"
-
-			unexpectedDuplicates.each {
-				unexpectedDuplicatesErrorMessage += "\n" + it.toString()
-			}
-
-			throw new GradleException(unexpectedDuplicatesErrorMessage)
+			throw new GradleException("Duplicate dependencies:\n" + StringUtil.merge(unexpectedDuplicates as String[], "\n"))
 		}
 
 		model.setDependencyManagement(dependencyManagement)

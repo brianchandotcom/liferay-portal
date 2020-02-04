@@ -34,6 +34,7 @@
 	{@param? tip: string}
 	{@param? tooltip: string}
 	{@param? valid: bool}
+	{@param? value: any}
 	{@param? visible: bool}
 
 	{call FieldBase.render}
@@ -52,7 +53,8 @@
 				{param predefinedValue: $predefinedValue /}
 				{param readOnly: $readOnly /}
 				{param spritemap: $spritemap /}
-				{param value: isNonnull($_value) ? $_value : '' /}
+				{param value: $value /}
+				{param _value: isNonnull($_value) ? $_value : '' /}
 			{/call}
 		{/param}
 		{param displayErrors: $displayErrors /}
@@ -78,6 +80,7 @@
 	{@param? _handleFieldChanged: any}
 	{@param? _handleFieldFocused: any}
 	{@param? _handleLanguageClicked: any}
+	{@param? _value: string}
 	{@param? availableLocales: list<[
 		displayName: string,
 		icon: string,
@@ -96,24 +99,20 @@
 	{@param? predefinedValue: string}
 	{@param? readOnly: bool}
 	{@param? spritemap: string}
-	{@param? value: string}
+	{@param? value: any}
 
-	{let $inputValue: isNonnull($value) and $value != '' ? $value : $predefinedValue /}
+	{let $inputValue: isNonnull($_value) and $_value != '' ? $_value : $predefinedValue /}
 
-	{let $attributes kind="attributes"}
+	{let $textAttributes kind="attributes"}
 		class="ddm-field-text form-control"
 
-		name="{$name}"
+		id="{$name}inputValue"
 
 		type="text"
 
 		data-oninput="{$_handleFieldChanged}"
 
 		data-onfocus="{$_handleFieldFocused}"
-
-		{if $id}
-			id="{$id}"
-		{/if}
 
 		{if $placeholder}
 			placeholder="{$placeholder}"
@@ -130,24 +129,42 @@
 		value="{$inputValue}"
 	{/let}
 
+	{let $jsonTextAttributes kind="attributes"}
+		{if $id}
+			id="{$id}"
+		{/if}
+
+		name="{$name}"
+
+		type="hidden"
+
+		{if $value}
+			value="{$value}"
+		{else}
+			value=""
+		{/if}
+	{/let}
+
 	<div class="input-group">
 		{if $displayStyle == 'multiline'}
 			<div class="input-group-item">
-				<textarea {$attributes}>{$inputValue}</textarea>
+				<textarea {$textAttributes}>{$inputValue}</textarea>
 			</div>
 		{else}
 			<div class="input-group-append input-group-item">
-				<input {$attributes}>
+				<input {$textAttributes}>
 			</div>
 		{/if}
 
-		<div class="input-group-item input-group-item-shrink">
+		<input {$jsonTextAttributes} />
+
+		<div class="input-group-item input-group-item-shrink liferay-ddm-form-field-localizable-text">
 			{if isNonnull($editingLocale)}
 				<button
 					aria-expanded="false"
 					aria-haspopup="true"
 					class="btn btn-monospaced btn-secondary dropdown-toggle"
-					data-toggle="dropdown"
+					data-toggle="liferay-dropdown"
 					type="button"
 				>
 					<span class="inline-item">
@@ -163,12 +180,12 @@
 				</button>
 			{/if}
 
-			<ul class="dropdown-menu dropdown-menu-right">
+			<ul class="dropdown-menu dropdown-menu-right custom-dropdown-menu">
 				{if isNonnull($availableLocales)}
 					{foreach $availableLocale in $availableLocales}
 						<li>
 							<a
-								class="autofit-row dropdown-item"
+								class="autofit-row dropdown-item custom-dropdown-item-row"
 								data-locale-id="{$availableLocale.localeId}"
 								href="#1"
 								onClick="{$_handleLanguageClicked}"

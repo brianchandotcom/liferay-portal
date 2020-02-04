@@ -54,14 +54,16 @@ public class DepotAdminMembershipsDisplayContext {
 			_liferayPortletRequest.getHttpServletRequest());
 	}
 
-	public List<Group> getDepots(int start, int end) throws PortalException {
-		List<Group> groups = _getGroups();
+	public List<Group> getDepotGroups(int start, int end)
+		throws PortalException {
 
-		return groups.subList(start, end);
+		List<Group> depotGroups = _getDepotGroups();
+
+		return depotGroups.subList(start, end);
 	}
 
-	public int getDepotsCount() throws PortalException {
-		List<Group> groups = _getGroups();
+	public int getDepotGroupsCount() throws PortalException {
+		List<Group> groups = _getDepotGroups();
 
 		return groups.size();
 	}
@@ -89,15 +91,15 @@ public class DepotAdminMembershipsDisplayContext {
 		return _user;
 	}
 
-	private List<Group> _getGroups() throws PortalException {
-		if (_groups != null) {
-			return _groups;
+	private List<Group> _getDepotGroups() throws PortalException {
+		if (_depotGroups != null) {
+			return _depotGroups;
 		}
 
 		if (_user == null) {
-			_groups = Collections.emptyList();
+			_depotGroups = Collections.emptyList();
 
-			return _groups;
+			return _depotGroups;
 		}
 
 		PermissionChecker permissionChecker =
@@ -121,12 +123,12 @@ public class DepotAdminMembershipsDisplayContext {
 			}
 		}
 
-		_groups = groups;
+		_depotGroups = groups;
 
-		return _groups;
+		return _depotGroups;
 	}
 
-	private List<Group> _groups;
+	private List<Group> _depotGroups;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final ThemeDisplay _themeDisplay;
 	private final User _user;

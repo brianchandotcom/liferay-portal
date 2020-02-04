@@ -55,10 +55,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "reposi
 	emptyResultsMessage="this-user-does-not-belong-to-a-repository"
 	headerNames="name,roles,null"
 	iteratorURL="<%= currentURLObj %>"
-	total="<%= depotAdminMembershipsDisplayContext.getDepotsCount() %>"
+	total="<%= depotAdminMembershipsDisplayContext.getDepotGroupsCount() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= depotAdminMembershipsDisplayContext.getDepots(searchContainer.getStart(), searchContainer.getEnd()) %>"
+		results="<%= depotAdminMembershipsDisplayContext.getDepotGroups(searchContainer.getStart(), searchContainer.getEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row

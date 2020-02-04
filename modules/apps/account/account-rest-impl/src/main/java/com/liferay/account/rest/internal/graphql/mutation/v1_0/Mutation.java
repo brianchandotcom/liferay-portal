@@ -68,6 +68,20 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField(
+		description = "Replaces the account with information sent in the request body. Any missing fields are deleted unless they are required."
+	)
+	public Account updateAccount(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("account") Account account)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountResource -> accountResource.putAccount(accountId, account));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

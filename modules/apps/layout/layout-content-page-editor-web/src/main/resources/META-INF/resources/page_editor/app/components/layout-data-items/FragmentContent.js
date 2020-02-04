@@ -330,6 +330,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	return (
 		<>
 			<UnsafeHTML
+				className="page-editor__fragment"
 				markup={content}
 				onClick={onClick}
 				onMouseOver={onMouseOver}

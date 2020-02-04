@@ -322,24 +322,10 @@ definition {
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
-			minimumDocumentFrequency = "1",
+			minimumDocumentFrequency = "3",
 			minimumTermFrequency = "1");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie");
-
-		AssertElementPresent(
-			key_linkResultTitle = "Alpha Bravo",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementPresent(
-			key_linkResultTitle = "Alpha Delta",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementPresent(
-			key_linkResultTitle = "Charlie",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		SearchPortlets.configureSimilarResults(minimumDocumentFrequency = "3");
 
 		AssertElementPresent(
 			key_linkResultTitle = "Alpha Bravo",
@@ -373,11 +359,7 @@ definition {
 	test ConfigureSimilarResultsFields {
 		JSONBlog.addEntry(
 			entryContent = "Content",
-			entryTitle = "No Match");
-
-		JSONBlog.addEntry(
-			entryContent = "No Match",
-			entryTitle = "Similar Results Blogs Title 2");
+			entryTitle = "No Match Content");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -401,7 +383,7 @@ definition {
 
 		Blogs.addEntryWithTag(
 			entryContent = "Content",
-			entryTitle = "Similar Results Blogs Title 1",
+			entryTitle = "Similar Results Blogs Title",
 			tagName = "Apple");
 
 		Navigator.gotoPage(pageName = "Similar Results Page");
@@ -410,50 +392,28 @@ definition {
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
-			fields = "localized_title_en_US",
+			fields = "content_en_US",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
-		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results Blogs Title 1");
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results Blogs Title");
 
 		AssertElementPresent(
-			key_linkResultTitle = "Similar Results Blogs Title 2",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementNotPresent(
-			key_linkResultTitle = "No Match",
+			key_linkResultTitle = "No Match Content",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
 		AssertElementNotPresent(
 			key_linkResultTitle = "No Match Tag",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		SearchPortlets.configureSimilarResults(fields = "content_en_US");
-
-		AssertElementPresent(
-			key_linkResultTitle = "No Match",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementNotPresent(
-			key_linkResultTitle = "No Match Tag",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementNotPresent(
-			key_linkResultTitle = "Similar Results Blogs Title 2",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
 		SearchPortlets.configureSimilarResults(fields = "assetTagNames,content_en_US");
 
 		AssertElementPresent(
-			key_linkResultTitle = "No Match",
+			key_linkResultTitle = "No Match Content",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
 		AssertElementPresent(
 			key_linkResultTitle = "No Match Tag",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementNotPresent(
-			key_linkResultTitle = "Similar Results Blogs Title 2",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
@@ -487,18 +447,11 @@ definition {
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
+			maximumItemDisplay = "0",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie Delta Echo Foxtrot");
-
-		for (var titleName : list "Alpha,Bravo,Charlie,Delta,Echo,Foxtrot") {
-			AssertElementPresent(
-				key_linkResultTitle = "${titleName}",
-				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-		}
-
-		SearchPortlets.configureSimilarResults(maximumItemDisplay = "0");
 
 		AssertTextEquals.assertPartialText(
 			key_widgetName = "Similar Results",
@@ -546,18 +499,11 @@ definition {
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
+			maximumQueryTerms = "2",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "One Two Three");
-
-		for (var count : list "One, Two, Three") {
-			AssertElementPresent(
-				key_linkResultTitle = "${count}",
-				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-		}
-
-		SearchPortlets.configureSimilarResults(maximumQueryTerms = "2");
 
 		AssertElementPresent(
 			key_resultPosition = "2",
@@ -678,23 +624,10 @@ definition {
 			displayTemplate = "Compact Layout",
 			fields = "content_en_US,localized_title_en_US",
 			minimumDocumentFrequency = "1",
-			minimumTermFrequency = "1");
+			minimumTermFrequency = "1",
+			stopWords = "Alpha");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie");
-
-		AssertElementPresent(
-			key_linkResultTitle = "Alpha",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementPresent(
-			key_linkResultTitle = "Charlie",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementPresent(
-			key_linkResultTitle = "No Match",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		SearchPortlets.configureSimilarResults(stopWords = "Alpha");
 
 		AssertElementPresent(
 			key_linkResultTitle = "Charlie",
@@ -802,11 +735,6 @@ definition {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",
-			title = "Alpha Delta");
-
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Guest",
 			title = "Alpha Bravo Charlie");
 
 		JSONWebcontent.addWebContent(
@@ -832,44 +760,23 @@ definition {
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = "1",
-			minimumTermFrequency = "1");
+			minimumTermFrequency = "1",
+			minimumWordLength = "6");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie");
 
 		AssertElementPresent(
-			key_linkResultTitle = "Alpha Bravo",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementPresent(
-			key_linkResultTitle = "Alpha Delta",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementPresent(
-			key_linkResultTitle = "Charlie",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		SearchPortlets.configureSimilarResults(minimumWordLength = "6");
-
-		AssertElementPresent(
 			key_linkResultTitle = "Charlie",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
 		AssertElementNotPresent(
 			key_linkResultTitle = "Alpha Bravo",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementNotPresent(
-			key_linkResultTitle = "Alpha Delta",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
 		SearchPortlets.configureSimilarResults(minimumWordLength = "8");
 
 		AssertElementNotPresent(
 			key_linkResultTitle = "Alpha Bravo",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementNotPresent(
-			key_linkResultTitle = "Alpha Delta",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
 		AssertElementNotPresent(
@@ -882,10 +789,6 @@ definition {
 
 		AssertElementPresent(
 			key_linkResultTitle = "Alpha Bravo",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementPresent(
-			key_linkResultTitle = "Alpha Delta",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
 		AssertElementNotPresent(

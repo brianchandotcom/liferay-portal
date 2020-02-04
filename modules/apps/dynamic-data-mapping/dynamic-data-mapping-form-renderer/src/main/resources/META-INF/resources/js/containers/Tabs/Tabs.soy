@@ -6,7 +6,7 @@
 	{@param? _handleItemClicked: any}
 
 	<nav class="component-tbar ddm-form-tabs mb-3 tbar">
-		<div className="container-fluid">
+		<div class="container-fluid pr-0">
 			<ul class="nav nav-underline" role="tablist">
 				{foreach $page in $pages}
 					{let $itemRenderer: $page.tabbedItemRenderer ?: 'tabbed' /}

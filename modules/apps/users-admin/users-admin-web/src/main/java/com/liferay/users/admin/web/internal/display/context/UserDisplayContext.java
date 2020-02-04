@@ -256,7 +256,7 @@ public class UserDisplayContext {
 		return userGroups;
 	}
 
-	public List<NavigationItem> getViewNavigationItems(String portletName) {
+	public List<NavigationItem> getViewNavigationItems() {
 		return new NavigationItemList() {
 			{
 				String toolbarItem = ParamUtil.getString(

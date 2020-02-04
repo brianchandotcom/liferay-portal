@@ -72,13 +72,19 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isThemeJsFastLoad()) {
-			absolutePortalURLBuilder.ignoreCDNHost();
-
 			sb.append("<script data-senna-track=\"permanent\" src=\"");
-			sb.append(
-				_portal.getStaticResourceURL(
-					httpServletRequest, _portal.getPathContext() + "/combo",
-					"minifierType=js", _lastModified));
+
+			String comboPath = _portal.getStaticResourceURL(
+				httpServletRequest, _portal.getPathContext() + "/combo",
+				"minifierType=js", _lastModified);
+
+			String comboURL = absolutePortalURLBuilder.forResource(
+				comboPath
+			).build();
+
+			sb.append(comboURL);
+
+			absolutePortalURLBuilder.ignoreCDNHost();
 
 			for (String fileName : _FILE_NAMES) {
 				sb.append("&");

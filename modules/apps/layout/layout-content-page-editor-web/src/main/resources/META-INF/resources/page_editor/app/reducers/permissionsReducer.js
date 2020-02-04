@@ -17,10 +17,10 @@ import {TOGGLE_PERMISSION} from '../actions/types';
 /**
  * @type {import('../../types/ActionKeys').ActionKeysMap}
  */
-const INITIAL_STATE = {
-	UNLOCKED_SEGMENTS_EXPERIENCE: true,
+export const INITIAL_STATE = {
+	LOCKED_SEGMENTS_EXPERIMENT: false,
 	UPDATE: true,
-	UPDATE_CONTENT: true
+	UPDATE_LAYOUT_CONTENT: true
 };
 
 /**

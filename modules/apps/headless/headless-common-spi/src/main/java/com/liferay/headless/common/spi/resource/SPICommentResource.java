@@ -46,6 +46,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import javax.ws.rs.ClientErrorException;
@@ -95,7 +97,8 @@ public class SPICommentResource<T> {
 	}
 
 	public Page<T> getEntityCommentsPage(
-			long groupId, String className, long classPK, String search,
+			long groupId, String className, long classPK,
+			Map<String, Map<String, String>> actions, String search,
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -107,8 +110,8 @@ public class SPICommentResource<T> {
 			discussion.getRootDiscussionComment();
 
 		return _getComments(
-			rootDiscussionComment.getCommentId(), search, filter, pagination,
-			sorts);
+			actions, rootDiscussionComment.getCommentId(), search, filter,
+			pagination, sorts);
 	}
 
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
@@ -187,6 +190,16 @@ public class SPICommentResource<T> {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		return _getComments(
+			new HashMap<>(), parentCommentId, search, filter, pagination,
+			sorts);
+	}
+
+	private Page<T> _getComments(
+			Map<String, Map<String, String>> actions, Long parentCommentId,
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
 		return SearchUtil.search(
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
@@ -209,7 +222,7 @@ public class SPICommentResource<T> {
 			document -> _transformUnsafeFunction.apply(
 				_commentManager.fetchComment(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+			sorts, (Map)actions);
 	}
 
 	private DiscussionPermission _getDiscussionPermission() {

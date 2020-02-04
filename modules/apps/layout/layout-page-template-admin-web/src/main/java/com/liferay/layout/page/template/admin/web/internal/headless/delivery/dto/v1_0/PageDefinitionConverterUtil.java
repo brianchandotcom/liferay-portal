@@ -21,7 +21,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
 import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -29,23 +29,21 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rubén Pulido
  */
-@Component(immediate = true, service = PageDefinitionConverterUtil.class)
 public class PageDefinitionConverterUtil {
 
-	public PageDefinition toPageDefinition(Layout layout) throws JSONException {
+	public static PageDefinition toPageDefinition(Layout layout)
+		throws JSONException {
+
 		return new PageDefinition() {
 			{
 				dateCreated = layout.getCreateDate();
@@ -56,7 +54,9 @@ public class PageDefinitionConverterUtil {
 		};
 	}
 
-	private ColumnDefinition _toColumnDefinition(JSONObject configJSONObject) {
+	private static ColumnDefinition _toColumnDefinition(
+		JSONObject configJSONObject) {
+
 		return new ColumnDefinition() {
 			{
 				setSize(
@@ -71,7 +71,7 @@ public class PageDefinitionConverterUtil {
 		};
 	}
 
-	private PageElement _toPageElement(
+	private static PageElement _toPageElement(
 		JSONObject itemsJSONObject, JSONObject jsonObject) {
 
 		List<PageElement> childrenPageElements = new ArrayList<>();
@@ -108,7 +108,7 @@ public class PageDefinitionConverterUtil {
 		return pageElement;
 	}
 
-	private PageElement _toPageElement(
+	private static PageElement _toPageElement(
 		JSONObject configJSONObject, String type) {
 
 		if (type.equals("column")) {
@@ -146,14 +146,16 @@ public class PageDefinitionConverterUtil {
 		return null;
 	}
 
-	private PageElement[] _toPageElements(Layout layout) throws JSONException {
+	private static PageElement[] _toPageElements(Layout layout)
+		throws JSONException {
+
 		List<PageElement> pageElements = new ArrayList<>();
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
+			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), _portal.getClassNameId(Layout.class),
-					layout.getPlid());
+					layout.getGroupId(),
+					PortalUtil.getClassNameId(Layout.class), layout.getPlid());
 
 		String layoutData = LayoutDataConverter.convert(
 			layoutPageTemplateStructure.getData(0L));
@@ -184,7 +186,7 @@ public class PageDefinitionConverterUtil {
 		return pageElements.toArray(new PageElement[0]);
 	}
 
-	private RowDefinition _toRowDefinition(JSONObject configJSONObject) {
+	private static RowDefinition _toRowDefinition(JSONObject configJSONObject) {
 		return new RowDefinition() {
 			{
 				setGutters(
@@ -207,7 +209,7 @@ public class PageDefinitionConverterUtil {
 		};
 	}
 
-	private SectionDefinition _toSectionDefinition(
+	private static SectionDefinition _toSectionDefinition(
 		JSONObject configJSONObject) {
 
 		return new SectionDefinition() {
@@ -271,7 +273,7 @@ public class PageDefinitionConverterUtil {
 		};
 	}
 
-	private Map<String, String> _toValueMap(
+	private static Map<String, String> _toValueMap(
 		JSONObject jsonObject, String name) {
 
 		if (jsonObject == null) {
@@ -282,12 +284,5 @@ public class PageDefinitionConverterUtil {
 			"value", jsonObject.getString(name)
 		).build();
 	}
-
-	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

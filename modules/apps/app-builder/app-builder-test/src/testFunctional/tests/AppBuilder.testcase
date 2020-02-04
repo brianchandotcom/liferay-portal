@@ -1,5 +1,6 @@
 @component-name = "app-builder"
 definition {
+
 	property custom.properties = "default.layout.template.id=1_column";
 
 	property portal.release = "true";
@@ -1678,6 +1679,185 @@ definition {
 		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "Apple");
 	}
 
+	@description = "Unpublish and Republish an App"
+	@priority = "5"
+	test UnpublishAndRepublish {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
+
+		App.add(
+			appTitle = "Test App A",
+			deployOption = "Product Menu",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
+
+		App.add(
+			appTitle = "Test App B",
+			deployOption = "Widget",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
+
+		App.add(
+			appTitle = "Test App C",
+			deployOption = "Standalone",
+			formViewName = "Form View Title",
+			tableViewName = "Table View Title");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "Test App A");
+
+		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "App Builder Page");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		Portlet.addPG(
+			pageName = "App Builder Page",
+			portletName = "Test App B");
+
+		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AppBuilderAdmin.validateStandAloneApp();
+
+		Navigator.closeWindow();
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.undeployApp(itemName = "Test App A");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "Test App A");
+
+		AppBuilderAdmin.validateUndeployedApp();
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.deployApp(itemName = "Test App A");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		AppBuilderAdmin.gotoCustomAppCP(
+			panel = "Control Panel",
+			portlet = "Test App A");
+
+		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.undeployApp(itemName = "Test App B");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		AppBuilderAdmin.validateUndeployedApp();
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.deployApp(itemName = "Test App B");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		Navigator.gotoPage(pageName = "App Builder Page");
+
+		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.undeployApp(itemName = "Test App C");
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AppBuilderAdmin.validateStandAlone404();
+
+		Navigator.closeWindow();
+
+		AppBuilderAdmin.deployApp(itemName = "Test App C");
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AppBuilderAdmin.validateStandAloneApp();
+
+		Navigator.closeWindow();
+	}
+
 	@description = "Update an existing deployment"
 	@priority = "5"
 	test UpdateDeployment {
@@ -1863,185 +2043,6 @@ definition {
 		App.selectTableView(tableViewName = "Table View Title");
 
 		App.saveApp();
-	}
-	
-	@description = "Unpublish and Republish an App"
-	@priority = "5"
-	test UnpublishAndRepublish {
-		
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text",
-			formViewName = "Form View Title",
-			tableViewName = "Table View Title");
-
-		App.add(
-			appTitle = "Test App A",
-			deployOption = "Product Menu",
-			formViewName = "Form View Title",
-			tableViewName = "Table View Title");
-
-		App.add(
-			appTitle = "Test App B",
-			deployOption = "Widget",
-			formViewName = "Form View Title",
-			tableViewName = "Table View Title");
-
-		App.add(
-			appTitle = "Test App C",
-			deployOption = "Standalone",
-			formViewName = "Form View Title",
-			tableViewName = "Table View Title");
-
-		AppBuilderAdmin.gotoCustomAppCP(
-			panel = "Control Panel",
-			portlet = "Test App A");
-
-		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "App Builder Page");
-
-		Navigator.gotoPage(pageName = "App Builder Page");
-
-		Portlet.addPG(
-			pageName = "App Builder Page",
-			portletName = "Test App B");
-
-		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
-
-		ProductMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
-
-		AppBuilderAdmin.openItem(itemName = "my custom object");
-
-		AppBuilderAdmin.switchTab(tabName = "Apps");
-
-		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
-
-		SelectWindow.selectPopUp(locator1 = "null");
-
-		AppBuilderAdmin.validateStandAloneApp();
-
-		Navigator.closeWindow();
-
-		ProductMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
-
-		AppBuilderAdmin.openItem(itemName = "my custom object");
-
-		AppBuilderAdmin.switchTab(tabName = "Apps");
-
-		AppBuilderAdmin.undeployApp(itemName = "Test App A");
-
-		AppBuilderAdmin.gotoCustomAppCP(
-			panel = "Control Panel",
-			portlet = "Test App A");
-
-		AppBuilderAdmin.validateUndeployedApp();
-
-		ProductMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
-
-		AppBuilderAdmin.openItem(itemName = "my custom object");
-
-		AppBuilderAdmin.switchTab(tabName = "Apps");
-
-		AppBuilderAdmin.deployApp(itemName = "Test App A");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		AppBuilderAdmin.gotoCustomAppCP(
-			panel = "Control Panel",
-			portlet = "Test App A");
-
-		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
-
-		ProductMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
-
-		AppBuilderAdmin.openItem(itemName = "my custom object");
-
-		AppBuilderAdmin.switchTab(tabName = "Apps");
-
-		AppBuilderAdmin.undeployApp(itemName = "Test App B");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		Navigator.gotoPage(pageName = "App Builder Page");
-
-		AppBuilderAdmin.validateUndeployedApp();
-
-		ProductMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
-
-		AppBuilderAdmin.openItem(itemName = "my custom object");
-
-		AppBuilderAdmin.switchTab(tabName = "Apps");
-
-		AppBuilderAdmin.deployApp(itemName = "Test App B");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		Navigator.gotoPage(pageName = "App Builder Page");
-
-		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
-
-		ProductMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
-
-		AppBuilderAdmin.openItem(itemName = "my custom object");
-
-		AppBuilderAdmin.switchTab(tabName = "Apps");
-
-		AppBuilderAdmin.undeployApp(itemName = "Test App C");
-
-		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
-
-		SelectWindow.selectPopUp(locator1 = "null");
-
-		AppBuilderAdmin.validateStandAlone404();
-
-		Navigator.closeWindow();
-
-		AppBuilderAdmin.deployApp(itemName = "Test App C");
-
-		AppBuilderAdmin.openStandAloneApp(itemName = "Test App C");
-
-		SelectWindow.selectPopUp(locator1 = "null");
-
-		AppBuilderAdmin.validateStandAloneApp();
-
-		Navigator.closeWindow();
 	}
 
 	@description = "Validate empty list state of Apps listing screen"

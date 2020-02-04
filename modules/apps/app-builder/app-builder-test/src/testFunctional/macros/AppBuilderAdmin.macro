@@ -96,16 +96,6 @@ definition {
 			value1 = "${key_itemName}");
 	}
 
-	macro editAppName {
-		AppBuilderAdmin.setName(title = "${appTitle}");
-
-		Button.clickNext();
-
-		Button.clickNext();
-
-		App.saveApp();
-	}
-
 	macro deployApp {
 		AssertTextEquals(
 			deployStatus = "Undeployed",
@@ -122,6 +112,16 @@ definition {
 			deployStatus = "Deployed",
 			locator1 = "AppBuilder#DEPLOY_APP_STATUS",
 			value1 = "Deployed");
+	}
+
+	macro editAppName {
+		AppBuilderAdmin.setName(title = "${appTitle}");
+
+		Button.clickNext();
+
+		Button.clickNext();
+
+		App.saveApp();
 	}
 
 	macro editCustomObjectNameAtPopover {

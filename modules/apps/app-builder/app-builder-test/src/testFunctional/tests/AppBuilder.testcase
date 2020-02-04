@@ -1,5 +1,6 @@
 @component-name = "app-builder"
 definition {
+
 	property custom.properties = "default.layout.template.id=1_column";
 
 	property portal.release = "true";

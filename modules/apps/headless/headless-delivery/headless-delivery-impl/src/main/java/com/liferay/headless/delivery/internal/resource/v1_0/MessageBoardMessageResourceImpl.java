@@ -31,6 +31,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -49,6 +50,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
@@ -426,6 +428,28 @@ public class MessageBoardMessageResourceImpl
 		).build();
 	}
 
+	private Map<String, Map<String, String>> _getRatingActions(
+			RatingsEntry ratingsEntry)
+		throws PortalException {
+
+		MBMessage mbMessage = _mbMessageService.getMessage(
+			ratingsEntry.getClassPK());
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction("UPDATE", mbMessage, "postMessageBoardMessageMyRating")
+		).put(
+			"delete",
+			addAction("UPDATE", mbMessage, "deleteMessageBoardMessageMyRating")
+		).put(
+			"get",
+			addAction("VIEW", mbMessage, "getMessageBoardMessageMyRating")
+		).put(
+			"replace",
+			addAction("UPDATE", mbMessage, "putMessageBoardMessageMyRating")
+		).build();
+	}
+
 	private Map<String, Map<String, String>> _getSiteListActions(long site) {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"get",
@@ -439,7 +463,8 @@ public class MessageBoardMessageResourceImpl
 		return new SPIRatingResource<>(
 			MBMessage.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
+				_portal, ratingsEntry, _getRatingActions(ratingsEntry),
+				_userLocalService),
 			contextUser);
 	}
 

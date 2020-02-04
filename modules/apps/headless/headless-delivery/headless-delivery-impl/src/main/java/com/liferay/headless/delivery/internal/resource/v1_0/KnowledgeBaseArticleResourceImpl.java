@@ -32,6 +32,7 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -51,6 +52,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
@@ -453,6 +455,44 @@ public class KnowledgeBaseArticleResourceImpl
 		).build();
 	}
 
+	private Map<String, Map<String, String>> _getRatingActions(
+			RatingsEntry ratingsEntry)
+		throws PortalException {
+
+		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
+			ratingsEntry.getClassPK(), WorkflowConstants.STATUS_APPROVED);
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"UPDATE", kbArticle.getResourcePrimKey(),
+				"postKnowledgeBaseArticleMyRating",
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).put(
+			"delete",
+			addAction(
+				"UPDATE", kbArticle.getResourcePrimKey(),
+				"deleteKnowledgeBaseArticleMyRating",
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", kbArticle.getResourcePrimKey(),
+				"getKnowledgeBaseArticleMyRating",
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).put(
+			"replace",
+			addAction(
+				"UPDATE", kbArticle.getResourcePrimKey(),
+				"putKnowledgeBaseArticleMyRating",
+				"com.liferay.knowledge.base.model.KBArticle",
+				kbArticle.getGroupId())
+		).build();
+	}
+
 	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
@@ -481,7 +521,8 @@ public class KnowledgeBaseArticleResourceImpl
 		return new SPIRatingResource<>(
 			KBArticle.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
+				_portal, ratingsEntry, _getRatingActions(ratingsEntry),
+				_userLocalService),
 			contextUser);
 	}
 

@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Javier Gamarra
  */
@@ -26,11 +29,13 @@ public class RatingUtil {
 
 	public static Rating toRating(
 			Portal portal, RatingsEntry ratingsEntry,
+			Map<String, Map<String, String>> ratingActions,
 			UserLocalService userLocalService)
 		throws Exception {
 
 		return new Rating() {
 			{
+				actions = (Map)ratingActions;
 				bestRating = 1D;
 				creator = CreatorUtil.toCreator(
 					portal, userLocalService.getUser(ratingsEntry.getUserId()));
@@ -41,6 +46,15 @@ public class RatingUtil {
 				worstRating = 0D;
 			}
 		};
+	}
+
+	public static Rating toRating(
+			Portal portal, RatingsEntry ratingsEntry,
+			UserLocalService userLocalService)
+		throws Exception {
+
+		return toRating(
+			portal, ratingsEntry, new HashMap<>(), userLocalService);
 	}
 
 }

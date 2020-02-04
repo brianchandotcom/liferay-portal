@@ -49,6 +49,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -71,6 +72,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
@@ -430,6 +432,27 @@ public class MessageBoardThreadResourceImpl
 		).build();
 	}
 
+	private Map<String, Map<String, String>> _getRatingActions(
+			RatingsEntry ratingsEntry)
+		throws PortalException {
+
+		MBMessage mbMessage = _mbMessageService.getMessage(
+			ratingsEntry.getClassPK());
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction("UPDATE", mbMessage, "postMessageBoardThreadMyRating")
+		).put(
+			"delete",
+			addAction("UPDATE", mbMessage, "deleteMessageBoardThreadMyRating")
+		).put(
+			"get", addAction("VIEW", mbMessage, "getMessageBoardThreadMyRating")
+		).put(
+			"replace",
+			addAction("UPDATE", mbMessage, "putMessageBoardThreadMyRating")
+		).build();
+	}
+
 	private Map<String, Map<String, String>> _getSiteListActions(long groupId) {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
@@ -470,7 +493,8 @@ public class MessageBoardThreadResourceImpl
 		return new SPIRatingResource<>(
 			MBMessage.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
+				_getRatingActions(ratingsEntry), _portal, ratingsEntry,
+				_userLocalService),
 			contextUser);
 	}
 

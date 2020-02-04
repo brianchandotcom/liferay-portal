@@ -222,7 +222,8 @@ public class MessageBoardSectionResourceImpl
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"create",
 			addAction(
-				"ADD_CATEGORY", "postMessageBoardSectionMessageBoardSection",
+				"ADD_CATEGORY", mbCategory.getCategoryId(),
+				"postMessageBoardSectionMessageBoardSection",
 				"com.liferay.message.boards", mbCategory.getGroupId())
 		).put(
 			"delete",

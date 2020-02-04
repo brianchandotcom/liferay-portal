@@ -31,6 +31,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.BlogPostingEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -50,6 +51,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
@@ -329,18 +331,39 @@ public class BlogPostingResourceImpl
 		).build();
 	}
 
+	private Map<String, Map<String, String>> _getRatingActions(
+			RatingsEntry ratingsEntry)
+		throws PortalException {
+
+		BlogsEntry blogsEntry = _blogsEntryService.getEntry(
+			ratingsEntry.getClassPK());
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create", addAction("UPDATE", blogsEntry, "postBlogPostingMyRating")
+		).put(
+			"delete",
+			addAction("UPDATE", blogsEntry, "deleteBlogPostingMyRating")
+		).put(
+			"get", addAction("VIEW", blogsEntry, "getBlogPostingMyRating")
+		).put(
+			"replace", addAction("UPDATE", blogsEntry, "putBlogPostingMyRating")
+		).build();
+	}
+
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
 		return new SPIRatingResource<>(
 			BlogsEntry.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _userLocalService),
+				_getRatingActions(ratingsEntry), _portal, ratingsEntry,
+				_userLocalService),
 			contextUser);
 	}
 
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
 		return _blogPostingDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				false, (Map)_getActions(blogsEntry), _dtoConverterRegistry,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				(Map)_getActions(blogsEntry), _dtoConverterRegistry,
 				blogsEntry.getEntryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));

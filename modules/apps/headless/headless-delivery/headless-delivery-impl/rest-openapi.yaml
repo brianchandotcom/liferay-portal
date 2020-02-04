@@ -1845,7 +1845,7 @@ components:
                         $ref: "#/components/schemas/PageElement"
                     type: array
                 type:
-                    enum: [Column, Fragment, Row, Section]
+                    enum: [Column, DropZone, Fragment, Root, Row, Section]
                     type: string
         PageTemplateDefinition:
             description:

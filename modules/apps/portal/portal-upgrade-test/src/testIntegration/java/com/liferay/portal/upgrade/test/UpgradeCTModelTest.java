@@ -158,7 +158,7 @@ public class UpgradeCTModelTest {
 			Assert.assertEquals(2, rs1.getLong("leftId"));
 			Assert.assertEquals(3, rs1.getLong("rightId"));
 			Assert.assertEquals(0, rs1.getLong("ctCollectionId"));
-			Assert.assertFalse(rs1.getBoolean("changeType"));
+			Assert.assertFalse(rs1.getBoolean("ctChangeType"));
 
 			Assert.assertFalse(rs1.next());
 

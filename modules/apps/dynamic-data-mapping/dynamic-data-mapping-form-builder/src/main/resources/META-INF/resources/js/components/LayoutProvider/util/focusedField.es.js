@@ -51,6 +51,7 @@ export const updateFocusedFieldName = (
 		focusedField = {
 			...focusedField,
 			fieldName: newFieldName,
+			name: newFieldName,
 			settingsContext: updateSettingsContextProperty(
 				editingLanguageId,
 				settingsContext,

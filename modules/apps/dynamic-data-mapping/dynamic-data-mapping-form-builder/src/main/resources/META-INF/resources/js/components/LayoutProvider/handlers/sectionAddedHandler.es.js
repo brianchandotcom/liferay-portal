@@ -50,6 +50,7 @@ const createField = (props, event) => {
 	const focusedField = {
 		...fieldType,
 		fieldName: newFieldName,
+		name: newFieldName,
 		settingsContext: {
 			...fieldType.settingsContext,
 			pages: normalizeSettingsContextPages(

@@ -39,7 +39,7 @@ task testPomCompileOnly
 task testPomRelease
 task testPomThirdParty
 
-Model compileOnlyModel = new Model()
+List<String> compileOnlyAllIdentifiers = []
 List<String> duplicateDependenciesWhitelist = ["javax.portlet:portlet-api", "javax.servlet:javax.servlet-api", "javax.ws.rs:javax.ws.rs-api"]
 
 String pomCompileOnlyArtifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.compile.only"
@@ -166,7 +166,11 @@ generatePomCompileOnly {
 
 		_write(model)
 
-		compileOnlyModel = model
+		model.dependencyManagement.dependencies.each {
+			dependency ->
+
+			compileOnlyAllIdentifiers.add dependency.groupId + ":" + dependency.artifactId
+		}
 	}
 }
 
@@ -298,24 +302,14 @@ generatePomThirdParty {
 		dependenciesProperties.each {
 			String[] dependencyInfo = it.value.split(":")
 
-			Boolean isDuplicate = false
+			String identifier = dependencyInfo[0] + ":" + dependencyInfo[1]
 
-			compileOnlyModel.dependencyManagement.dependencies.each {
-				compileOnlyDependency ->
-
-				if ((compileOnlyDependency.artifactId == dependencyInfo[1]) &&
-					(compileOnlyDependency.groupId == dependencyInfo[0])) {
-					isDuplicate = true
-
-					String identifier = dependencyInfo[0] + ":" + dependencyInfo[1]
-
-					if (duplicateDependenciesWhitelist.contains(identifier)) {
-						unexpectedDuplicates.add identifier
-					}
+			if (compileOnlyAllIdentifiers.contains(identifier)) {
+				if (duplicateDependenciesWhitelist.contains(identifier)) {
+					unexpectedDuplicates.add identifier
 				}
 			}
-
-			if (!isDuplicate) {
+			else {
 				Dependency dependency = new Dependency()
 
 				dependency.setArtifactId(dependencyInfo[1])

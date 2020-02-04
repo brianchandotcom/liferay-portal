@@ -300,32 +300,34 @@ generatePomThirdParty {
 		dependenciesProperties.each {
 			String[] dependencyInfo = it.value.split(":")
 
-			Dependency dependency = new Dependency()
-
-			dependency.setArtifactId(dependencyInfo[1])
-			dependency.setGroupId(dependencyInfo[0])
-			dependency.setVersion(dependencyInfo[2])
-
-			if (dependencyInfo.length == 4) {
-				dependency.setClassifier(dependencyInfo[3])
-			}
-
 			Boolean isDuplicate = false
 
 			compileOnlyModel.dependencyManagement.dependencies.each {
 				compileOnlyDependency ->
 
-				if ((compileOnlyDependency.artifactId == dependency.artifactId) &&
-					(compileOnlyDependency.groupId == dependency.groupId)) {
+				if ((compileOnlyDependency.artifactId == dependencyInfo[1]) &&
+					(compileOnlyDependency.groupId == dependencyInfo[0])) {
 					isDuplicate = true
 
-					if (duplicateDependenciesWhitelist.contains(dependency.groupId + ":" + dependency.artifactId)) {
-						unexpectedDuplicates << "${dependency.groupId}:${dependency.artifactId}"
+					String identifier = dependencyInfo[0] + ":" + dependencyInfo[1]
+
+					if (duplicateDependenciesWhitelist.contains(identifier)) {
+						unexpectedDuplicates.add identifier
 					}
 				}
 			}
 
 			if (!isDuplicate) {
+				Dependency dependency = new Dependency()
+
+				dependency.setArtifactId(dependencyInfo[1])
+				dependency.setGroupId(dependencyInfo[0])
+				dependency.setVersion(dependencyInfo[2])
+
+				if (dependencyInfo.length == 4) {
+					dependency.setClassifier(dependencyInfo[3])
+				}
+
 				dependencyManagement.addDependency(dependency)
 			}
 		}

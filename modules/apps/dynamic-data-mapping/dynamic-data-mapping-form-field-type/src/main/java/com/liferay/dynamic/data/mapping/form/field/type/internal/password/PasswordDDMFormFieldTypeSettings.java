@@ -80,10 +80,7 @@ public interface PasswordDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "string", label = "%placeholder-text",
-		properties = {
-			"placeholder=%enter-placeholder-text",
-			"tooltip=%enter-text-that-assists-the-user-but-is-not-submitted-as-a-field-value"
-		},
+		properties = "tooltip=%enter-text-that-assists-the-user-but-is-not-submitted-as-a-field-value",
 		type = "text"
 	)
 	public LocalizedValue placeholder();

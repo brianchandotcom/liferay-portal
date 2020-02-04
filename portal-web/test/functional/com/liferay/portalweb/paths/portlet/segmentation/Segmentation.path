@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_MENU</td>
-	<td>//*[contains(@class, 'd-flex justify-content-between sidebar-collapse-header') and contains(text(),'Organization')]</td>
+	<td>//*[contains(@class, 'd-flex') and contains(@class, 'justify-content-between') and contains(@class, 'sidebar-collapse-header') and contains(text(),'Organization')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>SEARCH_TAG_FIELD</td>
-	<td>//*[contains(@class,'form-control input-group-inset input-group-inset-after') and contains(@aria-label,'Search')]</td>
+	<td>//*[contains(@class,'form-control') and contains(@class,'input-group-inset') and contains(@class,'input-group-inset-after') and contains(@aria-label,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>SESSION_MENU</td>
-	<td>//*[contains(@class, 'd-flex justify-content-between sidebar-collapse-header') and contains(text(),'Session')]</td>
+	<td>//*[contains(@class, 'd-flex') and contains(@class, 'justify-content-between') and contains(@class, 'sidebar-collapse-header') and contains(text(),'Session')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -119,7 +119,8 @@ public class PageDefinitionConverterUtil {
 				}
 			};
 		}
-		else if (type.equals("container")) {
+
+		if (type.equals("container")) {
 			return new PageElement() {
 				{
 					definition = _toSectionDefinition(configJSONObject);
@@ -127,14 +128,16 @@ public class PageDefinitionConverterUtil {
 				}
 			};
 		}
-		else if (type.equals("fragment")) {
+
+		if (type.equals("fragment")) {
 			return new PageElement() {
 				{
 					type = PageElement.Type.FRAGMENT;
 				}
 			};
 		}
-		else if (type.equals("row")) {
+
+		if (type.equals("row")) {
 			return new PageElement() {
 				{
 					definition = _toRowDefinition(configJSONObject);
@@ -216,10 +219,8 @@ public class PageDefinitionConverterUtil {
 			{
 				backgroundColorCssClass = configJSONObject.getString(
 					"backgroundColorCssClass", null);
-
 				containerType = ContainerType.valueOf(
 					StringUtil.toUpperCase(configJSONObject.getString("type")));
-
 				setBackgroundImage(
 					() -> {
 						JSONObject backgroundImageJSONObject =
@@ -242,7 +243,6 @@ public class PageDefinitionConverterUtil {
 							}
 						};
 					});
-
 				setPaddingBottom(
 					() -> {
 						if (configJSONObject.isNull("paddingBottom")) {
@@ -251,7 +251,6 @@ public class PageDefinitionConverterUtil {
 
 						return configJSONObject.getInt("paddingBottom");
 					});
-
 				setPaddingHorizontal(
 					() -> {
 						if (configJSONObject.isNull("paddingHorizontal")) {
@@ -260,7 +259,6 @@ public class PageDefinitionConverterUtil {
 
 						return configJSONObject.getInt("paddingHorizontal");
 					});
-
 				setPaddingTop(
 					() -> {
 						if (configJSONObject.isNull("paddingTop")) {

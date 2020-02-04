@@ -372,3 +372,36 @@ value has also changed to avoid the execution of new upgrade processes on
 startup in production environments.
 
 ---------------------------------------
+
+### jQuery is no longer included by default
+- **Date:** 2020-Feb-04
+- **JIRA Ticket:** [LPS-95726](https://issues.liferay.com/browse/LPS-95726)
+
+#### What changed?
+
+Previously, `jQuery` was being included in every page by default and made
+available through the global `window.$` and the scoped `AUI.$` variables. After
+this change, `jQuery` is no longer included by default and those variables will
+be `undefined`.
+
+#### Who is affected?
+
+This affects any developer who used `AUI.$` or `window.$` in their custom
+scripts.
+
+#### How should I update my code?
+
+You should provide your own version `jQuery` to be used by your custom
+developments following any of the possible strategies to add third party
+libraries.
+
+Additionally, as a temporary measure, you can bring back the old behaviour by
+setting the `Enable jQuery` property in `System Settings > Third Party > jQuery`
+to `true`.
+
+#### Why was this change made?
+
+This change was made to avoid bundling and serving additional library code on
+every page that was mostly unused and redundant.
+
+---------------------------------------

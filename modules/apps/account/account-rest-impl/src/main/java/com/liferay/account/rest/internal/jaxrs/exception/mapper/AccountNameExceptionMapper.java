@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Account.Rest)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Account.Rest.AccountNameExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Account.REST.AccountNameExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

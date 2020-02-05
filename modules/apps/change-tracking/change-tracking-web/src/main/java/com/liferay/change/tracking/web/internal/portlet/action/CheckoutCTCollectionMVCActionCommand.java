@@ -26,8 +26,11 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -50,7 +53,8 @@ public class CheckoutCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
 
 		long ctCollectionId = ParamUtil.getLong(
 			actionRequest, "ctCollectionId");
@@ -73,15 +77,32 @@ public class CheckoutCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			_ctPreferencesLocalService.getCTPreferences(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId());
 
-		ctPreferences.setCtCollectionId(ctCollectionId);
+		long currentCtCollectionId = ctPreferences.getCtCollectionId();
 
-		_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
+		if (currentCtCollectionId != ctCollectionId) {
+			ctPreferences.setCtCollectionId(ctCollectionId);
 
-		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			SessionMessages.add(
-				actionRequest,
-				_portal.getPortletId(actionRequest) +
-					"checkoutProductionSuccess");
+			if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+				ctPreferences.setPreviousCtCollectionId(currentCtCollectionId);
+			}
+			else {
+				ctPreferences.setPreviousCtCollectionId(
+					CTConstants.CT_COLLECTION_ID_PRODUCTION);
+			}
+
+			_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
+		}
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		SessionMessages.add(
+			_portal.getHttpServletRequest(actionRequest), "requestProcessed",
+			ParamUtil.getString(actionRequest, "successMessage"));
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 	}
 

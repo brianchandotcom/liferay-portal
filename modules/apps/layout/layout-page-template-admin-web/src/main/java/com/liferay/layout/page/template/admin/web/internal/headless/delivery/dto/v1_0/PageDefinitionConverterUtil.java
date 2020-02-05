@@ -47,9 +47,6 @@ public class PageDefinitionConverterUtil {
 	public static PageDefinition toPageDefinition(Layout layout) {
 		return new PageDefinition() {
 			{
-				dateCreated = layout.getCreateDate();
-				dateModified = layout.getModifiedDate();
-				name = layout.getName();
 				pageElements = _toPageElements(layout);
 			}
 		};

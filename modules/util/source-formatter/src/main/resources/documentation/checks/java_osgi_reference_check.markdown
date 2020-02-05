@@ -1,4 +1,15 @@
-## OSGi Components
+## JavaOSGiReferenceCheck
+
+### OSGi Components Inheritance
+
+Duplicate methods with the `@Reference` annotation in a `@Component` class and
+its superclass by using inheritance should be avoided. The `@Reference` method
+in the class can be removed while adding `-dsannotations-options: inherit` to
+the `bnd.bnd` in the module.
+
+---
+
+### Service Util Calls
 
 OSGi Components should add references to the services instead of calling the
 `*ServiceUtil` class to avoid accidentally creating a circular dependency.

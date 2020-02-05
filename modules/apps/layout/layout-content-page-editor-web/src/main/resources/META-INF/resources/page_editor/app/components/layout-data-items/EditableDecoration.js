@@ -13,6 +13,7 @@
  */
 
 import classNames from 'classnames';
+import {closest} from 'metal-dom';
 import React, {
 	useLayoutEffect,
 	useState,
@@ -26,7 +27,12 @@ import {ConfigContext} from '../../config/index';
 import selectEditableValue from '../../selectors/selectEditableValue';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useSelector} from '../../store/index';
-import {useIsActive, useIsHovered} from '../Controls';
+import {
+	useIsActive,
+	useIsHovered,
+	useHoverItem,
+	useSelectItem
+} from '../Controls';
 
 const ACTIVE_CLASS = 'page-editor__editable-decoration--active';
 const HIGHLIGHTED_CLASS = 'page-editor__editable-decoration--highlighted';
@@ -38,6 +44,7 @@ export default function EditableDecoration({
 	editableId,
 	fragmentEntryLinkId,
 	itemId,
+	onEditableDoubleClick,
 	parentItemId,
 	parentRef,
 	siblingsItemIds
@@ -48,6 +55,8 @@ export default function EditableDecoration({
 
 	const isActive = useIsActive();
 	const isHovered = useIsHovered();
+	const hoverItem = useHoverItem();
+	const selectItem = useSelectItem();
 
 	const isHighlighted = useMemo(
 		() =>
@@ -119,6 +128,69 @@ export default function EditableDecoration({
 			width: editableElementRect.width
 		});
 	}, [editableId, parentRef, wrapper.scrollTop]);
+
+	useLayoutEffect(() => {
+		const onClick = event => {
+			const editableElement = closest(event.target, 'lfr-editable');
+
+			if (editableElement && editableElement.id === editableId) {
+				event.stopPropagation();
+
+				if (isActive(itemId) && onEditableDoubleClick) {
+					onEditableDoubleClick(editableElement);
+				} else {
+					selectItem(itemId);
+				}
+			}
+		};
+
+		const onMouseOver = event => {
+			const editableElement = closest(event.target, 'lfr-editable');
+
+			if (editableElement && editableElement.id === editableId) {
+				event.stopPropagation();
+				hoverItem(itemId);
+			}
+		};
+
+		const onMouseOut = event => {
+			const editableElement = closest(event.target, 'lfr-editable');
+
+			if (
+				editableElement &&
+				editableElement.id === editableId &&
+				isHovered(itemId)
+			) {
+				event.stopPropagation();
+				hoverItem(null);
+			}
+		};
+
+		const parent = parentRef.current;
+
+		if (parent) {
+			parent.addEventListener('click', onClick);
+			parent.addEventListener('mouseover', onMouseOver);
+			parent.addEventListener('mouseout', onMouseOut);
+		}
+
+		return () => {
+			if (parent) {
+				parent.removeEventListener('click', onClick);
+				parent.removeEventListener('mouseover', onMouseOver);
+				parent.removeEventListener('mouseout', onMouseOut);
+			}
+		};
+	}, [
+		editableId,
+		hoverItem,
+		isHovered,
+		itemId,
+		isActive,
+		onEditableDoubleClick,
+		parentRef,
+		selectItem
+	]);
 
 	useLayoutEffect(() => {
 		showDecoration();

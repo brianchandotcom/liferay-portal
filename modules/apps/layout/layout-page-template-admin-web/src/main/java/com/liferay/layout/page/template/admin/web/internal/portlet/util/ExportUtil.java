@@ -26,8 +26,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.headless.delivery.dto.v1_0.PageTemplateDefinition;
-import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateDefinitionConverterUtil;
+import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -97,13 +97,12 @@ public class ExportUtil {
 			ZipWriter zipWriter)
 		throws Exception {
 
-		PageTemplateDefinition pageTemplateDefinition =
-			PageTemplateDefinitionConverterUtil.toPageTemplateDefinition(
-				layoutPageTemplateEntry);
+		PageTemplate pageTemplate = PageTemplateConverterUtil.toPageTemplate(
+			layoutPageTemplateEntry);
 
 		String path =
-			pageTemplateDefinition.getCollectionName() + StringPool.SLASH +
-				pageTemplateDefinition.getName();
+			pageTemplate.getCollectionName() + StringPool.SLASH +
+				pageTemplate.getName();
 
 		SimpleFilterProvider simpleFilterProvider = new SimpleFilterProvider();
 
@@ -113,8 +112,8 @@ public class ExportUtil {
 		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
 
 		zipWriter.addEntry(
-			path + "/page-template-definition.json",
-			objectWriter.writeValueAsString(pageTemplateDefinition));
+			path + "/page-template.json",
+			objectWriter.writeValueAsString(pageTemplate));
 
 		FileEntry previewFileEntry = _getPreviewFileEntry(
 			layoutPageTemplateEntry.getPreviewFileEntryId());

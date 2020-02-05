@@ -14,7 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0;
 
-import com.liferay.headless.delivery.dto.v1_0.PageTemplateDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 /**
  * @author Rubén Pulido
  */
-public class PageTemplateDefinitionConverterUtil {
+public class PageTemplateConverterUtil {
 
-	public static PageTemplateDefinition toPageTemplateDefinition(
+	public static PageTemplate toPageTemplate(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		return new PageTemplateDefinition() {
+		return new PageTemplate() {
 			{
 				dateCreated = layoutPageTemplateEntry.getCreateDate();
 				dateModified = layoutPageTemplateEntry.getModifiedDate();

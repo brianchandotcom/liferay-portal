@@ -183,8 +183,7 @@ public class BuilderCheck extends ChainedMethodCheck {
 
 		log(
 			detailAST, _MSG_USE_BUILDER_INSTEAD,
-			builderInformation.getBuilderClassName(), className,
-			builderInformation.getMarkdownFileName());
+			builderInformation.getBuilderClassName(), className);
 	}
 
 	private void _checkBuilder(DetailAST methodCallDetailAST) {
@@ -233,8 +232,7 @@ public class BuilderCheck extends ChainedMethodCheck {
 
 		if (parentDetailAST.getType() == TokenTypes.LITERAL_RETURN) {
 			_checkInline(
-				parentDetailAST, methodVariableDetailASTList, builderClassName,
-				builderInformation.getMarkdownFileName());
+				parentDetailAST, methodVariableDetailASTList, builderClassName);
 		}
 
 		if (parentDetailAST.getType() != TokenTypes.ASSIGN) {
@@ -257,8 +255,7 @@ public class BuilderCheck extends ChainedMethodCheck {
 		}
 
 		_checkInline(
-			parentDetailAST, methodVariableDetailASTList, builderClassName,
-			builderInformation.getMarkdownFileName());
+			parentDetailAST, methodVariableDetailASTList, builderClassName);
 
 		firstChildDetailAST = assignDetailAST.getFirstChild();
 
@@ -300,8 +297,7 @@ public class BuilderCheck extends ChainedMethodCheck {
 				log(
 					assignDetailAST, _MSG_INCLUDE_BUILDER, fullIdent.getText(),
 					fullIdent.getLineNo(), builderClassName,
-					assignDetailAST.getLineNo(),
-					builderInformation.getMarkdownFileName());
+					assignDetailAST.getLineNo());
 
 				return;
 			}
@@ -320,7 +316,7 @@ public class BuilderCheck extends ChainedMethodCheck {
 
 	private void _checkInline(
 		DetailAST parentDetailAST, List<DetailAST> methodVariableDetailASTList,
-		String builderClassName, String markdownFileName) {
+		String builderClassName) {
 
 		if (!isAttributeValue(_CHECK_INLINE)) {
 			return;
@@ -393,7 +389,7 @@ public class BuilderCheck extends ChainedMethodCheck {
 					log(
 						identDetailAST, _MSG_INLINE_BUILDER, name,
 						identDetailAST.getLineNo(), builderClassName,
-						parentDetailAST.getLineNo(), markdownFileName);
+						parentDetailAST.getLineNo());
 				}
 			}
 
@@ -457,8 +453,7 @@ public class BuilderCheck extends ChainedMethodCheck {
 						log(
 							detailAST, _MSG_USE_BUILDER,
 							builderInformation.getBuilderClassName(),
-							detailAST.getLineNo(), fullIdent.getLineNo(),
-							builderInformation.getMarkdownFileName());
+							detailAST.getLineNo(), fullIdent.getLineNo());
 
 						return;
 					}
@@ -746,24 +741,19 @@ public class BuilderCheck extends ChainedMethodCheck {
 	private static final List<BuilderInformation> _builderInformationList =
 		ListUtil.fromArray(
 			new BuilderInformation(
-				"ConcurrentHashMap", "ConcurrentHashMapBuilder", "builders",
-				"put"),
+				"ConcurrentHashMap", "ConcurrentHashMapBuilder", "put"),
+			new BuilderInformation("HashMap", "HashMapBuilder", "put"),
 			new BuilderInformation(
-				"HashMap", "HashMapBuilder", "builders", "put"),
-			new BuilderInformation(
-				"LinkedHashMap", "LinkedHashMapBuilder", "builders", "put"),
-			new BuilderInformation(
-				"TreeMap", "TreeMapBuilder", "put", "builders", "put"));
+				"LinkedHashMap", "LinkedHashMapBuilder", "put"),
+			new BuilderInformation("TreeMap", "TreeMapBuilder", "put"));
 
 	private static class BuilderInformation {
 
 		public BuilderInformation(
-			String className, String builderClassName, String markdownFileName,
-			String... methodNames) {
+			String className, String builderClassName, String... methodNames) {
 
 			_className = className;
 			_builderClassName = builderClassName;
-			_markdownFileName = markdownFileName;
 			_methodNames = methodNames;
 		}
 
@@ -775,17 +765,12 @@ public class BuilderCheck extends ChainedMethodCheck {
 			return _className;
 		}
 
-		public String getMarkdownFileName() {
-			return _markdownFileName;
-		}
-
 		public String[] getMethodNames() {
 			return _methodNames;
 		}
 
 		private final String _builderClassName;
 		private final String _className;
-		private final String _markdownFileName;
 		private final String[] _methodNames;
 
 	}

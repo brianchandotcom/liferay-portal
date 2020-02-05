@@ -28,6 +28,7 @@ import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
@@ -192,6 +193,12 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				currentPrimaryKeys.getKey(), currentPrimaryKeys.getValue());
 
 			constraintResolver.resolveConflict(constraintResolverHelperImpl);
+
+			Session session = ctPersistence.getCurrentSession();
+
+			session.flush();
+
+			session.clear();
 
 			attemptedPrimaryKeys.add(currentPrimaryKeys);
 

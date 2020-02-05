@@ -1,4 +1,4 @@
-## Test Method Naming
+## JavaTestMethodAnnotationsCheck
 
 Methods with one of the following annotations, should follow our naming
 standards.

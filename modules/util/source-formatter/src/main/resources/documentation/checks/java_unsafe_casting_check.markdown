@@ -1,4 +1,4 @@
-## Unsafe Casting
+## JavaUnsafeCastingCheck
 
 To avoid ClassCastExceptions, we want to use
 

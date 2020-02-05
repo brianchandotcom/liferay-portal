@@ -14,10 +14,14 @@
 
 package com.liferay.rss.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.rss.constants.RSSPortletKeys;
 
@@ -70,6 +74,19 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 	protected void updateSubscriptions(ActionRequest actionRequest)
 		throws Exception {
 
+		UnicodeProperties properties = PropertiesParamUtil.getProperties(
+			actionRequest, _PARAMETER_NAME_PREFIX);
+
+		long entriesPerFeed = GetterUtil.getLong(
+			properties.getProperty("entriesPerFeed"));
+
+		long expandedEntriesPerFeed = GetterUtil.getLong(
+			properties.getProperty("expandedEntriesPerFeed"));
+
+		if ((entriesPerFeed < 0) || (expandedEntriesPerFeed < 0)) {
+			throw new ConfigurationException();
+		}
+
 		int[] subscriptionIndexes = StringUtil.split(
 			ParamUtil.getString(actionRequest, "subscriptionIndexes"), 0);
 
@@ -104,5 +121,7 @@ public class RSSConfigurationAction extends DefaultConfigurationAction {
 		setPreference(actionRequest, "urls", urls);
 		setPreference(actionRequest, "titles", titles);
 	}
+
+	private static final String _PARAMETER_NAME_PREFIX = "preferences--";
 
 }

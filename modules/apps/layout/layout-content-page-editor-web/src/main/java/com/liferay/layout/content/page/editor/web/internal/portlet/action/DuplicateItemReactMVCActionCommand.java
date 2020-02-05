@@ -23,12 +23,13 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.excecption.DuplicatedPortletIdException;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -61,7 +63,9 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -93,25 +97,45 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 			SessionMessages.add(actionRequest, "fragmentEntryLinkDuplicated");
 		}
 		catch (Exception exception) {
-			String errorMessage = "an-unexpected-error-occurred";
-
-			if (exception instanceof NoSuchEntryLinkException) {
-				errorMessage =
-					"the-section-could-not-be-duplicated-because-it-has-been-" +
-						"deleted";
-			}
-			else if (exception instanceof PortletIdException) {
-				errorMessage =
-					"the-layout-could-not-be-duplicated-because-it-contains-" +
-						"a-widget-x-that-can-only-appear-once-in-the-page";
-			}
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
+			String errorMessage = StringPool.BLANK;
+
+			if (exception instanceof NoSuchEntryLinkException) {
+				errorMessage = LanguageUtil.get(
+					themeDisplay.getRequest(),
+					"the-section-could-not-be-duplicated-because-it-has-been-" +
+						"deleted");
+			}
+			else if (exception instanceof DuplicatedPortletIdException) {
+				DuplicatedPortletIdException duplicatedPortletIdException =
+					(DuplicatedPortletIdException)exception;
+
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(actionRequest);
+
+				HttpSession session = httpServletRequest.getSession();
+
+				ServletContext servletContext = session.getServletContext();
+
+				Portlet portlet = _portletLocalService.getPortletById(
+					themeDisplay.getCompanyId(),
+					duplicatedPortletIdException.getPortletId());
+
+				errorMessage = LanguageUtil.format(
+					themeDisplay.getRequest(),
+					"the-layout-could-not-be-duplicated-because-it-contains-" +
+						"a-widget-x-that-can-only-appear-once-in-the-page",
+					_portal.getPortletTitle(
+						portlet, servletContext, themeDisplay.getLocale()));
+			}
+			else {
+				errorMessage = LanguageUtil.get(
+					themeDisplay.getRequest(), "an-unexpected-error-occurred");
+			}
+
+			jsonObject.put("error", errorMessage);
 		}
 
 		hideDefaultSuccessMessage(actionRequest);
@@ -236,7 +260,7 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 			Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 			if (!portlet.isInstanceable()) {
-				throw new PortletIdException();
+				throw new DuplicatedPortletIdException(portletId);
 			}
 
 			String oldInstanceId = editableValuesJSONObject.getString(
@@ -287,6 +311,9 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

@@ -71,6 +71,8 @@ public class TruncateLongLines
 				listWithFairlyLongName) {
 
 			stringWithAveryVeryVeryVeryVeryLongName = variable1;
+
+			listWithFairlyLongName.add(stringWithAveryVeryVeryVeryVeryLongName);
 		}
 	}
 

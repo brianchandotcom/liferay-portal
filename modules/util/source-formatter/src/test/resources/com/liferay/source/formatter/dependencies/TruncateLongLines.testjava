@@ -54,6 +54,8 @@ public class TruncateLongLines extends ThisIsASuperClassThatAlsoHasASuperLongNam
 
 		for (String stringWithAveryVeryVeryVeryVeryLongName : listWithFairlyLongName) {
 			stringWithAveryVeryVeryVeryVeryLongName = variable1;	
+
+			listWithFairlyLongName.add(stringWithAveryVeryVeryVeryVeryLongName);
 		}
 	}
 

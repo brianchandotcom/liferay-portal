@@ -36,10 +36,6 @@ import org.dom4j.Element;
 public class SourceFormatterMessage
 	implements Comparable<SourceFormatterMessage> {
 
-	public SourceFormatterMessage(String fileName, String message) {
-		this(fileName, message, -1);
-	}
-
 	public SourceFormatterMessage(
 		String fileName, String message, CheckType checkType, String checkName,
 		String checkSuperclassName, String markdownFileName, int lineNumber) {
@@ -51,12 +47,6 @@ public class SourceFormatterMessage
 		_checkSuperclassName = checkSuperclassName;
 		_markdownFileName = markdownFileName;
 		_lineNumber = lineNumber;
-	}
-
-	public SourceFormatterMessage(
-		String fileName, String message, int lineNumber) {
-
-		this(fileName, message, null, lineNumber);
 	}
 
 	public SourceFormatterMessage(

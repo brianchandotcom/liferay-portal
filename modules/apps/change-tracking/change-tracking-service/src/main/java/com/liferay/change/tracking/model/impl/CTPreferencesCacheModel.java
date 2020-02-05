@@ -75,7 +75,7 @@ public class CTPreferencesCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -89,6 +89,8 @@ public class CTPreferencesCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", confirmationEnabled=");
 		sb.append(confirmationEnabled);
+		sb.append(", previousCtCollectionId=");
+		sb.append(previousCtCollectionId);
 		sb.append("}");
 
 		return sb.toString();
@@ -104,6 +106,7 @@ public class CTPreferencesCacheModel
 		ctPreferencesImpl.setUserId(userId);
 		ctPreferencesImpl.setCtCollectionId(ctCollectionId);
 		ctPreferencesImpl.setConfirmationEnabled(confirmationEnabled);
+		ctPreferencesImpl.setPreviousCtCollectionId(previousCtCollectionId);
 
 		ctPreferencesImpl.resetOriginalValues();
 
@@ -123,6 +126,8 @@ public class CTPreferencesCacheModel
 		ctCollectionId = objectInput.readLong();
 
 		confirmationEnabled = objectInput.readBoolean();
+
+		previousCtCollectionId = objectInput.readLong();
 	}
 
 	@Override
@@ -138,6 +143,8 @@ public class CTPreferencesCacheModel
 		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeBoolean(confirmationEnabled);
+
+		objectOutput.writeLong(previousCtCollectionId);
 	}
 
 	public long mvccVersion;
@@ -146,5 +153,6 @@ public class CTPreferencesCacheModel
 	public long userId;
 	public long ctCollectionId;
 	public boolean confirmationEnabled;
+	public long previousCtCollectionId;
 
 }

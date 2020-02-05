@@ -8,6 +8,7 @@ create index IX_9FB742FA on CTMessage (ctCollectionId);
 
 create unique index IX_516E5375 on CTPreferences (companyId, userId);
 create index IX_3FECC82B on CTPreferences (ctCollectionId);
+create index IX_D9EA7A42 on CTPreferences (previousCtCollectionId);
 
 create index IX_7523B0A4 on CTProcess (companyId);
 create index IX_B4859762 on CTProcess (ctCollectionId);

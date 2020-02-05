@@ -1,4 +1,4 @@
-## Equals
+## ValidatorEqualsCheck
 
 Use `Objects.equals(Object, Object)` instead of
 `Validator.equals(Object, Object)`.

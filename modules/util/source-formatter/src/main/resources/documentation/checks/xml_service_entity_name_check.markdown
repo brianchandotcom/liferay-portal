@@ -1,6 +1,6 @@
-## Entity Naming
+## XMLServiceEntityNameCheck
 
-Entity name should not be the same as the package name.
+Entity names in `service.xml` should not be the same as the package name.
 
 ### Example
 

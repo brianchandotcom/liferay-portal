@@ -1,4 +1,4 @@
-## ConfigurationAdmin
+## JavaConfigurationAdminCheck
 
 OSGi Configurations are shared across bundles but are not created with
 `location == "?"`

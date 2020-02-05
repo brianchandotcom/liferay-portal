@@ -304,7 +304,6 @@ public class OracleDB extends BaseDB {
 	}
 
 	private String _postBuildSQL(String template) throws IOException {
-		template = removeLongInserts(template);
 		template = StringUtil.replace(template, "\\n", "'||CHR(10)||'");
 
 		return template;

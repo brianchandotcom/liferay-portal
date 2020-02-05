@@ -1047,27 +1047,6 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
-	protected String removeLongInserts(String data) throws IOException {
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
-
-			StringBundler sb = new StringBundler();
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (!line.startsWith("insert into Image (") &&
-					!line.startsWith("insert into JournalArticle (")) {
-
-					sb.append(line);
-					sb.append("\n");
-				}
-			}
-
-			return sb.toString();
-		}
-	}
-
 	protected String removeNull(String content) {
 		content = StringUtil.replace(content, " = null", " = NULL");
 		content = StringUtil.replace(content, " is null", " IS NULL");

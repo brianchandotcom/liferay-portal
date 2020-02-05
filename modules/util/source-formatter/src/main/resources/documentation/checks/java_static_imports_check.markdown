@@ -1,4 +1,4 @@
-## Imports
+## JavaStaticImportsCheck
 
 ### Do Not Use Wildcards
 

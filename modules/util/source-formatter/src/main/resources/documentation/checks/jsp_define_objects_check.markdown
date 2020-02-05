@@ -1,4 +1,4 @@
-## JSP Code Duplication
+## JSPDefineObjectsCheck
 
 We can use `liferay-frontend:defineObjects`, `liferay-theme:defineObjects` and
 `portlet:defineObjects` tags to prevent unnecessary code duplication.

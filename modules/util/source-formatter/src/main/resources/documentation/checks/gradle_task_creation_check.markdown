@@ -1,4 +1,4 @@
-## Gradle Task Creation
+## GradleTaskCreationCheck
 
 A task should be declared in a separate line before the closure.
 

@@ -801,6 +801,50 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	/**
+	 * Returns the translated and formatted storage size
+	 *
+	 * @param  size the storage size
+	 * @param  locale the locale to translate to
+	 * @return the translated storage size
+	 */
+	@Override
+	public String formatStorageSize(double size, Locale locale) {
+		NumberFormat numberFormat = NumberFormat.getInstance(locale);
+
+		numberFormat.setMaximumFractionDigits(0);
+
+		numberFormat.setMinimumFractionDigits(0);
+
+		String suffix = "storage.size.suffix.b";
+
+		if (size >= _STORAGE_SIZE_DENOMINATOR) {
+			suffix = "storage.size.suffix.kb";
+
+			size = size / _STORAGE_SIZE_DENOMINATOR;
+		}
+
+		if (size >= _STORAGE_SIZE_DENOMINATOR) {
+			suffix = "storage.size.suffix.mb";
+
+			size = size / _STORAGE_SIZE_DENOMINATOR;
+
+			numberFormat.setMaximumFractionDigits(1);
+		}
+
+		if (size >= _STORAGE_SIZE_DENOMINATOR) {
+			suffix = "storage.size.suffix.gb";
+
+			size = size / _STORAGE_SIZE_DENOMINATOR;
+
+			numberFormat.setMaximumFractionDigits(1);
+		}
+
+		suffix = get(locale, suffix);
+
+		return numberFormat.format(size) + StringPool.SPACE + suffix;
+	}
+
+	/**
 	 * Returns the key's translation from the portlet configuration, or from the
 	 * portal's resource bundle if the portlet configuration is unavailable.
 	 *
@@ -2081,6 +2125,8 @@ public class LanguageImpl implements Language, Serializable {
 			_supportedLocalesSet = Collections.unmodifiableSet(
 				supportedLocalesSet);
 		}
+
+		private final double _STORAGE_SIZE_DENOMINATOR = 1024.0;
 
 		private final Set<Locale> _availableLocales;
 		private final Set<String> _duplicateLanguageCodes;

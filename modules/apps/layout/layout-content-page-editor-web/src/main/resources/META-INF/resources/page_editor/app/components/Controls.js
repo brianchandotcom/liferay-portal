@@ -14,10 +14,6 @@
 
 import React, {useCallback, useContext, useReducer} from 'react';
 
-import {ConfigContext} from '../config/index';
-import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
-import {useSelector} from '../store/index';
-
 const INITIAL_STATE = {
 	activeItemId: null,
 	hoveredItemId: null,
@@ -84,25 +80,6 @@ const useActiveItemId = () => {
 	return state.activeItemId;
 };
 
-const useEditableIsTranslated = () => {
-	const config = useContext(ConfigContext);
-	const languageId = useSelector(state => state.languageId);
-	const segmentsExperienceId = useSelector(
-		selectPrefixedSegmentsExperienceId
-	);
-
-	const {defaultLanguageId} = config;
-
-	return useCallback(
-		editableValue =>
-			defaultLanguageId !== languageId &&
-			(editableValue[languageId] ||
-				(segmentsExperienceId in editableValue &&
-					editableValue[segmentsExperienceId][languageId])),
-		[defaultLanguageId, languageId, segmentsExperienceId]
-	);
-};
-
 const useHoveredItemId = () => {
 	const [state] = useContext(ControlsContext);
 
@@ -164,7 +141,6 @@ export {
 	ControlsConsumer,
 	ControlsProvider,
 	useActiveItemId,
-	useEditableIsTranslated,
 	useHoveredItemId,
 	useHoverItem,
 	useIsActive,

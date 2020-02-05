@@ -13,13 +13,20 @@
  */
 
 import classNames from 'classnames';
-import React, {useLayoutEffect, useState, useCallback} from 'react';
+import React, {
+	useLayoutEffect,
+	useState,
+	useCallback,
+	useContext,
+	useMemo
+} from 'react';
 import {createPortal} from 'react-dom';
 
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
+import {ConfigContext} from '../../config/index';
 import selectEditableValue from '../../selectors/selectEditableValue';
+import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useSelector} from '../../store/index';
-import {useEditableIsTranslated, useIsActive, useIsHovered} from '../Controls';
+import {useIsActive, useIsHovered} from '../Controls';
 
 const ACTIVE_CLASS = 'page-editor__editable-decoration--active';
 const HIGHLIGHTED_CLASS = 'page-editor__editable-decoration--highlighted';
@@ -27,56 +34,66 @@ const HOVERED_CLASS = 'page-editor__editable-decoration--hovered';
 const MAPPED_CLASS = 'page-editor__editable-decoration--mapped';
 const TRANSLATED_CLASS = 'page-editor__editable-decoration--translated';
 
-const useIsHighlighted = () => {
-	const isActive = useIsActive();
-
-	return useCallback(
-		(parentId, siblingsIds) =>
-			isActive(parentId) ||
-			siblingsIds.some(siblingId => isActive(siblingId)),
-		[isActive]
-	);
-};
-
-const isMapped = editableValue =>
-	(editableValue.classNameId &&
-		editableValue.classPK &&
-		editableValue.fieldId) ||
-	editableValue.mappedField;
-
 export default function EditableDecoration({
 	editableId,
-	editableUniqueId,
-	parentContent,
+	fragmentEntryLinkId,
+	itemId,
 	parentItemId,
 	parentRef,
-	siblingsIds
+	siblingsItemIds
 }) {
+	const {defaultLanguageId} = useContext(ConfigContext);
+	const [style, setStyle] = useState({});
+	const wrapper = useMemo(() => document.getElementById('wrapper'), []);
+
 	const isActive = useIsActive();
-	const isHighlighted = useIsHighlighted();
 	const isHovered = useIsHovered();
-	const isTranslated = useEditableIsTranslated();
+
+	const isHighlighted = useMemo(
+		() =>
+			[parentItemId, ...siblingsItemIds].some(_itemId =>
+				isActive(_itemId)
+			),
+		[isActive, parentItemId, siblingsItemIds]
+	);
+
+	const isMapped = useSelector(state => {
+		const editableValue = selectEditableValue(
+			state,
+			fragmentEntryLinkId,
+			editableId
+		);
+
+		return (
+			(editableValue.classNameId &&
+				editableValue.classPK &&
+				editableValue.fieldId) ||
+			editableValue.mappedField
+		);
+	});
+
+	const isTranslated = useSelector(state => {
+		const editableValue = selectEditableValue(
+			state,
+			fragmentEntryLinkId,
+			editableId
+		);
+
+		const {languageId} = state;
+		const segmentsExperienceId = selectPrefixedSegmentsExperienceId(state);
+
+		return (
+			editableValue &&
+			defaultLanguageId !== languageId &&
+			(editableValue[languageId] ||
+				(segmentsExperienceId in editableValue &&
+					editableValue[segmentsExperienceId][languageId]))
+		);
+	});
 
 	const sidebarOpen = useSelector(
 		state => state.sidebarPanelId && state.sidebarOpen
 	);
-	const [style, setStyle] = useState({});
-	const wrapper = document.getElementById('wrapper');
-
-	const editableValue = useSelector(state => {
-		const parentItem = state.layoutData.items[parentItemId];
-
-		if (parentItem) {
-			return selectEditableValue(
-				state,
-				state.layoutData.items[parentItemId].config.fragmentEntryLinkId,
-				editableId,
-				EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-			);
-		}
-
-		return {};
-	});
 
 	const hideDecoration = useCallback(() => {
 		setStyle({
@@ -105,7 +122,7 @@ export default function EditableDecoration({
 
 	useLayoutEffect(() => {
 		showDecoration();
-	}, [parentContent, showDecoration]);
+	}, [siblingsItemIds, showDecoration]);
 
 	useLayoutEffect(() => {
 		window.addEventListener('resize', showDecoration);
@@ -175,12 +192,11 @@ export default function EditableDecoration({
 	return createPortal(
 		<div
 			className={classNames('page-editor__editable-decoration', {
-				[ACTIVE_CLASS]: isActive(editableUniqueId),
-				[HIGHLIGHTED_CLASS]: isHighlighted(parentItemId, siblingsIds),
-				[HOVERED_CLASS]:
-					!isActive(editableUniqueId) && isHovered(editableUniqueId),
-				[MAPPED_CLASS]: isMapped(editableValue),
-				[TRANSLATED_CLASS]: isTranslated(editableValue)
+				[ACTIVE_CLASS]: isActive(itemId),
+				[HIGHLIGHTED_CLASS]: isHighlighted,
+				[HOVERED_CLASS]: !isActive(itemId) && isHovered(itemId),
+				[MAPPED_CLASS]: isMapped,
+				[TRANSLATED_CLASS]: isTranslated
 			})}
 			style={style}
 		></div>,

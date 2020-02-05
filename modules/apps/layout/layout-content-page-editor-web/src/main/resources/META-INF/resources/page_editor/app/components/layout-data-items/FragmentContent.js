@@ -210,6 +210,8 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 			editableElement && getEditableUniqueId(editableElement.id);
 
 		if (editableUniqueId) {
+			event.stopPropagation();
+
 			hoverItem(editableUniqueId);
 		}
 	};
@@ -321,14 +323,14 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 			{editablesIds.map(editableId => (
 				<EditableDecoration
 					editableId={editableId}
-					editableUniqueId={getEditableUniqueId(editableId)}
-					key={getEditableUniqueId(editableId)}
-					parentContent={content}
+					fragmentEntryLinkId={fragmentEntryLinkId}
+					itemId={getEditableUniqueId(editableId)}
+					key={editableId}
 					parentItemId={itemId}
 					parentRef={ref}
-					siblingsIds={editablesIds
-						.filter(siblingId => siblingId !== editableId)
-						.map(siblingId => getEditableUniqueId(siblingId))}
+					siblingsItemIds={editablesIds.map(siblingId =>
+						getEditableUniqueId(siblingId)
+					)}
 				/>
 			))}
 		</>

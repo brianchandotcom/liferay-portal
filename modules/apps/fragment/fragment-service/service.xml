@@ -54,6 +54,82 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="FragmentComposition" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="fragmentCompositionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="fragmentCollectionId" type="long" />
+		<column name="fragmentCompositionKey" type="String" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="fragments" type="String" />
+		<column name="previewFileEntryId" type="long" />
+		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="FragmentCollectionId" return-type="Collection">
+			<finder-column name="fragmentCollectionId" />
+		</finder>
+		<finder name="G_FCI" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentCollectionId" />
+		</finder>
+		<finder name="G_FCK" return-type="FragmentComposition" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentCompositionKey" />
+		</finder>
+		<finder name="G_FCI_LikeN" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentCollectionId" />
+			<finder-column comparator="LIKE" name="name" />
+		</finder>
+		<finder name="G_FCI_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentCollectionId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_FCI_LikeN_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentCollectionId" />
+			<finder-column comparator="LIKE" name="name" />
+			<finder-column name="status" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
 	<entity local-service="true" name="FragmentEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -231,9 +307,11 @@
 	<exceptions>
 		<exception>DuplicateFragmentCollection</exception>
 		<exception>DuplicateFragmentCollectionKey</exception>
+		<exception>DuplicateFragmentCompositionKey</exception>
 		<exception>DuplicateFragmentEntry</exception>
 		<exception>DuplicateFragmentEntryKey</exception>
 		<exception>FragmentCollectionName</exception>
+		<exception>FragmentCompositionName</exception>
 		<exception>FragmentEntryConfiguration</exception>
 		<exception>FragmentEntryContent</exception>
 		<exception>FragmentEntryName</exception>

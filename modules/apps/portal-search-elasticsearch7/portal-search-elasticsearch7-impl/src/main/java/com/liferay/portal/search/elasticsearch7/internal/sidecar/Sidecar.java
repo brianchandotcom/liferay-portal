@@ -138,6 +138,17 @@ public class Sidecar {
 						methodVisitor.visitInsn(Opcodes.ICONST_0);
 						methodVisitor.visitInsn(Opcodes.IRETURN);
 					}));
+
+			modifiedClasses.put(
+				_MODIFIED_CLASS_NAME_KEY_STORE_WRAPPER,
+				_getModifiedClassBytes(
+					classLoader.loadClass(
+						_MODIFIED_CLASS_NAME_KEY_STORE_WRAPPER),
+					"save",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					}));
 		}
 		catch (Exception exception) {
 			_log.error("Unable to modify classes", exception);
@@ -479,6 +490,9 @@ public class Sidecar {
 	}
 
 	private static final String _DEFAULT_NODE_NAME = "liferay";
+
+	private static final String _MODIFIED_CLASS_NAME_KEY_STORE_WRAPPER =
+		"org.elasticsearch.common.settings.KeyStoreWrapper";
 
 	private static final String _MODIFIED_CLASS_NAME_NATIVES =
 		"org.elasticsearch.bootstrap.Natives";

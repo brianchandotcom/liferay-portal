@@ -42,7 +42,7 @@ public class ValidatorEqualsCheck extends BaseFileCheck {
 					fileName,
 					"Use Objects.equals(Object, Object) instead of " +
 						"Validator.equals(Object, Object)",
-					"equals.markdown", getLineNumber(content, matcher.start()));
+					getLineNumber(content, matcher.start()));
 			}
 		}
 	}

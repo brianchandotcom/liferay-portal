@@ -62,8 +62,7 @@ public class XMLServiceEntityNameCheck extends BaseFileCheck {
 					fileName,
 					StringBundler.concat(
 						"Do not use entity '", entityName,
-						"' when package is '", packagePathName, "'"),
-					"entity_naming.markdown");
+						"' when package is '", packagePathName, "'"));
 			}
 		}
 

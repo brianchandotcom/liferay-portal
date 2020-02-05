@@ -36,8 +36,7 @@ public class JavaProcessCallableCheck extends BaseFileCheck {
 
 		addMessage(
 			fileName,
-			"Assign ProcessCallable implementation a serialVersionUID",
-			"process_callable.markdown");
+			"Assign ProcessCallable implementation a serialVersionUID");
 
 		return content;
 	}

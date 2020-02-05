@@ -31,7 +31,6 @@ public class JavaSeeAnnotationCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			addMessage(
 				fileName, "Do not use @see with another annotation",
-				"see_annotation.markdown",
 				getLineNumber(content, matcher.start() + 1));
 		}
 

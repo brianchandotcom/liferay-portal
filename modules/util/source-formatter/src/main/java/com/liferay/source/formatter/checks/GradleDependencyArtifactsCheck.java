@@ -159,7 +159,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			if (version.equals("default")) {
 				addMessage(
 					fileName, "Do not use 'default' version for '" + name + "'",
-					"gradle_versioning.markdown", getLineNumber(content, pos));
+					getLineNumber(content, pos));
 			}
 			else if (name.startsWith("com.liferay") &&
 					 !name.startsWith("com.liferay.portletmvc4spring") &&

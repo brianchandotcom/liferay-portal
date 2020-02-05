@@ -95,7 +95,7 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName, "Use '" + tag + ":defineObjects' or rename var",
-				"jsp_code_duplication.markdown", getLineNumber(content, x));
+				getLineNumber(content, x));
 		}
 	}
 

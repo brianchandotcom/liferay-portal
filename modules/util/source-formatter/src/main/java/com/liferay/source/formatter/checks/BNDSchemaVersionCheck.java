@@ -44,8 +44,7 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				"Do not include the header Liferay-Require-SchemaVersion in " +
-					"web modules",
-				"bnd_schema_version.markdown");
+					"web modules");
 		}
 
 		return content;
@@ -66,9 +65,7 @@ public class BNDSchemaVersionCheck extends BaseFileCheck {
 			absolutePath.substring(0, pos + 1) + "service.xml");
 
 		if (serviceXMLfile.exists()) {
-			addMessage(
-				fileName, "Missing 'Liferay-Require-SchemaVersion'",
-				"bnd_schema_version.markdown");
+			addMessage(fileName, "Missing 'Liferay-Require-SchemaVersion'");
 		}
 	}
 

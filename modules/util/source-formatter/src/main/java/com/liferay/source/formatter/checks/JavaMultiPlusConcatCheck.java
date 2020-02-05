@@ -126,7 +126,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 					fileName,
 					"Use method 'StringBundler.concat' when concatenating " +
 						"more than 3 strings",
-					"concat.markdown", javaTerm.getLineNumber(startPos));
+					javaTerm.getLineNumber(startPos));
 			}
 
 			x = endPos;

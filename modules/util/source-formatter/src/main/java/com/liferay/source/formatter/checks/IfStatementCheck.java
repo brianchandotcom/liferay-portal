@@ -38,9 +38,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 					"\\)[^()]*") &&
 			!ifClause.matches("[^()]*\\([^()]*\\)[^()]*")) {
 
-			addMessage(
-				fileName, "Redundant parentheses", "parentheses.markdown",
-				lineNumber);
+			addMessage(fileName, "Redundant parentheses", lineNumber);
 
 			return;
 		}
@@ -58,9 +56,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 		if (_hasRedundantParentheses(ifClause, "||", "&&") ||
 			_hasRedundantParentheses(ifClause, "&&", "||")) {
 
-			addMessage(
-				fileName, "Redundant parentheses", "parentheses.markdown",
-				lineNumber);
+			addMessage(fileName, "Redundant parentheses", lineNumber);
 
 			return;
 		}
@@ -105,8 +101,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 						(nextChar == CharPool.CLOSE_PARENTHESIS)) {
 
 						addMessage(
-							fileName, "Redundant parentheses",
-							"parentheses.markdown", lineNumber);
+							fileName, "Redundant parentheses", lineNumber);
 
 						return;
 					}
@@ -116,8 +111,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 						_hasRedundantParentheses(s)) {
 
 						addMessage(
-							fileName, "Redundant parentheses",
-							"parentheses.markdown", lineNumber);
+							fileName, "Redundant parentheses", lineNumber);
 
 						return;
 					}
@@ -144,9 +138,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			String s = ifClause.substring(Math.min(y, z), Math.max(y, z));
 
 			if (getLevel(s) == 0) {
-				addMessage(
-					fileName, "Missing parentheses", "parentheses.markdown",
-					lineNumber);
+				addMessage(fileName, "Missing parentheses", lineNumber);
 
 				return;
 			}
@@ -197,9 +189,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				String s = ifClause.substring(previousParenthesisPos + 1, i);
 
 				if (_hasMissingParentheses(s)) {
-					addMessage(
-						fileName, "Missing parentheses", "parentheses.markdown",
-						lineNumber);
+					addMessage(fileName, "Missing parentheses", lineNumber);
 
 					return;
 				}

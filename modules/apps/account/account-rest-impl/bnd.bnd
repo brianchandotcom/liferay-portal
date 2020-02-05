@@ -1,3 +1,3 @@
-Bundle-Name: Liferay Account Rest Implementation
+Bundle-Name: Liferay Account REST Implementation
 Bundle-SymbolicName: com.liferay.account.rest.impl
 Bundle-Version: 1.0.0

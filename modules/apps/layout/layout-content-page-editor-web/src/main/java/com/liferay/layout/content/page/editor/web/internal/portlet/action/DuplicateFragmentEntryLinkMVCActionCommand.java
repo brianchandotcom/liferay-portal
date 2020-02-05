@@ -63,7 +63,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -274,14 +273,13 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 
 				HttpSession httpSession = httpServletRequest.getSession();
 
-				ServletContext servletContext = httpSession.getServletContext();
-
 				errorMessage = LanguageUtil.format(
 					themeDisplay.getRequest(),
 					"the-layout-could-not-be-duplicated-because-it-contains-" +
 						"a-widget-x-that-can-only-appear-once-in-the-page",
 					_portal.getPortletTitle(
-						portlet, servletContext, themeDisplay.getLocale()));
+						portlet, httpSession.getServletContext(),
+						themeDisplay.getLocale()));
 			}
 			else {
 				errorMessage = LanguageUtil.get(

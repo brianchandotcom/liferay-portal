@@ -175,7 +175,7 @@ class CollapseProvider {
 	}
 
 	_getTrigger(panel) {
-		return document.querySelector(`[href="${panel.getAttribute('id')}"]`);
+		return document.querySelector(`[href="#${panel.getAttribute('id')}"]`);
 	}
 
 	_onTriggerClick = event => {

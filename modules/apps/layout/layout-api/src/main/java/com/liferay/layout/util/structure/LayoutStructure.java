@@ -188,6 +188,10 @@ public class LayoutStructure {
 		return ListUtil.fromCollection(_layoutStructureItems.values());
 	}
 
+	public String getMainItemId() {
+		return _mainItemId;
+	}
+
 	public LayoutStructureItem moveLayoutStructureItem(
 		String itemId, String parentItemId, int position) {
 

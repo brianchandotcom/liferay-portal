@@ -290,33 +290,33 @@ public class MessageBoardMessageResourceImpl
 	}
 
 	private Map<String, Map<String, String>> _getActions(
-		GroupedModel groupedModel) {
+		MBMessage mbMessage) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
-			addAction("DELETE", groupedModel, "deleteMessageBoardMessage")
+			addAction("DELETE", mbMessage, "deleteMessageBoardMessage")
 		).put(
-			"get", addAction("VIEW", groupedModel, "getMessageBoardMessage")
+			"get", addAction("VIEW", mbMessage, "getMessageBoardMessage")
 		).put(
 			"replace",
-			addAction("UPDATE", groupedModel, "putMessageBoardMessage")
+			addAction("UPDATE", mbMessage, "putMessageBoardMessage")
 		).put(
 			"reply-to-message",
 			addAction(
-				"REPLY_TO_MESSAGE",
+				"REPLY_TO_MESSAGE", mbMessage.getMessageId(),
 				"postMessageBoardMessageMessageBoardMessage",
-				"com.liferay.message.boards", groupedModel.getGroupId())
+				"com.liferay.message.boards", mbMessage.getGroupId())
 		).put(
 			"subscribe",
 			addAction(
-				"SUBSCRIBE", groupedModel, "putMessageBoardMessageSubscribe")
+				"SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
 		).put(
 			"unsubscribe",
 			addAction(
-				"SUBSCRIBE", groupedModel, "putMessageBoardMessageSubscribe")
+				"SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
 		).put(
 			"update",
-			addAction("UPDATE", groupedModel, "patchMessageBoardMessage")
+			addAction("UPDATE", mbMessage, "patchMessageBoardMessage")
 		).build();
 	}
 

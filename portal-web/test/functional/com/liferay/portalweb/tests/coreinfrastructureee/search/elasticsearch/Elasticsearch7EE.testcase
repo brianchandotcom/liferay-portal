@@ -32,7 +32,7 @@ definition {
 	}
 
 	test AssertSimilarResultsDisplayTemplate {
-		property test.name.skip.portal.instance = "Elasticsearch7EE#AssertSimilarResultsDisplayTemplate";
+		property portal.acceptance = "timpak";
 
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -41,22 +41,11 @@ definition {
 				title = "WC Title ${count}");
 		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoPage(pageName = "Similar Results Page");
-
-		Portlet.addPG(portletName = "Similar Results");
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
@@ -92,7 +81,7 @@ definition {
 	}
 
 	test AssertSimilarResultsMatchesAssetType {
-		property test.name.skip.portal.instance = "Elasticsearch7EE#AssertSimilarResultsMatchesAssetType";
+		property portal.acceptance = "timpak";
 
 		for (var count : list "1,2,3") {
 			JSONBlog.addEntry(
@@ -115,22 +104,23 @@ definition {
 				title = "Similar Results WC Title ${count}");
 		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page");
+		// Workaround for LPS-107399
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			widgetName = "Asset Publisher");
+		/*WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
-		Navigator.gotoPage(pageName = "Similar Results Page");
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
 
-		Portlet.addPG(portletName = "Similar Results");
+		for (var count : list "1,2,3") {
+			WikiPage.addCP(
+				wikiPageContent = "Wiki Content",
+				wikiPageTitle = "Similar Results Wiki Title ${count}");
+		}*/
+
+		SearchPortlets.setupSimilarResultsPage();
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
@@ -154,6 +144,10 @@ definition {
 
 		AssertElementNotPresent(
 			key_linkResultTitle = "Similar Results WC Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Wiki Title",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
@@ -180,6 +174,10 @@ definition {
 			key_linkResultTitle = "Similar Results WC Title",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Wiki Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results MB Title 1");
@@ -204,6 +202,10 @@ definition {
 			key_linkResultTitle = "Similar Results WC Title",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Wiki Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results WC Title 1");
@@ -226,6 +228,476 @@ definition {
 
 		AssertElementNotPresent(
 			key_linkResultTitle = "Similar Results MB Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Wiki Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		// Workaround for LPS-107399
+
+		/*Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results Wiki Title 1");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results Wiki Title 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results Wiki Title 3",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results Blogs Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results DM Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results MB Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results WC Title",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");*/
+	}
+
+	// LPS-107652
+
+	@ignore = "true"
+	test ConfigureSimilarResultsDocumentFrequency {
+		property portal.acceptance = "timpak";
+		property test.name.skip.portal.instance = "Elasticsearch7EE#ConfigureSimilarResultsDocumentFrequency";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Alpha Bravo");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Alpha Delta");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Alpha Bravo Charlie");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Charlie");
+
+		SearchPortlets.setupSimilarResultsPage();
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			minimumDocumentFrequency = "3",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Alpha Delta",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(
+			maximumDocumentFrequency = "2",
+			minimumDocumentFrequency = "1");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Alpha Delta",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+	}
+
+	test ConfigureSimilarResultsFields {
+		property portal.acceptance = "timpak";
+
+		JSONBlog.addEntry(
+			entryContent = "Content",
+			entryTitle = "No Match Content");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addEntryWithTag(
+			entryContent = "No Match",
+			entryTitle = "No Match Tag",
+			tagName = "Apple");
+
+		Blogs.addEntryWithTag(
+			entryContent = "Content",
+			entryTitle = "Similar Results Blogs Title",
+			tagName = "Apple");
+
+		SearchPortlets.setupSimilarResultsPage();
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "content_en_US",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results Blogs Title");
+
+		AssertElementPresent(
+			key_linkResultTitle = "No Match Content",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "No Match Tag",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(fields = "assetTagNames,content_en_US");
+
+		AssertElementPresent(
+			key_linkResultTitle = "No Match Content",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "No Match Tag",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+	}
+
+	test ConfigureSimilarResultsMaximumItemDisplay {
+		property portal.acceptance = "timpak";
+
+		for (var titleName : list "Alpha,Bravo,Charlie,Delta,Echo,Foxtrot") {
+			JSONWebcontent.addWebContent(
+				content = "${titleName}",
+				groupName = "Guest",
+				title = "${titleName}");
+		}
+
+		JSONWebcontent.addWebContent(
+			content = "Content",
+			groupName = "Guest",
+			title = "Alpha Bravo Charlie Delta Echo Foxtrot");
+
+		SearchPortlets.setupSimilarResultsPage();
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			maximumItemDisplay = "0",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie Delta Echo Foxtrot");
+
+		AssertTextEquals.assertPartialText(
+			key_widgetName = "Similar Results",
+			locator1 = "Message#INFO_SPECIFIC_WIDGET",
+			value1 = "no similar results available");
+
+		SearchPortlets.configureSimilarResults(maximumItemDisplay = "5");
+
+		AssertElementPresent(
+			key_resultPosition = "5",
+			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
+
+		AssertElementNotPresent(
+			key_resultPosition = "6",
+			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
+	}
+
+	test ConfigureSimilarResultsMaximumQueryTerms {
+		property portal.acceptance = "timpak";
+
+		for (var count : list "One, Two, Three") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "${count}");
+		}
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "One Two Three");
+
+		SearchPortlets.setupSimilarResultsPage();
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			maximumQueryTerms = "2",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "One Two Three");
+
+		AssertElementPresent(
+			key_resultPosition = "2",
+			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
+
+		AssertElementNotPresent(
+			key_resultPosition = "3",
+			locator1 = "Search#SIMILAR_RESULTS_SPECIFIC_POSITION");
+	}
+
+	test ConfigureSimilarResultsMinimumShouldMatch {
+		property portal.acceptance = "timpak";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Similar 1");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Similar Results 1");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Similar Results Web 1");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Similar Results Web Content");
+
+		SearchPortlets.setupSimilarResultsPage();
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			minimumDocumentFrequency = "1",
+			minimumShouldMatch = "25%",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Similar Results Web Content");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results Web 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(minimumShouldMatch = "75%");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Similar Results Web 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Similar Results 1",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+	}
+
+	test ConfigureSimilarResultsStopWords {
+		property portal.acceptance = "timpak";
+
+		JSONWebcontent.addWebContent(
+			content = "No Match",
+			groupName = "Guest",
+			title = "Alpha");
+
+		JSONWebcontent.addWebContent(
+			content = "Alpha Bravo Charlie",
+			groupName = "Guest",
+			title = "Alpha Bravo Charlie");
+
+		JSONWebcontent.addWebContent(
+			content = "No Match",
+			groupName = "Guest",
+			title = "Charlie");
+
+		JSONWebcontent.addWebContent(
+			content = "Bravo",
+			groupName = "Guest",
+			title = "No Match");
+
+		SearchPortlets.setupSimilarResultsPage();
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "content_en_US,localized_title_en_US",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1",
+			stopWords = "Alpha");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementPresent(
+			key_linkResultTitle = "No Match",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Alpha",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(stopWords = "Alpha,Bravo");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Alpha",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "No Match",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+	}
+
+	test ConfigureSimilarResultsTermFrequency {
+		property portal.acceptance = "timpak";
+
+		for (var count : list "One, Two, Three") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "${count}");
+		}
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "One Two Two Three Three Three");
+
+		SearchPortlets.setupSimilarResultsPage();
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "One Two Two Three Three Three");
+
+		for (var count : list "One, Two, Three") {
+			AssertElementPresent(
+				key_linkResultTitle = "${count}",
+				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+		}
+
+		SearchPortlets.configureSimilarResults(minimumTermFrequency = "3");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Three",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "One",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Two",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(minimumTermFrequency = "4");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "One",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Two",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Three",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+	}
+
+	test ConfigureSimilarResultsWordLength {
+		property portal.acceptance = "timpak";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Alpha Bravo");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Alpha Bravo Charlie");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Charlie");
+
+		SearchPortlets.setupSimilarResultsPage();
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1",
+			minimumWordLength = "6");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(minimumWordLength = "8");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(
+			maximumWordLength = "5",
+			minimumWordLength = "5");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Charlie",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 

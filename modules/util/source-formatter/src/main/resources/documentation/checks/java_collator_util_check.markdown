@@ -1,4 +1,4 @@
-## Collator
+## JavaCollatorUtilCheck
 
 Instead of getting an instance of Collator by calling
 `java.text.Collator.getInstance(java.util.Locale)` we should be calling

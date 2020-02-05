@@ -1,4 +1,4 @@
-## BND Exports
+## BNDExportsCheck
 
 Exporting packages for modules in the `modules/apps` directory is not allowed.
 

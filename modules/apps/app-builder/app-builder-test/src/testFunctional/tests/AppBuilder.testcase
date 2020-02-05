@@ -1,5 +1,6 @@
 @component-name = "app-builder"
 definition {
+
 	property custom.properties = "default.layout.template.id=1_column";
 
 	property portal.release = "true";
@@ -1245,7 +1246,7 @@ definition {
 			isCreatingViaPlusIcon = "true");
 
 		AppBuilderAdmin.createFormViewAndTableView(
-			fieldType = "Text Field",
+			fieldType = "Text",
 			formViewName = "Text Field - Form View Title",
 			tableViewName = "Text Field - Table View Title");
 

@@ -39,7 +39,6 @@ public class GradleTaskCreationCheck extends BaseGradleFileCheck {
 					fileName,
 					"The task should be declared in a separate line before " +
 						"the closure",
-					"gradle_task_creation.markdown",
 					getLineNumber(content, content.indexOf(line)));
 			}
 		}

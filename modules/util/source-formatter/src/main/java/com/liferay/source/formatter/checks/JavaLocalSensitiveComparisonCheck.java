@@ -54,8 +54,8 @@ public class JavaLocalSensitiveComparisonCheck extends BaseJavaTermCheck {
 			!javaTermContent.contains("Collator")) {
 
 			addMessage(
-				fileName, "Use Collator for locale-sensitive String comparison",
-				"localized_comparison.markdown");
+				fileName,
+				"Use Collator for locale-sensitive String comparison");
 		}
 	}
 

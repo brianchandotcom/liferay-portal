@@ -47,9 +47,7 @@ public class JavaResultSetCheck extends BaseFileCheck {
 			}
 
 			if ((pos3 < pos4) && (pos4 < pos5)) {
-				addMessage(
-					fileName, "Use rs.getInt(1) for count",
-					"sql_count_value.markdown");
+				addMessage(fileName, "Use rs.getInt(1) for count");
 			}
 		}
 

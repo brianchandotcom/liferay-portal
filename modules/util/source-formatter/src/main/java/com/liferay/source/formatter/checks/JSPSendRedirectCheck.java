@@ -37,7 +37,7 @@ public class JSPSendRedirectCheck extends BaseFileCheck {
 		if (pos != -1) {
 			addMessage(
 				fileName, "Do not use sendRedirect in jsp",
-				"jsp_send_redirect.markdown", getLineNumber(content, pos));
+				getLineNumber(content, pos));
 		}
 
 		return content;

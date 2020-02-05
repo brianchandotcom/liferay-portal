@@ -39,7 +39,7 @@ public class ResourceBundleCheck extends BaseFileCheck {
 				fileName,
 				"Use ResourceBundleUtil.getBundle instead of " +
 					"ResourceBundle.getBundle",
-				"resource_bundle.markdown", getLineNumber(content, pos));
+				getLineNumber(content, pos));
 		}
 
 		pos = content.indexOf("resourceBundle.getString(");
@@ -49,7 +49,7 @@ public class ResourceBundleCheck extends BaseFileCheck {
 				fileName,
 				"Use ResourceBundleUtil.getString instead of " +
 					"resourceBundle.getString",
-				"resource_bundle.markdown", getLineNumber(content, pos));
+				getLineNumber(content, pos));
 		}
 
 		return content;

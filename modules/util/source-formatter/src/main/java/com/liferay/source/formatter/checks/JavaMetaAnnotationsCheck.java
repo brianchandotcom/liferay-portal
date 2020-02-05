@@ -83,7 +83,7 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 		sb.append("' as delimeter");
 
 		addMessage(
-			fileName, sb.toString(), "meta_annotations.markdown",
+			fileName, sb.toString(),
 			getLineNumber(content, content.indexOf(matcher.group())));
 	}
 

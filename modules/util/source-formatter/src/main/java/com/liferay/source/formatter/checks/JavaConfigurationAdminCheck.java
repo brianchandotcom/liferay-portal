@@ -62,7 +62,7 @@ public class JavaConfigurationAdminCheck extends BaseFileCheck {
 			sb.append(StringPool.APOSTROPHE);
 
 			addMessage(
-				fileName, sb.toString(), "configuration_admin.markdown",
+				fileName, sb.toString(),
 				getLineNumber(content, matcher.start()));
 		}
 

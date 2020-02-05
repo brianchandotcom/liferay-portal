@@ -175,8 +175,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					"Initial value for '" + variableName +
-						"' differs from value in cleanUp method",
-					"cleanup.markdown");
+						"' differs from value in cleanUp method");
 			}
 		}
 

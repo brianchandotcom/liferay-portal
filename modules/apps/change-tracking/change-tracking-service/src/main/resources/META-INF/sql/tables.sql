@@ -39,7 +39,8 @@ create table CTPreferences (
 	companyId LONG,
 	userId LONG,
 	ctCollectionId LONG,
-	confirmationEnabled BOOLEAN
+	confirmationEnabled BOOLEAN,
+	previousCtCollectionId LONG
 );
 
 create table CTProcess (

@@ -14,6 +14,7 @@
 
 package com.liferay.asset.auto.tagger.internal.upgrade;
 
+import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -37,6 +38,9 @@ public class AssetAutoTaggerServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"1.1.0", "1.2.0", new UpgradeCTModel("AssetAutoTaggerEntry"));
 	}
 
 }

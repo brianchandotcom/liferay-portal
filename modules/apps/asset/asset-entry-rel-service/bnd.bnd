@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset Entry Rel Service
 Bundle-SymbolicName: com.liferay.asset.entry.rel.service
 Bundle-Version: 3.0.3
-Liferay-Require-SchemaVersion: 2.0.0
+Liferay-Require-SchemaVersion: 2.1.0
 Liferay-Service: true
 -dsannotations-options: inherit

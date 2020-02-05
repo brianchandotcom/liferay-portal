@@ -8,5 +8,6 @@ dependencies {
 	compileOnly project(":apps:asset:asset-api")
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }

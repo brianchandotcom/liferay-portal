@@ -20,7 +20,9 @@ import React, {
 	useEffect,
 	useLayoutEffect,
 	useState,
-	useRef
+	useRef,
+	useCallback,
+	useMemo
 } from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
@@ -36,12 +38,7 @@ import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSe
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
-import {
-	useSelectItem,
-	useHoverItem,
-	useIsActive,
-	useActiveItemId
-} from '../Controls';
+import {useIsActive, useActiveItemId} from '../Controls';
 import FloatingToolbar from '../FloatingToolbar';
 import UnsafeHTML from '../UnsafeHTML';
 import EditableDecoration from './EditableDecoration';
@@ -49,11 +46,9 @@ import EditableDecoration from './EditableDecoration';
 function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
-	const hoverItem = useHoverItem();
 	const activeItemId = useActiveItemId();
 	const isActive = useIsActive();
 	const isMounted = useIsMounted();
-	const selectItem = useSelectItem();
 	const state = useSelector(state => state);
 
 	const defaultContent = fragmentEntryLink.content.value.content;
@@ -68,8 +63,32 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		return editableId.join('-');
 	};
 
-	const getEditableUniqueId = editableId =>
-		`${fragmentEntryLinkId}-${editableId}`;
+	const getEditableUniqueId = useCallback(
+		editableId => `${fragmentEntryLinkId}-${editableId}`,
+		[fragmentEntryLinkId]
+	);
+
+	const canUpdateLayoutContent = useSelector(
+		({permissions}) =>
+			!permissions.LOCKED_SEGMENTS_EXPERIMENT &&
+			permissions.UPDATE_LAYOUT_CONTENT
+	);
+
+	const showEditableDecoration = useMemo(
+		() =>
+			canUpdateLayoutContent
+				? [itemId, ...editablesIds.map(getEditableUniqueId)].some(
+						isActive
+				  )
+				: true,
+		[
+			canUpdateLayoutContent,
+			editablesIds,
+			getEditableUniqueId,
+			itemId,
+			isActive
+		]
+	);
 
 	useLayoutEffect(() => {
 		setEditablesIds(
@@ -177,66 +196,29 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		};
 	}, [state, config, defaultContent, fragmentEntryLinkId, isMounted]);
 
-	const onClick = event => {
-		const editableElement = closest(event.target, 'lfr-editable');
-		const editableUniqueId =
-			editableElement && getEditableUniqueId(editableElement.id);
-
-		if (editableUniqueId) {
-			event.stopPropagation();
-
-			if (isActive(editableUniqueId)) {
-				initProcessor({
-					config,
-					editableConfig: selectEditableValueConfig(
-						state,
-						fragmentEntryLinkId,
-						editableElement.id,
-						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-					),
-					editableType: editableElement.getAttribute('type'),
-					element: editableElement,
-					processorType: EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-				});
-			} else {
-				selectItem(editableUniqueId);
-			}
-		}
-	};
-
-	const onMouseOver = event => {
-		const editableElement = closest(event.target, 'lfr-editable');
-		const editableUniqueId =
-			editableElement && getEditableUniqueId(editableElement.id);
-
-		if (editableUniqueId) {
-			event.stopPropagation();
-
-			hoverItem(editableUniqueId);
-		}
-	};
-
-	const initProcessor = ({
-		config,
-		editableConfig,
-		editableType,
-		element,
-		processorType
-	}) => {
+	const initProcessor = editableElement => {
+		const editableId = editableElement.id;
+		const editableType = editableElement.getAttribute('type');
 		const processor = Processors[editableType] || Processors.fallback;
+		const processorType = EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
 
-		const id =
-			processorType === EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-				? element.id
-				: element.dataset.lfrBackgroundImageId;
+		const editableConfig = selectEditableValueConfig(
+			state,
+			fragmentEntryLinkId,
+			editableId,
+			processorType
+		);
 
 		processor.createEditor(
-			element,
+			editableElement,
 			value => {
-				processor.render(element, value, editableConfig);
+				processor.render(editableElement, value, editableConfig);
 
 				const {editableValues} = fragmentEntryLink;
-				const editableValue = editableValues[processorType][id];
+				const editableValue =
+					editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
+						editableId
+					];
 				const prefixedSegmentsExperienceId = selectPrefixedSegmentsExperienceId(
 					state
 				);
@@ -259,7 +241,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 					})
 				);
 			},
-			() => processor.destroyEditor(element, editableConfig),
+			() => processor.destroyEditor(editableElement, editableConfig),
 			config
 		);
 	};
@@ -275,8 +257,6 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 			<UnsafeHTML
 				className="page-editor__fragment"
 				markup={content}
-				onClick={onClick}
-				onMouseOver={onMouseOver}
 				ref={ref}
 			/>
 
@@ -320,19 +300,21 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 					);
 				})}
 
-			{editablesIds.map(editableId => (
-				<EditableDecoration
-					editableId={editableId}
-					fragmentEntryLinkId={fragmentEntryLinkId}
-					itemId={getEditableUniqueId(editableId)}
-					key={editableId}
-					parentItemId={itemId}
-					parentRef={ref}
-					siblingsItemIds={editablesIds.map(siblingId =>
-						getEditableUniqueId(siblingId)
-					)}
-				/>
-			))}
+			{showEditableDecoration &&
+				editablesIds.map(editableId => (
+					<EditableDecoration
+						editableId={editableId}
+						fragmentEntryLinkId={fragmentEntryLinkId}
+						itemId={getEditableUniqueId(editableId)}
+						key={editableId}
+						onEditableDoubleClick={initProcessor}
+						parentItemId={itemId}
+						parentRef={ref}
+						siblingsItemIds={editablesIds.map(siblingId =>
+							getEditableUniqueId(siblingId)
+						)}
+					/>
+				))}
 		</>
 	);
 }

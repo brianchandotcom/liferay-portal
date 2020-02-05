@@ -15,10 +15,13 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistry;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -78,7 +81,20 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 
 	@Override
 	public void putServlet(String path, Servlet servlet) {
-		if (path.startsWith("/o/") || _servletInfos.containsKey(path)) {
+		if (_pathModulePrefix == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(PortalUtil.getPathProxy());
+			sb.append(PortalUtil.getPathContext());
+			sb.append(Portal.PATH_MODULE);
+			sb.append(StringPool.SLASH);
+
+			_pathModulePrefix = sb.toString();
+		}
+
+		if (path.startsWith(_pathModulePrefix) ||
+			_servletInfos.containsKey(path)) {
+
 			return;
 		}
 
@@ -210,6 +226,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 
 	private final Map<String, Long> _dependantTimestamps =
 		new ConcurrentHashMap<>();
+	private String _pathModulePrefix;
 	private boolean _reloadDependants = true;
 	private final Map<String, ServletInfo> _servletInfos =
 		new ConcurrentHashMap<>();

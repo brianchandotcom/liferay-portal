@@ -103,6 +103,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Account"
+                    # @review
                     description:
                         "Account successfully created"
             tags: ["Account"]

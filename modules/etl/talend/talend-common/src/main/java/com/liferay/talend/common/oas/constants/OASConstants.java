@@ -29,6 +29,10 @@ public class OASConstants {
 	public static final String LOCATOR_COMPONENTS_SCHEMAS =
 		"components>schemas";
 
+	public static final String LOCATOR_COMPONENTS_SCHEMAS_CLASS_NAME_PATTERN =
+		LOCATOR_COMPONENTS_SCHEMAS +
+			">SCHEMA_TPL>properties>x-class-name>default";
+
 	public static final String LOCATOR_COMPONENTS_SCHEMAS_PATTERN =
 		LOCATOR_COMPONENTS_SCHEMAS + ">SCHEMA_TPL";
 

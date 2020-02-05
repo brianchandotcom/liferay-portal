@@ -26,6 +26,8 @@
  * details.
  */
 
+import {useModal} from '@clayui/modal';
+import {useIsMounted} from 'frontend-js-react-web';
 import React, {useContext, useRef, useState} from 'react';
 
 import updateColSize from '../../actions/updateColSize';
@@ -37,6 +39,7 @@ import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopp
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import resizeColumns from '../../thunks/resizeColumns';
+import CompositionModal from '../CompositionModal';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import ColumnOverlayGrid from './ColumnOverlayGrid';
@@ -54,8 +57,18 @@ const RowWithControls = React.forwardRef(
 			],
 			...item.config
 		};
-		const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
+		const isMounted = useIsMounted();
+		const [openCompositionModal, setOpenCompositionModal] = useState(false);
+		const {observer} = useModal({
+			onClose: () => {
+				if (isMounted()) {
+					setOpenCompositionModal(false);
+				}
+			}
+		});
+
 		const state = useSelector(state => state);
+		const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
 
 		const rowRef = useRef(null);
 		const rowRect = getRect(rowRef.current);
@@ -72,6 +85,10 @@ const RowWithControls = React.forwardRef(
 						store: state
 					})
 				);
+			} else if (
+				id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveComposition.id
+			) {
+				setOpenCompositionModal(true);
 			}
 		};
 
@@ -184,6 +201,14 @@ const RowWithControls = React.forwardRef(
 						/>
 					)}
 				</ResizingContext.Provider>
+
+				{openCompositionModal && (
+					<CompositionModal
+						errorMessage={''}
+						observer={observer}
+						onErrorDismiss={() => true}
+					/>
+				)}
 			</Row>
 		);
 

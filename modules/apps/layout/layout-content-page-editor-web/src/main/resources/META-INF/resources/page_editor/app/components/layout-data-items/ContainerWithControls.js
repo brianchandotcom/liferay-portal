@@ -12,8 +12,10 @@
  * details.
  */
 
+import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
-import React, {useContext} from 'react';
+import {useIsMounted} from 'frontend-js-react-web';
+import React, {useContext, useState} from 'react';
 
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
@@ -21,6 +23,7 @@ import {ConfigContext} from '../../config/index';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
+import CompositionModal from '../CompositionModal';
 import {useSelectItem} from '../Controls';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
@@ -30,6 +33,16 @@ const ContainerWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
 		const config = useContext(ConfigContext);
 		const dispatch = useDispatch();
+		const isMounted = useIsMounted();
+		const [openCompositionModal, setOpenCompositionModal] = useState(false);
+		const {observer} = useModal({
+			onClose: () => {
+				if (isMounted()) {
+					setOpenCompositionModal(false);
+				}
+			}
+		});
+
 		const segmentsExperienceId = useSelector(
 			state => state.segmentsExperienceId
 		);
@@ -46,6 +59,10 @@ const ContainerWithControls = React.forwardRef(
 						store: {segmentsExperienceId}
 					})
 				);
+			} else if (
+				id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveComposition.id
+			) {
+				setOpenCompositionModal(true);
 			}
 		};
 
@@ -72,6 +89,14 @@ const ContainerWithControls = React.forwardRef(
 				/>
 
 				{children}
+
+				{openCompositionModal && (
+					<CompositionModal
+						errorMessage={''}
+						observer={observer}
+						onErrorDismiss={() => true}
+					/>
+				)}
 			</Container>
 		);
 

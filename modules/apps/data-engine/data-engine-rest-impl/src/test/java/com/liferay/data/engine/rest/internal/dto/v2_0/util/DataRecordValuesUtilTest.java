@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -56,6 +58,19 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 	}
 
 	@Test
+	public void testCreatDDMFormFieldValueNoValue() {
+		DDMFormField ddmFormField = _createDDMFormField("field1", "text", true);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DataRecordValuesUtil.createDDMFormFieldValue(
+				Collections.emptyMap(), ddmFormField, LocaleUtil.US);
+
+		Value value = ddmFormFieldValue.getValue();
+
+		Assert.assertEquals(value.getString(LocaleUtil.US), StringPool.BLANK);
+	}
+
+	@Test
 	public void testCreateDDMFormFieldValueInvalidName() {
 		DDMFormField ddmFormField = _createDDMFormField("field1", "text", true);
 
@@ -75,7 +90,7 @@ public class DataRecordValuesUtilTest extends PowerMockito {
 
 		Value value = ddmFormFieldValue.getValue();
 
-		Assert.assertNull(value);
+		Assert.assertNotNull(value);
 	}
 
 	@Test

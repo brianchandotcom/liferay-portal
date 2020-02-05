@@ -82,6 +82,10 @@ public class SourceFormatterMessage
 			return _OLD_DOCUMENTATION_URL + _markdownFileName;
 		}
 
+		if (_checkName == null) {
+			return null;
+		}
+
 		String markdownFilePath = _getMarkdownFilePath(_checkName);
 
 		if (markdownFilePath != null) {

@@ -155,11 +155,15 @@
 
 		<column name="ctCollectionId" type="long" />
 		<column name="confirmationEnabled" type="boolean" />
+		<column name="previousCtCollectionId" type="long" />
 
 		<!-- Finder methods -->
 
 		<finder name="CollectionId" return-type="Collection">
 			<finder-column name="ctCollectionId" />
+		</finder>
+		<finder name="PreviousCollectionId" return-type="Collection">
+			<finder-column name="previousCtCollectionId" />
 		</finder>
 		<finder name="C_U" return-type="CTPreferences" unique="true">
 			<finder-column name="companyId" />

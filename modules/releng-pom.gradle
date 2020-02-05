@@ -305,7 +305,7 @@ generatePomThirdParty {
 			String identifier = dependencyInfo[0] + ":" + dependencyInfo[1]
 
 			if (compileOnlyAllIdentifiers.contains(identifier)) {
-				if (thirdPartyCheckedIdentifiers.contains(identifier)) {
+				if (!thirdPartyCheckedIdentifiers.contains(identifier)) {
 					duplicateIdentifiers.add identifier
 				}
 			}

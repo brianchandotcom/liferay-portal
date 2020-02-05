@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.kaleo.demo.data.creator;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
-import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -26,14 +25,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WorkflowDefinitionLinkDemoDataCreator {
 
-	public WorkflowDefinitionLink assign(
-			String className, long classPK, long companyId, long groupId,
-			long typePK, long userId)
-		throws PortalException;
-
-	public WorkflowDefinitionLink assign(
-			String className, long classPK, long companyId, long groupId,
-			long typePK, long userId, WorkflowDefinition workflowDefinition)
+	public WorkflowDefinitionLink create(
+			long userId, long companyId, long groupId, String className,
+			long classPK, long typePK)
 		throws PortalException;
 
 	public void delete() throws PortalException;

@@ -48,19 +48,13 @@ public class DDMFormInstanceRecordDemoDataCreatorImpl
 
 	@Override
 	public DDMFormInstanceRecord create(
-			long companyId, Date createDate, DDMFormInstance formInstance,
-			long groupId, long userId)
+			long userId, long groupId, Date createDate, long ddmFormInstanceId)
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceLocalService.getDDMFormInstance(ddmFormInstanceId);
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCompanyId(companyId);
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setUserId(userId);
-
-		DDMStructure ddmStructure = formInstance.getStructure();
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
@@ -103,33 +97,39 @@ public class DDMFormInstanceRecordDemoDataCreatorImpl
 			}
 		}
 
-		DDMFormInstanceRecord formInstanceRecord =
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(userId);
+
+		DDMFormInstanceRecord ddmFormInstanceRecord =
 			_ddmFormInstanceRecordLocalService.addFormInstanceRecord(
-				userId, groupId, formInstance.getFormInstanceId(),
-				ddmFormValues, serviceContext);
+				userId, groupId, ddmFormInstanceId, ddmFormValues,
+				serviceContext);
 
 		if (createDate != null) {
-			formInstanceRecord.setCreateDate(createDate);
-			formInstanceRecord.setModifiedDate(createDate);
+			ddmFormInstanceRecord.setCreateDate(createDate);
 
-			formInstanceRecord =
+			ddmFormInstanceRecord =
 				_ddmFormInstanceRecordLocalService.updateDDMFormInstanceRecord(
-					formInstanceRecord);
+					ddmFormInstanceRecord);
 		}
 
-		_formInstanceRecordIds.add(
-			formInstanceRecord.getFormInstanceRecordId());
+		_ddmFormInstanceRecordIds.add(
+			ddmFormInstanceRecord.getFormInstanceRecordId());
 
-		return formInstanceRecord;
+		return ddmFormInstanceRecord;
 	}
 
 	@Override
 	public void delete() throws PortalException {
-		for (Long formInstanceRecordId : _formInstanceRecordIds) {
-			_formInstanceRecordIds.remove(formInstanceRecordId);
+		for (Long ddmFormInstanceRecordId : _ddmFormInstanceRecordIds) {
+			_ddmFormInstanceRecordIds.remove(ddmFormInstanceRecordId);
 
 			_ddmFormInstanceRecordLocalService.deleteFormInstanceRecord(
-				formInstanceRecordId);
+				ddmFormInstanceRecordId);
 		}
 
 		_ddmStructureDemoDataCreator.delete();
@@ -138,14 +138,14 @@ public class DDMFormInstanceRecordDemoDataCreatorImpl
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
+	private final List<Long> _ddmFormInstanceRecordIds =
+		new CopyOnWriteArrayList<>();
+
 	@Reference
 	private DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;
 
 	@Reference
 	private DDMStructureDemoDataCreator _ddmStructureDemoDataCreator;
-
-	private final List<Long> _formInstanceRecordIds =
-		new CopyOnWriteArrayList<>();
 
 }

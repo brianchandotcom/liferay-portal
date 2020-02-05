@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.demo.data.creator;
 
-import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -29,8 +28,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface DDMFormInstanceRecordDemoDataCreator {
 
 	public DDMFormInstanceRecord create(
-			long companyId, Date createDate, DDMFormInstance formInstance,
-			long groupId, long userId)
+			long userId, long groupId, Date createDate, long ddmFormInstanceId)
 		throws PortalException;
 
 	public void delete() throws PortalException;

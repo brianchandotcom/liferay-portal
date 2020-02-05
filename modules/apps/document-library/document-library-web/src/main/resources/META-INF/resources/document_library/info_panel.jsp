@@ -231,7 +231,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 							<liferay-ui:message key="size" />
 						</dt>
 						<dd class="sidebar-dd">
-							<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>
+							<%= LanguageUtil.formatStorageSize(fileEntry.getSize(), locale) %>
 						</dd>
 
 						<c:if test="<%= fileEntry.getModel() instanceof DLFileEntry %>">

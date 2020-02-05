@@ -60,7 +60,7 @@ if (kbArticle != null) {
 						icon="paperclip"
 						label="<%= true %>"
 						markupView="lexicon"
-						message='<%= HtmlUtil.escape(fileEntry.getTitle()) + " (" + TextFormatter.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
+						message='<%= HtmlUtil.escape(fileEntry.getTitle()) + " (" + LanguageUtil.formatStorageSize(fileEntry.getSize(), locale) + ")" %>'
 						method="get"
 						url="<%= rowURL %>"
 					/>

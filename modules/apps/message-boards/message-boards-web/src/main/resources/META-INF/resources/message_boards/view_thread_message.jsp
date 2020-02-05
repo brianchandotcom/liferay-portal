@@ -460,7 +460,7 @@ if (message.isAnonymous() || thread.isInTrash()) {
 								sb.append(fileEntry.getTitle());
 								sb.append(StringPool.SPACE);
 								sb.append(StringPool.OPEN_PARENTHESIS);
-								sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+								sb.append(LanguageUtil.formatStorageSize(fileEntry.getSize(), locale));
 								sb.append(StringPool.CLOSE_PARENTHESIS);
 
 								AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());

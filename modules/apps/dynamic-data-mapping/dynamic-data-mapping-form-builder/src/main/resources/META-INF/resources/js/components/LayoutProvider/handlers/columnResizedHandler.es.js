@@ -14,7 +14,7 @@
 
 import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 
-import {updateFocusedField} from '../util/focusedField.es';
+import {updateField} from '../util/settingsContext.es';
 
 const getColumn = (pages, nestedIndexes = []) => {
 	let column;
@@ -30,23 +30,38 @@ const getColumn = (pages, nestedIndexes = []) => {
 			columnIndex
 		);
 
-		context = column && column.fields;
+		if (column && context[0].nestedFields) {
+			context = context[0].nestedFields.filter(nestedField =>
+				column.fields.includes(nestedField.fieldName)
+			);
+		}
+		else {
+			context = column && column.fields;
+		}
 	});
 
 	return column;
 };
 
-const getContext = (pages, nestedIndexes = []) => {
-	let context = pages;
-
+const getContext = (context, nestedIndexes = []) => {
 	if (nestedIndexes.length) {
 		nestedIndexes.forEach((indexes, i) => {
 			const {columnIndex, pageIndex, rowIndex} = indexes;
 
-			context =
+			let fields =
 				context[i > 0 ? 0 : pageIndex].rows[rowIndex].columns[
 					columnIndex
 				].fields;
+
+			if (context[0].nestedFields) {
+				fields = fields.map(field =>
+					context[0].nestedFields.find(
+						nestedField => nestedField.fieldName === field
+					)
+				);
+			}
+
+			context = fields;
 		});
 	}
 
@@ -68,43 +83,65 @@ export const handleResizeRight = (
 	props,
 	state,
 	source,
-	sourceIndexes,
-	targetColumn
+	indexes,
+	columnTarget
 ) => {
 	const {pages} = state;
 
-	let newPages = [...pages];
+	const {columnIndex, pageIndex, rowIndex} = indexes[indexes.length - 1];
 
-	const parentIndexes = sourceIndexes.slice(0, -1);
+	const currentContext = getContext(pages, indexes.slice(0, -1));
 
-	const indexes = sourceIndexes[sourceIndexes.length - 1];
+	const currentColumn = getColumn(currentContext, [
+		indexes[indexes.length - 1]
+	]);
 
-	let parentContext = getContext(pages, parentIndexes);
-
-	const currentColumn = getColumn(parentContext, [indexes]);
-
-	const nextColumn = getColumn(parentContext, [
+	const nextColumn = getColumn(currentContext, [
 		{
-			columnIndex: indexes.columnIndex + 1,
-			pageIndex: indexes.pageIndex,
-			rowIndex: indexes.rowIndex
+			columnIndex: columnIndex + 1,
+			pageIndex,
+			rowIndex
 		}
 	]);
 
-	const currentColumnPosition = getColumnPosition(parentContext, {
-		columnIndex: indexes.columnIndex,
-		pageIndex: parentIndexes.length ? 0 : indexes.pageIndex,
-		rowIndex: indexes.rowIndex
+	const currentColumnPosition = getColumnPosition(currentContext, {
+		columnIndex,
+		pageIndex: indexes.length > 1 ? 0 : pageIndex,
+		rowIndex
 	});
 
+	let newContext = currentContext;
 	let newCurrentColumn;
 	let newNextColumn;
 
-	if (nextColumn) {
-		const newSize = Math.abs(currentColumnPosition - targetColumn);
+	if (
+		!nextColumn &&
+		currentColumn.size > currentColumnPosition - columnTarget &&
+		columnTarget < currentColumnPosition
+	) {
+		const newSize = currentColumnPosition - columnTarget;
+
+		newCurrentColumn = {
+			...currentColumn,
+			size: currentColumn.size - newSize
+		};
+
+		newContext = FormSupport.addColumn(
+			newContext,
+			columnIndex + 1,
+			indexes.length > 1 ? 0 : pageIndex,
+			rowIndex,
+			{
+				fields: [],
+				size: newSize
+			}
+		);
+	}
+	else if (nextColumn) {
+		const newSize = Math.abs(currentColumnPosition - columnTarget);
 
 		if (
-			targetColumn < currentColumnPosition &&
+			columnTarget < currentColumnPosition &&
 			currentColumn.size > newSize
 		) {
 			newCurrentColumn = {
@@ -117,18 +154,18 @@ export const handleResizeRight = (
 				size: Math.min(nextColumn.size + newSize, 12),
 			};
 		}
-		else if (targetColumn > currentColumnPosition) {
+		else if (columnTarget > currentColumnPosition) {
 			if (nextColumn.size === 1 && nextColumn.fields.length === 0) {
 				newCurrentColumn = {
 					...currentColumn,
 					size: currentColumn.size + newSize,
 				};
 
-				parentContext = FormSupport.removeColumn(
-					parentContext,
-					parentIndexes.length ? 0 : indexes.pageIndex,
-					indexes.rowIndex,
-					indexes.columnIndex + 1
+				newContext = FormSupport.removeColumn(
+					newContext,
+					indexes.length > 1 ? 0 : pageIndex,
+					rowIndex,
+					columnIndex + 1
 				);
 			}
 			else if (nextColumn.size > newSize) {
@@ -144,123 +181,113 @@ export const handleResizeRight = (
 			}
 		}
 	}
-	else if (
-		currentColumn.size > currentColumnPosition - targetColumn &&
-		targetColumn < currentColumnPosition
-	) {
-		const newSize = currentColumnPosition - targetColumn;
-
-		newCurrentColumn = {
-			...currentColumn,
-			size: currentColumn.size - newSize,
-		};
-
-		parentContext = FormSupport.addColumn(
-			parentContext,
-			indexes.columnIndex + 1,
-			parentIndexes.length ? 0 : indexes.pageIndex,
-			indexes.rowIndex,
-			{
-				fields: [],
-				size: newSize,
-			}
-		);
-	}
 
 	if (newCurrentColumn) {
-		parentContext = FormSupport.updateColumn(
-			parentContext,
-			parentIndexes.length ? 0 : indexes.pageIndex,
-			indexes.rowIndex,
-			indexes.columnIndex,
+		newContext = FormSupport.updateColumn(
+			newContext,
+			indexes.length > 1 ? 0 : pageIndex,
+			rowIndex,
+			columnIndex,
 			newCurrentColumn
 		);
 	}
 
 	if (newNextColumn) {
-		parentContext = FormSupport.updateColumn(
-			parentContext,
-			parentIndexes.length ? 0 : indexes.pageIndex,
-			indexes.rowIndex,
-			indexes.columnIndex + 1,
+		newContext = FormSupport.updateColumn(
+			newContext,
+			indexes.length > 1 ? 0 : pageIndex,
+			rowIndex,
+			columnIndex + 1,
 			newNextColumn
 		);
 	}
 
-	if (parentIndexes.length) {
-		parentContext[0] = updateFocusedField(
-			props,
-			{focusedField: parentContext[0]},
-			'rows',
-			parentContext[0].rows
-		);
+	if (indexes.length > 1) {
+		newContext = [
+			updateField(props, newContext[0], 'rows', newContext[0].rows)
+		];
 
-		parentIndexes.reduce((result, next, index, vector) => {
-			const {columnIndex, pageIndex, rowIndex} = vector[index];
-
-			return result[pageIndex].rows[rowIndex].columns[columnIndex].fields;
-		}, newPages)[0] = parentContext[0];
-	}
-	else {
-		newPages = parentContext;
+		currentContext[0].settingsContext = newContext[0].settingsContext;
 	}
 
-	return newPages;
+	currentContext[indexes.length > 1 ? 0 : pageIndex].rows =
+		newContext[indexes.length > 1 ? 0 : pageIndex].rows;
+
+	return pages;
 };
 
-const handleResizeLeft = (
-	props,
-	state,
-	source,
-	sourceIndexes,
-	targetColumn
-) => {
+const handleResizeLeft = (props, state, source, indexes, columnTarget) => {
 	const {pages} = state;
 
-	let newPages = [...pages];
+	const {columnIndex, pageIndex, rowIndex} = indexes[indexes.length - 1];
 
-	const indexes = sourceIndexes[sourceIndexes.length - 1];
+	const currentContext = getContext(pages, indexes.slice(0, -1));
 
-	const parentIndexes = sourceIndexes.slice(0, -1);
+	const currentColumn = getColumn(currentContext, [
+		indexes[indexes.length - 1]
+	]);
 
-	let parentContext = getContext(pages, parentIndexes);
-
-	const currentColumn = getColumn(parentContext, [indexes]);
-
-	const previousColumn = getColumn(parentContext, [
+	const previousColumn = getColumn(currentContext, [
 		{
-			columnIndex: indexes.columnIndex - 1,
-			pageIndex: indexes.pageIndex,
-			rowIndex: indexes.rowIndex
+			columnIndex: columnIndex - 1,
+			pageIndex,
+			rowIndex
 		}
 	]);
 
-	const previousColumnPosition = getColumnPosition(parentContext, {
-		columnIndex: indexes.columnIndex - 1,
-		pageIndex: parentIndexes.length ? 0 : indexes.pageIndex,
-		rowIndex: indexes.rowIndex
+	const previousColumnPosition = getColumnPosition(currentContext, {
+		columnIndex: columnIndex - 1,
+		pageIndex: indexes.length > 1 ? 0 : pageIndex,
+		rowIndex
 	});
 
-	if (
-		previousColumn &&
-		previousColumn.fields.length == 0 &&
-		previousColumn.size === 1 &&
-		targetColumn <= previousColumnPosition
-	) {
-		parentContext = FormSupport.removeColumn(
-			parentContext,
-			parentIndexes.length ? 0 : indexes.pageIndex,
-			indexes.rowIndex,
-			indexes.columnIndex - 1
+	let newContext = currentContext;
+
+	if (columnIndex === 0 && columnTarget > 0) {
+		newContext = FormSupport.addColumn(
+			newContext,
+			columnIndex,
+			indexes.length > 1 ? 0 : pageIndex,
+			rowIndex,
+			{
+				fields: [],
+				size: columnTarget
+			}
 		);
 
-		source.dataset.ddmFieldColumn = indexes.columnIndex - 1;
+		newContext = FormSupport.updateColumn(
+			newContext,
+			indexes.length > 1 ? 0 : pageIndex,
+			rowIndex,
+			columnIndex + 1,
+			{
+				...currentColumn,
+				size: currentColumn.size - columnTarget
+			}
+		);
 
-		parentContext = FormSupport.updateColumn(
-			parentContext,
-			parentIndexes.length ? 0 : indexes.pageIndex,
-			indexes.rowIndex,
-			indexes.columnIndex - 1,
+		source.dataset.ddmFieldColumn = columnIndex + 1;
+	}
+	else if (
+		previousColumn &&
+		previousColumn.size === 1 &&
+		previousColumn.fields.length === 0 &&
+		columnTarget <= previousColumnPosition
+	) {
+		newContext = FormSupport.removeColumn(
+			newContext,
+			indexes.length > 1 ? 0 : pageIndex,
+			rowIndex,
+			columnIndex - 1
+		);
+
+		source.dataset.ddmFieldColumn = columnIndex - 1;
+
+		newContext = FormSupport.updateColumn(
+			newContext,
+			indexes.length > 1 ? 0 : pageIndex,
+			rowIndex,
+			columnIndex - 1,
 			{
 				...currentColumn,
 				size: currentColumn.size + 1,
@@ -268,84 +295,52 @@ const handleResizeLeft = (
 		);
 	}
 	else if (previousColumn) {
-		const newSize = Math.abs(previousColumnPosition - targetColumn);
+		const newSize = Math.abs(previousColumnPosition - columnTarget);
 
 		if (
-			previousColumnPosition >= targetColumn &&
+			previousColumnPosition >= columnTarget &&
 			previousColumn.size > newSize
 		) {
 			currentColumn.size += newSize;
 			previousColumn.size -= newSize;
 		}
 		else if (
-			previousColumnPosition < targetColumn &&
+			previousColumnPosition < columnTarget &&
 			currentColumn.size > newSize
 		) {
 			currentColumn.size -= newSize;
 			previousColumn.size += newSize;
 		}
 
-		parentContext = FormSupport.updateColumn(
-			parentContext,
-			parentIndexes.length ? 0 : indexes.pageIndex,
-			indexes.rowIndex,
-			indexes.columnIndex,
+		newContext = FormSupport.updateColumn(
+			newContext,
+			indexes.length > 1 ? 0 : pageIndex,
+			rowIndex,
+			columnIndex,
 			currentColumn
 		);
 
-		parentContext = FormSupport.updateColumn(
-			parentContext,
-			parentIndexes.length ? 0 : indexes.pageIndex,
-			indexes.rowIndex,
-			indexes.columnIndex - 1,
+		newContext = FormSupport.updateColumn(
+			newContext,
+			indexes.length > 1 ? 0 : pageIndex,
+			rowIndex,
+			columnIndex - 1,
 			previousColumn
 		);
 	}
-	else if (indexes.columnIndex === 0 && targetColumn > 0) {
-		parentContext = FormSupport.addColumn(
-			parentContext,
-			indexes.columnIndex,
-			parentIndexes.length ? 0 : indexes.pageIndex,
-			indexes.rowIndex,
-			{
-				fields: [],
-				size: targetColumn,
-			}
-		);
 
-		parentContext = FormSupport.updateColumn(
-			parentContext,
-			parentIndexes.length ? 0 : indexes.pageIndex,
-			indexes.rowIndex,
-			indexes.columnIndex + 1,
-			{
-				...currentColumn,
-				size: currentColumn.size - targetColumn,
-			}
-		);
+	if (indexes.length > 1) {
+		newContext = [
+			updateField(props, newContext[0], 'rows', newContext[0].rows)
+		];
 
-		source.dataset.ddmFieldColumn = indexes.columnIndex + 1;
+		currentContext[0].settingsContext = newContext[0].settingsContext;
 	}
 
-	if (parentIndexes.length) {
-		parentContext[0] = updateFocusedField(
-			props,
-			{focusedField: parentContext[0]},
-			'rows',
-			parentContext[0].rows
-		);
+	currentContext[indexes.length > 1 ? 0 : pageIndex].rows =
+		newContext[indexes.length > 1 ? 0 : pageIndex].rows;
 
-		parentIndexes.reduce((result, next, index, vector) => {
-			const {columnIndex, pageIndex, rowIndex} = vector[index];
-
-			return result[pageIndex].rows[rowIndex].columns[columnIndex].fields;
-		}, newPages)[0] = parentContext[0];
-	}
-	else {
-		newPages = parentContext;
-	}
-
-	return newPages;
+	return pages;
 };
 
 export default (props, state, source, container, column, direction) => {

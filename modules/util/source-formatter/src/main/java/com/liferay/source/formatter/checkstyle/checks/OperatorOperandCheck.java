@@ -48,7 +48,9 @@ public class OperatorOperandCheck extends BaseCheck {
 	private void _checkOperand(
 		DetailAST operatorDetailAST, DetailAST detailAST, String side) {
 
-		if (detailAST.getType() != TokenTypes.METHOD_CALL) {
+		if ((detailAST == null) ||
+			(detailAST.getType() != TokenTypes.METHOD_CALL)) {
+
 			return;
 		}
 

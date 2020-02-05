@@ -49,122 +49,93 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 
 	@Override
 	public void create(
-			long companyId, Date createDate, long userId,
+			long companyId, long userId, Date createDate,
 			long workflowDefinitionId)
 		throws Exception {
 
-		create(
-			companyId, null, createDate, null, 172800000, "Review", null,
+		_create(
+			companyId, userId, createDate, 172800000, "Review",
 			workflowDefinitionId,
 			_toStringArray(
 				_getNodeKey(
+					"enter",
 					_getNodeId(
-						companyId, workflowDefinitionId,
-						"Underwriter final review"),
-					"enter"),
+						companyId, "Underwriter final review",
+						workflowDefinitionId)),
 				_getNodeKey(
+					"enter",
 					_getNodeId(
-						companyId, workflowDefinitionId, "Underwriter review"),
-					"enter")),
+						companyId, "Underwriter review",
+						workflowDefinitionId))),
 			_toStringArray(
 				_getNodeKey(
+					"leave",
 					_getNodeId(
-						companyId, workflowDefinitionId,
-						"Underwriter final review"),
-					"leave"),
+						companyId, "Underwriter final review",
+						workflowDefinitionId)),
 				_getNodeKey(
+					"leave",
 					_getNodeId(
-						companyId, workflowDefinitionId, "Underwriter review"),
-					"leave")),
-			userId);
-		create(
-			companyId, null, createDate, null, 259200000, "Payment", null,
+						companyId, "Underwriter review",
+						workflowDefinitionId))));
+		_create(
+			companyId, userId, createDate, 259200000, "Payment",
 			workflowDefinitionId,
 			_toStringArray(
 				_getNodeKey(
+					"enter",
 					_getNodeId(
-						companyId, workflowDefinitionId, "Insurance payment"),
-					"enter"),
+						companyId, "Insurance payment", workflowDefinitionId)),
 				_getNodeKey(
+					"enter",
 					_getNodeId(
-						companyId, workflowDefinitionId,
-						"Manual billing process"),
-					"enter")),
+						companyId, "Manual billing process",
+						workflowDefinitionId))),
 			_toStringArray(
 				_getNodeKey(
+					"leave",
 					_getNodeId(
-						companyId, workflowDefinitionId, "Insurance payment"),
-					"leave"),
+						companyId, "Insurance payment", workflowDefinitionId)),
 				_getNodeKey(
+					"leave",
 					_getNodeId(
-						companyId, workflowDefinitionId,
-						"Manual billing process"),
-					"leave")),
-			userId);
-		create(
-			companyId, null, createDate, null, 86400000, "Questions", null,
+						companyId, "Manual billing process",
+						workflowDefinitionId))));
+		_create(
+			companyId, userId, createDate, 86400000, "Questions",
 			workflowDefinitionId,
 			_toStringArray(
 				_getNodeKey(
+					"enter",
 					_getNodeId(
-						companyId, workflowDefinitionId,
-						"Additional rating questions"),
-					"enter")),
+						companyId, "Additional rating questions",
+						workflowDefinitionId))),
 			_toStringArray(
 				_getNodeKey(
+					"leave",
 					_getNodeId(
-						companyId, workflowDefinitionId,
-						"Additional rating questions"),
-					"leave")),
-			userId);
-		create(
-			companyId, null, createDate, null, 604800000, "Application", null,
+						companyId, "Additional rating questions",
+						workflowDefinitionId))));
+		_create(
+			companyId, userId, createDate, 604800000, "Application",
 			workflowDefinitionId,
 			_toStringArray(
 				_getNodeKey(
+					"begin",
 					_getNodeId(
-						companyId, workflowDefinitionId,
-						"Start online application"),
-					"begin")),
+						companyId, "Start online application",
+						workflowDefinitionId))),
 			_toStringArray(
 				_getNodeKey(
+					"end",
 					_getNodeId(
-						companyId, workflowDefinitionId,
-						"Application Complete"),
-					"end"),
+						companyId, "Application Complete",
+						workflowDefinitionId)),
 				_getNodeKey(
+					"end",
 					_getNodeId(
-						companyId, workflowDefinitionId,
-						"Application canceled"),
-					"end")),
-			userId);
-	}
-
-	@Override
-	public WorkflowMetricsSLADefinition create(
-			long companyId, String calendarKey, Date createDate,
-			String description, long duration, String name,
-			String[] pauseNodeKeys, long processId, String[] startNodeKeys,
-			String[] stopNodeKeys, long userId)
-		throws PortalException {
-
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
-			_workflowMetricsSLADefinitionLocalService.
-				addWorkflowMetricsSLADefinition(
-					calendarKey, description, duration, name, pauseNodeKeys,
-					processId, startNodeKeys, stopNodeKeys,
-					_createServiceContext(companyId, userId));
-
-		workflowMetricsSLADefinition.setCreateDate(createDate);
-		workflowMetricsSLADefinition.setModifiedDate(createDate);
-
-		_workflowMetricsSLADefinitionLocalService.
-			updateWorkflowMetricsSLADefinition(workflowMetricsSLADefinition);
-
-		_workflowMetricsSLADefinitionIds.add(
-			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
-
-		return workflowMetricsSLADefinition;
+						companyId, "Application canceled",
+						workflowDefinitionId))));
 	}
 
 	@Override
@@ -178,17 +149,35 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 		}
 	}
 
-	private ServiceContext _createServiceContext(long companyId, long userId) {
-		return new ServiceContext() {
-			{
-				setCompanyId(companyId);
-				setUserId(userId);
-			}
-		};
+	private void _create(
+			long companyId, long userId, Date createDate, long duration,
+			String name, long processId, String[] startNodeKeys,
+			String[] stopNodeKeys)
+		throws PortalException {
+
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+			_workflowMetricsSLADefinitionLocalService.
+				addWorkflowMetricsSLADefinition(
+					null, null, duration, name, null, processId, startNodeKeys,
+					stopNodeKeys,
+					new ServiceContext() {
+						{
+							setCompanyId(companyId);
+							setUserId(userId);
+						}
+					});
+
+		workflowMetricsSLADefinition.setCreateDate(createDate);
+
+		_workflowMetricsSLADefinitionLocalService.
+			updateWorkflowMetricsSLADefinition(workflowMetricsSLADefinition);
+
+		_workflowMetricsSLADefinitionIds.add(
+			workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
 	}
 
 	private long _getNodeId(
-			long companyId, long workflowDefinitionId, String name)
+			long companyId, String name, long workflowDefinitionId)
 		throws Exception {
 
 		SPINodeResource<Node> spiNodeResource = _getSPINodeResource(companyId);
@@ -207,7 +196,7 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 		return 0L;
 	}
 
-	private String _getNodeKey(long nodeId, String action) {
+	private String _getNodeKey(String action, long nodeId) {
 		return StringBundler.concat(nodeId, CharPool.COLON, action);
 	}
 

@@ -58,28 +58,26 @@ public class DDMStructureDemoDataCreatorImpl
 
 		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		DDMStructure structure = _ddmStructureLocalService.addStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
 			userId, groupId, 0,
 			_portal.getClassNameId(DDMFormInstance.class.getName()), null,
 			HashMapBuilder.put(
 				LocaleUtil.getSiteDefault(), "Test Structure"
 			).build(),
 			null, ddmForm, ddmFormLayout, StorageType.JSON.getValue(),
-			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+			DDMStructureConstants.TYPE_DEFAULT, new ServiceContext());
 
-		_structureIds.add(structure.getStructureId());
+		_ddmStructureIds.add(ddmStructure.getStructureId());
 
-		return structure;
+		return ddmStructure;
 	}
 
 	@Override
 	public void delete() throws PortalException {
-		for (Long structureId : _structureIds) {
-			_structureIds.remove(structureId);
+		for (Long ddmStructureId : _ddmStructureIds) {
+			_ddmStructureIds.remove(ddmStructureId);
 
-			_ddmStructureLocalService.deleteStructure(structureId);
+			_ddmStructureLocalService.deleteStructure(ddmStructureId);
 		}
 	}
 
@@ -101,12 +99,12 @@ public class DDMStructureDemoDataCreatorImpl
 	@Reference(target = "(ddm.form.deserializer.type=xsd)")
 	private DDMFormDeserializer _ddmFormDeserializer;
 
+	private final List<Long> _ddmStructureIds = new CopyOnWriteArrayList<>();
+
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private Portal _portal;
-
-	private final List<Long> _structureIds = new CopyOnWriteArrayList<>();
 
 }

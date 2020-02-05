@@ -71,8 +71,8 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionDemoDataCreator.create(
-				company.getCompanyId(), _toDate(startLocalDateTime),
-				omniAdminUser.getUserId());
+				company.getCompanyId(), omniAdminUser.getUserId(),
+				_toDate(startLocalDateTime));
 
 		Group group = _groupLocalService.getGroup(
 			company.getCompanyId(), "Guest");
@@ -88,18 +88,19 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 			group.getGroupId(),
 			_roleLocalService.getRole(company.getCompanyId(), "Underwriter"));
 
-		DDMFormInstance formInstance = _ddmFormInstanceDemoDataCreator.create(
-			company.getCompanyId(), _toDate(startLocalDateTime),
-			group.getGroupId(), omniAdminUser.getUserId());
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceDemoDataCreator.create(
+				omniAdminUser.getUserId(), group.getGroupId(),
+				_toDate(startLocalDateTime));
 
-		_workflowDefinitionLinkDemoDataCreator.assign(
-			DDMFormInstance.class.getName(), formInstance.getFormInstanceId(),
-			company.getCompanyId(), group.getGroupId(), 0,
-			omniAdminUser.getUserId());
+		_workflowDefinitionLinkDemoDataCreator.create(
+			omniAdminUser.getUserId(), company.getCompanyId(),
+			group.getGroupId(), DDMFormInstance.class.getName(),
+			ddmFormInstance.getFormInstanceId(), 0);
 
 		_workflowMetricsSLADefinitionDemoDataCreator.create(
-			company.getCompanyId(), _toDate(startLocalDateTime),
-			omniAdminUser.getUserId(),
+			company.getCompanyId(), omniAdminUser.getUserId(),
+			_toDate(startLocalDateTime),
 			workflowDefinition.getWorkflowDefinitionId());
 
 		for (int i = 1; i <= 200; i++) {
@@ -110,7 +111,8 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 
 			WorkflowInstance workflowInstance = _addWorkflowInstance(
 				company.getCompanyId(), _toDate(createLocalDateTime),
-				formInstance, group.getGroupId(), creatorUserId);
+				ddmFormInstance.getFormInstanceId(), group.getGroupId(),
+				creatorUserId);
 
 			_updateCreateDateWorkflowTask(
 				company.getCompanyId(), _toDate(createLocalDateTime),
@@ -248,22 +250,21 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 	}
 
 	private WorkflowInstance _addWorkflowInstance(
-			long companyId, Date createDate, DDMFormInstance formInstance,
+			long companyId, Date createDate, long ddmFormInstanceId,
 			long groupId, long userId)
 		throws Exception {
 
-		DDMFormInstanceRecord formInstanceRecord =
+		DDMFormInstanceRecord ddmFormInstanceRecord =
 			_ddmFormInstanceRecordDemoDataCreator.create(
-				companyId, createDate, formInstance, groupId, userId);
+				userId, groupId, createDate, ddmFormInstanceId);
 
-		DDMFormInstanceRecordVersion formInstanceRecordVersion =
-			formInstanceRecord.getFormInstanceRecordVersion();
+		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
+			ddmFormInstanceRecord.getFormInstanceRecordVersion();
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceDemoDataCreator.getWorkflowInstance(
-				DDMFormInstanceRecord.class.getName(),
-				formInstanceRecordVersion.getFormInstanceRecordVersionId(),
-				companyId);
+				companyId, DDMFormInstanceRecord.class.getName(),
+				ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId());
 
 		_workflowTaskDemoDataCreator.getWorkflowTask(
 			companyId, workflowInstance.getWorkflowInstanceId());
@@ -288,8 +289,8 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 				companyId, workflowTask.getWorkflowTaskId()));
 
 		_workflowTaskDemoDataCreator.completeWorkflowTask(
-			companyId, transitionName, userId,
-			workflowTask.getWorkflowTaskId());
+			companyId, userId, workflowTask.getWorkflowTaskId(),
+			transitionName);
 
 		_workflowTaskDemoDataCreator.updateCompletionDate(
 			workflowTask.getWorkflowTaskId(), completionDate);

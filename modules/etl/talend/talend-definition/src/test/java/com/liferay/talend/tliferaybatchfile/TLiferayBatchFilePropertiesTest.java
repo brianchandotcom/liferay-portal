@@ -74,15 +74,9 @@ public class TLiferayBatchFilePropertiesTest extends BasePropertiesTestCase {
 			PropertyPathConnector propertyPathConnector =
 				(PropertyPathConnector)inputConnector;
 
-			Schema expectedSchema = SchemaProperties.EMPTY_SCHEMA;
-
-			if (Objects.equals(inputConnector.getName(), Connector.MAIN_NAME)) {
-				expectedSchema = BatchSchemaConstants.SCHEMA;
-			}
-
 			assertEquals(
 				componentProperties, propertyPathConnector.getPropertyPath(),
-				expectedSchema);
+				SchemaProperties.EMPTY_SCHEMA);
 		}
 	}
 

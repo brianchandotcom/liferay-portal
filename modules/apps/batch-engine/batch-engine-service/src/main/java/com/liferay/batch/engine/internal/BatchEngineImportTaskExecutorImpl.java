@@ -103,8 +103,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 		_batchEngineTaskItemDelegateExecutorFactory =
 			new BatchEngineTaskItemDelegateExecutorFactory(
-				_batchEngineTaskMethodRegistry, _companyLocalService, null,
-				null, null, _userLocalService);
+				_batchEngineTaskMethodRegistry, null, null, null);
 	}
 
 	private void _commitItems(
@@ -142,9 +141,11 @@ public class BatchEngineImportTaskExecutorImpl
 				batchEngineTaskItemDelegateExecutor =
 					_batchEngineTaskItemDelegateExecutorFactory.create(
 						batchEngineImportTask.getClassName(),
-						batchEngineImportTask.getCompanyId(),
+						_companyLocalService.getCompany(
+							batchEngineImportTask.getCompanyId()),
 						batchEngineImportTask.getParameters(),
-						batchEngineImportTask.getUserId())) {
+						_userLocalService.getUser(
+							batchEngineImportTask.getUserId()))) {
 
 			List<Object> items = new ArrayList<>();
 

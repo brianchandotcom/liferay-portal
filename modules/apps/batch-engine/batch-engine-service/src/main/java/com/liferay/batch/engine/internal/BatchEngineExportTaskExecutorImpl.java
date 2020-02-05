@@ -112,9 +112,8 @@ public class BatchEngineExportTaskExecutorImpl
 
 		_batchEngineTaskItemDelegateExecutorFactory =
 			new BatchEngineTaskItemDelegateExecutorFactory(
-				_batchEngineTaskMethodRegistry, _companyLocalService,
-				_expressionConvert, _filterParserProvider, _sortParserProvider,
-				_userLocalService);
+				_batchEngineTaskMethodRegistry, _expressionConvert,
+				_filterParserProvider, _sortParserProvider);
 	}
 
 	private void _exportItems(BatchEngineExportTask batchEngineExportTask)
@@ -127,9 +126,11 @@ public class BatchEngineExportTaskExecutorImpl
 				batchEngineTaskItemDelegateExecutor =
 					_batchEngineTaskItemDelegateExecutorFactory.create(
 						batchEngineExportTask.getClassName(),
-						batchEngineExportTask.getCompanyId(),
+						_companyLocalService.getCompany(
+							batchEngineExportTask.getCompanyId()),
 						batchEngineExportTask.getParameters(),
-						batchEngineExportTask.getUserId());
+						_userLocalService.getUser(
+							batchEngineExportTask.getUserId()));
 			ZipOutputStream zipOutputStream = _getZipOutputStream(
 				batchEngineExportTask.getContentType(),
 				unsyncByteArrayOutputStream);

@@ -112,6 +112,10 @@ public class ExportUtil {
 		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
 
 		zipWriter.addEntry(
+			path + "/page-definition.json",
+			objectWriter.writeValueAsString(pageTemplate.getPageDefinition()));
+
+		zipWriter.addEntry(
 			path + "/page-template.json",
 			objectWriter.writeValueAsString(pageTemplate));
 

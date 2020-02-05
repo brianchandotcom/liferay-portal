@@ -36,7 +36,7 @@ import javax.json.JsonValue;
  */
 public class OASExplorer {
 
-	public Optional<String> getEntityClassName(
+	public Optional<String> getEntityClassNameOptional(
 		String name, JsonObject oasJsonObject) {
 
 		String jsonFinderPath = StringUtil.replace(

@@ -320,7 +320,7 @@ AUI.add(
 						if (errorFields.size() > 0 && !panel.hasClass('in')) {
 							var panelNode = panel.getDOM();
 
-							AUI.$(panelNode).collapse('show');
+							Liferay.CollapseProvider.show({panel: panelNode});
 						}
 					});
 				},

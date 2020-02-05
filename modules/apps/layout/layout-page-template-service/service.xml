@@ -23,6 +23,7 @@
 
 		<!-- Other fields -->
 
+		<column db-name="lptCollectionKey" name="layoutPageTemplateCollectionKey" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="lastPublishDate" type="Date" />
@@ -37,6 +38,10 @@
 
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_LPTCK" return-type="LayoutPageTemplateCollection" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateCollectionKey" />
 		</finder>
 		<finder name="G_N" return-type="LayoutPageTemplateCollection" unique="true">
 			<finder-column name="groupId" />
@@ -73,6 +78,7 @@
 		<!-- Other fields -->
 
 		<column name="layoutPageTemplateCollectionId" type="long" />
+		<column name="layoutPageTemplateEntryKey" type="String" />
 		<column name="classNameId" type="long" />
 		<column name="classTypeId" type="long" />
 		<column accessor="true" name="name" type="String" />
@@ -107,6 +113,10 @@
 		<finder name="G_L" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateCollectionId" />
+		</finder>
+		<finder name="G_LPTEK" return-type="LayoutPageTemplateEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateEntryKey" />
 		</finder>
 		<finder name="G_N" return-type="Collection">
 			<finder-column name="groupId" />

@@ -16,6 +16,7 @@ package com.liferay.portal.search.internal.searcher;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchResponse;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public class SearchResponseImplTest {
 		assertIs(searchResponse.getRequest(), nullValue());
 		assertIs(searchResponse.getRequestString(), blank());
 		assertIs(searchResponse.getResponseString(), blank());
-		assertIs(searchResponse.getSearchHits(), nullValue());
+		assertIs(searchResponse.getSearchHits(), instanceOf(SearchHits.class));
 		assertIs(searchResponse.getStatsResponseMap(), emptyMap());
 		assertIs(searchResponse.getTotalHits(), zeroInt());
 	}
@@ -82,6 +83,10 @@ public class SearchResponseImplTest {
 				).collect(
 					Collectors.toList()
 				)));
+	}
+
+	protected static Consumer instanceOf(Class clazz) {
+		return object -> Assert.assertTrue(clazz.isInstance(object));
 	}
 
 	protected static Consumer nullValue() {

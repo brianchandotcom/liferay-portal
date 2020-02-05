@@ -43,14 +43,23 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 				keyProperty="roleId"
 				modelVar="accountRole"
 			>
+				<portlet:renderURL var="rowURL">
+					<portlet:param name="mvcPath" value="/account_entries_admin/edit_account_role.jsp" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
+					<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+					<portlet:param name="accountRoleId" value="<%= String.valueOf(accountRole.getAccountRoleId()) %>" />
+				</portlet:renderURL>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="name"
 					value="<%= accountRole.getName(locale) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
 					name="description"
 					value="<%= accountRole.getDescription(locale) %>"
 				/>

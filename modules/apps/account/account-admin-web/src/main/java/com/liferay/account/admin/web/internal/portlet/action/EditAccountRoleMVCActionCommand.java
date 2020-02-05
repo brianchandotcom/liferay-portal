@@ -17,9 +17,11 @@ package com.liferay.account.admin.web.internal.portlet.action;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -87,6 +89,9 @@ public class EditAccountRoleMVCActionCommand extends BaseMVCActionCommand {
 					redirect, actionResponse.getNamespace() + "accountRoleId",
 					accountRole.getAccountRoleId());
 			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				updateAccountRole(actionRequest);
+			}
 
 			if (Validator.isNotNull(redirect)) {
 				sendRedirect(actionRequest, actionResponse, redirect);
@@ -108,10 +113,32 @@ public class EditAccountRoleMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	protected void updateAccountRole(ActionRequest actionRequest)
+		throws PortalException {
+
+		long accountRoleId = ParamUtil.getLong(actionRequest, "accountRoleId");
+
+		AccountRole accountRole = _accountRoleLocalService.fetchAccountRole(
+			accountRoleId);
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "title");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+
+		_roleLocalService.updateRole(
+			accountRole.getRoleId(), name, titleMap, descriptionMap, null,
+			null);
+	}
+
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

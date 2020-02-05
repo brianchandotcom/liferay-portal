@@ -35,6 +35,10 @@ public class AccountRoleDisplay {
 		return new AccountRoleDisplay(accountRole);
 	}
 
+	public long getAccountRoleId() {
+		return _accountRole.getAccountRoleId();
+	}
+
 	public String getDescription(Locale locale) {
 		return _role.getDescription(locale);
 	}
@@ -48,9 +52,11 @@ public class AccountRoleDisplay {
 	}
 
 	private AccountRoleDisplay(AccountRole accountRole) throws Exception {
+		_accountRole = accountRole;
 		_role = RoleLocalServiceUtil.getRole(accountRole.getRoleId());
 	}
 
+	private final AccountRole _accountRole;
 	private final Role _role;
 
 }

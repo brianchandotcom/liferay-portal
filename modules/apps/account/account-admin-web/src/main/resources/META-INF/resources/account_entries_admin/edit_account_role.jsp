@@ -18,7 +18,7 @@
 
 <%
 long accountEntryId = ParamUtil.getLong(request, "accountEntryId");
-
+long accountRoleId = ParamUtil.getLong(request, "accountRoleId");
 String backURL = ParamUtil.getString(request, "backURL");
 
 if (Validator.isNull(backURL)) {
@@ -34,7 +34,15 @@ if (Validator.isNull(backURL)) {
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-renderResponse.setTitle(LanguageUtil.get(request, "add-new-role"));
+AccountRole accountRole = AccountRoleLocalServiceUtil.fetchAccountRole(accountRoleId);
+
+Role role = null;
+
+if (accountRole != null) {
+	role = accountRole.getRole();
+}
+
+renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "add-new-role") : role.getTitle(locale));
 %>
 
 <portlet:actionURL name="/account_admin/edit_account_role" var="editAccountRoleURL" />
@@ -43,11 +51,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-role"));
 	action="<%= editAccountRoleURL %>"
 >
 	<liferay-frontend:edit-form-body>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (role == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="accountEntryId" type="hidden" value="<%= String.valueOf(accountEntryId) %>" />
+		<aui:input name="accountRoleId" type="hidden" value="<%= accountRoleId %>" />
 
-		<aui:model-context model="<%= Role.class %>" />
+		<aui:model-context bean="<%= role %>" model="<%= Role.class %>" />
 
 		<aui:input helpMessage="title-field-help" name="title" />
 		<aui:input name="description" />
@@ -76,27 +85,29 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-role"));
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script require="frontend-js-web/liferay/debounce/debounce.es as debounceModule">
-	var form = document.getElementById('<portlet:namespace />fm');
+<c:if test="<%= role == null %>">
+	<aui:script require="frontend-js-web/liferay/debounce/debounce.es as debounceModule">
+		var form = document.getElementById('<portlet:namespace />fm');
 
-	if (form) {
-		var nameInput = form.querySelector('#<portlet:namespace />name');
-		var titleInput = form.querySelector('#<portlet:namespace />title');
+		if (form) {
+			var nameInput = form.querySelector('#<portlet:namespace />name');
+			var titleInput = form.querySelector('#<portlet:namespace />title');
 
-		if (nameInput && titleInput) {
-			var debounce = debounceModule.default;
+			if (nameInput && titleInput) {
+				var debounce = debounceModule.default;
 
-			var handleOnTitleInput = function(event) {
-				var value = event.target.value;
+				var handleOnTitleInput = function(event) {
+					var value = event.target.value;
 
-				if (nameInput.hasAttribute('maxLength')) {
-					value = value.substring(0, nameInput.getAttribute('maxLength'));
-				}
+					if (nameInput.hasAttribute('maxLength')) {
+						value = value.substring(0, nameInput.getAttribute('maxLength'));
+					}
 
-				nameInput.value = value;
-			};
+					nameInput.value = value;
+				};
 
-			titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
+				titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
+			}
 		}
-	}
-</aui:script>
+	</aui:script>
+</c:if>

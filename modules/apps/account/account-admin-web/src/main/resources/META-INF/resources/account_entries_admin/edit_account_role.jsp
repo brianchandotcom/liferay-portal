@@ -61,6 +61,8 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "add-new-role
 		<aui:input helpMessage="title-field-help" name="title" />
 		<aui:input name="description" />
 
+		<liferay-ui:error exception="<%= DuplicateRoleException.class %>" message="please-enter-a-unique-name" />
+
 		<%
 		String nameLabel = LanguageUtil.get(request, "role-key");
 		%>

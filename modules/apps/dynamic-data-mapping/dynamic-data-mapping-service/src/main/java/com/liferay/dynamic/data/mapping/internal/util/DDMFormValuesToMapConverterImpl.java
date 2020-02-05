@@ -76,6 +76,12 @@ public class DDMFormValuesToMapConverterImpl
 
 		Value value = ddmFormFieldValue.getValue();
 
+		if (value == null) {
+			values.put(ddmFormField.getName(), null);
+
+			return;
+		}
+
 		if (ddmFormField.isRepeatable()) {
 			if (ddmFormField.isLocalizable()) {
 				Map<String, Object> localizedValues =

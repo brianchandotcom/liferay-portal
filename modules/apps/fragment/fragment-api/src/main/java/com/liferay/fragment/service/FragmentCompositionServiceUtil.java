@@ -37,6 +37,86 @@ public class FragmentCompositionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentCompositionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.fragment.model.FragmentComposition
+			addFragmentComposition(
+				long groupId, long fragmentCollectionId,
+				String fragmentCompositionKey, String name, String description,
+				String fragments, long previewFileEntryId, int status,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addFragmentComposition(
+			groupId, fragmentCollectionId, fragmentCompositionKey, name,
+			description, fragments, previewFileEntryId, status, serviceContext);
+	}
+
+	public static com.liferay.fragment.model.FragmentComposition
+			deleteFragmentComposition(long fragmentCompositionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteFragmentComposition(fragmentCompositionId);
+	}
+
+	public static com.liferay.fragment.model.FragmentComposition
+		fetchFragmentComposition(long fragmentCompositionId) {
+
+		return getService().fetchFragmentComposition(fragmentCompositionId);
+	}
+
+	public static com.liferay.fragment.model.FragmentComposition
+		fetchFragmentComposition(long groupId, String fragmentCompositionKey) {
+
+		return getService().fetchFragmentComposition(
+			groupId, fragmentCompositionKey);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(long fragmentCollectionId) {
+
+		return getService().getFragmentCompositions(fragmentCollectionId);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(long fragmentCollectionId, int start, int end) {
+
+		return getService().getFragmentCompositions(
+			fragmentCollectionId, start, end);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(
+			long groupId, long fragmentCollectionId, int status) {
+
+		return getService().getFragmentCompositions(
+			groupId, fragmentCollectionId, status);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(
+			long groupId, long fragmentCollectionId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.fragment.model.FragmentComposition>
+					orderByComparator) {
+
+		return getService().getFragmentCompositions(
+			groupId, fragmentCollectionId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(
+			long groupId, long fragmentCollectionId, String name, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.fragment.model.FragmentComposition>
+					orderByComparator) {
+
+		return getService().getFragmentCompositions(
+			groupId, fragmentCollectionId, name, start, end, orderByComparator);
+	}
+
+	public static int getFragmentCompositionsCount(long fragmentCollectionId) {
+		return getService().getFragmentCompositionsCount(fragmentCollectionId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -45,6 +125,26 @@ public class FragmentCompositionServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.fragment.model.FragmentComposition
+			updateFragmentComposition(
+				long fragmentCompositionId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateFragmentComposition(
+			fragmentCompositionId, previewFileEntryId);
+	}
+
+	public static com.liferay.fragment.model.FragmentComposition
+			updateFragmentComposition(
+				long fragmentCompositionId, String name, String description,
+				String fragments, long previewFileEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateFragmentComposition(
+			fragmentCompositionId, name, description, fragments,
+			previewFileEntryId, status);
 	}
 
 	public static FragmentCompositionService getService() {

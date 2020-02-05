@@ -307,6 +307,15 @@ public class FragmentCompositionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_FCI_S() throws Exception {
+		_persistence.countByG_FCI_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_FCI_S(0L, 0L, 0);
+	}
+
+	@Test
 	public void testCountByG_FCI_LikeN_S() throws Exception {
 		_persistence.countByG_FCI_LikeN_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
@@ -315,15 +324,6 @@ public class FragmentCompositionPersistenceTest {
 		_persistence.countByG_FCI_LikeN_S(0L, 0L, "null", 0);
 
 		_persistence.countByG_FCI_LikeN_S(0L, 0L, (String)null, 0);
-	}
-
-	@Test
-	public void testCountByG_FCI_S() throws Exception {
-		_persistence.countByG_FCI_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByG_FCI_S(0L, 0L, 0);
 	}
 
 	@Test
@@ -358,9 +358,9 @@ public class FragmentCompositionPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "fragmentCollectionId", true,
 			"fragmentCompositionKey", true, "name", true, "description", true,
-			"fragments", true, "previewFileEntryId", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"previewFileEntryId", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test

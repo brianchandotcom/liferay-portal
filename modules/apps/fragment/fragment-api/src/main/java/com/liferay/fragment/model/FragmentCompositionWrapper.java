@@ -263,6 +263,13 @@ public class FragmentCompositionWrapper
 		return model.getFragments();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getFragmentsJSONObject()
+		throws Exception {
+
+		return model.getFragmentsJSONObject();
+	}
+
 	/**
 	 * Returns the group ID of this fragment composition.
 	 *

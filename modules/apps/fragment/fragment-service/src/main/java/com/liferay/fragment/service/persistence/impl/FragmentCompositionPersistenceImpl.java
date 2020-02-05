@@ -3965,6 +3965,605 @@ public class FragmentCompositionPersistenceImpl
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_NAME_3 =
 		"(fragmentComposition.name IS NULL OR fragmentComposition.name LIKE '')";
 
+	private FinderPath _finderPathWithPaginationFindByG_FCI_S;
+	private FinderPath _finderPathWithoutPaginationFindByG_FCI_S;
+	private FinderPath _finderPathCountByG_FCI_S;
+
+	/**
+	 * Returns all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @return the matching fragment compositions
+	 */
+	@Override
+	public List<FragmentComposition> findByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status) {
+
+		return findByG_FCI_S(
+			groupId, fragmentCollectionId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param start the lower bound of the range of fragment compositions
+	 * @param end the upper bound of the range of fragment compositions (not inclusive)
+	 * @return the range of matching fragment compositions
+	 */
+	@Override
+	public List<FragmentComposition> findByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status, int start,
+		int end) {
+
+		return findByG_FCI_S(
+			groupId, fragmentCollectionId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param start the lower bound of the range of fragment compositions
+	 * @param end the upper bound of the range of fragment compositions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment compositions
+	 */
+	@Override
+	public List<FragmentComposition> findByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status, int start, int end,
+		OrderByComparator<FragmentComposition> orderByComparator) {
+
+		return findByG_FCI_S(
+			groupId, fragmentCollectionId, status, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param start the lower bound of the range of fragment compositions
+	 * @param end the upper bound of the range of fragment compositions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment compositions
+	 */
+	@Override
+	public List<FragmentComposition> findByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status, int start, int end,
+		OrderByComparator<FragmentComposition> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_FCI_S;
+				finderArgs = new Object[] {
+					groupId, fragmentCollectionId, status
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByG_FCI_S;
+			finderArgs = new Object[] {
+				groupId, fragmentCollectionId, status, start, end,
+				orderByComparator
+			};
+		}
+
+		List<FragmentComposition> list = null;
+
+		if (useFinderCache) {
+			list = (List<FragmentComposition>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (FragmentComposition fragmentComposition : list) {
+					if ((groupId != fragmentComposition.getGroupId()) ||
+						(fragmentCollectionId !=
+							fragmentComposition.getFragmentCollectionId()) ||
+						(status != fragmentComposition.getStatus())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_FRAGMENTCOMPOSITION_WHERE);
+
+			query.append(_FINDER_COLUMN_G_FCI_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_FCI_S_FRAGMENTCOLLECTIONID_2);
+
+			query.append(_FINDER_COLUMN_G_FCI_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				query.append(FragmentCompositionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(fragmentCollectionId);
+
+				qPos.add(status);
+
+				list = (List<FragmentComposition>)QueryUtil.list(
+					q, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment composition
+	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
+	 */
+	@Override
+	public FragmentComposition findByG_FCI_S_First(
+			long groupId, long fragmentCollectionId, int status,
+			OrderByComparator<FragmentComposition> orderByComparator)
+		throws NoSuchCompositionException {
+
+		FragmentComposition fragmentComposition = fetchByG_FCI_S_First(
+			groupId, fragmentCollectionId, status, orderByComparator);
+
+		if (fragmentComposition != null) {
+			return fragmentComposition;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", fragmentCollectionId=");
+		msg.append(fragmentCollectionId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchCompositionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
+	 */
+	@Override
+	public FragmentComposition fetchByG_FCI_S_First(
+		long groupId, long fragmentCollectionId, int status,
+		OrderByComparator<FragmentComposition> orderByComparator) {
+
+		List<FragmentComposition> list = findByG_FCI_S(
+			groupId, fragmentCollectionId, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment composition
+	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
+	 */
+	@Override
+	public FragmentComposition findByG_FCI_S_Last(
+			long groupId, long fragmentCollectionId, int status,
+			OrderByComparator<FragmentComposition> orderByComparator)
+		throws NoSuchCompositionException {
+
+		FragmentComposition fragmentComposition = fetchByG_FCI_S_Last(
+			groupId, fragmentCollectionId, status, orderByComparator);
+
+		if (fragmentComposition != null) {
+			return fragmentComposition;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", fragmentCollectionId=");
+		msg.append(fragmentCollectionId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchCompositionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
+	 */
+	@Override
+	public FragmentComposition fetchByG_FCI_S_Last(
+		long groupId, long fragmentCollectionId, int status,
+		OrderByComparator<FragmentComposition> orderByComparator) {
+
+		int count = countByG_FCI_S(groupId, fragmentCollectionId, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<FragmentComposition> list = findByG_FCI_S(
+			groupId, fragmentCollectionId, status, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param fragmentCompositionId the primary key of the current fragment composition
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next fragment composition
+	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
+	 */
+	@Override
+	public FragmentComposition[] findByG_FCI_S_PrevAndNext(
+			long fragmentCompositionId, long groupId, long fragmentCollectionId,
+			int status,
+			OrderByComparator<FragmentComposition> orderByComparator)
+		throws NoSuchCompositionException {
+
+		FragmentComposition fragmentComposition = findByPrimaryKey(
+			fragmentCompositionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			FragmentComposition[] array = new FragmentCompositionImpl[3];
+
+			array[0] = getByG_FCI_S_PrevAndNext(
+				session, fragmentComposition, groupId, fragmentCollectionId,
+				status, orderByComparator, true);
+
+			array[1] = fragmentComposition;
+
+			array[2] = getByG_FCI_S_PrevAndNext(
+				session, fragmentComposition, groupId, fragmentCollectionId,
+				status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected FragmentComposition getByG_FCI_S_PrevAndNext(
+		Session session, FragmentComposition fragmentComposition, long groupId,
+		long fragmentCollectionId, int status,
+		OrderByComparator<FragmentComposition> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_FRAGMENTCOMPOSITION_WHERE);
+
+		query.append(_FINDER_COLUMN_G_FCI_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_FCI_S_FRAGMENTCOLLECTIONID_2);
+
+		query.append(_FINDER_COLUMN_G_FCI_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(FragmentCompositionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(fragmentCollectionId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						fragmentComposition)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<FragmentComposition> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status) {
+
+		for (FragmentComposition fragmentComposition :
+				findByG_FCI_S(
+					groupId, fragmentCollectionId, status, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(fragmentComposition);
+		}
+	}
+
+	/**
+	 * Returns the number of fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @return the number of matching fragment compositions
+	 */
+	@Override
+	public int countByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status) {
+
+		FinderPath finderPath = _finderPathCountByG_FCI_S;
+
+		Object[] finderArgs = new Object[] {
+			groupId, fragmentCollectionId, status
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_FRAGMENTCOMPOSITION_WHERE);
+
+			query.append(_FINDER_COLUMN_G_FCI_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_FCI_S_FRAGMENTCOLLECTIONID_2);
+
+			query.append(_FINDER_COLUMN_G_FCI_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(fragmentCollectionId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_FCI_S_GROUPID_2 =
+		"fragmentComposition.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_FCI_S_FRAGMENTCOLLECTIONID_2 =
+		"fragmentComposition.fragmentCollectionId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_FCI_S_STATUS_2 =
+		"fragmentComposition.status = ?";
+
 	private FinderPath _finderPathWithPaginationFindByG_FCI_LikeN_S;
 	private FinderPath _finderPathWithPaginationCountByG_FCI_LikeN_S;
 
@@ -4631,605 +5230,6 @@ public class FragmentCompositionPersistenceImpl
 		"(fragmentComposition.name IS NULL OR fragmentComposition.name LIKE '') AND ";
 
 	private static final String _FINDER_COLUMN_G_FCI_LIKEN_S_STATUS_2 =
-		"fragmentComposition.status = ?";
-
-	private FinderPath _finderPathWithPaginationFindByG_FCI_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_FCI_S;
-	private FinderPath _finderPathCountByG_FCI_S;
-
-	/**
-	 * Returns all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @return the matching fragment compositions
-	 */
-	@Override
-	public List<FragmentComposition> findByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status) {
-
-		return findByG_FCI_S(
-			groupId, fragmentCollectionId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment compositions
-	 * @param end the upper bound of the range of fragment compositions (not inclusive)
-	 * @return the range of matching fragment compositions
-	 */
-	@Override
-	public List<FragmentComposition> findByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status, int start,
-		int end) {
-
-		return findByG_FCI_S(
-			groupId, fragmentCollectionId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment compositions
-	 * @param end the upper bound of the range of fragment compositions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment compositions
-	 */
-	@Override
-	public List<FragmentComposition> findByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status, int start, int end,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return findByG_FCI_S(
-			groupId, fragmentCollectionId, status, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment compositions
-	 * @param end the upper bound of the range of fragment compositions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching fragment compositions
-	 */
-	@Override
-	public List<FragmentComposition> findByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status, int start, int end,
-		OrderByComparator<FragmentComposition> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_FCI_S;
-				finderArgs = new Object[] {
-					groupId, fragmentCollectionId, status
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByG_FCI_S;
-			finderArgs = new Object[] {
-				groupId, fragmentCollectionId, status, start, end,
-				orderByComparator
-			};
-		}
-
-		List<FragmentComposition> list = null;
-
-		if (useFinderCache) {
-			list = (List<FragmentComposition>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (FragmentComposition fragmentComposition : list) {
-					if ((groupId != fragmentComposition.getGroupId()) ||
-						(fragmentCollectionId !=
-							fragmentComposition.getFragmentCollectionId()) ||
-						(status != fragmentComposition.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(5);
-			}
-
-			query.append(_SQL_SELECT_FRAGMENTCOMPOSITION_WHERE);
-
-			query.append(_FINDER_COLUMN_G_FCI_S_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_FCI_S_FRAGMENTCOLLECTIONID_2);
-
-			query.append(_FINDER_COLUMN_G_FCI_S_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				query.append(FragmentCompositionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(fragmentCollectionId);
-
-				qPos.add(status);
-
-				list = (List<FragmentComposition>)QueryUtil.list(
-					q, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition findByG_FCI_S_First(
-			long groupId, long fragmentCollectionId, int status,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException {
-
-		FragmentComposition fragmentComposition = fetchByG_FCI_S_First(
-			groupId, fragmentCollectionId, status, orderByComparator);
-
-		if (fragmentComposition != null) {
-			return fragmentComposition;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", fragmentCollectionId=");
-		msg.append(fragmentCollectionId);
-
-		msg.append(", status=");
-		msg.append(status);
-
-		msg.append("}");
-
-		throw new NoSuchCompositionException(msg.toString());
-	}
-
-	/**
-	 * Returns the first fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition fetchByG_FCI_S_First(
-		long groupId, long fragmentCollectionId, int status,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		List<FragmentComposition> list = findByG_FCI_S(
-			groupId, fragmentCollectionId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition findByG_FCI_S_Last(
-			long groupId, long fragmentCollectionId, int status,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException {
-
-		FragmentComposition fragmentComposition = fetchByG_FCI_S_Last(
-			groupId, fragmentCollectionId, status, orderByComparator);
-
-		if (fragmentComposition != null) {
-			return fragmentComposition;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", fragmentCollectionId=");
-		msg.append(fragmentCollectionId);
-
-		msg.append(", status=");
-		msg.append(status);
-
-		msg.append("}");
-
-		throw new NoSuchCompositionException(msg.toString());
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	@Override
-	public FragmentComposition fetchByG_FCI_S_Last(
-		long groupId, long fragmentCollectionId, int status,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		int count = countByG_FCI_S(groupId, fragmentCollectionId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<FragmentComposition> list = findByG_FCI_S(
-			groupId, fragmentCollectionId, status, count - 1, count,
-			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param fragmentCompositionId the primary key of the current fragment composition
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment composition
-	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
-	 */
-	@Override
-	public FragmentComposition[] findByG_FCI_S_PrevAndNext(
-			long fragmentCompositionId, long groupId, long fragmentCollectionId,
-			int status,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws NoSuchCompositionException {
-
-		FragmentComposition fragmentComposition = findByPrimaryKey(
-			fragmentCompositionId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FragmentComposition[] array = new FragmentCompositionImpl[3];
-
-			array[0] = getByG_FCI_S_PrevAndNext(
-				session, fragmentComposition, groupId, fragmentCollectionId,
-				status, orderByComparator, true);
-
-			array[1] = fragmentComposition;
-
-			array[2] = getByG_FCI_S_PrevAndNext(
-				session, fragmentComposition, groupId, fragmentCollectionId,
-				status, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected FragmentComposition getByG_FCI_S_PrevAndNext(
-		Session session, FragmentComposition fragmentComposition, long groupId,
-		long fragmentCollectionId, int status,
-		OrderByComparator<FragmentComposition> orderByComparator,
-		boolean previous) {
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(5);
-		}
-
-		query.append(_SQL_SELECT_FRAGMENTCOMPOSITION_WHERE);
-
-		query.append(_FINDER_COLUMN_G_FCI_S_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_FCI_S_FRAGMENTCOLLECTIONID_2);
-
-		query.append(_FINDER_COLUMN_G_FCI_S_STATUS_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(FragmentCompositionModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		qPos.add(fragmentCollectionId);
-
-		qPos.add(status);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						fragmentComposition)) {
-
-				qPos.add(orderByConditionValue);
-			}
-		}
-
-		List<FragmentComposition> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 */
-	@Override
-	public void removeByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status) {
-
-		for (FragmentComposition fragmentComposition :
-				findByG_FCI_S(
-					groupId, fragmentCollectionId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentComposition);
-		}
-	}
-
-	/**
-	 * Returns the number of fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @return the number of matching fragment compositions
-	 */
-	@Override
-	public int countByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status) {
-
-		FinderPath finderPath = _finderPathCountByG_FCI_S;
-
-		Object[] finderArgs = new Object[] {
-			groupId, fragmentCollectionId, status
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_COUNT_FRAGMENTCOMPOSITION_WHERE);
-
-			query.append(_FINDER_COLUMN_G_FCI_S_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_FCI_S_FRAGMENTCOLLECTIONID_2);
-
-			query.append(_FINDER_COLUMN_G_FCI_S_STATUS_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(fragmentCollectionId);
-
-				qPos.add(status);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_FCI_S_GROUPID_2 =
-		"fragmentComposition.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_FCI_S_FRAGMENTCOLLECTIONID_2 =
-		"fragmentComposition.fragmentCollectionId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_FCI_S_STATUS_2 =
 		"fragmentComposition.status = ?";
 
 	public FragmentCompositionPersistenceImpl() {
@@ -6279,25 +6279,6 @@ public class FragmentCompositionPersistenceImpl
 				String.class.getName()
 			});
 
-		_finderPathWithPaginationFindByG_FCI_LikeN_S = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
-			FragmentCompositionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_FCI_LikeN_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-
-		_finderPathWithPaginationCountByG_FCI_LikeN_S = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_FCI_LikeN_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			});
-
 		_finderPathWithPaginationFindByG_FCI_S = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			FragmentCompositionImpl.class,
@@ -6327,6 +6308,25 @@ public class FragmentCompositionPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
+			});
+
+		_finderPathWithPaginationFindByG_FCI_LikeN_S = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			FragmentCompositionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_FCI_LikeN_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithPaginationCountByG_FCI_LikeN_S = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_FCI_LikeN_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName()
 			});
 	}
 

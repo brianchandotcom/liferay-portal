@@ -1359,6 +1359,215 @@ public class FragmentCompositionUtil {
 	}
 
 	/**
+	 * Returns all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @return the matching fragment compositions
+	 */
+	public static List<FragmentComposition> findByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status) {
+
+		return getPersistence().findByG_FCI_S(
+			groupId, fragmentCollectionId, status);
+	}
+
+	/**
+	 * Returns a range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param start the lower bound of the range of fragment compositions
+	 * @param end the upper bound of the range of fragment compositions (not inclusive)
+	 * @return the range of matching fragment compositions
+	 */
+	public static List<FragmentComposition> findByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status, int start,
+		int end) {
+
+		return getPersistence().findByG_FCI_S(
+			groupId, fragmentCollectionId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param start the lower bound of the range of fragment compositions
+	 * @param end the upper bound of the range of fragment compositions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment compositions
+	 */
+	public static List<FragmentComposition> findByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status, int start, int end,
+		OrderByComparator<FragmentComposition> orderByComparator) {
+
+		return getPersistence().findByG_FCI_S(
+			groupId, fragmentCollectionId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param start the lower bound of the range of fragment compositions
+	 * @param end the upper bound of the range of fragment compositions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment compositions
+	 */
+	public static List<FragmentComposition> findByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status, int start, int end,
+		OrderByComparator<FragmentComposition> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_FCI_S(
+			groupId, fragmentCollectionId, status, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment composition
+	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
+	 */
+	public static FragmentComposition findByG_FCI_S_First(
+			long groupId, long fragmentCollectionId, int status,
+			OrderByComparator<FragmentComposition> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchCompositionException {
+
+		return getPersistence().findByG_FCI_S_First(
+			groupId, fragmentCollectionId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the first fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
+	 */
+	public static FragmentComposition fetchByG_FCI_S_First(
+		long groupId, long fragmentCollectionId, int status,
+		OrderByComparator<FragmentComposition> orderByComparator) {
+
+		return getPersistence().fetchByG_FCI_S_First(
+			groupId, fragmentCollectionId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment composition
+	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
+	 */
+	public static FragmentComposition findByG_FCI_S_Last(
+			long groupId, long fragmentCollectionId, int status,
+			OrderByComparator<FragmentComposition> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchCompositionException {
+
+		return getPersistence().findByG_FCI_S_Last(
+			groupId, fragmentCollectionId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
+	 */
+	public static FragmentComposition fetchByG_FCI_S_Last(
+		long groupId, long fragmentCollectionId, int status,
+		OrderByComparator<FragmentComposition> orderByComparator) {
+
+		return getPersistence().fetchByG_FCI_S_Last(
+			groupId, fragmentCollectionId, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param fragmentCompositionId the primary key of the current fragment composition
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next fragment composition
+	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
+	 */
+	public static FragmentComposition[] findByG_FCI_S_PrevAndNext(
+			long fragmentCompositionId, long groupId, long fragmentCollectionId,
+			int status,
+			OrderByComparator<FragmentComposition> orderByComparator)
+		throws com.liferay.fragment.exception.NoSuchCompositionException {
+
+		return getPersistence().findByG_FCI_S_PrevAndNext(
+			fragmentCompositionId, groupId, fragmentCollectionId, status,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 */
+	public static void removeByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status) {
+
+		getPersistence().removeByG_FCI_S(groupId, fragmentCollectionId, status);
+	}
+
+	/**
+	 * Returns the number of fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param status the status
+	 * @return the number of matching fragment compositions
+	 */
+	public static int countByG_FCI_S(
+		long groupId, long fragmentCollectionId, int status) {
+
+		return getPersistence().countByG_FCI_S(
+			groupId, fragmentCollectionId, status);
+	}
+
+	/**
 	 * Returns all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -1579,215 +1788,6 @@ public class FragmentCompositionUtil {
 
 		return getPersistence().countByG_FCI_LikeN_S(
 			groupId, fragmentCollectionId, name, status);
-	}
-
-	/**
-	 * Returns all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @return the matching fragment compositions
-	 */
-	public static List<FragmentComposition> findByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status) {
-
-		return getPersistence().findByG_FCI_S(
-			groupId, fragmentCollectionId, status);
-	}
-
-	/**
-	 * Returns a range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment compositions
-	 * @param end the upper bound of the range of fragment compositions (not inclusive)
-	 * @return the range of matching fragment compositions
-	 */
-	public static List<FragmentComposition> findByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status, int start,
-		int end) {
-
-		return getPersistence().findByG_FCI_S(
-			groupId, fragmentCollectionId, status, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment compositions
-	 * @param end the upper bound of the range of fragment compositions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment compositions
-	 */
-	public static List<FragmentComposition> findByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status, int start, int end,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return getPersistence().findByG_FCI_S(
-			groupId, fragmentCollectionId, status, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCompositionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment compositions
-	 * @param end the upper bound of the range of fragment compositions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching fragment compositions
-	 */
-	public static List<FragmentComposition> findByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status, int start, int end,
-		OrderByComparator<FragmentComposition> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findByG_FCI_S(
-			groupId, fragmentCollectionId, status, start, end,
-			orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition findByG_FCI_S_First(
-			long groupId, long fragmentCollectionId, int status,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCompositionException {
-
-		return getPersistence().findByG_FCI_S_First(
-			groupId, fragmentCollectionId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the first fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition fetchByG_FCI_S_First(
-		long groupId, long fragmentCollectionId, int status,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return getPersistence().fetchByG_FCI_S_First(
-			groupId, fragmentCollectionId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition
-	 * @throws NoSuchCompositionException if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition findByG_FCI_S_Last(
-			long groupId, long fragmentCollectionId, int status,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCompositionException {
-
-		return getPersistence().findByG_FCI_S_Last(
-			groupId, fragmentCollectionId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the last fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching fragment composition, or <code>null</code> if a matching fragment composition could not be found
-	 */
-	public static FragmentComposition fetchByG_FCI_S_Last(
-		long groupId, long fragmentCollectionId, int status,
-		OrderByComparator<FragmentComposition> orderByComparator) {
-
-		return getPersistence().fetchByG_FCI_S_Last(
-			groupId, fragmentCollectionId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment compositions before and after the current fragment composition in the ordered set where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param fragmentCompositionId the primary key of the current fragment composition
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment composition
-	 * @throws NoSuchCompositionException if a fragment composition with the primary key could not be found
-	 */
-	public static FragmentComposition[] findByG_FCI_S_PrevAndNext(
-			long fragmentCompositionId, long groupId, long fragmentCollectionId,
-			int status,
-			OrderByComparator<FragmentComposition> orderByComparator)
-		throws com.liferay.fragment.exception.NoSuchCompositionException {
-
-		return getPersistence().findByG_FCI_S_PrevAndNext(
-			fragmentCompositionId, groupId, fragmentCollectionId, status,
-			orderByComparator);
-	}
-
-	/**
-	 * Removes all the fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 */
-	public static void removeByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status) {
-
-		getPersistence().removeByG_FCI_S(groupId, fragmentCollectionId, status);
-	}
-
-	/**
-	 * Returns the number of fragment compositions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @return the number of matching fragment compositions
-	 */
-	public static int countByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status) {
-
-		return getPersistence().countByG_FCI_S(
-			groupId, fragmentCollectionId, status);
 	}
 
 	/**

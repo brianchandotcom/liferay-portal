@@ -60,4 +60,7 @@ public interface FragmentComposition
 
 			};
 
+	public com.liferay.portal.kernel.json.JSONObject getFragmentsJSONObject()
+		throws Exception;
+
 }

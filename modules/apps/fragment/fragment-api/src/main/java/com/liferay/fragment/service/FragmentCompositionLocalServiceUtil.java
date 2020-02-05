@@ -52,6 +52,19 @@ public class FragmentCompositionLocalServiceUtil {
 		return getService().addFragmentComposition(fragmentComposition);
 	}
 
+	public static com.liferay.fragment.model.FragmentComposition
+			addFragmentComposition(
+				long userId, long groupId, long fragmentCollectionId,
+				String fragmentCompositionKey, String name, String description,
+				String fragments, long previewFileEntryId, int status,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addFragmentComposition(
+			userId, groupId, fragmentCollectionId, fragmentCompositionKey, name,
+			description, fragments, previewFileEntryId, status, serviceContext);
+	}
+
 	/**
 	 * Creates a new fragment composition with the primary key. Does not add the fragment composition to the database.
 	 *
@@ -69,11 +82,13 @@ public class FragmentCompositionLocalServiceUtil {
 	 *
 	 * @param fragmentComposition the fragment composition
 	 * @return the fragment composition that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.fragment.model.FragmentComposition
-		deleteFragmentComposition(
-			com.liferay.fragment.model.FragmentComposition
-				fragmentComposition) {
+			deleteFragmentComposition(
+				com.liferay.fragment.model.FragmentComposition
+					fragmentComposition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteFragmentComposition(fragmentComposition);
 	}
@@ -194,6 +209,13 @@ public class FragmentCompositionLocalServiceUtil {
 		return getService().fetchFragmentComposition(fragmentCompositionId);
 	}
 
+	public static com.liferay.fragment.model.FragmentComposition
+		fetchFragmentComposition(long groupId, String fragmentCompositionKey) {
+
+		return getService().fetchFragmentComposition(
+			groupId, fragmentCompositionKey);
+	}
+
 	/**
 	 * Returns the fragment composition matching the UUID and group.
 	 *
@@ -206,6 +228,12 @@ public class FragmentCompositionLocalServiceUtil {
 
 		return getService().fetchFragmentCompositionByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	public static String generateFragmentCompositionKey(
+		long groupId, String name) {
+
+		return getService().generateFragmentCompositionKey(groupId, name);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -269,6 +297,50 @@ public class FragmentCompositionLocalServiceUtil {
 		return getService().getFragmentCompositions(start, end);
 	}
 
+	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(long fragmentCollectionId) {
+
+		return getService().getFragmentCompositions(fragmentCollectionId);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(long fragmentCollectionId, int start, int end) {
+
+		return getService().getFragmentCompositions(
+			fragmentCollectionId, start, end);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(
+			long groupId, long fragmentCollectionId, int status) {
+
+		return getService().getFragmentCompositions(
+			groupId, fragmentCollectionId, status);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(
+			long groupId, long fragmentCollectionId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.fragment.model.FragmentComposition>
+					orderByComparator) {
+
+		return getService().getFragmentCompositions(
+			groupId, fragmentCollectionId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(
+			long groupId, long fragmentCollectionId, String name, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.fragment.model.FragmentComposition>
+					orderByComparator) {
+
+		return getService().getFragmentCompositions(
+			groupId, fragmentCollectionId, name, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the fragment compositions matching the UUID and company.
 	 *
@@ -313,6 +385,10 @@ public class FragmentCompositionLocalServiceUtil {
 		return getService().getFragmentCompositionsCount();
 	}
 
+	public static int getFragmentCompositionsCount(long fragmentCollectionId) {
+		return getService().getFragmentCompositionsCount(fragmentCollectionId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {
@@ -336,6 +412,13 @@ public class FragmentCompositionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static String[] getTempFileNames(
+			long userId, long groupId, String folderName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getTempFileNames(userId, groupId, folderName);
+	}
+
 	/**
 	 * Updates the fragment composition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -348,6 +431,27 @@ public class FragmentCompositionLocalServiceUtil {
 				fragmentComposition) {
 
 		return getService().updateFragmentComposition(fragmentComposition);
+	}
+
+	public static com.liferay.fragment.model.FragmentComposition
+			updateFragmentComposition(
+				long fragmentCompositionId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateFragmentComposition(
+			fragmentCompositionId, previewFileEntryId);
+	}
+
+	public static com.liferay.fragment.model.FragmentComposition
+			updateFragmentComposition(
+				long userId, long fragmentCompositionId, String name,
+				String description, String fragments, long previewFileEntryId,
+				int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateFragmentComposition(
+			userId, fragmentCompositionId, name, description, fragments,
+			previewFileEntryId, status);
 	}
 
 	public static FragmentCompositionLocalService getService() {

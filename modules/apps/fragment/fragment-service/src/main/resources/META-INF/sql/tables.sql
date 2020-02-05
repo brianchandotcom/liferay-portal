@@ -28,7 +28,7 @@ create table FragmentComposition (
 	fragmentCompositionKey VARCHAR(75) null,
 	name VARCHAR(75) null,
 	description VARCHAR(75) null,
-	fragments VARCHAR(75) null,
+	fragments TEXT null,
 	previewFileEntryId LONG,
 	lastPublishDate DATE null,
 	status INTEGER,

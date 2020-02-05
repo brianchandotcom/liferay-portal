@@ -49,6 +49,20 @@ public class FragmentCompositionLocalServiceWrapper
 			fragmentComposition);
 	}
 
+	@Override
+	public com.liferay.fragment.model.FragmentComposition
+			addFragmentComposition(
+				long userId, long groupId, long fragmentCollectionId,
+				String fragmentCompositionKey, String name, String description,
+				String fragments, long previewFileEntryId, int status,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentCompositionLocalService.addFragmentComposition(
+			userId, groupId, fragmentCollectionId, fragmentCompositionKey, name,
+			description, fragments, previewFileEntryId, status, serviceContext);
+	}
+
 	/**
 	 * Creates a new fragment composition with the primary key. Does not add the fragment composition to the database.
 	 *
@@ -68,12 +82,14 @@ public class FragmentCompositionLocalServiceWrapper
 	 *
 	 * @param fragmentComposition the fragment composition
 	 * @return the fragment composition that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.fragment.model.FragmentComposition
-		deleteFragmentComposition(
-			com.liferay.fragment.model.FragmentComposition
-				fragmentComposition) {
+			deleteFragmentComposition(
+				com.liferay.fragment.model.FragmentComposition
+					fragmentComposition)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentCompositionLocalService.deleteFragmentComposition(
 			fragmentComposition);
@@ -206,6 +222,14 @@ public class FragmentCompositionLocalServiceWrapper
 			fragmentCompositionId);
 	}
 
+	@Override
+	public com.liferay.fragment.model.FragmentComposition
+		fetchFragmentComposition(long groupId, String fragmentCompositionKey) {
+
+		return _fragmentCompositionLocalService.fetchFragmentComposition(
+			groupId, fragmentCompositionKey);
+	}
+
 	/**
 	 * Returns the fragment composition matching the UUID and group.
 	 *
@@ -219,6 +243,12 @@ public class FragmentCompositionLocalServiceWrapper
 
 		return _fragmentCompositionLocalService.
 			fetchFragmentCompositionByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public String generateFragmentCompositionKey(long groupId, String name) {
+		return _fragmentCompositionLocalService.generateFragmentCompositionKey(
+			groupId, name);
 	}
 
 	@Override
@@ -290,6 +320,56 @@ public class FragmentCompositionLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(long fragmentCollectionId) {
+
+		return _fragmentCompositionLocalService.getFragmentCompositions(
+			fragmentCollectionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(long fragmentCollectionId, int start, int end) {
+
+		return _fragmentCompositionLocalService.getFragmentCompositions(
+			fragmentCollectionId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(
+			long groupId, long fragmentCollectionId, int status) {
+
+		return _fragmentCompositionLocalService.getFragmentCompositions(
+			groupId, fragmentCollectionId, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(
+			long groupId, long fragmentCollectionId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.fragment.model.FragmentComposition>
+					orderByComparator) {
+
+		return _fragmentCompositionLocalService.getFragmentCompositions(
+			groupId, fragmentCollectionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentComposition>
+		getFragmentCompositions(
+			long groupId, long fragmentCollectionId, String name, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.fragment.model.FragmentComposition>
+					orderByComparator) {
+
+		return _fragmentCompositionLocalService.getFragmentCompositions(
+			groupId, fragmentCollectionId, name, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the fragment compositions matching the UUID and company.
 	 *
@@ -339,6 +419,12 @@ public class FragmentCompositionLocalServiceWrapper
 	}
 
 	@Override
+	public int getFragmentCompositionsCount(long fragmentCollectionId) {
+		return _fragmentCompositionLocalService.getFragmentCompositionsCount(
+			fragmentCollectionId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
@@ -365,6 +451,15 @@ public class FragmentCompositionLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public String[] getTempFileNames(
+			long userId, long groupId, String folderName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentCompositionLocalService.getTempFileNames(
+			userId, groupId, folderName);
+	}
+
 	/**
 	 * Updates the fragment composition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -379,6 +474,29 @@ public class FragmentCompositionLocalServiceWrapper
 
 		return _fragmentCompositionLocalService.updateFragmentComposition(
 			fragmentComposition);
+	}
+
+	@Override
+	public com.liferay.fragment.model.FragmentComposition
+			updateFragmentComposition(
+				long fragmentCompositionId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentCompositionLocalService.updateFragmentComposition(
+			fragmentCompositionId, previewFileEntryId);
+	}
+
+	@Override
+	public com.liferay.fragment.model.FragmentComposition
+			updateFragmentComposition(
+				long userId, long fragmentCompositionId, String name,
+				String description, String fragments, long previewFileEntryId,
+				int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentCompositionLocalService.updateFragmentComposition(
+			userId, fragmentCompositionId, name, description, fragments,
+			previewFileEntryId, status);
 	}
 
 	@Override

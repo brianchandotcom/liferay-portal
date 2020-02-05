@@ -24,10 +24,13 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -73,6 +76,13 @@ public interface FragmentCompositionLocalService
 	public FragmentComposition addFragmentComposition(
 		FragmentComposition fragmentComposition);
 
+	public FragmentComposition addFragmentComposition(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentCompositionKey, String name, String description,
+			String fragments, long previewFileEntryId, int status,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new fragment composition with the primary key. Does not add the fragment composition to the database.
 	 *
@@ -88,10 +98,13 @@ public interface FragmentCompositionLocalService
 	 *
 	 * @param fragmentComposition the fragment composition
 	 * @return the fragment composition that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public FragmentComposition deleteFragmentComposition(
-		FragmentComposition fragmentComposition);
+			FragmentComposition fragmentComposition)
+		throws PortalException;
 
 	/**
 	 * Deletes the fragment composition with the primary key from the database. Also notifies the appropriate model listeners.
@@ -182,6 +195,10 @@ public interface FragmentCompositionLocalService
 	public FragmentComposition fetchFragmentComposition(
 		long fragmentCompositionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentComposition fetchFragmentComposition(
+		long groupId, String fragmentCompositionKey);
+
 	/**
 	 * Returns the fragment composition matching the UUID and group.
 	 *
@@ -192,6 +209,8 @@ public interface FragmentCompositionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentComposition fetchFragmentCompositionByUuidAndGroupId(
 		String uuid, long groupId);
+
+	public String generateFragmentCompositionKey(long groupId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -240,6 +259,28 @@ public interface FragmentCompositionLocalService
 	public List<FragmentComposition> getFragmentCompositions(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentComposition> getFragmentCompositions(
+		long fragmentCollectionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentComposition> getFragmentCompositions(
+		long fragmentCollectionId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentComposition> getFragmentCompositions(
+		long groupId, long fragmentCollectionId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentComposition> getFragmentCompositions(
+		long groupId, long fragmentCollectionId, int start, int end,
+		OrderByComparator<FragmentComposition> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentComposition> getFragmentCompositions(
+		long groupId, long fragmentCollectionId, String name, int start,
+		int end, OrderByComparator<FragmentComposition> orderByComparator);
+
 	/**
 	 * Returns all the fragment compositions matching the UUID and company.
 	 *
@@ -275,6 +316,9 @@ public interface FragmentCompositionLocalService
 	public int getFragmentCompositionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFragmentCompositionsCount(long fragmentCollectionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -289,6 +333,11 @@ public interface FragmentCompositionLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String[] getTempFileNames(
+			long userId, long groupId, String folderName)
+		throws PortalException;
+
 	/**
 	 * Updates the fragment composition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -298,5 +347,15 @@ public interface FragmentCompositionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public FragmentComposition updateFragmentComposition(
 		FragmentComposition fragmentComposition);
+
+	public FragmentComposition updateFragmentComposition(
+			long fragmentCompositionId, long previewFileEntryId)
+		throws PortalException;
+
+	public FragmentComposition updateFragmentComposition(
+			long userId, long fragmentCompositionId, String name,
+			String description, String fragments, long previewFileEntryId,
+			int status)
+		throws PortalException;
 
 }

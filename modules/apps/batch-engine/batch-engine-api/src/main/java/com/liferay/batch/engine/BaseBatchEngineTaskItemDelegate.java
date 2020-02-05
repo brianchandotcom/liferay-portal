@@ -66,14 +66,17 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 		return null;
 	}
 
+	@Override
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
 
+	@Override
 	public void setContextUser(User contextUser) {
 		this.contextUser = contextUser;
 	}

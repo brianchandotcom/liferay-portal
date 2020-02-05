@@ -22,7 +22,9 @@ import java.util.Set;
 
 import org.talend.components.api.component.ConnectorTopology;
 import org.talend.components.api.component.runtime.ExecutionEngine;
+import org.talend.components.api.exception.error.ComponentsErrorCode;
 import org.talend.components.api.properties.ComponentProperties;
+import org.talend.daikon.exception.TalendRuntimeException;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.runtime.RuntimeInfo;
 
@@ -65,6 +67,17 @@ public class TLiferayInputDefinition extends LiferayDefinition {
 		ExecutionEngine executionEngine,
 		ComponentProperties componentProperties,
 		ConnectorTopology connectorTopology) {
+
+		if (connectorTopology != ConnectorTopology.OUTGOING) {
+			TalendRuntimeException.TalendRuntimeExceptionBuilder builder =
+				new TalendRuntimeException.TalendRuntimeExceptionBuilder(
+					ComponentsErrorCode.WRONG_CONNECTOR,
+					new IllegalArgumentException());
+
+			builder.put("component", COMPONENT_NAME);
+
+			throw builder.create();
+		}
 
 		assertEngineCompatibility(executionEngine);
 

@@ -16,6 +16,7 @@ package com.liferay.asset.list.service;
 
 import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -29,6 +30,8 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -56,7 +59,8 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface AssetListEntryUsageLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+	extends BaseLocalService, CTService<AssetListEntryUsage>,
+			PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -333,5 +337,20 @@ public interface AssetListEntryUsageLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetListEntryUsage updateAssetListEntryUsage(
 		AssetListEntryUsage assetListEntryUsage);
+
+	@Override
+	@Transactional(enabled = false)
+	public CTPersistence<AssetListEntryUsage> getCTPersistence();
+
+	@Override
+	@Transactional(enabled = false)
+	public Class<AssetListEntryUsage> getModelClass();
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<AssetListEntryUsage>, R, E>
+				updateUnsafeFunction)
+		throws E;
 
 }

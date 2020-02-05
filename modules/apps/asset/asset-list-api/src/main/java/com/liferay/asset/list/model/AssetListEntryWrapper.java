@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public class AssetListEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("assetListEntryId", getAssetListEntryId());
 		attributes.put("groupId", getGroupId());
@@ -66,6 +69,12 @@ public class AssetListEntryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -282,6 +291,16 @@ public class AssetListEntryWrapper
 	}
 
 	/**
+	 * Returns the ct collection ID of this asset list entry.
+	 *
+	 * @return the ct collection ID of this asset list entry
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
+	}
+
+	/**
 	 * Returns the group ID of this asset list entry.
 	 *
 	 * @return the group ID of this asset list entry
@@ -454,6 +473,16 @@ public class AssetListEntryWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this asset list entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this asset list entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the group ID of this asset list entry.
 	 *
 	 * @param groupId the group ID of this asset list entry
@@ -561,6 +590,20 @@ public class AssetListEntryWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public Map<String, Function<AssetListEntry, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<AssetListEntry, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

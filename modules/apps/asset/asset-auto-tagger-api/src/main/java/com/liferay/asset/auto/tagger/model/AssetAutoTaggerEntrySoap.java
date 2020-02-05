@@ -34,6 +34,7 @@ public class AssetAutoTaggerEntrySoap implements Serializable {
 		AssetAutoTaggerEntrySoap soapModel = new AssetAutoTaggerEntrySoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setAssetAutoTaggerEntryId(model.getAssetAutoTaggerEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -111,6 +112,14 @@ public class AssetAutoTaggerEntrySoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getAssetAutoTaggerEntryId() {
 		return _assetAutoTaggerEntryId;
 	}
@@ -168,6 +177,7 @@ public class AssetAutoTaggerEntrySoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _assetAutoTaggerEntryId;
 	private long _groupId;
 	private long _companyId;

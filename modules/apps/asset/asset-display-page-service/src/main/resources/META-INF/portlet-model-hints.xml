@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.asset.display.page.model.AssetDisplayPageEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="assetDisplayPageEntryId" type="long" />
 		<field name="groupId" type="long" />

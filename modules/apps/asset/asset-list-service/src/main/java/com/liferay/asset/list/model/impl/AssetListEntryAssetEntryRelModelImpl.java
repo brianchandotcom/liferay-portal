@@ -70,7 +70,8 @@ public class AssetListEntryAssetEntryRelModelImpl
 	public static final String TABLE_NAME = "AssetListEntryAssetEntryRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR},
 		{"assetListEntryAssetEntryRelId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -85,6 +86,7 @@ public class AssetListEntryAssetEntryRelModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetListEntryAssetEntryRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -101,7 +103,7 @@ public class AssetListEntryAssetEntryRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntryAssetEntryRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryAssetEntryRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,assetEntryId LONG,segmentsEntryId LONG,position INTEGER,lastPublishDate DATE null)";
+		"create table AssetListEntryAssetEntryRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryAssetEntryRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,assetEntryId LONG,segmentsEntryId LONG,position INTEGER,lastPublishDate DATE null,primary key (assetListEntryAssetEntryRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetListEntryAssetEntryRel";
@@ -280,6 +282,12 @@ public class AssetListEntryAssetEntryRelModelImpl
 			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
 				AssetListEntryAssetEntryRel::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", AssetListEntryAssetEntryRel::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<AssetListEntryAssetEntryRel, Long>)
+				AssetListEntryAssetEntryRel::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"uuid", AssetListEntryAssetEntryRel::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -374,6 +382,16 @@ public class AssetListEntryAssetEntryRelModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -656,6 +674,7 @@ public class AssetListEntryAssetEntryRelModelImpl
 			new AssetListEntryAssetEntryRelImpl();
 
 		assetListEntryAssetEntryRelImpl.setMvccVersion(getMvccVersion());
+		assetListEntryAssetEntryRelImpl.setCtCollectionId(getCtCollectionId());
 		assetListEntryAssetEntryRelImpl.setUuid(getUuid());
 		assetListEntryAssetEntryRelImpl.setAssetListEntryAssetEntryRelId(
 			getAssetListEntryAssetEntryRelId());
@@ -787,6 +806,9 @@ public class AssetListEntryAssetEntryRelModelImpl
 				new AssetListEntryAssetEntryRelCacheModel();
 
 		assetListEntryAssetEntryRelCacheModel.mvccVersion = getMvccVersion();
+
+		assetListEntryAssetEntryRelCacheModel.ctCollectionId =
+			getCtCollectionId();
 
 		assetListEntryAssetEntryRelCacheModel.uuid = getUuid();
 
@@ -937,6 +959,7 @@ public class AssetListEntryAssetEntryRelModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _assetListEntryAssetEntryRelId;

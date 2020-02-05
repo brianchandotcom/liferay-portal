@@ -17,6 +17,7 @@ package com.liferay.asset.entry.rel.service.base;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.entry.rel.service.persistence.AssetEntryAssetCategoryRelPersistence;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -36,6 +37,8 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -361,7 +364,8 @@ public abstract class AssetEntryAssetCategoryRelLocalServiceBaseImpl
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
 			AssetEntryAssetCategoryRelLocalService.class,
-			IdentifiableOSGiService.class, PersistedModelLocalService.class
+			IdentifiableOSGiService.class, CTService.class,
+			PersistedModelLocalService.class
 		};
 	}
 
@@ -381,8 +385,24 @@ public abstract class AssetEntryAssetCategoryRelLocalServiceBaseImpl
 		return AssetEntryAssetCategoryRelLocalService.class.getName();
 	}
 
-	protected Class<?> getModelClass() {
+	@Override
+	public CTPersistence<AssetEntryAssetCategoryRel> getCTPersistence() {
+		return assetEntryAssetCategoryRelPersistence;
+	}
+
+	@Override
+	public Class<AssetEntryAssetCategoryRel> getModelClass() {
 		return AssetEntryAssetCategoryRel.class;
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<AssetEntryAssetCategoryRel>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return updateUnsafeFunction.apply(
+			assetEntryAssetCategoryRelPersistence);
 	}
 
 	protected String getModelClassName() {

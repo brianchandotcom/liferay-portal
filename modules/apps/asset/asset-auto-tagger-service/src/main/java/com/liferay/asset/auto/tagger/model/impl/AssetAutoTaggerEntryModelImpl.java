@@ -65,10 +65,11 @@ public class AssetAutoTaggerEntryModelImpl
 	public static final String TABLE_NAME = "AssetAutoTaggerEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"assetAutoTaggerEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"assetEntryId", Types.BIGINT}, {"assetTagId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"assetAutoTaggerEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"assetEntryId", Types.BIGINT},
+		{"assetTagId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -76,6 +77,7 @@ public class AssetAutoTaggerEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetAutoTaggerEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -86,7 +88,7 @@ public class AssetAutoTaggerEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetAutoTaggerEntry (mvccVersion LONG default 0 not null,assetAutoTaggerEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,assetTagId LONG)";
+		"create table AssetAutoTaggerEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,assetAutoTaggerEntryId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,assetTagId LONG,primary key (assetAutoTaggerEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetAutoTaggerEntry";
@@ -255,6 +257,12 @@ public class AssetAutoTaggerEntryModelImpl
 			(BiConsumer<AssetAutoTaggerEntry, Long>)
 				AssetAutoTaggerEntry::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", AssetAutoTaggerEntry::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<AssetAutoTaggerEntry, Long>)
+				AssetAutoTaggerEntry::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"assetAutoTaggerEntryId",
 			AssetAutoTaggerEntry::getAssetAutoTaggerEntryId);
 		attributeSetterBiConsumers.put(
@@ -312,6 +320,16 @@ public class AssetAutoTaggerEntryModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -455,6 +473,7 @@ public class AssetAutoTaggerEntryModelImpl
 			new AssetAutoTaggerEntryImpl();
 
 		assetAutoTaggerEntryImpl.setMvccVersion(getMvccVersion());
+		assetAutoTaggerEntryImpl.setCtCollectionId(getCtCollectionId());
 		assetAutoTaggerEntryImpl.setAssetAutoTaggerEntryId(
 			getAssetAutoTaggerEntryId());
 		assetAutoTaggerEntryImpl.setGroupId(getGroupId());
@@ -547,6 +566,8 @@ public class AssetAutoTaggerEntryModelImpl
 			new AssetAutoTaggerEntryCacheModel();
 
 		assetAutoTaggerEntryCacheModel.mvccVersion = getMvccVersion();
+
+		assetAutoTaggerEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		assetAutoTaggerEntryCacheModel.assetAutoTaggerEntryId =
 			getAssetAutoTaggerEntryId();
@@ -657,6 +678,7 @@ public class AssetAutoTaggerEntryModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _assetAutoTaggerEntryId;
 	private long _groupId;
 	private long _companyId;

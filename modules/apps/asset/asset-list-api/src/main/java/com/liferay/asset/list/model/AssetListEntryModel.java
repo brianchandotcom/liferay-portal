@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetListEntryModel
-	extends BaseModel<AssetListEntry>, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+	extends BaseModel<AssetListEntry>, CTModel<AssetListEntry>, MVCCModel,
+			ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -51,6 +52,7 @@ public interface AssetListEntryModel
 	 *
 	 * @return the primary key of this asset list entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +60,7 @@ public interface AssetListEntryModel
 	 *
 	 * @param primaryKey the primary key of this asset list entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +78,22 @@ public interface AssetListEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this asset list entry.
+	 *
+	 * @return the ct collection ID of this asset list entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this asset list entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this asset list entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this asset list entry.

@@ -14,7 +14,10 @@
 
 package com.liferay.asset.category.property.service;
 
+import com.liferay.asset.category.property.model.AssetCategoryProperty;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link AssetCategoryPropertyLocalService}.
@@ -40,19 +43,16 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	 * @return the asset category property that was added
 	 */
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-		addAssetCategoryProperty(
-			com.liferay.asset.category.property.model.AssetCategoryProperty
-				assetCategoryProperty) {
+	public AssetCategoryProperty addAssetCategoryProperty(
+		AssetCategoryProperty assetCategoryProperty) {
 
 		return _assetCategoryPropertyLocalService.addAssetCategoryProperty(
 			assetCategoryProperty);
 	}
 
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-			addCategoryProperty(
-				long userId, long categoryId, String key, String value)
+	public AssetCategoryProperty addCategoryProperty(
+			long userId, long categoryId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryPropertyLocalService.addCategoryProperty(
@@ -66,8 +66,8 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	 * @return the new asset category property
 	 */
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-		createAssetCategoryProperty(long categoryPropertyId) {
+	public AssetCategoryProperty createAssetCategoryProperty(
+		long categoryPropertyId) {
 
 		return _assetCategoryPropertyLocalService.createAssetCategoryProperty(
 			categoryPropertyId);
@@ -80,10 +80,8 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	 * @return the asset category property that was removed
 	 */
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-		deleteAssetCategoryProperty(
-			com.liferay.asset.category.property.model.AssetCategoryProperty
-				assetCategoryProperty) {
+	public AssetCategoryProperty deleteAssetCategoryProperty(
+		AssetCategoryProperty assetCategoryProperty) {
 
 		return _assetCategoryPropertyLocalService.deleteAssetCategoryProperty(
 			assetCategoryProperty);
@@ -97,8 +95,8 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	 * @throws PortalException if a asset category property with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-			deleteAssetCategoryProperty(long categoryPropertyId)
+	public AssetCategoryProperty deleteAssetCategoryProperty(
+			long categoryPropertyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryPropertyLocalService.deleteAssetCategoryProperty(
@@ -111,10 +109,7 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCategoryProperty(
-		com.liferay.asset.category.property.model.AssetCategoryProperty
-			categoryProperty) {
-
+	public void deleteCategoryProperty(AssetCategoryProperty categoryProperty) {
 		_assetCategoryPropertyLocalService.deleteCategoryProperty(
 			categoryProperty);
 	}
@@ -232,16 +227,16 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-		fetchAssetCategoryProperty(long categoryPropertyId) {
+	public AssetCategoryProperty fetchAssetCategoryProperty(
+		long categoryPropertyId) {
 
 		return _assetCategoryPropertyLocalService.fetchAssetCategoryProperty(
 			categoryPropertyId);
 	}
 
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-		fetchCategoryProperty(long categoryId, String key) {
+	public AssetCategoryProperty fetchCategoryProperty(
+		long categoryId, String key) {
 
 		return _assetCategoryPropertyLocalService.fetchCategoryProperty(
 			categoryId, key);
@@ -266,9 +261,8 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	 * @return the range of asset category properties
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.asset.category.property.model.AssetCategoryProperty>
-			getAssetCategoryProperties(int start, int end) {
+	public java.util.List<AssetCategoryProperty> getAssetCategoryProperties(
+		int start, int end) {
 
 		return _assetCategoryPropertyLocalService.getAssetCategoryProperties(
 			start, end);
@@ -293,8 +287,8 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	 * @throws PortalException if a asset category property with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-			getAssetCategoryProperty(long categoryPropertyId)
+	public AssetCategoryProperty getAssetCategoryProperty(
+			long categoryPropertyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryPropertyLocalService.getAssetCategoryProperty(
@@ -302,25 +296,20 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.asset.category.property.model.AssetCategoryProperty>
-			getCategoryProperties() {
-
+	public java.util.List<AssetCategoryProperty> getCategoryProperties() {
 		return _assetCategoryPropertyLocalService.getCategoryProperties();
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.asset.category.property.model.AssetCategoryProperty>
-			getCategoryProperties(long entryId) {
+	public java.util.List<AssetCategoryProperty> getCategoryProperties(
+		long entryId) {
 
 		return _assetCategoryPropertyLocalService.getCategoryProperties(
 			entryId);
 	}
 
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-			getCategoryProperty(long categoryPropertyId)
+	public AssetCategoryProperty getCategoryProperty(long categoryPropertyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryPropertyLocalService.getCategoryProperty(
@@ -328,8 +317,8 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-			getCategoryProperty(long categoryId, String key)
+	public AssetCategoryProperty getCategoryProperty(
+			long categoryId, String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryPropertyLocalService.getCategoryProperty(
@@ -337,9 +326,8 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.asset.category.property.model.AssetCategoryProperty>
-			getCategoryPropertyValues(long groupId, String key) {
+	public java.util.List<AssetCategoryProperty> getCategoryPropertyValues(
+		long groupId, String key) {
 
 		return _assetCategoryPropertyLocalService.getCategoryPropertyValues(
 			groupId, key);
@@ -379,19 +367,16 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	 * @return the asset category property that was updated
 	 */
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-		updateAssetCategoryProperty(
-			com.liferay.asset.category.property.model.AssetCategoryProperty
-				assetCategoryProperty) {
+	public AssetCategoryProperty updateAssetCategoryProperty(
+		AssetCategoryProperty assetCategoryProperty) {
 
 		return _assetCategoryPropertyLocalService.updateAssetCategoryProperty(
 			assetCategoryProperty);
 	}
 
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-			updateCategoryProperty(
-				long userId, long categoryPropertyId, String key, String value)
+	public AssetCategoryProperty updateCategoryProperty(
+			long userId, long categoryPropertyId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryPropertyLocalService.updateCategoryProperty(
@@ -399,13 +384,32 @@ public class AssetCategoryPropertyLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-			updateCategoryProperty(
-				long categoryPropertyId, String key, String value)
+	public AssetCategoryProperty updateCategoryProperty(
+			long categoryPropertyId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryPropertyLocalService.updateCategoryProperty(
 			categoryPropertyId, key, value);
+	}
+
+	@Override
+	public CTPersistence<AssetCategoryProperty> getCTPersistence() {
+		return _assetCategoryPropertyLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<AssetCategoryProperty> getModelClass() {
+		return _assetCategoryPropertyLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<AssetCategoryProperty>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _assetCategoryPropertyLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

@@ -82,10 +82,12 @@ public class AssetListEntryAssetEntryRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", assetListEntryAssetEntryRelId=");
@@ -123,6 +125,7 @@ public class AssetListEntryAssetEntryRelCacheModel
 			new AssetListEntryAssetEntryRelImpl();
 
 		assetListEntryAssetEntryRelImpl.setMvccVersion(mvccVersion);
+		assetListEntryAssetEntryRelImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			assetListEntryAssetEntryRelImpl.setUuid("");
@@ -180,6 +183,8 @@ public class AssetListEntryAssetEntryRelCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		assetListEntryAssetEntryRelId = objectInput.readLong();
@@ -206,6 +211,8 @@ public class AssetListEntryAssetEntryRelCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -243,6 +250,7 @@ public class AssetListEntryAssetEntryRelCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long assetListEntryAssetEntryRelId;
 	public long groupId;

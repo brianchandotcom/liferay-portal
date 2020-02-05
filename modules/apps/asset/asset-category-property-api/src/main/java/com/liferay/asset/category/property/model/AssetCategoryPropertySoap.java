@@ -34,6 +34,7 @@ public class AssetCategoryPropertySoap implements Serializable {
 		AssetCategoryPropertySoap soapModel = new AssetCategoryPropertySoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setCategoryPropertyId(model.getCategoryPropertyId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -113,6 +114,14 @@ public class AssetCategoryPropertySoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getCategoryPropertyId() {
 		return _categoryPropertyId;
 	}
@@ -186,6 +195,7 @@ public class AssetCategoryPropertySoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _categoryPropertyId;
 	private long _companyId;
 	private long _userId;

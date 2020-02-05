@@ -17,6 +17,7 @@ package com.liferay.asset.auto.tagger.service;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -55,7 +58,8 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface AssetAutoTaggerEntryLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+	extends BaseLocalService, CTService<AssetAutoTaggerEntry>,
+			PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -259,5 +263,20 @@ public interface AssetAutoTaggerEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetAutoTaggerEntry updateAssetAutoTaggerEntry(
 		AssetAutoTaggerEntry assetAutoTaggerEntry);
+
+	@Override
+	@Transactional(enabled = false)
+	public CTPersistence<AssetAutoTaggerEntry> getCTPersistence();
+
+	@Override
+	@Transactional(enabled = false)
+	public Class<AssetAutoTaggerEntry> getModelClass();
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<AssetAutoTaggerEntry>, R, E>
+				updateUnsafeFunction)
+		throws E;
 
 }

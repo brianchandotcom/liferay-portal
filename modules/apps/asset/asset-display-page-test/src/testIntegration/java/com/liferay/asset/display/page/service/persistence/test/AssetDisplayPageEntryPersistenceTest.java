@@ -131,6 +131,8 @@ public class AssetDisplayPageEntryPersistenceTest {
 
 		newAssetDisplayPageEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAssetDisplayPageEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAssetDisplayPageEntry.setUuid(RandomTestUtil.randomString());
 
 		newAssetDisplayPageEntry.setGroupId(RandomTestUtil.nextLong());
@@ -166,6 +168,9 @@ public class AssetDisplayPageEntryPersistenceTest {
 		Assert.assertEquals(
 			existingAssetDisplayPageEntry.getMvccVersion(),
 			newAssetDisplayPageEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingAssetDisplayPageEntry.getCtCollectionId(),
+			newAssetDisplayPageEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingAssetDisplayPageEntry.getUuid(),
 			newAssetDisplayPageEntry.getUuid());
@@ -288,11 +293,12 @@ public class AssetDisplayPageEntryPersistenceTest {
 
 	protected OrderByComparator<AssetDisplayPageEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetDisplayPageEntry", "mvccVersion", true, "uuid", true,
-			"assetDisplayPageEntryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"layoutPageTemplateEntryId", true, "type", true, "plid", true);
+			"AssetDisplayPageEntry", "mvccVersion", true, "ctCollectionId",
+			true, "uuid", true, "assetDisplayPageEntryId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "layoutPageTemplateEntryId", true, "type", true,
+			"plid", true);
 	}
 
 	@Test
@@ -579,6 +585,8 @@ public class AssetDisplayPageEntryPersistenceTest {
 		AssetDisplayPageEntry assetDisplayPageEntry = _persistence.create(pk);
 
 		assetDisplayPageEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		assetDisplayPageEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetDisplayPageEntry.setUuid(RandomTestUtil.randomString());
 

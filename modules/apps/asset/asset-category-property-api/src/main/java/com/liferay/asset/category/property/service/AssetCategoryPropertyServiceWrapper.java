@@ -14,6 +14,7 @@
 
 package com.liferay.asset.category.property.service;
 
+import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -34,8 +35,8 @@ public class AssetCategoryPropertyServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-			addCategoryProperty(long entryId, String key, String value)
+	public AssetCategoryProperty addCategoryProperty(
+			long entryId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryPropertyService.addCategoryProperty(
@@ -51,17 +52,15 @@ public class AssetCategoryPropertyServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.asset.category.property.model.AssetCategoryProperty>
-			getCategoryProperties(long entryId) {
+	public java.util.List<AssetCategoryProperty> getCategoryProperties(
+		long entryId) {
 
 		return _assetCategoryPropertyService.getCategoryProperties(entryId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.asset.category.property.model.AssetCategoryProperty>
-			getCategoryPropertyValues(long companyId, String key) {
+	public java.util.List<AssetCategoryProperty> getCategoryPropertyValues(
+		long companyId, String key) {
 
 		return _assetCategoryPropertyService.getCategoryPropertyValues(
 			companyId, key);
@@ -78,9 +77,8 @@ public class AssetCategoryPropertyServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-			updateCategoryProperty(
-				long userId, long categoryPropertyId, String key, String value)
+	public AssetCategoryProperty updateCategoryProperty(
+			long userId, long categoryPropertyId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryPropertyService.updateCategoryProperty(
@@ -88,9 +86,8 @@ public class AssetCategoryPropertyServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.category.property.model.AssetCategoryProperty
-			updateCategoryProperty(
-				long categoryPropertyId, String key, String value)
+	public AssetCategoryProperty updateCategoryProperty(
+			long categoryPropertyId, String key, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryPropertyService.updateCategoryProperty(

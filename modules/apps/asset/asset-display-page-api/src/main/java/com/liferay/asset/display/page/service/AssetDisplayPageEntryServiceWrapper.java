@@ -14,6 +14,7 @@
 
 package com.liferay.asset.display.page.service;
 
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -34,11 +35,10 @@ public class AssetDisplayPageEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.display.page.model.AssetDisplayPageEntry
-			addAssetDisplayPageEntry(
-				long userId, long groupId, long classNameId, long classPK,
-				long layoutPageTemplateEntryId, int type,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public AssetDisplayPageEntry addAssetDisplayPageEntry(
+			long userId, long groupId, long classNameId, long classPK,
+			long layoutPageTemplateEntryId, int type,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
 		return _assetDisplayPageEntryService.addAssetDisplayPageEntry(
@@ -47,11 +47,10 @@ public class AssetDisplayPageEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.display.page.model.AssetDisplayPageEntry
-			addAssetDisplayPageEntry(
-				long userId, long groupId, long classNameId, long classPK,
-				long layoutPageTemplateEntryId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public AssetDisplayPageEntry addAssetDisplayPageEntry(
+			long userId, long groupId, long classNameId, long classPK,
+			long layoutPageTemplateEntryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
 		return _assetDisplayPageEntryService.addAssetDisplayPageEntry(
@@ -69,9 +68,8 @@ public class AssetDisplayPageEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.display.page.model.AssetDisplayPageEntry
-			fetchAssetDisplayPageEntry(
-				long groupId, long classNameId, long classPK)
+	public AssetDisplayPageEntry fetchAssetDisplayPageEntry(
+			long groupId, long classNameId, long classPK)
 		throws Exception {
 
 		return _assetDisplayPageEntryService.fetchAssetDisplayPageEntry(
@@ -79,10 +77,9 @@ public class AssetDisplayPageEntryServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.asset.display.page.model.AssetDisplayPageEntry>
-			getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
-				long layoutPageTemplateEntryId) {
+	public java.util.List<AssetDisplayPageEntry>
+		getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
+			long layoutPageTemplateEntryId) {
 
 		return _assetDisplayPageEntryService.
 			getAssetDisplayPageEntriesByLayoutPageTemplateEntryId(
@@ -109,10 +106,9 @@ public class AssetDisplayPageEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.display.page.model.AssetDisplayPageEntry
-			updateAssetDisplayPageEntry(
-				long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
-				int type)
+	public AssetDisplayPageEntry updateAssetDisplayPageEntry(
+			long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
+			int type)
 		throws Exception {
 
 		return _assetDisplayPageEntryService.updateAssetDisplayPageEntry(

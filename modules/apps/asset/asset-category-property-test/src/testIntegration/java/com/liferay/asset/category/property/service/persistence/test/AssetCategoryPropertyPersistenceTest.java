@@ -131,6 +131,8 @@ public class AssetCategoryPropertyPersistenceTest {
 
 		newAssetCategoryProperty.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAssetCategoryProperty.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAssetCategoryProperty.setCompanyId(RandomTestUtil.nextLong());
 
 		newAssetCategoryProperty.setUserId(RandomTestUtil.nextLong());
@@ -157,6 +159,9 @@ public class AssetCategoryPropertyPersistenceTest {
 		Assert.assertEquals(
 			existingAssetCategoryProperty.getMvccVersion(),
 			newAssetCategoryProperty.getMvccVersion());
+		Assert.assertEquals(
+			existingAssetCategoryProperty.getCtCollectionId(),
+			newAssetCategoryProperty.getCtCollectionId());
 		Assert.assertEquals(
 			existingAssetCategoryProperty.getCategoryPropertyId(),
 			newAssetCategoryProperty.getCategoryPropertyId());
@@ -248,10 +253,10 @@ public class AssetCategoryPropertyPersistenceTest {
 
 	protected OrderByComparator<AssetCategoryProperty> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetCategoryProperty", "mvccVersion", true, "categoryPropertyId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "categoryId", true, "key",
-			true, "value", true);
+			"AssetCategoryProperty", "mvccVersion", true, "ctCollectionId",
+			true, "categoryPropertyId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"categoryId", true, "key", true, "value", true);
 	}
 
 	@Test
@@ -520,6 +525,8 @@ public class AssetCategoryPropertyPersistenceTest {
 		AssetCategoryProperty assetCategoryProperty = _persistence.create(pk);
 
 		assetCategoryProperty.setMvccVersion(RandomTestUtil.nextLong());
+
+		assetCategoryProperty.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetCategoryProperty.setCompanyId(RandomTestUtil.nextLong());
 

@@ -21,6 +21,7 @@ import com.liferay.asset.auto.tagger.model.impl.AssetAutoTaggerEntryModelImpl;
 import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryPersistence;
 import com.liferay.asset.auto.tagger.service.persistence.impl.constants.AssetAutoTaggerPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -44,7 +46,13 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -165,18 +173,21 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetAutoTaggerEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByAssetEntryId;
 				finderArgs = new Object[] {assetEntryId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByAssetEntryId;
 			finderArgs = new Object[] {
 				assetEntryId, start, end, orderByComparator
@@ -185,7 +196,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 		List<AssetAutoTaggerEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetAutoTaggerEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -243,12 +254,12 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -557,11 +568,21 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Override
 	public int countByAssetEntryId(long assetEntryId) {
-		FinderPath finderPath = _finderPathCountByAssetEntryId;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetAutoTaggerEntry.class);
 
-		Object[] finderArgs = new Object[] {assetEntryId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByAssetEntryId;
+
+			finderArgs = new Object[] {assetEntryId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -585,10 +606,14 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -680,18 +705,21 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetAutoTaggerEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByAssetTagId;
 				finderArgs = new Object[] {assetTagId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByAssetTagId;
 			finderArgs = new Object[] {
 				assetTagId, start, end, orderByComparator
@@ -700,7 +728,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 		List<AssetAutoTaggerEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetAutoTaggerEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -756,12 +784,12 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -1070,11 +1098,21 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Override
 	public int countByAssetTagId(long assetTagId) {
-		FinderPath finderPath = _finderPathCountByAssetTagId;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetAutoTaggerEntry.class);
 
-		Object[] finderArgs = new Object[] {assetTagId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByAssetTagId;
+
+			finderArgs = new Object[] {assetTagId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1098,10 +1136,14 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1181,15 +1223,18 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	public AssetAutoTaggerEntry fetchByA_A(
 		long assetEntryId, long assetTagId, boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetAutoTaggerEntry.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {assetEntryId, assetTagId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
 				_finderPathFetchByA_A, finderArgs, this);
 		}
@@ -1232,7 +1277,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 				List<AssetAutoTaggerEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						finderCache.putResult(
 							_finderPathFetchByA_A, finderArgs, list);
 					}
@@ -1246,7 +1291,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(_finderPathFetchByA_A, finderArgs);
 				}
 
@@ -1291,11 +1336,21 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Override
 	public int countByA_A(long assetEntryId, long assetTagId) {
-		FinderPath finderPath = _finderPathCountByA_A;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetAutoTaggerEntry.class);
 
-		Object[] finderArgs = new Object[] {assetEntryId, assetTagId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByA_A;
+
+			finderArgs = new Object[] {assetEntryId, assetTagId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1323,10 +1378,14 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1358,6 +1417,12 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(AssetAutoTaggerEntry assetAutoTaggerEntry) {
+		if (assetAutoTaggerEntry.getCtCollectionId() != 0) {
+			assetAutoTaggerEntry.resetOriginalValues();
+
+			return;
+		}
+
 		entityCache.putResult(
 			entityCacheEnabled, AssetAutoTaggerEntryImpl.class,
 			assetAutoTaggerEntry.getPrimaryKey(), assetAutoTaggerEntry);
@@ -1382,6 +1447,12 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	public void cacheResult(List<AssetAutoTaggerEntry> assetAutoTaggerEntries) {
 		for (AssetAutoTaggerEntry assetAutoTaggerEntry :
 				assetAutoTaggerEntries) {
+
+			if (assetAutoTaggerEntry.getCtCollectionId() != 0) {
+				assetAutoTaggerEntry.resetOriginalValues();
+
+				continue;
+			}
 
 			if (entityCache.getResult(
 					entityCacheEnabled, AssetAutoTaggerEntryImpl.class,
@@ -1580,6 +1651,10 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	protected AssetAutoTaggerEntry removeImpl(
 		AssetAutoTaggerEntry assetAutoTaggerEntry) {
 
+		if (!ctPersistenceHelper.isRemove(assetAutoTaggerEntry)) {
+			return assetAutoTaggerEntry;
+		}
+
 		Session session = null;
 
 		try {
@@ -1665,7 +1740,18 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		try {
 			session = openSession();
 
-			if (assetAutoTaggerEntry.isNew()) {
+			if (ctPersistenceHelper.isInsert(assetAutoTaggerEntry)) {
+				if (!isNew) {
+					AssetAutoTaggerEntry oldAssetAutoTaggerEntry =
+						(AssetAutoTaggerEntry)session.get(
+							AssetAutoTaggerEntryImpl.class,
+							assetAutoTaggerEntry.getPrimaryKeyObj());
+
+					if (oldAssetAutoTaggerEntry != null) {
+						session.evict(oldAssetAutoTaggerEntry);
+					}
+				}
+
 				session.save(assetAutoTaggerEntry);
 
 				assetAutoTaggerEntry.setNew(false);
@@ -1680,6 +1766,12 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (assetAutoTaggerEntry.getCtCollectionId() != 0) {
+			assetAutoTaggerEntry.resetOriginalValues();
+
+			return assetAutoTaggerEntry;
 		}
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1805,12 +1897,124 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	/**
 	 * Returns the asset auto tagger entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the asset auto tagger entry
+	 * @return the asset auto tagger entry, or <code>null</code> if a asset auto tagger entry with the primary key could not be found
+	 */
+	@Override
+	public AssetAutoTaggerEntry fetchByPrimaryKey(Serializable primaryKey) {
+		if (ctPersistenceHelper.isProductionMode(AssetAutoTaggerEntry.class)) {
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		AssetAutoTaggerEntry assetAutoTaggerEntry = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			assetAutoTaggerEntry = (AssetAutoTaggerEntry)session.get(
+				AssetAutoTaggerEntryImpl.class, primaryKey);
+
+			if (assetAutoTaggerEntry != null) {
+				cacheResult(assetAutoTaggerEntry);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return assetAutoTaggerEntry;
+	}
+
+	/**
+	 * Returns the asset auto tagger entry with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param assetAutoTaggerEntryId the primary key of the asset auto tagger entry
 	 * @return the asset auto tagger entry, or <code>null</code> if a asset auto tagger entry with the primary key could not be found
 	 */
 	@Override
 	public AssetAutoTaggerEntry fetchByPrimaryKey(long assetAutoTaggerEntryId) {
 		return fetchByPrimaryKey((Serializable)assetAutoTaggerEntryId);
+	}
+
+	@Override
+	public Map<Serializable, AssetAutoTaggerEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (ctPersistenceHelper.isProductionMode(AssetAutoTaggerEntry.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, AssetAutoTaggerEntry> map =
+			new HashMap<Serializable, AssetAutoTaggerEntry>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByPrimaryKey(
+				primaryKey);
+
+			if (assetAutoTaggerEntry != null) {
+				map.put(primaryKey, assetAutoTaggerEntry);
+			}
+
+			return map;
+		}
+
+		StringBundler query = new StringBundler(primaryKeys.size() * 2 + 1);
+
+		query.append(getSelectSQL());
+		query.append(" WHERE ");
+		query.append(getPKDBName());
+		query.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			query.append((long)primaryKey);
+
+			query.append(",");
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(")");
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (AssetAutoTaggerEntry assetAutoTaggerEntry :
+					(List<AssetAutoTaggerEntry>)q.list()) {
+
+				map.put(
+					assetAutoTaggerEntry.getPrimaryKeyObj(),
+					assetAutoTaggerEntry);
+
+				cacheResult(assetAutoTaggerEntry);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -1878,25 +2082,28 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetAutoTaggerEntry.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<AssetAutoTaggerEntry> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<AssetAutoTaggerEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1934,12 +2141,12 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -1971,8 +2178,15 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetAutoTaggerEntry.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)finderCache.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -1984,12 +2198,16 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				if (productionMode) {
+					finderCache.removeResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY);
+				}
 
 				throw processException(exception);
 			}
@@ -2017,8 +2235,68 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.get(ctColumnResolutionType);
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return AssetAutoTaggerEntryModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "AssetAutoTaggerEntry";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("groupId");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("createDate");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("assetEntryId");
+		ctStrictColumnNames.add("assetTagId");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK,
+			Collections.singleton("assetAutoTaggerEntryId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"assetEntryId", "assetTagId"});
 	}
 
 	/**
@@ -2144,6 +2422,9 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 	private boolean _columnBitmaskEnabled;
+
+	@Reference
+	protected CTPersistenceHelper ctPersistenceHelper;
 
 	@Reference
 	protected EntityCache entityCache;

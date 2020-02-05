@@ -81,10 +81,12 @@ public class AssetEntryUsageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", assetEntryUsageId=");
@@ -119,6 +121,7 @@ public class AssetEntryUsageCacheModel
 		AssetEntryUsageImpl assetEntryUsageImpl = new AssetEntryUsageImpl();
 
 		assetEntryUsageImpl.setMvccVersion(mvccVersion);
+		assetEntryUsageImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			assetEntryUsageImpl.setUuid("");
@@ -173,6 +176,8 @@ public class AssetEntryUsageCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		assetEntryUsageId = objectInput.readLong();
@@ -197,6 +202,8 @@ public class AssetEntryUsageCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -231,6 +238,7 @@ public class AssetEntryUsageCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long assetEntryUsageId;
 	public long groupId;

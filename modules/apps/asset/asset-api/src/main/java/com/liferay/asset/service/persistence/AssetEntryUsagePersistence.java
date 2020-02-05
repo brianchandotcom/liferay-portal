@@ -17,6 +17,7 @@ package com.liferay.asset.service.persistence;
 import com.liferay.asset.exception.NoSuchEntryUsageException;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @Deprecated
 @ProviderType
 public interface AssetEntryUsagePersistence
-	extends BasePersistence<AssetEntryUsage> {
+	extends BasePersistence<AssetEntryUsage>, CTPersistence<AssetEntryUsage> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

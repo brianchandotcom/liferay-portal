@@ -74,13 +74,13 @@ public class AssetListEntryModelImpl
 	public static final String TABLE_NAME = "AssetListEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"assetListEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"assetListEntryKey", Types.VARCHAR},
-		{"title", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"assetListEntryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"assetListEntryKey", Types.VARCHAR}, {"title", Types.VARCHAR},
+		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -88,6 +88,7 @@ public class AssetListEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetListEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -103,7 +104,7 @@ public class AssetListEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryKey VARCHAR(75) null,title VARCHAR(75) null,type_ INTEGER,lastPublishDate DATE null)";
+		"create table AssetListEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryKey VARCHAR(75) null,title VARCHAR(75) null,type_ INTEGER,lastPublishDate DATE null,primary key (assetListEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetListEntry";
 
@@ -155,6 +156,7 @@ public class AssetListEntryModelImpl
 		AssetListEntry model = new AssetListEntryImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setAssetListEntryId(soapModel.getAssetListEntryId());
 		model.setGroupId(soapModel.getGroupId());
@@ -326,6 +328,12 @@ public class AssetListEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<AssetListEntry, Long>)AssetListEntry::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", AssetListEntry::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<AssetListEntry, Long>)
+				AssetListEntry::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", AssetListEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -398,6 +406,17 @@ public class AssetListEntryModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -683,6 +702,7 @@ public class AssetListEntryModelImpl
 		AssetListEntryImpl assetListEntryImpl = new AssetListEntryImpl();
 
 		assetListEntryImpl.setMvccVersion(getMvccVersion());
+		assetListEntryImpl.setCtCollectionId(getCtCollectionId());
 		assetListEntryImpl.setUuid(getUuid());
 		assetListEntryImpl.setAssetListEntryId(getAssetListEntryId());
 		assetListEntryImpl.setGroupId(getGroupId());
@@ -789,6 +809,8 @@ public class AssetListEntryModelImpl
 			new AssetListEntryCacheModel();
 
 		assetListEntryCacheModel.mvccVersion = getMvccVersion();
+
+		assetListEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		assetListEntryCacheModel.uuid = getUuid();
 
@@ -937,6 +959,7 @@ public class AssetListEntryModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _assetListEntryId;

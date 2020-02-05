@@ -17,6 +17,7 @@ package com.liferay.asset.entry.rel.model;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetEntryAssetCategoryRelModel
-	extends BaseModel<AssetEntryAssetCategoryRel>, MVCCModel, ShardedModel {
+	extends BaseModel<AssetEntryAssetCategoryRel>,
+			CTModel<AssetEntryAssetCategoryRel>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -46,6 +48,7 @@ public interface AssetEntryAssetCategoryRelModel
 	 *
 	 * @return the primary key of this asset entry asset category rel
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -53,6 +56,7 @@ public interface AssetEntryAssetCategoryRelModel
 	 *
 	 * @param primaryKey the primary key of this asset entry asset category rel
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -70,6 +74,22 @@ public interface AssetEntryAssetCategoryRelModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this asset entry asset category rel.
+	 *
+	 * @return the ct collection ID of this asset entry asset category rel
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this asset entry asset category rel.
+	 *
+	 * @param ctCollectionId the ct collection ID of this asset entry asset category rel
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the asset entry asset category rel ID of this asset entry asset category rel.

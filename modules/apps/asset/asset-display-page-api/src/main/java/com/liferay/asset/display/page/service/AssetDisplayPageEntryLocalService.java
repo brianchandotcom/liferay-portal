@@ -16,6 +16,7 @@ package com.liferay.asset.display.page.service;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -58,7 +61,8 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface AssetDisplayPageEntryLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+	extends BaseLocalService, CTService<AssetDisplayPageEntry>,
+			PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -337,5 +341,20 @@ public interface AssetDisplayPageEntryLocalService
 			long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
 			int type)
 		throws PortalException;
+
+	@Override
+	@Transactional(enabled = false)
+	public CTPersistence<AssetDisplayPageEntry> getCTPersistence();
+
+	@Override
+	@Transactional(enabled = false)
+	public Class<AssetDisplayPageEntry> getModelClass();
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<AssetDisplayPageEntry>, R, E>
+				updateUnsafeFunction)
+		throws E;
 
 }

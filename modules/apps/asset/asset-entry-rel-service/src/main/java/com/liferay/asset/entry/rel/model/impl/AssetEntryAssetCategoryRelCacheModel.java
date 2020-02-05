@@ -79,10 +79,12 @@ public class AssetEntryAssetCategoryRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", assetEntryAssetCategoryRelId=");
 		sb.append(assetEntryAssetCategoryRelId);
 		sb.append(", companyId=");
@@ -104,6 +106,7 @@ public class AssetEntryAssetCategoryRelCacheModel
 			new AssetEntryAssetCategoryRelImpl();
 
 		assetEntryAssetCategoryRelImpl.setMvccVersion(mvccVersion);
+		assetEntryAssetCategoryRelImpl.setCtCollectionId(ctCollectionId);
 		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(
 			assetEntryAssetCategoryRelId);
 		assetEntryAssetCategoryRelImpl.setCompanyId(companyId);
@@ -120,6 +123,8 @@ public class AssetEntryAssetCategoryRelCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		assetEntryAssetCategoryRelId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -135,6 +140,8 @@ public class AssetEntryAssetCategoryRelCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		objectOutput.writeLong(ctCollectionId);
+
 		objectOutput.writeLong(assetEntryAssetCategoryRelId);
 
 		objectOutput.writeLong(companyId);
@@ -147,6 +154,7 @@ public class AssetEntryAssetCategoryRelCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long assetEntryAssetCategoryRelId;
 	public long companyId;
 	public long assetEntryId;

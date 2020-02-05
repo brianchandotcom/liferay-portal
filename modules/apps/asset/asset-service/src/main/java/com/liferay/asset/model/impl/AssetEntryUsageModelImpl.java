@@ -69,13 +69,13 @@ public class AssetEntryUsageModelImpl
 	public static final String TABLE_NAME = "AssetEntryUsage";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"assetEntryUsageId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"assetEntryId", Types.BIGINT},
-		{"containerType", Types.BIGINT}, {"containerKey", Types.VARCHAR},
-		{"plid", Types.BIGINT}, {"type_", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"assetEntryUsageId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"assetEntryId", Types.BIGINT}, {"containerType", Types.BIGINT},
+		{"containerKey", Types.VARCHAR}, {"plid", Types.BIGINT},
+		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -83,6 +83,7 @@ public class AssetEntryUsageModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetEntryUsageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -98,7 +99,7 @@ public class AssetEntryUsageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetEntryUsage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,assetEntryUsageId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,containerType LONG,containerKey VARCHAR(200) null,plid LONG,type_ INTEGER,lastPublishDate DATE null)";
+		"create table AssetEntryUsage (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,assetEntryUsageId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,containerType LONG,containerKey VARCHAR(200) null,plid LONG,type_ INTEGER,lastPublishDate DATE null,primary key (assetEntryUsageId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetEntryUsage";
 
@@ -273,6 +274,12 @@ public class AssetEntryUsageModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", AssetEntryUsage::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<AssetEntryUsage, Long>)
+				AssetEntryUsage::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", AssetEntryUsage::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -350,6 +357,16 @@ public class AssetEntryUsageModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -623,6 +640,7 @@ public class AssetEntryUsageModelImpl
 		AssetEntryUsageImpl assetEntryUsageImpl = new AssetEntryUsageImpl();
 
 		assetEntryUsageImpl.setMvccVersion(getMvccVersion());
+		assetEntryUsageImpl.setCtCollectionId(getCtCollectionId());
 		assetEntryUsageImpl.setUuid(getUuid());
 		assetEntryUsageImpl.setAssetEntryUsageId(getAssetEntryUsageId());
 		assetEntryUsageImpl.setGroupId(getGroupId());
@@ -741,6 +759,8 @@ public class AssetEntryUsageModelImpl
 			new AssetEntryUsageCacheModel();
 
 		assetEntryUsageCacheModel.mvccVersion = getMvccVersion();
+
+		assetEntryUsageCacheModel.ctCollectionId = getCtCollectionId();
 
 		assetEntryUsageCacheModel.uuid = getUuid();
 
@@ -877,6 +897,7 @@ public class AssetEntryUsageModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _assetEntryUsageId;

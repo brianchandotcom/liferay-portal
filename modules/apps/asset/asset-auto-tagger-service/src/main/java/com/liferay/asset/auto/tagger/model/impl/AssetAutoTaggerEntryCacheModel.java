@@ -78,10 +78,12 @@ public class AssetAutoTaggerEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", assetAutoTaggerEntryId=");
 		sb.append(assetAutoTaggerEntryId);
 		sb.append(", groupId=");
@@ -107,6 +109,7 @@ public class AssetAutoTaggerEntryCacheModel
 			new AssetAutoTaggerEntryImpl();
 
 		assetAutoTaggerEntryImpl.setMvccVersion(mvccVersion);
+		assetAutoTaggerEntryImpl.setCtCollectionId(ctCollectionId);
 		assetAutoTaggerEntryImpl.setAssetAutoTaggerEntryId(
 			assetAutoTaggerEntryId);
 		assetAutoTaggerEntryImpl.setGroupId(groupId);
@@ -138,6 +141,8 @@ public class AssetAutoTaggerEntryCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		assetAutoTaggerEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -155,6 +160,8 @@ public class AssetAutoTaggerEntryCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		objectOutput.writeLong(ctCollectionId);
+
 		objectOutput.writeLong(assetAutoTaggerEntryId);
 
 		objectOutput.writeLong(groupId);
@@ -169,6 +176,7 @@ public class AssetAutoTaggerEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long assetAutoTaggerEntryId;
 	public long groupId;
 	public long companyId;

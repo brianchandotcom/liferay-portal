@@ -1,7 +1,8 @@
 create table AssetDisplayPageEntry (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	assetDisplayPageEntryId LONG not null primary key,
+	assetDisplayPageEntryId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -12,5 +13,6 @@ create table AssetDisplayPageEntry (
 	classPK LONG,
 	layoutPageTemplateEntryId LONG,
 	type_ INTEGER,
-	plid LONG
+	plid LONG,
+	primary key (assetDisplayPageEntryId, ctCollectionId)
 );

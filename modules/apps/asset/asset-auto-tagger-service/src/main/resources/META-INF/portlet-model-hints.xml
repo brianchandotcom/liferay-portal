@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="assetAutoTaggerEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

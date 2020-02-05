@@ -17,6 +17,7 @@ package com.liferay.asset.list.service.persistence;
 import com.liferay.asset.list.exception.NoSuchEntryException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetListEntryPersistence
-	extends BasePersistence<AssetListEntry> {
+	extends BasePersistence<AssetListEntry>, CTPersistence<AssetListEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -34,6 +34,7 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 			new AssetEntryAssetCategoryRelSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setAssetEntryAssetCategoryRelId(
 			model.getAssetEntryAssetCategoryRelId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -111,6 +112,14 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getAssetEntryAssetCategoryRelId() {
 		return _assetEntryAssetCategoryRelId;
 	}
@@ -154,6 +163,7 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _assetEntryAssetCategoryRelId;
 	private long _companyId;
 	private long _assetEntryId;

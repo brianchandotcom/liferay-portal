@@ -128,6 +128,8 @@ public class AssetAutoTaggerEntryPersistenceTest {
 
 		newAssetAutoTaggerEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAssetAutoTaggerEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAssetAutoTaggerEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newAssetAutoTaggerEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -150,6 +152,9 @@ public class AssetAutoTaggerEntryPersistenceTest {
 		Assert.assertEquals(
 			existingAssetAutoTaggerEntry.getMvccVersion(),
 			newAssetAutoTaggerEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingAssetAutoTaggerEntry.getCtCollectionId(),
+			newAssetAutoTaggerEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingAssetAutoTaggerEntry.getAssetAutoTaggerEntryId(),
 			newAssetAutoTaggerEntry.getAssetAutoTaggerEntryId());
@@ -225,7 +230,7 @@ public class AssetAutoTaggerEntryPersistenceTest {
 
 	protected OrderByComparator<AssetAutoTaggerEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetAutoTaggerEntry", "mvccVersion", true,
+			"AssetAutoTaggerEntry", "mvccVersion", true, "ctCollectionId", true,
 			"assetAutoTaggerEntryId", true, "groupId", true, "companyId", true,
 			"createDate", true, "modifiedDate", true, "assetEntryId", true,
 			"assetTagId", true);
@@ -496,6 +501,8 @@ public class AssetAutoTaggerEntryPersistenceTest {
 		AssetAutoTaggerEntry assetAutoTaggerEntry = _persistence.create(pk);
 
 		assetAutoTaggerEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		assetAutoTaggerEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetAutoTaggerEntry.setGroupId(RandomTestUtil.nextLong());
 

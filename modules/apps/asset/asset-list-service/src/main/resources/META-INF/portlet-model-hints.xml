@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.asset.list.model.AssetListEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="assetListEntryId" type="long" />
 		<field name="groupId" type="long" />
@@ -18,6 +19,7 @@
 	</model>
 	<model name="com.liferay.asset.list.model.AssetListEntryAssetEntryRel">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="assetListEntryAssetEntryRelId" type="long" />
 		<field name="groupId" type="long" />
@@ -34,6 +36,7 @@
 	</model>
 	<model name="com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="assetListEntrySegmentsEntryRelId" type="long" />
 		<field name="groupId" type="long" />
@@ -51,6 +54,7 @@
 	</model>
 	<model name="com.liferay.asset.list.model.AssetListEntryUsage">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="assetListEntryUsageId" type="long" />
 		<field name="groupId" type="long" />

@@ -17,6 +17,7 @@ package com.liferay.asset.entry.rel.service.persistence;
 import com.liferay.asset.entry.rel.exception.NoSuchEntryAssetCategoryRelException;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetEntryAssetCategoryRelPersistence
-	extends BasePersistence<AssetEntryAssetCategoryRel> {
+	extends BasePersistence<AssetEntryAssetCategoryRel>,
+			CTPersistence<AssetEntryAssetCategoryRel> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

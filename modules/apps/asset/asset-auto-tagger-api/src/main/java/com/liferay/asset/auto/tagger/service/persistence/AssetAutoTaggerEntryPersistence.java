@@ -17,6 +17,7 @@ package com.liferay.asset.auto.tagger.service.persistence;
 import com.liferay.asset.auto.tagger.exception.NoSuchEntryException;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetAutoTaggerEntryPersistence
-	extends BasePersistence<AssetAutoTaggerEntry> {
+	extends BasePersistence<AssetAutoTaggerEntry>,
+			CTPersistence<AssetAutoTaggerEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

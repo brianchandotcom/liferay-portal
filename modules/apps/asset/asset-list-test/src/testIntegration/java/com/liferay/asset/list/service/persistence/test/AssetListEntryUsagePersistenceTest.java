@@ -128,6 +128,8 @@ public class AssetListEntryUsagePersistenceTest {
 
 		newAssetListEntryUsage.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAssetListEntryUsage.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newAssetListEntryUsage.setUuid(RandomTestUtil.randomString());
 
 		newAssetListEntryUsage.setGroupId(RandomTestUtil.nextLong());
@@ -161,6 +163,9 @@ public class AssetListEntryUsagePersistenceTest {
 		Assert.assertEquals(
 			existingAssetListEntryUsage.getMvccVersion(),
 			newAssetListEntryUsage.getMvccVersion());
+		Assert.assertEquals(
+			existingAssetListEntryUsage.getCtCollectionId(),
+			newAssetListEntryUsage.getCtCollectionId());
 		Assert.assertEquals(
 			existingAssetListEntryUsage.getUuid(),
 			newAssetListEntryUsage.getUuid());
@@ -284,11 +289,11 @@ public class AssetListEntryUsagePersistenceTest {
 
 	protected OrderByComparator<AssetListEntryUsage> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetListEntryUsage", "mvccVersion", true, "uuid", true,
-			"assetListEntryUsageId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "assetListEntryId", true, "classNameId", true,
-			"classPK", true, "portletId", true, "lastPublishDate", true);
+			"AssetListEntryUsage", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "assetListEntryUsageId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "assetListEntryId", true, "classNameId",
+			true, "classPK", true, "portletId", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -562,6 +567,8 @@ public class AssetListEntryUsagePersistenceTest {
 		AssetListEntryUsage assetListEntryUsage = _persistence.create(pk);
 
 		assetListEntryUsage.setMvccVersion(RandomTestUtil.nextLong());
+
+		assetListEntryUsage.setCtCollectionId(RandomTestUtil.nextLong());
 
 		assetListEntryUsage.setUuid(RandomTestUtil.randomString());
 

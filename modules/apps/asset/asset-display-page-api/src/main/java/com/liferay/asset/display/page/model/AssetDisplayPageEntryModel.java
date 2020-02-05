@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -39,8 +40,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetDisplayPageEntryModel
-	extends AttachedModel, BaseModel<AssetDisplayPageEntry>, GroupedModel,
-			MVCCModel, ShardedModel, StagedAuditedModel {
+	extends AttachedModel, BaseModel<AssetDisplayPageEntry>,
+			CTModel<AssetDisplayPageEntry>, GroupedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -53,6 +55,7 @@ public interface AssetDisplayPageEntryModel
 	 *
 	 * @return the primary key of this asset display page entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -60,6 +63,7 @@ public interface AssetDisplayPageEntryModel
 	 *
 	 * @param primaryKey the primary key of this asset display page entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -77,6 +81,22 @@ public interface AssetDisplayPageEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this asset display page entry.
+	 *
+	 * @return the ct collection ID of this asset display page entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this asset display page entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this asset display page entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this asset display page entry.

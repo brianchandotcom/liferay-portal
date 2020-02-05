@@ -30,8 +30,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface WorkflowTaskDemoDataCreator {
 
 	public void completeWorkflowTask(
-			long companyId, String transitionName, long userId,
-			long workflowTaskId)
+			long companyId, long userId, long workflowTaskId,
+			String transitionName)
 		throws Exception;
 
 	public List<String> getNextTransitionNames(

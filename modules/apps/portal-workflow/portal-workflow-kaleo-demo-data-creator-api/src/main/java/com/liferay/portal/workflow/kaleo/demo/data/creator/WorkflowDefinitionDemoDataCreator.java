@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.kaleo.demo.data.creator;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowException;
 
 import java.util.Date;
 
@@ -29,12 +28,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface WorkflowDefinitionDemoDataCreator {
 
 	public WorkflowDefinition create(
-			byte[] bytes, long companyId, String name, String title,
-			long userId)
-		throws WorkflowException;
-
-	public WorkflowDefinition create(
-			long companyId, Date createDate, long userId)
+			long companyId, long userId, Date createDate)
 		throws PortalException;
 
 	public void delete() throws PortalException;

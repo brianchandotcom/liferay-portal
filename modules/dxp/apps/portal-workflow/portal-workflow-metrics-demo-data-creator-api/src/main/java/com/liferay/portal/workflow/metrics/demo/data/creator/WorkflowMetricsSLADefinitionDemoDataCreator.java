@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.metrics.demo.data.creator;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 
 import java.util.Date;
 
@@ -28,16 +27,9 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface WorkflowMetricsSLADefinitionDemoDataCreator {
 
 	public void create(
-			long companyId, Date createDate, long userId,
+			long companyId, long userId, Date createDate,
 			long workflowDefinitionId)
 		throws Exception;
-
-	public WorkflowMetricsSLADefinition create(
-			long companyId, String calendarKey, Date createDate,
-			String description, long duration, String name,
-			String[] pauseNodeKeys, long processId, String[] startNodeKeys,
-			String[] stopNodeKeys, long userId)
-		throws PortalException;
 
 	public void delete() throws PortalException;
 

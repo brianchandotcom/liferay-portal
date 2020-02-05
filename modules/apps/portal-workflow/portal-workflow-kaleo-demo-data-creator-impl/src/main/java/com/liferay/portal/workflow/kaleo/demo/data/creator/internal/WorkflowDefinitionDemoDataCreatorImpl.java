@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.demo.data.creator.WorkflowDefinitionDemoDataCreator;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
@@ -40,31 +39,19 @@ public class WorkflowDefinitionDemoDataCreatorImpl
 
 	@Override
 	public WorkflowDefinition create(
-			byte[] bytes, long companyId, String name, String title,
-			long userId)
-		throws WorkflowException {
-
-		WorkflowDefinition workflowDefinition =
-			_workflowDefinitionManager.deployWorkflowDefinition(
-				companyId, userId, title, name, bytes);
-
-		_workflowDefinitions.add(workflowDefinition);
-
-		return workflowDefinition;
-	}
-
-	@Override
-	public WorkflowDefinition create(
-			long companyId, Date createDate, long userId)
+			long companyId, long userId, Date createDate)
 		throws PortalException {
 
 		String content = StringUtil.read(
 			WorkflowDefinitionDemoDataCreatorImpl.class,
 			"dependencies/auto-insurance-application-definition.xml");
 
-		WorkflowDefinition workflowDefinition = create(
-			content.getBytes(), companyId, "Auto Insurance Application",
-			"Auto Insurance Application", userId);
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				companyId, userId, "Auto Insurance Application",
+				"Auto Insurance Application", content.getBytes());
+
+		_workflowDefinitions.add(workflowDefinition);
 
 		if (createDate != null) {
 			KaleoDefinition kaleoDefinition =
@@ -72,7 +59,6 @@ public class WorkflowDefinitionDemoDataCreatorImpl
 					workflowDefinition.getWorkflowDefinitionId());
 
 			kaleoDefinition.setCreateDate(createDate);
-			kaleoDefinition.setModifiedDate(createDate);
 
 			_kaleoDefinitionLocalService.updateKaleoDefinition(kaleoDefinition);
 		}

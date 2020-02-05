@@ -39,25 +39,14 @@ public class WorkflowDefinitionLinkDemoDataCreatorImpl
 	implements WorkflowDefinitionLinkDemoDataCreator {
 
 	@Override
-	public WorkflowDefinitionLink assign(
-			String className, long classPK, long companyId, long groupId,
-			long typePK, long userId)
+	public WorkflowDefinitionLink create(
+			long userId, long companyId, long groupId, String className,
+			long classPK, long typePK)
 		throws PortalException {
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.getWorkflowDefinition(
 				companyId, "Auto Insurance Application", 1);
-
-		return assign(
-			className, classPK, companyId, groupId, typePK, userId,
-			workflowDefinition);
-	}
-
-	@Override
-	public WorkflowDefinitionLink assign(
-			String className, long classPK, long companyId, long groupId,
-			long typePK, long userId, WorkflowDefinition workflowDefinition)
-		throws PortalException {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();

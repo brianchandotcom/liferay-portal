@@ -58,6 +58,7 @@
 		<field name="userId" type="long" />
 		<field name="ctCollectionId" type="long" />
 		<field name="confirmationEnabled" type="boolean" />
+		<field name="previousCtCollectionId" type="long" />
 	</model>
 	<model name="com.liferay.change.tracking.model.CTProcess">
 		<field name="mvccVersion" type="long" />

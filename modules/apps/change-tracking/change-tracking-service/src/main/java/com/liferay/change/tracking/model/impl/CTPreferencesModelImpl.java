@@ -67,7 +67,9 @@ public class CTPreferencesModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctPreferencesId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"ctCollectionId", Types.BIGINT}, {"confirmationEnabled", Types.BOOLEAN}
+		{"ctCollectionId", Types.BIGINT},
+		{"confirmationEnabled", Types.BOOLEAN},
+		{"previousCtCollectionId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -80,10 +82,11 @@ public class CTPreferencesModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("confirmationEnabled", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("previousCtCollectionId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTPreferences (mvccVersion LONG default 0 not null,ctPreferencesId LONG not null primary key,companyId LONG,userId LONG,ctCollectionId LONG,confirmationEnabled BOOLEAN)";
+		"create table CTPreferences (mvccVersion LONG default 0 not null,ctPreferencesId LONG not null primary key,companyId LONG,userId LONG,ctCollectionId LONG,confirmationEnabled BOOLEAN,previousCtCollectionId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTPreferences";
 
@@ -103,9 +106,11 @@ public class CTPreferencesModelImpl
 
 	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 2L;
 
-	public static final long USERID_COLUMN_BITMASK = 4L;
+	public static final long PREVIOUSCTCOLLECTIONID_COLUMN_BITMASK = 4L;
 
-	public static final long CTPREFERENCESID_COLUMN_BITMASK = 8L;
+	public static final long USERID_COLUMN_BITMASK = 8L;
+
+	public static final long CTPREFERENCESID_COLUMN_BITMASK = 16L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -271,6 +276,12 @@ public class CTPreferencesModelImpl
 			"confirmationEnabled",
 			(BiConsumer<CTPreferences, Boolean>)
 				CTPreferences::setConfirmationEnabled);
+		attributeGetterFunctions.put(
+			"previousCtCollectionId", CTPreferences::getPreviousCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"previousCtCollectionId",
+			(BiConsumer<CTPreferences, Long>)
+				CTPreferences::setPreviousCtCollectionId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -395,6 +406,28 @@ public class CTPreferencesModelImpl
 		_confirmationEnabled = confirmationEnabled;
 	}
 
+	@Override
+	public long getPreviousCtCollectionId() {
+		return _previousCtCollectionId;
+	}
+
+	@Override
+	public void setPreviousCtCollectionId(long previousCtCollectionId) {
+		_columnBitmask |= PREVIOUSCTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalPreviousCtCollectionId) {
+			_setOriginalPreviousCtCollectionId = true;
+
+			_originalPreviousCtCollectionId = _previousCtCollectionId;
+		}
+
+		_previousCtCollectionId = previousCtCollectionId;
+	}
+
+	public long getOriginalPreviousCtCollectionId() {
+		return _originalPreviousCtCollectionId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -437,6 +470,8 @@ public class CTPreferencesModelImpl
 		ctPreferencesImpl.setUserId(getUserId());
 		ctPreferencesImpl.setCtCollectionId(getCtCollectionId());
 		ctPreferencesImpl.setConfirmationEnabled(isConfirmationEnabled());
+		ctPreferencesImpl.setPreviousCtCollectionId(
+			getPreviousCtCollectionId());
 
 		ctPreferencesImpl.resetOriginalValues();
 
@@ -513,6 +548,11 @@ public class CTPreferencesModelImpl
 
 		ctPreferencesModelImpl._setOriginalCtCollectionId = false;
 
+		ctPreferencesModelImpl._originalPreviousCtCollectionId =
+			ctPreferencesModelImpl._previousCtCollectionId;
+
+		ctPreferencesModelImpl._setOriginalPreviousCtCollectionId = false;
+
 		ctPreferencesModelImpl._columnBitmask = 0;
 	}
 
@@ -532,6 +572,9 @@ public class CTPreferencesModelImpl
 		ctPreferencesCacheModel.ctCollectionId = getCtCollectionId();
 
 		ctPreferencesCacheModel.confirmationEnabled = isConfirmationEnabled();
+
+		ctPreferencesCacheModel.previousCtCollectionId =
+			getPreviousCtCollectionId();
 
 		return ctPreferencesCacheModel;
 	}
@@ -621,6 +664,9 @@ public class CTPreferencesModelImpl
 	private long _originalCtCollectionId;
 	private boolean _setOriginalCtCollectionId;
 	private boolean _confirmationEnabled;
+	private long _previousCtCollectionId;
+	private long _originalPreviousCtCollectionId;
+	private boolean _setOriginalPreviousCtCollectionId;
 	private long _columnBitmask;
 	private CTPreferences _escapedModel;
 

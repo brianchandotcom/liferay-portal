@@ -51,7 +51,7 @@ public class DB2DB extends BaseDB {
 		template = replaceTemplate(template, getTemplate());
 
 		template = reword(template);
-		template = removeNull(template);
+		template = _removeNull(template);
 		template = StringUtil.replace(template, "\\'", "''");
 		template = StringUtil.replace(template, "\\n", "'||CHR(10)||'");
 
@@ -263,6 +263,16 @@ public class DB2DB extends BaseDB {
 
 			return sb.toString();
 		}
+	}
+
+	private String _removeNull(String content) {
+		content = StringUtil.replace(content, " = null", " = NULL");
+		content = StringUtil.replace(content, " is null", " IS NULL");
+		content = StringUtil.replace(content, " not null", " not_null");
+		content = StringUtil.removeSubstring(content, " null");
+		content = StringUtil.replace(content, " not_null", " not null");
+
+		return content;
 	}
 
 	private static final String[] _DB2 = {

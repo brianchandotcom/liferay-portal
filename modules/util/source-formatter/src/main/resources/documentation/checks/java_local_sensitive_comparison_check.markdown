@@ -1,4 +1,4 @@
-## Comparing Localized Values
+## JavaLocalSensitiveComparisonCheck
 
 When we compare localized values, we have to use `java.text.Collator` to compare
 those values. If we compare the values using regular String comparison

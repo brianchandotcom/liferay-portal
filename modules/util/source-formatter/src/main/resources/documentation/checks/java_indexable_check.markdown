@@ -1,4 +1,4 @@
-## Indexable annotation
+## JavaIndexableCheck
 
 The `com.liferay.portal.kernel.search.Indexable` is read by the IndexableAdvice
 which either updates or deletes the search index for the return type of the

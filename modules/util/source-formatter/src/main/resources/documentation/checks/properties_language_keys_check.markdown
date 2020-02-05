@@ -1,4 +1,4 @@
-## Language Keys
+## PropertiesLanguageKeysCheck
 
 Language keys should not have HTML markup.
 

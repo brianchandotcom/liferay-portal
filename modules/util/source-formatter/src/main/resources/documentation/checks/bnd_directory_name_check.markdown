@@ -1,4 +1,4 @@
-## Module Directory Structure
+## BNDDirectoryNameCheck
 
 When an application has multiple modules, the directory names for the modules
 should always match the directory name of the application.

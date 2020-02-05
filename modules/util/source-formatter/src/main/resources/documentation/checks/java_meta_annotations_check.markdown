@@ -1,4 +1,4 @@
-## Meta Annotations
+## JavaMetaAnnotationsCheck
 
 When using `aQute.bnd.annotation.metatype.Meta` annotations, we should use `-`
 as delimeter for values of the `description` and `name` of the attribute. For

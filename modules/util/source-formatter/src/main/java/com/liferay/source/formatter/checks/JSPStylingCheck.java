@@ -59,9 +59,6 @@ public class JSPStylingCheck extends StylingCheck {
 		content = content.replaceAll("'<%= (\"[^.(\\[\"]+\") %>'", "$1");
 
 		_checkIllegalSyntax(
-			fileName, content, "=>", "Do not use arrow function",
-			"arrow_functions.markdown");
-		_checkIllegalSyntax(
 			fileName, content, "console.log(", "Do not use console.log");
 		_checkIllegalSyntax(
 			fileName, content, "debugger.", "Do not use debugger");

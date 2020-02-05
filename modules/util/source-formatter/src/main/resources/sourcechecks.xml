@@ -340,6 +340,7 @@
 		</check>
 		<check name="EmptyCollectionCheck" />
 		<check name="GetterUtilCheck" />
+		<check name="JSPArrowFunctionCheck" />
 		<check name="JSPButtonTagCheck" />
 		<check name="JSPDefineObjectsCheck" />
 		<check name="JSPEmptyLinesCheck" />

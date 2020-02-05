@@ -136,13 +136,12 @@ public class SourceChecksUtil {
 							fileName, sourceChecksResult.getContent());
 					}
 					catch (ParseException parseException) {
-						Class<?> superClass = clazz.getSuperclass();
-
 						sourceChecksResult.addSourceFormatterMessage(
 							new SourceFormatterMessage(
 								fileName, parseException.getMessage(),
-								CheckType.SOURCE_CHECK, clazz.getSimpleName(),
-								superClass.getSimpleName(), null, -1));
+								CheckType.SOURCE_CHECK,
+								JavaClassParser.class.getSimpleName(), null,
+								null, -1));
 
 						continue;
 					}

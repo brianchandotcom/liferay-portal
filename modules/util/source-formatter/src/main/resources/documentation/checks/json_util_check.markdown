@@ -1,4 +1,4 @@
-## JSONUtil
+## JSONUtilCheck
 
 Use `JSONUtil.put` or `JSONUtil.putAll`, when possible.
 

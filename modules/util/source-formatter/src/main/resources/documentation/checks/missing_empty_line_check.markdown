@@ -1,4 +1,4 @@
-## Line Break before Variable Definition
+## MissingEmptyLineCheck
 
 When multiple variable definitions are grouped, but only the last variable(s)
 are used by the following statement, there should be an empty line before the

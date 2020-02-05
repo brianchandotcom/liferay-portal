@@ -1,4 +1,4 @@
-## Persistence Update
+## PersistenceUpdateCheck
 
 Reduce stale references in service code from persistence updates.
 

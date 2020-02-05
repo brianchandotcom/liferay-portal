@@ -1,4 +1,4 @@
-## Static Blocks
+## StaticBlockCheck
 
 When possible, do not use static blocks to make method calls on variables.
 Instead, make those calls inside the variable definition.

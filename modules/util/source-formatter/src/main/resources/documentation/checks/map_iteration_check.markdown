@@ -1,4 +1,4 @@
-## Map Iteration
+## MapIterationCheck
 
 Use the `entrySet()` iterator when retrieving values from a `Map`, instead of
 retrieving values from the `Map` while iterating over the `Map` keys using

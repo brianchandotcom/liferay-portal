@@ -1,4 +1,4 @@
-## Lambda
+## LambdaCheck
 
 When a lambda expression contains a single statement, it can be simplified:
 

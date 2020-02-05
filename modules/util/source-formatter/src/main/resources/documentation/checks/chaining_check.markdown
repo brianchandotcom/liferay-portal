@@ -1,4 +1,4 @@
-## Chaining
+## ChainingCheck
 
 When possible, we should declare new variables instead of chaining.
 

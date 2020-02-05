@@ -1,4 +1,4 @@
-## ListUtil
+## ListUtilCheck
 
 Use `ListUtil.fromArray` to simplify code, when possible:
 

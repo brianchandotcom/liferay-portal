@@ -35,7 +35,7 @@ info:
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-    title: "Account Rest"
+    title: "Account"
     version: v1.0
 openapi: 3.0.1
 paths:

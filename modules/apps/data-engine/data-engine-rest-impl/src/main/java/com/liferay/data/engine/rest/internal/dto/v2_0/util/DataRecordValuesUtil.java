@@ -23,12 +23,14 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -127,12 +129,18 @@ public class DataRecordValuesUtil {
 
 		ddmFormFieldValue.setName(name);
 
-		if ((dataRecordValues == null) || !dataRecordValues.containsKey(name)) {
-			return ddmFormFieldValue;
+		Object value = null;
+
+		if ((dataRecordValues != null) && dataRecordValues.containsKey(name)) {
+			value = dataRecordValues.get(name);
+		}
+		else {
+			value = HashMapBuilder.put(
+				LanguageUtil.getLanguageId(locale), StringPool.BLANK
+			).build();
 		}
 
-		ddmFormFieldValue.setValue(
-			createValue(ddmFormField, locale, dataRecordValues.get(name)));
+		ddmFormFieldValue.setValue(createValue(ddmFormField, locale, value));
 
 		if (ListUtil.isNotEmpty(ddmFormField.getNestedDDMFormFields())) {
 			for (DDMFormField nestedDDMFormField :

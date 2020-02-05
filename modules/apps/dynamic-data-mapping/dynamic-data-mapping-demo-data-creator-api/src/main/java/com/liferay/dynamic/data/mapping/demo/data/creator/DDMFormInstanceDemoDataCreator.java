@@ -27,8 +27,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DDMFormInstanceDemoDataCreator {
 
-	public DDMFormInstance create(
-			long companyId, Date createDate, long groupId, long userId)
+	public DDMFormInstance create(long userId, long groupId, Date createDate)
 		throws PortalException;
 
 	public void delete() throws PortalException;

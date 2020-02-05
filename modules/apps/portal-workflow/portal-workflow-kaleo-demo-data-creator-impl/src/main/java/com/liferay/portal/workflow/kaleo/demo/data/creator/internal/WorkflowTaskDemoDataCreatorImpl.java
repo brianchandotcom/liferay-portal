@@ -50,8 +50,8 @@ public class WorkflowTaskDemoDataCreatorImpl
 
 	@Override
 	public void completeWorkflowTask(
-			long companyId, String transitionName, long userId,
-			long workflowTaskId)
+			long companyId, long userId, long workflowTaskId,
+			String transitionName)
 		throws Exception {
 
 		PermissionChecker permissionChecker =

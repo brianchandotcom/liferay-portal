@@ -33,7 +33,7 @@ public interface WorkflowInstanceDemoDataCreator {
 		throws WorkflowException;
 
 	public WorkflowInstance getWorkflowInstance(
-			String assetClassName, long assetClassPK, long companyId)
+			long companyId, String assetClassName, long assetClassPK)
 		throws Exception;
 
 	public void updateCompletionDate(

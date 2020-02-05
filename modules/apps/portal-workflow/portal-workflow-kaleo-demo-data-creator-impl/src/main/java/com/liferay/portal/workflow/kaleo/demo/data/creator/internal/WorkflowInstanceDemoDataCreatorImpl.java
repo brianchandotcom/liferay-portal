@@ -47,7 +47,7 @@ public class WorkflowInstanceDemoDataCreatorImpl
 
 	@Override
 	public WorkflowInstance getWorkflowInstance(
-			String assetClassName, long assetClassPK, long companyId)
+			long companyId, String assetClassName, long assetClassPK)
 		throws Exception {
 
 		return WorkflowDemoDataCreatorUtil.retry(

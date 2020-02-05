@@ -213,6 +213,13 @@ public class FragmentCompositionWrapper
 		return model.getComposition();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getCompositionjsONObject()
+		throws Exception {
+
+		return model.getCompositionjsONObject();
+	}
+
 	/**
 	 * Returns the create date of this fragment composition.
 	 *

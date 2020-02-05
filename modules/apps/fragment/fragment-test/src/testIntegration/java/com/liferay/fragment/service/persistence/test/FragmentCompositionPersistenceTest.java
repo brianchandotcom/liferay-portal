@@ -358,9 +358,9 @@ public class FragmentCompositionPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "fragmentCollectionId", true,
 			"fragmentCompositionKey", true, "name", true, "description", true,
-			"composition", true, "previewFileEntryId", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"previewFileEntryId", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test

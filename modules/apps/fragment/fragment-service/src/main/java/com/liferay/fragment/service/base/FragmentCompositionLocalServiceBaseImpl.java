@@ -136,11 +136,13 @@ public abstract class FragmentCompositionLocalServiceBaseImpl
 	 *
 	 * @param fragmentComposition the fragment composition
 	 * @return the fragment composition that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public FragmentComposition deleteFragmentComposition(
-		FragmentComposition fragmentComposition) {
+			FragmentComposition fragmentComposition)
+		throws PortalException {
 
 		return fragmentCompositionPersistence.remove(fragmentComposition);
 	}

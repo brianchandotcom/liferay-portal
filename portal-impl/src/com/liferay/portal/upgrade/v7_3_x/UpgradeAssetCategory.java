@@ -84,10 +84,6 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 				}
 			}
 		}
-
-		alter(
-			AssetCategoryTable.class,
-			new AlterTableAddColumn("name VARCHAR(255) null"));
 	}
 
 }

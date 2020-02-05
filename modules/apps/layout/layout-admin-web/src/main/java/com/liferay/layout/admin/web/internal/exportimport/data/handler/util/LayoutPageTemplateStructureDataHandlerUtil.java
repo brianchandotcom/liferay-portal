@@ -21,6 +21,10 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
+import com.liferay.layout.page.template.util.LayoutDataConverter;
+import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -115,7 +119,13 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
-		_processDataJSONObject(dataJSONObject, portletDataContext);
+		if (LayoutDataConverter.isLatestVersion(dataJSONObject)) {
+			dataJSONObject = _processLatestDataJSONObject(
+				data, portletDataContext);
+		}
+		else {
+			_processDataJSONObject(dataJSONObject, portletDataContext);
+		}
 
 		existingLayoutPageTemplateStructureRel.setData(
 			dataJSONObject.toString());
@@ -181,6 +191,41 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 					"fragmentEntryLinkIds", newFragmentEntryLinkIdsJSONArray);
 			}
 		}
+	}
+
+	private JSONObject _processLatestDataJSONObject(
+		String data, PortletDataContext portletDataContext) {
+
+		LayoutStructure layoutStructure = LayoutStructure.of(data);
+
+		Map<Long, Long> fragmentEntryLinkIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FragmentEntryLink.class);
+
+		for (LayoutStructureItem layoutStructureItem :
+				layoutStructure.getLayoutStructureItems()) {
+
+			if (!(layoutStructureItem instanceof FragmentLayoutStructureItem)) {
+				continue;
+			}
+
+			FragmentLayoutStructureItem fragmentLayoutStructureItem =
+				(FragmentLayoutStructureItem)layoutStructureItem;
+
+			long fragmentEntryLinkId = MapUtil.getLong(
+				fragmentEntryLinkIds,
+				fragmentLayoutStructureItem.getFragmentEntryLinkId(),
+				fragmentLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLinkId <= 0) {
+				continue;
+			}
+
+			fragmentLayoutStructureItem.setFragmentEntryLinkId(
+				fragmentEntryLinkId);
+		}
+
+		return layoutStructure.toJSONObject();
 	}
 
 	private void _updateSegmentsExperiences(

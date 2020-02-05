@@ -73,7 +73,8 @@ const SelectLayout = ({
 
 		if (followURLOnTitleClick) {
 			Liferay.Util.getOpener().document.location.href = data.url;
-		} else {
+		}
+		else {
 			Liferay.fire(itemSelectorSaveEvent, {
 				data
 			});

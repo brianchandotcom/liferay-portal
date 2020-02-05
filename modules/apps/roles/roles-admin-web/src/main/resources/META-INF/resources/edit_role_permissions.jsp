@@ -228,7 +228,8 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		permissionNavigationSearch.on('query', function(event) {
 			if (event.query) {
 				togglerDelegate.expandAll();
-			} else {
+			}
+			else {
 				togglerDelegate.collapseAll();
 			}
 		});
@@ -268,7 +269,8 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 			if (foundVisibleSection) {
 				noResultsNode.remove();
-			} else {
+			}
+			else {
 				permissionNavigationDataContainer.appendChild(noResultsNode);
 			}
 		});
@@ -304,9 +306,11 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 					.then(function(response) {
 						if (response.status === 401) {
 							window.location.reload();
-						} else if (response.ok) {
+						}
+						else if (response.ok) {
 							return response.text();
-						} else {
+						}
+						else {
 							throw new Error(
 								'<liferay-ui:message key="sorry,-we-were-not-able-to-access-the-server" />'
 							);
@@ -385,7 +389,8 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 						if (unselectedTargetIndex != -1) {
 							unselectedTargets.splice(unselectedTargetIndex, 1);
 						}
-					} else if (originalSelectedValues.indexOf(value) != -1) {
+					}
+					else if (originalSelectedValues.indexOf(value) != -1) {
 						unselectedTargets.push(value);
 					}
 				});

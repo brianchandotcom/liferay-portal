@@ -326,7 +326,8 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				contextualSidebarContainer.classList.remove(
 					'contextual-sidebar-visible'
 				);
-			} else {
+			}
+			else {
 				contextualSidebarContainer.classList.add(
 					'contextual-sidebar-visible'
 				);

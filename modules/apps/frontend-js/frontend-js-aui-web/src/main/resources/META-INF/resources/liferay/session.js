@@ -122,7 +122,8 @@ AUI.add(
 								if (instance.get('redirectOnExpire')) {
 									location.href = instance.get('redirectUrl');
 								}
-							} else {
+							}
+							else {
 								A.setTimeout(() => {
 									instance._expireSession();
 								}, 1000);
@@ -200,7 +201,8 @@ AUI.add(
 
 					if (prevVal == 'expired' && prevVal != newVal) {
 						event.preventDefault();
-					} else if (prevVal == 'active' && prevVal == newVal) {
+					}
+					else if (prevVal == 'active' && prevVal == newVal) {
 						instance._afterSessionStateChange(event);
 					}
 				},
@@ -263,7 +265,8 @@ AUI.add(
 									);
 								}
 							}
-						} else {
+						}
+						else {
 							timestamp = 'expired';
 						}
 
@@ -290,12 +293,14 @@ AUI.add(
 									warningMoment = false;
 
 									instance.extend();
-								} else {
+								}
+								else {
 									instance.expire();
 
 									expirationMoment = true;
 								}
-							} else if (
+							}
+							else if (
 								hasWarned &&
 								!hasExpired &&
 								!extend &&
@@ -479,7 +484,8 @@ AUI.add(
 						) => {
 							if (!hasWarned) {
 								instance._uiSetActivated();
-							} else if (!hasExpired) {
+							}
+							else if (!hasExpired) {
 								if (warningMoment) {
 									if (remainingTime <= 0) {
 										remainingTime = warningLength;
@@ -543,7 +549,8 @@ AUI.add(
 						BUFFER_TIME[2] = instance._formatNumber(time);
 
 						time = BUFFER_TIME.join(':');
-					} else {
+					}
+					else {
 						time = 0;
 					}
 
@@ -573,7 +580,8 @@ AUI.add(
 									) {
 										event.domEvent.preventDefault();
 										instance._host.extend();
-									} else if (
+									}
+									else if (
 										event.domEvent.target.test('.close')
 									) {
 										instance._destroyBanner();
@@ -702,7 +710,8 @@ AUI.add(
 							'_defExpiredFn',
 							instance._afterDefExpiredFn
 						);
-					} else {
+					}
+					else {
 						host.unplug(instance);
 					}
 				}

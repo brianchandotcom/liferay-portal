@@ -86,7 +86,8 @@ Lagrange.prototype.valueOf = function(x) {
 			a = this.ws[j] / (x - this.xs[j]);
 			b += a * this.ys[j];
 			c += a;
-		} else {
+		}
+		else {
 			return this.ys[j];
 		}
 	}

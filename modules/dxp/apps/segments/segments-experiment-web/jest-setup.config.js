@@ -30,7 +30,8 @@ window.Liferay.Util.sub = function(string = '', data) {
 
 				if (lastReplacement) {
 					return dataCopy.join('');
-				} else {
+				}
+				else {
 					return dataCopy.shift();
 				}
 		  })

@@ -70,7 +70,8 @@ export default function PageEditor({withinMasterPage = false}) {
 
 		if (keycode === ARROW_UP_KEYCODE) {
 			direction = MOVE_ITEM_DIRECTIONS.UP;
-		} else if (keycode === ARROW_DOWN_KEYCODE) {
+		}
+		else if (keycode === ARROW_DOWN_KEYCODE) {
 			direction = MOVE_ITEM_DIRECTIONS.DOWN;
 		}
 
@@ -112,7 +113,8 @@ export default function PageEditor({withinMasterPage = false}) {
 				let position;
 				if (direction === MOVE_ITEM_DIRECTIONS.UP) {
 					position = currentPosition - 1;
-				} else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
+				}
+				else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
 					position = currentPosition + 1;
 				}
 

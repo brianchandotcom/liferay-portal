@@ -119,7 +119,8 @@ const EditCategoriesModal = ({
 
 		if (!append) {
 			addedCategories = finalCategories;
-		} else {
+		}
+		else {
 			addedCategories = finalCategories.filter(
 				categoryId => initialCategories.indexOf(categoryId) == -1
 			);

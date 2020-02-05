@@ -64,7 +64,8 @@ class SelectEntityInput extends React.Component {
 					onChange(selectedValues);
 				}
 			});
-		} else {
+		}
+		else {
 			Liferay.Util.selectEntity(
 				{
 					dialog: {

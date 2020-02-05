@@ -198,7 +198,8 @@ else {
 
 						if (masterLayoutPlid.value == 0) {
 							themeContainer.classList.remove('hide');
-						} else {
+						}
+						else {
 							themeContainer.classList.add('hide');
 						}
 
@@ -207,7 +208,8 @@ else {
 							masterLayoutPlid.value != 0
 						) {
 							editMasterLayoutButton.classList.remove('hide');
-						} else {
+						}
+						else {
 							editMasterLayoutButton.classList.add('hide');
 						}
 					}

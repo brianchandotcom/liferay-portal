@@ -39,9 +39,11 @@ const handleFieldClicked = (state, event) => {
 
 				if (fieldName === 'name') {
 					field.visible = true;
-				} else if (fieldName === 'label') {
+				}
+				else if (fieldName === 'label') {
 					field.type = 'text';
-				} else if (fieldName === 'validation') {
+				}
+				else if (fieldName === 'validation') {
 					field = {
 						...field,
 						validation: {

@@ -59,7 +59,8 @@ function dropIsValid(
 
 		targetColumnHasLayoutAssociated =
 			sourceColumnHasActiveItem || targetColumnHasItems;
-	} else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
+	}
+	else if (targetType === DROP_TARGET_ITEM_TYPES.item) {
 		targetEqualsSource = sourceItem.plid === targetId;
 	}
 

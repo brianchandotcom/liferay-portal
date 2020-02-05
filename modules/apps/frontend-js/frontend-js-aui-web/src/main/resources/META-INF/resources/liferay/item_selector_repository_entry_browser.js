@@ -195,7 +195,8 @@ AUI.add(
 
 							if (type === STR_DRAG_OVER) {
 								rootNode.addClass(CSS_DROP_ACTIVE);
-							} else if (type === STR_DRAG_LEAVE || eventDrop) {
+							}
+							else if (type === STR_DRAG_LEAVE || eventDrop) {
 								rootNode.removeClass(CSS_DROP_ACTIVE);
 
 								if (eventDrop) {
@@ -225,7 +226,8 @@ AUI.add(
 							if (error.message) {
 								message = error.message;
 							}
-						} else if (
+						}
+						else if (
 							errorType ===
 							STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION
 						) {
@@ -236,20 +238,23 @@ AUI.add(
 									),
 									[error.message]
 								);
-							} else {
+							}
+							else {
 								message = Lang.sub(
 									Liferay.Language.get(
 										'please-enter-a-file-with-a-valid-file-type'
 									)
 								);
 							}
-						} else if (
+						}
+						else if (
 							errorType === STATUS_CODE.SC_FILE_NAME_EXCEPTION
 						) {
 							message = Liferay.Language.get(
 								'please-enter-a-file-with-a-valid-file-name'
 							);
-						} else if (
+						}
+						else if (
 							errorType === STATUS_CODE.SC_FILE_SIZE_EXCEPTION ||
 							errorType ===
 								STATUS_CODE.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION
@@ -264,7 +269,8 @@ AUI.add(
 									)
 								]
 							);
-						} else if (
+						}
+						else if (
 							errorType ===
 							STATUS_CODE.SC_UPLOAD_REQUEST_SIZE_EXCEPTION
 						) {
@@ -461,7 +467,8 @@ AUI.add(
 
 						if (file.size <= maxFileSize) {
 							instance._previewFile(file);
-						} else {
+						}
+						else {
 							errorMessage = Lang.sub(
 								Liferay.Language.get(
 									'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
@@ -473,7 +480,8 @@ AUI.add(
 								]
 							);
 						}
-					} else {
+					}
+					else {
 						errorMessage = Lang.sub(
 							Liferay.Language.get(
 								'please-enter-a-file-with-a-valid-extension-x'

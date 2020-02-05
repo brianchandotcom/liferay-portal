@@ -44,7 +44,8 @@ const ManageLanguages = ({
 					localeId: selectedLocaleId
 				})
 			);
-		} else {
+		}
+		else {
 			setSelectedLocales(
 				selectedLocales.filter(
 					({localeId}) => localeId != selectedLocaleId

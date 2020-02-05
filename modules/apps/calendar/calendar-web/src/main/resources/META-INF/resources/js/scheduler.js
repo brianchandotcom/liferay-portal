@@ -265,11 +265,14 @@ AUI.add(
 
 					if (viewName == 'agenda') {
 						schedulerViewText = Liferay.Language.get('agenda-view');
-					} else if (viewName == 'day') {
+					}
+					else if (viewName == 'day') {
 						schedulerViewText = Liferay.Language.get('day-view');
-					} else if (viewName == 'month') {
+					}
+					else if (viewName == 'month') {
 						schedulerViewText = Liferay.Language.get('month-view');
-					} else if (viewName == 'week') {
+					}
+					else if (viewName == 'week') {
 						schedulerViewText = Liferay.Language.get('week-view');
 					}
 
@@ -328,7 +331,8 @@ AUI.add(
 								rrule.byday.push(
 									DAYS_OF_WEEK[newDate.getDay()]
 								);
-							} else if (rrule.byday) {
+							}
+							else if (rrule.byday) {
 								var position = Math.ceil(
 									newDate.getDate() / DateMath.WEEK_LENGTH
 								);
@@ -449,14 +453,16 @@ AUI.add(
 								);
 							}
 						);
-					} else if (schedulerEvent.isMasterBooking()) {
+					}
+					else if (schedulerEvent.isMasterBooking()) {
 						var confirmationMessage;
 
 						if (schedulerEvent.get('hasChildCalendarBookings')) {
 							confirmationMessage = Liferay.Language.get(
 								'deleting-this-event-will-cancel-the-meeting-with-your-guests-would-you-like-to-delete'
 							);
-						} else {
+						}
+						else {
 							confirmationMessage = Liferay.Language.get(
 								'would-you-like-to-delete-this-event'
 							);
@@ -513,7 +519,8 @@ AUI.add(
 
 					if (answers.cancel) {
 						A.soon(showNextQuestion);
-					} else {
+					}
+					else {
 						var remoteServices = instance.get('remoteServices');
 
 						remoteServices.updateEvent(
@@ -821,7 +828,8 @@ AUI.add(
 
 						if (DateMath.isMonthOverlapWeek(startDate)) {
 							endDateFormat = Liferay.Language.get('b-d-y');
-						} else {
+						}
+						else {
 							endDateFormat = Liferay.Language.get('d-y');
 						}
 
@@ -904,7 +912,8 @@ AUI.add(
 					A.each(instance.tableRows, (item, index) => {
 						if (index >= weeks) {
 							item.remove();
-						} else if (index < weeks && !item.parentElement) {
+						}
+						else if (index < weeks && !item.parentElement) {
 							instance.tableRowContainer.appendChild(item);
 						}
 					});
@@ -944,7 +953,8 @@ AUI.add(
 							startDateMask = '%H:%M';
 
 							endDateMask = '%H:%M';
-						} else {
+						}
+						else {
 							startDateMask = '%l:%M';
 							endDateMask = '%l:%M';
 
@@ -994,7 +1004,8 @@ AUI.add(
 
 						if (!DateMath.isDayOverlap(date, todayDate)) {
 							mask = Liferay.Language.get('today');
-						} else {
+						}
+						else {
 							mask = Liferay.Language.get('a');
 						}
 
@@ -1081,7 +1092,8 @@ AUI.add(
 
 					if (scheduler.get('showHeader')) {
 						headerContent.show();
-					} else {
+					}
+					else {
 						headerContent.hide();
 					}
 				}

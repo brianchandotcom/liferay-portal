@@ -33,7 +33,8 @@ class Captcha extends Component {
 			window.grecaptcha.ready(() => {
 				try {
 					window.grecaptcha.reset();
-				} catch (e) {
+				}
+				catch (e) {
 					console.warn('Could not reset reCAPTCHA.');
 				}
 			});

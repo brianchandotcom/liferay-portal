@@ -329,7 +329,8 @@ AUI.add(
 									KaleoDesignerStrings.inspectTaskMessage +
 									'</div>'
 							);
-						} else {
+						}
+						else {
 							KaleoDesigner.superclass._uiSetAvailableFields.apply(
 								this,
 								arguments
@@ -404,7 +405,8 @@ AUI.add(
 							this,
 							arguments
 						);
-					} else {
+					}
+					else {
 						instance.closeEditProperties();
 					}
 

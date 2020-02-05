@@ -51,7 +51,8 @@
 				sendEmailButton.removeAttribute('disabled');
 
 				clearInterval(interval);
-			} else {
+			}
+			else {
 				sendEmailButton.text(--resendDuration);
 			}
 		}, 1000);

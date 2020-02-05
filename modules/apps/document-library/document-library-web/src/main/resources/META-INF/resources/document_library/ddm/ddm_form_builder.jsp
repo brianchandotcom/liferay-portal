@@ -105,7 +105,8 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 
 		if (formEditor && !isViewTabActive()) {
 			content = formEditor.get(STR_VALUE);
-		} else {
+		}
+		else {
 			content = formBuilder.getContent();
 		}
 
@@ -153,10 +154,12 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 			displayWarning(
 				'<%= UnicodeLanguageUtil.get(resourceBundle, "you-cannot-remove-default-attributes") %>'
 			);
-		} else {
+		}
+		else {
 			try {
 				content = JSON.parse(content);
-			} catch (e) {
+			}
+			catch (e) {
 				displayWarning(
 					'<%= UnicodeLanguageUtil.get(resourceBundle, "you-have-entered-invalid-json") %>'
 				);
@@ -197,7 +200,8 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 	var switchToView = function() {
 		if (formEditor) {
 			reloadFormBuilderData(formEditor.get(STR_VALUE));
-		} else if (formBuilder) {
+		}
+		else if (formBuilder) {
 			reloadFormBuilderData(formBuilder.getContent());
 		}
 	};
@@ -255,7 +259,8 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 	var afterShowTab = function(event) {
 		if (isViewTabActive()) {
 			switchToView();
-		} else {
+		}
+		else {
 			switchToSource();
 		}
 	};

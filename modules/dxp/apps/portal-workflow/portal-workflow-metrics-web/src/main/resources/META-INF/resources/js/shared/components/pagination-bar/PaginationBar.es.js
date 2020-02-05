@@ -57,7 +57,8 @@ const PaginationBar = ({
 				});
 
 				history.push({pathname, search});
-			} else {
+			}
+			else {
 				setPage(1);
 				setPageSize(newPageSize);
 			}
@@ -75,7 +76,8 @@ const PaginationBar = ({
 				});
 
 				history.push({pathname, search});
-			} else {
+			}
+			else {
 				setPage(newPage);
 			}
 		},

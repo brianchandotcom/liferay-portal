@@ -246,7 +246,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 	if (Liferay.DMMFieldTypesReady) {
 		Liferay.Forms.App.start();
-	} else {
+	}
+	else {
 		Liferay.onceAfter('DMMFieldTypesReady', function() {
 			Liferay.Forms.App.start();
 		});

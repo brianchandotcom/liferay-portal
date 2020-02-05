@@ -59,7 +59,8 @@ function _fetch(url, body = {}) {
 			if (typeof body === 'object') {
 				if ('exception' in body) {
 					throw new Error(body.exception);
-				} else if ('error' in body) {
+				}
+				else if ('error' in body) {
 					throw new Error(body.error);
 				}
 			}
@@ -116,7 +117,8 @@ function addStructuredContent(ddmFormValues, ddmStructureId, title) {
 	}).then(response => {
 		if (response.errorMessage) {
 			throw new Error(response.errorMessage);
-		} else if (
+		}
+		else if (
 			!response.classNameId ||
 			!response.classPK ||
 			!response.title

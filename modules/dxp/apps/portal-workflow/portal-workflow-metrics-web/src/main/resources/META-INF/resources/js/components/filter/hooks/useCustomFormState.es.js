@@ -29,7 +29,8 @@ const useCustomFormState = () => {
 			if (currentItem.active) {
 				document.dispatchEvent(new Event('mousedown'));
 			}
-		} else {
+		}
+		else {
 			setFormVisible(false);
 		}
 

@@ -72,14 +72,16 @@ export default function Sidebar() {
 		() => {
 			if (panel) {
 				togglePlugin(panel);
-			} else if (sidebarPanelId) {
+			}
+			else if (sidebarPanelId) {
 				dispatch(
 					Actions.switchSidebarPanel({
 						sidebarOpen: false,
 						sidebarPanelId: null
 					})
 				);
-			} else {
+			}
+			else {
 				adjustWrapperPadding({sidebarOpen: false});
 			}
 		},
@@ -91,7 +93,8 @@ export default function Sidebar() {
 		useCallback(({instance}) => {
 			if (typeof instance.renderSidebar === 'function') {
 				return instance.renderSidebar();
-			} else {
+			}
+			else {
 				return null;
 			}
 		}, [])
@@ -129,7 +132,8 @@ export default function Sidebar() {
 				isMounted()
 			) {
 				plugin.activate();
-			} else if (!plugin) {
+			}
+			else if (!plugin) {
 				setHasError(true);
 			}
 		});
@@ -176,7 +180,8 @@ export default function Sidebar() {
 						// Add separator between groups.
 						if (groupIndex === panels.length - 1) {
 							return elements.concat(buttons);
-						} else {
+						}
+						else {
 							return elements.concat([
 								...buttons,
 								<hr key={`separator-${groupIndex}`} />
@@ -251,7 +256,8 @@ class ErrorBoundary extends React.Component {
 	render() {
 		if (this.state.hasError) {
 			return null;
-		} else {
+		}
+		else {
 			return this.props.children;
 		}
 	}
@@ -266,7 +272,8 @@ function adjustWrapperPadding({sidebarOpen}) {
 		if (sidebarOpen) {
 			classList.add('page-editor-sidebar-padding-open');
 			classList.remove('page-editor-sidebar-padding');
-		} else {
+		}
+		else {
 			classList.add('page-editor-sidebar-padding');
 			classList.remove('page-editor-sidebar-padding-open');
 		}

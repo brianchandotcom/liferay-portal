@@ -155,7 +155,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 			function(response, err) {
 				if (err) {
 					console.error(err);
-				} else {
+				}
+				else {
 					updateAddressZipRequired(response.zipRequired);
 				}
 			}
@@ -167,7 +168,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 
 		if (value > 0) {
 			checkCountry(value);
-		} else {
+		}
+		else {
 			updateAddressZipRequired(false);
 		}
 	}
@@ -183,7 +185,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 
 		if (required) {
 			addressZipRequiredWrapper.removeAttribute('hidden');
-		} else {
+		}
+		else {
 			addressZipRequiredWrapper.setAttribute('hidden', true);
 		}
 

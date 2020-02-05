@@ -84,7 +84,8 @@ AUI.add(
 						instance._selectedFileEntries = selectedElements.attr(
 							'value'
 						);
-					} else {
+					}
+					else {
 						instance._selectedFileEntries = [];
 					}
 
@@ -283,7 +284,8 @@ AUI.add(
 						form.get(namespace + 'javax-portlet-action').val(
 							action
 						);
-					} else {
+					}
+					else {
 						form.get(namespace + 'cmd').val(action);
 					}
 
@@ -319,20 +321,25 @@ AUI.add(
 						instance._openModalTags();
 
 						action = null;
-					} else if (action === 'editCategories') {
+					}
+					else if (action === 'editCategories') {
 						instance._openModalCategories();
 
 						action = null;
-					} else if (action === 'move' || action === 'moveEntries') {
+					}
+					else if (action === 'move' || action === 'moveEntries') {
 						instance._openModalMove();
 
 						action = null;
-					} else if (action === 'download') {
+					}
+					else if (action === 'download') {
 						url = instance.get('downloadEntryUrl');
-					} else if (action === 'deleteEntries') {
+					}
+					else if (action === 'deleteEntries') {
 						if (instance.get('trashEnabled')) {
 							action = 'move_to_trash';
-						} else if (
+						}
+						else if (
 							confirm(
 								Liferay.Language.get(
 									'are-you-sure-you-want-to-delete-the-selected-entries'
@@ -340,10 +347,12 @@ AUI.add(
 							)
 						) {
 							action = 'delete';
-						} else {
+						}
+						else {
 							action = null;
 						}
-					} else if (action === 'checkin') {
+					}
+					else if (action === 'checkin') {
 						Liferay.componentReady(
 							instance.ns('DocumentLibraryCheckinModal')
 						).then(documentLibraryCheckinModal => {
@@ -518,7 +527,8 @@ AUI.add(
 						dialogTitle = Liferay.Language.get(
 							'select-destination-folder-for-x-item'
 						);
-					} else {
+					}
+					else {
 						dialogTitle = Liferay.Language.get(
 							'select-destination-folder-for-x-items'
 						);
@@ -543,7 +553,8 @@ AUI.add(
 									parameterName,
 									parameterValue
 								);
-							} else {
+							}
+							else {
 								instance._moveCurrentSelection(event.folderid);
 							}
 						}

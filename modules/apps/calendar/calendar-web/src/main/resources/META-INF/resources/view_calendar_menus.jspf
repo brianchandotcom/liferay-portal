@@ -585,7 +585,8 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 		if (viewName == 'month') {
 			total = A.Date.daysInMonth(viewDate);
-		} else if (viewName == 'week') {
+		}
+		else if (viewName == 'week') {
 			total = 7;
 		}
 

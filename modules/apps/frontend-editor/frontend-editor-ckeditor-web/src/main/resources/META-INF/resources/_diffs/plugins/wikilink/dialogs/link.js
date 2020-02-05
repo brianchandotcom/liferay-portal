@@ -31,10 +31,12 @@ CKEDITOR.dialog.add('link', editor => {
 
 			if (editor.config.decodeLinks) {
 				data.address = decodeURIComponent(href);
-			} else {
+			}
+			else {
 				data.address = href;
 			}
-		} else {
+		}
+		else {
 			var selection = editor.getSelection();
 
 			data.address = selection.getSelectedText();
@@ -116,7 +118,8 @@ CKEDITOR.dialog.add('link', editor => {
 												urlField.setValue(
 													selectedItem.title
 												);
-											} else {
+											}
+											else {
 												urlField.setValue(
 													location.origin + newVal
 												);
@@ -191,7 +194,8 @@ CKEDITOR.dialog.add('link', editor => {
 				style.type = CKEDITOR.STYLE_INLINE;
 
 				editor.applyStyle(style);
-			} else {
+			}
+			else {
 				var selectedElement = instance._.selectedElement;
 
 				var currentText = selectedElement.getText(data.text);

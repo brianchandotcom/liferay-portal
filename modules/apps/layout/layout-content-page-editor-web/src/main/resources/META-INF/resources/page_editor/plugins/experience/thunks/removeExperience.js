@@ -51,7 +51,8 @@ export default function removeExperience(
 					);
 				});
 			});
-		} else {
+		}
+		else {
 			return ExperienceService.removeExperience({
 				body: {
 					fragmentEntryLinkIds,

@@ -135,7 +135,8 @@ name = HtmlUtil.escapeJS(name);
 
 		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
 			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
-		} else {
+		}
+		else {
 			data =
 				'<%= (contents != null) ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
 		}
@@ -218,7 +219,8 @@ name = HtmlUtil.escapeJS(name);
 
 			if (!window['<%= name %>'].instanceReady) {
 				data = getInitialContent();
-			} else {
+			}
+			else {
 				data = CKEDITOR.instances['<%= name %>'].getData();
 
 				if (CKEDITOR.env.gecko && CKEDITOR.tools.trim(data) == '<br />') {
@@ -242,7 +244,8 @@ name = HtmlUtil.escapeJS(name);
 
 			if (!window['<%= name %>'].instanceReady) {
 				data = getInitialContent();
-			} else {
+			}
+			else {
 				var editor = CKEDITOR.instances['<%= name %>'];
 
 				data = editor.editable().getText();
@@ -292,7 +295,8 @@ name = HtmlUtil.escapeJS(name);
 			var setHTML = function(data) {
 				if (instanceDataReady) {
 					ckEditorInstance.setData(data);
-				} else {
+				}
+				else {
 					instancePendingData = data;
 				}
 
@@ -301,7 +305,8 @@ name = HtmlUtil.escapeJS(name);
 
 			if (win.instanceReady) {
 				setHTML(value);
-			} else {
+			}
+			else {
 				instancePendingData = value;
 			}
 		}
@@ -363,7 +368,8 @@ name = HtmlUtil.escapeJS(name);
 
 				if (event.enabled && !ckEditor) {
 					createEditor();
-				} else if (ckEditor) {
+				}
+				else if (ckEditor) {
 					inlineEditor.destroy();
 					ckEditor.destroy();
 
@@ -389,7 +395,8 @@ name = HtmlUtil.escapeJS(name);
 
 		if (Util.isPhone()) {
 			toolbarSet = 'phone';
-		} else if (Util.isTablet()) {
+		}
+		else if (Util.isTablet()) {
 			toolbarSet = 'tablet';
 		}
 
@@ -526,7 +533,8 @@ name = HtmlUtil.escapeJS(name);
 				var contentChangeHandle = setInterval(function() {
 					try {
 						window['<%= name %>'].onChangeCallback();
-					} catch (e) {}
+					}
+					catch (e) {}
 				}, 300);
 
 				var clearContentChangeHandle = function(event) {
@@ -594,7 +602,8 @@ name = HtmlUtil.escapeJS(name);
 				instancePendingData = null;
 
 				ckEditor.setData(pendingData);
-			} else {
+			}
+			else {
 				instanceDataReady = true;
 			}
 

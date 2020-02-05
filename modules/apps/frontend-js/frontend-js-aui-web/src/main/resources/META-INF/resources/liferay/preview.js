@@ -347,7 +347,8 @@ AUI.add(
 					if (target.hasClass('lfr-preview-file-arrow')) {
 						if (target.hasClass('right')) {
 							instance._updateIndex(1);
-						} else if (target.hasClass('left')) {
+						}
+						else if (target.hasClass('left')) {
 							instance._updateIndex(-1);
 						}
 
@@ -403,7 +404,8 @@ AUI.add(
 
 						if (!instance._nodeList) {
 							instance._nodeList = nodeList;
-						} else {
+						}
+						else {
 							instance._nodeList = instance._nodeList.concat(
 								nodeList
 							);
@@ -465,7 +467,8 @@ AUI.add(
 
 					if (isNaN(value)) {
 						value = A.Attribute.INVALID_VALUE;
-					} else {
+					}
+					else {
 						value = Math.min(
 							Math.max(value, 0),
 							instance.get(STR_MAX_INDEX) - 1

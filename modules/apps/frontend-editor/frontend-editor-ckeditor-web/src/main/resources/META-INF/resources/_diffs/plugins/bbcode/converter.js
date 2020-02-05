@@ -387,14 +387,16 @@
 							styleAttr = MAP_ORDERED_LIST_STYLES[attrValue];
 
 							tag = 'ol';
-						} else {
+						}
+						else {
 							styleAttr = MAP_UNORDERED_LIST_STYLES[attrValue];
 						}
 
 						if (styleAttr) {
 							listAttributes += ' style="' + styleAttr + '"';
 						}
-					} else if (
+					}
+					else if (
 						attrName === STR_START &&
 						REGEX_NUMBER.test(attrValue)
 					) {
@@ -437,7 +439,8 @@
 					) {
 						value = STR_BLANK;
 					}
-				} else if (REGEX_LASTCHAR_NEWLINE.test(value)) {
+				}
+				else if (REGEX_LASTCHAR_NEWLINE.test(value)) {
 					nextToken =
 						instance._parsedData[instance._tokenPointer + 1];
 
@@ -634,11 +637,14 @@
 
 				if (type === TOKEN_TAG_START) {
 					instance._handleTagStart(token);
-				} else if (type === TOKEN_TAG_END) {
+				}
+				else if (type === TOKEN_TAG_END) {
 					instance._handleTagEnd(token);
-				} else if (type === TOKEN_DATA) {
+				}
+				else if (type === TOKEN_DATA) {
 					instance._handleData(token);
-				} else {
+				}
+				else {
 					throw 'Internal error. Invalid token type';
 				}
 			}

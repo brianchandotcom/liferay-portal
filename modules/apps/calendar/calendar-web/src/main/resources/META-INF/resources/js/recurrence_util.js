@@ -177,7 +177,8 @@ AUI.add(
 
 				if (recurrence.interval == 1) {
 					parts.push(A.Lang.String.toLowerCase(recurrence.frequency));
-				} else {
+				}
+				else {
 					parts.push(
 						'every-x-' +
 							instance.INTERVAL_UNITS[recurrence.frequency]
@@ -200,7 +201,8 @@ AUI.add(
 								recurrence.positionalWeekday.weekday
 							]
 						);
-					} else {
+					}
+					else {
 						parts.push('on-x-x-of-x');
 
 						params.push(
@@ -219,7 +221,8 @@ AUI.add(
 							]
 						);
 					}
-				} else if (
+				}
+				else if (
 					recurrence.frequency == instance.FREQUENCY.WEEKLY &&
 					recurrence.weekdays.length > 0
 				) {
@@ -236,7 +239,8 @@ AUI.add(
 					parts.push('x-times');
 
 					params.push(recurrence.count);
-				} else if (
+				}
+				else if (
 					recurrence.untilDate &&
 					recurrence.endValue === 'on'
 				) {
@@ -279,7 +283,8 @@ AUI.add(
 					modalDescription = Liferay.Language.get(
 						'would-you-like-to-delete-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series'
 					);
-				} else {
+				}
+				else {
 					titleText = Liferay.Language.get('change-recurring-event');
 					modalDescription = Liferay.Language.get(
 						'would-you-like-to-change-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series'

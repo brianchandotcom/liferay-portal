@@ -63,7 +63,8 @@ function removeFragmentEntryLinkAction(fragmentEntryLinkId) {
 
 		if (!fragmentEntryLinkIsUsedInOtherExperience) {
 			dispatch(removeFragmentEntryLinksAction([fragmentEntryLinkId]));
-		} else {
+		}
+		else {
 			removeExperience(
 				state.segmentsExperienceId,
 				[fragmentEntryLinkId],

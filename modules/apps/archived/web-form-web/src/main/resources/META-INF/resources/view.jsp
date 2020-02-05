@@ -174,7 +174,8 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 				if (field) {
 					fieldsMap[key] = field.val();
 				}
-			} else {
+			}
+			else {
 				fieldsMap[key] = (field && field.val()) || '';
 			}
 		});
@@ -221,7 +222,8 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			if (field) {
 				field.attr('aria-invalid', true);
 			}
-		} else if (!fieldValidationFunctions[key](currentFieldValue, fieldsMap)) {
+		}
+		else if (!fieldValidationFunctions[key](currentFieldValue, fieldsMap)) {
 			A.all('.alert-success').hide();
 
 			if (optionalFieldError) {
@@ -236,7 +238,8 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			if (field) {
 				field.attr('aria-invalid', true);
 			}
-		} else {
+		}
+		else {
 			if (optionalFieldError) {
 				optionalFieldError.hide();
 			}

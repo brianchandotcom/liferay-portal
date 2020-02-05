@@ -138,7 +138,8 @@ AUI.add(
 						}
 
 						instance._installXuggler();
-					} else {
+					}
+					else {
 						submitForm(form, instance.get(STR_URL));
 					}
 				},

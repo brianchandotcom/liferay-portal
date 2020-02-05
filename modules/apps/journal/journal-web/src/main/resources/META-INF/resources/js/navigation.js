@@ -123,7 +123,8 @@ AUI.add(
 						form.get(namespace + 'javax-portlet-action').val(
 							action
 						);
-					} else {
+					}
+					else {
 						form.get(namespace + 'cmd').val(action);
 					}
 

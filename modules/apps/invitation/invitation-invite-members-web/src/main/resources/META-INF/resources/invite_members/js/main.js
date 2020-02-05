@@ -189,10 +189,12 @@ AUI.add(
 					if (userId) {
 						if (user.hasClass(CSS_INVITED)) {
 							instance._removeMemberInvite(user, userId);
-						} else {
+						}
+						else {
 							instance._addMemberInvite(user);
 						}
-					} else {
+					}
+					else {
 						instance._removeEmailInvite(user);
 					}
 				},
@@ -306,7 +308,8 @@ AUI.add(
 
 							buffer.push(noUsersMessage);
 						}
-					} else {
+					}
+					else {
 						buffer.push(
 							A.Array.map(results, result => {
 								var cssClass = 'user';
@@ -467,7 +470,8 @@ AUI.add(
 
 							if (typeof response.toString != 'undefined') {
 								result = response.toString();
-							} else if (
+							}
+							else if (
 								typeof response.responseText != 'undefined'
 							) {
 								result = response.responseText;

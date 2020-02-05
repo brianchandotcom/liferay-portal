@@ -50,7 +50,8 @@ const getItem = key => {
 	const item = localStorage.getItem(key);
 	try {
 		data = JSON.parse(item);
-	} catch (e) {
+	}
+	catch (e) {
 		return;
 	}
 	return data;
@@ -59,7 +60,8 @@ const getItem = key => {
 const setItem = (key, value) => {
 	try {
 		localStorage.setItem(key, JSON.stringify(value));
-	} catch (e) {
+	}
+	catch (e) {
 		return;
 	}
 };
@@ -202,7 +204,8 @@ class Analytics {
 					this.isFlushInProgress = false;
 					return this.isFlushInProgress;
 				});
-		} else {
+		}
+		else {
 			result = Promise.resolve();
 		}
 
@@ -254,7 +257,8 @@ class Analytics {
 					return this._getEventKey(evt) === eventKey;
 				});
 			});
-		} else {
+		}
+		else {
 			this.events.length = 0;
 		}
 

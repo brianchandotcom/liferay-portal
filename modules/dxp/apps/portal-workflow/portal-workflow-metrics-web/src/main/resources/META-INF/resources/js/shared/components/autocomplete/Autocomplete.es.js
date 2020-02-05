@@ -47,7 +47,8 @@ const Autocomplete = ({
 			setDropDownItems(
 				items ? items.filter(item => item.name.match(match)) : []
 			);
-		} else {
+		}
+		else {
 			onChange(value);
 		}
 

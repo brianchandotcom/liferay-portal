@@ -49,7 +49,8 @@
 				proxy = AOP.method;
 
 				AOP.method = methodFn;
-			} else {
+			}
+			else {
 				obj[methodName] = methodFn;
 			}
 

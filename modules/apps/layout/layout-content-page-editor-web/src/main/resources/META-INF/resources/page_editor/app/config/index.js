@@ -86,7 +86,8 @@ function generatePanels(sidebarPanels) {
 		(groups, panel) => {
 			if (isSeparator(panel)) {
 				groups.push([]);
-			} else {
+			}
+			else {
 				groups[groups.length - 1].push(panel.sidebarPanelId);
 			}
 			return groups;

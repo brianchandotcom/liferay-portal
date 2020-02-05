@@ -278,7 +278,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 			if (showOptions) {
 				<%= className %>Options.classList.remove('hide');
-			} else {
+			}
+			else {
 				<%= className %>Options.classList.add('hide');
 			}
 
@@ -420,10 +421,12 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList()
 
 						if (structureOptions) {
 							subtypeFieldsWrapper.classList.remove('hide');
-						} else if (hideSubtypeFilterEnableWrapper) {
+						}
+						else if (hideSubtypeFilterEnableWrapper) {
 							subtypeFieldsWrapper.classList.add('hide');
 						}
-					} else if (hideSubtypeFilterEnableWrapper) {
+					}
+					else if (hideSubtypeFilterEnableWrapper) {
 						subtypeFieldsWrapper.classList.add('hide');
 					}
 				});

@@ -106,7 +106,8 @@ const getConnectedComponent = (Component, properties, mapStateToProps) => {
 			ConnectedComponent.STATE[property] = INITIAL_STATE[
 				property
 			].internal();
-		} catch (e) {
+		}
+		catch (e) {
 			throw new Error(
 				`${property} is not available from ${Component.name}`
 			);

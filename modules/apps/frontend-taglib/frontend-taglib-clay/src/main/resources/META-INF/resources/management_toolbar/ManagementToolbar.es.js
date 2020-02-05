@@ -183,7 +183,8 @@ class ManagementToolbar extends ClayComponent {
 
 			if (checkboxStatus) {
 				this._searchContainer.select.toggleAllRows(true);
-			} else {
+			}
+			else {
 				this._searchContainer.select.toggleAllRows(false);
 			}
 		}
@@ -251,7 +252,8 @@ class ManagementToolbar extends ClayComponent {
 			this.checkboxStatus = currentPageSelected
 				? 'checked'
 				: 'indeterminate';
-		} else {
+		}
+		else {
 			this.checkboxStatus = 'unchecked';
 		}
 

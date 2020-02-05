@@ -61,7 +61,8 @@ const ExperienceModal = ({
 		if (!validName || !validSegmentId) {
 			if (!validName) setRequiredNameError(true);
 			if (!validSegmentId) setRequiredSegmentError(true);
-		} else {
+		}
+		else {
 			setLoading(true);
 
 			onSubmit({
@@ -80,7 +81,8 @@ const ExperienceModal = ({
 
 		if (!_getValidValue(value)) {
 			setRequiredNameError(true);
-		} else {
+		}
+		else {
 			setRequiredNameError(false);
 		}
 
@@ -91,7 +93,8 @@ const ExperienceModal = ({
 
 		if (!_getValidValue(value)) {
 			setRequiredSegmentError(true);
-		} else {
+		}
+		else {
 			setRequiredSegmentError(false);
 		}
 

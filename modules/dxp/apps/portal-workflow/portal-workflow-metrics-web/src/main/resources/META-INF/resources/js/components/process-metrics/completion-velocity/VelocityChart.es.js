@@ -152,16 +152,20 @@ const Tooltip = (isAmPm, timeRange, unitKey, unitName) => dataPoints => {
 		if (unitKey === HOURS) {
 			if (isAmPm) {
 				datePattern = Liferay.Language.get('mmm-dd-hh-mm-a');
-			} else {
+			}
+			else {
 				datePattern = Liferay.Language.get('mmm-dd-hh-mm');
 			}
 
 			return dateUTC.format(datePattern);
-		} else if (unitKey === WEEKS) {
+		}
+		else if (unitKey === WEEKS) {
 			return formatWeekDateWithYear(date, timeRange);
-		} else if (unitKey === MONTHS) {
+		}
+		else if (unitKey === MONTHS) {
 			return formatMonthDate(date, timeRange);
-		} else if (unitKey === YEARS) {
+		}
+		else if (unitKey === YEARS) {
 			return formatYearDate(date, timeRange);
 		}
 		return dateUTC.format(datePattern);

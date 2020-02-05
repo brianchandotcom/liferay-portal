@@ -73,7 +73,8 @@ AUI.add(
 
 			if (index === undefined) {
 				obj[key].push(value);
-			} else {
+			}
+			else {
 				obj[key][index] = value;
 			}
 		};
@@ -117,7 +118,8 @@ AUI.add(
 								A.each(item2, (item3, index3) => {
 									_put(assignments, index3, item3, index2);
 								});
-							} else {
+							}
+							else {
 								_put(assignments, item1, item2);
 							}
 						});
@@ -150,7 +152,8 @@ AUI.add(
 
 					if (assignments.assignmentType == 'roleId') {
 						populateRole(assignments);
-					} else if (assignments.assignmentType == 'user') {
+					}
+					else if (assignments.assignmentType == 'user') {
 						populateUser(assignments);
 					}
 				}
@@ -214,15 +217,18 @@ AUI.add(
 						if (isValue(item2)) {
 							if (index2 === 'delay' || index2 === 'recurrence') {
 								return;
-							} else if (index2 === 'timerNotifications') {
+							}
+							else if (index2 === 'timerNotifications') {
 								item2 = FieldNormalizer.normalizeToNotifications(
 									item2
 								);
-							} else if (index2 === 'timerActions') {
+							}
+							else if (index2 === 'timerActions') {
 								item2 = FieldNormalizer.normalizeToActions(
 									item2
 								);
-							} else if (index2 === 'reassignments') {
+							}
+							else if (index2 === 'reassignments') {
 								item2 = FieldNormalizer.normalizeToAssignments(
 									item2
 								);

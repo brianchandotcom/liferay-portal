@@ -32,7 +32,8 @@ const reducer = (state, action) => {
 
 	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
 		nextState = {...nextState, hoveredItemId: itemId};
-	} else if (type === SELECT_ITEM) {
+	}
+	else if (type === SELECT_ITEM) {
 		if (multiSelect && itemId) {
 			const wasSelected = state.selectedItemsIds.includes(itemId);
 
@@ -43,13 +44,15 @@ const reducer = (state, action) => {
 					? state.selectedItemsIds.filter(id => id !== itemId)
 					: state.selectedItemsIds.concat([itemId])
 			};
-		} else if (itemId && itemId !== nextState.activeItemId) {
+		}
+		else if (itemId && itemId !== nextState.activeItemId) {
 			nextState = {
 				...nextState,
 				activeItemId: itemId,
 				selectedItemsIds: [itemId]
 			};
-		} else if (
+		}
+		else if (
 			nextState.activeItemId ||
 			nextState.selectedItemsIds.length
 		) {

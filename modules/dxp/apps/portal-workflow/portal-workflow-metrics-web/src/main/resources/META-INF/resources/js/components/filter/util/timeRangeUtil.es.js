@@ -84,10 +84,12 @@ const getFormatPattern = (dateEndMoment, dateStartMoment, isAmPm) => {
 	if (dateEndMoment.diff(dateStartMoment, 'days') <= 1) {
 		if (isAmPm) {
 			dateStartPattern = Liferay.Language.get('mmm-dd-hh-mm-a');
-		} else {
+		}
+		else {
 			dateStartPattern = Liferay.Language.get('mmm-dd-hh-mm');
 		}
-	} else if (dateEndMoment.diff(dateStartMoment, 'years') < 1) {
+	}
+	else if (dateEndMoment.diff(dateStartMoment, 'years') < 1) {
 		dateStartPattern = Liferay.Language.get('mmm-dd');
 	}
 
@@ -113,7 +115,8 @@ const parseDate = (date, format, isEndDate, locale) => {
 			.hours(23)
 			.minutes(59)
 			.seconds(59);
-	} else {
+	}
+	else {
 		utcDate = utcDate.hours(0);
 	}
 

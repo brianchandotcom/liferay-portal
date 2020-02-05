@@ -99,7 +99,8 @@ class FragmentEditableBackgroundImage extends Component {
 				'fragments-editor__background-image-editable--active'
 			);
 			this._createFloatingToolbar();
-		} else {
+		}
+		else {
 			this._active = false;
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--active'
@@ -124,7 +125,8 @@ class FragmentEditableBackgroundImage extends Component {
 			this.element.classList.add(
 				'fragments-editor__background-image-editable--mapped'
 			);
-		} else {
+		}
+		else {
 			this._renderBackgroundImage();
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--mapped'
@@ -162,7 +164,8 @@ class FragmentEditableBackgroundImage extends Component {
 			this.element.classList.add(
 				'fragments-editor__background-image-editable--hovered'
 			);
-		} else {
+		}
+		else {
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--hovered'
 			);
@@ -208,7 +211,8 @@ class FragmentEditableBackgroundImage extends Component {
 
 		if (this._floatingToolbar) {
 			this._floatingToolbar.setState(config);
-		} else {
+		}
+		else {
 			this._floatingToolbar = new FloatingToolbar(config);
 		}
 	}
@@ -322,7 +326,8 @@ class FragmentEditableBackgroundImage extends Component {
 				'data-fragment-entry-link-id',
 				this.fragmentEntryLinkId
 			);
-		} else if (this.activeItemId !== this._getItemId()) {
+		}
+		else if (this.activeItemId !== this._getItemId()) {
 			this.element.removeAttribute('data-fragment-entry-link-id');
 			this.element.removeAttribute('data-fragments-editor-item-id');
 			this.element.removeAttribute('data-fragments-editor-item-type');
@@ -346,7 +351,8 @@ class FragmentEditableBackgroundImage extends Component {
 			this.element.classList.add(
 				'fragments-editor__background-image-editable--highlighted'
 			);
-		} else {
+		}
+		else {
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--highlighted'
 			);

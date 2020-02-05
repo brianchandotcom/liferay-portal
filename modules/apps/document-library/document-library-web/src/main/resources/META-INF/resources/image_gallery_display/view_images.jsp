@@ -267,7 +267,8 @@ embeddedPlayerURL.setWindowState(LiferayWindowState.POP_UP);
 	imageViewer._syncPlaying = function() {
 		if (this.get('playing')) {
 			this._player.setHTML(TPL_PLAYER_PAUSE);
-		} else {
+		}
+		else {
 			this._player.setHTML(TPL_PLAYER_PLAY);
 		}
 	};

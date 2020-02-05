@@ -31,7 +31,8 @@ export default (evaluatorContext, properties) => {
 				},
 				value
 			};
-		} else if (field.nestedFields) {
+		}
+		else if (field.nestedFields) {
 			field = {
 				...field,
 				nestedFields: field.nestedFields.map(nestedField => {

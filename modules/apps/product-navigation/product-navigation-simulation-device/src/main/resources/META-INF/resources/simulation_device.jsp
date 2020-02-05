@@ -117,7 +117,8 @@
 
 			if (dataDevice === 'custom') {
 				customDeviceContainer.show();
-			} else {
+			}
+			else {
 				customDeviceContainer.hide();
 			}
 		},

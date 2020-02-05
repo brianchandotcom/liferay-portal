@@ -102,7 +102,8 @@ export default () => {
 
 			if (site) {
 				return site.name;
-			} else {
+			}
+			else {
 				return '';
 			}
 		})

@@ -113,7 +113,8 @@ AUI().use(
 
 				if (Lang.isNumber(portraitURLInt)) {
 					userImagePath += '/user_portrait?img_id=' + portraitURL;
-				} else {
+				}
+				else {
 					userImagePath += portraitURL;
 				}
 
@@ -272,7 +273,8 @@ AUI().use(
 
 				if (instance.get('selected')) {
 					instance.hide();
-				} else {
+				}
+				else {
 					instance.show();
 				}
 			},
@@ -299,7 +301,8 @@ AUI().use(
 
 					if (target.hasClass('minimize')) {
 						instance.hide();
-					} else if (target.hasClass('close')) {
+					}
+					else if (target.hasClass('close')) {
 						instance.close();
 					}
 				});
@@ -441,7 +444,8 @@ AUI().use(
 
 					if (hasUnreadMessage) {
 						unreadMessagesContainer.text(unreadMessages);
-					} else {
+					}
+					else {
 						Liferay.Chat.Manager.triggerSound();
 
 						instance.setWaiting(true);
@@ -491,7 +495,8 @@ AUI().use(
 					}
 
 					waitingAnim.run();
-				} else {
+				}
+				else {
 					if (waitingAnim) {
 						waitingAnim.stop();
 					}
@@ -541,7 +546,8 @@ AUI().use(
 						}
 
 						instance.setAsUnread();
-					} else {
+					}
+					else {
 						instance.setTyping(true);
 
 						instance._stopTypingTask();
@@ -1088,7 +1094,8 @@ AUI().use(
 								}
 
 								event._liferayChatBuddyService = true;
-							} else if (!event._liferayChatBuddyService) {
+							}
+							else if (!event._liferayChatBuddyService) {
 								instance._createChatFromUser(target);
 							}
 						},
@@ -1280,14 +1287,17 @@ AUI().use(
 				if (Notification) {
 					if (Notification.permissionLevel) {
 						notifyPermission = Notification.permissionLevel();
-					} else if (Notification.permission) {
+					}
+					else if (Notification.permission) {
 						notifyPermission = Notification.permission;
-					} else if (A.config.win.webkitNotifications) {
+					}
+					else if (A.config.win.webkitNotifications) {
 						var webkitNotifyPermission = A.config.win.webkitNotifications.checkPermission();
 
 						if (webkitNotifyPermission === 0) {
 							notifyPermission = NOTIFICATIONS_PERMISSION_GRANTED;
-						} else if (webkitNotifyPermission === 1) {
+						}
+						else if (webkitNotifyPermission === 1) {
 							notifyPermission = NOTIFICATIONS_PERMISSION_DEFAULT;
 						}
 					}
@@ -1319,7 +1329,8 @@ AUI().use(
 
 				try {
 					activePanelIds = JSON.parse(activePanelIds);
-				} catch (e) {
+				}
+				catch (e) {
 					activePanelIds = {
 						minimized: [],
 						open: null
@@ -1467,7 +1478,8 @@ AUI().use(
 						.removeClass('loading');
 
 					instance._initialRequest = false;
-				} else if (!instance._initialRequest) {
+				}
+				else if (!instance._initialRequest) {
 					instance._updateConversations(entries, windowId);
 				}
 			},

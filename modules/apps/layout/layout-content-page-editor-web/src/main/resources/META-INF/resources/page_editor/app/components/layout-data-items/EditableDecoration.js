@@ -138,7 +138,8 @@ export default function EditableDecoration({
 
 				if (isActive(itemId) && onEditableDoubleClick) {
 					onEditableDoubleClick(editableElement);
-				} else {
+				}
+				else {
 					selectItem(itemId);
 				}
 			}

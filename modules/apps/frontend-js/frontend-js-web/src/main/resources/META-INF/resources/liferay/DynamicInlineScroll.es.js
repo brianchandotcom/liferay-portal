@@ -163,7 +163,8 @@ class DynamicInlineScroll extends PortletBase {
 
 			if (pageIndexCurrent === 0) {
 				pageIndex = initialPages;
-			} else {
+			}
+			else {
 				pageIndex = pageIndexCurrent + initialPages;
 			}
 		}

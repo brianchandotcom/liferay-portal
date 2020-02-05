@@ -36,7 +36,8 @@ export default function ResolveButton({
 	if (loading) {
 		title = undefined;
 		icon = <Loader />;
-	} else if (resolved) {
+	}
+	else if (resolved) {
 		icon = (
 			<span className="text-lowercase text-success">
 				<ClayIcon symbol="check-circle-full" />

@@ -177,7 +177,8 @@ class ImageEditor extends PortletBase {
 
 				if (canvas.toBlob) {
 					canvas.toBlob(resolve, this.saveMimeType);
-				} else {
+				}
+				else {
 					const data = atob(
 						canvas.toDataURL(this.saveMimeType).split(',')[1]
 					);
@@ -244,7 +245,8 @@ class ImageEditor extends PortletBase {
 			});
 
 			Liferay.Util.getWindow().hide();
-		} else if (result.error) {
+		}
+		else if (result.error) {
 			this.showError_(result.error.message);
 		}
 	}
@@ -467,7 +469,8 @@ class ImageEditor extends PortletBase {
 		if (availableAspectRatio > 1) {
 			canvas.height = availableHeight;
 			canvas.width = aspectRatio * availableHeight;
-		} else {
+		}
+		else {
 			canvas.width = availableWidth;
 			canvas.height = availableWidth / aspectRatio;
 		}

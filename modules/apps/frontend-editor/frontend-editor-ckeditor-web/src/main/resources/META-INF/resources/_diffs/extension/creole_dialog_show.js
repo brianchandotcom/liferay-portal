@@ -37,7 +37,8 @@ ckEditor.on('dialogShow', event => {
 		if (imagePreviewBox) {
 			imagePreviewBox.setStyle('width', 410);
 		}
-	} else if (dialog.getName() == 'cellProperties') {
+	}
+	else if (dialog.getName() == 'cellProperties') {
 		var containerNode = A.one('#' + dialog.getElement('cellType').$.id);
 
 		if (!containerNode.getData(MODIFIED)) {

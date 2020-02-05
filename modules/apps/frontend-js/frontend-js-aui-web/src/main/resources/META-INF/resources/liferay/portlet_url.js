@@ -78,7 +78,8 @@ AUI.add(
 				if (Lang.isValue(item)) {
 					if (instance._isReservedParam(index)) {
 						instance.reservedParams[index] = item;
-					} else {
+					}
+					else {
 						instance.params[index] = item;
 					}
 				}
@@ -156,9 +157,11 @@ AUI.add(
 				if (lifecycle === PortletURL.ACTION_PHASE) {
 					reservedParams.p_auth = Liferay.authToken;
 					reservedParams.p_p_lifecycle = PortletURL.ACTION_PHASE;
-				} else if (lifecycle === PortletURL.RENDER_PHASE) {
+				}
+				else if (lifecycle === PortletURL.RENDER_PHASE) {
 					reservedParams.p_p_lifecycle = PortletURL.RENDER_PHASE;
-				} else if (lifecycle === PortletURL.RESOURCE_PHASE) {
+				}
+				else if (lifecycle === PortletURL.RESOURCE_PHASE) {
 					reservedParams.p_p_lifecycle = PortletURL.RESOURCE_PHASE;
 					reservedParams.p_p_cacheability = 'cacheLevelPage';
 				}
@@ -179,7 +182,8 @@ AUI.add(
 
 				if (instance._isReservedParam(key)) {
 					instance.reservedParams[key] = value;
-				} else {
+				}
+				else {
 					instance.params[key] = value;
 				}
 

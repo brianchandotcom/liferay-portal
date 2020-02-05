@@ -31,7 +31,8 @@ const ResolveButton = props => {
 	if (props.loading) {
 		title = undefined;
 		icon = <Loader />;
-	} else if (props.resolved) {
+	}
+	else if (props.resolved) {
 		icon = (
 			<span className="text-lowercase text-success">
 				<ClayIcon symbol="check-circle-full" />

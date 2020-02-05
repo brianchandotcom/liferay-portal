@@ -46,7 +46,8 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 
 			if (mappingType) {
 				setSubtypes(mappingType.subtypes);
-			} else {
+			}
+			else {
 				setSubtypes([]);
 			}
 		},

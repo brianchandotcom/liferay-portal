@@ -78,7 +78,8 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 			if (isNaN(num1) || isNaN(num2)) {
 				result = A.ArraySort.compare(a, b, desc);
-			} else {
+			}
+			else {
 				result = desc ? num2 - num1 : num1 - num2;
 			}
 
@@ -105,7 +106,8 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		if (!item.sortFn) {
 			if (numericData[item.dataType]) {
 				item.sortFn = A.rbind(ignoreEmptyRecordsNumericSort, item, key);
-			} else {
+			}
+			else {
 				item.sortFn = A.rbind(ignoreEmptyRecordsStringSort, item, key);
 			}
 		}

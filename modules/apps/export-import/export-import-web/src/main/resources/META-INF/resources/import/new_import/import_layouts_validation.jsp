@@ -105,7 +105,8 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 			if (uploadedFiles.size() == 1) {
 				continueButton.show();
-			} else {
+			}
+			else {
 				continueButton.hide();
 			}
 		}

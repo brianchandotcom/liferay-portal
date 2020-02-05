@@ -86,7 +86,8 @@ AUI.add(
 							if (metadata.terminal) {
 								type = 'end';
 							}
-						} else {
+						}
+						else {
 							metadata = {
 								xy: instance._getRandomXY()
 							};

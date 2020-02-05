@@ -113,7 +113,8 @@ function init(
 										title: Liferay.Language.get('error'),
 										type: 'danger'
 									});
-								} else {
+								}
+								else {
 									_changedCallback(_editor.get('value'));
 									_dialog.hide();
 								}

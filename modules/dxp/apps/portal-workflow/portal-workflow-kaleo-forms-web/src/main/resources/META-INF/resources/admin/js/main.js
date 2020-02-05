@@ -373,11 +373,13 @@ AUI.add(
 						instance.nextBtn.show();
 						instance.prevBtn.hide();
 						instance.submitBtn.hide();
-					} else if (currentStep === STEPS_MAP.FORMS) {
+					}
+					else if (currentStep === STEPS_MAP.FORMS) {
 						instance.nextBtn.hide();
 						instance.prevBtn.show();
 						instance.submitBtn.show();
-					} else {
+					}
+					else {
 						instance.nextBtn.show();
 						instance.prevBtn.show();
 						instance.submitBtn.hide();

@@ -106,7 +106,8 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 						if (userStatus == 'user_added') {
 							message =
 								'<liferay-ui:message key="thank-you-for-creating-an-account" /> <liferay-ui:message arguments="<%= emailAddress %>" key="you-can-set-your-password-following-instructions-sent-to-x" translateArguments="<%= false %>" />';
-						} else if (userStatus == 'user_pending') {
+						}
+						else if (userStatus == 'user_pending') {
 							message =
 								'<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />';
 						}
@@ -157,7 +158,8 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 
 			window.close();
 		}
-	} else {
+	}
+	else {
 		window.opener.parent.location.href =
 			'<%= HtmlUtil.escapeJS(themeDisplay.getURLSignIn()) %>';
 

@@ -155,7 +155,8 @@ class CriteriaGroup extends Component {
 				groupId: generateGroupId(),
 				items: [newCriterion]
 			});
-		} else {
+		}
+		else {
 			onChange({
 				...criteria,
 				items: insertAtIndex(newCriterion, criteria.items, index)

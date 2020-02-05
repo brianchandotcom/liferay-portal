@@ -108,7 +108,8 @@ function AssetVocabulariesCategoriesSelector({
 				)
 			) {
 				validAddedItems.push(item);
-			} else {
+			}
+			else {
 				invalidAddedItems.push(item);
 			}
 		});

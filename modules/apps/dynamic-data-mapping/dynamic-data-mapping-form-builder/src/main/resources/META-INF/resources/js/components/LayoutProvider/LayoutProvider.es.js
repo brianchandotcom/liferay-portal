@@ -148,7 +148,8 @@ class LayoutProvider extends Component {
 				if (localizedValue !== undefined) {
 					value = localizedValue;
 				}
-			} else if (
+			}
+			else if (
 				field.dataType === 'ddm-options' &&
 				value[editingLanguageId] === undefined
 			) {
@@ -205,13 +206,15 @@ class LayoutProvider extends Component {
 
 			if (page.localizedDescription[editingLanguageId]) {
 				description = page.localizedDescription[editingLanguageId];
-			} else if (page.localizedDescription[defaultLanguageId]) {
+			}
+			else if (page.localizedDescription[defaultLanguageId]) {
 				description = page.localizedDescription[defaultLanguageId];
 			}
 
 			if (page.localizedTitle[editingLanguageId]) {
 				title = page.localizedTitle[editingLanguageId];
-			} else if (page.localizedTitle[defaultLanguageId]) {
+			}
+			else if (page.localizedTitle[defaultLanguageId]) {
 				title = page.localizedTitle[defaultLanguageId];
 			}
 

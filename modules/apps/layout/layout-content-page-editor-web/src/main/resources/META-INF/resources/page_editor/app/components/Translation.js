@@ -63,11 +63,14 @@ const getTranslationStatus = ({
 }) => {
 	if (isDefault) {
 		return TRANSLATION_STATUS_TYPE.default;
-	} else if (translatedValuesLength === 0) {
+	}
+	else if (translatedValuesLength === 0) {
 		return TRANSLATION_STATUS_TYPE.untranslated;
-	} else if (translatedValuesLength < editableValuesLength) {
+	}
+	else if (translatedValuesLength < editableValuesLength) {
 		return TRANSLATION_STATUS_TYPE.translating;
-	} else if (translatedValuesLength === editableValuesLength) {
+	}
+	else if (translatedValuesLength === editableValuesLength) {
 		return TRANSLATION_STATUS_TYPE.translated;
 	}
 };

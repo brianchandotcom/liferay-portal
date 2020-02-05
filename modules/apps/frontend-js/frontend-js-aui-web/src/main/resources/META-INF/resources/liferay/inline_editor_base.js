@@ -182,7 +182,8 @@ AUI.add(
 
 				if (Lang.isNumber(delay)) {
 					closeNoticeTask.delay(delay);
-				} else {
+				}
+				else {
 					closeNoticeTask();
 				}
 			},
@@ -249,7 +250,8 @@ AUI.add(
 					.then(response => {
 						if (response) {
 							instance.fire('saveSuccess', autosaved);
-						} else {
+						}
+						else {
 							instance.fire('saveFailure');
 						}
 					})

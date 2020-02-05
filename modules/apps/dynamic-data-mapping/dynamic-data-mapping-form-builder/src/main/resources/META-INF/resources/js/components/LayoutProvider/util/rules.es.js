@@ -95,7 +95,8 @@ export const updateRulesReferences = (rules, oldProperties, newProperties) => {
 						...operand,
 						value: newFieldName
 					};
-				} else if (
+				}
+				else if (
 					index === 1 &&
 					isFieldValueOperand(condition.operands) &&
 					isEqualLengthOptions(oldOptions, newOptions) &&

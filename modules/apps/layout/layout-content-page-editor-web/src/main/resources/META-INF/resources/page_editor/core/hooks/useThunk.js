@@ -35,7 +35,8 @@ export default function useThunk([state, dispatch]) {
 						dispatch(payload);
 					}
 				});
-			} else {
+			}
+			else {
 				dispatch(action);
 			}
 		}

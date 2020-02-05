@@ -48,7 +48,8 @@ class PublishButton extends Component {
 
 		if (published) {
 			promise = this.unpublish(event);
-		} else {
+		}
+		else {
 			promise = this.publish(event);
 		}
 

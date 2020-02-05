@@ -179,7 +179,8 @@ portletURL.setParameter("eventName", eventName);
 					);
 
 					Util.getWindow().destroy();
-				} else {
+				}
+				else {
 					message.show();
 				}
 			});

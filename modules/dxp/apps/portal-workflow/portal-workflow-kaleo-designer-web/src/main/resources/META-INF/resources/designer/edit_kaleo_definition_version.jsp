@@ -410,7 +410,8 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 											if (activeTab === <portlet:namespace />kaleoDesigner.sourceNode) {
 												content.val(<portlet:namespace />kaleoDesigner.editor.get('value'));
-											} else {
+											}
+											else {
 												content.val(<portlet:namespace />kaleoDesigner.getContent());
 											}
 										},
@@ -667,7 +668,8 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 														roleId.val(data.roleId);
 													}
 												});
-											} else if (inputName == 'fullName') {
+											}
+											else if (inputName == 'fullName') {
 												createUserAutocomplete(inputNode, inputName, function(event) {
 													var data = event.result.raw;
 

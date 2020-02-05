@@ -56,9 +56,11 @@ class DocumentLibraryOpener {
 					this._openExternal({
 						externalURL: response.office365EditURL
 					});
-				} else if (response.error) {
+				}
+				else if (response.error) {
 					throw DEFAULT_ERROR;
-				} else {
+				}
+				else {
 					return new Promise(resolve => {
 						setTimeout(() => {
 							this._polling({statusURL}).then(resolve);
@@ -150,11 +152,13 @@ class DocumentLibraryOpener {
 			.then(response => {
 				if (response.redirectURL) {
 					navigate(response.redirectURL);
-				} else if (response.oneDriveBackgroundTaskStatusURL) {
+				}
+				else if (response.oneDriveBackgroundTaskStatusURL) {
 					return this._polling({
 						statusURL: response.oneDriveBackgroundTaskStatusURL
 					});
-				} else if (response.error) {
+				}
+				else if (response.error) {
 					throw response.error.errorMessage || DEFAULT_ERROR;
 				}
 			})

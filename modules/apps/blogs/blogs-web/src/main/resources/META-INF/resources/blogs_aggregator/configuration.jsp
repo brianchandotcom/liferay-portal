@@ -158,7 +158,8 @@ if (organizationId > 0) {
 
 								if (showUsersSelectionOptions) {
 									dom.addClasses(usersSelectionOptions, 'hide');
-								} else {
+								}
+								else {
 									dom.removeClasses(usersSelectionOptions, 'hide');
 								}
 							}

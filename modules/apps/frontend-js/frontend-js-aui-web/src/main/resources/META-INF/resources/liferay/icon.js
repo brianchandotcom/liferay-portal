@@ -47,7 +47,8 @@ AUI.add(
 
 					if (config.useDialog) {
 						instance._useDialog(event);
-					} else {
+					}
+					else {
 						instance._forcePost(event);
 					}
 				}

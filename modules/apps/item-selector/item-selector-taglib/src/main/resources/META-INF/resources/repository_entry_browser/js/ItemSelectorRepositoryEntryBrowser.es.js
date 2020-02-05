@@ -232,7 +232,8 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 				if (type === STR_DRAG_OVER) {
 					rootNode.classList.add('drop-active');
-				} else if (type === STR_DRAG_LEAVE || eventDrop) {
+				}
+				else if (type === STR_DRAG_LEAVE || eventDrop) {
 					rootNode.classList.remove('drop-active');
 
 					if (eventDrop) {
@@ -273,7 +274,8 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 							),
 							[error.message]
 						);
-					} else {
+					}
+					else {
 						message = Liferay.Language.get(
 							'please-enter-a-file-with-a-valid-file-type'
 						);
@@ -477,7 +479,8 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 			if (file.size <= maxFileSize) {
 				this._previewFile(file);
-			} else {
+			}
+			else {
 				errorMessage = Liferay.Util.sub(
 					Liferay.Language.get(
 						'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
@@ -485,7 +488,8 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					[Liferay.Util.formatStorage(maxFileSize)]
 				);
 			}
-		} else {
+		}
+		else {
 			errorMessage = Liferay.Util.sub(
 				Liferay.Language.get(
 					'please-enter-a-file-with-a-valid-extension-x'

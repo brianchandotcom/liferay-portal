@@ -126,7 +126,8 @@
 
 			if (searchContainerData) {
 				searchContainerData = searchContainerData.split(',');
-			} else {
+			}
+			else {
 				searchContainerData = [];
 			}
 

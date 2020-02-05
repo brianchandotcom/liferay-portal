@@ -96,7 +96,8 @@ const ImagePreviewer = ({imageURL}) => {
 		if (currentZoom === 1) {
 			setImageHeight(null);
 			setImageWidth(null);
-		} else {
+		}
+		else {
 			applyZoom(1);
 		}
 	};
@@ -140,7 +141,8 @@ const ImagePreviewer = ({imageURL}) => {
 				scrollTop =
 					(imageContainerElement.clientHeight * (zoomRatio - 1)) / 2 +
 					imageContainerElement.scrollTop * zoomRatio;
-			} else {
+			}
+			else {
 				scrollTop =
 					(imageHeight - imageContainerElement.clientHeight) / 2;
 				scrollLeft =

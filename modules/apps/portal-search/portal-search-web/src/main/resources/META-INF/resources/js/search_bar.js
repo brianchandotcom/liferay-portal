@@ -28,7 +28,8 @@ AUI.add(
 
 			if (emptySearchInput.val() === 'true') {
 				instance.emptySearchEnabled = true;
-			} else {
+			}
+			else {
 				instance.emptySearchEnabled = false;
 			}
 

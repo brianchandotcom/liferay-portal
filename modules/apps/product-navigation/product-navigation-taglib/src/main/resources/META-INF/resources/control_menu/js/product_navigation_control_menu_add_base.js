@@ -214,7 +214,8 @@ AUI.add(
 							item.remove(true);
 
 							beforePortletLoaded = options.beforePortletLoaded;
-						} else {
+						}
+						else {
 							var firstColumn = Layout.getActiveDropNodes().item(
 								0
 							);
@@ -229,7 +230,8 @@ AUI.add(
 
 								if (referencePortlet) {
 									referencePortlet.placeBefore(placeHolder);
-								} else if (dropColumn) {
+								}
+								else if (dropColumn) {
 									dropColumn.append(placeHolder);
 								}
 							}

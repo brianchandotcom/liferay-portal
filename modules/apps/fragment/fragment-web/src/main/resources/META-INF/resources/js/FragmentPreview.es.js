@@ -200,7 +200,8 @@ class FragmentPreview extends PortletBase {
 					preview.style.width = `${ratio.width * scale}px`;
 					preview.style.height = `${ratio.height * scale}px`;
 				}
-			} else {
+			}
+			else {
 				preview.style.width = '';
 				preview.style.height = '';
 			}

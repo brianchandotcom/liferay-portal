@@ -197,7 +197,8 @@ String friendlyURLBase = StringPool.BLANK;
 					layoutPrototypeInfoMessage.classList.remove('hide');
 
 					applyLayoutPrototype.value = '<%= true %>';
-				} else {
+				}
+				else {
 					layoutPrototypeInfoMessage.classList.add('hide');
 
 					applyLayoutPrototype.value = '<%= false %>';

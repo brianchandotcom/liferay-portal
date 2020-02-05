@@ -99,7 +99,8 @@ AUI.add(
 				if (Array.isArray(offset)) {
 					offsetX = offset[0];
 					offsetY = offset[1];
-				} else if (Lang.isNumber(offset)) {
+				}
+				else if (Lang.isNumber(offset)) {
 					offsetY = offset;
 				}
 
@@ -205,7 +206,8 @@ AUI.add(
 					instance._setTriggerConfig(input[0]);
 
 					event.query = input.substring(1);
-				} else {
+				}
+				else {
 					event.preventDefault();
 
 					if (instance.get(STR_VISIBLE)) {
@@ -223,7 +225,8 @@ AUI.add(
 					query = query.substring(1);
 
 					instance.sendRequest(query);
-				} else if (instance.get(STR_VISIBLE)) {
+				}
+				else if (instance.get(STR_VISIBLE)) {
 					instance.hide();
 				}
 			},

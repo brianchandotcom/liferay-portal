@@ -118,7 +118,8 @@ const SingleReassignModal = () => {
 					setErrorToast(() => true);
 					setSendingPost(() => false);
 				});
-		} else {
+		}
+		else {
 			onClose();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

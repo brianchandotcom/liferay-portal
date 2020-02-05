@@ -26,7 +26,8 @@ function getActiveFragmentEntryLink(itemId, fragmentEntryLinks, layoutData) {
 	if (item) {
 		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 			return fragmentEntryLinks[item.config.fragmentEntryLinkId];
-		} else if (item.parentId) {
+		}
+		else if (item.parentId) {
 			return getActiveFragmentEntryLink(
 				item.parentId,
 				fragmentEntryLinks,

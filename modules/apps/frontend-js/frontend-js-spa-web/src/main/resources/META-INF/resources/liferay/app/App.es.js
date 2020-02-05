@@ -297,7 +297,8 @@ class LiferayApp extends App {
 	onNavigationError(event) {
 		if (event.error.requestPrematureTermination) {
 			window.location.href = event.path;
-		} else if (
+		}
+		else if (
 			event.error.invalidStatus ||
 			event.error.requestError ||
 			event.error.timeout

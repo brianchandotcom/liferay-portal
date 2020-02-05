@@ -109,7 +109,8 @@ class WikiPortlet extends PortletBase {
 		if (confirm(confirmMessage)) {
 			this.one('form').setAttribute('action', this.renderUrl);
 			this.save_();
-		} else {
+		}
+		else {
 			formatSelect.selectedIndex = this.currentFormatIndex;
 		}
 	}
@@ -172,7 +173,8 @@ class WikiPortlet extends PortletBase {
 				tempImages.forEach(node => {
 					node.parentElement.remove();
 				});
-			} else {
+			}
+			else {
 				discardTempImages = false;
 			}
 		}

@@ -68,7 +68,8 @@
 						options[i] = this.options[i];
 					}
 				}
-			} else {
+			}
+			else {
 				options = this.options;
 			}
 			data = data.replace(/\r\n?/g, '\n');
@@ -151,7 +152,8 @@
 					if (matches[i]) {
 						if (matches[i].index >= chopped) {
 							matches[i].index -= chopped;
-						} else {
+						}
+						else {
 							matches[i] = void 0;
 						}
 					}
@@ -173,7 +175,8 @@
 			if (this.tag) {
 				target = document.createElement(this.tag);
 				node.appendChild(target);
-			} else {
+			}
+			else {
 				target = node;
 			}
 
@@ -297,7 +300,8 @@
 					img.src = imagePath;
 					if (r[2]) {
 						img.alt = r[2].replace(/~(.)/g, '$1');
-					} else if (options && options.defaultImageText) {
+					}
+					else if (options && options.defaultImageText) {
 						img.alt = options.defaultImageText;
 					}
 					node.appendChild(img);
@@ -339,7 +343,8 @@
 					link.href = r[1];
 					if (options && options.isPlainUri) {
 						link.appendChild(document.createTextNode(r[2]));
-					} else {
+					}
+					else {
 						this.apply(link, r[2], options);
 					}
 					node.appendChild(link);

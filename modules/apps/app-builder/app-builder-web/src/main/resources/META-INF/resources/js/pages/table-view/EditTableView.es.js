@@ -99,7 +99,8 @@ const EditTableView = withRouter(({history}) => {
 				.catch(error => {
 					onError(error);
 				});
-		} else {
+		}
+		else {
 			addItem(
 				`/o/data-engine/v2.0/data-definitions/${dataDefinition.id}/data-list-views`,
 				dataListView

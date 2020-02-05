@@ -41,7 +41,8 @@ class DocumentLibrary extends Component {
 				if (fileEntry.url) {
 					fileEntryURL = fileEntry.url;
 				}
-			} catch (e) {
+			}
+			catch (e) {
 				console.warn('Unable to parse JSON', value);
 			}
 		}
@@ -170,7 +171,8 @@ class DocumentLibrary extends Component {
 				fieldInstance: this,
 				originalEvent: event
 			});
-		} else {
+		}
+		else {
 			this.emit('fieldBlurred', {
 				fieldInstance: this,
 				originalEvent: event

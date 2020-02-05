@@ -74,13 +74,15 @@ CKEDITOR.dialog.add('video', editor => {
 		if (value) {
 			if (id === 'poster') {
 				extraStyles.backgroundImage = 'url(' + value + ')';
-			} else if (id === 'height' || id === 'width') {
+			}
+			else if (id === 'height' || id === 'width') {
 				var height = videoHeight;
 				var width = videoWidth;
 
 				if (id === 'height') {
 					height = value;
-				} else {
+				}
+				else {
 					width = value;
 				}
 
@@ -117,9 +119,11 @@ CKEDITOR.dialog.add('video', editor => {
 
 			if (id === 'poster') {
 				value = videoNode.getAttribute('data-document-url');
-			} else if (id === 'height') {
+			}
+			else if (id === 'height') {
 				value = videoNode.getAttribute('data-height');
-			} else if (id === 'width') {
+			}
+			else if (id === 'width') {
 				value = videoNode.getAttribute('data-width');
 			}
 

@@ -106,7 +106,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 					)
 				}
 			});
-		} else if (currentMetadataFieldsInput) {
+		}
+		else if (currentMetadataFieldsInput) {
 			Liferay.Util.postForm(form, {
 				data: {
 					metadataFields: Liferay.Util.listSelect(
@@ -114,7 +115,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 					)
 				}
 			});
-		} else {
+		}
+		else {
 			submitForm(form);
 		}
 	}

@@ -105,7 +105,8 @@ class DropZoneFragmentEntryLink extends Component {
 					this.store,
 					this.layoutData.structure
 				);
-			} else {
+			}
+			else {
 				const column = getFragmentColumn(
 					this.layoutData.structure,
 					this.fragmentEntryLinkId

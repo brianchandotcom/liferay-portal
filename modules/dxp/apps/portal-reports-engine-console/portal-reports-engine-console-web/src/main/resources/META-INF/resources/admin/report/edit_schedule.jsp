@@ -166,7 +166,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 													document.<portlet:namespace />fm.<portlet:namespace />endDateType[1].checked =
 														'true';
 												}
-											} else {
+											}
+											else {
 												day.attr('disabled', '');
 												month.attr('disabled', '');
 												year.attr('disabled', '');

@@ -39,7 +39,8 @@ const handleFieldAdded = (props, state, event) => {
 				newFieldName = value;
 			}
 		});
-	} else {
+	}
+	else {
 		newFieldName = fieldNameGenerator(fieldType.label);
 	}
 

@@ -35,7 +35,8 @@ AUI.add(
 
 				if (answers.cancel) {
 					A.soon(showNextQuestion);
-				} else {
+				}
+				else {
 					Liferay.CalendarMessageUtil.confirm(
 						TPL_MESSAGE_UPDATE_ALL_INVITED,
 						Liferay.Language.get('save-changes'),
@@ -59,7 +60,8 @@ AUI.add(
 
 				if (answers.cancel) {
 					A.soon(showNextQuestion);
-				} else {
+				}
+				else {
 					Liferay.RecurrenceUtil.openConfirmationPanel(
 						'update',
 						() => {
@@ -92,7 +94,8 @@ AUI.add(
 
 				if (answers.cancel) {
 					A.soon(showNextQuestion);
-				} else {
+				}
+				else {
 					var content = [
 						'<p class="calendar-portlet-confirmation-text">',
 						Lang.sub(
@@ -183,7 +186,8 @@ AUI.add(
 							timeout: 0
 						});
 					}
-				} else {
+				}
+				else {
 					queue.add({
 						args: [data],
 						autoContinue: false,

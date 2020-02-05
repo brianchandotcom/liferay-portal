@@ -69,9 +69,11 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 							url = response.googleDocsEditURL;
 
 							navigate();
-						} else if (response.error) {
+						}
+						else if (response.error) {
 							throw defaultError;
-						} else {
+						}
+						else {
 							setTimeout(polling, TIME_POLLING);
 						}
 					})

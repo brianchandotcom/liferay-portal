@@ -133,7 +133,8 @@ if (portletTitleBasedNavigation) {
 		if (addExplanationPostButton && explanationPost) {
 			if (addExplanationPostButton.checked) {
 				explanationPost.classList.remove('hide');
-			} else {
+			}
+			else {
 				explanationPost.classList.add('hide');
 			}
 		}

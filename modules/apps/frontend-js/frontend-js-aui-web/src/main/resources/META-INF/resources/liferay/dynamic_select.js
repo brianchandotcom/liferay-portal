@@ -28,7 +28,8 @@ AUI.add(
 
 			if (nameA < nameB) {
 				retVal = -1;
-			} else if (nameA > nameB) {
+			}
+			else if (nameA > nameB) {
 				retVal = 1;
 			}
 

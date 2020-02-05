@@ -76,7 +76,8 @@ class ScrollTracker {
 
 		if (top <= 0 && bottom >= 0) {
 			depthValue = visibleArea / (height + top);
-		} else if (!element) {
+		}
+		else if (!element) {
 			depthValue = (top + visibleArea) / height;
 		}
 

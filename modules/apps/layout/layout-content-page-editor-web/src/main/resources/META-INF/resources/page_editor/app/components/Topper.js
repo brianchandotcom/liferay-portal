@@ -112,13 +112,17 @@ export default function Topper({
 
 		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 			name = fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
 			name = Liferay.Language.get('section');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
 			name = Liferay.Language.get('column');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
 			name = Liferay.Language.get('drop-zone');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
 			name = Liferay.Language.get('row');
 		}
 

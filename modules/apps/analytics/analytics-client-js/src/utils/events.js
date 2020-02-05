@@ -21,7 +21,8 @@ const onReady = fn => {
 		document.readyState === 'loaded'
 	) {
 		fn();
-	} else {
+	}
+	else {
 		document.addEventListener('DOMContentLoaded', fn);
 	}
 
@@ -53,7 +54,8 @@ const clickEvent = ({
 		if (tagName === 'a') {
 			payload.href = target.href;
 			payload.text = target.innerText;
-		} else if (tagName === 'img') {
+		}
+		else if (tagName === 'img') {
 			payload.src = target.src;
 		}
 

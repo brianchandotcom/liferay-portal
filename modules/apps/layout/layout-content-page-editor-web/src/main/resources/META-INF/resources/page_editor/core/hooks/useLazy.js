@@ -38,7 +38,8 @@ export default function useLazy(callback) {
 							default: () => {
 								if (instance) {
 									return callback({instance});
-								} else {
+								}
+								else {
 									return null;
 								}
 							}

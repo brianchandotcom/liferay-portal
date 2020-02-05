@@ -175,7 +175,8 @@ Hits hits = searchDisplayContext.getHits();
 			targetSiblings.forEach(function(sibling) {
 				if (sibling.classList.contains('hide')) {
 					sibling.classList.remove('hide');
-				} else {
+				}
+				else {
 					sibling.classList.add('hide');
 				}
 			});

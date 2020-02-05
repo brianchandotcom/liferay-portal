@@ -88,10 +88,12 @@ class CriteriaBuilder extends Component {
 									soloItem.items
 								)
 							};
-						} else {
+						}
+						else {
 							cleanedItem = root ? item : soloItem;
 						}
-					} else {
+					}
+					else {
 						cleanedItem = {
 							...item,
 							items: this._cleanCriteriaMapItems(item.items)

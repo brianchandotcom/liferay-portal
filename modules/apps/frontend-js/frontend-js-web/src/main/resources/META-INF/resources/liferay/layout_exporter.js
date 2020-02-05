@@ -77,7 +77,8 @@
 				if (detail.hasClass('hide')) {
 					detail.show();
 					icon = LayoutExporter.icons.minus;
-				} else {
+				}
+				else {
 					detail.hide();
 				}
 
@@ -123,7 +124,8 @@
 					'<input type="submit" value="' +
 					Liferay.Language.get('proceed') +
 					'" />';
-			} else {
+			}
+			else {
 				contents +=
 					Liferay.Language.get('no-reviewers-were-found') +
 					'<br />' +

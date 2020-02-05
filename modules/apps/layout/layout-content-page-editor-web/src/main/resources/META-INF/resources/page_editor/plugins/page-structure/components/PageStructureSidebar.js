@@ -33,13 +33,17 @@ export default function PageStructureSidebar() {
 
 		if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
 			name = fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
 			name = Liferay.Language.get('container');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
 			name = Liferay.Language.get('column');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
 			name = Liferay.Language.get('drop-zone');
-		} else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
+		}
+		else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
 			name = Liferay.Language.get('row');
 		}
 
@@ -63,7 +67,8 @@ export default function PageStructureSidebar() {
 					removable: false
 				});
 			});
-		} else {
+		}
+		else {
 			item.children.forEach(childId => {
 				const childItem = items[childId];
 

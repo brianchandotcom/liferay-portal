@@ -168,7 +168,8 @@ function SegmentsExperimentsSidebar({
 					experiment.segmentsExperimentId === experimentId
 				) {
 					navigateToExperience(experiment.segmentsExperienceId);
-				} else {
+				}
+				else {
 					dispatch(deleteArchivedExperiment(experimentId));
 				}
 			})
@@ -266,7 +267,8 @@ function SegmentsExperimentsSidebar({
 							status
 						})
 					);
-				} else {
+				}
+				else {
 					dispatch(
 						updateSegmentsExperimentStatus({
 							editable,

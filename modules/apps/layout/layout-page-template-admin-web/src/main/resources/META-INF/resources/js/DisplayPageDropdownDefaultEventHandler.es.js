@@ -39,7 +39,8 @@ class DisplayPageDropdownDefaultEventHandler extends DefaultEventHandler {
 			if (confirm(Liferay.Language.get(itemData.message))) {
 				this._send(itemData.markAsDefaultDisplayPageURL);
 			}
-		} else {
+		}
+		else {
 			this._send(itemData.markAsDefaultDisplayPageURL);
 		}
 	}

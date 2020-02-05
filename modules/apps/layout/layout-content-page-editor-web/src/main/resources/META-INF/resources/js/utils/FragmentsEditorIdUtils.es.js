@@ -49,7 +49,8 @@ const decodeId = str => JSON.parse(atob(str));
 function encodeAssetId(asset) {
 	if (!(asset && typeof asset === 'object')) {
 		throw new TypeError('Expect input to be an object');
-	} else if (!(asset.classNameId && asset.classPK)) {
+	}
+	else if (!(asset.classNameId && asset.classPK)) {
 		throw new Error('Expect input to be an asset');
 	}
 

@@ -114,7 +114,8 @@ class MapBase extends State {
 					this._initializeLocation({lat: 0, lng: 0});
 				}
 			);
-		} else {
+		}
+		else {
 			this._initializeLocation(geolocation);
 		}
 	}
@@ -347,7 +348,8 @@ class MapBase extends State {
 
 		if (locations.length > 1) {
 			locations.forEach(location => bounds.extend(location));
-		} else {
+		}
+		else {
 			this.position = {location: locations[0]};
 		}
 	}
@@ -451,7 +453,8 @@ class MapBase extends State {
 			geocoder.reverse(geolocation, ({data}) =>
 				this._initializeMap(data)
 			);
-		} else {
+		}
+		else {
 			this._initializeMap({location: geolocation});
 		}
 	}
@@ -639,7 +642,8 @@ MapBase.get = function(id, callback) {
 
 	if (map) {
 		callback(map);
-	} else {
+	}
+	else {
 		const idPendingCallbacks = pendingCallbacks[id] || [];
 
 		idPendingCallbacks.push(callback);

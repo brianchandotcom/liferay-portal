@@ -64,7 +64,8 @@ export const getRepeatedIndex = name => {
 
 	if (NESTED_FIELD_NAME_REGEX.test(name)) {
 		parsedName = parseNestedFieldName(name);
-	} else {
+	}
+	else {
 		parsedName = parseName(name);
 	}
 

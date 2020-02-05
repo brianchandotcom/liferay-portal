@@ -61,7 +61,8 @@ AUI.add(
 
 					if (response.success) {
 						submitForm(instance._hrefFm, uri);
-					} else {
+					}
+					else {
 						var data = instance.ns({
 							duplicateEntryId: response.duplicateEntryId,
 							oldName: response.oldName,
@@ -85,7 +86,8 @@ AUI.add(
 
 					if (response.success) {
 						submitForm(form);
-					} else {
+					}
+					else {
 						var errorMessage = response.errorMessage;
 
 						var errorMessageContainer = instance.byId(
@@ -98,7 +100,8 @@ AUI.add(
 							);
 
 							errorMessageContainer.show();
-						} else {
+						}
+						else {
 							errorMessageContainer.hide();
 
 							var messageContainer = instance.byId(
@@ -218,7 +221,8 @@ AUI.add(
 						(!override.attr('checked') && !newName.val())
 					) {
 						submitForm(form);
-					} else {
+					}
+					else {
 						var data = {
 							newName: newName.val(),
 							trashEntryId: trashEntryId.val()

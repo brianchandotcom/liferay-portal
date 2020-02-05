@@ -91,7 +91,8 @@ export const addFieldToColumn = (
 
 	if (rowIndex >= numberOfRows) {
 		pages = addRow(pages, numberOfRows, pageIndex);
-	} else if (!isEmptyColumn(pages, pageIndex, rowIndex, columnIndex)) {
+	}
+	else if (!isEmptyColumn(pages, pageIndex, rowIndex, columnIndex)) {
 		pages = addRow(pages, rowIndex, pageIndex);
 	}
 
@@ -157,7 +158,8 @@ export const setColumnFields = (
 			columnIndex,
 			fields
 		);
-	} else {
+	}
+	else {
 		pages[Number(pageIndex)].rows[Number(rowIndex)].columns[
 			Number(columnIndex)
 		].fields = fields;

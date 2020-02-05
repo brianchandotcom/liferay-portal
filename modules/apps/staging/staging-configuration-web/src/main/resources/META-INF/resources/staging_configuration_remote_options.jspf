@@ -92,7 +92,8 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 
 		if (checked) {
 			remoteSiteURLContainer.classList.remove('hide');
-		} else {
+		}
+		else {
 			remoteSiteURLContainer.classList.add('hide');
 		}
 	});

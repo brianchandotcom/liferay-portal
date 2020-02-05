@@ -52,7 +52,8 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 				numberOfColumns,
 				columnsSize
 			);
-		} else {
+		}
+		else {
 			nextData = _removeColumns(
 				state.layoutData,
 				rowIndex,

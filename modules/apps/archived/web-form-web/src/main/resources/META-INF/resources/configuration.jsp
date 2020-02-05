@@ -242,7 +242,8 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 			if (value === 'options' || value === 'radio') {
 				optionsDiv.all('label').show();
 				optionsDiv.show();
-			} else {
+			}
+			else {
 				optionsDiv.hide();
 			}
 

@@ -76,7 +76,8 @@ function setWidgetUsage(widgets, path, usage) {
 
 			return widget;
 		});
-	} else {
+	}
+	else {
 		return {
 			...widgets,
 			[currentPath]: setWidgetUsage(widgets[currentPath], restPath, usage)

@@ -370,7 +370,8 @@ AUI.add(
 						instance.fire(STR_IMAGE_DATA, {
 							imageData: image
 						});
-					} else {
+					}
+					else {
 						instance.fire(STR_ERROR_MESSAGE, {
 							error: data.error
 						});
@@ -496,7 +497,8 @@ AUI.add(
 						errorType === STATUS_CODE.SC_FILE_CUSTOM_EXCEPTION
 					) {
 						message = error.message;
-					} else if (
+					}
+					else if (
 						errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION
 					) {
 						if (instance.get('validExtensions')) {
@@ -506,20 +508,23 @@ AUI.add(
 								),
 								[instance.get('validExtensions')]
 							);
-						} else {
+						}
+						else {
 							message = Lang.sub(
 								Liferay.Language.get(
 									'please-enter-a-file-with-a-valid-file-type'
 								)
 							);
 						}
-					} else if (
+					}
+					else if (
 						errorType === STATUS_CODE.SC_FILE_NAME_EXCEPTION
 					) {
 						message = Liferay.Language.get(
 							'please-enter-a-file-with-a-valid-file-name'
 						);
-					} else if (
+					}
+					else if (
 						errorType === STATUS_CODE.SC_FILE_SIZE_EXCEPTION
 					) {
 						message = Lang.sub(
@@ -532,7 +537,8 @@ AUI.add(
 								)
 							]
 						);
-					} else if (
+					}
+					else if (
 						errorType ===
 						STATUS_CODE.SC_UPLOAD_REQUEST_SIZE_EXCEPTION
 					) {

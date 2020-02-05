@@ -309,7 +309,8 @@ export const getThreads = ({
 	let filter = '';
 	if (keyword) {
 		filter = `keywords/any(x:x eq '${keyword}')`;
-	} else if (creatorId) {
+	}
+	else if (creatorId) {
 		filter = `creator/id eq ${creatorId}`;
 	}
 

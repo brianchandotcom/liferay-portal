@@ -77,7 +77,8 @@ export function getComputedEditableValue(editableValue, configuration = {}) {
 			selectedLanguageId,
 			defaultLanguageId
 		);
-	} else {
+	}
+	else {
 		result.value = _getTranslatedValue(
 			editableValue,
 			selectedLanguageId,

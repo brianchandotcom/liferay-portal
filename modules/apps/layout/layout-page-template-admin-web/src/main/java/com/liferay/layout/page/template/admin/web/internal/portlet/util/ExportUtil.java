@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -114,6 +115,8 @@ public class ExportUtil {
 		zipWriter.addEntry(
 			path + "/page-definition.json",
 			objectWriter.writeValueAsString(pageTemplate.getPageDefinition()));
+
+		pageTemplate.setPageDefinition((PageDefinition)null);
 
 		zipWriter.addEntry(
 			path + "/page-template.json",

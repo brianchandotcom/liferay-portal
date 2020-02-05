@@ -25,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DDMStructureDemoDataCreator {
 
-	public DDMStructure create(long groupId, long userId)
+	public DDMStructure create(long userId, long groupId)
 		throws PortalException;
 
 	public void delete() throws PortalException;

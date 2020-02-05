@@ -31,8 +31,6 @@ public class JSPStylingCheck extends StylingCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		_checkChaining(fileName, content);
-
 		content = _formatLineBreak(fileName, content);
 
 		content = _fixEmptyJavaSourceTag(content);
@@ -63,16 +61,6 @@ public class JSPStylingCheck extends StylingCheck {
 	@Override
 	protected boolean isJavaSource(String content, int pos) {
 		return JSPSourceUtil.isJavaSource(content, pos, true);
-	}
-
-	private void _checkChaining(String fileName, String content) {
-		Matcher matcher = _chainingPattern.matcher(content);
-
-		if (matcher.find()) {
-			addMessage(
-				fileName, "Avoid chaining on 'getClass'", "chaining.markdown",
-				getLineNumber(content, matcher.start()));
-		}
 	}
 
 	private String _fixEmptyJavaSourceTag(String content) {
@@ -152,8 +140,6 @@ public class JSPStylingCheck extends StylingCheck {
 		return matcher.replaceAll("$1\n\t$2$4\n$2$5");
 	}
 
-	private static final Pattern _chainingPattern = Pattern.compile(
-		"\\WgetClass\\(\\)\\.");
 	private static final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\\!?\n+\t*%>(\n|\\Z)");
 	private static final Pattern _incorrectClosingTagPattern = Pattern.compile(

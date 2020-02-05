@@ -34,7 +34,9 @@
 		<field name="fragmentCompositionKey" type="String" />
 		<field name="name" type="String" />
 		<field name="description" type="String" />
-		<field name="fragments" type="String" />
+		<field name="fragments" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="previewFileEntryId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />

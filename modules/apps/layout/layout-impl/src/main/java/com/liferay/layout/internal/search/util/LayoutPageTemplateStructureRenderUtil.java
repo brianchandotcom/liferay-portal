@@ -77,6 +77,34 @@ public class LayoutPageTemplateStructureRenderUtil {
 			segmentsExperienceIds);
 	}
 
+	private static String _renderFragmentEntryLink(
+		long fragmentEntryLinkId,
+		FragmentRendererController fragmentRendererController,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String mode,
+		Map<String, Object> parameterMap, Locale locale,
+		long[] segmentsExperienceIds) {
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+				fragmentEntryLinkId);
+
+		if (fragmentEntryLink == null) {
+			return StringPool.BLANK;
+		}
+
+		DefaultFragmentRendererContext fragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		fragmentRendererContext.setFieldValues(parameterMap);
+		fragmentRendererContext.setLocale(locale);
+		fragmentRendererContext.setMode(mode);
+		fragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
+
+		return fragmentRendererController.render(
+			fragmentRendererContext, httpServletRequest, httpServletResponse);
+	}
+
 	private static String _renderLatestLayoutData(
 		String data, FragmentRendererController fragmentRendererController,
 		HttpServletRequest httpServletRequest,
@@ -102,27 +130,12 @@ public class LayoutPageTemplateStructureRenderUtil {
 				continue;
 			}
 
-			FragmentEntryLink fragmentEntryLink =
-				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-					fragmentLayoutStructureItem.getFragmentEntryLinkId());
-
-			if (fragmentEntryLink == null) {
-				continue;
-			}
-
-			DefaultFragmentRendererContext fragmentRendererContext =
-				new DefaultFragmentRendererContext(fragmentEntryLink);
-
-			fragmentRendererContext.setFieldValues(parameterMap);
-			fragmentRendererContext.setLocale(locale);
-			fragmentRendererContext.setMode(mode);
-			fragmentRendererContext.setSegmentsExperienceIds(
-				segmentsExperienceIds);
-
 			sb.append(
-				fragmentRendererController.render(
-					fragmentRendererContext, httpServletRequest,
-					httpServletResponse));
+				_renderFragmentEntryLink(
+					fragmentLayoutStructureItem.getFragmentEntryLinkId(),
+					fragmentRendererController, httpServletRequest,
+					httpServletResponse, mode, parameterMap, locale,
+					segmentsExperienceIds));
 		}
 
 		return sb.toString();
@@ -165,27 +178,11 @@ public class LayoutPageTemplateStructureRenderUtil {
 						continue;
 					}
 
-					FragmentEntryLink fragmentEntryLink =
-						FragmentEntryLinkLocalServiceUtil.
-							fetchFragmentEntryLink(fragmentEntryLinkId);
-
-					if (fragmentEntryLink == null) {
-						continue;
-					}
-
-					DefaultFragmentRendererContext fragmentRendererContext =
-						new DefaultFragmentRendererContext(fragmentEntryLink);
-
-					fragmentRendererContext.setFieldValues(parameterMap);
-					fragmentRendererContext.setLocale(locale);
-					fragmentRendererContext.setMode(mode);
-					fragmentRendererContext.setSegmentsExperienceIds(
-						segmentsExperienceIds);
-
 					sb.append(
-						fragmentRendererController.render(
-							fragmentRendererContext, httpServletRequest,
-							httpServletResponse));
+						_renderFragmentEntryLink(
+							fragmentEntryLinkId, fragmentRendererController,
+							httpServletRequest, httpServletResponse, mode,
+							parameterMap, locale, segmentsExperienceIds));
 				}
 			}
 		}

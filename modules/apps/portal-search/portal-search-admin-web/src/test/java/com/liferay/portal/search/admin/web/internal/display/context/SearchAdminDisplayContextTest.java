@@ -69,7 +69,7 @@ public class SearchAdminDisplayContextTest {
 			searchAdminDisplayContext.getNavigationItemList();
 
 		Assert.assertEquals(
-			navigationItemList.toString(), 2, navigationItemList.size());
+			navigationItemList.toString(), 3, navigationItemList.size());
 	}
 
 	@Test
@@ -88,7 +88,7 @@ public class SearchAdminDisplayContextTest {
 			searchAdminDisplayContext.getNavigationItemList();
 
 		Assert.assertEquals(
-			navigationItemList.toString(), 1, navigationItemList.size());
+			navigationItemList.toString(), 2, navigationItemList.size());
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class SearchAdminDisplayContextTest {
 			searchAdminDisplayBuilder.build();
 
 		Assert.assertEquals(
-			"index-actions", searchAdminDisplayContext.getSelectedTab());
+			"search-engine", searchAdminDisplayContext.getSelectedTab());
 	}
 
 	@Test
@@ -140,7 +140,7 @@ public class SearchAdminDisplayContextTest {
 			searchAdminDisplayBuilder.build();
 
 		Assert.assertEquals(
-			"index-actions", searchAdminDisplayContext.getSelectedTab());
+			"search-engine", searchAdminDisplayContext.getSelectedTab());
 	}
 
 	@Test
@@ -162,6 +162,24 @@ public class SearchAdminDisplayContextTest {
 	}
 
 	@Test
+	public void testGetTabSearchEngine() {
+		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
+			new SearchAdminDisplayBuilder(
+				_language, _portal,
+				getRenderRequestWithSelectedTab("search-engine"),
+				new MockRenderResponse());
+
+		searchAdminDisplayBuilder.setIndexInformation(
+			Mockito.mock(IndexInformation.class));
+
+		SearchAdminDisplayContext searchAdminDisplayContext =
+			searchAdminDisplayBuilder.build();
+
+		Assert.assertEquals(
+			"search-engine", searchAdminDisplayContext.getSelectedTab());
+	}
+
+	@Test
 	public void testGetTabUnavailable() {
 		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
 			new SearchAdminDisplayBuilder(
@@ -176,7 +194,7 @@ public class SearchAdminDisplayContextTest {
 			searchAdminDisplayBuilder.build();
 
 		Assert.assertEquals(
-			"index-actions", searchAdminDisplayContext.getSelectedTab());
+			"search-engine", searchAdminDisplayContext.getSelectedTab());
 	}
 
 	protected RenderRequest getRenderRequestWithSelectedTab(

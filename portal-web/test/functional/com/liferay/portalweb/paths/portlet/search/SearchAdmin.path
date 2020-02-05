@@ -10,17 +10,32 @@
 <tbody>
 <tr>
 	<td>CLIENT_VERSION</td>
-	<td>//div[contains(.,'${clientVersion}')]</td>
+	<td>//div[contains(@class,'value')][preceding-sibling::div[contains(.,'Client Version')]]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_ENGINE_INFORMATION</td>
-	<td>//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]//strong[${position}][contains(.,'${searchInformation}')]</td>
+	<td>ELASTICSEARCH6_CLIENT_VERSION</td>
+	<td>//div[contains(@class,'alert alert-info')]//strong[preceding-sibling::text()[contains(.,'Client Version')]][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ELASTICSEARCH6_ENGINE_VENDOR</td>
+	<td>//div[contains(@class,'alert alert-info')]//strong[preceding-sibling::text()[contains(.,'Search Engine Vendor')]][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ELASTICSEARCH6_NODES</td>
+	<td>//div[contains(@class,'alert alert-info')]//strong[preceding-sibling::text()[contains(.,'Nodes')]][1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_ENGINE_VENDOR</td>
-	<td>//div[contains(.,'${engineVendor}')]</td>
+	<td>//div[contains(@class,'value')][preceding-sibling::div[contains(.,'Search Engine Vendor')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVER_VERSION</td>
+	<td>//td[contains(@class,'lfr-version-column')]</td>
 	<td></td>
 </tr>
 </tbody>

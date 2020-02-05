@@ -1,7 +1,7 @@
 definition {
 
 	macro assertEngineVendorAndVersions {
-		if (IsElementNotPresent(locator1 = "//div[contains(@class,'alert alert-info')]//strong[2]")) {
+		if (IsElementNotPresent(locator1 = "SearchAdmin#ELASTICSEARCH6_ENGINE_VENDOR")) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
 				value1 = "${engineVendor}");
@@ -9,24 +9,24 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "SearchAdmin#CLIENT_VERSION",
 				value1 = "${clientVersion}");
+
+			Panel.expandPanel(panel = "Nodes (1)");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#SERVER_VERSION",
+				value1 = "${serverVersion}");
 		}
 		else {
 			AssertTextEquals.assertPartialText(
-				locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
-				position = "1",
-				searchInformation = "${engineVendor}",
+				locator1 = "SearchAdmin#ELASTICSEARCH6_ENGINE_VENDOR",
 				value1 = "${engineVendor}");
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
-				position = "2",
-				searchInformation = "${clientVersion}",
+				locator1 = "SearchAdmin#ELASTICSEARCH6_CLIENT_VERSION",
 				value1 = "${clientVersion}");
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
-				position = "3",
-				searchInformation = "${serverVersion}",
+				locator1 = "SearchAdmin#ELASTICSEARCH6_NODES",
 				value1 = "${serverVersion}");
 		}
 	}
@@ -36,13 +36,13 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
 
-		if (IsElementPresent(locator1 = "//div[contains(@class,'alert alert-info')]//strong[2]")) {
-			var searchClientVersion = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[2]");
-			var searchEngineVendor = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[1]");
+		if (IsElementPresent(locator1 = "SearchAdmin#ELASTICSEARCH6_ENGINE_VENDOR")) {
+			var searchClientVersion = selenium.getText("SearchAdmin#ELASTICSEARCH6_CLIENT_VERSION");
+			var searchEngineVendor = selenium.getText("SearchAdmin#ELASTICSEARCH6_ENGINE_VENDOR");
 		}
 		else {
-			var searchClientVersion = selenium.getText("//div[contains(@class,'value')]//preceding-sibling::div[contains(.,'Client Version')]");
-			var searchEngineVendor = selenium.getText("//div[contains(@class,'value')]//preceding-sibling::div[contains(.,'Search Engine Vendor')]");
+			var searchClientVersion = selenium.getText("SearchAdmin#CLIENT_VERSION");
+			var searchEngineVendor = selenium.getText("SearchAdmin#SEARCH_ENGINE_VENDOR");
 		}
 
 		if (contains("${searchEngineVendor}", "Elasticsearch")) {

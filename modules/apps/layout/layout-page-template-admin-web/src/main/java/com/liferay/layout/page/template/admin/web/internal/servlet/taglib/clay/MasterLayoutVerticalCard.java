@@ -22,7 +22,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.MasterLayoutActionDropdownItemsProvider;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -138,6 +141,28 @@ public class MasterLayoutVerticalCard
 						_layoutPageTemplateEntry.getStatus()));
 			}
 		};
+	}
+
+	@Override
+	public String getStickerIcon() {
+		if (_layoutPageTemplateEntry.getLayoutPageTemplateEntryId() <= 0) {
+			LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+				LayoutPageTemplateEntryServiceUtil.
+					fetchDefaultLayoutPageTemplateEntry(
+						_themeDisplay.getScopeGroupId(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+						WorkflowConstants.STATUS_APPROVED);
+
+			if (defaultLayoutPageTemplateEntry == null) {
+				return "check-circle";
+			}
+		}
+
+		if (_layoutPageTemplateEntry.isDefaultTemplate()) {
+			return "check-circle";
+		}
+
+		return null;
 	}
 
 	@Override

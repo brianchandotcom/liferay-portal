@@ -560,13 +560,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						continue;
 					}
 
-					String markdownFilePath =
-						sourceFormatterMessage.getMarkdownFilePath();
+					String documentationURLString =
+						sourceFormatterMessage.getDocumentationURLString();
 
-					if (Validator.isNotNull(markdownFilePath)) {
+					if (Validator.isNotNull(documentationURLString)) {
 						Desktop desktop = Desktop.getDesktop();
 
-						desktop.browse(new URI(markdownFilePath));
+						desktop.browse(new URI(documentationURLString));
 
 						_browserStarted = true;
 					}

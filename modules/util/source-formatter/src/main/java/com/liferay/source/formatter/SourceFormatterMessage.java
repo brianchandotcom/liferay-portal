@@ -87,15 +87,7 @@ public class SourceFormatterMessage
 		return _checkType;
 	}
 
-	public String getFileName() {
-		return _fileName;
-	}
-
-	public int getLineNumber() {
-		return _lineNumber;
-	}
-
-	public String getMarkdownFilePath() {
+	public String getDocumentationURLString() {
 		if (_markdownFileName != null) {
 			return _OLD_DOCUMENTATION_URL + _markdownFileName;
 		}
@@ -113,10 +105,18 @@ public class SourceFormatterMessage
 		}
 
 		if (_checkType.equals(CheckType.CHECKSTYLE)) {
-			return _getCheckstyleURLFilePath(_checkName);
+			return _getCheckstyleDocumentationURLString(_checkName);
 		}
 
 		return null;
+	}
+
+	public String getFileName() {
+		return _fileName;
+	}
+
+	public int getLineNumber() {
+		return _lineNumber;
 	}
 
 	public String getMessage() {
@@ -129,11 +129,11 @@ public class SourceFormatterMessage
 
 		sb.append(_message);
 
-		String markdownFilePath = getMarkdownFilePath();
+		String documentationURLString = getDocumentationURLString();
 
-		if (markdownFilePath != null) {
+		if (documentationURLString != null) {
 			sb.append(", see ");
-			sb.append(markdownFilePath);
+			sb.append(documentationURLString);
 		}
 
 		sb.append(": ");
@@ -160,7 +160,7 @@ public class SourceFormatterMessage
 		return sb.toString();
 	}
 
-	private String _getCheckstyleURLFilePath(
+	private String _getCheckstyleDocumentationURLString(
 		Element element, String checkName) {
 
 		if (checkName.equals(element.attributeValue("name"))) {
@@ -181,7 +181,7 @@ public class SourceFormatterMessage
 		for (Element moduleElement :
 				(List<Element>)element.elements("module")) {
 
-			String checkstyleURLFilePath = _getCheckstyleURLFilePath(
+			String checkstyleURLFilePath = _getCheckstyleDocumentationURLString(
 				moduleElement, checkName);
 
 			if (checkstyleURLFilePath != null) {
@@ -192,7 +192,7 @@ public class SourceFormatterMessage
 		return null;
 	}
 
-	private String _getCheckstyleURLFilePath(String checkName) {
+	private String _getCheckstyleDocumentationURLString(String checkName) {
 		try {
 			ClassLoader classLoader =
 				SourceFormatterMessage.class.getClassLoader();
@@ -201,7 +201,7 @@ public class SourceFormatterMessage
 				StringUtil.read(
 					classLoader.getResourceAsStream("checkstyle.xml")));
 
-			return _getCheckstyleURLFilePath(
+			return _getCheckstyleDocumentationURLString(
 				document.getRootElement(), checkName);
 		}
 		catch (Exception exception) {

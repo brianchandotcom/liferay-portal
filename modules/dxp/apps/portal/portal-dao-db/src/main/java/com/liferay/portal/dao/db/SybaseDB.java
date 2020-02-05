@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -24,6 +25,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.IOException;
 
 import java.sql.Types;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Alexander Chow
@@ -65,6 +69,30 @@ public class SybaseDB extends BaseDB {
 	@Override
 	public boolean isSupportsNewUuidFunction() {
 		return _SUPPORTS_NEW_UUID_FUNCTION;
+	}
+
+	@Override
+	protected String applyMaxStringIndexLengthLimitation(String template) {
+		String[] strings = StringUtil.split(template, CharPool.NEW_LINE);
+
+		Matcher matcher = _columnLengthPattern.matcher(StringPool.BLANK);
+
+		for (int i = 0; i < strings.length; i++) {
+			matcher.reset(strings[i]);
+
+			while (matcher.find()) {
+				int length = Integer.valueOf(matcher.group(1));
+
+				if (length > 1250) {
+					strings[i] = StringPool.BLANK;
+
+					break;
+				}
+			}
+		}
+
+		return super.applyMaxStringIndexLengthLimitation(
+			StringUtil.merge(strings, StringPool.NEW_LINE));
 	}
 
 	@Override
@@ -193,5 +221,8 @@ public class SybaseDB extends BaseDB {
 		" bigdatetime", " float", " int", " decimal(20,0)", " varchar(4000)",
 		" text", " varchar", "  identity(1,1)", "go"
 	};
+
+	private static final Pattern _columnLengthPattern = Pattern.compile(
+		"\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 
 }

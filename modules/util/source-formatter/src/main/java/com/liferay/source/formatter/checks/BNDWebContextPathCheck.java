@@ -67,17 +67,14 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 
 		if (_hasPackageJSONNameProperty(absolutePath)) {
 			if (webContextPath == null) {
-				addMessage(
-					fileName, "Missing Web-ContextPath",
-					"bnd_bundle_information.markdown");
+				addMessage(fileName, "Missing Web-ContextPath");
 			}
 		}
 		else if ((webContextPath != null) &&
 				 !webContextPath.equals("/" + moduleName)) {
 
 			addMessage(
-				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'",
-				"bnd_bundle_information.markdown");
+				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'");
 		}
 	}
 

@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateCollectionLocalServiceBaseImpl;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
@@ -73,6 +75,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		layoutPageTemplateCollection.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
+		layoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
+			_generateLayoutPageTemplateCollectionKey(groupId, name));
 		layoutPageTemplateCollection.setName(name);
 		layoutPageTemplateCollection.setDescription(description);
 
@@ -213,6 +217,34 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 		if (layoutPageTemplateCollection != null) {
 			throw new DuplicateLayoutPageTemplateCollectionException(name);
+		}
+	}
+
+	private String _generateLayoutPageTemplateCollectionKey(
+		long groupId, String name) {
+
+		String layoutPageTemplateCollectionKey = StringUtil.toLowerCase(
+			name.trim());
+
+		layoutPageTemplateCollectionKey = StringUtil.replace(
+			layoutPageTemplateCollectionKey, CharPool.SPACE, CharPool.DASH);
+
+		String curLayoutPageTemplateCollectionKey =
+			layoutPageTemplateCollectionKey;
+
+		int count = 0;
+
+		while (true) {
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				layoutPageTemplateCollectionPersistence.fetchByG_LPTCK(
+					groupId, curLayoutPageTemplateCollectionKey);
+
+			if (layoutPageTemplateCollection == null) {
+				return curLayoutPageTemplateCollectionKey;
+			}
+
+			curLayoutPageTemplateCollectionKey =
+				curLayoutPageTemplateCollectionKey + CharPool.DASH + count++;
 		}
 	}
 

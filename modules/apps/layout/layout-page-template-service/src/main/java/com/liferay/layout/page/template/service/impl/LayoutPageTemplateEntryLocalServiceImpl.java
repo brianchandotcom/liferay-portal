@@ -27,6 +27,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
@@ -204,6 +205,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
 			layoutPageTemplateCollectionId);
+		layoutPageTemplateEntry.setLayoutPageTemplateEntryKey(
+			_generateLayoutPageTemplateEntryKey(groupId, name));
 		layoutPageTemplateEntry.setClassNameId(classNameId);
 		layoutPageTemplateEntry.setClassTypeId(classTypeId);
 		layoutPageTemplateEntry.setName(name);
@@ -935,6 +938,32 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			previewFileEntryId, folder.getFolderId(), serviceContext);
 
 		return copyDLFileEntry.getFileEntryId();
+	}
+
+	private String _generateLayoutPageTemplateEntryKey(
+		long groupId, String name) {
+
+		String layoutPageTemplateEntryKey = StringUtil.toLowerCase(name.trim());
+
+		layoutPageTemplateEntryKey = StringUtil.replace(
+			layoutPageTemplateEntryKey, CharPool.SPACE, CharPool.DASH);
+
+		String curLayoutPageTemplateEntryKey = layoutPageTemplateEntryKey;
+
+		int count = 0;
+
+		while (true) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				layoutPageTemplateEntryPersistence.fetchByG_LPTEK(
+					groupId, curLayoutPageTemplateEntryKey);
+
+			if (layoutPageTemplateEntry == null) {
+				return curLayoutPageTemplateEntryKey;
+			}
+
+			curLayoutPageTemplateEntryKey =
+				curLayoutPageTemplateEntryKey + CharPool.DASH + count++;
+		}
 	}
 
 	private String _getUniqueCopyName(

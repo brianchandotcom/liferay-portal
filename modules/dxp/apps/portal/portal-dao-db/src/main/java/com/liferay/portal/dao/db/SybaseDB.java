@@ -73,6 +73,10 @@ public class SybaseDB extends BaseDB {
 
 	@Override
 	protected String applyMaxStringIndexLengthLimitation(String template) {
+		if (!template.contains("[$COLUMN_LENGTH:")) {
+			return template;
+		}
+
 		String[] strings = StringUtil.split(template, CharPool.NEW_LINE);
 
 		Matcher matcher = _columnLengthPattern.matcher(StringPool.BLANK);

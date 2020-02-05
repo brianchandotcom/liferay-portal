@@ -29,7 +29,7 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.excecption.DuplicatedPortletIdException;
+import com.liferay.layout.content.page.editor.web.internal.excecption.NoninstanceablePortletException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -258,9 +258,12 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 					"the-section-could-not-be-duplicated-because-it-has-been-" +
 						"deleted");
 			}
-			else if (portalException instanceof DuplicatedPortletIdException) {
-				DuplicatedPortletIdException duplicatedPortletIdException =
-					(DuplicatedPortletIdException)portalException;
+			else if (portalException instanceof
+						NoninstanceablePortletException) {
+
+				NoninstanceablePortletException
+					noninstanceablePortletException =
+						(NoninstanceablePortletException)portalException;
 
 				HttpServletRequest httpServletRequest =
 					_portal.getHttpServletRequest(actionRequest);
@@ -271,7 +274,7 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 
 				Portlet portlet = _portletLocalService.getPortletById(
 					themeDisplay.getCompanyId(),
-					duplicatedPortletIdException.getPortletId());
+					noninstanceablePortletException.getPortletId());
 
 				errorMessage = LanguageUtil.format(
 					themeDisplay.getRequest(),

@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Eudaldo Alonso
  */
-public class DuplicatedPortletIdException extends PortalException {
+public class NoninstanceablePortletException extends PortalException {
 
-	public DuplicatedPortletIdException(String portletId) {
+	public NoninstanceablePortletException(String portletId) {
 		_portletId = portletId;
 	}
 

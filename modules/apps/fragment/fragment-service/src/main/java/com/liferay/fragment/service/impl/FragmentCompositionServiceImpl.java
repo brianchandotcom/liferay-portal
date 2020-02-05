@@ -14,23 +14,26 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.service.base.FragmentCompositionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.util.dao.orm.CustomSQL;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * The implementation of the fragment composition remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.fragment.service.FragmentCompositionService</code> interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see FragmentCompositionServiceBaseImpl
+ * @author Pavel Savinov
  */
 @Component(
 	property = {
@@ -42,9 +45,150 @@ import org.osgi.service.component.annotations.Component;
 public class FragmentCompositionServiceImpl
 	extends FragmentCompositionServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.fragment.service.FragmentCompositionServiceUtil</code> to access the fragment composition remote service.
-	 */
+	@Override
+	public FragmentComposition addFragmentComposition(
+			long groupId, long fragmentCollectionId,
+			String fragmentCompositionKey, String name, String description,
+			String fragments, long previewFileEntryId, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentCompositionLocalService.addFragmentComposition(
+			getUserId(), groupId, fragmentCollectionId, fragmentCompositionKey,
+			name, description, fragments, previewFileEntryId, status,
+			serviceContext);
+	}
+
+	@Override
+	public FragmentComposition deleteFragmentComposition(
+			long fragmentCompositionId)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentCompositionLocalService.deleteFragmentComposition(
+			fragmentCompositionId);
+	}
+
+	@Override
+	public FragmentComposition fetchFragmentComposition(
+		long fragmentCompositionId) {
+
+		return fragmentCompositionPersistence.fetchByPrimaryKey(
+			fragmentCompositionId);
+	}
+
+	@Override
+	public FragmentComposition fetchFragmentComposition(
+		long groupId, String fragmentCompositionKey) {
+
+		return fragmentCompositionPersistence.fetchByG_FCK(
+			groupId, _getFragmentCompositionKey(fragmentCompositionKey));
+	}
+
+	@Override
+	public List<FragmentComposition> getFragmentCompositions(
+		long fragmentCollectionId) {
+
+		return fragmentCompositionPersistence.findByFragmentCollectionId(
+			fragmentCollectionId);
+	}
+
+	@Override
+	public List<FragmentComposition> getFragmentCompositions(
+		long fragmentCollectionId, int start, int end) {
+
+		return fragmentCompositionPersistence.findByFragmentCollectionId(
+			fragmentCollectionId, start, end);
+	}
+
+	@Override
+	public List<FragmentComposition> getFragmentCompositions(
+		long groupId, long fragmentCollectionId, int status) {
+
+		return fragmentCompositionPersistence.findByG_FCI_S(
+			groupId, fragmentCollectionId, status);
+	}
+
+	@Override
+	public List<FragmentComposition> getFragmentCompositions(
+		long groupId, long fragmentCollectionId, int start, int end,
+		OrderByComparator<FragmentComposition> orderByComparator) {
+
+		return fragmentCompositionPersistence.findByG_FCI(
+			groupId, fragmentCollectionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentComposition> getFragmentCompositions(
+		long groupId, long fragmentCollectionId, String name, int start,
+		int end, OrderByComparator<FragmentComposition> orderByComparator) {
+
+		if (Validator.isNull(name)) {
+			return fragmentCompositionPersistence.findByG_FCI(
+				groupId, fragmentCollectionId, start, end, orderByComparator);
+		}
+
+		return fragmentCompositionPersistence.findByG_FCI_LikeN(
+			groupId, fragmentCollectionId,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public int getFragmentCompositionsCount(long fragmentCollectionId) {
+		return fragmentCompositionPersistence.countByFragmentCollectionId(
+			fragmentCollectionId);
+	}
+
+	@Override
+	public FragmentComposition updateFragmentComposition(
+			long fragmentCompositionId, long previewFileEntryId)
+		throws PortalException {
+
+		FragmentComposition fragmentComposition =
+			fragmentCompositionPersistence.findByPrimaryKey(
+				fragmentCompositionId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), fragmentComposition.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentCompositionLocalService.updateFragmentComposition(
+			fragmentCompositionId, previewFileEntryId);
+	}
+
+	@Override
+	public FragmentComposition updateFragmentComposition(
+			long fragmentCompositionId, String name, String description,
+			String fragments, long previewFileEntryId, int status)
+		throws PortalException {
+
+		FragmentComposition fragmentComposition =
+			fragmentCompositionPersistence.findByPrimaryKey(
+				fragmentCompositionId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), fragmentComposition.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentCompositionLocalService.updateFragmentComposition(
+			getUserId(), fragmentCompositionId, name, description, fragments,
+			previewFileEntryId, status);
+	}
+
+	@Reference
+	private CustomSQL _customSQL;
+
+	@Reference(
+		target = "(resource.name=" + FragmentConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
+
 }

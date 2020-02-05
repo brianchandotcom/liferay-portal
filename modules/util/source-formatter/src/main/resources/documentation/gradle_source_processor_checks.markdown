@@ -5,7 +5,7 @@ Check | Category | Description
 GradleBlockOrderCheck | Miscellaneous | |
 GradleBodyCheck | Miscellaneous | |
 GradleDependenciesCheck | Miscellaneous | |
-GradleDependencyArtifactsCheck | Miscellaneous | |
+[GradleDependencyArtifactsCheck](checks/gradle_dependency_artifacts_check.markdown) | Miscellaneous | |
 GradleDependencyConfigurationCheck | Miscellaneous | |
 GradleDependencyVersionCheck | Miscellaneous | |
 GradleExportedPackageDependenciesCheck | Miscellaneous | |
@@ -16,6 +16,6 @@ GradlePropertiesCheck | Miscellaneous | |
 GradleProvidedDependenciesCheck | Miscellaneous | |
 GradleRequiredDependenciesCheck | Miscellaneous | |
 GradleStylingCheck | Miscellaneous | |
-GradleTaskCreationCheck | Miscellaneous | |
+[GradleTaskCreationCheck](checks/gradle_task_creation_check.markdown) | Miscellaneous | |
 GradleTestDependencyVersionCheck | Miscellaneous | |
 WhitespaceCheck | Miscellaneous | |

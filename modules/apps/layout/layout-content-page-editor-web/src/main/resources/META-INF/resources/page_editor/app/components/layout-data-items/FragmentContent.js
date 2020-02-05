@@ -31,7 +31,6 @@ import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 import {
-	useEditableIsTranslated,
 	useSelectItem,
 	useHoverItem,
 	useIsActive,
@@ -46,7 +45,6 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const dispatch = useDispatch();
 	const hoverItem = useHoverItem();
 	const activeItemId = useActiveItemId();
-	const editableIsTranslated = useEditableIsTranslated();
 	const isActive = useIsActive();
 	const isMounted = useIsMounted();
 	const selectItem = useSelectItem();
@@ -57,7 +55,6 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 
 	const [content, setContent] = useState(defaultContent);
 	const [editablesIds, setEditablesIds] = useState([]);
-	const [editing, setEditing] = useState(false);
 
 	const getEditableId = editableUniqueId => {
 		const [, ...editableId] = editableUniqueId.split('-');
@@ -67,11 +64,6 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 
 	const getEditableUniqueId = editableId =>
 		`${fragmentEntryLinkId}-${editableId}`;
-
-	const siblingEditableIsActive = id =>
-		editablesIds
-			.filter(editableId => editableId !== id)
-			.some(siblingId => isActive(getEditableUniqueId(siblingId)));
 
 	useLayoutEffect(() => {
 		setEditablesIds(
@@ -151,11 +143,13 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 
 	const onClick = event => {
 		const editableElement = closest(event.target, 'lfr-editable');
+		const editableUniqueId =
+			editableElement && getEditableUniqueId(editableElement.id);
 
-		if (editableElement) {
-			if (isActive(getEditableUniqueId(editableElement.id))) {
-				event.stopPropagation();
+		if (editableUniqueId) {
+			event.stopPropagation();
 
+			if (isActive(editableUniqueId)) {
 				initProcessor({
 					config,
 					editableConfig: selectEditableValueConfig(
@@ -168,32 +162,19 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 					element: editableElement,
 					processorType: EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 				});
-			}
-
-			if (
-				isActive(itemId) ||
-				siblingEditableIsActive(editableElement.id)
-			) {
-				event.stopPropagation();
-
-				selectItem(getEditableUniqueId(editableElement.id));
+			} else {
+				selectItem(editableUniqueId);
 			}
 		}
 	};
 
 	const onMouseOver = event => {
 		const editableElement = closest(event.target, 'lfr-editable');
+		const editableUniqueId =
+			editableElement && getEditableUniqueId(editableElement.id);
 
-		if (editableElement) {
-			if (
-				(isActive(itemId) ||
-					siblingEditableIsActive(editableElement.id)) &&
-				editableElement
-			) {
-				event.stopPropagation();
-
-				hoverItem(getEditableUniqueId(editableElement.id));
-			}
+		if (editableUniqueId) {
+			hoverItem(editableUniqueId);
 		}
 	};
 
@@ -204,8 +185,6 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		element,
 		processorType
 	}) => {
-		setEditing(true);
-
 		const processor = Processors[editableType] || Processors.fallback;
 
 		const id =
@@ -248,33 +227,9 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	};
 
 	const destroyProcessor = (element, editableType) => {
-		setEditing(false);
-
 		const processor = Processors[editableType] || Processors.fallback;
 
 		processor.destroyEditor(element);
-	};
-
-	const shouldShowEditablesDecoration = () => {
-		return (
-			!editing &&
-			(isActive(itemId) ||
-				editablesIds.some(editableId => {
-					const editableValue = selectEditableValue(
-						state,
-						fragmentEntryLinkId,
-						editableId,
-						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-					);
-
-					return (
-						isActive(getEditableUniqueId(editableId)) ||
-						editableIsMappedToInfoItem(editableValue) ||
-						editableValue.mappedField ||
-						editableIsTranslated(editableValue)
-					);
-				}))
-		);
 	};
 
 	return (
@@ -327,20 +282,19 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 					);
 				})}
 
-			{shouldShowEditablesDecoration() &&
-				editablesIds.map(editableId => (
-					<EditableDecoration
-						editableId={editableId}
-						editableUniqueId={getEditableUniqueId(editableId)}
-						key={getEditableUniqueId(editableId)}
-						parentContent={content}
-						parentItemId={itemId}
-						parentRef={ref}
-						siblingsIds={editablesIds
-							.filter(siblingId => siblingId !== editableId)
-							.map(siblingId => getEditableUniqueId(siblingId))}
-					></EditableDecoration>
-				))}
+			{editablesIds.map(editableId => (
+				<EditableDecoration
+					editableId={editableId}
+					editableUniqueId={getEditableUniqueId(editableId)}
+					key={getEditableUniqueId(editableId)}
+					parentContent={content}
+					parentItemId={itemId}
+					parentRef={ref}
+					siblingsIds={editablesIds
+						.filter(siblingId => siblingId !== editableId)
+						.map(siblingId => getEditableUniqueId(siblingId))}
+				/>
+			))}
 		</>
 	);
 }

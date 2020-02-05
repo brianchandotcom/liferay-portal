@@ -345,6 +345,7 @@
 		<check name="JSPDefineObjectsCheck" />
 		<check name="JSPEmptyLinesCheck" />
 		<check name="JSPExceptionOrderCheck" />
+		<check name="JSPIllegalSyntaxCheck" />
 		<check name="JSPImportsCheck" />
 		<check name="JSPIncludeCheck" />
 		<check name="JSPIndentationCheck" />

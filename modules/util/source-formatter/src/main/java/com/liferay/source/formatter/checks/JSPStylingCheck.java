@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.util.regex.Matcher;
@@ -58,17 +57,6 @@ public class JSPStylingCheck extends StylingCheck {
 
 		content = content.replaceAll("'<%= (\"[^.(\\[\"]+\") %>'", "$1");
 
-		_checkIllegalSyntax(
-			fileName, content, "console.log(", "Do not use console.log");
-		_checkIllegalSyntax(
-			fileName, content, "debugger.", "Do not use debugger");
-
-		if (!fileName.endsWith("test.jsp")) {
-			_checkIllegalSyntax(
-				fileName, content, "System.out.print",
-				"Do not call 'System.out.print'");
-		}
-
 		return formatStyling(content);
 	}
 
@@ -84,33 +72,6 @@ public class JSPStylingCheck extends StylingCheck {
 			addMessage(
 				fileName, "Avoid chaining on 'getClass'", "chaining.markdown",
 				getLineNumber(content, matcher.start()));
-		}
-	}
-
-	private void _checkIllegalSyntax(
-		String fileName, String content, String syntax, String message) {
-
-		_checkIllegalSyntax(fileName, content, syntax, message, null);
-	}
-
-	private void _checkIllegalSyntax(
-		String fileName, String content, String syntax, String message,
-		String markdownFileName) {
-
-		int pos = -1;
-
-		while (true) {
-			pos = content.indexOf(syntax, pos + 1);
-
-			if (pos == -1) {
-				return;
-			}
-
-			if (!ToolsUtil.isInsideQuotes(content, pos)) {
-				addMessage(
-					fileName, message, markdownFileName,
-					getLineNumber(content, pos));
-			}
 		}
 	}
 

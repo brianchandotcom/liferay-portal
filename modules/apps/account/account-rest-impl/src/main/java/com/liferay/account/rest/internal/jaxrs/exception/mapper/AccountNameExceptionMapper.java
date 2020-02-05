@@ -43,7 +43,7 @@ public class AccountNameExceptionMapper
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			"A name is required to create an account");
+			accountEntryNameException.getMessage());
 	}
 
 }

@@ -53,7 +53,7 @@ public class ArrayCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			if (!ToolsUtil.isInsideQuotes(content, matcher.start())) {
 				addMessage(
-					fileName, "Use Collections.addAll", "collections.markdown",
+					fileName, "Use Collections.addAll",
 					getLineNumber(content, matcher.start()));
 			}
 		}

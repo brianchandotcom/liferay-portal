@@ -179,11 +179,10 @@ public class UserGroupGroupRoleLocalServiceImpl
 	public boolean hasUserGroupGroupRole(
 		long userGroupId, long groupId, long roleId) {
 
-		UserGroupGroupRole userGroupGroupRole =
-			userGroupGroupRolePersistence.fetchByU_G_R(
-				userGroupId, groupId, roleId);
+		int count = userGroupGroupRolePersistence.countByU_G_R(
+			userGroupId, groupId, roleId);
 
-		if (userGroupGroupRole != null) {
+		if (count > 0) {
 			return true;
 		}
 

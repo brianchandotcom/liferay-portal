@@ -53,6 +53,37 @@ public class PageDefinitionConverterUtil {
 	}
 
 	private static PageElement _toPageElement(
+		LayoutStructure layoutStructure,
+		LayoutStructureItem layoutStructureItem) {
+
+		List<PageElement> pageElements = new ArrayList<>();
+
+		List<String> childrenItemIds = layoutStructureItem.getChildrenItemIds();
+
+		for (String childItemId : childrenItemIds) {
+			LayoutStructureItem childLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childItemId);
+
+			List<String> grandChildrenItemIds =
+				childLayoutStructureItem.getChildrenItemIds();
+
+			if (grandChildrenItemIds.isEmpty()) {
+				pageElements.add(_toPageElement(childLayoutStructureItem));
+			}
+			else {
+				pageElements.add(
+					_toPageElement(layoutStructure, childLayoutStructureItem));
+			}
+		}
+
+		PageElement pageElement = _toPageElement(layoutStructureItem);
+
+		pageElement.setPageElements(pageElements.toArray(new PageElement[0]));
+
+		return pageElement;
+	}
+
+	private static PageElement _toPageElement(
 		LayoutStructureItem layoutStructureItem) {
 
 		if (layoutStructureItem instanceof ColumnLayoutStructureItem) {

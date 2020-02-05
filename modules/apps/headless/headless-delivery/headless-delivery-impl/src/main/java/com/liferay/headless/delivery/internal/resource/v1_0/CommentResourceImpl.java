@@ -27,11 +27,14 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.util.Map;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -71,6 +74,9 @@ public class CommentResourceImpl
 
 		return spiCommentResource.getEntityCommentsPage(
 			blogsEntry.getGroupId(), BlogsEntry.class.getName(), blogPostingId,
+			_getBlogPostingCommentsListActions(
+				BlogsEntry.class.getName(), blogPostingId,
+				blogsEntry.getGroupId()),
 			search, filter, pagination, sorts);
 	}
 
@@ -108,6 +114,9 @@ public class CommentResourceImpl
 
 		return spiCommentResource.getEntityCommentsPage(
 			dlFileEntry.getGroupId(), DLFileEntry.class.getName(), documentId,
+			_getDocumentCommentsListActions(
+				DLFileEntry.class.getName(), documentId,
+				dlFileEntry.getGroupId()),
 			search, filter, pagination, sorts);
 	}
 
@@ -133,7 +142,11 @@ public class CommentResourceImpl
 
 		return spiCommentResource.getEntityCommentsPage(
 			journalArticle.getGroupId(), JournalArticle.class.getName(),
-			structuredContentId, search, filter, pagination, sorts);
+			structuredContentId,
+			_getStructuredContentCommentsListActions(
+				JournalArticle.class.getName(), structuredContentId,
+				journalArticle.getGroupId()),
+			search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -208,11 +221,59 @@ public class CommentResourceImpl
 		return spiCommentResource.putComment(commentId, comment.getText());
 	}
 
+	private Map<String, Map<String, String>> _getBlogPostingCommentsListActions(
+		String className, Long entityId, long groupId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"add-discussion",
+			addAction(
+				"ADD_DISCUSSION", entityId, "postBlogPostingComment", className,
+				groupId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", entityId, "getBlogPostingCommentsPage", className,
+				groupId)
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getDocumentCommentsListActions(
+		String className, Long entityId, long groupId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"add-discussion",
+			addAction(
+				"ADD_DISCUSSION", entityId, "postDocumentComment", className,
+				groupId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", entityId, "getDocumentCommentsPage", className, groupId)
+		).build();
+	}
+
 	private SPICommentResource<Comment> _getSPICommentResource() {
 		return new SPICommentResource<>(
 			_commentManager, contextCompany,
 			comment -> CommentUtil.toComment(
 				comment, _commentManager, _portal));
+	}
+
+	private Map<String, Map<String, String>>
+		_getStructuredContentCommentsListActions(
+			String className, Long entityId, long groupId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"add-discussion",
+			addAction(
+				"ADD_DISCUSSION", entityId, "postStructuredContentComment",
+				className, groupId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", entityId, "getStructuredContentCommentsPage", className,
+				groupId)
+		).build();
 	}
 
 	@Reference

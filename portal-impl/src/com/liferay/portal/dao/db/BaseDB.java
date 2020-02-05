@@ -473,7 +473,6 @@ public abstract class BaseDB implements DB {
 
 					String include = StringUtil.read(is);
 
-					include = convertTimestamp(include);
 					include = replaceTemplate(include, getTemplate());
 
 					runSQLTemplateString(include, true);
@@ -753,7 +752,6 @@ public abstract class BaseDB implements DB {
 
 						String include = FileUtil.read(includeFile);
 
-						include = convertTimestamp(include);
 						include = replaceTemplate(include, getTemplate());
 
 						sb.append(include);
@@ -779,21 +777,6 @@ public abstract class BaseDB implements DB {
 		}
 
 		return template;
-	}
-
-	protected String convertTimestamp(String data) {
-		String s = null;
-
-		if (this instanceof MySQLDB) {
-			s = StringUtil.removeSubstring(data, "SPECIFIC_TIMESTAMP_");
-		}
-		else {
-			Matcher matcher = _timestampPattern.matcher(data);
-
-			s = matcher.replaceAll("CURRENT_TIMESTAMP");
-		}
-
-		return s;
 	}
 
 	protected Set<String> dropIndexes(
@@ -1182,8 +1165,6 @@ public abstract class BaseDB implements DB {
 	private static final Pattern _columnLengthPattern = Pattern.compile(
 		"\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 	private static final Pattern _templatePattern;
-	private static final Pattern _timestampPattern = Pattern.compile(
-		"SPECIFIC_TIMESTAMP_\\d+");
 
 	static {
 		StringBundler sb = new StringBundler(TEMPLATE.length * 5 - 6);

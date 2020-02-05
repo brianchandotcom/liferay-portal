@@ -212,10 +212,10 @@
 			<property name="allowedMockitoMethodNames" value="doAnswer,doCallRealMethod,doNothing,doReturn,doThrow,field,replace,stub,verify,verifyPrivate,when" />
 			<property name="allowedVariableTypeNames" value="^(?!String).+Builder(Impl)?,Column,CompletableFuture,.*Consumer,ContactsEngineClient,Dataset,Description,ExecuteActionRequest,(FormsEventDataset)?Filter,.*Function[0-9]*,HttpSecurity,InOrder,JSONArray,JSONObject,JsonPath,.*Mapper,NestedRepresentor.*,Optional,Predicate,RequestSpecification,Response,SoyContext,(Double|Int|Long)?Stream,Try,UpdateFieldPropertyRequest,ValidatableResponse,WebTarget" />
 			<property name="applyToTypeCast" value="true" />
-			<message key="chaining.allowed" value="Chaining is allowed on ''{0}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />
-			<message key="chaining.avoid.method" value="Avoid chaining on method ''{0}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />
+			<message key="chaining.allowed" value="Chaining is allowed on ''{0}''" />
+			<message key="chaining.avoid.method" value="Avoid chaining on method ''{0}''" />
 			<message key="chaining.avoid.type.cast" value="Avoid chaining on Type Cast" />
-			<message key="chaining.required" value="Chaining on ''{0}'' is preferred. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />
+			<message key="chaining.required" value="Chaining on ''{0}'' is preferred" />
 			<message key="concat.avoid.too.many" value="Use StringBundler instead of chaining concat when there is more than 3 parts" />
 			<message key="response.unsorted" value="Method calls between ''Response.status'' and ''Response.build'' should be sorted" />
 		</module>
@@ -265,7 +265,7 @@
 			<message key="whitespace.incorrect" value="The value of ''{0}'' should not have spaces around ''='', see LPS-70526" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FrameworkBundleCheck">
-			<message key="bundle.get.headers.use" value="Use ''Bundle.getHeaders(java.lang.String locale)'' statement instead ''Bundle.getHeaders()''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/framework_bundle.markdown" />
+			<message key="bundle.get.headers.use" value="Use ''Bundle.getHeaders(java.lang.String locale)'' statement instead ''Bundle.getHeaders()''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FullyQualifiedNameCheck">
 			<message key="import.statement.use" value="Use import statement instead of Fully Qualified Name for ''{0}'" />
@@ -288,10 +288,10 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.JSONUtilCheck">
 			<message key="json.util.put.all.use" value="Use ''JSONUtil.putAll'' instead of chaining on ''JSONUtil.put''" />
-			<message key="json.util.put.use" value="Combine calls ''{0}'' ({1}) and ''{2}'' ({3}) into single call ''{4}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/json_util.markdown" />
+			<message key="json.util.put.use" value="Combine calls ''{0}'' ({1}) and ''{2}'' ({3}) into single call ''{4}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.LambdaCheck">
-			<message key="lambda.simplify" value="Simplify lambda statement with single statement. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/lambda.markdown" />
+			<message key="lambda.simplify" value="Simplify lambda statement with single statement" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.LineBreakAfterCommaCheck">
 			<message key="line.break.incorrect" value="There should be a line break after ''{0}''" />
@@ -303,8 +303,8 @@
 			<message key="end.line.character.incorrect" value="Line should not end with ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ListUtilCheck">
-			<message key="array.unneeded" value="Pass arguments directly to ''ListUtil.fromArray'' instead of passing new array. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/list_util.markdown" />
-			<message key="list.util.use" value="Use ''ListUtil.fromArray'' to simplify code. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/list_util.markdown" />
+			<message key="array.unneeded" value="Pass arguments directly to ''ListUtil.fromArray'' instead of passing new array" />
+			<message key="list.util.use" value="Use ''ListUtil.fromArray'' to simplify code" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.LiteralStringEqualsCheck">
 			<message key="objects.equals.use.1" value="Use ''Objects.equals'' instead of calling ''equals'' on a literal String" />
@@ -320,7 +320,7 @@
 			<message key="lps42924" value="Use ''classNameLocalService.getClassNameId'' instead of ''PortalUtil.getClassName''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MapIterationCheck">
-			<message key="entry.set.use" value="Use Map.entrySet() to retrieve values. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/map_iteration.markdown" />
+			<message key="entry.set.use" value="Use Map.entrySet() to retrieve values" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNamingCheck">
 			<message key="method.rename" value="Rename method ''{0}'' to ''{1}''" />
@@ -340,7 +340,7 @@
 			<message key="empty.line.missing.after.method.call" value="There should be an empty line after line ''{0}''" />
 			<message key="empty.line.missing.after.variable.definition" value="There should be an empty line after variable definition of type ''{0}''" />
 			<message key="empty.line.missing.after.variable.reference" value="There should be an empty line before line ''{0}'', as we finished referencing variable ''{1}''" />
-			<message key="empty.line.missing.before.variable.assign" value="There should be an empty line before assigning value to variable ''{0}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/line_breaks.markdown" />
+			<message key="empty.line.missing.before.variable.assign" value="There should be an empty line before assigning value to variable ''{0}''" />
 			<message key="empty.line.missing.before.variable.use" value="There should be an empty line between assigning and using variable ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingModifierCheck">
@@ -374,7 +374,7 @@
 			<message key="persistence.call.illegal" value="Illegal call to class ''{0}'', see LPS-68923" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.PersistenceUpdateCheck">
-			<message key="update.call.reassign" value="Update call should be reassigned to variable ''{0}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/persistence_update.markdown" />
+			<message key="update.call.reassign" value="Update call should be reassigned to variable ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.PlusStatementCheck">
 			<message key="end.character.invalid" value="When concatenating multiple literal strings using '+', only the last literal string can end with ''{0}''" />
@@ -409,7 +409,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.StaticBlockCheck">
 			<property name="immutableFieldTypes" value="boolean,byte,char,double,float,int,long,short,Boolean,Byte,Character,Class,Double,Float,Int,Long,Number,Short,String" />
-			<message key="static.block.unneeded" value="No need to use static block for method call ''{0}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/static_block.markdown" />
+			<message key="static.block.unneeded" value="No need to use static block for method call ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.StringBundlerNamingCheck">
 			<property name="category" value="Naming Conventions" />

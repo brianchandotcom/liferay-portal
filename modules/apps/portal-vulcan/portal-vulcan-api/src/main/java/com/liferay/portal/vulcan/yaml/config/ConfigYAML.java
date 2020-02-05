@@ -67,6 +67,10 @@ public class ConfigYAML {
 		return _forcePredictableSchemaPropertyName;
 	}
 
+	public boolean isGenerateBatch() {
+		return _generateBatch;
+	}
+
 	public boolean isGenerateGraphQL() {
 		return _generateGraphQL;
 	}
@@ -119,6 +123,10 @@ public class ConfigYAML {
 			forcePredictableSchemaPropertyName;
 	}
 
+	public void setGenerateBatch(boolean generateBatch) {
+		_generateBatch = generateBatch;
+	}
+
 	public void setGenerateGraphQL(boolean generateGraphQL) {
 		_generateGraphQL = generateGraphQL;
 	}
@@ -155,6 +163,7 @@ public class ConfigYAML {
 	private boolean _forcePredictableContentApplicationXML = true;
 	private boolean _forcePredictableOperationId = true;
 	private boolean _forcePredictableSchemaPropertyName = true;
+	private boolean _generateBatch = true;
 	private boolean _generateGraphQL = true;
 	private boolean _generateREST = true;
 	private String _implDir = "src/main/java";

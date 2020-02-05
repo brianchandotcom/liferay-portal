@@ -176,6 +176,12 @@
 			<finder-column name="type" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_T_D_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="type" />
+			<finder-column name="defaultTemplate" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_C_C_LikeN_T" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />

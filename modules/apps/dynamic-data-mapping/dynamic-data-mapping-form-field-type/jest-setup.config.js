@@ -12,6 +12,24 @@
  * details.
  */
 
+
+window.themeDisplay = {
+	getDefaultLanguageId: () => 'en_US',
+	getLanguageId: () => 'en_US',
+	getPathContext: () => '/',
+	getPathThemeImages: jest.fn().mockImplementation(() => '//images/')
+};
+
+window.util = {
+	isEqual: (a, b) => a === b
+};
+
+window.Liferay = {
+	...(window.Liferay || {}),
+	ThemeDisplay: window.themeDisplay,
+	Util: window.util
+};
+
 window.AlloyEditor = {
 	Selections: [
 		{

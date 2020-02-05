@@ -1820,6 +1820,7 @@ components:
                     oneOf:
                         - $ref: "#/components/schemas/ColumnDefinition"
                         - $ref: "#/components/schemas/FragmentDefinition"
+                        - $ref: "#/components/schemas/RootDefinition"
                         - $ref: "#/components/schemas/RowDefinition"
                         - $ref: "#/components/schemas/SectionDefinition"
                 pageElements:
@@ -1936,6 +1937,8 @@ components:
                         The title of the content.
                     readOnly: true
                     type: string
+        RootDefinition:
+            type: object
         RowDefinition:
             properties:
                 gutters:

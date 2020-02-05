@@ -16,6 +16,9 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -40,6 +43,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;
@@ -85,8 +89,22 @@ public class AddSimpleLayoutMVCActionCommand
 			actionRequest, "parentLayoutId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String type = ParamUtil.getString(actionRequest, "type");
+
 		long masterLayoutPlid = ParamUtil.getLong(
 			actionRequest, "masterLayoutPlid");
+
+		if (masterLayoutPlid <= 0) {
+			LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.
+					fetchDefaultLayoutPageTemplateEntry(
+						groupId,
+						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+						WorkflowConstants.STATUS_APPROVED);
+
+			if (defaultLayoutPageTemplateEntry != null) {
+				masterLayoutPlid = defaultLayoutPageTemplateEntry.getPlid();
+			}
+		}
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getSiteDefault(), name
@@ -172,6 +190,9 @@ public class AddSimpleLayoutMVCActionCommand
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private LayoutService _layoutService;

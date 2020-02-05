@@ -45,10 +45,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageTemplateDefinition")
+@GraphQLName("PageTemplate")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageTemplateDefinition")
-public class PageTemplateDefinition {
+@XmlRootElement(name = "PageTemplate")
+public class PageTemplate {
 
 	@Schema
 	public String getCollectionName() {
@@ -190,6 +190,34 @@ public class PageTemplateDefinition {
 	protected Long id;
 
 	@Schema
+	public String[] getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String[] keywords) {
+		this.keywords = keywords;
+	}
+
+	@JsonIgnore
+	public void setKeywords(
+		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
+
+		try {
+			keywords = keywordsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] keywords;
+
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -251,14 +279,13 @@ public class PageTemplateDefinition {
 			return true;
 		}
 
-		if (!(object instanceof PageTemplateDefinition)) {
+		if (!(object instanceof PageTemplate)) {
 			return false;
 		}
 
-		PageTemplateDefinition pageTemplateDefinition =
-			(PageTemplateDefinition)object;
+		PageTemplate pageTemplate = (PageTemplate)object;
 
-		return Objects.equals(toString(), pageTemplateDefinition.toString());
+		return Objects.equals(toString(), pageTemplate.toString());
 	}
 
 	@Override
@@ -338,6 +365,30 @@ public class PageTemplateDefinition {
 			sb.append(id);
 		}
 
+		if (keywords != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"keywords\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < keywords.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(keywords[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < keywords.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -368,7 +419,7 @@ public class PageTemplateDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageTemplateDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageTemplate",
 		name = "x-class-name"
 	)
 	public String xClassName;

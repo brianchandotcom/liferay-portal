@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.PageTemplateDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.PageTemplateSerDes;
 
 import java.util.Date;
 import java.util.Objects;
@@ -27,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageTemplateDefinition {
+public class PageTemplate {
 
 	public String getCollectionName() {
 		return collectionName;
@@ -132,6 +132,27 @@ public class PageTemplateDefinition {
 
 	protected Long id;
 
+	public String[] getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String[] keywords) {
+		this.keywords = keywords;
+	}
+
+	public void setKeywords(
+		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
+
+		try {
+			keywords = keywordsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] keywords;
+
 	public String getName() {
 		return name;
 	}
@@ -179,14 +200,13 @@ public class PageTemplateDefinition {
 			return true;
 		}
 
-		if (!(object instanceof PageTemplateDefinition)) {
+		if (!(object instanceof PageTemplate)) {
 			return false;
 		}
 
-		PageTemplateDefinition pageTemplateDefinition =
-			(PageTemplateDefinition)object;
+		PageTemplate pageTemplate = (PageTemplate)object;
 
-		return Objects.equals(toString(), pageTemplateDefinition.toString());
+		return Objects.equals(toString(), pageTemplate.toString());
 	}
 
 	@Override
@@ -197,7 +217,7 @@ public class PageTemplateDefinition {
 	}
 
 	public String toString() {
-		return PageTemplateDefinitionSerDes.toJSON(this);
+		return PageTemplateSerDes.toJSON(this);
 	}
 
 }

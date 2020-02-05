@@ -19,9 +19,6 @@ import com.liferay.headless.delivery.client.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -61,51 +58,6 @@ public class PageDefinitionSerDes {
 
 		sb.append("{");
 
-		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		if (pageDefinition.getCreator() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"creator\": ");
-
-			sb.append(String.valueOf(pageDefinition.getCreator()));
-		}
-
-		if (pageDefinition.getDateCreated() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dateCreated\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				liferayToJSONDateFormat.format(
-					pageDefinition.getDateCreated()));
-
-			sb.append("\"");
-		}
-
-		if (pageDefinition.getDateModified() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dateModified\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				liferayToJSONDateFormat.format(
-					pageDefinition.getDateModified()));
-
-			sb.append("\"");
-		}
-
 		if (pageDefinition.getFriendlyURLPath() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -128,44 +80,6 @@ public class PageDefinitionSerDes {
 			sb.append("\"id\": ");
 
 			sb.append(pageDefinition.getId());
-		}
-
-		if (pageDefinition.getKeywords() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"keywords\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < pageDefinition.getKeywords().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(pageDefinition.getKeywords()[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < pageDefinition.getKeywords().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (pageDefinition.getName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(pageDefinition.getName()));
-
-			sb.append("\"");
 		}
 
 		if (pageDefinition.getPageElements() != null) {
@@ -276,24 +190,6 @@ public class PageDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		if (pageDefinition.getCreator() == null) {
-			map.put("creator", null);
-		}
-		else {
-			map.put("creator", String.valueOf(pageDefinition.getCreator()));
-		}
-
-		map.put(
-			"dateCreated",
-			liferayToJSONDateFormat.format(pageDefinition.getDateCreated()));
-
-		map.put(
-			"dateModified",
-			liferayToJSONDateFormat.format(pageDefinition.getDateModified()));
-
 		if (pageDefinition.getFriendlyURLPath() == null) {
 			map.put("friendlyURLPath", null);
 		}
@@ -308,20 +204,6 @@ public class PageDefinitionSerDes {
 		}
 		else {
 			map.put("id", String.valueOf(pageDefinition.getId()));
-		}
-
-		if (pageDefinition.getKeywords() == null) {
-			map.put("keywords", null);
-		}
-		else {
-			map.put("keywords", String.valueOf(pageDefinition.getKeywords()));
-		}
-
-		if (pageDefinition.getName() == null) {
-			map.put("name", null);
-		}
-		else {
-			map.put("name", String.valueOf(pageDefinition.getName()));
 		}
 
 		if (pageDefinition.getPageElements() == null) {
@@ -386,25 +268,7 @@ public class PageDefinitionSerDes {
 			PageDefinition pageDefinition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "creator")) {
-				if (jsonParserFieldValue != null) {
-					pageDefinition.setCreator(
-						CreatorSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
-				if (jsonParserFieldValue != null) {
-					pageDefinition.setDateCreated(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
-				if (jsonParserFieldValue != null) {
-					pageDefinition.setDateModified(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "friendlyURLPath")) {
+			if (Objects.equals(jsonParserFieldName, "friendlyURLPath")) {
 				if (jsonParserFieldValue != null) {
 					pageDefinition.setFriendlyURLPath(
 						(String)jsonParserFieldValue);
@@ -414,17 +278,6 @@ public class PageDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageDefinition.setId(
 						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "keywords")) {
-				if (jsonParserFieldValue != null) {
-					pageDefinition.setKeywords(
-						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					pageDefinition.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "pageElements")) {

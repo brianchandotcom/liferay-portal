@@ -17,7 +17,6 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.PageDefinitionSerDes;
 
-import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -28,69 +27,6 @@ import javax.annotation.Generated;
  */
 @Generated("")
 public class PageDefinition {
-
-	public Creator getCreator() {
-		return creator;
-	}
-
-	public void setCreator(Creator creator) {
-		this.creator = creator;
-	}
-
-	public void setCreator(
-		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
-
-		try {
-			creator = creatorUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Creator creator;
-
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public void setDateCreated(
-		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
-
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Date dateCreated;
-
-	public Date getDateModified() {
-		return dateModified;
-	}
-
-	public void setDateModified(Date dateModified) {
-		this.dateModified = dateModified;
-	}
-
-	public void setDateModified(
-		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
-
-		try {
-			dateModified = dateModifiedUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Date dateModified;
 
 	public String getFriendlyURLPath() {
 		return friendlyURLPath;
@@ -131,46 +67,6 @@ public class PageDefinition {
 	}
 
 	protected Long id;
-
-	public String[] getKeywords() {
-		return keywords;
-	}
-
-	public void setKeywords(String[] keywords) {
-		this.keywords = keywords;
-	}
-
-	public void setKeywords(
-		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
-
-		try {
-			keywords = keywordsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String[] keywords;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String name;
 
 	public PageElement[] getPageElements() {
 		return pageElements;

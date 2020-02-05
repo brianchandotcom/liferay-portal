@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.PageTemplateDefinition;
+import com.liferay.headless.delivery.client.dto.v1_0.PageTemplate;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -33,24 +33,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class PageTemplateDefinitionSerDes {
+public class PageTemplateSerDes {
 
-	public static PageTemplateDefinition toDTO(String json) {
-		PageTemplateDefinitionJSONParser pageTemplateDefinitionJSONParser =
-			new PageTemplateDefinitionJSONParser();
+	public static PageTemplate toDTO(String json) {
+		PageTemplateJSONParser pageTemplateJSONParser =
+			new PageTemplateJSONParser();
 
-		return pageTemplateDefinitionJSONParser.parseToDTO(json);
+		return pageTemplateJSONParser.parseToDTO(json);
 	}
 
-	public static PageTemplateDefinition[] toDTOs(String json) {
-		PageTemplateDefinitionJSONParser pageTemplateDefinitionJSONParser =
-			new PageTemplateDefinitionJSONParser();
+	public static PageTemplate[] toDTOs(String json) {
+		PageTemplateJSONParser pageTemplateJSONParser =
+			new PageTemplateJSONParser();
 
-		return pageTemplateDefinitionJSONParser.parseToDTOs(json);
+		return pageTemplateJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(PageTemplateDefinition pageTemplateDefinition) {
-		if (pageTemplateDefinition == null) {
+	public static String toJSON(PageTemplate pageTemplate) {
+		if (pageTemplate == null) {
 			return "null";
 		}
 
@@ -61,7 +61,7 @@ public class PageTemplateDefinitionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (pageTemplateDefinition.getCollectionName() != null) {
+		if (pageTemplate.getCollectionName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -70,22 +70,22 @@ public class PageTemplateDefinitionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(pageTemplateDefinition.getCollectionName()));
+			sb.append(_escape(pageTemplate.getCollectionName()));
 
 			sb.append("\"");
 		}
 
-		if (pageTemplateDefinition.getCreator() != null) {
+		if (pageTemplate.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"creator\": ");
 
-			sb.append(String.valueOf(pageTemplateDefinition.getCreator()));
+			sb.append(String.valueOf(pageTemplate.getCreator()));
 		}
 
-		if (pageTemplateDefinition.getDateCreated() != null) {
+		if (pageTemplate.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -95,13 +95,12 @@ public class PageTemplateDefinitionSerDes {
 			sb.append("\"");
 
 			sb.append(
-				liferayToJSONDateFormat.format(
-					pageTemplateDefinition.getDateCreated()));
+				liferayToJSONDateFormat.format(pageTemplate.getDateCreated()));
 
 			sb.append("\"");
 		}
 
-		if (pageTemplateDefinition.getDateModified() != null) {
+		if (pageTemplate.getDateModified() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -111,23 +110,46 @@ public class PageTemplateDefinitionSerDes {
 			sb.append("\"");
 
 			sb.append(
-				liferayToJSONDateFormat.format(
-					pageTemplateDefinition.getDateModified()));
+				liferayToJSONDateFormat.format(pageTemplate.getDateModified()));
 
 			sb.append("\"");
 		}
 
-		if (pageTemplateDefinition.getId() != null) {
+		if (pageTemplate.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(pageTemplateDefinition.getId());
+			sb.append(pageTemplate.getId());
 		}
 
-		if (pageTemplateDefinition.getName() != null) {
+		if (pageTemplate.getKeywords() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"keywords\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pageTemplate.getKeywords().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(pageTemplate.getKeywords()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < pageTemplate.getKeywords().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (pageTemplate.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -136,20 +158,19 @@ public class PageTemplateDefinitionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(pageTemplateDefinition.getName()));
+			sb.append(_escape(pageTemplate.getName()));
 
 			sb.append("\"");
 		}
 
-		if (pageTemplateDefinition.getPageDefinition() != null) {
+		if (pageTemplate.getPageDefinition() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"pageDefinition\": ");
 
-			sb.append(
-				String.valueOf(pageTemplateDefinition.getPageDefinition()));
+			sb.append(String.valueOf(pageTemplate.getPageDefinition()));
 		}
 
 		sb.append("}");
@@ -158,16 +179,14 @@ public class PageTemplateDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		PageTemplateDefinitionJSONParser pageTemplateDefinitionJSONParser =
-			new PageTemplateDefinitionJSONParser();
+		PageTemplateJSONParser pageTemplateJSONParser =
+			new PageTemplateJSONParser();
 
-		return pageTemplateDefinitionJSONParser.parseToMap(json);
+		return pageTemplateJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		PageTemplateDefinition pageTemplateDefinition) {
-
-		if (pageTemplateDefinition == null) {
+	public static Map<String, String> toMap(PageTemplate pageTemplate) {
+		if (pageTemplate == null) {
 			return null;
 		}
 
@@ -176,116 +195,125 @@ public class PageTemplateDefinitionSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (pageTemplateDefinition.getCollectionName() == null) {
+		if (pageTemplate.getCollectionName() == null) {
 			map.put("collectionName", null);
 		}
 		else {
 			map.put(
 				"collectionName",
-				String.valueOf(pageTemplateDefinition.getCollectionName()));
+				String.valueOf(pageTemplate.getCollectionName()));
 		}
 
-		if (pageTemplateDefinition.getCreator() == null) {
+		if (pageTemplate.getCreator() == null) {
 			map.put("creator", null);
 		}
 		else {
-			map.put(
-				"creator", String.valueOf(pageTemplateDefinition.getCreator()));
+			map.put("creator", String.valueOf(pageTemplate.getCreator()));
 		}
 
 		map.put(
 			"dateCreated",
-			liferayToJSONDateFormat.format(
-				pageTemplateDefinition.getDateCreated()));
+			liferayToJSONDateFormat.format(pageTemplate.getDateCreated()));
 
 		map.put(
 			"dateModified",
-			liferayToJSONDateFormat.format(
-				pageTemplateDefinition.getDateModified()));
+			liferayToJSONDateFormat.format(pageTemplate.getDateModified()));
 
-		if (pageTemplateDefinition.getId() == null) {
+		if (pageTemplate.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(pageTemplateDefinition.getId()));
+			map.put("id", String.valueOf(pageTemplate.getId()));
 		}
 
-		if (pageTemplateDefinition.getName() == null) {
+		if (pageTemplate.getKeywords() == null) {
+			map.put("keywords", null);
+		}
+		else {
+			map.put("keywords", String.valueOf(pageTemplate.getKeywords()));
+		}
+
+		if (pageTemplate.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(pageTemplateDefinition.getName()));
+			map.put("name", String.valueOf(pageTemplate.getName()));
 		}
 
-		if (pageTemplateDefinition.getPageDefinition() == null) {
+		if (pageTemplate.getPageDefinition() == null) {
 			map.put("pageDefinition", null);
 		}
 		else {
 			map.put(
 				"pageDefinition",
-				String.valueOf(pageTemplateDefinition.getPageDefinition()));
+				String.valueOf(pageTemplate.getPageDefinition()));
 		}
 
 		return map;
 	}
 
-	public static class PageTemplateDefinitionJSONParser
-		extends BaseJSONParser<PageTemplateDefinition> {
+	public static class PageTemplateJSONParser
+		extends BaseJSONParser<PageTemplate> {
 
 		@Override
-		protected PageTemplateDefinition createDTO() {
-			return new PageTemplateDefinition();
+		protected PageTemplate createDTO() {
+			return new PageTemplate();
 		}
 
 		@Override
-		protected PageTemplateDefinition[] createDTOArray(int size) {
-			return new PageTemplateDefinition[size];
+		protected PageTemplate[] createDTOArray(int size) {
+			return new PageTemplate[size];
 		}
 
 		@Override
 		protected void setField(
-			PageTemplateDefinition pageTemplateDefinition,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			PageTemplate pageTemplate, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "collectionName")) {
 				if (jsonParserFieldValue != null) {
-					pageTemplateDefinition.setCollectionName(
+					pageTemplate.setCollectionName(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
-					pageTemplateDefinition.setCreator(
+					pageTemplate.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
-					pageTemplateDefinition.setDateCreated(
+					pageTemplate.setDateCreated(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
-					pageTemplateDefinition.setDateModified(
+					pageTemplate.setDateModified(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					pageTemplateDefinition.setId(
+					pageTemplate.setId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "keywords")) {
+				if (jsonParserFieldValue != null) {
+					pageTemplate.setKeywords(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					pageTemplateDefinition.setName(
-						(String)jsonParserFieldValue);
+					pageTemplate.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "pageDefinition")) {
 				if (jsonParserFieldValue != null) {
-					pageTemplateDefinition.setPageDefinition(
+					pageTemplate.setPageDefinition(
 						PageDefinitionSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}

@@ -93,3 +93,7 @@
 		overflow: auto;
 	}
 }
+
+.modal-open .modal {
+	overflow: auto !important;
+}

@@ -8,7 +8,7 @@ PropertiesDefinitionKeysCheck | Miscellaneous | |
 PropertiesDependenciesFileCheck | Miscellaneous | |
 PropertiesEmptyLinesCheck | Miscellaneous | |
 PropertiesImportedFilesContentCheck | Miscellaneous | |
-PropertiesLanguageKeysCheck | Miscellaneous | |
+[PropertiesLanguageKeysCheck](checks/properties_language_keys_check.markdown) | Miscellaneous | |
 PropertiesLanguageKeysOrderCheck | Miscellaneous | |
 PropertiesLiferayPluginPackageFileCheck | Miscellaneous | |
 PropertiesLiferayPluginPackageLiferayVersionsCheck | Miscellaneous | |

@@ -13,24 +13,24 @@ AssertEqualsCheck | Miscellaneous | .java | |
 AttributeOrderCheck | Miscellaneous | .java | |
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/config_blocks.html#AvoidNestedBlocks) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | Finds nested blocks (blocks that are used freely in the code). |
 [AvoidStarImportCheck](https://checkstyle.sourceforge.io/config_imports.html#AvoidStarImport) | Miscellaneous | .java | Checks that there are no import statements that use the * notation. |
-BNDBundleActivatorCheck | Miscellaneous | .bnd | |
+[BNDBundleActivatorCheck](checks/bnd_bundle_activator_check.markdown) | Miscellaneous | .bnd | |
 BNDBundleCheck | Miscellaneous | .bnd | |
-BNDBundleInformationCheck | Miscellaneous | .bnd | |
+[BNDBundleInformationCheck](checks/bnd_bundle_information_check.markdown) | Miscellaneous | .bnd | |
 BNDCapabilityCheck | Miscellaneous | .bnd | |
-BNDDefinitionKeysCheck | Miscellaneous | .bnd | |
+[BNDDefinitionKeysCheck](checks/bnd_definition_keys_check.markdown) | Miscellaneous | .bnd | |
 BNDDeprecatedAppBNDsCheck | Miscellaneous | .bnd | |
-BNDDirectoryNameCheck | Miscellaneous | .bnd | |
-BNDExportsCheck | Miscellaneous | .bnd | |
+[BNDDirectoryNameCheck](checks/bnd_directory_name_check.markdown) | Miscellaneous | .bnd | |
+[BNDExportsCheck](checks/bnd_exports_check.markdown) | Miscellaneous | .bnd | |
 BNDImportsCheck | Miscellaneous | .bnd | |
-BNDIncludeResourceCheck | Miscellaneous | .bnd | |
+[BNDIncludeResourceCheck](checks/bnd_include_resource_check.markdown) | Miscellaneous | .bnd | |
 BNDLineBreaksCheck | Miscellaneous | .bnd | |
 BNDMultipleAppBNDsCheck | Miscellaneous | .bnd | |
 BNDRangeCheck | Miscellaneous | .bnd | |
 BNDRunInstructionsOrderCheck | Miscellaneous | .bndrun | |
-BNDSchemaVersionCheck | Miscellaneous | .bnd | |
+[BNDSchemaVersionCheck](checks/bnd_schema_version_check.markdown) | Miscellaneous | .bnd | |
 BNDStylingCheck | Miscellaneous | .bnd | |
 BNDSuiteCheck | Miscellaneous | .bnd | |
-BNDWebContextPathCheck | Miscellaneous | .bnd | |
+[BNDWebContextPathCheck](checks/bnd_web_context_path_check.markdown) | Miscellaneous | .bnd | |
 BNDWhitespaceCheck | Miscellaneous | .bnd | |
 BuilderCheck | Miscellaneous | .java | |
 CDNCheck | Miscellaneous | | |
@@ -77,7 +77,7 @@ GetterUtilCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 GradleBlockOrderCheck | Miscellaneous | .gradle | |
 GradleBodyCheck | Miscellaneous | .gradle | |
 GradleDependenciesCheck | Miscellaneous | .gradle | |
-GradleDependencyArtifactsCheck | Miscellaneous | .gradle | |
+[GradleDependencyArtifactsCheck](checks/gradle_dependency_artifacts_check.markdown) | Miscellaneous | .gradle | |
 GradleDependencyConfigurationCheck | Miscellaneous | .gradle | |
 GradleDependencyVersionCheck | Miscellaneous | .gradle | |
 GradleExportedPackageDependenciesCheck | Miscellaneous | .gradle | |
@@ -88,11 +88,11 @@ GradlePropertiesCheck | Miscellaneous | .gradle | |
 GradleProvidedDependenciesCheck | Miscellaneous | .gradle | |
 GradleRequiredDependenciesCheck | Miscellaneous | .gradle | |
 GradleStylingCheck | Miscellaneous | .gradle | |
-GradleTaskCreationCheck | Miscellaneous | .gradle | |
+[GradleTaskCreationCheck](checks/gradle_task_creation_check.markdown) | Miscellaneous | .gradle | |
 GradleTestDependencyVersionCheck | Miscellaneous | .gradle | |
 HTMLEmptyLinesCheck | Miscellaneous | .html | |
 HTMLWhitespaceCheck | Miscellaneous | .html | |
-IfStatementCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[IfStatementCheck](checks/if_statement_check.markdown) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 IncorrectFileLocationCheck | Miscellaneous | | |
 InstanceofOrderCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 JSLodashDependencyCheck | Miscellaneous | .js or .jsx | |
@@ -108,7 +108,7 @@ JSONUtilCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 JSONValidationCheck | Miscellaneous | .json or .npmbridgerc | |
 JSONWhitespaceCheck | Miscellaneous | .json or .npmbridgerc | |
 JSPButtonTagCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
-JSPDefineObjectsCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
+[JSPDefineObjectsCheck](checks/jsp_define_objects_check.markdown) | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPEmptyLinesCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPExceptionOrderCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPFunctionNameCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
@@ -124,7 +124,7 @@ JSPMissingTaglibsCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPModuleIllegalImportsCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPParenthesesCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPRedirectBackURLCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
-JSPSendRedirectCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
+[JSPSendRedirectCheck](checks/jsp_send_redirect_check.markdown) | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPServiceUtilCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPSessionKeysCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPStringBundlerCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
@@ -140,7 +140,7 @@ JSPXSSVulnerabilitiesCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSStylingCheck | Miscellaneous | .js or .jsx | |
 JSWhitespaceCheck | Miscellaneous | .js or .jsx | |
 Java2HTMLCheck | Miscellaneous | .java | |
-JavaAPISignatureCheck | Miscellaneous | .java | |
+[JavaAPISignatureCheck](checks/java_api_signature_check.markdown) | Miscellaneous | .java | |
 JavaAggregateTestRuleParameterOrderCheck | Miscellaneous | .java | |
 JavaAnnotationDefaultAttributeCheck | Miscellaneous | .java | |
 JavaAnnotationsCheck | Miscellaneous | .java | |
@@ -149,13 +149,13 @@ JavaAssertEqualsCheck | Miscellaneous | .java | |
 JavaBooleanStatementCheck | Miscellaneous | .java | |
 JavaBooleanUsageCheck | Miscellaneous | .java | |
 JavaCleanUpMethodSuperCleanUpCheck | Miscellaneous | .java | |
-JavaCleanUpMethodVariablesCheck | Miscellaneous | .java | |
-JavaCollatorUtilCheck | Miscellaneous | .java | |
+[JavaCleanUpMethodVariablesCheck](checks/java_clean_up_method_variables_check.markdown) | Miscellaneous | .java | |
+[JavaCollatorUtilCheck](checks/java_collator_util_check.markdown) | Miscellaneous | .java | |
 JavaComponentActivateCheck | Miscellaneous | .java | |
 JavaComponentAnnotationsCheck | Miscellaneous | .java | |
-JavaConfigurationAdminCheck | Miscellaneous | .java | |
-JavaConfigurationCategoryCheck | Miscellaneous | .java | |
-JavaConstructorParametersCheck | Miscellaneous | .java | |
+[JavaConfigurationAdminCheck](checks/java_configuration_admin_check.markdown) | Miscellaneous | .java | |
+[JavaConfigurationCategoryCheck](checks/java_configuration_category_check.markdown) | Miscellaneous | .java | |
+[JavaConstructorParametersCheck](checks/java_constructor_parameters_check.markdown) | Miscellaneous | .java | |
 JavaConstructorSuperCallCheck | Miscellaneous | .java | |
 JavaDataAccessConnectionCheck | Miscellaneous | .java | |
 JavaDeprecatedJavadocCheck | Miscellaneous | .java | |
@@ -166,28 +166,28 @@ JavaElseStatementCheck | Miscellaneous | .java | |
 JavaEmptyLineAfterSuperCallCheck | Miscellaneous | .java | |
 JavaEmptyLinesCheck | Miscellaneous | .java | |
 JavaExceptionCheck | Miscellaneous | .java | |
-JavaFinderCacheCheck | Miscellaneous | .java | |
+[JavaFinderCacheCheck](checks/java_finder_cache_check.markdown) | Miscellaneous | .java | |
 JavaFinderImplCustomSQLCheck | Miscellaneous | .java | |
 [JavaForLoopCheck](checks/java_for_loop_check.markdown) | Styling | .java | Checks if a Enhanced For Loop can be used instead of a Simple For Loop |
 JavaHibernateSQLCheck | Miscellaneous | .java | |
 JavaIOExceptionCheck | Miscellaneous | .java | |
 JavaIllegalImportsCheck | Miscellaneous | .java | |
 JavaImportsCheck | Miscellaneous | .java | |
-JavaIndexableCheck | Miscellaneous | .java | |
+[JavaIndexableCheck](checks/java_indexable_check.markdown) | Miscellaneous | .java | |
 JavaInnerClassImportsCheck | Miscellaneous | .java | |
 JavaInterfaceCheck | Miscellaneous | .java | |
 JavaInternalPackageCheck | Miscellaneous | .java | |
 JavaJSPDynamicIncludeCheck | Miscellaneous | .java | |
-JavaLocalSensitiveComparisonCheck | Miscellaneous | .java | |
+[JavaLocalSensitiveComparisonCheck](checks/java_local_sensitive_comparison_check.markdown) | Miscellaneous | .java | |
 JavaLogClassNameCheck | Miscellaneous | .java | |
 JavaLogLevelCheck | Miscellaneous | .java | |
 JavaLogParametersCheck | Miscellaneous | .java | |
 JavaLongLinesCheck | Miscellaneous | .java | |
 JavaMapBuilderGenericsCheck | Miscellaneous | .java | |
-JavaMetaAnnotationsCheck | Miscellaneous | .java | |
+[JavaMetaAnnotationsCheck](checks/java_meta_annotations_check.markdown) | Miscellaneous | .java | |
 JavaModifiedServiceMethodCheck | Miscellaneous | .java | |
-JavaModuleComponentCheck | Miscellaneous | .java | |
-JavaModuleExposureCheck | Miscellaneous | .java | |
+[JavaModuleComponentCheck](checks/java_module_component_check.markdown) | Miscellaneous | .java | |
+[JavaModuleExposureCheck](checks/java_module_exposure_check.markdown) | Miscellaneous | .java | |
 JavaModuleExtendedObjectClassDefinitionCheck | Miscellaneous | .java | |
 JavaModuleIllegalImportsCheck | Miscellaneous | .java | |
 JavaModuleInternalImportsCheck | Miscellaneous | .java | |
@@ -195,28 +195,28 @@ JavaModuleJavaxPortletInitParamTemplatePathCheck | Miscellaneous | .java | |
 JavaModuleServiceProxyFactoryCheck | Miscellaneous | .java | |
 JavaModuleServiceReferenceCheck | Miscellaneous | .java | |
 JavaModuleTestCheck | Miscellaneous | .java | |
-JavaMultiPlusConcatCheck | Miscellaneous | .java | |
+[JavaMultiPlusConcatCheck](checks/java_multi_plus_concat_check.markdown) | Miscellaneous | .java | |
 JavaOSGiReferenceCheck | Miscellaneous | .java | |
-JavaPackagePathCheck | Miscellaneous | .java | |
+[JavaPackagePathCheck](checks/java_package_path_check.markdown) | Miscellaneous | .java | |
 JavaParameterAnnotationsCheck | Miscellaneous | .java | |
-JavaProcessCallableCheck | Miscellaneous | .java | |
+[JavaProcessCallableCheck](checks/java_process_callable_check.markdown) | Miscellaneous | .java | |
 JavaProviderTypeAnnotationCheck | Miscellaneous | .java | |
 JavaRedundantConstructorCheck | Miscellaneous | .java | |
 JavaReleaseInfoCheck | Miscellaneous | .java | |
-JavaResultSetCheck | Miscellaneous | .java | |
+[JavaResultSetCheck](checks/java_result_set_check.markdown) | Miscellaneous | .java | |
 JavaReturnStatementCheck | Miscellaneous | .java | |
-JavaSeeAnnotationCheck | Miscellaneous | .java | |
+[JavaSeeAnnotationCheck](checks/java_see_annotation_check.markdown) | Miscellaneous | .java | |
 JavaServiceImplCheck | Miscellaneous | .java | |
 JavaServiceObjectCheck | Miscellaneous | .java | |
 JavaServiceTrackerFactoryCheck | Miscellaneous | .java | |
-JavaServiceUtilCheck | Miscellaneous | .java | |
+[JavaServiceUtilCheck](checks/java_service_util_check.markdown) | Miscellaneous | .java | |
 JavaSessionCheck | Miscellaneous | .java | |
 JavaSignatureParametersCheck | Miscellaneous | .java | |
 JavaStagedModelDataHandlerCheck | Miscellaneous | .java | |
 JavaStaticBlockCheck | Miscellaneous | .java | |
-JavaStaticImportsCheck | Miscellaneous | .java | |
+[JavaStaticImportsCheck](checks/java_static_imports_check.markdown) | Miscellaneous | .java | |
 JavaStaticVariableDependencyCheck | Miscellaneous | .java | |
-JavaStopWatchCheck | Miscellaneous | .java | |
+[JavaStopWatchCheck](checks/java_stop_watch_check.markdown) | Miscellaneous | .java | |
 JavaStringBundlerConcatCheck | Miscellaneous | .java | |
 JavaStringBundlerInitialCapacityCheck | Miscellaneous | .java | |
 JavaStylingCheck | Miscellaneous | .java | |
@@ -306,7 +306,7 @@ PropertiesDefinitionKeysCheck | Miscellaneous | .properties | |
 PropertiesDependenciesFileCheck | Miscellaneous | .properties | |
 PropertiesEmptyLinesCheck | Miscellaneous | .properties | |
 PropertiesImportedFilesContentCheck | Miscellaneous | .properties | |
-PropertiesLanguageKeysCheck | Miscellaneous | .properties | |
+[PropertiesLanguageKeysCheck](checks/properties_language_keys_check.markdown) | Miscellaneous | .properties | |
 PropertiesLanguageKeysOrderCheck | Miscellaneous | .properties | |
 PropertiesLiferayPluginPackageFileCheck | Miscellaneous | .properties | |
 PropertiesLiferayPluginPackageLiferayVersionsCheck | Miscellaneous | .properties | |
@@ -324,7 +324,7 @@ RedundantBranchingStatementCheck | Miscellaneous | .java | |
 RedundantVariableDeclarationCheck | Miscellaneous | .java | |
 ReferenceAnnotationCheck | Miscellaneous | .java | |
 [RequireThisCheck](https://checkstyle.sourceforge.io/config_coding.html#RequireThis) | Miscellaneous | .java | Checks that references to instance variables and methods of the present object are explicitly of the form 'this.varName' or 'this.methodName(args)' and that those references don't rely on the default behavior when 'this.' is absent. |
-ResourceBundleCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[ResourceBundleCheck](checks/resource_bundle_check.markdown) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 SQLEmptyLinesCheck | Miscellaneous | .sql | |
 [SQLLongNamesCheck](checks/sql_long_names_check.markdown) | Bug Prevention | .sql | Checks for table and column names that exceed 30 characters |
 SQLStylingCheck | Miscellaneous | .sql | |
@@ -358,7 +358,7 @@ UnusedMethodCheck | Miscellaneous | .java | |
 UnusedParameterCheck | Miscellaneous | .java | |
 UnusedVariableCheck | Miscellaneous | .java | |
 UnwrappedVariableInfoCheck | Miscellaneous | .java | |
-ValidatorEqualsCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[ValidatorEqualsCheck](checks/validator_equals_check.markdown) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 ValidatorIsNullCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 VariableDeclarationAsUsedCheck | Miscellaneous | .java | |
 VariableNameCheck | Miscellaneous | .java | |
@@ -388,7 +388,7 @@ XMLPortletPreferencesFileCheck | Miscellaneous | .action, .function, .jrxml, .ma
 XMLPoshiFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLProjectElementCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLResourceActionsFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
-XMLServiceEntityNameCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
+[XMLServiceEntityNameCheck](checks/xml_service_entity_name_check.markdown) | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLServiceFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLServiceReferenceCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLSolrSchemaFileCheck | Miscellaneous | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |

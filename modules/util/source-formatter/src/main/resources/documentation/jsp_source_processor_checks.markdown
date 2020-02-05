@@ -17,12 +17,12 @@ EmptyCollectionCheck | Miscellaneous | |
 ExceptionMessageCheck | Miscellaneous | |
 FactoryCheck | Miscellaneous | |
 GetterUtilCheck | Miscellaneous | |
-IfStatementCheck | Miscellaneous | |
+[IfStatementCheck](checks/if_statement_check.markdown) | Miscellaneous | |
 InstanceofOrderCheck | Miscellaneous | |
 JSONNamingCheck | Miscellaneous | |
 JSONUtilCheck | Miscellaneous | |
 JSPButtonTagCheck | Miscellaneous | |
-JSPDefineObjectsCheck | Miscellaneous | |
+[JSPDefineObjectsCheck](checks/jsp_define_objects_check.markdown) | Miscellaneous | |
 JSPEmptyLinesCheck | Miscellaneous | |
 JSPExceptionOrderCheck | Miscellaneous | |
 JSPFunctionNameCheck | Miscellaneous | |
@@ -38,7 +38,7 @@ JSPMissingTaglibsCheck | Miscellaneous | |
 JSPModuleIllegalImportsCheck | Miscellaneous | |
 JSPParenthesesCheck | Miscellaneous | |
 JSPRedirectBackURLCheck | Miscellaneous | |
-JSPSendRedirectCheck | Miscellaneous | |
+[JSPSendRedirectCheck](checks/jsp_send_redirect_check.markdown) | Miscellaneous | |
 JSPServiceUtilCheck | Miscellaneous | |
 JSPSessionKeysCheck | Miscellaneous | |
 JSPStringBundlerCheck | Miscellaneous | |
@@ -83,7 +83,7 @@ PersistenceCallCheck | Miscellaneous | |
 PlusStatementCheck | Miscellaneous | |
 PrimitiveWrapperInstantiationCheck | Miscellaneous | |
 PrincipalExceptionCheck | Miscellaneous | |
-ResourceBundleCheck | Miscellaneous | |
+[ResourceBundleCheck](checks/resource_bundle_check.markdown) | Miscellaneous | |
 SemiColonCheck | Miscellaneous | |
 [StaticVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#StaticVariableName) | Miscellaneous | Checks that static, non-final variable names conform to a specified pattern. |
 StringBundlerNamingCheck | Naming Conventions | Checks for consistent naming on variables of type 'StringBundler' |
@@ -94,7 +94,7 @@ TernaryOperatorCheck | Miscellaneous | |
 [TypeNameCheck](https://checkstyle.sourceforge.io/config_naming.html#TypeName) | Miscellaneous | Checks that type names conform to a specified pattern. |
 [UnnecessaryParenthesesCheck](https://checkstyle.sourceforge.io/config_coding.html#UnnecessaryParentheses) | Miscellaneous | Checks if unnecessary parentheses are used in a statement or expression. |
 UnparameterizedClassCheck | Miscellaneous | |
-ValidatorEqualsCheck | Miscellaneous | |
+[ValidatorEqualsCheck](checks/validator_equals_check.markdown) | Miscellaneous | |
 ValidatorIsNullCheck | Miscellaneous | |
 [WhitespaceAfterCheck](https://checkstyle.sourceforge.io/config_whitespace.html#WhitespaceAfter) | Miscellaneous | Checks that a token is followed by whitespace, with the exception that it does not check for whitespace after the semicolon of an empty for iterator. |
 [WhitespaceAroundCheck](https://checkstyle.sourceforge.io/config_whitespace.html#WhitespaceAround) | Miscellaneous | Checks that a token is surrounded by whitespace. |

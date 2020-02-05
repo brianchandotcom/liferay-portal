@@ -12,24 +12,24 @@ AssertEqualsCheck | .java | |
 AttributeOrderCheck | .java | |
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/config_blocks.html#AvoidNestedBlocks) | .java, .jsp, .jspf, .tag, .tpl or .vm | Finds nested blocks (blocks that are used freely in the code). |
 [AvoidStarImportCheck](https://checkstyle.sourceforge.io/config_imports.html#AvoidStarImport) | .java | Checks that there are no import statements that use the * notation. |
-BNDBundleActivatorCheck | .bnd | |
+[BNDBundleActivatorCheck](checks/bnd_bundle_activator_check.markdown) | .bnd | |
 BNDBundleCheck | .bnd | |
-BNDBundleInformationCheck | .bnd | |
+[BNDBundleInformationCheck](checks/bnd_bundle_information_check.markdown) | .bnd | |
 BNDCapabilityCheck | .bnd | |
-BNDDefinitionKeysCheck | .bnd | |
+[BNDDefinitionKeysCheck](checks/bnd_definition_keys_check.markdown) | .bnd | |
 BNDDeprecatedAppBNDsCheck | .bnd | |
-BNDDirectoryNameCheck | .bnd | |
-BNDExportsCheck | .bnd | |
+[BNDDirectoryNameCheck](checks/bnd_directory_name_check.markdown) | .bnd | |
+[BNDExportsCheck](checks/bnd_exports_check.markdown) | .bnd | |
 BNDImportsCheck | .bnd | |
-BNDIncludeResourceCheck | .bnd | |
+[BNDIncludeResourceCheck](checks/bnd_include_resource_check.markdown) | .bnd | |
 BNDLineBreaksCheck | .bnd | |
 BNDMultipleAppBNDsCheck | .bnd | |
 BNDRangeCheck | .bnd | |
 BNDRunInstructionsOrderCheck | .bndrun | |
-BNDSchemaVersionCheck | .bnd | |
+[BNDSchemaVersionCheck](checks/bnd_schema_version_check.markdown) | .bnd | |
 BNDStylingCheck | .bnd | |
 BNDSuiteCheck | .bnd | |
-BNDWebContextPathCheck | .bnd | |
+[BNDWebContextPathCheck](checks/bnd_web_context_path_check.markdown) | .bnd | |
 BNDWhitespaceCheck | .bnd | |
 BuilderCheck | .java | |
 CDNCheck | | |
@@ -76,7 +76,7 @@ GetterUtilCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 GradleBlockOrderCheck | .gradle | |
 GradleBodyCheck | .gradle | |
 GradleDependenciesCheck | .gradle | |
-GradleDependencyArtifactsCheck | .gradle | |
+[GradleDependencyArtifactsCheck](checks/gradle_dependency_artifacts_check.markdown) | .gradle | |
 GradleDependencyConfigurationCheck | .gradle | |
 GradleDependencyVersionCheck | .gradle | |
 GradleExportedPackageDependenciesCheck | .gradle | |
@@ -87,11 +87,11 @@ GradlePropertiesCheck | .gradle | |
 GradleProvidedDependenciesCheck | .gradle | |
 GradleRequiredDependenciesCheck | .gradle | |
 GradleStylingCheck | .gradle | |
-GradleTaskCreationCheck | .gradle | |
+[GradleTaskCreationCheck](checks/gradle_task_creation_check.markdown) | .gradle | |
 GradleTestDependencyVersionCheck | .gradle | |
 HTMLEmptyLinesCheck | .html | |
 HTMLWhitespaceCheck | .html | |
-IfStatementCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[IfStatementCheck](checks/if_statement_check.markdown) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 IncorrectFileLocationCheck | | |
 InstanceofOrderCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 JSLodashDependencyCheck | .js or .jsx | |
@@ -107,7 +107,7 @@ JSONUtilCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 JSONValidationCheck | .json or .npmbridgerc | |
 JSONWhitespaceCheck | .json or .npmbridgerc | |
 JSPButtonTagCheck | .jsp, .jspf, .tag, .tpl or .vm | |
-JSPDefineObjectsCheck | .jsp, .jspf, .tag, .tpl or .vm | |
+[JSPDefineObjectsCheck](checks/jsp_define_objects_check.markdown) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPEmptyLinesCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPExceptionOrderCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPFunctionNameCheck | .jsp, .jspf, .tag, .tpl or .vm | |
@@ -123,7 +123,7 @@ JSPMissingTaglibsCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPModuleIllegalImportsCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPParenthesesCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPRedirectBackURLCheck | .jsp, .jspf, .tag, .tpl or .vm | |
-JSPSendRedirectCheck | .jsp, .jspf, .tag, .tpl or .vm | |
+[JSPSendRedirectCheck](checks/jsp_send_redirect_check.markdown) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPServiceUtilCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPSessionKeysCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPStringBundlerCheck | .jsp, .jspf, .tag, .tpl or .vm | |
@@ -139,7 +139,7 @@ JSPXSSVulnerabilitiesCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSStylingCheck | .js or .jsx | |
 JSWhitespaceCheck | .js or .jsx | |
 Java2HTMLCheck | .java | |
-JavaAPISignatureCheck | .java | |
+[JavaAPISignatureCheck](checks/java_api_signature_check.markdown) | .java | |
 JavaAggregateTestRuleParameterOrderCheck | .java | |
 JavaAnnotationDefaultAttributeCheck | .java | |
 JavaAnnotationsCheck | .java | |
@@ -148,13 +148,13 @@ JavaAssertEqualsCheck | .java | |
 JavaBooleanStatementCheck | .java | |
 JavaBooleanUsageCheck | .java | |
 JavaCleanUpMethodSuperCleanUpCheck | .java | |
-JavaCleanUpMethodVariablesCheck | .java | |
-JavaCollatorUtilCheck | .java | |
+[JavaCleanUpMethodVariablesCheck](checks/java_clean_up_method_variables_check.markdown) | .java | |
+[JavaCollatorUtilCheck](checks/java_collator_util_check.markdown) | .java | |
 JavaComponentActivateCheck | .java | |
 JavaComponentAnnotationsCheck | .java | |
-JavaConfigurationAdminCheck | .java | |
-JavaConfigurationCategoryCheck | .java | |
-JavaConstructorParametersCheck | .java | |
+[JavaConfigurationAdminCheck](checks/java_configuration_admin_check.markdown) | .java | |
+[JavaConfigurationCategoryCheck](checks/java_configuration_category_check.markdown) | .java | |
+[JavaConstructorParametersCheck](checks/java_constructor_parameters_check.markdown) | .java | |
 JavaConstructorSuperCallCheck | .java | |
 JavaDataAccessConnectionCheck | .java | |
 JavaDeprecatedJavadocCheck | .java | |
@@ -165,27 +165,27 @@ JavaElseStatementCheck | .java | |
 JavaEmptyLineAfterSuperCallCheck | .java | |
 JavaEmptyLinesCheck | .java | |
 JavaExceptionCheck | .java | |
-JavaFinderCacheCheck | .java | |
+[JavaFinderCacheCheck](checks/java_finder_cache_check.markdown) | .java | |
 JavaFinderImplCustomSQLCheck | .java | |
 JavaHibernateSQLCheck | .java | |
 JavaIOExceptionCheck | .java | |
 JavaIllegalImportsCheck | .java | |
 JavaImportsCheck | .java | |
-JavaIndexableCheck | .java | |
+[JavaIndexableCheck](checks/java_indexable_check.markdown) | .java | |
 JavaInnerClassImportsCheck | .java | |
 JavaInterfaceCheck | .java | |
 JavaInternalPackageCheck | .java | |
 JavaJSPDynamicIncludeCheck | .java | |
-JavaLocalSensitiveComparisonCheck | .java | |
+[JavaLocalSensitiveComparisonCheck](checks/java_local_sensitive_comparison_check.markdown) | .java | |
 JavaLogClassNameCheck | .java | |
 JavaLogLevelCheck | .java | |
 JavaLogParametersCheck | .java | |
 JavaLongLinesCheck | .java | |
 JavaMapBuilderGenericsCheck | .java | |
-JavaMetaAnnotationsCheck | .java | |
+[JavaMetaAnnotationsCheck](checks/java_meta_annotations_check.markdown) | .java | |
 JavaModifiedServiceMethodCheck | .java | |
-JavaModuleComponentCheck | .java | |
-JavaModuleExposureCheck | .java | |
+[JavaModuleComponentCheck](checks/java_module_component_check.markdown) | .java | |
+[JavaModuleExposureCheck](checks/java_module_exposure_check.markdown) | .java | |
 JavaModuleExtendedObjectClassDefinitionCheck | .java | |
 JavaModuleIllegalImportsCheck | .java | |
 JavaModuleInternalImportsCheck | .java | |
@@ -193,28 +193,28 @@ JavaModuleJavaxPortletInitParamTemplatePathCheck | .java | |
 JavaModuleServiceProxyFactoryCheck | .java | |
 JavaModuleServiceReferenceCheck | .java | |
 JavaModuleTestCheck | .java | |
-JavaMultiPlusConcatCheck | .java | |
+[JavaMultiPlusConcatCheck](checks/java_multi_plus_concat_check.markdown) | .java | |
 JavaOSGiReferenceCheck | .java | |
-JavaPackagePathCheck | .java | |
+[JavaPackagePathCheck](checks/java_package_path_check.markdown) | .java | |
 JavaParameterAnnotationsCheck | .java | |
-JavaProcessCallableCheck | .java | |
+[JavaProcessCallableCheck](checks/java_process_callable_check.markdown) | .java | |
 JavaProviderTypeAnnotationCheck | .java | |
 JavaRedundantConstructorCheck | .java | |
 JavaReleaseInfoCheck | .java | |
-JavaResultSetCheck | .java | |
+[JavaResultSetCheck](checks/java_result_set_check.markdown) | .java | |
 JavaReturnStatementCheck | .java | |
-JavaSeeAnnotationCheck | .java | |
+[JavaSeeAnnotationCheck](checks/java_see_annotation_check.markdown) | .java | |
 JavaServiceImplCheck | .java | |
 JavaServiceObjectCheck | .java | |
 JavaServiceTrackerFactoryCheck | .java | |
-JavaServiceUtilCheck | .java | |
+[JavaServiceUtilCheck](checks/java_service_util_check.markdown) | .java | |
 JavaSessionCheck | .java | |
 JavaSignatureParametersCheck | .java | |
 JavaStagedModelDataHandlerCheck | .java | |
 JavaStaticBlockCheck | .java | |
-JavaStaticImportsCheck | .java | |
+[JavaStaticImportsCheck](checks/java_static_imports_check.markdown) | .java | |
 JavaStaticVariableDependencyCheck | .java | |
-JavaStopWatchCheck | .java | |
+[JavaStopWatchCheck](checks/java_stop_watch_check.markdown) | .java | |
 JavaStringBundlerConcatCheck | .java | |
 JavaStringBundlerInitialCapacityCheck | .java | |
 JavaStylingCheck | .java | |
@@ -302,7 +302,7 @@ PropertiesDefinitionKeysCheck | .properties | |
 PropertiesDependenciesFileCheck | .properties | |
 PropertiesEmptyLinesCheck | .properties | |
 PropertiesImportedFilesContentCheck | .properties | |
-PropertiesLanguageKeysCheck | .properties | |
+[PropertiesLanguageKeysCheck](checks/properties_language_keys_check.markdown) | .properties | |
 PropertiesLanguageKeysOrderCheck | .properties | |
 PropertiesLiferayPluginPackageFileCheck | .properties | |
 PropertiesLiferayPluginPackageLiferayVersionsCheck | .properties | |
@@ -320,7 +320,7 @@ RedundantBranchingStatementCheck | .java | |
 RedundantVariableDeclarationCheck | .java | |
 ReferenceAnnotationCheck | .java | |
 [RequireThisCheck](https://checkstyle.sourceforge.io/config_coding.html#RequireThis) | .java | Checks that references to instance variables and methods of the present object are explicitly of the form 'this.varName' or 'this.methodName(args)' and that those references don't rely on the default behavior when 'this.' is absent. |
-ResourceBundleCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[ResourceBundleCheck](checks/resource_bundle_check.markdown) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 SQLEmptyLinesCheck | .sql | |
 SQLStylingCheck | .sql | |
 SelfReferenceCheck | .java | |
@@ -351,7 +351,7 @@ UnusedMethodCheck | .java | |
 UnusedParameterCheck | .java | |
 UnusedVariableCheck | .java | |
 UnwrappedVariableInfoCheck | .java | |
-ValidatorEqualsCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[ValidatorEqualsCheck](checks/validator_equals_check.markdown) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 ValidatorIsNullCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 VariableDeclarationAsUsedCheck | .java | |
 VariableNameCheck | .java | |
@@ -381,7 +381,7 @@ XMLPortletPreferencesFileCheck | .action, .function, .jrxml, .macro, .pom, .test
 XMLPoshiFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLProjectElementCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLResourceActionsFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
-XMLServiceEntityNameCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
+[XMLServiceEntityNameCheck](checks/xml_service_entity_name_check.markdown) | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLServiceFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLServiceReferenceCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |
 XMLSolrSchemaFileCheck | .action, .function, .jrxml, .macro, .pom, .testcase, .toggle, .wsdl, .xml or .xsd | |

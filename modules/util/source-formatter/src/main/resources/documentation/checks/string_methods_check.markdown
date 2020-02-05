@@ -1,7 +1,6 @@
-## String Methods
+## StringMethodsCheck
 
-Methods that are deal with case sensitivity in `java.util.String` are
-inefficient.
+Methods that deal with case sensitivity in `java.util.String` are inefficient.
 While in reality most Strings contain `ASCII` characters only, the methods will
 use `Unicode` detection.
 

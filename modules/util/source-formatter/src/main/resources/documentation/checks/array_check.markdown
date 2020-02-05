@@ -1,4 +1,4 @@
-## Collections
+## ArrayCheck
 
 To avoid creating unnecessary overhead, we want to avoid using
 `Collection.addAll(Arrays.asList(T...))` or

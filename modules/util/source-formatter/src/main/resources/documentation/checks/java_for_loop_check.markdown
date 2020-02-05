@@ -1,4 +1,4 @@
-## Enhanced For-Loop
+## JavaForLoopCheck
 
 When possible, use an Enhanced For-Loop.
 

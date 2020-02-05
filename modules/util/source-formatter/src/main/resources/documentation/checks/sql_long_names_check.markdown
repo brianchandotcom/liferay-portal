@@ -1,4 +1,4 @@
-## Oracle Naming Rules
+## SQLLongNamesCheck
 
 Names for tables and columns cannot exceed 30 characters, because Oracle only
 supports names up to 30 bytes long.

@@ -10,6 +10,7 @@ create index IX_4C3A286A on LayoutPageTemplateEntry (groupId, layoutPageTemplate
 create index IX_A4733F6B on LayoutPageTemplateEntry (groupId, layoutPageTemplateCollectionId, status);
 create index IX_4BCAC4B0 on LayoutPageTemplateEntry (groupId, layoutPageTemplateCollectionId, type_);
 create unique index IX_C3960EB1 on LayoutPageTemplateEntry (groupId, name[$COLUMN_LENGTH:75$], type_);
+create index IX_85E526A1 on LayoutPageTemplateEntry (groupId, type_, defaultTemplate, status);
 create index IX_1F1BEA76 on LayoutPageTemplateEntry (groupId, type_, status);
 create index IX_A185457E on LayoutPageTemplateEntry (layoutPrototypeId);
 create unique index IX_84D30230 on LayoutPageTemplateEntry (plid);

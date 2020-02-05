@@ -147,6 +147,14 @@ public class LayoutPageTemplateEntryServiceUtil {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 		fetchDefaultLayoutPageTemplateEntry(
+			long groupId, int type, int status) {
+
+		return getService().fetchDefaultLayoutPageTemplateEntry(
+			groupId, type, status);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+		fetchDefaultLayoutPageTemplateEntry(
 			long groupId, long classNameId, long classTypeId) {
 
 		return getService().fetchDefaultLayoutPageTemplateEntry(

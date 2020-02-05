@@ -151,6 +151,15 @@ public class LayoutPageTemplateEntryServiceWrapper
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 		fetchDefaultLayoutPageTemplateEntry(
+			long groupId, int type, int status) {
+
+		return _layoutPageTemplateEntryService.
+			fetchDefaultLayoutPageTemplateEntry(groupId, type, status);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+		fetchDefaultLayoutPageTemplateEntry(
 			long groupId, long classNameId, long classTypeId) {
 
 		return _layoutPageTemplateEntryService.

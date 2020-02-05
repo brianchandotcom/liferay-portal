@@ -116,6 +116,10 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
+		long groupId, int type, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
 		long groupId, long classNameId, long classTypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

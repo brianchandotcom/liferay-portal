@@ -220,7 +220,8 @@ class FloatingToolbar extends Component {
 		if (!event.defaultPrevented) {
 			if (this.selectedPanelId === panelId) {
 				this.selectedPanelId = null;
-			} else {
+			}
+			else {
 				this.selectedPanelId = panelId;
 				this._lastSelectedPanelId = panelId;
 			}
@@ -235,7 +236,8 @@ class FloatingToolbar extends Component {
 	_handlePanelVisibilityOnScroll() {
 		if (!this._isAnchorElementVisible()) {
 			this.selectedPanelId = null;
-		} else {
+		}
+		else {
 			if (this._lastSelectedPanelId && !this.selectedPanelId) {
 				this.selectedPanelId = this._lastSelectedPanelId;
 			}
@@ -288,7 +290,8 @@ class FloatingToolbar extends Component {
 				anchorElementBottom >
 				this._productMenuHeight + this._managementBarHeight
 			);
-		} else {
+		}
+		else {
 			return false;
 		}
 	}
@@ -316,7 +319,8 @@ class FloatingToolbar extends Component {
 				requestAnimationFrame(() => {
 					this._alignPanel();
 				});
-			} else if (this.anchorElement) {
+			}
+			else if (this.anchorElement) {
 				this._alignPanel();
 			}
 		});

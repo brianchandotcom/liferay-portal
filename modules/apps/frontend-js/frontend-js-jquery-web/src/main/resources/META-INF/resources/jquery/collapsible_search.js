@@ -77,7 +77,8 @@
 
 			if (!supportsTransition) {
 				complete.call(instance);
-			} else {
+			}
+			else {
 				basicSearchSubmit.focus();
 			}
 		},

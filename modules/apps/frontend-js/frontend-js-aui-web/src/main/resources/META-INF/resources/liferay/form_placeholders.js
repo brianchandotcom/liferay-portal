@@ -114,7 +114,8 @@ AUI.add(
 							if (value === placeholder) {
 								currentTarget.removeClass(CSS_PLACEHOLDER);
 							}
-						} else if (!value) {
+						}
+						else if (!value) {
 							currentTarget.val(placeholder);
 
 							currentTarget.addClass(CSS_PLACEHOLDER);
@@ -142,7 +143,8 @@ AUI.add(
 									Liferay.Util.focusFormField(passwordField);
 								}, 0);
 							}
-						} else if (
+						}
+						else if (
 							currentTarget.attr(STR_TYPE) === STR_PASSWORD
 						) {
 							var value = currentTarget.val();
@@ -171,12 +173,14 @@ AUI.add(
 							event,
 							currentTarget
 						);
-					} else if (currentTarget.hasClass('language-value')) {
+					}
+					else if (currentTarget.hasClass('language-value')) {
 						instance._toggleLocalizedPlaceholders(
 							event,
 							currentTarget
 						);
-					} else {
+					}
+					else {
 						var placeholder = currentTarget.attr(STR_PLACEHOLDER);
 
 						if (placeholder) {
@@ -188,7 +192,8 @@ AUI.add(
 
 									currentTarget.removeClass(CSS_PLACEHOLDER);
 								}
-							} else if (!value) {
+							}
+							else if (!value) {
 								currentTarget.val(placeholder);
 
 								currentTarget.addClass(CSS_PLACEHOLDER);
@@ -213,7 +218,8 @@ AUI.add(
 							if (!item.val()) {
 								if (item.attr(STR_TYPE) === STR_PASSWORD) {
 									instance._initializePasswordNode(item);
-								} else {
+								}
+								else {
 									item.addClass(CSS_PLACEHOLDER);
 
 									item.val(item.attr(STR_PLACEHOLDER));

@@ -107,7 +107,8 @@ AUI.add(
 
 					if (schedulerEvent) {
 						schedulerEventCreated = true;
-					} else {
+					}
+					else {
 						schedulerEvent = instance;
 					}
 
@@ -331,7 +332,8 @@ AUI.add(
 									);
 								}
 							);
-						} else {
+						}
+						else {
 							remoteServices.invokeTransition(
 								schedulerEvent,
 								0,
@@ -732,7 +734,8 @@ AUI.add(
 							instance._getFooterToolbar(),
 							'footer'
 						);
-					} else {
+					}
+					else {
 						SchedulerEventRecorder.superclass.populateForm.apply(
 							instance,
 							arguments

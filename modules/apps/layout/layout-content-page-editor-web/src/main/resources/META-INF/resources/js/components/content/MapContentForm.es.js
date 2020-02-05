@@ -117,7 +117,8 @@ class MapContentForm extends PortletBase {
 								? selectedItem.itemValue.title
 								: selectedItem.itemValue
 						);
-					} else {
+					}
+					else {
 						selectedItem.displayValue = stripHTML(
 							selectedItem.itemValue
 						);
@@ -151,7 +152,8 @@ class MapContentForm extends PortletBase {
 					label: field.label,
 					type: field.type
 				};
-			} else if (fieldKey !== '-' && field.key === fieldKey) {
+			}
+			else if (fieldKey !== '-' && field.key === fieldKey) {
 				newField.disabled = true;
 				newField.editableId = editableId;
 				newField.fragmentEntryLinkId = fragmentEntryLinkId;

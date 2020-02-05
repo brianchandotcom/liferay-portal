@@ -88,7 +88,8 @@ const resolveEditableValue = (
 			config,
 			fieldId: editableValue.fieldId
 		});
-	} else {
+	}
+	else {
 		valuePromise = Promise.resolve(
 			selectEditableValueContent(
 				state,
@@ -111,7 +112,8 @@ const resolveEditableValue = (
 		}).then(href => {
 			return {...editableValue.config, href};
 		});
-	} else {
+	}
+	else {
 		configPromise = Promise.resolve(
 			selectEditableValueConfig(
 				state,
@@ -339,7 +341,8 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 						...editableValue[prefixedSegmentsExperienceId],
 						[state.languageId]: value
 					};
-				} else {
+				}
+				else {
 					editableValue[state.languageId] = value;
 				}
 

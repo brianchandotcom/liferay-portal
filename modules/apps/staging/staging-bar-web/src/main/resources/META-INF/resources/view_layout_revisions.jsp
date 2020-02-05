@@ -214,7 +214,8 @@ function <portlet:namespace />selectRevision(
 				) {
 					layoutBranchesContainer.classList.remove('hide');
 				});
-			} else {
+			}
+			else {
 				Array.prototype.forEach.call(layoutBranchesContainers, function(
 					layoutBranchesContainer
 				) {

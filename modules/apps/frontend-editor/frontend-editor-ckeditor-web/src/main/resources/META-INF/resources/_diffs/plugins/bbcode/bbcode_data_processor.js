@@ -212,7 +212,8 @@
 
 			if (document.defaultView.getComputedStyle) {
 				style = document.defaultView.getComputedStyle(body, null);
-			} else if (body.currentStyle) {
+			}
+			else if (body.currentStyle) {
 				style = body.currentStyle;
 			}
 
@@ -251,7 +252,8 @@
 
 			if (REGEX_PX.test(fontSize)) {
 				fontSize = instance._getFontSizePX(fontSize);
-			} else if (REGEX_EM.test(fontSize)) {
+			}
+			else if (REGEX_EM.test(fontSize)) {
 				bodySize = instance._getBodySize();
 
 				fontSize = parseFloat(fontSize, 10);
@@ -259,7 +261,8 @@
 				fontSize = Math.round(fontSize * bodySize) + 'px';
 
 				fontSize = instance._getFontSize(fontSize);
-			} else if (REGEX_PERCENT.test(fontSize)) {
+			}
+			else if (REGEX_PERCENT.test(fontSize)) {
 				bodySize = instance._getBodySize();
 
 				fontSize = parseFloat(fontSize, 10);
@@ -276,19 +279,26 @@
 
 			if (sizeValue <= 10) {
 				sizeValue = '1';
-			} else if (sizeValue <= 12) {
+			}
+			else if (sizeValue <= 12) {
 				sizeValue = '2';
-			} else if (sizeValue <= 14) {
+			}
+			else if (sizeValue <= 14) {
 				sizeValue = '3';
-			} else if (sizeValue <= 16) {
+			}
+			else if (sizeValue <= 16) {
 				sizeValue = '4';
-			} else if (sizeValue <= 18) {
+			}
+			else if (sizeValue <= 18) {
 				sizeValue = '5';
-			} else if (sizeValue <= 24) {
+			}
+			else if (sizeValue <= 24) {
 				sizeValue = '6';
-			} else if (sizeValue <= 32) {
+			}
+			else if (sizeValue <= 32) {
 				sizeValue = '7';
-			} else {
+			}
+			else {
 				sizeValue = '8';
 			}
 
@@ -300,7 +310,8 @@
 
 			if (array.lastIndexOf) {
 				index = array.lastIndexOf(image);
-			} else {
+			}
+			else {
 				for (var i = array.length - 1; i >= 0; i--) {
 					var item = array[i];
 
@@ -359,7 +370,8 @@
 
 			if (instance._inPRE) {
 				listTagsIn.push(NEW_LINE);
-			} else if (instance._allowNewLine(element)) {
+			}
+			else if (instance._allowNewLine(element)) {
 				listTagsIn.push(NEW_LINE);
 			}
 		},
@@ -395,12 +407,14 @@
 			if (data) {
 				if (!instance._allowNewLine(element)) {
 					data = data.replace(REGEX_NEWLINE, STR_EMPTY);
-				} else if (
+				}
+				else if (
 					instance._checkParentElement(element, TAG_LINK) &&
 					data.indexOf(STR_MAILTO) === 0
 				) {
 					data = data.substring(STR_MAILTO.length);
-				} else if (instance._checkParentElement(element, TAG_CITE)) {
+				}
+				else if (instance._checkParentElement(element, TAG_CITE)) {
 					data = Liferay.BBCodeUtil.escape(data);
 				}
 
@@ -420,7 +434,8 @@
 					if (!instance._isLastItemNewLine()) {
 						instance._endResult.push(NEW_LINE);
 					}
-				} else if (tagName === TAG_PRE || tagName === TAG_CODE) {
+				}
+				else if (tagName === TAG_PRE || tagName === TAG_CODE) {
 					instance._inPRE = false;
 				}
 			}
@@ -481,7 +496,8 @@
 
 			if (emoticonSymbol) {
 				instance._endResult.push(emoticonSymbol);
-			} else {
+			}
+			else {
 				var attrSrc = element.getAttribute('src');
 
 				var openTag =
@@ -555,13 +571,17 @@
 
 			if (REGEX_LIST_LOWER_ALPHA.test(listStyleType)) {
 				listTagsIn.push(' type="a"');
-			} else if (REGEX_LIST_LOWER_ROMAN.test(listStyleType)) {
+			}
+			else if (REGEX_LIST_LOWER_ROMAN.test(listStyleType)) {
 				listTagsIn.push(' type="i"');
-			} else if (REGEX_LIST_UPPER_ALPHA.test(listStyleType)) {
+			}
+			else if (REGEX_LIST_UPPER_ALPHA.test(listStyleType)) {
 				listTagsIn.push(' type="A"');
-			} else if (REGEX_LIST_UPPER_ROMAN.test(listStyleType)) {
+			}
+			else if (REGEX_LIST_UPPER_ROMAN.test(listStyleType)) {
 				listTagsIn.push(' type="I"');
-			} else {
+			}
+			else {
 				listTagsIn.push(' type="1"');
 			}
 
@@ -735,7 +755,8 @@
 				stylesTagsIn.push('[s]');
 
 				stylesTagsOut.push('[/s]');
-			} else if (textDecoration === 'underline') {
+			}
+			else if (textDecoration === 'underline') {
 				stylesTagsIn.push('[u]');
 
 				stylesTagsOut.push('[/u]');
@@ -847,9 +868,11 @@
 
 			if (REGEX_LIST_CIRCLE.test(listStyleType)) {
 				listTagsIn.push(' type="circle"]');
-			} else if (REGEX_LIST_SQUARE.test(listStyleType)) {
+			}
+			else if (REGEX_LIST_SQUARE.test(listStyleType)) {
 				listTagsIn.push(' type="square"]');
-			} else {
+			}
+			else {
 				listTagsIn.push(' type="disc"]');
 			}
 
@@ -922,7 +945,8 @@
 				fragment.writeHtml(writer);
 
 				data = writer.getHtml();
-			} else {
+			}
+			else {
 				data = instance._bbcodeConverter.convert(data);
 			}
 

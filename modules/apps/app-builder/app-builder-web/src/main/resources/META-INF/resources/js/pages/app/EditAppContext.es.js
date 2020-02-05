@@ -82,7 +82,8 @@ const reducer = (state, action) => {
 
 			if (siteId === -1) {
 				siteIds = siteIds.includes(siteId) ? [] : [siteId];
-			} else {
+			}
+			else {
 				siteIds = siteIds.includes(siteId)
 					? siteIds.filter(id => id != siteId)
 					: siteIds.concat(siteId);

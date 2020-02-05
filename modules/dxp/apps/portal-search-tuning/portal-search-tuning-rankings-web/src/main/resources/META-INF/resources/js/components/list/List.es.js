@@ -85,7 +85,8 @@ class List extends PureComponent {
 			event.preventDefault();
 
 			this._handleReorder(!reorder && focusIndex < pinLength);
-		} else if (event.key === KEY_CODES.ARROW_DOWN) {
+		}
+		else if (event.key === KEY_CODES.ARROW_DOWN) {
 			event.preventDefault();
 
 			if (focusIndex + 1 < resultIds.length) {
@@ -97,7 +98,8 @@ class List extends PureComponent {
 					this._handleItemFocus(focusIndex + 1);
 				}
 			}
-		} else if (event.key === KEY_CODES.ARROW_UP) {
+		}
+		else if (event.key === KEY_CODES.ARROW_UP) {
 			event.preventDefault();
 
 			if (focusIndex > 0) {

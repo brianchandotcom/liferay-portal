@@ -157,7 +157,8 @@ AUI.add(
 
 					if (event.newVal) {
 						instance._setCalendarColor(target, target.get('color'));
-					} else {
+					}
+					else {
 						instance._clearCalendarColor(target);
 					}
 				},
@@ -199,7 +200,8 @@ AUI.add(
 								simpleMenu.get('align.node') !== target ||
 								!simpleMenu.get('visible')
 						});
-					} else {
+					}
+					else {
 						var calendar = instance.getCalendarByNode(
 							event.currentTarget
 						);

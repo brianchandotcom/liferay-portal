@@ -41,13 +41,15 @@ export default function selectEditableValueContent(
 
 	if (content[segmentsExperienceId]) {
 		content = content[segmentsExperienceId];
-	} else if (content[defaultSegmentsExperienceId]) {
+	}
+	else if (content[defaultSegmentsExperienceId]) {
 		content = content[defaultSegmentsExperienceId];
 	}
 
 	if (content[languageId]) {
 		content = content[languageId];
-	} else if (content[defaultLanguageId]) {
+	}
+	else if (content[defaultLanguageId]) {
 		content = content[defaultLanguageId];
 	}
 

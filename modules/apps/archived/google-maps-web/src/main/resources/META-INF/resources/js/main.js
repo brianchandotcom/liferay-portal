@@ -110,7 +110,8 @@ AUI.add(
 
 					if (instance._isGoogleMapLoaded()) {
 						instance._renderMap();
-					} else {
+					}
+					else {
 						instance._initGoogleMaps();
 					}
 				},
@@ -269,9 +270,11 @@ AUI.add(
 
 					if (type == MAP_TYPE_SATELLITE) {
 						googleMapsType = mapType.SATELLITE;
-					} else if (type == MAP_TYPE_HYBRID) {
+					}
+					else if (type == MAP_TYPE_HYBRID) {
 						googleMapsType = mapType.HYBRID;
-					} else if (type == MAP_TYPE_TERRAIN) {
+					}
+					else if (type == MAP_TYPE_TERRAIN) {
 						googleMapsType = mapType.TERRAIN;
 					}
 
@@ -360,7 +363,8 @@ AUI.add(
 								map: instance._map,
 								position: location
 							});
-						} else {
+						}
+						else {
 							instance._marker.setMap(instance._map);
 
 							instance._marker.setPosition(location);
@@ -370,7 +374,8 @@ AUI.add(
 							instance._infoWindow = new googleMaps.InfoWindow({
 								content: address
 							});
-						} else {
+						}
+						else {
 							instance._infoWindow.setContent(address);
 						}
 
@@ -398,7 +403,8 @@ AUI.add(
 
 					if (instance._isDirectionFilled()) {
 						instance._getDirections();
-					} else {
+					}
+					else {
 						instance._getMap();
 					}
 				},
@@ -504,7 +510,8 @@ AUI.add(
 
 					if (instance._isDirectionFilled()) {
 						instance._getDirections();
-					} else {
+					}
+					else {
 						instance._getAddress(instance.get(STR_MAP_ADDRESS));
 					}
 				},

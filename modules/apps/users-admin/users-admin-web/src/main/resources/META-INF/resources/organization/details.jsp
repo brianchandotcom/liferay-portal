@@ -160,7 +160,8 @@ if (organization != null) {
 								!<%= OrganizationLocalServiceUtil.isCountryEnabled(curType) %>
 							) {
 								countryDiv.classList.add('hide');
-							} else {
+							}
+							else {
 								countryDiv.classList.remove('hide');
 							}
 						}

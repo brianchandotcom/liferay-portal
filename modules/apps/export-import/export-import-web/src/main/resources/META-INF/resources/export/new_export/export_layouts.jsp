@@ -224,7 +224,8 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 
 		if (dateChecker.validRange) {
 			submitForm(form, form.attr('action'), false);
-		} else {
+		}
+		else {
 			exportImport.showNotification(dateChecker);
 		}
 	});

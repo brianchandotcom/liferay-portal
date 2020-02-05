@@ -55,7 +55,8 @@ class DateInput extends React.Component {
 					value: date
 				});
 			});
-		} else {
+		}
+		else {
 			this.setState({value: jsDatetoYYYYMMDD(new Date())}, () => {
 				this.props.onChange({
 					type: PROPERTY_TYPES.DATE,

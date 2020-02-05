@@ -355,7 +355,8 @@ if (privateVirtualHostnames.isEmpty()) {
 
 			if (value == '/') {
 				value = '';
-			} else {
+			}
+			else {
 				value = value.replace(/^[^\/]|\/$/g, function(match, index) {
 					var str = '';
 

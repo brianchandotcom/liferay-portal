@@ -576,7 +576,8 @@ renderResponse.setTitle(headerTitle);
 
 		if (<%= dlAdminDisplayContext.isVersioningStrategyOverridable() %>) {
 			<portlet:namespace />showVersionDetailsDialog(form);
-		} else {
+		}
+		else {
 			submitForm(form);
 		}
 	}

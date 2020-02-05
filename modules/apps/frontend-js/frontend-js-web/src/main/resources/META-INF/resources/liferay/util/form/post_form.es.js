@@ -38,16 +38,19 @@ export default function postForm(form, options) {
 
 			if (isObject(data)) {
 				setFormValues(form, data);
-			} else {
+			}
+			else {
 				return;
 			}
 
 			if (!isDef(url)) {
 				submitForm(form);
-			} else if (isString(url)) {
+			}
+			else if (isString(url)) {
 				submitForm(form, url);
 			}
-		} else {
+		}
+		else {
 			submitForm(form);
 		}
 	}

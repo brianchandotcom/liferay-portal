@@ -44,7 +44,8 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 	useEffect(() => {
 		if (typeof backgroundImage.url === 'string') {
 			setBackgroundImageValue(backgroundImage.url);
-		} else if (backgroundImage.fieldId) {
+		}
+		else if (backgroundImage.fieldId) {
 			InfoItemService.getAssetFieldValue({
 				classNameId: backgroundImage.classNameId,
 				classPK: backgroundImage.classPK,
@@ -58,7 +59,8 @@ const Container = React.forwardRef(({children, className, item}, ref) => {
 					setBackgroundImageValue(fieldValue.url);
 				}
 			});
-		} else {
+		}
+		else {
 			setBackgroundImageValue('');
 		}
 	}, [backgroundImage, backgroundImageValue, config, dispatch, item]);

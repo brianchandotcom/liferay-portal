@@ -33,7 +33,8 @@ export default function objectToURLSearchParams(obj) {
 			for (let i = 0; i < value.length; i++) {
 				urlSearchParams.append(key, value[i]);
 			}
-		} else {
+		}
+		else {
 			urlSearchParams.append(key, value);
 		}
 	});

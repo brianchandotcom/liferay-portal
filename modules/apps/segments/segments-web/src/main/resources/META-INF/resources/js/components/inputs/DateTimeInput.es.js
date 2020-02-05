@@ -64,7 +64,8 @@ class DateTimeInput extends React.Component {
 					});
 				}
 			);
-		} else {
+		}
+		else {
 			const resetDate = dateFns.format(new Date(), INPUT_DATE_FORMAT);
 
 			this.setState(

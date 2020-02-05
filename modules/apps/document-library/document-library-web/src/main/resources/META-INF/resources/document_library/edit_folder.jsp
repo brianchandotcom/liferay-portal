@@ -342,7 +342,8 @@ renderResponse.setTitle(headerTitle);
 
 		if (!searchContainerData.length) {
 			searchContainerData = [];
-		} else {
+		}
+		else {
 			searchContainerData = searchContainerData.split(',');
 		}
 
@@ -520,7 +521,8 @@ renderResponse.setTitle(headerTitle);
 				);
 
 				restrictionTypeWorkflow.show();
-			} else {
+			}
+			else {
 				selectContainer.show();
 			}
 		},

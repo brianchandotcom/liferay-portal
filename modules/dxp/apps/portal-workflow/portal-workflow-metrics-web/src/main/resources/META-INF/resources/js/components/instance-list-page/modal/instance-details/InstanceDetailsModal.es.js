@@ -67,9 +67,11 @@ const InstanceDetailsModal = () => {
 
 	if (empty) {
 		styleName = 'text-info';
-	} else if (status === 'Completed') {
+	}
+	else if (status === 'Completed') {
 		styleName = 'text-secondary';
-	} else if (status === 'Pending' && slaStatus === 'OnTime') {
+	}
+	else if (status === 'Pending' && slaStatus === 'OnTime') {
 		styleName = 'text-success';
 	}
 
@@ -77,7 +79,8 @@ const InstanceDetailsModal = () => {
 
 	if (empty) {
 		iconTitleName = 'hr';
-	} else if (overdue) {
+	}
+	else if (overdue) {
 		iconTitleName = 'exclamation-circle';
 	}
 
@@ -258,7 +261,8 @@ const Item = ({dateOverdue, name, onTime, remainingTime, status}) => {
 
 	if (status === 'Paused') {
 		statusText = `(${Liferay.Language.get('sla-paused')})`;
-	} else if (status === 'Running') {
+	}
+	else if (status === 'Running') {
 		const remainingTimePositive = onTime
 			? remainingTime
 			: remainingTime * -1;
@@ -281,7 +285,8 @@ const Item = ({dateOverdue, name, onTime, remainingTime, status}) => {
 			.format(
 				Liferay.Language.get('mmm-dd-yyyy-lt')
 			)} (${durationText} ${onTimeText})`;
-	} else if (status === 'Stopped' && onTime) {
+	}
+	else if (status === 'Stopped' && onTime) {
 		statusText = `(${Liferay.Language.get('resolved-on-time')})`;
 	}
 

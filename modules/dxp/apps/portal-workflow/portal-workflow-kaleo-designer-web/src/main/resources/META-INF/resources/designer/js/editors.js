@@ -344,7 +344,8 @@ AUI.add(
 											: true
 									)
 								);
-							} else if (
+							}
+							else if (
 								item2.test('select[multiple]') &&
 								Lang.isArray(value)
 							) {
@@ -359,7 +360,8 @@ AUI.add(
 											.set('selected', true);
 									}
 								});
-							} else {
+							}
+							else {
 								item2.val(value);
 							}
 						});
@@ -371,7 +373,8 @@ AUI.add(
 
 					if (instance.get('dynamicViewSingleton')) {
 						instance._addSectionButton = null;
-					} else if (!instance._addSectionButton) {
+					}
+					else if (!instance._addSectionButton) {
 						var strings = instance.get('strings');
 
 						var addSectionButton = new A.Button({
@@ -1029,7 +1032,8 @@ AUI.add(
 
 						if (viewId === 'user') {
 							instance.addViewUser();
-						} else if (viewId === 'roleType') {
+						}
+						else if (viewId === 'roleType') {
 							instance.addViewRoleType();
 						}
 
@@ -2347,7 +2351,8 @@ AUI.add(
 					if (value && value.actionType && value.actionType[index]) {
 						actionType = value.actionType[index];
 						timerAction = value.timerAction[index];
-					} else {
+					}
+					else {
 						var actionTypeSelect = bodyContentNode.one(
 							'.select-action-type'
 						);
@@ -2979,7 +2984,8 @@ AUI.add(
 							item.get('type') === 'checkbox'
 						) {
 							value[item.get('name')].push(item.get('checked'));
-						} else {
+						}
+						else {
 							value[item.get('name')].push(item.val());
 						}
 					});
@@ -3024,9 +3030,11 @@ AUI.add(
 
 								if (actionType === 'action') {
 									object = value.timerActions[index1];
-								} else if (actionType === 'notification') {
+								}
+								else if (actionType === 'notification') {
 									object = value.timerNotifications[index1];
-								} else if (actionType === 'reassignment') {
+								}
+								else if (actionType === 'reassignment') {
 									object = value.reassignments[index1];
 								}
 

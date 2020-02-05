@@ -129,11 +129,14 @@ export default class MultiSelect extends React.Component {
 					: verticalIndex;
 
 			this.setState({verticalIndex});
-		} else if (keyCode === keyEnter && verticalIndex > -1) {
+		}
+		else if (keyCode === keyEnter && verticalIndex > -1) {
 			this.addTag(`${dataFiltered[verticalIndex][fieldId]}`);
-		} else if (keyCode === keyEscape) {
+		}
+		else if (keyCode === keyEscape) {
 			this.setState({active: false});
-		} else if (![keyTab, keyEnter].includes(keyCode)) {
+		}
+		else if (![keyTab, keyEnter].includes(keyCode)) {
 			this.showDropList({active: true});
 		}
 	}
@@ -172,7 +175,8 @@ export default class MultiSelect extends React.Component {
 
 		if (!active) {
 			this.inputRef.focus();
-		} else {
+		}
+		else {
 			this.setState({active: !active});
 		}
 	}

@@ -105,7 +105,8 @@ class FragmentEditableField extends PortletBase {
 						eventName,
 						this._createProcessor
 					);
-				} else {
+				}
+				else {
 					this._disposeFloatingToolbar();
 					this._destroyProcessors();
 
@@ -229,7 +230,8 @@ class FragmentEditableField extends PortletBase {
 
 		if (this._floatingToolbar) {
 			this._floatingToolbar.setState(config);
-		} else {
+		}
+		else {
 			this._floatingToolbar = new FloatingToolbar(config);
 		}
 	}
@@ -376,7 +378,8 @@ class FragmentEditableField extends PortletBase {
 
 			mappedFieldId = this.editableValues.mappedField;
 			promise = this.fetch(this.mappingFieldsURL, data);
-		} else if (
+		}
+		else if (
 			this.editableValues.classNameId &&
 			this.editableValues.classPK &&
 			this.editableValues.fieldId &&
@@ -429,7 +432,8 @@ class FragmentEditableField extends PortletBase {
 							typeof fieldValue.url === 'string'
 						) {
 							this._mappedFieldValue = fieldValue.url;
-						} else {
+						}
+						else {
 							this._mappedFieldValue = fieldValue;
 						}
 					}

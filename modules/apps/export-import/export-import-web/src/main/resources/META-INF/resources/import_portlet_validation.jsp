@@ -115,7 +115,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 			if (uploadedFiles.size() == 1) {
 				lfrDynamicUploader.removeClass('hide-dialog-footer');
-			} else {
+			}
+			else {
 				lfrDynamicUploader.addClass('hide-dialog-footer');
 			}
 		}

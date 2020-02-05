@@ -30,7 +30,8 @@ const parseResponse = response =>
 	new Promise((resolve, reject) => {
 		if (response.ok) {
 			parseJSON(response, resolve, reject);
-		} else {
+		}
+		else {
 			parseJSON(response, reject, reject);
 		}
 	});
@@ -52,7 +53,8 @@ export const confirmDelete = endpoint => item =>
 			deleteItem(endpoint + item.id)
 				.then(() => resolve(true))
 				.catch(error => reject(error));
-		} else {
+		}
+		else {
 			resolve(false);
 		}
 	});

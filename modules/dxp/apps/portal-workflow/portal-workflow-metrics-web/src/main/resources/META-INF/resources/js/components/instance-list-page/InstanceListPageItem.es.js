@@ -178,7 +178,8 @@ const QuickActionMenu = ({disabled, taskItem}) => {
 				setBulkModal({...bulkModal, visible: true});
 
 				setSingleModal({selectedItem: taskItem});
-			} else {
+			}
+			else {
 				setSingleModal({
 					selectedItem: taskItem,
 					visible: true

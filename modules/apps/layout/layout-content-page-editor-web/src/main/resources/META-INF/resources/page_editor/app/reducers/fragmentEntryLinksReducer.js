@@ -43,7 +43,8 @@ export default function fragmentEntryLinksReducer(fragmentEntryLinks, action) {
 						  }
 						: comment
 				);
-			} else {
+			}
+			else {
 				nextComments = [...comments, action.fragmentEntryLinkComment];
 			}
 
@@ -77,7 +78,8 @@ export default function fragmentEntryLinksReducer(fragmentEntryLinks, action) {
 						  }
 						: comment
 				);
-			} else {
+			}
+			else {
 				nextComments = comments.filter(
 					comment => comment.commentId !== action.commentId
 				);
@@ -114,7 +116,8 @@ export default function fragmentEntryLinksReducer(fragmentEntryLinks, action) {
 						  }
 						: comment
 				);
-			} else {
+			}
+			else {
 				nextComments = comments.map(comment =>
 					comment.commentId ===
 					action.fragmentEntryLinkComment.commentId

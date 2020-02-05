@@ -156,7 +156,8 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 
 										try {
 											responseData = JSON.parse(data);
-										} catch (e) {}
+										}
+										catch (e) {}
 
 										var portletErrorMessage = A.one(
 											'#<portlet:namespace />portletErrorMessage'
@@ -174,7 +175,8 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 											portletSuccessMessage.hide();
 
 											portletErrorMessage.html(error);
-										} else {
+										}
+										else {
 											portletErrorMessage.hide();
 											portletSuccessMessage.show();
 										}

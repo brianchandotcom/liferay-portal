@@ -260,7 +260,8 @@ class SegmentEdit extends Component {
 			if (confirmed) {
 				this._redirect();
 			}
-		} else {
+		}
+		else {
 			this._redirect();
 		}
 	};
@@ -361,7 +362,8 @@ class SegmentEdit extends Component {
 						/>
 					</React.Fragment>
 				);
-			} else {
+			}
+			else {
 				returnVal = (
 					<React.Fragment key={key}>
 						<input

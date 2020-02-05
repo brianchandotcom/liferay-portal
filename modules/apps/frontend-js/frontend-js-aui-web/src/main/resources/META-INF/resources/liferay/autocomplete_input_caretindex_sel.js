@@ -74,7 +74,8 @@ AUI.add(
 						) > -1
 					) {
 						start = end = length;
-					} else {
+					}
+					else {
 						start = -textInputRange.moveStart(
 							STR_CHARACTER,
 							-length
@@ -90,7 +91,8 @@ AUI.add(
 							) > -1
 						) {
 							end = length;
-						} else {
+						}
+						else {
 							end = -textInputRange.moveEnd(
 								STR_CHARACTER,
 								-length

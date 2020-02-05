@@ -43,7 +43,8 @@ function updateActiveItemReducer(state, action) {
 		if (nextState.selectedItems && nextState.selectedItems.length) {
 			nextState = setIn(nextState, ['selectedItems'], []);
 		}
-	} else if (action.type === UPDATE_ACTIVE_ITEM) {
+	}
+	else if (action.type === UPDATE_ACTIVE_ITEM) {
 		nextState = setIn(nextState, ['activeItemId'], action.activeItemId);
 		nextState = setIn(nextState, ['activeItemType'], action.activeItemType);
 
@@ -88,7 +89,8 @@ function updateDropTargetReducer(state, action) {
 		nextState = setIn(nextState, ['dropTargetBorder'], null);
 		nextState = setIn(nextState, ['dropTargetItemId'], null);
 		nextState = setIn(nextState, ['dropTargetItemType'], null);
-	} else if (action.type === UPDATE_DROP_TARGET) {
+	}
+	else if (action.type === UPDATE_DROP_TARGET) {
 		nextState = setIn(
 			nextState,
 			['dropTargetBorder'],
@@ -127,7 +129,8 @@ function updateHoveredItemReducer(state, action) {
 	if (action.type === CLEAR_HOVERED_ITEM) {
 		nextState = setIn(nextState, ['hoveredItemId'], null);
 		nextState = setIn(nextState, ['hoveredItemType'], null);
-	} else if (action.type === UPDATE_HOVERED_ITEM) {
+	}
+	else if (action.type === UPDATE_HOVERED_ITEM) {
 		nextState = setIn(nextState, ['hoveredItemId'], action.hoveredItemId);
 
 		nextState = setIn(

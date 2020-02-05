@@ -73,7 +73,8 @@ function createEditor(element, changeCallback, destroyCallback) {
 										title: Liferay.Language.get('error'),
 										type: 'danger'
 									});
-								} else {
+								}
+								else {
 									changeCallback(editor.get('value'));
 									dialog.hide();
 								}

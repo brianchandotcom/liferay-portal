@@ -82,7 +82,8 @@ export default function serviceFetch(
 						})
 					);
 					return Promise.reject(body.exception);
-				} else if ('error' in body) {
+				}
+				else if ('error' in body) {
 					onNetworkStatus(
 						updateNetwork({
 							error: body.error,

@@ -76,7 +76,8 @@ AUI.add(
 						instance._anim.set('to', attrs);
 
 						instance._anim.run();
-					} else {
+					}
+					else {
 						instance.fire(STR_START);
 
 						host.setAttrs(attrs);

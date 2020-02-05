@@ -216,7 +216,8 @@ AUI.add(
 
 							instance._saveEntry(draft, ajax);
 						}
-					} else {
+					}
+					else {
 						instance._saveEntry(draft, ajax);
 					}
 				},
@@ -260,7 +261,8 @@ AUI.add(
 							'picture'
 						) {
 							finalImages.push(currentImage.parentElement);
-						} else {
+						}
+						else {
 							finalImages.push(currentImage);
 						}
 					}
@@ -329,7 +331,8 @@ AUI.add(
 
 						Liferay.Util.toggleDisabled(urlTitleInput, true);
 						Liferay.Util.toggleDisabled(urlTitleInputLabel, true);
-					} else {
+					}
+					else {
 						urlTitleInput.val(
 							instance._lastCustomURL || urlTitleInput.val()
 						);
@@ -514,7 +517,8 @@ AUI.add(
 
 											instance._updateStatus(now);
 										}
-									} else {
+									}
+									else {
 										saveStatus.hide();
 									}
 
@@ -529,7 +533,8 @@ AUI.add(
 									);
 								});
 						}
-					} else {
+					}
+					else {
 						instance
 							.one('#' + constants.CMD)
 							.val(
@@ -644,7 +649,8 @@ AUI.add(
 									}
 
 									el.removeAttribute(attributeDataImageId);
-								} else {
+								}
+								else {
 									el.replace(finalContentImages[i]);
 								}
 							}
@@ -741,7 +747,8 @@ AUI.add(
 						);
 
 						form.addRule(instance.ns('description'), 'required');
-					} else {
+					}
+					else {
 						Liferay.Util.toggleDisabled(descriptionNode, true);
 						Liferay.Util.toggleDisabled(descriptionLabelNode, true);
 

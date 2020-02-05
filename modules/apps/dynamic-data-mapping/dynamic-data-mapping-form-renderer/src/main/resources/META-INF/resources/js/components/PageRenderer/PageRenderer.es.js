@@ -58,13 +58,15 @@ class PageRenderer extends Component {
 
 		if (!rows || !rows.length) {
 			empty = true;
-		} else {
+		}
+		else {
 			empty = !rows.some(({columns}) => {
 				let hasFields = true;
 
 				if (!columns) {
 					hasFields = false;
-				} else {
+				}
+				else {
 					hasFields = columns.some(column => column.fields.length);
 				}
 				return hasFields;

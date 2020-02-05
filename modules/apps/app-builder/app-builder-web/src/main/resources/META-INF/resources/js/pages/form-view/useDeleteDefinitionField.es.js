@@ -33,7 +33,8 @@ export default ({dataLayoutBuilder}) => {
 			);
 
 			dataLayoutBuilder.dispatch('fieldDeleted', {indexes});
-		} else {
+		}
+		else {
 			dispatch(deleteDefinitionField(fieldName));
 		}
 	};

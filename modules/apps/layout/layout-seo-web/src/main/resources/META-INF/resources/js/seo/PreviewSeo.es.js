@@ -141,7 +141,8 @@ const PreviewSeoContainer = ({
 						input,
 						type
 					};
-				} else if (value) {
+				}
+				else if (value) {
 					setFieldState({type, value});
 				}
 
@@ -226,7 +227,8 @@ const PreviewSeoContainer = ({
 
 			if (language !== defaultLanguage && defaultLanguageInputValue) {
 				value = defaultLanguageInputValue;
-			} else {
+			}
+			else {
 				value = getDefaultValue(type);
 			}
 		}

@@ -285,7 +285,8 @@ AUI.add(
 						if (target.get('length') > 0) {
 							if (target == instance._rightBox) {
 								btnDisabledLeft = false;
-							} else if (target == instance._leftBox) {
+							}
+							else if (target == instance._leftBox) {
 								btnDisabledRight = false;
 							}
 						}
@@ -317,9 +318,11 @@ AUI.add(
 
 						if (selectedIndex === length - 1) {
 							btnDisabledDown = true;
-						} else if (selectedIndex === 0) {
+						}
+						else if (selectedIndex === 0) {
 							btnDisabledUp = true;
-						} else if (selectedIndex === -1) {
+						}
+						else if (selectedIndex === -1) {
 							btnDisabledDown = true;
 							btnDisabledUp = true;
 						}

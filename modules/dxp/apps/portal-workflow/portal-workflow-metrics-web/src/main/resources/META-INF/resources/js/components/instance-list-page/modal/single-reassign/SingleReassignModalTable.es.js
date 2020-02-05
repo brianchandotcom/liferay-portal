@@ -41,7 +41,8 @@ const AssigneeInput = ({reassignedTasks, setReassignedTasks, taskId}) => {
 				setReassignedTasks({
 					tasks
 				});
-			} else {
+			}
+			else {
 				tasks[selectedTaskIndex].assigneeId = newAssignee.id;
 				setReassignedTasks({
 					tasks

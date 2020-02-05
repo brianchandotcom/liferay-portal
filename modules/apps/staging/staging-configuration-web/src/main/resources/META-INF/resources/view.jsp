@@ -112,25 +112,29 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 
 								if (value != '<%= StagingConstants.TYPE_LOCAL_STAGING %>') {
 									pwcWarning.classList.add('hide');
-								} else {
+								}
+								else {
 									pwcWarning.classList.remove('hide');
 								}
 
 								if (value == '<%= StagingConstants.TYPE_NOT_STAGED %>') {
 									stagedPortlets.classList.add('hide');
-								} else {
+								}
+								else {
 									stagedPortlets.classList.remove('hide');
 								}
 
 								if (value != '<%= StagingConstants.TYPE_REMOTE_STAGING %>') {
 									remoteStagingOptions.classList.add('hide');
-								} else {
+								}
+								else {
 									remoteStagingOptions.classList.remove('hide');
 								}
 
 								if (value != '<%= StagingConstants.TYPE_LOCAL_STAGING %>') {
 									trashWarning.classList.add('hide');
-								} else {
+								}
+								else {
 									trashWarning.classList.remove('hide');
 								}
 							});
@@ -183,13 +187,15 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 						ok = confirm(
 							'<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-deactivate-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>'
 						);
-					} else if (
+					}
+					else if (
 						currentValue == <%= StagingConstants.TYPE_LOCAL_STAGING %>
 					) {
 						ok = confirm(
 							'<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-activate-local-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>'
 						);
-					} else if (
+					}
+					else if (
 						currentValue == <%= StagingConstants.TYPE_REMOTE_STAGING %>
 					) {
 						ok = confirm(

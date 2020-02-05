@@ -577,7 +577,8 @@ AUI.add(
 						message = Liferay.Language.get(
 							'end-date-must-be-greater-than-start-date'
 						);
-					} else if (
+					}
+					else if (
 						!instance._rangeEndsInPast(dateChecker.todayUsed) ||
 						!instance._rangeStartsInPast(dateChecker.todayUsed)
 					) {
@@ -801,7 +802,8 @@ AUI.add(
 						instance.all('.deletions').each(item => {
 							item.show();
 						});
-					} else {
+					}
+					else {
 						instance.all('.deletions').each(item => {
 							item.hide();
 						});
@@ -824,7 +826,8 @@ AUI.add(
 								'editExportConfiguration';
 							params.tabs2 = 'new-export-process';
 							params.exportConfigurationButtons = 'custom';
-						} else {
+						}
+						else {
 							params.mvcRenderCommandName =
 								'editPublishConfiguration';
 							params.publishConfigurationButtons = 'custom';
@@ -1025,7 +1028,8 @@ AUI.add(
 						instance
 							.byId('showChangeConfiguration_' + portletId)
 							.hide();
-					} else {
+					}
+					else {
 						instance
 							.byId('showChangeConfiguration_' + portletId)
 							.show();
@@ -1066,7 +1070,8 @@ AUI.add(
 							.attr('checked', false);
 
 						instance.byId('showChangeContent_' + portletId).hide();
-					} else {
+					}
+					else {
 						instance.byId('showChangeContent_' + portletId).show();
 					}
 
@@ -1182,7 +1187,8 @@ AUI.add(
 					if (linkNode) {
 						if (label !== STR_EMPTY) {
 							linkNode.html(Liferay.Language.get('change'));
-						} else {
+						}
+						else {
 							linkNode.html(Liferay.Language.get('select'));
 						}
 					}
@@ -1199,7 +1205,8 @@ AUI.add(
 
 					if (Lang.isString(val)) {
 						val = instance.one(val);
-					} else {
+					}
+					else {
 						val = A.one(val);
 					}
 
@@ -1246,7 +1253,8 @@ AUI.add(
 						A.all(
 							'.datepicker-popover, .timepicker-popover'
 						).hide();
-					} else {
+					}
+					else {
 						instance.showNotification(dateChecker);
 					}
 				},

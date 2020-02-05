@@ -36,7 +36,8 @@ function saveChangesReducer(state, action) {
 		);
 
 		nextState = setIn(nextState, ['lastSaveDate'], newDate);
-	} else if (action.type === UPDATE_SAVING_CHANGES_STATUS) {
+	}
+	else if (action.type === UPDATE_SAVING_CHANGES_STATUS) {
 		nextState = setIn(
 			nextState,
 			['savingChanges'],

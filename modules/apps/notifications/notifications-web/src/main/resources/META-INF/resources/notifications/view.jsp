@@ -207,7 +207,8 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 							notificationContainer.remove();
 						}
-					} else {
+					}
+					else {
 						getNotice().show();
 					}
 				});

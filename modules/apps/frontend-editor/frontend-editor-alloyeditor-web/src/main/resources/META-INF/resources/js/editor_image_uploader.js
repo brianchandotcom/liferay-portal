@@ -146,7 +146,8 @@ AUI.add(
 							instance._onUploadProgress,
 							instance
 						);
-					} else {
+					}
+					else {
 						file = new A.FileHTML5(file);
 
 						instance._uploadImage(file, randomId);
@@ -205,7 +206,8 @@ AUI.add(
 								)
 							});
 						}
-					} else {
+					}
+					else {
 						instance._removeTempImage(data.file);
 					}
 				},

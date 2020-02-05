@@ -39,7 +39,8 @@ export const ContainerTypeConfiguration = ({containerType, onValueChange}) => (
 							].paddingHorizontal,
 						[CONTAINER_TYPE_IDENTIFIER]: value
 					});
-				} else {
+				}
+				else {
 					onValueChange({[CONTAINER_TYPE_IDENTIFIER]: value});
 				}
 			}}

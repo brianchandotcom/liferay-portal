@@ -113,7 +113,8 @@ const TemplateSelector = ({item, onTemplateSelect, selectedTemplate}) => {
 									))}
 								</optgroup>
 							);
-						} else {
+						}
+						else {
 							return (
 								<option
 									data-info-item-renderer-key={

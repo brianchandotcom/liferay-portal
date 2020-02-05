@@ -93,7 +93,8 @@ class Modal extends Component {
 			this._eventHandler.add(
 				dom.on(document, 'keyup', this._handleKeyup.bind(this))
 			);
-		} else {
+		}
+		else {
 			this._eventHandler.removeAllListeners();
 		}
 	}
@@ -124,7 +125,8 @@ class Modal extends Component {
 
 			this._autoFocus(this.autoFocus);
 			this._restrictFocus();
-		} else {
+		}
+		else {
 			this._unrestrictFocus();
 			this._shiftFocusBack();
 		}

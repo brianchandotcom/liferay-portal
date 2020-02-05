@@ -464,7 +464,8 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 					ranksTempTextarea.classList.remove('hide');
 
 					<portlet:namespace />ranksLastLanguageId = selLanguageId;
-				} else {
+				}
+				else {
 					ranksTempTextarea.classList.add('hide');
 				}
 			}
@@ -573,7 +574,8 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 			if (localizedPrioritiesTable) {
 				if (selLanguageId) {
 					localizedPrioritiesTable.classList.remove('hide');
-				} else {
+				}
+				else {
 					localizedPrioritiesTable.classList.add('hide');
 				}
 			}

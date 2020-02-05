@@ -31,7 +31,8 @@
 		if (false && typeof define === 'function' && define.amd) {
 			// using AMD; register as anon module
 			define(['jquery'], factory);
-		} else {
+		}
+		else {
 			// no AMD; invoke directly
 			factory(typeof jQuery != 'undefined' ? jQuery : window.Zepto);
 		}
@@ -121,7 +122,8 @@
 
 			if (typeof options == 'function') {
 				options = {success: options};
-			} else if (options === undefined) {
+			}
+			else if (options === undefined) {
 				options = {};
 			}
 
@@ -204,7 +206,8 @@
 			if (options.type.toUpperCase() == 'GET') {
 				options.url += (options.url.indexOf('?') >= 0 ? '&' : '?') + q;
 				options.data = null; // data is null for 'get'
-			} else {
+			}
+			else {
 				options.data = q; // data is the query string for 'post'
 			}
 
@@ -229,7 +232,8 @@
 						[fn](data)
 						.each(oldSuccess, arguments);
 				});
-			} else if (options.success) {
+			}
+			else if (options.success) {
 				callbacks.push(options.success);
 			}
 
@@ -295,12 +299,15 @@
 					$.get(options.closeKeepAlive, function() {
 						jqxhr = fileUploadIframe(a);
 					});
-				} else {
+				}
+				else {
 					jqxhr = fileUploadIframe(a);
 				}
-			} else if ((hasFileInputs || multipart) && fileAPI) {
+			}
+			else if ((hasFileInputs || multipart) && fileAPI) {
 				jqxhr = fileUploadXhr(a);
-			} else {
+			}
+			else {
 				jqxhr = $.ajax(options);
 			}
 
@@ -403,7 +410,8 @@
 					//Send FormData() provided by user
 					if (options.formData) {
 						o.data = options.formData;
-					} else {
+					}
+					else {
 						o.data = formdata;
 					}
 					if (beforeSend) {
@@ -441,7 +449,8 @@
 						el = $(elements[i]);
 						if (hasProp) {
 							el.prop('disabled', false);
-						} else {
+						}
+						else {
 							el.removeAttr('disabled');
 						}
 					}
@@ -455,10 +464,12 @@
 					n = $io.attr2('name');
 					if (!n) {
 						$io.attr2('name', id);
-					} else {
+					}
+					else {
 						id = n;
 					}
-				} else {
+				}
+				else {
 					$io = $(
 						'<iframe name="' + id + '" src="' + s.iframeSrc + '" />'
 					);
@@ -490,7 +501,8 @@
 							if (io.contentWindow.document.execCommand) {
 								io.contentWindow.document.execCommand('Stop');
 							}
-						} catch (ignore) {}
+						}
+						catch (ignore) {}
 
 						$io.attr('src', s.iframeSrc); // abort op in progress
 						xhr.error = e;
@@ -562,7 +574,8 @@
 						if (frame.contentWindow) {
 							doc = frame.contentWindow.document;
 						}
-					} catch (err) {
+					}
+					catch (err) {
 						// IE8 access denied under ssl & missing protocol
 						log('cannot get iframe.contentWindow document: ' + err);
 					}
@@ -577,7 +590,8 @@
 						doc = frame.contentDocument
 							? frame.contentDocument
 							: frame.document;
-					} catch (err) {
+					}
+					catch (err) {
 						// last attempt
 						log('cannot get iframe.contentDocument: ' + err);
 						doc = frame.document;
@@ -643,7 +657,8 @@
 							) {
 								setTimeout(checkState, 50);
 							}
-						} catch (e) {
+						}
+						catch (e) {
 							log('Server abort: ', e, ' (', e.name, ')');
 							cb(SERVER_ABORT);
 							if (timeoutHandle) {
@@ -674,7 +689,8 @@
 												.val(s.extraData[n].value)
 												.appendTo(form)[0]
 										);
-									} else {
+									}
+									else {
 										extraInputs.push(
 											$(
 												'<input type="hidden" name="' +
@@ -695,26 +711,30 @@
 						}
 						if (io.attachEvent) {
 							io.attachEvent('onload', cb);
-						} else {
+						}
+						else {
 							io.addEventListener('load', cb, false);
 						}
 						setTimeout(checkState, 15);
 
 						try {
 							form.submit();
-						} catch (err) {
+						}
+						catch (err) {
 							// just in case form has element with name/id of 'submit'
 							var submitFn = document.createElement('form')
 								.submit;
 							submitFn.apply(form);
 						}
-					} finally {
+					}
+					finally {
 						// reset attrs and remove "extra" input elements
 						form.setAttribute('action', a);
 						form.setAttribute('enctype', et); // #380
 						if (t) {
 							form.setAttribute('target', t);
-						} else {
+						}
+						else {
 							$form.removeAttr('target');
 						}
 						$(extraInputs).remove();
@@ -723,7 +743,8 @@
 
 				if (s.forceSync) {
 					doSubmit();
-				} else {
+				}
+				else {
 					setTimeout(doSubmit, 10); // this lets dom updates render
 				}
 
@@ -746,7 +767,8 @@
 						xhr.abort('timeout');
 						deferred.reject(xhr, 'timeout');
 						return;
-					} else if (e == SERVER_ABORT && xhr) {
+					}
+					else if (e == SERVER_ABORT && xhr) {
 						xhr.abort('server abort');
 						deferred.reject(xhr, 'error', 'server abort');
 						return;
@@ -760,7 +782,8 @@
 					}
 					if (io.detachEvent) {
 						io.detachEvent('onload', cb);
-					} else {
+					}
+					else {
 						io.removeEventListener('load', cb, false);
 					}
 
@@ -832,7 +855,8 @@
 								xhr.statusText =
 									ta.getAttribute('statusText') ||
 									xhr.statusText;
-							} else if (scr) {
+							}
+							else if (scr) {
 								// account for browsers injecting pre around json response
 								var pre = doc.getElementsByTagName('pre')[0];
 								var b = doc.getElementsByTagName('body')[0];
@@ -840,13 +864,15 @@
 									xhr.responseText = pre.textContent
 										? pre.textContent
 										: pre.innerText;
-								} else if (b) {
+								}
+								else if (b) {
 									xhr.responseText = b.textContent
 										? b.textContent
 										: b.innerText;
 								}
 							}
-						} else if (
+						}
+						else if (
 							dt == 'xml' &&
 							!xhr.responseXML &&
 							xhr.responseText
@@ -856,11 +882,13 @@
 
 						try {
 							data = httpData(xhr, dt, s);
-						} catch (err) {
+						}
+						catch (err) {
 							status = 'parsererror';
 							xhr.error = errMsg = err || status;
 						}
-					} catch (err) {
+					}
+					catch (err) {
 						log('error caught: ', err);
 						status = 'error';
 						xhr.error = errMsg = err || status;
@@ -889,7 +917,8 @@
 						if (g) {
 							$.event.trigger('ajaxSuccess', [xhr, s]);
 						}
-					} else if (status) {
+					}
+					else if (status) {
 						if (errMsg === undefined) {
 							errMsg = xhr.statusText;
 						}
@@ -923,7 +952,8 @@
 					setTimeout(function() {
 						if (!s.iframeTarget) {
 							$io.remove();
-						} else {
+						}
+						else {
 							//adding else to clean up existing iframe response.
 							$io.attr('src', s.iframeSrc);
 						}
@@ -939,7 +969,8 @@
 							doc = new ActiveXObject('Microsoft.XMLDOM');
 							doc.async = 'false';
 							doc.loadXML(s);
-						} else {
+						}
+						else {
 							doc = new DOMParser().parseFromString(
 								s,
 								'text/xml'
@@ -983,7 +1014,8 @@
 							(!type && ct.indexOf('json') >= 0)
 						) {
 							data = parseJSON(data);
-						} else if (
+						}
+						else if (
 							type === 'script' ||
 							(!type && ct.indexOf('javascript') >= 0)
 						) {
@@ -1091,11 +1123,13 @@
 				if (e.offsetX !== undefined) {
 					form.clk_x = e.offsetX;
 					form.clk_y = e.offsetY;
-				} else if (typeof $.fn.offset == 'function') {
+				}
+				else if (typeof $.fn.offset == 'function') {
 					var offset = $el.offset();
 					form.clk_x = e.pageX - offset.left;
 					form.clk_y = e.pageY - offset.top;
-				} else {
+				}
+				else {
 					form.clk_x = e.pageX - target.offsetLeft;
 					form.clk_y = e.pageY - target.offsetTop;
 				}
@@ -1178,7 +1212,8 @@
 					for (j = 0, jmax = v.length; j < jmax; j++) {
 						a.push({name: n, value: v[j]});
 					}
-				} else if (feature.fileapi && el.type == 'file') {
+				}
+				else if (feature.fileapi && el.type == 'file') {
 					if (elements) {
 						elements.push(el);
 					}
@@ -1187,11 +1222,13 @@
 						for (j = 0; j < files.length; j++) {
 							a.push({name: n, value: files[j], type: el.type});
 						}
-					} else {
+					}
+					else {
 						// #180
 						a.push({name: n, value: '', type: el.type});
 					}
-				} else if (v !== null && typeof v != 'undefined') {
+				}
+				else if (v !== null && typeof v != 'undefined') {
 					if (elements) {
 						elements.push(el);
 					}
@@ -1245,7 +1282,8 @@
 					for (var i = 0, max = v.length; i < max; i++) {
 						a.push({name: n, value: v[i]});
 					}
-				} else if (v !== null && typeof v != 'undefined') {
+				}
+				else if (v !== null && typeof v != 'undefined') {
 					a.push({name: this.name, value: v});
 				}
 			});
@@ -1304,7 +1342,8 @@
 				}
 				if (v.constructor == Array) {
 					$.merge(val, v);
-				} else {
+				}
+				else {
 					val.push(v);
 				}
 			}
@@ -1394,17 +1433,22 @@
 					tag = this.tagName.toLowerCase();
 				if (re.test(t) || tag == 'textarea') {
 					this.value = '';
-				} else if (t == 'checkbox' || t == 'radio') {
+				}
+				else if (t == 'checkbox' || t == 'radio') {
 					this.checked = false;
-				} else if (tag == 'select') {
+				}
+				else if (tag == 'select') {
 					this.selectedIndex = -1;
-				} else if (t == 'file') {
+				}
+				else if (t == 'file') {
 					if (/MSIE/.test(navigator.userAgent)) {
 						$(this).replaceWith($(this).clone(true));
-					} else {
+					}
+					else {
 						$(this).val('');
 					}
-				} else if (includeHidden) {
+				}
+				else if (includeHidden) {
 					// includeHidden can be the value true, or it can be a selector string
 					// indicating a special test; for example:
 					//  $('#myForm').clearForm('.special:hidden')
@@ -1460,7 +1504,8 @@
 				var t = this.type;
 				if (t == 'checkbox' || t == 'radio') {
 					this.checked = select;
-				} else if (this.tagName.toLowerCase() == 'option') {
+				}
+				else if (this.tagName.toLowerCase() == 'option') {
 					var $sel = $(this).parent('select');
 					if (select && $sel[0] && $sel[0].type == 'select-one') {
 						// deselect all other options
@@ -1483,7 +1528,8 @@
 				'[jquery.form] ' + Array.prototype.join.call(arguments, '');
 			if (window.console && window.console.log) {
 				window.console.log(msg);
-			} else if (window.opera && window.opera.postError) {
+			}
+			else if (window.opera && window.opera.postError) {
 				window.opera.postError(msg);
 			}
 		}

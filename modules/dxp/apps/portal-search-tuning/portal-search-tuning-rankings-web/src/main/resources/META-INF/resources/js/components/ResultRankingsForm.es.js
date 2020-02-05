@@ -473,7 +473,8 @@ class ResultRankingsForm extends Component {
 						type: 'danger'
 					});
 				});
-			} else {
+			}
+			else {
 				this.setState(
 					{
 						workflowAction: this.context.constants

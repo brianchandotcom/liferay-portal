@@ -223,7 +223,8 @@ AUI.add(
 
 							if (typeof response.toString != STR_UNDEFINED) {
 								result = response.toString();
-							} else if (
+							}
+							else if (
 								typeof response.responseText != STR_UNDEFINED
 							) {
 								result = response.responseText;
@@ -422,7 +423,8 @@ AUI.add(
 									instance.showMessage(false);
 								});
 						}
-					} else {
+					}
+					else {
 						contacts = instance._contactsCheckBox.all(
 							CSS_SELECTED_CHECKBOX
 						);
@@ -523,7 +525,8 @@ AUI.add(
 
 					if (results.length == 0 && displayMessage) {
 						buffer.push(TPL_NO_RESULTS);
-					} else {
+					}
+					else {
 						var selectedUsersNodes = A.all(
 							'.lfr-contact-grid-item input'
 						);
@@ -545,7 +548,8 @@ AUI.add(
 
 									if (result.portalUser) {
 										name = result.lastName;
-									} else {
+									}
+									else {
 										name = result.fullName;
 									}
 
@@ -553,7 +557,8 @@ AUI.add(
 										nameAnchor = name
 											.substring(0, 1)
 											.toUpperCase();
-									} else {
+									}
+									else {
 										nameAnchor = Liferay.Language.get(
 											'no-last-name'
 										);
@@ -605,7 +610,8 @@ AUI.add(
 												? result.viewSummaryURL
 												: ''
 										});
-									} else {
+									}
+									else {
 										str = Lang.sub(TPL_ENTRY_DATA, {
 											emailAddress: result.emailAddress
 												? result.emailAddress
@@ -712,7 +718,8 @@ AUI.add(
 
 							instance._buttonUnBlockUserIds.push(user.userId);
 						}
-					} else {
+					}
+					else {
 						if (instance._blockButton) {
 							instance._showButton(instance._blockButton);
 
@@ -730,7 +737,8 @@ AUI.add(
 										user.userId
 									);
 								}
-							} else if (instance._addConnectionButton) {
+							}
+							else if (instance._addConnectionButton) {
 								instance._showButton(
 									instance._addConnectionButton
 								);
@@ -749,7 +757,8 @@ AUI.add(
 									user.userId
 								);
 							}
-						} else if (instance._followButton) {
+						}
+						else if (instance._followButton) {
 							instance._showButton(instance._followButton);
 
 							instance._buttonFollowUserIds.push(user.userId);
@@ -908,23 +917,27 @@ AUI.add(
 						connectedIcon.hide();
 						disabledIcon.hide();
 						followingIcon.hide();
-					} else {
+					}
+					else {
 						blockIcon.hide();
 
 						if (user.connectionRequested) {
 							connectedIcon.hide();
 							disabledIcon.show();
-						} else if (user.connected) {
+						}
+						else if (user.connected) {
 							connectedIcon.show();
 							disabledIcon.hide();
-						} else {
+						}
+						else {
 							connectedIcon.hide();
 							disabledIcon.hide();
 						}
 
 						if (user.following) {
 							followingIcon.show();
-						} else {
+						}
+						else {
 							followingIcon.hide();
 						}
 					}
@@ -955,17 +968,20 @@ AUI.add(
 						removeConnectionButton.hide();
 						instance._showButton(unblockButton);
 						unfollowButton.hide();
-					} else {
+					}
+					else {
 						instance._showButton(blockButton);
 						unblockButton.hide();
 
 						if (user.connectionRequested) {
 							addConnectionButton.hide();
 							removeConnectionButton.hide();
-						} else if (user.connected) {
+						}
+						else if (user.connected) {
 							addConnectionButton.hide();
 							instance._showButton(removeConnectionButton);
-						} else {
+						}
+						else {
 							instance._showButton(addConnectionButton);
 							removeConnectionButton.hide();
 						}
@@ -973,7 +989,8 @@ AUI.add(
 						if (user.following) {
 							followButton.hide();
 							instance._showButton(unfollowButton);
-						} else {
+						}
+						else {
 							instance._showButton(followButton);
 							unfollowButton.hide();
 						}
@@ -995,7 +1012,8 @@ AUI.add(
 						instance._contactCenterToolbar.show();
 
 						instance._userToolbar.empty();
-					} else {
+					}
+					else {
 						instance._selectedUsersView.append(contact);
 					}
 
@@ -1204,7 +1222,8 @@ AUI.add(
 
 							instance._updateUserToolBar(user);
 							instance._updateUserIcons(user);
-						} else {
+						}
+						else {
 							instance._clearContactResult();
 
 							contacts.map(contact => {
@@ -1244,7 +1263,8 @@ AUI.add(
 									message +
 									'</span>'
 							);
-						} else {
+						}
+						else {
 							if (!message || message == '') {
 								message = instance._defaultMessageError;
 							}

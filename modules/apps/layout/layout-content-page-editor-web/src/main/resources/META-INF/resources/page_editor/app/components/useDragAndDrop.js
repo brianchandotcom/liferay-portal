@@ -209,7 +209,8 @@ function isMiddle(hoverClientY, hoverMiddleY) {
 function getTargetPosition(hoverClientY, hoverMiddleY) {
 	if (hoverClientY < hoverMiddleY) {
 		return TARGET_POSITION.TOP;
-	} else if (hoverClientY > hoverMiddleY) {
+	}
+	else if (hoverClientY > hoverMiddleY) {
 		return TARGET_POSITION.BOTTOM;
 	}
 }
@@ -256,7 +257,8 @@ function getParentItemIdAndPositon({
 			parentId: siblingOrParentId,
 			position: siblingOrParent.children.length
 		};
-	} else {
+	}
+	else {
 		const parent = items[siblingOrParent.parentId];
 
 		const siblingIndex = parent.children.indexOf(siblingOrParentId);

@@ -190,7 +190,8 @@ class CollapseProvider {
 		if (panel) {
 			if (panel.classList.contains(CssClass.SHOW)) {
 				this.hide({panel, trigger});
-			} else {
+			}
+			else {
 				this.show({panel, trigger});
 			}
 		}

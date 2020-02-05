@@ -163,7 +163,8 @@ function endDrag(props, monitor) {
 		}
 
 		onFocus(hoverPosition !== null ? focusIndex : dragIndex);
-	} else {
+	}
+	else {
 		onFocus(dragIndex);
 	}
 }
@@ -190,9 +191,11 @@ function hover(props, monitor, component) {
 
 	if (dragIndex === destIndex) {
 		component.setState({hoverPosition: null});
-	} else if (hoverAbove) {
+	}
+	else if (hoverAbove) {
 		component.setState({hoverPosition: HOVER_TYPES.TOP});
-	} else {
+	}
+	else {
 		component.setState({hoverPosition: HOVER_TYPES.BOTTOM});
 	}
 }
@@ -341,9 +344,11 @@ class Item extends PureComponent {
 		if (focus) {
 			if (event.key === KEY_CODES.S) {
 				this._handleSelect();
-			} else if (event.key === KEY_CODES.P) {
+			}
+			else if (event.key === KEY_CODES.P) {
 				this._handlePin();
-			} else if (event.key === KEY_CODES.H) {
+			}
+			else if (event.key === KEY_CODES.H) {
 				this._handleHide();
 			}
 		}

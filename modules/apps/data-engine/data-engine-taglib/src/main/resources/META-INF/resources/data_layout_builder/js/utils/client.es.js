@@ -38,7 +38,8 @@ export const confirmDelete = endpoint => item =>
 			deleteItem(endpoint + item.id)
 				.then(() => resolve(true))
 				.catch(error => reject(error));
-		} else {
+		}
+		else {
 			resolve(false);
 		}
 	});

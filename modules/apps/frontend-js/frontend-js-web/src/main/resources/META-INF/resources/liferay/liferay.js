@@ -39,7 +39,8 @@ Liferay = window.Liferay || {};
 		for (var part; parts.length && (part = parts.shift()); ) {
 			if (obj[part] && obj[part] !== Object.prototype[part]) {
 				obj = obj[part];
-			} else {
+			}
+			else {
 				obj = obj[part] = {};
 			}
 		}
@@ -128,7 +129,8 @@ Liferay = window.Liferay || {};
 					if (callbackSuccess) {
 						callbackSuccess.call(this, response);
 					}
-				} else if (callbackException) {
+				}
+				else if (callbackException) {
 					var exception = response
 						? response.exception
 						: 'The server returned an empty response';

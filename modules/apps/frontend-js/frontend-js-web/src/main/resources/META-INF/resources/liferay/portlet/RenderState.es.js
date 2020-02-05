@@ -20,7 +20,8 @@ class RenderState {
 	constructor(state) {
 		if (isObject(state)) {
 			this.from(state);
-		} else {
+		}
+		else {
 			this.parameters = {};
 			this.portletMode = PortletConstants.VIEW;
 			this.windowState = PortletConstants.NORMAL;

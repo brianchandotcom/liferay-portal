@@ -88,7 +88,8 @@ function drop(props, monitor) {
 
 	if (itemType === PROPERTY) {
 		onCriterionAdd(destIndex, criterion);
-	} else if (itemType === CRITERIA_ROW || itemType === CRITERIA_GROUP) {
+	}
+	else if (itemType === CRITERIA_ROW || itemType === CRITERIA_GROUP) {
 		onMove(startGroupId, startIndex, destGroupId, destIndex, criterion);
 	}
 }

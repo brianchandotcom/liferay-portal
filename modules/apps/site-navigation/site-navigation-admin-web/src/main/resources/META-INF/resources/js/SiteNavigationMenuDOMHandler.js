@@ -98,7 +98,8 @@ const insertAtPosition = function(parentMenuItem, menuItem, position) {
 
 	if (position >= children.length) {
 		parentMenuItem.appendChild(menuItem);
-	} else {
+	}
+	else {
 		parentMenuItem.insertBefore(menuItem, children[position]);
 	}
 };
@@ -115,7 +116,8 @@ const insertAtTop = function(menuItem) {
 
 	if (children.length) {
 		container.insertBefore(menuItem, children[0]);
-	} else {
+	}
+	else {
 		container.appendChild(menuItem);
 	}
 };

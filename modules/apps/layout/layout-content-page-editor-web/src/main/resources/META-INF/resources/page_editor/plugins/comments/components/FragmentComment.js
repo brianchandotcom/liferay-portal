@@ -88,7 +88,8 @@ export default function FragmentComment({
 
 				if (showResolvedComments) {
 					onEdit(comment);
-				} else if (!resolved) {
+				}
+				else if (!resolved) {
 					setShowResolveMask(true);
 					hideComment(() => onEdit(comment));
 				}

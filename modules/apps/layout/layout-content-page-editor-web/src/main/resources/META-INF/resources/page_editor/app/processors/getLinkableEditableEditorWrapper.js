@@ -25,7 +25,8 @@ export function getLinkableEditableEditorWrapper(element) {
 		anchor.appendChild(innerWrapper);
 
 		return innerWrapper;
-	} else {
+	}
+	else {
 		const wrapper = document.createElement('div');
 		wrapper.innerHTML = element.innerHTML;
 		element.innerHTML = '';

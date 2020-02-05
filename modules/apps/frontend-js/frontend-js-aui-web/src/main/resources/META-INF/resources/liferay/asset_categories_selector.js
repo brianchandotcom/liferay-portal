@@ -247,7 +247,8 @@ AUI.add(
 							if (parentVocabularyId) {
 								data.vocabularyId = parentVocabularyId;
 							}
-						} else {
+						}
+						else {
 							data.vocabularyId = assetId;
 						}
 					}
@@ -283,7 +284,8 @@ AUI.add(
 							},
 							callback
 						);
-					} else {
+					}
+					else {
 						if (
 							!portalModelResource &&
 							themeDisplay.getSiteGroupId() !=
@@ -329,7 +331,8 @@ AUI.add(
 							STR_MORE_RESULTS_LABEL
 						);
 						paginatorConfig.total = item.childrenCount;
-					} else {
+					}
+					else {
 						paginatorConfig.end = -1;
 						paginatorConfig.start = -1;
 					}
@@ -431,7 +434,8 @@ AUI.add(
 						assetId = currentTarget.attr('data-categoryId');
 
 						entryMatchKey = currentTarget.val();
-					} else {
+					}
+					else {
 						assetId = instance._getTreeNodeAssetId(currentTarget);
 
 						entryMatchKey = currentTarget.get('label');
@@ -471,7 +475,8 @@ AUI.add(
 
 					if (A.instanceOf(currentTarget, A.Node)) {
 						assetId = currentTarget.attr('data-categoryId');
-					} else {
+					}
+					else {
 						assetId = instance._getTreeNodeAssetId(currentTarget);
 					}
 
@@ -487,7 +492,8 @@ AUI.add(
 						}
 
 						instance._onCheckboxCheck(event);
-					} else {
+					}
+					else {
 						instance._onCheckboxUncheck(event);
 					}
 				},
@@ -532,7 +538,8 @@ AUI.add(
 
 							buffer.push(Lang.sub(TPL_INPUT, item));
 						});
-					} else {
+					}
+					else {
 						var message = Lang.sub(TPL_MESSAGE, [
 							Liferay.Language.get('no-categories-were-found')
 						]);
@@ -687,7 +694,8 @@ AUI.add(
 					if (item.groupId == themeDisplay.getCompanyGroupId()) {
 						vocabularyTitle +=
 							' (' + Liferay.Language.get('global') + ')';
-					} else {
+					}
+					else {
 						vocabularyTitle +=
 							' (' + item.group.descriptiveName + ')';
 					}

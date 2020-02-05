@@ -189,7 +189,8 @@ AUI.add(
 							items.forEach(item => {
 								instance.entries.add(item, {});
 							});
-						} else {
+						}
+						else {
 							instance.entries.add(text, {});
 						}
 					}
@@ -408,7 +409,8 @@ AUI.add(
 							event.preventDefault();
 
 							instance._addEntries();
-						} else if (
+						}
+						else if (
 							MAP_INVALID_CHARACTERS[
 								String.fromCharCode(charCode)
 							]

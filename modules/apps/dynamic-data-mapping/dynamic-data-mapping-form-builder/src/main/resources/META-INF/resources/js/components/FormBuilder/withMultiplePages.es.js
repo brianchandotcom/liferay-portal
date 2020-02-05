@@ -146,7 +146,8 @@ const withMultiplePages = ChildComponent => {
 					label: Liferay.Language.get('reset-page'),
 					settingsItem: 'reset-page'
 				});
-			} else {
+			}
+			else {
 				pageSettingsItems.push({
 					label: Liferay.Language.get('delete-current-page'),
 					settingsItem: 'delete-page'
@@ -186,20 +187,25 @@ const withMultiplePages = ChildComponent => {
 
 			if (settingsItem == 'add-page') {
 				this._addPage();
-			} else if (settingsItem === 'reset-page') {
+			}
+			else if (settingsItem === 'reset-page') {
 				this._resetPage();
-			} else if (settingsItem === 'delete-page') {
+			}
+			else if (settingsItem === 'delete-page') {
 				if (
 					successPageSettings.enabled &&
 					activePage == this.getPages().length - 1
 				) {
 					this._deleteSuccessPage();
-				} else {
+				}
+				else {
 					this._deletePage();
 				}
-			} else if (settingsItem == 'switch-pagination-mode') {
+			}
+			else if (settingsItem == 'switch-pagination-mode') {
 				this._switchPaginationMode();
-			} else if (settingsItem == 'add-success-page') {
+			}
+			else if (settingsItem == 'add-success-page') {
 				this._addSuccessPage();
 			}
 		}

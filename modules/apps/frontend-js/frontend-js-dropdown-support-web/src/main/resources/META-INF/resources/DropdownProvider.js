@@ -118,7 +118,8 @@ class DropdownProvider {
 		if (menu) {
 			if (menu.classList.contains(CssClass.SHOW)) {
 				this.hide({menu, trigger});
-			} else {
+			}
+			else {
 				this.show({menu, trigger});
 			}
 		}

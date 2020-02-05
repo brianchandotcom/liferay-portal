@@ -184,7 +184,8 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 				this._selectedMappingSourceTypeId = backgroundImage.mappedField
 					? MAPPING_SOURCE_TYPE_IDS.structure
 					: MAPPING_SOURCE_TYPE_IDS.content;
-			} else {
+			}
+			else {
 				this._selectedImageSourceTypeId =
 					IMAGE_SOURCE_TYPE_IDS.selection;
 				this._selectedMappingSourceTypeId =
@@ -332,7 +333,8 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 			)
 		) {
 			this._loadFields();
-		} else {
+		}
+		else {
 			this._clearMappingValues();
 		}
 	}
@@ -350,7 +352,8 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 			)
 		) {
 			this._loadFields();
-		} else {
+		}
+		else {
 			this._clearMappingValues();
 		}
 	}
@@ -373,7 +376,8 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 				this.selectedMappingTypes.type.id,
 				this.selectedMappingTypes.subtype.id
 			);
-		} else if (
+		}
+		else if (
 			this._selectedMappingSourceTypeId ===
 				MAPPING_SOURCE_TYPE_IDS.content &&
 			this._selectedInfoItem.classNameId &&
@@ -392,7 +396,8 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 						COMPATIBLE_TYPES['image'].indexOf(field.type) !== -1
 				);
 			});
-		} else if (this._fields.length) {
+		}
+		else if (this._fields.length) {
 			this._clearFields();
 		}
 	}

@@ -179,13 +179,15 @@ else {
 								organizationsRedirect
 							);
 						}
-					} else {
+					}
+					else {
 						var message;
 
 						if (ids && ids.toString().split(',').length > 1) {
 							message =
 								'<%= UnicodeLanguageUtil.get(request, "one-or-more-organizations-are-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-organizations-by-automatically-unassociating-the-deactivated-users") %>';
-						} else {
+						}
+						else {
 							message =
 								'<%= UnicodeLanguageUtil.get(request, "the-selected-organization-is-associated-with-deactivated-users.-do-you-want-to-proceed-with-deleting-the-selected-organization-by-automatically-unassociating-the-deactivated-users") %>';
 						}
@@ -198,7 +200,8 @@ else {
 						}
 					}
 				});
-			} else if (
+			}
+			else if (
 				confirm(
 					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
 				)

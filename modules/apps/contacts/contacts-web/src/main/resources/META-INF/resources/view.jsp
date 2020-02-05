@@ -562,7 +562,8 @@ portletURL.setWindowState(WindowState.NORMAL);
 									contactsCenter.addContactResult(data);
 								}
 							});
-					} else {
+					}
+					else {
 						contactsCenter.deleteContactResult(userId);
 					}
 				},

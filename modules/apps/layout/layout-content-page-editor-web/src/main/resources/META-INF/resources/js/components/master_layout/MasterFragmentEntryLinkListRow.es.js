@@ -64,7 +64,8 @@ class MasterFragmentEntryLinkListRow extends Component {
 					this._mappedBackgroundFieldValue = fieldValue.url;
 				}
 			});
-		} else {
+		}
+		else {
 			this._mappedBackgroundFieldValue = null;
 		}
 	}

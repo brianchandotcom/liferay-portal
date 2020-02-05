@@ -15,7 +15,8 @@ const getJsonItem = (storage, key) => {
 
 	try {
 		jsonItem = JSON.parse(item);
-	} catch {
+	}
+	catch {
 		jsonItem = item;
 	}
 
@@ -27,7 +28,8 @@ const setJsonItem = (storage, key, json = {}) => {
 
 	try {
 		jsonString = JSON.stringify(json);
-	} catch {
+	}
+	catch {
 		jsonString = json;
 	}
 

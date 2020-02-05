@@ -63,7 +63,8 @@ const PageContent = props => {
 				editableValues.classNameId === classNameId &&
 				editableValues.classPK === classPK
 			);
-		} else if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem) {
+		}
+		else if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.mappedItem) {
 			return itemId === state.hoveredItemId;
 		}
 	});

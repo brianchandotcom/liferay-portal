@@ -28,7 +28,8 @@ export function stopImmediatePropagation(event) {
 	if (event.nativeEvent) {
 		// This is a React synthetic event; must access nativeEvent instead.
 		event.nativeEvent.stopImmediatePropagation();
-	} else {
+	}
+	else {
 		event.stopImmediatePropagation();
 	}
 }

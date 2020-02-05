@@ -35,7 +35,8 @@ export default function(namespace, obj) {
 
 	if (typeof obj !== 'object') {
 		value = nsCached(namespace, obj);
-	} else {
+	}
+	else {
 		value = {};
 
 		const keys = Object.keys(obj);

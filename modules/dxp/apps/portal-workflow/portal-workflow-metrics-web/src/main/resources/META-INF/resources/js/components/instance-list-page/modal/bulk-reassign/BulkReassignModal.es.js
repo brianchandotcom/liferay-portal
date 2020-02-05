@@ -83,7 +83,8 @@ const BulkReassignModal = ({processId}) => {
 		if (visible) {
 			if (selectAllInstances) {
 				params.workflowDefinitionId = processId;
-			} else {
+			}
+			else {
 				params.workflowInstanceIds = selectedItems.length
 					? selectedItems.map(item => item.id)
 					: singleModal.selectedItem.id;
@@ -121,7 +122,8 @@ const BulkReassignModal = ({processId}) => {
 					);
 					setFetching(false);
 				});
-		} else {
+		}
+		else {
 			setCurrentStep('selectAssignees');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

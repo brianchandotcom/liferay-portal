@@ -240,7 +240,8 @@ AUI.add(
 					buffer.push(
 						XMLUtil.create('resourceActions', xmlResourceAction)
 					);
-				} else if (assignmentType === 'roleId') {
+				}
+				else if (assignmentType === 'roleId') {
 					var xmlRoleId = XMLUtil.create(
 						'roleId',
 						dataAssignments.roleId
@@ -251,7 +252,8 @@ AUI.add(
 						XMLUtil.create('role', xmlRoleId),
 						xmlRoles.close
 					);
-				} else if (assignmentType === 'roleType') {
+				}
+				else if (assignmentType === 'roleType') {
 					buffer.push(xmlRoles.open);
 
 					var xmlRole = XMLUtil.createObj('role');
@@ -280,7 +282,8 @@ AUI.add(
 					});
 
 					buffer.push(xmlRoles.close);
-				} else if (assignmentType === 'scriptedAssignment') {
+				}
+				else if (assignmentType === 'scriptedAssignment') {
 					var xmlScriptedAssignment = XMLUtil.createObj(
 						'scriptedAssignment'
 					);
@@ -296,7 +299,8 @@ AUI.add(
 							xmlScriptedAssignment.close
 						);
 					});
-				} else if (assignmentType === 'scriptedRecipient') {
+				}
+				else if (assignmentType === 'scriptedRecipient') {
 					var xmlScriptedRecipient = XMLUtil.createObj(
 						'scriptedRecipient'
 					);
@@ -312,7 +316,8 @@ AUI.add(
 							xmlScriptedRecipient.close
 						);
 					});
-				} else if (assignmentType === 'user') {
+				}
+				else if (assignmentType === 'user') {
 					if (
 						isArray(dataAssignments.userId) &&
 						dataAssignments.userId.filter(isValue).length !== 0
@@ -326,14 +331,16 @@ AUI.add(
 
 							if (isValue(item)) {
 								userContent = XMLUtil.create('userId', item);
-							} else if (
+							}
+							else if (
 								isValue(dataAssignments.emailAddress[index])
 							) {
 								userContent = XMLUtil.create(
 									'emailAddress',
 									dataAssignments.emailAddress[index]
 								);
-							} else if (
+							}
+							else if (
 								isValue(dataAssignments.screenName[index])
 							) {
 								userContent = XMLUtil.create(
@@ -348,12 +355,15 @@ AUI.add(
 
 							buffer.push(xmlUser.close);
 						});
-					} else {
+					}
+					else {
 						buffer.push('<user/>');
 					}
-				} else if (assignmentType === 'taskAssignees') {
+				}
+				else if (assignmentType === 'taskAssignees') {
 					buffer.push('<assignees/>');
-				} else if (
+				}
+				else if (
 					!dataAssignments.address ||
 					dataAssignments.address.filter(isValue).length === 0
 				) {
@@ -521,7 +531,8 @@ AUI.add(
 						buffer.push(
 							XMLUtil.create('blocking', blocking[index])
 						);
-					} else {
+					}
+					else {
 						buffer.push(XMLUtil.create('blocking', String(false)));
 					}
 

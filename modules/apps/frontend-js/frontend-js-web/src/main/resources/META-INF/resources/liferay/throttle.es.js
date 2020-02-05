@@ -40,7 +40,8 @@ export default function throttle(fn, interval) {
 
 		if (timeout === null) {
 			schedule();
-		} else {
+		}
+		else {
 			const remaining = Math.max(last + interval - now, 0);
 			clearTimeout(timeout);
 			timeout = setTimeout(schedule, remaining);

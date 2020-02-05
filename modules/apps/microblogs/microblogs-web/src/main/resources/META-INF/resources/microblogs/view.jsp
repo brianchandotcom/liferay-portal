@@ -263,7 +263,8 @@ portletURL.setParameter("tabs1", tabs1);
 
 				editContainer.io.set('uri', uri);
 				editContainer.io.start();
-			} else {
+			}
+			else {
 				editForm.toggle();
 			}
 

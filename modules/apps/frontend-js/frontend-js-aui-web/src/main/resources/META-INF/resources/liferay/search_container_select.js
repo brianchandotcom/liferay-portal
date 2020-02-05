@@ -57,7 +57,8 @@ AUI.add(
 					setter(keepSelection) {
 						if (Lang.isString(keepSelection)) {
 							keepSelection = new RegExp(keepSelection);
-						} else if (!Lang.isRegExp(keepSelection)) {
+						}
+						else if (!Lang.isRegExp(keepSelection)) {
 							keepSelection = keepSelection
 								? REGEX_MATCH_EVERYTHING
 								: REGEX_MATCH_NOTHING;
@@ -381,7 +382,8 @@ AUI.add(
 							.ancestor(params.rowSelector)
 							.addClass(params.rowClassNameActive);
 					});
-				} else {
+				}
+				else {
 					var offScreenElementsHtml = '';
 
 					AArray.each(state.data.elements, item => {
@@ -394,7 +396,8 @@ AUI.add(
 							input
 								.ancestor(params.rowSelector)
 								.addClass(params.rowClassNameActive);
-						} else {
+						}
+						else {
 							offScreenElementsHtml += Lang.sub(
 								TPL_HIDDEN_INPUT,
 								item

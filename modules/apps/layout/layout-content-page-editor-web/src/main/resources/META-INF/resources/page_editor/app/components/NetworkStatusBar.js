@@ -21,9 +21,11 @@ import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkSt
 const getStatus = (isOnline, status, lastSaveDate) => {
 	if (!isOnline) {
 		return `${Liferay.Language.get('trying-to-reconnect')}...`;
-	} else if (status === SERVICE_NETWORK_STATUS_TYPES.Fetching) {
+	}
+	else if (status === SERVICE_NETWORK_STATUS_TYPES.Fetching) {
 		return Liferay.Language.get('saving-changes');
-	} else if (lastSaveDate) {
+	}
+	else if (lastSaveDate) {
 		return lastSaveDate;
 	}
 

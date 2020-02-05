@@ -152,7 +152,8 @@ if (!GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(
 							'copy_from_live';
 
 						submitForm(document.<portlet:namespace />fm1);
-					} else if (!dateChecker.validRange) {
+					}
+					else if (!dateChecker.validRange) {
 						exportImport.showNotification(dateChecker);
 					}
 				}
@@ -171,7 +172,8 @@ if (!GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(
 						)
 					) {
 						submitForm(document.<portlet:namespace />fm1);
-					} else if (!dateChecker.validRange) {
+					}
+					else if (!dateChecker.validRange) {
 						exportImport.showNotification(dateChecker);
 					}
 				}

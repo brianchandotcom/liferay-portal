@@ -97,7 +97,8 @@ AUI.add(
 
 					if (localCheckedNodes.indexOf(plid) > -1) {
 						checked = true;
-					} else if (localUncheckedNodes.indexOf(plid) > -1) {
+					}
+					else if (localUncheckedNodes.indexOf(plid) > -1) {
 						checked = false;
 					}
 
@@ -141,7 +142,8 @@ AUI.add(
 								'RootNode',
 							expanded
 						);
-					} else {
+					}
+					else {
 						var layoutId = host.extractLayoutId(target);
 
 						instance._updateSessionTreeOpenedState(
@@ -197,7 +199,8 @@ AUI.add(
 						responseData => {
 							try {
 								paginationMap = JSON.parse(responseData);
-							} catch (e) {}
+							}
+							catch (e) {}
 
 							updatePaginationMap(paginationMap, target);
 
@@ -288,7 +291,8 @@ AUI.add(
 
 					if (instance.get(STR_CHECKED_NODES).indexOf(plid) > -1) {
 						treeNodeTaskSuperClass.check.call(node, tree);
-					} else {
+					}
+					else {
 						treeNodeTaskSuperClass.uncheck.call(node, tree);
 					}
 
@@ -337,7 +341,8 @@ AUI.add(
 								localUncheckedIndex
 							);
 						}
-					} else if (checkedIndex > -1) {
+					}
+					else if (checkedIndex > -1) {
 						AArray.remove(checkedNodes, checkedIndex);
 
 						localUncheckedNodes.push(plid);

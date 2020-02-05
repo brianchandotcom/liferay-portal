@@ -50,7 +50,8 @@ function loadFields({
 			config,
 			onNetworkStatus: dispatch
 		});
-	} else if (
+	}
+	else if (
 		selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content &&
 		selectedItem.classNameId &&
 		selectedItem.classPK

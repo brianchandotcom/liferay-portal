@@ -164,7 +164,8 @@
 						node,
 						extraStyles
 					);
-				} else if (type === 'video') {
+				}
+				else if (type === 'video') {
 					mediaScript = instance._commitVideoValue(
 						value,
 						node,
@@ -195,7 +196,8 @@
 				itemSelectorDialog.zIndex = CKEDITOR.getNextZIndex();
 
 				callback(itemSelectorDialog);
-			} else {
+			}
+			else {
 				Liferay.Loader.require(
 					'frontend-js-web/liferay/ItemSelectorDialog.es',
 					ItemSelectorDialog => {
@@ -225,7 +227,8 @@
 						? editor.config.attachmentURLPrefix +
 						  encodeURIComponent(itemValue.title)
 						: itemValue.url;
-				} catch (e) {}
+				}
+				catch (e) {}
 			}
 
 			return itemSrc;
@@ -253,7 +256,8 @@
 				if (audioSrc) {
 					if (typeof callback === 'function') {
 						callback(audioSrc);
-					} else {
+					}
+					else {
 						instance._commitMediaValue(audioSrc, editor, 'audio');
 					}
 				}
@@ -273,7 +277,8 @@
 					if (imageSrc) {
 						if (typeof callback === 'function') {
 							callback(imageSrc, selectedItem);
-						} else {
+						}
+						else {
 							var elementOuterHtml =
 								'<img src="' + imageSrc + '">';
 
@@ -309,7 +314,8 @@
 											region: element.getClientRect()
 										}
 									});
-								} else {
+								}
+								else {
 									editor.execCommand('enter');
 								}
 							}
@@ -348,7 +354,8 @@
 				if (videoSrc) {
 					if (typeof callback === 'function') {
 						callback(videoSrc);
-					} else {
+					}
+					else {
 						instance._commitMediaValue(videoSrc, editor, 'video');
 					}
 				}
@@ -490,7 +497,8 @@
 						'audioselector',
 						'url'
 					);
-				} else if (dialogName === 'image') {
+				}
+				else if (dialogName === 'image') {
 					instance._bindBrowseButton(
 						event.editor,
 						dialogDefinition,
@@ -506,7 +514,8 @@
 							.getInputElement()
 							.setAttribute('readOnly', true);
 					};
-				} else if (dialogName === 'video') {
+				}
+				else if (dialogName === 'video') {
 					instance._bindBrowseButton(
 						event.editor,
 						dialogDefinition,
@@ -514,7 +523,8 @@
 						'videoselector',
 						'poster'
 					);
-				} else if (dialogName === 'link') {
+				}
+				else if (dialogName === 'link') {
 					instance._bindBrowseButton(
 						event.editor,
 						dialogDefinition,

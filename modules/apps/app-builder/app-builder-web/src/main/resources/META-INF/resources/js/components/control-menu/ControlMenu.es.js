@@ -198,7 +198,8 @@ export const PortalControlMenu = ({actions, backURL, title, tooltip, url}) => {
 		if (tooltip) {
 			tooltipNode.classList.remove('hide');
 			tooltipNode.setAttribute('title', tooltip);
-		} else {
+		}
+		else {
 			tooltipNode.classList.add('hide');
 		}
 	}, [tooltip]);
@@ -223,7 +224,8 @@ export const ControlMenuBase = props => {
 		(appDeploymentType === 'standalone' || appDeploymentType === 'widget')
 	) {
 		return <InlineControlMenu {...props} />;
-	} else {
+	}
+	else {
 		return <PortalControlMenu {...props} />;
 	}
 };

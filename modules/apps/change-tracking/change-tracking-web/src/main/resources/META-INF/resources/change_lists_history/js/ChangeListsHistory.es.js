@@ -79,7 +79,8 @@ class ChangeListsHistory extends PortletBase {
 	_callFetchProcesses(urlProcesses) {
 		try {
 			this._fetchProcesses(urlProcesses);
-		} catch (e) {
+		}
+		catch (e) {
 			this._clearInterval(this.intervalId);
 		}
 	}
@@ -165,7 +166,8 @@ class ChangeListsHistory extends PortletBase {
 
 		if (this.filterUser > 0) {
 			processesParameters.user = this.filterUser;
-		} else {
+		}
+		else {
 			processesParameters.user = USER_FILTER_ALL;
 		}
 

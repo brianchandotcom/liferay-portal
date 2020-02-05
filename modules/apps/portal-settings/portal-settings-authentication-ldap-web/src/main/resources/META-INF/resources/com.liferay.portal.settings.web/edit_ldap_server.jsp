@@ -407,7 +407,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			userMappingLastName = 'sn';
 			userMappingPassword = 'userPassword';
 			userMappingScreenName = 'cn';
-		} else if (ldapType === 'fedora') {
+		}
+		else if (ldapType === 'fedora') {
 			baseDN = 'dc=localdomain';
 			baseProviderURL = 'ldap://localhost:19389';
 			importUserSearchFilter = '(objectClass=inetOrgPerson)';
@@ -420,7 +421,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			userMappingLastName = 'sn';
 			userMappingPassword = 'userPassword';
 			userMappingScreenName = 'uid';
-		} else if (ldapType === 'microsoft') {
+		}
+		else if (ldapType === 'microsoft') {
 			baseDN = 'dc=example,dc=com';
 			baseProviderURL = 'ldap://localhost:389';
 			credentials = 'secret';
@@ -439,7 +441,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			userMappingMiddleName = 'middleName';
 			userMappingPassword = 'unicodePwd';
 			userMappingScreenName = 'sAMAccountName';
-		} else if (ldapType === 'novell') {
+		}
+		else if (ldapType === 'novell') {
 			baseProviderURL = 'ldap://localhost:389';
 			credentials = 'secret';
 			principal = 'cn=admin,ou=test';
@@ -450,7 +453,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			userMappingLastName = 'sn';
 			userMappingPassword = 'userPassword';
 			userMappingScreenName = 'cn';
-		} else if (ldapType === 'open') {
+		}
+		else if (ldapType === 'open') {
 			baseDN = 'dc=example,dc=com';
 			baseProviderURL = 'ldap://localhost:389';
 			credentials = 'secret';
@@ -514,7 +518,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			if (type === 'ldapConnection') {
 				url =
 					'<portlet:renderURL copyCurrentRenderParameters="<%= false %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_connection" /></portlet:renderURL>';
-			} else if (type === 'ldapGroups') {
+			}
+			else if (type === 'ldapGroups') {
 				url =
 					'<portlet:renderURL copyCurrentRenderParameters="<%= false %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_groups" /></portlet:renderURL>';
 
@@ -534,7 +539,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 					document.<portlet:namespace />fm[
 						'<portlet:namespace />groupMappingUser'
 					].value;
-			} else if (type === 'ldapUsers') {
+			}
+			else if (type === 'ldapUsers') {
 				url =
 					'<portlet:renderURL copyCurrentRenderParameters="<%= false %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_users" /></portlet:renderURL>';
 

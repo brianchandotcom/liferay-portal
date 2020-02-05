@@ -83,7 +83,8 @@ export default function FloatingToolbar({
 			if (newPanelId) {
 				if (newPanelId === panelId) {
 					setPanelId(null);
-				} else {
+				}
+				else {
 					setPanelId(newPanelId);
 				}
 			}

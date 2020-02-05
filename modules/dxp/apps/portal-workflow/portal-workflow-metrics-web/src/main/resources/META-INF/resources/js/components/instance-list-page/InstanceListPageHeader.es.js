@@ -49,7 +49,8 @@ const Header = ({
 					selectedItems[0].taskNames.length > 1
 				) {
 					setBulkModal({...bulkModal, visible: true});
-				} else {
+				}
+				else {
 					setSingleModal({
 						selectedItem: selectedItems[0],
 						visible: true

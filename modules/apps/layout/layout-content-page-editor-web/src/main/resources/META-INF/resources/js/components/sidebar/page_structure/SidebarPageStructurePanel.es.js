@@ -269,7 +269,8 @@ class SidebarPageStructurePanel extends Component {
 
 			if (nodeKeyIndex === -1) {
 				this._expandedNodes = [...this._expandedNodes, nodeKey];
-			} else {
+			}
+			else {
 				this._expandedNodes = this._expandedNodes.filter(
 					node => node != nodeKey
 				);
@@ -303,7 +304,8 @@ class SidebarPageStructurePanel extends Component {
 
 		if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.row) {
 			removeItemAction = removeRowAction(itemId);
-		} else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
+		}
+		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
 			removeItemAction = removeFragmentEntryLinkAction(itemId);
 		}
 

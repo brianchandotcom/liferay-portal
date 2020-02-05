@@ -215,7 +215,8 @@
 							query = nodeText.substring(triggerIndex) + query;
 
 							triggerContainer = node;
-						} else {
+						}
+						else {
 							query = node.getText() + query;
 						}
 					}
@@ -228,7 +229,8 @@
 				};
 
 				triggerWalker.checkBackward();
-			} else if (
+			}
+			else if (
 				triggerIndex > 0 &&
 				query.charAt(triggerIndex - 1) === STR_SPACE
 			) {
@@ -330,9 +332,11 @@
 					if (KeyMap.isKey(event.keyCode, 'enter') || !inlineEditor) {
 						instance._onInputKey(event);
 					}
-				} else if (event.keyCode === KeyMap.ESC) {
+				}
+				else if (event.keyCode === KeyMap.ESC) {
 					instance.hide();
-				} else {
+				}
+				else {
 					instance._processCaretTask();
 				}
 			}
@@ -396,7 +400,8 @@
 						node.setText(nodeText.substring(spaceIndex));
 
 						updateWalker.end();
-					} else {
+					}
+					else {
 						removeNodes.push(node);
 					}
 

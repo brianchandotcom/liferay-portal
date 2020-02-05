@@ -331,7 +331,8 @@ for (int i = 0; i < pages.size(); i++) {
 								'<portlet:namespace />targetVersion=<%= wikiPage.getVersion() %>',
 								uri
 							);
-						} else if (rowIdsSize === 2) {
+						}
+						else if (rowIdsSize === 2) {
 							uri = Liferay.Util.addParams(
 								'<portlet:namespace />sourceVersion=' + rowIds[1].value,
 								uri

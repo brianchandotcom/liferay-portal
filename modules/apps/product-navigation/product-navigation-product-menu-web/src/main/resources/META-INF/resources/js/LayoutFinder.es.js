@@ -76,7 +76,8 @@ function LayoutFinder(props) {
 				cancelUpdatePageResults();
 
 				tree.classList.remove('hide');
-			} else {
+			}
+			else {
 				setLoading(true);
 				updatePageResults(newKeywords);
 

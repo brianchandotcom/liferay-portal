@@ -186,7 +186,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 									currentColumnsElement,
 									'<option value="action"><%= UnicodeLanguageUtil.get(request, "action") %></option>'
 								);
-							} else {
+							}
+							else {
 								var options = document.querySelectorAll(
 									'#<portlet:namespace />currentEntryColumns option[value="action"], #<portlet:namespace />availableEntryColumns option[value="action"]'
 								);

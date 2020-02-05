@@ -52,12 +52,14 @@ AUI.add(
 
 				if (config.type === 'like') {
 					ratings = Liferay.Ratings.LikeRating;
-				} else if (
+				}
+				else if (
 					config.type === 'stars' ||
 					config.type === 'stacked-stars'
 				) {
 					ratings = Liferay.Ratings.StarRating;
-				} else if (config.type === 'thumbs') {
+				}
+				else if (config.type === 'thumbs') {
 					ratings = Liferay.Ratings.ThumbRating;
 				}
 
@@ -157,7 +159,8 @@ AUI.add(
 
 					if (score === 1.0) {
 						scoreIndex = 0;
-					} else if (score === 0.0) {
+					}
+					else if (score === 0.0) {
 						scoreIndex = 1;
 					}
 
@@ -181,7 +184,8 @@ AUI.add(
 
 					if (instance.get('type') === 'stacked-stars') {
 						tplLabel = TPL_LABEL_SCORE_STACKED;
-					} else {
+					}
+					else {
 						tplLabel = TPL_LABEL_SCORE;
 					}
 
@@ -189,7 +193,8 @@ AUI.add(
 
 					if (totalEntries === 1) {
 						voteLabel = Liferay.Language.get('vote');
-					} else {
+					}
+					else {
 						voteLabel = Liferay.Language.get('votes');
 					}
 
@@ -241,7 +246,8 @@ AUI.add(
 
 					if (stars === 1) {
 						message = Liferay.Language.get('star');
-					} else {
+					}
+					else {
 						message = Liferay.Language.get('stars');
 					}
 
@@ -265,7 +271,8 @@ AUI.add(
 							message = Liferay.Language.get(
 								'the-average-rating-is-x-star-out-of-x'
 							);
-						} else {
+						}
+						else {
 							message = Liferay.Language.get(
 								'the-average-rating-is-x-stars-out-of-x'
 							);
@@ -299,7 +306,8 @@ AUI.add(
 											'you-have-rated-this-x-stars-out-of-x'
 									  );
 							ratingScore = score;
-						} else {
+						}
+						else {
 							ratingMessage =
 								i === 0
 									? Liferay.Language.get(
@@ -343,7 +351,8 @@ AUI.add(
 					});
 
 					instance._registerTask();
-				} else {
+				}
+				else {
 					instance._registerRating(config);
 				}
 			}
@@ -591,7 +600,8 @@ AUI.add(
 						ratingThumbUp.removeClass(cssClasses.on);
 
 						ratings.set('disabled', true);
-					} else {
+					}
+					else {
 						var cssClassesOn = cssClasses.on;
 
 						var ratingThumbDownCssClassOn = false;
@@ -618,7 +628,8 @@ AUI.add(
 								thumbDownMessage = Liferay.Language.get(
 									'you-have-rated-this-as-bad'
 								);
-							} else {
+							}
+							else {
 								thumbDownMessage = Liferay.Language.get(
 									'rate-this-as-bad'
 								);
@@ -635,21 +646,24 @@ AUI.add(
 							thumbUpMessage = Liferay.Language.get(
 								'you-have-rated-this-as-good'
 							);
-						} else if (
+						}
+						else if (
 							ratingThumbDown &&
 							!ratingThumbUpCssClassOn
 						) {
 							thumbUpMessage = Liferay.Language.get(
 								'rate-this-as-good'
 							);
-						} else if (
+						}
+						else if (
 							!ratingThumbDown &&
 							ratingThumbUpCssClassOn
 						) {
 							thumbUpMessage = Liferay.Language.get(
 								'unlike-this'
 							);
-						} else if (
+						}
+						else if (
 							!ratingThumbDown &&
 							!ratingThumbUpCssClassOn
 						) {

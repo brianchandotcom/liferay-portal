@@ -91,7 +91,8 @@ class CreateContentDialog extends Component {
 	_handleSubmitButtonClick() {
 		if (this._step === 1) {
 			this._step = 2;
-		} else {
+		}
+		else {
 			this.store.dispatch(enableSavingChangesStatusAction());
 
 			addStructuredContent(

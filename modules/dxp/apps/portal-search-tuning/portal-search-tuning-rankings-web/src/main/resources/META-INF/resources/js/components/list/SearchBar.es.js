@@ -54,7 +54,8 @@ class SearchBar extends Component {
 	_handleAllCheckbox = () => {
 		if (this.props.selectedIds.length > 0) {
 			this.props.onSelectClear();
-		} else {
+		}
+		else {
 			this.props.onSelectAll();
 		}
 	};
@@ -76,7 +77,8 @@ class SearchBar extends Component {
 			onRemoveSelect(selectedIds.filter(id => dataMap[id].hidden));
 
 			onClickPin(unpinnedIds, true);
-		} else {
+		}
+		else {
 			onRemoveSelect(selectedIds.filter(id => dataMap[id].addedResult));
 
 			onClickPin(selectedIds, false);

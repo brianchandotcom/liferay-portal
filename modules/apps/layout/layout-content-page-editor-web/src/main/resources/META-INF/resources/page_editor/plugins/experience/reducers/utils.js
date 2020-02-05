@@ -188,7 +188,8 @@ function updateUsedWidgets(widgets, portletIds) {
 				!portlet.instanceable
 			) {
 				portlet.used = true;
-			} else {
+			}
+			else {
 				portlet.used = false;
 			}
 

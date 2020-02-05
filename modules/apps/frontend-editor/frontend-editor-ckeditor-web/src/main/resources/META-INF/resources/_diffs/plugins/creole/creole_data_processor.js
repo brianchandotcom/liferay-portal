@@ -143,7 +143,8 @@
 					instance._handleData(child.data || child.outerHTML, node);
 
 					continue;
-				} else if (instance._isIgnorable(child)) {
+				}
+				else if (instance._isIgnorable(child)) {
 					continue;
 				}
 
@@ -175,7 +176,8 @@
 				newLineCharacter = NEW_LINE;
 
 				listTagsIn.push(newLineCharacter);
-			} else if (
+			}
+			else if (
 				element.previousSibling &&
 				nextSibling &&
 				nextSibling !== NEW_LINE
@@ -201,7 +203,8 @@
 
 								if (!instance._endResult.length) {
 									res += '~' + p1;
-								} else {
+								}
+								else {
 									var lastResultString =
 										instance._endResult[
 											instance._endResult.length - 1
@@ -247,11 +250,13 @@
 						instance._endResult.push(
 							STR_LIST_ITEM_ESCAPE_CHARACTERS
 						);
-					} else {
+					}
+					else {
 						instance._endResult.push(NEW_LINE);
 					}
 				}
-			} else if (
+			}
+			else if (
 				tagName == TAG_UNORDERED_LIST ||
 				tagName == TAG_ORDERED_LIST
 			) {
@@ -264,11 +269,13 @@
 				}
 
 				instance._appendNewLines(newLinesCount);
-			} else if (tagName == TAG_PRE) {
+			}
+			else if (tagName == TAG_PRE) {
 				if (!instance._isLastItemNewLine()) {
 					instance._endResult.push(NEW_LINE);
 				}
-			} else if (tagName == 'table') {
+			}
+			else if (tagName == 'table') {
 				listTagsOut.push(NEW_LINE);
 			}
 
@@ -291,58 +298,73 @@
 
 				if (tagName == TAG_PARAGRAPH) {
 					instance._handleParagraph(element, listTagsIn, listTagsOut);
-				} else if (tagName == 'br') {
+				}
+				else if (tagName == 'br') {
 					instance._handleBreak(element, listTagsIn, listTagsOut);
-				} else if (tagName == 'a') {
+				}
+				else if (tagName == 'a') {
 					instance._handleLink(element, listTagsIn, listTagsOut);
-				} else if (
+				}
+				else if (
 					(tagName == 'strong' || tagName == 'b') &&
 					elementContent.length > 0
 				) {
 					instance._handleStrong(element, listTagsIn, listTagsOut);
-				} else if (
+				}
+				else if (
 					(tagName == 'em' || tagName == 'i') &&
 					elementContent.length > 0
 				) {
 					instance._handleEm(element, listTagsIn, listTagsOut);
-				} else if (tagName == 'img') {
+				}
+				else if (tagName == 'img') {
 					instance._handleImage(element, listTagsIn, listTagsOut);
-				} else if (tagName == TAG_UNORDERED_LIST) {
+				}
+				else if (tagName == TAG_UNORDERED_LIST) {
 					instance._handleUnorderedList(
 						element,
 						listTagsIn,
 						listTagsOut
 					);
-				} else if (tagName == TAG_LIST_ITEM) {
+				}
+				else if (tagName == TAG_LIST_ITEM) {
 					instance._handleListItem(element, listTagsIn, listTagsOut);
-				} else if (tagName == TAG_ORDERED_LIST) {
+				}
+				else if (tagName == TAG_ORDERED_LIST) {
 					instance._handleOrderedList(
 						element,
 						listTagsIn,
 						listTagsOut
 					);
-				} else if (tagName == 'hr') {
+				}
+				else if (tagName == 'hr') {
 					instance._handleHr(element, listTagsIn, listTagsOut);
-				} else if (tagName == TAG_PRE) {
+				}
+				else if (tagName == TAG_PRE) {
 					instance._handlePre(element, listTagsIn, listTagsOut);
-				} else if (tagName == TAG_TELETYPETEXT) {
+				}
+				else if (tagName == TAG_TELETYPETEXT) {
 					instance._handleTT(element, listTagsIn, listTagsOut);
-				} else if (regexHeader) {
+				}
+				else if (regexHeader) {
 					instance._handleHeader(
 						element,
 						listTagsIn,
 						listTagsOut,
 						regexHeader
 					);
-				} else if (tagName == 'th') {
+				}
+				else if (tagName == 'th') {
 					instance._handleTableHeader(
 						element,
 						listTagsIn,
 						listTagsOut
 					);
-				} else if (tagName == 'tr') {
+				}
+				else if (tagName == 'tr') {
 					instance._handleTableRow(element, listTagsIn, listTagsOut);
-				} else if (tagName == 'td') {
+				}
+				else if (tagName == 'td') {
 					instance._handleTableCell(element, listTagsIn, listTagsOut);
 				}
 			}
@@ -411,7 +433,8 @@
 
 				if (linkText === hrefAttribute) {
 					instance._verbatim = true;
-				} else {
+				}
+				else {
 					listTagsIn.push(hrefAttribute, STR_PIPE);
 				}
 
@@ -673,7 +696,8 @@
 				fragment.writeHtml(writer);
 
 				data = writer.getHtml();
-			} else {
+			}
+			else {
 				var div = document.createElement('div');
 
 				if (!instance._creoleParser) {

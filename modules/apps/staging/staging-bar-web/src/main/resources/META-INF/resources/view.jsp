@@ -265,7 +265,8 @@ if (liveLayout != null) {
 						}
 
 						setTimeout(checkBackgroundTasks, 5000);
-					} else {
+					}
+					else {
 						if (stagingLink) {
 							stagingLink.classList.remove('hide');
 						}

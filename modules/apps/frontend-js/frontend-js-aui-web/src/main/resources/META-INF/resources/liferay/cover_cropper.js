@@ -120,7 +120,8 @@ AUI.add(
 							left: containerX,
 							right: containerX + imageContainer.width()
 						};
-					} else if (direction === STR_HORIZONTAL) {
+					}
+					else if (direction === STR_HORIZONTAL) {
 						var containerY = containerPos[1];
 
 						constrain = {

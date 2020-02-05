@@ -169,7 +169,8 @@ AUI.add(
 
 					if (hidden) {
 						element.removeAttribute('hidden');
-					} else {
+					}
+					else {
 						element.setAttribute('hidden', true);
 					}
 				}
@@ -188,7 +189,8 @@ AUI.add(
 
 				if (form && !instance._forms[randomId]) {
 					instance._forms[randomId] = form;
-				} else if (!form && instance._forms[randomId]) {
+				}
+				else if (!form && instance._forms[randomId]) {
 					form = instance._forms[randomId];
 				}
 
@@ -479,9 +481,11 @@ AUI.add(
 					instance._doToggleDefinitionLinkEditionMode(namespace);
 
 					instance._resetLastValue(namespace);
-				} else if (!openDefinitionLinkNode) {
+				}
+				else if (!openDefinitionLinkNode) {
 					instance._doToggleDefinitionLinkEditionMode(namespace);
-				} else if (
+				}
+				else if (
 					!instance._hasDefinitionLinkChanged(openDefinitionLinkNode)
 				) {
 					openDefinitionLinkNamespace = instance._getDefinitionLinkNodeNamespace(
@@ -493,7 +497,8 @@ AUI.add(
 					);
 
 					instance._doToggleDefinitionLinkEditionMode(namespace);
-				} else {
+				}
+				else {
 					openDefinitionLinkNamespace = instance._getDefinitionLinkNodeNamespace(
 						openDefinitionLinkNode
 					);

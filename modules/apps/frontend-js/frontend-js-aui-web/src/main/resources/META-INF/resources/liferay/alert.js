@@ -100,14 +100,16 @@ AUI.add(
 
 							if (targetNode) {
 								targetNode.prepend(alertsContainer);
-							} else {
+							}
+							else {
 								var navbar = rootNode.one(
 									'.portlet-body > .navbar'
 								);
 
 								if (navbar) {
 									navbar.placeAfter(alertsContainer);
-								} else {
+								}
+								else {
 									var prependTarget =
 										rootNode.one('.portlet-body') ||
 										rootNode;
@@ -149,7 +151,8 @@ AUI.add(
 					if (instance._ignoreHideDelay) {
 						instance._prepareTransition(false);
 						instance._transition(false);
-					} else {
+					}
+					else {
 						Alert.superclass._maybeHide.call(this);
 					}
 				},
@@ -214,12 +217,14 @@ AUI.add(
 
 									if (visible && delay.hide) {
 										instance.hide();
-									} else if (instance.get('destroyOnHide')) {
+									}
+									else if (instance.get('destroyOnHide')) {
 										A.soon(A.bind('destroy', instance));
 									}
 								}
 							);
-						} catch (error) {}
+						}
+						catch (error) {}
 					}
 				},
 

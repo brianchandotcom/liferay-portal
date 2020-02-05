@@ -101,7 +101,8 @@ AUI.add(
 
 					if (isString(val)) {
 						val = instance.one(val);
-					} else {
+					}
+					else {
 						val = A.one(val);
 					}
 

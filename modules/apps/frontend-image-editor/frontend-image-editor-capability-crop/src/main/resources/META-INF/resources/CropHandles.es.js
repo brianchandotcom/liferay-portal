@@ -179,13 +179,15 @@ class CropHandles extends Component {
 
 		if (region.left < constrain.left) {
 			region.left = constrain.left;
-		} else if (region.right > constrain.right) {
+		}
+		else if (region.right > constrain.right) {
 			region.left -= region.right - constrain.right;
 		}
 
 		if (region.top < constrain.top) {
 			region.top = constrain.top;
-		} else if (region.bottom > constrain.bottom) {
+		}
+		else if (region.bottom > constrain.bottom) {
 			region.top -= region.bottom - constrain.bottom;
 		}
 

@@ -50,7 +50,8 @@ function render(element, value, config = {}) {
 
 	if (element instanceof HTMLImageElement) {
 		image = element;
-	} else {
+	}
+	else {
 		image = element.querySelector('img');
 	}
 
@@ -59,7 +60,8 @@ function render(element, value, config = {}) {
 			if (image.parentElement instanceof HTMLAnchorElement) {
 				image.parentElement.href = config.href;
 				image.parentElement.target = config.target || '';
-			} else {
+			}
+			else {
 				const link = document.createElement('a');
 
 				link.href = config.href;

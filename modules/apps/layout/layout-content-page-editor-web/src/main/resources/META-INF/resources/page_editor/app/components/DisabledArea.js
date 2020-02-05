@@ -75,7 +75,8 @@ const DisabledArea = () => {
 		if (element) {
 			if (sidebarOpen) {
 				element.classList.add('collapsed');
-			} else {
+			}
+			else {
 				element.classList.remove('collapsed');
 			}
 		}
@@ -103,7 +104,8 @@ const DisabledArea = () => {
 			) {
 				setCurrentElementClicked(event.target);
 				setShow(true);
-			} else if (show) {
+			}
+			else if (show) {
 				setCurrentElementClicked(null);
 				setShow(false);
 			}

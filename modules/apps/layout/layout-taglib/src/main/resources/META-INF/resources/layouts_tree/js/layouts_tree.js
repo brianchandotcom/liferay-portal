@@ -278,7 +278,8 @@ AUI.add(
 						title = Liferay.Language.get(
 							'there-is-not-a-version-of-this-page-marked-as-ready-for-publication'
 						);
-					} else if (node.layoutBranchName) {
+					}
+					else if (node.layoutBranchName) {
 						node.layoutBranchName = LString.escapeHTML(
 							node.layoutBranchName
 						);
@@ -417,7 +418,8 @@ AUI.add(
 										response.total;
 
 									this.syncUI();
-								} catch (e) {}
+								}
+								catch (e) {}
 
 								this.fire('ioSuccess');
 							}
@@ -525,7 +527,8 @@ AUI.add(
 				if (index > 0) {
 					if (index === parentNode.childrenLength) {
 						action = 'append';
-					} else {
+					}
+					else {
 						var siblingIndex = index;
 
 						if (node.get('parentNode').get('id') !== parentNodeId) {
@@ -540,7 +543,8 @@ AUI.add(
 
 				if (sibling) {
 					instance.insert(node, sibling, action);
-				} else {
+				}
+				else {
 					parentNode.appendChild(node);
 				}
 			},

@@ -44,7 +44,8 @@ export const MultipleSelectFilter = ({dataDefinitionField, useFieldLabel}) => {
 
 		if (values.includes(optionValue)) {
 			newValue = values.filter(item => item !== optionValue);
-		} else {
+		}
+		else {
 			newValue = [...values, optionValue];
 		}
 
@@ -53,7 +54,8 @@ export const MultipleSelectFilter = ({dataDefinitionField, useFieldLabel}) => {
 				payload: {fieldName, value: newValue},
 				type: UPDATE_FILTER_VALUE
 			});
-		} else {
+		}
+		else {
 			dispatch({
 				payload: {fieldName},
 				type: REMOVE_FILTER_VALUE

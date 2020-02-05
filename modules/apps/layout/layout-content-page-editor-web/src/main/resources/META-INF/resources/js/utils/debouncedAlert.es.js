@@ -54,7 +54,8 @@ function debouncedAlert(
 	const handleBeforeNavigate = event => {
 		if (confirm(message)) {
 			clearPendingCallback();
-		} else {
+		}
+		else {
 			event.originalEvent.preventDefault();
 		}
 	};

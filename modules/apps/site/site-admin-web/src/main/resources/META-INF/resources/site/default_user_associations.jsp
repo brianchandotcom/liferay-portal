@@ -171,7 +171,8 @@ for (long defaultTeamId : defaultTeamIds) {
 
 			if (!searchContainerData.length) {
 				searchContainerData = [];
-			} else {
+			}
+			else {
 				searchContainerData = searchContainerData.split(',');
 			}
 

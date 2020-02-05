@@ -167,7 +167,8 @@ else {
 								Liferay.Mail.keywords
 							);
 						}
-					} catch (e) {
+					}
+					catch (e) {
 						Liferay.Mail.setStatus(
 							'error',
 							'<liferay-ui:message key="unable-to-send-message" />'

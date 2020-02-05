@@ -34,7 +34,8 @@ export function getMockResultsData(
 
 	if (searchBarTerm === '') {
 		LEVEL = hidden ? 200 : 100;
-	} else {
+	}
+	else {
 		LEVEL = 300;
 	}
 

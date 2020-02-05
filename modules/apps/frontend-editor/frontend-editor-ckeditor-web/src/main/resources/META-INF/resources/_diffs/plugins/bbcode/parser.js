@@ -108,7 +108,8 @@
 			if (token) {
 				if (isString(token)) {
 					tagName = token;
-				} else {
+				}
+				else {
 					tagName = token[3];
 				}
 
@@ -237,11 +238,13 @@
 
 						if (token) {
 							instance._handleTagEnd(token);
-						} else {
+						}
+						else {
 							break;
 						}
 					}
-				} else {
+				}
+				else {
 					instance._handleTagEnd(token);
 				}
 			}

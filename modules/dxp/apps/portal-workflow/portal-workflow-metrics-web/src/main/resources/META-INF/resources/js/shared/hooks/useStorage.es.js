@@ -30,7 +30,8 @@ const useStorage = (storageType, key) => {
 	const updater = (newValue, removeItem) => {
 		if (removeItem) {
 			remove(key);
-		} else {
+		}
+		else {
 			set(key, newValue);
 		}
 

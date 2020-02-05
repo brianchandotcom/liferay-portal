@@ -61,7 +61,8 @@
 				dom.addClasses(success, 'show');
 
 				dom.removeClasses(success, 'hide');
-			} else {
+			}
+			else {
 				var paragraph = error.querySelector('p');
 
 				if (paragraph) {

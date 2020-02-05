@@ -22,7 +22,8 @@ export default (ref, isClosed) => {
 
 		if (isClosed) {
 			classList.add('closed');
-		} else {
+		}
+		else {
 			classList.remove('closed');
 		}
 

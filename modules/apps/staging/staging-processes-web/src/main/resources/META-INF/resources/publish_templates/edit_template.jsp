@@ -200,7 +200,8 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 
 		if (dateChecker.validRange) {
 			submitForm(document.<portlet:namespace />exportPagesFm);
-		} else {
+		}
+		else {
 			exportImport.showNotification();
 		}
 	}

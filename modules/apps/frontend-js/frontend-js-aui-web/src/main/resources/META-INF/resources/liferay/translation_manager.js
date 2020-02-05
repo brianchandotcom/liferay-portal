@@ -300,7 +300,8 @@ AUI.add(
 								instance._resetEditingLocale();
 							}
 						}
-					} else {
+					}
+					else {
 						instance.set('editingLocale', locale);
 					}
 				},
@@ -449,7 +450,8 @@ AUI.add(
 
 					if (val === instance.get('defaultLocale')) {
 						localeNode = defaultLocaleTextNode;
-					} else {
+					}
+					else {
 						localeNode = availableTranslationsLinksNode.one(
 							'span[locale=' + val + ']'
 						);
@@ -700,7 +702,8 @@ AUI.add(
 
 					if (defaultLocaleNode.test(':hidden')) {
 						text = Liferay.Language.get('change');
-					} else {
+					}
+					else {
 						text = Liferay.Language.get('cancel');
 					}
 

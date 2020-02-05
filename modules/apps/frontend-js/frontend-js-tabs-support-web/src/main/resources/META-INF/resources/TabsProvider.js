@@ -102,7 +102,8 @@ class TabsProvider {
 			});
 
 			this.hide({panel: activePanel});
-		} else {
+		}
+		else {
 			Liferay.fire(this.EVENT_SHOW, {panel, trigger});
 
 			trigger.classList.add(CssClass.ACTIVE);
@@ -135,7 +136,8 @@ class TabsProvider {
 		if (panel) {
 			if (panel.classList.contains(CssClass.SHOW)) {
 				this.hide({panel, trigger});
-			} else {
+			}
+			else {
 				this.show({panel, trigger});
 			}
 		}

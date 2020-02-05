@@ -33,6 +33,7 @@ class LocalizableText extends Component {
 
 	prepareStateForRender(state) {
 		const {value} = state;
+
 		return {
 			...state,
 			availableLocales: state.availableLocales.map(availableLocale => {
@@ -64,7 +65,8 @@ class LocalizableText extends Component {
 		if (value && typeof value === 'string') {
 			try {
 				return JSON.parse(value);
-			} catch (e) {
+			}
+			catch (e) {
 				console.warn('Unable to parse JSON', value);
 			}
 		}
@@ -76,6 +78,7 @@ class LocalizableText extends Component {
 		if (value && typeof value === 'object') {
 			return JSON.stringify(value);
 		}
+
 		return value;
 	}
 

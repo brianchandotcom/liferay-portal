@@ -1,4 +1,4 @@
-## Arrow Functions
+## JSPArrowFunctionCheck
 
 Arrow functions were introduced with ES6. IE11 does not support ES6.
 

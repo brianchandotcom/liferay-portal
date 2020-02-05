@@ -74,45 +74,68 @@ public class MasterLayoutActionDropdownItemsProvider {
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return new DropdownItemList() {
 			{
-				if (LayoutPageTemplateEntryPermission.contains(
-						_themeDisplay.getPermissionChecker(),
-						_layoutPageTemplateEntry, ActionKeys.UPDATE)) {
+				if (_layoutPageTemplateEntry.getLayoutPageTemplateEntryId() >
+						0) {
 
-					add(_getEditMasterLayoutActionUnsafeConsumer());
+					if (LayoutPageTemplateEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutPageTemplateEntry, ActionKeys.UPDATE)) {
 
-					add(_getUpdateMasterLayoutPreviewActionUnsafeConsumer());
+						add(_getEditMasterLayoutActionUnsafeConsumer());
 
-					if (_layoutPageTemplateEntry.getPreviewFileEntryId() > 0) {
 						add(
-							_getDeleteMasterLayoutPreviewActionUnsafeConsumer());
+							_getUpdateMasterLayoutPreviewActionUnsafeConsumer());
+
+						if (_layoutPageTemplateEntry.getPreviewFileEntryId() >
+								0) {
+
+							add(
+								_getDeleteMasterLayoutPreviewActionUnsafeConsumer());
+						}
+
+						add(_getRenameMasterLayoutActionUnsafeConsumer());
+
+						add(_getCopyMasterLayoutActionUnsafeConsumer());
 					}
 
-					add(_getRenameMasterLayoutActionUnsafeConsumer());
+					if (LayoutPageTemplateEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutPageTemplateEntry, ActionKeys.PERMISSIONS)) {
 
-					add(_getCopyMasterLayoutActionUnsafeConsumer());
+						add(_getPermissionsMasterLayoutActionUnsafeConsumer());
+					}
+
+					if (_layoutPageTemplateEntry.isApproved() &&
+						!_layoutPageTemplateEntry.isDefaultTemplate() &&
+						LayoutPageTemplateEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutPageTemplateEntry, ActionKeys.UPDATE)) {
+
+						add(
+							_getMarkAsDefaultMasterLayoutActionUnsafeConsumer());
+					}
+
+					if (LayoutPageTemplateEntryPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_layoutPageTemplateEntry, ActionKeys.DELETE)) {
+
+						add(_getDeleteMasterLayoutActionUnsafeConsumer());
+					}
 				}
+				else {
+					LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+						LayoutPageTemplateEntryServiceUtil.
+							fetchDefaultLayoutPageTemplateEntry(
+								_themeDisplay.getScopeGroupId(),
+								LayoutPageTemplateEntryTypeConstants.
+									TYPE_MASTER_LAYOUT,
+								WorkflowConstants.STATUS_APPROVED);
 
-				if (LayoutPageTemplateEntryPermission.contains(
-						_themeDisplay.getPermissionChecker(),
-						_layoutPageTemplateEntry, ActionKeys.PERMISSIONS)) {
-
-					add(_getPermissionsMasterLayoutActionUnsafeConsumer());
-				}
-
-				if (_layoutPageTemplateEntry.isApproved() &&
-					!_layoutPageTemplateEntry.isDefaultTemplate() &&
-					LayoutPageTemplateEntryPermission.contains(
-						_themeDisplay.getPermissionChecker(),
-						_layoutPageTemplateEntry, ActionKeys.UPDATE)) {
-
-					add(_getMarkAsDefaultMasterLayoutActionUnsafeConsumer());
-				}
-
-				if (LayoutPageTemplateEntryPermission.contains(
-						_themeDisplay.getPermissionChecker(),
-						_layoutPageTemplateEntry, ActionKeys.DELETE)) {
-
-					add(_getDeleteMasterLayoutActionUnsafeConsumer());
+					if (defaultLayoutPageTemplateEntry != null) {
+						add(
+							_getMarkAsDefaulBlanktMasterLayoutActionUnsafeConsumer(
+								defaultLayoutPageTemplateEntry));
+					}
 				}
 			}
 		};
@@ -254,6 +277,46 @@ public class MasterLayoutActionDropdownItemsProvider {
 			itemSelectorCriterion);
 
 		return itemSelectorURL.toString();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getMarkAsDefaulBlanktMasterLayoutActionUnsafeConsumer(
+			LayoutPageTemplateEntry defaultLayoutPageTemplateEntry) {
+
+		PortletURL markAsDefaultMasterLayoutURL =
+			_renderResponse.createActionURL();
+
+		markAsDefaultMasterLayoutURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout_page_template/edit_layout_page_template_settings");
+
+		markAsDefaultMasterLayoutURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		markAsDefaultMasterLayoutURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		markAsDefaultMasterLayoutURL.setParameter(
+			"defaultTemplate", Boolean.FALSE.toString());
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "markAsDefaultMasterLayout");
+			dropdownItem.putData(
+				"markAsDefaultMasterLayoutURL",
+				markAsDefaultMasterLayoutURL.toString());
+			dropdownItem.putData(
+				"message",
+				LanguageUtil.format(
+					_httpServletRequest,
+					"do-you-want-to-replace-x-for-x-as-the-default-master-" +
+						"page-for-widget-pages",
+					new String[] {
+						_layoutPageTemplateEntry.getName(),
+						defaultLayoutPageTemplateEntry.getName()
+					}));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "mark-as-default"));
+		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

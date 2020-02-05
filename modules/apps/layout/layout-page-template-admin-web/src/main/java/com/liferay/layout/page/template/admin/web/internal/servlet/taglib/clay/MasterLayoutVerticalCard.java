@@ -76,8 +76,15 @@ public class MasterLayoutVerticalCard
 						_layoutPageTemplateEntry, _renderRequest,
 						_renderResponse);
 
-			return masterLayoutActionDropdownItemsProvider.
-				getActionDropdownItems();
+			List<DropdownItem> actionDropdownItems =
+				masterLayoutActionDropdownItemsProvider.
+					getActionDropdownItems();
+
+			if (!actionDropdownItems.isEmpty()) {
+				return actionDropdownItems;
+			}
+
+			return null;
 		}
 		catch (Exception exception) {
 		}

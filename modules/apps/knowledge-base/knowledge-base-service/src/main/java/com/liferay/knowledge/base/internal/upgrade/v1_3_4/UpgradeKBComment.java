@@ -51,7 +51,7 @@ public class UpgradeKBComment extends UpgradeProcess {
 			UpgradeKBComment.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
-		runSQLTemplateString(template, false, false);
+		runSQLTemplateString(template, false);
 	}
 
 }

@@ -30,7 +30,7 @@ public class UpgradeSchema extends UpgradeProcess {
 		String template = StringUtil.read(
 			UpgradeSchema.class.getResourceAsStream("dependencies/update.sql"));
 
-		runSQLTemplateString(template, false, false);
+		runSQLTemplateString(template, false);
 
 		upgrade(new UpgradeMVCCVersion());
 

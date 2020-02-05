@@ -139,8 +139,7 @@ public class ArchivedModulesUpgradeTest {
 
 				DB db = DBManagerUtil.getDB();
 
-				db.runSQLTemplateString(
-					StringUtil.read(inputStream), true, true);
+				db.runSQLTemplateString(StringUtil.read(inputStream), true);
 			}
 		}
 

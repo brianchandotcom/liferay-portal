@@ -214,7 +214,7 @@ public class DBInitUtil {
 			StreamUtil.toString(
 				classLoader.getResourceAsStream(
 					"com/liferay/portal/tools/sql/dependencies/".concat(path))),
-			false, false);
+			false);
 	}
 
 	private static void _setSupportsStringCaseSensitiveQuery(

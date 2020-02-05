@@ -102,7 +102,7 @@ public class UpgradeLayoutClassedModelUsage extends UpgradeProcess {
 			UpgradeLayoutClassedModelUsage.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
-		runSQLTemplateString(template, false, false);
+		runSQLTemplateString(template, false);
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

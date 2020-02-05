@@ -118,7 +118,7 @@ public class UpgradeKaleoDefinitionVersionTest {
 			_db.runSQLTemplateString(
 				StringBundler.concat(
 					"alter table ", table, " add ", column, " LONG;"),
-				false, true);
+				true);
 
 			if (postProcess != null) {
 				postProcess.accept(table, column);

@@ -50,6 +50,14 @@ public interface DBProcess {
 	public void runSQLTemplate(String path, boolean failOnError)
 		throws IOException, NamingException, SQLException;
 
+	public void runSQLTemplateString(String template, boolean failOnError)
+		throws IOException, NamingException, SQLException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #runSQLTemplateString(String, boolean)}
+	 */
+	@Deprecated
 	public void runSQLTemplateString(
 			String template, boolean evaluate, boolean failOnError)
 		throws IOException, NamingException, SQLException;

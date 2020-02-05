@@ -16,6 +16,8 @@
 
 <%@ include file="/change_lists/init.jsp" %>
 
+<liferay-portlet:renderURL var="portletURL" />
+
 <%
 String backURL = ParamUtil.getString(request, "backURL");
 
@@ -34,11 +36,9 @@ else {
 	ctCollectionId = ParamUtil.getLong(request, "ctCollectionId");
 }
 
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(portletURL.toString());
 portletDisplay.setShowBackIcon(true);
 %>
-
-<liferay-portlet:renderURL var="portletURL" />
 
 <liferay-portlet:actionURL name="/change_lists/edit_ct_collection" var="actionURL">
 	<liferay-portlet:param name="mvcRenderCommandName" value="/change_lists/view" />

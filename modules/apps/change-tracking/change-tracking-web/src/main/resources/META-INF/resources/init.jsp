@@ -38,6 +38,8 @@ page import="com.liferay.change.tracking.web.internal.display.context.ChangeList
 page import="com.liferay.change.tracking.web.internal.display.context.ChangeListsDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ChangeListsHistoryDetailsDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ChangeListsHistoryDisplayContext" %><%@
+page import="com.liferay.change.tracking.web.internal.display.context.SelectChangeListDisplayContext" %><%@
+page import="com.liferay.change.tracking.web.internal.display.context.SelectChangeListManagementToolbarDisplayContext" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -50,7 +52,8 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
-<%@ page import="java.util.Map" %><%@
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@

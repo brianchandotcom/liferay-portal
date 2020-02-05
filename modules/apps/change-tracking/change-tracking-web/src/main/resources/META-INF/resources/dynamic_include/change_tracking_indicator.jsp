@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,15 +12,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.change.tracking.web.internal.constants;
+<%@ include file="/dynamic_include/init.jsp" %>
 
-/**
- * @author Samuel Trong Tran
- */
-public class CTProductNavigationControlMenuCategoryKeys {
-
-	public static final String PRODUCT_NAVIGATION_CONTROL_MENU_CATEGORY =
-		"change_tracking";
-
-}
+<div class="change-tracking-indicator">
+	<react:component
+		data="<%= changeTrackingIndicatorDisplayContext.getReactData() %>"
+		module="dynamic_include/ChangeTrackingIndictator"
+	/>
+</div>

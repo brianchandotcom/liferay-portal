@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
@@ -79,6 +80,8 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 				ctPreferences.setCtCollectionId(
 					ctCollection.getCtCollectionId());
+				ctPreferences.setPreviousCtCollectionId(
+					CTConstants.CT_COLLECTION_ID_PRODUCTION);
 
 				_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 			}

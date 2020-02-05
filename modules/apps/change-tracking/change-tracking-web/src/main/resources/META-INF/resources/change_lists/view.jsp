@@ -23,8 +23,8 @@ DisplayTerms displayTerms = ctCollectionSearchContainer.getDisplayTerms();
 
 PortletURL portletURL = PortletURLFactoryUtil.create(request, CTPortletKeys.CHANGE_LISTS, PortletRequest.RENDER_PHASE);
 
-portletDisplay.setTitle(LanguageUtil.get(request, "select-change-list"));
-renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
+portletDisplay.setTitle(LanguageUtil.get(request, "select-a-publication"));
+renderResponse.setTitle(LanguageUtil.get(request, "select-a-publication"));
 %>
 
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "checkoutProductionSuccess" %>' message="production-checked-out-success-message" />

@@ -32,6 +32,8 @@ definition {
 	}
 
 	test AssertSimilarResultsDisplayTemplate {
+		property portal.acceptance = "timpak";
+
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -79,6 +81,8 @@ definition {
 	}
 
 	test AssertSimilarResultsMatchesAssetType {
+		property portal.acceptance = "timpak";
+
 		for (var count : list "1,2,3") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Content",
@@ -265,6 +269,7 @@ definition {
 
 	@ignore = "true"
 	test ConfigureSimilarResultsDocumentFrequency {
+		property portal.acceptance = "timpak";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#ConfigureSimilarResultsDocumentFrequency";
 
 		JSONWebcontent.addWebContent(
@@ -327,6 +332,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsFields {
+		property portal.acceptance = "timpak";
+
 		JSONBlog.addEntry(
 			entryContent = "Content",
 			entryTitle = "No Match Content");
@@ -376,6 +383,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsMaximumItemDisplay {
+		property portal.acceptance = "timpak";
+
 		for (var titleName : list "Alpha,Bravo,Charlie,Delta,Echo,Foxtrot") {
 			JSONWebcontent.addWebContent(
 				content = "${titleName}",
@@ -416,6 +425,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsMaximumQueryTerms {
+		property portal.acceptance = "timpak";
+
 		for (var count : list "One, Two, Three") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -449,6 +460,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsMinimumShouldMatch {
+		property portal.acceptance = "timpak";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",
@@ -508,6 +521,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsStopWords {
+		property portal.acceptance = "timpak";
+
 		JSONWebcontent.addWebContent(
 			content = "No Match",
 			groupName = "Guest",
@@ -567,6 +582,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsTermFrequency {
+		property portal.acceptance = "timpak";
+
 		for (var count : list "One, Two, Three") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -625,6 +642,8 @@ definition {
 	}
 
 	test ConfigureSimilarResultsWordLength {
+		property portal.acceptance = "timpak";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",

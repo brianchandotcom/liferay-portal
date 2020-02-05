@@ -311,7 +311,6 @@ public class OracleDB extends BaseDB {
 	}
 
 	private String _preBuildSQL(String template) throws IOException {
-		template = convertTimestamp(template);
 		template = replaceTemplate(template, getTemplate());
 
 		template = reword(template);

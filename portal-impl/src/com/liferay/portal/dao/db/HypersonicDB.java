@@ -37,7 +37,6 @@ public class HypersonicDB extends BaseDB {
 
 	@Override
 	public String buildSQL(String template) throws IOException {
-		template = convertTimestamp(template);
 		template = replaceTemplate(template, getTemplate());
 
 		template = reword(template);

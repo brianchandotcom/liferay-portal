@@ -23,7 +23,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.excecption.DuplicatedPortletIdException;
+import com.liferay.layout.content.page.editor.web.internal.excecption.NoninstanceablePortletException;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
@@ -108,9 +108,10 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 					"the-section-could-not-be-duplicated-because-it-has-been-" +
 						"deleted");
 			}
-			else if (exception instanceof DuplicatedPortletIdException) {
-				DuplicatedPortletIdException duplicatedPortletIdException =
-					(DuplicatedPortletIdException)exception;
+			else if (exception instanceof NoninstanceablePortletException) {
+				NoninstanceablePortletException
+					noninstanceablePortletException =
+						(NoninstanceablePortletException)exception;
 
 				HttpServletRequest httpServletRequest =
 					_portal.getHttpServletRequest(actionRequest);
@@ -121,7 +122,7 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 
 				Portlet portlet = _portletLocalService.getPortletById(
 					themeDisplay.getCompanyId(),
-					duplicatedPortletIdException.getPortletId());
+					noninstanceablePortletException.getPortletId());
 
 				errorMessage = LanguageUtil.format(
 					themeDisplay.getRequest(),
@@ -260,7 +261,7 @@ public class DuplicateItemReactMVCActionCommand extends BaseMVCActionCommand {
 			Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 			if (!portlet.isInstanceable()) {
-				throw new DuplicatedPortletIdException(portletId);
+				throw new NoninstanceablePortletException(portletId);
 			}
 
 			String oldInstanceId = editableValuesJSONObject.getString(

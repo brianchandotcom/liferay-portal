@@ -215,7 +215,8 @@ public class LiferayBatchFileProperties
 
 		for (String name : names) {
 			Optional<String> optionalEntityClassName =
-				_oasExplorer.getEntityClassName(name, _getOASJsonObject());
+				_oasExplorer.getEntityClassNameOptional(
+					name, _getOASJsonObject());
 
 			if (optionalEntityClassName.isPresent()) {
 				entityClassNames.put(name, optionalEntityClassName.get());

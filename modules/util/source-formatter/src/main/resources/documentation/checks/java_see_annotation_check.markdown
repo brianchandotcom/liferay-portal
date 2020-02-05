@@ -1,4 +1,4 @@
-## @see Annotation
+## JavaSeeAnnotationCheck
 
 Do not nest annotations inside a `@see` annotation.
 

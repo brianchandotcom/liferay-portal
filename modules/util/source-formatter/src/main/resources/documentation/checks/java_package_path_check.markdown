@@ -1,4 +1,4 @@
-## Java Package Formatting
+## JavaPackagePathCheck
 
 ### Naming
 

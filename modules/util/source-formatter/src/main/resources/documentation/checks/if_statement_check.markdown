@@ -1,6 +1,4 @@
-## Use of Parentheses
-
-### If-Statements
+## IfStatementCheck
 
 In if-statements we use parentheses in the following cases:
 

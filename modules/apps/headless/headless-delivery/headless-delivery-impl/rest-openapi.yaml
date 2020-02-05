@@ -1760,18 +1760,6 @@ components:
             description:
                 ""
             properties:
-                creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
-                    readOnly: true
-                dateCreated:
-                    format: date-time
-                    readOnly: true
-                    type: string
-                dateModified:
-                    format: date-time
-                    readOnly: true
-                    type: string
                 friendlyURLPath:
                     type: string
                 id:
@@ -1782,8 +1770,6 @@ components:
                     items:
                         type: string
                     type: array
-                name:
-                    type: string
                 pageElements:
                     items:
                         $ref: "#/components/schemas/PageElement"

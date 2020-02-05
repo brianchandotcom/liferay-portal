@@ -14,23 +14,17 @@
 
 package com.liferay.fragment.model.impl;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+
 /**
- * The extended model implementation for the FragmentComposition service. Represents a row in the &quot;FragmentComposition&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.fragment.model.FragmentComposition</code> interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Pavel Savinov
  */
 public class FragmentCompositionImpl extends FragmentCompositionBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a fragment composition model instance should use the {@link com.liferay.fragment.model.FragmentComposition} interface instead.
-	 */
-	public FragmentCompositionImpl() {
+	@Override
+	public JSONObject getFragmentsJSONObject() throws Exception {
+		return JSONFactoryUtil.createJSONObject(getFragments());
 	}
 
 }

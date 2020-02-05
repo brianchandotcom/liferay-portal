@@ -131,15 +131,13 @@ public class JavaModuleTestCheck extends BaseJavaTermCheck {
 				content.contains("import org.powermock.")) {
 
 				addMessage(
-					fileName, "Do not use PowerMock inside Arquillian tests",
-					"power_mock.markdown");
+					fileName, "Do not use PowerMock inside Arquillian tests");
 			}
 
 			if (!packageName.endsWith(".test")) {
 				addMessage(
 					fileName,
-					"Module integration test must be under a test subpackage",
-					"modules_tests.markdown");
+					"Module integration test must be under a test subpackage");
 			}
 		}
 		else if ((absolutePath.contains("/test/unit/") ||
@@ -148,8 +146,7 @@ public class JavaModuleTestCheck extends BaseJavaTermCheck {
 
 			addMessage(
 				fileName,
-				"Module unit test should not be under a test subpackage",
-				"modules_tests.markdown");
+				"Module unit test should not be under a test subpackage");
 		}
 	}
 

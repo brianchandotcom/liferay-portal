@@ -220,6 +220,7 @@ definition {
 			value1 = "No Custom Results Yet");
 	}
 
+	@ignore = "true"
 	test AssertResultRankingsWithSynonyms {
 		property test.name.skip.portal.instance = "SearchTuningES7#AssertResultRankingsWithSynonyms";
 

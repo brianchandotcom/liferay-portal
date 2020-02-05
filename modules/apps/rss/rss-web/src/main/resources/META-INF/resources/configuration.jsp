@@ -81,13 +81,11 @@
 
 				<aui:input label="num-of-entries-per-feed" name="preferences--entriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.entriesPerFeed() %>">
 					<aui:validator name="digits" />
-					<aui:validator name="max">10</aui:validator>
 					<aui:validator name="min">0</aui:validator>
 				</aui:input>
 
 				<aui:input label="num-of-expanded-entries-per-feed" name="preferences--expandedEntriesPerFeed--" type="number" value="<%= rssPortletInstanceConfiguration.expandedEntriesPerFeed() %>">
 					<aui:validator name="digits" />
-					<aui:validator name="max">10</aui:validator>
 					<aui:validator name="min">0</aui:validator>
 				</aui:input>
 

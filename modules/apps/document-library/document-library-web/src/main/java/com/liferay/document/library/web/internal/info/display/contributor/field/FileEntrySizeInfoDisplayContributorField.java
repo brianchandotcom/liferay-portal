@@ -19,7 +19,6 @@ import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTyp
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.util.Locale;
 
@@ -53,7 +52,7 @@ public class FileEntrySizeInfoDisplayContributorField
 
 	@Override
 	public String getValue(FileEntry fileEntry, Locale locale) {
-		return TextFormatter.formatStorageSize(fileEntry.getSize(), locale);
+		return LanguageUtil.formatStorageSize(fileEntry.getSize(), locale);
 	}
 
 }

@@ -25,7 +25,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker("onFil
 				'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>'
 			</aui:validator>
 
-			<aui:validator errorMessage='<%= LanguageUtil.format(locale, "please-enter-a-file-with-a-valid-file-size-no-larger-than-x", TextFormatter.formatStorageSize(dlEditFileEntryDisplayContext.getMaximumUploadSize(), locale)) %>' name="maxFileSize"><%= dlEditFileEntryDisplayContext.getMaximumUploadSize() %></aui:validator>
+			<aui:validator errorMessage='<%= LanguageUtil.format(locale, "please-enter-a-file-with-a-valid-file-size-no-larger-than-x", LanguageUtil.formatStorageSize(dlEditFileEntryDisplayContext.getMaximumUploadSize(), locale)) %>' name="maxFileSize"><%= dlEditFileEntryDisplayContext.getMaximumUploadSize() %></aui:validator>
 		</aui:input>
 	</c:when>
 	<c:otherwise>

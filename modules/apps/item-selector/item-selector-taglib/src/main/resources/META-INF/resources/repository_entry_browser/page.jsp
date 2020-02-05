@@ -184,7 +184,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 
 							<liferay-ui:search-container-column-text
 								name="size"
-								value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
+								value="<%= LanguageUtil.formatStorageSize(fileEntry.getSize(), locale) %>"
 							/>
 
 							<liferay-ui:search-container-column-status

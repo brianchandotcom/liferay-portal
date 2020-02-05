@@ -41,7 +41,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		sb.append(LanguageUtil.get(request, "download"));
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+		sb.append(LanguageUtil.formatStorageSize(fileEntry.getSize(), locale));
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 		%>
 

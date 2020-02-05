@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 
@@ -102,7 +102,7 @@ public class GetAttachmentsMVCResourceCommand extends BaseMVCResourceCommand {
 				"id", fileEntry.getFileEntryId()
 			).put(
 				"size",
-				TextFormatter.formatStorageSize(
+				LanguageUtil.formatStorageSize(
 					fileEntry.getSize(), resourceRequest.getLocale())
 			).put(
 				"title", fileEntry.getTitle()

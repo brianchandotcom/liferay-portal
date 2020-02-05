@@ -120,7 +120,7 @@ if (portletTitleBasedNavigation) {
 			<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="the-document-could-not-be-found" />
 
 			<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">
-				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
+				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
 			<liferay-asset:asset-categories-error />

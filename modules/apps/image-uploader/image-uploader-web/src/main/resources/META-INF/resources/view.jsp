@@ -77,20 +77,20 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 					</liferay-ui:error>
 
 					<liferay-ui:error exception="<%= FileSizeException.class %>">
-						<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(maxFileSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 					</liferay-ui:error>
 
 					<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 					<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
 					<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">
-						<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(maxFileSize, locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
 					</liferay-ui:error>
 
 					<aui:fieldset-group markupView="lexicon">
 						<aui:fieldset cssClass="lfr-portrait-editor">
 							<h4 class="text-default">
-								<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(maxFileSize, locale) %>" key="upload-images-no-larger-than-x" />
+								<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(maxFileSize, locale) %>" key="upload-images-no-larger-than-x" />
 							</h4>
 
 							<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">

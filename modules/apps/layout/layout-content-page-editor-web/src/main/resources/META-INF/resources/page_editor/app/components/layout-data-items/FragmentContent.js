@@ -47,85 +47,6 @@ import FloatingToolbar from '../FloatingToolbar';
 import UnsafeHTML from '../UnsafeHTML';
 import EditableDecoration from './EditableDecoration';
 
-const editableIsMappedToInfoItem = editableValue =>
-	editableValue &&
-	editableValue.classNameId &&
-	editableValue.classPK &&
-	editableValue.fieldId;
-
-const getMappingValue = ({classNameId, classPK, config, fieldId}) =>
-	InfoItemService.getAssetFieldValue({
-		classNameId,
-		classPK,
-		config,
-		fieldId,
-		onNetworkStatus: () => {}
-	}).then(response => {
-		const {fieldValue = ''} = response;
-
-		return fieldValue;
-	});
-
-const resolveEditableValue = (
-	state,
-	config,
-	fragmentEntryLinkId,
-	editableId,
-	processorType
-) => {
-	const editableValue = selectEditableValue(
-		state,
-		fragmentEntryLinkId,
-		editableId,
-		processorType
-	);
-
-	let valuePromise;
-
-	if (editableIsMappedToInfoItem(editableValue)) {
-		valuePromise = getMappingValue({
-			classNameId: editableValue.classNameId,
-			classPK: editableValue.classPK,
-			config,
-			fieldId: editableValue.fieldId
-		});
-	} else {
-		valuePromise = Promise.resolve(
-			selectEditableValueContent(
-				state,
-				config,
-				fragmentEntryLinkId,
-				editableId,
-				processorType
-			)
-		);
-	}
-
-	let configPromise;
-
-	if (editableIsMappedToInfoItem(editableValue.config)) {
-		configPromise = getMappingValue({
-			classNameId: editableValue.config.classNameId,
-			classPK: editableValue.config.classPK,
-			config,
-			fieldId: editableValue.config.fieldId
-		}).then(href => {
-			return {...editableValue.config, href};
-		});
-	} else {
-		configPromise = Promise.resolve(
-			selectEditableValueConfig(
-				state,
-				fragmentEntryLinkId,
-				editableId,
-				processorType
-			)
-		);
-	}
-
-	return Promise.all([valuePromise, configPromise]);
-};
-
 function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
@@ -461,3 +382,82 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 }
 
 export default React.forwardRef(FragmentContent);
+
+const editableIsMappedToInfoItem = editableValue =>
+	editableValue &&
+	editableValue.classNameId &&
+	editableValue.classPK &&
+	editableValue.fieldId;
+
+const getMappingValue = ({classNameId, classPK, config, fieldId}) =>
+	InfoItemService.getAssetFieldValue({
+		classNameId,
+		classPK,
+		config,
+		fieldId,
+		onNetworkStatus: () => {}
+	}).then(response => {
+		const {fieldValue = ''} = response;
+
+		return fieldValue;
+	});
+
+const resolveEditableValue = (
+	state,
+	config,
+	fragmentEntryLinkId,
+	editableId,
+	processorType
+) => {
+	const editableValue = selectEditableValue(
+		state,
+		fragmentEntryLinkId,
+		editableId,
+		processorType
+	);
+
+	let valuePromise;
+
+	if (editableIsMappedToInfoItem(editableValue)) {
+		valuePromise = getMappingValue({
+			classNameId: editableValue.classNameId,
+			classPK: editableValue.classPK,
+			config,
+			fieldId: editableValue.fieldId
+		});
+	} else {
+		valuePromise = Promise.resolve(
+			selectEditableValueContent(
+				state,
+				config,
+				fragmentEntryLinkId,
+				editableId,
+				processorType
+			)
+		);
+	}
+
+	let configPromise;
+
+	if (editableIsMappedToInfoItem(editableValue.config)) {
+		configPromise = getMappingValue({
+			classNameId: editableValue.config.classNameId,
+			classPK: editableValue.config.classPK,
+			config,
+			fieldId: editableValue.config.fieldId
+		}).then(href => {
+			return {...editableValue.config, href};
+		});
+	} else {
+		configPromise = Promise.resolve(
+			selectEditableValueConfig(
+				state,
+				fragmentEntryLinkId,
+				editableId,
+				processorType
+			)
+		);
+	}
+
+	return Promise.all([valuePromise, configPromise]);
+};

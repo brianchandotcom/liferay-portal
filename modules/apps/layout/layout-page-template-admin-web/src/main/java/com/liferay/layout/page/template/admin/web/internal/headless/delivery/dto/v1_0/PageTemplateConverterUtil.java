@@ -31,8 +31,6 @@ public class PageTemplateConverterUtil {
 
 		return new PageTemplate() {
 			{
-				dateCreated = layoutPageTemplateEntry.getCreateDate();
-				dateModified = layoutPageTemplateEntry.getModifiedDate();
 				name = layoutPageTemplateEntry.getName();
 
 				setCollectionName(

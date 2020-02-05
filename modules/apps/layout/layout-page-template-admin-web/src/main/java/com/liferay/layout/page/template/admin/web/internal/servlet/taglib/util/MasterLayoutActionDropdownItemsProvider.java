@@ -23,7 +23,9 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
@@ -94,6 +97,15 @@ public class MasterLayoutActionDropdownItemsProvider {
 						_layoutPageTemplateEntry, ActionKeys.PERMISSIONS)) {
 
 					add(_getPermissionsMasterLayoutActionUnsafeConsumer());
+				}
+
+				if (_layoutPageTemplateEntry.isApproved() &&
+					!_layoutPageTemplateEntry.isDefaultTemplate() &&
+					LayoutPageTemplateEntryPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						_layoutPageTemplateEntry, ActionKeys.UPDATE)) {
+
+					add(_getMarkAsDefaultMasterLayoutActionUnsafeConsumer());
 				}
 
 				if (LayoutPageTemplateEntryPermission.contains(
@@ -242,6 +254,57 @@ public class MasterLayoutActionDropdownItemsProvider {
 			itemSelectorCriterion);
 
 		return itemSelectorURL.toString();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getMarkAsDefaultMasterLayoutActionUnsafeConsumer() {
+
+		PortletURL markAsDefaultMasterLayoutURL =
+			_renderResponse.createActionURL();
+
+		markAsDefaultMasterLayoutURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout_page_template/edit_layout_page_template_settings");
+
+		markAsDefaultMasterLayoutURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		markAsDefaultMasterLayoutURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		markAsDefaultMasterLayoutURL.setParameter(
+			"defaultTemplate", Boolean.TRUE.toString());
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "markAsDefaultMasterLayout");
+			dropdownItem.putData(
+				"markAsDefaultMasterLayoutURL",
+				markAsDefaultMasterLayoutURL.toString());
+
+			String name = "Blank";
+
+			LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+				LayoutPageTemplateEntryServiceUtil.
+					fetchDefaultLayoutPageTemplateEntry(
+						_layoutPageTemplateEntry.getGroupId(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+						WorkflowConstants.STATUS_APPROVED);
+
+			if (defaultLayoutPageTemplateEntry != null) {
+				name = defaultLayoutPageTemplateEntry.getName();
+			}
+
+			dropdownItem.putData(
+				"message",
+				LanguageUtil.format(
+					_httpServletRequest,
+					"do-you-want-to-replace-x-for-x-as-the-default-master-" +
+						"page-for-widget-pages",
+					new String[] {_layoutPageTemplateEntry.getName(), name}));
+
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "mark-as-default"));
+		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

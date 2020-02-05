@@ -15,10 +15,9 @@
 package com.liferay.item.selector.provider;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 
-import javax.portlet.PortletURL;
+import java.util.Collection;
 
 /**
  * @author Alejandro Tardín
@@ -27,5 +26,8 @@ public interface ItemSelectorViewRendererCustomizer {
 
 	public ItemSelectorViewRenderer customizeItemSelectorViewRenderer(
 		ItemSelectorViewRenderer itemSelectorViewRenderer);
+
+	public Collection<Class<? extends ItemSelectorCriterion>>
+		getSupportedItemSelectorCriterionClasses();
 
 }

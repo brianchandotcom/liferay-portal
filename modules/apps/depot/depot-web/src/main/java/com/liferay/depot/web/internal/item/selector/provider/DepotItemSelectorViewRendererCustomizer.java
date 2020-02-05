@@ -39,6 +39,7 @@ import com.liferay.taglib.util.PortalIncludeUtil;
 
 import java.io.IOException;
 
+import java.util.Collection;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
@@ -148,6 +149,13 @@ public class DepotItemSelectorViewRendererCustomizer
 		}
 
 		return itemSelectorViewRenderer;
+	}
+
+	@Override
+	public Collection<Class<? extends ItemSelectorCriterion>>
+		getSupportedItemSelectorCriterionClasses() {
+
+		return _itemSelectorCriterionMap.keySet();
 	}
 
 	@Reference(

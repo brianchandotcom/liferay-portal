@@ -22,7 +22,7 @@ import {ModalContext} from '../ModalContext.es';
 import {BulkReassignSelectAssigneesStep} from './select-assignees-step/BulkReassignSelectAssigneesStep.es';
 import {BulkReassignSelectTasksStep} from './select-tasks-step/BulkReassignSelectTasksStep.es';
 
-const BulkReassignModal = ({processId}) => {
+const BulkReassignModal = () => {
 	const {bulkModal, setBulkModal, setSingleModal, singleModal} = useContext(
 		ModalContext
 	);
@@ -34,6 +34,7 @@ const BulkReassignModal = ({processId}) => {
 	} = useContext(InstanceListContext);
 
 	const {
+		processId,
 		reassignedTasks,
 		reassigning,
 		selectAll,

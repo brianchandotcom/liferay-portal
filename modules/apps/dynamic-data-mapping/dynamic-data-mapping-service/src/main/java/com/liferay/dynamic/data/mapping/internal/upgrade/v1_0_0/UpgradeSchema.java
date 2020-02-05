@@ -54,7 +54,7 @@ public class UpgradeSchema extends UpgradeProcess {
 				UpgradeSchema.class.getResourceAsStream(
 					"dependencies/update.sql"));
 
-			runSQLTemplateString(template, false, false);
+			runSQLTemplateString(template, false);
 		}
 	}
 

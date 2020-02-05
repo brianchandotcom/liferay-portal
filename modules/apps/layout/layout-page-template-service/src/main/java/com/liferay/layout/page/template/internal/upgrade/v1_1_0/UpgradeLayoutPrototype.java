@@ -115,7 +115,7 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 			UpgradeLayoutPrototype.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
-		runSQLTemplateString(template, false, false);
+		runSQLTemplateString(template, false);
 	}
 
 	private final CompanyLocalService _companyLocalService;

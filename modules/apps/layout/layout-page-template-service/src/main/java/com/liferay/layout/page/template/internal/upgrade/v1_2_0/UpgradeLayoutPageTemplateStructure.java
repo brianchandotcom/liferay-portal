@@ -130,7 +130,7 @@ public class UpgradeLayoutPageTemplateStructure extends UpgradeProcess {
 			UpgradeLayoutPageTemplateStructure.class.getResourceAsStream(
 				"dependencies/update.sql"));
 
-		runSQLTemplateString(template, false, false);
+		runSQLTemplateString(template, false);
 	}
 
 	private JSONObject _generateContentLayoutStructure(

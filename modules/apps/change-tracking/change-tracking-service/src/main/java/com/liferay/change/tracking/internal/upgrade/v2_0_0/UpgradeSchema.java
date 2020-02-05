@@ -36,7 +36,7 @@ public class UpgradeSchema extends UpgradeProcess {
 			UpgradeSchema.class.getResourceAsStream(
 				"/META-INF/sql/tables.sql"));
 
-		runSQLTemplateString(template, false, true);
+		runSQLTemplateString(template, true);
 	}
 
 }

@@ -37,7 +37,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 			runSQLTemplateString(
 				"create index IX_D5F1E2A2 on ResourcePermission " +
 					"(name[$COLUMN_LENGTH:255$])",
-				false, false);
+				false);
 		}
 	}
 

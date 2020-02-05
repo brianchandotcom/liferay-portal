@@ -416,13 +416,12 @@ public abstract class BaseDB implements DB {
 
 		String template = StringUtil.read(is);
 
-		runSQLTemplateString(template, false, failOnError);
+		runSQLTemplateString(template, failOnError);
 	}
 
 	@Override
 	public void runSQLTemplateString(
-			Connection connection, String template, boolean evaluate,
-			boolean failOnError)
+			Connection connection, String template, boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
 		template = StringUtil.trim(template);
@@ -477,7 +476,7 @@ public abstract class BaseDB implements DB {
 					include = convertTimestamp(include);
 					include = replaceTemplate(include, getTemplate());
 
-					runSQLTemplateString(include, false, true);
+					runSQLTemplateString(include, true);
 				}
 				else {
 					sb.append(line);
@@ -541,14 +540,40 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #runSQLTemplateString(Connection, String, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public void runSQLTemplateString(
+			Connection connection, String template, boolean evaluate,
+			boolean failOnError)
+		throws IOException, NamingException, SQLException {
+
+		runSQLTemplateString(connection, template, failOnError);
+	}
+
+	@Override
+	public void runSQLTemplateString(String template, boolean failOnError)
+		throws IOException, NamingException, SQLException {
+
+		try (Connection connection = DataAccess.getConnection()) {
+			runSQLTemplateString(connection, template, failOnError);
+		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #runSQLTemplateString(String, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public void runSQLTemplateString(
 			String template, boolean evaluate, boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
-		try (Connection connection = DataAccess.getConnection()) {
-			runSQLTemplateString(connection, template, evaluate, failOnError);
-		}
+		runSQLTemplateString(template, failOnError);
 	}
 
 	@Override

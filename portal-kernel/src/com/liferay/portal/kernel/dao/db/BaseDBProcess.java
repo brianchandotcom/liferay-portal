@@ -102,21 +102,32 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	@Override
-	public void runSQLTemplateString(
-			String template, boolean evaluate, boolean failOnError)
+	public void runSQLTemplateString(String template, boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			DB db = DBManagerUtil.getDB();
 
 			if (connection == null) {
-				db.runSQLTemplateString(template, evaluate, failOnError);
+				db.runSQLTemplateString(template, failOnError);
 			}
 			else {
-				db.runSQLTemplateString(
-					connection, template, evaluate, failOnError);
+				db.runSQLTemplateString(connection, template, failOnError);
 			}
 		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #runSQLTemplateString(String, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public void runSQLTemplateString(
+			String template, boolean evaluate, boolean failOnError)
+		throws IOException, NamingException, SQLException {
+
+		runSQLTemplateString(template, failOnError);
 	}
 
 	protected boolean doHasTable(String tableName) throws Exception {

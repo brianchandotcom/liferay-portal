@@ -62,7 +62,7 @@ public class HypersonicLoader {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		db.runSQLTemplateString(con, sb.toString(), false, true);
+		db.runSQLTemplateString(con, sb.toString(), true);
 	}
 
 	public static void main(String[] args) throws Exception {

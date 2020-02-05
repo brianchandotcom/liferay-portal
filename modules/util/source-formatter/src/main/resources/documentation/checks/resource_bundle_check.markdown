@@ -1,4 +1,4 @@
-## ResourceBundle
+## ResourceBundleCheck
 
 Avoid making calls to `java.util.ResourceBundle.getBundle`, because this method
 may return incorrect values for non-English languages, due to the fact that

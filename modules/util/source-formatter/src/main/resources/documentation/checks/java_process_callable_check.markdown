@@ -1,4 +1,4 @@
-## ProcessCallable
+## JavaProcessCallableCheck
 
 Always assign a `serialVersionUID` to a class that implements `ProcessCallable`.
 Without an explicit `serialVersionUID`, for the same given `ProcessCallable`, by

@@ -1,4 +1,4 @@
-## StopWatch
+## JavaStopWatchCheck
 
 Do not set the initial value of `StopWatch` to `null`.
 

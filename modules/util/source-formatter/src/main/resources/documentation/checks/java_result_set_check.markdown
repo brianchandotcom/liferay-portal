@@ -1,4 +1,4 @@
-## SQL Count Value
+## JavaResultSetCheck
 
 When calling `java.sql.Connection.prepareStatement(String sql)` with `sql` of
 the format `SELECT COUNT(*)`, we should use the type `int` when retrieving the

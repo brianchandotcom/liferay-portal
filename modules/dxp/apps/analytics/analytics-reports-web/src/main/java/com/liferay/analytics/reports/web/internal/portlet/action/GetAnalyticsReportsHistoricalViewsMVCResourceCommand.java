@@ -60,7 +60,8 @@ public class GetAnalyticsReportsHistoricalViewsMVCResourceCommand
 
 			jsonObject.put(
 				"analyticsReportsHistoricalViews",
-				_analyticsReportsDataProvider.getHistoricalViews(plid));
+				_analyticsReportsDataProvider.getHistoricalViewsJSONObject(
+					plid));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

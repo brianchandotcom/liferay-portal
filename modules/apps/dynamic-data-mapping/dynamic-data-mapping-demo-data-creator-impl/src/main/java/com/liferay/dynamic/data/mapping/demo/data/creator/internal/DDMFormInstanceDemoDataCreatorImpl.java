@@ -45,7 +45,7 @@ public class DDMFormInstanceDemoDataCreatorImpl
 			long companyId, Date createDate, long groupId, long userId)
 		throws PortalException {
 
-		DDMStructure structure = _ddmStructureDemoDataCreator.create(
+		DDMStructure ddmStructure = _ddmStructureDemoDataCreator.create(
 			groupId, userId);
 
 		DDMFormValues ddmFormValues = new DDMFormValues(
@@ -70,42 +70,43 @@ public class DDMFormInstanceDemoDataCreatorImpl
 		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setUserId(userId);
 
-		DDMFormInstance formInstance =
+		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceLocalService.addFormInstance(
-				structure.getUserId(), structure.getGroupId(),
-				structure.getStructureId(), structure.getNameMap(),
-				structure.getNameMap(), ddmFormValues, serviceContext);
+				ddmStructure.getUserId(), ddmStructure.getGroupId(),
+				ddmStructure.getStructureId(), ddmStructure.getNameMap(),
+				ddmStructure.getNameMap(), ddmFormValues, serviceContext);
 
 		if (createDate != null) {
-			formInstance.setCreateDate(createDate);
-			formInstance.setModifiedDate(createDate);
+			ddmFormInstance.setCreateDate(createDate);
+			ddmFormInstance.setModifiedDate(createDate);
 
-			formInstance = _ddmFormInstanceLocalService.updateDDMFormInstance(
-				formInstance);
+			ddmFormInstance =
+				_ddmFormInstanceLocalService.updateDDMFormInstance(
+					ddmFormInstance);
 		}
 
-		_formInstanceIds.add(formInstance.getFormInstanceId());
+		_ddmFormInstanceIds.add(ddmFormInstance.getFormInstanceId());
 
-		return formInstance;
+		return ddmFormInstance;
 	}
 
 	@Override
 	public void delete() throws PortalException {
-		for (Long formInstanceId : _formInstanceIds) {
-			_formInstanceIds.remove(formInstanceId);
+		for (Long ddmFormInstanceId : _ddmFormInstanceIds) {
+			_ddmFormInstanceIds.remove(ddmFormInstanceId);
 
-			_ddmFormInstanceLocalService.deleteFormInstance(formInstanceId);
+			_ddmFormInstanceLocalService.deleteFormInstance(ddmFormInstanceId);
 		}
 
 		_ddmStructureDemoDataCreator.delete();
 	}
+
+	private final List<Long> _ddmFormInstanceIds = new CopyOnWriteArrayList<>();
 
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	@Reference
 	private DDMStructureDemoDataCreator _ddmStructureDemoDataCreator;
-
-	private final List<Long> _formInstanceIds = new CopyOnWriteArrayList<>();
 
 }

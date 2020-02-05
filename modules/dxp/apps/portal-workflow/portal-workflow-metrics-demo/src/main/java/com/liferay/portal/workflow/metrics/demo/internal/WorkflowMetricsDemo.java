@@ -88,14 +88,15 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 			group.getGroupId(),
 			_roleLocalService.getRole(company.getCompanyId(), "Underwriter"));
 
-		DDMFormInstance formInstance = _ddmFormInstanceDemoDataCreator.create(
-			company.getCompanyId(), _toDate(startLocalDateTime),
-			group.getGroupId(), omniAdminUser.getUserId());
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceDemoDataCreator.create(
+				company.getCompanyId(), _toDate(startLocalDateTime),
+				group.getGroupId(), omniAdminUser.getUserId());
 
 		_workflowDefinitionLinkDemoDataCreator.assign(
-			DDMFormInstance.class.getName(), formInstance.getFormInstanceId(),
-			company.getCompanyId(), group.getGroupId(), 0,
-			omniAdminUser.getUserId());
+			DDMFormInstance.class.getName(),
+			ddmFormInstance.getFormInstanceId(), company.getCompanyId(),
+			group.getGroupId(), 0, omniAdminUser.getUserId());
 
 		_workflowMetricsSLADefinitionDemoDataCreator.create(
 			company.getCompanyId(), _toDate(startLocalDateTime),
@@ -110,7 +111,7 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 
 			WorkflowInstance workflowInstance = _addWorkflowInstance(
 				company.getCompanyId(), _toDate(createLocalDateTime),
-				formInstance, group.getGroupId(), creatorUserId);
+				ddmFormInstance, group.getGroupId(), creatorUserId);
 
 			_updateCreateDateWorkflowTask(
 				company.getCompanyId(), _toDate(createLocalDateTime),
@@ -248,21 +249,21 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 	}
 
 	private WorkflowInstance _addWorkflowInstance(
-			long companyId, Date createDate, DDMFormInstance formInstance,
+			long companyId, Date createDate, DDMFormInstance ddmFormInstance,
 			long groupId, long userId)
 		throws Exception {
 
-		DDMFormInstanceRecord formInstanceRecord =
+		DDMFormInstanceRecord ddmFormInstanceRecord =
 			_ddmFormInstanceRecordDemoDataCreator.create(
-				companyId, createDate, formInstance, groupId, userId);
+				companyId, createDate, ddmFormInstance, groupId, userId);
 
-		DDMFormInstanceRecordVersion formInstanceRecordVersion =
-			formInstanceRecord.getFormInstanceRecordVersion();
+		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
+			ddmFormInstanceRecord.getFormInstanceRecordVersion();
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceDemoDataCreator.getWorkflowInstance(
 				DDMFormInstanceRecord.class.getName(),
-				formInstanceRecordVersion.getFormInstanceRecordVersionId(),
+				ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
 				companyId);
 
 		_workflowTaskDemoDataCreator.getWorkflowTask(

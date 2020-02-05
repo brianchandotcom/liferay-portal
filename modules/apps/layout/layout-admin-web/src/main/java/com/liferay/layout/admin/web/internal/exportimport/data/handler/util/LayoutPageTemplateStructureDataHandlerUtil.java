@@ -115,6 +115,19 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
+		_processDataJSONObject(dataJSONObject, portletDataContext);
+
+		existingLayoutPageTemplateStructureRel.setData(
+			dataJSONObject.toString());
+
+		_layoutPageTemplateStructureRelLocalService.
+			updateLayoutPageTemplateStructureRel(
+				existingLayoutPageTemplateStructureRel);
+	}
+
+	private void _processDataJSONObject(
+		JSONObject dataJSONObject, PortletDataContext portletDataContext) {
+
 		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
 
 		if (structureJSONArray == null) {
@@ -168,13 +181,6 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 					"fragmentEntryLinkIds", newFragmentEntryLinkIdsJSONArray);
 			}
 		}
-
-		existingLayoutPageTemplateStructureRel.setData(
-			dataJSONObject.toString());
-
-		_layoutPageTemplateStructureRelLocalService.
-			updateLayoutPageTemplateStructureRel(
-				existingLayoutPageTemplateStructureRel);
 	}
 
 	private void _updateSegmentsExperiences(

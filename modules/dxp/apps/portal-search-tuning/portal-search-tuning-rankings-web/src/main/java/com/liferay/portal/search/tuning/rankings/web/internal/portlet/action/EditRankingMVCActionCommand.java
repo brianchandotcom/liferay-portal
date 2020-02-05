@@ -575,9 +575,23 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		if (_detectedDuplicateQueryStrings(
-				ranking, ranking.getQueryStrings())) {
+		Collection<String> queryStrings = ranking.getQueryStrings();
 
+		if (editRankingMVCActionRequest.isCmd(Constants.UPDATE)) {
+			List<String> aliases = _getAliases(editRankingMVCActionRequest);
+
+			queryStrings = Stream.concat(
+				Stream.of(ranking.getQueryString()), aliases.stream()
+			).filter(
+				string -> !Validator.isBlank(string)
+			).distinct(
+			).sorted(
+			).collect(
+				Collectors.toList()
+			);
+		}
+
+		if (_detectedDuplicateQueryStrings(ranking, queryStrings)) {
 			throw new DuplicateQueryStringException();
 		}
 	}

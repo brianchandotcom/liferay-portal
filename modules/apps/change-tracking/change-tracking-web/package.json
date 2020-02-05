@@ -1,11 +1,15 @@
 {
 	"dependencies": {
+		"@clayui/drop-down": "3.2.0",
+		"@clayui/icon": "3.0.3",
 		"clay-label": "2.20.2",
 		"clay-progress-bar": "2.20.2",
 		"clay-sticker": "2.20.2",
 		"frontend-js-web": "*",
 		"metal-soy": "2.16.8",
-		"metal-state": "2.16.8"
+		"metal-state": "2.16.8",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
 	},
 	"name": "change-tracking-web",
 	"scripts": {

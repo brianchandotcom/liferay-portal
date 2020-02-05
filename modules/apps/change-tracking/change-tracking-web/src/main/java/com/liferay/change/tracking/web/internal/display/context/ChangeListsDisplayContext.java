@@ -215,7 +215,8 @@ public class ChangeListsDisplayContext {
 				dropdownItem.setHref(portletURL);
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "add-change-list"));
+					LanguageUtil.get(
+						_httpServletRequest, "create-new-publication"));
 			}
 		).build();
 	}

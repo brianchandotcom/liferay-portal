@@ -157,6 +157,10 @@ public class LanguageUtil {
 			resourceBundle, pattern, arguments, translateArguments);
 	}
 
+	public static String formatStorageSize(double size, Locale locale) {
+		return getLanguage().formatStorageSize(size, locale);
+	}
+
 	public static String get(
 		HttpServletRequest httpServletRequest, ResourceBundle resourceBundle,
 		String key) {

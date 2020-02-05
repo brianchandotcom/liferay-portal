@@ -299,7 +299,7 @@ public class MessageBoardMessageResourceImpl
 		).put(
 			"reply-to-message",
 			addAction(
-				"REPLY_TO_MESSAGE",
+				"REPLY_TO_MESSAGE", mbMessage.getMessageId(),
 				"postMessageBoardMessageMessageBoardMessage",
 				"com.liferay.message.boards", mbMessage.getGroupId())
 		).put(

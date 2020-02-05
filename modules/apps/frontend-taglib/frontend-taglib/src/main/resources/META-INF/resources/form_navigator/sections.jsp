@@ -146,7 +146,7 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 						});
 					}
 
-					Liferay.CollapseProvider.show(sectionContent);
+					Liferay.CollapseProvider.show({panel: sectionContent});
 				} else if (focusField) {
 					Liferay.Util.focusFormField(focusField);
 				}

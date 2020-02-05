@@ -1,4 +1,4 @@
-## API Method Signatures
+## JavaAPISignatureCheck
 
 The following types should be avoided in API method signatures:
 

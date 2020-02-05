@@ -1,4 +1,4 @@
-## BND Bundle information
+## BNDBundleActivatorCheck
 
 If the `bnd.bnd` file contains a `Bundle-Activator` header, the value for
 `Bundle-Activator` should end with `BundleActivator` and match the

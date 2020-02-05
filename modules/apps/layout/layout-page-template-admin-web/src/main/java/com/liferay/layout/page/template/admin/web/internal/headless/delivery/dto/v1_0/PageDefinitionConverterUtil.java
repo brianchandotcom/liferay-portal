@@ -212,11 +212,27 @@ public class PageDefinitionConverterUtil {
 
 		LayoutStructure layoutStructure = LayoutStructure.of(layoutData);
 
-		for (LayoutStructureItem layoutStructureItem :
-				layoutStructure.getLayoutStructureItems()) {
+		LayoutStructureItem mainLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructure.getMainItemId());
 
-			pageElements.add(_toPageElement(layoutStructureItem));
+		List<PageElement> mainPageElements = new ArrayList<>();
+
+		for (String childItemId :
+				mainLayoutStructureItem.getChildrenItemIds()) {
+
+			mainPageElements.add(
+				_toPageElement(
+					layoutStructure,
+					layoutStructure.getLayoutStructureItem(childItemId)));
 		}
+
+		PageElement pageElement = _toPageElement(mainLayoutStructureItem);
+
+		pageElement.setPageElements(
+			mainPageElements.toArray(new PageElement[0]));
+
+		pageElements.add(pageElement);
 
 		return pageElements.toArray(new PageElement[0]);
 	}

@@ -295,21 +295,25 @@ public class MessageBoardMessageResourceImpl
 		).put(
 			"get", addAction("VIEW", mbMessage, "getMessageBoardMessage")
 		).put(
-			"replace", addAction("UPDATE", mbMessage, "putMessageBoardMessage")
+			"replace",
+			addAction("UPDATE", mbMessage, "putMessageBoardMessage")
 		).put(
 			"reply-to-message",
 			addAction(
-				"REPLY_TO_MESSAGE",
+				"REPLY_TO_MESSAGE", mbMessage.getMessageId(),
 				"postMessageBoardMessageMessageBoardMessage",
 				"com.liferay.message.boards", mbMessage.getGroupId())
 		).put(
 			"subscribe",
-			addAction("SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
+			addAction(
+				"SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
 		).put(
 			"unsubscribe",
-			addAction("SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
+			addAction(
+				"SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
 		).put(
-			"update", addAction("UPDATE", mbMessage, "patchMessageBoardMessage")
+			"update",
+			addAction("UPDATE", mbMessage, "patchMessageBoardMessage")
 		).build();
 	}
 

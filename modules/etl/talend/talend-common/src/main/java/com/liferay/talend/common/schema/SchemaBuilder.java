@@ -314,6 +314,14 @@ public class SchemaBuilder {
 			apiSpecJsonObject);
 	}
 
+	private boolean _isExtensionField(String name) {
+		if (name.startsWith("x-")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _processSchemaJsonObject(
 		String parentPropertyName, JsonObject schemaJsonObject,
 		AtomicInteger index, Set<String> previousFieldNames,
@@ -355,6 +363,10 @@ public class SchemaBuilder {
 
 			String fieldName = NameUtil.correct(
 				propertyEntry.getKey(), index.get(), previousFieldNames);
+
+			if (_isExtensionField(fieldName)) {
+				continue;
+			}
 
 			if (parentPropertyName != null) {
 				fieldName = NameUtil.correct(

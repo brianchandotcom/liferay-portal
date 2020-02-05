@@ -22,16 +22,42 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 
 /**
  * @author Igor Beslic
  */
 public class OASExplorer {
+
+	public Optional<String> getEntityClassName(
+		String name, JsonObject oasJsonObject) {
+
+		String jsonFinderPath = StringUtil.replace(
+			OASConstants.LOCATOR_COMPONENTS_SCHEMAS_CLASS_NAME_PATTERN,
+			"SCHEMA_TPL", name);
+
+		if (!_jsonFinder.hasJsonObject(jsonFinderPath, oasJsonObject)) {
+			return Optional.empty();
+		}
+
+		JsonValue classNameJsonValue = _jsonFinder.getDescendantJsonValue(
+			jsonFinderPath, oasJsonObject);
+
+		if (classNameJsonValue.getValueType() != JsonValue.ValueType.STRING) {
+			return Optional.empty();
+		}
+
+		JsonString classNameJSON = (JsonString)classNameJsonValue;
+
+		return Optional.ofNullable(classNameJSON.getString());
+	}
 
 	public Set<String> getEntitySchemaNames(JsonObject oasJsonObject) {
 		Set<String> entitySchemaNames = new HashSet<>();

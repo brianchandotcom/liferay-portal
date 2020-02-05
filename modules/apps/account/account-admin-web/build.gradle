@@ -22,12 +22,19 @@ dependencies {
 }
 
 mergeLang {
+	setting("../../roles/roles-admin-web/src/main/resources/content") {
+		transformKey "key-field-help", "key-field-help"
+		transformKey "role-key", "role-key"
+		transformKey "title-field-help", "title-field-help"
+	}
+
 	setting("../../users-admin/users-admin-web/src/main/resources/content") {
 		transformKey "alerts-and-announcements-delivery", "alerts-and-announcements-delivery"
 		transformKey "edit-user-x", "edit-user-x"
 	}
 
 	sourceDirs = [
+		"../../roles/roles-admin-web/src/main/resources/content",
 		"../../users-admin/users-admin-web/src/main/resources/content",
 		"src/main/resources/content"
 	]

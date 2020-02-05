@@ -72,83 +72,80 @@ public class DepotItemSelectorViewRendererCustomizer
 		String portletId = _itemSelectorCriterionMap.get(
 			itemSelectorCriterion.getClass());
 
-		if (Validator.isNotNull(portletId)) {
-			return new ItemSelectorViewRenderer() {
-
-				@Override
-				public String getItemSelectedEventName() {
-					return itemSelectorViewRenderer.getItemSelectedEventName();
-				}
-
-				@Override
-				public ItemSelectorCriterion getItemSelectorCriterion() {
-					return itemSelectorViewRenderer.getItemSelectorCriterion();
-				}
-
-				@Override
-				public ItemSelectorView<ItemSelectorCriterion>
-					getItemSelectorView() {
-
-					return itemSelectorViewRenderer.getItemSelectorView();
-				}
-
-				@Override
-				public PortletURL getPortletURL() {
-					return itemSelectorViewRenderer.getPortletURL();
-				}
-
-				@Override
-				public void renderHTML(PageContext pageContext)
-					throws IOException, ServletException {
-
-					PortalIncludeUtil.include(
-						pageContext,
-						(httpServletRequest, httpServletResponse) -> {
-							ThemeDisplay themeDisplay =
-								(ThemeDisplay)httpServletRequest.getAttribute(
-									WebKeys.THEME_DISPLAY);
-
-							Group scopeGroup = themeDisplay.getScopeGroup();
-
-							if ((scopeGroup.getType() !=
-									GroupConstants.TYPE_DEPOT) ||
-								_depotApplicationController.isEnabled(
-									portletId, scopeGroup.getGroupId())) {
-
-								itemSelectorViewRenderer.renderHTML(
-									pageContext);
-
-								return;
-							}
-
-							RequestDispatcher requestDispatcher =
-								_servletContext.getRequestDispatcher(
-									"/item/selector/application_disabled.jsp");
-
-							DepotApplicationDisplayContext
-								depotApplicationDisplayContext =
-									new DepotApplicationDisplayContext(
-										httpServletRequest, _portal);
-
-							depotApplicationDisplayContext.setPortletId(
-								portletId);
-							depotApplicationDisplayContext.setPortletURL(
-								itemSelectorViewRenderer.getPortletURL());
-
-							httpServletRequest.setAttribute(
-								DepotAdminWebKeys.
-									DEPOT_APPLICATION_DISPLAY_CONTEXT,
-								depotApplicationDisplayContext);
-
-							requestDispatcher.include(
-								httpServletRequest, httpServletResponse);
-						});
-				}
-
-			};
+		if (Validator.isNull(portletId)) {
+			return itemSelectorViewRenderer;
 		}
 
-		return itemSelectorViewRenderer;
+		return new ItemSelectorViewRenderer() {
+
+			@Override
+			public String getItemSelectedEventName() {
+				return itemSelectorViewRenderer.getItemSelectedEventName();
+			}
+
+			@Override
+			public ItemSelectorCriterion getItemSelectorCriterion() {
+				return itemSelectorViewRenderer.getItemSelectorCriterion();
+			}
+
+			@Override
+			public ItemSelectorView<ItemSelectorCriterion>
+				getItemSelectorView() {
+
+				return itemSelectorViewRenderer.getItemSelectorView();
+			}
+
+			@Override
+			public PortletURL getPortletURL() {
+				return itemSelectorViewRenderer.getPortletURL();
+			}
+
+			@Override
+			public void renderHTML(PageContext pageContext)
+				throws IOException, ServletException {
+
+				PortalIncludeUtil.include(
+					pageContext,
+					(httpServletRequest, httpServletResponse) -> {
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)httpServletRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
+
+						Group scopeGroup = themeDisplay.getScopeGroup();
+
+						if ((scopeGroup.getType() !=
+								GroupConstants.TYPE_DEPOT) ||
+							_depotApplicationController.isEnabled(
+								portletId, scopeGroup.getGroupId())) {
+
+							itemSelectorViewRenderer.renderHTML(pageContext);
+
+							return;
+						}
+
+						RequestDispatcher requestDispatcher =
+							_servletContext.getRequestDispatcher(
+								"/item/selector/application_disabled.jsp");
+
+						DepotApplicationDisplayContext
+							depotApplicationDisplayContext =
+								new DepotApplicationDisplayContext(
+									httpServletRequest, _portal);
+
+						depotApplicationDisplayContext.setPortletId(portletId);
+						depotApplicationDisplayContext.setPortletURL(
+							itemSelectorViewRenderer.getPortletURL());
+
+						httpServletRequest.setAttribute(
+							DepotAdminWebKeys.DEPOT_APPLICATION_DISPLAY_CONTEXT,
+							depotApplicationDisplayContext);
+
+						requestDispatcher.include(
+							httpServletRequest, httpServletResponse);
+					});
+			}
+
+		};
 	}
 
 	@Override

@@ -121,7 +121,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= ImageResolutionException.class %>">
-				<liferay-ui:message arguments="<%= new String[] {String.valueOf(PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT), String.valueOf(PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH)} %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+				<liferay-ui:message arguments="<%= new String[] {String.valueOf(PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT), String.valueOf(PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH)} %>" key="image-dimensions-exceed-max-dimensions-x-high-x-wide" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">

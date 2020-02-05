@@ -17,10 +17,18 @@ package com.liferay.source.formatter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.InputStream;
+
+import java.util.List;
+import java.util.Objects;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
 
 /**
  * @author Hugo Huijser
@@ -98,7 +106,17 @@ public class SourceFormatterMessage
 			return markdownFilePath;
 		}
 
-		return _getMarkdownFilePath(_checkSuperclassName);
+		markdownFilePath = _getMarkdownFilePath(_checkSuperclassName);
+
+		if (markdownFilePath != null) {
+			return markdownFilePath;
+		}
+
+		if (_checkType.equals(CheckType.CHECKSTYLE)) {
+			return _getCheckstyleURLFilePath(_checkName);
+		}
+
+		return null;
 	}
 
 	public String getMessage() {
@@ -140,6 +158,55 @@ public class SourceFormatterMessage
 		}
 
 		return sb.toString();
+	}
+
+	private String _getCheckstyleURLFilePath(
+		Element element, String checkName) {
+
+		if (checkName.equals(element.attributeValue("name"))) {
+			for (Element propertyElement :
+					(List<Element>)element.elements("property")) {
+
+				if (Objects.equals(
+						propertyElement.attributeValue("name"),
+						"documentationLocation")) {
+
+					return SourceFormatterUtil.
+						CHECKSTYLE_DOCUMENTATION_URL_BASE +
+							propertyElement.attributeValue("value");
+				}
+			}
+		}
+
+		for (Element moduleElement :
+				(List<Element>)element.elements("module")) {
+
+			String checkstyleURLFilePath = _getCheckstyleURLFilePath(
+				moduleElement, checkName);
+
+			if (checkstyleURLFilePath != null) {
+				return checkstyleURLFilePath;
+			}
+		}
+
+		return null;
+	}
+
+	private String _getCheckstyleURLFilePath(String checkName) {
+		try {
+			ClassLoader classLoader =
+				SourceFormatterMessage.class.getClassLoader();
+
+			Document document = SourceUtil.readXML(
+				StringUtil.read(
+					classLoader.getResourceAsStream("checkstyle.xml")));
+
+			return _getCheckstyleURLFilePath(
+				document.getRootElement(), checkName);
+		}
+		catch (Exception exception) {
+			return null;
+		}
 	}
 
 	private String _getMarkdownFilePath(String checkName) {

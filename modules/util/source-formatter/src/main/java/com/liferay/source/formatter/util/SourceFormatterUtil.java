@@ -56,6 +56,9 @@ import java.util.regex.Pattern;
  */
 public class SourceFormatterUtil {
 
+	public static final String CHECKSTYLE_DOCUMENTATION_URL_BASE =
+		"https://checkstyle.sourceforge.io/";
+
 	public static final String GIT_LIFERAY_PORTAL_BRANCH =
 		"git.liferay.portal.branch";
 

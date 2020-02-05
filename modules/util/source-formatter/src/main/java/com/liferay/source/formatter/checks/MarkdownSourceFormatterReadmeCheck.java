@@ -239,7 +239,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 			if (Validator.isNotNull(documentationLocation)) {
 				link =
-					_CHECKSTYLE_DOCUMENTATION_URL_BASE + documentationLocation;
+					SourceFormatterUtil.CHECKSTYLE_DOCUMENTATION_URL_BASE +
+						documentationLocation;
 			}
 			else {
 				String markdownFileName =
@@ -580,9 +581,6 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		return sourceProcessorNames;
 	}
-
-	private static final String _CHECKSTYLE_DOCUMENTATION_URL_BASE =
-		"https://checkstyle.sourceforge.io/";
 
 	private static final String _DOCUMENTATION_CHECKS_DIR_NAME = "checks/";
 

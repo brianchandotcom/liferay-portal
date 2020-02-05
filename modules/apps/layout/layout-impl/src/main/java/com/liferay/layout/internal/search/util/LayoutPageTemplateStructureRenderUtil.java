@@ -60,6 +60,20 @@ public class LayoutPageTemplateStructureRenderUtil {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
+		return _renderLayoutData(
+			dataJSONObject, fragmentRendererController, httpServletRequest,
+			httpServletResponse, mode, parameterMap, locale,
+			segmentsExperienceIds);
+	}
+
+	private static String _renderLayoutData(
+		JSONObject dataJSONObject,
+		FragmentRendererController fragmentRendererController,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String mode,
+		Map<String, Object> parameterMap, Locale locale,
+		long[] segmentsExperienceIds) {
+
 		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
 
 		if (structureJSONArray == null) {

@@ -14,6 +14,29 @@ create table FragmentCollection (
 	lastPublishDate DATE null
 );
 
+create table FragmentComposition (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	fragmentCompositionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	fragmentCollectionId LONG,
+	fragmentCompositionKey VARCHAR(75) null,
+	name VARCHAR(75) null,
+	description VARCHAR(75) null,
+	fragments VARCHAR(75) null,
+	previewFileEntryId LONG,
+	lastPublishDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
+);
+
 create table FragmentEntry (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,

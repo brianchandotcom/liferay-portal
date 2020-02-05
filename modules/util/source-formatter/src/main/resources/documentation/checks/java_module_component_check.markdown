@@ -1,4 +1,4 @@
-## @Component Annotation
+## JavaModuleComponentCheck
 
 Do not create `@Component` classes in `-api` or `-spi` modules. All `@Component`
 classes contain implementation details which do not belong in any API. Move

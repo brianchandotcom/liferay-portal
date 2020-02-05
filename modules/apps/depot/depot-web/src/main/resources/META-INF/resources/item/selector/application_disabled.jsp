@@ -19,10 +19,7 @@
 <%
 DepotApplicationDisplayContext depotApplicationDisplayContext = (DepotApplicationDisplayContext)request.getAttribute(DepotAdminWebKeys.DEPOT_APPLICATION_DISPLAY_CONTEXT);
 
-PortletURL portletURL = depotApplicationDisplayContext.getPortletURL();
-String portletTitle = depotApplicationDisplayContext.getPortletTitle();
-
-PortletURL viewGroupSelectorURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+PortletURL viewGroupSelectorURL = PortletURLUtil.clone(depotApplicationDisplayContext.getPortletURL(), liferayPortletResponse);
 
 viewGroupSelectorURL.setParameter("groupType", "site");
 viewGroupSelectorURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
@@ -37,9 +34,9 @@ viewGroupSelectorURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
 		</span>
 
 		<%
-		String taglibViewGroupSelectorURL = "<a href=\"" + HtmlUtil.escape(viewGroupSelectorURL.toString()) + "\">";
+		String taglibViewGroupSelectorLink = "<a href=\"" + HtmlUtil.escape(viewGroupSelectorURL.toString()) + "\">";
 		%>
 
-		<strong class="lead">Info:</strong><liferay-ui:message arguments='<%= new Object[] {portletTitle, taglibViewGroupSelectorURL, "</a>"} %>' key="x-application-is-disabled-for-this-scope.-please-go-back-to-selection" />
+		<strong class="lead">Info:</strong><liferay-ui:message arguments='<%= new Object[] {depotApplicationDisplayContext.getPortletTitle(), taglibViewGroupSelectorLink, "</a>"} %>' key="x-application-is-disabled-for-this-scope.-please-go-back-to-selection" />
 	</div>
 </div>

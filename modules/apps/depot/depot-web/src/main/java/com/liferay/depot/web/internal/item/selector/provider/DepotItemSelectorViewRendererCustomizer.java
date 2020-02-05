@@ -25,7 +25,7 @@ import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCrite
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
-import com.liferay.item.selector.provider.ItemSelectorViewRendererProvider;
+import com.liferay.item.selector.provider.ItemSelectorViewRendererCustomizer;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Group;
@@ -56,48 +56,44 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "service.ranking:Integer=100",
-	service = ItemSelectorViewRendererProvider.class
+	service = ItemSelectorViewRendererCustomizer.class
 )
-public class DepotItemSelectorViewRendererProvider
-	implements ItemSelectorViewRendererProvider {
+public class DepotItemSelectorViewRendererCustomizer
+	implements ItemSelectorViewRendererCustomizer {
 
 	@Override
-	public ItemSelectorViewRenderer getItemSelectorViewRenderer(
-		ItemSelectorView<ItemSelectorCriterion> itemSelectorView,
-		ItemSelectorCriterion itemSelectorCriterion, PortletURL portletURL,
-		String itemSelectedEventName, boolean search) {
+	public ItemSelectorViewRenderer customizeItemSelectorViewRenderer(
+		ItemSelectorViewRenderer itemSelectorViewRenderer) {
+
+		ItemSelectorCriterion itemSelectorCriterion =
+			itemSelectorViewRenderer.getItemSelectorCriterion();
 
 		String portletId = _itemSelectorCriterionMap.get(
 			itemSelectorCriterion.getClass());
-
-		ItemSelectorViewRenderer itemSelectorViewRenderer =
-			_itemSelectorViewRendererProvider.getItemSelectorViewRenderer(
-				itemSelectorView, itemSelectorCriterion, portletURL,
-				itemSelectedEventName, search);
 
 		if (Validator.isNotNull(portletId)) {
 			return new ItemSelectorViewRenderer() {
 
 				@Override
 				public String getItemSelectedEventName() {
-					return itemSelectedEventName;
+					return itemSelectorViewRenderer.getItemSelectedEventName();
 				}
 
 				@Override
 				public ItemSelectorCriterion getItemSelectorCriterion() {
-					return itemSelectorCriterion;
+					return itemSelectorViewRenderer.getItemSelectorCriterion();
 				}
 
 				@Override
 				public ItemSelectorView<ItemSelectorCriterion>
 					getItemSelectorView() {
 
-					return itemSelectorView;
+					return itemSelectorViewRenderer.getItemSelectorView();
 				}
 
 				@Override
 				public PortletURL getPortletURL() {
-					return portletURL;
+					return itemSelectorViewRenderer.getPortletURL();
 				}
 
 				@Override
@@ -136,7 +132,7 @@ public class DepotItemSelectorViewRendererProvider
 							depotApplicationDisplayContext.setPortletId(
 								portletId);
 							depotApplicationDisplayContext.setPortletURL(
-								portletURL);
+								itemSelectorViewRenderer.getPortletURL());
 
 							httpServletRequest.setAttribute(
 								DepotAdminWebKeys.
@@ -181,11 +177,6 @@ public class DepotItemSelectorViewRendererProvider
 				VideoItemSelectorCriterion.class,
 				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
 			).build();
-
-	@Reference(
-		target = "(!(component.name=com.liferay.depot.web.internal.item.selector.provider.DepotItemSelectorViewRendererProvider))"
-	)
-	private ItemSelectorViewRendererProvider _itemSelectorViewRendererProvider;
 
 	@Reference
 	private Portal _portal;

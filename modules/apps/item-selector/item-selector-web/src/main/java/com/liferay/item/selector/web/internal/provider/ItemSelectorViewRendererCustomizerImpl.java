@@ -12,22 +12,30 @@
  * details.
  */
 
-package com.liferay.item.selector.provider;
+package com.liferay.item.selector.web.internal.provider;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
+import com.liferay.item.selector.provider.ItemSelectorViewRendererCustomizer;
+import com.liferay.item.selector.web.internal.ItemSelectorViewRendererImpl;
 
 import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alejandro Tardín
  */
-public interface ItemSelectorViewRendererProvider {
+@Component(service = ItemSelectorViewRendererCustomizer.class)
+public class ItemSelectorViewRendererCustomizerImpl
+	implements ItemSelectorViewRendererCustomizer {
 
-	public ItemSelectorViewRenderer getItemSelectorViewRenderer(
-		ItemSelectorView<ItemSelectorCriterion> itemSelectorView,
-		ItemSelectorCriterion itemSelectorCriterion, PortletURL portletURL,
-		String itemSelectedEventName, boolean search);
+	@Override
+	public ItemSelectorViewRenderer customizeItemSelectorViewRenderer(
+		ItemSelectorViewRenderer itemSelectorViewRenderer) {
+
+		return itemSelectorViewRenderer;
+	}
 
 }

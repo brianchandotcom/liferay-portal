@@ -1,4 +1,4 @@
-## Builders
+## BuilderCheck
 
 Use `*Builder` when possible.
 

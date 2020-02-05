@@ -328,8 +328,11 @@ public class Sidecar {
 		try {
 			_file.write(
 				new File(configFolder, "log4j2.properties"),
-				ResourceUtil.getResourceAsString(
-					Sidecar.class, "/log4j2.properties"));
+				StringBundler.concat(
+					"logger.deprecation.name=org.elasticsearch.deprecation\n",
+					"logger.deprecation.level=error\n",
+					ResourceUtil.getResourceAsString(
+						Sidecar.class, "/log4j2.properties")));
 		}
 		catch (IOException ioException) {
 			_log.error(

@@ -155,8 +155,7 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 		ResourceRequest resourceRequest,
 		ValidateRankingMVCResourceRequest validateRankingMVCResourceRequest) {
 
-		String index = _getIndexName(
-			resourceRequest, validateRankingMVCResourceRequest);
+		String index = _getIndexName(resourceRequest);
 
 		List<String> aliases = _getAliases(validateRankingMVCResourceRequest);
 
@@ -182,18 +181,9 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 			).build());
 	}
 
-	private String _getIndexName(
-		ResourceRequest resourceRequest,
-		ValidateRankingMVCResourceRequest validateRankingMVCResourceRequest) {
-
-		String index = validateRankingMVCResourceRequest.getIndexName();
-
-		if (Validator.isBlank(index)) {
-			index = indexNameBuilder.getIndexName(
-				portal.getCompanyId(resourceRequest));
-		}
-
-		return index;
+	private String _getIndexName(ResourceRequest resourceRequest) {
+		return indexNameBuilder.getIndexName(
+			portal.getCompanyId(resourceRequest));
 	}
 
 	private boolean _isUpdateSpecial(String string) {
@@ -209,7 +199,6 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 
 			_aliases = Arrays.asList(
 				ParamUtil.getStringValues(resourceRequest, "aliases"));
-			_indexName = ParamUtil.getString(resourceRequest, "index-name");
 			_inactive = ParamUtil.getBoolean(resourceRequest, "inactive");
 			_queryString = ParamUtil.getString(resourceRequest, "keywords");
 			_resultsRankingUid = ParamUtil.getString(
@@ -224,10 +213,6 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 			return _inactive;
 		}
 
-		public String getIndexName() {
-			return _indexName;
-		}
-
 		public String getQueryString() {
 			return _queryString;
 		}
@@ -238,7 +223,6 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 
 		private final List<String> _aliases;
 		private final boolean _inactive;
-		private final String _indexName;
 		private final String _queryString;
 		private final String _resultsRankingUid;
 

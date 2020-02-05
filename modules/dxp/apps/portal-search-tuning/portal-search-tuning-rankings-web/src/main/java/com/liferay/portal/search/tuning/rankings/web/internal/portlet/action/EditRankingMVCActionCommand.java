@@ -212,8 +212,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		rankingBuilder.index(
-			getIndexName(
-				actionRequest, editRankingMVCActionRequest.getIndexName())
+			getIndexName(actionRequest)
 		).name(
 			editRankingMVCActionRequest.getQueryString()
 		).queryString(
@@ -296,7 +295,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		).inactive(
 			_isInactive(editRankingMVCActionRequest)
 		).index(
-			_getIndexName(editRankingMVCActionRequest)
+			_getIndexName()
 		).name(
 			_getNameForUpdate(ranking.getName(), editRankingMVCActionRequest)
 		);
@@ -320,21 +319,10 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		rankingIndexWriter.update(rankingBuilder.build());
 	}
 
-	protected String getIndexName(
-		ActionRequest actionRequest, String indexParam) {
+	protected String getIndexName(ActionRequest actionRequest) {
+		long companyId = portal.getCompanyId(actionRequest);
 
-		String index;
-
-		if (Validator.isBlank(indexParam)) {
-			long companyId = portal.getCompanyId(actionRequest);
-
-			index = "liferay-" + companyId;
-		}
-		else {
-			index = indexParam;
-		}
-
-		return index;
+		return "liferay-" + companyId;
 	}
 
 	protected String getSaveAndContinueRedirect(
@@ -432,7 +420,7 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			duplicateQueryStringsDetector.detect(
 				duplicateQueryStringsDetector.builder(
 				).index(
-					_getIndexName(ranking)
+					_getIndexName()
 				).queryStrings(
 					queryStrings
 				).unlessRankingId(
@@ -459,26 +447,8 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		);
 	}
 
-	private String _getIndexName(
-		EditRankingMVCActionRequest editRankingMVCActionRequest) {
-
-		String index = editRankingMVCActionRequest.getIndexName();
-
-		if (Validator.isBlank(index)) {
-			index = indexNameBuilder.getIndexName(_companyId);
-		}
-
-		return index;
-	}
-
-	private String _getIndexName(Ranking ranking) {
-		String index = ranking.getIndex();
-
-		if (Validator.isBlank(index)) {
-			index = indexNameBuilder.getIndexName(_companyId);
-		}
-
-		return index;
+	private String _getIndexName() {
+		return indexNameBuilder.getIndexName(_companyId);
 	}
 
 	private String _getNameForUpdate(
@@ -626,7 +596,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			_cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 			_redirect = ParamUtil.getString(actionRequest, "redirect");
 			_inactive = ParamUtil.getBoolean(actionRequest, "inactive");
-			_indexName = ParamUtil.getString(actionRequest, "index-name");
 			_queryString = ParamUtil.getString(actionRequest, PARAM_KEYWORDS);
 			_resultsRankingUid = ParamUtil.getString(
 				actionRequest, "resultsRankingUid");
@@ -641,10 +610,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		public boolean getInactive() {
 			return _inactive;
-		}
-
-		public String getIndexName() {
-			return _indexName;
 		}
 
 		public String getQueryString() {
@@ -666,7 +631,6 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 		private final List<String> _aliases;
 		private final String _cmd;
 		private final boolean _inactive;
-		private final String _indexName;
 		private final String _queryString;
 		private final String _redirect;
 		private final String _resultsRankingUid;

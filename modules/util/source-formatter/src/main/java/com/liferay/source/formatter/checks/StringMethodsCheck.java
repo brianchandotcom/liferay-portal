@@ -89,7 +89,6 @@ public class StringMethodsCheck extends BaseFileCheck {
 
 				addMessage(
 					fileName, "Use StringUtil." + methodName,
-					"string_methods.markdown",
 					getLineNumber(content, matcher.start(1)));
 			}
 		}
@@ -129,7 +128,7 @@ public class StringMethodsCheck extends BaseFileCheck {
 			sb.append(".replace(CharSequence, CharSequence)");
 
 			addMessage(
-				fileName, sb.toString(), "string_methods.markdown",
+				fileName, sb.toString(),
 				getLineNumber(content, matcher.start()));
 		}
 	}
@@ -186,7 +185,7 @@ public class StringMethodsCheck extends BaseFileCheck {
 			sb.append("(String, char, String) instead");
 
 			addMessage(
-				fileName, sb.toString(), "string_methods.markdown",
+				fileName, sb.toString(),
 				getLineNumber(content, matcher.start()));
 		}
 

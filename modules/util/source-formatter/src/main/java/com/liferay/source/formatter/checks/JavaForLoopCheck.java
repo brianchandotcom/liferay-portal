@@ -126,7 +126,6 @@ public class JavaForLoopCheck extends BaseJavaTermCheck {
 			if (!matcher2.find() || (varNameCount > 1)) {
 				addMessage(
 					fileName, "Use Enhanced For-Loop",
-					"enhanced_for_loop.markdown",
 					lineNumber - 1 +
 						getLineNumber(javaTermContent, matcher1.start()));
 

@@ -38,6 +38,7 @@ import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.EditorConstants;
+import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -233,8 +234,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			   EntryDisplayDateException | EntrySmallImageNameException |
 			   EntrySmallImageScaleException | EntryTitleException |
 			   EntryUrlTitleException | FileSizeException |
-			   LiferayFileItemException | SanitizerException |
-			   UploadRequestSizeException exception) {
+			   ImageResolutionException | LiferayFileItemException |
+			   SanitizerException | UploadRequestSizeException exception) {
 
 			SessionErrors.add(actionRequest, exception.getClass());
 

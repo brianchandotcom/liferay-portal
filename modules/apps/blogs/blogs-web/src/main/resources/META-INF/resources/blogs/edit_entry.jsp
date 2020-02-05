@@ -120,6 +120,10 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(DLValidatorUtil.getMaxAllowableSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
+			<liferay-ui:error exception="<%= ImageResolutionException.class %>">
+				<liferay-ui:message arguments="<%= new String[] {String.valueOf(PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT), String.valueOf(PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH)} %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
+
 			<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
 			</liferay-ui:error>

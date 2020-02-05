@@ -1829,7 +1829,7 @@ components:
                 type:
                     enum: [Column, DropZone, Fragment, Root, Row, Section]
                     type: string
-        PageTemplateDefinition:
+        PageTemplate:
             description:
                 ""
             properties:

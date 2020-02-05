@@ -15,10 +15,11 @@
 import dom from 'metal-dom';
 import {Drag} from 'metal-drag-drop';
 import Component from 'metal-jsx';
-import Position from 'metal-position';
 import {Config} from 'metal-state';
 
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
+
+const MAX_COLUMNS = 12;
 
 const withResizeableColumns = ChildComponent => {
 	class ResizeableColumns extends Component {
@@ -43,24 +44,9 @@ const withResizeableColumns = ChildComponent => {
 		render() {
 			return (
 				<div class={this.isResizeEnabled() ? 'resizeable' : ''}>
-					{this.renderResizeReferences()}
-
 					<ChildComponent {...this.props} />
 				</div>
 			);
-		}
-
-		renderResizeReferences() {
-			return [...Array(12)].map((element, index) => {
-				return (
-					<div
-						class="ddm-resize-column"
-						data-resize-column={index}
-						key={index}
-						ref={`resizeColumn${index}`}
-					/>
-				);
-			});
 		}
 
 		_createResizeDrag() {
@@ -101,10 +87,7 @@ const withResizeableColumns = ChildComponent => {
 		}
 
 		_handleDragMove(event) {
-			const columnNodes = Object.keys(this.refs)
-				.filter(key => key.indexOf('resizeColumn') === 0)
-				.map(key => this.refs[key]);
-			const {source, x} = event;
+			const {source} = event;
 			const {store} = this.context;
 
 			if (!this._currentRow) {
@@ -125,22 +108,18 @@ const withResizeableColumns = ChildComponent => {
 				container.classList.add('dragging');
 			}
 
-			let distance = Infinity;
-			let nearest;
+			let column = Math.floor(
+				((event.x - this._currentRow.getBoundingClientRect().left) *
+					(MAX_COLUMNS * 10)) /
+					this._currentRow.clientWidth /
+					10
+			);
 
-			columnNodes.forEach(node => {
-				const region = Position.getRegion(node);
+			if (column > MAX_COLUMNS - 1) {
+				column = MAX_COLUMNS - 1;
+			}
 
-				const currentDistance = Math.abs(x - region.left);
-
-				if (currentDistance < distance) {
-					distance = currentDistance;
-					nearest = node;
-				}
-			});
-
-			if (nearest) {
-				const column = Number(nearest.dataset.resizeColumn);
+			if (column >= 0) {
 				const direction = source.classList.contains(
 					'ddm-resize-handle-left'
 				)

@@ -151,9 +151,9 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 		);
 
 		when(
-			spyHttpResponse.bodyText()
+			spyHttpResponse.bodyBytes()
 		).thenReturn(
-			"{}"
+			"{}".getBytes()
 		);
 
 		DDMDataProviderRequest.Builder builder =
@@ -211,7 +211,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 
 		Mockito.verify(
 			spyHttpResponse, Mockito.times(1)
-		).bodyText();
+		).bodyBytes();
 
 		Mockito.verify(
 			spyPortalCache, Mockito.times(1)

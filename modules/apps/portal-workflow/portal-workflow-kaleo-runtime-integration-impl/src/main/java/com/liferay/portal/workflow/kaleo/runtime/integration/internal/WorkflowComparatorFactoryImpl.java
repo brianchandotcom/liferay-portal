@@ -156,9 +156,9 @@ public class WorkflowComparatorFactoryImpl
 		boolean ascending) {
 
 		return new WorkflowTaskInstanceIdComparator(
-			ascending, "completed ASC, kaleoTaskInstanceTokenId ASC",
-			"completed ASC, kaleoTaskInstanceTokenId DESC",
-			new String[] {"completed", "kaleoTaskInstanceTokenId"});
+			ascending, "completed ASC, kaleoInstanceId ASC",
+			"completed ASC, kaleoInstanceId DESC",
+			new String[] {"completed", "kaleoInstanceId"});
 	}
 
 	@Override

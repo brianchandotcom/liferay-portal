@@ -254,6 +254,7 @@ public class StructuredContentFolderResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
+			actions,
 			booleanQuery -> {
 				if (parentStructuredContentFolderId != null) {
 					BooleanFilter booleanFilter =
@@ -273,10 +274,10 @@ public class StructuredContentFolderResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 			},
+			sorts,
 			document -> _toStructuredContentFolder(
 				_journalFolderService.getFolder(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts, (Map)actions);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {

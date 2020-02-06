@@ -436,16 +436,16 @@ public class DocumentResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			booleanQueryUnsafeConsumer, filter, DLFileEntry.class, search,
-			pagination,
+			actions, booleanQueryUnsafeConsumer, filter, DLFileEntry.class,
+			search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
+			sorts,
 			document -> _toDocument(
 				_dlAppService.getFileEntry(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts, (Map)actions);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private CustomField[] _getExpandoBridgeAttributes(

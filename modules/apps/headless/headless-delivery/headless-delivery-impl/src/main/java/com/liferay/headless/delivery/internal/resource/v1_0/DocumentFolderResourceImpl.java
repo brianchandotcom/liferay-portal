@@ -270,6 +270,7 @@ public class DocumentFolderResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
+			actions,
 			booleanQuery -> {
 				if (parentDocumentFolderId != null) {
 					BooleanFilter booleanFilter =
@@ -298,10 +299,10 @@ public class DocumentFolderResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 			},
+			sorts,
 			document -> _toDocumentFolder(
 				_dlAppService.getFolder(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts, (Map)actions);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {

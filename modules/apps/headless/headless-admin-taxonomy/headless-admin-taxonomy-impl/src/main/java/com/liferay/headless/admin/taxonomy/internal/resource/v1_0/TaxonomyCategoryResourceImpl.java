@@ -324,16 +324,17 @@ public class TaxonomyCategoryResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			booleanQueryUnsafeConsumer, filter, AssetCategory.class, search,
-			pagination,
+			Collections.emptyMap(), booleanQueryUnsafeConsumer, filter,
+			AssetCategory.class, search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ASSET_CATEGORY_ID),
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
+			sorts,
 			document -> _toTaxonomyCategory(
 				_assetCategoryService.getCategory(
-					GetterUtil.getLong(document.get(Field.ASSET_CATEGORY_ID)))),
-			sorts);
+					GetterUtil.getLong(
+						document.get(Field.ASSET_CATEGORY_ID)))));
 	}
 
 	private ParentTaxonomyCategory _toParentTaxonomyCategory(

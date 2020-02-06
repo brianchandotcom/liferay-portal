@@ -46,6 +46,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Collections;
 import java.util.function.Function;
 
 import javax.ws.rs.ClientErrorException;
@@ -188,6 +189,7 @@ public class SPICommentResource<T> {
 		throws Exception {
 
 		return SearchUtil.search(
+			Collections.emptyMap(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -206,10 +208,10 @@ public class SPICommentResource<T> {
 					"searchPermissionContext", StringPool.BLANK);
 				searchContext.setCompanyId(_company.getCompanyId());
 			},
+			sorts,
 			document -> _transformUnsafeFunction.apply(
 				_commentManager.fetchComment(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private DiscussionPermission _getDiscussionPermission() {

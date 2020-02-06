@@ -312,6 +312,7 @@ public class OrganizationResourceImpl
 		long id = _getOrganizationId(organizationId);
 
 		return SearchUtil.search(
+			Collections.emptyMap(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -342,9 +343,9 @@ public class OrganizationResourceImpl
 				Field.ENTRY_CLASS_PK),
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
+			sorts,
 			document -> _toOrganization(
-				GetterUtil.getString(document.get(Field.ENTRY_CLASS_PK))),
-			sorts);
+				GetterUtil.getString(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	private List<OrgLabor> _getOrgLabors(Organization organization) {

@@ -73,6 +73,7 @@ public class WikiNodeResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
+			_getActions(siteId),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -86,10 +87,10 @@ public class WikiNodeResourceImpl
 				Field.ENTRY_CLASS_PK),
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
+			sorts,
 			document -> _toWikiNode(
 				_wikiNodeService.getNode(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts, (Map)_getActions(siteId));
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

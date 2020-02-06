@@ -118,6 +118,7 @@ public class BlogPostingResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
+			_getListActions(siteId),
 			booleanQuery -> {
 			},
 			filter, BlogsEntry.class, search, pagination,
@@ -129,10 +130,10 @@ public class BlogPostingResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 			},
+			sorts,
 			document -> _toBlogPosting(
 				_blogsEntryService.getEntry(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts, (Map)_getListActions(siteId));
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

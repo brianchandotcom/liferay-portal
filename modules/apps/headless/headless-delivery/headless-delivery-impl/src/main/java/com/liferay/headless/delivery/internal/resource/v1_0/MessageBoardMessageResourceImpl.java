@@ -361,6 +361,7 @@ public class MessageBoardMessageResourceImpl
 		long messageBoardMessageSiteId = siteId;
 
 		return SearchUtil.search(
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -402,10 +403,10 @@ public class MessageBoardMessageResourceImpl
 				Field.ENTRY_CLASS_PK),
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
+			sorts,
 			document -> _toMessageBoardMessage(
 				_mbMessageService.getMessage(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts, (Map)actions);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private Map<String, Map<String, String>> _getMessageBoardThreadListActions(

@@ -416,8 +416,8 @@ public class KnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			booleanQueryUnsafeConsumer, filter, KBArticle.class, search,
-			pagination,
+			actions, booleanQueryUnsafeConsumer, filter, KBArticle.class,
+			search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
@@ -430,11 +430,11 @@ public class KnowledgeBaseArticleResourceImpl
 					searchContext.setKeywords("");
 				}
 			},
+			sorts,
 			document -> _toKnowledgeBaseArticle(
 				_kbArticleService.getLatestKBArticle(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
-					WorkflowConstants.STATUS_APPROVED)),
-			sorts, (Map)actions);
+					WorkflowConstants.STATUS_APPROVED)));
 	}
 
 	private Map<String, Map<String, String>> _getKnowledgeFolderListActions(

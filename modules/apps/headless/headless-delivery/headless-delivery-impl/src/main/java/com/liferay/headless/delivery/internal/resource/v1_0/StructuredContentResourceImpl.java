@@ -821,8 +821,8 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			booleanQueryUnsafeConsumer, filter, JournalArticle.class, search,
-			pagination,
+			actions, booleanQueryUnsafeConsumer, filter, JournalArticle.class,
+			search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				com.liferay.portal.kernel.search.Field.ARTICLE_ID,
 				com.liferay.portal.kernel.search.Field.SCOPE_GROUP_ID),
@@ -837,6 +837,7 @@ public class StructuredContentResourceImpl
 					searchContext.setGroupIds(new long[] {siteId});
 				}
 			},
+			sorts,
 			document -> _toStructuredContent(
 				_journalArticleService.getLatestArticle(
 					GetterUtil.getLong(
@@ -845,8 +846,7 @@ public class StructuredContentResourceImpl
 								SCOPE_GROUP_ID)),
 					document.get(
 						com.liferay.portal.kernel.search.Field.ARTICLE_ID),
-					WorkflowConstants.STATUS_APPROVED)),
-			sorts, (Map)actions);
+					WorkflowConstants.STATUS_APPROVED)));
 	}
 
 	private ThemeDisplay _getThemeDisplay(JournalArticle journalArticle)

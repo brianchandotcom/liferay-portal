@@ -275,18 +275,18 @@ public class MessageBoardSectionResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			booleanQueryUnsafeConsumer, filter, MBCategory.class, search,
-			pagination,
+			actions, booleanQueryUnsafeConsumer, filter, MBCategory.class,
+			search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 			},
+			sorts,
 			document -> _toMessageBoardSection(
 				_mbCategoryService.getCategory(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts, (Map)actions);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private Map<String, Map<String, String>> _getSiteActions(Long siteId) {

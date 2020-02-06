@@ -355,7 +355,24 @@ public abstract class BaseDB implements DB {
 					s.executeUpdate(sql);
 				}
 				catch (SQLException sqlException) {
-					handleSQLException(sql, sqlException);
+					if (_log.isDebugEnabled()) {
+						StringBundler sb = new StringBundler(10);
+
+						sb.append("SQL: ");
+						sb.append(sql);
+						sb.append("\nSQL state: ");
+						sb.append(sqlException.getSQLState());
+						sb.append("\nVendor: ");
+						sb.append(getDBType());
+						sb.append("\nVendor error code: ");
+						sb.append(sqlException.getErrorCode());
+						sb.append("\nVendor error message: ");
+						sb.append(sqlException.getMessage());
+
+						_log.debug(sb.toString());
+					}
+
+					throw sqlException;
 				}
 			}
 		}
@@ -902,29 +919,6 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected abstract String[] getTemplate();
-
-	protected void handleSQLException(String sql, SQLException sqlException)
-		throws SQLException {
-
-		if (_log.isDebugEnabled()) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append("SQL: ");
-			sb.append(sql);
-			sb.append("\nSQL state: ");
-			sb.append(sqlException.getSQLState());
-			sb.append("\nVendor: ");
-			sb.append(getDBType());
-			sb.append("\nVendor error code: ");
-			sb.append(sqlException.getErrorCode());
-			sb.append("\nVendor error message: ");
-			sb.append(sqlException.getMessage());
-
-			_log.debug(sb.toString());
-		}
-
-		throw sqlException;
-	}
 
 	protected String readFile(String fileName) throws IOException {
 		if (FileUtil.exists(fileName)) {

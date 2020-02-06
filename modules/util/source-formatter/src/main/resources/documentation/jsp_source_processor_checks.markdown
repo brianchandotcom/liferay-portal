@@ -3,7 +3,7 @@
 Check | Category | Description
 ----- | -------- | -----------
 AppendCheck | Miscellaneous | |
-[ArrayCheck](checks/array_check.markdown) | Performance | Checks if performance can be improved by using different mehods that can be used by collections |
+[ArrayCheck](checks/array_check.markdown#arraycheck) | Performance | Checks if performance can be improved by using different mehods that can be used by collections |
 [ArrayTypeStyleCheck](https://checkstyle.sourceforge.io/config_misc.html#ArrayTypeStyle) | Miscellaneous | Checks the style of array type definitions. |
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/config_blocks.html#AvoidNestedBlocks) | Miscellaneous | Finds nested blocks (blocks that are used freely in the code). |
 CamelCaseNameCheck | Miscellaneous | |
@@ -17,13 +17,13 @@ EmptyCollectionCheck | Miscellaneous | |
 ExceptionMessageCheck | Miscellaneous | |
 FactoryCheck | Miscellaneous | |
 GetterUtilCheck | Miscellaneous | |
-[IfStatementCheck](checks/if_statement_check.markdown) | Miscellaneous | |
+[IfStatementCheck](checks/if_statement_check.markdown#ifstatementcheck) | Miscellaneous | |
 InstanceofOrderCheck | Miscellaneous | |
 JSONNamingCheck | Miscellaneous | |
-[JSONUtilCheck](checks/json_util_check.markdown) | Miscellaneous | |
-[JSPArrowFunctionCheck](checks/jsp_arrow_function_check.markdown) | Miscellaneous | |
+[JSONUtilCheck](checks/json_util_check.markdown#jsonutilcheck) | Miscellaneous | |
+[JSPArrowFunctionCheck](checks/jsp_arrow_function_check.markdown#jsparrowfunctioncheck) | Miscellaneous | |
 JSPButtonTagCheck | Miscellaneous | |
-[JSPDefineObjectsCheck](checks/jsp_define_objects_check.markdown) | Miscellaneous | |
+[JSPDefineObjectsCheck](checks/jsp_define_objects_check.markdown#jspdefineobjectscheck) | Miscellaneous | |
 JSPEmptyLinesCheck | Miscellaneous | |
 JSPExceptionOrderCheck | Miscellaneous | |
 JSPFunctionNameCheck | Miscellaneous | |
@@ -40,7 +40,7 @@ JSPMissingTaglibsCheck | Miscellaneous | |
 JSPModuleIllegalImportsCheck | Miscellaneous | |
 JSPParenthesesCheck | Miscellaneous | |
 JSPRedirectBackURLCheck | Miscellaneous | |
-[JSPSendRedirectCheck](checks/jsp_send_redirect_check.markdown) | Miscellaneous | |
+[JSPSendRedirectCheck](checks/jsp_send_redirect_check.markdown#jspsendredirectcheck) | Miscellaneous | |
 JSPServiceUtilCheck | Miscellaneous | |
 JSPSessionKeysCheck | Miscellaneous | |
 JSPStringBundlerCheck | Miscellaneous | |
@@ -53,16 +53,16 @@ JSPUnusedJSPF | Miscellaneous | |
 JSPUnusedTermsCheck | Miscellaneous | |
 JSPWhitespaceCheck | Miscellaneous | |
 JSPXSSVulnerabilitiesCheck | Miscellaneous | |
-[LambdaCheck](checks/lambda_check.markdown) | Miscellaneous | |
+[LambdaCheck](checks/lambda_check.markdown#lambdacheck) | Miscellaneous | |
 LineBreakAfterCommaCheck | Miscellaneous | |
 LineBreakBeforeGenericStartCheck | Miscellaneous | |
 LineEndCharacterCheck | Miscellaneous | |
-[ListUtilCheck](checks/list_util_check.markdown) | Miscellaneous | |
+[ListUtilCheck](checks/list_util_check.markdown#listutilcheck) | Miscellaneous | |
 LiteralStringEqualsCheck | Miscellaneous | |
 [LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalFinalVariableName) | Miscellaneous | Checks that local final variable names conform to a specified pattern. |
 [LocalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalVariableName) | Miscellaneous | Checks that local, non-final variable names conform to a specified pattern. |
 LocaleUtilCheck | Miscellaneous | |
-[MapIterationCheck](checks/map_iteration_check.markdown) | Miscellaneous | |
+[MapIterationCheck](checks/map_iteration_check.markdown#mapiterationcheck) | Miscellaneous | |
 [MemberNameCheck](https://checkstyle.sourceforge.io/config_naming.html#MemberName) | Miscellaneous | Checks that instance variable names conform to a specified pattern. |
 MethodCallsOrderCheck | Miscellaneous | |
 [MethodNameCheck](https://checkstyle.sourceforge.io/config_naming.html#MethodName) | Miscellaneous | Checks that method names conform to a specified pattern. |
@@ -85,7 +85,7 @@ PersistenceCallCheck | Miscellaneous | |
 PlusStatementCheck | Miscellaneous | |
 PrimitiveWrapperInstantiationCheck | Miscellaneous | |
 PrincipalExceptionCheck | Miscellaneous | |
-[ResourceBundleCheck](checks/resource_bundle_check.markdown) | Miscellaneous | |
+[ResourceBundleCheck](checks/resource_bundle_check.markdown#resourcebundlecheck) | Miscellaneous | |
 SemiColonCheck | Miscellaneous | |
 [StaticVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#StaticVariableName) | Miscellaneous | Checks that static, non-final variable names conform to a specified pattern. |
 StringBundlerNamingCheck | Naming Conventions | Checks for consistent naming on variables of type 'StringBundler' |
@@ -96,7 +96,7 @@ TernaryOperatorCheck | Miscellaneous | |
 [TypeNameCheck](https://checkstyle.sourceforge.io/config_naming.html#TypeName) | Miscellaneous | Checks that type names conform to a specified pattern. |
 [UnnecessaryParenthesesCheck](https://checkstyle.sourceforge.io/config_coding.html#UnnecessaryParentheses) | Miscellaneous | Checks if unnecessary parentheses are used in a statement or expression. |
 UnparameterizedClassCheck | Miscellaneous | |
-[ValidatorEqualsCheck](checks/validator_equals_check.markdown) | Miscellaneous | |
+[ValidatorEqualsCheck](checks/validator_equals_check.markdown#validatorequalscheck) | Miscellaneous | |
 ValidatorIsNullCheck | Miscellaneous | |
 [WhitespaceAfterCheck](https://checkstyle.sourceforge.io/config_whitespace.html#WhitespaceAfter) | Miscellaneous | Checks that a token is followed by whitespace, with the exception that it does not check for whitespace after the semicolon of an empty for iterator. |
 [WhitespaceAroundCheck](https://checkstyle.sourceforge.io/config_whitespace.html#WhitespaceAround) | Miscellaneous | Checks that a token is surrounded by whitespace. |

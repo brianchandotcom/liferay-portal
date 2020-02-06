@@ -32,17 +32,33 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DB {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final int BARE = 0;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final int DEFAULT = 1;
 
 	public void addIndexes(
 			Connection con, String indexesSQL, Set<String> validIndexNames)
 		throws IOException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void buildCreateFile(String sqlDir, String databaseName)
 		throws IOException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void buildCreateFile(
 			String sqlDir, String databaseName, int population)
 		throws IOException;

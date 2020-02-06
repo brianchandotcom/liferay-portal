@@ -112,66 +112,23 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void buildCreateFile(String sqlDir, String databaseName)
 		throws IOException {
-
-		buildCreateFile(sqlDir, databaseName, BARE);
-		buildCreateFile(sqlDir, databaseName, DEFAULT);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void buildCreateFile(
 			String sqlDir, String databaseName, int population)
 		throws IOException {
-
-		String recreateSQL = getRecreateSQL(databaseName);
-
-		if (population == BARE) {
-			FileUtil.write(
-				StringBundler.concat(
-					sqlDir, "/create-bare/create-bare-", _dbType, ".sql"),
-				recreateSQL);
-
-			return;
-		}
-
-		File file = new File(
-			StringBundler.concat(sqlDir, "/create/create-", _dbType, ".sql"));
-
-		StringBundler sb = new StringBundler(6);
-
-		String tablesPrefix = "/portal/portal-";
-
-		if (sqlDir.endsWith("/WEB-INF/sql")) {
-			tablesPrefix = "/tables/tables-";
-		}
-
-		sb.append(
-			_readFile(
-				StringBundler.concat(sqlDir, tablesPrefix, _dbType, ".sql")));
-
-		sb.append("\n\n");
-
-		sb.append(
-			_readFile(
-				StringBundler.concat(
-					sqlDir, "/indexes/indexes-", _dbType, ".sql")));
-
-		sb.append("\n\n");
-
-		sb.append(
-			_readFile(
-				StringBundler.concat(
-					sqlDir, "/sequences/sequences-", _dbType, ".sql")));
-
-		sb.append("\n");
-
-		String content = getPopulateSQL(databaseName, sb.toString());
-
-		if (!content.isEmpty()) {
-			FileUtil.write(file, recreateSQL.concat(content));
-		}
 	}
 
 	@Override

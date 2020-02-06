@@ -31,10 +31,10 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,25 +124,23 @@ public class PageDefinitionConverterUtil {
 
 							setBackgroundImage(
 								() -> {
-									String backgroundImageTitle =
+									JSONObject backgroundImageJSONObject =
 										containerLayoutStructureItem.
-											getBackgroundImageTitle();
+											getBackgroundImageJSONObject();
 
-									String backgroundImageURL =
-										containerLayoutStructureItem.
-											getBackgroundImageURL();
-
-									if (Validator.isNull(
-											backgroundImageTitle) ||
-										Validator.isNull(backgroundImageURL)) {
+									if ((backgroundImageJSONObject == null) ||
+										!backgroundImageJSONObject.has("url")) {
 
 										return null;
 									}
 
 									return new FragmentImage() {
 										{
-											title = backgroundImageTitle;
-											url = backgroundImageURL;
+											title =
+												backgroundImageJSONObject.get(
+													"title");
+											url = backgroundImageJSONObject.get(
+												"url");
 										}
 									};
 								});

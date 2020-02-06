@@ -14,17 +14,12 @@
  */
 --%>
 
-<%@ include file="/render_fragment_layout/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-Map<String, Object> fieldValues = (Map<String, Object>)request.getAttribute("liferay-layout:render-fragment-layout:fieldValues");
-String mode = (String)request.getAttribute("liferay-layout:render-fragment-layout:mode");
-long previewClassNameId = (long)request.getAttribute("liferay-layout:render-fragment-layout:previewClassNameId");
-long previewClassPK = (long)request.getAttribute("liferay-layout:render-fragment-layout:previewClassPK");
-int previewType = (int)request.getAttribute("liferay-layout:render-fragment-layout:previewType");
-long[] segmentsExperienceIds = (long[])request.getAttribute("liferay-layout:render-fragment-layout:segmentsExperienceIds");
+HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttribute(PortletLayoutTypeControllerWebKeys.ORIGINAL_HTTP_SERVLET_REQUEST);
 
-RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("render_layout_data_structure.jsp-renderFragmentLayoutDisplayContext");
+PortletLayoutDisplayContext portletLayoutDisplayContext = (PortletLayoutDisplayContext)request.getAttribute("render_layout_data_structure.jsp-portletLayoutDisplayContext");
 
 LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("render_react_editor_layout_data_structure.jsp-layoutStructure");
 
@@ -47,7 +42,7 @@ for (String childrenItemId : childrenItemIds) {
 				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 				%>
 
-				<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/layout/view/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 			</div>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ContainerLayoutStructureItem %>">
@@ -55,7 +50,7 @@ for (String childrenItemId : childrenItemIds) {
 			<%
 			ContainerLayoutStructureItem containerLayoutStructureItem = (ContainerLayoutStructureItem)layoutStructureItem;
 
-			String backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(containerLayoutStructureItem.getBackgroundImageJSONObject());
+			String backgroundImage = portletLayoutDisplayContext.getBackgroundImage(containerLayoutStructureItem.getBackgroundImageJSONObject());
 
 			StringBundler sb = new StringBundler();
 
@@ -93,46 +88,59 @@ for (String childrenItemId : childrenItemIds) {
 				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 				%>
 
-				<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/layout/view/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 			</div>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof DropZoneLayoutStructureItem %>">
 
 			<%
-			request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			String themeId = theme.getThemeId();
+
+			String layoutTemplateId = layoutTypePortlet.getLayoutTemplateId();
+
+			if (Validator.isNull(layoutTemplateId)) {
+				layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
+			}
+
+			LayoutTemplate layoutTemplate = LayoutTemplateLocalServiceUtil.getLayoutTemplate(layoutTemplateId, false, theme.getThemeId());
+
+			if (layoutTemplate != null) {
+				themeId = layoutTemplate.getThemeId();
+			}
+
+			String templateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + layoutTypePortlet.getLayoutTemplateId();
+			String templateContent = LayoutTemplateLocalServiceUtil.getContent(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
+			String langType = LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
+
+			if (Validator.isNotNull(templateContent)) {
+				RuntimePageUtil.processTemplate(originalServletRequest, response, new StringTemplateResource(templateId, templateContent), langType);
+			}
 			%>
 
-			<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof FragmentLayoutStructureItem %>">
 
 			<%
 			FragmentLayoutStructureItem fragmentLayoutStructureItem = (FragmentLayoutStructureItem)layoutStructureItem;
 
-			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() > 0) {
-				FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentLayoutStructureItem.getFragmentEntryLinkId());
-
-				if (fragmentEntryLink != null) {
-					FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
-
-					DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
-
-					defaultFragmentRendererContext.setFieldValues(fieldValues);
-					defaultFragmentRendererContext.setLocale(locale);
-					defaultFragmentRendererContext.setMode(mode);
-					defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
-					defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
-					defaultFragmentRendererContext.setPreviewType(previewType);
-					defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
-			%>
-
-					<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-
-			<%
-				}
+			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
+				continue;
 			}
+
+			FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink == null) {
+				continue;
+			}
+
+			FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
+
+			DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
+
+			defaultFragmentRendererContext.setLocale(locale);
 			%>
 
+			<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof RootLayoutStructureItem %>">
 
@@ -140,7 +148,7 @@ for (String childrenItemId : childrenItemIds) {
 			request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 			%>
 
-			<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/layout/view/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof RowLayoutStructureItem %>">
 
@@ -154,7 +162,7 @@ for (String childrenItemId : childrenItemIds) {
 				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 				%>
 
-				<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/layout/view/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 			</div>
 		</c:when>
 	</c:choose>

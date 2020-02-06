@@ -19,7 +19,7 @@ import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.layout.internal.upgrade.v1_0_0.UpgradeLayout;
 import com.liferay.layout.internal.upgrade.v1_0_0.UpgradeLayoutClassedModelUsage;
 import com.liferay.layout.internal.upgrade.v1_0_0.UpgradeLayoutPermissions;
-import com.liferay.layout.internal.upgrade.v1_1_0.UpgradeSchema;
+import com.liferay.layout.internal.upgrade.v1_1_0.UpgradeCompanyId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,7 +41,7 @@ public class LayoutServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register("1.0.0", "1.0.1", new UpgradeLayout());
 
-		registry.register("1.0.1", "1.1.0", new UpgradeSchema());
+		registry.register("1.0.1", "1.1.0", new UpgradeCompanyId());
 	}
 
 	@Reference

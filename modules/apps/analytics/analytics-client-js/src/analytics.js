@@ -452,7 +452,10 @@ class Analytics {
 	}
 
 	_isNewUserIdRequired() {
-		const identityHash = getItem(STORAGE_KEY_IDENTITY_HASH);
+		const {dataSourceId} = this.config;
+		const {identity} = this.config;
+
+		const storedIdentityHash = getItem(STORAGE_KEY_IDENTITY_HASH);
 		const storedUserId = getItem(STORAGE_KEY_USER_ID);
 
 		let newUserIdRequired = false;
@@ -460,8 +463,7 @@ class Analytics {
 		// During logout or session expiration, identity object becomes undefined
 		// because the client object is being instantiated on every page navigation,
 		// in such cases, we force a new user ID token.
-
-		if (!storedUserId || (identityHash && !this.config.identity)) {
+		if (!storedUserId || (storedIdentityHash && !identity)) {
 			newUserIdRequired = true;
 		}
 

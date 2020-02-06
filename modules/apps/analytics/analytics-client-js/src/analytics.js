@@ -411,6 +411,16 @@ class Analytics {
 		return context;
 	}
 
+	_getIdentityHash(dataSourceId, identity, userId) {
+		const bodyData = {
+			dataSourceId,
+			identity,
+			userId
+		};
+
+		return hash(bodyData);
+	}
+
 	/**
 	 * Gets the userId for the existing analytics user. Previously generated ids
 	 * are stored and retrieved before generating a new one. If a anonymous
@@ -489,13 +499,11 @@ class Analytics {
 	_sendIdentity(identity, userId) {
 		const {dataSourceId} = this.config;
 
-		const bodyData = {
+		const newIdentityHash = this._getIdentityHash(
 			dataSourceId,
 			identity,
 			userId
-		};
-
-		const newIdentityHash = hash(bodyData);
+		);
 		const storedIdentityHash = getItem(STORAGE_KEY_IDENTITY_HASH);
 
 		let identyHash = Promise.resolve(storedIdentityHash);
@@ -503,7 +511,11 @@ class Analytics {
 		if (newIdentityHash !== storedIdentityHash) {
 			instance._persist(STORAGE_KEY_IDENTITY_HASH, newIdentityHash);
 
-			const body = JSON.stringify(bodyData);
+			const body = JSON.stringify({
+				dataSourceId,
+				identity,
+				userId
+			});
 			const headers = new Headers();
 
 			headers.append('Content-Type', 'application/json');

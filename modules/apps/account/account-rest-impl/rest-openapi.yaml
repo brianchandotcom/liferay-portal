@@ -151,6 +151,39 @@ paths:
                     description:
                         ""
             tags: ["Account"]
+        patch:
+            # @review
+            description:
+                Updates the account with information sent in the request body. Only the provided fields
+                are updated.
+            operationId: patchAccount
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Account"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Account"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                    # @review
+                    description:
+                        "Account successfully updated"
         put:
             # @review
             description:

@@ -18,7 +18,7 @@ import {MockRouter} from '../../mock/MockRouter.es';
 const query = '?filters.roleIds%5B0%5D=2';
 
 const items = [
-	{id: 1, name: 'Administrador'},
+	{id: 1, name: 'Admin'},
 	{id: 2, name: 'User'}
 ];
 
@@ -38,10 +38,9 @@ describe('The role filter component should', () => {
 	afterEach(cleanup);
 
 	beforeEach(() => {
-		const renderResult = render(
-			<RoleFilter dispatch={() => {}} processId={12345} />,
-			{wrapper}
-		);
+		const renderResult = render(<RoleFilter processId={12345} />, {
+			wrapper
+		});
 
 		getAllByTestId = renderResult.getAllByTestId;
 	});
@@ -49,7 +48,7 @@ describe('The role filter component should', () => {
 	test('Be rendered with filter item names', () => {
 		const filterItems = getAllByTestId('filterItem');
 
-		expect(filterItems[0].innerHTML).toContain('Administrador');
+		expect(filterItems[0].innerHTML).toContain('Admin');
 		expect(filterItems[1].innerHTML).toContain('User');
 	});
 

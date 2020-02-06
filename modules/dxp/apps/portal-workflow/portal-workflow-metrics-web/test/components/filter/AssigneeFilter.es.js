@@ -38,10 +38,9 @@ describe('The assignee filter component should', () => {
 	afterEach(cleanup);
 
 	beforeEach(() => {
-		const renderResult = render(
-			<AssigneeFilter dispatch={() => {}} processId={12345} />,
-			{wrapper}
-		);
+		const renderResult = render(<AssigneeFilter processId={12345} />, {
+			wrapper
+		});
 
 		getAllByTestId = renderResult.getAllByTestId;
 	});

@@ -20,7 +20,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 const {processId, query} = {
 	processId: 12345,
-	query: '?filters.steptimeRange%5B0%5D=7'
+	query: '?filters.stepTimeRange%5B0%5D=7'
 };
 
 const items = [

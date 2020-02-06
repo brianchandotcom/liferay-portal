@@ -21,7 +21,7 @@ import '@testing-library/jest-dom/extend-expect';
 const {processId, query} = {
 	processId: 12345,
 	query:
-		'?filters.completionvelocityUnit%5B0%5D=Days&filters.completiontimeRange%5B0%5D=7'
+		'?filters.completionVelocityUnit%5B0%5D=Days&filters.completionTimeRange%5B0%5D=7'
 };
 
 const data = {

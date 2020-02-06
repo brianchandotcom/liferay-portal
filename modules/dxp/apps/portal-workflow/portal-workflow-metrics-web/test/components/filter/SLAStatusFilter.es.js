@@ -27,10 +27,9 @@ describe('The sla status filter component should', () => {
 	afterEach(cleanup);
 
 	beforeEach(() => {
-		const renderResult = render(
-			<SLAStatusFilter dispatch={() => {}} processId={12345} />,
-			{wrapper}
-		);
+		const renderResult = render(<SLAStatusFilter processId={12345} />, {
+			wrapper
+		});
 
 		getAllByTestId = renderResult.getAllByTestId;
 	});

@@ -26,7 +26,7 @@ import '@testing-library/jest-dom/extend-expect';
 const {processId, query} = {
 	processId: 12345,
 	query:
-		'?filters.assigneetaskKeys%5B0%5D=update&filters.assigneetimeRange%5B0%5D=7'
+		'?filters.assigneeTaskKeys%5B0%5D=update&filters.assigneeTimeRange%5B0%5D=7'
 };
 
 const items = [

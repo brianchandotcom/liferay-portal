@@ -14,6 +14,7 @@ import React, {cloneElement, useMemo, useState} from 'react';
 import {Route, Router} from 'react-router-dom';
 
 import {AppContext} from '../../src/main/resources/META-INF/resources/js/components/AppContext.es';
+import {FilterContextProvider} from '../../src/main/resources/META-INF/resources/js/shared/components/filter/FilterContext.es';
 
 const withParamsMock = (...components) => ({
 	history,
@@ -79,7 +80,9 @@ const MockRouter = ({
 	return (
 		<Router history={history}>
 			<AppContext.Provider value={contextState}>
-				<Route path={path} render={component} />
+				<FilterContextProvider>
+					<Route path={path} render={component} />
+				</FilterContextProvider>
 			</AppContext.Provider>
 		</Router>
 	);

@@ -63,14 +63,13 @@ describe('The instance list card should', () => {
 		getAllByTestId = renderResult.getAllByTestId;
 	});
 
-	test('Be rendered with "sla-status", "process-status", and "process-step" filters', () => {
+	test('Be rendered with "sla-status", "process-status", "process-step" and "assignee" filters', () => {
 		const filterNames = getAllByTestId('filterName');
 
 		expect(filterNames[0].innerHTML).toBe('sla-status');
 		expect(filterNames[1].innerHTML).toBe('process-status');
-		expect(filterNames[2].innerHTML).toBe('completion-period');
-		expect(filterNames[3].innerHTML).toBe('process-step');
-		expect(filterNames[4].innerHTML).toBe('assignee');
+		expect(filterNames[2].innerHTML).toBe('process-step');
+		expect(filterNames[3].innerHTML).toBe('assignee');
 	});
 
 	test('Select all page by clicking on check all button', () => {

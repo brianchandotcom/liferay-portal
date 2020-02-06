@@ -27,10 +27,9 @@ describe('The process status filter component should', () => {
 	afterEach(cleanup);
 
 	beforeEach(() => {
-		const renderResult = render(
-			<ProcessStatusFilter dispatch={() => {}} processId={12345} />,
-			{wrapper}
-		);
+		const renderResult = render(<ProcessStatusFilter processId={12345} />, {
+			wrapper
+		});
 
 		getAllByTestId = renderResult.getAllByTestId;
 	});

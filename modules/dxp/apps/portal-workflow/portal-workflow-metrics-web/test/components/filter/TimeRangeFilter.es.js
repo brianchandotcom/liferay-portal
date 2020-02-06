@@ -19,7 +19,7 @@ import {MockRouter} from '../../mock/MockRouter.es';
 import '@testing-library/jest-dom/extend-expect';
 
 const query =
-	'?filters.testtimeRange%5B0%5D=7&filters.testdateEnd=2019-12-09&filters.testdateStart=2019-12-03';
+	'?filters.testTimeRange%5B0%5D=7&filters.testDateEnd=2019-12-09&filters.testDateStart=2019-12-03';
 
 const data = {
 	items: [
@@ -54,11 +54,7 @@ describe('The time range filter component should', () => {
 			jsonSessionStorage.set('timeRanges', data);
 
 			const renderResult = render(
-				<TimeRangeFilter
-					dispatch={() => {}}
-					prefixKey="test"
-					processId={12345}
-				/>,
+				<TimeRangeFilter prefixKey="test" processId={12345} />,
 				{wrapper}
 			);
 
@@ -95,11 +91,7 @@ describe('The time range filter component should', () => {
 			jsonSessionStorage.set('timeRanges', data);
 
 			const renderResult = render(
-				<TimeRangeFilter
-					dispatch={() => {}}
-					prefixKey="test"
-					processId={12345}
-				/>,
+				<TimeRangeFilter prefixKey="test" processId={12345} />,
 				{wrapper}
 			);
 

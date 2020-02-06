@@ -29,7 +29,6 @@ describe('The velocity unit filter component should', () => {
 	beforeEach(() => {
 		const renderResult = render(
 			<VelocityUnitFilter
-				dispatch={() => {}}
 				processId={12345}
 				timeRange={{
 					dateEnd: '2019-12-10T20:19:34Z',

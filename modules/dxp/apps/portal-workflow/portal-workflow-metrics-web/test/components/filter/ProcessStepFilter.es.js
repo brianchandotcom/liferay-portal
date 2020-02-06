@@ -38,10 +38,9 @@ describe('The process step filter component should', () => {
 	afterEach(cleanup);
 
 	beforeEach(() => {
-		const renderResult = render(
-			<ProcessStepFilter dispatch={() => {}} processId={12345} />,
-			{wrapper}
-		);
+		const renderResult = render(<ProcessStepFilter processId={12345} />, {
+			wrapper
+		});
 
 		getAllByTestId = renderResult.getAllByTestId;
 	});

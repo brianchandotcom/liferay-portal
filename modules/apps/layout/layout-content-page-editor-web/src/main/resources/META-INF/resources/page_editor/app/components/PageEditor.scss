@@ -11,7 +11,9 @@
 	}
 
 	&--with-sidebar-open {
-		padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+		@include media-breakpoint-up(sm) {
+			padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+		}
 	}
 
 	&__col {

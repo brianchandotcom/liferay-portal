@@ -22,6 +22,8 @@
 	}
 
 	&.collapsed {
-		width: calc(100vw - 320px);
+		@include media-breakpoint-up(sm) {
+			width: calc(100vw - 360px);
+		}
 	}
 }

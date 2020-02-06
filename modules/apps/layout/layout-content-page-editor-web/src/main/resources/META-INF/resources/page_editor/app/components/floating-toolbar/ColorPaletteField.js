@@ -15,7 +15,7 @@
 import ClayForm from '@clayui/form';
 import React from 'react';
 
-import ColorPalette from '../../common/components/ColorPalette';
+import ColorPalette from '../../../common/components/ColorPalette';
 
 export const ColorPaletteField = ({field, onValueSelect, value}) => (
 	<ClayForm.Group small>

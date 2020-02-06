@@ -16,9 +16,9 @@ import ClayForm from '@clayui/form';
 import {useIsMounted} from 'frontend-js-react-web';
 import React, {useContext, useState, useEffect} from 'react';
 
-import ItemSelector from '../../common/components/ItemSelector';
-import {ConfigContext} from '../config/index';
-import InfoItemService from '../services/InfoItemService';
+import ItemSelector from '../../../common/components/ItemSelector';
+import {ConfigContext} from '../../config/index';
+import InfoItemService from '../../services/InfoItemService';
 
 export const ItemSelectorField = ({field, onValueSelect, value}) => {
 	const {typeOptions = {}} = field;

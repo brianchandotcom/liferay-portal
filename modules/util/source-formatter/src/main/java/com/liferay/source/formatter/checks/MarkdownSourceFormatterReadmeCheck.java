@@ -380,6 +380,90 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		return checkInfoMap;
 	}
 
+	private String _getChecksInformation(
+			String absolutePath, Map<String, CheckInfo> checkInfoMap)
+		throws DocumentException, IOException {
+
+		int x = absolutePath.lastIndexOf(StringPool.SLASH);
+
+		String rootFolderLocation = absolutePath.substring(0, x + 1);
+
+		File documentationDir = new File(
+			rootFolderLocation + _DOCUMENTATION_DIR_LOCATION);
+
+		File documentationChecksDir = new File(
+			documentationDir, _DOCUMENTATION_CHECKS_DIR_NAME);
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("## Checks\n\n");
+
+		String headerName = "All Checks";
+		String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
+			"AllChecks");
+
+		sb.append(_getLink(markdownFileName, "- ###", headerName, headerName));
+
+		sb.append("\n\n");
+
+		_createChecksTableMarkdown(
+			headerName, new File(documentationDir, markdownFileName),
+			checkInfoMap.values(), documentationChecksDir, true, true);
+
+		sb.append("- ### By Category:\n");
+
+		for (String category : _getCategories(checkInfoMap)) {
+			headerName = category + " Checks";
+			markdownFileName = SourceFormatterUtil.getMarkdownFileName(
+				StringUtil.removeChar(category, CharPool.SPACE) + "Checks");
+
+			sb.append(_getLink(markdownFileName, "   *", category, headerName));
+
+			sb.append("\n");
+
+			_createChecksTableMarkdown(
+				headerName, new File(documentationDir, markdownFileName),
+				_getCategoryCheckInfos(category, checkInfoMap),
+				documentationChecksDir, false, true);
+		}
+
+		sb.append("\n");
+
+		sb.append("- ### By File Extensions:\n");
+
+		for (String sourceProcessorName :
+				_getSourceProcessorNames(checkInfoMap)) {
+
+			if (sourceProcessorName.equals("all")) {
+				continue;
+			}
+
+			String fileExtensionsString = _getFileExtensionsString(
+				ListUtil.fromArray(sourceProcessorName));
+
+			headerName = "Checks for " + fileExtensionsString;
+
+			markdownFileName = SourceFormatterUtil.getMarkdownFileName(
+				sourceProcessorName + "Checks");
+
+			sb.append(
+				_getLink(
+					markdownFileName, "   *", fileExtensionsString,
+					headerName));
+
+			sb.append("\n");
+
+			_createChecksTableMarkdown(
+				"Checks for " + fileExtensionsString,
+				new File(documentationDir, markdownFileName),
+				_getSourceProcessorCheckInfos(
+					sourceProcessorName, checkInfoMap),
+				documentationChecksDir, true, false);
+		}
+
+		return StringUtil.trim(sb.toString());
+	}
+
 	private List<String> _getFileExtensions(String sourceProcessorName) {
 		List<String> fileExtensions = _sourceProcessorFileExtensionsMap.get(
 			sourceProcessorName);
@@ -484,90 +568,6 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private String _getChecksInformation(
-			String absolutePath, Map<String, CheckInfo> checkInfoMap)
-		throws DocumentException, IOException {
-
-		int x = absolutePath.lastIndexOf(StringPool.SLASH);
-
-		String rootFolderLocation = absolutePath.substring(0, x + 1);
-
-		File documentationDir = new File(
-			rootFolderLocation + _DOCUMENTATION_DIR_LOCATION);
-
-		File documentationChecksDir = new File(
-			documentationDir, _DOCUMENTATION_CHECKS_DIR_NAME);
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("## Checks\n\n");
-
-		String headerName = "All Checks";
-		String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
-			"AllChecks");
-
-		sb.append(_getLink(markdownFileName, "- ###", headerName, headerName));
-
-		sb.append("\n\n");
-
-		_createChecksTableMarkdown(
-			headerName, new File(documentationDir, markdownFileName),
-			checkInfoMap.values(), documentationChecksDir, true, true);
-
-		sb.append("- ### By Category:\n");
-
-		for (String category : _getCategories(checkInfoMap)) {
-			headerName = category + " Checks";
-			markdownFileName = SourceFormatterUtil.getMarkdownFileName(
-				StringUtil.removeChar(category, CharPool.SPACE) + "Checks");
-
-			sb.append(_getLink(markdownFileName, "   *", category, headerName));
-
-			sb.append("\n");
-
-			_createChecksTableMarkdown(
-				headerName, new File(documentationDir, markdownFileName),
-				_getCategoryCheckInfos(category, checkInfoMap),
-				documentationChecksDir, false, true);
-		}
-
-		sb.append("\n");
-
-		sb.append("- ### By File Extensions:\n");
-
-		for (String sourceProcessorName :
-				_getSourceProcessorNames(checkInfoMap)) {
-
-			if (sourceProcessorName.equals("all")) {
-				continue;
-			}
-
-			String fileExtensionsString = _getFileExtensionsString(
-				ListUtil.fromArray(sourceProcessorName));
-
-			headerName = "Checks for " + fileExtensionsString;
-
-			markdownFileName = SourceFormatterUtil.getMarkdownFileName(
-				sourceProcessorName + "Checks");
-
-			sb.append(
-				_getLink(
-					markdownFileName, "   *", fileExtensionsString,
-					headerName));
-
-			sb.append("\n");
-
-			_createChecksTableMarkdown(
-				"Checks for " + fileExtensionsString,
-				new File(documentationDir, markdownFileName),
-				_getSourceProcessorCheckInfos(
-					sourceProcessorName, checkInfoMap),
-				documentationChecksDir, true, false);
-		}
-
-		return StringUtil.trim(sb.toString());
 	}
 
 	private List<CheckInfo> _getSourceProcessorCheckInfos(

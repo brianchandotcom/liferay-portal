@@ -35,6 +35,20 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _deleteRoleById {
+		Variables.assertDefined(parameterList = "${roleId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/role/delete-role \
+				-u test@liferay.com:test \
+				-d roleId=${roleId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _getRoleIdByName {
 		Variables.assertDefined(parameterList = "${name}");
 

@@ -184,6 +184,7 @@
 						path: 'cover_cropper.js',
 						requires: [
 							'aui-base',
+							'aui-component',
 							'dd-constrain',
 							'dd-drag',
 							'plugin'

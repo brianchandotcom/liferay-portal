@@ -56,6 +56,11 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 	}
 
 	@Override
+	public <T extends Table<T>> FromStep select(Table<T> table) {
+		return new Select(false, table.getColumns());
+	}
+
+	@Override
 	public FromStep selectDistinct(Expression<?>... expressions) {
 		return new Select(true, Arrays.asList(expressions));
 	}

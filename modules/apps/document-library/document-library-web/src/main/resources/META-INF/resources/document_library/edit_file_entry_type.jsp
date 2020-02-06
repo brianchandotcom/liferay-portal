@@ -43,6 +43,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new-document-type") : fileEntryType.getName(locale));
+
+DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFileEntryTypeDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT);
 %>
 
 <div class="container-fluid-1280">
@@ -58,7 +60,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type" />
 	</portlet:actionURL>
 
-	<aui:form action="<%= editFileEntryTypeURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
+	<aui:form action="<%= dlEditFileEntryTypeDisplayContext.useDataEngineEditor() ? StringPool.BLANK : editFileEntryTypeURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (fileEntryType == null) ? Constants.ADD : Constants.UPDATE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
@@ -90,7 +92,14 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="mainMetadataFields" label="main-metadata-fields">
-				<liferay-util:include page="/document_library/ddm/ddm_form_builder.jsp" servletContext="<%= application %>" />
+				<c:choose>
+					<c:when test="<%= dlEditFileEntryTypeDisplayContext.useDataEngineEditor() %>">
+
+					</c:when>
+					<c:otherwise>
+						<liferay-util:include page="/document_library/ddm/ddm_form_builder.jsp" servletContext="<%= application %>" />
+					</c:otherwise>
+				</c:choose>
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="additionalMetadataFields" label="additional-metadata-fields">
@@ -151,54 +160,56 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 </div>
 
 <aui:script>
-	function <portlet:namespace />openDDMStructureSelector() {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					modal: true
-				},
-				eventName: '<portlet:namespace />selectDDMStructure',
-				id: '<portlet:namespace />selectDDMStructure',
-				title:
-					'<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
-				uri:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" /></portlet:renderURL>'
+function <portlet:namespace />openDDMStructureSelector() {
+	Liferay.Util.selectEntity(
+		{
+			dialog: {
+				constrain: true,
+				modal: true
 			},
-			function(event) {
-				var searchContainer = Liferay.SearchContainer.get(
-					'<portlet:namespace />ddmStructuresSearchContainer'
+			eventName: '<portlet:namespace />selectDDMStructure',
+			id: '<portlet:namespace />selectDDMStructure',
+			title:
+				'<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
+			uri:
+				'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" /></portlet:renderURL>'
+		},
+		function(event) {
+			var searchContainer = Liferay.SearchContainer.get(
+				'<portlet:namespace />ddmStructuresSearchContainer'
+			);
+
+			var data = searchContainer.getData(false);
+
+			if (!data.includes(event.ddmstructureid)) {
+				var ddmStructureLink =
+					'<a class="modify-link" data-rowId="' +
+					event.ddmstructureid +
+					'" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
+
+				searchContainer.addRow(
+					[event.name, ddmStructureLink],
+					event.ddmstructureid
 				);
 
-				var data = searchContainer.getData(false);
-
-				if (!data.includes(event.ddmstructureid)) {
-					var ddmStructureLink =
-						'<a class="modify-link" data-rowId="' +
-						event.ddmstructureid +
-						'" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
-
-					searchContainer.addRow(
-						[event.name, ddmStructureLink],
-						event.ddmstructureid
-					);
-
-					searchContainer.updateDataStore();
-				}
+				searchContainer.updateDataStore();
 			}
-		);
-	}
+		}
+	);
+}
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveStructure',
-		function() {
+function <portlet:namespace />saveStructure() {
+	<c:choose>
+		<c:when test="<%= dlEditFileEntryTypeDisplayContext.useDataEngineEditor() %>">
+
+		</c:when>
+		<c:otherwise>
 			document.<portlet:namespace />fm.<portlet:namespace />definition.value = window.<portlet:namespace />formBuilder.getContentValue();
 
 			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-portlet-dynamic-data-mapping']
-	);
+		</c:otherwise>
+	</c:choose>
+}
 </aui:script>
 
 <aui:script use="liferay-search-container">

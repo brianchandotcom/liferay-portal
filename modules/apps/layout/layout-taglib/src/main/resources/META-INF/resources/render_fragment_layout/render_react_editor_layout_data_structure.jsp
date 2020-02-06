@@ -41,7 +41,7 @@ for (String childrenItemId : childrenItemIds) {
 			ColumnLayoutStructureItem columnLayoutStructureItem = (ColumnLayoutStructureItem)layoutStructureItem;
 			%>
 
-			<div class="<%= (columnLayoutStructureItem.getSize() > 0) ? "col-md-" + columnLayoutStructureItem.getSize() : StringPool.BLANK %>">
+			<div class="<%= (columnLayoutStructureItem.getSize() > 0) ? "col-md-" + columnLayoutStructureItem.getSize() : "col-md" %>">
 
 				<%
 				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());

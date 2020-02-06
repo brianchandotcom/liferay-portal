@@ -128,6 +128,42 @@ public class DepotEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.depot.model.DepotEntrySoap[]
+			getGroupConnectedDepotEntries(long groupId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.depot.model.DepotEntry> returnValue =
+				DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+					groupId, start, end);
+
+			return com.liferay.depot.model.DepotEntrySoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getGroupConnectedDepotEntriesCount(long groupId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				DepotEntryServiceUtil.getGroupConnectedDepotEntriesCount(
+					groupId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.depot.model.DepotEntrySoap getGroupDepotEntry(
 			long groupId)
 		throws RemoteException {

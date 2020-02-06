@@ -321,6 +321,17 @@ public class DepotEntryLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
+	public static java.util.List<com.liferay.depot.model.DepotEntry>
+			getGroupConnectedDepotEntries(long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getGroupConnectedDepotEntries(groupId, start, end);
+	}
+
+	public static int getGroupConnectedDepotEntriesCount(long groupId) {
+		return getService().getGroupConnectedDepotEntriesCount(groupId);
+	}
+
 	public static com.liferay.depot.model.DepotEntry getGroupDepotEntry(
 			long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -174,6 +174,88 @@ public class DepotEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.depot.model.DepotEntry>
+			getGroupConnectedDepotEntries(
+				HttpPrincipal httpPrincipal, long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryServiceUtil.class, "getGroupConnectedDepotEntries",
+				_getGroupConnectedDepotEntriesParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.depot.model.DepotEntry>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getGroupConnectedDepotEntriesCount(
+			HttpPrincipal httpPrincipal, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryServiceUtil.class,
+				"getGroupConnectedDepotEntriesCount",
+				_getGroupConnectedDepotEntriesCountParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.depot.model.DepotEntry getGroupDepotEntry(
 			HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -181,7 +263,7 @@ public class DepotEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DepotEntryServiceUtil.class, "getGroupDepotEntry",
-				_getGroupDepotEntryParameterTypes3);
+				_getGroupDepotEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -226,7 +308,7 @@ public class DepotEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DepotEntryServiceUtil.class, "updateDepotEntry",
-				_updateDepotEntryParameterTypes4);
+				_updateDepotEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, depotEntryId, nameMap, descriptionMap,
@@ -273,9 +355,17 @@ public class DepotEntryServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getDepotEntryParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getGroupDepotEntryParameterTypes3 =
+	private static final Class<?>[]
+		_getGroupConnectedDepotEntriesParameterTypes3 = new Class[] {
+			long.class, int.class, int.class
+		};
+	private static final Class<?>[]
+		_getGroupConnectedDepotEntriesCountParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getGroupDepotEntryParameterTypes5 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateDepotEntryParameterTypes4 =
+	private static final Class<?>[] _updateDepotEntryParameterTypes6 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class,

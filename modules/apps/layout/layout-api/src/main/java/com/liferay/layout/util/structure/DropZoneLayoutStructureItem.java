@@ -15,6 +15,7 @@
 package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
 /**
@@ -37,7 +38,7 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	protected JSONObject getItemConfigJSONObject() {
-		return null;
+		return JSONFactoryUtil.createJSONObject();
 	}
 
 }

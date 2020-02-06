@@ -14,6 +14,63 @@
 
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
+export const createField = (props, event) => {
+	const {
+		defaultLanguageId,
+		editingLanguageId,
+		fieldNameGenerator,
+		spritemap
+	} = props;
+	const {fieldType, skipFieldNameGeneration = false} = event;
+
+	let newFieldName;
+
+	if (skipFieldNameGeneration) {
+		const {settingsContext} = fieldType;
+		const visitor = new PagesVisitor(settingsContext.pages);
+
+		visitor.mapFields(({fieldName, value}) => {
+			if (fieldName === 'name') {
+				newFieldName = value;
+			}
+		});
+	} else {
+		newFieldName = fieldNameGenerator(fieldType.label);
+	}
+
+	const newField = {
+		...fieldType,
+		fieldName: newFieldName,
+		name: newFieldName,
+		settingsContext: {
+			...fieldType.settingsContext,
+			pages: normalizeSettingsContextPages(
+				fieldType.settingsContext.pages,
+				editingLanguageId,
+				fieldType,
+				newFieldName
+			),
+			type: fieldType.name
+		}
+	};
+
+	const {fieldName, name, settingsContext} = newField;
+
+	return {
+		...getFieldProperties(
+			settingsContext,
+			defaultLanguageId,
+			editingLanguageId
+		),
+		fieldName,
+		instanceId: generateInstanceId(8),
+		name,
+		settingsContext,
+		spritemap,
+		type: fieldType.name
+	};
+};
+
 export const formatFieldName = (instanceId, languageId, value) => {
 	return `ddm$$${value}$${instanceId}$0$$${languageId}`;
 };

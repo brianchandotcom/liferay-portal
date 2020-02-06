@@ -12,13 +12,9 @@
  * details.
  */
 
-import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 
-import {
-	generateInstanceId,
-	getFieldProperties,
-	normalizeSettingsContextPages,
-} from '../../../util/fieldSupport.es';
+import {createField} from '../../../util/fieldSupport.es';
 import {updateFocusedField} from '../util/focusedField.es';
 
 const getContext = (context, nestedIndexes = []) => {
@@ -47,60 +43,10 @@ const getContext = (context, nestedIndexes = []) => {
 };
 
 const handleFieldAdded = (props, state, event) => {
-	const {fieldType, indexes, skipFieldNameGeneration = false} = event;
-	const {
-		defaultLanguageId,
-		editingLanguageId,
-		fieldNameGenerator,
-		spritemap,
-	} = props;
-	let newFieldName;
-
-	if (skipFieldNameGeneration) {
-		const {settingsContext} = fieldType;
-		const visitor = new PagesVisitor(settingsContext.pages);
-
-		visitor.mapFields(({fieldName, value}) => {
-			if (fieldName === 'name') {
-				newFieldName = value;
-			}
-		});
-	}
-	else {
-		newFieldName = fieldNameGenerator(fieldType.label);
-	}
-
-	const focusedField = {
-		...fieldType,
-		fieldName: newFieldName,
-		settingsContext: {
-			...fieldType.settingsContext,
-			pages: normalizeSettingsContextPages(
-				fieldType.settingsContext.pages,
-				editingLanguageId,
-				fieldType,
-				newFieldName
-			),
-			type: fieldType.name,
-		},
-	};
-
+	const {indexes} = event;
 	const {pages} = state;
-	const {fieldName, name, settingsContext} = focusedField;
 
-	const fieldProperties = {
-		...getFieldProperties(
-			settingsContext,
-			defaultLanguageId,
-			editingLanguageId
-		),
-		fieldName,
-		instanceId: generateInstanceId(8),
-		name,
-		settingsContext,
-		spritemap,
-		type: fieldType.name,
-	};
+	const newField = createField(props, event);
 
 	if (!indexes.length || indexes.length === 1) {
 		const {columnIndex, pageIndex, rowIndex} = indexes.length
@@ -109,7 +55,7 @@ const handleFieldAdded = (props, state, event) => {
 
 		return {
 			focusedField: {
-				...fieldProperties,
+				...newField,
 				columnIndex,
 				pageIndex,
 				rowIndex
@@ -119,9 +65,9 @@ const handleFieldAdded = (props, state, event) => {
 				pageIndex,
 				rowIndex,
 				columnIndex,
-				fieldProperties
+				newField
 			),
-			previousFocusedField: fieldProperties
+			previousFocusedField: newField
 		};
 	} else {
 		const currentContext = getContext(pages, indexes.slice(0, -1));
@@ -133,14 +79,14 @@ const handleFieldAdded = (props, state, event) => {
 			0,
 			rowIndex,
 			columnIndex,
-			fieldProperties.fieldName
+			newField.fieldName
 		)[0];
 
 		newContext = updateFocusedField(
 			props,
 			{focusedField: newContext},
 			'nestedFields',
-			[...newContext.nestedFields, fieldProperties]
+			[...newContext.nestedFields, newField]
 		);
 
 		newContext = updateFocusedField(
@@ -156,13 +102,13 @@ const handleFieldAdded = (props, state, event) => {
 
 		return {
 			focusedField: {
-				...fieldProperties,
+				...newField,
 				columnIndex,
 				pageIndes: 0,
 				rowIndex
 			},
 			pages,
-			previousFocusedField: fieldProperties
+			previousFocusedField: newField
 		};
 	}
 };

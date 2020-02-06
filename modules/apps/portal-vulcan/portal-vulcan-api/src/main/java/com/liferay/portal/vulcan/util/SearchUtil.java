@@ -77,31 +77,15 @@ public class SearchUtil {
 	}
 
 	public static <T> Page<T> search(
+			Map<String, Map> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Filter filter, Class<?> indexerClass, String keywords,
 			Pagination pagination,
 			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
 			UnsafeConsumer<SearchContext, Exception>
 				searchContextUnsafeConsumer,
-			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
-			Sort[] sorts)
-		throws Exception {
-
-		return search(
-			booleanQueryUnsafeConsumer, filter, indexerClass, keywords,
-			pagination, queryConfigUnsafeConsumer, searchContextUnsafeConsumer,
-			transformUnsafeFunction, sorts, new HashMap<>());
-	}
-
-	public static <T> Page<T> search(
-			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Filter filter, Class<?> indexerClass, String keywords,
-			Pagination pagination,
-			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
-			UnsafeConsumer<SearchContext, Exception>
-				searchContextUnsafeConsumer,
-			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
-			Sort[] sorts, Map<String, Map> actions)
+			Sort[] sorts,
+			UnsafeFunction<Document, T, Exception> transformUnsafeFunction)
 		throws Exception {
 
 		if (sorts == null) {
@@ -132,6 +116,50 @@ public class SearchUtil {
 
 		return Page.of(
 			actions, items, pagination, indexer.searchCount(searchContext));
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #search(Map, UnsafeConsumer, Filter, Class, String, Pagination, UnsafeConsumer, UnsafeConsumer, Sort[], UnsafeFunction)}
+	 */
+	@Deprecated
+	public static <T> Page<T> search(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, Class<?> indexerClass, String keywords,
+			Pagination pagination,
+			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
+			UnsafeConsumer<SearchContext, Exception>
+				searchContextUnsafeConsumer,
+			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
+			Sort[] sorts)
+		throws Exception {
+
+		return search(
+			new HashMap<>(), booleanQueryUnsafeConsumer, filter, indexerClass,
+			keywords, pagination, queryConfigUnsafeConsumer,
+			searchContextUnsafeConsumer, sorts, transformUnsafeFunction);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #search(Map, UnsafeConsumer, Filter, Class, String, Pagination, UnsafeConsumer, UnsafeConsumer, Sort[], UnsafeFunction)}
+	 */
+	@Deprecated
+	public static <T> Page<T> search(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, Class<?> indexerClass, String keywords,
+			Pagination pagination,
+			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
+			UnsafeConsumer<SearchContext, Exception>
+				searchContextUnsafeConsumer,
+			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
+			Sort[] sorts, Map<String, Map> actions)
+		throws Exception {
+
+		return search(
+			actions, booleanQueryUnsafeConsumer, filter, indexerClass, keywords,
+			pagination, queryConfigUnsafeConsumer, searchContextUnsafeConsumer,
+			sorts, transformUnsafeFunction);
 	}
 
 	private static SearchContext _createSearchContext(

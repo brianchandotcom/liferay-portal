@@ -581,6 +581,31 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
+	public void testPatchAccount() throws Exception {
+		Account postAccount = testPatchAccount_addAccount();
+
+		Account randomPatchAccount = randomPatchAccount();
+
+		Account patchAccount = accountResource.patchAccount(
+			postAccount.getId(), randomPatchAccount);
+
+		Account expectedPatchAccount = (Account)BeanUtils.cloneBean(
+			postAccount);
+
+		_beanUtilsBean.copyProperties(expectedPatchAccount, randomPatchAccount);
+
+		Account getAccount = accountResource.getAccount(patchAccount.getId());
+
+		assertEquals(expectedPatchAccount, getAccount);
+		assertValid(getAccount);
+	}
+
+	protected Account testPatchAccount_addAccount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutAccount() throws Exception {
 		Account postAccount = testPutAccount_addAccount();
 

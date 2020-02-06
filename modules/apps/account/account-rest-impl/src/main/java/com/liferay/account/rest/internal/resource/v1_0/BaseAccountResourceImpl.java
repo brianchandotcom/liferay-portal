@@ -51,6 +51,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -151,6 +152,54 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 		throws Exception {
 
 		return new Account();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}' -d $'{"description": ___, "domains": ___, "name": ___, "parentAccountId": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Updates the account with information sent in the request body. Only the provided fields are updated."
+	)
+	@PATCH
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "accountId")})
+	@Path("/accounts/{accountId}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {})
+	public Account patchAccount(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			Account account)
+		throws Exception {
+
+		Account existingAccount = getAccount(accountId);
+
+		if (account.getDescription() != null) {
+			existingAccount.setDescription(account.getDescription());
+		}
+
+		if (account.getDomains() != null) {
+			existingAccount.setDomains(account.getDomains());
+		}
+
+		if (account.getName() != null) {
+			existingAccount.setName(account.getName());
+		}
+
+		if (account.getParentAccountId() != null) {
+			existingAccount.setParentAccountId(account.getParentAccountId());
+		}
+
+		if (account.getStatus() != null) {
+			existingAccount.setStatus(account.getStatus());
+		}
+
+		preparePatch(account, existingAccount);
+
+		return putAccount(accountId, existingAccount);
 	}
 
 	/**

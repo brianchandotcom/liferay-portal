@@ -175,7 +175,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isSystem() && layout.isTypeContent()) {
-			layout = _layoutLocalService.fetchLayout(layout.getClassPK());
+			layout = _layoutLocalService.getLayout(layout.getClassPK());
 		}
 
 		if (_layoutPermission.contains(

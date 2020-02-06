@@ -16,8 +16,10 @@ package com.liferay.depot.service.impl;
 
 import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
+import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +39,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -96,6 +100,31 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 	@Override
 	public DepotEntry fetchGroupDepotEntry(long groupId) {
 		return depotEntryPersistence.fetchByGroupId(groupId);
+	}
+
+	@Override
+	public List<DepotEntry> getGroupConnectedDepotEntries(
+			long groupId, int start, int end)
+		throws PortalException {
+
+		List<DepotEntryGroupRel> depotEntryGroupRels =
+			_depotEntryGroupRelPersistence.findByToGroupId(groupId, start, end);
+
+		List<DepotEntry> depotEntries = new ArrayList<>();
+
+		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
+			DepotEntry depotEntry = depotEntryLocalService.getDepotEntry(
+				depotEntryGroupRel.getDepotEntryId());
+
+			depotEntries.add(depotEntry);
+		}
+
+		return depotEntries;
+	}
+
+	@Override
+	public int getGroupConnectedDepotEntriesCount(long groupId) {
+		return _depotEntryGroupRelPersistence.countByToGroupId(groupId);
 	}
 
 	@Override
@@ -228,6 +257,9 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 	@Reference
 	private DepotAppCustomizationLocalService
 		_depotAppCustomizationLocalService;
+
+	@Reference
+	private DepotEntryGroupRelPersistence _depotEntryGroupRelPersistence;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

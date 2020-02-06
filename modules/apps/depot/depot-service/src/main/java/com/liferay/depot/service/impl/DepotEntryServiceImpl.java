@@ -24,8 +24,11 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -79,6 +82,35 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<DepotEntry> getGroupConnectedDepotEntries(
+			long groupId, int start, int end)
+		throws PortalException {
+
+		if (!_groupPermission.contains(
+				getPermissionChecker(), groupId, ActionKeys.VIEW)) {
+
+			return Collections.emptyList();
+		}
+
+		return depotEntryLocalService.getGroupConnectedDepotEntries(
+			groupId, start, end);
+	}
+
+	@Override
+	public int getGroupConnectedDepotEntriesCount(long groupId)
+		throws PortalException {
+
+		if (!_groupPermission.contains(
+				getPermissionChecker(), groupId, ActionKeys.VIEW)) {
+
+			return 0;
+		}
+
+		return depotEntryLocalService.getGroupConnectedDepotEntriesCount(
+			groupId);
+	}
+
+	@Override
 	public DepotEntry getGroupDepotEntry(long groupId) throws PortalException {
 		DepotEntry depotEntry = depotEntryLocalService.getGroupDepotEntry(
 			groupId);
@@ -113,6 +145,9 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	)
 	private volatile ModelResourcePermission<DepotEntry>
 		_depotEntryModelResourcePermission;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

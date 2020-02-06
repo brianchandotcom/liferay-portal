@@ -40,11 +40,11 @@ String selectedTab = searchAdminDisplayContext.getSelectedTab();
 />
 
 <c:choose>
-	<c:when test='<%= selectedTab.equals("index-actions") %>'>
-		<liferay-util:include page="/index_actions.jsp" servletContext="<%= application %>" />
-	</c:when>
 	<c:when test='<%= selectedTab.equals("field-mappings") %>'>
 		<liferay-util:include page="/field_mappings.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:when test='<%= selectedTab.equals("index-actions") %>'>
+		<liferay-util:include page="/index_actions.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= selectedTab.equals("search-engine") %>'>
 		<liferay-util:include page="/search_engine.jsp" servletContext="<%= application %>" />

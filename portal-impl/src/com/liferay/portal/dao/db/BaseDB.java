@@ -125,7 +125,11 @@ public abstract class BaseDB implements DB {
 			String sqlDir, String databaseName, int population)
 		throws IOException {
 
-		String suffix = getSuffix(population);
+		String suffix = StringPool.BLANK;
+
+		if (population == BARE) {
+			suffix = "-bare";
+		}
 
 		File file = new File(
 			StringBundler.concat(
@@ -909,14 +913,6 @@ public abstract class BaseDB implements DB {
 	protected abstract String getServerName();
 
 	protected abstract int[] getSQLTypes();
-
-	protected String getSuffix(int type) {
-		if (type == BARE) {
-			return "-bare";
-		}
-
-		return StringPool.BLANK;
-	}
 
 	protected abstract String[] getTemplate();
 

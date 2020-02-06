@@ -125,54 +125,49 @@ public abstract class BaseDB implements DB {
 			String sqlDir, String databaseName, int population)
 		throws IOException {
 
-		String suffix = StringPool.BLANK;
-
 		if (population == BARE) {
-			suffix = "-bare";
+			FileUtil.write(
+				StringBundler.concat(
+					sqlDir, "/create-bare/create-bare-", _dbType, ".sql"),
+				getRecreateSQL(databaseName));
+
+			return;
 		}
 
 		File file = new File(
-			StringBundler.concat(
-				sqlDir, "/create", suffix, "/create", suffix, "-", _dbType,
-				".sql"));
+			StringBundler.concat(sqlDir, "/create/create-", _dbType,	".sql"));
 
-		String createContent = null;
+		StringBundler sb = new StringBundler(6);
 
-		if (population != BARE) {
-			StringBundler sb = new StringBundler(6);
+		String tablesPrefix = "/portal/portal-";
 
-			String tablesPrefix = "/portal/portal-";
-
-			if (sqlDir.endsWith("/WEB-INF/sql")) {
-				tablesPrefix = "/tables/tables-";
-			}
-
-			sb.append(
-				_readFile(
-					StringBundler.concat(
-						sqlDir, tablesPrefix, _dbType, ".sql")));
-
-			sb.append("\n\n");
-
-			sb.append(
-				_readFile(
-					StringBundler.concat(
-						sqlDir, "/indexes/indexes-", _dbType, ".sql")));
-
-			sb.append("\n\n");
-
-			sb.append(
-				_readFile(
-					StringBundler.concat(
-						sqlDir, "/sequences/sequences-", _dbType, ".sql")));
-
-			sb.append("\n");
-
-			createContent = sb.toString();
+		if (sqlDir.endsWith("/WEB-INF/sql")) {
+			tablesPrefix = "/tables/tables-";
 		}
 
+		sb.append(
+			_readFile(
+				StringBundler.concat(
+					sqlDir, tablesPrefix, _dbType, ".sql")));
+
+		sb.append("\n\n");
+
+		sb.append(
+			_readFile(
+				StringBundler.concat(
+					sqlDir, "/indexes/indexes-", _dbType, ".sql")));
+
+		sb.append("\n\n");
+
+		sb.append(
+			_readFile(
+				StringBundler.concat(
+					sqlDir, "/sequences/sequences-", _dbType, ".sql")));
+
+		sb.append("\n");
+
 		String content = buildCreateFileContent(
-			sqlDir, databaseName, createContent);
+			sqlDir, databaseName, sb.toString());
 
 		if (content != null) {
 			FileUtil.write(file, content);

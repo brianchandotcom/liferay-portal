@@ -106,7 +106,11 @@ public class DBBuilder {
 
 			if (db != null) {
 				if (!sqlDir.endsWith("/WEB-INF/sql")) {
-					db.buildCreateFile(sqlDir, _databaseName, DB.BARE);
+					FileUtil.write(
+						StringBundler.concat(
+							sqlDir, "/create-bare/create-bare-", db.getDBType(),
+							".sql"),
+						db.getRecreateSQL(_databaseName));
 				}
 
 				db.buildCreateFile(sqlDir, _databaseName, DB.DEFAULT);

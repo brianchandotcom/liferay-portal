@@ -139,23 +139,17 @@ public abstract class BaseDB implements DB {
 		String createTablesContent = null;
 
 		if (population != BARE) {
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(sqlDir);
 
 			if (!sqlDir.endsWith("/WEB-INF/sql")) {
-				sb.append("/portal");
-				sb.append(suffix);
-				sb.append("/portal");
+				sb.append("/portal/portal-");
 			}
 			else {
-				sb.append("/tables");
-				sb.append(suffix);
-				sb.append("/tables");
+				sb.append("/tables/tables-");
 			}
 
-			sb.append(suffix);
-			sb.append(StringPool.DASH);
 			sb.append(getServerName());
 			sb.append(".sql");
 

@@ -23,7 +23,7 @@ const ContainerProps = ({children, initialPage = 1, initialPageSize = 20}) => {
 	const stateProps = {page, pageSize, setPage, setPageSize};
 
 	return (
-		<MockRouter withRouterProps={false}>
+		<MockRouter withoutRouterProps>
 			{cloneElement(children, stateProps)}
 		</MockRouter>
 	);

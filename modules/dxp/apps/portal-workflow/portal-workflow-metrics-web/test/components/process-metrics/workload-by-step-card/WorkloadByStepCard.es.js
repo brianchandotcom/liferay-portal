@@ -17,7 +17,7 @@ import {MockRouter} from '../../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-const routeParams = {
+const mockProps = {
 	page: 1,
 	pageSize: 10,
 	processId: '12345',
@@ -46,13 +46,13 @@ describe('The WorkloadByStepCard component should', () => {
 	};
 
 	beforeAll(() => {
-		const component = render(
-			<MockRouter client={clientMock}>
-				<WorkloadByStepCard {...routeParams}></WorkloadByStepCard>
+		const renderResult = render(
+			<MockRouter client={clientMock} withoutRouterProps>
+				<WorkloadByStepCard {...mockProps} routeParams={mockProps} />
 			</MockRouter>
 		);
 
-		getByTestId = component.getByTestId;
+		getByTestId = renderResult.getByTestId;
 	});
 
 	test('Load table component with request data and navigation links', () => {
@@ -84,8 +84,8 @@ describe('When request fails the WorkloadByStepCard component should', () => {
 
 	beforeAll(() => {
 		const component = render(
-			<MockRouter client={clientMock}>
-				<WorkloadByStepCard {...routeParams}></WorkloadByStepCard>
+			<MockRouter client={clientMock} withoutRouterProps>
+				<WorkloadByStepCard {...mockProps} routeParams={mockProps} />
 			</MockRouter>
 		);
 
@@ -105,7 +105,7 @@ describe('When request fails the WorkloadByStepCard component should', () => {
 
 describe('When request is pending the WorkloadByStepCard component should', () => {
 	test('Show loading view', () => {
-		const {getByTestId} = render(<WorkloadByStepCard.Loading />);
+		const {getByTestId} = render(<WorkloadByStepCard.Body.Loading />);
 
 		const loadingState = getByTestId('loadingState');
 		expect(loadingState.children[0]).toHaveClass('loading-animation');
@@ -124,7 +124,7 @@ describe('When request returns do data the WorkloadByStepCard component should',
 
 	beforeAll(() => {
 		const component = render(
-			<MockRouter client={clientMock}>
+			<MockRouter client={clientMock} withoutRouterProps>
 				<WorkloadByStepCard />
 			</MockRouter>
 		);

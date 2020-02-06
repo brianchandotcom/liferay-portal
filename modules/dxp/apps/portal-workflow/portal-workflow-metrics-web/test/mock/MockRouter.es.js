@@ -39,7 +39,7 @@ const MockRouter = ({
 	initialPath = '/1/20/title%3Aasc',
 	path = '/:page/:pageSize/:sort',
 	query = '?backPath=%2F',
-	withRouterProps = true
+	withoutRouterProps
 }) => {
 	const [title, setTitle] = useState(null);
 	const [status, setStatus] = useState(null);
@@ -71,9 +71,9 @@ const MockRouter = ({
 		[initialEntries]
 	);
 
-	const component = withRouterProps
-		? withParamsMock(children)
-		: () => cloneElement(children);
+	const component = withoutRouterProps
+		? () => cloneElement(children)
+		: withParamsMock(children);
 
 	return (
 		<Router history={history}>

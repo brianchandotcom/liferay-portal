@@ -1,5 +1,86 @@
 # Source Formatter
 
+## Configuration
+
+### Configuration Files
+
+Checks are configured in the following files:
+- [checkstyle.xml](src/main/resources/checkstyle.xml)
+- [checkstyle-jsp.xml](src/main/resources/checkstyle-jsp.xml)
+- [sourcechecks.xml](src/main/resources/sourcechecks.xml)
+
+### Excluding Files or Directories
+
+1. Exclude a **single file** from **one specific check**
+
+   Use `checkstyle-suppressions.xml`:
+
+   ```
+   <suppressions>
+       <checkstyle>
+           <suppress checks="UnusedVariableCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/PortalUtil\.java" />
+       </checkstyle>
+       <source-check>
+           <suppress checks="JavaModuleIllegalImportsCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/PortalUtil\.java" />
+       </source-check>
+   </suppressions>
+   ```
+
+2. Exclude a **single file** from **all checks**
+
+   Use `source-formatter.properties#source.formatter.excludes`:
+
+   ```
+   source.formatter.excludes=portal-kernel/src/com/liferay/portal/kernel/util/PortalUtil.java
+   ```
+
+3. Exclude **all files in a directory** from **one specific check**
+
+   Use `checkstyle-suppressions.xml`:
+
+   ```
+   <suppressions>
+       <checkstyle>
+           <suppress checks="UnusedVariableCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/.*" />
+       </checkstyle>
+       <source-check>
+           <suppress checks="JavaModuleIllegalImportsCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/.*" />
+       </source-check>
+   </suppressions>
+   ```
+
+4. Exclude a **all files in a directory** from **all checks**
+
+   - Use `source-formatter.properties#source.formatter.excludes`:
+
+      ```
+      source.formatter.excludes=portal-kernel/src/com/liferay/portal/kernel/util/**
+      ```
+
+   - Add (empty) file `source_formatter.ignore` in the directory
+
+5. Exclude **all files in the project** from **one specific check**
+
+   - Use `checkstyle-suppressions.xml`:
+
+      ```
+      <suppressions>
+          <checkstyle>
+              <suppress checks="UnusedVariableCheck" />
+          </checkstyle>
+          <source-check>
+              <suppress checks="JavaModuleIllegalImportsCheck" />
+          </source-check>
+      </suppressions>
+      ```
+
+   - Use property `enabled` in `source-formatter.properties`:
+
+   ```
+   checkstyle.UnusedVariableCheck.enabled=false
+   source.check.JavaModuleIllegalImportsCheck.enabled=false
+   ```
+
 ## Checks
 
 - ### [All Checks](src/main/resources/documentation/all_checks.markdown#all-checks)

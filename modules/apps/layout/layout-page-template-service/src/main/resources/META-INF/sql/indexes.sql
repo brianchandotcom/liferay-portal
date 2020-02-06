@@ -1,3 +1,4 @@
+create unique index IX_FBD6BAB8 on LayoutPageTemplateCollection (groupId, lptCollectionKey[$COLUMN_LENGTH:75$]);
 create unique index IX_D569E8F2 on LayoutPageTemplateCollection (groupId, name[$COLUMN_LENGTH:75$]);
 create index IX_BCD4D4B on LayoutPageTemplateCollection (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_9E4EAA8D on LayoutPageTemplateCollection (uuid_[$COLUMN_LENGTH:75$], groupId);
@@ -9,6 +10,7 @@ create index IX_CD171EDF on LayoutPageTemplateEntry (groupId, classNameId, type_
 create index IX_4C3A286A on LayoutPageTemplateEntry (groupId, layoutPageTemplateCollectionId, name[$COLUMN_LENGTH:75$], status);
 create index IX_A4733F6B on LayoutPageTemplateEntry (groupId, layoutPageTemplateCollectionId, status);
 create index IX_4BCAC4B0 on LayoutPageTemplateEntry (groupId, layoutPageTemplateCollectionId, type_);
+create unique index IX_DB7DADB9 on LayoutPageTemplateEntry (groupId, layoutPageTemplateEntryKey[$COLUMN_LENGTH:75$]);
 create unique index IX_C3960EB1 on LayoutPageTemplateEntry (groupId, name[$COLUMN_LENGTH:75$], type_);
 create index IX_85E526A1 on LayoutPageTemplateEntry (groupId, type_, defaultTemplate, status);
 create index IX_1F1BEA76 on LayoutPageTemplateEntry (groupId, type_, status);

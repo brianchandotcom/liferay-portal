@@ -57,6 +57,9 @@ public class LayoutPageTemplateCollectionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put(
+			"layoutPageTemplateCollectionKey",
+			getLayoutPageTemplateCollectionKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -119,6 +122,13 @@ public class LayoutPageTemplateCollectionWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String layoutPageTemplateCollectionKey = (String)attributes.get(
+			"layoutPageTemplateCollectionKey");
+
+		if (layoutPageTemplateCollectionKey != null) {
+			setLayoutPageTemplateCollectionKey(layoutPageTemplateCollectionKey);
 		}
 
 		String name = (String)attributes.get("name");
@@ -198,6 +208,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public long getLayoutPageTemplateCollectionId() {
 		return model.getLayoutPageTemplateCollectionId();
+	}
+
+	/**
+	 * Returns the layout page template collection key of this layout page template collection.
+	 *
+	 * @return the layout page template collection key of this layout page template collection
+	 */
+	@Override
+	public String getLayoutPageTemplateCollectionKey() {
+		return model.getLayoutPageTemplateCollectionKey();
 	}
 
 	/**
@@ -345,6 +365,19 @@ public class LayoutPageTemplateCollectionWrapper
 		long layoutPageTemplateCollectionId) {
 
 		model.setLayoutPageTemplateCollectionId(layoutPageTemplateCollectionId);
+	}
+
+	/**
+	 * Sets the layout page template collection key of this layout page template collection.
+	 *
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key of this layout page template collection
+	 */
+	@Override
+	public void setLayoutPageTemplateCollectionKey(
+		String layoutPageTemplateCollectionKey) {
+
+		model.setLayoutPageTemplateCollectionKey(
+			layoutPageTemplateCollectionKey);
 	}
 
 	/**

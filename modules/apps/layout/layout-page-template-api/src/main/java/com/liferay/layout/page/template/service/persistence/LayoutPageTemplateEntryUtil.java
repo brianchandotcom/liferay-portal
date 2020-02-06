@@ -1343,6 +1343,83 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
+	 * Returns the layout page template entry where groupId = &#63; and layoutPageTemplateEntryKey = &#63; or throws a <code>NoSuchPageTemplateEntryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateEntryKey the layout page template entry key
+	 * @return the matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	public static LayoutPageTemplateEntry findByG_LPTEK(
+			long groupId, String layoutPageTemplateEntryKey)
+		throws com.liferay.layout.page.template.exception.
+			NoSuchPageTemplateEntryException {
+
+		return getPersistence().findByG_LPTEK(
+			groupId, layoutPageTemplateEntryKey);
+	}
+
+	/**
+	 * Returns the layout page template entry where groupId = &#63; and layoutPageTemplateEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateEntryKey the layout page template entry key
+	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	public static LayoutPageTemplateEntry fetchByG_LPTEK(
+		long groupId, String layoutPageTemplateEntryKey) {
+
+		return getPersistence().fetchByG_LPTEK(
+			groupId, layoutPageTemplateEntryKey);
+	}
+
+	/**
+	 * Returns the layout page template entry where groupId = &#63; and layoutPageTemplateEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateEntryKey the layout page template entry key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	public static LayoutPageTemplateEntry fetchByG_LPTEK(
+		long groupId, String layoutPageTemplateEntryKey,
+		boolean useFinderCache) {
+
+		return getPersistence().fetchByG_LPTEK(
+			groupId, layoutPageTemplateEntryKey, useFinderCache);
+	}
+
+	/**
+	 * Removes the layout page template entry where groupId = &#63; and layoutPageTemplateEntryKey = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateEntryKey the layout page template entry key
+	 * @return the layout page template entry that was removed
+	 */
+	public static LayoutPageTemplateEntry removeByG_LPTEK(
+			long groupId, String layoutPageTemplateEntryKey)
+		throws com.liferay.layout.page.template.exception.
+			NoSuchPageTemplateEntryException {
+
+		return getPersistence().removeByG_LPTEK(
+			groupId, layoutPageTemplateEntryKey);
+	}
+
+	/**
+	 * Returns the number of layout page template entries where groupId = &#63; and layoutPageTemplateEntryKey = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateEntryKey the layout page template entry key
+	 * @return the number of matching layout page template entries
+	 */
+	public static int countByG_LPTEK(
+		long groupId, String layoutPageTemplateEntryKey) {
+
+		return getPersistence().countByG_LPTEK(
+			groupId, layoutPageTemplateEntryKey);
+	}
+
+	/**
 	 * Returns all the layout page template entries where groupId = &#63; and name = &#63;.
 	 *
 	 * @param groupId the group ID

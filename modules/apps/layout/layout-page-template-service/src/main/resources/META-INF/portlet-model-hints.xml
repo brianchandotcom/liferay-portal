@@ -11,6 +11,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="layoutPageTemplateCollectionKey" type="String" />
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
@@ -30,6 +31,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="layoutPageTemplateCollectionId" type="long" />
+		<field name="layoutPageTemplateEntryKey" type="String" />
 		<field name="classNameId" type="long" />
 		<field name="classTypeId" type="long" />
 		<field name="name" type="String" />

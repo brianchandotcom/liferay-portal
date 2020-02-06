@@ -8,6 +8,7 @@ create table LayoutPageTemplateCollection (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	lptCollectionKey VARCHAR(75) null,
 	name VARCHAR(75) null,
 	description STRING null,
 	lastPublishDate DATE null
@@ -24,6 +25,7 @@ create table LayoutPageTemplateEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	layoutPageTemplateCollectionId LONG,
+	layoutPageTemplateEntryKey VARCHAR(75) null,
 	classNameId LONG,
 	classTypeId LONG,
 	name VARCHAR(75) null,

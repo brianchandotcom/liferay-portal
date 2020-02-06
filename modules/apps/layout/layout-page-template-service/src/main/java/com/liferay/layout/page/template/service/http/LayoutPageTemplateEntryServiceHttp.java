@@ -416,8 +416,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 		fetchDefaultLayoutPageTemplateEntry(
-			HttpPrincipal httpPrincipal, long groupId, long classNameId,
-			long classTypeId) {
+			HttpPrincipal httpPrincipal, long groupId, int type, int status) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -426,7 +425,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 				_fetchDefaultLayoutPageTemplateEntryParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, classNameId, classTypeId);
+				methodKey, groupId, type, status);
 
 			Object returnObj = null;
 
@@ -452,7 +451,8 @@ public class LayoutPageTemplateEntryServiceHttp {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 		fetchDefaultLayoutPageTemplateEntry(
-			HttpPrincipal httpPrincipal, long groupId, int type, int status) {
+			HttpPrincipal httpPrincipal, long groupId, long classNameId,
+			long classTypeId) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -461,7 +461,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 				_fetchDefaultLayoutPageTemplateEntryParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, type, status);
+				methodKey, groupId, classNameId, classTypeId);
 
 			Object returnObj = null;
 
@@ -2056,11 +2056,11 @@ public class LayoutPageTemplateEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_fetchDefaultLayoutPageTemplateEntryParameterTypes8 = new Class[] {
-			long.class, long.class, long.class
+			long.class, int.class, int.class
 		};
 	private static final Class<?>[]
 		_fetchDefaultLayoutPageTemplateEntryParameterTypes9 = new Class[] {
-			long.class, int.class, int.class
+			long.class, long.class, long.class
 		};
 	private static final Class<?>[]
 		_fetchLayoutPageTemplateEntryParameterTypes10 = new Class[] {

@@ -80,8 +80,8 @@ public class LayoutPageTemplateCollectionModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"lptCollectionKey", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,13 +97,14 @@ public class LayoutPageTemplateCollectionModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("lptCollectionKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutPageTemplateCollection (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutPageTemplateCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
+		"create table LayoutPageTemplateCollection (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutPageTemplateCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,lptCollectionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateCollection";
@@ -124,9 +125,12 @@ public class LayoutPageTemplateCollectionModelImpl
 
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 
-	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long LAYOUTPAGETEMPLATECOLLECTIONKEY_COLUMN_BITMASK =
+		4L;
 
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
+
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -162,6 +166,8 @@ public class LayoutPageTemplateCollectionModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setLayoutPageTemplateCollectionKey(
+			soapModel.getLayoutPageTemplateCollectionKey());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
@@ -384,6 +390,14 @@ public class LayoutPageTemplateCollectionModelImpl
 			(BiConsumer<LayoutPageTemplateCollection, Date>)
 				LayoutPageTemplateCollection::setModifiedDate);
 		attributeGetterFunctions.put(
+			"layoutPageTemplateCollectionKey",
+			LayoutPageTemplateCollection::getLayoutPageTemplateCollectionKey);
+		attributeSetterBiConsumers.put(
+			"layoutPageTemplateCollectionKey",
+			(BiConsumer<LayoutPageTemplateCollection, String>)
+				LayoutPageTemplateCollection::
+					setLayoutPageTemplateCollectionKey);
+		attributeGetterFunctions.put(
 			"name", LayoutPageTemplateCollection::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -578,6 +592,35 @@ public class LayoutPageTemplateCollectionModelImpl
 
 	@JSON
 	@Override
+	public String getLayoutPageTemplateCollectionKey() {
+		if (_layoutPageTemplateCollectionKey == null) {
+			return "";
+		}
+		else {
+			return _layoutPageTemplateCollectionKey;
+		}
+	}
+
+	@Override
+	public void setLayoutPageTemplateCollectionKey(
+		String layoutPageTemplateCollectionKey) {
+
+		_columnBitmask |= LAYOUTPAGETEMPLATECOLLECTIONKEY_COLUMN_BITMASK;
+
+		if (_originalLayoutPageTemplateCollectionKey == null) {
+			_originalLayoutPageTemplateCollectionKey =
+				_layoutPageTemplateCollectionKey;
+		}
+
+		_layoutPageTemplateCollectionKey = layoutPageTemplateCollectionKey;
+	}
+
+	public String getOriginalLayoutPageTemplateCollectionKey() {
+		return GetterUtil.getString(_originalLayoutPageTemplateCollectionKey);
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -684,6 +727,8 @@ public class LayoutPageTemplateCollectionModelImpl
 		layoutPageTemplateCollectionImpl.setUserName(getUserName());
 		layoutPageTemplateCollectionImpl.setCreateDate(getCreateDate());
 		layoutPageTemplateCollectionImpl.setModifiedDate(getModifiedDate());
+		layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionKey(
+			getLayoutPageTemplateCollectionKey());
 		layoutPageTemplateCollectionImpl.setName(getName());
 		layoutPageTemplateCollectionImpl.setDescription(getDescription());
 		layoutPageTemplateCollectionImpl.setLastPublishDate(
@@ -767,6 +812,11 @@ public class LayoutPageTemplateCollectionModelImpl
 
 		layoutPageTemplateCollectionModelImpl._setModifiedDate = false;
 
+		layoutPageTemplateCollectionModelImpl.
+			_originalLayoutPageTemplateCollectionKey =
+				layoutPageTemplateCollectionModelImpl.
+					_layoutPageTemplateCollectionKey;
+
 		layoutPageTemplateCollectionModelImpl._originalName =
 			layoutPageTemplateCollectionModelImpl._name;
 
@@ -825,6 +875,20 @@ public class LayoutPageTemplateCollectionModelImpl
 		else {
 			layoutPageTemplateCollectionCacheModel.modifiedDate =
 				Long.MIN_VALUE;
+		}
+
+		layoutPageTemplateCollectionCacheModel.layoutPageTemplateCollectionKey =
+			getLayoutPageTemplateCollectionKey();
+
+		String layoutPageTemplateCollectionKey =
+			layoutPageTemplateCollectionCacheModel.
+				layoutPageTemplateCollectionKey;
+
+		if ((layoutPageTemplateCollectionKey != null) &&
+			(layoutPageTemplateCollectionKey.length() == 0)) {
+
+			layoutPageTemplateCollectionCacheModel.
+				layoutPageTemplateCollectionKey = null;
 		}
 
 		layoutPageTemplateCollectionCacheModel.name = getName();
@@ -951,6 +1015,8 @@ public class LayoutPageTemplateCollectionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _layoutPageTemplateCollectionKey;
+	private String _originalLayoutPageTemplateCollectionKey;
 	private String _name;
 	private String _originalName;
 	private String _description;

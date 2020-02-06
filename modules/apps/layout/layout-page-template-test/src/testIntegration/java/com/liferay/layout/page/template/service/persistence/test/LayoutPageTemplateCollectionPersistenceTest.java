@@ -150,6 +150,9 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		newLayoutPageTemplateCollection.setModifiedDate(
 			RandomTestUtil.nextDate());
 
+		newLayoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
+			RandomTestUtil.randomString());
+
 		newLayoutPageTemplateCollection.setName(RandomTestUtil.randomString());
 
 		newLayoutPageTemplateCollection.setDescription(
@@ -199,6 +202,11 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 			Time.getShortTimestamp(
 				newLayoutPageTemplateCollection.getModifiedDate()));
 		Assert.assertEquals(
+			existingLayoutPageTemplateCollection.
+				getLayoutPageTemplateCollectionKey(),
+			newLayoutPageTemplateCollection.
+				getLayoutPageTemplateCollectionKey());
+		Assert.assertEquals(
 			existingLayoutPageTemplateCollection.getName(),
 			newLayoutPageTemplateCollection.getName());
 		Assert.assertEquals(
@@ -243,6 +251,15 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 		_persistence.countByGroupId(0L);
+	}
+
+	@Test
+	public void testCountByG_LPTCK() throws Exception {
+		_persistence.countByG_LPTCK(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_LPTCK(0L, "null");
+
+		_persistence.countByG_LPTCK(0L, (String)null);
 	}
 
 	@Test
@@ -303,8 +320,8 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 			"LayoutPageTemplateCollection", "mvccVersion", true, "uuid", true,
 			"layoutPageTemplateCollectionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true,
-			"lastPublishDate", true);
+			true, "modifiedDate", true, "layoutPageTemplateCollectionKey", true,
+			"name", true, "description", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -584,6 +601,20 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 				new Class<?>[0]));
 		Assert.assertTrue(
 			Objects.equals(
+				existingLayoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionKey(),
+				ReflectionTestUtil.invoke(
+					existingLayoutPageTemplateCollection,
+					"getOriginalLayoutPageTemplateCollectionKey",
+					new Class<?>[0])));
+
+		Assert.assertEquals(
+			Long.valueOf(existingLayoutPageTemplateCollection.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingLayoutPageTemplateCollection, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
 				existingLayoutPageTemplateCollection.getName(),
 				ReflectionTestUtil.invoke(
 					existingLayoutPageTemplateCollection, "getOriginalName",
@@ -613,6 +644,9 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		layoutPageTemplateCollection.setCreateDate(RandomTestUtil.nextDate());
 
 		layoutPageTemplateCollection.setModifiedDate(RandomTestUtil.nextDate());
+
+		layoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
+			RandomTestUtil.randomString());
 
 		layoutPageTemplateCollection.setName(RandomTestUtil.randomString());
 

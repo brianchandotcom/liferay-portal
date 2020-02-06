@@ -238,6 +238,22 @@ public interface LayoutPageTemplateEntryModel
 		long layoutPageTemplateCollectionId);
 
 	/**
+	 * Returns the layout page template entry key of this layout page template entry.
+	 *
+	 * @return the layout page template entry key of this layout page template entry
+	 */
+	@AutoEscape
+	public String getLayoutPageTemplateEntryKey();
+
+	/**
+	 * Sets the layout page template entry key of this layout page template entry.
+	 *
+	 * @param layoutPageTemplateEntryKey the layout page template entry key of this layout page template entry
+	 */
+	public void setLayoutPageTemplateEntryKey(
+		String layoutPageTemplateEntryKey);
+
+	/**
 	 * Returns the fully qualified class name of this layout page template entry.
 	 *
 	 * @return the fully qualified class name of this layout page template entry

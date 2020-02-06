@@ -284,7 +284,7 @@ public class LayoutPageTemplateEntryServiceSoap {
 	public static
 		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
 				fetchDefaultLayoutPageTemplateEntry(
-					long groupId, long classNameId, long classTypeId)
+					long groupId, int type, int status)
 			throws RemoteException {
 
 		try {
@@ -292,7 +292,7 @@ public class LayoutPageTemplateEntryServiceSoap {
 				returnValue =
 					LayoutPageTemplateEntryServiceUtil.
 						fetchDefaultLayoutPageTemplateEntry(
-							groupId, classNameId, classTypeId);
+							groupId, type, status);
 
 			return com.liferay.layout.page.template.model.
 				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
@@ -307,7 +307,7 @@ public class LayoutPageTemplateEntryServiceSoap {
 	public static
 		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
 				fetchDefaultLayoutPageTemplateEntry(
-					long groupId, int type, int status)
+					long groupId, long classNameId, long classTypeId)
 			throws RemoteException {
 
 		try {
@@ -315,7 +315,7 @@ public class LayoutPageTemplateEntryServiceSoap {
 				returnValue =
 					LayoutPageTemplateEntryServiceUtil.
 						fetchDefaultLayoutPageTemplateEntry(
-							groupId, type, status);
+							groupId, classNameId, classTypeId);
 
 			return com.liferay.layout.page.template.model.
 				LayoutPageTemplateEntrySoap.toSoapModel(returnValue);

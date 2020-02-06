@@ -78,7 +78,7 @@ public class LayoutPageTemplateEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,6 +100,8 @@ public class LayoutPageTemplateEntryCacheModel
 		sb.append(modifiedDate);
 		sb.append(", layoutPageTemplateCollectionId=");
 		sb.append(layoutPageTemplateCollectionId);
+		sb.append(", layoutPageTemplateEntryKey=");
+		sb.append(layoutPageTemplateEntryKey);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classTypeId=");
@@ -174,6 +176,15 @@ public class LayoutPageTemplateEntryCacheModel
 
 		layoutPageTemplateEntryImpl.setLayoutPageTemplateCollectionId(
 			layoutPageTemplateCollectionId);
+
+		if (layoutPageTemplateEntryKey == null) {
+			layoutPageTemplateEntryImpl.setLayoutPageTemplateEntryKey("");
+		}
+		else {
+			layoutPageTemplateEntryImpl.setLayoutPageTemplateEntryKey(
+				layoutPageTemplateEntryKey);
+		}
+
 		layoutPageTemplateEntryImpl.setClassNameId(classNameId);
 		layoutPageTemplateEntryImpl.setClassTypeId(classTypeId);
 
@@ -237,6 +248,7 @@ public class LayoutPageTemplateEntryCacheModel
 		modifiedDate = objectInput.readLong();
 
 		layoutPageTemplateCollectionId = objectInput.readLong();
+		layoutPageTemplateEntryKey = objectInput.readUTF();
 
 		classNameId = objectInput.readLong();
 
@@ -292,6 +304,13 @@ public class LayoutPageTemplateEntryCacheModel
 
 		objectOutput.writeLong(layoutPageTemplateCollectionId);
 
+		if (layoutPageTemplateEntryKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(layoutPageTemplateEntryKey);
+		}
+
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classTypeId);
@@ -338,6 +357,7 @@ public class LayoutPageTemplateEntryCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long layoutPageTemplateCollectionId;
+	public String layoutPageTemplateEntryKey;
 	public long classNameId;
 	public long classTypeId;
 	public String name;

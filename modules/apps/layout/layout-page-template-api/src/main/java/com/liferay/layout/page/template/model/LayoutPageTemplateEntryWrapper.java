@@ -58,6 +58,8 @@ public class LayoutPageTemplateEntryWrapper
 		attributes.put(
 			"layoutPageTemplateCollectionId",
 			getLayoutPageTemplateCollectionId());
+		attributes.put(
+			"layoutPageTemplateEntryKey", getLayoutPageTemplateEntryKey());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classTypeId", getClassTypeId());
 		attributes.put("name", getName());
@@ -137,6 +139,13 @@ public class LayoutPageTemplateEntryWrapper
 
 		if (layoutPageTemplateCollectionId != null) {
 			setLayoutPageTemplateCollectionId(layoutPageTemplateCollectionId);
+		}
+
+		String layoutPageTemplateEntryKey = (String)attributes.get(
+			"layoutPageTemplateEntryKey");
+
+		if (layoutPageTemplateEntryKey != null) {
+			setLayoutPageTemplateEntryKey(layoutPageTemplateEntryKey);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -330,6 +339,16 @@ public class LayoutPageTemplateEntryWrapper
 	@Override
 	public long getLayoutPageTemplateEntryId() {
 		return model.getLayoutPageTemplateEntryId();
+	}
+
+	/**
+	 * Returns the layout page template entry key of this layout page template entry.
+	 *
+	 * @return the layout page template entry key of this layout page template entry
+	 */
+	@Override
+	public String getLayoutPageTemplateEntryKey() {
+		return model.getLayoutPageTemplateEntryKey();
 	}
 
 	/**
@@ -692,6 +711,18 @@ public class LayoutPageTemplateEntryWrapper
 	@Override
 	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId) {
 		model.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+	}
+
+	/**
+	 * Sets the layout page template entry key of this layout page template entry.
+	 *
+	 * @param layoutPageTemplateEntryKey the layout page template entry key of this layout page template entry
+	 */
+	@Override
+	public void setLayoutPageTemplateEntryKey(
+		String layoutPageTemplateEntryKey) {
+
+		model.setLayoutPageTemplateEntryKey(layoutPageTemplateEntryKey);
 	}
 
 	/**

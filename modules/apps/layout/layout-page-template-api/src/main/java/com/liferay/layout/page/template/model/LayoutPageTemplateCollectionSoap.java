@@ -44,6 +44,8 @@ public class LayoutPageTemplateCollectionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setLayoutPageTemplateCollectionKey(
+			model.getLayoutPageTemplateCollectionKey());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -183,6 +185,16 @@ public class LayoutPageTemplateCollectionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getLayoutPageTemplateCollectionKey() {
+		return _layoutPageTemplateCollectionKey;
+	}
+
+	public void setLayoutPageTemplateCollectionKey(
+		String layoutPageTemplateCollectionKey) {
+
+		_layoutPageTemplateCollectionKey = layoutPageTemplateCollectionKey;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -216,6 +228,7 @@ public class LayoutPageTemplateCollectionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _layoutPageTemplateCollectionKey;
 	private String _name;
 	private String _description;
 	private Date _lastPublishDate;

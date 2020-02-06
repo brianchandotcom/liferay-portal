@@ -222,6 +222,22 @@ public interface LayoutPageTemplateCollectionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the layout page template collection key of this layout page template collection.
+	 *
+	 * @return the layout page template collection key of this layout page template collection
+	 */
+	@AutoEscape
+	public String getLayoutPageTemplateCollectionKey();
+
+	/**
+	 * Sets the layout page template collection key of this layout page template collection.
+	 *
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key of this layout page template collection
+	 */
+	public void setLayoutPageTemplateCollectionKey(
+		String layoutPageTemplateCollectionKey);
+
+	/**
 	 * Returns the name of this layout page template collection.
 	 *
 	 * @return the name of this layout page template collection

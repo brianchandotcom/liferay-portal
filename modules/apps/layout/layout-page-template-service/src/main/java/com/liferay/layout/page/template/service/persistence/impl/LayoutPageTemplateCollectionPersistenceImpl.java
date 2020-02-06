@@ -2419,6 +2419,287 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
 		"layoutPageTemplateCollection.groupId = ?";
 
+	private FinderPath _finderPathFetchByG_LPTCK;
+	private FinderPath _finderPathCountByG_LPTCK;
+
+	/**
+	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; or throws a <code>NoSuchPageTemplateCollectionException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key
+	 * @return the matching layout page template collection
+	 * @throws NoSuchPageTemplateCollectionException if a matching layout page template collection could not be found
+	 */
+	@Override
+	public LayoutPageTemplateCollection findByG_LPTCK(
+			long groupId, String layoutPageTemplateCollectionKey)
+		throws NoSuchPageTemplateCollectionException {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			fetchByG_LPTCK(groupId, layoutPageTemplateCollectionKey);
+
+		if (layoutPageTemplateCollection == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", layoutPageTemplateCollectionKey=");
+			msg.append(layoutPageTemplateCollectionKey);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchPageTemplateCollectionException(msg.toString());
+		}
+
+		return layoutPageTemplateCollection;
+	}
+
+	/**
+	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key
+	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
+	 */
+	@Override
+	public LayoutPageTemplateCollection fetchByG_LPTCK(
+		long groupId, String layoutPageTemplateCollectionKey) {
+
+		return fetchByG_LPTCK(groupId, layoutPageTemplateCollectionKey, true);
+	}
+
+	/**
+	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
+	 */
+	@Override
+	public LayoutPageTemplateCollection fetchByG_LPTCK(
+		long groupId, String layoutPageTemplateCollectionKey,
+		boolean useFinderCache) {
+
+		layoutPageTemplateCollectionKey = Objects.toString(
+			layoutPageTemplateCollectionKey, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, layoutPageTemplateCollectionKey
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_LPTCK, finderArgs, this);
+		}
+
+		if (result instanceof LayoutPageTemplateCollection) {
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				(LayoutPageTemplateCollection)result;
+
+			if ((groupId != layoutPageTemplateCollection.getGroupId()) ||
+				!Objects.equals(
+					layoutPageTemplateCollectionKey,
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionKey())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION_WHERE);
+
+			query.append(_FINDER_COLUMN_G_LPTCK_GROUPID_2);
+
+			boolean bindLayoutPageTemplateCollectionKey = false;
+
+			if (layoutPageTemplateCollectionKey.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_G_LPTCK_LAYOUTPAGETEMPLATECOLLECTIONKEY_3);
+			}
+			else {
+				bindLayoutPageTemplateCollectionKey = true;
+
+				query.append(
+					_FINDER_COLUMN_G_LPTCK_LAYOUTPAGETEMPLATECOLLECTIONKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindLayoutPageTemplateCollectionKey) {
+					qPos.add(layoutPageTemplateCollectionKey);
+				}
+
+				List<LayoutPageTemplateCollection> list = q.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_LPTCK, finderArgs, list);
+					}
+				}
+				else {
+					LayoutPageTemplateCollection layoutPageTemplateCollection =
+						list.get(0);
+
+					result = layoutPageTemplateCollection;
+
+					cacheResult(layoutPageTemplateCollection);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByG_LPTCK, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (LayoutPageTemplateCollection)result;
+		}
+	}
+
+	/**
+	 * Removes the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key
+	 * @return the layout page template collection that was removed
+	 */
+	@Override
+	public LayoutPageTemplateCollection removeByG_LPTCK(
+			long groupId, String layoutPageTemplateCollectionKey)
+		throws NoSuchPageTemplateCollectionException {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			findByG_LPTCK(groupId, layoutPageTemplateCollectionKey);
+
+		return remove(layoutPageTemplateCollection);
+	}
+
+	/**
+	 * Returns the number of layout page template collections where groupId = &#63; and layoutPageTemplateCollectionKey = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionKey the layout page template collection key
+	 * @return the number of matching layout page template collections
+	 */
+	@Override
+	public int countByG_LPTCK(
+		long groupId, String layoutPageTemplateCollectionKey) {
+
+		layoutPageTemplateCollectionKey = Objects.toString(
+			layoutPageTemplateCollectionKey, "");
+
+		FinderPath finderPath = _finderPathCountByG_LPTCK;
+
+		Object[] finderArgs = new Object[] {
+			groupId, layoutPageTemplateCollectionKey
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE);
+
+			query.append(_FINDER_COLUMN_G_LPTCK_GROUPID_2);
+
+			boolean bindLayoutPageTemplateCollectionKey = false;
+
+			if (layoutPageTemplateCollectionKey.isEmpty()) {
+				query.append(
+					_FINDER_COLUMN_G_LPTCK_LAYOUTPAGETEMPLATECOLLECTIONKEY_3);
+			}
+			else {
+				bindLayoutPageTemplateCollectionKey = true;
+
+				query.append(
+					_FINDER_COLUMN_G_LPTCK_LAYOUTPAGETEMPLATECOLLECTIONKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindLayoutPageTemplateCollectionKey) {
+					qPos.add(layoutPageTemplateCollectionKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_LPTCK_GROUPID_2 =
+		"layoutPageTemplateCollection.groupId = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_G_LPTCK_LAYOUTPAGETEMPLATECOLLECTIONKEY_2 =
+			"layoutPageTemplateCollection.layoutPageTemplateCollectionKey = ?";
+
+	private static final String
+		_FINDER_COLUMN_G_LPTCK_LAYOUTPAGETEMPLATECOLLECTIONKEY_3 =
+			"(layoutPageTemplateCollection.layoutPageTemplateCollectionKey IS NULL OR layoutPageTemplateCollection.layoutPageTemplateCollectionKey = '')";
+
 	private FinderPath _finderPathFetchByG_N;
 	private FinderPath _finderPathCountByG_N;
 
@@ -3728,6 +4009,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put(
+			"layoutPageTemplateCollectionKey", "lptCollectionKey");
 
 		setDBColumnNames(dbColumnNames);
 	}
@@ -3751,6 +4034,15 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			new Object[] {
 				layoutPageTemplateCollection.getUuid(),
 				layoutPageTemplateCollection.getGroupId()
+			},
+			layoutPageTemplateCollection);
+
+		finderCache.putResult(
+			_finderPathFetchByG_LPTCK,
+			new Object[] {
+				layoutPageTemplateCollection.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionKey()
 			},
 			layoutPageTemplateCollection);
 
@@ -3879,6 +4171,18 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		args = new Object[] {
 			layoutPageTemplateCollectionModelImpl.getGroupId(),
+			layoutPageTemplateCollectionModelImpl.
+				getLayoutPageTemplateCollectionKey()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByG_LPTCK, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByG_LPTCK, args,
+			layoutPageTemplateCollectionModelImpl, false);
+
+		args = new Object[] {
+			layoutPageTemplateCollectionModelImpl.getGroupId(),
 			layoutPageTemplateCollectionModelImpl.getName()
 		};
 
@@ -3914,6 +4218,30 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
 			finderCache.removeResult(_finderPathFetchByUUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				layoutPageTemplateCollectionModelImpl.getGroupId(),
+				layoutPageTemplateCollectionModelImpl.
+					getLayoutPageTemplateCollectionKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_LPTCK, args);
+			finderCache.removeResult(_finderPathFetchByG_LPTCK, args);
+		}
+
+		if ((layoutPageTemplateCollectionModelImpl.getColumnBitmask() &
+			 _finderPathFetchByG_LPTCK.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				layoutPageTemplateCollectionModelImpl.getOriginalGroupId(),
+				layoutPageTemplateCollectionModelImpl.
+					getOriginalLayoutPageTemplateCollectionKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_LPTCK, args);
+			finderCache.removeResult(_finderPathFetchByG_LPTCK, args);
 		}
 
 		if (clearCurrent) {
@@ -4637,6 +4965,20 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()});
 
+		_finderPathFetchByG_LPTCK = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled,
+			LayoutPageTemplateCollectionImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_LPTCK",
+			new String[] {Long.class.getName(), String.class.getName()},
+			LayoutPageTemplateCollectionModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutPageTemplateCollectionModelImpl.
+				LAYOUTPAGETEMPLATECOLLECTIONKEY_COLUMN_BITMASK);
+
+		_finderPathCountByG_LPTCK = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_LPTCK",
+			new String[] {Long.class.getName(), String.class.getName()});
+
 		_finderPathFetchByG_N = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			LayoutPageTemplateCollectionImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -4768,7 +5110,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		LayoutPageTemplateCollectionPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid"});
+		new String[] {"uuid", "layoutPageTemplateCollectionKey"});
 
 	static {
 		try {

@@ -9,12 +9,12 @@
 	"license": "LGPL",
 	"liferayTheme": {
 		"baseTheme": "styled",
-		"distName": "chamaeleon-theme",
+		"distName": "chameleon-theme",
 		"rubySass": false,
-		"version": "7.1"
+		"version": "7.3"
 	},
 	"main": "package.json",
-	"name": "liferay-chamaeleon-theme",
+	"name": "liferay-chameleon-theme",
 	"repository": "liferay/liferay-portal",
 	"scripts": {
 		"build": "liferay-npm-scripts theme build",

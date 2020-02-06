@@ -30,6 +30,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -103,12 +104,9 @@ public class BlogPostingDTOConverter
 				taxonomyCategories = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
+					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
+						dtoConverterContext.isAcceptAllLanguages(),
+						assetCategory, dtoConverterContext.getLocale()),
 					TaxonomyCategory.class);
 			}
 		};

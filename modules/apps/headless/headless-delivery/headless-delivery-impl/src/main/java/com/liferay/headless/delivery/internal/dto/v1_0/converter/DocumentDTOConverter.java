@@ -36,6 +36,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -119,12 +120,9 @@ public class DocumentDTOConverter
 					_assetCategoryLocalService.getCategories(
 						DLFileEntry.class.getName(),
 						fileEntry.getFileEntryId()),
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
+					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
+						dtoConverterContext.isAcceptAllLanguages(),
+						assetCategory, dtoConverterContext.getLocale()),
 					TaxonomyCategory.class);
 				title = fileEntry.getTitle();
 			}

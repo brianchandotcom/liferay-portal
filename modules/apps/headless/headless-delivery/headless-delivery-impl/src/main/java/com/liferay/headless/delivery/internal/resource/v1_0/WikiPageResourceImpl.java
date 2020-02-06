@@ -30,6 +30,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.WikiPageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -406,12 +407,10 @@ public class WikiPageResourceImpl
 					_assetCategoryLocalService.getCategories(
 						com.liferay.wiki.model.WikiPage.class.getName(),
 						wikiPage.getPageId()),
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
+					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						assetCategory,
+						contextAcceptLanguage.getPreferredLocale()),
 					TaxonomyCategory.class);
 
 				setParentWikiPageId(

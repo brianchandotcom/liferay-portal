@@ -42,6 +42,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentStructureUtil
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil;
 import com.liferay.headless.delivery.internal.resource.v1_0.BaseStructuredContentResourceImpl;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
@@ -171,12 +172,9 @@ public class StructuredContentDTOConverter
 					_assetCategoryLocalService.getCategories(
 						JournalArticle.class.getName(),
 						journalArticle.getResourcePrimKey()),
-					assetCategory -> new TaxonomyCategory() {
-						{
-							taxonomyCategoryId = assetCategory.getCategoryId();
-							taxonomyCategoryName = assetCategory.getName();
-						}
-					},
+					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
+						dtoConverterContext.isAcceptAllLanguages(),
+						assetCategory, dtoConverterContext.getLocale()),
 					TaxonomyCategory.class);
 				title = journalArticle.getTitle(
 					dtoConverterContext.getLocale());

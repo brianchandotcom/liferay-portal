@@ -17,6 +17,7 @@ package com.liferay.account.admin.web.internal.dao.search;
 import com.liferay.account.admin.web.internal.display.AccountRoleDisplay;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalServiceUtil;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -46,6 +47,9 @@ public class AccountRoleDisplaySearchContainerFactory {
 			liferayPortletRequest, "orderByType", "asc");
 
 		searchContainer.setOrderByType(orderByType);
+
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(liferayPortletResponse));
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords");

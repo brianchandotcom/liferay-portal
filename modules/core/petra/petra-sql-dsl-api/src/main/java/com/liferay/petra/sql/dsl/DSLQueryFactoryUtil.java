@@ -42,6 +42,10 @@ public class DSLQueryFactoryUtil {
 		return _DSL_QUERY_FACTORY.select(expressions);
 	}
 
+	public static <T extends Table<T>> FromStep select(T table) {
+		return _DSL_QUERY_FACTORY.select(table);
+	}
+
 	public static FromStep selectDistinct(Expression<?>... expressions) {
 		return _DSL_QUERY_FACTORY.selectDistinct(expressions);
 	}

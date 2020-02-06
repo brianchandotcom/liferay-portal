@@ -896,17 +896,6 @@ public class SQLDSLTest {
 	}
 
 	@Test
-	public void testSelectDistinctTable() {
-		FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
-			MainExampleTable.INSTANCE);
-
-		Assert.assertEquals(
-			"select distinct MainExample.description, MainExample.flag, " +
-				"MainExample.mainExampleId, MainExample.name",
-			fromStep.toString());
-	}
-
-	@Test
 	public void testSelectDistinctWhereInWithAlias() {
 		MainExampleTable aliasMainExampleTable = MainExampleTable.INSTANCE.as(
 			"mainTable");
@@ -968,6 +957,25 @@ public class SQLDSLTest {
 
 		Assert.assertEquals(
 			Arrays.asList(strings), defaultASTNodeListener.getScalarValues());
+	}
+
+	@Test
+	public void testSelectTable() {
+		FromStep fromStep = DSLQueryFactoryUtil.select(
+			MainExampleTable.INSTANCE);
+
+		Assert.assertEquals(
+			"select MainExample.description, MainExample.flag, " +
+				"MainExample.mainExampleId, MainExample.name",
+			fromStep.toString());
+
+		fromStep = DSLQueryFactoryUtil.selectDistinct(
+			MainExampleTable.INSTANCE);
+
+		Assert.assertEquals(
+			"select distinct MainExample.description, MainExample.flag, " +
+				"MainExample.mainExampleId, MainExample.name",
+			fromStep.toString());
 	}
 
 	@Test

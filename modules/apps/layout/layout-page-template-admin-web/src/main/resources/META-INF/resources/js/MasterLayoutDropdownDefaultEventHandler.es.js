@@ -43,7 +43,8 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 			if (confirm(Liferay.Language.get(itemData.message))) {
 				this._send(itemData.markAsDefaultMasterLayoutURL);
 			}
-		} else {
+		}
+		else {
 			this._send(itemData.markAsDefaultMasterLayoutURL);
 		}
 	}

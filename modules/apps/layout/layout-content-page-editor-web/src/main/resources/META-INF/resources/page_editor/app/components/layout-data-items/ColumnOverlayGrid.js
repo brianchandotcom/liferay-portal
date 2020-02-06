@@ -35,7 +35,11 @@ export default function ColumnOverlayGrid({
 		>
 			<FragmentsEditorShim />
 
-			<div className="container-fluid h-100 py-0">
+			<div
+				className={classNames('container-fluid h-100 py-0', {
+					'px-0': !columnSpacing
+				})}
+			>
 				<div
 					className={classNames('h-100 row', {
 						'no-gutters': !columnSpacing

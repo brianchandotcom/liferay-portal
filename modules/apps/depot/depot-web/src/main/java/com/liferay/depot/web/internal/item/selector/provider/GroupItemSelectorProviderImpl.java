@@ -14,8 +14,6 @@
 
 package com.liferay.depot.web.internal.item.selector.provider;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.util.DepotSupportChecker;
@@ -30,9 +28,6 @@ import com.liferay.portal.kernel.service.GroupService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,21 +49,8 @@ public class GroupItemSelectorProviderImpl
 		long companyId, long groupId, String keywords, int start, int end) {
 
 		try {
-			List<DepotEntryGroupRel> depotEntryGroupRels =
-				_depotEntryGroupRelService.getDepotEntryGroupRels(
-					_getLiveGroupId(groupId), start, end);
-
-			Stream<DepotEntryGroupRel> stream = depotEntryGroupRels.stream();
-
-			return stream.map(
-				this::_toGroupOptional
-			).filter(
-				Optional::isPresent
-			).map(
-				Optional::get
-			).collect(
-				Collectors.toList()
-			);
+			return _depotEntryGroupRelService.getGroupDepotEntryGroups(
+				_getLiveGroupId(groupId), start, end);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -80,7 +62,7 @@ public class GroupItemSelectorProviderImpl
 	@Override
 	public int getGroupsCount(long companyId, long groupId, String keywords) {
 		try {
-			return _depotEntryGroupRelService.getDepotEntryGroupRelsCount(
+			return _depotEntryGroupRelService.getGroupDepotEntryGroupsCount(
 				_getLiveGroupId(groupId));
 		}
 		catch (PortalException portalException) {
@@ -118,22 +100,6 @@ public class GroupItemSelectorProviderImpl
 		}
 
 		return groupId;
-	}
-
-	private Optional<Group> _toGroupOptional(
-		DepotEntryGroupRel depotEntryGroupRel) {
-
-		try {
-			DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
-				depotEntryGroupRel.getDepotEntryId());
-
-			return Optional.of(_groupService.getGroup(depotEntry.getGroupId()));
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-
-			return Optional.empty();
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -25,7 +25,7 @@ import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCrite
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
-import com.liferay.item.selector.provider.ItemSelectorViewRendererCustomizer;
+import com.liferay.item.selector.ItemSelectorViewRendererCustomizer;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Group;

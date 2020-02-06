@@ -27,13 +27,15 @@ export default function App() {
 	const languageId = useSelector(state => state.languageId);
 
 	useEffect(() => {
-		const languageDirection = Liferay.Language.direction[languageId];
-		const wrapper = document.getElementById('wrapper');
+		AUI().use('portal-available-languages', () => {
+			const languageDirection = Liferay.Language.direction[languageId];
+			const wrapper = document.getElementById('wrapper');
 
-		if (wrapper) {
-			wrapper.dir = languageDirection;
-			wrapper.lang = languageId;
-		}
+			if (wrapper) {
+				wrapper.dir = languageDirection;
+				wrapper.lang = languageId;
+			}
+		});
 	}, [languageId]);
 
 	return (

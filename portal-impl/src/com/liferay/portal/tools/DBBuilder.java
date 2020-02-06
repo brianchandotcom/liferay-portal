@@ -107,11 +107,9 @@ public class DBBuilder {
 			if (db != null) {
 				if (!sqlDir.endsWith("/WEB-INF/sql")) {
 					db.buildCreateFile(sqlDir, _databaseName, DB.BARE);
-					db.buildCreateFile(sqlDir, _databaseName, DB.DEFAULT);
 				}
-				else {
-					db.buildCreateFile(sqlDir, _databaseName, DB.DEFAULT);
-				}
+
+				db.buildCreateFile(sqlDir, _databaseName, DB.DEFAULT);
 			}
 		}
 	}

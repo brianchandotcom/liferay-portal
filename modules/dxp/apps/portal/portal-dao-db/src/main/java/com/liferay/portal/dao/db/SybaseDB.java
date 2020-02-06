@@ -15,11 +15,11 @@
 package com.liferay.portal.dao.db;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -58,6 +58,18 @@ public class SybaseDB extends BaseDB {
 	@Override
 	public String getNewUuidFunctionName() {
 		return "newid(1)";
+	}
+
+	@Override
+	public String getPopulateSQL(String databaseName, String sqlContent) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("use ");
+		sb.append(databaseName);
+		sb.append("\n\n");
+		sb.append(sqlContent);
+
+		return sb.toString();
 	}
 
 	@Override

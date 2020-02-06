@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -98,6 +98,19 @@ public class OracleDB extends BaseDB {
 		}
 
 		return indexes;
+	}
+
+	@Override
+	public String getPopulateSQL(String databaseName, String sqlContent) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("connect &1/&2;\n");
+		sb.append("set define off;\n");
+		sb.append("\n");
+		sb.append(sqlContent);
+		sb.append("quit");
+
+		return sb.toString();
 	}
 
 	@Override

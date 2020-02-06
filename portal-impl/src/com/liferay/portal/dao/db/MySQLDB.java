@@ -97,6 +97,18 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
+	public String getPopulateSQL(String databaseName, String sqlContent) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("use ");
+		sb.append(databaseName);
+		sb.append(";\n\n");
+		sb.append(sqlContent);
+
+		return sb.toString();
+	}
+
+	@Override
 	public String getRecreateSQL(String databaseName) {
 		StringBundler sb = new StringBundler(6);
 

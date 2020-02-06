@@ -15,11 +15,11 @@
 package com.liferay.portal.dao.db;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -56,6 +56,18 @@ public class DB2DB extends BaseDB {
 		template = StringUtil.replace(template, "\\n", "'||CHR(10)||'");
 
 		return template;
+	}
+
+	@Override
+	public String getPopulateSQL(String databaseName, String sqlContent) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("connect to ");
+		sb.append(databaseName);
+		sb.append(";\n");
+		sb.append(sqlContent);
+
+		return sb.toString();
 	}
 
 	@Override

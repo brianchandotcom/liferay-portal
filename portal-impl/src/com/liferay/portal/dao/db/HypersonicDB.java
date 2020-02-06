@@ -47,6 +47,11 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
+	public String getPopulateSQL(String databaseName, String sqlContent) {
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String getRecreateSQL(String databaseName) {
 		return StringPool.BLANK;
 	}

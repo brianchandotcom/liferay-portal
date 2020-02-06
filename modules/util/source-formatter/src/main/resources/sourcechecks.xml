@@ -417,6 +417,7 @@
 	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">
 		<check name="MarkdownFileExtensionCheck" />
+		<check name="MarkdownSourceFormatterDocumentationCheck" />
 		<check name="MarkdownSourceFormatterReadmeCheck" />
 		<check name="MarkdownStylingCheck" />
 		<check name="MarkdownWhitespaceCheck">

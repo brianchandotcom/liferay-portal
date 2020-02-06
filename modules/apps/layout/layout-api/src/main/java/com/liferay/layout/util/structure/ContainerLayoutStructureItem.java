@@ -31,12 +31,8 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		return _backgroundColorCssClass;
 	}
 
-	public String getBackgroundImageTitle() {
-		return _backgroundImageTitle;
-	}
-
-	public String getBackgroundImageURL() {
-		return _backgroundImageURL;
+	public JSONObject getBackgroundImageJSONObject() {
+		return _backgroundImageJSONObject;
 	}
 
 	public String getContainerType() {
@@ -64,12 +60,10 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		_backgroundColorCssClass = backgroundColorCssClass;
 	}
 
-	public void setBackgroundImageTitle(String backgroundImageTitle) {
-		_backgroundImageTitle = backgroundImageTitle;
-	}
+	public void setBackgroundImageJSONObject(
+		JSONObject backgroundImageJSONObject) {
 
-	public void setBackgroundImageURL(String backgroundImageURL) {
-		_backgroundImageURL = backgroundImageURL;
+		_backgroundImageJSONObject = backgroundImageJSONObject;
 	}
 
 	public void setContainerType(String containerType) {
@@ -96,12 +90,8 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		}
 
 		if (itemConfigJSONObject.has("backgroundImage")) {
-			JSONObject backgroundImageJSONObject =
-				itemConfigJSONObject.getJSONObject("backgroundImage");
-
-			setBackgroundImageTitle(
-				backgroundImageJSONObject.getString("title"));
-			setBackgroundImageURL(backgroundImageJSONObject.getString("url"));
+			setBackgroundImageJSONObject(
+				itemConfigJSONObject.getJSONObject("backgroundImage"));
 		}
 
 		if (itemConfigJSONObject.has("containerType")) {
@@ -127,12 +117,7 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		return JSONUtil.put(
 			"backgroundColorCssClass", _backgroundColorCssClass
 		).put(
-			"backgroundImage",
-			JSONUtil.put(
-				"title", _backgroundImageTitle
-			).put(
-				"url", _backgroundImageURL
-			)
+			"backgroundImage", _backgroundImageJSONObject
 		).put(
 			"containerType", _containerType
 		).put(
@@ -145,8 +130,7 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	private String _backgroundColorCssClass;
-	private String _backgroundImageTitle;
-	private String _backgroundImageURL;
+	private JSONObject _backgroundImageJSONObject;
 	private String _containerType = "fluid";
 	private int _paddingBottom = 3;
 	private int _paddingHorizontal = 3;

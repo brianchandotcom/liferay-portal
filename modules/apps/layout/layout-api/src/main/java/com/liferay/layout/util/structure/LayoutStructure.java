@@ -90,6 +90,15 @@ public class LayoutStructure {
 	}
 
 	public LayoutStructureItem addLayoutStructureItem(
+		LayoutStructureItem layoutStructureItem) {
+
+		_layoutStructureItems.put(
+			layoutStructureItem.getItemId(), layoutStructureItem);
+
+		return layoutStructureItem;
+	}
+
+	public LayoutStructureItem addLayoutStructureItem(
 		String itemType, String parentItemId, int position) {
 
 		LayoutStructureItem layoutStructureItem =

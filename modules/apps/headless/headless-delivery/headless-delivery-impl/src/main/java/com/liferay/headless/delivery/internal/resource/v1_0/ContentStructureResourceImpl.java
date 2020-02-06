@@ -69,6 +69,7 @@ public class ContentStructureResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
+			null,
 			booleanQuery -> {
 			},
 			filter, DDMStructure.class, search, pagination,
@@ -80,10 +81,10 @@ public class ContentStructureResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 			},
+			sorts,
 			document -> _toContentStructure(
 				_ddmStructureService.getStructure(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private ContentStructure _toContentStructure(DDMStructure ddmStructure)

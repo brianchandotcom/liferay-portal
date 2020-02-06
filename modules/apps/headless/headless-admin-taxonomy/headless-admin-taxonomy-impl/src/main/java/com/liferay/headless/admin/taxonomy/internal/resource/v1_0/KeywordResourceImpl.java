@@ -74,6 +74,7 @@ public class KeywordResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
+			null,
 			booleanQuery -> {
 			},
 			filter, AssetTag.class, search, pagination,
@@ -83,10 +84,10 @@ public class KeywordResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 			},
+			sorts,
 			document -> _toKeyword(
 				_assetTagService.getTag(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

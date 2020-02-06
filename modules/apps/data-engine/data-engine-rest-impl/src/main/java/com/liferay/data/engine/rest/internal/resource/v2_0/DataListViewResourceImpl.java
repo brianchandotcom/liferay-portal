@@ -135,6 +135,7 @@ public class DataListViewResourceImpl
 		}
 
 		return SearchUtil.search(
+			null,
 			booleanQuery -> {
 			},
 			null, DEDataListView.class, keywords, pagination,
@@ -148,10 +149,10 @@ public class DataListViewResourceImpl
 				searchContext.setGroupIds(
 					new long[] {ddmStructure.getGroupId()});
 			},
+			sorts,
 			document -> _toDataListView(
 				_deDataListViewLocalService.getDEDataListView(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

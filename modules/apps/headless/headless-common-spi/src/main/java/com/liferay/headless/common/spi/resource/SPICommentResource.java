@@ -188,6 +188,7 @@ public class SPICommentResource<T> {
 		throws Exception {
 
 		return SearchUtil.search(
+			null,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -206,10 +207,10 @@ public class SPICommentResource<T> {
 					"searchPermissionContext", StringPool.BLANK);
 				searchContext.setCompanyId(_company.getCompanyId());
 			},
+			sorts,
 			document -> _transformUnsafeFunction.apply(
 				_commentManager.fetchComment(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private DiscussionPermission _getDiscussionPermission() {

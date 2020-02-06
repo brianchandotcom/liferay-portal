@@ -184,6 +184,7 @@ public class DataRecordResourceImpl
 			dataRecordCollectionId);
 
 		return SearchUtil.search(
+			null,
 			booleanQuery -> {
 			},
 			_getBooleanFilter(dataListViewId, ddlRecordSet), DDLRecord.class,
@@ -198,10 +199,10 @@ public class DataRecordResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setUserId(0);
 			},
+			sorts,
 			document -> _toDataRecord(
 				_ddlRecordLocalService.getRecord(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

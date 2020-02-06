@@ -87,6 +87,7 @@ public class BlogPostingImageResourceImpl
 		Folder folder = _blogsEntryService.addAttachmentsFolder(siteId);
 
 		return SearchUtil.search(
+			null,
 			booleanQuery -> {
 			},
 			filter, DLFileEntry.class, search, pagination,
@@ -96,10 +97,10 @@ public class BlogPostingImageResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setFolderIds(new long[] {folder.getFolderId()});
 			},
+			sorts,
 			document -> _toBlogPostingImage(
 				_dlAppService.getFileEntry(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

@@ -317,6 +317,7 @@ public class DataDefinitionResourceImpl
 		}
 
 		return SearchUtil.search(
+			null,
 			booleanQuery -> {
 			},
 			null, DDMStructure.class, keywords, pagination,
@@ -331,11 +332,11 @@ public class DataDefinitionResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 			},
+			sorts,
 			document -> DataDefinitionUtil.toDataDefinition(
 				_ddmFormFieldTypeServicesTracker,
 				_ddmStructureLocalService.getStructure(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

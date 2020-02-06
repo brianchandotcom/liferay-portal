@@ -148,21 +148,21 @@ public abstract class BaseDB implements DB {
 			}
 
 			sb.append(
-				readFile(
+				_readFile(
 					StringBundler.concat(
 						sqlDir, tablesPrefix, getServerName(), ".sql")));
 
 			sb.append("\n\n");
 
 			sb.append(
-				readFile(
+				_readFile(
 					StringBundler.concat(
 						sqlDir, "/indexes/indexes-", getServerName(), ".sql")));
 
 			sb.append("\n\n");
 
 			sb.append(
-				readFile(
+				_readFile(
 					StringBundler.concat(
 						sqlDir, "/sequences/sequences-", getServerName(),
 						".sql")));
@@ -781,7 +781,7 @@ public abstract class BaseDB implements DB {
 	protected String buildTemplate(String sqlDir, String fileName)
 		throws IOException {
 
-		String template = readFile(
+		String template = _readFile(
 			StringBundler.concat(sqlDir, "/", fileName, ".sql"));
 
 		if (fileName.equals("portal")) {
@@ -926,18 +926,10 @@ public abstract class BaseDB implements DB {
 
 	protected abstract String[] getTemplate();
 
-	protected String readFile(String fileName) throws IOException {
-		if (FileUtil.exists(fileName)) {
-			return FileUtil.read(fileName);
-		}
-
-		return StringPool.BLANK;
-	}
-
 	protected String removeBooleanIndexes(String sqlDir, String data)
 		throws IOException {
 
-		String portalData = readFile(sqlDir + "/portal-tables.sql");
+		String portalData = _readFile(sqlDir + "/portal-tables.sql");
 
 		if (Validator.isNull(portalData)) {
 			return StringPool.BLANK;
@@ -1072,6 +1064,14 @@ public abstract class BaseDB implements DB {
 		" SBLOB", " BOOLEAN", " DATE", " DOUBLE", " INTEGER", " LONG",
 		" STRING", " TEXT", " VARCHAR", " IDENTITY", "COMMIT_TRANSACTION"
 	};
+
+	private String _readFile(String fileName) throws IOException {
+		if (FileUtil.exists(fileName)) {
+			return FileUtil.read(fileName);
+		}
+
+		return StringPool.BLANK;
+	}
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_NAME = true;
 

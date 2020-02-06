@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -935,38 +934,6 @@ public abstract class BaseDB implements DB {
 		return StringPool.BLANK;
 	}
 
-	protected String readSQL(String fileName, String comments, String eol)
-		throws IOException {
-
-		if (!FileUtil.exists(fileName)) {
-			return StringPool.BLANK;
-		}
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new FileReader(new File(fileName)))) {
-
-			StringBundler sb = new StringBundler();
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (!line.startsWith(comments)) {
-					line = StringUtil.removeChars(line, '\n', '\t');
-
-					if (line.endsWith(";")) {
-						sb.append(line.substring(0, line.length() - 1));
-						sb.append(eol);
-					}
-					else {
-						sb.append(line);
-					}
-				}
-			}
-
-			return sb.toString();
-		}
-	}
-
 	protected String removeBooleanIndexes(String sqlDir, String data)
 		throws IOException {
 
@@ -1017,27 +984,6 @@ public abstract class BaseDB implements DB {
 				}
 
 				if (append) {
-					sb.append(line);
-					sb.append("\n");
-				}
-			}
-
-			return sb.toString();
-		}
-	}
-
-	protected String removeInserts(String data) throws IOException {
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
-
-			StringBundler sb = new StringBundler();
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (!line.startsWith("insert into ") &&
-					!line.startsWith("update ")) {
-
 					sb.append(line);
 					sb.append("\n");
 				}

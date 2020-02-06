@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MessageBodyReader.class
 )
-@Consumes({"text/csv", "application/x-ndjson"})
+@Consumes({"application/x-ndjson", "text/csv"})
 @Provider
 public class ObjectMessageBodyReader implements MessageBodyReader<Object> {
 

@@ -50,10 +50,13 @@ public class OracleDB extends BaseDB {
 
 	@Override
 	public String buildSQL(String template) throws IOException {
-		template = _preBuildSQL(template);
-		template = _postBuildSQL(template);
+		template = replaceTemplate(template, getTemplate());
+		template = reword(template);
+		template = StringUtil.replace(
+			template, new String[] {"\\\\", "\\'", "\\\""},
+			new String[] {"\\", "''", "\""});
 
-		return template;
+		return StringUtil.replace(template, "\\n", "'||CHR(10)||'");
 	}
 
 	@Override
@@ -238,23 +241,6 @@ public class OracleDB extends BaseDB {
 
 			return sb.toString();
 		}
-	}
-
-	private String _postBuildSQL(String template) throws IOException {
-		template = StringUtil.replace(template, "\\n", "'||CHR(10)||'");
-
-		return template;
-	}
-
-	private String _preBuildSQL(String template) throws IOException {
-		template = replaceTemplate(template, getTemplate());
-
-		template = reword(template);
-		template = StringUtil.replace(
-			template, new String[] {"\\\\", "\\'", "\\\""},
-			new String[] {"\\", "''", "\""});
-
-		return template;
 	}
 
 	private static final String[] _ORACLE = {

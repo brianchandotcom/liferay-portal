@@ -43,73 +43,19 @@ if (accountRole != null) {
 }
 
 renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "add-new-role") : role.getTitle(locale));
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/account_entries_admin/edit_account_role.jsp");
+portletURL.setParameter("accountEntryId", String.valueOf(accountEntryId));
+portletURL.setParameter("accountRoleId", String.valueOf(accountRoleId));
 %>
 
-<portlet:actionURL name="/account_admin/edit_account_role" var="editAccountRoleURL" />
-
-<liferay-frontend:edit-form
-	action="<%= editAccountRoleURL %>"
->
-	<liferay-frontend:edit-form-body>
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (role == null) ? Constants.ADD : Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="accountEntryId" type="hidden" value="<%= String.valueOf(accountEntryId) %>" />
-		<aui:input name="accountRoleId" type="hidden" value="<%= accountRoleId %>" />
-
-		<aui:model-context bean="<%= role %>" model="<%= Role.class %>" />
-
-		<aui:input helpMessage="title-field-help" name="title" />
-		<aui:input name="description" />
-
-		<liferay-ui:error exception="<%= DuplicateRoleException.class %>" message="please-enter-a-unique-name" />
-
-		<%
-		String nameLabel = LanguageUtil.get(request, "role-key");
-		%>
-
-		<liferay-ui:error exception="<%= RoleNameException.class %>">
-			<p>
-				<liferay-ui:message arguments="<%= new String[] {nameLabel, RoleConstants.getNameGeneralRestrictions(locale, PropsValues.ROLES_NAME_ALLOW_NUMERIC), RoleConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
-			</p>
-
-			<p>
-				<liferay-ui:message arguments="<%= new String[] {nameLabel, RoleConstants.NAME_INVALID_CHARACTERS} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
-			</p>
-		</liferay-ui:error>
-
-		<aui:input helpMessage="key-field-help" label="key" name="name" />
-	</liferay-frontend:edit-form-body>
-
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= backURL %>" type="cancel" />
-	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
-
-<c:if test="<%= role == null %>">
-	<aui:script require="frontend-js-web/liferay/debounce/debounce.es as debounceModule">
-		var form = document.getElementById('<portlet:namespace />fm');
-
-		if (form) {
-			var nameInput = form.querySelector('#<portlet:namespace />name');
-			var titleInput = form.querySelector('#<portlet:namespace />title');
-
-			if (nameInput && titleInput) {
-				var debounce = debounceModule.default;
-
-				var handleOnTitleInput = function(event) {
-					var value = event.target.value;
-
-					if (nameInput.hasAttribute('maxLength')) {
-						value = value.substring(0, nameInput.getAttribute('maxLength'));
-					}
-
-					nameInput.value = value;
-				};
-
-				titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
-			}
-		}
-	</aui:script>
-</c:if>
+<liferay-frontend:screen-navigation
+	containerWrapperCssClass=""
+	context="<%= accountRole %>"
+	headerContainerCssClass=""
+	inverted="<%= true %>"
+	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT_ROLE %>"
+	portletURL="<%= portletURL %>"
+/>

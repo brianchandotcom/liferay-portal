@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	<#if configYAML.generateBatch>
 		{BatchEngineTaskItemDelegate.class, ${schemaName}Resource.class}
 	<#else>
-        ${schemaName}Resource.class
+		${schemaName}Resource.class
 	</#if>
 )
 public class ${schemaName}ResourceImpl extends Base${schemaName}ResourceImpl

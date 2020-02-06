@@ -12,25 +12,29 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl;
+package com.liferay.petra.sql.dsl.spi.expression;
 
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.ColumnAlias;
-import com.liferay.petra.sql.dsl.expression.Expression;
 
 /**
  * @author Preston Crary
  */
-public interface Column<T extends Table<T>, C> extends Expression<C> {
+public class DefaultColumnAlias<T extends Table<T>, C>
+	extends DefaultAlias<C> implements ColumnAlias<T, C> {
+
+	public DefaultColumnAlias(Column<T, C> column, String name) {
+		super(column, name);
+
+		_table = column.getTable();
+	}
 
 	@Override
-	public ColumnAlias<T, C> as(String name);
+	public T getTable() {
+		return _table;
+	}
 
-	public Class<C> getJavaType();
-
-	public String getName();
-
-	public int getSQLType();
-
-	public T getTable();
+	private final T _table;
 
 }

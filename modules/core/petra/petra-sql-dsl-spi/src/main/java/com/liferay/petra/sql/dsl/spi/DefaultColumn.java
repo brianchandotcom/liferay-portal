@@ -18,9 +18,9 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.base.BaseTable;
-import com.liferay.petra.sql.dsl.expression.Alias;
+import com.liferay.petra.sql.dsl.expression.ColumnAlias;
 import com.liferay.petra.sql.dsl.spi.ast.BaseASTNode;
-import com.liferay.petra.sql.dsl.spi.expression.DefaultAlias;
+import com.liferay.petra.sql.dsl.spi.expression.DefaultColumnAlias;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultExpression;
 
 import java.util.Objects;
@@ -40,12 +40,12 @@ public class DefaultColumn<T extends BaseTable<T>, C>
 	}
 
 	@Override
-	public Alias<C> as(String name) {
+	public ColumnAlias<T, C> as(String name) {
 		if (_name.equals(name)) {
-			return new DefaultAlias<>(this, name);
+			return new DefaultColumnAlias<>(this, name);
 		}
 
-		return new DefaultAlias<>(_table.aliasColumn(this, name), name);
+		return new DefaultColumnAlias<>(_table.aliasColumn(this, name), name);
 	}
 
 	@Override

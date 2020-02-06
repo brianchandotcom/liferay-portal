@@ -12,24 +12,14 @@
  * details.
  */
 
-package com.liferay.petra.sql.dsl;
+package com.liferay.petra.sql.dsl.expression;
 
-import com.liferay.petra.sql.dsl.expression.ColumnAlias;
-import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.Table;
 
 /**
  * @author Preston Crary
  */
-public interface Column<T extends Table<T>, C> extends Expression<C> {
-
-	@Override
-	public ColumnAlias<T, C> as(String name);
-
-	public Class<C> getJavaType();
-
-	public String getName();
-
-	public int getSQLType();
+public interface ColumnAlias<T extends Table<T>, C> extends Alias<C> {
 
 	public T getTable();
 

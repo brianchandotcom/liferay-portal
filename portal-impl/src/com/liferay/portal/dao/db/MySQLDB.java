@@ -97,6 +97,20 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
+	public String getRecreateSQL(String databaseName) {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("drop database if exists ");
+		sb.append(databaseName);
+		sb.append(";\n");
+		sb.append("create database ");
+		sb.append(databaseName);
+		sb.append(" character set utf8;\n");
+
+		return sb.toString();
+	}
+
+	@Override
 	public boolean isSupportsNewUuidFunction() {
 		return _SUPPORTS_NEW_UUID_FUNCTION;
 	}

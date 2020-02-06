@@ -152,6 +152,20 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	public String getRecreateSQL(String databaseName) {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("drop database ");
+		sb.append(databaseName);
+		sb.append(";\n");
+		sb.append("create database ");
+		sb.append(databaseName);
+		sb.append(" encoding = 'UNICODE';\n");
+
+		return sb.toString();
+	}
+
+	@Override
 	public boolean isSupportsQueryingAfterException() {
 		return _SUPPORTS_QUERYING_AFTER_EXCEPTION;
 	}

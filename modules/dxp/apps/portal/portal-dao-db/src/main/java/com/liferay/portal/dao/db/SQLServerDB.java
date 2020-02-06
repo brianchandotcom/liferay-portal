@@ -111,6 +111,23 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
+	public String getRecreateSQL(String databaseName) {
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("drop database ");
+		sb.append(databaseName);
+		sb.append(";\n");
+		sb.append("create database ");
+		sb.append(databaseName);
+		sb.append(";\n");
+		sb.append("\n");
+		sb.append("go\n");
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
+	@Override
 	public boolean isSupportsAlterColumnType() {
 		return _SUPPORTS_ALTER_COLUMN_TYPE;
 	}

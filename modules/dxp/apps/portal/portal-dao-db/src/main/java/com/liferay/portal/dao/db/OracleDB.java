@@ -101,6 +101,12 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
+	public String getRecreateSQL(String databaseName) {
+		return "drop user &1 cascade;\ncreate user &1 identified by &2;\n" +
+			"grant connect,resource to &1;\nquit";
+	}
+
+	@Override
 	public boolean isSupportsInlineDistinct() {
 		return _SUPPORTS_INLINE_DISTINCT;
 	}

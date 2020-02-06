@@ -63,6 +63,8 @@ public interface DB {
 		return null;
 	}
 
+	public String getRecreateSQL(String databaseName);
+
 	public Integer getSQLType(String templateType);
 
 	public String getTemplateBlob();

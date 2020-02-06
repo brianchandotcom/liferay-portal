@@ -61,6 +61,23 @@ public class SybaseDB extends BaseDB {
 	}
 
 	@Override
+	public String getRecreateSQL(String databaseName) {
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("use master\n");
+		sb.append("exec sp_dboption '");
+		sb.append(databaseName);
+		sb.append("', 'allow nulls by default' , true\n");
+		sb.append("go\n\n");
+		sb.append("exec sp_dboption '");
+		sb.append(databaseName);
+		sb.append("', 'select into/bulkcopy/pllsort' , true\n");
+		sb.append("go\n\n");
+
+		return sb.toString();
+	}
+
+	@Override
 	public boolean isSupportsInlineDistinct() {
 		return _SUPPORTS_INLINE_DISTINCT;
 	}

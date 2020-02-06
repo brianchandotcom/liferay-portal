@@ -59,6 +59,21 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
+	public String getRecreateSQL(String databaseName) {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("drop database ");
+		sb.append(databaseName);
+		sb.append(";\n");
+		sb.append("create database ");
+		sb.append(databaseName);
+		sb.append(" pagesize 32768 temporary tablespace managed by automatic ");
+		sb.append("storage;\n");
+
+		return sb.toString();
+	}
+
+	@Override
 	public boolean isSupportsAlterColumnType() {
 		return _SUPPORTS_ALTER_COLUMN_TYPE;
 	}

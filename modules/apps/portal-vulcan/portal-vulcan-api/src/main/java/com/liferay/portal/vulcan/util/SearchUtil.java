@@ -43,9 +43,11 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -77,32 +79,20 @@ public class SearchUtil {
 	}
 
 	public static <T> Page<T> search(
+			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Filter filter, Class<?> indexerClass, String keywords,
 			Pagination pagination,
 			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
 			UnsafeConsumer<SearchContext, Exception>
 				searchContextUnsafeConsumer,
-			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
-			Sort[] sorts)
+			Sort[] sorts,
+			UnsafeFunction<Document, T, Exception> transformUnsafeFunction)
 		throws Exception {
 
-		return search(
-			booleanQueryUnsafeConsumer, filter, indexerClass, keywords,
-			pagination, queryConfigUnsafeConsumer, searchContextUnsafeConsumer,
-			transformUnsafeFunction, sorts, new HashMap<>());
-	}
-
-	public static <T> Page<T> search(
-			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Filter filter, Class<?> indexerClass, String keywords,
-			Pagination pagination,
-			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
-			UnsafeConsumer<SearchContext, Exception>
-				searchContextUnsafeConsumer,
-			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
-			Sort[] sorts, Map<String, Map> actions)
-		throws Exception {
+		if (actions == null) {
+			actions = Collections.emptyMap();
+		}
 
 		if (sorts == null) {
 			sorts = new Sort[] {
@@ -131,7 +121,63 @@ public class SearchUtil {
 		}
 
 		return Page.of(
-			actions, items, pagination, indexer.searchCount(searchContext));
+			(Map)actions, items, pagination,
+			indexer.searchCount(searchContext));
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(Map,
+	 *             UnsafeConsumer, Filter, Class, String, Pagination,
+	 *             UnsafeConsumer, UnsafeConsumer, Sort[], UnsafeFunction)}
+	 */
+	@Deprecated
+	public static <T> Page<T> search(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, Class<?> indexerClass, String keywords,
+			Pagination pagination,
+			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
+			UnsafeConsumer<SearchContext, Exception>
+				searchContextUnsafeConsumer,
+			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
+			Sort[] sorts)
+		throws Exception {
+
+		return search(
+			Collections.emptyMap(), booleanQueryUnsafeConsumer, filter,
+			indexerClass, keywords, pagination, queryConfigUnsafeConsumer,
+			searchContextUnsafeConsumer, sorts, transformUnsafeFunction);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(Map,
+	 *             UnsafeConsumer, Filter, Class, String, Pagination,
+	 *             UnsafeConsumer, UnsafeConsumer, Sort[], UnsafeFunction)}
+	 */
+	@Deprecated
+	public static <T> Page<T> search(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, Class<?> indexerClass, String keywords,
+			Pagination pagination,
+			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
+			UnsafeConsumer<SearchContext, Exception>
+				searchContextUnsafeConsumer,
+			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
+			Sort[] sorts, Map<String, Map> actions)
+		throws Exception {
+
+		Set<Map.Entry<String, Map>> entries = actions.entrySet();
+
+		Stream<Map.Entry<String, Map>> stream = entries.stream();
+
+		Map<String, Map<String, String>> actionsTypedMap = stream.collect(
+			Collectors.toMap(
+				Map.Entry::getKey,
+				entry -> (Map<String, String>)entry.getValue()));
+
+		return search(
+			actionsTypedMap, booleanQueryUnsafeConsumer, filter, indexerClass,
+			keywords, pagination, queryConfigUnsafeConsumer,
+			searchContextUnsafeConsumer, sorts, transformUnsafeFunction);
 	}
 
 	private static SearchContext _createSearchContext(

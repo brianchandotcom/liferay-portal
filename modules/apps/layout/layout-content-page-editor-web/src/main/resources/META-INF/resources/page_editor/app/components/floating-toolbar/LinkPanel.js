@@ -22,12 +22,12 @@ import React, {
 	useRef
 } from 'react';
 
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
-import {EDITABLE_TYPES} from '../config/constants/editableTypes';
-import {ConfigContext} from '../config/index';
-import InfoItemService from '../services/InfoItemService';
-import {useDispatch, useSelector} from '../store/index';
-import updateEditableValues from '../thunks/updateEditableValues';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../js/utils/constants';
+import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
+import {ConfigContext} from '../../config/index';
+import InfoItemService from '../../services/InfoItemService';
+import {useDispatch, useSelector} from '../../store/index';
+import updateEditableValues from '../../thunks/updateEditableValues';
 import MappingSelector from './MappingSelector';
 
 const SOURCE_TYPES = {
@@ -77,7 +77,7 @@ export function useDebounceCallback(callback, milliseconds) {
 	return [callbackRef.current, () => cancelDebounce(callbackRef.current)];
 }
 
-export default function LinkConfigurationPanel({item}) {
+export default function LinkPanel({item}) {
 	const {editableId, fragmentEntryLinkId} = item;
 
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);

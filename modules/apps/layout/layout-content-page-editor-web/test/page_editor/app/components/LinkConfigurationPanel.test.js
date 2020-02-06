@@ -24,7 +24,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../src/main/resources/META-INF/resources/js/utils/constants';
-import LinkConfigurationPanel from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/LinkConfigurationPanel';
+import LinkPanel from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/LinkPanel';
 import {ConfigContext} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import serviceFetch from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
@@ -65,14 +65,14 @@ function getStateWithConfig(config = {}) {
 	};
 }
 
-function renderLinkConfigurationPanel(
+function renderLinkPanel(
 	{state = getStateWithConfig()} = {},
 	dispatch = () => {}
 ) {
 	return render(
 		<ConfigContext.Provider value={{}}>
 			<StoreAPIContextProvider dispatch={dispatch} getState={() => state}>
-				<LinkConfigurationPanel
+				<LinkPanel
 					item={{editableId: 'editable-id-0', fragmentEntryLinkId: 0}}
 				/>
 			</StoreAPIContextProvider>
@@ -83,7 +83,7 @@ function renderLinkConfigurationPanel(
 	);
 }
 
-describe('LinkConfigurationPanel', () => {
+describe('LinkPanel', () => {
 	afterEach(() => {
 		cleanup();
 
@@ -92,7 +92,7 @@ describe('LinkConfigurationPanel', () => {
 	});
 
 	it('renders manual selection panel', () => {
-		const {getByText, queryByText} = renderLinkConfigurationPanel();
+		const {getByText, queryByText} = renderLinkPanel();
 
 		expect(getByText('link')).toBeInTheDocument();
 		expect(getByText('url')).toBeInTheDocument();
@@ -102,7 +102,7 @@ describe('LinkConfigurationPanel', () => {
 	});
 
 	it('shows mapping panel when changing link source', async () => {
-		const {getByLabelText, queryByText} = renderLinkConfigurationPanel();
+		const {getByLabelText, queryByText} = renderLinkPanel();
 
 		const sourceTypeInput = getByLabelText('link');
 
@@ -118,7 +118,7 @@ describe('LinkConfigurationPanel', () => {
 	});
 
 	it('shows the url and target values when previously saved', () => {
-		const {getByLabelText} = renderLinkConfigurationPanel({
+		const {getByLabelText} = renderLinkPanel({
 			state: getStateWithConfig({
 				href: 'http://liferay.com',
 				target: '_blank'
@@ -131,7 +131,7 @@ describe('LinkConfigurationPanel', () => {
 
 	it('shows mapping panel when editable link is mapped', async () => {
 		await act(async () => {
-			renderLinkConfigurationPanel({
+			renderLinkPanel({
 				state: getStateWithConfig({
 					classNameId: 1,
 					classPK: 1,
@@ -147,7 +147,7 @@ describe('LinkConfigurationPanel', () => {
 
 	it('shows mapping panel when editable link is mapped', async () => {
 		await act(async () => {
-			renderLinkConfigurationPanel({
+			renderLinkPanel({
 				state: getStateWithConfig({
 					classNameId: 1,
 					classPK: 1,
@@ -167,7 +167,7 @@ describe('LinkConfigurationPanel', () => {
 		);
 
 		await act(async () => {
-			renderLinkConfigurationPanel({
+			renderLinkPanel({
 				state: getStateWithConfig({
 					classNameId: 1,
 					classPK: 1,
@@ -190,7 +190,7 @@ describe('LinkConfigurationPanel', () => {
 		});
 
 		await act(async () => {
-			renderLinkConfigurationPanel({
+			renderLinkPanel({
 				state: getStateWithConfig({
 					classNameId: 1,
 					classPK: 1,
@@ -218,7 +218,7 @@ describe('LinkConfigurationPanel', () => {
 			editableConfig = getEditableConfig(editableValues);
 		});
 
-		const {getByLabelText} = renderLinkConfigurationPanel({
+		const {getByLabelText} = renderLinkPanel({
 			state: getStateWithConfig({})
 		});
 

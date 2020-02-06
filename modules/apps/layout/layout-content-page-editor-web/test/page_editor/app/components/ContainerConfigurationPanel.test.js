@@ -16,7 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import {ContainerConfigurationPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/ContainerConfigurationPanel';
+import {ContainerConfigurationPanel} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/ContainerConfigurationPanel';
 import {ConfigContext} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config';
 import {PADDING_OPTIONS} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/paddingOptions';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';

@@ -26,9 +26,9 @@ import React, {
 } from 'react';
 import {createPortal} from 'react-dom';
 
-import debounceRAF from '../../core/debounceRAF';
-import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../config/constants/floatingToolbarConfigurations';
-import {useIsActive} from './Controls';
+import debounceRAF from '../../../core/debounceRAF';
+import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../../config/constants/floatingToolbarConfigurations';
+import {useIsActive} from '../Controls';
 
 export default function FloatingToolbar({
 	buttons,

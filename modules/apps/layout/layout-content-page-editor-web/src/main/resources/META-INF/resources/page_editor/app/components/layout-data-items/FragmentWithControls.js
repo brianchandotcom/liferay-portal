@@ -35,8 +35,8 @@ import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopp
 import {useSelector, useDispatch} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {useSelectItem} from '../Controls';
-import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
+import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import FragmentContent from './FragmentContent';
 
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {

@@ -12,11 +12,11 @@
  * details.
  */
 
-import {ContainerConfigurationPanel} from '../../../app/components/ContainerConfigurationPanel';
-import {FragmentConfigurationPanel} from '../../../app/components/FragmentConfigurationPanel';
-import LinkConfigurationPanel from '../../../app/components/LinkConfigurationPanel';
-import {MapConfigurationPanel} from '../../../app/components/MapConfigurationPanel';
-import {RowConfigurationPanel} from '../../../app/components/RowConfigurationPanel';
+import {ContainerConfigurationPanel} from '../../../app/components/floating-toolbar/ContainerConfigurationPanel';
+import {FragmentConfigurationPanel} from '../../../app/components/floating-toolbar/FragmentConfigurationPanel';
+import LinkPanel from '../../../app/components/floating-toolbar/LinkPanel';
+import {MappingPanel} from '../../../app/components/floating-toolbar/MappingPanel';
+import {RowConfigurationPanel} from '../../../app/components/floating-toolbar/RowConfigurationPanel';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from './editableFloatingToolbarButtons';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from './layoutDataFloatingToolbarButtons';
 
@@ -31,7 +31,7 @@ const {link, map} = EDITABLE_FLOATING_TOOLBAR_BUTTONS;
 export const FLOATING_TOOLBAR_CONFIGURATIONS = {
 	[containerConfiguration.panelId]: ContainerConfigurationPanel,
 	[fragmentConfiguration.panelId]: FragmentConfigurationPanel,
-	[link.panelId]: LinkConfigurationPanel,
-	[map.panelId]: MapConfigurationPanel,
+	[link.panelId]: LinkPanel,
+	[map.panelId]: MappingPanel,
 	[rowConfiguration.panelId]: RowConfigurationPanel
 };

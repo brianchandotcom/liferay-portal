@@ -254,6 +254,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"classPK", editorSoyContext.get("classPK")
 			).put(
+				"collections", _getFragmentCollectionsSoyContexts(true, false)
+			).put(
 				"defaultEditorConfigurations", _getDefaultConfigurations()
 			).put(
 				"defaultLanguageId", editorSoyContext.get("defaultLanguageId")
@@ -479,7 +481,7 @@ public class ContentPageEditorDisplayContext {
 			getFragmentEntryActionURL(
 				"/content_layout/edit_fragment_entry_link")
 		).put(
-			"elements", _getFragmentCollectionsSoyContexts()
+			"elements", _getFragmentCollectionsSoyContexts(false, true)
 		).put(
 			"fragmentEntryLinks", _getFragmentEntryLinksSoyContext()
 		).put(
@@ -986,11 +988,15 @@ public class ContentPageEditorDisplayContext {
 		return soyContexts;
 	}
 
-	private List<SoyContext> _getFragmentCollectionsSoyContexts() {
-		List<SoyContext> soyContexts =
-			_getFragmentCollectionContributorSoyContexts();
+	private List<SoyContext> _getFragmentCollectionsSoyContexts(
+		boolean includeEmpty, boolean includeSystem) {
 
-		soyContexts.addAll(_getDynamicFragmentsSoyContexts());
+		List<SoyContext> soyContexts = new ArrayList<>();
+
+		if (includeSystem) {
+			soyContexts.addAll(_getFragmentCollectionContributorSoyContexts());
+			soyContexts.addAll(_getDynamicFragmentsSoyContexts());
+		}
 
 		long[] groupIds = {
 			themeDisplay.getCompanyGroupId(), getGroupId(),
@@ -1007,7 +1013,7 @@ public class ContentPageEditorDisplayContext {
 					fragmentCollection.getFragmentCollectionId(),
 					WorkflowConstants.STATUS_APPROVED);
 
-			if (ListUtil.isEmpty(fragmentEntries)) {
+			if (!includeEmpty && ListUtil.isEmpty(fragmentEntries)) {
 				continue;
 			}
 
@@ -1016,7 +1022,14 @@ public class ContentPageEditorDisplayContext {
 			List<SoyContext> fragmentEntriesSoyContexts =
 				_getFragmentEntriesSoyContexts(fragmentEntries);
 
-			if (ListUtil.isEmpty(fragmentEntriesSoyContexts)) {
+			if (!includeEmpty && ListUtil.isEmpty(fragmentEntriesSoyContexts)) {
+				continue;
+			}
+
+			if (!includeSystem &&
+				(fragmentCollection.getGroupId() !=
+					themeDisplay.getScopeGroupId())) {
+
 				continue;
 			}
 

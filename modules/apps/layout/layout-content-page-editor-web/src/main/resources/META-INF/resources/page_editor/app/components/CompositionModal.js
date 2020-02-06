@@ -14,15 +14,17 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayCardWithHorizontal from '@clayui/card';
+import ClayCard from '@clayui/card';
 import ClayForm, {ClayInput, ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
+import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
 import Button from '../../common/components/Button';
+import {openImageSelector} from '../../core/openImageSelector';
 
 const CompositionModal = ({
 	errorMessage,
@@ -30,7 +32,22 @@ const CompositionModal = ({
 	onClose,
 	onErrorDismiss
 }) => {
-	const {elements, portletNamespace} = useContext(ConfigContext);
+	const {collections, imageSelectorURL, portletNamespace} = useContext(
+		ConfigContext
+	);
+
+	const [fragmentCollectionId, setFragmentCollectionId] = useState(-1);
+
+	const [thumbnail, setThumbnail] = useState({});
+
+	const handleThumbnailSelected = image => {
+		setThumbnail(image);
+	};
+
+	const thumbnailSelectorConfig = {
+		imageSelectorURL,
+		portletNamespace
+	};
 
 	const [loading] = useState(false);
 
@@ -54,31 +71,38 @@ const CompositionModal = ({
 						/>
 					)}
 					<ClayForm.Group>
-						<ClayInput.Group className="align-items-end">
-							<ClayInput.GroupItem>
-								<label htmlFor={nameInputId}>
-									{Liferay.Language.get('name')}
+						<label htmlFor={nameInputId}>
+							{Liferay.Language.get('name')}
 
-									<ClayIcon
-										className="ml-1 reference-mark"
-										focusable="false"
-										role="presentation"
-										symbol="asterisk"
-									/>
-								</label>
+							<ClayIcon
+								className="ml-1 reference-mark"
+								focusable="false"
+								role="presentation"
+								symbol="asterisk"
+							/>
+						</label>
 
-								<ClayInput
-									autoFocus
-									id={nameInputId}
-									placeholder={Liferay.Language.get('name')}
-									required
-									type="text"
-								/>
-							</ClayInput.GroupItem>
+						<ClayInput
+							autoFocus
+							id={nameInputId}
+							placeholder={Liferay.Language.get('name')}
+							required
+							type="text"
+						/>
+					</ClayForm.Group>
+
+					<ClayForm.Group>
+						<ClayInput.Group>
 							<ClayInput.GroupItem shrink>
 								<ClayButton
 									disabled={loading}
 									displayType="secondary"
+									onClick={() =>
+										openImageSelector(
+											thumbnailSelectorConfig,
+											handleThumbnailSelected
+										)
+									}
 									value={Liferay.Language.get(
 										'upload-thumbnail'
 									)}
@@ -92,6 +116,9 @@ const CompositionModal = ({
 
 									{Liferay.Language.get('upload-thumbnail')}
 								</ClayButton>
+							</ClayInput.GroupItem>
+							<ClayInput.GroupItem className="align-items-center">
+								<span className="ml-2">{thumbnail.title}</span>
 							</ClayInput.GroupItem>
 						</ClayInput.Group>
 					</ClayForm.Group>
@@ -121,7 +148,7 @@ const CompositionModal = ({
 									)}
 								/>
 							</ClayInput.GroupItem>
-							<ClayInput.GroupItem>
+							<ClayInput.GroupItem className="ml-4">
 								<ClayCheckbox
 									id={
 										portletNamespace +
@@ -136,11 +163,78 @@ const CompositionModal = ({
 						</ClayInput.Group>
 					</ClayForm.Group>
 					<ClayForm.Group>
-						{elements.map(collection => (
-							<ClayCardWithHorizontal
-								title={collection.name}
-							/>
-						))}
+						{collections.length > 0 ? (
+							<>
+								<h5 className="text-muted text-uppercase">
+									{Liferay.Language.get('select-collection')}
+								</h5>
+
+								<div className="row">
+									{collections.length > 0 &&
+										collections.map(collection => (
+											<div
+												className="col-md-4"
+												key={
+													collection.fragmentCollectionId
+												}
+											>
+												<ClayCard
+													className={
+														fragmentCollectionId ===
+														collection.fragmentCollectionId
+															? 'active'
+															: ''
+													}
+													horizontal
+													interactive
+													onClick={() =>
+														setFragmentCollectionId(
+															collection.fragmentCollectionId
+														)
+													}
+												>
+													<ClayCard.Body>
+														<ClayCard.Row>
+															<span className="autofit-col">
+																<ClaySticker
+																	inline
+																>
+																	<ClayIcon symbol="folder" />
+																</ClaySticker>
+															</span>
+															<span className="autofit-col autofit-col-expand">
+																<span className="autofit-section">
+																	<ClayCard.Description
+																		displayType="title"
+																		truncate
+																	>
+																		{
+																			collection.name
+																		}
+																	</ClayCard.Description>
+																</span>
+															</span>
+														</ClayCard.Row>
+													</ClayCard.Body>
+												</ClayCard>
+											</div>
+										))}
+								</div>
+							</>
+						) : (
+							<div className="alert alert-info">
+								<ClayIcon
+									className="inline-item inline-item-after mr-2 reference-mark"
+									focusable="false"
+									role="presentation"
+									symbol="exclamation-full"
+								/>
+
+								{Liferay.Language.get(
+									'this-fragment-will-be-saved-in-a-new-collection-called-saved-fragments'
+								)}
+							</div>
+						)}
 					</ClayForm.Group>
 				</ClayForm>
 			</ClayModal.Body>

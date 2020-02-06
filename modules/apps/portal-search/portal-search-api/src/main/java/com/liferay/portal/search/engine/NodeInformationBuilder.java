@@ -14,9 +14,12 @@
 
 package com.liferay.portal.search.engine;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Bryan Engler
  */
+@ProviderType
 public interface NodeInformationBuilder {
 
 	public NodeInformation build();

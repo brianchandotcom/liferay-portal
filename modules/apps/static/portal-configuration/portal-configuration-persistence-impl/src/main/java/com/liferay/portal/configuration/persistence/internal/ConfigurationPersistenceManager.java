@@ -463,6 +463,10 @@ public class ConfigurationPersistenceManager
 			String pid, String dictionaryString)
 		throws IOException {
 
+		if (dictionaryString == null) {
+			return new HashMapDictionary<>();
+		}
+
 		Dictionary<String, String> dictionary = ConfigurationHandler.read(
 			new UnsyncByteArrayInputStream(
 				dictionaryString.getBytes(StringPool.UTF8)));

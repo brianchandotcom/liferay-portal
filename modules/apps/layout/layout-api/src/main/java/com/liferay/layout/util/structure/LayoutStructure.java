@@ -210,7 +210,7 @@ public class LayoutStructure {
 		LayoutStructureItem newParentLayoutStructureItem =
 			_layoutStructureItems.get(parentItemId);
 
-		if (!(newParentLayoutStructureItem instanceof RowLayoutStructureItem) ||
+		if (!(layoutStructureItem instanceof RowLayoutStructureItem) ||
 			!(newParentLayoutStructureItem instanceof
 				RootLayoutStructureItem)) {
 

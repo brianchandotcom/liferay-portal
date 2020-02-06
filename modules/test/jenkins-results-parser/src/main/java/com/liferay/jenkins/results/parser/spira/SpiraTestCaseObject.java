@@ -29,7 +29,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SpiraTest {
+public class SpiraTestCaseObject {
 
 	public int getID() {
 		return _jsonObject.getInt("TestCaseId");
@@ -48,24 +48,20 @@ public class SpiraTest {
 		return _jsonObject.toString();
 	}
 
-	protected SpiraTest(JSONObject jsonObject) {
-		_jsonObject = jsonObject;
-	}
-
-	protected static List<SpiraTest> getSpiraTests(
+	protected static List<SpiraTestCaseObject> getSpiraTestCases(
 			SpiraProject spiraProject, SearchParameter... searchParameters)
 		throws IOException {
 
-		List<SpiraTest> spiraTests = new ArrayList<>();
+		List<SpiraTestCaseObject> spiraTestCases = new ArrayList<>();
 
-		for (SpiraTest spiraTest : _spiraTests.values()) {
-			if (spiraTest.matches(searchParameters)) {
-				spiraTests.add(spiraTest);
+		for (SpiraTestCaseObject spiraTestCase : _spiraTestCases.values()) {
+			if (spiraTestCase.matches(searchParameters)) {
+				spiraTestCases.add(spiraTestCase);
 			}
 		}
 
-		if (!spiraTests.isEmpty()) {
-			return spiraTests;
+		if (!spiraTestCases.isEmpty()) {
+			return spiraTestCases;
 		}
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
@@ -90,36 +86,42 @@ public class SpiraTest {
 			requestJSONArray.toString());
 
 		for (int i = 0; i < responseJSONArray.length(); i++) {
-			SpiraTest spiraTest = new SpiraTest(
+			SpiraTestCaseObject spiraTestCase = new SpiraTestCaseObject(
 				responseJSONArray.getJSONObject(i));
 
-			_spiraTests.put(
-				_createSpiraTestKey(spiraProject.getID(), spiraTest.getID()),
-				spiraTest);
+			_spiraTestCases.put(
+				_createSpiraTestCaseKey(
+					spiraProject.getID(), spiraTestCase.getID()),
+				spiraTestCase);
 
-			if (spiraTest.matches(searchParameters)) {
-				spiraTests.add(spiraTest);
+			if (spiraTestCase.matches(searchParameters)) {
+				spiraTestCases.add(spiraTestCase);
 			}
 		}
 
-		return spiraTests;
+		return spiraTestCases;
+	}
+
+	protected SpiraTestCaseObject(JSONObject jsonObject) {
+		_jsonObject = jsonObject;
 	}
 
 	protected boolean matches(SearchParameter... searchParameters) {
 		return SearchParameter.matches(toJSONObject(), searchParameters);
 	}
 
-	private static String _createSpiraTestKey(
-		Integer projectID, Integer testID) {
+	private static String _createSpiraTestCaseKey(
+		Integer projectID, Integer testCaseID) {
 
-		return projectID + "-" + testID;
+		return projectID + "-" + testCaseID;
 	}
 
 	private static final int _NUMBER_OF_ROWS = 15000;
 
 	private static final int _STARTING_ROW = 1;
 
-	private static final Map<String, SpiraTest> _spiraTests = new HashMap<>();
+	private static final Map<String, SpiraTestCaseObject> _spiraTestCases =
+		new HashMap<>();
 
 	private final JSONObject _jsonObject;
 

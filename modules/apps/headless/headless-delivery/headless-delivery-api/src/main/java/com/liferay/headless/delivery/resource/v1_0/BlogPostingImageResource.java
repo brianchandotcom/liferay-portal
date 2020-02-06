@@ -27,6 +27,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -46,6 +47,10 @@ public interface BlogPostingImageResource {
 	public void deleteBlogPostingImage(Long blogPostingImageId)
 		throws Exception;
 
+	public Response deleteBlogPostingImageBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public BlogPostingImage getBlogPostingImage(Long blogPostingImageId)
 		throws Exception;
 
@@ -56,6 +61,11 @@ public interface BlogPostingImageResource {
 
 	public BlogPostingImage postSiteBlogPostingImage(
 			Long siteId, MultipartBody multipartBody)
+		throws Exception;
+
+	public Response postSiteBlogPostingImageBatch(
+			Long siteId, MultipartBody multipartBody, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

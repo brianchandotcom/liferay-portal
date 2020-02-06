@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.item.selector.web.internal.DLItemSelectorView;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
@@ -65,6 +66,7 @@ import com.liferay.staging.StagingGroupHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
@@ -189,11 +191,16 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			FileEntryTypeCapability fileEntryTypeCapability =
 				repository.getCapability(FileEntryTypeCapability.class);
 
+			Optional<Long> optional = _getFileEntryTypeIdOptional();
+
+			long fileEntryTypeId = optional.orElse(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
+
 			return (List)
 				fileEntryTypeCapability.
 					getFoldersAndFileEntriesAndFileShortcuts(
 						_getStagingAwareGroupId(), _getFolderId(),
-						_getMimeTypes(), _getFileEntryTypeId(), false,
+						_getMimeTypes(), fileEntryTypeId, false,
 						WorkflowConstants.STATUS_APPROVED, startAndEnd[0],
 						startAndEnd[1], repositoryModelOrderByComparator);
 		}
@@ -219,11 +226,15 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			FileEntryTypeCapability fileEntryTypeCapability =
 				repository.getCapability(FileEntryTypeCapability.class);
 
+			Optional<Long> optional = _getFileEntryTypeIdOptional();
+
+			long fileEntryTypeId = optional.orElse(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
+
 			return fileEntryTypeCapability.
 				getFoldersAndFileEntriesAndFileShortcutsCount(
 					_getStagingAwareGroupId(), _getFolderId(), _getMimeTypes(),
-					_getFileEntryTypeId(), false,
-					WorkflowConstants.STATUS_APPROVED);
+					fileEntryTypeId, false, WorkflowConstants.STATUS_APPROVED);
 		}
 
 		return DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
@@ -306,12 +317,18 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return _showDragAndDropZone;
 	}
 
-	private long _getFileEntryTypeId() {
+	private Optional<Long> _getFileEntryTypeIdOptional() {
+		if (!(_itemSelectorCriterion instanceof
+				InfoItemItemSelectorCriterion)) {
+
+			return Optional.empty();
+		}
+
 		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion =
 			(InfoItemItemSelectorCriterion)_itemSelectorCriterion;
 
-		return GetterUtil.getLong(
-			infoItemItemSelectorCriterion.getItemSubtype());
+		return Optional.of(
+			GetterUtil.getLong(infoItemItemSelectorCriterion.getItemSubtype()));
 	}
 
 	private long _getFolderId() {
@@ -399,8 +416,11 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		if (_isFilterByFileEntryType() &&
 			repository.isCapabilityProvided(FileEntryTypeCapability.class)) {
 
-			searchContext.setAttribute(
-				"fileEntryTypeId", _getFileEntryTypeId());
+			Optional<Long> optional = _getFileEntryTypeIdOptional();
+
+			optional.ifPresent(
+				fileEntryTypeId -> searchContext.setAttribute(
+					"fileEntryTypeId", fileEntryTypeId));
 		}
 
 		searchContext.setAttribute("mimeTypes", _getMimeTypes());

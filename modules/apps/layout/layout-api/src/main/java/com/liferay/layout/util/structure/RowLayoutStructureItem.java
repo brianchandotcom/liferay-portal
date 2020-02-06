@@ -28,6 +28,15 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	@Override
+	public JSONObject getItemConfigJSONObject() {
+		return JSONUtil.put(
+			"gutters", _gutters
+		).put(
+			"numberOfColumns", _numberOfColumns
+		);
+	}
+
+	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_ROW;
 	}
@@ -57,15 +66,6 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 		if (itemConfigJSONObject.has("numberOfColumns")) {
 			setNumberOfColumns(itemConfigJSONObject.getInt("numberOfColumns"));
 		}
-	}
-
-	@Override
-	protected JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put(
-			"gutters", _gutters
-		).put(
-			"numberOfColumns", _numberOfColumns
-		);
 	}
 
 	private boolean _gutters = true;

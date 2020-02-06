@@ -32,6 +32,11 @@ public class FragmentLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	@Override
+	public JSONObject getItemConfigJSONObject() {
+		return JSONUtil.put("fragmentEntryLinkId", _fragmentEntryLinkId);
+	}
+
+	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_FRAGMENT;
 	}
@@ -46,11 +51,6 @@ public class FragmentLayoutStructureItem extends LayoutStructureItem {
 			setFragmentEntryLinkId(
 				itemConfigJSONObject.getLong("fragmentEntryLinkId"));
 		}
-	}
-
-	@Override
-	protected JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put("fragmentEntryLinkId", _fragmentEntryLinkId);
 	}
 
 	private long _fragmentEntryLinkId;

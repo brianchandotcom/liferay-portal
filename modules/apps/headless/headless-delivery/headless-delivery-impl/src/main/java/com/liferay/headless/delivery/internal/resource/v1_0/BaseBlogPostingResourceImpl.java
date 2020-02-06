@@ -14,6 +14,8 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
@@ -25,9 +27,11 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -37,6 +41,8 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
+
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.List;
@@ -60,6 +66,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -69,7 +78,8 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 @Path("/v1.0")
 public abstract class BaseBlogPostingResourceImpl
-	implements BlogPostingResource {
+	implements BlogPostingResource, BatchEngineTaskItemDelegate<BlogPosting>,
+			   EntityModelResource {
 
 	/**
 	 * Invoke this method with the command line:
@@ -91,6 +101,41 @@ public abstract class BaseBlogPostingResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("blogPostingId") Long
 				blogPostingId)
 		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes("application/json")
+	@DELETE
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/blog-postings/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
+	public Response deleteBlogPostingBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
+		importTaskResource.setContextCompany(contextCompany);
+		importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		importTaskResource.setContextUriInfo(contextUriInfo);
+		importTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			importTaskResource.deleteImportTask(
+				BlogPosting.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	/**
@@ -235,6 +280,41 @@ public abstract class BaseBlogPostingResourceImpl
 		throws Exception {
 
 		return new BlogPosting();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes("application/json")
+	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/blog-postings/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
+	public Response putBlogPostingBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
+		importTaskResource.setContextCompany(contextCompany);
+		importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		importTaskResource.setContextUriInfo(contextUriInfo);
+		importTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			importTaskResource.putImportTask(
+				BlogPosting.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	/**
@@ -392,6 +472,45 @@ public abstract class BaseBlogPostingResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-postings/batch'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes("application/json")
+	@POST
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/sites/{siteId}/blog-postings/batch")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
+	public Response postSiteBlogPostingBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		importTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
+		importTaskResource.setContextCompany(contextCompany);
+		importTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		importTaskResource.setContextUriInfo(contextUriInfo);
+		importTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			importTaskResource.postImportTask(
+				BlogPosting.class.getName(), callbackURL, null, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-postings/subscribe'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -419,6 +538,68 @@ public abstract class BaseBlogPostingResourceImpl
 	public void putSiteBlogPostingUnsubscribe(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
 		throws Exception {
+	}
+
+	@Override
+	public void create(
+			java.util.Collection<BlogPosting> blogPostings,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (BlogPosting blogPosting : blogPostings) {
+			postSiteBlogPosting(
+				Long.valueOf((String)parameters.get("siteId")), blogPosting);
+		}
+	}
+
+	@Override
+	public void delete(
+			java.util.Collection<BlogPosting> blogPostings,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (BlogPosting blogPosting : blogPostings) {
+			deleteBlogPosting(blogPosting.getId());
+		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
+		throws Exception {
+
+		return getEntityModel(
+			new MultivaluedHashMap<String, Object>(multivaluedMap));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
+	public Page<BlogPosting> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
+		throws Exception {
+
+		return getSiteBlogPostingsPage(
+			(Long)parameters.get("siteId"), search, filter, pagination, sorts);
+	}
+
+	@Override
+	public void update(
+			java.util.Collection<BlogPosting> blogPostings,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (BlogPosting blogPosting : blogPostings) {
+			putBlogPosting(
+				blogPosting.getId() != null ? blogPosting.getId() :
+				(Long)parameters.get("blogPostingId"),
+				blogPosting);
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -516,6 +697,7 @@ public abstract class BaseBlogPostingResourceImpl
 	protected GroupLocalService groupLocalService;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
+	protected ImportTaskResource importTaskResource;
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;

@@ -27,6 +27,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -45,6 +46,9 @@ public interface BlogPostingResource {
 
 	public void deleteBlogPosting(Long blogPostingId) throws Exception;
 
+	public Response deleteBlogPostingBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public BlogPosting getBlogPosting(Long blogPostingId) throws Exception;
 
 	public BlogPosting patchBlogPosting(
@@ -53,6 +57,9 @@ public interface BlogPostingResource {
 
 	public BlogPosting putBlogPosting(
 			Long blogPostingId, BlogPosting blogPosting)
+		throws Exception;
+
+	public Response putBlogPostingBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteBlogPostingMyRating(Long blogPostingId) throws Exception;
@@ -71,6 +78,10 @@ public interface BlogPostingResource {
 		throws Exception;
 
 	public BlogPosting postSiteBlogPosting(Long siteId, BlogPosting blogPosting)
+		throws Exception;
+
+	public Response postSiteBlogPostingBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public void putSiteBlogPostingSubscribe(Long siteId) throws Exception;

@@ -28,6 +28,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -53,7 +54,15 @@ public interface DocumentResource {
 			Long documentFolderId, MultipartBody multipartBody)
 		throws Exception;
 
+	public Response postDocumentFolderDocumentBatch(
+			Long documentFolderId, MultipartBody multipartBody,
+			String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteDocument(Long documentId) throws Exception;
+
+	public Response deleteDocumentBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public Document getDocument(Long documentId) throws Exception;
 
@@ -61,6 +70,10 @@ public interface DocumentResource {
 		throws Exception;
 
 	public Document putDocument(Long documentId, MultipartBody multipartBody)
+		throws Exception;
+
+	public Response putDocumentBatch(
+			MultipartBody multipartBody, String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteDocumentMyRating(Long documentId) throws Exception;
@@ -79,6 +92,11 @@ public interface DocumentResource {
 		throws Exception;
 
 	public Document postSiteDocument(Long siteId, MultipartBody multipartBody)
+		throws Exception;
+
+	public Response postSiteDocumentBatch(
+			Long siteId, MultipartBody multipartBody, String callbackURL,
+			Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

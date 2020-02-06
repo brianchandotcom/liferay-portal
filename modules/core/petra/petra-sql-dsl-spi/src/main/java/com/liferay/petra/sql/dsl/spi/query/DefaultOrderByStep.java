@@ -20,6 +20,7 @@ import com.liferay.petra.sql.dsl.query.LimitStep;
 import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.sql.dsl.query.sort.OrderByInfo;
+import com.liferay.petra.sql.dsl.spi.expression.DefaultAlias;
 import com.liferay.petra.sql.dsl.spi.query.sort.DefaultOrderByExpression;
 
 import java.util.Arrays;
@@ -57,8 +58,15 @@ public interface DefaultOrderByStep extends DefaultLimitStep, OrderByStep {
 			Column<?, ?> column = table.getColumn(field);
 
 			if (column != null) {
-				orderByExpressions[i] = new DefaultOrderByExpression(
-					column, orderByInfo.isAscending(field));
+				if (field.equals(column.getName())) {
+					orderByExpressions[i] = new DefaultOrderByExpression(
+						column, orderByInfo.isAscending(field));
+				}
+				else {
+					orderByExpressions[i] = new DefaultOrderByExpression(
+						new DefaultAlias<>(column, field),
+						orderByInfo.isAscending(field));
+				}
 
 				count++;
 			}

@@ -112,10 +112,10 @@ public class MySQLDB extends BaseDB {
 
 	@Override
 	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, String createTablesContent)
+			String sqlDir, String databaseName, String createContent)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append("drop database if exists ");
 		sb.append(databaseName);
@@ -124,17 +124,12 @@ public class MySQLDB extends BaseDB {
 		sb.append(databaseName);
 		sb.append(" character set utf8;\n");
 
-		if (createTablesContent != null) {
+		if (createContent != null) {
 			sb.append("use ");
 			sb.append(databaseName);
 			sb.append(";\n\n");
 
-			sb.append(createTablesContent);
-
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/indexes/indexes-mysql.sql"));
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/sequences/sequences-mysql.sql"));
+			sb.append(createContent);
 		}
 
 		return sb.toString();

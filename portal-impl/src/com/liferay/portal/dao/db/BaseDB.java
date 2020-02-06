@@ -136,22 +136,44 @@ public abstract class BaseDB implements DB {
 				sqlDir, "/create", suffix, "/create", suffix, "-",
 				getServerName(), ".sql"));
 
-		String createTablesContent = null;
+		String createContent = null;
 
 		if (population != BARE) {
+			StringBundler sb = new StringBundler(6);
+
 			String tablesPrefix = "/portal/portal-";
 
 			if (sqlDir.endsWith("/WEB-INF/sql")) {
 				tablesPrefix = "/tables/tables-";
 			}
 
-			createTablesContent = readFile(
-				StringBundler.concat(
-					sqlDir, tablesPrefix, getServerName(), ".sql"));
+			sb.append(
+				readFile(
+					StringBundler.concat(
+						sqlDir, tablesPrefix, getServerName(), ".sql")));
+
+			sb.append("\n\n");
+
+			sb.append(
+				readFile(
+					StringBundler.concat(
+						sqlDir, "/indexes/indexes-", getServerName(), ".sql")));
+
+			sb.append("\n\n");
+
+			sb.append(
+				readFile(
+					StringBundler.concat(
+						sqlDir, "/sequences/sequences-", getServerName(),
+						".sql")));
+
+			sb.append("\n");
+
+			createContent = sb.toString();
 		}
 
 		String content = buildCreateFileContent(
-			sqlDir, databaseName, createTablesContent);
+			sqlDir, databaseName, createContent);
 
 		if (content != null) {
 			FileUtil.write(file, content);

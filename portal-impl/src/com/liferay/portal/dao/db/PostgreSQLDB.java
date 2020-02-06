@@ -158,10 +158,10 @@ public class PostgreSQLDB extends BaseDB {
 
 	@Override
 	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, String createTablesContent)
+			String sqlDir, String databaseName, String createContent)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append("drop database ");
 		sb.append(databaseName);
@@ -170,15 +170,11 @@ public class PostgreSQLDB extends BaseDB {
 		sb.append(databaseName);
 		sb.append(" encoding = 'UNICODE';\n");
 
-		if (createTablesContent != null) {
+		if (createContent != null) {
 			sb.append("\\c ");
 			sb.append(databaseName);
 			sb.append(";\n\n");
-			sb.append(createTablesContent);
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/indexes/indexes-postgresql.sql"));
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/sequences/sequences-postgresql.sql"));
+			sb.append(createContent);
 		}
 
 		return sb.toString();

@@ -127,25 +127,20 @@ public class OracleDB extends BaseDB {
 
 	@Override
 	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, String createTablesContent)
+			String sqlDir, String databaseName, String createContent)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("drop user &1 cascade;\n");
 		sb.append("create user &1 identified by &2;\n");
 		sb.append("grant connect,resource to &1;\n");
 
-		if (createTablesContent != null) {
+		if (createContent != null) {
 			sb.append("connect &1/&2;\n");
 			sb.append("set define off;\n");
 			sb.append("\n");
-			sb.append(createTablesContent);
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/indexes/indexes-oracle.sql"));
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/sequences/sequences-oracle.sql"));
-			sb.append("\n");
+			sb.append(createContent);
 		}
 
 		sb.append("quit");

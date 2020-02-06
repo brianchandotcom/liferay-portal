@@ -100,10 +100,10 @@ public class SybaseDB extends BaseDB {
 
 	@Override
 	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, String createTablesContent)
+			String sqlDir, String databaseName, String createContent)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("use master\n");
 		sb.append("exec sp_dboption '");
@@ -115,15 +115,11 @@ public class SybaseDB extends BaseDB {
 		sb.append("', 'select into/bulkcopy/pllsort' , true\n");
 		sb.append("go\n\n");
 
-		if (createTablesContent != null) {
+		if (createContent != null) {
 			sb.append("use ");
 			sb.append(databaseName);
 			sb.append("\n\n");
-			sb.append(createTablesContent);
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/indexes/indexes-sybase.sql"));
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/sequences/sequences-sybase.sql"));
+			sb.append(createContent);
 		}
 
 		return sb.toString();

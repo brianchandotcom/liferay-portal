@@ -122,10 +122,10 @@ public class SQLServerDB extends BaseDB {
 
 	@Override
 	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, String createTablesContent)
+			String sqlDir, String databaseName, String createContent)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("drop database ");
 		sb.append(databaseName);
@@ -137,15 +137,11 @@ public class SQLServerDB extends BaseDB {
 		sb.append("go\n");
 		sb.append("\n");
 
-		if (createTablesContent != null) {
+		if (createContent != null) {
 			sb.append("use ");
 			sb.append(databaseName);
 			sb.append(";\n\n");
-			sb.append(createTablesContent);
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/indexes/indexes-sql-server.sql"));
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/sequences/sequences-sql-server.sql"));
+			sb.append(createContent);
 		}
 
 		return sb.toString();

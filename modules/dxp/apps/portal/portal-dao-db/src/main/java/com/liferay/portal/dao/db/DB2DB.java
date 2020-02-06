@@ -104,10 +104,10 @@ public class DB2DB extends BaseDB {
 
 	@Override
 	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, String createTablesContent)
+			String sqlDir, String databaseName, String createContent)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("drop database ");
 		sb.append(databaseName);
@@ -117,15 +117,11 @@ public class DB2DB extends BaseDB {
 		sb.append(" pagesize 32768 temporary tablespace managed by automatic ");
 		sb.append("storage;\n");
 
-		if (createTablesContent != null) {
+		if (createContent != null) {
 			sb.append("connect to ");
 			sb.append(databaseName);
 			sb.append(";\n");
-			sb.append(createTablesContent);
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/indexes/indexes-db2.sql"));
-			sb.append("\n\n");
-			sb.append(readFile(sqlDir + "/sequences/sequences-db2.sql"));
+			sb.append(createContent);
 		}
 
 		return sb.toString();

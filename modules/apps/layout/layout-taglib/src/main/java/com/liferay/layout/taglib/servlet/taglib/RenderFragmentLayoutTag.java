@@ -271,19 +271,12 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			masterLayoutStructure.addLayoutStructureItem(layoutStructureItem);
 		}
 
-		for (LayoutStructureItem layoutStructureItem :
-				masterLayoutStructure.getLayoutStructureItems()) {
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+			(DropZoneLayoutStructureItem)
+				masterLayoutStructure.getDropZoneLayoutStructureItem();
 
-			if (layoutStructureItem instanceof DropZoneLayoutStructureItem) {
-				DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
-					(DropZoneLayoutStructureItem)layoutStructureItem;
-
-				dropZoneLayoutStructureItem.addChildrenItem(
-					layoutStructure.getMainItemId());
-
-				break;
-			}
-		}
+		dropZoneLayoutStructureItem.addChildrenItem(
+			layoutStructure.getMainItemId());
 
 		return masterLayoutStructure.toJSONObject();
 	}

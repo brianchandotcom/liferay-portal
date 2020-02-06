@@ -48,6 +48,34 @@ definition {
 		}
 	}
 
+	@description = "Access and set permissions for a custom object"
+	@priority = "4"
+	test AccessAndSetPermissionsForCustomObject {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.gotoBack();
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
+
+		Button.clickSave();
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
+
+		AppBuilderAdmin.validatePermissionsFromRolesAreNotChecked(roleList = "Account Administrator,Account Owner,Analytics Administrator,Portal Content Reviewer,Power User,User");
+
+		AppBuilderAdmin.addAllPermissionsFromRoles(roleList = "Portal Content Reviewer,User");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
+		AppBuilderAdmin.validatePermissionsFromRolesAreChecked(roleList = "Portal Content Reviewer,User");
+
+		AppBuilderAdmin.removeAllPermissionsFromRoles(roleList = "Portal Content Reviewer,User");
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
+		AppBuilderAdmin.validatePermissionsFromRolesAreNotChecked(roleList = "Portal Content Reviewer,User");
+	}
+
 	@description = "Add a Custom Object with valid name"
 	@priority = "5"
 	test AddCustomObjectWithValidName {
@@ -1853,162 +1881,6 @@ definition {
 		AppBuilderAdmin.searchByItem(itemName = "!@#");
 
 		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "!@#");
-	}
-
-	@description = "SetPermission"
-	@priority = "5"
-	test SetPermission {
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		ProductMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Control Panel",
-			portlet = "Custom Objects");
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
-		FormViewBuilder.closeSidebar();
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
-		FormViewBuilder.closeSidebar();
-
-		FormViewBuilder.setName(formViewName = "My Form View");
-
-		FormViewBuilder.save();
-
-		TableViewBuilder.addBasicTableView(
-			fieldType = "Text",
-			tableViewName = "My Table View");
-
-		App.add(
-			appTitle = "Test App",
-			deployOption = "Widget",
-			formViewName = "My Form View",
-			tableViewName = "My Table View");
-
-		AppBuilderAdmin.gotoBack();
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
-
-		AppBuilderAdmin.addOrRemovePermissionFromRoles(
-			addOrRemovePermission = "ADD",
-			permission = "ADD",
-			roleList = "User,Portal Content Reviewer");
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
-
-		AppBuilderAdmin.addOrRemovePermissionFromRoles(
-			addOrRemovePermission = "ADD",
-			permission = "DELETE",
-			roleList = "User,Portal Content Reviewer");
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
-
-		AppBuilderAdmin.addOrRemovePermissionFromRoles(
-			addOrRemovePermission = "ADD",
-			permission = "UPDATE",
-			roleList = "User,Portal Content Reviewer");
-
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
-
-		AppBuilderAdmin.addOrRemovePermissionFromRoles(
-			addOrRemovePermission = "ADD",
-			permission = "VIEW",
-			roleList = "User,Portal Content Reviewer");
-
-		JSONLayout.addPublicLayout(
-			groupName = "App Builder Site Name",
-			layoutName = "App Builder Test Page");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "App Builder Site Name",
-			layoutName = "App Builder Test Page",
-			layoutTemplate = "1 Column");
-
-		Navigator.gotoSitePage(
-			pageName = "App Builder Test Page",
-			siteName = "App Builder Site Name");
-
-		Portlet.addPG(
-			pageName = "App Builder Test Page",
-			portletName = "Test App");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "App Builder Test Page",
-			siteName = "App Builder Site Name");
-
-		for (var number : list "1,2") {
-
-			AppBuilderAdmin.add();
-
-			FormViewBuilder.editText(
-				fieldName = "Text",
-				fieldValue = "Testing permission.");
-
-			FormViewBuilder.editText(
-				fieldName = "Numeric",
-				fieldValue = "1914");
-
-			AppBuilderAdmin.save();
-
-			AppBuilderAdmin.validateItemNameOnTable(itemName = "Testing permission.");
-
-			AppBuilderAdmin.viewItem(itemName = "Testing permission.");
-
-			DetailsView.validateEntry(entry = "Testing permission.");
-			DetailsView.validateEntry(entry = "1914");
-
-			DetailsView.editEntry();
-
-			FormViewBuilder.editText(
-				fieldName = "Text",
-				fieldValue = "Testing EDIT permission.");
-
-			AppBuilderAdmin.save();
-
-			DetailsView.validateEntry(entry = "Testing EDIT permission.");
-
-			AppBuilderAdmin.gotoBack();
-
-			AppBuilderAdmin.validateItemNameOnTable(itemName = "Testing EDIT permission.");
-
-			AppBuilderAdmin.deleteEntry(itemName = "Testing EDIT permission.");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Portal Content Reviewer",
-				userEmailAddress = "userea@liferay.com");
-
-		}
 	}
 
 	@description = "Clear Table View search results when clicking the Clear button on the search results banner"

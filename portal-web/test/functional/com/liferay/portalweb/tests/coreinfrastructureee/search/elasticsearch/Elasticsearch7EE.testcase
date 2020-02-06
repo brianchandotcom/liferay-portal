@@ -700,7 +700,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "replicate-indices");
+			value1 = "create-follower-indices");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -770,7 +770,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "stop-follower-elasticsearch");
+			value1 = "stop-elasticsearch-local-cluster");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

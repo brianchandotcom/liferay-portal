@@ -114,7 +114,7 @@ xpack.security.transport.ssl.verification_mode: certificate</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-follower-elasticsearch-properties">
+	<macrodef name="configure-local-cluster-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
 cluster.name: LiferayElasticsearchClusterTwo
@@ -880,7 +880,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		<echo></echo>
 	</target>
 
-	<target name="replicate-indices">
+	<target name="create-follower-indices">
 		<exec executable="curl" outputproperty="companyId">
 			<arg value="http://localhost:8080/api/jsonws/company/get-company-by-virtual-host/virtual-host/localhost" />
 			<arg value="-u" />
@@ -1042,7 +1042,7 @@ xpack.monitoring.collection.enabled: true</echo>
 					<param name="remote.elasticsearch.cluster.size" value="2" />
 				</antcall>
 
-				<configure-follower-elasticsearch-properties />
+				<configure-local-cluster-properties />
 
 				<antcall target="start-elasticsearch-node">
 					<param name="remote.elasticsearch.cluster.size" value="2" />
@@ -1301,7 +1301,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		</if>
 	</target>
 
-	<target name="stop-follower-elasticsearch">
+	<target name="stop-elasticsearch-local-cluster">
 		<configure-elasticsearch7-test-properties />
 
 		<if>

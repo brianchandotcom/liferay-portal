@@ -16,6 +16,7 @@ package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
 /**
@@ -28,17 +29,17 @@ public class RootLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	@Override
+	public JSONObject getItemConfigJSONObject() {
+		return JSONFactoryUtil.createJSONObject();
+	}
+
+	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_ROOT;
 	}
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
-	}
-
-	@Override
-	protected JSONObject getItemConfigJSONObject() {
-		return null;
 	}
 
 }

@@ -90,6 +90,15 @@ public class LayoutStructure {
 	}
 
 	public LayoutStructureItem addLayoutStructureItem(
+		LayoutStructureItem layoutStructureItem) {
+
+		_layoutStructureItems.put(
+			layoutStructureItem.getItemId(), layoutStructureItem);
+
+		return layoutStructureItem;
+	}
+
+	public LayoutStructureItem addLayoutStructureItem(
 		String itemType, String parentItemId, int position) {
 
 		LayoutStructureItem layoutStructureItem =
@@ -184,6 +193,18 @@ public class LayoutStructure {
 			itemId, layoutStructureItem.getParentItemId(), position);
 	}
 
+	public LayoutStructureItem getDropZoneLayoutStructureItem() {
+		for (LayoutStructureItem layoutStructureItem :
+				getLayoutStructureItems()) {
+
+			if (layoutStructureItem instanceof DropZoneLayoutStructureItem) {
+				return layoutStructureItem;
+			}
+		}
+
+		return null;
+	}
+
 	public LayoutStructureItem getLayoutStructureItem(String itemId) {
 		return _layoutStructureItems.get(itemId);
 	}
@@ -210,7 +231,7 @@ public class LayoutStructure {
 		LayoutStructureItem newParentLayoutStructureItem =
 			_layoutStructureItems.get(parentItemId);
 
-		if (!(newParentLayoutStructureItem instanceof RowLayoutStructureItem) ||
+		if (!(layoutStructureItem instanceof RowLayoutStructureItem) ||
 			!(newParentLayoutStructureItem instanceof
 				RootLayoutStructureItem)) {
 

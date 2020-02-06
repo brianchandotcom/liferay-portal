@@ -20,7 +20,9 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -162,11 +164,8 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 					return _dataJSONObject;
 				}
 
-				JSONObject masterLayoutDataJSONObject =
-					JSONFactoryUtil.createJSONObject(masterLayoutData);
-
 				_dataJSONObject = _mergeLayoutDataJSONObject(
-					dataJSONObject, masterLayoutDataJSONObject);
+					data, masterLayoutData);
 
 				return _dataJSONObject;
 			}
@@ -259,39 +258,27 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	}
 
 	private JSONObject _mergeLayoutDataJSONObject(
-		JSONObject dataJSONObject, JSONObject masterLayoutDataJSONObject) {
+		String data, String masterLayoutData) {
 
-		JSONObject masterLayoutItemsJSONObject =
-			masterLayoutDataJSONObject.getJSONObject("items");
+		LayoutStructure masterLayoutStructure = LayoutStructure.of(
+			masterLayoutData);
 
-		JSONObject itemsJSONObject = dataJSONObject.getJSONObject("items");
+		LayoutStructure layoutStructure = LayoutStructure.of(data);
 
-		for (String key : itemsJSONObject.keySet()) {
-			JSONObject itemJSONObject = itemsJSONObject.getJSONObject(key);
+		for (LayoutStructureItem layoutStructureItem :
+				layoutStructure.getLayoutStructureItems()) {
 
-			masterLayoutItemsJSONObject.put(key, itemJSONObject);
+			masterLayoutStructure.addLayoutStructureItem(layoutStructureItem);
 		}
 
-		JSONObject masterLayoutDataRootItemsJSONObject =
-			masterLayoutDataJSONObject.getJSONObject("rootItems");
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+			(DropZoneLayoutStructureItem)
+				masterLayoutStructure.getDropZoneLayoutStructureItem();
 
-		String dropZoneItemId = masterLayoutDataRootItemsJSONObject.getString(
-			"dropZone");
+		dropZoneLayoutStructureItem.addChildrenItem(
+			layoutStructure.getMainItemId());
 
-		JSONObject dropZoneJSONObject =
-			masterLayoutItemsJSONObject.getJSONObject(dropZoneItemId);
-
-		JSONArray dropZoneChildrenJSONArray = dropZoneJSONObject.getJSONArray(
-			"children");
-
-		JSONObject rootItemsJSONObject = dataJSONObject.getJSONObject(
-			"rootItems");
-
-		String mainItemId = rootItemsJSONObject.getString("main");
-
-		dropZoneChildrenJSONArray.put(mainItemId);
-
-		return masterLayoutDataJSONObject;
+		return masterLayoutStructure.toJSONObject();
 	}
 
 	private static final String _PAGE = "/render_fragment_layout/page.jsp";

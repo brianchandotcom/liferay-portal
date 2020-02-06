@@ -19,6 +19,10 @@ import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.util.LayoutDataConverter;
+import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,6 +64,91 @@ public class LayoutPageTemplateStructureRenderUtil {
 
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
 
+		if (LayoutDataConverter.isLatestVersion(dataJSONObject)) {
+			return _renderLatestLayoutData(
+				data, fragmentRendererController, httpServletRequest,
+				httpServletResponse, mode, parameterMap, locale,
+				segmentsExperienceIds);
+		}
+
+		return _renderLayoutData(
+			dataJSONObject, fragmentRendererController, httpServletRequest,
+			httpServletResponse, mode, parameterMap, locale,
+			segmentsExperienceIds);
+	}
+
+	private static String _renderFragmentEntryLink(
+		long fragmentEntryLinkId,
+		FragmentRendererController fragmentRendererController,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String mode,
+		Map<String, Object> parameterMap, Locale locale,
+		long[] segmentsExperienceIds) {
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+				fragmentEntryLinkId);
+
+		if (fragmentEntryLink == null) {
+			return StringPool.BLANK;
+		}
+
+		DefaultFragmentRendererContext fragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		fragmentRendererContext.setFieldValues(parameterMap);
+		fragmentRendererContext.setLocale(locale);
+		fragmentRendererContext.setMode(mode);
+		fragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
+
+		return fragmentRendererController.render(
+			fragmentRendererContext, httpServletRequest, httpServletResponse);
+	}
+
+	private static String _renderLatestLayoutData(
+		String data, FragmentRendererController fragmentRendererController,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String mode,
+		Map<String, Object> parameterMap, Locale locale,
+		long[] segmentsExperienceIds) {
+
+		StringBundler sb = new StringBundler();
+
+		LayoutStructure layoutStructure = LayoutStructure.of(data);
+
+		for (LayoutStructureItem layoutStructureItem :
+				layoutStructure.getLayoutStructureItems()) {
+
+			if (!(layoutStructureItem instanceof FragmentLayoutStructureItem)) {
+				continue;
+			}
+
+			FragmentLayoutStructureItem fragmentLayoutStructureItem =
+				(FragmentLayoutStructureItem)layoutStructureItem;
+
+			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
+				continue;
+			}
+
+			sb.append(
+				_renderFragmentEntryLink(
+					fragmentLayoutStructureItem.getFragmentEntryLinkId(),
+					fragmentRendererController, httpServletRequest,
+					httpServletResponse, mode, parameterMap, locale,
+					segmentsExperienceIds));
+		}
+
+		return sb.toString();
+	}
+
+	private static String _renderLayoutData(
+		JSONObject dataJSONObject,
+		FragmentRendererController fragmentRendererController,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String mode,
+		Map<String, Object> parameterMap, Locale locale,
+		long[] segmentsExperienceIds) {
+
 		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
 
 		if (structureJSONArray == null) {
@@ -89,27 +178,11 @@ public class LayoutPageTemplateStructureRenderUtil {
 						continue;
 					}
 
-					FragmentEntryLink fragmentEntryLink =
-						FragmentEntryLinkLocalServiceUtil.
-							fetchFragmentEntryLink(fragmentEntryLinkId);
-
-					if (fragmentEntryLink == null) {
-						continue;
-					}
-
-					DefaultFragmentRendererContext fragmentRendererContext =
-						new DefaultFragmentRendererContext(fragmentEntryLink);
-
-					fragmentRendererContext.setFieldValues(parameterMap);
-					fragmentRendererContext.setLocale(locale);
-					fragmentRendererContext.setMode(mode);
-					fragmentRendererContext.setSegmentsExperienceIds(
-						segmentsExperienceIds);
-
 					sb.append(
-						fragmentRendererController.render(
-							fragmentRendererContext, httpServletRequest,
-							httpServletResponse));
+						_renderFragmentEntryLink(
+							fragmentEntryLinkId, fragmentRendererController,
+							httpServletRequest, httpServletResponse, mode,
+							parameterMap, locale, segmentsExperienceIds));
 				}
 			}
 		}

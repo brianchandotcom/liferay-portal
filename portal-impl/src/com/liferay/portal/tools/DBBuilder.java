@@ -15,6 +15,7 @@
 package com.liferay.portal.tools;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -105,15 +106,47 @@ public class DBBuilder {
 			DB db = DBManagerUtil.getDB(dbType, null);
 
 			if (db != null) {
+				String recreateSQL = db.getRecreateSQL(_databaseName);
+
 				if (!sqlDir.endsWith("/WEB-INF/sql")) {
 					FileUtil.write(
 						StringBundler.concat(
 							sqlDir, "/create-bare/create-bare-", db.getDBType(),
 							".sql"),
-						db.getRecreateSQL(_databaseName));
+						recreateSQL);
 				}
 
-				db.buildCreateFile(sqlDir, _databaseName, DB.DEFAULT);
+				StringBundler sb = new StringBundler(6);
+
+				String tablesPrefix = "/portal/portal-";
+
+				if (sqlDir.endsWith("/WEB-INF/sql")) {
+					tablesPrefix = "/tables/tables-";
+				}
+
+				sb.append(_readFile(sqlDir, tablesPrefix, db.getDBType()));
+
+				sb.append("\n\n");
+
+				sb.append(
+					_readFile(sqlDir, "/indexes/indexes-", db.getDBType()));
+
+				sb.append("\n\n");
+
+				sb.append(
+					_readFile(sqlDir, "/sequences/sequences-", db.getDBType()));
+
+				sb.append("\n");
+
+				String content = db.getPopulateSQL(
+					_databaseName, sb.toString());
+
+				if (!content.isEmpty()) {
+					FileUtil.write(
+						StringBundler.concat(
+							sqlDir, "/create/create-", db.getDBType(), ".sql"),
+						recreateSQL.concat(content));
+				}
 			}
 		}
 	}
@@ -157,6 +190,19 @@ public class DBBuilder {
 				db.buildSQLFile(sqlDir, fileName);
 			}
 		}
+	}
+
+	private String _readFile(String sqlDir, String pathPrefix, DBType dbType)
+		throws IOException {
+
+		String fileName = StringBundler.concat(
+			sqlDir, pathPrefix, dbType, ".sql");
+
+		if (FileUtil.exists(fileName)) {
+			return FileUtil.read(fileName);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private final String _databaseName;

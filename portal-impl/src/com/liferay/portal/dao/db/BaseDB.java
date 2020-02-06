@@ -125,17 +125,19 @@ public abstract class BaseDB implements DB {
 			String sqlDir, String databaseName, int population)
 		throws IOException {
 
+		String recreateSQL = getRecreateSQL(databaseName);
+
 		if (population == BARE) {
 			FileUtil.write(
 				StringBundler.concat(
 					sqlDir, "/create-bare/create-bare-", _dbType, ".sql"),
-				getRecreateSQL(databaseName));
+				recreateSQL);
 
 			return;
 		}
 
 		File file = new File(
-			StringBundler.concat(sqlDir, "/create/create-", _dbType,	".sql"));
+			StringBundler.concat(sqlDir, "/create/create-", _dbType, ".sql"));
 
 		StringBundler sb = new StringBundler(6);
 
@@ -147,8 +149,7 @@ public abstract class BaseDB implements DB {
 
 		sb.append(
 			_readFile(
-				StringBundler.concat(
-					sqlDir, tablesPrefix, _dbType, ".sql")));
+				StringBundler.concat(sqlDir, tablesPrefix, _dbType, ".sql")));
 
 		sb.append("\n\n");
 
@@ -166,11 +167,10 @@ public abstract class BaseDB implements DB {
 
 		sb.append("\n");
 
-		String content = buildCreateFileContent(
-			sqlDir, databaseName, sb.toString());
+		String content = getPopulateSQL(databaseName, sb.toString());
 
-		if (content != null) {
-			FileUtil.write(file, content);
+		if (!content.isEmpty()) {
+			FileUtil.write(file, recreateSQL.concat(content));
 		}
 	}
 

@@ -755,19 +755,8 @@ public class SQLDSLTest {
 		Assert.assertEquals(
 			"select MainExample.name from MainExample", dslQuery.toString());
 
-		OrderByInfo orderByInfo = new OrderByInfo() {
-
-			@Override
-			public String[] getOrderByFields() {
-				return new String[] {MainExampleTable.INSTANCE.flag.getName()};
-			}
-
-			@Override
-			public boolean isAscending(String field) {
-				return true;
-			}
-
-		};
+		OrderByInfo orderByInfo = new TestOrderByInfo(
+			MainExampleTable.INSTANCE.flag.getName());
 
 		dslQuery = orderByStep.orderBy(MainExampleTable.INSTANCE, orderByInfo);
 
@@ -776,16 +765,40 @@ public class SQLDSLTest {
 				"MainExample.flag asc",
 			dslQuery.toString());
 
-		try {
-			orderByStep.orderBy(ReferenceExampleTable.INSTANCE, orderByInfo);
+		dslQuery = orderByStep.orderBy(
+			ReferenceExampleTable.INSTANCE, orderByInfo);
 
-			Assert.fail();
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			Assert.assertEquals(
-				"No column \"flag\" for table ReferenceExample",
-				illegalArgumentException.getMessage());
-		}
+		Assert.assertEquals(
+			"select MainExample.name from MainExample", dslQuery.toString());
+	}
+
+	@Test
+	public void testOrderByOrderByInfoWithAlias() {
+		ColumnAlias<MainExampleTable, String> columnAlias =
+			MainExampleTable.INSTANCE.name.as("columnAlias");
+
+		OrderByStep orderByStep = DSLQueryFactoryUtil.select(
+			columnAlias
+		).from(
+			columnAlias.getTable()
+		);
+
+		DSLQuery dslQuery = orderByStep.orderBy(columnAlias.getTable(), null);
+
+		Assert.assertEquals(
+			"select MainExample.name columnAlias from MainExample",
+			dslQuery.toString());
+
+		OrderByInfo orderByInfo = new TestOrderByInfo(
+			columnAlias.getName(),
+			ReferenceExampleTable.INSTANCE.referenceExampleId.getName());
+
+		dslQuery = orderByStep.orderBy(columnAlias.getTable(), orderByInfo);
+
+		Assert.assertEquals(
+			"select MainExample.name columnAlias from MainExample order by " +
+				"columnAlias asc",
+			dslQuery.toString());
 	}
 
 	@Test
@@ -1317,6 +1330,26 @@ public class SQLDSLTest {
 		private ReferenceExampleTable() {
 			super("ReferenceExample", ReferenceExampleTable::new);
 		}
+
+	}
+
+	private static class TestOrderByInfo implements OrderByInfo {
+
+		@Override
+		public String[] getOrderByFields() {
+			return _orderByFields;
+		}
+
+		@Override
+		public boolean isAscending(String field) {
+			return true;
+		}
+
+		private TestOrderByInfo(String... orderByFields) {
+			_orderByFields = orderByFields;
+		}
+
+		private final String[] _orderByFields;
 
 	}
 

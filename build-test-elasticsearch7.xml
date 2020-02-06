@@ -902,19 +902,19 @@ xpack.monitoring.collection.enabled: true</echo>
 		<echo>${curl.output}</echo>
 
 		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-X PUT &quot;localhost:9202/liferay-${companyId}/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-${companyId}&quot;}&apos;" />
+			<arg line="-X PUT &quot;localhost:9202/liferay-${companyId}/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-${companyId}&quot;}&apos;" />
 		</exec>
 
 		<echo>${curl.output}</echo>
 
 		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-X PUT &quot;localhost:9202/liferay-search-tuning-rankings/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-search-tuning-rankings&quot;}&apos;" />
+			<arg line="-X PUT &quot;localhost:9202/liferay-search-tuning-rankings/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-search-tuning-rankings&quot;}&apos;" />
 		</exec>
 
 		<echo>${curl.output}</echo>
 
 		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-X PUT &quot;localhost:9202/liferay-search-tuning-synonyms-liferay-${companyId}/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-search-tuning-synonyms-liferay-${companyId}&quot;}&apos;" />
+			<arg line="-X PUT &quot;localhost:9202/liferay-search-tuning-synonyms-liferay-${companyId}/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-search-tuning-synonyms-liferay-${companyId}&quot;}&apos;" />
 		</exec>
 
 		<echo>${curl.output}</echo>

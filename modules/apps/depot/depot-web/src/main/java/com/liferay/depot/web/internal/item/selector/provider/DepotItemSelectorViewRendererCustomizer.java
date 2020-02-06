@@ -155,7 +155,7 @@ public class DepotItemSelectorViewRendererCustomizer
 	@Reference
 	private DepotApplicationController _depotApplicationController;
 
-	private final Map<Class<? extends ItemSelectorCriterion>, String>
+	private static final Map<Class<? extends ItemSelectorCriterion>, String>
 		_itemSelectorCriterionMap =
 			HashMapBuilder.<Class<? extends ItemSelectorCriterion>, String>put(
 				AudioItemSelectorCriterion.class,

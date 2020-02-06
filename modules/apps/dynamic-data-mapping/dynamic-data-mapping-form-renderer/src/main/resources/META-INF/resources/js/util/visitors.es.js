@@ -12,6 +12,8 @@
  * details.
  */
 
+import * as FormSupport from '../components/FormRenderer/FormSupport.es';
+
 const identity = value => value;
 
 class PagesVisitor {
@@ -49,17 +51,43 @@ class PagesVisitor {
 		return this._map(identity, identity, mapper, identity);
 	}
 
-	mapFields(mapper, merge = true) {
+	mapFields(mapper, merge = true, includeNestedFields = false) {
 		return this._map(identity, identity, identity, (fields, ...args) => {
 			return fields.map((field, fieldIndex) => {
+				let mappedField;
+
 				if (merge) {
-					return {
+					mappedField = {
 						...field,
 						...mapper(field, fieldIndex, ...args),
 					};
+				} else {
+					mappedField = mapper(field, fieldIndex, ...args);
 				}
 
-				return mapper(field, fieldIndex, ...args);
+				if (includeNestedFields && mappedField.nestedFields) {
+					const nestedFields = [];
+
+					FormSupport.visitNestedFields(mappedField, nestedField => {
+						if (merge) {
+							nestedFields.push({
+								...nestedField,
+								...mapper(nestedField, fieldIndex, ...args)
+							});
+						} else {
+							nestedFields.push(
+								mapper(nestedField, fieldIndex, ...args)
+							);
+						}
+					});
+
+					mappedField = {
+						...mappedField,
+						nestedFields
+					};
+				}
+
+				return mappedField;
 			});
 		});
 	}

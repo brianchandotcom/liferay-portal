@@ -119,14 +119,14 @@ public class UserDisplayContext {
 		return inheritedSiteRoles;
 	}
 
-	public List<Group> getInheritedSites() throws PortalException {
-		SortedSet<Group> inheritedSitesSet = new TreeSet<>();
+	public List<Group> getInheritedSiteGroups() throws PortalException {
+		SortedSet<Group> inheritedSiteGroupsSet = new TreeSet<>();
 
-		inheritedSitesSet.addAll(
+		inheritedSiteGroupsSet.addAll(
 			GroupLocalServiceUtil.getUserGroupsRelatedGroups(getUserGroups()));
-		inheritedSitesSet.addAll(_getOrganizationRelatedGroups());
+		inheritedSiteGroupsSet.addAll(_getOrganizationRelatedGroups());
 
-		return ListUtil.fromCollection(inheritedSitesSet);
+		return ListUtil.fromCollection(inheritedSiteGroupsSet);
 	}
 
 	public List<UserGroupRole> getOrganizationRoles() throws PortalException {
@@ -197,19 +197,19 @@ public class UserDisplayContext {
 		return ListUtil.filter(_getUserGroupRoles(), this::_isSiteRole);
 	}
 
-	public List<Group> getSites() throws PortalException {
-		List<Group> sites = Collections.emptyList();
+	public List<Group> getSiteGroups() throws PortalException {
+		List<Group> siteGroups = Collections.emptyList();
 
 		if (_selUser != null) {
-			sites = _selUser.getSiteGroups();
+			siteGroups = _selUser.getSiteGroups();
 
 			if (_initDisplayContext.isFilterManageableGroups()) {
-				sites = UsersAdminUtil.filterGroups(
-					_themeDisplay.getPermissionChecker(), sites);
+				siteGroups = UsersAdminUtil.filterGroups(
+					_themeDisplay.getPermissionChecker(), siteGroups);
 			}
 		}
 
-		return sites;
+		return siteGroups;
 	}
 
 	public List<UserGroup> getUserGroups() {
@@ -267,7 +267,7 @@ public class UserDisplayContext {
 		List<Group> allGroups = new ArrayList<>();
 
 		allGroups.addAll(getGroups());
-		allGroups.addAll(getInheritedSites());
+		allGroups.addAll(getInheritedSiteGroups());
 		allGroups.addAll(
 			GroupLocalServiceUtil.getOrganizationsGroups(getOrganizations()));
 		allGroups.addAll(

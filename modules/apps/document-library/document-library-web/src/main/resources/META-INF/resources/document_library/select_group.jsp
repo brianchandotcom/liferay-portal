@@ -80,9 +80,9 @@ portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
 
 				int end = searchContainer.getEnd() - additionalSites;
 
-				List<Group> sites = GroupServiceUtil.search(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams, start, end, searchContainer.getOrderByComparator());
+				List<Group> siteGroups = GroupServiceUtil.search(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams, start, end, searchContainer.getOrderByComparator());
 
-				results.addAll(sites);
+				results.addAll(siteGroups);
 
 				searchContainer.setResults(results);
 				%>

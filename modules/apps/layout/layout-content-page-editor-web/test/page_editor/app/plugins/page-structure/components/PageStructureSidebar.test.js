@@ -86,7 +86,7 @@ const layoutData = {
 const RenderPageStructureSidebar = () => {
 	return (
 		<StoreAPIContextProvider
-			getState={() => ({fragmentEntryLinks, layoutData})}
+			getState={() => ({fragmentEntryLinks, layoutData, permissions: {}})}
 		>
 			<PageStructureSidebar />
 		</StoreAPIContextProvider>

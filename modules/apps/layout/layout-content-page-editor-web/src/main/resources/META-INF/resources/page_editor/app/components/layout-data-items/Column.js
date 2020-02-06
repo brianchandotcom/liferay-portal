@@ -21,6 +21,73 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 import {useSelector} from '../../store/index';
 import {ResizingContext} from './RowWithControls';
 
+function Column({children, className, item, ...props}, ref) {
+	const {
+		config: {
+			size = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
+				LAYOUT_DATA_ITEM_TYPES.column
+			].size
+		}
+	} = item;
+
+	const layoutData = useSelector(state => state.layoutData);
+
+	const {onResizeEnd, onResizeStart, onResizing} = useContext(
+		ResizingContext
+	);
+
+	const columnInfo = useMemo(() => getColumnInfo({item, layoutData}), [
+		item,
+		layoutData
+	]);
+
+	const onMouseMoveInWindow = event => {
+		event.preventDefault();
+
+		onResizing(event, columnInfo);
+	};
+
+	const onMouseDownInWindow = event => {
+		onResizeStart(event);
+
+		window.addEventListener('mouseup', onMouseUpInWindow);
+		window.addEventListener('mousemove', onMouseMoveInWindow);
+	};
+
+	const onMouseUpInWindow = event => {
+		onResizeEnd(event);
+
+		window.removeEventListener('mouseup', onMouseUpInWindow);
+		window.removeEventListener('mousemove', onMouseMoveInWindow);
+	};
+
+	const resizeHandler = (
+		<div>
+			{children}
+			<ClayButton
+				className="page-editor__col-resizer"
+				onMouseDown={onMouseDownInWindow}
+			/>
+		</div>
+	);
+
+	return (
+		<>
+			<div
+				className={classNames(className, 'col', {
+					[`col-${size}`]: size
+				})}
+				ref={ref}
+				{...props}
+			>
+				{!columnInfo.isLastColumn ? resizeHandler : children}
+			</div>
+		</>
+	);
+}
+
+export default React.forwardRef(Column);
+
 /**
  * Retrieves necessary data from the current and next column.
  *
@@ -53,72 +120,3 @@ function getColumnInfo({item, layoutData}) {
 		rowColumns
 	};
 }
-
-const Column = React.forwardRef(
-	({children, className, item, ...props}, ref) => {
-		const {
-			config: {
-				size = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
-					LAYOUT_DATA_ITEM_TYPES.column
-				].size
-			}
-		} = item;
-
-		const layoutData = useSelector(state => state.layoutData);
-
-		const {onResizeEnd, onResizeStart, onResizing} = useContext(
-			ResizingContext
-		);
-
-		const columnInfo = useMemo(() => getColumnInfo({item, layoutData}), [
-			item,
-			layoutData
-		]);
-
-		const onMouseMoveInWindow = event => {
-			event.preventDefault();
-
-			onResizing(event, columnInfo);
-		};
-
-		const onMouseDownInWindow = event => {
-			onResizeStart(event);
-
-			window.addEventListener('mouseup', onMouseUpInWindow);
-			window.addEventListener('mousemove', onMouseMoveInWindow);
-		};
-
-		const onMouseUpInWindow = event => {
-			onResizeEnd(event);
-
-			window.removeEventListener('mouseup', onMouseUpInWindow);
-			window.removeEventListener('mousemove', onMouseMoveInWindow);
-		};
-
-		const resizeHandler = (
-			<div>
-				{children}
-				<ClayButton
-					className="page-editor__col-resizer"
-					onMouseDown={onMouseDownInWindow}
-				/>
-			</div>
-		);
-
-		return (
-			<>
-				<div
-					className={classNames(className, 'col', {
-						[`col-${size}`]: size
-					})}
-					ref={ref}
-					{...props}
-				>
-					{!columnInfo.isLastColumn ? resizeHandler : children}
-				</div>
-			</>
-		);
-	}
-);
-
-export default Column;

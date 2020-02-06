@@ -27,8 +27,18 @@ page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
 page import="com.liferay.fragment.renderer.DefaultFragmentRendererContext" %><%@
 page import="com.liferay.fragment.renderer.FragmentRendererController" %><%@
 page import="com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil" %><%@
+page import="com.liferay.layout.page.template.util.LayoutDataConverter" %><%@
 page import="com.liferay.layout.type.controller.portlet.internal.constants.PortletLayoutTypeControllerWebKeys" %><%@
 page import="com.liferay.layout.type.controller.portlet.internal.display.context.PortletLayoutDisplayContext" %><%@
+page import="com.liferay.layout.util.structure.ColumnLayoutStructureItem" %><%@
+page import="com.liferay.layout.util.structure.ContainerLayoutStructureItem" %><%@
+page import="com.liferay.layout.util.structure.DropZoneLayoutStructureItem" %><%@
+page import="com.liferay.layout.util.structure.FragmentLayoutStructureItem" %><%@
+page import="com.liferay.layout.util.structure.LayoutStructure" %><%@
+page import="com.liferay.layout.util.structure.LayoutStructureItem" %><%@
+page import="com.liferay.layout.util.structure.RootLayoutStructureItem" %><%@
+page import="com.liferay.layout.util.structure.RowLayoutStructureItem" %><%@
+page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
@@ -46,7 +56,8 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %>
 
-<%@ page import="java.util.Objects" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 

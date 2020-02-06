@@ -128,33 +128,6 @@ public class SybaseDB extends BaseDB {
 	}
 
 	@Override
-	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, String createContent)
-		throws IOException {
-
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("use master\n");
-		sb.append("exec sp_dboption '");
-		sb.append(databaseName);
-		sb.append("', 'allow nulls by default' , true\n");
-		sb.append("go\n\n");
-		sb.append("exec sp_dboption '");
-		sb.append(databaseName);
-		sb.append("', 'select into/bulkcopy/pllsort' , true\n");
-		sb.append("go\n\n");
-
-		if (createContent != null) {
-			sb.append("use ");
-			sb.append(databaseName);
-			sb.append("\n\n");
-			sb.append(createContent);
-		}
-
-		return sb.toString();
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

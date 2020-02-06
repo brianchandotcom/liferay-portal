@@ -137,31 +137,6 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
-	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, String createContent)
-		throws IOException {
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("drop database if exists ");
-		sb.append(databaseName);
-		sb.append(";\n");
-		sb.append("create database ");
-		sb.append(databaseName);
-		sb.append(" character set utf8;\n");
-
-		if (createContent != null) {
-			sb.append("use ");
-			sb.append(databaseName);
-			sb.append(";\n\n");
-
-			sb.append(createContent);
-		}
-
-		return sb.toString();
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

@@ -183,30 +183,6 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
-	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, String createContent)
-		throws IOException {
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("drop database ");
-		sb.append(databaseName);
-		sb.append(";\n");
-		sb.append("create database ");
-		sb.append(databaseName);
-		sb.append(" encoding = 'UNICODE';\n");
-
-		if (createContent != null) {
-			sb.append("\\c ");
-			sb.append(databaseName);
-			sb.append(";\n\n");
-			sb.append(createContent);
-		}
-
-		return sb.toString();
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

@@ -761,10 +761,6 @@ public abstract class BaseDB implements DB {
 		return new String[] {words[1], words[2], "", words[3], nullable};
 	}
 
-	protected abstract String buildCreateFileContent(
-			String sqlDir, String databaseName, String createTablesContent)
-		throws IOException;
-
 	protected String[] buildTableNameTokens(String line) {
 		String[] words = StringUtil.split(line, StringPool.SPACE);
 

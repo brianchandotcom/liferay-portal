@@ -57,13 +57,6 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
-	protected String buildCreateFileContent(
-		String sqlDir, String databaseName, String createContent) {
-
-		return null;
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

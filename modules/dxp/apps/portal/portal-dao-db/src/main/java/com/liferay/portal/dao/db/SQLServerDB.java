@@ -150,33 +150,6 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
-	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, String createContent)
-		throws IOException {
-
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("drop database ");
-		sb.append(databaseName);
-		sb.append(";\n");
-		sb.append("create database ");
-		sb.append(databaseName);
-		sb.append(";\n");
-		sb.append("\n");
-		sb.append("go\n");
-		sb.append("\n");
-
-		if (createContent != null) {
-			sb.append("use ");
-			sb.append(databaseName);
-			sb.append(";\n\n");
-			sb.append(createContent);
-		}
-
-		return sb.toString();
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

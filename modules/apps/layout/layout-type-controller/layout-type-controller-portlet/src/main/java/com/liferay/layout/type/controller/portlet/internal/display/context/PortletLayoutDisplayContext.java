@@ -24,7 +24,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -112,7 +111,7 @@ public class PortletLayoutDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public JSONArray getStructureJSONArray() {
+	public JSONObject getDataJSONObject() {
 		try {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -127,7 +126,7 @@ public class PortletLayoutDisplayContext {
 						layout.getMasterLayoutPlid());
 
 			if (masterLayoutPageTemplateEntry == null) {
-				return _getDefaultStructureJSONArray();
+				return _getDefaultStructureJSONObject();
 			}
 
 			LayoutPageTemplateStructure masterLayoutPageTemplateStructure =
@@ -141,30 +140,30 @@ public class PortletLayoutDisplayContext {
 				SegmentsExperienceConstants.ID_DEFAULT);
 
 			if (Validator.isNull(data)) {
-				return _getDefaultStructureJSONArray();
+				return _getDefaultStructureJSONObject();
 			}
 
-			JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
-
-			return dataJSONObject.getJSONArray("structure");
+			return JSONFactoryUtil.createJSONObject(data);
 		}
 		catch (Exception exception) {
-			_log.error("Unable to get structure JSON array", exception);
+			_log.error("Unable to get JSON object", exception);
 
 			return null;
 		}
 	}
 
-	private JSONArray _getDefaultStructureJSONArray() {
-		return JSONUtil.putAll(
-			JSONUtil.put(
-				"columns",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"fragmentEntryLinkIds", JSONUtil.putAll("drop-zone")
-					).put(
-						"size", 12
-					))));
+	private JSONObject _getDefaultStructureJSONObject() {
+		return JSONUtil.put(
+			"structure",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"columns",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"fragmentEntryLinkIds", JSONUtil.put("drop-zone")
+						).put(
+							"size", 12
+						)))));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

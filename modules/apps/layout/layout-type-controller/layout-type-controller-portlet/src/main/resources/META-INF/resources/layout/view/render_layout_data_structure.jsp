@@ -19,9 +19,11 @@
 <%
 HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttribute(PortletLayoutTypeControllerWebKeys.ORIGINAL_HTTP_SERVLET_REQUEST);
 
-PortletLayoutDisplayContext portletLayoutDisplayContext = new PortletLayoutDisplayContext(request);
+PortletLayoutDisplayContext portletLayoutDisplayContext = (PortletLayoutDisplayContext)request.getAttribute("render_layout_data_structure.jsp-portletLayoutDisplayContext");
 
-JSONArray structureJSONArray = portletLayoutDisplayContext.getStructureJSONArray();
+JSONObject dataJSONObject = (JSONObject)request.getAttribute("render_layout_data_structure.jsp-dataJSONObject");
+
+JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
 
 for (int i = 0; i < structureJSONArray.length(); i++) {
 	JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);

@@ -18,10 +18,24 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.sql.dsl.query.sort.OrderByInfo;
 
+import java.util.function.Function;
+
 /**
  * @author Preston Crary
  */
 public interface OrderByStep extends LimitStep {
+
+	public default LimitStep orderBy(
+		Function<OrderByStep, LimitStep> function) {
+
+		LimitStep limitStep = function.apply(this);
+
+		if (limitStep == null) {
+			return this;
+		}
+
+		return limitStep;
+	}
 
 	public LimitStep orderBy(OrderByExpression... orderByExpressions);
 

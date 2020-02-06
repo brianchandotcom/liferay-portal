@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -50,7 +51,16 @@ public interface KnowledgeBaseAttachmentResource {
 				Long knowledgeBaseArticleId, MultipartBody multipartBody)
 		throws Exception;
 
+	public Response postKnowledgeBaseArticleKnowledgeBaseAttachmentBatch(
+			Long knowledgeBaseArticleId, MultipartBody multipartBody,
+			String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteKnowledgeBaseAttachment(Long knowledgeBaseAttachmentId)
+		throws Exception;
+
+	public Response deleteKnowledgeBaseAttachmentBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public KnowledgeBaseAttachment getKnowledgeBaseAttachment(

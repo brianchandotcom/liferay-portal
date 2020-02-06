@@ -185,16 +185,6 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
-	public void testPatchKeywordBatch() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutKeywordBatch() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testPostKeywordsCommonPage() throws Exception {
 		Assert.assertTrue(false);
 	}

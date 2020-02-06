@@ -45,18 +45,18 @@ public class SpiraRelease {
 
 	public static SpiraRelease createSpiraRelease(
 			SpiraProject spiraProject, String releaseName,
-			Integer parentReleaseId)
+			Integer parentReleaseID)
 		throws IOException {
 
 		String urlPath = "projects/{project_id}/releases{parent_release_id}";
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
-		if ((parentReleaseId == null) || (parentReleaseId == 0)) {
+		if ((parentReleaseID == null) || (parentReleaseID == 0)) {
 			urlPathReplacements.put("parent_release_id", "");
 		}
 		else {
-			urlPathReplacements.put("parent_release_id", "/" + parentReleaseId);
+			urlPathReplacements.put("parent_release_id", "/" + parentReleaseID);
 		}
 
 		urlPathReplacements.put(

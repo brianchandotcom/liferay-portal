@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useMemo, useEffect} from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
@@ -34,25 +34,37 @@ function ColumnWithControls({children, item, layoutData, ...otherProps}, ref) {
 		layoutData
 	]);
 
-	const onMouseMoveInWindow = event => {
+	const onWindowMouseMove = event => {
 		event.preventDefault();
 
 		onResizing(event, columnInfo);
 	};
 
-	const onMouseDownInWindow = event => {
-		onResizeStart(event);
-
-		window.addEventListener('mouseup', onMouseUpInWindow);
-		window.addEventListener('mousemove', onMouseMoveInWindow);
-	};
-
-	const onMouseUpInWindow = event => {
+	const onWindowMouseUp = event => {
 		onResizeEnd(event);
 
-		window.removeEventListener('mouseup', onMouseUpInWindow);
-		window.removeEventListener('mousemove', onMouseMoveInWindow);
+		window.removeEventListener('mouseup', onWindowMouseUp);
+		window.removeEventListener('mousemove', onWindowMouseMove);
 	};
+
+	const onResizeButtonMouseDown = event => {
+		onResizeStart(event);
+
+		window.addEventListener('mouseup', onWindowMouseUp);
+		window.addEventListener('mousemove', onWindowMouseMove);
+	};
+
+	useEffect(
+		() => () => {
+			window.removeEventListener('mouseup', onWindowMouseUp);
+			window.removeEventListener('mousemove', onWindowMouseMove);
+		},
+
+		// We just want to ensure that this listeners are removed if
+		// the component is unmounted before resizing has ended
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[]
+	);
 
 	const content = (
 		<Column
@@ -66,7 +78,7 @@ function ColumnWithControls({children, item, layoutData, ...otherProps}, ref) {
 					{children}
 					<ClayButton
 						className="page-editor__col-resizer"
-						onMouseDown={onMouseDownInWindow}
+						onMouseDown={onResizeButtonMouseDown}
 					/>
 				</div>
 			) : (

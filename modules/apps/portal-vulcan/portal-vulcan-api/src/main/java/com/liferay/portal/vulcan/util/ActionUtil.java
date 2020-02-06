@@ -26,6 +26,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,6 +74,10 @@ public class ActionUtil {
 			String actionName, Class clazz, Long id, String methodName,
 			String permissionName, Object object, Long siteId, UriInfo uriInfo)
 		throws Exception {
+
+		if (uriInfo == null) {
+			return new HashMap<>();
+		}
 
 		MultivaluedMap<String, String> queryParameters =
 			uriInfo.getQueryParameters();

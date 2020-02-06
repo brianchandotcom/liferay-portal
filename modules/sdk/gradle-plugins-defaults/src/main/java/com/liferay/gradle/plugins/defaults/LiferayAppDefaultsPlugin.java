@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.LiferayRelengUtil;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.jsdoc.AppJSDocConfigurationExtension;
 import com.liferay.gradle.plugins.jsdoc.AppJSDocPlugin;
@@ -444,7 +445,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private Properties _getAppProperties(Project project) {
-		File relengDir = LiferayRelengPlugin.getRelengDir(project);
+		File relengDir = LiferayRelengUtil.getRelengDir(project);
 
 		if (relengDir != null) {
 			File appPropertiesFile = new File(relengDir, "app.properties");

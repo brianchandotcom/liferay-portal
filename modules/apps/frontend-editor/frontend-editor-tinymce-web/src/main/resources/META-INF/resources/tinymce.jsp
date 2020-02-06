@@ -147,8 +147,17 @@ name = HtmlUtil.escapeJS(name);
 					itemSelectorDialog.eventName = '<%= name %>selectItem';
 					itemSelectorDialog.singleSelect = true;
 					itemSelectorDialog.url = url;
-					itemSelectorDialog.zIndex =
-						tinymce.activeEditor.windowManager.windows[0].zIndex + 10;
+
+					var tinymceDialogContainer = document.querySelector(
+						'.tox-tinymce-aux'
+					);
+
+					if (tinymceDialogContainer) {
+						var zIndex = window.getComputedStyle(tinymceDialogContainer)
+							.zIndex;
+
+						itemSelectorDialog.zIndex = parseInt(zIndex) + 10;
+					}
 
 					itemSelectorDialog.on('selectedItemChange', function(event) {
 						var selectedItem = event.selectedItem

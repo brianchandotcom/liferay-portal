@@ -99,9 +99,6 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	}
 
 	@Reference
-	protected StagingGroupHelper stagingGroupHelper;
-
-	@Reference
 	protected AssetVocabularyService assetVocabularyService;
 
 	@Reference
@@ -115,5 +112,8 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		target = "(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)"
 	)
 	protected ServletContext servletContext;
+
+	@Reference
+	protected StagingGroupHelper stagingGroupHelper;
 
 }

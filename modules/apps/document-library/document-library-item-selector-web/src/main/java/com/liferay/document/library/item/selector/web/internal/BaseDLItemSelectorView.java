@@ -19,6 +19,8 @@ import com.liferay.document.library.item.selector.web.internal.constants.DLItemS
 import com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -87,6 +89,7 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
 			new DLItemSelectorViewDisplayContext<>(
 				assetVocabularyService, classNameLocalService, this,
+				folderModelResourcePermission,
 				(HttpServletRequest)servletRequest, t, itemSelectedEventName,
 				itemSelectorReturnTypeResolverHandler, portletURL, search,
 				stagingGroupHelper);
@@ -103,6 +106,11 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 	@Reference
 	protected ClassNameLocalService classNameLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	protected ModelResourcePermission<Folder> folderModelResourcePermission;
 
 	@Reference
 	protected ItemSelectorReturnTypeResolverHandler

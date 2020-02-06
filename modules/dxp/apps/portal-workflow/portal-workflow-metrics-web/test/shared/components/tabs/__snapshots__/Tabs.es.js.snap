@@ -32,216 +32,218 @@ exports[`Should expand tab items 1`] = `
       }
     }
   >
-    <Route
-      path="/:page/:pageSize/:sort"
-      render={[Function]}
-    >
-      <Tabs
-        history={
-          Object {
-            "action": "POP",
-            "block": [Function],
-            "canGo": [Function],
-            "createHref": [Function],
-            "entries": Array [
-              Object {
+    <FilterContextProvider>
+      <Route
+        path="/:page/:pageSize/:sort"
+        render={[Function]}
+      >
+        <Tabs
+          history={
+            Object {
+              "action": "POP",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
+                  "hash": "",
+                  "pathname": "/1/20/title%3Aasc",
+                  "search": "?backPath=%2F",
+                },
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
                 "hash": "",
                 "pathname": "/1/20/title%3Aasc",
                 "search": "?backPath=%2F",
               },
-            ],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "index": 0,
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/1/20/title%3Aasc",
-              "search": "?backPath=%2F",
-            },
-            "push": [Function],
-            "replace": [Function],
+              "push": [Function],
+              "replace": [Function],
+            }
           }
-        }
-        location={
-          Object {
-            "pathname": "/metrics/:processId/completed",
-          }
-        }
-        page="1"
-        pageSize="20"
-        query="?backPath=%2F"
-        routeParams={
-          Object {
-            "page": "1",
-            "pageSize": "20",
-            "sort": "title:asc",
-          }
-        }
-        sort="title:asc"
-        tabs={
-          Array [
+          location={
             Object {
-              "key": "completed",
-              "name": "completed",
-              "params": Object {
-                "processId": 35135,
-              },
-              "path": "/metrics/:processId/completed",
-            },
+              "pathname": "/metrics/:processId/completed",
+            }
+          }
+          page="1"
+          pageSize="20"
+          query="?backPath=%2F"
+          routeParams={
             Object {
-              "key": "pending",
-              "name": "pending",
-              "params": Object {
-                "processId": 35135,
+              "page": "1",
+              "pageSize": "20",
+              "sort": "title:asc",
+            }
+          }
+          sort="title:asc"
+          tabs={
+            Array [
+              Object {
+                "key": "completed",
+                "name": "completed",
+                "params": Object {
+                  "processId": 35135,
+                },
+                "path": "/metrics/:processId/completed",
               },
-              "path": "/metrics/:processId/pending",
-            },
-          ]
-        }
-      >
-        <nav
-          className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+              Object {
+                "key": "pending",
+                "name": "pending",
+                "params": Object {
+                  "processId": 35135,
+                },
+                "path": "/metrics/:processId/pending",
+              },
+            ]
+          }
         >
-          <div
-            className="container-fluid container-fluid-max-xl"
+          <nav
+            className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
           >
-            <button
-              aria-expanded={false}
-              aria-label="toggle-navigation"
-              className="collapsed navbar-toggler navbar-toggler-link"
-              onClick={[Function]}
-            >
-              completed
-              <Icon
-                iconName="caret-bottom"
-              >
-                <svg
-                  className="lexicon-icon lexicon-icon-caret-bottom"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                    }
-                  }
-                  data-testid="icon"
-                  focusable="false"
-                  role="presentation"
-                />
-              </Icon>
-            </button>
             <div
-              className="collapse navbar-collapse "
+              className="container-fluid container-fluid-max-xl"
             >
-              <div
-                className="container-fluid container-fluid-max-xl"
+              <button
+                aria-expanded={false}
+                aria-label="toggle-navigation"
+                className="collapsed navbar-toggler navbar-toggler-link"
+                onClick={[Function]}
               >
-                <ul
-                  className="navbar-nav"
-                  data-testid="tabElements"
+                completed
+                <Icon
+                  iconName="caret-bottom"
                 >
-                  <li
-                    className="nav-item"
-                    key="0"
-                    onClick={[Function]}
-                  >
-                    <TabItem
-                      active={true}
-                      key="completed"
-                      name="completed"
-                      params={
-                        Object {
-                          "processId": 35135,
-                        }
+                  <svg
+                    className="lexicon-icon lexicon-icon-caret-bottom"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                       }
-                      path="/metrics/:processId/completed"
+                    }
+                    data-testid="icon"
+                    focusable="false"
+                    role="presentation"
+                  />
+                </Icon>
+              </button>
+              <div
+                className="collapse navbar-collapse "
+              >
+                <div
+                  className="container-fluid container-fluid-max-xl"
+                >
+                  <ul
+                    className="navbar-nav"
+                    data-testid="tabElements"
+                  >
+                    <li
+                      className="nav-item"
+                      key="0"
+                      onClick={[Function]}
                     >
-                      <ChildLink
-                        aria-label="current-page"
-                        className="active nav-link"
-                        to="/metrics/35135/completed"
+                      <TabItem
+                        active={true}
+                        key="completed"
+                        name="completed"
+                        params={
+                          Object {
+                            "processId": 35135,
+                          }
+                        }
+                        path="/metrics/:processId/completed"
                       >
-                        <Link
+                        <ChildLink
                           aria-label="current-page"
                           className="active nav-link"
-                          to={
-                            Object {
-                              "pathname": "/metrics/35135/completed",
-                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                            }
-                          }
+                          to="/metrics/35135/completed"
                         >
-                          <a
+                          <Link
                             aria-label="current-page"
                             className="active nav-link"
-                            href="/metrics/35135/completed?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                            onClick={[Function]}
+                            to={
+                              Object {
+                                "pathname": "/metrics/35135/completed",
+                                "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                              }
+                            }
                           >
-                            <span
-                              className="navbar-text-truncate"
+                            <a
+                              aria-label="current-page"
+                              className="active nav-link"
+                              href="/metrics/35135/completed?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                              onClick={[Function]}
                             >
-                              completed
-                            </span>
-                          </a>
-                        </Link>
-                      </ChildLink>
-                    </TabItem>
-                  </li>
-                  <li
-                    className="nav-item"
-                    key="1"
-                    onClick={[Function]}
-                  >
-                    <TabItem
-                      active={false}
-                      key="pending"
-                      name="pending"
-                      params={
-                        Object {
-                          "processId": 35135,
-                        }
-                      }
-                      path="/metrics/:processId/pending"
+                              <span
+                                className="navbar-text-truncate"
+                              >
+                                completed
+                              </span>
+                            </a>
+                          </Link>
+                        </ChildLink>
+                      </TabItem>
+                    </li>
+                    <li
+                      className="nav-item"
+                      key="1"
+                      onClick={[Function]}
                     >
-                      <ChildLink
-                        aria-label=""
-                        className=" nav-link"
-                        to="/metrics/35135/pending"
+                      <TabItem
+                        active={false}
+                        key="pending"
+                        name="pending"
+                        params={
+                          Object {
+                            "processId": 35135,
+                          }
+                        }
+                        path="/metrics/:processId/pending"
                       >
-                        <Link
+                        <ChildLink
                           aria-label=""
                           className=" nav-link"
-                          to={
-                            Object {
-                              "pathname": "/metrics/35135/pending",
-                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                            }
-                          }
+                          to="/metrics/35135/pending"
                         >
-                          <a
+                          <Link
                             aria-label=""
                             className=" nav-link"
-                            href="/metrics/35135/pending?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                            onClick={[Function]}
+                            to={
+                              Object {
+                                "pathname": "/metrics/35135/pending",
+                                "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                              }
+                            }
                           >
-                            <span
-                              className="navbar-text-truncate"
+                            <a
+                              aria-label=""
+                              className=" nav-link"
+                              href="/metrics/35135/pending?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                              onClick={[Function]}
                             >
-                              pending
-                            </span>
-                          </a>
-                        </Link>
-                      </ChildLink>
-                    </TabItem>
-                  </li>
-                </ul>
+                              <span
+                                className="navbar-text-truncate"
+                              >
+                                pending
+                              </span>
+                            </a>
+                          </Link>
+                        </ChildLink>
+                      </TabItem>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        </nav>
-      </Tabs>
-    </Route>
+          </nav>
+        </Tabs>
+      </Route>
+    </FilterContextProvider>
   </Router>
 </MockRouter>
 `;
@@ -278,216 +280,218 @@ exports[`Should hide tab items 1`] = `
       }
     }
   >
-    <Route
-      path="/:page/:pageSize/:sort"
-      render={[Function]}
-    >
-      <Tabs
-        history={
-          Object {
-            "action": "POP",
-            "block": [Function],
-            "canGo": [Function],
-            "createHref": [Function],
-            "entries": Array [
-              Object {
+    <FilterContextProvider>
+      <Route
+        path="/:page/:pageSize/:sort"
+        render={[Function]}
+      >
+        <Tabs
+          history={
+            Object {
+              "action": "POP",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
+                  "hash": "",
+                  "pathname": "/1/20/title%3Aasc",
+                  "search": "?backPath=%2F",
+                },
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
                 "hash": "",
                 "pathname": "/1/20/title%3Aasc",
                 "search": "?backPath=%2F",
               },
-            ],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "index": 0,
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/1/20/title%3Aasc",
-              "search": "?backPath=%2F",
-            },
-            "push": [Function],
-            "replace": [Function],
+              "push": [Function],
+              "replace": [Function],
+            }
           }
-        }
-        location={
-          Object {
-            "pathname": "/metrics/:processId/completed",
-          }
-        }
-        page="1"
-        pageSize="20"
-        query="?backPath=%2F"
-        routeParams={
-          Object {
-            "page": "1",
-            "pageSize": "20",
-            "sort": "title:asc",
-          }
-        }
-        sort="title:asc"
-        tabs={
-          Array [
+          location={
             Object {
-              "key": "completed",
-              "name": "completed",
-              "params": Object {
-                "processId": 35135,
-              },
-              "path": "/metrics/:processId/completed",
-            },
+              "pathname": "/metrics/:processId/completed",
+            }
+          }
+          page="1"
+          pageSize="20"
+          query="?backPath=%2F"
+          routeParams={
             Object {
-              "key": "pending",
-              "name": "pending",
-              "params": Object {
-                "processId": 35135,
+              "page": "1",
+              "pageSize": "20",
+              "sort": "title:asc",
+            }
+          }
+          sort="title:asc"
+          tabs={
+            Array [
+              Object {
+                "key": "completed",
+                "name": "completed",
+                "params": Object {
+                  "processId": 35135,
+                },
+                "path": "/metrics/:processId/completed",
               },
-              "path": "/metrics/:processId/pending",
-            },
-          ]
-        }
-      >
-        <nav
-          className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+              Object {
+                "key": "pending",
+                "name": "pending",
+                "params": Object {
+                  "processId": 35135,
+                },
+                "path": "/metrics/:processId/pending",
+              },
+            ]
+          }
         >
-          <div
-            className="container-fluid container-fluid-max-xl"
+          <nav
+            className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
           >
-            <button
-              aria-expanded={false}
-              aria-label="toggle-navigation"
-              className="collapsed navbar-toggler navbar-toggler-link"
-              onClick={[Function]}
-            >
-              completed
-              <Icon
-                iconName="caret-bottom"
-              >
-                <svg
-                  className="lexicon-icon lexicon-icon-caret-bottom"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
-                    }
-                  }
-                  data-testid="icon"
-                  focusable="false"
-                  role="presentation"
-                />
-              </Icon>
-            </button>
             <div
-              className="collapse navbar-collapse "
+              className="container-fluid container-fluid-max-xl"
             >
-              <div
-                className="container-fluid container-fluid-max-xl"
+              <button
+                aria-expanded={false}
+                aria-label="toggle-navigation"
+                className="collapsed navbar-toggler navbar-toggler-link"
+                onClick={[Function]}
               >
-                <ul
-                  className="navbar-nav"
-                  data-testid="tabElements"
+                completed
+                <Icon
+                  iconName="caret-bottom"
                 >
-                  <li
-                    className="nav-item"
-                    key="0"
-                    onClick={[Function]}
-                  >
-                    <TabItem
-                      active={true}
-                      key="completed"
-                      name="completed"
-                      params={
-                        Object {
-                          "processId": 35135,
-                        }
+                  <svg
+                    className="lexicon-icon lexicon-icon-caret-bottom"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                       }
-                      path="/metrics/:processId/completed"
+                    }
+                    data-testid="icon"
+                    focusable="false"
+                    role="presentation"
+                  />
+                </Icon>
+              </button>
+              <div
+                className="collapse navbar-collapse "
+              >
+                <div
+                  className="container-fluid container-fluid-max-xl"
+                >
+                  <ul
+                    className="navbar-nav"
+                    data-testid="tabElements"
+                  >
+                    <li
+                      className="nav-item"
+                      key="0"
+                      onClick={[Function]}
                     >
-                      <ChildLink
-                        aria-label="current-page"
-                        className="active nav-link"
-                        to="/metrics/35135/completed"
+                      <TabItem
+                        active={true}
+                        key="completed"
+                        name="completed"
+                        params={
+                          Object {
+                            "processId": 35135,
+                          }
+                        }
+                        path="/metrics/:processId/completed"
                       >
-                        <Link
+                        <ChildLink
                           aria-label="current-page"
                           className="active nav-link"
-                          to={
-                            Object {
-                              "pathname": "/metrics/35135/completed",
-                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                            }
-                          }
+                          to="/metrics/35135/completed"
                         >
-                          <a
+                          <Link
                             aria-label="current-page"
                             className="active nav-link"
-                            href="/metrics/35135/completed?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                            onClick={[Function]}
+                            to={
+                              Object {
+                                "pathname": "/metrics/35135/completed",
+                                "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                              }
+                            }
                           >
-                            <span
-                              className="navbar-text-truncate"
+                            <a
+                              aria-label="current-page"
+                              className="active nav-link"
+                              href="/metrics/35135/completed?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                              onClick={[Function]}
                             >
-                              completed
-                            </span>
-                          </a>
-                        </Link>
-                      </ChildLink>
-                    </TabItem>
-                  </li>
-                  <li
-                    className="nav-item"
-                    key="1"
-                    onClick={[Function]}
-                  >
-                    <TabItem
-                      active={false}
-                      key="pending"
-                      name="pending"
-                      params={
-                        Object {
-                          "processId": 35135,
-                        }
-                      }
-                      path="/metrics/:processId/pending"
+                              <span
+                                className="navbar-text-truncate"
+                              >
+                                completed
+                              </span>
+                            </a>
+                          </Link>
+                        </ChildLink>
+                      </TabItem>
+                    </li>
+                    <li
+                      className="nav-item"
+                      key="1"
+                      onClick={[Function]}
                     >
-                      <ChildLink
-                        aria-label=""
-                        className=" nav-link"
-                        to="/metrics/35135/pending"
+                      <TabItem
+                        active={false}
+                        key="pending"
+                        name="pending"
+                        params={
+                          Object {
+                            "processId": 35135,
+                          }
+                        }
+                        path="/metrics/:processId/pending"
                       >
-                        <Link
+                        <ChildLink
                           aria-label=""
                           className=" nav-link"
-                          to={
-                            Object {
-                              "pathname": "/metrics/35135/pending",
-                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                            }
-                          }
+                          to="/metrics/35135/pending"
                         >
-                          <a
+                          <Link
                             aria-label=""
                             className=" nav-link"
-                            href="/metrics/35135/pending?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                            onClick={[Function]}
+                            to={
+                              Object {
+                                "pathname": "/metrics/35135/pending",
+                                "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                              }
+                            }
                           >
-                            <span
-                              className="navbar-text-truncate"
+                            <a
+                              aria-label=""
+                              className=" nav-link"
+                              href="/metrics/35135/pending?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                              onClick={[Function]}
                             >
-                              pending
-                            </span>
-                          </a>
-                        </Link>
-                      </ChildLink>
-                    </TabItem>
-                  </li>
-                </ul>
+                              <span
+                                className="navbar-text-truncate"
+                              >
+                                pending
+                              </span>
+                            </a>
+                          </Link>
+                        </ChildLink>
+                      </TabItem>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        </nav>
-      </Tabs>
-    </Route>
+          </nav>
+        </Tabs>
+      </Route>
+    </FilterContextProvider>
   </Router>
 </MockRouter>
 `;

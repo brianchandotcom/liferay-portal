@@ -113,169 +113,171 @@ exports[`Should render component 2`] = `
       }
     }
   >
-    <Route
-      path="/:page/:pageSize/:sort"
-      render={[Function]}
-    >
-      <SLAListItem
-        dateModified={2019-05-06T20:32:18.000Z}
-        duration={58000}
-        history={
-          Object {
-            "action": "POP",
-            "block": [Function],
-            "canGo": [Function],
-            "createHref": [Function],
-            "entries": Array [
-              Object {
+    <FilterContextProvider>
+      <Route
+        path="/:page/:pageSize/:sort"
+        render={[Function]}
+      >
+        <SLAListItem
+          dateModified={2019-05-06T20:32:18.000Z}
+          duration={58000}
+          history={
+            Object {
+              "action": "POP",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
+                  "hash": "",
+                  "pathname": "/1/20/title%3Aasc",
+                  "search": "?backPath=%2F",
+                },
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
                 "hash": "",
                 "pathname": "/1/20/title%3Aasc",
                 "search": "?backPath=%2F",
               },
-            ],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "index": 0,
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/1/20/title%3Aasc",
-              "search": "?backPath=%2F",
-            },
-            "push": [Function],
-            "replace": [Function],
+              "push": [Function],
+              "replace": [Function],
+            }
           }
-        }
-        instancesCount="10"
-        onTime="5"
-        overdue="5"
-        page="1"
-        pageSize="20"
-        processName="Process test"
-        query="?backPath=%2F"
-        routeParams={
-          Object {
-            "page": "1",
-            "pageSize": "20",
-            "sort": "title:asc",
+          instancesCount="10"
+          onTime="5"
+          overdue="5"
+          page="1"
+          pageSize="20"
+          processName="Process test"
+          query="?backPath=%2F"
+          routeParams={
+            Object {
+              "page": "1",
+              "pageSize": "20",
+              "sort": "title:asc",
+            }
           }
-        }
-        sort="title:asc"
-      >
-        <tr>
-          <td
-            className="table-cell-expand"
-          >
-            <div
-              className="table-list-title"
+          sort="title:asc"
+        >
+          <tr>
+            <td
+              className="table-cell-expand"
             >
-               
-              <ChildLink
-                to="/sla/edit/undefined/undefined"
+              <div
+                className="table-list-title"
               >
-                <Link
-                  to={
-                    Object {
-                      "pathname": "/sla/edit/undefined/undefined",
-                      "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                    }
-                  }
+                 
+                <ChildLink
+                  to="/sla/edit/undefined/undefined"
                 >
-                  <a
-                    href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                    onClick={[Function]}
-                  />
-                </Link>
-              </ChildLink>
-            </div>
-          </td>
-          <td />
-          <td
-            className=""
-          >
-            running
-          </td>
-          <td>
-            1min
-          </td>
-          <td>
-            May 06
-          </td>
-          <td
-            className="actions"
-          >
-            <div
-              className="dropdown dropdown-action"
-            >
-              <a
-                aria-expanded="false"
-                aria-haspopup="true"
-                className="component-action dropdown-toggle"
-                data-toggle="liferay-dropdown"
-                href="#1"
-                id="dropDownAction"
-                role="button"
-              >
-                <Icon
-                  iconName="ellipsis-v"
-                >
-                  <svg
-                    className="lexicon-icon lexicon-icon-ellipsis-v"
-                    dangerouslySetInnerHTML={
+                  <Link
+                    to={
                       Object {
-                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                        "pathname": "/sla/edit/undefined/undefined",
+                        "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
                       }
                     }
-                    data-testid="icon"
-                    focusable="false"
-                    role="presentation"
-                  />
-                </Icon>
-              </a>
-              <ul
-                aria-labelledby=""
-                className="dropdown-menu dropdown-menu-right"
-              >
-                <li>
-                  <ChildLink
-                    className="dropdown-item"
-                    to="/sla/edit/undefined/undefined"
                   >
-                    <Link
-                      className="dropdown-item"
-                      to={
+                    <a
+                      href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                      onClick={[Function]}
+                    />
+                  </Link>
+                </ChildLink>
+              </div>
+            </td>
+            <td />
+            <td
+              className=""
+            >
+              running
+            </td>
+            <td>
+              1min
+            </td>
+            <td>
+              May 06
+            </td>
+            <td
+              className="actions"
+            >
+              <div
+                className="dropdown dropdown-action"
+              >
+                <a
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  className="component-action dropdown-toggle"
+                  data-toggle="liferay-dropdown"
+                  href="#1"
+                  id="dropDownAction"
+                  role="button"
+                >
+                  <Icon
+                    iconName="ellipsis-v"
+                  >
+                    <svg
+                      className="lexicon-icon lexicon-icon-ellipsis-v"
+                      dangerouslySetInnerHTML={
                         Object {
-                          "pathname": "/sla/edit/undefined/undefined",
-                          "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
                         }
                       }
+                      data-testid="icon"
+                      focusable="false"
+                      role="presentation"
+                    />
+                  </Icon>
+                </a>
+                <ul
+                  aria-labelledby=""
+                  className="dropdown-menu dropdown-menu-right"
+                >
+                  <li>
+                    <ChildLink
+                      className="dropdown-item"
+                      to="/sla/edit/undefined/undefined"
                     >
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                        onClick={[Function]}
+                        to={
+                          Object {
+                            "pathname": "/sla/edit/undefined/undefined",
+                            "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                          }
+                        }
                       >
-                        edit
-                      </a>
-                    </Link>
-                  </ChildLink>
-                </li>
-                <li>
-                  <button
-                    className="dropdown-item"
-                    onClick={[Function]}
-                  >
-                    delete
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </td>
-        </tr>
-      </SLAListItem>
-    </Route>
+                        <a
+                          className="dropdown-item"
+                          href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                          onClick={[Function]}
+                        >
+                          edit
+                        </a>
+                      </Link>
+                    </ChildLink>
+                  </li>
+                  <li>
+                    <button
+                      className="dropdown-item"
+                      onClick={[Function]}
+                    >
+                      delete
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </SLAListItem>
+      </Route>
+    </FilterContextProvider>
   </Router>
 </MockRouter>
 `;
@@ -312,136 +314,75 @@ exports[`Should render component blocked 1`] = `
       }
     }
   >
-    <Route
-      path="/:page/:pageSize/:sort"
-      render={[Function]}
-    >
-      <SLAListItem
-        dateModified={2019-05-06T20:32:18.000Z}
-        duration={58000}
-        history={
-          Object {
-            "action": "POP",
-            "block": [Function],
-            "canGo": [Function],
-            "createHref": [Function],
-            "entries": Array [
-              Object {
+    <FilterContextProvider>
+      <Route
+        path="/:page/:pageSize/:sort"
+        render={[Function]}
+      >
+        <SLAListItem
+          dateModified={2019-05-06T20:32:18.000Z}
+          duration={58000}
+          history={
+            Object {
+              "action": "POP",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
+                  "hash": "",
+                  "pathname": "/1/20/title%3Aasc",
+                  "search": "?backPath=%2F",
+                },
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
                 "hash": "",
                 "pathname": "/1/20/title%3Aasc",
                 "search": "?backPath=%2F",
               },
-            ],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "index": 0,
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/1/20/title%3Aasc",
-              "search": "?backPath=%2F",
-            },
-            "push": [Function],
-            "replace": [Function],
+              "push": [Function],
+              "replace": [Function],
+            }
           }
-        }
-        instancesCount="10"
-        onTime="5"
-        overdue="5"
-        page="1"
-        pageSize="20"
-        processName="Process test"
-        query="?backPath=%2F"
-        routeParams={
-          Object {
-            "page": "1",
-            "pageSize": "20",
-            "sort": "title:asc",
+          instancesCount="10"
+          onTime="5"
+          overdue="5"
+          page="1"
+          pageSize="20"
+          processName="Process test"
+          query="?backPath=%2F"
+          routeParams={
+            Object {
+              "page": "1",
+              "pageSize": "20",
+              "sort": "title:asc",
+            }
           }
-        }
-        sort="title:asc"
-        status={2}
-      >
-        <tr>
-          <td
-            className="table-cell-expand"
-          >
-            <div
-              className="table-list-title"
+          sort="title:asc"
+          status={2}
+        >
+          <tr>
+            <td
+              className="table-cell-expand"
             >
-              <Icon
-                elementClasses="text-danger"
-                iconName="exclamation-full"
-              >
-                <svg
-                  className="lexicon-icon lexicon-icon-exclamation-full text-danger"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-full\\" />",
-                    }
-                  }
-                  data-testid="icon"
-                  focusable="false"
-                  role="presentation"
-                />
-              </Icon>
-               
-              <ChildLink
-                to="/sla/edit/undefined/undefined"
-              >
-                <Link
-                  to={
-                    Object {
-                      "pathname": "/sla/edit/undefined/undefined",
-                      "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                    }
-                  }
-                >
-                  <a
-                    href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                    onClick={[Function]}
-                  />
-                </Link>
-              </ChildLink>
-            </div>
-          </td>
-          <td />
-          <td
-            className="text-danger"
-          >
-            blocked
-          </td>
-          <td>
-            1min
-          </td>
-          <td>
-            May 06
-          </td>
-          <td
-            className="actions"
-          >
-            <div
-              className="dropdown dropdown-action"
-            >
-              <a
-                aria-expanded="false"
-                aria-haspopup="true"
-                className="component-action dropdown-toggle"
-                data-toggle="liferay-dropdown"
-                href="#1"
-                id="dropDownAction"
-                role="button"
+              <div
+                className="table-list-title"
               >
                 <Icon
-                  iconName="ellipsis-v"
+                  elementClasses="text-danger"
+                  iconName="exclamation-full"
                 >
                   <svg
-                    className="lexicon-icon lexicon-icon-ellipsis-v"
+                    className="lexicon-icon lexicon-icon-exclamation-full text-danger"
                     dangerouslySetInnerHTML={
                       Object {
-                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-full\\" />",
                       }
                     }
                     data-testid="icon"
@@ -449,49 +390,112 @@ exports[`Should render component blocked 1`] = `
                     role="presentation"
                   />
                 </Icon>
-              </a>
-              <ul
-                aria-labelledby=""
-                className="dropdown-menu dropdown-menu-right"
-              >
-                <li>
-                  <ChildLink
-                    className="dropdown-item"
-                    to="/sla/edit/undefined/undefined"
+                 
+                <ChildLink
+                  to="/sla/edit/undefined/undefined"
+                >
+                  <Link
+                    to={
+                      Object {
+                        "pathname": "/sla/edit/undefined/undefined",
+                        "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                      }
+                    }
                   >
-                    <Link
-                      className="dropdown-item"
-                      to={
+                    <a
+                      href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                      onClick={[Function]}
+                    />
+                  </Link>
+                </ChildLink>
+              </div>
+            </td>
+            <td />
+            <td
+              className="text-danger"
+            >
+              blocked
+            </td>
+            <td>
+              1min
+            </td>
+            <td>
+              May 06
+            </td>
+            <td
+              className="actions"
+            >
+              <div
+                className="dropdown dropdown-action"
+              >
+                <a
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  className="component-action dropdown-toggle"
+                  data-toggle="liferay-dropdown"
+                  href="#1"
+                  id="dropDownAction"
+                  role="button"
+                >
+                  <Icon
+                    iconName="ellipsis-v"
+                  >
+                    <svg
+                      className="lexicon-icon lexicon-icon-ellipsis-v"
+                      dangerouslySetInnerHTML={
                         Object {
-                          "pathname": "/sla/edit/undefined/undefined",
-                          "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
                         }
                       }
+                      data-testid="icon"
+                      focusable="false"
+                      role="presentation"
+                    />
+                  </Icon>
+                </a>
+                <ul
+                  aria-labelledby=""
+                  className="dropdown-menu dropdown-menu-right"
+                >
+                  <li>
+                    <ChildLink
+                      className="dropdown-item"
+                      to="/sla/edit/undefined/undefined"
                     >
-                      <a
+                      <Link
                         className="dropdown-item"
-                        href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                        onClick={[Function]}
+                        to={
+                          Object {
+                            "pathname": "/sla/edit/undefined/undefined",
+                            "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                          }
+                        }
                       >
-                        edit
-                      </a>
-                    </Link>
-                  </ChildLink>
-                </li>
-                <li>
-                  <button
-                    className="dropdown-item"
-                    onClick={[Function]}
-                  >
-                    delete
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </td>
-        </tr>
-      </SLAListItem>
-    </Route>
+                        <a
+                          className="dropdown-item"
+                          href="/sla/edit/undefined/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                          onClick={[Function]}
+                        >
+                          edit
+                        </a>
+                      </Link>
+                    </ChildLink>
+                  </li>
+                  <li>
+                    <button
+                      className="dropdown-item"
+                      onClick={[Function]}
+                    >
+                      delete
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </SLAListItem>
+      </Route>
+    </FilterContextProvider>
   </Router>
 </MockRouter>
 `;

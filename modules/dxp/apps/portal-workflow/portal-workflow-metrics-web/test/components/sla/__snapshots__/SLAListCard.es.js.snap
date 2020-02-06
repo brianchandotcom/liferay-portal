@@ -41,144 +41,146 @@ exports[`Should remove a item 1`] = `
       }
     }
   >
-    <Route
-      path="/:page/:pageSize/:sort"
-      render={[Function]}
-    >
-      <SLAListCard
-        history={
-          Object {
-            "action": "POP",
-            "block": [Function],
-            "canGo": [Function],
-            "createHref": [Function],
-            "entries": Array [
-              Object {
+    <FilterContextProvider>
+      <Route
+        path="/:page/:pageSize/:sort"
+        render={[Function]}
+      >
+        <SLAListCard
+          history={
+            Object {
+              "action": "POP",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
+                  "hash": "",
+                  "pathname": "/1/20/title%3Aasc",
+                  "search": "?backPath=%2F",
+                },
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
                 "hash": "",
                 "pathname": "/1/20/title%3Aasc",
                 "search": "?backPath=%2F",
               },
-            ],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "index": 0,
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/1/20/title%3Aasc",
-              "search": "?backPath=%2F",
-            },
-            "push": [Function],
-            "replace": [Function],
+              "push": [Function],
+              "replace": [Function],
+            }
           }
-        }
-        page="1"
-        pageSize="20"
-        query="?backPath=%2F"
-        routeParams={
-          Object {
-            "page": "1",
-            "pageSize": "20",
-            "sort": "title:asc",
+          page="1"
+          pageSize="20"
+          query="?backPath=%2F"
+          routeParams={
+            Object {
+              "page": "1",
+              "pageSize": "20",
+              "sort": "title:asc",
+            }
           }
-        }
-        sort="title:asc"
-      >
-        <nav
-          className="management-bar management-bar-light navbar navbar-expand-md"
+          sort="title:asc"
         >
-          <div
-            className="container-fluid container-fluid-max-xl"
+          <nav
+            className="management-bar management-bar-light navbar navbar-expand-md"
           >
-            <ul
-              className="autofit-row navbar-nav"
+            <div
+              className="container-fluid container-fluid-max-xl"
             >
-              <li
-                className="autofit-col-expand autofit-float-end nav-item"
+              <ul
+                className="autofit-row navbar-nav"
               >
-                <TooltipProvider>
-                  <span
-                    onMouseOut={[Function]}
-                    onMouseOver={[Function]}
+                <li
+                  className="autofit-col-expand autofit-float-end nav-item"
+                >
+                  <TooltipProvider>
+                    <span
+                      onMouseOut={[Function]}
+                      onMouseOver={[Function]}
+                    >
+                      <span
+                        className="workflow-tooltip"
+                        data-tooltip-align="bottom"
+                        title="new-sla"
+                      >
+                        <ChildLink
+                          className="btn btn-primary nav-btn nav-btn-monospaced"
+                          to="/sla/new/undefined"
+                        >
+                          <Link
+                            className="btn btn-primary nav-btn nav-btn-monospaced"
+                            to={
+                              Object {
+                                "pathname": "/sla/new/undefined",
+                                "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                              }
+                            }
+                          >
+                            <a
+                              className="btn btn-primary nav-btn nav-btn-monospaced"
+                              href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                              onClick={[Function]}
+                            >
+                              <Icon
+                                iconName="plus"
+                              >
+                                <svg
+                                  className="lexicon-icon lexicon-icon-plus"
+                                  dangerouslySetInnerHTML={
+                                    Object {
+                                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                    }
+                                  }
+                                  data-testid="icon"
+                                  focusable="false"
+                                  role="presentation"
+                                />
+                              </Icon>
+                            </a>
+                          </Link>
+                        </ChildLink>
+                      </span>
+                    </span>
+                  </TooltipProvider>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div
+            className="container-fluid-1280"
+          >
+            <ListView
+              emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+              emptyTitleText="no-slas-yet"
+              fetching={false}
+              loading={true}
+            >
+              <div>
+                <LoadingState
+                  className="border-1 pb-6 pt-6 sheet"
+                >
+                  <div
+                    className="border-1 pb-6 pt-6 sheet"
+                    data-testid="loadingState"
                   >
                     <span
-                      className="workflow-tooltip"
-                      data-tooltip-align="bottom"
-                      title="new-sla"
-                    >
-                      <ChildLink
-                        className="btn btn-primary nav-btn nav-btn-monospaced"
-                        to="/sla/new/undefined"
-                      >
-                        <Link
-                          className="btn btn-primary nav-btn nav-btn-monospaced"
-                          to={
-                            Object {
-                              "pathname": "/sla/new/undefined",
-                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                            }
-                          }
-                        >
-                          <a
-                            className="btn btn-primary nav-btn nav-btn-monospaced"
-                            href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                            onClick={[Function]}
-                          >
-                            <Icon
-                              iconName="plus"
-                            >
-                              <svg
-                                className="lexicon-icon lexicon-icon-plus"
-                                dangerouslySetInnerHTML={
-                                  Object {
-                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                  }
-                                }
-                                data-testid="icon"
-                                focusable="false"
-                                role="presentation"
-                              />
-                            </Icon>
-                          </a>
-                        </Link>
-                      </ChildLink>
-                    </span>
-                  </span>
-                </TooltipProvider>
-              </li>
-            </ul>
+                      aria-hidden="true"
+                      className="loading-animation"
+                    />
+                  </div>
+                </LoadingState>
+              </div>
+            </ListView>
           </div>
-        </nav>
-        <div
-          className="container-fluid-1280"
-        >
-          <ListView
-            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
-            emptyTitleText="no-slas-yet"
-            fetching={false}
-            loading={true}
-          >
-            <div>
-              <LoadingState
-                className="border-1 pb-6 pt-6 sheet"
-              >
-                <div
-                  className="border-1 pb-6 pt-6 sheet"
-                  data-testid="loadingState"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="loading-animation"
-                  />
-                </div>
-              </LoadingState>
-            </div>
-          </ListView>
-        </div>
-      </SLAListCard>
-    </Route>
+        </SLAListCard>
+      </Route>
+    </FilterContextProvider>
   </Router>
 </MockRouter>
 `;
@@ -352,144 +354,146 @@ exports[`Should render toast with SLA saved message 1`] = `
       }
     }
   >
-    <Route
-      path="/:page/:pageSize/:sort"
-      render={[Function]}
-    >
-      <SLAListCard
-        history={
-          Object {
-            "action": "POP",
-            "block": [Function],
-            "canGo": [Function],
-            "createHref": [Function],
-            "entries": Array [
-              Object {
+    <FilterContextProvider>
+      <Route
+        path="/:page/:pageSize/:sort"
+        render={[Function]}
+      >
+        <SLAListCard
+          history={
+            Object {
+              "action": "POP",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
+                  "hash": "",
+                  "pathname": "/1/20/title%3Aasc",
+                  "search": "?backPath=%2F",
+                },
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
                 "hash": "",
                 "pathname": "/1/20/title%3Aasc",
                 "search": "?backPath=%2F",
               },
-            ],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "index": 0,
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/1/20/title%3Aasc",
-              "search": "?backPath=%2F",
-            },
-            "push": [Function],
-            "replace": [Function],
+              "push": [Function],
+              "replace": [Function],
+            }
           }
-        }
-        page="1"
-        pageSize="20"
-        query="?backPath=%2F"
-        routeParams={
-          Object {
-            "page": "1",
-            "pageSize": "20",
-            "sort": "title:asc",
+          page="1"
+          pageSize="20"
+          query="?backPath=%2F"
+          routeParams={
+            Object {
+              "page": "1",
+              "pageSize": "20",
+              "sort": "title:asc",
+            }
           }
-        }
-        sort="title:asc"
-      >
-        <nav
-          className="management-bar management-bar-light navbar navbar-expand-md"
+          sort="title:asc"
         >
-          <div
-            className="container-fluid container-fluid-max-xl"
+          <nav
+            className="management-bar management-bar-light navbar navbar-expand-md"
           >
-            <ul
-              className="autofit-row navbar-nav"
+            <div
+              className="container-fluid container-fluid-max-xl"
             >
-              <li
-                className="autofit-col-expand autofit-float-end nav-item"
+              <ul
+                className="autofit-row navbar-nav"
               >
-                <TooltipProvider>
-                  <span
-                    onMouseOut={[Function]}
-                    onMouseOver={[Function]}
+                <li
+                  className="autofit-col-expand autofit-float-end nav-item"
+                >
+                  <TooltipProvider>
+                    <span
+                      onMouseOut={[Function]}
+                      onMouseOver={[Function]}
+                    >
+                      <span
+                        className="workflow-tooltip"
+                        data-tooltip-align="bottom"
+                        title="new-sla"
+                      >
+                        <ChildLink
+                          className="btn btn-primary nav-btn nav-btn-monospaced"
+                          to="/sla/new/undefined"
+                        >
+                          <Link
+                            className="btn btn-primary nav-btn nav-btn-monospaced"
+                            to={
+                              Object {
+                                "pathname": "/sla/new/undefined",
+                                "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                              }
+                            }
+                          >
+                            <a
+                              className="btn btn-primary nav-btn nav-btn-monospaced"
+                              href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                              onClick={[Function]}
+                            >
+                              <Icon
+                                iconName="plus"
+                              >
+                                <svg
+                                  className="lexicon-icon lexicon-icon-plus"
+                                  dangerouslySetInnerHTML={
+                                    Object {
+                                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                    }
+                                  }
+                                  data-testid="icon"
+                                  focusable="false"
+                                  role="presentation"
+                                />
+                              </Icon>
+                            </a>
+                          </Link>
+                        </ChildLink>
+                      </span>
+                    </span>
+                  </TooltipProvider>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div
+            className="container-fluid-1280"
+          >
+            <ListView
+              emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+              emptyTitleText="no-slas-yet"
+              fetching={false}
+              loading={true}
+            >
+              <div>
+                <LoadingState
+                  className="border-1 pb-6 pt-6 sheet"
+                >
+                  <div
+                    className="border-1 pb-6 pt-6 sheet"
+                    data-testid="loadingState"
                   >
                     <span
-                      className="workflow-tooltip"
-                      data-tooltip-align="bottom"
-                      title="new-sla"
-                    >
-                      <ChildLink
-                        className="btn btn-primary nav-btn nav-btn-monospaced"
-                        to="/sla/new/undefined"
-                      >
-                        <Link
-                          className="btn btn-primary nav-btn nav-btn-monospaced"
-                          to={
-                            Object {
-                              "pathname": "/sla/new/undefined",
-                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                            }
-                          }
-                        >
-                          <a
-                            className="btn btn-primary nav-btn nav-btn-monospaced"
-                            href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                            onClick={[Function]}
-                          >
-                            <Icon
-                              iconName="plus"
-                            >
-                              <svg
-                                className="lexicon-icon lexicon-icon-plus"
-                                dangerouslySetInnerHTML={
-                                  Object {
-                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                  }
-                                }
-                                data-testid="icon"
-                                focusable="false"
-                                role="presentation"
-                              />
-                            </Icon>
-                          </a>
-                        </Link>
-                      </ChildLink>
-                    </span>
-                  </span>
-                </TooltipProvider>
-              </li>
-            </ul>
+                      aria-hidden="true"
+                      className="loading-animation"
+                    />
+                  </div>
+                </LoadingState>
+              </div>
+            </ListView>
           </div>
-        </nav>
-        <div
-          className="container-fluid-1280"
-        >
-          <ListView
-            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
-            emptyTitleText="no-slas-yet"
-            fetching={false}
-            loading={true}
-          >
-            <div>
-              <LoadingState
-                className="border-1 pb-6 pt-6 sheet"
-              >
-                <div
-                  className="border-1 pb-6 pt-6 sheet"
-                  data-testid="loadingState"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="loading-animation"
-                  />
-                </div>
-              </LoadingState>
-            </div>
-          </ListView>
-        </div>
-      </SLAListCard>
-    </Route>
+        </SLAListCard>
+      </Route>
+    </FilterContextProvider>
   </Router>
 </MockRouter>
 `;
@@ -535,144 +539,146 @@ exports[`Should render toast with SLA updated message 1`] = `
       }
     }
   >
-    <Route
-      path="/:page/:pageSize/:sort"
-      render={[Function]}
-    >
-      <SLAListCard
-        history={
-          Object {
-            "action": "POP",
-            "block": [Function],
-            "canGo": [Function],
-            "createHref": [Function],
-            "entries": Array [
-              Object {
+    <FilterContextProvider>
+      <Route
+        path="/:page/:pageSize/:sort"
+        render={[Function]}
+      >
+        <SLAListCard
+          history={
+            Object {
+              "action": "POP",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
+                  "hash": "",
+                  "pathname": "/1/20/title%3Aasc",
+                  "search": "?backPath=%2F",
+                },
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
                 "hash": "",
                 "pathname": "/1/20/title%3Aasc",
                 "search": "?backPath=%2F",
               },
-            ],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "index": 0,
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/1/20/title%3Aasc",
-              "search": "?backPath=%2F",
-            },
-            "push": [Function],
-            "replace": [Function],
+              "push": [Function],
+              "replace": [Function],
+            }
           }
-        }
-        page="1"
-        pageSize="20"
-        query="?backPath=%2F"
-        routeParams={
-          Object {
-            "page": "1",
-            "pageSize": "20",
-            "sort": "title:asc",
+          page="1"
+          pageSize="20"
+          query="?backPath=%2F"
+          routeParams={
+            Object {
+              "page": "1",
+              "pageSize": "20",
+              "sort": "title:asc",
+            }
           }
-        }
-        sort="title:asc"
-      >
-        <nav
-          className="management-bar management-bar-light navbar navbar-expand-md"
+          sort="title:asc"
         >
-          <div
-            className="container-fluid container-fluid-max-xl"
+          <nav
+            className="management-bar management-bar-light navbar navbar-expand-md"
           >
-            <ul
-              className="autofit-row navbar-nav"
+            <div
+              className="container-fluid container-fluid-max-xl"
             >
-              <li
-                className="autofit-col-expand autofit-float-end nav-item"
+              <ul
+                className="autofit-row navbar-nav"
               >
-                <TooltipProvider>
-                  <span
-                    onMouseOut={[Function]}
-                    onMouseOver={[Function]}
+                <li
+                  className="autofit-col-expand autofit-float-end nav-item"
+                >
+                  <TooltipProvider>
+                    <span
+                      onMouseOut={[Function]}
+                      onMouseOver={[Function]}
+                    >
+                      <span
+                        className="workflow-tooltip"
+                        data-tooltip-align="bottom"
+                        title="new-sla"
+                      >
+                        <ChildLink
+                          className="btn btn-primary nav-btn nav-btn-monospaced"
+                          to="/sla/new/undefined"
+                        >
+                          <Link
+                            className="btn btn-primary nav-btn nav-btn-monospaced"
+                            to={
+                              Object {
+                                "pathname": "/sla/new/undefined",
+                                "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                              }
+                            }
+                          >
+                            <a
+                              className="btn btn-primary nav-btn nav-btn-monospaced"
+                              href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                              onClick={[Function]}
+                            >
+                              <Icon
+                                iconName="plus"
+                              >
+                                <svg
+                                  className="lexicon-icon lexicon-icon-plus"
+                                  dangerouslySetInnerHTML={
+                                    Object {
+                                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                    }
+                                  }
+                                  data-testid="icon"
+                                  focusable="false"
+                                  role="presentation"
+                                />
+                              </Icon>
+                            </a>
+                          </Link>
+                        </ChildLink>
+                      </span>
+                    </span>
+                  </TooltipProvider>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div
+            className="container-fluid-1280"
+          >
+            <ListView
+              emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+              emptyTitleText="no-slas-yet"
+              fetching={false}
+              loading={true}
+            >
+              <div>
+                <LoadingState
+                  className="border-1 pb-6 pt-6 sheet"
+                >
+                  <div
+                    className="border-1 pb-6 pt-6 sheet"
+                    data-testid="loadingState"
                   >
                     <span
-                      className="workflow-tooltip"
-                      data-tooltip-align="bottom"
-                      title="new-sla"
-                    >
-                      <ChildLink
-                        className="btn btn-primary nav-btn nav-btn-monospaced"
-                        to="/sla/new/undefined"
-                      >
-                        <Link
-                          className="btn btn-primary nav-btn nav-btn-monospaced"
-                          to={
-                            Object {
-                              "pathname": "/sla/new/undefined",
-                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                            }
-                          }
-                        >
-                          <a
-                            className="btn btn-primary nav-btn nav-btn-monospaced"
-                            href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                            onClick={[Function]}
-                          >
-                            <Icon
-                              iconName="plus"
-                            >
-                              <svg
-                                className="lexicon-icon lexicon-icon-plus"
-                                dangerouslySetInnerHTML={
-                                  Object {
-                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                  }
-                                }
-                                data-testid="icon"
-                                focusable="false"
-                                role="presentation"
-                              />
-                            </Icon>
-                          </a>
-                        </Link>
-                      </ChildLink>
-                    </span>
-                  </span>
-                </TooltipProvider>
-              </li>
-            </ul>
+                      aria-hidden="true"
+                      className="loading-animation"
+                    />
+                  </div>
+                </LoadingState>
+              </div>
+            </ListView>
           </div>
-        </nav>
-        <div
-          className="container-fluid-1280"
-        >
-          <ListView
-            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
-            emptyTitleText="no-slas-yet"
-            fetching={false}
-            loading={true}
-          >
-            <div>
-              <LoadingState
-                className="border-1 pb-6 pt-6 sheet"
-              >
-                <div
-                  className="border-1 pb-6 pt-6 sheet"
-                  data-testid="loadingState"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="loading-animation"
-                  />
-                </div>
-              </LoadingState>
-            </div>
-          </ListView>
-        </div>
-      </SLAListCard>
-    </Route>
+        </SLAListCard>
+      </Route>
+    </FilterContextProvider>
   </Router>
 </MockRouter>
 `;
@@ -718,144 +724,146 @@ exports[`Should test props change 1`] = `
       }
     }
   >
-    <Route
-      path="/:page/:pageSize/:sort"
-      render={[Function]}
-    >
-      <SLAListCard
-        history={
-          Object {
-            "action": "POP",
-            "block": [Function],
-            "canGo": [Function],
-            "createHref": [Function],
-            "entries": Array [
-              Object {
+    <FilterContextProvider>
+      <Route
+        path="/:page/:pageSize/:sort"
+        render={[Function]}
+      >
+        <SLAListCard
+          history={
+            Object {
+              "action": "POP",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
+                  "hash": "",
+                  "pathname": "/1/20/title%3Aasc",
+                  "search": "?backPath=%2F",
+                },
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
                 "hash": "",
                 "pathname": "/1/20/title%3Aasc",
                 "search": "?backPath=%2F",
               },
-            ],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "index": 0,
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/1/20/title%3Aasc",
-              "search": "?backPath=%2F",
-            },
-            "push": [Function],
-            "replace": [Function],
+              "push": [Function],
+              "replace": [Function],
+            }
           }
-        }
-        page="1"
-        pageSize="20"
-        query="?backPath=%2F"
-        routeParams={
-          Object {
-            "page": "1",
-            "pageSize": "20",
-            "sort": "title:asc",
+          page="1"
+          pageSize="20"
+          query="?backPath=%2F"
+          routeParams={
+            Object {
+              "page": "1",
+              "pageSize": "20",
+              "sort": "title:asc",
+            }
           }
-        }
-        sort="title:asc"
-      >
-        <nav
-          className="management-bar management-bar-light navbar navbar-expand-md"
+          sort="title:asc"
         >
-          <div
-            className="container-fluid container-fluid-max-xl"
+          <nav
+            className="management-bar management-bar-light navbar navbar-expand-md"
           >
-            <ul
-              className="autofit-row navbar-nav"
+            <div
+              className="container-fluid container-fluid-max-xl"
             >
-              <li
-                className="autofit-col-expand autofit-float-end nav-item"
+              <ul
+                className="autofit-row navbar-nav"
               >
-                <TooltipProvider>
-                  <span
-                    onMouseOut={[Function]}
-                    onMouseOver={[Function]}
+                <li
+                  className="autofit-col-expand autofit-float-end nav-item"
+                >
+                  <TooltipProvider>
+                    <span
+                      onMouseOut={[Function]}
+                      onMouseOver={[Function]}
+                    >
+                      <span
+                        className="workflow-tooltip"
+                        data-tooltip-align="bottom"
+                        title="new-sla"
+                      >
+                        <ChildLink
+                          className="btn btn-primary nav-btn nav-btn-monospaced"
+                          to="/sla/new/undefined"
+                        >
+                          <Link
+                            className="btn btn-primary nav-btn nav-btn-monospaced"
+                            to={
+                              Object {
+                                "pathname": "/sla/new/undefined",
+                                "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                              }
+                            }
+                          >
+                            <a
+                              className="btn btn-primary nav-btn nav-btn-monospaced"
+                              href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                              onClick={[Function]}
+                            >
+                              <Icon
+                                iconName="plus"
+                              >
+                                <svg
+                                  className="lexicon-icon lexicon-icon-plus"
+                                  dangerouslySetInnerHTML={
+                                    Object {
+                                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                    }
+                                  }
+                                  data-testid="icon"
+                                  focusable="false"
+                                  role="presentation"
+                                />
+                              </Icon>
+                            </a>
+                          </Link>
+                        </ChildLink>
+                      </span>
+                    </span>
+                  </TooltipProvider>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div
+            className="container-fluid-1280"
+          >
+            <ListView
+              emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+              emptyTitleText="no-slas-yet"
+              fetching={false}
+              loading={true}
+            >
+              <div>
+                <LoadingState
+                  className="border-1 pb-6 pt-6 sheet"
+                >
+                  <div
+                    className="border-1 pb-6 pt-6 sheet"
+                    data-testid="loadingState"
                   >
                     <span
-                      className="workflow-tooltip"
-                      data-tooltip-align="bottom"
-                      title="new-sla"
-                    >
-                      <ChildLink
-                        className="btn btn-primary nav-btn nav-btn-monospaced"
-                        to="/sla/new/undefined"
-                      >
-                        <Link
-                          className="btn btn-primary nav-btn nav-btn-monospaced"
-                          to={
-                            Object {
-                              "pathname": "/sla/new/undefined",
-                              "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F",
-                            }
-                          }
-                        >
-                          <a
-                            className="btn btn-primary nav-btn nav-btn-monospaced"
-                            href="/sla/new/undefined?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F"
-                            onClick={[Function]}
-                          >
-                            <Icon
-                              iconName="plus"
-                            >
-                              <svg
-                                className="lexicon-icon lexicon-icon-plus"
-                                dangerouslySetInnerHTML={
-                                  Object {
-                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
-                                  }
-                                }
-                                data-testid="icon"
-                                focusable="false"
-                                role="presentation"
-                              />
-                            </Icon>
-                          </a>
-                        </Link>
-                      </ChildLink>
-                    </span>
-                  </span>
-                </TooltipProvider>
-              </li>
-            </ul>
+                      aria-hidden="true"
+                      className="loading-animation"
+                    />
+                  </div>
+                </LoadingState>
+              </div>
+            </ListView>
           </div>
-        </nav>
-        <div
-          className="container-fluid-1280"
-        >
-          <ListView
-            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
-            emptyTitleText="no-slas-yet"
-            fetching={false}
-            loading={true}
-          >
-            <div>
-              <LoadingState
-                className="border-1 pb-6 pt-6 sheet"
-              >
-                <div
-                  className="border-1 pb-6 pt-6 sheet"
-                  data-testid="loadingState"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="loading-animation"
-                  />
-                </div>
-              </LoadingState>
-            </div>
-          </ListView>
-        </div>
-      </SLAListCard>
-    </Route>
+        </SLAListCard>
+      </Route>
+    </FilterContextProvider>
   </Router>
 </MockRouter>
 `;

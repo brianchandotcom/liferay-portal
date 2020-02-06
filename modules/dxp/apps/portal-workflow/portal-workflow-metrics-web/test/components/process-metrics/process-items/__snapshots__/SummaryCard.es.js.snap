@@ -32,147 +32,149 @@ exports[`Should render component 1`] = `
       }
     }
   >
-    <Route
-      path="/:page/:pageSize/:sort"
-      render={[Function]}
-    >
-      <SummaryCard
-        getTitle={[Function]}
-        history={
-          Object {
-            "action": "POP",
-            "block": [Function],
-            "canGo": [Function],
-            "createHref": [Function],
-            "entries": Array [
-              Object {
+    <FilterContextProvider>
+      <Route
+        path="/:page/:pageSize/:sort"
+        render={[Function]}
+      >
+        <SummaryCard
+          getTitle={[Function]}
+          history={
+            Object {
+              "action": "POP",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
+                  "hash": "",
+                  "pathname": "/1/20/title%3Aasc",
+                  "search": "?backPath=%2F",
+                },
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
                 "hash": "",
                 "pathname": "/1/20/title%3Aasc",
                 "search": "?backPath=%2F",
               },
-            ],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "index": 0,
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/1/20/title%3Aasc",
-              "search": "?backPath=%2F",
-            },
-            "push": [Function],
-            "replace": [Function],
-          }
-        }
-        iconColor="success"
-        iconName="check-circle"
-        page="1"
-        pageSize="20"
-        processId={12345}
-        query="?backPath=%2F"
-        routeParams={
-          Object {
-            "page": "1",
-            "pageSize": "20",
-            "sort": "title:asc",
-          }
-        }
-        sort="title:asc"
-        total={false}
-        totalValue={55}
-        value={31}
-      >
-        <ChildLink
-          className=" process-dashboard-summary-card"
-          onMouseOut={[Function]}
-          onMouseOver={[Function]}
-          query={
-            Object {
-              "filters": Object {
-                "slaStatuses": Array [
-                  undefined,
-                ],
-                "statuses": Array [
-                  "Pending",
-                ],
-              },
+              "push": [Function],
+              "replace": [Function],
             }
           }
-          to="/instance/12345/20/1"
+          iconColor="success"
+          iconName="check-circle"
+          page="1"
+          pageSize="20"
+          processId={12345}
+          query="?backPath=%2F"
+          routeParams={
+            Object {
+              "page": "1",
+              "pageSize": "20",
+              "sort": "title:asc",
+            }
+          }
+          sort="title:asc"
+          total={false}
+          totalValue={55}
+          value={31}
         >
-          <Link
+          <ChildLink
             className=" process-dashboard-summary-card"
             onMouseOut={[Function]}
             onMouseOver={[Function]}
-            to={
+            query={
               Object {
-                "pathname": "/instance/12345/20/1",
-                "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending",
+                "filters": Object {
+                  "slaStatuses": Array [
+                    undefined,
+                  ],
+                  "statuses": Array [
+                    "Pending",
+                  ],
+                },
               }
             }
+            to="/instance/12345/20/1"
           >
-            <a
+            <Link
               className=" process-dashboard-summary-card"
-              href="/instance/12345/20/1?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending"
-              onClick={[Function]}
               onMouseOut={[Function]}
               onMouseOver={[Function]}
+              to={
+                Object {
+                  "pathname": "/instance/12345/20/1",
+                  "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending",
+                }
+              }
             >
-              <div>
-                <div
-                  className="header"
-                >
-                  <span
-                    className="bg-success-light mr-3 sticker sticker-circle"
+              <a
+                className=" process-dashboard-summary-card"
+                href="/instance/12345/20/1?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending"
+                onClick={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+              >
+                <div>
+                  <div
+                    className="header"
                   >
                     <span
-                      className="inline-item"
+                      className="bg-success-light mr-3 sticker sticker-circle"
                     >
-                      <Icon
-                        elementClasses="text-success"
-                        iconName="check-circle"
+                      <span
+                        className="inline-item"
                       >
-                        <svg
-                          className="lexicon-icon lexicon-icon-check-circle text-success"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle\\" />",
+                        <Icon
+                          elementClasses="text-success"
+                          iconName="check-circle"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-check-circle text-success"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle\\" />",
+                              }
                             }
-                          }
-                          data-testid="icon"
-                          focusable="false"
-                          role="presentation"
-                        />
-                      </Icon>
+                            data-testid="icon"
+                            focusable="false"
+                            role="presentation"
+                          />
+                        </Icon>
+                      </span>
                     </span>
-                  </span>
-                  <span>
-                    On Time
-                  </span>
-                </div>
-                <div
-                  className="body"
-                  title={31}
-                >
-                  31
-                </div>
-                <div
-                  className="footer"
-                >
-                  <span
-                    className=" xsmall"
+                    <span>
+                      On Time
+                    </span>
+                  </div>
+                  <div
+                    className="body"
+                    title={31}
                   >
-                    56.36%
-                  </span>
+                    31
+                  </div>
+                  <div
+                    className="footer"
+                  >
+                    <span
+                      className=" xsmall"
+                    >
+                      56.36%
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </Link>
-        </ChildLink>
-      </SummaryCard>
-    </Route>
+              </a>
+            </Link>
+          </ChildLink>
+        </SummaryCard>
+      </Route>
+    </FilterContextProvider>
   </Router>
 </MockRouter>
 `;
@@ -209,131 +211,133 @@ exports[`Should render component with disabled state 1`] = `
       }
     }
   >
-    <Route
-      path="/:page/:pageSize/:sort"
-      render={[Function]}
-    >
-      <SummaryCard
-        getTitle={[Function]}
-        history={
-          Object {
-            "action": "POP",
-            "block": [Function],
-            "canGo": [Function],
-            "createHref": [Function],
-            "entries": Array [
-              Object {
+    <FilterContextProvider>
+      <Route
+        path="/:page/:pageSize/:sort"
+        render={[Function]}
+      >
+        <SummaryCard
+          getTitle={[Function]}
+          history={
+            Object {
+              "action": "POP",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
+                  "hash": "",
+                  "pathname": "/1/20/title%3Aasc",
+                  "search": "?backPath=%2F",
+                },
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
                 "hash": "",
                 "pathname": "/1/20/title%3Aasc",
                 "search": "?backPath=%2F",
               },
-            ],
-            "go": [Function],
-            "goBack": [Function],
-            "goForward": [Function],
-            "index": 0,
-            "length": 1,
-            "listen": [Function],
-            "location": Object {
-              "hash": "",
-              "pathname": "/1/20/title%3Aasc",
-              "search": "?backPath=%2F",
-            },
-            "push": [Function],
-            "replace": [Function],
-          }
-        }
-        iconColor="success"
-        iconName="check-circle"
-        page="1"
-        pageSize="20"
-        processId={12345}
-        query="?backPath=%2F"
-        routeParams={
-          Object {
-            "page": "1",
-            "pageSize": "20",
-            "sort": "title:asc",
-          }
-        }
-        sort="title:asc"
-        total={false}
-        totalValue={55}
-      >
-        <ChildLink
-          className="disabled process-dashboard-summary-card"
-          onMouseOut={[Function]}
-          onMouseOver={[Function]}
-          query={
-            Object {
-              "filters": Object {
-                "slaStatuses": Array [
-                  undefined,
-                ],
-                "statuses": Array [
-                  "Pending",
-                ],
-              },
+              "push": [Function],
+              "replace": [Function],
             }
           }
-          to="/instance/12345/20/1"
+          iconColor="success"
+          iconName="check-circle"
+          page="1"
+          pageSize="20"
+          processId={12345}
+          query="?backPath=%2F"
+          routeParams={
+            Object {
+              "page": "1",
+              "pageSize": "20",
+              "sort": "title:asc",
+            }
+          }
+          sort="title:asc"
+          total={false}
+          totalValue={55}
         >
-          <Link
+          <ChildLink
             className="disabled process-dashboard-summary-card"
             onMouseOut={[Function]}
             onMouseOver={[Function]}
-            to={
+            query={
               Object {
-                "pathname": "/instance/12345/20/1",
-                "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending",
+                "filters": Object {
+                  "slaStatuses": Array [
+                    undefined,
+                  ],
+                  "statuses": Array [
+                    "Pending",
+                  ],
+                },
               }
             }
+            to="/instance/12345/20/1"
           >
-            <a
+            <Link
               className="disabled process-dashboard-summary-card"
-              href="/instance/12345/20/1?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending"
-              onClick={[Function]}
               onMouseOut={[Function]}
               onMouseOver={[Function]}
+              to={
+                Object {
+                  "pathname": "/instance/12345/20/1",
+                  "search": "?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending",
+                }
+              }
             >
-              <div>
-                <div
-                  className="header"
-                >
-                  <span
-                    className="bg-success-light mr-3 sticker sticker-circle"
+              <a
+                className="disabled process-dashboard-summary-card"
+                href="/instance/12345/20/1?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&filters.statuses%5B0%5D=Pending"
+                onClick={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+              >
+                <div>
+                  <div
+                    className="header"
                   >
                     <span
-                      className="inline-item"
+                      className="bg-success-light mr-3 sticker sticker-circle"
                     >
-                      <Icon
-                        elementClasses="text-success"
-                        iconName="check-circle"
+                      <span
+                        className="inline-item"
                       >
-                        <svg
-                          className="lexicon-icon lexicon-icon-check-circle text-success"
-                          dangerouslySetInnerHTML={
-                            Object {
-                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle\\" />",
+                        <Icon
+                          elementClasses="text-success"
+                          iconName="check-circle"
+                        >
+                          <svg
+                            className="lexicon-icon lexicon-icon-check-circle text-success"
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#check-circle\\" />",
+                              }
                             }
-                          }
-                          data-testid="icon"
-                          focusable="false"
-                          role="presentation"
-                        />
-                      </Icon>
+                            data-testid="icon"
+                            focusable="false"
+                            role="presentation"
+                          />
+                        </Icon>
+                      </span>
                     </span>
-                  </span>
-                  <span>
-                    On Time
-                  </span>
+                    <span>
+                      On Time
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </Link>
-        </ChildLink>
-      </SummaryCard>
-    </Route>
+              </a>
+            </Link>
+          </ChildLink>
+        </SummaryCard>
+      </Route>
+    </FilterContextProvider>
   </Router>
 </MockRouter>
 `;

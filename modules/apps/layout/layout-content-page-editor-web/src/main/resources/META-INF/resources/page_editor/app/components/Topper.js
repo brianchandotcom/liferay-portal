@@ -18,6 +18,7 @@ import classNames from 'classnames';
 import React, {useContext, useRef, useMemo} from 'react';
 
 import {switchSidebarPanel} from '../actions/index';
+import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../config/index';
 import selectShowLayoutItemRemoveButton from '../selectors/selectShowLayoutItemRemoveButton';
@@ -114,16 +115,16 @@ export default function Topper({
 			name = fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
 		}
 		else if (item.type === LAYOUT_DATA_ITEM_TYPES.container) {
-			name = Liferay.Language.get('section');
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.container;
 		}
 		else if (item.type === LAYOUT_DATA_ITEM_TYPES.column) {
-			name = Liferay.Language.get('column');
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.column;
 		}
 		else if (item.type === LAYOUT_DATA_ITEM_TYPES.dropZone) {
-			name = Liferay.Language.get('drop-zone');
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.dropZone;
 		}
 		else if (item.type === LAYOUT_DATA_ITEM_TYPES.row) {
-			name = Liferay.Language.get('row');
+			name = LAYOUT_DATA_ITEM_TYPE_LABELS.row;
 		}
 
 		return name;

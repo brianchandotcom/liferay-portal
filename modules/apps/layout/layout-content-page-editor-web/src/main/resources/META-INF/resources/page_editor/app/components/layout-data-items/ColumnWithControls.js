@@ -18,12 +18,20 @@ import React, {useContext, useMemo, useEffect} from 'react';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useSelector} from '../../store/index';
+import {useIsActive} from '../Controls';
 import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
 import {ResizingContext} from './RowWithControls';
 
 function ColumnWithControls({children, item, layoutData}, ref) {
+	const isActive = useIsActive();
 	const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
+
+	const parentItemIsActive = useMemo(
+		() =>
+			layoutData.items[item.parentId] ? isActive(item.parentId) : false,
+		[isActive, item, layoutData]
+	);
 
 	const {onResizeEnd, onResizeStart, onResizing} = useContext(
 		ResizingContext
@@ -68,7 +76,7 @@ function ColumnWithControls({children, item, layoutData}, ref) {
 
 	const content = (
 		<Column className="page-editor__col" item={item} ref={ref}>
-			{isActive && !columnInfo.isLastColumn ? (
+			{parentItemIsActive && !columnInfo.isLastColumn ? (
 				<div>
 					{children}
 					<ClayButton

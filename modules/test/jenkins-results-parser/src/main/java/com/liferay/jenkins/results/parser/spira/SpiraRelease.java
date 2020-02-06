@@ -100,7 +100,7 @@ public class SpiraRelease {
 
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 1; i < (releasePathNames.length - 1); i++) {
+		for (int i = 0; i < (releasePathNames.length - 2); i++) {
 			sb.append("/");
 			sb.append(releasePathNames[i]);
 		}

@@ -488,11 +488,13 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		sb.append("# Source Formatter\n\n");
 
+		sb.append("## Checks\n\n");
+
 		String headerName = "All Checks";
 		String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
 			"AllChecks");
 
-		sb.append(_getLink(markdownFileName, "###", headerName, headerName));
+		sb.append(_getLink(markdownFileName, "- ###", headerName, headerName));
 
 		sb.append("\n\n");
 
@@ -500,14 +502,14 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			headerName, new File(documentationDir, markdownFileName),
 			checkInfoMap.values(), documentationChecksDir, true, true);
 
-		sb.append("## Categories:\n");
+		sb.append("- ### By Category:\n");
 
 		for (String category : _getCategories(checkInfoMap)) {
 			headerName = category + " Checks";
 			markdownFileName = SourceFormatterUtil.getMarkdownFileName(
 				StringUtil.removeChar(category, CharPool.SPACE) + "Checks");
 
-			sb.append(_getLink(markdownFileName, "-", category, headerName));
+			sb.append(_getLink(markdownFileName, "   *", category, headerName));
 
 			sb.append("\n");
 
@@ -519,7 +521,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		sb.append("\n");
 
-		sb.append("## File Extensions:\n");
+		sb.append("- ### By File Extensions:\n");
 
 		for (String sourceProcessorName :
 				_getSourceProcessorNames(checkInfoMap)) {
@@ -538,7 +540,8 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 			sb.append(
 				_getLink(
-					markdownFileName, "-", fileExtensionsString, headerName));
+					markdownFileName, "   *", fileExtensionsString,
+					headerName));
 
 			sb.append("\n");
 

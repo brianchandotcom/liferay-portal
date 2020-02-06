@@ -52,7 +52,7 @@ import com.liferay.journal.internal.upgrade.v1_1_3.UpgradeResourcePermissions;
 import com.liferay.journal.internal.upgrade.v1_1_4.UpgradeUrlTitle;
 import com.liferay.journal.internal.upgrade.v1_1_5.UpgradeContentImages;
 import com.liferay.journal.internal.upgrade.v1_1_6.UpgradeAssetDisplayPageEntry;
-import com.liferay.journal.internal.upgrade.v1_1_9.UpgradeJournalArticle;
+import com.liferay.journal.internal.upgrade.v1_1_8.UpgradeJournalArticle;
 import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalArticleTable;
 import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalFeedTable;
 import com.liferay.journal.internal.upgrade.v2_0_0.util.JournalFolderTable;
@@ -202,12 +202,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 				_subscriptionLocalService, JournalArticle.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.ADD_NEW));
 
-		registry.register("1.1.7", "1.1.8", new DummyUpgradeStep());
-
-		registry.register("1.1.8", "1.1.9", new UpgradeJournalArticle());
+		registry.register("1.1.7", "1.1.8", new UpgradeJournalArticle());
 
 		registry.register(
-			"1.1.9", "2.0.0",
+			"1.1.8", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {
 					JournalArticleTable.class, JournalFeedTable.class,

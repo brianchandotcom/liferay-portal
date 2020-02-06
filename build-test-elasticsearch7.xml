@@ -114,15 +114,6 @@ xpack.security.transport.ssl.verification_mode: certificate</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-local-cluster-properties">
-		<sequential>
-			<echo append="true" file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
-cluster.name: LiferayElasticsearchClusterTwo
-http.port: 9202
-xpack.ml.enabled: false</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="configure-kibana-properties">
 		<sequential>
 			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.hosts: "http://localhost:9200"
@@ -149,6 +140,15 @@ xpack.security.sessionTimeout: 600000</echo>
 				<replacetoken><![CDATA[elasticsearch.hosts: "http://localhost:9200"]]></replacetoken>
 				<replacevalue><![CDATA[elasticsearch.hosts: "https://localhost:9200"]]></replacevalue>
 			</replace>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configure-local-cluster-properties">
+		<sequential>
+			<echo append="true" file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
+cluster.name: LiferayElasticsearchClusterTwo
+http.port: 9202
+xpack.ml.enabled: false</echo>
 		</sequential>
 	</macrodef>
 
@@ -826,60 +826,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 xpack.monitoring.collection.enabled: true</echo>
 	</target>
 
-	<target name="deploy-elasticsearch7">
-		<gradle-execute dir="${project.dir}/modules/apps/portal-search-elasticsearch7" task="deploy">
-			<arg value="clean" />
-		</gradle-execute>
-
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.search.elasticsearch6.spi,com.liferay.portal.search.elasticsearch6.api,com.liferay.portal.search.elasticsearch6.impl,com.liferay.portal.search.elasticsearch6.xpack.security.impl&quot;</echo>
-	</target>
-
-	<target name="prepare-additional-elasticsearch-dirs">
-		<var name="elasticsearch.node.number" value="0" />
-
-		<antelope:repeat count="${remote.elasticsearch.cluster.size}">
-			<math
-				datatype="int"
-				operand1="${elasticsearch.node.number}"
-				operand2="1"
-				operation="+"
-				result="elasticsearch.node.number"
-			/>
-
-			<delete dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
-
-			<copy
-				todir="${elasticsearch.dir}-${elasticsearch.node.number}"
-			>
-				<fileset
-					dir="${elasticsearch.dir}"
-				/>
-			</copy>
-		</antelope:repeat>
-
-		<delete dir="${elasticsearch.dir}" />
-	</target>
-
-	<target name="print-elasticsearch-indices">
-		<get-testcase-property property.name="remote.elasticsearch.enabled" />
-
-		<condition else="9201" property="elasticsearch.port" value="9200">
-			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
-		</condition>
-
-		<exec executable="curl" outputproperty="curl.output.elasticsearch.indices">
-			<arg line="&apos;localhost:${elasticsearch.port}/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
-		</exec>
-
-		<echo></echo>
-		<echo>##</echo>
-		<echo>## Elasticsearch Indices</echo>
-		<echo>##</echo>
-		<echo></echo>
-		<echo>${curl.output.elasticsearch.indices}</echo>
-		<echo></echo>
-	</target>
-
 	<target name="create-follower-indices">
 		<exec executable="curl" outputproperty="companyId">
 			<arg value="http://localhost:8080/api/jsonws/company/get-company-by-virtual-host/virtual-host/localhost" />
@@ -938,6 +884,60 @@ xpack.monitoring.collection.enabled: true</echo>
 				<fail>Failed to create follower indices.</fail>
 			</else>
 		</if>
+	</target>
+
+	<target name="deploy-elasticsearch7">
+		<gradle-execute dir="${project.dir}/modules/apps/portal-search-elasticsearch7" task="deploy">
+			<arg value="clean" />
+		</gradle-execute>
+
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.search.elasticsearch6.spi,com.liferay.portal.search.elasticsearch6.api,com.liferay.portal.search.elasticsearch6.impl,com.liferay.portal.search.elasticsearch6.xpack.security.impl&quot;</echo>
+	</target>
+
+	<target name="prepare-additional-elasticsearch-dirs">
+		<var name="elasticsearch.node.number" value="0" />
+
+		<antelope:repeat count="${remote.elasticsearch.cluster.size}">
+			<math
+				datatype="int"
+				operand1="${elasticsearch.node.number}"
+				operand2="1"
+				operation="+"
+				result="elasticsearch.node.number"
+			/>
+
+			<delete dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
+
+			<copy
+				todir="${elasticsearch.dir}-${elasticsearch.node.number}"
+			>
+				<fileset
+					dir="${elasticsearch.dir}"
+				/>
+			</copy>
+		</antelope:repeat>
+
+		<delete dir="${elasticsearch.dir}" />
+	</target>
+
+	<target name="print-elasticsearch-indices">
+		<get-testcase-property property.name="remote.elasticsearch.enabled" />
+
+		<condition else="9201" property="elasticsearch.port" value="9200">
+			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
+		</condition>
+
+		<exec executable="curl" outputproperty="curl.output.elasticsearch.indices">
+			<arg line="&apos;localhost:${elasticsearch.port}/liferay-${companyId}/_search?pretty&apos; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;query&quot;: {&quot;bool&quot;: {&quot;must&quot;: [{ &quot;match&quot;: { &quot;userName&quot;: &quot;test test&quot; } }],&quot;must_not&quot;: [{ &quot;match&quot;: { &quot;hidden&quot;: &quot;true&quot; } }]}}}&apos;" />
+		</exec>
+
+		<echo></echo>
+		<echo>##</echo>
+		<echo>## Elasticsearch Indices</echo>
+		<echo>##</echo>
+		<echo></echo>
+		<echo>${curl.output.elasticsearch.indices}</echo>
+		<echo></echo>
 	</target>
 
 	<target name="restore-backup">

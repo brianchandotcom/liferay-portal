@@ -58,13 +58,10 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		return new String[0];
 	}
 
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
-
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
+		ResourceBundleLoader resourceBundleLoader =
+			LanguageResources.RESOURCE_BUNDLE_LOADER;
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
@@ -84,16 +81,14 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		ServletContext servletContext = getServletContext();
-
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/documents.jsp");
 
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
 			new DLItemSelectorViewDisplayContext<>(
-				_assetVocabularyService, _classNameLocalService, this,
+				assetVocabularyService, classNameLocalService, this,
 				(HttpServletRequest)servletRequest, t, itemSelectedEventName,
-				_itemSelectorReturnTypeResolverHandler, portletURL, search,
+				itemSelectorReturnTypeResolverHandler, portletURL, search,
 				stagingGroupHelper);
 
 		servletRequest.setAttribute(
@@ -103,48 +98,22 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	@Reference(unbind = "-")
-	public void setAssetVocabularyService(
-		AssetVocabularyService assetVocabularyService) {
-
-		_assetVocabularyService = assetVocabularyService;
-	}
-
-	@Reference(unbind = "-")
-	public void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setItemSelectorReturnTypeResolverHandler(
-		ItemSelectorReturnTypeResolverHandler
-			itemSelectorReturnTypeResolverHandler) {
-
-		_itemSelectorReturnTypeResolverHandler =
-			itemSelectorReturnTypeResolverHandler;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	protected ResourceBundleLoader getResourceBundleLoader() {
-		return LanguageResources.RESOURCE_BUNDLE_LOADER;
-	}
-
 	@Reference
 	protected StagingGroupHelper stagingGroupHelper;
 
-	private AssetVocabularyService _assetVocabularyService;
-	private ClassNameLocalService _classNameLocalService;
-	private ItemSelectorReturnTypeResolverHandler
-		_itemSelectorReturnTypeResolverHandler;
-	private ServletContext _servletContext;
+	@Reference
+	protected AssetVocabularyService assetVocabularyService;
+
+	@Reference
+	protected ClassNameLocalService classNameLocalService;
+
+	@Reference
+	protected ItemSelectorReturnTypeResolverHandler
+		itemSelectorReturnTypeResolverHandler;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)"
+	)
+	protected ServletContext servletContext;
 
 }

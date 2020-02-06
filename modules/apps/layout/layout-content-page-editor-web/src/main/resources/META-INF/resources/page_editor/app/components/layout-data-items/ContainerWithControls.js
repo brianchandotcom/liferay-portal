@@ -35,7 +35,7 @@ const ContainerWithControls = React.forwardRef(
 		const dispatch = useDispatch();
 		const isMounted = useIsMounted();
 		const [openCompositionModal, setOpenCompositionModal] = useState(false);
-		const {observer} = useModal({
+		const {observer, onClose} = useModal({
 			onClose: () => {
 				if (isMounted()) {
 					setOpenCompositionModal(false);
@@ -59,7 +59,8 @@ const ContainerWithControls = React.forwardRef(
 						store: {segmentsExperienceId}
 					})
 				);
-			} else if (
+			}
+			else if (
 				id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveComposition.id
 			) {
 				setOpenCompositionModal(true);
@@ -94,6 +95,7 @@ const ContainerWithControls = React.forwardRef(
 					<CompositionModal
 						errorMessage={''}
 						observer={observer}
+						onClose={onClose}
 						onErrorDismiss={() => true}
 					/>
 				)}

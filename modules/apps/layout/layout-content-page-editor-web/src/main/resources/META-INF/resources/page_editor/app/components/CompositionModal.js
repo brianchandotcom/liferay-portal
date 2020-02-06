@@ -14,7 +14,8 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayCardWithHorizontal from '@clayui/card';
+import ClayForm, {ClayInput, ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
@@ -23,8 +24,13 @@ import React, {useContext, useState} from 'react';
 import {ConfigContext} from '../../app/config/index';
 import Button from '../../common/components/Button';
 
-const CompositionModal = ({errorMessage, observer, onErrorDismiss}) => {
-	const {portletNamespace} = useContext(ConfigContext);
+const CompositionModal = ({
+	errorMessage,
+	observer,
+	onClose,
+	onErrorDismiss
+}) => {
+	const {elements, portletNamespace} = useContext(ConfigContext);
 
 	const [loading] = useState(false);
 
@@ -33,7 +39,7 @@ const CompositionModal = ({errorMessage, observer, onErrorDismiss}) => {
 		portletNamespace + 'fragmentCompositionDescription';
 
 	return (
-		<ClayModal observer={observer} size="md">
+		<ClayModal observer={observer} size="lg">
 			<ClayModal.Header>
 				{Liferay.Language.get('new-fragment')}
 			</ClayModal.Header>
@@ -48,25 +54,46 @@ const CompositionModal = ({errorMessage, observer, onErrorDismiss}) => {
 						/>
 					)}
 					<ClayForm.Group>
-						<label htmlFor={nameInputId}>
-							{Liferay.Language.get('name')}
+						<ClayInput.Group className="align-items-end">
+							<ClayInput.GroupItem>
+								<label htmlFor={nameInputId}>
+									{Liferay.Language.get('name')}
 
-							<ClayIcon
-								className="ml-1 reference-mark"
-								focusable="false"
-								role="presentation"
-								symbol="asterisk"
-							/>
-						</label>
+									<ClayIcon
+										className="ml-1 reference-mark"
+										focusable="false"
+										role="presentation"
+										symbol="asterisk"
+									/>
+								</label>
 
-						<ClayInput
-							autoFocus
-							id={nameInputId}
-							placeholder={Liferay.Language.get('name')}
-							required
-							type="text"
-							value={name}
-						/>
+								<ClayInput
+									autoFocus
+									id={nameInputId}
+									placeholder={Liferay.Language.get('name')}
+									required
+									type="text"
+								/>
+							</ClayInput.GroupItem>
+							<ClayInput.GroupItem shrink>
+								<ClayButton
+									disabled={loading}
+									displayType="secondary"
+									value={Liferay.Language.get(
+										'upload-thumbnail'
+									)}
+								>
+									<ClayIcon
+										className="inline-item inline-item-after mr-2 reference-mark"
+										focusable="false"
+										role="presentation"
+										symbol="upload"
+									/>
+
+									{Liferay.Language.get('upload-thumbnail')}
+								</ClayButton>
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
 					</ClayForm.Group>
 
 					<ClayForm.Group>
@@ -76,18 +103,55 @@ const CompositionModal = ({errorMessage, observer, onErrorDismiss}) => {
 
 						<ClayInput
 							autoFocus
+							component="textarea"
 							id={descriptionInputId}
 							placeholder={Liferay.Language.get('description')}
-							type="textarea"
-							value={name}
+							type="text"
 						/>
+					</ClayForm.Group>
+
+					<ClayForm.Group>
+						<ClayInput.Group>
+							<ClayInput.GroupItem shrink>
+								<ClayCheckbox
+									id={portletNamespace + 'saveInlineContent'}
+									inline={true}
+									label={Liferay.Language.get(
+										'save-inline-content'
+									)}
+								/>
+							</ClayInput.GroupItem>
+							<ClayInput.GroupItem>
+								<ClayCheckbox
+									id={
+										portletNamespace +
+										'saveMappingConfiguration'
+									}
+									inline={true}
+									label={Liferay.Language.get(
+										'save-mapping-configuration'
+									)}
+								/>
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
+					</ClayForm.Group>
+					<ClayForm.Group>
+						{elements.map(collection => (
+							<ClayCardWithHorizontal
+								title={collection.name}
+							/>
+						))}
 					</ClayForm.Group>
 				</ClayForm>
 			</ClayModal.Body>
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton disabled={loading} displayType="secondary">
+						<ClayButton
+							disabled={loading}
+							displayType="secondary"
+							onClick={onClose}
+						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
@@ -108,6 +172,7 @@ const CompositionModal = ({errorMessage, observer, onErrorDismiss}) => {
 CompositionModal.propTypes = {
 	errorMessage: PropTypes.string,
 	observer: PropTypes.object.isRequired,
+	onClose: PropTypes.func.isRequired,
 	onErrorDismiss: PropTypes.func.isRequired
 };
 

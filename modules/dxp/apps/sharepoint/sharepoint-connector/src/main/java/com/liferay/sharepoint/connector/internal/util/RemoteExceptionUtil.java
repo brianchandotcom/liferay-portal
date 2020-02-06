@@ -23,7 +23,9 @@ import org.apache.axis.AxisFault;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class RemoteExceptionUtil {
 
 	public static void handleRemoteException(RemoteException remoteException)

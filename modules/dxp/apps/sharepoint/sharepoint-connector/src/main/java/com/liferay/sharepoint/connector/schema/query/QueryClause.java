@@ -18,6 +18,8 @@ import com.liferay.sharepoint.connector.schema.Node;
 
 /**
  * @author Iván Zaera
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public interface QueryClause extends Node {
 }

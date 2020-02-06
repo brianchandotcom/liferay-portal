@@ -21,7 +21,9 @@ import com.liferay.sharepoint.connector.schema.query.QueryField;
 
 /**
  * @author Iván Zaera
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public abstract class BaseOperator extends BaseNode implements QueryClause {
 
 	public BaseOperator(QueryField queryField) {

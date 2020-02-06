@@ -24,7 +24,9 @@ import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public interface Operation {
 
 	public void afterPropertiesSet();

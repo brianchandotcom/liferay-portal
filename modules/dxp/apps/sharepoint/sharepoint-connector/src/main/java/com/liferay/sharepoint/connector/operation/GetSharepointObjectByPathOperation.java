@@ -27,7 +27,9 @@ import com.liferay.sharepoint.connector.schema.query.option.ViewAttributesQueryO
 
 /**
  * @author Iván Zaera
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class GetSharepointObjectByPathOperation extends BaseOperation {
 
 	@Override

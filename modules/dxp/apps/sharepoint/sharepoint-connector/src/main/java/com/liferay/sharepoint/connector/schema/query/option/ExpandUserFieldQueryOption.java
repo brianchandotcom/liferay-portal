@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Adorjan Nagy
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class ExpandUserFieldQueryOption extends BaseQueryOption {
 
 	public ExpandUserFieldQueryOption(boolean expand) {

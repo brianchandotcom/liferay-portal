@@ -19,7 +19,9 @@ import com.liferay.sharepoint.connector.schema.BaseNode;
 
 /**
  * @author Iván Zaera
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class BatchField extends BaseNode {
 
 	public BatchField(String name, long value) {

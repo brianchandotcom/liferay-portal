@@ -18,7 +18,9 @@ import com.liferay.petra.string.StringPool;
 
 /**
  * @author Iván Zaera
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class PathHelper {
 
 	public String buildPath(String folderPath, String name) {

@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Iván Zaera
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class IncludeMandatoryColumnsQueryOption extends BaseQueryOption {
 
 	public IncludeMandatoryColumnsQueryOption(boolean include) {

@@ -16,7 +16,9 @@ package com.liferay.sharepoint.connector;
 
 /**
  * @author Iván Zaera
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class SharepointException extends Exception {
 
 	public SharepointException(String message) {

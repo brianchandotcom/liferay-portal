@@ -66,7 +66,9 @@ import org.apache.axis.client.Stub;
 
 /**
  * @author Iván Zaera
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class SharepointConnectionImpl implements SharepointConnection {
 
 	public static final long SHAREPOINT_ROOT_FOLDER_SHAREPOINT_OBJECT_ID = -1;

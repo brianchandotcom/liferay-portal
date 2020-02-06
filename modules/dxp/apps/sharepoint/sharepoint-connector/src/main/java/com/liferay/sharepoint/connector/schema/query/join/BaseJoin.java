@@ -20,7 +20,9 @@ import com.liferay.sharepoint.connector.schema.query.QueryClause;
 
 /**
  * @author Iván Zaera
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public abstract class BaseJoin extends BaseNode implements QueryClause {
 
 	public BaseJoin(QueryClause leftQueryClause, QueryClause rightQueryClause) {

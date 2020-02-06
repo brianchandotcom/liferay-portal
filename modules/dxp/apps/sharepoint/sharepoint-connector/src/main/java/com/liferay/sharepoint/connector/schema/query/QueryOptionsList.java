@@ -21,7 +21,9 @@ import com.liferay.sharepoint.connector.schema.query.option.BaseQueryOption;
 
 /**
  * @author Iván Zaera
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class QueryOptionsList extends BaseNode {
 
 	public QueryOptionsList(BaseQueryOption... baseQueryOptions) {

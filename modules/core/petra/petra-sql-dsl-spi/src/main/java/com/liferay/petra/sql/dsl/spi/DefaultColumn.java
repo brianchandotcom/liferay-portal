@@ -54,13 +54,15 @@ public class DefaultColumn<T extends BaseTable<T>, C>
 			return true;
 		}
 
-		if (!(object instanceof DefaultColumn<?, ?>)) {
+		if (!(object instanceof Column<?, ?>)) {
 			return false;
 		}
 
-		DefaultColumn<?, ?> column = (DefaultColumn<?, ?>)object;
+		Column<?, ?> column = (Column<?, ?>)object;
 
-		if (_name.equals(column.getName()) && _table.equals(column._table)) {
+		if (_name.equals(column.getName()) &&
+			_table.equals(column.getTable())) {
+
 			return true;
 		}
 

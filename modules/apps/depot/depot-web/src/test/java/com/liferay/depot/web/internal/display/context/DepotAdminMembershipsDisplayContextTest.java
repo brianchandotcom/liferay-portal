@@ -161,6 +161,50 @@ public class DepotAdminMembershipsDisplayContextTest {
 		Assert.assertEquals(depots.toString(), 0, depots.size());
 	}
 
+	@Test
+	public void testGetDepotsGroupCountWithDepotAndCompanyAdmin()
+		throws Exception {
+
+		Group group = getDepotGroup();
+
+		Mockito.when(
+			_user.getGroups()
+		).thenReturn(
+			Collections.singletonList(group)
+		);
+
+		DepotAdminMembershipsDisplayContext
+			depotAdminMembershipsDisplayContext =
+				new DepotAdminMembershipsDisplayContext(
+					getHttpServletRequest(
+						new ThemeDisplayBuilder().withPermissionChecker(
+							getPermissionCheckerWithCompanyAdmin()
+						).build()));
+
+		Assert.assertEquals(
+			1, depotAdminMembershipsDisplayContext.getDepotGroupsCount());
+	}
+
+	@Test
+	public void testGetDepotsGroupCountWithoutDepot() throws Exception {
+		Mockito.when(
+			_user.getGroups()
+		).thenReturn(
+			Collections.emptyList()
+		);
+
+		DepotAdminMembershipsDisplayContext
+			depotAdminMembershipsDisplayContext =
+				new DepotAdminMembershipsDisplayContext(
+					getHttpServletRequest(
+						new ThemeDisplayBuilder().withPermissionChecker(
+							getPermissionCheckerWithCompanyAdmin()
+						).build()));
+
+		Assert.assertEquals(
+			0, depotAdminMembershipsDisplayContext.getDepotGroupsCount());
+	}
+
 	protected Group getDepotGroup() {
 		Group group = Mockito.mock(Group.class);
 

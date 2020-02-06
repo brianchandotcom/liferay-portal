@@ -122,7 +122,9 @@ public class KnowledgeBaseArticleDTOConverter
 				taxonomyCategories = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						KBArticle.class.getName(), kbArticle.getClassPK()),
-					TaxonomyCategoryUtil::toTaxonomyCategory,
+					assetCategory -> TaxonomyCategoryUtil.toTaxonomyCategory(
+						assetCategory, dtoConverterContext.getLocale(),
+						dtoConverterContext.isAcceptAllLanguages()),
 					TaxonomyCategory.class);
 				title = kbArticle.getTitle();
 

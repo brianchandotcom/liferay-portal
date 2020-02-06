@@ -75,27 +75,31 @@ const InstanceListPage = ({routeParams}) => {
 	];
 
 	const {
-		dispatch,
 		filterState: {timeRange},
 		filterValues: {assigneeUserIds, slaStatuses, statuses = [], taskKeys},
+		prefixedKeys,
 		selectedFilters
-	} = useFilter(filterKeys);
+	} = useFilter({filterKeys});
 
 	const {dateEnd, dateStart} =
 		timeRange && timeRange.length ? timeRange[0] : {};
 
+	const completedStatus = statuses.some(
+		status => status === processStatusConstants.completed
+	);
+
+	let completedAndDate = !completedStatus;
+
 	let timeRangeParams = {};
 
-	if (
-		statuses.some(status => status === processStatusConstants.completed) &&
-		isValidDate(dateEnd) &&
-		isValidDate(dateStart)
-	) {
+	if (completedStatus && isValidDate(dateEnd) && isValidDate(dateStart)) {
 		timeRangeParams = {
 			dateEnd: dateEnd.toISOString(),
 			dateStart: dateStart.toISOString()
 		};
+		completedAndDate = true;
 	}
+
 	const {data, fetchData} = useFetch({
 		params: {
 			assigneeUserIds,
@@ -110,19 +114,19 @@ const InstanceListPage = ({routeParams}) => {
 	});
 
 	const promises = useMemo(() => {
-		if (!bulkModal.visible && !singleModal.visible) {
+		if (!bulkModal.visible && !singleModal.visible && completedAndDate) {
 			return [fetchData()];
 		}
 
 		return [];
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [bulkModal.visible, fetchData, singleModal.visible]);
+	}, [bulkModal.visible, completedAndDate, fetchData, singleModal.visible]);
 
 	return (
 		<ModalContext.Provider value={modalState}>
 			<InstanceListProvider>
 				<InstanceListPage.Header
-					dispatch={dispatch}
+					filterKeys={prefixedKeys}
 					items={data.items}
 					processId={processId}
 					routeParams={routeParams}

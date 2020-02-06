@@ -23,7 +23,7 @@ import {Body} from './ProcessListPageBody.es';
 const Header = ({page, pageSize, search, sort, totalCount}) => {
 	return (
 		<>
-			<ClayManagementToolbar>
+			<ClayManagementToolbar className="mb-0">
 				<div className="navbar-form-autofit">
 					<SearchField disabled={!search && totalCount === 0} />
 				</div>

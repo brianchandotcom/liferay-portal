@@ -20,7 +20,7 @@ import TimeRangeFilter from '../../filter/TimeRangeFilter.es';
 import {isValidDate} from '../../filter/util/timeRangeUtil.es';
 import {Body, Footer} from './PerformanceByAssigneeCardBody.es';
 
-const Header = ({dispatch, prefixKey, processId}) => {
+const Header = ({prefixKey, processId}) => {
 	return (
 		<Panel.HeaderWithOptions
 			description={Liferay.Language.get(
@@ -32,7 +32,6 @@ const Header = ({dispatch, prefixKey, processId}) => {
 			<div className="autofit-col m-0 management-bar management-bar-light navbar">
 				<ul className="navbar-nav">
 					<ProcessStepFilter
-						dispatch={dispatch}
 						options={{
 							hideControl: true,
 							multiple: false,
@@ -46,7 +45,6 @@ const Header = ({dispatch, prefixKey, processId}) => {
 
 					<TimeRangeFilter
 						className={'pl-3'}
-						dispatch={dispatch}
 						options={{position: 'right'}}
 						prefixKey={prefixKey}
 					/>
@@ -62,10 +60,10 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 	const filterKeys = ['processStep', 'timeRange'];
 	const prefixKey = 'assignee';
 	const prefixKeys = [prefixKey];
-	const {dispatch, filterState = {}, filterValues} = useFilter(
+	const {filterState = {}, filterValues} = useFilter({
 		filterKeys,
 		prefixKeys
-	);
+	});
 
 	const params = {
 		completed: true,
@@ -74,12 +72,12 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 		sort: 'durationTaskAvg:desc'
 	};
 
-	const processStep = filterValues.assigneetaskKeys || [];
+	const processStep = filterValues.assigneeTaskKeys || [];
 	if (processStep.length && processStep[0] !== 'allSteps') {
 		params.taskKeys = processStep[0];
 	}
 
-	const timeRange = filterState.assigneetimeRange || [];
+	const timeRange = filterState.assigneeTimeRange || [];
 	const timeRangeValues = timeRange.length ? timeRange[0] : {};
 	const {dateEnd, dateStart} = timeRangeValues;
 
@@ -105,7 +103,6 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 		<Panel elementClasses="dashboard-card">
 			<PromisesResolver promises={promises}>
 				<PerformanceByAssigneeCard.Header
-					dispatch={dispatch}
 					prefixKey={prefixKey}
 					{...routeParams}
 				/>

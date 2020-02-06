@@ -18,12 +18,12 @@ import SearchField from '../../shared/components/search-field/SearchField.es';
 import ProcessStepFilter from '../filter/ProcessStepFilter.es';
 import RoleFilter from '../filter/RoleFilter.es';
 
-const Header = ({dispatch, routeParams, selectedFilters, totalCount}) => {
+const Header = ({filterKeys, routeParams, selectedFilters, totalCount}) => {
 	const showFiltersResult = routeParams.search || selectedFilters.length > 0;
 
 	return (
 		<>
-			<ClayManagementToolbar>
+			<ClayManagementToolbar className="mb-0">
 				<ClayManagementToolbar.Item>
 					<strong className="ml-0 mr-0 navbar-text">
 						{Liferay.Language.get('filter-by')}
@@ -31,13 +31,11 @@ const Header = ({dispatch, routeParams, selectedFilters, totalCount}) => {
 				</ClayManagementToolbar.Item>
 
 				<RoleFilter
-					dispatch={dispatch}
 					filterKey={filterConstants.roles.key}
 					processId={routeParams.processId}
 				/>
 
 				<ProcessStepFilter
-					dispatch={dispatch}
 					filterKey={filterConstants.processStep.key}
 					processId={routeParams.processId}
 				/>
@@ -65,6 +63,7 @@ const Header = ({dispatch, routeParams, selectedFilters, totalCount}) => {
 					/>
 
 					<ResultsBar.Clear
+						filterKeys={filterKeys}
 						filters={selectedFilters}
 						{...routeParams}
 					/>

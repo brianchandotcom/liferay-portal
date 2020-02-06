@@ -19,7 +19,7 @@ import TimeRangeFilter from '../../filter/TimeRangeFilter.es';
 import {isValidDate} from '../../filter/util/timeRangeUtil.es';
 import {Body, Footer} from './PerformanceByStepCardBody.es';
 
-const Header = ({dispatch, prefixKey, totalCount}) => (
+const Header = ({prefixKey, totalCount}) => (
 	<Panel.HeaderWithOptions
 		description={Liferay.Language.get('performance-by-step-description')}
 		elementClasses="dashboard-panel-header"
@@ -29,7 +29,6 @@ const Header = ({dispatch, prefixKey, totalCount}) => (
 			<ul className="navbar-nav">
 				<TimeRangeFilter
 					disabled={!totalCount}
-					dispatch={dispatch}
 					options={{position: 'right'}}
 					prefixKey={prefixKey}
 				/>
@@ -45,9 +44,9 @@ const PerformanceByStepCard = ({routeParams}) => {
 	const prefixKey = 'step';
 	const prefixKeys = [prefixKey];
 
-	const {dispatch, filterState = {}} = useFilter(filterKeys, prefixKeys);
+	const {filterState = {}} = useFilter({filterKeys, prefixKeys});
 
-	const timeRange = filterState.steptimeRange || [];
+	const timeRange = filterState.stepTimeRange || [];
 	const timeRangeValues = timeRange && timeRange.length ? timeRange[0] : {};
 	const {dateEnd, dateStart} = timeRangeValues;
 
@@ -83,7 +82,6 @@ const PerformanceByStepCard = ({routeParams}) => {
 		<Panel elementClasses="dashboard-card">
 			<PromisesResolver promises={promises}>
 				<PerformanceByStepCard.Header
-					dispatch={dispatch}
 					prefixKey={prefixKey}
 					totalCount={data.totalCount}
 				/>

@@ -19,7 +19,7 @@ import ProcessStepFilter from '../../filter/ProcessStepFilter.es';
 import {Body} from './WorkloadByAssigneeCardBody.es';
 import Tabs from './WorkloadByAssigneeCardTabs.es';
 
-const Header = ({dispatch, processId}) => (
+const Header = ({processId}) => (
 	<>
 		<Panel.HeaderWithOptions
 			description={Liferay.Language.get(
@@ -33,7 +33,6 @@ const Header = ({dispatch, processId}) => (
 		<div className="management-bar management-bar-light ml-3 navbar navbar-expand-md pl-1">
 			<ul className="navbar-nav">
 				<ProcessStepFilter
-					dispatch={dispatch}
 					options={{
 						hideControl: true,
 						multiple: false,
@@ -52,12 +51,9 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 	const [currentTab, setCurrentTab] = useState('overdue');
 
 	const filterKeys = ['processStep'];
-	const {
-		dispatch,
-		filterValues: {taskKeys}
-	} = useFilter(filterKeys);
+	const {filterValues} = useFilter({filterKeys});
 
-	const params = getParams(currentTab, taskKeys);
+	const params = getParams(currentTab, filterValues.taskKeys);
 	const {data, fetchData} = useFetch({
 		params,
 		url: `/processes/${processId}/assignee-users`
@@ -68,10 +64,7 @@ const WorkloadByAssigneeCard = ({routeParams}) => {
 	return (
 		<PromisesResolver promises={promises}>
 			<Panel elementClasses="workload-by-assignee-card">
-				<WorkloadByAssigneeCard.Header
-					dispatch={dispatch}
-					processId={processId}
-				/>
+				<WorkloadByAssigneeCard.Header processId={processId} />
 
 				<WorkloadByAssigneeCard.Tabs
 					currentTab={currentTab}

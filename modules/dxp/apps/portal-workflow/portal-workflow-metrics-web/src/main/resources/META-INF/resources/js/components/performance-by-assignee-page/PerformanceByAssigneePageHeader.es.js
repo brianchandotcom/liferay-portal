@@ -19,12 +19,12 @@ import ProcessStepFilter from '../filter/ProcessStepFilter.es';
 import RoleFilter from '../filter/RoleFilter.es';
 import TimeRangeFilter from '../filter/TimeRangeFilter.es';
 
-const Header = ({dispatch, routeParams, selectedFilters, totalCount}) => {
+const Header = ({filterKeys, routeParams, selectedFilters, totalCount}) => {
 	const showFiltersResult = routeParams.search || selectedFilters.length > 0;
 
 	return (
 		<>
-			<ClayManagementToolbar>
+			<ClayManagementToolbar className="mb-0">
 				<ClayManagementToolbar.Item>
 					<strong className="ml-0 mr-0 navbar-text">
 						{Liferay.Language.get('filter-by')}
@@ -33,13 +33,11 @@ const Header = ({dispatch, routeParams, selectedFilters, totalCount}) => {
 
 				<RoleFilter
 					completed={true}
-					dispatch={dispatch}
 					filterKey={filterConstants.roles.key}
 					processId={routeParams.processId}
 				/>
 
 				<ProcessStepFilter
-					dispatch={dispatch}
 					filterKey={filterConstants.processStep.key}
 					processId={routeParams.processId}
 				/>
@@ -55,7 +53,6 @@ const Header = ({dispatch, routeParams, selectedFilters, totalCount}) => {
 
 				<TimeRangeFilter
 					buttonClassName="btn-flat btn-sm"
-					dispatch={dispatch}
 					options={{position: 'right'}}
 				/>
 			</ClayManagementToolbar>
@@ -73,6 +70,7 @@ const Header = ({dispatch, routeParams, selectedFilters, totalCount}) => {
 					/>
 
 					<ResultsBar.Clear
+						filterKeys={filterKeys}
 						filters={selectedFilters}
 						{...routeParams}
 					/>

@@ -31,9 +31,9 @@ const PerformanceByStepPage = ({query, routeParams}) => {
 	const {search = null} = parse(query);
 
 	const {
-		dispatch,
-		filterState: {timeRange}
-	} = useFilter();
+		filterState: {timeRange},
+		prefixedKeys
+	} = useFilter({});
 
 	const {dateEnd, dateStart} =
 		timeRange && timeRange.length ? timeRange[0] : {};
@@ -68,7 +68,7 @@ const PerformanceByStepPage = ({query, routeParams}) => {
 	return (
 		<PromisesResolver promises={promises}>
 			<PerformanceByStepPage.Header
-				dispatch={dispatch}
+				filterKeys={prefixedKeys}
 				routeParams={{...routeParams, search}}
 				totalCount={data.totalCount}
 			/>

@@ -21,9 +21,8 @@ const CompletedItemsCard = ({routeParams}) => {
 	const prefixKeys = [prefixKey];
 
 	const {
-		dispatch,
-		filterState: {completedtimeRange: timeRange = []}
-	} = useFilter(filterKeys, prefixKeys);
+		filterState: {completedTimeRange: timeRange = []}
+	} = useFilter({filterKeys, prefixKeys});
 
 	const timeRangeParams = timeRange && timeRange.length ? timeRange[0] : {};
 
@@ -36,7 +35,6 @@ const CompletedItemsCard = ({routeParams}) => {
 			{...routeParams}
 		>
 			<TimeRangeFilter
-				dispatch={dispatch}
 				options={{position: 'right'}}
 				prefixKey={prefixKey}
 			/>

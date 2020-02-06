@@ -16,10 +16,10 @@ import ResultsBar from '../../shared/components/results-bar/ResultsBar.es';
 import SearchField from '../../shared/components/search-field/SearchField.es';
 import TimeRangeFilter from '../filter/TimeRangeFilter.es';
 
-const Header = ({dispatch, routeParams, totalCount}) => {
+const Header = ({filterKeys, routeParams, totalCount}) => {
 	return (
 		<>
-			<ClayManagementToolbar>
+			<ClayManagementToolbar className="mb-0">
 				<ClayManagementToolbar.Item>
 					<strong className="ml-0 mr-0 navbar-text">
 						{Liferay.Language.get('filter-by')}
@@ -37,7 +37,6 @@ const Header = ({dispatch, routeParams, totalCount}) => {
 
 				<TimeRangeFilter
 					buttonClassName="btn-flat btn-sm"
-					dispatch={dispatch}
 					options={{position: 'right'}}
 				/>
 			</ClayManagementToolbar>
@@ -50,7 +49,10 @@ const Header = ({dispatch, routeParams, totalCount}) => {
 							totalCount={totalCount}
 						/>
 
-						<ResultsBar.Clear {...routeParams} />
+						<ResultsBar.Clear
+							filterKeys={filterKeys}
+							{...routeParams}
+						/>
 					</>
 				</ResultsBar>
 			)}

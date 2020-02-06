@@ -28,10 +28,10 @@ const WorkloadByAssigneePage = ({query, routeParams}) => {
 	const filterKeys = ['processStep', 'roles'];
 
 	const {
-		dispatch,
 		filterValues: {roleIds, taskKeys},
+		prefixedKeys,
 		selectedFilters
-	} = useFilter(filterKeys);
+	} = useFilter({filterKeys});
 
 	const filtered = search || selectedFilters.length > 0;
 
@@ -50,7 +50,7 @@ const WorkloadByAssigneePage = ({query, routeParams}) => {
 	return (
 		<PromisesResolver promises={promises}>
 			<WorkloadByAssigneePage.Header
-				dispatch={dispatch}
+				filterKeys={prefixedKeys}
 				routeParams={{...routeParams, search}}
 				selectedFilters={selectedFilters}
 				totalCount={data.totalCount}

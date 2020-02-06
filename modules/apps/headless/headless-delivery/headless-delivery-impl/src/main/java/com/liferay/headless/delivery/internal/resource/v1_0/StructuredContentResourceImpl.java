@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
@@ -123,10 +124,15 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/structured-content.properties",
-	scope = ServiceScope.PROTOTYPE, service = StructuredContentResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		BatchEngineTaskItemDelegate.class, StructuredContentResource.class
+	}
 )
 public class StructuredContentResourceImpl
-	extends BaseStructuredContentResourceImpl implements EntityModelResource {
+	extends BaseStructuredContentResourceImpl
+	implements BatchEngineTaskItemDelegate<StructuredContent>,
+			   EntityModelResource {
 
 	@Override
 	public void deleteStructuredContent(Long structuredContentId)

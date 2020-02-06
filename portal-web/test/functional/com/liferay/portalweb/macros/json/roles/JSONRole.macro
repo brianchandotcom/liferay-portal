@@ -66,4 +66,12 @@ definition {
 			userId = "${userId}");
 	}
 
+	macro deleteRole {
+		Variables.assertDefined(parameterList = "${roleTitle}");
+
+		var roleId = JSONRoleAPI._getRoleIdByName(name = "${roleTitle}");
+
+		JSONRoleAPI._deleteRoleById(roleId = "${roleId}");
+	}
+
 }

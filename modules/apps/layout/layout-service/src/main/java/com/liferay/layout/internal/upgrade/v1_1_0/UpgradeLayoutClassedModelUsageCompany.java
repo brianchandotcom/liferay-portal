@@ -23,7 +23,7 @@ import java.sql.Statement;
 /**
  * @author Pavel Savinov
  */
-public class UpgradeSchema extends UpgradeProcess {
+public class UpgradeLayoutClassedModelUsageCompany extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

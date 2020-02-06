@@ -136,6 +136,42 @@ public class DepotEntryGroupRelServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.GroupSoap[]
+			getGroupDepotEntryGroups(long groupId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Group> returnValue =
+				DepotEntryGroupRelServiceUtil.getGroupDepotEntryGroups(
+					groupId, start, end);
+
+			return com.liferay.portal.kernel.model.GroupSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getGroupDepotEntryGroupsCount(long groupId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				DepotEntryGroupRelServiceUtil.getGroupDepotEntryGroupsCount(
+					groupId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.depot.model.DepotEntryGroupRelSoap
 			updateSearchable(long depotEntryGroupRelId, boolean searchable)
 		throws RemoteException {

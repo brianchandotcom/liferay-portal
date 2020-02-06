@@ -19,7 +19,7 @@ import React, {useContext, useMemo} from 'react';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelector} from '../../store/index';
-import ResizingContext from './ResizingContext';
+import {ResizingContext} from './RowWithControls';
 
 /**
  * Retrieves necessary data from the current and next column.

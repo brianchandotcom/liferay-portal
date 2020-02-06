@@ -12,45 +12,117 @@
  * details.
  */
 
-import React from 'react';
+import ClayButton from '@clayui/button';
+import React, {useContext, useMemo} from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useSelector} from '../../store/index';
 import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
+import {ResizingContext} from './RowWithControls';
 
-const ColumnWithControls = React.forwardRef(
-	({children, item, layoutData, ...otherProps}, ref) => {
-		const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
+function ColumnWithControls({children, item, layoutData, ...otherProps}, ref) {
+	const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
 
-		const content = (
-			<Column
-				className="page-editor__col"
-				item={item}
-				ref={ref}
-				{...otherProps}
-			>
-				{children}
-			</Column>
-		);
+	const {onResizeEnd, onResizeStart, onResizing} = useContext(
+		ResizingContext
+	);
 
-		return showLayoutItemTopper ? (
-			<TopperEmpty
-				acceptDrop={[
-					LAYOUT_DATA_ITEM_TYPES.dropZone,
-					LAYOUT_DATA_ITEM_TYPES.fragment,
-					LAYOUT_DATA_ITEM_TYPES.row
-				]}
-				item={item}
-				layoutData={layoutData}
-			>
-				{() => content}
-			</TopperEmpty>
-		) : (
-			content
-		);
-	}
-);
+	const columnInfo = useMemo(() => getColumnInfo({item, layoutData}), [
+		item,
+		layoutData
+	]);
 
-export default ColumnWithControls;
+	const onMouseMoveInWindow = event => {
+		event.preventDefault();
+
+		onResizing(event, columnInfo);
+	};
+
+	const onMouseDownInWindow = event => {
+		onResizeStart(event);
+
+		window.addEventListener('mouseup', onMouseUpInWindow);
+		window.addEventListener('mousemove', onMouseMoveInWindow);
+	};
+
+	const onMouseUpInWindow = event => {
+		onResizeEnd(event);
+
+		window.removeEventListener('mouseup', onMouseUpInWindow);
+		window.removeEventListener('mousemove', onMouseMoveInWindow);
+	};
+
+	const content = (
+		<Column
+			className="page-editor__col"
+			item={item}
+			ref={ref}
+			{...otherProps}
+		>
+			{!columnInfo.isLastColumn ? (
+				<div>
+					{children}
+					<ClayButton
+						className="page-editor__col-resizer"
+						onMouseDown={onMouseDownInWindow}
+					/>
+				</div>
+			) : (
+				children
+			)}
+		</Column>
+	);
+
+	return showLayoutItemTopper ? (
+		<TopperEmpty
+			acceptDrop={[
+				LAYOUT_DATA_ITEM_TYPES.dropZone,
+				LAYOUT_DATA_ITEM_TYPES.fragment,
+				LAYOUT_DATA_ITEM_TYPES.row
+			]}
+			item={item}
+			layoutData={layoutData}
+		>
+			{() => content}
+		</TopperEmpty>
+	) : (
+		content
+	);
+}
+
+export default React.forwardRef(ColumnWithControls);
+
+/**
+ * Retrieves necessary data from the current and next column.
+ *
+ * @param {!Object} options
+ * @param {!Object} options.item
+ * @param {!Object} options.layoutData
+ *
+ * @returns {!Object}
+ */
+function getColumnInfo({item, layoutData}) {
+	const rowColumns = layoutData.items[item.parentId].children;
+	const colIndex = rowColumns.indexOf(item.itemId);
+	const nextColumnIndex = colIndex + 1;
+	const currentColumn = item;
+	const currentColumnConfig = currentColumn.config;
+	const nextColumn = {...layoutData.items[rowColumns[nextColumnIndex]]};
+	const nextColumnConfig =
+		typeof nextColumn === 'object' && Object.keys(nextColumn).length
+			? nextColumn.config
+			: {};
+
+	return {
+		colIndex,
+		currentColumn,
+		currentColumnConfig,
+		isLastColumn: rowColumns.indexOf(item.itemId) === rowColumns.length - 1,
+		nextColumn: nextColumn ? nextColumn : {},
+		nextColumnConfig: nextColumn ? nextColumnConfig : {},
+		nextColumnIndex: colIndex + 1,
+		rowColumns
+	};
+}

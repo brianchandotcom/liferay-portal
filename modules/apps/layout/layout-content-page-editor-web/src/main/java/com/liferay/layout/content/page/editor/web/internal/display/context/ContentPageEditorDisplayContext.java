@@ -58,6 +58,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.util.constants.LayoutConverterTypeConstants;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
@@ -838,22 +840,17 @@ public class ContentPageEditorDisplayContext {
 			return masterLayoutDataJSONObject;
 		}
 
-		JSONObject itemsJSONObject = masterLayoutDataJSONObject.getJSONObject(
-			"items");
+		LayoutStructure masterLayoutStructure = LayoutStructure.of(
+			masterLayoutDataJSONObject.toString());
 
-		JSONObject rootItemsJSONObject =
-			masterLayoutDataJSONObject.getJSONObject("rootItems");
+		LayoutStructureItem layoutStructureItem =
+			masterLayoutStructure.getDropZoneLayoutStructureItem();
 
-		String dropZoneId = rootItemsJSONObject.getString("dropZone");
-
-		JSONObject dropZoneJSONObject = itemsJSONObject.getJSONObject(
-			dropZoneId);
-
-		if (dropZoneJSONObject == null) {
+		if (layoutStructureItem == null) {
 			return JSONFactoryUtil.createJSONObject();
 		}
 
-		return dropZoneJSONObject.getJSONObject("config");
+		return layoutStructureItem.getItemConfigJSONObject();
 	}
 
 	private List<SoyContext> _getDynamicFragmentsSoyContexts() {

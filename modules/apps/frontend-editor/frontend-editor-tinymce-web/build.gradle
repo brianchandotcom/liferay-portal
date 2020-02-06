@@ -7,7 +7,7 @@ configurations {
 
 task buildTinyMCE(type: Copy)
 
-String tinyMCEVersion = "4.9.2"
+String tinyMCEVersion = "5.1.6"
 
 File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")
@@ -70,5 +70,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 
-	tinyMCE group: "org.webjars.bower", name: "tinymce", transitive: false, version: tinyMCEVersion
+	tinyMCE group: "org.webjars.npm", name: "tinymce", transitive: false, version: tinyMCEVersion
 }

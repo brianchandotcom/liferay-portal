@@ -552,11 +552,8 @@ class Sidebar extends Component {
 
 		const {fieldTypes} = this.props;
 		const {fieldSetId} = data.source.dataset;
-		let indexes = FormSupport.getNestedIndexes(data.target.parentElement);
-		
-		if (!indexes.length) {
-			indexes = FormSupport.getIndexes(data.target.parentElement);
-		}
+		const columnNode = dom.closest(data.target, '.col-ddm');
+		const indexes = FormSupport.getIndexes(columnNode);
 
 		if (fieldSetId) {
 			this._fetchFieldSet(fieldSetId).then(pages => {
@@ -573,22 +570,24 @@ class Sidebar extends Component {
 				return name === data.source.dataset.fieldTypeName;
 			});
 
-			const addedToPlaceholder = data.target.parentElement.parentElement.classList.contains(
-				'placeholder'
-			);
+			if (dom.closest(data.target, '.col-empty')) {
+				const addedToPlaceholder = dom.closest(
+					data.target,
+					'.placeholder'
+				);
 
-			if (!data.target.parentElement.classList.contains('col-empty')) {
-				dispatch('sectionAdded', {
+				dispatch('fieldAdded', {
+					addedToPlaceholder,
 					data,
 					fieldType: {
 						...fieldType,
 						editable: true
-					}
+					},
+					indexes
 				});
 			}
 			else {
-				dispatch('fieldAdded', {
-					addedToPlaceholder,
+				dispatch('sectionAdded', {
 					data,
 					fieldType: {
 						...fieldType,

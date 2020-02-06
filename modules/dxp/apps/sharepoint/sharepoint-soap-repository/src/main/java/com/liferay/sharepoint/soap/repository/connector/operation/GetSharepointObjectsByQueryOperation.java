@@ -75,19 +75,19 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 
 		try {
 			getListItemsResponseDocument = listsStub.getListItems(
-				getGetListItemsDocument(
+				_getGetListItemsDocument(
 					query, queryOptionsList, queryFieldNames));
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
 
-		log(query, queryOptionsList, getListItemsResponseDocument);
+		_log(query, queryOptionsList, getListItemsResponseDocument);
 
-		return getSharepointObjects(getListItemsResponseDocument);
+		return _getSharepointObjects(getListItemsResponseDocument);
 	}
 
-	protected GetListItemsDocument getGetListItemsDocument(
+	private GetListItemsDocument _getGetListItemsDocument(
 		Query query, QueryOptionsList queryOptionsList,
 		String... queryFieldNames) {
 
@@ -98,16 +98,16 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 			getListItemsDocument.addNewGetListItems();
 
 		getListItems.setListName(sharepointConnectionInfo.getLibraryName());
-		getListItems.setQuery(getQuery(query));
-		getListItems.setQueryOptions(getQueryOptions(queryOptionsList));
-		getListItems.setViewFields(getViewFields(queryFieldNames));
+		getListItems.setQuery(_getQuery(query));
+		getListItems.setQueryOptions(_getQueryOptions(queryOptionsList));
+		getListItems.setViewFields(_getViewFields(queryFieldNames));
 		getListItems.setViewName(SharepointConstants.VIEW_DEFAULT);
 		getListItems.setRowLimit(SharepointConstants.ROW_LIMIT_DEFAULT);
 
 		return getListItemsDocument;
 	}
 
-	protected String getNodeValue(Node node, int index) {
+	private String _getNodeValue(Node node, int index) {
 		if (node == null) {
 			return null;
 		}
@@ -124,7 +124,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		return null;
 	}
 
-	protected Set<SharepointObject.Permission> getPermissions(
+	private Set<SharepointObject.Permission> _getPermissions(
 		String permissionsHexMask) {
 
 		Set<SharepointObject.Permission> permissions = EnumSet.noneOf(
@@ -146,7 +146,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		return permissions;
 	}
 
-	protected GetListItemsDocument.GetListItems.Query getQuery(Query query) {
+	private GetListItemsDocument.GetListItems.Query _getQuery(Query query) {
 		GetListItemsDocument.GetListItems.Query getListItemsQuery =
 			GetListItemsDocumentImpl.GetListItems.Query.Factory.newInstance();
 
@@ -161,7 +161,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		return getListItemsQuery;
 	}
 
-	protected GetListItemsDocument.GetListItems.QueryOptions getQueryOptions(
+	private GetListItemsDocument.GetListItems.QueryOptions _getQueryOptions(
 		QueryOptionsList queryOptionsList) {
 
 		GetListItemsDocument.GetListItems.QueryOptions queryOptions =
@@ -179,7 +179,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		return queryOptions;
 	}
 
-	protected List<SharepointObject> getSharepointObjects(
+	private List<SharepointObject> _getSharepointObjects(
 		GetListItemsResponseDocument getListItemsResponseDocument) {
 
 		GetListItemsResponseDocument.GetListItemsResponse getListItemsResponse =
@@ -212,7 +212,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 
 			Node owsFileRefNode = namedNodeMap.getNamedItem("ows_FileRef");
 
-			String path = getNodeValue(owsFileRefNode, 1);
+			String path = _getNodeValue(owsFileRefNode, 1);
 
 			path = path.substring(_pathPrefixToRemoveLength);
 
@@ -236,16 +236,16 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 				"ows_File_x0020_Size");
 
 			SharepointObject sharepointObject = new SharepointObject(
-				getNodeValue(owsAuthorNode, 1),
-				getNodeValue(owsCheckedOutUserIdNode, 1),
-				parseDate(getNodeValue(owsCreatedX0020DateNode, 1)),
+				_getNodeValue(owsAuthorNode, 1),
+				_getNodeValue(owsCheckedOutUserIdNode, 1),
+				_parseDate(_getNodeValue(owsCreatedX0020DateNode, 1)),
 				Objects.equals(
-					getNodeValue(owsFSObjTypeNode, 1),
+					_getNodeValue(owsFSObjTypeNode, 1),
 					SharepointConstants.FS_OBJ_TYPE_FOLDER),
-				parseDate(getNodeValue(owsLastX0020ModifiedNode, 1)), path,
-				getPermissions(owsPermMaskNode.getNodeValue()),
-				GetterUtil.getLong(getNodeValue(owsFileRefNode, 0)),
-				GetterUtil.getLong(getNodeValue(owsFileX0020SizeNode, 1)),
+				_parseDate(_getNodeValue(owsLastX0020ModifiedNode, 1)), path,
+				_getPermissions(owsPermMaskNode.getNodeValue()),
+				GetterUtil.getLong(_getNodeValue(owsFileRefNode, 0)),
+				GetterUtil.getLong(_getNodeValue(owsFileX0020SizeNode, 1)),
 				toURL(path));
 
 			sharepointObjects.add(sharepointObject);
@@ -254,7 +254,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		return sharepointObjects;
 	}
 
-	protected GetListItemsDocument.GetListItems.ViewFields getViewFields(
+	private GetListItemsDocument.GetListItems.ViewFields _getViewFields(
 		String... queryFieldNames) {
 
 		GetListItemsDocument.GetListItems.ViewFields viewFields =
@@ -265,7 +265,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 
 		for (Node childNode :
 				xmlHelper.toNodes(
-					node.getOwnerDocument(), toQueryFields(queryFieldNames))) {
+					node.getOwnerDocument(), _toQueryFields(queryFieldNames))) {
 
 			node.appendChild(childNode);
 		}
@@ -273,7 +273,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		return viewFields;
 	}
 
-	protected void log(
+	private void _log(
 		Query query, QueryOptionsList queryOptionsList,
 		GetListItemsResponseDocument getListItemsResponseDocument) {
 
@@ -287,7 +287,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 				"\nResult: ", getListItemsResponseDocument.xmlText()));
 	}
 
-	protected Date parseDate(String dateString) {
+	private Date _parseDate(String dateString) {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat(
 				SharepointConstants.SHAREPOINT_OBJECT_DATE_FORMAT_PATTERN);
@@ -309,7 +309,7 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		}
 	}
 
-	protected QueryField[] toQueryFields(String[] queryFieldNames) {
+	private QueryField[] _toQueryFields(String[] queryFieldNames) {
 		QueryField[] queryFields = new QueryField[queryFieldNames.length];
 
 		for (int i = 0; i < queryFieldNames.length; i++) {

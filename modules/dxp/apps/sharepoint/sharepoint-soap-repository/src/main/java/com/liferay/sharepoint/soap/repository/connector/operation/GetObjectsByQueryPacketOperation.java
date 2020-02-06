@@ -52,24 +52,18 @@ public class GetObjectsByQueryPacketOperation extends BaseOperation {
 	public List<SharepointObject> execute(String queryPacket)
 		throws SharepointException {
 
-		QueryResponseDocument queryResponseDocument = null;
-
 		try {
-			queryResponseDocument = _queryServiceStub.query(
-				getQueryDocument(queryPacket));
+			QueryResponseDocument queryResponseDocument =
+				_queryServiceStub.query(_getQueryDocument(queryPacket));
+
+			return _getSharepointObjects(queryResponseDocument);
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
-
-		return getSharepointObjects(queryResponseDocument);
 	}
 
-	public void setQueryServiceStub(QueryServiceStub queryServiceStub) {
-		_queryServiceStub = queryServiceStub;
-	}
-
-	protected QueryDocument getQueryDocument(String queryPacket) {
+	private QueryDocument _getQueryDocument(String queryPacket) {
 		QueryDocument queryDocument = QueryDocument.Factory.newInstance();
 
 		QueryDocument.Query query = queryDocument.addNewQuery();
@@ -79,7 +73,7 @@ public class GetObjectsByQueryPacketOperation extends BaseOperation {
 		return queryDocument;
 	}
 
-	protected List<SharepointObject> getSharepointObjects(
+	private List<SharepointObject> _getSharepointObjects(
 			QueryResponseDocument queryResponseDocument)
 		throws SharepointException {
 

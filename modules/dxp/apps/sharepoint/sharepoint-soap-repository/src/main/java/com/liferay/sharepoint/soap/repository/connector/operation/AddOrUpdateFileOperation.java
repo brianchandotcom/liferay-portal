@@ -48,25 +48,25 @@ public class AddOrUpdateFileOperation extends BaseOperation {
 			String filePath, String changeLog, InputStream inputStream)
 		throws SharepointException {
 
-		CopyIntoItemsResponseDocument copyIntoItemsResponseDocument = null;
-
 		try {
-			copyIntoItemsResponseDocument = copyStub.copyIntoItems(
-				getCopyIntoItemsDocument(filePath, inputStream));
+			CopyIntoItemsResponseDocument copyIntoItemsResponseDocument =
+				copyStub.copyIntoItems(
+					_getCopyIntoItemsDocument(filePath, inputStream));
+
+			_processResponse(copyIntoItemsResponseDocument);
+
+			if (changeLog != null) {
+				_checkInFileOperation.execute(
+					filePath, changeLog,
+					SharepointConnection.CheckInType.MAJOR);
+			}
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
-
-		processResponse(copyIntoItemsResponseDocument);
-
-		if (changeLog != null) {
-			_checkInFileOperation.execute(
-				filePath, changeLog, SharepointConnection.CheckInType.MAJOR);
-		}
 	}
 
-	protected CopyIntoItemsDocument getCopyIntoItemsDocument(
+	private CopyIntoItemsDocument _getCopyIntoItemsDocument(
 			String filePath, InputStream inputStream)
 		throws SharepointException {
 
@@ -85,7 +85,7 @@ public class AddOrUpdateFileOperation extends BaseOperation {
 		return copyIntoItemsDocument;
 	}
 
-	protected void processResponse(
+	private void _processResponse(
 			CopyIntoItemsResponseDocument copyIntoItemsResponseDocument)
 		throws SharepointException {
 

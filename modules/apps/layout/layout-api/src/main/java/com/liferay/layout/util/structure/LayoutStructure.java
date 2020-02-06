@@ -193,6 +193,18 @@ public class LayoutStructure {
 			itemId, layoutStructureItem.getParentItemId(), position);
 	}
 
+	public LayoutStructureItem getDropZoneLayoutStructureItem() {
+		for (LayoutStructureItem layoutStructureItem :
+				getLayoutStructureItems()) {
+
+			if (layoutStructureItem instanceof DropZoneLayoutStructureItem) {
+				return layoutStructureItem;
+			}
+		}
+
+		return null;
+	}
+
 	public LayoutStructureItem getLayoutStructureItem(String itemId) {
 		return _layoutStructureItems.get(itemId);
 	}

@@ -862,13 +862,25 @@ public class SQLDSLTest {
 
 	@Test
 	public void testQueryTable() {
-		Table<?> table = DSLQueryFactoryUtil.select(
+		Table<?> table1 = DSLQueryFactoryUtil.select(
 			new Scalar<>(1)
 		).as(
 			"alias"
 		);
 
-		Assert.assertEquals("(select ?) alias", table.toString());
+		Assert.assertEquals("(select ?) alias", table1.toString());
+
+		Assert.assertEquals(System.identityHashCode(table1), table1.hashCode());
+
+		Table<?> table2 = DSLQueryFactoryUtil.select(
+			new Scalar<>(2)
+		).as(
+			"alias"
+		);
+
+		Assert.assertEquals(table1, table1);
+
+		Assert.assertNotEquals(table1, table2);
 	}
 
 	@Test

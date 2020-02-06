@@ -35,6 +35,20 @@ public class QueryTable extends BaseTable<QueryTable> {
 	}
 
 	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return System.identityHashCode(this);
+	}
+
+	@Override
 	public void toSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 

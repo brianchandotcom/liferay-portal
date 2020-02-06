@@ -75,7 +75,7 @@ public abstract class BaseTable<T extends BaseTable<T>> implements Table<T> {
 
 		Table<?> table = (Table<?>)object;
 
-		return Objects.equals(_tableName, table.getTableName());
+		return _tableName.equals(table.getTableName());
 	}
 
 	@Override

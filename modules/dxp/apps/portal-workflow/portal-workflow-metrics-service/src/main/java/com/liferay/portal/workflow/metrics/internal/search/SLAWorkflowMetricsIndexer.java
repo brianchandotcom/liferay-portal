@@ -14,12 +14,19 @@
 
 package com.liferay.portal.workflow.metrics.internal.search;
 
+import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAInstanceResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
 
-import org.osgi.service.component.annotations.Activate;
+import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -29,31 +36,53 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = {Indexer.class, SLAWorkflowMetricsIndexer.class}
 )
-public class SLAWorkflowMetricsIndexer extends WorkflowMetricsIndexer {
+public class SLAWorkflowMetricsIndexer extends BaseIndexer<Object> {
 
 	@Override
 	public String getClassName() {
 		return SLAWorkflowMetricsIndexer.class.getName();
 	}
 
-	@Activate
-	protected void activate() throws Exception {
-		createIndices(
-			_slaInstanceResultWorkflowMetricsIndexer,
-			_slaTaskResultWorkflowMetricsIndexer);
+	@Override
+	protected final void doDelete(Object t) throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected final Document doGetDocument(Object object) throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected final Summary doGetSummary(
+			Document document, Locale locale, String snippet,
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected final void doReindex(Object object) throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected final void doReindex(String className, long classPK)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		deleteIndices(
-			companyId, _slaInstanceResultWorkflowMetricsIndexer,
-			_slaTaskResultWorkflowMetricsIndexer);
+		_slaInstanceResultWorkflowMetricsIndexer.deleteIndex(companyId);
+		_slaTaskResultWorkflowMetricsIndexer.deleteIndex(companyId);
 
-		createIndices(
-			_slaInstanceResultWorkflowMetricsIndexer,
-			_slaTaskResultWorkflowMetricsIndexer);
+		_slaInstanceResultWorkflowMetricsIndexer.createIndex();
+		_slaTaskResultWorkflowMetricsIndexer.createIndex();
 
 		_slaInstanceResultWorkflowMetricsIndexer.reindex(companyId);
 		_slaTaskResultWorkflowMetricsIndexer.reindex(companyId);

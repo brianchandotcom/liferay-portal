@@ -16,16 +16,35 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
+import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -51,6 +70,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -106,10 +126,70 @@ public abstract class BaseWorkflowMetricsIndexer {
 		}
 	}
 
+	public void createIndex() throws PortalException {
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
+		if (_hasIndex(getIndexName())) {
+			return;
+		}
+
+		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
+			getIndexName());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			StringUtil.read(getClass(), "/META-INF/search/mappings.json"));
+
+		createIndexRequest.setSource(
+			JSONUtil.put(
+				"mappings",
+				JSONUtil.put(getIndexType(), jsonObject.get(getIndexType()))
+			).put(
+				"settings",
+				JSONFactoryUtil.createJSONObject(
+					StringUtil.read(
+						getClass(), "/META-INF/search/settings.json"))
+			).toString());
+
+		searchEngineAdapter.execute(createIndexRequest);
+	}
+
 	public void deleteDocument(Document document) {
 		document.addKeyword("deleted", true);
 
 		_updateDocument(document);
+	}
+
+	public void deleteIndex(long companyId) throws PortalException {
+		if (searchEngineAdapter == null) {
+			return;
+		}
+
+		if (!_hasIndex(getIndexName())) {
+			return;
+		}
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		booleanFilter.add(
+			new TermFilter("companyId", String.valueOf(companyId)),
+			BooleanClauseOccur.MUST);
+
+		booleanQuery.setPreBooleanFilter(booleanFilter);
+
+		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
+			new DeleteByQueryDocumentRequest(booleanQuery, getIndexName());
+
+		if (PortalRunMode.isTestMode()) {
+			deleteByQueryDocumentRequest.setRefresh(true);
+		}
+
+		searchEngineAdapter.execute(deleteByQueryDocumentRequest);
 	}
 
 	public abstract String getIndexName();
@@ -120,6 +200,17 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 	public void updateDocument(Document document) {
 		_updateDocument(document);
+	}
+
+	@Activate
+	protected void activate() throws Exception {
+		createIndex();
+
+		if (!_INDEX_ON_STARTUP) {
+			for (Company company : companyLocalService.getCompanies()) {
+				reindex(company.getCompanyId());
+			}
+		}
 	}
 
 	protected String digest(Serializable... parts) {
@@ -223,6 +314,9 @@ public abstract class BaseWorkflowMetricsIndexer {
 	protected AssetEntryLocalService assetEntryLocalService;
 
 	@Reference
+	protected CompanyLocalService companyLocalService;
+
+	@Reference
 	protected KaleoDefinitionLocalService kaleoDefinitionLocalService;
 
 	@Reference
@@ -260,6 +354,16 @@ public abstract class BaseWorkflowMetricsIndexer {
 	@Reference
 	protected WorkflowMetricsPortalExecutor workflowMetricsPortalExecutor;
 
+	private boolean _hasIndex(String indexName) {
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(indexName);
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		return indicesExistsIndexResponse.isExists();
+	}
+
 	private void _updateDocument(Document document) {
 		if (searchEngineAdapter == null) {
 			return;
@@ -276,5 +380,8 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 		searchEngineAdapter.execute(updateDocumentRequest);
 	}
+
+	private static final boolean _INDEX_ON_STARTUP = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.INDEX_ON_STARTUP));
 
 }

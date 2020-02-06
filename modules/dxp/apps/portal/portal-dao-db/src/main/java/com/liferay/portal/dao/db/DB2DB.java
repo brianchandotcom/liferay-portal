@@ -128,11 +128,6 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
-	protected String getServerName() {
-		return "db2";
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

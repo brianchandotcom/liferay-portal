@@ -43,11 +43,6 @@ public class TestDB extends BaseDB {
 	}
 
 	@Override
-	protected String getServerName() {
-		return StringPool.BLANK;
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return new int[10];
 	}

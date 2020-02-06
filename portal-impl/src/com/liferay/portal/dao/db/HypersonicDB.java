@@ -53,11 +53,6 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
-	protected String getServerName() {
-		return "hypersonic";
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

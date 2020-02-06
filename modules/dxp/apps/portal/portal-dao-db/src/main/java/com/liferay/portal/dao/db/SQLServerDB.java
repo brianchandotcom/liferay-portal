@@ -148,11 +148,6 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
-	protected String getServerName() {
-		return "sqlserver";
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

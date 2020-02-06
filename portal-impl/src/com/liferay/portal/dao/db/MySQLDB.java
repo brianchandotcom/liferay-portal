@@ -136,11 +136,6 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
-	protected String getServerName() {
-		return "mysql";
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

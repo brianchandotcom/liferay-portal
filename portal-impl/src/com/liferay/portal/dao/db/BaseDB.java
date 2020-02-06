@@ -15,6 +15,7 @@
 package com.liferay.portal.dao.db;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -133,8 +133,8 @@ public abstract class BaseDB implements DB {
 
 		File file = new File(
 			StringBundler.concat(
-				sqlDir, "/create", suffix, "/create", suffix, "-",
-				getServerName(), ".sql"));
+				sqlDir, "/create", suffix, "/create", suffix, "-", _dbType,
+				".sql"));
 
 		String createContent = null;
 
@@ -150,22 +150,21 @@ public abstract class BaseDB implements DB {
 			sb.append(
 				_readFile(
 					StringBundler.concat(
-						sqlDir, tablesPrefix, getServerName(), ".sql")));
+						sqlDir, tablesPrefix, _dbType, ".sql")));
 
 			sb.append("\n\n");
 
 			sb.append(
 				_readFile(
 					StringBundler.concat(
-						sqlDir, "/indexes/indexes-", getServerName(), ".sql")));
+						sqlDir, "/indexes/indexes-", _dbType, ".sql")));
 
 			sb.append("\n\n");
 
 			sb.append(
 				_readFile(
 					StringBundler.concat(
-						sqlDir, "/sequences/sequences-", getServerName(),
-						".sql")));
+						sqlDir, "/sequences/sequences-", _dbType, ".sql")));
 
 			sb.append("\n");
 
@@ -197,8 +196,7 @@ public abstract class BaseDB implements DB {
 
 		FileUtil.write(
 			StringBundler.concat(
-				sqlDir, "/", fileName, "/", fileName, "-", getServerName(),
-				".sql"),
+				sqlDir, "/", fileName, "/", fileName, "-", _dbType, ".sql"),
 			template);
 	}
 
@@ -919,8 +917,6 @@ public abstract class BaseDB implements DB {
 
 		return validIndexNames;
 	}
-
-	protected abstract String getServerName();
 
 	protected abstract int[] getSQLTypes();
 

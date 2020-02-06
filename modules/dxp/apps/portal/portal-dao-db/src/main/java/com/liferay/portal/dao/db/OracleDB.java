@@ -149,11 +149,6 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
-	protected String getServerName() {
-		return "oracle";
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

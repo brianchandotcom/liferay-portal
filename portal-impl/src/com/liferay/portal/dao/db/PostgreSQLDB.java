@@ -181,11 +181,6 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
-	protected String getServerName() {
-		return "postgresql";
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

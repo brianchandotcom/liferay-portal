@@ -126,11 +126,6 @@ public class SybaseDB extends BaseDB {
 	}
 
 	@Override
-	protected String getServerName() {
-		return "sybase";
-	}
-
-	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

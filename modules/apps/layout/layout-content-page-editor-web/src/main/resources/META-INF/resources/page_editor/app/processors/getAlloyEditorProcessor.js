@@ -108,7 +108,13 @@ export default function getAlloyEditorProcessor(
 
 				nativeEditor.on('instanceReady', () => {
 					nativeEditor.focus();
-					nativeEditor.execCommand('selectAll');
+
+					if (event) {
+						_selectRange(event, nativeEditor);
+					}
+					else {
+						nativeEditor.execCommand('selectAll');
+					}
 				}),
 
 				_stopEventPropagation(element, 'keydown'),
@@ -166,4 +172,38 @@ function _stopEventPropagation(element, eventName) {
 			element.removeEventListener(eventName, handler);
 		}
 	};
+}
+
+/**
+ * Place the caret in the click position
+ * @param {Event} event
+ * @param {CKEditor} nativeEditor
+ */
+function _selectRange(event, nativeEditor) {
+	const ckRange = nativeEditor.getSelection().getRanges()[0];
+
+	if (document.caretPositionFromPoint) {
+		const range = document.caretPositionFromPoint(
+			event.clientX,
+			event.clientY
+		);
+
+		const textNode = range.offsetNode;
+
+		ckRange.setStart(CKEDITOR.dom.node(textNode), range.offset);
+		ckRange.setEnd(CKEDITOR.dom.node(textNode), range.offset);
+	}
+	else if (document.caretRangeFromPoint) {
+		const range = document.caretRangeFromPoint(
+			event.clientX,
+			event.clientY
+		);
+
+		const offset = range.startOffset || 0;
+
+		ckRange.setStart(CKEDITOR.dom.node(range.startContainer), offset);
+		ckRange.setEnd(CKEDITOR.dom.node(range.endContainer), offset);
+	}
+
+	nativeEditor.getSelection().selectRanges([ckRange]);
 }

@@ -38,8 +38,8 @@ public class PortalWebResourceConstants {
 
 	public static final String RESOURCE_TYPE_THEME_ADMIN = "theme_admin";
 
-	public static final String RESOURCE_TYPE_THEME_CHAMAELEON =
-		"theme_chamaeleon";
+	public static final String RESOURCE_TYPE_THEME_CHAMELEON =
+		"theme_chameleon";
 
 	public static final String RESOURCE_TYPE_THEME_CONTRIBUTOR =
 		"theme_contributor";

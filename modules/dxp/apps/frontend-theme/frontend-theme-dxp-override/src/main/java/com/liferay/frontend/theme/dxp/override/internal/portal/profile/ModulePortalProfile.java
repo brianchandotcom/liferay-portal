@@ -15,7 +15,7 @@
 package com.liferay.frontend.theme.dxp.override.internal.portal.profile;
 
 import com.liferay.frontend.theme.dxp.override.internal.admin.AdminThemeFragmentBundleInstaller;
-import com.liferay.frontend.theme.dxp.override.internal.chamaeleon.ChamaeleonThemeFragmentBundleInstaller;
+import com.liferay.frontend.theme.dxp.override.internal.chameleon.ChameleonThemeFragmentBundleInstaller;
 import com.liferay.frontend.theme.dxp.override.internal.classic.ClassicThemeFragmentBundleInstaller;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
@@ -38,7 +38,7 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			componentContext,
 			Collections.singleton(PortalProfile.PORTAL_PROFILE_NAME_DXP),
 			AdminThemeFragmentBundleInstaller.class.getName(),
-			ChamaeleonThemeFragmentBundleInstaller.class.getName(),
+			ChameleonThemeFragmentBundleInstaller.class.getName(),
 			ClassicThemeFragmentBundleInstaller.class.getName());
 	}
 

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.frontend.theme.dxp.override.internal.chamaeleon;
+package com.liferay.frontend.theme.dxp.override.internal.chameleon;
 
 import com.liferay.frontend.theme.dxp.override.internal.BaseThemeFragmentBundleInstaller;
 
@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera Avellón
  */
 @Component(enabled = false, immediate = true, service = {})
-public class ChamaeleonThemeFragmentBundleInstaller
+public class ChameleonThemeFragmentBundleInstaller
 	extends BaseThemeFragmentBundleInstaller {
 
 	@Override

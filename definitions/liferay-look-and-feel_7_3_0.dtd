@@ -132,9 +132,9 @@ the user.
 
 <!--
 The root-path value sets the location of the root path for the theme. For
-example, the root path for the Chamaeleon theme is "/chamaeleon". This
-means you can find the files for the Chamaeleon theme in
-/modules/apps/frontend-theme/frontend-theme-chamaeleon/src.
+example, the root path for the Chameleon theme is "/chameleon". This
+means you can find the files for the Chameleon theme in
+/modules/apps/frontend-theme/frontend-theme-chameleon/src.
 
 For convenience, the root-path attribute can be referenced in the rest of the
 theme element as ${root-path}.
@@ -145,9 +145,9 @@ The default value is "/".
 
 <!--
 The templates-path value sets the location of the templates path for the theme.
-For example, the templates path for the Chamaeleon theme is "/chamaeleon/templates".
-This means you can find the JSP or VM templates for the Chamaeleon theme in
-/modules/apps/frontend-theme/frontend-theme-chamaeleon/src/templates.
+For example, the templates path for the Chameleon theme is "/chameleon/templates".
+This means you can find the JSP or VM templates for the Chameleon theme in
+/modules/apps/frontend-theme/frontend-theme-chameleon/src/templates.
 
 For convenience, the templates-path attribute can be referenced in the rest of
 the theme element as ${templates-path}.
@@ -158,9 +158,9 @@ The default value is "${root-path}/templates".
 
 <!--
 The css-path value sets the location of the css path for the theme. For example,
-the css path for the Chamaeleon theme is "/chamaeleon/css". This means you can find
-css for the Chamaeleon theme in
-/modules/apps/frontend-theme/frontend-theme-chamaeleon/src/css.
+the css path for the Chameleon theme is "/chameleon/css". This means you can find
+css for the Chameleon theme in
+/modules/apps/frontend-theme/frontend-theme-chameleon/src/css.
 
 For convenience, the css-path attribute can be referenced in the rest of the
 theme element as ${css-path}.
@@ -171,9 +171,9 @@ The default value is "${root-path}/css".
 
 <!--
 The images-path value sets the location of the images path for the theme. For
-example, the images path for the Chamaeleon theme is "/chamaeleon/images". This means
-you can find images for the Chamaeleon theme in
-/modules/apps/frontend-theme/frontend-theme-chamaeleon/src/images.
+example, the images path for the Chameleon theme is "/chameleon/images". This means
+you can find images for the Chameleon theme in
+/modules/apps/frontend-theme/frontend-theme-chameleon/src/images.
 
 For convenience, the images-path attribute can be referenced in the rest of the
 theme element as ${images-path}.
@@ -184,9 +184,9 @@ The default value is "${root-path}/images".
 
 <!--
 The javascript-path value sets the location of the JavaScript path for the
-theme. For example, the JavaScript path for the Chamaeleon theme is "/chamaeleon/js".
-This means you can find JavaScript for the Chamaeleon theme in
-/modules/apps/frontend-theme/frontend-theme-chamaeleon/src/js.
+theme. For example, the JavaScript path for the Chameleon theme is "/chameleon/js".
+This means you can find JavaScript for the Chameleon theme in
+/modules/apps/frontend-theme/frontend-theme-chameleon/src/js.
 
 For convenience, the javascript-path attribute can be referenced in the rest of
 the theme element as ${javascript-path}.

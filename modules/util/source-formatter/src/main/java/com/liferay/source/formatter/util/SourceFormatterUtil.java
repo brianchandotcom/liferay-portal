@@ -29,6 +29,7 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -214,6 +215,21 @@ public class SourceFormatterUtil {
 			markdownFileName, TextFormatter.N);
 
 		return markdownFileName + ".markdown";
+	}
+
+	public static String getMarkdownURLString(String checkName) {
+		String markdownFileName = getMarkdownFileName(checkName);
+
+		ClassLoader classLoader = SourceFormatterUtil.class.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"documentation/checks/" + markdownFileName);
+
+		if (inputStream != null) {
+			return _DOCUMENTATION_URL + markdownFileName;
+		}
+
+		return null;
 	}
 
 	public static File getPortalDir(String baseDirName) {
@@ -643,6 +659,10 @@ public class SourceFormatterUtil {
 
 		return fileNames;
 	}
+
+	private static final String _DOCUMENTATION_URL =
+		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
+			"/source-formatter/src/main/resources/documentation/checks/";
 
 	private static class PathMatchers {
 

@@ -141,7 +141,7 @@ public class SourceChecksUtil {
 								fileName, parseException.getMessage(),
 								CheckType.SOURCE_CHECK,
 								JavaClassParser.class.getSimpleName(), null,
-								null, -1));
+								-1));
 
 						continue;
 					}

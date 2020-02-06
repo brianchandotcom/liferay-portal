@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -28,8 +29,13 @@ import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
 
 /**
  * @author Hugo Huijser
@@ -54,13 +60,16 @@ public class CheckstyleLogger extends DefaultLogger {
 	}
 
 	protected void addError(AuditEvent auditEvent, String fileName) {
-		String checkName = SourceFormatterUtil.getSimpleName(
-			auditEvent.getSourceName());
+		String checkName = auditEvent.getSourceName();
+
+		String simpleCheckName = SourceFormatterUtil.getSimpleName(checkName);
 
 		_sourceFormatterMessages.add(
 			new SourceFormatterMessage(
 				fileName, auditEvent.getMessage(), CheckType.CHECKSTYLE,
-				checkName, null, null, auditEvent.getLine()));
+				simpleCheckName,
+				_getDocumentationURLString(checkName, simpleCheckName),
+				auditEvent.getLine()));
 
 		super.addError(auditEvent);
 	}
@@ -87,6 +96,84 @@ public class CheckstyleLogger extends DefaultLogger {
 		path = path.toAbsolutePath();
 
 		return path.normalize();
+	}
+
+	private String _getCheckstyleDocumentationURLString(
+		Element element, String checkName) {
+
+		if (checkName.equals(element.attributeValue("name"))) {
+			for (Element propertyElement :
+					(List<Element>)element.elements("property")) {
+
+				if (Objects.equals(
+						propertyElement.attributeValue("name"),
+						"documentationLocation")) {
+
+					return SourceFormatterUtil.
+						CHECKSTYLE_DOCUMENTATION_URL_BASE +
+							propertyElement.attributeValue("value");
+				}
+			}
+		}
+
+		for (Element moduleElement :
+				(List<Element>)element.elements("module")) {
+
+			String checkstyleURLFilePath = _getCheckstyleDocumentationURLString(
+				moduleElement, checkName);
+
+			if (checkstyleURLFilePath != null) {
+				return checkstyleURLFilePath;
+			}
+		}
+
+		return null;
+	}
+
+	private String _getCheckstyleDocumentationURLString(String checkName) {
+		try {
+			ClassLoader classLoader =
+				SourceFormatterMessage.class.getClassLoader();
+
+			Document document = SourceUtil.readXML(
+				StringUtil.read(
+					classLoader.getResourceAsStream("checkstyle.xml")));
+
+			return _getCheckstyleDocumentationURLString(
+				document.getRootElement(), checkName);
+		}
+		catch (Exception exception) {
+			return null;
+		}
+	}
+
+	private String _getDocumentationURLString(
+		String checkName, String simpleCheckName) {
+
+		if (!checkName.startsWith("com.liferay.")) {
+			return _getCheckstyleDocumentationURLString(simpleCheckName);
+		}
+
+		String markdownURLString = SourceFormatterUtil.getMarkdownURLString(
+			simpleCheckName);
+
+		if (markdownURLString != null) {
+			return markdownURLString;
+		}
+
+		ClassLoader classLoader = CheckstyleLogger.class.getClassLoader();
+
+		try {
+			Class<?> checkClass = classLoader.loadClass(checkName);
+
+			Class<?> superClass = checkClass.getSuperclass();
+
+			return SourceFormatterUtil.getMarkdownURLString(
+				superClass.getSimpleName());
+		}
+		catch (Exception exception) {
+			return null;
+		}
 	}
 
 	private static final Set<SourceFormatterMessage> _sourceFormatterMessages =

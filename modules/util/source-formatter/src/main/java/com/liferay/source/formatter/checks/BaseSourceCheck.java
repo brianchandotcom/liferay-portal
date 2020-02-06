@@ -173,13 +173,12 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		Class<?> clazz = getClass();
 
-		Class<?> superClass = clazz.getSuperclass();
-
 		sourceFormatterMessages.add(
 			new SourceFormatterMessage(
 				fileName, message, CheckType.SOURCE_CHECK,
-				clazz.getSimpleName(), superClass.getSimpleName(),
-				markdownFileName, lineNumber));
+				clazz.getSimpleName(),
+				_getDocumentationURLString(clazz, markdownFileName),
+				lineNumber));
 
 		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
@@ -725,6 +724,26 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
 
+	private String _getDocumentationURLString(
+		Class<?> checkClass, String markdownFileName) {
+
+		if (markdownFileName != null) {
+			return _OLD_DOCUMENTATION_URL + markdownFileName;
+		}
+
+		String markdownURLString = SourceFormatterUtil.getMarkdownURLString(
+			checkClass.getSimpleName());
+
+		if (markdownURLString != null) {
+			return markdownURLString;
+		}
+
+		Class<?> superclass = checkClass.getSuperclass();
+
+		return SourceFormatterUtil.getMarkdownURLString(
+			superclass.getSimpleName());
+	}
+
 	private String _getVariableTypeName(
 		String content, String variableName,
 		boolean includeArrayOrCollectionTypes) {
@@ -773,6 +792,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	private static final String _MODULES_PROPERTIES_FILE_NAME =
 		"modules/modules.properties";
+
+	private static final String _OLD_DOCUMENTATION_URL =
+		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
+			"/source-formatter/documentation/";
 
 	private JSONObject _attributesJSONObject = new JSONObjectImpl();
 	private final Map<String, String> _attributeValueMap =

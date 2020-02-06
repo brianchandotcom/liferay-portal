@@ -17,18 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.CheckType;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
-
-import java.io.InputStream;
-
-import java.util.List;
-import java.util.Objects;
-
-import org.dom4j.Document;
-import org.dom4j.Element;
 
 /**
  * @author Hugo Huijser
@@ -36,24 +25,20 @@ import org.dom4j.Element;
 public class SourceFormatterMessage
 	implements Comparable<SourceFormatterMessage> {
 
+	public SourceFormatterMessage(String fileName, String message) {
+		this(fileName, message, null, null, null, -1);
+	}
+
 	public SourceFormatterMessage(
 		String fileName, String message, CheckType checkType, String checkName,
-		String checkSuperclassName, String markdownFileName, int lineNumber) {
+		String documentationURLString, int lineNumber) {
 
 		_fileName = fileName;
 		_message = message;
 		_checkType = checkType;
 		_checkName = checkName;
-		_checkSuperclassName = checkSuperclassName;
-		_markdownFileName = markdownFileName;
+		_documentationURLString = documentationURLString;
 		_lineNumber = lineNumber;
-	}
-
-	public SourceFormatterMessage(
-		String fileName, String message, String markdownFileName,
-		int lineNumber) {
-
-		this(fileName, message, null, null, null, markdownFileName, lineNumber);
 	}
 
 	@Override
@@ -78,31 +63,7 @@ public class SourceFormatterMessage
 	}
 
 	public String getDocumentationURLString() {
-		if (_markdownFileName != null) {
-			return _OLD_DOCUMENTATION_URL + _markdownFileName;
-		}
-
-		if (_checkName == null) {
-			return null;
-		}
-
-		String markdownFilePath = _getMarkdownFilePath(_checkName);
-
-		if (markdownFilePath != null) {
-			return markdownFilePath;
-		}
-
-		markdownFilePath = _getMarkdownFilePath(_checkSuperclassName);
-
-		if (markdownFilePath != null) {
-			return markdownFilePath;
-		}
-
-		if (_checkType.equals(CheckType.CHECKSTYLE)) {
-			return _getCheckstyleDocumentationURLString(_checkName);
-		}
-
-		return null;
+		return _documentationURLString;
 	}
 
 	public String getFileName() {
@@ -123,11 +84,9 @@ public class SourceFormatterMessage
 
 		sb.append(_message);
 
-		String documentationURLString = getDocumentationURLString();
-
-		if (documentationURLString != null) {
+		if (_documentationURLString != null) {
 			sb.append(", see ");
-			sb.append(documentationURLString);
+			sb.append(_documentationURLString);
 		}
 
 		sb.append(": ");
@@ -154,85 +113,11 @@ public class SourceFormatterMessage
 		return sb.toString();
 	}
 
-	private String _getCheckstyleDocumentationURLString(
-		Element element, String checkName) {
-
-		if (checkName.equals(element.attributeValue("name"))) {
-			for (Element propertyElement :
-					(List<Element>)element.elements("property")) {
-
-				if (Objects.equals(
-						propertyElement.attributeValue("name"),
-						"documentationLocation")) {
-
-					return SourceFormatterUtil.
-						CHECKSTYLE_DOCUMENTATION_URL_BASE +
-							propertyElement.attributeValue("value");
-				}
-			}
-		}
-
-		for (Element moduleElement :
-				(List<Element>)element.elements("module")) {
-
-			String checkstyleURLFilePath = _getCheckstyleDocumentationURLString(
-				moduleElement, checkName);
-
-			if (checkstyleURLFilePath != null) {
-				return checkstyleURLFilePath;
-			}
-		}
-
-		return null;
-	}
-
-	private String _getCheckstyleDocumentationURLString(String checkName) {
-		try {
-			ClassLoader classLoader =
-				SourceFormatterMessage.class.getClassLoader();
-
-			Document document = SourceUtil.readXML(
-				StringUtil.read(
-					classLoader.getResourceAsStream("checkstyle.xml")));
-
-			return _getCheckstyleDocumentationURLString(
-				document.getRootElement(), checkName);
-		}
-		catch (Exception exception) {
-			return null;
-		}
-	}
-
-	private String _getMarkdownFilePath(String checkName) {
-		String markdownFileName = SourceFormatterUtil.getMarkdownFileName(
-			checkName);
-
-		ClassLoader classLoader = SourceFormatterMessage.class.getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"documentation/checks/" + markdownFileName);
-
-		if (inputStream != null) {
-			return _DOCUMENTATION_URL + markdownFileName;
-		}
-
-		return null;
-	}
-
-	private static final String _DOCUMENTATION_URL =
-		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
-			"/source-formatter/src/main/resources/documentation/checks/";
-
-	private static final String _OLD_DOCUMENTATION_URL =
-		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
-			"/source-formatter/documentation/";
-
 	private final String _checkName;
-	private final String _checkSuperclassName;
 	private final CheckType _checkType;
+	private final String _documentationURLString;
 	private final String _fileName;
 	private final int _lineNumber;
-	private final String _markdownFileName;
 	private final String _message;
 
 }

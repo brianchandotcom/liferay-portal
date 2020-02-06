@@ -137,7 +137,7 @@ export default function EditableDecoration({
 				event.stopPropagation();
 
 				if (isActive(itemId) && onEditableDoubleClick) {
-					onEditableDoubleClick(editableElement);
+					onEditableDoubleClick(editableElement, event);
 				}
 				else {
 					selectItem(itemId);

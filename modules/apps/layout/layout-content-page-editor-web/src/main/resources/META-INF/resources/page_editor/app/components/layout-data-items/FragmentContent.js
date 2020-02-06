@@ -196,7 +196,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		};
 	}, [state, config, defaultContent, fragmentEntryLinkId, isMounted]);
 
-	const initProcessor = editableElement => {
+	const initProcessor = (editableElement, event) => {
 		const editableId = editableElement.id;
 		const editableType = editableElement.getAttribute('type');
 		const processor = Processors[editableType] || Processors.fallback;
@@ -243,7 +243,8 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 				);
 			},
 			() => processor.destroyEditor(editableElement, editableConfig),
-			config
+			config,
+			event
 		);
 	};
 

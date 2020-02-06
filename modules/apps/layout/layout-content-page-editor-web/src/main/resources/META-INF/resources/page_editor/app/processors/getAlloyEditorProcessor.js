@@ -46,7 +46,13 @@ export default function getAlloyEditorProcessor(
 	let _element;
 
 	return {
-		createEditor: (element, changeCallback, destroyCallback, config) => {
+		createEditor: (
+			element,
+			changeCallback,
+			destroyCallback,
+			config,
+			event
+		) => {
 			const {portletNamespace} = config;
 
 			const {editorConfig} = config.defaultEditorConfigurations[

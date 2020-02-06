@@ -43,6 +43,8 @@ definition {
 
 			JSONGroup.deleteGroupByName(groupName = "App Builder Site Name");
 
+			JSONUser.tearDownNonAdminUsers();
+
 		}
 	}
 
@@ -2464,6 +2466,72 @@ definition {
 		DetailsView.validateEntry(entry = "Bester");
 
 		DetailsView.deleteEntry(itemName = "Changed");
+	@description = "SetPermission"
+	@priority = "5"
+	test SetPermission {
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Test App",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.openActionMenu(itemName = "App Permissions");
+
+		
+
+		
+
+		
+
+
+		
+
+		
+
+		
 	}
 
 }

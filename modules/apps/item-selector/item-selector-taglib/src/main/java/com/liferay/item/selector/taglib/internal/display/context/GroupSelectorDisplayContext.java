@@ -200,6 +200,7 @@ public class GroupSelectorDisplayContext {
 	private PortletURL _getIteratorURL() {
 		PortletURL portletURL = _getItemSelectorURL();
 
+		portletURL.setParameter("groupType", _getGroupType());
 		portletURL.setParameter(
 			"selectedTab",
 			ParamUtil.getString(_liferayPortletRequest, "selectedTab"));

@@ -151,19 +151,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected void addMessage(String fileName, String message, int lineNumber) {
-		addMessage(fileName, message, null, lineNumber);
-	}
-
-	protected void addMessage(
-		String fileName, String message, String markdownFileName) {
-
-		addMessage(fileName, message, markdownFileName, -1);
-	}
-
-	protected void addMessage(
-		String fileName, String message, String markdownFileName,
-		int lineNumber) {
-
 		Set<SourceFormatterMessage> sourceFormatterMessages =
 			_sourceFormatterMessagesMap.get(fileName);
 
@@ -176,8 +163,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		sourceFormatterMessages.add(
 			new SourceFormatterMessage(
 				fileName, message, CheckType.SOURCE_CHECK,
-				clazz.getSimpleName(),
-				_getDocumentationURLString(clazz, markdownFileName),
+				clazz.getSimpleName(), _getDocumentationURLString(clazz),
 				lineNumber));
 
 		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
@@ -724,13 +710,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
 
-	private String _getDocumentationURLString(
-		Class<?> checkClass, String markdownFileName) {
-
-		if (markdownFileName != null) {
-			return _OLD_DOCUMENTATION_URL + markdownFileName;
-		}
-
+	private String _getDocumentationURLString(Class<?> checkClass) {
 		String markdownURLString = SourceFormatterUtil.getMarkdownURLString(
 			checkClass.getSimpleName());
 
@@ -792,10 +772,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	private static final String _MODULES_PROPERTIES_FILE_NAME =
 		"modules/modules.properties";
-
-	private static final String _OLD_DOCUMENTATION_URL =
-		"https://github.com/liferay/liferay-portal/blob/master/modules/util" +
-			"/source-formatter/documentation/";
 
 	private JSONObject _attributesJSONObject = new JSONObjectImpl();
 	private final Map<String, String> _attributeValueMap =

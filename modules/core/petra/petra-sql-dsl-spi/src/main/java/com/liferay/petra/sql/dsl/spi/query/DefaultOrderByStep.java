@@ -21,7 +21,8 @@ import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.sql.dsl.query.sort.OrderByInfo;
 import com.liferay.petra.sql.dsl.spi.query.sort.DefaultOrderByExpression;
-import com.liferay.petra.string.StringBundler;
+
+import java.util.Arrays;
 
 /**
  * @author Preston Crary
@@ -48,20 +49,28 @@ public interface DefaultOrderByStep extends DefaultLimitStep, OrderByStep {
 		OrderByExpression[] orderByExpressions =
 			new OrderByExpression[orderByFields.length];
 
+		int count = 0;
+
 		for (int i = 0; i < orderByFields.length; i++) {
 			String field = orderByFields[i];
 
 			Column<?, ?> column = table.getColumn(field);
 
-			if (column == null) {
-				throw new IllegalArgumentException(
-					StringBundler.concat(
-						"No column \"", field, "\" for table ",
-						table.getTableName()));
-			}
+			if (column != null) {
+				orderByExpressions[i] = new DefaultOrderByExpression(
+					column, orderByInfo.isAscending(field));
 
-			orderByExpressions[i] = new DefaultOrderByExpression(
-				column, orderByInfo.isAscending(field));
+				count++;
+			}
+		}
+
+		if (count == 0) {
+			return this;
+		}
+
+		if (count < orderByFields.length) {
+			return new OrderBy(
+				this, Arrays.copyOfRange(orderByExpressions, 0, count));
 		}
 
 		return new OrderBy(this, orderByExpressions);

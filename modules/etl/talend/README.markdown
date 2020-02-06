@@ -25,7 +25,7 @@ $ mvn clean install
 ```
 
 This gives you a definition OSGi bundle of the component in
-`talend-definition/target/com.liferay.talend.definition-0.1.0-SNAPSHOT.jar`
+`talend-definition/target/com.liferay.talend.definition-0.3.0-SNAPSHOT.jar`
 and additional:
 `talend-common/target/com.liferay.talend.common-0.3.0-SNAPSHOT.jar`
 `talend-runtime/target/com.liferay.talend.runtime-0.3.0-SNAPSHOT.jar`
@@ -135,7 +135,7 @@ When ever component codebase is changed user should reload generated JARs to Tal
  Remove components. Pick back components from Palette view and configure them as before.
 
  Tip: Make sure you are aware of all previous configurations otherwise your updated job may not
- keep the same funcionality as before.
+ keep the same functionality as before.
 
 OSX and Linux users may use these 2 scripts to automatize process:
 

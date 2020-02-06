@@ -516,10 +516,10 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<if>
 				<contains string="${curl.output.trial.remote.cluster}" substring="&quot;trial_was_started&quot;:true" />
 				<then>
-					<echo>Leader Elasticsearch started with trial.</echo>
+					<echo>Trial license activated on remote cluster.</echo>
 				</then>
 				<else>
-					<fail>Leader Elasticsearch failed to start with trial.</fail>
+					<fail>Trial license failed to activate on remote cluster.</fail>
 				</else>
 			</if>
 
@@ -532,10 +532,10 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<if>
 				<contains string="${curl.output.trial.local.cluster}" substring="&quot;trial_was_started&quot;:true" />
 				<then>
-					<echo>Follower Elasticsearch started with trial.</echo>
+					<echo>Trial license activated on local cluster.</echo>
 				</then>
 				<else>
-					<fail>Follower Elasticsearch failed to start with trial.</fail>
+					<fail>Trial license failed to activate on local cluster.</fail>
 				</else>
 			</if>
 		</sequential>
@@ -932,10 +932,10 @@ xpack.monitoring.collection.enabled: true</echo>
 				<contains string="${curl.output.follower.indices}" substring="liferay-search-tuning-synonyms-liferay-${companyId}" />
 			</and>
 			<then>
-				<echo>Elasticsearch indices replicate sucessfully.</echo>
+				<echo>Created follower indices.</echo>
 			</then>
 			<else>
-				<fail>Elasticsearch indices Fail to replicate.</fail>
+				<fail>Failed to create follower indices.</fail>
 			</else>
 		</if>
 	</target>

@@ -48,18 +48,19 @@ public class SpiraRelease {
 			Integer parentReleaseId)
 		throws IOException {
 
-		String urlPath = "projects/{project_id}/releases/{parent_release_id}";
+		String urlPath = "projects/{project_id}/releases{parent_release_id}";
 
 		Map<String, String> urlPathReplacements = new HashMap<>();
 
-		urlPathReplacements.put(
-			"parent_release_id", String.valueOf(parentReleaseId));
+		if ((parentReleaseId == null) || (parentReleaseId == 0)) {
+			urlPathReplacements.put("parent_release_id", "");
+		}
+		else {
+			urlPathReplacements.put("parent_release_id", "/" + parentReleaseId);
+		}
+
 		urlPathReplacements.put(
 			"project_id", String.valueOf(spiraProject.getID()));
-
-		if ((parentReleaseId == null) || (parentReleaseId == 0)) {
-			urlPath = urlPath.replace("/{parent_release_id}", "");
-		}
 
 		JSONObject requestJSONObject = new JSONObject();
 

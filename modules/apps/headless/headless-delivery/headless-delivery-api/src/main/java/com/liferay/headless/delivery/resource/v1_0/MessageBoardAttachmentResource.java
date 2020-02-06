@@ -24,6 +24,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -43,6 +44,10 @@ public interface MessageBoardAttachmentResource {
 	public void deleteMessageBoardAttachment(Long messageBoardAttachmentId)
 		throws Exception;
 
+	public Response deleteMessageBoardAttachmentBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public MessageBoardAttachment getMessageBoardAttachment(
 			Long messageBoardAttachmentId)
 		throws Exception;
@@ -56,6 +61,11 @@ public interface MessageBoardAttachmentResource {
 			Long messageBoardMessageId, MultipartBody multipartBody)
 		throws Exception;
 
+	public Response postMessageBoardMessageMessageBoardAttachmentBatch(
+			Long messageBoardMessageId, MultipartBody multipartBody,
+			String callbackURL, Object object)
+		throws Exception;
+
 	public Page<MessageBoardAttachment>
 			getMessageBoardThreadMessageBoardAttachmentsPage(
 				Long messageBoardThreadId)
@@ -63,6 +73,11 @@ public interface MessageBoardAttachmentResource {
 
 	public MessageBoardAttachment postMessageBoardThreadMessageBoardAttachment(
 			Long messageBoardThreadId, MultipartBody multipartBody)
+		throws Exception;
+
+	public Response postMessageBoardThreadMessageBoardAttachmentBatch(
+			Long messageBoardThreadId, MultipartBody multipartBody,
+			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

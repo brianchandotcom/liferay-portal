@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import 'string.prototype.startswith';
+import 'custom-event-polyfill';
 import React from 'react';
 
 import App from './components/App.es';

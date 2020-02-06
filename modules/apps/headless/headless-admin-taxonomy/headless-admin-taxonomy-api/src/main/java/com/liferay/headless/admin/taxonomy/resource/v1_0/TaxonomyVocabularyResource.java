@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -51,7 +52,15 @@ public interface TaxonomyVocabularyResource {
 			Long siteId, TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception;
 
+	public Response postSiteTaxonomyVocabularyBatch(
+			Long siteId, String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
+		throws Exception;
+
+	public Response deleteTaxonomyVocabularyBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public TaxonomyVocabulary getTaxonomyVocabulary(Long taxonomyVocabularyId)
@@ -63,6 +72,10 @@ public interface TaxonomyVocabularyResource {
 
 	public TaxonomyVocabulary putTaxonomyVocabulary(
 			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception;
+
+	public Response putTaxonomyVocabularyBatch(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

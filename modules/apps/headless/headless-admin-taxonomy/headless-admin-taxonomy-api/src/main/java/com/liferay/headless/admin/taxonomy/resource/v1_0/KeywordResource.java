@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -44,9 +45,15 @@ public interface KeywordResource {
 
 	public void deleteKeyword(Long keywordId) throws Exception;
 
+	public Response deleteKeywordBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Keyword getKeyword(Long keywordId) throws Exception;
 
 	public Keyword putKeyword(Long keywordId, Keyword keyword) throws Exception;
+
+	public Response putKeywordBatch(String callbackURL, Object object)
+		throws Exception;
 
 	public Page<Keyword> getSiteKeywordsPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
@@ -54,6 +61,10 @@ public interface KeywordResource {
 		throws Exception;
 
 	public Keyword postSiteKeyword(Long siteId, Keyword keyword)
+		throws Exception;
+
+	public Response postSiteKeywordBatch(
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

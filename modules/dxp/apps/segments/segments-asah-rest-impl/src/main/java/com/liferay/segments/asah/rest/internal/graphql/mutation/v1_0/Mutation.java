@@ -31,6 +31,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -81,6 +82,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response deleteExperimentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_experimentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			experimentResource -> experimentResource.deleteExperimentBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
 	public ExperimentRun createExperimentRun(
 			@GraphQLName("experimentId") Long experimentId,
 			@GraphQLName("experimentRun") ExperimentRun experimentRun)
@@ -91,6 +105,21 @@ public class Mutation {
 			this::_populateResourceContext,
 			experimentRunResource -> experimentRunResource.postExperimentRun(
 				experimentId, experimentRun));
+	}
+
+	@GraphQLField
+	public Response createExperimentRunBatch(
+			@GraphQLName("experimentId") Long experimentId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_experimentRunResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			experimentRunResource ->
+				experimentRunResource.postExperimentRunBatch(
+					experimentId, callbackURL, object));
 	}
 
 	@GraphQLField

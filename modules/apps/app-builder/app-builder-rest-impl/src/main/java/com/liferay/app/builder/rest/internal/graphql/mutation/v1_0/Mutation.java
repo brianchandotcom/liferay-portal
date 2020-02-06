@@ -59,6 +59,17 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response deleteAppBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_appResourceComponentServiceObjects, this::_populateResourceContext,
+			appResource -> appResource.deleteAppBatch(callbackURL, object));
+	}
+
+	@GraphQLField
 	public App updateApp(
 			@GraphQLName("appId") Long appId, @GraphQLName("app") App app)
 		throws Exception {
@@ -66,6 +77,17 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_appResourceComponentServiceObjects, this::_populateResourceContext,
 			appResource -> appResource.putApp(appId, app));
+	}
+
+	@GraphQLField
+	public Response updateAppBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_appResourceComponentServiceObjects, this::_populateResourceContext,
+			appResource -> appResource.putAppBatch(callbackURL, object));
 	}
 
 	@GraphQLField

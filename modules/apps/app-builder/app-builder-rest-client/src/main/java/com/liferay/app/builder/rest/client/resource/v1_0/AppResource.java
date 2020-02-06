@@ -46,6 +46,13 @@ public interface AppResource {
 	public HttpInvoker.HttpResponse deleteAppHttpResponse(Long appId)
 		throws Exception;
 
+	public void deleteAppBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse deleteAppBatchHttpResponse(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public App getApp(Long appId) throws Exception;
 
 	public HttpInvoker.HttpResponse getAppHttpResponse(Long appId)
@@ -54,6 +61,12 @@ public interface AppResource {
 	public App putApp(Long appId, App app) throws Exception;
 
 	public HttpInvoker.HttpResponse putAppHttpResponse(Long appId, App app)
+		throws Exception;
+
+	public void putAppBatch(String callbackURL, Object object) throws Exception;
+
+	public HttpInvoker.HttpResponse putAppBatchHttpResponse(
+			String callbackURL, Object object)
 		throws Exception;
 
 	public void putAppDeployment(Long appId, DeploymentAction deploymentAction)
@@ -204,6 +217,61 @@ public interface AppResource {
 			return httpInvoker.invoke();
 		}
 
+		public void deleteAppBatch(String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = deleteAppBatchHttpResponse(
+				callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse deleteAppBatchHttpResponse(
+				String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + "/o/app-builder/v1.0/apps/batch");
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
 		public App getApp(Long appId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = getAppHttpResponse(appId);
 
@@ -316,6 +384,63 @@ public interface AppResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + "/o/app-builder/v1.0/apps/{appId}",
 				appId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putAppBatch(String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = putAppBatchHttpResponse(
+				callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse putAppBatchHttpResponse(
+				String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + "/o/app-builder/v1.0/apps/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

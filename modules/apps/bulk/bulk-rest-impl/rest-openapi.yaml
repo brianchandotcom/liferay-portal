@@ -121,7 +121,6 @@ paths:
             tags: ["Selection"]
     "/keywords/batch":
         patch:
-            operationId: patchKeywordBatch
             requestBody:
                 content:
                     application/json:
@@ -138,7 +137,6 @@ paths:
                         ""
             tags: ["Keyword"]
         put:
-            operationId: putKeywordBatch
             requestBody:
                 content:
                     application/json:
@@ -232,7 +230,6 @@ paths:
             tags: ["Status"]
     "/taxonomy-categories/batch":
         patch:
-            operationId: patchTaxonomyCategoryBatch
             requestBody:
                 content:
                     application/json:
@@ -249,7 +246,6 @@ paths:
                         ""
             tags: ["TaxonomyCategory"]
         put:
-            operationId: putTaxonomyCategoryBatch
             requestBody:
                 content:
                     application/json:

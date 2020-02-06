@@ -18,4 +18,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:segments:segments-asah-rest-api")
+	compileOnly project(":apps:batch-engine:batch-engine-api")
+	compileOnly project(":apps:headless:headless-batch-engine:headless-batch-engine-api")
 }

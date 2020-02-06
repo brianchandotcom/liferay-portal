@@ -467,6 +467,20 @@ class Analytics {
 			newUserIdRequired = true;
 		}
 
+		// After logout or session expiration, it is not guaranteed a new user id
+		// is generated. The login/logout process can redirect the user to page
+		// where the analytics.js is not loaded. In such cases, we must verify
+		// the identity hashes match and generate a new user ID token otherwise.
+		if (
+			storedUserId &&
+			identity &&
+			storedIdentityHash &&
+			storedIdentityHash !==
+				this._getIdentityHash(dataSourceId, identity, storedUserId)
+		) {
+			newUserIdRequired = true;
+		}
+
 		return newUserIdRequired;
 	}
 

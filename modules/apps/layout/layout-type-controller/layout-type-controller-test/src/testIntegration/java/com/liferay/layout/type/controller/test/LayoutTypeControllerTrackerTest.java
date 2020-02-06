@@ -17,11 +17,11 @@ package com.liferay.layout.type.controller.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.type.controller.TestLayoutTypeController;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.portal.model.impl.LayoutTypeControllerImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
@@ -49,15 +49,17 @@ public class LayoutTypeControllerTrackerTest {
 	public void testGetLayoutTypeController1() {
 		Layout layout = new TestLayoutImpl();
 
+		LayoutTypeController defaultLayoutTypeController =
+			_getDefaultLayoutTypeController();
+
 		LayoutTypeController layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(layout);
 
 		Assert.assertNotNull(layoutTypeController);
 
-		Class<?> clazz = layoutTypeController.getClass();
-
 		Assert.assertEquals(
-			LayoutTypeControllerImpl.class.getName(), clazz.getName());
+			defaultLayoutTypeController.getClass(),
+			layoutTypeController.getClass());
 
 		layout.setType("testLayoutTypeController");
 
@@ -66,10 +68,8 @@ public class LayoutTypeControllerTrackerTest {
 
 		Assert.assertNotNull(layoutTypeController);
 
-		clazz = layoutTypeController.getClass();
-
 		Assert.assertEquals(
-			TestLayoutTypeController.class.getName(), clazz.getName());
+			TestLayoutTypeController.class, layoutTypeController.getClass());
 	}
 
 	@Test
@@ -80,10 +80,12 @@ public class LayoutTypeControllerTrackerTest {
 
 		Assert.assertNotNull(layoutTypeController);
 
-		Class<?> clazz = layoutTypeController.getClass();
+		LayoutTypeController defaultLayoutTypeController =
+			_getDefaultLayoutTypeController();
 
 		Assert.assertEquals(
-			LayoutTypeControllerImpl.class.getName(), clazz.getName());
+			defaultLayoutTypeController.getClass(),
+			layoutTypeController.getClass());
 
 		layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(
@@ -91,10 +93,8 @@ public class LayoutTypeControllerTrackerTest {
 
 		Assert.assertNotNull(layoutTypeController);
 
-		clazz = layoutTypeController.getClass();
-
 		Assert.assertEquals(
-			TestLayoutTypeController.class.getName(), clazz.getName());
+			TestLayoutTypeController.class, layoutTypeController.getClass());
 	}
 
 	@Test
@@ -128,6 +128,11 @@ public class LayoutTypeControllerTrackerTest {
 		}
 
 		Assert.assertTrue(found);
+	}
+
+	private LayoutTypeController _getDefaultLayoutTypeController() {
+		return LayoutTypeControllerTracker.getLayoutTypeController(
+			LayoutConstants.TYPE_PORTLET);
 	}
 
 	private static class TestLayoutImpl extends LayoutImpl {

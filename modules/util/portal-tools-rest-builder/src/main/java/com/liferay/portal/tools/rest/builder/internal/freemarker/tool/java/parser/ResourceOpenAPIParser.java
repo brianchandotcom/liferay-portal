@@ -17,6 +17,8 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.pars
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,11 +32,14 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
+import com.liferay.portal.vulcan.yaml.openapi.Delete;
 import com.liferay.portal.vulcan.yaml.openapi.Get;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
 import com.liferay.portal.vulcan.yaml.openapi.PathItem;
+import com.liferay.portal.vulcan.yaml.openapi.Post;
+import com.liferay.portal.vulcan.yaml.openapi.Put;
 import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import com.liferay.portal.vulcan.yaml.openapi.Response;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
@@ -96,12 +101,21 @@ public class ResourceOpenAPIParser {
 							String methodName = _getMethodName(
 								operation, path, returnType, schemaName);
 
-							javaMethodSignatures.add(
+							JavaMethodSignature javaMethodSignature =
 								new JavaMethodSignature(
 									path, pathItem, operation,
 									requestBodyMediaTypes, schemaName,
 									javaMethodParameters, methodName,
-									returnType));
+									returnType,
+									_getParentSchema(
+										path, pathItems, schemaName));
+
+							javaMethodSignatures.add(javaMethodSignature);
+
+							if (configYAML.isGenerateBatch()) {
+								_addBatchJavaMethodSignature(
+									javaMethodSignature, javaMethodSignatures);
+							}
 						});
 				});
 		}
@@ -212,6 +226,58 @@ public class ResourceOpenAPIParser {
 		return sb.toString();
 	}
 
+	private static void _addBatchJavaMethodSignature(
+		JavaMethodSignature javaMethodSignature,
+		List<JavaMethodSignature> javaMethodSignatures) {
+
+		String parentSchemaName = javaMethodSignature.getParentSchemaName();
+
+		if (parentSchemaName == null) {
+			parentSchemaName = "";
+		}
+
+		String methodName = javaMethodSignature.getMethodName();
+
+		String schemaName = javaMethodSignature.getSchemaName();
+
+		if (methodName.equals("delete" + schemaName) ||
+			methodName.equals("post" + parentSchemaName + schemaName) ||
+			methodName.equals("put" + schemaName)) {
+
+			String batchPath = StringUtil.removeSubstring(
+				javaMethodSignature.getPath(),
+				"/{" + StringUtil.lowerCaseFirstLetter(schemaName) + "Id}");
+
+			Operation batchOperation = _getBatchOperation(
+				javaMethodSignature, methodName, schemaName);
+
+			List<JavaMethodParameter> javaMethodParameters = new ArrayList<>();
+
+			for (JavaMethodParameter javaMethodParameter :
+					javaMethodSignature.getJavaMethodParameters()) {
+
+				if (_isValidParameter(
+						javaMethodParameter.getParameterName(), schemaName)) {
+
+					javaMethodParameters.add(javaMethodParameter);
+				}
+			}
+
+			javaMethodParameters.add(
+				new JavaMethodParameter("callbackURL", "String"));
+			javaMethodParameters.add(
+				new JavaMethodParameter("object", "Object"));
+
+			javaMethodSignatures.add(
+				new JavaMethodSignature(
+					batchPath + "/batch", javaMethodSignature.getPathItem(),
+					batchOperation,
+					Collections.singleton(ContentTypes.APPLICATION_JSON),
+					schemaName, javaMethodParameters, methodName + "Batch",
+					"javax.ws.rs.core.Response", parentSchemaName));
+		}
+	}
+
 	private static String _addParameter(Parameter parameter) {
 		if (parameter == null) {
 			return "";
@@ -245,6 +311,76 @@ public class ResourceOpenAPIParser {
 		}
 
 		return null;
+	}
+
+	private static Operation _getBatchOperation(
+		JavaMethodSignature javaMethodSignature, String methodName,
+		String schemaName) {
+
+		Operation batchOperation;
+
+		if (methodName.startsWith("delete")) {
+			batchOperation = new Delete();
+		}
+		else if (methodName.startsWith("post")) {
+			batchOperation = new Post();
+		}
+		else {
+			batchOperation = new Put();
+		}
+
+		Operation operation = javaMethodSignature.getOperation();
+
+		batchOperation.setOperationId(operation.getOperationId() + "Batch");
+		batchOperation.setParameters(
+			_getBatchParameters(schemaName, operation));
+		batchOperation.setTags(operation.getTags());
+
+		Content content = new Content();
+
+		content.setSchema(new Schema());
+
+		Response response = new Response();
+
+		response.setContent(
+			Collections.singletonMap("application/json", content));
+
+		batchOperation.setResponses(
+			HashMapBuilder.put(
+				200, response
+			).build());
+
+		return batchOperation;
+	}
+
+	private static List<Parameter> _getBatchParameters(
+		String schemaName, Operation operation) {
+
+		List<Parameter> parameters = new ArrayList<>();
+
+		for (Parameter parameter : operation.getParameters()) {
+			if (_isValidParameter(parameter.getName(), schemaName)) {
+				parameters.add(parameter);
+			}
+		}
+
+		parameters.add(_getCallbarkURLParameter());
+
+		return parameters;
+	}
+
+	private static Parameter _getCallbarkURLParameter() {
+		Schema schema = new Schema();
+
+		schema.setType("String");
+
+		Parameter parameter = new Parameter();
+
+		parameter.setIn("query");
+		parameter.setName("callbackURL");
+		parameter.setSchema(schema);
+
+		return parameter;
 	}
 
 	private static String _getDefaultValue(
@@ -638,6 +774,34 @@ public class ResourceOpenAPIParser {
 		return "";
 	}
 
+	private static String _getParentSchema(
+		String path, Map<String, PathItem> pathItems, String schemaName) {
+
+		String basePath = path.substring(0, path.lastIndexOf("/"));
+
+		if (basePath.equals("/sites/{siteId}")) {
+			return "Site";
+		}
+
+		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
+			PathItem pathItem = entry.getValue();
+
+			Get get = pathItem.getGet();
+
+			if ((get != null) && basePath.equals(entry.getKey())) {
+				List<String> tags = get.getTags();
+
+				String tag = tags.get(0);
+
+				if (!tag.equals(schemaName)) {
+					return tag;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private static String _getReturnType(
 		Map<String, String> javaDataTypeMap, Operation operation, String path) {
 
@@ -750,6 +914,16 @@ public class ResourceOpenAPIParser {
 			if (className.equals(javaDataTypeMap.get(schemaName))) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private static boolean _isValidParameter(String name, String schemaName) {
+		String schemaVarName = StringUtil.lowerCaseFirstLetter(schemaName);
+
+		if (!name.equals(schemaVarName + "Id") && !name.equals(schemaVarName)) {
+			return true;
 		}
 
 		return false;

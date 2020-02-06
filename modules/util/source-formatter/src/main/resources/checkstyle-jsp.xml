@@ -173,7 +173,7 @@
 			<message key="contraction.avoid" value="Avoid using contraction ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ExceptionMessageCheck">
-			<message key="message.incorrect" value="Incorrect exception message. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/phrase_vs_sentence.markdown" />
+			<message key="message.incorrect" value="Incorrect exception message" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FactoryCheck">
 			<message key="factory.use" value="Use ''{0}'' to create new instance of ''{1}''" />

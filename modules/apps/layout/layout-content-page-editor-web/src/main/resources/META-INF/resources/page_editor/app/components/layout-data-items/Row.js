@@ -137,7 +137,7 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 
 	const rowRect = getRect(rowRef.current);
 
-	const [highlightedColumn, setHighLightedColumn] = useState(0);
+	const [highlightedColumn, setHighLightedColumn] = useState(null);
 	const [showOverlay, setShowOverlay] = useState(false);
 
 	const onResizeStart = () => setShowOverlay(true);
@@ -189,7 +189,7 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	};
 
 	const onResizeEnd = () => {
-		setHighLightedColumn(6);
+		setHighLightedColumn(null);
 		setShowOverlay(false);
 
 		dispatch(

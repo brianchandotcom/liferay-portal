@@ -81,6 +81,8 @@ public abstract class LayoutStructureItem {
 		return _childrenItemIds;
 	}
 
+	public abstract JSONObject getItemConfigJSONObject();
+
 	public String getItemId() {
 		return _itemId;
 	}
@@ -118,8 +120,6 @@ public abstract class LayoutStructureItem {
 	}
 
 	public abstract void updateItemConfig(JSONObject itemConfigJSONObject);
-
-	protected abstract JSONObject getItemConfigJSONObject();
 
 	private List<String> _childrenItemIds;
 	private String _itemId;

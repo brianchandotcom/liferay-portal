@@ -28,6 +28,11 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	@Override
+	public JSONObject getItemConfigJSONObject() {
+		return JSONUtil.put("size", _size);
+	}
+
+	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_COLUMN;
 	}
@@ -45,11 +50,6 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 		if (itemConfigJSONObject.has("size")) {
 			setSize(itemConfigJSONObject.getInt("size"));
 		}
-	}
-
-	@Override
-	protected JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put("size", _size);
 	}
 
 	private int _size;

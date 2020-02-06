@@ -40,6 +40,23 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	@Override
+	public JSONObject getItemConfigJSONObject() {
+		return JSONUtil.put(
+			"backgroundColorCssClass", _backgroundColorCssClass
+		).put(
+			"backgroundImage", _backgroundImageJSONObject
+		).put(
+			"containerType", _containerType
+		).put(
+			"paddingBottom", _paddingBottom
+		).put(
+			"paddingHorizontal", _paddingHorizontal
+		).put(
+			"paddingTop", _paddingTop
+		);
+	}
+
+	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_CONTAINER;
 	}
@@ -110,23 +127,6 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		if (itemConfigJSONObject.has("paddingTop")) {
 			setPaddingTop(itemConfigJSONObject.getInt("paddingTop"));
 		}
-	}
-
-	@Override
-	protected JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put(
-			"backgroundColorCssClass", _backgroundColorCssClass
-		).put(
-			"backgroundImage", _backgroundImageJSONObject
-		).put(
-			"containerType", _containerType
-		).put(
-			"paddingBottom", _paddingBottom
-		).put(
-			"paddingHorizontal", _paddingHorizontal
-		).put(
-			"paddingTop", _paddingTop
-		);
 	}
 
 	private String _backgroundColorCssClass;

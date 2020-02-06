@@ -38,6 +38,15 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	@Override
+	public JSONObject getItemConfigJSONObject() {
+		return JSONUtil.put(
+			"allowNewFragmentEntries", _allowNewFragmentEntries
+		).put(
+			"fragmentEntryKeys", _fragmentEntryKeys
+		);
+	}
+
+	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_DROP_ZONE;
 	}
@@ -68,15 +77,6 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 			_fragmentEntryKeys = JSONUtil.toStringList(
 				fragmentEntryKeysJSONArray);
 		}
-	}
-
-	@Override
-	protected JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put(
-			"allowNewFragmentEntries", _allowNewFragmentEntries
-		).put(
-			"fragmentEntryKeys", _fragmentEntryKeys
-		);
 	}
 
 	private boolean _allowNewFragmentEntries = true;

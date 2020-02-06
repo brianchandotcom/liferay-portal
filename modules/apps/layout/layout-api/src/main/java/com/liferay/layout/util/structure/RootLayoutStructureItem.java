@@ -29,17 +29,17 @@ public class RootLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	@Override
+	public JSONObject getItemConfigJSONObject() {
+		return JSONFactoryUtil.createJSONObject();
+	}
+
+	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_ROOT;
 	}
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
-	}
-
-	@Override
-	protected JSONObject getItemConfigJSONObject() {
-		return JSONFactoryUtil.createJSONObject();
 	}
 
 }

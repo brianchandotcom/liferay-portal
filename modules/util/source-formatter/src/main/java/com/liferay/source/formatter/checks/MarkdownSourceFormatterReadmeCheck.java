@@ -417,7 +417,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			markdownFileName = SourceFormatterUtil.getMarkdownFileName(
 				StringUtil.removeChar(category, CharPool.SPACE) + "Checks");
 
-			sb.append(_getLink(markdownFileName, "   *", category, headerName));
+			sb.append(_getLink(markdownFileName, "   -", category, headerName));
 
 			sb.append("\n");
 
@@ -448,7 +448,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 			sb.append(
 				_getLink(
-					markdownFileName, "   *", fileExtensionsString,
+					markdownFileName, "   -", fileExtensionsString,
 					headerName));
 
 			sb.append("\n");

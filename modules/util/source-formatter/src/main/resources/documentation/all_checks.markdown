@@ -32,7 +32,7 @@ BNDStylingCheck | Miscellaneous | .bnd | |
 BNDSuiteCheck | Miscellaneous | .bnd | |
 [BNDWebContextPathCheck](checks/bnd_web_context_path_check.markdown) | Miscellaneous | .bnd | |
 BNDWhitespaceCheck | Miscellaneous | .bnd | |
-BuilderCheck | Miscellaneous | .java | |
+[BuilderCheck](checks/builder_check.markdown) | Miscellaneous | .java | |
 CDNCheck | Miscellaneous | | |
 CQLKeywordCheck | Miscellaneous | .cql | |
 CSSCommentsCheck | Miscellaneous | .css or .scss | |
@@ -41,7 +41,7 @@ CSSHexColorsCheck | Miscellaneous | .css or .scss | |
 CSSImportsCheck | Miscellaneous | .css or .scss | |
 CSSPropertiesOrderCheck | Miscellaneous | .css or .scss | |
 CamelCaseNameCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-ChainingCheck | Miscellaneous | .java | |
+[ChainingCheck](checks/chaining_check.markdown) | Miscellaneous | .java | |
 CodeownersFileLocationCheck | Miscellaneous | CODEOWNERS | |
 CodeownersWhitespaceCheck | Miscellaneous | CODEOWNERS | |
 CompatClassImportsCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
@@ -71,7 +71,7 @@ FTLTagCheck | Miscellaneous | .ftl | |
 FTLWhitespaceCheck | Miscellaneous | .ftl | |
 FactoryCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 FilterStringWhitespaceCheck | Miscellaneous | .java | |
-FrameworkBundleCheck | Miscellaneous | .java | |
+[FrameworkBundleCheck](checks/framework_bundle_check.markdown) | Miscellaneous | .java | |
 FullyQualifiedNameCheck | Miscellaneous | .java | |
 GetterUtilCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 GradleBlockOrderCheck | Miscellaneous | .gradle | |
@@ -104,14 +104,16 @@ JSONPackageJSONBNDVersionCheck | Miscellaneous | .json or .npmbridgerc | |
 JSONPackageJSONCheck | Miscellaneous | .json or .npmbridgerc | |
 JSONPackageJSONDependencyVersionCheck | Miscellaneous | .json or .npmbridgerc | |
 JSONPropertyOrderCheck | Miscellaneous | .json or .npmbridgerc | |
-JSONUtilCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[JSONUtilCheck](checks/json_util_check.markdown) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 JSONValidationCheck | Miscellaneous | .json or .npmbridgerc | |
 JSONWhitespaceCheck | Miscellaneous | .json or .npmbridgerc | |
+[JSPArrowFunctionCheck](checks/jsp_arrow_function_check.markdown) | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPButtonTagCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 [JSPDefineObjectsCheck](checks/jsp_define_objects_check.markdown) | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPEmptyLinesCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPExceptionOrderCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPFunctionNameCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
+JSPIllegalSyntaxCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPImportsCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPIncludeCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPIndentationCheck | Miscellaneous | .jsp, .jspf, .tag, .tpl or .vm | |
@@ -194,7 +196,7 @@ JavaModuleInternalImportsCheck | Miscellaneous | .java | |
 JavaModuleJavaxPortletInitParamTemplatePathCheck | Miscellaneous | .java | |
 JavaModuleServiceProxyFactoryCheck | Miscellaneous | .java | |
 JavaModuleServiceReferenceCheck | Miscellaneous | .java | |
-JavaModuleTestCheck | Miscellaneous | .java | |
+[JavaModuleTestCheck](checks/java_module_test_check.markdown) | Miscellaneous | .java | |
 [JavaMultiPlusConcatCheck](checks/java_multi_plus_concat_check.markdown) | Miscellaneous | .java | |
 JavaOSGiReferenceCheck | Miscellaneous | .java | |
 [JavaPackagePathCheck](checks/java_package_path_check.markdown) | Miscellaneous | .java | |
@@ -230,7 +232,7 @@ JavaTermStylingCheck | Miscellaneous | .java | |
 [JavaTestMethodAnnotationsCheck](checks/java_test_method_annotations_check.markdown) | Naming Conventions | .java | Checks if methods with test annotations follow the naming conventions |
 [JavaUnsafeCastingCheck](checks/java_unsafe_casting_check.markdown) | Bug Prevention | .java | Checks for potential ClassCastException |
 JavaUnusedSourceFormatterChecksCheck | Miscellaneous | .java | |
-JavaUpgradeClassCheck | Miscellaneous | .java | |
+[JavaUpgradeClassCheck](checks/java_upgrade_class_check.markdown) | Miscellaneous | .java | |
 JavaUpgradeConnectionCheck | Miscellaneous | .java | |
 JavaUpgradeVersionCheck | Miscellaneous | .java | |
 JavaVariableTypeCheck | Miscellaneous | .java | |
@@ -241,19 +243,19 @@ JavadocCheck | Miscellaneous | .java | |
 LFRBuildContentCheck | Miscellaneous | .lfrbuild-* | |
 LFRBuildReadmeCheck | Miscellaneous | .lfrbuild-* | |
 LPS42924Check | Miscellaneous | .java | |
-LambdaCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[LambdaCheck](checks/lambda_check.markdown) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LanguageKeysCheck | Miscellaneous | .java, .js or .jsx | |
 LineBreakAfterCommaCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LineBreakBeforeGenericStartCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LineEndCharacterCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-ListUtilCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[ListUtilCheck](checks/list_util_check.markdown) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LiteralStringEqualsCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalFinalVariableName) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that local final variable names conform to a specified pattern. |
 LocalPatternCheck | Miscellaneous | .java | |
 [LocalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalVariableName) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that local, non-final variable names conform to a specified pattern. |
 LocaleUtilCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LogMessageCheck | Miscellaneous | .java | |
-MapIterationCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[MapIterationCheck](checks/map_iteration_check.markdown) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 MarkdownFileExtensionCheck | Miscellaneous | .markdown or .md | |
 MarkdownSourceFormatterReadmeCheck | Miscellaneous | .markdown or .md | |
 MarkdownStylingCheck | Miscellaneous | .markdown or .md | |
@@ -267,7 +269,7 @@ MissingAuthorCheck | Miscellaneous | .java | |
 [MissingDeprecatedCheck](https://checkstyle.sourceforge.io/config_annotation.html#MissingDeprecated) | Miscellaneous | .java | Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present. |
 MissingDeprecatedJavadocCheck | Miscellaneous | .java | |
 MissingDiamondOperatorCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-MissingEmptyLineCheck | Miscellaneous | .java | |
+[MissingEmptyLineCheck](checks/missing_empty_line_check.markdown) | Miscellaneous | .java | |
 MissingModifierCheck | Miscellaneous | .java | |
 MissingOverrideCheck | Miscellaneous | .java | |
 MissingParenthesesCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
@@ -289,7 +291,7 @@ PackageinfoBNDExportPackageCheck | Miscellaneous | packageinfo | |
 [ParameterNameCheck](https://checkstyle.sourceforge.io/config_naming.html#ParameterName) | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that method parameter names conform to a specified pattern. |
 ParsePrimitiveTypeCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 PersistenceCallCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-PersistenceUpdateCheck | Miscellaneous | .java | |
+[PersistenceUpdateCheck](checks/persistence_update_check.markdown) | Miscellaneous | .java | |
 PlusStatementCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 PoshiAnnotationsOrderCheck | Miscellaneous | .function, .macro or .testcase | |
 PoshiCommandsOrderCheck | Miscellaneous | .function, .macro or .testcase | |
@@ -335,7 +337,7 @@ SingleStatementClauseCheck | Miscellaneous | .java | |
 SizeIsZeroCheck | Miscellaneous | .java | |
 SlantedQuotesCheck | Miscellaneous | | |
 SoyEmptyLinesCheck | Miscellaneous | .soy | |
-StaticBlockCheck | Miscellaneous | .java | |
+[StaticBlockCheck](checks/static_block_check.markdown) | Miscellaneous | .java | |
 [StaticVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#StaticVariableName) | Miscellaneous | .java, .java, .jsp, .jsp, .jspf, .jspf, .tag, .tag, .tpl, .tpl, .vm or .vm | Checks that static, non-final variable names conform to a specified pattern. |
 StringBundlerNamingCheck | Naming Conventions | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks for consistent naming on variables of type 'StringBundler' |
 StringCastCheck | Miscellaneous | .java, .jsp, .jspf, .tag, .tpl or .vm | |

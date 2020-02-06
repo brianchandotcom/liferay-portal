@@ -13,9 +13,9 @@ AssertEqualsCheck | Miscellaneous | |
 AttributeOrderCheck | Miscellaneous | |
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/config_blocks.html#AvoidNestedBlocks) | Miscellaneous | Finds nested blocks (blocks that are used freely in the code). |
 [AvoidStarImportCheck](https://checkstyle.sourceforge.io/config_imports.html#AvoidStarImport) | Miscellaneous | Checks that there are no import statements that use the * notation. |
-BuilderCheck | Miscellaneous | |
+[BuilderCheck](checks/builder_check.markdown) | Miscellaneous | |
 CamelCaseNameCheck | Miscellaneous | |
-ChainingCheck | Miscellaneous | |
+[ChainingCheck](checks/chaining_check.markdown) | Miscellaneous | |
 CompatClassImportsCheck | Miscellaneous | |
 ConcatCheck | Miscellaneous | |
 ConstantNameCheck | Miscellaneous | |
@@ -31,13 +31,13 @@ ExceptionMessageCheck | Miscellaneous | |
 ExceptionVariableNameCheck | Miscellaneous | |
 FactoryCheck | Miscellaneous | |
 FilterStringWhitespaceCheck | Miscellaneous | |
-FrameworkBundleCheck | Miscellaneous | |
+[FrameworkBundleCheck](checks/framework_bundle_check.markdown) | Miscellaneous | |
 FullyQualifiedNameCheck | Miscellaneous | |
 GetterUtilCheck | Miscellaneous | |
 [IfStatementCheck](checks/if_statement_check.markdown) | Miscellaneous | |
 InstanceofOrderCheck | Miscellaneous | |
 JSONNamingCheck | Miscellaneous | |
-JSONUtilCheck | Miscellaneous | |
+[JSONUtilCheck](checks/json_util_check.markdown) | Miscellaneous | |
 Java2HTMLCheck | Miscellaneous | |
 [JavaAPISignatureCheck](checks/java_api_signature_check.markdown) | Miscellaneous | |
 JavaAggregateTestRuleParameterOrderCheck | Miscellaneous | |
@@ -93,7 +93,7 @@ JavaModuleInternalImportsCheck | Miscellaneous | |
 JavaModuleJavaxPortletInitParamTemplatePathCheck | Miscellaneous | |
 JavaModuleServiceProxyFactoryCheck | Miscellaneous | |
 JavaModuleServiceReferenceCheck | Miscellaneous | |
-JavaModuleTestCheck | Miscellaneous | |
+[JavaModuleTestCheck](checks/java_module_test_check.markdown) | Miscellaneous | |
 [JavaMultiPlusConcatCheck](checks/java_multi_plus_concat_check.markdown) | Miscellaneous | |
 JavaOSGiReferenceCheck | Miscellaneous | |
 [JavaPackagePathCheck](checks/java_package_path_check.markdown) | Miscellaneous | |
@@ -129,7 +129,7 @@ JavaTermStylingCheck | Miscellaneous | |
 [JavaTestMethodAnnotationsCheck](checks/java_test_method_annotations_check.markdown) | Naming Conventions | Checks if methods with test annotations follow the naming conventions |
 [JavaUnsafeCastingCheck](checks/java_unsafe_casting_check.markdown) | Bug Prevention | Checks for potential ClassCastException |
 JavaUnusedSourceFormatterChecksCheck | Miscellaneous | |
-JavaUpgradeClassCheck | Miscellaneous | |
+[JavaUpgradeClassCheck](checks/java_upgrade_class_check.markdown) | Miscellaneous | |
 JavaUpgradeConnectionCheck | Miscellaneous | |
 JavaUpgradeVersionCheck | Miscellaneous | |
 JavaVariableTypeCheck | Miscellaneous | |
@@ -138,19 +138,19 @@ JavaXMLSecurityCheck | Miscellaneous | |
 JavadocCheck | Miscellaneous | |
 [JavadocStyleCheck](https://checkstyle.sourceforge.io/config_javadoc.html#JavadocStyle) | Miscellaneous | Validates Javadoc comments to help ensure they are well formed. |
 LPS42924Check | Miscellaneous | |
-LambdaCheck | Miscellaneous | |
+[LambdaCheck](checks/lambda_check.markdown) | Miscellaneous | |
 LanguageKeysCheck | Miscellaneous | |
 LineBreakAfterCommaCheck | Miscellaneous | |
 LineBreakBeforeGenericStartCheck | Miscellaneous | |
 LineEndCharacterCheck | Miscellaneous | |
-ListUtilCheck | Miscellaneous | |
+[ListUtilCheck](checks/list_util_check.markdown) | Miscellaneous | |
 LiteralStringEqualsCheck | Miscellaneous | |
 [LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalFinalVariableName) | Miscellaneous | Checks that local final variable names conform to a specified pattern. |
 LocalPatternCheck | Miscellaneous | |
 [LocalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalVariableName) | Miscellaneous | Checks that local, non-final variable names conform to a specified pattern. |
 LocaleUtilCheck | Miscellaneous | |
 LogMessageCheck | Miscellaneous | |
-MapIterationCheck | Miscellaneous | |
+[MapIterationCheck](checks/map_iteration_check.markdown) | Miscellaneous | |
 [MemberNameCheck](https://checkstyle.sourceforge.io/config_naming.html#MemberName) | Miscellaneous | Checks that instance variable names conform to a specified pattern. |
 MethodCallsOrderCheck | Miscellaneous | |
 [MethodNameCheck](https://checkstyle.sourceforge.io/config_naming.html#MethodName) | Miscellaneous | Checks that method names conform to a specified pattern. |
@@ -160,7 +160,7 @@ MissingAuthorCheck | Miscellaneous | |
 [MissingDeprecatedCheck](https://checkstyle.sourceforge.io/config_annotation.html#MissingDeprecated) | Miscellaneous | Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present. |
 MissingDeprecatedJavadocCheck | Miscellaneous | |
 MissingDiamondOperatorCheck | Miscellaneous | |
-MissingEmptyLineCheck | Miscellaneous | |
+[MissingEmptyLineCheck](checks/missing_empty_line_check.markdown) | Miscellaneous | |
 MissingModifierCheck | Miscellaneous | |
 MissingOverrideCheck | Miscellaneous | |
 MissingParenthesesCheck | Miscellaneous | |
@@ -179,7 +179,7 @@ OperatorOrderCheck | Miscellaneous | |
 [ParameterNameCheck](https://checkstyle.sourceforge.io/config_naming.html#ParameterName) | Miscellaneous | Checks that method parameter names conform to a specified pattern. |
 ParsePrimitiveTypeCheck | Miscellaneous | |
 PersistenceCallCheck | Miscellaneous | |
-PersistenceUpdateCheck | Miscellaneous | |
+[PersistenceUpdateCheck](checks/persistence_update_check.markdown) | Miscellaneous | |
 PlusStatementCheck | Miscellaneous | |
 PrimitiveWrapperInstantiationCheck | Miscellaneous | |
 PrincipalExceptionCheck | Miscellaneous | |
@@ -193,7 +193,7 @@ SemiColonCheck | Miscellaneous | |
 SessionKeysCheck | Miscellaneous | |
 SingleStatementClauseCheck | Miscellaneous | |
 SizeIsZeroCheck | Miscellaneous | |
-StaticBlockCheck | Miscellaneous | |
+[StaticBlockCheck](checks/static_block_check.markdown) | Miscellaneous | |
 [StaticVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#StaticVariableName) | Miscellaneous | Checks that static, non-final variable names conform to a specified pattern. |
 StringBundlerNamingCheck | Naming Conventions | Checks for consistent naming on variables of type 'StringBundler' |
 StringCastCheck | Miscellaneous | |

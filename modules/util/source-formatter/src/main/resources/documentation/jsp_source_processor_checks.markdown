@@ -20,12 +20,14 @@ GetterUtilCheck | Miscellaneous | |
 [IfStatementCheck](checks/if_statement_check.markdown) | Miscellaneous | |
 InstanceofOrderCheck | Miscellaneous | |
 JSONNamingCheck | Miscellaneous | |
-JSONUtilCheck | Miscellaneous | |
+[JSONUtilCheck](checks/json_util_check.markdown) | Miscellaneous | |
+[JSPArrowFunctionCheck](checks/jsp_arrow_function_check.markdown) | Miscellaneous | |
 JSPButtonTagCheck | Miscellaneous | |
 [JSPDefineObjectsCheck](checks/jsp_define_objects_check.markdown) | Miscellaneous | |
 JSPEmptyLinesCheck | Miscellaneous | |
 JSPExceptionOrderCheck | Miscellaneous | |
 JSPFunctionNameCheck | Miscellaneous | |
+JSPIllegalSyntaxCheck | Miscellaneous | |
 JSPImportsCheck | Miscellaneous | |
 JSPIncludeCheck | Miscellaneous | |
 JSPIndentationCheck | Miscellaneous | |
@@ -51,16 +53,16 @@ JSPUnusedJSPF | Miscellaneous | |
 JSPUnusedTermsCheck | Miscellaneous | |
 JSPWhitespaceCheck | Miscellaneous | |
 JSPXSSVulnerabilitiesCheck | Miscellaneous | |
-LambdaCheck | Miscellaneous | |
+[LambdaCheck](checks/lambda_check.markdown) | Miscellaneous | |
 LineBreakAfterCommaCheck | Miscellaneous | |
 LineBreakBeforeGenericStartCheck | Miscellaneous | |
 LineEndCharacterCheck | Miscellaneous | |
-ListUtilCheck | Miscellaneous | |
+[ListUtilCheck](checks/list_util_check.markdown) | Miscellaneous | |
 LiteralStringEqualsCheck | Miscellaneous | |
 [LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalFinalVariableName) | Miscellaneous | Checks that local final variable names conform to a specified pattern. |
 [LocalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalVariableName) | Miscellaneous | Checks that local, non-final variable names conform to a specified pattern. |
 LocaleUtilCheck | Miscellaneous | |
-MapIterationCheck | Miscellaneous | |
+[MapIterationCheck](checks/map_iteration_check.markdown) | Miscellaneous | |
 [MemberNameCheck](https://checkstyle.sourceforge.io/config_naming.html#MemberName) | Miscellaneous | Checks that instance variable names conform to a specified pattern. |
 MethodCallsOrderCheck | Miscellaneous | |
 [MethodNameCheck](https://checkstyle.sourceforge.io/config_naming.html#MethodName) | Miscellaneous | Checks that method names conform to a specified pattern. |

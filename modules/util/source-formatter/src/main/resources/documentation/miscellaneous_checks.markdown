@@ -31,7 +31,7 @@ BNDStylingCheck | .bnd | |
 BNDSuiteCheck | .bnd | |
 [BNDWebContextPathCheck](checks/bnd_web_context_path_check.markdown) | .bnd | |
 BNDWhitespaceCheck | .bnd | |
-BuilderCheck | .java | |
+[BuilderCheck](checks/builder_check.markdown) | .java | |
 CDNCheck | | |
 CQLKeywordCheck | .cql | |
 CSSCommentsCheck | .css or .scss | |
@@ -40,7 +40,7 @@ CSSHexColorsCheck | .css or .scss | |
 CSSImportsCheck | .css or .scss | |
 CSSPropertiesOrderCheck | .css or .scss | |
 CamelCaseNameCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-ChainingCheck | .java | |
+[ChainingCheck](checks/chaining_check.markdown) | .java | |
 CodeownersFileLocationCheck | CODEOWNERS | |
 CodeownersWhitespaceCheck | CODEOWNERS | |
 CompatClassImportsCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
@@ -70,7 +70,7 @@ FTLTagCheck | .ftl | |
 FTLWhitespaceCheck | .ftl | |
 FactoryCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 FilterStringWhitespaceCheck | .java | |
-FrameworkBundleCheck | .java | |
+[FrameworkBundleCheck](checks/framework_bundle_check.markdown) | .java | |
 FullyQualifiedNameCheck | .java | |
 GetterUtilCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 GradleBlockOrderCheck | .gradle | |
@@ -103,14 +103,16 @@ JSONPackageJSONBNDVersionCheck | .json or .npmbridgerc | |
 JSONPackageJSONCheck | .json or .npmbridgerc | |
 JSONPackageJSONDependencyVersionCheck | .json or .npmbridgerc | |
 JSONPropertyOrderCheck | .json or .npmbridgerc | |
-JSONUtilCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[JSONUtilCheck](checks/json_util_check.markdown) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 JSONValidationCheck | .json or .npmbridgerc | |
 JSONWhitespaceCheck | .json or .npmbridgerc | |
+[JSPArrowFunctionCheck](checks/jsp_arrow_function_check.markdown) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPButtonTagCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 [JSPDefineObjectsCheck](checks/jsp_define_objects_check.markdown) | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPEmptyLinesCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPExceptionOrderCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPFunctionNameCheck | .jsp, .jspf, .tag, .tpl or .vm | |
+JSPIllegalSyntaxCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPImportsCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPIncludeCheck | .jsp, .jspf, .tag, .tpl or .vm | |
 JSPIndentationCheck | .jsp, .jspf, .tag, .tpl or .vm | |
@@ -192,7 +194,7 @@ JavaModuleInternalImportsCheck | .java | |
 JavaModuleJavaxPortletInitParamTemplatePathCheck | .java | |
 JavaModuleServiceProxyFactoryCheck | .java | |
 JavaModuleServiceReferenceCheck | .java | |
-JavaModuleTestCheck | .java | |
+[JavaModuleTestCheck](checks/java_module_test_check.markdown) | .java | |
 [JavaMultiPlusConcatCheck](checks/java_multi_plus_concat_check.markdown) | .java | |
 JavaOSGiReferenceCheck | .java | |
 [JavaPackagePathCheck](checks/java_package_path_check.markdown) | .java | |
@@ -226,7 +228,7 @@ JavaTermDividersCheck | .java | |
 JavaTermOrderCheck | .java | |
 JavaTermStylingCheck | .java | |
 JavaUnusedSourceFormatterChecksCheck | .java | |
-JavaUpgradeClassCheck | .java | |
+[JavaUpgradeClassCheck](checks/java_upgrade_class_check.markdown) | .java | |
 JavaUpgradeConnectionCheck | .java | |
 JavaUpgradeVersionCheck | .java | |
 JavaVariableTypeCheck | .java | |
@@ -237,19 +239,19 @@ JavadocCheck | .java | |
 LFRBuildContentCheck | .lfrbuild-* | |
 LFRBuildReadmeCheck | .lfrbuild-* | |
 LPS42924Check | .java | |
-LambdaCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[LambdaCheck](checks/lambda_check.markdown) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LanguageKeysCheck | .java, .js or .jsx | |
 LineBreakAfterCommaCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LineBreakBeforeGenericStartCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LineEndCharacterCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-ListUtilCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[ListUtilCheck](checks/list_util_check.markdown) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LiteralStringEqualsCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [LocalFinalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalFinalVariableName) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that local final variable names conform to a specified pattern. |
 LocalPatternCheck | .java | |
 [LocalVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#LocalVariableName) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that local, non-final variable names conform to a specified pattern. |
 LocaleUtilCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 LogMessageCheck | .java | |
-MapIterationCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
+[MapIterationCheck](checks/map_iteration_check.markdown) | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 MarkdownFileExtensionCheck | .markdown or .md | |
 MarkdownSourceFormatterReadmeCheck | .markdown or .md | |
 MarkdownStylingCheck | .markdown or .md | |
@@ -263,7 +265,7 @@ MissingAuthorCheck | .java | |
 [MissingDeprecatedCheck](https://checkstyle.sourceforge.io/config_annotation.html#MissingDeprecated) | .java | Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present. |
 MissingDeprecatedJavadocCheck | .java | |
 MissingDiamondOperatorCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-MissingEmptyLineCheck | .java | |
+[MissingEmptyLineCheck](checks/missing_empty_line_check.markdown) | .java | |
 MissingModifierCheck | .java | |
 MissingOverrideCheck | .java | |
 MissingParenthesesCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
@@ -285,7 +287,7 @@ PackageinfoBNDExportPackageCheck | packageinfo | |
 [ParameterNameCheck](https://checkstyle.sourceforge.io/config_naming.html#ParameterName) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that method parameter names conform to a specified pattern. |
 ParsePrimitiveTypeCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 PersistenceCallCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
-PersistenceUpdateCheck | .java | |
+[PersistenceUpdateCheck](checks/persistence_update_check.markdown) | .java | |
 PlusStatementCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 PoshiAnnotationsOrderCheck | .function, .macro or .testcase | |
 PoshiCommandsOrderCheck | .function, .macro or .testcase | |
@@ -330,7 +332,7 @@ SingleStatementClauseCheck | .java | |
 SizeIsZeroCheck | .java | |
 SlantedQuotesCheck | | |
 SoyEmptyLinesCheck | .soy | |
-StaticBlockCheck | .java | |
+[StaticBlockCheck](checks/static_block_check.markdown) | .java | |
 [StaticVariableNameCheck](https://checkstyle.sourceforge.io/config_naming.html#StaticVariableName) | .java, .java, .jsp, .jsp, .jspf, .jspf, .tag, .tag, .tpl, .tpl, .vm or .vm | Checks that static, non-final variable names conform to a specified pattern. |
 StringCastCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | |
 [StringLiteralEqualityCheck](https://checkstyle.sourceforge.io/config_coding.html#StringLiteralEquality) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that string literals are not used with == or !=. |

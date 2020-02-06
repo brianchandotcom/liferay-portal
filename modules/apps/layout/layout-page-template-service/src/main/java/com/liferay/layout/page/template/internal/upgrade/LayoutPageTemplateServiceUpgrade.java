@@ -106,6 +106,13 @@ public class LayoutPageTemplateServiceUpgrade
 			new com.liferay.layout.page.template.internal.upgrade.v3_1_1.
 				UpgradeLayoutPageTemplateEntry(),
 			new UpgradeResourcePermission());
+
+		registry.register(
+			"3.1.1", "3.2.0",
+			new com.liferay.layout.page.template.internal.upgrade.v3_2_0.
+				UpgradeLayoutPageTemplateCollection(),
+			new com.liferay.layout.page.template.internal.upgrade.v3_2_0.
+				UpgradeLayoutPageTemplateEntry());
 	}
 
 	@Reference

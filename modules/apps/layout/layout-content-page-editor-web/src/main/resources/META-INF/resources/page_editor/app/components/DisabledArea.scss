@@ -1,5 +1,8 @@
+@import 'atlas-variables';
+
 .page-editor__disabled-area {
 	cursor: not-allowed;
+	margin-right: 40px;
 	position: relative;
 
 	&::after {

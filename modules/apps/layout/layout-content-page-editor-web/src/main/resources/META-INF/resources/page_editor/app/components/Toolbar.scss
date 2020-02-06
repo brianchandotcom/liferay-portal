@@ -1,13 +1,11 @@
+@import 'atlas-variables';
+
 @import './variables';
 
 .page-editor-toolbar {
 	background-color: #fff;
 	border-bottom: $toolbarBorderWidth solid $toolbarBorderColor;
 	color: #6b6c7e;
-	height: $toolbarHeight;
-	left: 0;
-	position: fixed;
-	top: $controlMenuHeight;
 	width: 100%;
 	z-index: $zIndexToolbar;
 
@@ -29,39 +27,44 @@
 		color: #6b6c7e !important;
 	}
 
-	@media (min-width: 768px) {
-		body.open & {
-			left: 320px;
-			width: calc(100% - 320px);
-		}
-	}
-
-	@media (max-width: 768px) {
-		height: 96px;
-		top: 48px;
-	}
-
 	& > .container-fluid {
-		@media (max-width: 768px) {
-			flex-direction: column;
-			height: $managementBarHeight;
-			padding: 0;
-			white-space: nowrap;
+		flex-direction: column;
+		padding: 0;
+		white-space: nowrap;
 
-			> .navbar-nav:first-child {
+		@include media-breakpoint-up(lg) {
+			flex-direction: unset;
+		}
+
+		> .navbar-nav {
+			padding: 12px;
+
+			@include media-breakpoint-up(lg) {
+				padding-bottom: 16px;
+				padding-top: 16px;
+			}
+			&:first-child {
 				align-self: flex-start;
 				flex-grow: 1;
 				order: 1;
-				padding-left: 12px;
+				padding-right: 0;
+
+				@include media-breakpoint-up(lg) {
+					order: unset;
+				}
 			}
 
-			> .navbar-nav:last-child {
+			&:last-child {
 				border-bottom: $toolbarBorderWidth solid $toolbarBorderColor;
 				justify-content: flex-end;
 				order: 0;
 				padding-left: 4px;
-				padding-right: 12px;
 				width: 100%;
+
+				@include media-breakpoint-up(lg) {
+					border-bottom: 0;
+					width: unset;
+				}
 			}
 		}
 	}

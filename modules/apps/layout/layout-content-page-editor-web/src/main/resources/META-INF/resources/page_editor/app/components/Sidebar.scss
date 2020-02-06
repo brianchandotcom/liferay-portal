@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 @import './variables';
 
 $sidebarButtonHeight: $sidebarButtonWidth;
@@ -57,8 +59,13 @@ $zIndexContent: 0;
 	}
 
 	body.has-control-menu & {
-		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
-		top: $controlMenuHeight + $toolbarHeight;
+		height: calc(100vh - #{$controlMenuHeight + $managementBarHeight});
+		top: $controlMenuHeight + $managementBarHeight;
+
+		@include media-breakpoint-up(lg) {
+			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
+			top: $desktopControlMenuHeight + $toolbarHeight;
+		}
 	}
 }
 

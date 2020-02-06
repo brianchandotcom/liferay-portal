@@ -30,7 +30,7 @@ public class NewFileCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {
-		return false;
+		return true;
 	}
 
 	@Override

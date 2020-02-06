@@ -209,6 +209,8 @@ public class SQLDSLTest {
 			};
 
 			baseASTNode.withNewChild(null);
+
+			Assert.fail();
 		}
 		catch (RuntimeException runtimeException) {
 			Throwable cause = runtimeException.getCause();
@@ -393,6 +395,8 @@ public class SQLDSLTest {
 
 		try {
 			new DSLFunction<>(DSLFunctionType.BITWISE_AND);
+
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertSame(
@@ -534,6 +538,8 @@ public class SQLDSLTest {
 
 		try {
 			from.groupBy();
+
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertSame(
@@ -703,6 +709,8 @@ public class SQLDSLTest {
 
 		try {
 			new OrderBy(joinStep, new OrderByExpression[0]);
+
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertSame(
@@ -765,6 +773,8 @@ public class SQLDSLTest {
 
 		try {
 			orderByStep.orderBy(ReferenceExampleTable.TABLE, orderByInfo);
+
+			Assert.fail();
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
 			Assert.assertEquals(
@@ -838,6 +848,8 @@ public class SQLDSLTest {
 
 		try {
 			new ScalarList<>(new String[0]);
+
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertSame(
@@ -1178,6 +1190,8 @@ public class SQLDSLTest {
 
 		try {
 			columns.remove(MainExampleTable.TABLE.mainExampleId);
+
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertSame(

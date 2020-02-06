@@ -299,6 +299,21 @@ public class DepotEntryGroupRelLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Group>
+			getGroupDepotEntryGroups(long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryGroupRelLocalService.getGroupDepotEntryGroups(
+			groupId, start, end);
+	}
+
+	@Override
+	public int getGroupDepotEntryGroupsCount(long groupId) {
+		return _depotEntryGroupRelLocalService.getGroupDepotEntryGroupsCount(
+			groupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

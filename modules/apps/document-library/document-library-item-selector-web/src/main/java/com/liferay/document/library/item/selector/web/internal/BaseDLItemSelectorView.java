@@ -19,6 +19,8 @@ import com.liferay.document.library.item.selector.web.internal.constants.DLItemS
 import com.liferay.document.library.item.selector.web.internal.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -58,13 +60,10 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		return new String[0];
 	}
 
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
-
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
+		ResourceBundleLoader resourceBundleLoader =
+			LanguageResources.RESOURCE_BUNDLE_LOADER;
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
@@ -84,16 +83,15 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		ServletContext servletContext = getServletContext();
-
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/documents.jsp");
 
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
 			new DLItemSelectorViewDisplayContext<>(
-				_assetVocabularyService, _classNameLocalService, this,
+				assetVocabularyService, classNameLocalService, this,
+				folderModelResourcePermission,
 				(HttpServletRequest)servletRequest, t, itemSelectedEventName,
-				_itemSelectorReturnTypeResolverHandler, portletURL, search,
+				itemSelectorReturnTypeResolverHandler, portletURL, search,
 				stagingGroupHelper);
 
 		servletRequest.setAttribute(
@@ -103,48 +101,27 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	@Reference(unbind = "-")
-	public void setAssetVocabularyService(
-		AssetVocabularyService assetVocabularyService) {
+	@Reference
+	protected AssetVocabularyService assetVocabularyService;
 
-		_assetVocabularyService = assetVocabularyService;
-	}
-
-	@Reference(unbind = "-")
-	public void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setItemSelectorReturnTypeResolverHandler(
-		ItemSelectorReturnTypeResolverHandler
-			itemSelectorReturnTypeResolverHandler) {
-
-		_itemSelectorReturnTypeResolverHandler =
-			itemSelectorReturnTypeResolverHandler;
-	}
+	@Reference
+	protected ClassNameLocalService classNameLocalService;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
 	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
+	protected ModelResourcePermission<Folder> folderModelResourcePermission;
 
-	protected ResourceBundleLoader getResourceBundleLoader() {
-		return LanguageResources.RESOURCE_BUNDLE_LOADER;
-	}
+	@Reference
+	protected ItemSelectorReturnTypeResolverHandler
+		itemSelectorReturnTypeResolverHandler;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)"
+	)
+	protected ServletContext servletContext;
 
 	@Reference
 	protected StagingGroupHelper stagingGroupHelper;
-
-	private AssetVocabularyService _assetVocabularyService;
-	private ClassNameLocalService _classNameLocalService;
-	private ItemSelectorReturnTypeResolverHandler
-		_itemSelectorReturnTypeResolverHandler;
-	private ServletContext _servletContext;
 
 }

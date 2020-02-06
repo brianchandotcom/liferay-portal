@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.workflow.comparator.WorkflowLogUserIdComparator
 import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskCompletionDateComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskCreateDateComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskDueDateComparator;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskInstanceIdComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskModifiedDateComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskNameComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskUserIdComparator;
@@ -148,6 +149,16 @@ public class WorkflowComparatorFactoryImpl
 			new String[] {
 				"completed", "dueDate", "modifiedDate", "kaleoTaskId"
 			});
+	}
+
+	@Override
+	public OrderByComparator<WorkflowTask> getTaskInstanceIdComparator(
+		boolean ascending) {
+
+		return new WorkflowTaskInstanceIdComparator(
+			ascending, "completed ASC, kaleoTaskInstanceTokenId ASC",
+			"completed ASC, kaleoTaskInstanceTokenId DESC",
+			new String[] {"completed", "kaleoTaskInstanceTokenId"});
 	}
 
 	@Override

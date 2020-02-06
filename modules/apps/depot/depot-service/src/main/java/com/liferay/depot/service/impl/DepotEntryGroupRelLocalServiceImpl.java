@@ -16,13 +16,18 @@ package com.liferay.depot.service.impl;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.base.DepotEntryGroupRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -89,6 +94,31 @@ public class DepotEntryGroupRelLocalServiceImpl
 	}
 
 	@Override
+	public List<Group> getGroupDepotEntryGroups(
+			long groupId, int start, int end)
+		throws PortalException {
+
+		List<DepotEntryGroupRel> depotEntryGroupRels =
+			depotEntryGroupRelPersistence.findByToGroupId(groupId, start, end);
+
+		List<Group> groups = new ArrayList<>();
+
+		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
+			DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
+				depotEntryGroupRel.getDepotEntryId());
+
+			groups.add(depotEntry.getGroup());
+		}
+
+		return groups;
+	}
+
+	@Override
+	public int getGroupDepotEntryGroupsCount(long groupId) {
+		return depotEntryGroupRelPersistence.countByToGroupId(groupId);
+	}
+
+	@Override
 	public List<DepotEntryGroupRel> getSearchableDepotEntryGroupRels(
 		long groupId, int start, int end) {
 
@@ -113,5 +143,11 @@ public class DepotEntryGroupRelLocalServiceImpl
 
 		return depotEntryGroupRelPersistence.update(depotEntryGroupRel);
 	}
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

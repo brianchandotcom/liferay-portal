@@ -19,6 +19,7 @@ import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.base.DepotEntryGroupRelServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
@@ -92,6 +93,24 @@ public class DepotEntryGroupRelServiceImpl
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		return depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
+			groupId);
+	}
+
+	@Override
+	public List<Group> getGroupDepotEntryGroups(
+			long groupId, int start, int end)
+		throws PortalException {
+
+		_groupPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW);
+
+		return depotEntryGroupRelLocalService.getGroupDepotEntryGroups(
+			groupId, start, end);
+	}
+
+	@Override
+	public int getGroupDepotEntryGroupsCount(long groupId) {
+		return depotEntryGroupRelLocalService.getGroupDepotEntryGroupsCount(
 			groupId);
 	}
 

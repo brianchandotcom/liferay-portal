@@ -41,12 +41,16 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.FileEntryTypeCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -77,6 +81,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		AssetVocabularyService assetVocabularyService,
 		ClassNameLocalService classNameLocalService,
 		DLItemSelectorView<T> dlItemSelectorView,
+		ModelResourcePermission<Folder> folderModelResourcePermission,
 		HttpServletRequest httpServletRequest, T itemSelectorCriterion,
 		String itemSelectedEventName,
 		ItemSelectorReturnTypeResolverHandler
@@ -87,6 +92,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_assetVocabularyService = assetVocabularyService;
 		_classNameLocalService = classNameLocalService;
 		_dlItemSelectorView = dlItemSelectorView;
+		_folderModelResourcePermission = folderModelResourcePermission;
 		_httpServletRequest = httpServletRequest;
 		_itemSelectorCriterion = itemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
@@ -272,18 +278,29 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			return _showDragAndDropZone;
 		}
 
-		long defaultFileEntryTypeId =
-			DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
-				_getFolderId());
-
-		if (DLUtil.hasWorkflowDefinitionLink(
-				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
-				_getFolderId(), defaultFileEntryTypeId)) {
+		if (!ModelResourcePermissionHelper.contains(
+				_folderModelResourcePermission,
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), _getFolderId(),
+				ActionKeys.ADD_DOCUMENT)) {
 
 			_showDragAndDropZone = false;
 		}
 		else {
-			_showDragAndDropZone = true;
+			long defaultFileEntryTypeId =
+				DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
+					_getFolderId());
+
+			if (DLUtil.hasWorkflowDefinitionLink(
+					_themeDisplay.getCompanyId(),
+					_themeDisplay.getScopeGroupId(), _getFolderId(),
+					defaultFileEntryTypeId)) {
+
+				_showDragAndDropZone = false;
+			}
+			else {
+				_showDragAndDropZone = true;
+			}
 		}
 
 		return _showDragAndDropZone;
@@ -467,6 +484,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	private final DLItemSelectorView<T> _dlItemSelectorView;
 	private Boolean _filterByFileEntryType;
 	private Long _folderId;
+	private final ModelResourcePermission<Folder>
+		_folderModelResourcePermission;
 	private Long _groupId;
 	private Hits _hits;
 	private final HttpServletRequest _httpServletRequest;

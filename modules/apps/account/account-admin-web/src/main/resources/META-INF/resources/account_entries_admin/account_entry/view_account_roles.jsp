@@ -63,6 +63,10 @@ renderResponse.setTitle((accountEntryDisplay == null) ? "" : accountEntryDisplay
 					name="description"
 					value="<%= accountRole.getDescription(locale) %>"
 				/>
+
+				<liferay-ui:search-container-column-jsp
+					path="/account_entries_admin/account_role_action.jsp"
+				/>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator

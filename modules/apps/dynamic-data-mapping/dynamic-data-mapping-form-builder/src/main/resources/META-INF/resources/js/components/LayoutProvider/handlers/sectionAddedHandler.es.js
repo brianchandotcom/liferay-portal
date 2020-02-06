@@ -104,7 +104,7 @@ export default (props, state, event) => {
 
 	const {fieldName} = target.dataset;
 
-	const newField = createField(props, event);
+	const newField = event.newField || createField(props, event);
 
 	const sectionField = createSection(props, event, newField);
 

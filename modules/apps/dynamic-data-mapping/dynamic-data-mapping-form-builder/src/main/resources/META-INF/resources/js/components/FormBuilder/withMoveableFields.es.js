@@ -91,7 +91,6 @@ const withMoveableFields = ChildComponent => {
 				);
 
 				const targetColumn = target.parentElement;
-				const targetIndexes = FormSupport.getIndexes(targetColumn);
 
 				const addedToPlaceholder = targetColumn.parentElement.classList.contains(
 					'placeholder'
@@ -100,7 +99,7 @@ const withMoveableFields = ChildComponent => {
 				this._handleFieldMoved({
 					addedToPlaceholder,
 					source: sourceIndexes,
-					target: targetIndexes,
+					target: targetColumn,
 				});
 			}
 		}

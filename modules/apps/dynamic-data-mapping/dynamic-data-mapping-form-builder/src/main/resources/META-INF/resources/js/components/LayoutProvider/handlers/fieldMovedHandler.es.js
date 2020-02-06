@@ -13,39 +13,48 @@
  */
 
 import {FormSupport} from 'dynamic-data-mapping-form-renderer';
+import createSection from './sectionAddedHandler.es';
 
 export default (props, state, {addedToPlaceholder, source, target}) => {
 	let {pages} = state;
 	const {columnIndex, pageIndex, rowIndex} = source;
 
-	const column = FormSupport.getColumn(
+	const targetIndexes = FormSupport.getIndexes(target);
+
+	const currentColumn = FormSupport.getColumn(
 		pages,
 		pageIndex,
 		rowIndex,
 		columnIndex
 	);
-	const {fields} = column;
 
 	pages = FormSupport.removeFields(pages, pageIndex, rowIndex, columnIndex);
 
-	if (
+	if (target.dataset.ddmFieldColumn) {
+		pages = createSection(props, {...state, pages}, {
+			data: {
+				target: target.children[0]
+			},
+			newField: currentColumn.fields[0]
+		}).pages;
+	} else if (
 		target.rowIndex > pages[pageIndex].rows.length - 1 ||
 		addedToPlaceholder
 	) {
 		pages = FormSupport.addRow(
 			pages,
-			target.rowIndex,
-			target.pageIndex,
-			FormSupport.implAddRow(12, fields)
+			targetIndexes.rowIndex,
+			targetIndexes.pageIndex,
+			FormSupport.implAddRow(12, currentColumn.fields)
 		);
 	}
 	else {
 		pages = FormSupport.addFieldToColumn(
 			pages,
-			target.pageIndex,
-			target.rowIndex,
-			target.columnIndex,
-			fields[0]
+			targetIndexes.pageIndex,
+			targetIndexes.rowIndex,
+			targetIndexes.columnIndex,
+			currentColumn.fields[0]
 		);
 	}
 

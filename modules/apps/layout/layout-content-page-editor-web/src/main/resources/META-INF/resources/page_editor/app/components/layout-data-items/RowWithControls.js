@@ -84,7 +84,6 @@ const RowWithControls = React.forwardRef(
 				acceptDrop={[LAYOUT_DATA_ITEM_TYPES.column]}
 				item={item}
 				layoutData={layoutData}
-				name={Liferay.Language.get('row')}
 			>
 				{() => content}
 			</Topper>

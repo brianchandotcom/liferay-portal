@@ -43,7 +43,6 @@ const DropZoneWithControls = React.forwardRef(({item, layoutData}, ref) => {
 			active
 			item={item}
 			layoutData={layoutData}
-			name={Liferay.Language.get('drop-zone')}
 		>
 			{() => content}
 		</Topper>

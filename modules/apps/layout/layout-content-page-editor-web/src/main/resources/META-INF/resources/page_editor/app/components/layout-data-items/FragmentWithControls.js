@@ -114,7 +114,6 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 			]}
 			item={item}
 			layoutData={layoutData}
-			name={fragmentEntryLink.name}
 		>
 			{() => content}
 		</Topper>

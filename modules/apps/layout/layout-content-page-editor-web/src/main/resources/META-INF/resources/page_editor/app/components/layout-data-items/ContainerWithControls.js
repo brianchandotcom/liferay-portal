@@ -85,7 +85,6 @@ const ContainerWithControls = React.forwardRef(
 				dropNestedAndSibling
 				item={item}
 				layoutData={layoutData}
-				name={Liferay.Language.get('container')}
 			>
 				{() => content}
 			</Topper>

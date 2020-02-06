@@ -59,7 +59,23 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			return content;
 		}
 
-		return _getReadmeContent(absolutePath, _getCheckInfoMap());
+		int x = content.indexOf("\n## Checks\n");
+
+		if (x == -1) {
+			return content;
+		}
+
+		String checksInformation = content.substring(x + 1);
+
+		String newChecksInformation = _getChecksInformation(
+			absolutePath, _getCheckInfoMap());
+
+		if (!checksInformation.equals(newChecksInformation)) {
+			return StringUtil.replaceLast(
+				content, checksInformation, newChecksInformation);
+		}
+
+		return content;
 	}
 
 	private Map<String, CheckInfo> _addCheckstyleChecks(
@@ -470,7 +486,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		return StringPool.BLANK;
 	}
 
-	private String _getReadmeContent(
+	private String _getChecksInformation(
 			String absolutePath, Map<String, CheckInfo> checkInfoMap)
 		throws DocumentException, IOException {
 
@@ -485,8 +501,6 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 			documentationDir, _DOCUMENTATION_CHECKS_DIR_NAME);
 
 		StringBundler sb = new StringBundler();
-
-		sb.append("# Source Formatter\n\n");
 
 		sb.append("## Checks\n\n");
 

@@ -507,14 +507,14 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 	<macrodef name="start-ccr-trial">
 		<sequential>
-			<exec executable="curl" outputproperty="curl.output.trial">
+			<exec executable="curl" outputproperty="curl.output.trial.remote.cluster">
 				<arg line="-X POST &quot;http://localhost:9200/_license/start_trial?acknowledge=true&quot; -H &apos;Content-Type:application/json&apos;" />
 			</exec>
 
-			<echo>${curl.output.trial}</echo>
+			<echo>${curl.output.trial.remote.cluster}</echo>
 
 			<if>
-				<contains string="${curl.output.trial}" substring="&quot;trial_was_started&quot;:true" />
+				<contains string="${curl.output.trial.remote.cluster}" substring="&quot;trial_was_started&quot;:true" />
 				<then>
 					<echo>Leader Elasticsearch started with trial.</echo>
 				</then>
@@ -523,14 +523,14 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				</else>
 			</if>
 
-			<exec executable="curl" outputproperty="curl.output.trial">
+			<exec executable="curl" outputproperty="curl.output.trial.local.cluster">
 				<arg line="-X POST &quot;http://localhost:9202/_license/start_trial?acknowledge=true&quot; -H &apos;Content-Type:application/json&apos;" />
 			</exec>
 
-			<echo>${curl.output.trial}</echo>
+			<echo>${curl.output.trial.local.cluster}</echo>
 
 			<if>
-				<contains string="${curl.output.trial}" substring="&quot;trial_was_started&quot;:true" />
+				<contains string="${curl.output.trial.local.cluster}" substring="&quot;trial_was_started&quot;:true" />
 				<then>
 					<echo>Follower Elasticsearch started with trial.</echo>
 				</then>
@@ -895,41 +895,41 @@ xpack.monitoring.collection.enabled: true</echo>
 			select="\1"
 		/>
 
-		<exec executable="curl" outputproperty="curl.output">
+		<exec executable="curl" outputproperty="curl.output.companyId">
 			<arg line="-X PUT &quot;localhost:9202/_cluster/settings&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;persistent&quot;:{&quot;cluster&quot;:{&quot;remote&quot;:{&quot;leader&quot;:{&quot;seeds&quot;:[&quot;127.0.0.1:9300&quot;]}}}}}&apos;" />
 		</exec>
 
-		<echo>${curl.output}</echo>
+		<echo>${curl.output.companyId}</echo>
 
-		<exec executable="curl" outputproperty="curl.output">
+		<exec executable="curl" outputproperty="curl.output.follower.liferay.index">
 			<arg line="-X PUT &quot;localhost:9202/liferay-${companyId}/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-${companyId}&quot;}&apos;" />
 		</exec>
 
-		<echo>${curl.output}</echo>
+		<echo>${curl.output.follower.liferay.index}</echo>
 
-		<exec executable="curl" outputproperty="curl.output">
+		<exec executable="curl" outputproperty="curl.output.follower.result.rankings.index">
 			<arg line="-X PUT &quot;localhost:9202/liferay-search-tuning-rankings/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-search-tuning-rankings&quot;}&apos;" />
 		</exec>
 
-		<echo>${curl.output}</echo>
+		<echo>${curl.output.follower.result.rankings.index}</echo>
 
-		<exec executable="curl" outputproperty="curl.output">
+		<exec executable="curl" outputproperty="curl.output.follower.synonyms.index">
 			<arg line="-X PUT &quot;localhost:9202/liferay-search-tuning-synonyms-liferay-${companyId}/_ccr/follow?wait_for_active_shards=1&quot; -H &apos;Content-Type: application/json&apos; -d &apos;{&quot;remote_cluster&quot;: &quot;leader&quot;,&quot;leader_index&quot;: &quot;liferay-search-tuning-synonyms-liferay-${companyId}&quot;}&apos;" />
 		</exec>
 
-		<echo>${curl.output}</echo>
+		<echo>${curl.output.follower.synonyms.index}</echo>
 
-		<exec executable="curl" outputproperty="curl.output.indices">
+		<exec executable="curl" outputproperty="curl.output.follower.indices">
 			<arg line="-X GET &quot;localhost:9202/_cat/indices&quot;" />
 		</exec>
 
-		<echo>${curl.output.indices}</echo>
+		<echo>${curl.output.follower.indices}</echo>
 
 		<if>
 			<and>
-				<contains string="${curl.output.indices}" substring="liferay-${companyId}" />
-				<contains string="${curl.output.indices}" substring="liferay-search-tuning-rankings" />
-				<contains string="${curl.output.indices}" substring="liferay-search-tuning-synonyms-liferay-${companyId}" />
+				<contains string="${curl.output.follower.indices}" substring="liferay-${companyId}" />
+				<contains string="${curl.output.follower.indices}" substring="liferay-search-tuning-rankings" />
+				<contains string="${curl.output.follower.indices}" substring="liferay-search-tuning-synonyms-liferay-${companyId}" />
 			</and>
 			<then>
 				<echo>Elasticsearch indices replicate sucessfully.</echo>

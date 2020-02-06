@@ -711,6 +711,20 @@ public class SQLDSLTest {
 		Assert.assertEquals(
 			"select MainExample.name from MainExample", limitStep.toString());
 
+		limitStep = joinStep.orderBy(orderByStep -> null);
+
+		Assert.assertEquals(
+			"select MainExample.name from MainExample", limitStep.toString());
+
+		limitStep = joinStep.orderBy(
+			orderByStep -> orderByStep.orderBy(
+				MainExampleTable.INSTANCE.name.ascending()));
+
+		Assert.assertEquals(
+			"select MainExample.name from MainExample order by " +
+				"MainExample.name asc",
+			limitStep.toString());
+
 		try {
 			new OrderBy(joinStep, new OrderByExpression[0]);
 
@@ -1027,7 +1041,7 @@ public class SQLDSLTest {
 
 		Assert.assertEquals("select * from MainExample", joinStep.toString());
 
-		GroupByStep groupByStep = joinStep.where(null);
+		GroupByStep groupByStep = joinStep.where(() -> null);
 
 		Assert.assertEquals(
 			"select * from MainExample", groupByStep.toString());
@@ -1137,7 +1151,7 @@ public class SQLDSLTest {
 				).from(
 					ReferenceExampleTable.INSTANCE
 				).where(
-					ReferenceExampleTable.INSTANCE.name.eq("test")
+					() -> ReferenceExampleTable.INSTANCE.name.eq("test")
 				))
 		);
 

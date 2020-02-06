@@ -324,7 +324,7 @@ export const getIndexes = node => {
 export const getNestedIndexes = node => {
 	let indexes = [];
 
-	if (node.dataset.ddmFieldColumn) {
+	if (node.dataset.ddmFieldRow) {
 		indexes = [getIndexes(node)];
 	}
 

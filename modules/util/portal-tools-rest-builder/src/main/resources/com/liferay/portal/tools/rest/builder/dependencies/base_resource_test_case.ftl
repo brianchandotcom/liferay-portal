@@ -211,6 +211,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 			parameters = freeMarkerTool.getResourceTestCaseParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, false)
 		/>
 
+		<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch")>
+			<#continue>
+		</#if>
+
 		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete")>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {

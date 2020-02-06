@@ -521,7 +521,7 @@ public class DocumentResourceImpl
 		return new SPIRatingResource<>(
 			DLFileEntry.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _getRatingsActions(ratingsEntry),
+				_portal, _getRatingsActions(ratingsEntry), ratingsEntry,
 				_userLocalService),
 			contextUser);
 	}

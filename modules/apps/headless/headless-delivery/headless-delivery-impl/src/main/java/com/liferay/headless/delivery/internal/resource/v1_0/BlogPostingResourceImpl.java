@@ -353,7 +353,7 @@ public class BlogPostingResourceImpl
 		return new SPIRatingResource<>(
 			BlogsEntry.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _getRatingActions(ratingsEntry),
+				_portal, _getRatingActions(ratingsEntry), ratingsEntry,
 				_userLocalService),
 			contextUser);
 	}

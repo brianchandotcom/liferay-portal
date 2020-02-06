@@ -32,7 +32,6 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -289,17 +288,14 @@ public class MessageBoardMessageResourceImpl
 		return _toMessageBoardMessage(mbMessage);
 	}
 
-	private Map<String, Map<String, String>> _getActions(
-		MBMessage mbMessage) {
-
+	private Map<String, Map<String, String>> _getActions(MBMessage mbMessage) {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			addAction("DELETE", mbMessage, "deleteMessageBoardMessage")
 		).put(
 			"get", addAction("VIEW", mbMessage, "getMessageBoardMessage")
 		).put(
-			"replace",
-			addAction("UPDATE", mbMessage, "putMessageBoardMessage")
+			"replace", addAction("UPDATE", mbMessage, "putMessageBoardMessage")
 		).put(
 			"reply-to-message",
 			addAction(
@@ -308,15 +304,12 @@ public class MessageBoardMessageResourceImpl
 				"com.liferay.message.boards", mbMessage.getGroupId())
 		).put(
 			"subscribe",
-			addAction(
-				"SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
+			addAction("SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
 		).put(
 			"unsubscribe",
-			addAction(
-				"SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
+			addAction("SUBSCRIBE", mbMessage, "putMessageBoardMessageSubscribe")
 		).put(
-			"update",
-			addAction("UPDATE", mbMessage, "patchMessageBoardMessage")
+			"update", addAction("UPDATE", mbMessage, "patchMessageBoardMessage")
 		).build();
 	}
 
@@ -463,7 +456,7 @@ public class MessageBoardMessageResourceImpl
 		return new SPIRatingResource<>(
 			MBMessage.class.getName(), _ratingsEntryLocalService,
 			ratingsEntry -> RatingUtil.toRating(
-				_portal, ratingsEntry, _getRatingActions(ratingsEntry),
+				_portal, _getRatingActions(ratingsEntry), ratingsEntry,
 				_userLocalService),
 			contextUser);
 	}

@@ -28,9 +28,8 @@ import java.util.Map;
 public class RatingUtil {
 
 	public static Rating toRating(
-			Portal portal, RatingsEntry ratingsEntry,
-			Map<String, Map<String, String>> ratingActions,
-			UserLocalService userLocalService)
+			Portal portal, Map<String, Map<String, String>> ratingActions,
+			RatingsEntry ratingsEntry, UserLocalService userLocalService)
 		throws Exception {
 
 		return new Rating() {
@@ -54,7 +53,7 @@ public class RatingUtil {
 		throws Exception {
 
 		return toRating(
-			portal, ratingsEntry, new HashMap<>(), userLocalService);
+			portal, new HashMap<>(), ratingsEntry, userLocalService);
 	}
 
 }

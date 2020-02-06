@@ -12,6 +12,7 @@
 import getClassName from 'classnames';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
+import {useFilter} from '../../hooks/useFilter.es';
 import {useRouter} from '../../hooks/useRouter.es';
 import Icon from '../Icon.es';
 import {FilterItem} from './FilterItem.es';
@@ -22,8 +23,8 @@ import {
 	removeClickOutsideListener
 } from './util/filterEvents.es';
 import {
+	getCapitalizedFilterKey,
 	getSelectedItemsQuery,
-	pushToHistory,
 	replaceHistory
 } from './util/filterUtil.es';
 
@@ -43,10 +44,15 @@ const Filter = ({
 	onClickFilter,
 	position = 'left',
 	prefixKey = '',
-	style
+	style,
+	withoutRouteParams
 }) => {
+	const {dispatchFilter} = useFilter({withoutRouteParams});
 	const [expanded, setExpanded] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
+	const [changed, setChanged] = useState(false);
+
+	const prefixedFilterKey = getCapitalizedFilterKey(prefixKey, filterKey);
 
 	const routerProps = useRouter();
 
@@ -76,17 +82,6 @@ const Filter = ({
 		[buttonClassName, children, elementClasses, expanded, position]
 	);
 
-	const getFilterQuery = useCallback(
-		() =>
-			getSelectedItemsQuery(
-				items,
-				`${prefixKey}${filterKey}`,
-				routerProps.location.search
-			),
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[routerProps.location.search, items]
-	);
-
 	const filteredItems = useMemo(() => {
 		return searchTerm
 			? items.filter(item =>
@@ -94,6 +89,28 @@ const Filter = ({
 			  )
 			: items;
 	}, [items, searchTerm]);
+
+	const applyFilterChanges = useCallback(() => {
+		dispatchFilter(prefixedFilterKey, getSelectedItems(items));
+
+		if (!withoutRouteParams) {
+			const query = getSelectedItemsQuery(
+				items,
+				prefixedFilterKey,
+				routerProps.location.search
+			);
+
+			replaceHistory(query, routerProps);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [items, routerProps.location.search]);
+
+	const closeDropdown = () => {
+		setExpanded(false);
+		setSearchTerm('');
+	};
+
+	const getSelectedItems = items => items.filter(item => item.active);
 
 	const onClickHandler = item => () =>
 		onClickFilter ? onClickFilter(item) : true;
@@ -118,26 +135,29 @@ const Filter = ({
 
 				current.active = target.checked;
 
-				pushToHistory(getFilterQuery(), routerProps);
+				if (!multiple) {
+					applyFilterChanges();
+					closeDropdown();
+				} else {
+					setChanged(true);
+				}
 			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[items, routerProps]
+		[items]
 	);
 
 	const selectDefaultItem = useCallback(() => {
 		if (defaultItem && !multiple) {
-			const selectedItems = items.filter(item => item.active);
+			const selectedItems = getSelectedItems(items);
 
 			if (!selectedItems.length) {
 				const index = items.findIndex(
 					item => item.key === defaultItem.key
 				);
 
-				defaultItem.active = true;
 				items[index].active = true;
-
-				replaceHistory(getFilterQuery(), routerProps);
+				applyFilterChanges();
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -152,8 +172,14 @@ const Filter = ({
 		selectDefaultItem();
 
 		const callback = handleClickOutside(() => {
-			setExpanded(false);
-			setSearchTerm('');
+			if (expanded) {
+				closeDropdown();
+
+				if (changed) {
+					setChanged(false);
+					applyFilterChanges();
+				}
+			}
 		}, wrapperRef.current);
 
 		addClickOutsideListener(callback);
@@ -162,7 +188,7 @@ const Filter = ({
 			removeClickOutsideListener(callback);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [expanded, changed]);
 
 	return (
 		<li

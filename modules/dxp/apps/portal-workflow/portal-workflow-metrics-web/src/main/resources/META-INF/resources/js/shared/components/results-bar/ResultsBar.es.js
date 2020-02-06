@@ -9,14 +9,18 @@
  * distribution rights of the Software.
  */
 
-import pathToRegexp from 'path-to-regexp';
-import React from 'react';
-import {Link} from 'react-router-dom';
+import ClayButton from '@clayui/button';
+import React, {useCallback} from 'react';
 
+import {useFilter} from '../../hooks/useFilter.es';
 import {useRouter} from '../../hooks/useRouter.es';
 import {sub} from '../../util/lang.es';
 import Icon from '../Icon.es';
-import {removeFilters, removeItem} from '../filter/util/filterUtil.es';
+import {
+	removeFilters,
+	removeItem,
+	replaceHistory
+} from '../filter/util/filterUtil.es';
 
 const ResultsBar = ({children}) => {
 	return (
@@ -28,59 +32,72 @@ const ResultsBar = ({children}) => {
 	);
 };
 
-const Clear = props => {
-	const {
-		location: {search},
-		match: {path}
-	} = useRouter();
+const Clear = ({filters = [], filterKeys = [], withoutRouteParams}) => {
+	const {dispatch, filterState} = useFilter({withoutRouteParams});
+	const routerProps = useRouter();
 
-	const handleClearAll = () => {
-		const {filters = []} = props;
-
+	const handleClearAll = useCallback(() => {
 		filters.map(filter => {
 			filter.items.map(item => {
 				item.active = false;
 			});
 		});
-	};
 
-	const pathname = pathToRegexp.compile(path)(props);
+		filterKeys.forEach(key => {
+			filterState[key] = undefined;
+		});
 
-	const query = removeFilters(search);
+		dispatch(filterState);
+
+		if (!withoutRouteParams) {
+			const query = removeFilters(routerProps.location.search);
+
+			replaceHistory(query, routerProps);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [filterState, routerProps, withoutRouteParams]);
 
 	return (
 		<li className="tbar-item tbar-item-expand">
 			<div className="tbar-section text-right">
-				<Link
+				<ClayButton
 					className="component-link tbar-link"
 					data-testid="clearAll"
+					displayType="link"
 					onClick={handleClearAll}
-					to={{
-						pathname,
-						search: query
-					}}
+					small
 				>
-					<span>{Liferay.Language.get('clear-all')}</span>
-				</Link>
+					{Liferay.Language.get('clear-all')}
+				</ClayButton>
 			</div>
 		</li>
 	);
 };
 
-const FilterItem = props => {
-	const {filter, item} = props;
-	const {
-		location: {search},
-		match: {path}
-	} = useRouter();
+const FilterItem = ({filter, item, withoutRouteParams}) => {
+	const {dispatch, filterState} = useFilter({withoutRouteParams});
+	const routerProps = useRouter();
 
-	const pathname = pathToRegexp.compile(path)(props);
-
-	const query = removeItem(filter.key, item, search);
-
-	const removeFilter = () => {
+	const removeFilter = useCallback(() => {
 		item.active = false;
-	};
+
+		filterState[filter.key] = filterState[filter.key]
+			? filterState[filter.key].filter(({key}) => key !== item.key)
+			: undefined;
+
+		dispatch(filterState);
+
+		if (!withoutRouteParams) {
+			const query = removeItem(
+				filter.key,
+				item,
+				routerProps.location.search
+			);
+
+			replaceHistory(query, routerProps);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [filterState, routerProps, withoutRouteParams]);
 
 	return (
 		<li className="tbar-item">
@@ -100,18 +117,14 @@ const FilterItem = props => {
 
 					{!filter.pinned && (
 						<span className="label-item label-item-after">
-							<Link
-								aria-label="close"
-								className="close"
+							<ClayButton
+								className="text-dark"
 								data-testid="removeFilter"
+								displayType="unstyled"
 								onClick={removeFilter}
-								to={{
-									pathname,
-									search: query
-								}}
 							>
 								<Icon iconName="times" />
-							</Link>
+							</ClayButton>
 						</span>
 					)}
 				</span>
@@ -120,9 +133,7 @@ const FilterItem = props => {
 	);
 };
 
-const FilterItems = props => {
-	const {filters = []} = props;
-
+const FilterItems = ({filters = [], ...props}) => {
 	return filters.map(filter =>
 		filter.items.map((item, index) => (
 			<FilterItem filter={filter} item={item} key={index} {...props} />

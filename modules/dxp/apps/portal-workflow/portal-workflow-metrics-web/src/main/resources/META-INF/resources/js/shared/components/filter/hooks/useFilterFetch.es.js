@@ -9,48 +9,46 @@
  * distribution rights of the Software.
  */
 
-import {useContext, useEffect} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 
 import {AppContext} from '../../../../components/AppContext.es';
-import {useRouterParams} from '../../../hooks/useRouterParams.es';
-import {buildFilterItems, mergeItemsArray} from '../util/filterUtil.es';
+import {
+	buildFilterItems,
+	getCapitalizedFilterKey,
+	mergeItemsArray
+} from '../util/filterUtil.es';
 import {useFilterState} from './useFilterState.es';
 
 const useFilterFetch = ({
-	dispatch,
 	filterKey,
-	parseItems = items => items,
 	prefixKey,
 	requestUrl,
-	staticItems
+	staticItems,
+	withoutRouteParams
 }) => {
 	const {client} = useContext(AppContext);
-	const {filters} = useRouterParams();
+	const {items, selectedItems, selectedKeys, setItems} = useFilterState(
+		getCapitalizedFilterKey(prefixKey, filterKey),
+		withoutRouteParams
+	);
 
-	const prefixedFilterKey = `${prefixKey}${filterKey}`;
-	const {items, selectedItems, setItems} = useFilterState(
-		dispatch,
-		prefixedFilterKey
+	const fetchCallback = useCallback(
+		({data = {}}) => {
+			const mergedItems = mergeItemsArray(staticItems, data.items);
+			const mappedItems = buildFilterItems(mergedItems, selectedKeys);
+
+			setItems(mappedItems);
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[selectedKeys, staticItems]
 	);
 
 	useEffect(
 		() => {
-			client.get(requestUrl).then(({data = {}}) => {
-				const mergedItems = mergeItemsArray(staticItems, data.items);
-				const parsedItems = parseItems
-					? parseItems(mergedItems)
-					: mergedItems;
-
-				const mappedItems = buildFilterItems(
-					parsedItems,
-					filters[prefixedFilterKey]
-				);
-
-				setItems(mappedItems);
-			});
+			client.get(requestUrl).then(fetchCallback);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[staticItems]
+		[]
 	);
 
 	return {

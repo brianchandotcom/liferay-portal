@@ -15,7 +15,7 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import React, {useEffect, useState} from 'react';
 
 import {useRouter} from '../../hooks/useRouter.es';
-import {pushToHistory} from '../filter/util/filterUtil.es';
+import {replaceHistory} from '../filter/util/filterUtil.es';
 import {parse, stringify} from '../router/queryString.es';
 
 const SearchField = ({
@@ -42,7 +42,7 @@ const SearchField = ({
 
 		query.search = searchValue;
 
-		pushToHistory(stringify(query), routerProps);
+		replaceHistory(stringify(query), routerProps);
 	};
 
 	return (

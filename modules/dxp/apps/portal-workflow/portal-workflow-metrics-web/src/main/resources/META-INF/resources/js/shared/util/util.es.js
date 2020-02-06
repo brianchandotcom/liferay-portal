@@ -45,4 +45,6 @@ const isValidNumber = number => {
 	return !isNaN(number) && number !== Infinity ? true : false;
 };
 
-export {getFormattedPercentage, getPercentage, isValidNumber};
+const capitalize = str => str.replace(/^\w/, letter => letter.toUpperCase());
+
+export {capitalize, getFormattedPercentage, getPercentage, isValidNumber};

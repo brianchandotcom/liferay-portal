@@ -68,7 +68,7 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 		);
 	}
 
-	private boolean _gutters;
+	private boolean _gutters = true;
 	private int _numberOfColumns;
 
 }

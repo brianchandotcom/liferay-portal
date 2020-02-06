@@ -436,8 +436,8 @@ public class ItemSelectorImpl implements ItemSelector {
 			itemSelectorCriterion.getClass();
 
 		List<ItemSelectorViewRendererCustomizer>
-			itemSelectorViewRendererCustomizers =
-				_serviceTrackerMap.getService(clazz.getName());
+			itemSelectorViewRendererCustomizers = _serviceTrackerMap.getService(
+				clazz.getName());
 
 		if (itemSelectorViewRendererCustomizers == null) {
 			return itemSelectorViewRenderer;

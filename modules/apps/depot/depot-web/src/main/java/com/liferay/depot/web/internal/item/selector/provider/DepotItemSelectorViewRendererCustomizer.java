@@ -21,11 +21,11 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
+import com.liferay.item.selector.ItemSelectorViewRendererCustomizer;
 import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCriterion;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorViewRendererCustomizer;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.model.Group;
@@ -152,9 +152,6 @@ public class DepotItemSelectorViewRendererCustomizer
 		return _itemSelectorCriterionMap.keySet();
 	}
 
-	@Reference
-	private DepotApplicationController _depotApplicationController;
-
 	private static final Map<Class<? extends ItemSelectorCriterion>, String>
 		_itemSelectorCriterionMap =
 			HashMapBuilder.<Class<? extends ItemSelectorCriterion>, String>put(
@@ -172,6 +169,9 @@ public class DepotItemSelectorViewRendererCustomizer
 				VideoItemSelectorCriterion.class,
 				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
 			).build();
+
+	@Reference
+	private DepotApplicationController _depotApplicationController;
 
 	@Reference
 	private Portal _portal;

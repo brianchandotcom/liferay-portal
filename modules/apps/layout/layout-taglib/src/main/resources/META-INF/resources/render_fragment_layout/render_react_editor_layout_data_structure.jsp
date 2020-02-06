@@ -109,30 +109,30 @@ for (String childrenItemId : childrenItemIds) {
 			<%
 			FragmentLayoutStructureItem fragmentLayoutStructureItem = (FragmentLayoutStructureItem)layoutStructureItem;
 
-			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() > 0) {
-				FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentLayoutStructureItem.getFragmentEntryLinkId());
-
-				if (fragmentEntryLink != null) {
-					FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
-
-					DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
-
-					defaultFragmentRendererContext.setFieldValues(fieldValues);
-					defaultFragmentRendererContext.setLocale(locale);
-					defaultFragmentRendererContext.setMode(mode);
-					defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
-					defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
-					defaultFragmentRendererContext.setPreviewType(previewType);
-					defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
-			%>
-
-					<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-
-			<%
-				}
+			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
+				continue;
 			}
+
+			FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink == null) {
+				continue;
+			}
+
+			FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
+
+			DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
+
+			defaultFragmentRendererContext.setFieldValues(fieldValues);
+			defaultFragmentRendererContext.setLocale(locale);
+			defaultFragmentRendererContext.setMode(mode);
+			defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
+			defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
+			defaultFragmentRendererContext.setPreviewType(previewType);
+			defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
 			%>
 
+			<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof RootLayoutStructureItem %>">
 

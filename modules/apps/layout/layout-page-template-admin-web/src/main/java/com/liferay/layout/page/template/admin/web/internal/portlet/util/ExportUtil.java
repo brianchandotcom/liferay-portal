@@ -28,14 +28,17 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
+import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageTemplateConverterUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
@@ -46,6 +49,7 @@ import java.util.List;
 import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rubén Pulido
@@ -113,14 +117,20 @@ public class ExportUtil {
 		ObjectWriter objectWriter = _objectMapper.writer(filterProvider);
 
 		zipWriter.addEntry(
-			path + "/page-definition.json",
-			objectWriter.writeValueAsString(pageTemplate.getPageDefinition()));
-
-		pageTemplate.setPageDefinition((PageDefinition)null);
-
-		zipWriter.addEntry(
 			path + "/page-template.json",
 			objectWriter.writeValueAsString(pageTemplate));
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		if (layout != null) {
+			PageDefinition pageDefinition =
+				PageDefinitionConverterUtil.toPageDefinition(layout);
+
+			zipWriter.addEntry(
+				path + "/page-definition.json",
+				objectWriter.writeValueAsString(pageDefinition));
+		}
 
 		FileEntry previewFileEntry = _getPreviewFileEntry(
 			layoutPageTemplateEntry.getPreviewFileEntryId());
@@ -147,5 +157,8 @@ public class ExportUtil {
 				PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 		}
 	};
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.dynamic.data.lists.exception.RecordGroupIdException;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
@@ -31,6 +32,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
@@ -43,7 +45,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -83,11 +85,13 @@ public class DDLRecordServiceTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceRegistration = registry.registerService(
 			StorageAdapter.class, new FailStorageAdapter());
+
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@AfterClass
@@ -100,9 +104,6 @@ public class DDLRecordServiceTest {
 		_availableLocales = DDMFormTestUtil.createAvailableLocales(
 			LocaleUtil.US);
 		_defaultLocale = LocaleUtil.US;
-
-		_group = GroupTestUtil.addGroup();
-
 		_ddmStructureTestHelper = new DDMStructureTestHelper(
 			PortalUtil.getClassNameId(DDLRecordSet.class), _group);
 		_recordSetTestHelper = new DDLRecordSetTestHelper(_group);
@@ -440,6 +441,28 @@ public class DDLRecordServiceTest {
 		assertRecordFieldValue(record, "Phone", "123456");
 	}
 
+	@Test
+	public void testUpdateRecordIncreaseRecordVersion() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		ddmForm.addDDMFormField(createTextDDMFormField("Name", true, false));
+
+		DDLRecordSet recordSet = addRecordSet(ddmForm);
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			_group, recordSet);
+
+		DDLRecord record = recordTestHelper.addRecord();
+
+		DDLRecord updatedRecord = DDLRecordLocalServiceUtil.updateRecord(
+			TestPropsValues.getUserId(), record.getRecordId(),
+			record.getDDMStorageId(),
+			DDLRecordTestUtil.getServiceContext(
+				WorkflowConstants.ACTION_PUBLISH));
+
+		Assert.assertNotEquals(record.getVersion(), updatedRecord.getVersion());
+	}
+
 	protected DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
 		return addRecordSet(ddmForm, StorageType.JSON.toString());
 	}
@@ -576,15 +599,19 @@ public class DDLRecordServiceTest {
 			serviceContext);
 	}
 
+	private static Group _group;
 	private static ServiceRegistration<StorageAdapter> _serviceRegistration;
 
 	private Set<Locale> _availableLocales;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
+
+	@Inject
+	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
+
 	private DDMStructureTestHelper _ddmStructureTestHelper;
 	private Locale _defaultLocale;
-
-	@DeleteAfterTestRun
-	private Group _group;
-
 	private DDLRecordSetTestHelper _recordSetTestHelper;
 
 }

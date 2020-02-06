@@ -37,8 +37,8 @@ import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopp
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import resizeColumns from '../../thunks/resizeColumns';
-import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
+import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import ColumnOverlayGrid from './ColumnOverlayGrid';
 import Row from './Row';
 

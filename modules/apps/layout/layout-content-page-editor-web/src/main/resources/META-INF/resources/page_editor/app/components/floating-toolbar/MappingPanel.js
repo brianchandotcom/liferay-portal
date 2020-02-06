@@ -14,14 +14,14 @@
 
 import React, {useContext} from 'react';
 
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
-import {ConfigContext} from '../config/index';
-import selectEditableValue from '../selectors/selectEditableValue';
-import {useSelector, useDispatch} from '../store/index';
-import updateEditableValues from '../thunks/updateEditableValues';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
+import {ConfigContext} from '../../config/index';
+import selectEditableValue from '../../selectors/selectEditableValue';
+import {useSelector, useDispatch} from '../../store/index';
+import updateEditableValues from '../../thunks/updateEditableValues';
 import MappingSelector from './MappingSelector';
 
-export function MapConfigurationPanel({item}) {
+export function MappingPanel({item}) {
 	const {editableId, editableType, fragmentEntryLinkId} = item;
 
 	const config = useContext(ConfigContext);

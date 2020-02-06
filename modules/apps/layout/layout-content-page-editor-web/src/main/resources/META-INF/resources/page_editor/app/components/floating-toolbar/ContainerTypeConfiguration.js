@@ -15,10 +15,10 @@
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
-import {CONTAINER_PADDING_IDENTIFIERS} from '../config/constants/containerPaddingIdentifiers';
-import {CONTAINER_TYPES} from '../config/constants/containerTypes';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {CONTAINER_PADDING_IDENTIFIERS} from '../../config/constants/containerPaddingIdentifiers';
+import {CONTAINER_TYPES} from '../../config/constants/containerTypes';
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 
 const CONTAINER_TYPE_IDENTIFIER = 'type';
 

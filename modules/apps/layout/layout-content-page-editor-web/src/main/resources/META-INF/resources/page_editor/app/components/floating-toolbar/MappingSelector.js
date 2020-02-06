@@ -15,13 +15,13 @@
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useContext, useEffect, useState} from 'react';
 
-import ItemSelector from '../../common/components/ItemSelector';
-import {addMappedInfoItem} from '../actions/index';
-import {COMPATIBLE_TYPES} from '../config/constants/compatibleTypes';
-import {PAGE_TYPES} from '../config/constants/pageTypes';
-import {ConfigContext} from '../config/index';
-import InfoItemService from '../services/InfoItemService';
-import {useDispatch, useSelector} from '../store/index';
+import ItemSelector from '../../../common/components/ItemSelector';
+import {addMappedInfoItem} from '../../actions/index';
+import {COMPATIBLE_TYPES} from '../../config/constants/compatibleTypes';
+import {PAGE_TYPES} from '../../config/constants/pageTypes';
+import {ConfigContext} from '../../config/index';
+import InfoItemService from '../../services/InfoItemService';
+import {useDispatch, useSelector} from '../../store/index';
 
 const MAPPING_SOURCE_TYPE_IDS = {
 	content: 'content',

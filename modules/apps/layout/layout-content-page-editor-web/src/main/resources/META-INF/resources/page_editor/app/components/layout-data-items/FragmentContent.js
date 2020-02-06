@@ -39,8 +39,8 @@ import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 import {useIsActive, useActiveItemId} from '../Controls';
-import FloatingToolbar from '../FloatingToolbar';
 import UnsafeHTML from '../UnsafeHTML';
+import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import EditableDecoration from './EditableDecoration';
 
 function FragmentContent({fragmentEntryLink, itemId}, ref) {

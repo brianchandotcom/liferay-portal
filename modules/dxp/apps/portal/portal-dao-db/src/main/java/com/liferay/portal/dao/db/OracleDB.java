@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,21 +54,6 @@ public class OracleDB extends BaseDB {
 		template = _postBuildSQL(template);
 
 		return template;
-	}
-
-	@Override
-	public void buildSQLFile(String sqlDir, String fileName)
-		throws IOException {
-
-		String oracle = buildTemplate(sqlDir, fileName);
-
-		oracle = _preBuildSQL(oracle);
-		oracle = _postBuildSQL(oracle);
-
-		FileUtil.write(
-			StringBundler.concat(
-				sqlDir, "/", fileName, "/", fileName, "-oracle.sql"),
-			oracle);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-## Phrase vs. Sentence
+## MessageCheck
 
 Use either a single phrase or multiple sentences.
 

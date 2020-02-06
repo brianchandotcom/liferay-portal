@@ -263,6 +263,27 @@ describe('Analytics', () => {
 			expect(localStorage.getItem(STORAGE_KEY_USER_ID)).toEqual(userId);
 		});
 
+		it('replace the user id whenever the set identity hash is changed', async () => {
+			fetchMock.mock(/ac-server/i, () => Promise.resolve(200));
+			fetchMock.mock(/identity$/, () => Promise.resolve(200));
+
+			await Analytics.setIdentity({
+				email: 'john@liferay.com',
+				name: 'John'
+			});
+
+			const firstUserId = localStorage.getItem(STORAGE_KEY_USER_ID);
+
+			await Analytics.setIdentity({
+				email: 'brian@liferay.com',
+				name: 'Brian'
+			});
+
+			const secondUserId = localStorage.getItem(STORAGE_KEY_USER_ID);
+
+			expect(firstUserId).not.toEqual(secondUserId);
+		});
+
 		// Skipping this test because it was broken in the old
 		// Karma-based implementation (the `expect` was failing but it
 		// did so asynchronously after the test has "finished").

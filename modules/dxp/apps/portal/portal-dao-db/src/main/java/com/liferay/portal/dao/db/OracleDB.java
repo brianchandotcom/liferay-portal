@@ -64,40 +64,6 @@ public class OracleDB extends BaseDB {
 		String oracle = buildTemplate(sqlDir, fileName);
 
 		oracle = _preBuildSQL(oracle);
-
-		StringBundler imageSB = new StringBundler();
-		StringBundler journalArticleSB = new StringBundler();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(oracle))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.startsWith("insert into Image")) {
-					_convertToOracleCSV(line, imageSB);
-				}
-				else if (line.startsWith("insert into JournalArticle (")) {
-					_convertToOracleCSV(line, journalArticleSB);
-				}
-			}
-		}
-
-		if (imageSB.length() > 0) {
-			FileUtil.write(
-				StringBundler.concat(
-					sqlDir, "/", fileName, "/", fileName, "-oracle-image.csv"),
-				imageSB.toString());
-		}
-
-		if (journalArticleSB.length() > 0) {
-			FileUtil.write(
-				StringBundler.concat(
-					sqlDir, "/", fileName, "/", fileName,
-					"-oracle-journalarticle.csv"),
-				journalArticleSB.toString());
-		}
-
 		oracle = _postBuildSQL(oracle);
 
 		FileUtil.write(
@@ -288,19 +254,6 @@ public class OracleDB extends BaseDB {
 
 			return sb.toString();
 		}
-	}
-
-	private void _convertToOracleCSV(String line, StringBundler sb) {
-		int x = line.indexOf("values (");
-		int y = line.lastIndexOf(");");
-
-		line = line.substring(x + 8, y);
-
-		line = StringUtil.replace(line, "sysdate, ", "20050101, ");
-
-		sb.append(line);
-
-		sb.append("\n");
 	}
 
 	private String _postBuildSQL(String template) throws IOException {

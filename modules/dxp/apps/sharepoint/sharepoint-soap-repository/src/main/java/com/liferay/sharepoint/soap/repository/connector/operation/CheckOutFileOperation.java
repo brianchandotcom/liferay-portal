@@ -29,7 +29,6 @@ import java.rmi.RemoteException;
 public class CheckOutFileOperation extends BaseOperation {
 
 	public boolean execute(String filePath) throws SharepointException {
-
 		try {
 			CheckOutFileResponseDocument checkOutFileResponseDocument =
 				listsStub.checkOutFile(_getCheckOutFileDocument(filePath));

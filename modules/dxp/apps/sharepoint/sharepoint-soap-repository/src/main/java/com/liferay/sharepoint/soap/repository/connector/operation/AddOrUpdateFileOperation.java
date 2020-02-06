@@ -66,6 +66,18 @@ public class AddOrUpdateFileOperation extends BaseOperation {
 		}
 	}
 
+	private byte[] _getBytes(InputStream inputStream)
+		throws SharepointException {
+
+		try {
+			return FileUtil.getBytes(inputStream);
+		}
+		catch (IOException ioException) {
+			throw new SharepointException(
+				"Unable to read input stream", ioException);
+		}
+	}
+
 	private CopyIntoItemsDocument _getCopyIntoItemsDocument(
 			String filePath, InputStream inputStream)
 		throws SharepointException {
@@ -83,38 +95,6 @@ public class AddOrUpdateFileOperation extends BaseOperation {
 		copyIntoItems.setStream(_getBytes(inputStream));
 
 		return copyIntoItemsDocument;
-	}
-
-	private void _processResponse(
-			CopyIntoItemsResponseDocument copyIntoItemsResponseDocument)
-		throws SharepointException {
-
-		CopyIntoItemsResponseDocument.CopyIntoItemsResponse
-			copyIntoItemsResponse =
-				copyIntoItemsResponseDocument.getCopyIntoItemsResponse();
-
-		CopyResultCollection copyResultCollection =
-			copyIntoItemsResponse.getResults();
-
-		CopyResult copyResult = copyResultCollection.getCopyResultArray(0);
-
-		if (copyResult.getErrorCode() != CopyErrorCode.SUCCESS) {
-			throw new SharepointResultException(
-				String.valueOf(copyResult.getErrorCode()),
-				copyResult.getErrorMessage());
-		}
-	}
-
-	private byte[] _getBytes(InputStream inputStream)
-		throws SharepointException {
-
-		try {
-			return FileUtil.getBytes(inputStream);
-		}
-		catch (IOException ioException) {
-			throw new SharepointException(
-				"Unable to read input stream", ioException);
-		}
 	}
 
 	private DestinationUrlCollection _getDestinationUrlCollection(
@@ -136,6 +116,26 @@ public class AddOrUpdateFileOperation extends BaseOperation {
 			_EMPTY_FIELD_INFORMATIONS);
 
 		return fieldInformationCollection;
+	}
+
+	private void _processResponse(
+			CopyIntoItemsResponseDocument copyIntoItemsResponseDocument)
+		throws SharepointException {
+
+		CopyIntoItemsResponseDocument.CopyIntoItemsResponse
+			copyIntoItemsResponse =
+				copyIntoItemsResponseDocument.getCopyIntoItemsResponse();
+
+		CopyResultCollection copyResultCollection =
+			copyIntoItemsResponse.getResults();
+
+		CopyResult copyResult = copyResultCollection.getCopyResultArray(0);
+
+		if (copyResult.getErrorCode() != CopyErrorCode.SUCCESS) {
+			throw new SharepointResultException(
+				String.valueOf(copyResult.getErrorCode()),
+				copyResult.getErrorMessage());
+		}
 	}
 
 	private static final FieldInformation[] _EMPTY_FIELD_INFORMATIONS =

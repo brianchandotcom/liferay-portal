@@ -51,7 +51,7 @@ public interface Expression<T> extends ASTNode {
 
 	public Predicate like(Expression<String> expression);
 
-	public Predicate like(String s);
+	public Predicate like(String value);
 
 	public Predicate lt(Expression<T> expression);
 

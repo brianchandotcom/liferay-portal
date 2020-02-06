@@ -101,8 +101,8 @@ public interface DefaultExpression<T> extends Expression<T> {
 	}
 
 	@Override
-	public default Predicate like(String s) {
-		return like(new Scalar<>(s));
+	public default Predicate like(String value) {
+		return like(new Scalar<>(value));
 	}
 
 	@Override

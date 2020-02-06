@@ -294,8 +294,8 @@ describe('The AssigneeInput component should', () => {
 
 		fireEvent.change(autocompleteInput, {target: {value: 'Test'}});
 		fireEvent.blur(autocompleteInput);
-		const dropdownListItem = getByTestId('dropDownListItem');
-		fireEvent.click(dropdownListItem);
+		const dropDownListItem = getByTestId('dropDownListItem');
+		fireEvent.click(dropDownListItem);
 	});
 
 	test('Select a new assignee with input already filled', async () => {
@@ -314,7 +314,7 @@ describe('The AssigneeInput component should', () => {
 
 		fireEvent.change(autocompleteInput, {target: {value: 'Test'}});
 		fireEvent.blur(autocompleteInput);
-		const dropdownListItem = getByTestId('dropDownListItem');
-		fireEvent.click(dropdownListItem);
+		const dropDownListItem = getByTestId('dropDownListItem');
+		fireEvent.click(dropDownListItem);
 	});
 });

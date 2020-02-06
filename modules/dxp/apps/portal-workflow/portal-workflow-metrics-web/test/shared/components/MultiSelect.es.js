@@ -46,7 +46,7 @@ test('Should add a tag', () => {
 	expect(component).toMatchSnapshot();
 });
 
-test('Should hide the dropdown list', () => {
+test('Should hide the dropDown list', () => {
 	const component = mount(
 		<MultiSelect data={data} selectedTagsId={selectedTagsId} />
 	);
@@ -86,7 +86,7 @@ test('Should search', () => {
 	expect(component).toMatchSnapshot();
 });
 
-test('Should show the dropdown list', () => {
+test('Should show the dropDown list', () => {
 	const component = mount(
 		<MultiSelect data={data} selectedTagsId={selectedTagsId} />
 	);

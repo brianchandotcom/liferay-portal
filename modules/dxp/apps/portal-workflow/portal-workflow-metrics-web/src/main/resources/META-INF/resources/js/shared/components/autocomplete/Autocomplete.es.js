@@ -28,7 +28,7 @@ const Autocomplete = ({
 }) => {
 	const [dropDownItems, setDropDownItems] = useState([]);
 	const [value, setValue] = useState('');
-	const [dropdownVisible, setDropdownVisible] = useState(false);
+	const [dropDownVisible, setDropDownVisible] = useState(false);
 	const [selectedValue, setSelectedValue] = useState();
 
 	const handleChange = useCallback(
@@ -38,7 +38,7 @@ const Autocomplete = ({
 				setSelectedValue();
 			}
 			setValue(value);
-			setDropdownVisible(() => value.length > 0);
+			setDropDownVisible(() => value.length > 0);
 
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		},
@@ -80,7 +80,7 @@ const Autocomplete = ({
 	useEffect(() => {
 		if (disabled) {
 			setValue('');
-			setDropdownVisible(false);
+			setDropDownVisible(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [disabled]);
@@ -108,11 +108,11 @@ const Autocomplete = ({
 				</ClayInput.Group>
 
 				<Autocomplete.DropDown
-					active={dropdownVisible}
+					active={dropDownVisible}
 					items={dropDownItems}
 					match={value}
 					onSelect={handleSelect}
-					setActive={setDropdownVisible}
+					setActive={setDropDownVisible}
 					setValue={setValue}
 				/>
 			</ClayAutocomplete>

@@ -80,7 +80,7 @@ class SLAListItem extends React.Component {
 							className="component-action dropdown-toggle"
 							data-toggle="liferay-dropdown"
 							href="#1"
-							id="dropdownAction1"
+							id="dropDownAction"
 							role="button"
 						>
 							<Icon iconName="ellipsis-v" />

@@ -260,7 +260,7 @@ exports[`Should add a tag 1`] = `
 </MultiSelect>
 `;
 
-exports[`Should hide the dropdown list 1`] = `
+exports[`Should hide the dropDown list 1`] = `
 <MultiSelect
   data={
     Array [
@@ -998,7 +998,7 @@ exports[`Should search 1`] = `
 </MultiSelect>
 `;
 
-exports[`Should show the dropdown list 1`] = `
+exports[`Should show the dropDown list 1`] = `
 <MultiSelect
   data={
     Array [

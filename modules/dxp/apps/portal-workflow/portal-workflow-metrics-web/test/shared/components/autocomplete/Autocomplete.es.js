@@ -42,8 +42,8 @@ describe('The Autocomplete component should', () => {
 	afterEach(() => cleanup);
 
 	test('Render its items list', () => {
-		const dropdownListItem = getByTestId('dropDownListItem');
-		expect(dropdownListItem.innerHTML).toContain('0test test0');
+		const dropDownListItem = getByTestId('dropDownListItem');
+		expect(dropDownListItem.innerHTML).toContain('0test test0');
 	});
 
 	test('Fire onChange handler function on change its text', () => {

@@ -39,7 +39,7 @@ exports[`Should render component 1`] = `
         className="component-action dropdown-toggle"
         data-toggle="liferay-dropdown"
         href="#1"
-        id="dropdownAction1"
+        id="dropDownAction"
         role="button"
       >
         <svg
@@ -215,7 +215,7 @@ exports[`Should render component 2`] = `
                 className="component-action dropdown-toggle"
                 data-toggle="liferay-dropdown"
                 href="#1"
-                id="dropdownAction1"
+                id="dropDownAction"
                 role="button"
               >
                 <Icon
@@ -431,7 +431,7 @@ exports[`Should render component blocked 1`] = `
                 className="component-action dropdown-toggle"
                 data-toggle="liferay-dropdown"
                 href="#1"
-                id="dropdownAction1"
+                id="dropDownAction"
                 role="button"
               >
                 <Icon

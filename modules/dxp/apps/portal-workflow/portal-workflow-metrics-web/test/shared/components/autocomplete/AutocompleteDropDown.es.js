@@ -40,7 +40,7 @@ describe('The AssigneeInput component should', () => {
 		);
 	});
 
-	test('Fire blur event when user blurs the dropdown', () => {
+	test('Fire blur event when user blurs the dropDown', () => {
 		const {getByTestId} = render(
 			<Autocomplete items={items} onChange={onChange} />
 		);

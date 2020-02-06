@@ -18,8 +18,8 @@
 
 <%
 User selUser = userDisplayContext.getSelectedUser();
-List<Group> sites = userDisplayContext.getSites();
-List<Group> inheritedSites = userDisplayContext.getInheritedSites();
+List<Group> siteGroups = userDisplayContext.getSiteGroups();
+List<Group> inheritedSiteGroups = userDisplayContext.getInheritedSiteGroups();
 
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites");
 %>
@@ -72,10 +72,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	emptyResultsMessage="this-user-does-not-belong-to-a-site"
 	headerNames="name,roles,null"
 	iteratorURL="<%= currentURLObj %>"
-	total="<%= sites.size() %>"
+	total="<%= siteGroups.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= sites.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+		results="<%= siteGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -271,7 +271,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	</aui:script>
 </c:if>
 
-<c:if test="<%= !inheritedSites.isEmpty() %>">
+<c:if test="<%= !inheritedSiteGroups.isEmpty() %>">
 	<h4 class="sheet-tertiary-title"><liferay-ui:message key="inherited-sites" /></h4>
 
 	<liferay-ui:search-container
@@ -279,10 +279,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		curParam="inheritedSitesCur"
 		headerNames="name,roles"
 		iteratorURL="<%= currentURLObj %>"
-		total="<%= inheritedSites.size() %>"
+		total="<%= inheritedSiteGroups.size() %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= inheritedSites.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+			results="<%= inheritedSiteGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row

@@ -22,7 +22,7 @@ User selUser = userDisplayContext.getSelectedUser();
 List<Group> groups = new ArrayList<>();
 
 groups.addAll(userDisplayContext.getGroups());
-groups.addAll(userDisplayContext.getInheritedSites());
+groups.addAll(userDisplayContext.getInheritedSiteGroups());
 
 List<Organization> organizations = userDisplayContext.getOrganizations();
 

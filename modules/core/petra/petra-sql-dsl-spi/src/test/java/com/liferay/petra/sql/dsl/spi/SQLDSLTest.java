@@ -21,6 +21,7 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Alias;
+import com.liferay.petra.sql.dsl.expression.ColumnAlias;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.expression.step.WhenThenStep;
@@ -39,6 +40,7 @@ import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultAlias;
+import com.liferay.petra.sql.dsl.spi.expression.DefaultColumnAlias;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.NullExpression;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
@@ -96,6 +98,7 @@ public class SQLDSLTest {
 				assertClasses.add(DefaultAlias.class);
 				assertClasses.add(DefaultASTNodeListener.class);
 				assertClasses.add(DefaultColumn.class);
+				assertClasses.add(DefaultColumnAlias.class);
 				assertClasses.add(DefaultOrderByExpression.class);
 				assertClasses.add(DefaultPredicate.class);
 				assertClasses.add(DSLFunction.class);
@@ -1133,30 +1136,34 @@ public class SQLDSLTest {
 			MainExampleTable.TABLE.getColumn(
 				MainExampleTable.TABLE.name.getName(), Long.class));
 
-		Alias<String> nameAlias = aliasMainExampleTable.name.as("nameAlias");
+		ColumnAlias<MainExampleTable, String> nameColumnAlias =
+			aliasMainExampleTable.name.as("nameColumnAlias");
 
 		Assert.assertEquals(
 			"MainExample alias", aliasMainExampleTable.toString());
 
-		Column<MainExampleTable, String> column =
-			(Column<MainExampleTable, String>)nameAlias.getExpression();
+		Assert.assertNotSame(
+			MainExampleTable.TABLE.name, nameColumnAlias.getExpression());
 
-		Assert.assertNotSame(MainExampleTable.TABLE.name, column);
-
-		aliasMainExampleTable = column.getTable();
+		aliasMainExampleTable = nameColumnAlias.getTable();
 
 		Assert.assertEquals("alias", aliasMainExampleTable.getName());
+
+		Column<MainExampleTable, String> column =
+			(Column<MainExampleTable, String>)nameColumnAlias.getExpression();
+
+		Assert.assertSame(column.getTable(), nameColumnAlias.getTable());
 
 		Assert.assertEquals(
 			MainExampleTable.TABLE.name,
 			aliasMainExampleTable.getColumn(
-				nameAlias.getName(), column.getJavaType()));
+				nameColumnAlias.getName(), column.getJavaType()));
 
 		Assert.assertNull(
-			MainExampleTable.TABLE.getColumn(nameAlias.getName()));
+			MainExampleTable.TABLE.getColumn(nameColumnAlias.getName()));
 		Assert.assertNull(
 			MainExampleTable.TABLE.getColumn(
-				nameAlias.getName(), column.getJavaType()));
+				nameColumnAlias.getName(), column.getJavaType()));
 
 		Collection<Column<MainExampleTable, ?>> columns =
 			MainExampleTable.TABLE.getColumns();

@@ -68,6 +68,8 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Collections;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -194,15 +196,16 @@ public class UserAccountResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			booleanQueryUnsafeConsumer, filter, User.class, search, pagination,
+			Collections.emptyMap(), booleanQueryUnsafeConsumer, filter,
+			User.class, search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
+			sorts,
 			document -> _toUserAccount(
 				_userService.getUserById(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	private OrganizationBrief _toOrganizationBrief(Organization organization) {

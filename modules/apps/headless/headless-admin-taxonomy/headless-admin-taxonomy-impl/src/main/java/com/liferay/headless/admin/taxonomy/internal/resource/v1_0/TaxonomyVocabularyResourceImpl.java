@@ -104,6 +104,7 @@ public class TaxonomyVocabularyResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
+			Collections.emptyMap(),
 			booleanQuery -> {
 			},
 			filter, AssetVocabulary.class, search, pagination,
@@ -113,11 +114,11 @@ public class TaxonomyVocabularyResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 			},
+			sorts,
 			document -> _toTaxonomyVocabulary(
 				_assetVocabularyService.getVocabulary(
 					GetterUtil.getLong(
-						document.get(Field.ASSET_VOCABULARY_ID)))),
-			sorts);
+						document.get(Field.ASSET_VOCABULARY_ID)))));
 	}
 
 	@Override

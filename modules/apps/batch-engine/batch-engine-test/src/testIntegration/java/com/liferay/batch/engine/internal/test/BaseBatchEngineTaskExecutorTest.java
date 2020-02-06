@@ -208,6 +208,7 @@ public class BaseBatchEngineTaskExecutorTest {
 			long siteId = GetterUtil.getLong(parameters.get("siteId"));
 
 			return SearchUtil.search(
+				Collections.emptyMap(),
 				booleanQuery -> {
 				},
 				filter, BlogsEntry.class, search, pagination,
@@ -219,11 +220,11 @@ public class BaseBatchEngineTaskExecutorTest {
 					searchContext.setCompanyId(contextCompany.getCompanyId());
 					searchContext.setGroupIds(new long[] {siteId});
 				},
+				sorts,
 				document -> _toBlogPosting(
 					_blogsEntryService.getEntry(
 						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-					contextUser),
-				sorts, Collections.emptyMap());
+					contextUser));
 		}
 
 		@Override

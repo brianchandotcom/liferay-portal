@@ -111,6 +111,8 @@ public class WikiPageResourceImpl
 		WikiNode wikiNode = _wikiNodeService.getNode(wikiNodeId);
 
 		return SearchUtil.search(
+			(Map)_getWikiNodeListActions(
+				wikiNode.getPrimaryKey(), wikiNode.getGroupId()),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -124,12 +126,10 @@ public class WikiPageResourceImpl
 				Field.ENTRY_CLASS_PK),
 			searchContext -> searchContext.setCompanyId(
 				contextCompany.getCompanyId()),
+			sorts,
 			document -> _toWikiPage(
 				_wikiPageService.getPage(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts,
-			(Map)_getWikiNodeListActions(
-				wikiNode.getPrimaryKey(), wikiNode.getGroupId()));
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

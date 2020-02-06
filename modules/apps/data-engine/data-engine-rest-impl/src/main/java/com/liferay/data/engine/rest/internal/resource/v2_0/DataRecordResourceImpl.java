@@ -66,6 +66,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -184,6 +185,7 @@ public class DataRecordResourceImpl
 			dataRecordCollectionId);
 
 		return SearchUtil.search(
+			Collections.emptyMap(),
 			booleanQuery -> {
 			},
 			_getBooleanFilter(dataListViewId, ddlRecordSet), DDLRecord.class,
@@ -198,10 +200,10 @@ public class DataRecordResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setUserId(0);
 			},
+			sorts,
 			document -> _toDataRecord(
 				_ddlRecordLocalService.getRecord(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override

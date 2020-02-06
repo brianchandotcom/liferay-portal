@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -66,7 +65,7 @@ public class DepotAdminMembershipsDisplayContextTest {
 	}
 
 	@Test
-	public void testGetDepotsWithDepotAndCompanyAdmin() throws Exception {
+	public void testGetDepotGroupsWithDepotAndCompanyAdmin() throws Exception {
 		Group group = getDepotGroup();
 
 		Mockito.when(
@@ -78,19 +77,19 @@ public class DepotAdminMembershipsDisplayContextTest {
 		DepotAdminMembershipsDisplayContext
 			depotAdminMembershipsDisplayContext =
 				new DepotAdminMembershipsDisplayContext(
-					getLiferayPortletRequest(
+					getHttpServletRequest(
 						new ThemeDisplayBuilder().withPermissionChecker(
 							getPermissionCheckerWithCompanyAdmin()
-						).build()),
-					null);
+						).build()));
 
-		List<Group> depots = depotAdminMembershipsDisplayContext.getDepots();
+		List<Group> depots = depotAdminMembershipsDisplayContext.getDepotGroups(
+			0, 20);
 
 		Assert.assertEquals(depots.toString(), 1, depots.size());
 	}
 
 	@Test
-	public void testGetDepotsWithDepotAndNoCompanyAdminAndAssignMember()
+	public void testGetDepotGroupsWithDepotAndNoCompanyAdminAndAssignMember()
 		throws Exception {
 
 		Group group = getDepotGroup();
@@ -104,19 +103,19 @@ public class DepotAdminMembershipsDisplayContextTest {
 		DepotAdminMembershipsDisplayContext
 			depotAdminMembershipsDisplayContext =
 				new DepotAdminMembershipsDisplayContext(
-					getLiferayPortletRequest(
+					getHttpServletRequest(
 						new ThemeDisplayBuilder().withPermissionChecker(
 							getPermissionCheckerWithNoCompanyAdminAndAssignMember()
-						).build()),
-					null);
+						).build()));
 
-		List<Group> depots = depotAdminMembershipsDisplayContext.getDepots();
+		List<Group> depots = depotAdminMembershipsDisplayContext.getDepotGroups(
+			0, 20);
 
 		Assert.assertEquals(depots.toString(), 1, depots.size());
 	}
 
 	@Test
-	public void testGetDepotsWithDepotAndNoCompanyAdminAndNoAssignMember()
+	public void testGetDepotGroupsWithDepotAndNoCompanyAdminAndNoAssignMember()
 		throws Exception {
 
 		Group group = getDepotGroup();
@@ -130,19 +129,19 @@ public class DepotAdminMembershipsDisplayContextTest {
 		DepotAdminMembershipsDisplayContext
 			depotAdminMembershipsDisplayContext =
 				new DepotAdminMembershipsDisplayContext(
-					getLiferayPortletRequest(
+					getHttpServletRequest(
 						new ThemeDisplayBuilder().withPermissionChecker(
 							getPermissionCheckerWithNoCompanyAdminAndNoAssignMember()
-						).build()),
-					null);
+						).build()));
 
-		List<Group> depots = depotAdminMembershipsDisplayContext.getDepots();
+		List<Group> depots = depotAdminMembershipsDisplayContext.getDepotGroups(
+			0, 20);
 
 		Assert.assertEquals(depots.toString(), 0, depots.size());
 	}
 
 	@Test
-	public void testGetDepotsWithSite() throws Exception {
+	public void testGetDepotGroupsWithSite() throws Exception {
 		Group group = getSiteGroup();
 
 		Mockito.when(
@@ -154,22 +153,12 @@ public class DepotAdminMembershipsDisplayContextTest {
 		DepotAdminMembershipsDisplayContext
 			depotAdminMembershipsDisplayContext =
 				new DepotAdminMembershipsDisplayContext(
-					getLiferayPortletRequest(new ThemeDisplayBuilder().build()),
-					null);
+					getHttpServletRequest(new ThemeDisplayBuilder().build()));
 
-		List<Group> depots = depotAdminMembershipsDisplayContext.getDepots();
+		List<Group> depots = depotAdminMembershipsDisplayContext.getDepotGroups(
+			0, 20);
 
 		Assert.assertEquals(depots.toString(), 0, depots.size());
-	}
-
-	protected static HttpServletRequest getHttpServletRequest(
-		ThemeDisplay themeDisplay) {
-
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
-
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return httpServletRequest;
 	}
 
 	protected Group getDepotGroup() {
@@ -190,28 +179,14 @@ public class DepotAdminMembershipsDisplayContextTest {
 		return group;
 	}
 
-	protected LiferayPortletRequest getLiferayPortletRequest(
+	protected HttpServletRequest getHttpServletRequest(
 		ThemeDisplay themeDisplay) {
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest(
-			themeDisplay);
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
-		LiferayPortletRequest liferayPortletRequest = Mockito.mock(
-			LiferayPortletRequest.class);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-		Mockito.when(
-			liferayPortletRequest.getHttpServletRequest()
-		).thenReturn(
-			httpServletRequest
-		);
-
-		Mockito.when(
-			liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		);
-
-		return liferayPortletRequest;
+		return httpServletRequest;
 	}
 
 	protected PermissionChecker getPermissionCheckerWithCompanyAdmin() {

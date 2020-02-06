@@ -107,6 +107,16 @@ public class UserDisplayContext {
 		return groups;
 	}
 
+	public List<Group> getInheritedSiteGroups() throws PortalException {
+		SortedSet<Group> inheritedSiteGroupsSet = new TreeSet<>();
+
+		inheritedSiteGroupsSet.addAll(
+			GroupLocalServiceUtil.getUserGroupsRelatedGroups(getUserGroups()));
+		inheritedSiteGroupsSet.addAll(_getOrganizationRelatedGroups());
+
+		return ListUtil.fromCollection(inheritedSiteGroupsSet);
+	}
+
 	public List<UserGroupGroupRole> getInheritedSiteRoles() {
 		List<UserGroupGroupRole> inheritedSiteRoles = Collections.emptyList();
 
@@ -117,16 +127,6 @@ public class UserDisplayContext {
 		}
 
 		return inheritedSiteRoles;
-	}
-
-	public List<Group> getInheritedSiteGroups() throws PortalException {
-		SortedSet<Group> inheritedSiteGroupsSet = new TreeSet<>();
-
-		inheritedSiteGroupsSet.addAll(
-			GroupLocalServiceUtil.getUserGroupsRelatedGroups(getUserGroups()));
-		inheritedSiteGroupsSet.addAll(_getOrganizationRelatedGroups());
-
-		return ListUtil.fromCollection(inheritedSiteGroupsSet);
 	}
 
 	public List<UserGroupRole> getOrganizationRoles() throws PortalException {
@@ -193,10 +193,6 @@ public class UserDisplayContext {
 		return _selUser;
 	}
 
-	public List<UserGroupRole> getSiteRoles() throws PortalException {
-		return ListUtil.filter(_getUserGroupRoles(), this::_isSiteRole);
-	}
-
 	public List<Group> getSiteGroups() throws PortalException {
 		List<Group> siteGroups = Collections.emptyList();
 
@@ -210,6 +206,10 @@ public class UserDisplayContext {
 		}
 
 		return siteGroups;
+	}
+
+	public List<UserGroupRole> getSiteRoles() throws PortalException {
+		return ListUtil.filter(_getUserGroupRoles(), this::_isSiteRole);
 	}
 
 	public List<UserGroup> getUserGroups() {

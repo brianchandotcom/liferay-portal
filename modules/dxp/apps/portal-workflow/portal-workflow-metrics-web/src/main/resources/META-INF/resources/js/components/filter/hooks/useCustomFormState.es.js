@@ -25,10 +25,7 @@ const useCustomFormState = () => {
 	const onClickFilter = useCallback(currentItem => {
 		if (isCustomFilter(currentItem)) {
 			setFormVisible(true);
-
-			if (currentItem.active) {
-				document.dispatchEvent(new Event('mousedown'));
-			}
+			document.dispatchEvent(new Event('mousedown'));
 		}
 		else {
 			setFormVisible(false);

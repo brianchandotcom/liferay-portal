@@ -19,7 +19,6 @@ import {getVelocityUnits} from './util/velocityUnitUtil.es';
 
 const VelocityUnitFilter = ({
 	className,
-	dispatch,
 	filterKey = filterConstants.velocityUnit.key,
 	options = {},
 	prefixKey = '',
@@ -29,7 +28,8 @@ const VelocityUnitFilter = ({
 		hideControl: true,
 		multiple: false,
 		position: 'right',
-		withSelectionTitle: true
+		withSelectionTitle: true,
+		withoutRouteParams: false
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
@@ -39,9 +39,9 @@ const VelocityUnitFilter = ({
 	]);
 
 	const {items, selectedItems} = useFilterStatic(
-		dispatch,
 		filterKey,
 		prefixKey,
+		options.withoutRouteParams,
 		velocityUnits
 	);
 
@@ -50,7 +50,7 @@ const VelocityUnitFilter = ({
 		[items]
 	);
 
-	if (defaultItem && !selectedItems.length) {
+	if (defaultItem && options.withSelectionTitle && !selectedItems.length) {
 		selectedItems[0] = defaultItem;
 	}
 

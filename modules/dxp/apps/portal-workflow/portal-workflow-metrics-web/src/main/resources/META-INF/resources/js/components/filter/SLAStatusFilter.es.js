@@ -18,7 +18,6 @@ import filterConstants from '../../shared/components/filter/util/filterConstants
 
 const SLAStatusFilter = ({
 	className,
-	dispatch,
 	filterKey = filterConstants.slaStatus.key,
 	options = {},
 	prefixKey = ''
@@ -27,15 +26,16 @@ const SLAStatusFilter = ({
 		hideControl: false,
 		multiple: true,
 		position: 'left',
-		withSelectionTitle: true
+		withSelectionTitle: true,
+		withoutRouteParams: false
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
 
 	const {items, selectedItems} = useFilterStatic(
-		dispatch,
 		filterKey,
 		prefixKey,
+		options.withoutRouteParams,
 		slaStatuses
 	);
 

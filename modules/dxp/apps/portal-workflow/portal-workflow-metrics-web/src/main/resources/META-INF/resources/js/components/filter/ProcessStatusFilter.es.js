@@ -18,7 +18,6 @@ import filterConstants from '../../shared/components/filter/util/filterConstants
 
 const ProcessStatusFilter = ({
 	className,
-	dispatch,
 	filterKey = filterConstants.processStatus.key,
 	options = {},
 	prefixKey = ''
@@ -27,15 +26,16 @@ const ProcessStatusFilter = ({
 		hideControl: false,
 		multiple: true,
 		position: 'left',
-		withSelectionTitle: false
+		withSelectionTitle: false,
+		withoutRouteParams: false
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
 
 	const {items, selectedItems} = useFilterStatic(
-		dispatch,
 		filterKey,
 		prefixKey,
+		options.withoutRouteParams,
 		processStatuses
 	);
 

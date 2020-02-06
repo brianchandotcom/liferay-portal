@@ -11,11 +11,15 @@
 
 import {useState} from 'react';
 
-import {pushToHistory} from '../../../shared/components/filter/util/filterUtil.es';
+import {
+	getCapitalizedFilterKey,
+	replaceHistory
+} from '../../../shared/components/filter/util/filterUtil.es';
 import {
 	parse,
 	stringify
 } from '../../../shared/components/router/queryString.es';
+import {useFilter} from '../../../shared/hooks/useFilter.es';
 import {useRouter} from '../../../shared/hooks/useRouter.es';
 import {useRouterParams} from '../../../shared/hooks/useRouterParams.es';
 import moment from '../../../shared/util/moment.es';
@@ -25,20 +29,24 @@ import {
 	parseDateMomentEnLocale
 } from '../util/timeRangeUtil.es';
 
-const useCustomTimeRange = (filterKey, prefixKey = '') => {
+const useCustomTimeRange = (filterKey, prefixKey = '', withoutRouteParams) => {
 	const [errors, setErrors] = useState(undefined);
-
-	const dateEndKey = `${prefixKey}dateEnd`;
-	const dateStartKey = `${prefixKey}dateStart`;
-	const prefixedFilterKey = `${prefixKey}${filterKey}`;
-
 	const {filters} = useRouterParams();
+	const {dispatch, filterState, filterValues} = useFilter({
+		withoutRouteParams
+	});
+
+	const dateEndKey = getCapitalizedFilterKey(prefixKey, 'dateEnd');
+	const dateStartKey = getCapitalizedFilterKey(prefixKey, 'dateStart');
+	const prefixedFilterKey = getCapitalizedFilterKey(prefixKey, filterKey);
+
+	const values = !withoutRouteParams ? filters : filterValues;
 
 	const [dateEnd, setDateEnd] = useState(
-		formatDateEnLocale(filters[dateEndKey])
+		formatDateEnLocale(values[dateEndKey])
 	);
 	const [dateStart, setDateStart] = useState(
-		formatDateEnLocale(filters[dateStartKey])
+		formatDateEnLocale(values[dateStartKey])
 	);
 
 	const routerProps = useRouter();
@@ -47,16 +55,25 @@ const useCustomTimeRange = (filterKey, prefixKey = '') => {
 		const {dateEnd: dateEndError, dateStart: dateStartError} = errors || {};
 
 		if (!dateEndError && !dateStartError) {
-			const query = parse(routerProps.location.search);
-
-			query.filters = {
-				...query.filters,
+			const newValue = {
 				[dateEndKey]: formatQueryDate(dateEnd, true),
 				[dateStartKey]: formatQueryDate(dateStart),
 				[prefixedFilterKey]: ['custom']
 			};
 
-			pushToHistory(stringify(query), routerProps);
+			if (!withoutRouteParams) {
+				const query = parse(routerProps.location.search);
+
+				query.filters = {
+					...query.filters,
+					...newValue
+				};
+
+				replaceHistory(stringify(query), routerProps);
+			}
+			else {
+				dispatch({...filterState, ...newValue});
+			}
 		}
 	};
 

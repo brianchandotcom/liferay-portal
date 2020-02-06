@@ -18,7 +18,6 @@ import filterConstants from '../../shared/components/filter/util/filterConstants
 
 const AssigneeFilter = ({
 	className,
-	dispatch,
 	filterKey = filterConstants.assignee.key,
 	options = {},
 	prefixKey = '',
@@ -28,7 +27,8 @@ const AssigneeFilter = ({
 		hideControl: false,
 		multiple: true,
 		position: 'left',
-		withSelectionTitle: false
+		withSelectionTitle: false,
+		withoutRouteParams: false
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
@@ -46,11 +46,11 @@ const AssigneeFilter = ({
 	);
 
 	const {items, selectedItems} = useFilterFetch({
-		dispatch,
 		filterKey,
 		prefixKey,
 		requestUrl: `/processes/${processId}/assignee-users?page=0&pageSize=0`,
-		staticItems
+		staticItems,
+		withoutRouteParams: options.withoutRouteParams
 	});
 
 	const defaultItem = useMemo(() => (items ? items[0] : undefined), [items]);

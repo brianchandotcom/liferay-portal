@@ -15,7 +15,10 @@ import Filter from '../../shared/components/filter/Filter.es';
 import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.es';
 import {useFilterStatic} from '../../shared/components/filter/hooks/useFilterStatic.es';
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
-import {mergeItemsArray} from '../../shared/components/filter/util/filterUtil.es';
+import {
+	getCapitalizedFilterKey,
+	mergeItemsArray
+} from '../../shared/components/filter/util/filterUtil.es';
 import {useRouterParams} from '../../shared/hooks/useRouterParams.es';
 import {useSessionStorage} from '../../shared/hooks/useStorage.es';
 import {AppContext} from '../AppContext.es';
@@ -27,7 +30,6 @@ const TimeRangeFilter = ({
 	buttonClassName,
 	className,
 	disabled,
-	dispatch,
 	filterKey = filterConstants.timeRange.key,
 	options = {},
 	prefixKey = '',
@@ -37,7 +39,8 @@ const TimeRangeFilter = ({
 		hideControl: true,
 		multiple: false,
 		position: 'left',
-		withSelectionTitle: true
+		withSelectionTitle: true,
+		withoutRouteParams: false
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
@@ -52,8 +55,11 @@ const TimeRangeFilter = ({
 	} = useCustomFormState();
 	const [storedTimeRanges = {}] = useSessionStorage('timeRanges');
 
-	const dateEnd = filters[`${prefixKey}dateEnd`];
-	const dateStart = filters[`${prefixKey}dateStart`];
+	const dateEndKey = getCapitalizedFilterKey(prefixKey, 'dateEnd');
+	const dateStartKey = getCapitalizedFilterKey(prefixKey, 'dateStart');
+
+	const dateEnd = filters[dateEndKey];
+	const dateStart = filters[dateStartKey];
 
 	const {items: timeRanges} = useMemo(() => storedTimeRanges, [
 		storedTimeRanges
@@ -71,9 +77,9 @@ const TimeRangeFilter = ({
 	);
 
 	const {items, selectedItems} = useFilterStatic(
-		dispatch,
 		filterKey,
 		prefixKey,
+		options.withoutRouteParams,
 		staticItems
 	);
 
@@ -82,7 +88,7 @@ const TimeRangeFilter = ({
 		[items]
 	);
 
-	if (defaultItem && !selectedItems.length) {
+	if (defaultItem && options.withSelectionTitle && !selectedItems.length) {
 		selectedItems[0] = defaultItem;
 	}
 
@@ -115,6 +121,7 @@ const TimeRangeFilter = ({
 					items={items}
 					prefixKey={prefixKey}
 					setFormVisible={setFormVisible}
+					withoutRouteParams={options.withoutRouteParams}
 				/>
 			)}
 		</Filter>

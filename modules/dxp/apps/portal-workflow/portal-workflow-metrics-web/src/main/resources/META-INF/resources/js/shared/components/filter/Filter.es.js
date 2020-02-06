@@ -138,7 +138,8 @@ const Filter = ({
 				if (!multiple) {
 					applyFilterChanges();
 					closeDropdown();
-				} else {
+				}
+				else {
 					setChanged(true);
 				}
 			}

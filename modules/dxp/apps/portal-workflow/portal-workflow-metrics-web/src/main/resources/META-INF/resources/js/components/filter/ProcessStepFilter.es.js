@@ -24,7 +24,6 @@ const allStepsItem = {
 
 const ProcessStepFilter = ({
 	className,
-	dispatch,
 	filterKey = filterConstants.processStep.key,
 	options = {},
 	prefixKey = '',
@@ -35,7 +34,8 @@ const ProcessStepFilter = ({
 		multiple: true,
 		position: 'left',
 		withAllSteps: false,
-		withSelectionTitle: false
+		withSelectionTitle: false,
+		withoutRouteParams: false
 	};
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	options = useMemo(() => ({...defaultOptions, ...options}), [options]);
@@ -46,16 +46,16 @@ const ProcessStepFilter = ({
 	);
 
 	const {items, selectedItems} = useFilterFetch({
-		dispatch,
 		filterKey,
 		prefixKey,
 		requestUrl: `/processes/${processId}/tasks?page=0&pageSize=0`,
-		staticItems
+		staticItems,
+		withoutRouteParams: options.withoutRouteParams
 	});
 
 	const defaultItem = useMemo(() => items[0], [items]);
 
-	if (defaultItem && !selectedItems.length) {
+	if (defaultItem && options.withSelectionTitle && !selectedItems.length) {
 		selectedItems[0] = defaultItem;
 	}
 

@@ -25,7 +25,8 @@ const CustomTimeRangeForm = ({
 	filterKey,
 	items,
 	prefixKey = '',
-	setFormVisible
+	setFormVisible,
+	withoutRouteParams
 }) => {
 	const {
 		applyCustomFilter,
@@ -35,7 +36,7 @@ const CustomTimeRangeForm = ({
 		setDateEnd,
 		setDateStart,
 		validate
-	} = useCustomTimeRange(filterKey, prefixKey);
+	} = useCustomTimeRange(filterKey, prefixKey, withoutRouteParams);
 	const wrapperRef = useRef();
 
 	const dateFormat = 'MM/DD/YYYY';

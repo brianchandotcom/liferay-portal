@@ -181,7 +181,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 		String mappedModuleName = _exactMatchMap.get(moduleName);
 
 		if (Validator.isNotNull(mappedModuleName)) {
-			return mappedModuleName;
+			return mapModuleName(mappedModuleName);
 		}
 
 		for (Map.Entry<String, String> entry : _globalAliases.entrySet()) {
@@ -190,8 +190,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 			if (resolvedId.equals(moduleName) ||
 				moduleName.startsWith(resolvedId + StringPool.SLASH)) {
 
-				return entry.getValue() +
-					moduleName.substring(resolvedId.length());
+				return mapModuleName(
+					entry.getValue() +
+						moduleName.substring(resolvedId.length()));
 			}
 		}
 
@@ -201,8 +202,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 			if (resolvedId.equals(moduleName) ||
 				moduleName.startsWith(resolvedId + StringPool.SLASH)) {
 
-				return entry.getValue() +
-					moduleName.substring(resolvedId.length());
+				return mapModuleName(
+					entry.getValue() +
+						moduleName.substring(resolvedId.length()));
 			}
 		}
 

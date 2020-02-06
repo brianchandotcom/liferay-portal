@@ -18,7 +18,7 @@ import React from 'react';
 import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 
-function Column({children, className, item, ...props}, ref) {
+function Column({children, className, item}, ref) {
 	const {
 		config: {
 			size = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
@@ -34,7 +34,6 @@ function Column({children, className, item, ...props}, ref) {
 					[`col-${size}`]: size
 				})}
 				ref={ref}
-				{...props}
 			>
 				{children}
 			</div>

@@ -22,7 +22,7 @@ import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
 import {ResizingContext} from './RowWithControls';
 
-function ColumnWithControls({children, item, layoutData, ...otherProps}, ref) {
+function ColumnWithControls({children, item, layoutData}, ref) {
 	const showLayoutItemTopper = useSelector(selectShowLayoutItemTopper);
 
 	const {onResizeEnd, onResizeStart, onResizing} = useContext(
@@ -67,13 +67,8 @@ function ColumnWithControls({children, item, layoutData, ...otherProps}, ref) {
 	);
 
 	const content = (
-		<Column
-			className="page-editor__col"
-			item={item}
-			ref={ref}
-			{...otherProps}
-		>
-			{!columnInfo.isLastColumn ? (
+		<Column className="page-editor__col" item={item} ref={ref}>
+			{isActive && !columnInfo.isLastColumn ? (
 				<div>
 					{children}
 					<ClayButton

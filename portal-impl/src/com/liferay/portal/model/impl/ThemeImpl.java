@@ -359,9 +359,9 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			contextPath = PortalWebResourcesUtil.getModuleContextPath(
 				PortalWebResourceConstants.RESOURCE_TYPE_THEME_ADMIN);
 		}
-		else if (_themeId.equals("chamaeleon")) {
+		else if (_themeId.equals("chameleon")) {
 			contextPath = PortalWebResourcesUtil.getModuleContextPath(
-				PortalWebResourceConstants.RESOURCE_TYPE_THEME_CHAMAELEON);
+				PortalWebResourceConstants.RESOURCE_TYPE_THEME_CHAMELEON);
 		}
 
 		if (Validator.isNull(contextPath)) {

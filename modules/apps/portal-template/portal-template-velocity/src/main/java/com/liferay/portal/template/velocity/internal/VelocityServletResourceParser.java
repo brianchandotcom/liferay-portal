@@ -100,7 +100,7 @@ public class VelocityServletResourceParser extends URLResourceParser {
 
 			ServletContext themeClassicServletContext =
 				PortalWebResourcesUtil.getServletContext(
-					PortalWebResourceConstants.RESOURCE_TYPE_THEME_CHAMAELEON);
+					PortalWebResourceConstants.RESOURCE_TYPE_THEME_CHAMELEON);
 
 			url = themeClassicServletContext.getResource(
 				"/classic/templates/init_custom.vm");

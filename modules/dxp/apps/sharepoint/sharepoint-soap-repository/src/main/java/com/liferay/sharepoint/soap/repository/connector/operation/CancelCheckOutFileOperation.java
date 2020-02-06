@@ -28,23 +28,22 @@ import java.rmi.RemoteException;
 public class CancelCheckOutFileOperation extends BaseOperation {
 
 	public boolean execute(String filePath) throws SharepointException {
-		UndoCheckOutResponseDocument undoCheckOutResponseDocument = null;
-
 		try {
-			undoCheckOutResponseDocument = listsStub.undoCheckOut(
-				getUndoCheckOutDocument(filePath));
+			UndoCheckOutResponseDocument undoCheckOutResponseDocument =
+				listsStub.undoCheckOut(_getUndoCheckOutDocument(filePath));
+
+			UndoCheckOutResponseDocument.UndoCheckOutResponse
+				undoCheckOutResponse =
+					undoCheckOutResponseDocument.getUndoCheckOutResponse();
+
+			return undoCheckOutResponse.getUndoCheckOutResult();
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
-
-		UndoCheckOutResponseDocument.UndoCheckOutResponse undoCheckOutResponse =
-			undoCheckOutResponseDocument.getUndoCheckOutResponse();
-
-		return undoCheckOutResponse.getUndoCheckOutResult();
 	}
 
-	protected UndoCheckOutDocument getUndoCheckOutDocument(String filePath) {
+	private UndoCheckOutDocument _getUndoCheckOutDocument(String filePath) {
 		UndoCheckOutDocument undoCheckOutDocument =
 			UndoCheckOutDocument.Factory.newInstance();
 

@@ -42,16 +42,16 @@ public class GetInputStreamOperation extends BaseOperation {
 	public InputStream execute(SharepointObject sharepointObject)
 		throws SharepointException {
 
-		return execute(sharepointObject.getURL());
+		return _execute(sharepointObject.getURL());
 	}
 
 	public InputStream execute(SharepointVersion sharepointVersion)
 		throws SharepointException {
 
-		return execute(sharepointVersion.getURL());
+		return _execute(sharepointVersion.getURL());
 	}
 
-	protected void authenticate(HttpClient httpClient, URL url) {
+	private void _authenticate(HttpClient httpClient, URL url) {
 		HttpClientParams httpClientParams = httpClient.getParams();
 
 		httpClientParams.setAuthenticationPreemptive(true);
@@ -69,12 +69,12 @@ public class GetInputStreamOperation extends BaseOperation {
 		httpClientState.setCredentials(authScope, usernamePasswordCredentials);
 	}
 
-	protected InputStream execute(URL url) throws SharepointException {
+	private InputStream _execute(URL url) throws SharepointException {
 		url = urlHelper.escapeURL(url);
 
 		HttpClient httpClient = new HttpClient();
 
-		authenticate(httpClient, url);
+		_authenticate(httpClient, url);
 
 		GetMethod getMethod = new GetMethod(url.toString());
 

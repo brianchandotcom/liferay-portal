@@ -33,23 +33,23 @@ public class CheckInFileOperation extends BaseOperation {
 			SharepointConnection.CheckInType checkInType)
 		throws SharepointException {
 
-		CheckInFileResponseDocument checkInFileResponseDocument = null;
-
 		try {
-			checkInFileResponseDocument = listsStub.checkInFile(
-				getCheckInFileDocument(filePath, comment, checkInType));
+			CheckInFileResponseDocument checkInFileResponseDocument =
+				listsStub.checkInFile(
+					_getCheckInFileDocument(filePath, comment, checkInType));
+
+			CheckInFileResponseDocument.CheckInFileResponse
+				checkInFileResponse =
+					checkInFileResponseDocument.getCheckInFileResponse();
+
+			return checkInFileResponse.getCheckInFileResult();
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
-
-		CheckInFileResponseDocument.CheckInFileResponse checkInFileResponse =
-			checkInFileResponseDocument.getCheckInFileResponse();
-
-		return checkInFileResponse.getCheckInFileResult();
 	}
 
-	protected CheckInFileDocument getCheckInFileDocument(
+	private CheckInFileDocument _getCheckInFileDocument(
 		String filePath, String comment,
 		SharepointConnection.CheckInType checkInType) {
 

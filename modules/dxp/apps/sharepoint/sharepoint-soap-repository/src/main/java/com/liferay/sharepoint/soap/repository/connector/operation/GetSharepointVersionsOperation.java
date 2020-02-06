@@ -54,35 +54,33 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 	public List<SharepointVersion> execute(String filePath)
 		throws SharepointException {
 
-		SharepointObject sharepointObject =
-			_getSharepointObjectByPathOperation.execute(filePath);
-
-		if (sharepointObject == null) {
-			throw new SharepointException(
-				"Unable to find Sharepoint object at " + filePath);
-		}
-
-		GetVersionsResponseDocument getVersionsResponseDocument = null;
-
 		try {
-			getVersionsResponseDocument = versionsStub.getVersions(
-				getGetVersionsDocument(filePath));
+			SharepointObject sharepointObject =
+				_getSharepointObjectByPathOperation.execute(filePath);
+
+			if (sharepointObject == null) {
+				throw new SharepointException(
+					"Unable to find Sharepoint object at " + filePath);
+			}
+
+			GetVersionsResponseDocument getVersionsResponseDocument =
+				versionsStub.getVersions(_getGetVersionsDocument(filePath));
+
+			return _getSharepointVersions(
+				sharepointObject, getVersionsResponseDocument);
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
-
-		return getSharepointVersions(
-			sharepointObject, getVersionsResponseDocument);
 	}
 
-	protected Date getDate(String dateString) {
+	private Date _getDate(String dateString) {
 		Calendar calendar = DatatypeConverter.parseDateTime(dateString);
 
 		return calendar.getTime();
 	}
 
-	protected GetVersionsDocument getGetVersionsDocument(String filePath) {
+	private GetVersionsDocument _getGetVersionsDocument(String filePath) {
 		GetVersionsDocument getVersionsDocument =
 			GetVersionsDocument.Factory.newInstance();
 
@@ -94,13 +92,13 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 		return getVersionsDocument;
 	}
 
-	protected String getSharepointVersionId(
+	private String _getSharepointVersionId(
 		long sharepointObjectId, String version) {
 
 		return sharepointObjectId + StringPool.AT + version;
 	}
 
-	protected List<SharepointVersion> getSharepointVersions(
+	private List<SharepointVersion> _getSharepointVersions(
 		SharepointObject sharepointObject,
 		GetVersionsResponseDocument getVersionsResponseDocument) {
 
@@ -140,13 +138,13 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 
 			SharepointVersion sharepointVersion = new SharepointVersion(
 				commentsNode.getNodeValue(), createdByNode.getNodeValue(),
-				getDate(createdRawNode.getNodeValue()),
-				getSharepointVersionId(
+				_getDate(createdRawNode.getNodeValue()),
+				_getSharepointVersionId(
 					sharepointObject.getSharepointObjectId(),
 					versionNode.getNodeValue()),
 				GetterUtil.getLong(sizeNode.getNodeValue()),
 				urlHelper.toURL(urlNode.getNodeValue()),
-				getVersion(versionNode.getNodeValue()));
+				_getVersion(versionNode.getNodeValue()));
 
 			sharepointVersions.add(sharepointVersion);
 		}
@@ -156,7 +154,7 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 		return sharepointVersions;
 	}
 
-	protected String getVersion(String version) {
+	private String _getVersion(String version) {
 		if (version.startsWith(StringPool.AT)) {
 			version = version.substring(1);
 		}

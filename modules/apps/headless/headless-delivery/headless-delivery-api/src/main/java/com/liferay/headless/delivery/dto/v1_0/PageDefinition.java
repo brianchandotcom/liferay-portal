@@ -301,7 +301,7 @@ public class PageDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Settings settings;
 
-	@Schema
+	@Schema(description = "The categories associated with this article.")
 	@Valid
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
@@ -327,7 +327,7 @@ public class PageDefinition {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The categories associated with this article.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected TaxonomyCategory[] taxonomyCategories;
 

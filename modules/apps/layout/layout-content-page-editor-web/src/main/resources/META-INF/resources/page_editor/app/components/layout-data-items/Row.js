@@ -140,16 +140,21 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	const [highlightedColumn, setHighLightedColumn] = useState(null);
 	const [showOverlay, setShowOverlay] = useState(false);
 
-	const onResizeStart = () => setShowOverlay(true);
+	const getHighlightedColumnIndex = clientX => {
+		const gridSizes = getGridSizes(rowRect.width);
+		const mousePosition = clientX - rowRect.left;
+
+		return getClosestGridIndexPosition(mousePosition, gridSizes);
+	};
+
+	const onResizeStart = ({clientX}) => {
+		setHighLightedColumn(getHighlightedColumnIndex(clientX));
+		setShowOverlay(true);
+	};
 
 	const onResizing = ({clientX}, columnInfo) => {
 		if (rowRef.current) {
-			const gridSizes = getGridSizes(rowRef.current.offsetWidth);
-
-			const mousePosition = clientX - rowRect.left;
-
-			const index = getClosestGridIndexPosition(mousePosition, gridSizes);
-
+			const index = getHighlightedColumnIndex(clientX);
 			setHighLightedColumn(index);
 
 			const columnSizes = getColumnAccumulationSizes(

@@ -67,6 +67,21 @@ public class DepotEntryGroupRelServiceWrapper
 		return _depotEntryGroupRelService.getDepotEntryGroupRelsCount(groupId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Group>
+			getGroupDepotEntryGroups(long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryGroupRelService.getGroupDepotEntryGroups(
+			groupId, start, end);
+	}
+
+	@Override
+	public int getGroupDepotEntryGroupsCount(long groupId) {
+		return _depotEntryGroupRelService.getGroupDepotEntryGroupsCount(
+			groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

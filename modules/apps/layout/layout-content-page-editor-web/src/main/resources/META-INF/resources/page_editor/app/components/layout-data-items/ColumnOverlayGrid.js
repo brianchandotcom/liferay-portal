@@ -14,14 +14,28 @@
 
 import classNames from 'classnames';
 import React from 'react';
+import {createPortal} from 'react-dom';
 
 import {FragmentsEditorShim} from './FragmentsEditorShim';
 
-export default function ColumnOverlayGrid({columnSpacing, highlightedColumn}) {
-	return (
-		<div className="column-overlay-grid position-absolute w-100">
+export default function ColumnOverlayGrid({
+	columnSpacing,
+	highlightedColumn,
+	rowRect
+}) {
+	return createPortal(
+		<div
+			className="column-overlay-grid position-fixed"
+			style={{
+				height: `${rowRect.height}px`,
+				left: `${rowRect.left}px`,
+				top: `${rowRect.top}px`,
+				width: `${rowRect.width}px`
+			}}
+		>
 			<FragmentsEditorShim />
-			<div className="h-100 py-0">
+
+			<div className="container-fluid h-100 py-0">
 				<div
 					className={classNames('h-100 row', {
 						'no-gutters': !columnSpacing
@@ -43,6 +57,7 @@ export default function ColumnOverlayGrid({columnSpacing, highlightedColumn}) {
 					))}
 				</div>
 			</div>
-		</div>
+		</div>,
+		document.body
 	);
 }

@@ -135,18 +135,18 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	const store = useSelector(state => state);
 	const rowRef = useRef(null);
 
+	const rowRect = getRect(rowRef.current);
+
 	const [highlightedColumn, setHighLightedColumn] = useState(0);
 	const [showOverlay, setShowOverlay] = useState(false);
 
 	const onResizeStart = () => setShowOverlay(true);
 
-	const {left} = getRect(rowRef.current);
-
 	const onResizing = ({clientX}, columnInfo) => {
 		if (rowRef.current) {
 			const gridSizes = getGridSizes(rowRef.current.offsetWidth);
 
-			const mousePosition = clientX - left;
+			const mousePosition = clientX - rowRect.left;
 
 			const index = getClosestGridIndexPosition(mousePosition, gridSizes);
 
@@ -232,6 +232,7 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 				<ColumnOverlayGrid
 					columnSpacing={gutters}
 					highlightedColumn={highlightedColumn}
+					rowRect={rowRect}
 				/>
 			)}
 		</div>

@@ -132,8 +132,34 @@ public abstract class BaseDB implements DB {
 				sqlDir, "/create", suffix, "/create", suffix, "-",
 				getServerName(), ".sql"));
 
+		String createTablesContent = null;
+
+		if (population != BARE) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(sqlDir);
+
+			if (!sqlDir.endsWith("/WEB-INF/sql")) {
+				sb.append("/portal");
+				sb.append(suffix);
+				sb.append("/portal");
+			}
+			else {
+				sb.append("/tables");
+				sb.append(suffix);
+				sb.append("/tables");
+			}
+
+			sb.append(suffix);
+			sb.append(StringPool.DASH);
+			sb.append(getServerName());
+			sb.append(".sql");
+
+			createTablesContent = readFile(sb.toString());
+		}
+
 		String content = buildCreateFileContent(
-			sqlDir, databaseName, population);
+			sqlDir, databaseName, createTablesContent);
 
 		if (content != null) {
 			FileUtil.write(file, content);
@@ -729,7 +755,7 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected abstract String buildCreateFileContent(
-			String sqlDir, String databaseName, int population)
+			String sqlDir, String databaseName, String createTablesContent)
 		throws IOException;
 
 	protected String[] buildTableNameTokens(String line) {
@@ -878,32 +904,6 @@ public abstract class BaseDB implements DB {
 		}
 
 		return validIndexNames;
-	}
-
-	protected String getCreateTablesContent(String sqlDir, String suffix)
-		throws IOException {
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(sqlDir);
-
-		if (!sqlDir.endsWith("/WEB-INF/sql")) {
-			sb.append("/portal");
-			sb.append(suffix);
-			sb.append("/portal");
-		}
-		else {
-			sb.append("/tables");
-			sb.append(suffix);
-			sb.append("/tables");
-		}
-
-		sb.append(suffix);
-		sb.append(StringPool.DASH);
-		sb.append(getServerName());
-		sb.append(".sql");
-
-		return readFile(sb.toString());
 	}
 
 	protected abstract String getServerName();

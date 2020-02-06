@@ -36,7 +36,7 @@ public class TestDB extends BaseDB {
 
 	@Override
 	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, int population)
+			String sqlDir, String databaseName, String createContent)
 		throws IOException {
 
 		return StringPool.BLANK;

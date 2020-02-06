@@ -127,10 +127,8 @@ public class OracleDB extends BaseDB {
 
 	@Override
 	protected String buildCreateFileContent(
-			String sqlDir, String databaseName, int population)
+			String sqlDir, String databaseName, String createTablesContent)
 		throws IOException {
-
-		String suffix = getSuffix(population);
 
 		StringBundler sb = new StringBundler(13);
 
@@ -138,11 +136,11 @@ public class OracleDB extends BaseDB {
 		sb.append("create user &1 identified by &2;\n");
 		sb.append("grant connect,resource to &1;\n");
 
-		if (population != BARE) {
+		if (createTablesContent != null) {
 			sb.append("connect &1/&2;\n");
 			sb.append("set define off;\n");
 			sb.append("\n");
-			sb.append(getCreateTablesContent(sqlDir, suffix));
+			sb.append(createTablesContent);
 			sb.append("\n\n");
 			sb.append(readFile(sqlDir + "/indexes/indexes-oracle.sql"));
 			sb.append("\n\n");

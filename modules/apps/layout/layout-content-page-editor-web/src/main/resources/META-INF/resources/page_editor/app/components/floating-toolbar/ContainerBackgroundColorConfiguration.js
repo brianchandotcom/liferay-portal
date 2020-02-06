@@ -15,7 +15,7 @@
 import ClayForm from '@clayui/form';
 import React from 'react';
 
-import ColorPalette from '../../common/components/ColorPalette';
+import ColorPalette from '../../../common/components/ColorPalette';
 
 const CONTAINER_BACKGROUND_COLOR_IDENTIFIER = 'backgroundColorCssClass';
 

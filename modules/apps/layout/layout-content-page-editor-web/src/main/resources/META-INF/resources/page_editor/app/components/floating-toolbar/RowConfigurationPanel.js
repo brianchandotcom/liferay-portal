@@ -15,13 +15,13 @@
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
 import React, {useContext, useState} from 'react';
 
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../config/index';
-import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
-import {useSelector, useDispatch} from '../store/index';
-import updateItemConfig from '../thunks/updateItemConfig';
-import updateRowColumns from '../thunks/updateRowColumns';
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {ConfigContext} from '../../config/index';
+import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
+import {useSelector, useDispatch} from '../../store/index';
+import updateItemConfig from '../../thunks/updateItemConfig';
+import updateRowColumns from '../../thunks/updateRowColumns';
 
 const NUMBER_OF_COLUMNS_OPTIONS = ['1', '2', '3', '4', '5', '6'];
 

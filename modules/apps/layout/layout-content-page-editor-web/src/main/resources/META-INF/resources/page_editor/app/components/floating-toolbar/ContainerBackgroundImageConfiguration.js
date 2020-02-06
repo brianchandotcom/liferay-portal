@@ -15,8 +15,8 @@
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
-import {EDITABLE_TYPES} from '../config/constants/editableTypes';
-import {ImageSelector} from './../../common/components/ImageSelector';
+import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
+import {ImageSelector} from './../../../common/components/ImageSelector';
 import MappingSelector from './MappingSelector';
 
 const IMAGE_SOURCE = {

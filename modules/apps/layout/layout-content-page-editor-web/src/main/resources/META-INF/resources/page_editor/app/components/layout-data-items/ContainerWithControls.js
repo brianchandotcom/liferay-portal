@@ -22,8 +22,8 @@ import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopp
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {useSelectItem} from '../Controls';
-import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
+import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Container from './Container';
 
 const ContainerWithControls = React.forwardRef(

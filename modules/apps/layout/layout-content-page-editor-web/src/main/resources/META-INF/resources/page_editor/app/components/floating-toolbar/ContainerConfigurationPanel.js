@@ -14,13 +14,13 @@
 
 import React, {useContext} from 'react';
 
-import {CONTAINER_TYPES} from '../config/constants/containerTypes';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {ConfigContext} from '../config/index';
-import selectPrefixedSegmentsExperienceId from '../selectors/selectPrefixedSegmentsExperienceId';
-import {useSelector, useDispatch} from '../store/index';
-import updateItemConfig from '../thunks/updateItemConfig';
+import {CONTAINER_TYPES} from '../../config/constants/containerTypes';
+import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {ConfigContext} from '../../config/index';
+import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
+import {useSelector, useDispatch} from '../../store/index';
+import updateItemConfig from '../../thunks/updateItemConfig';
 import {ContainerBackgroundColorConfiguration} from './ContainerBackgroundColorConfiguration';
 import {ContainerBackgroundImageConfiguration} from './ContainerBackgroundImageConfiguration';
 import {

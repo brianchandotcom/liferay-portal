@@ -34,8 +34,8 @@ import {ConfigContext} from '../../config/index';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
-import FloatingToolbar from '../FloatingToolbar';
 import Topper from '../Topper';
+import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Row from './Row';
 
 const RowWithControls = React.forwardRef(

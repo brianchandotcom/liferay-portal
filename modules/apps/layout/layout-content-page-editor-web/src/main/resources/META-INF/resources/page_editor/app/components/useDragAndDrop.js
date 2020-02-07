@@ -26,13 +26,25 @@ export const TARGET_POSITION = {
 	TOP: 2
 };
 
-const NESTING_LEVEL = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: 0,
-	[LAYOUT_DATA_ITEM_TYPES.container]: 1,
-	[LAYOUT_DATA_ITEM_TYPES.dropZone]: Infinity,
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: Infinity,
-	[LAYOUT_DATA_ITEM_TYPES.root]: 0,
-	[LAYOUT_DATA_ITEM_TYPES.row]: Infinity
+const RULES_TYPE = {
+	ELEVATE: 3,
+	MIDDLE: 1,
+	NESTING_LEVEL: 2,
+	VALID_MOVE: 4
+};
+
+const RULES = {
+	[RULES_TYPE.MIDDLE]: ({hoverClientY, hoverMiddleY, ...args}) =>
+		isValidMoveToMiddle(args) && isMiddle(hoverClientY, hoverMiddleY),
+	[RULES_TYPE.NESTING_LEVEL]: isNestingLevel,
+	[RULES_TYPE.ELEVATE]: checkElevate,
+	[RULES_TYPE.VALID_MOVE]: isValidMoveToTargetPosition
+};
+
+const RULES_DROP_END = {
+	[RULES_TYPE.MIDDLE]: isValidMoveToMiddle,
+	[RULES_TYPE.NESTING_LEVEL]: isNestingLevel,
+	[RULES_TYPE.VALID_MOVE]: isValidMoveToTargetPosition
 };
 
 const initialDragDrop = {
@@ -113,17 +125,13 @@ export default function useDragAndDrop({
 		drop(_item, _monitor) {
 			if (
 				!_monitor.didDrop() &&
-				(isValidMoveToMiddle(
+				checkRules(RULES_DROP_END, {
 					dropNestedAndSibling,
-					layoutData.items[dropTargetItemId],
-					_item
-				) ||
-					isValidMoveToTargetPosition({
-						item: _item,
-						items: layoutData.items,
-						siblingOrParent: layoutData.items[dropTargetItemId],
-						targetPosition
-					}))
+					item: _item,
+					items: layoutData.items,
+					siblingOrParent: layoutData.items[dropTargetItemId],
+					targetPosition
+				})
 			) {
 				const {parentId, position} = getParentItemIdAndPositon({
 					dropNestedAndSibling,
@@ -142,10 +150,15 @@ export default function useDragAndDrop({
 			}
 		},
 		hover(_item, _monitor) {
-			if (_item.itemId === item.itemId || rootVoid(item)) {
+			if (_item.itemId === item.itemId) {
+				dispatch(initialDragDrop);
+				return;
+			}
+
+			if (rootVoid(item)) {
 				dispatch({
-					dropTargetItemId: null,
-					targetPosition: null
+					dropTargetItemId: item.itemId,
+					targetPosition: TARGET_POSITION.MIDDLE
 				});
 
 				return;
@@ -164,33 +177,35 @@ export default function useDragAndDrop({
 			// Get pixels to the top
 			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-			if (isValidMoveToMiddle(dropNestedAndSibling, item, _item)) {
-				if (isMiddle(hoverClientY, hoverMiddleY)) {
-					dispatch({
-						dropTargetItemId: item.itemId,
-						targetPosition: TARGET_POSITION.MIDDLE
-					});
-
-					return;
-				}
-			}
-
 			const newTargetPosition = getTargetPosition(
 				hoverClientY,
 				hoverMiddleY
 			);
 
-			if (
-				isElevate(
-					clientOffset.y,
-					hoverBoundingRect.height,
-					hoverBoundingRect.top,
-					hoverBoundingRect.bottom
-				)
-			) {
-				const parent = layoutData.items[item.parentId];
+			const result = checkRules(RULES, {
+				clientOffset,
+				dropNestedAndSibling,
+				hoverBoundingRect,
+				hoverClientY,
+				hoverMiddleY,
+				item: _item,
+				items: layoutData.items,
+				siblingOrParent: item,
+				targetPosition: newTargetPosition
+			});
 
-				if (parent && parent.type !== LAYOUT_DATA_ITEM_TYPES.root) {
+			switch (result) {
+				case RULES_TYPE.MIDDLE:
+					dispatch({
+						dropTargetItemId: item.itemId,
+						targetPosition: TARGET_POSITION.MIDDLE
+					});
+					break;
+				case RULES_TYPE.NESTING_LEVEL:
+					break;
+				case RULES_TYPE.ELEVATE: {
+					const parent = layoutData.items[item.parentId];
+
 					dispatch({
 						dropTargetItemId:
 							parent.type !== LAYOUT_DATA_ITEM_TYPES.row &&
@@ -199,28 +214,17 @@ export default function useDragAndDrop({
 								: item.parentId,
 						targetPosition: newTargetPosition
 					});
-
-					return;
+					break;
 				}
-			}
-
-			if (
-				isValidMoveToTargetPosition({
-					item: _item,
-					items: layoutData.items,
-					siblingOrParent: item,
-					targetPosition: newTargetPosition
-				})
-			) {
-				dispatch({
-					dropTargetItemId: item.itemId,
-					targetPosition: newTargetPosition
-				});
-			} else {
-				dispatch({
-					dropTargetItemId: null,
-					targetPosition: null
-				});
+				case RULES_TYPE.VALID_MOVE:
+					dispatch({
+						dropTargetItemId: item.itemId,
+						targetPosition: newTargetPosition
+					});
+					break;
+				default:
+					dispatch(initialDragDrop);
+					break;
 			}
 		}
 	});
@@ -245,6 +249,66 @@ export default function useDragAndDrop({
 		drag,
 		drop
 	};
+}
+
+function checkRules(rules, args) {
+	const rulesType = Object.keys(rules);
+	let passed = null;
+
+	for (let index = 0; index < rulesType.length; index++) {
+		const key = rulesType[index];
+		const rule = rules[key];
+
+		if (passed) {
+			break;
+		}
+
+		if (rule(args)) {
+			passed = Number(key);
+		}
+	}
+
+	return passed;
+}
+
+function checkElevate({
+	clientOffset,
+	hoverBoundingRect,
+	items,
+	siblingOrParent
+}) {
+	const parent = items[siblingOrParent.parentId];
+	return (
+		isElevate(
+			clientOffset.y,
+			hoverBoundingRect.height,
+			hoverBoundingRect.top,
+			hoverBoundingRect.bottom
+		) &&
+		parent &&
+		parent.type !== LAYOUT_DATA_ITEM_TYPES.root
+	);
+}
+
+const NESTING_LEVEL = {
+	[LAYOUT_DATA_ITEM_TYPES.column]: 0,
+	[LAYOUT_DATA_ITEM_TYPES.container]: 1,
+	[LAYOUT_DATA_ITEM_TYPES.dropZone]: Infinity,
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: Infinity,
+	[LAYOUT_DATA_ITEM_TYPES.root]: 0,
+	[LAYOUT_DATA_ITEM_TYPES.row]: Infinity
+};
+
+function isNestingLevel({item, items, siblingOrParent}) {
+	if (NESTING_LEVEL[item.type] !== Infinity) {
+		if (
+			getLevel(item, items, siblingOrParent) >= NESTING_LEVEL[item.type]
+		) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 function getLevel(item, items, siblingOrParent) {
@@ -275,11 +339,11 @@ function getLevel(item, items, siblingOrParent) {
 	return counter;
 }
 
-function isValidMoveToMiddle(enable, item, dragItem) {
+function isValidMoveToMiddle({dropNestedAndSibling, item, siblingOrParent}) {
 	return (
-		enable &&
-		!item.children.length &&
-		isNestingSupported(dragItem.type, item.type)
+		dropNestedAndSibling &&
+		!siblingOrParent.children.length &&
+		isNestingSupported(item.type, siblingOrParent.type)
 	);
 }
 
@@ -294,14 +358,6 @@ function isValidMoveToTargetPosition({
 			? siblingOrParent.parentId
 			: siblingOrParent.itemId
 	];
-
-	if (NESTING_LEVEL[item.type] !== Infinity) {
-		if (
-			getLevel(item, items, siblingOrParent) >= NESTING_LEVEL[item.type]
-		) {
-			return false;
-		}
-	}
 
 	if (typeof targetPosition !== 'number' && !rootVoid(siblingOrParent)) {
 		return false;

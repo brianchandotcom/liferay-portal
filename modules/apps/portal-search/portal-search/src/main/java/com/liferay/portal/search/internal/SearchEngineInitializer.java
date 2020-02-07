@@ -188,7 +188,9 @@ public class SearchEngineInitializer implements Runnable {
 		stopWatch.start();
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Reindexing with " + indexer.getClass() + " started");
+			_log.info(
+				"Reindexing of " + indexer.getClassName() +
+					" className started");
 		}
 
 		indexer.reindex(new String[] {String.valueOf(_companyId)});
@@ -198,8 +200,9 @@ public class SearchEngineInitializer implements Runnable {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Reindexing with ", indexer.getClass(), " completed in ",
-					stopWatch.getTime() / Time.SECOND, " seconds"));
+					"Reindexing of ", indexer.getClassName(), " className ",
+					"completed in ", stopWatch.getTime() / Time.SECOND,
+					" seconds"));
 		}
 	}
 

@@ -164,9 +164,59 @@ public class LiferayRelengUtil {
 			return true;
 		}
 
-		if (_isStale(project, artifactProjectDir, artifactGitId)) {
+		Project rootProject = project.getRootProject();
+
+		String gitId = GitUtil.getGitResult(
+			project, rootProject.getProjectDir(), "rev-parse", "--short",
+			"HEAD");
+
+		File gitResultsDir = new File(
+			rootProject.getBuildDir(), "releng/git-results/" + gitId);
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(artifactProjectDir.getName());
+		sb.append('-');
+		sb.append(artifactGitId);
+		sb.append('-');
+
+		File file = new File(gitResultsDir, sb.toString() + "true");
+
+		if (file.exists()) {
 			return true;
 		}
+
+		file = new File(gitResultsDir, sb.toString() + "false");
+
+		if (file.exists()) {
+			return false;
+		}
+
+		String result = GitUtil.getGitResult(
+			project, artifactProjectDir, "log", "--format=%s",
+			artifactGitId + "..HEAD", ".");
+
+		String[] lines = result.split("\\r?\\n");
+
+		for (String line : lines) {
+			if (logger.isInfoEnabled()) {
+				logger.info(line);
+			}
+
+			if (Validator.isNull(line)) {
+				continue;
+			}
+
+			if (line.contains(_IGNORED_MESSAGE_PATTERN)) {
+				continue;
+			}
+
+			_createNewFile(new File(gitResultsDir, sb.toString() + "true"));
+
+			return true;
+		}
+
+		_createNewFile(new File(gitResultsDir, sb.toString() + "false"));
 
 		return false;
 	}
@@ -247,68 +297,6 @@ public class LiferayRelengUtil {
 		}
 
 		return portalProjectDir;
-	}
-
-	private static boolean _isStale(
-		Project project, File artifactProjectDir, String artifactGitId) {
-
-		Logger logger = project.getLogger();
-
-		Project rootProject = project.getRootProject();
-
-		String gitId = GitUtil.getGitResult(
-			project, rootProject.getProjectDir(), "rev-parse", "--short",
-			"HEAD");
-
-		File gitResultsDir = new File(
-			rootProject.getBuildDir(), "releng/git-results/" + gitId);
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(artifactProjectDir.getName());
-		sb.append('-');
-		sb.append(artifactGitId);
-		sb.append('-');
-
-		File file = new File(gitResultsDir, sb.toString() + "true");
-
-		if (file.exists()) {
-			return true;
-		}
-
-		file = new File(gitResultsDir, sb.toString() + "false");
-
-		if (file.exists()) {
-			return false;
-		}
-
-		String result = GitUtil.getGitResult(
-			project, artifactProjectDir, "log", "--format=%s",
-			artifactGitId + "..HEAD", ".");
-
-		String[] lines = result.split("\\r?\\n");
-
-		for (String line : lines) {
-			if (logger.isInfoEnabled()) {
-				logger.info(line);
-			}
-
-			if (Validator.isNull(line)) {
-				continue;
-			}
-
-			if (line.contains(_IGNORED_MESSAGE_PATTERN)) {
-				continue;
-			}
-
-			_createNewFile(new File(gitResultsDir, sb.toString() + "true"));
-
-			return true;
-		}
-
-		_createNewFile(new File(gitResultsDir, sb.toString() + "false"));
-
-		return false;
 	}
 
 	private static void _createNewFile(File file) {

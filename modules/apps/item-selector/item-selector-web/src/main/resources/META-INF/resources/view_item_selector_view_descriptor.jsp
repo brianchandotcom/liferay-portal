@@ -44,7 +44,7 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 	>
 		<liferay-ui:search-container-row
 			className="Object"
-			cssClass="entry-display-style"
+			cssClass="entry entry-display-style"
 			modelVar="entry"
 		>
 
@@ -62,7 +62,7 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 				<c:when test="<%= itemSelectorViewDescriptorRendererDisplayContext.isIconDisplayStyle() %>">
 
 					<%
-					row.setCssClass("entry entry-card lfr-asset-item " + row.getCssClass());
+					row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 					%>
 
 					<liferay-ui:search-container-column-text>
@@ -81,11 +81,6 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
-
-					<%
-					row.setCssClass("entry " + row.getCssClass());
-					%>
-
 					<c:if test="<%= itemDescriptor.getUserId() != UserConstants.USER_ID_DEFAULT %>">
 						<liferay-ui:search-container-column-user
 							showDetails="<%= false %>"

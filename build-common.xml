@@ -758,6 +758,7 @@ information.
 		<attribute default="" name="outputproperty" />
 		<attribute default="" name="refreshdependencies" />
 		<attribute default="true" name="setupbinariescache" />
+		<attribute default="true" name="stacktrace" />
 		<attribute name="task" />
 		<element implicit="true" name="args" optional="true" />
 
@@ -834,7 +835,7 @@ information.
 						<arg if:set="env.JENKINS_HOME" value="--profile" />
 						<arg value="--project-cache-dir=${project.dir}/.gradle" />
 						<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
-						<arg value="--stacktrace" />
+						<arg if:true="@{stacktrace}" value="--stacktrace" />
 						<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 						<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dgradle.build.scan.enabled=true" />
@@ -947,7 +948,7 @@ information.
 								<arg if:set="env.JENKINS_HOME" value="--profile" />
 								<arg value="--project-cache-dir=${project.dir}/.gradle" />
 								<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
-								<arg value="--stacktrace" />
+								<arg if:true="@{stacktrace}" value="--stacktrace" />
 								<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 								<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dgradle.build.scan.enabled=true" />
@@ -984,7 +985,7 @@ information.
 									<arg if:set="env.JENKINS_HOME" value="--profile" />
 									<arg value="--project-cache-dir=${project.dir}/.gradle" />
 									<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
-									<arg value="--stacktrace" />
+									<arg if:true="@{stacktrace}" value="--stacktrace" />
 									<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 									<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 									<arg if:set="env.JENKINS_HOME" value="-Dgradle.build.scan.enabled=true" />

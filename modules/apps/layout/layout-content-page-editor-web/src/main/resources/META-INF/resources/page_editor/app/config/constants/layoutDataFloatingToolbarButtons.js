@@ -56,10 +56,10 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel'
 	},
 
-	saveComposition: {
+	saveFragmentComposition: {
 		icon: 'download',
-		id: 'save_composition',
-		panelId: 'save_composition',
+		id: 'save_fragment_composition',
+		panelId: 'save_fragment_compositionn',
 		title: Liferay.Language.get('save-as-fragment'),
 		type: 'panel'
 	}

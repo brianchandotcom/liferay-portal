@@ -62,8 +62,10 @@ const ContainerWithControls = React.forwardRef(
 						store: {segmentsExperienceId}
 					})
 				);
-			} else if (
-				id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveComposition.id
+			}
+			else if (
+				id ===
+				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition.id
 			) {
 				setOpenSaveFragmentCompositionModal(true);
 			}
@@ -83,7 +85,7 @@ const ContainerWithControls = React.forwardRef(
 				<FloatingToolbar
 					buttons={[
 						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveComposition,
+						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition,
 						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
 					]}
 					item={item}

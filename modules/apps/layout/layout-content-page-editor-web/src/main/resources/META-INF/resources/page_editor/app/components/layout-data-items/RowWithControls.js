@@ -88,8 +88,10 @@ const RowWithControls = React.forwardRef(
 						store: state
 					})
 				);
-			} else if (
-				id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveComposition.id
+			}
+			else if (
+				id ===
+				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition.id
 			) {
 				setOpenSaveFragmentCompositionModal(true);
 			}
@@ -179,7 +181,7 @@ const RowWithControls = React.forwardRef(
 				<FloatingToolbar
 					buttons={[
 						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveComposition,
+						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition,
 						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration
 					]}
 					item={item}

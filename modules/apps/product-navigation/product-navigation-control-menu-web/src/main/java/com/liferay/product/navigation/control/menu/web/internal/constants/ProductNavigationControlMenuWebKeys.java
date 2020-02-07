@@ -19,8 +19,6 @@ package com.liferay.product.navigation.control.menu.web.internal.constants;
  */
 public class ProductNavigationControlMenuWebKeys {
 
-	public static final String PORTLET_DESCRIPTION = "PORTLET_DESCRIPTION";
-
 	public static final String PORTLET_TITLE = "PORTLET_TITLE";
 
 }

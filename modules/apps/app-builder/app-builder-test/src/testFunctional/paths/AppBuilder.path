@@ -269,11 +269,36 @@
 	<td></td>
 </tr>
 
- <tr>
+<tr>
  	<td>ENTRY_SUCCESS_MESSAGE</td>
  	<td>//div[contains(text(),'An entry was added.')]</td>
  	<td></td>
- </tr>
+</tr>
+
+ <!--CONFIGURATION_PERMISSIONS-->
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_ADD_ENTRY</td>
+	<td>//td[contains(@class,'text-left')]//p[text()='User']/parent::td/following-sibling::td//input[@name='ADD_DATA_RECORD']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_DELETE_ENTRY</td>
+	<td>//td[contains(@class,'text-left')]//p[text()='User']/parent::td/following-sibling::td//input[@name='DELETE_DATA_RECORD']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_UPDATE_ENTRY</td>
+	<td>//td[contains(@class,'text-left')]//p[text()='User']/parent::td/following-sibling::td//input[@name='UPDATE_DATA_RECORD']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_VIEW_ENTRY</td>
+	<td>//td[contains(@class,'text-left')]//p[text()='User']/parent::td/following-sibling::td//input[@name='VIEW_DATA_RECORD']</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>

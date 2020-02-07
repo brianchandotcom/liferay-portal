@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Samuel Trong Tran
  */
-public class UpgradeAssetEntryTableMappings extends UpgradeProcess {
+public class UpgradeAssetEntryMappingTables extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

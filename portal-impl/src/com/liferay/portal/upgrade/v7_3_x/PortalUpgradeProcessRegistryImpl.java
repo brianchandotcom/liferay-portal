@@ -62,7 +62,7 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(8, 1, 1), new UpgradeAssetCategoryName());
 
 		upgradeProcesses.put(
-			new Version(8, 2, 0), new UpgradeAssetEntryTableMappings());
+			new Version(8, 2, 0), new UpgradeAssetEntryMappingTables());
 	}
 
 }

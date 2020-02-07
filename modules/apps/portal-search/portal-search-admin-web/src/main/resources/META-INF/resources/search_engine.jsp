@@ -136,7 +136,6 @@ SearchEngineDisplayContext
 									%>
 
 									<liferay-frontend:fieldset
-										collapsed="<%= true %>"
 										collapsible="<%= nodeInformationList.size() > 0 %>"
 										cssClass="connection-info-node-list"
 										label='<%= LanguageUtil.format(request, "nodes-x", nodeInformationList.size(), false) %>'

@@ -20,6 +20,7 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 
 import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.adaptive.media.image.internal.util.RenderedImageUtil;
+import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -89,7 +90,7 @@ public class TiffOrientationTransformer {
 
 	private static RenderedImage _transform(
 			Supplier<InputStream> inputStreamSupplier, int tiffOrientationValue)
-		throws IOException {
+		throws ImageResolutionException, IOException {
 
 		RenderedImage renderedImage = RenderedImageUtil.readImage(
 			inputStreamSupplier.get());

@@ -67,7 +67,7 @@ public class AMDefaultImageScaler implements AMImageScaler {
 				scaledRenderedImage.getHeight(),
 				scaledRenderedImage.getWidth());
 		}
-		catch (IOException | PortalException exception) {
+		catch (PortalException portalException) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("Unable to scale file entry ");
@@ -75,7 +75,8 @@ public class AMDefaultImageScaler implements AMImageScaler {
 			sb.append(" to match adaptive media configuration ");
 			sb.append(amImageConfigurationEntry.getUUID());
 
-			throw new AMRuntimeException.IOException(sb.toString(), exception);
+			throw new AMRuntimeException.IOException(
+				sb.toString(), portalException);
 		}
 	}
 

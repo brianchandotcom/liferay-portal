@@ -15,8 +15,11 @@
 package com.liferay.adaptive.media.image.internal.util;
 
 import com.liferay.adaptive.media.exception.AMRuntimeException;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.util.PropsValues;
 
 import java.awt.image.RenderedImage;
 
@@ -35,8 +38,7 @@ import javax.imageio.stream.ImageInputStream;
 public class RenderedImageUtil {
 
 	public static byte[] getRenderedImageContentStream(
-			RenderedImage renderedImage, String mimeType)
-		throws IOException {
+		RenderedImage renderedImage, String mimeType) {
 
 		try (UnsyncByteArrayOutputStream baos =
 				new UnsyncByteArrayOutputStream()) {
@@ -51,7 +53,7 @@ public class RenderedImageUtil {
 	}
 
 	public static RenderedImage readImage(InputStream inputStream)
-		throws IOException {
+		throws ImageResolutionException, IOException {
 
 		ImageInputStream imageInputStream = ImageIO.createImageInputStream(
 			inputStream);
@@ -67,9 +69,32 @@ public class RenderedImageUtil {
 
 				imageReader.setInput(imageInputStream);
 
+				int height = imageReader.getHeight(0);
+				int width = imageReader.getWidth(0);
+
+				if (((PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT > 0) &&
+					 (height > PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT)) ||
+					((PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH > 0) &&
+					 (width > PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH))) {
+
+					StringBundler sb = new StringBundler(9);
+
+					sb.append("Image's dimensions (");
+					sb.append(height);
+					sb.append(" px high and ");
+					sb.append(width);
+					sb.append(" px wide) exceed max dimensions (");
+					sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT);
+					sb.append(" px high and ");
+					sb.append(PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH);
+					sb.append(" px wide)");
+
+					throw new ImageResolutionException(sb.toString());
+				}
+
 				return imageReader.read(0);
 			}
-			catch (Exception exception) {
+			catch (IOException ioException) {
 			}
 			finally {
 				if (imageReader != null) {

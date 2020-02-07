@@ -65,9 +65,9 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 		User omniAdminUser = _omniAdminUserDemoDataCreator.create(
 			company.getCompanyId());
 
-		final LocalDateTime nowLocalDateTime = LocalDateTime.now();
+		LocalDateTime nowLocalDateTime = LocalDateTime.now();
 
-		final LocalDateTime startLocalDateTime = nowLocalDateTime.minusDays(45);
+		LocalDateTime startLocalDateTime = nowLocalDateTime.minusDays(45);
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionDemoDataCreator.create(
@@ -201,7 +201,7 @@ public class WorkflowMetricsDemo extends BasePortalInstanceLifecycleListener {
 					_getRandomElement(underwriterUserIds),
 					workflowInstance.getWorkflowInstanceId());
 
-				if (Objects.equals(transitionName, "Approved")) {
+				if (Objects.equals(transitionName, "Approve")) {
 					createLocalDateTime = completionLocalDateTime;
 
 					_updateCreateDateWorkflowTask(

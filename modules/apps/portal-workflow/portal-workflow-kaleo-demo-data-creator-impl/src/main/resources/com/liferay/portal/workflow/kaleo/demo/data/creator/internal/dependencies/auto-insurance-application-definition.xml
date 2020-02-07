@@ -8,7 +8,7 @@
 	<name>Auto Insurance Application</name>
 	<version>1</version>
 	<condition>
-		<name>Proceed to full aplication</name>
+		<name>proceed-to-full-aplication</name>
 		<metadata>
 			<![CDATA[{"xy":[95,37]}]]>
 		</metadata>
@@ -19,18 +19,18 @@
 		<transitions>
 			<transition>
 				<name>Cancel</name>
-				<target>Application canceled</target>
+				<target>application-canceled</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<name>Yes</name>
-				<target>Additional rating questions</target>
+				<target>additional-rating-questions</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</condition>
 	<state>
-		<name>Start online application</name>
+		<name>start-online-application</name>
 		<metadata>
 			<![CDATA[{"xy":[10,8]}]]>
 		</metadata>
@@ -38,13 +38,13 @@
 		<transitions>
 			<transition>
 				<name>Proceed</name>
-				<target>Proceed to full aplication</target>
+				<target>proceed-to-full-aplication</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>Application Complete</name>
+		<name>application-completed</name>
 		<metadata>
 			<![CDATA[{"terminal":true,"xy":[752,447]}]]>
 		</metadata>
@@ -61,7 +61,7 @@
 		</actions>
 	</state>
 	<state>
-		<name>Application canceled</name>
+		<name>application-canceled</name>
 		<metadata>
 			<![CDATA[{"terminal":true,"xy":[100,444]}]]>
 		</metadata>
@@ -78,33 +78,33 @@
 		</actions>
 	</state>
 	<state>
-		<name>Deliver temporary policy terms</name>
+		<name>deliver-temporary-policy-terms</name>
 		<metadata>
 			<![CDATA[{"xy":[426,235]}]]>
 		</metadata>
 		<transitions>
 			<transition>
-				<name>review</name>
-				<target>Underwriter final review</target>
+				<name>Review</name>
+				<target>underwriter-final-review</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>Deliver policy docs</name>
+		<name>deliver-policy-docs</name>
 		<metadata>
 			<![CDATA[{"xy":[613,393]}]]>
 		</metadata>
 		<transitions>
 			<transition>
 				<name>Complete</name>
-				<target>Application Complete</target>
+				<target>application-completed</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<task>
-		<name>Additional rating questions</name>
+		<name>additional-rating-questions</name>
 		<metadata>
 			<![CDATA[{"xy":[238,13]}]]>
 		</metadata>
@@ -120,18 +120,18 @@
 		<transitions>
 			<transition>
 				<name>Payment</name>
-				<target>Insurance payment</target>
+				<target>insurance-payment</target>
 				<default>true</default>
 			</transition>
 			<transition>
 				<name>Review</name>
-				<target>Underwriter review</target>
+				<target>underwriter-review</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>Underwriter review</name>
+		<name>underwriter-review</name>
 		<metadata>
 			<![CDATA[{"xy":[268,194]}]]>
 		</metadata>
@@ -147,18 +147,18 @@
 		<transitions>
 			<transition>
 				<name>Cancel</name>
-				<target>Application canceled</target>
+				<target>application-canceled</target>
 				<default>true</default>
 			</transition>
 			<transition>
-				<name>Approved</name>
-				<target>Manual billing process</target>
+				<name>Approve</name>
+				<target>manual-billing-process</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>Insurance payment</name>
+		<name>insurance-payment</name>
 		<metadata>
 			<![CDATA[{"xy":[498,14]}]]>
 		</metadata>
@@ -167,14 +167,14 @@
 		</assignments>
 		<transitions>
 			<transition>
-				<name>Deliver temporary policy docs</name>
-				<target>Deliver temporary policy terms</target>
+				<name>Deliver Policy</name>
+				<target>deliver-temporary-policy-terms</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>Manual billing process</name>
+		<name>manual-billing-process</name>
 		<metadata>
 			<![CDATA[{"xy":[601,194]}]]>
 		</metadata>
@@ -183,14 +183,14 @@
 		</assignments>
 		<transitions>
 			<transition>
-				<name>Deliver policy docs</name>
-				<target>Deliver policy docs</target>
+				<name>Deliver Policy</name>
+				<target>deliver-policy-docs</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>Underwriter final review</name>
+		<name>underwriter-final-review</name>
 		<metadata>
 			<![CDATA[{"xy":[327,409]}]]>
 		</metadata>
@@ -206,12 +206,12 @@
 		<transitions>
 			<transition>
 				<name>Cancel</name>
-				<target>Application canceled</target>
+				<target>application-canceled</target>
 				<default>true</default>
 			</transition>
 			<transition>
-				<name>Deliver policy docs</name>
-				<target>Deliver policy docs</target>
+				<name>Deliver Policy</name>
+				<target>deliver-policy-docs</target>
 				<default>false</default>
 			</transition>
 		</transitions>

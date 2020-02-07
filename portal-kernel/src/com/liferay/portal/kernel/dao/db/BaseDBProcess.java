@@ -14,9 +14,14 @@
 
 package com.liferay.portal.kernel.dao.db;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -83,11 +88,7 @@ public abstract class BaseDBProcess implements DBProcess {
 	public void runSQLTemplate(String path)
 		throws IOException, NamingException, SQLException {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer(path)) {
-			DB db = DBManagerUtil.getDB();
-
-			db.runSQLTemplate(path);
-		}
+		runSQLTemplate(path, true);
 	}
 
 	@Override
@@ -95,9 +96,28 @@ public abstract class BaseDBProcess implements DBProcess {
 		throws IOException, NamingException, SQLException {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(path)) {
-			DB db = DBManagerUtil.getDB();
+			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
-			db.runSQLTemplate(path, failOnError);
+			InputStream is = classLoader.getResourceAsStream(
+				"com/liferay/portal/tools/sql/dependencies/" + path);
+
+			if (is == null) {
+				is = classLoader.getResourceAsStream(path);
+			}
+
+			if (is == null) {
+				_log.error("Invalid path " + path);
+
+				if (failOnError) {
+					throw new IOException("Invalid path " + path);
+				}
+
+				return;
+			}
+
+			String template = StringUtil.read(is);
+
+			runSQLTemplateString(template, failOnError);
 		}
 	}
 
@@ -184,5 +204,7 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	protected Connection connection;
+
+	private static final Log _log = LogFactoryUtil.getLog(BaseDBProcess.class);
 
 }

@@ -56,7 +56,7 @@ const SaveFragmentCompositionModal = ({
 
 	return (
 		<ClayModal
-			className="page-editor__fragment-composition__modal"
+			className="page-editor__save-fragment-composition__modal"
 			observer={observer}
 			size="lg"
 		>

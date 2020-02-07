@@ -20,4 +20,10 @@
 SharingConfiguration groupSharingConfiguration = (SharingConfiguration)request.getAttribute(SharingWebKeys.GROUP_SHARING_CONFIGURATION);
 %>
 
-<aui:input label="enabled" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= groupSharingConfiguration.isEnabled() %>" />
+<liferay-frontend:fieldset
+	collapsible="true"
+	cssClass="panel-group-flush"
+	label='<%= LanguageUtil.get(request, "sharing") %>'
+>
+	<aui:input label="enabled" name="TypeSettingsProperties--sharingEnabled--" type="toggle-switch" value="<%= groupSharingConfiguration.isEnabled() %>" />
+</liferay-frontend:fieldset>

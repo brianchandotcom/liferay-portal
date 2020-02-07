@@ -64,29 +64,11 @@ DepotAdminDetailsDisplayContext depotAdminDetailsDisplayContext = (DepotAdminDet
 
 	</liferay-frontend:fieldset>
 
-	<liferay-frontend:fieldset
-		collapsible="true"
-		cssClass="panel-group-flush"
-		label='<%= LanguageUtil.get(request, "sharing") %>'
-	>
-		<liferay-util:include page="/screen/navigation/entries/sharing.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:fieldset>
+	<liferay-util:include page="/screen/navigation/entries/sharing.jsp" servletContext="<%= application %>" />
 
 	<liferay-util:include page="/screen/navigation/entries/asset_auto_tagger.jsp" servletContext="<%= application %>" />
 
-	<liferay-frontend:fieldset
-		collapsible="true"
-		cssClass="panel-group-flush"
-		label='<%= LanguageUtil.get(request, "documents-and-media") %>'
-	>
-		<liferay-util:include page="/screen/navigation/entries/documents_and_media.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:fieldset>
+	<liferay-util:include page="/screen/navigation/entries/documents_and_media.jsp" servletContext="<%= application %>" />
 
-	<liferay-frontend:fieldset
-		collapsible="true"
-		cssClass="panel-group-flush"
-		label='<%= LanguageUtil.get(request, "recycle-bin") %>'
-	>
-		<liferay-util:include page="/screen/navigation/entries/recycle_bin.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:fieldset>
+	<liferay-util:include page="/screen/navigation/entries/recycle_bin.jsp" servletContext="<%= application %>" />
 </liferay-frontend:fieldset-group>

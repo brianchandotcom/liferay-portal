@@ -83,8 +83,8 @@ const ContainerWithControls = React.forwardRef(
 				<FloatingToolbar
 					buttons={[
 						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration,
-						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveComposition
+						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveComposition,
+						LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
 					]}
 					item={item}
 					itemRef={ref}

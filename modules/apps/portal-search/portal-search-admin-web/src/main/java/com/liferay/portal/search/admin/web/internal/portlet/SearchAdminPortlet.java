@@ -89,7 +89,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 
 		String tab = searchAdminDisplayContext.getSelectedTab();
 
-		if (tab.equals("search-engine")) {
+		if (tab.equals("connections")) {
 			SearchEngineDisplayBuilder searchEngineDisplayBuilder =
 				new SearchEngineDisplayBuilder();
 

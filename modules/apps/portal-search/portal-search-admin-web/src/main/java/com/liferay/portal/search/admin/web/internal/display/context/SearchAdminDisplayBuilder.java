@@ -47,7 +47,7 @@ public class SearchAdminDisplayBuilder {
 		NavigationItemList navigationItemList = new NavigationItemList();
 		String selectedTab = getSelectedTab();
 
-		addNavigationItemList(navigationItemList, "search-engine", selectedTab);
+		addNavigationItemList(navigationItemList, "connections", selectedTab);
 
 		addNavigationItemList(navigationItemList, "index-actions", selectedTab);
 
@@ -83,19 +83,19 @@ public class SearchAdminDisplayBuilder {
 
 	protected String getSelectedTab() {
 		String selectedTab = ParamUtil.getString(
-			_renderRequest, "tabs1", "search-engine");
+			_renderRequest, "tabs1", "connections");
 
 		if (!Objects.equals(selectedTab, "field-mappings") &&
 			!Objects.equals(selectedTab, "index-actions") &&
-			!Objects.equals(selectedTab, "search-engine")) {
+			!Objects.equals(selectedTab, "connections")) {
 
-			return "search-engine";
+			return "connections";
 		}
 
 		if (Objects.equals(selectedTab, "field-mappings") &&
 			!isIndexInformationAvailable()) {
 
-			return "search-engine";
+			return "connections";
 		}
 
 		return selectedTab;

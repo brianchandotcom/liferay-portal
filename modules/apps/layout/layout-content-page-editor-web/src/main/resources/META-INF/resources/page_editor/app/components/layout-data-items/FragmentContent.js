@@ -270,6 +270,12 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		processor.destroyEditor(element);
 	};
 
+	const onFloatingToolbarButtonClick = (buttonId, event, itemRef) => {
+		if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {
+			initProcessor(itemRef.current, event);
+		}
+	};
+
 	return (
 		<>
 			<UnsafeHTML
@@ -295,7 +301,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 						editableType == EDITABLE_TYPES.link;
 
 					const buttons = [
-						{icon: 'pencil', panelId: 'panel'},
+						EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit,
 						EDITABLE_FLOATING_TOOLBAR_BUTTONS.map
 					];
 
@@ -314,6 +320,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 							}}
 							itemRef={editableRef}
 							key={getEditableUniqueId(editableId)}
+							onButtonClick={onFloatingToolbarButtonClick}
 						/>
 					);
 				})}

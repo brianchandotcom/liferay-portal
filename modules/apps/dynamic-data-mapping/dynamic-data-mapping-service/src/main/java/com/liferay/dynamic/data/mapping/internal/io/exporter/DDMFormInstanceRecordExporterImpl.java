@@ -53,7 +53,6 @@ import java.time.format.FormatStyle;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -281,9 +280,7 @@ public class DDMFormInstanceRecordExporterImpl
 			ddmFormInstanceVersionLocalService.getFormInstanceVersions(
 				ddmFormInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		ddmFormInstanceVersions = ListUtil.copy(ddmFormInstanceVersions);
-
-		Collections.sort(
+		ddmFormInstanceVersions = ListUtil.sort(
 			ddmFormInstanceVersions,
 			new FormInstanceVersionVersionComparator());
 

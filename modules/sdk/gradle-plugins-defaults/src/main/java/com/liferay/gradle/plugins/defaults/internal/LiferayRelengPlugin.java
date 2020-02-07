@@ -524,32 +524,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		_configureTaskWriteArtifactPublishCommandsOnlyIf(
 			project, writeArtifactPublishCommandsTask, recordArtifactTask);
 
-		String projectPath = project.getPath();
-
-		if (projectPath.startsWith(":apps:") ||
-			projectPath.startsWith(":dxp:apps:") ||
-			projectPath.startsWith(":dxp:util:") ||
-			projectPath.startsWith(":private:apps:") ||
-			projectPath.startsWith(":private:util:") ||
-			projectPath.startsWith(":util:")) {
-
-			writeArtifactPublishCommandsTask.onlyIf(
-				new Spec<Task>() {
-
-					@Override
-					public boolean isSatisfiedBy(Task task) {
-						if (LiferayRelengUtil.hasUnpublishedDependencies(
-								task.getProject())) {
-
-							return false;
-						}
-
-						return true;
-					}
-
-				});
-		}
-
 		GradleUtil.withPlugin(
 			project, LiferayOSGiDefaultsPlugin.class,
 			new Action<LiferayOSGiDefaultsPlugin>() {
@@ -910,6 +884,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					FileUtil.getAbsolutePath(project.getProjectDir()));
 
 				if (Validator.isNull(result)) {
+					return false;
+				}
+
+				if (LiferayRelengUtil.hasUnpublishedDependencies(project)) {
 					return false;
 				}
 

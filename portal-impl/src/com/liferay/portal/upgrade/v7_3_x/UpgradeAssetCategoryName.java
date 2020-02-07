@@ -27,7 +27,7 @@ public class UpgradeAssetCategoryName extends UpgradeProcess {
 		if (hasColumnType("AssetCategory", "name", "VARCHAR(75) null")) {
 			alter(
 				AssetCategoryTable.class,
-				new AlterTableAddColumn("name VARCHAR(255) null"));
+				new AlterColumnType("name", "VARCHAR(255) null"));
 		}
 	}
 

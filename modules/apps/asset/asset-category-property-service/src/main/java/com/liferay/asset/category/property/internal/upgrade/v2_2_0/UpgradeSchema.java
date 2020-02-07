@@ -26,11 +26,11 @@ public class UpgradeSchema extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(
 			AssetCategoryPropertyTable.class,
-			new AlterTableAddColumn("key_ VARCHAR(255) null"));
+			new AlterColumnType("key_", "VARCHAR(255) null"));
 
 		alter(
 			AssetCategoryPropertyTable.class,
-			new AlterTableAddColumn("value VARCHAR(255) null"));
+			new AlterColumnType("value", "VARCHAR(255) null"));
 	}
 
 }

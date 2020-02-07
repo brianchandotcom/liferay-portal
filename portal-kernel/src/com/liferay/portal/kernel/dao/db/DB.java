@@ -65,6 +65,10 @@ public interface DB {
 
 	public String buildSQL(String template) throws IOException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void buildSQLFile(String sqlDir, String fileName) throws IOException;
 
 	public DBType getDBType();

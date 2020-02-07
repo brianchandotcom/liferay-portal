@@ -278,25 +278,25 @@
  <!--CONFIGURATION_PERMISSIONS-->
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ADD_ENTRY</td>
-	<td>//td[contains(@class,'text-left')]//p[text()='User']/parent::td/following-sibling::td//input[@name='ADD_DATA_RECORD']</td>
+	<td>//td[contains(@class,'text-left')]//p[text()='${key_roleTitle}']/parent::td/following-sibling::td//input[@name='ADD_DATA_RECORD']</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_DELETE_ENTRY</td>
-	<td>//td[contains(@class,'text-left')]//p[text()='User']/parent::td/following-sibling::td//input[@name='DELETE_DATA_RECORD']</td>
+	<td>//td[contains(@class,'text-left')]//p[text()='${key_roleTitle}']/parent::td/following-sibling::td//input[@name='DELETE_DATA_RECORD']</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_UPDATE_ENTRY</td>
-	<td>//td[contains(@class,'text-left')]//p[text()='User']/parent::td/following-sibling::td//input[@name='UPDATE_DATA_RECORD']</td>
+	<td>//td[contains(@class,'text-left')]//p[text()='${key_roleTitle}']/parent::td/following-sibling::td//input[@name='UPDATE_DATA_RECORD']</td>
 	<td></td>
 </tr>
 
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_VIEW_ENTRY</td>
-	<td>//td[contains(@class,'text-left')]//p[text()='User']/parent::td/following-sibling::td//input[@name='VIEW_DATA_RECORD']</td>
+	<td>//td[contains(@class,'text-left')]//p[text()='${key_roleTitle}']/parent::td/following-sibling::td//input[@name='VIEW_DATA_RECORD']</td>
 	<td></td>
 </tr>
 

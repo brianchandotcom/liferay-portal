@@ -2466,6 +2466,8 @@ definition {
 		DetailsView.validateEntry(entry = "Bester");
 
 		DetailsView.deleteEntry(itemName = "Changed");
+	}
+
 	@description = "SetPermission"
 	@priority = "5"
 	test SetPermission {
@@ -2475,10 +2477,6 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Guest",
-			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -2497,14 +2495,25 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
-			isCreatingFormView = "false",
+			isCreatingFormView = "true",
 			isCreatingViaPlusIcon = "true");
 
-		FormViewBuilder.addFormView(
-			fieldType = "Text",
-			formViewName = "My Form View");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.setName(formViewName = "My Form View");
+
+		FormViewBuilder.save();
 
 		TableViewBuilder.addBasicTableView(
 			fieldType = "Text",
@@ -2512,7 +2521,7 @@ definition {
 
 		App.add(
 			appTitle = "Test App",
-			deployOption = "Product Menu",
+			deployOption = "Widget",
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
@@ -2520,18 +2529,92 @@ definition {
 
 		AppBuilderAdmin.openActionMenu(itemName = "App Permissions");
 
-		
+		AppBuilderAdmin.addOrRemovePermissionFromRoles(
+			addOrRemovePermission = "ADD",
+			permission = "ADD",
+			roleList = "Account Administrator, Account Owner, Analytics Administrator, Portal Content Reviewer, Power User, User");
 
+		AppBuilderAdmin.addOrRemovePermissionFromRoles(
+			addOrRemovePermission = "ADD",
+			permission = "DELETE",
+			roleList = "Account Administrator, Account Owner, Analytics Administrator, Portal Content Reviewer, Power User, User");
 		
+		AppBuilderAdmin.addOrRemovePermissionFromRoles(
+			addOrRemovePermission = "ADD",
+			permission = "UPDATE",
+			roleList = "Account Administrator, Account Owner, Analytics Administrator, Portal Content Reviewer, Power User, User");
 
-		
+		AppBuilderAdmin.addOrRemovePermissionFromRoles(
+			addOrRemovePermission = "ADD",
+			permission = "VIEW",
+			roleList = "Account Administrator, Account Owner, Analytics Administrator, Portal Content Reviewer, Power User, User");
 
+		JSONLayout.addPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page");
 
-		
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "App Builder Site Name",
+			layoutName = "App Builder Test Page",
+			layoutTemplate = "1 Column");
 
-		
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
 
-		
+		Portlet.addPG(
+			pageName = "App Builder Test Page",
+			portletName = "Test App");			
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "App Builder Test Page",
+			siteName = "App Builder Site Name");
+	
+		for (var number : list "1,2,3") {
+
+			AppBuilderAdmin.add();
+
+			FormViewBuilder.editText(
+				fieldName = "Text",
+				fieldValue = "Testing permission.");
+
+			FormViewBuilder.editText(
+				fieldName = "Numeric",
+				fieldValue = "1914");
+
+			AppBuilderAdmin.save();
+
+			AppBuilderAdmin.validateItemNameOnTable(itemName = "Testing permission.");
+
+			AppBuilderAdmin.viewItem(itemName = "Testing permission.");
+
+			DetailsView.validateEntry(entry = "Testing permission.");
+			DetailsView.validateEntry(entry = "1914");
+
+			DetailsView.editEntry();
+
+			FormViewBuilder.editText(
+				fieldName = "Text",
+				fieldValue = "Testing EDIT permission.");
+
+			AppBuilderAdmin.save();
+
+			DetailsView.validateEntry(entry = "Testing EDIT permission.");
+			
+			AppBuilderAdmin.gotoBack();
+
+			AppBuilderAdmin.validateItemNameOnTable(itemName = "Testing EDIT permission.");
+
+			AppBuilderAdmin.deleteEntry(itemName = "Testing EDIT permission.");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Portal Content Reviewer",
+				userEmailAddress = "userea@liferay.com");
+
+		}
 	}
-
 }

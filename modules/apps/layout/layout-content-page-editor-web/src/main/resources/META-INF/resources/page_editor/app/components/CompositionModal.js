@@ -70,7 +70,7 @@ const CompositionModal = ({
 							title={errorMessage}
 						/>
 					)}
-					<ClayForm.Group>
+					<ClayForm.Group className="mb-3">
 						<label htmlFor={nameInputId}>
 							{Liferay.Language.get('name')}
 
@@ -103,13 +103,15 @@ const CompositionModal = ({
 											handleThumbnailSelected
 										)
 									}
+									small
 									value={Liferay.Language.get(
 										'upload-thumbnail'
 									)}
 								>
 									<ClayIcon
-										className="inline-item inline-item-after mr-2 reference-mark"
+										className="mr-2"
 										focusable="false"
+										monospaced
 										role="presentation"
 										symbol="upload"
 									/>
@@ -118,7 +120,9 @@ const CompositionModal = ({
 								</ClayButton>
 							</ClayInput.GroupItem>
 							<ClayInput.GroupItem className="align-items-center">
-								<span className="ml-2">{thumbnail.title}</span>
+								<span className="ml-2 text-truncate">
+									{thumbnail.title}
+								</span>
 							</ClayInput.GroupItem>
 						</ClayInput.Group>
 					</ClayForm.Group>
@@ -138,23 +142,21 @@ const CompositionModal = ({
 					</ClayForm.Group>
 
 					<ClayForm.Group>
-						<ClayInput.Group>
-							<ClayInput.GroupItem shrink>
+						<ClayInput.Group className="input-group-stacked-sm-down">
+							<ClayInput.GroupItem className="mr-4" shrink>
 								<ClayCheckbox
 									id={portletNamespace + 'saveInlineContent'}
-									inline={true}
 									label={Liferay.Language.get(
 										'save-inline-content'
 									)}
 								/>
 							</ClayInput.GroupItem>
-							<ClayInput.GroupItem className="ml-4">
+							<ClayInput.GroupItem>
 								<ClayCheckbox
 									id={
 										portletNamespace +
 										'saveMappingConfiguration'
 									}
-									inline={true}
 									label={Liferay.Language.get(
 										'save-mapping-configuration'
 									)}
@@ -165,7 +167,7 @@ const CompositionModal = ({
 					<ClayForm.Group>
 						{collections.length > 0 ? (
 							<>
-								<h5 className="text-muted text-uppercase">
+								<h5 className="sheet-tertiary-title">
 									{Liferay.Language.get('select-collection')}
 								</h5>
 

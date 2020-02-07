@@ -403,6 +403,8 @@ public class SQLDSLTest {
 		catch (Exception exception) {
 			Assert.assertSame(
 				IllegalArgumentException.class, exception.getClass());
+
+			Assert.assertEquals("Expressions is empty", exception.getMessage());
 		}
 	}
 
@@ -548,6 +550,8 @@ public class SQLDSLTest {
 		catch (Exception exception) {
 			Assert.assertSame(
 				IllegalArgumentException.class, exception.getClass());
+
+			Assert.assertEquals("Expressions is empty", exception.getMessage());
 		}
 	}
 
@@ -733,6 +737,9 @@ public class SQLDSLTest {
 		catch (Exception exception) {
 			Assert.assertSame(
 				IllegalArgumentException.class, exception.getClass());
+
+			Assert.assertEquals(
+				"OrderByExpressions is empty", exception.getMessage());
 		}
 
 		OrderByExpression orderByExpression =
@@ -899,6 +906,8 @@ public class SQLDSLTest {
 		catch (Exception exception) {
 			Assert.assertSame(
 				IllegalArgumentException.class, exception.getClass());
+
+			Assert.assertEquals("Values is empty", exception.getMessage());
 		}
 	}
 

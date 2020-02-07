@@ -26,7 +26,7 @@ public class ScalarList<T> extends BaseASTNode implements DefaultExpression<T> {
 
 	public ScalarList(T[] values) {
 		if (values.length == 0) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Values is empty");
 		}
 
 		_values = values;

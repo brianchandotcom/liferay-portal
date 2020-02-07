@@ -338,7 +338,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	}
 
 	private Task _addTaskPrintStaleArtifact(
-		Project project, final WritePropertiesTask recordArtifactTask) {
+		Project project, WritePropertiesTask recordArtifactTask) {
 
 		final Task task = project.task(PRINT_STALE_ARTIFACT_TASK_NAME);
 
@@ -675,6 +675,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			});
 	}
 
+	private void _configureTaskPrintStaleArtifactForOSGi(Task task) {
+		if (GradlePluginsDefaultsUtil.isTestProject(task.getProject())) {
+			task.setEnabled(false);
+		}
+	}
+
 	private void _configureTaskPrintStaleArtifactOnlyIf(
 		Project project, Task printStaleArtifactTask,
 		final WritePropertiesTask recordArtifactTask) {
@@ -758,12 +764,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		};
 
 		printStaleArtifactTask.onlyIf(onlyIfSpec);
-	}
-
-	private void _configureTaskPrintStaleArtifactForOSGi(Task task) {
-		if (GradlePluginsDefaultsUtil.isTestProject(task.getProject())) {
-			task.setEnabled(false);
-		}
 	}
 
 	@SuppressWarnings("serial")

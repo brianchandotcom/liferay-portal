@@ -103,26 +103,6 @@ public class LiferayRelengUtil {
 		return getRelengDir(project.getProjectDir());
 	}
 
-	public static boolean hasStaleParentTheme(Project project) {
-		WriteDigestTask writeDigestTask = (WriteDigestTask)GradleUtil.getTask(
-			project,
-			LiferayThemeDefaultsPlugin.WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
-
-		if (!Objects.equals(
-				writeDigestTask.getDigest(), writeDigestTask.getOldDigest())) {
-
-			Logger logger = project.getLogger();
-
-			if (logger.isInfoEnabled()) {
-				logger.info("The digest for {} has changed.", writeDigestTask);
-			}
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public static boolean hasStaleDependencies(
 		Project project, String artifactGitId) {
 
@@ -180,27 +160,21 @@ public class LiferayRelengUtil {
 		return false;
 	}
 
-	public static boolean hasUnpublishedDependencies(Project project) {
-		List<File> artifactPropertiesFiles = _getArtifactPropertiesFiles(
-			project);
+	public static boolean hasStaleParentTheme(Project project) {
+		WriteDigestTask writeDigestTask = (WriteDigestTask)GradleUtil.getTask(
+			project,
+			LiferayThemeDefaultsPlugin.WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
 
-		for (File artifactPropertiesFile : artifactPropertiesFiles) {
-			File artifactProjectDir = _getArtifactProjectDir(
-				artifactPropertiesFile);
+		if (!Objects.equals(
+				writeDigestTask.getDigest(), writeDigestTask.getOldDigest())) {
 
-			if (hasUnpublishedCommits(
-					project, artifactProjectDir, artifactPropertiesFile)) {
+			Logger logger = project.getLogger();
 
-				Logger logger = project.getLogger();
-
-				if (logger.isQuietEnabled()) {
-					logger.quiet(
-						"The project dependency '{}' has new commits.",
-						artifactProjectDir.getName());
-				}
-
-				return true;
+			if (logger.isInfoEnabled()) {
+				logger.info("The digest for {} has changed.", writeDigestTask);
 			}
+
+			return true;
 		}
 
 		return false;
@@ -285,6 +259,45 @@ public class LiferayRelengUtil {
 		_createNewFile(new File(gitResultsDir, sb.toString() + "false"));
 
 		return false;
+	}
+
+	public static boolean hasUnpublishedDependencies(Project project) {
+		List<File> artifactPropertiesFiles = _getArtifactPropertiesFiles(
+			project);
+
+		for (File artifactPropertiesFile : artifactPropertiesFiles) {
+			File artifactProjectDir = _getArtifactProjectDir(
+				artifactPropertiesFile);
+
+			if (hasUnpublishedCommits(
+					project, artifactProjectDir, artifactPropertiesFile)) {
+
+				Logger logger = project.getLogger();
+
+				if (logger.isQuietEnabled()) {
+					logger.quiet(
+						"The project dependency '{}' has new commits.",
+						artifactProjectDir.getName());
+				}
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static void _createNewFile(File file) {
+		File dir = file.getParentFile();
+
+		try {
+			Files.createDirectories(dir.toPath());
+
+			file.createNewFile();
+		}
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
+		}
 	}
 
 	private static File _getArtifactProjectDir(File artifactPropertiesFile) {
@@ -455,19 +468,6 @@ public class LiferayRelengUtil {
 		sb.append(".properties");
 
 		return new File(portalRootDir, sb.toString());
-	}
-
-	private static void _createNewFile(File file) {
-		File dir = file.getParentFile();
-
-		try {
-			Files.createDirectories(dir.toPath());
-
-			file.createNewFile();
-		}
-		catch (IOException ioException) {
-			throw new UncheckedIOException(ioException);
-		}
 	}
 
 	private static final String _ARTIFACT_PROPERTIES_FILE_NAME =

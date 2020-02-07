@@ -92,6 +92,24 @@ public class SearchAdminDisplayContextTest {
 	}
 
 	@Test
+	public void testGetTabConnections() {
+		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
+			new SearchAdminDisplayBuilder(
+				_language, _portal,
+				getRenderRequestWithSelectedTab("connections"),
+				new MockRenderResponse());
+
+		searchAdminDisplayBuilder.setIndexInformation(
+			Mockito.mock(IndexInformation.class));
+
+		SearchAdminDisplayContext searchAdminDisplayContext =
+			searchAdminDisplayBuilder.build();
+
+		Assert.assertEquals(
+			"connections", searchAdminDisplayContext.getSelectedTab());
+	}
+
+	@Test
 	public void testGetTabDefault() {
 		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
 			new SearchAdminDisplayBuilder(
@@ -105,7 +123,7 @@ public class SearchAdminDisplayContextTest {
 			searchAdminDisplayBuilder.build();
 
 		Assert.assertEquals(
-			"search-engine", searchAdminDisplayContext.getSelectedTab());
+			"connections", searchAdminDisplayContext.getSelectedTab());
 	}
 
 	@Test
@@ -140,7 +158,7 @@ public class SearchAdminDisplayContextTest {
 			searchAdminDisplayBuilder.build();
 
 		Assert.assertEquals(
-			"search-engine", searchAdminDisplayContext.getSelectedTab());
+			"connections", searchAdminDisplayContext.getSelectedTab());
 	}
 
 	@Test
@@ -162,24 +180,6 @@ public class SearchAdminDisplayContextTest {
 	}
 
 	@Test
-	public void testGetTabSearchEngine() {
-		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
-			new SearchAdminDisplayBuilder(
-				_language, _portal,
-				getRenderRequestWithSelectedTab("search-engine"),
-				new MockRenderResponse());
-
-		searchAdminDisplayBuilder.setIndexInformation(
-			Mockito.mock(IndexInformation.class));
-
-		SearchAdminDisplayContext searchAdminDisplayContext =
-			searchAdminDisplayBuilder.build();
-
-		Assert.assertEquals(
-			"search-engine", searchAdminDisplayContext.getSelectedTab());
-	}
-
-	@Test
 	public void testGetTabUnavailable() {
 		SearchAdminDisplayBuilder searchAdminDisplayBuilder =
 			new SearchAdminDisplayBuilder(
@@ -194,7 +194,7 @@ public class SearchAdminDisplayContextTest {
 			searchAdminDisplayBuilder.build();
 
 		Assert.assertEquals(
-			"search-engine", searchAdminDisplayContext.getSelectedTab());
+			"connections", searchAdminDisplayContext.getSelectedTab());
 	}
 
 	protected RenderRequest getRenderRequestWithSelectedTab(

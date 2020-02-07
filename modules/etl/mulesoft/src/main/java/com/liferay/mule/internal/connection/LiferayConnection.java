@@ -67,7 +67,8 @@ public final class LiferayConnection {
 
 	public HttpResponse delete(
 			Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, String endpoint)
+			MultiMap<String, String> queryParams, String endpoint,
+			long connectionTimeout)
 		throws IOException, TimeoutException {
 
 		return _httpClient.send(
@@ -75,12 +76,13 @@ public final class LiferayConnection {
 				HttpConstants.Method.DELETE,
 				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
 				queryParams, null),
-			10000, true, null);
+			(int)connectionTimeout, true, null);
 	}
 
 	public HttpResponse get(
 			Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, String endpoint)
+			MultiMap<String, String> queryParams, String endpoint,
+			long connectionTimeout)
 		throws IOException, TimeoutException {
 
 		return _httpClient.send(
@@ -88,7 +90,7 @@ public final class LiferayConnection {
 				HttpConstants.Method.GET,
 				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
 				queryParams, null),
-			10000, true, null);
+			(int)connectionTimeout, true, null);
 	}
 
 	public HttpResponse getOpenAPISpec() throws IOException, TimeoutException {
@@ -105,7 +107,8 @@ public final class LiferayConnection {
 
 	public HttpResponse patch(
 			InputStream inputStream, Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, String endpoint)
+			MultiMap<String, String> queryParams, String endpoint,
+			long connectionTimeout)
 		throws IOException, TimeoutException {
 
 		return _httpClient.send(
@@ -113,12 +116,13 @@ public final class LiferayConnection {
 				HttpConstants.Method.PATCH,
 				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
 				queryParams, inputStream),
-			10000, true, null);
+			(int)connectionTimeout, true, null);
 	}
 
 	public HttpResponse post(
 			InputStream inputStream, Map<String, String> pathParams,
-			MultiMap<String, String> queryParams, String endpoint)
+			MultiMap<String, String> queryParams, String endpoint,
+			long connectionTimeout)
 		throws IOException, TimeoutException {
 
 		return _httpClient.send(
@@ -126,7 +130,7 @@ public final class LiferayConnection {
 				HttpConstants.Method.POST,
 				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
 				queryParams, inputStream),
-			10000, true, null);
+			(int)connectionTimeout, true, null);
 	}
 
 	private LiferayConnection(

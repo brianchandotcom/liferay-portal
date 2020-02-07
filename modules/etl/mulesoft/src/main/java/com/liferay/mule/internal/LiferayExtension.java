@@ -14,15 +14,12 @@
 
 package com.liferay.mule.internal;
 
-import com.liferay.mule.internal.connection.BasicCachedConnectionProvider;
-import com.liferay.mule.internal.connection.OAuth2CachedConnectionProvider;
+import com.liferay.mule.internal.config.LiferayConfig;
 import com.liferay.mule.internal.error.LiferayError;
-import com.liferay.mule.internal.operation.LiferayOperations;
 
 import org.mule.runtime.api.meta.Category;
+import org.mule.runtime.extension.api.annotation.Configurations;
 import org.mule.runtime.extension.api.annotation.Extension;
-import org.mule.runtime.extension.api.annotation.Operations;
-import org.mule.runtime.extension.api.annotation.connectivity.ConnectionProviders;
 import org.mule.runtime.extension.api.annotation.dsl.xml.Xml;
 import org.mule.runtime.extension.api.annotation.error.ErrorTypes;
 import org.mule.runtime.extension.api.annotation.license.RequiresEnterpriseLicense;
@@ -30,12 +27,9 @@ import org.mule.runtime.extension.api.annotation.license.RequiresEnterpriseLicen
 /**
  * @author Matija Petanjek
  */
-@ConnectionProviders(
-	{BasicCachedConnectionProvider.class, OAuth2CachedConnectionProvider.class}
-)
+@Configurations(LiferayConfig.class)
 @ErrorTypes(LiferayError.class)
 @Extension(category = Category.CERTIFIED, name = "Liferay", vendor = "Liferay")
-@Operations(LiferayOperations.class)
 @RequiresEnterpriseLicense(allowEvaluationLicense = true)
 @Xml(prefix = "liferay")
 public class LiferayExtension {

@@ -30,7 +30,7 @@ public class GroupBy extends BaseASTNode implements DefaultHavingStep {
 		super(groupByStep);
 
 		if (expressions.length == 0) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expressions is empty");
 		}
 
 		_expressions = expressions;

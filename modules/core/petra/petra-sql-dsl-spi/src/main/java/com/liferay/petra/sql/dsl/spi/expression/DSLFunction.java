@@ -33,7 +33,7 @@ public class DSLFunction<T>
 		_dslFunctionType = Objects.requireNonNull(dslFunctionType);
 
 		if (expressions.length == 0) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expressions is empty");
 		}
 
 		_expressions = expressions;

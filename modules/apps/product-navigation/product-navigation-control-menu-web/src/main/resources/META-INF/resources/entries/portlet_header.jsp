@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletDescription = (String)request.getAttribute(ProductNavigationControlMenuWebKeys.PORTLET_DESCRIPTION);
 String portletTitle = (String)request.getAttribute(ProductNavigationControlMenuWebKeys.PORTLET_TITLE);
 %>
 

@@ -65,15 +65,47 @@ public class LayoutStructure {
 			}
 		}
 
-		return new LayoutStructure(new HashMap<>(), StringPool.BLANK);
+		return new LayoutStructure();
 	}
 
-	public LayoutStructure(
-		Map<String, LayoutStructureItem> layoutStructureItems,
-		String mainItemId) {
+	public LayoutStructure() {
+		_layoutStructureItems = new HashMap<>();
+		_mainItemId = StringPool.BLANK;
+	}
 
-		_layoutStructureItems = layoutStructureItems;
-		_mainItemId = mainItemId;
+	public LayoutStructureItem addColumnLayoutStructureItem(
+		String parentItemId, int position) {
+
+		ColumnLayoutStructureItem columnLayoutStructureItem =
+			new ColumnLayoutStructureItem(parentItemId);
+
+		columnLayoutStructureItem.setSize(_MAX_COLUMNS);
+
+		_updateLayoutStructure(columnLayoutStructureItem, position);
+
+		return columnLayoutStructureItem;
+	}
+
+	public LayoutStructureItem addContainerLayoutStructureItem(
+		String parentItemId, int position) {
+
+		ContainerLayoutStructureItem containerLayoutStructureItem =
+			new ContainerLayoutStructureItem(parentItemId);
+
+		_updateLayoutStructure(containerLayoutStructureItem, position);
+
+		return containerLayoutStructureItem;
+	}
+
+	public LayoutStructureItem addDropZoneLayoutStructureItem(
+		String parentItemId, int position) {
+
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+			new DropZoneLayoutStructureItem(parentItemId);
+
+		_updateLayoutStructure(dropZoneLayoutStructureItem, position);
+
+		return dropZoneLayoutStructureItem;
 	}
 
 	public LayoutStructureItem addFragmentLayoutStructureItem(
@@ -107,6 +139,17 @@ public class LayoutStructure {
 		_updateLayoutStructure(layoutStructureItem, position);
 
 		return layoutStructureItem;
+	}
+
+	public LayoutStructureItem addRootLayoutStructureItem() {
+		RootLayoutStructureItem rootLayoutStructureItem =
+			new RootLayoutStructureItem();
+
+		_updateLayoutStructure(rootLayoutStructureItem, 0);
+
+		_mainItemId = rootLayoutStructureItem.getItemId();
+
+		return rootLayoutStructureItem;
 	}
 
 	public LayoutStructureItem addRowLayoutStructureItem(
@@ -364,6 +407,14 @@ public class LayoutStructure {
 		return deletedLayoutStructureItems;
 	}
 
+	private LayoutStructure(
+		Map<String, LayoutStructureItem> layoutStructureItems,
+		String mainItemId) {
+
+		_layoutStructureItems = layoutStructureItems;
+		_mainItemId = mainItemId;
+	}
+
 	private void _addColumnLayoutStructureItem(
 		String parentItemId, int position, int size) {
 
@@ -444,6 +495,6 @@ public class LayoutStructure {
 		LayoutStructure.class);
 
 	private final Map<String, LayoutStructureItem> _layoutStructureItems;
-	private final String _mainItemId;
+	private String _mainItemId;
 
 }

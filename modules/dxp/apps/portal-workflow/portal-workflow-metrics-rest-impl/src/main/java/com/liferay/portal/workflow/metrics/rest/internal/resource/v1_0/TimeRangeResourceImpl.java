@@ -15,10 +15,10 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TimeRange;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.TimeRangeUtil;
-import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TimeRangeResource;
 
 import java.util.stream.Collectors;
@@ -66,44 +66,51 @@ public class TimeRangeResourceImpl extends BaseTimeRangeResourceImpl {
 	private String _getName(int id) {
 		if (id == 0) {
 			return _language.get(
-				_resourceHelper.getResourceBundle(
-					contextAcceptLanguage.getPreferredLocale()),
+				ResourceBundleUtil.getModuleAndPortalResourceBundle(
+					contextAcceptLanguage.getPreferredLocale(),
+					TimeRangeResourceImpl.class),
 				"today");
 		}
 		else if (id == 1) {
 			return _language.get(
-				_resourceHelper.getResourceBundle(
-					contextAcceptLanguage.getPreferredLocale()),
+				ResourceBundleUtil.getModuleAndPortalResourceBundle(
+					contextAcceptLanguage.getPreferredLocale(),
+					TimeRangeResourceImpl.class),
 				"yesterday");
 		}
 		else if (id == 7) {
 			return _language.get(
-				_resourceHelper.getResourceBundle(
-					contextAcceptLanguage.getPreferredLocale()),
+				ResourceBundleUtil.getModuleAndPortalResourceBundle(
+					contextAcceptLanguage.getPreferredLocale(),
+					TimeRangeResourceImpl.class),
 				"last-7-days");
 		}
 		else if (id == 30) {
 			return _language.get(
-				_resourceHelper.getResourceBundle(
-					contextAcceptLanguage.getPreferredLocale()),
+				ResourceBundleUtil.getModuleAndPortalResourceBundle(
+					contextAcceptLanguage.getPreferredLocale(),
+					TimeRangeResourceImpl.class),
 				"last-30-days");
 		}
 		else if (id == 90) {
 			return _language.get(
-				_resourceHelper.getResourceBundle(
-					contextAcceptLanguage.getPreferredLocale()),
+				ResourceBundleUtil.getModuleAndPortalResourceBundle(
+					contextAcceptLanguage.getPreferredLocale(),
+					TimeRangeResourceImpl.class),
 				"last-90-days");
 		}
 		else if (id == 180) {
 			return _language.get(
-				_resourceHelper.getResourceBundle(
-					contextAcceptLanguage.getPreferredLocale()),
+				ResourceBundleUtil.getModuleAndPortalResourceBundle(
+					contextAcceptLanguage.getPreferredLocale(),
+					TimeRangeResourceImpl.class),
 				"last-180-days");
 		}
 
 		return _language.get(
-			_resourceHelper.getResourceBundle(
-				contextAcceptLanguage.getPreferredLocale()),
+			ResourceBundleUtil.getModuleAndPortalResourceBundle(
+				contextAcceptLanguage.getPreferredLocale(),
+				TimeRangeResourceImpl.class),
 			"last-year");
 	}
 
@@ -117,8 +124,5 @@ public class TimeRangeResourceImpl extends BaseTimeRangeResourceImpl {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private ResourceHelper _resourceHelper;
 
 }

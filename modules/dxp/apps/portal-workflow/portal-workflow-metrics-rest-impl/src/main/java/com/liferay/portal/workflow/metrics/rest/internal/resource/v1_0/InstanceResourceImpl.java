@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.search.aggregation.AggregationResult;
@@ -669,8 +670,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			Bucket::getKey
 		).map(
 			taskName -> _language.get(
-				_resourceHelper.getResourceBundle(
-					contextAcceptLanguage.getPreferredLocale()),
+				ResourceBundleUtil.getModuleAndPortalResourceBundle(
+					contextAcceptLanguage.getPreferredLocale(),
+					InstanceResourceImpl.class),
 				taskName)
 		).collect(
 			Collectors.toList()
@@ -847,8 +849,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		transition.setLabel(
 			_language.get(
-				_resourceHelper.getResourceBundle(
-					contextAcceptLanguage.getPreferredLocale()),
+				ResourceBundleUtil.getModuleAndPortalResourceBundle(
+					contextAcceptLanguage.getPreferredLocale(),
+					InstanceResourceImpl.class),
 				name));
 		transition.setName(name);
 

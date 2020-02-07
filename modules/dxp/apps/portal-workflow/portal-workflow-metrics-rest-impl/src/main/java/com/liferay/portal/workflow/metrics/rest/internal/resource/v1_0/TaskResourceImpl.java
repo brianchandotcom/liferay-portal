@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -272,8 +273,9 @@ public class TaskResourceImpl
 			{
 				key = taskName;
 				name = _language.get(
-					_resourceHelper.getResourceBundle(
-						contextAcceptLanguage.getPreferredLocale()),
+					ResourceBundleUtil.getModuleAndPortalResourceBundle(
+						contextAcceptLanguage.getPreferredLocale(),
+						TaskResourceImpl.class),
 					taskName);
 			}
 		};

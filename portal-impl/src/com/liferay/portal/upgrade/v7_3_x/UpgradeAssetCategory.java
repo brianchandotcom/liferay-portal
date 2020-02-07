@@ -69,7 +69,7 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 			while (true) {
 				try (ResultSet rs = selectPS.executeQuery()) {
 					if (!rs.next()) {
-						break;
+						return;
 					}
 
 					do {

@@ -94,7 +94,8 @@ public class BlogsContentEditorConfigContributor
 	}
 
 	private String _getAllowedContentText() {
-		return "b blockquote code em h1 h2 h3 h4 h5 h6 hr i pre strong u;";
+		return "b blockquote code em h1 h2 h3 h4 h5 h6 hr i pre s strike " +
+			"strong u;";
 	}
 
 	private void _populateFileBrowserURL(

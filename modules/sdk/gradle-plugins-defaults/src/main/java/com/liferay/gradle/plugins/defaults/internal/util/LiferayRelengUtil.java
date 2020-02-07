@@ -29,6 +29,8 @@ import java.lang.reflect.Method;
 
 import java.nio.file.Files;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -221,6 +223,84 @@ public class LiferayRelengUtil {
 		return false;
 	}
 
+	private static File _getArtifactProjectDir(File artifactPropertiesFile) {
+		String fileName = artifactPropertiesFile.getName();
+
+		if (Objects.equals(fileName, _ARTIFACT_PROPERTIES_FILE_NAME)) {
+			File artifactPropertiesDir = artifactPropertiesFile.getParentFile();
+
+			File relengRootDir = GradleUtil.getRootDir(
+				artifactPropertiesDir, _RELENG_DIR_NAME);
+
+			while (true) {
+				File rootDir = GradleUtil.getRootDir(
+					relengRootDir.getParentFile(), _RELENG_DIR_NAME);
+
+				if (rootDir == null) {
+					break;
+				}
+
+				relengRootDir = rootDir;
+			}
+
+			File relengDir = new File(relengRootDir, _RELENG_DIR_NAME);
+
+			String relativePath = FileUtil.relativize(
+				artifactPropertiesDir, relengDir);
+
+			return new File(relengRootDir, relativePath);
+		}
+
+		File portalRootDir = GradleUtil.getRootDir(
+			artifactPropertiesFile.getParentFile(), "portal-impl");
+
+		int pos = fileName.lastIndexOf('.');
+
+		return new File(portalRootDir, fileName.substring(0, pos));
+	}
+
+	private static List<File> _getArtifactPropertiesFiles(Project project) {
+		List<File> artifactPropertiesFiles = new ArrayList<>();
+
+		for (Configuration configuration : project.getConfigurations()) {
+			String configurationName = configuration.getName();
+
+			if (configurationName.equals(_JS_COMPILE_CONFIGURATION_NAME) ||
+				configurationName.equals(_SOY_COMPILE_CONFIGURATION_NAME) ||
+				configurationName.startsWith("test")) {
+
+				continue;
+			}
+
+			for (Dependency dependency : configuration.getDependencies()) {
+				if (dependency instanceof ProjectDependency) {
+					ProjectDependency projectDependency =
+						(ProjectDependency)dependency;
+
+					File relengDir = getRelengDir(
+						projectDependency.getDependencyProject());
+
+					if (relengDir != null) {
+						File propertiesFile = new File(
+							relengDir, _ARTIFACT_PROPERTIES_FILE_NAME);
+
+						artifactPropertiesFiles.add(propertiesFile);
+					}
+				}
+				else if (configurationName.startsWith("compile")) {
+					File propertiesFile = _getPortalArtifactPropertiesFile(
+						project, dependency);
+
+					if (propertiesFile != null) {
+						artifactPropertiesFiles.add(propertiesFile);
+					}
+				}
+			}
+		}
+
+		return artifactPropertiesFiles;
+	}
+
 	private static StringBuilder _getArtifactRemoteBaseURL(
 			Project project, boolean cdn)
 		throws Exception {
@@ -262,6 +342,55 @@ public class LiferayRelengUtil {
 		sb.append('/');
 
 		return sb;
+	}
+
+	private static File _getPortalArtifactPropertiesFile(
+		Project project, Dependency dependency) {
+
+		String dependencyGroup = dependency.getGroup();
+
+		if (!Objects.equals(dependencyGroup, "com.liferay.portal")) {
+			return null;
+		}
+
+		String dependencyVersion = dependency.getVersion();
+
+		if (!Objects.equals(dependencyVersion, "default")) {
+			return null;
+		}
+
+		String dependencyName = dependency.getName();
+
+		if (!dependencyName.startsWith("com.liferay.")) {
+			return null;
+		}
+
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
+		if (portalRootDir == null) {
+			return null;
+		}
+
+		String portalProjectName = dependencyName.substring(12);
+
+		File portalProjectDir = new File(
+			portalRootDir, portalProjectName.replace('.', '-'));
+
+		if (!portalProjectDir.exists()) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_MODULES_DIR_NAME);
+		sb.append('/');
+		sb.append(_RELENG_DIR_NAME);
+		sb.append('/');
+		sb.append(portalProjectDir.getName());
+		sb.append(".properties");
+
+		return new File(portalRootDir, sb.toString());
 	}
 
 	private static File _getPortalProjectDir(
@@ -378,9 +507,20 @@ public class LiferayRelengUtil {
 		return false;
 	}
 
+	private static final String _ARTIFACT_PROPERTIES_FILE_NAME =
+		"artifact.properties";
+
 	private static final String _IGNORED_MESSAGE_PATTERN =
 		WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN;
 
+	private static final String _JS_COMPILE_CONFIGURATION_NAME =
+		JSTranspilerBasePlugin.JS_COMPILE_CONFIGURATION_NAME;
+
+	private static final String _MODULES_DIR_NAME = "modules";
+
 	private static final String _RELENG_DIR_NAME = ".releng";
+
+	private static final String _SOY_COMPILE_CONFIGURATION_NAME =
+		JSTranspilerPlugin.SOY_COMPILE_CONFIGURATION_NAME;
 
 }

@@ -353,6 +353,16 @@ public class AccountRoleLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.account.model.AccountRole> searchAccountRoles(
+			long[] accountEntryIds, String keywords, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator obc) {
+
+		return _accountRoleLocalService.searchAccountRoles(
+			accountEntryIds, keywords, start, end, obc);
+	}
+
+	@Override
 	public void unassociateUser(
 			long accountEntryId, long accountRoleId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {

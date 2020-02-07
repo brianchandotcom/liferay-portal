@@ -15,6 +15,7 @@
 package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Permission;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -62,7 +63,9 @@ public class PermissionConverterTest {
 		try {
 			RoleTestUtil.addResourcePermission(
 				role, User.class.getName(),
-				ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", ActionKeys.VIEW);
+				ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+				ActionKeys.VIEW);
 
 			List<Permission> permissions =
 				PermissionConverterUtil.convertPermissions(role);

@@ -25,7 +25,7 @@ AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAtt
 <div class="card">
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(assetRenderer.getThumbnailPath(renderRequest)) %>">
-			<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover" style="background-image: url('<%= assetRenderer.getThumbnailPath(renderRequest) %>')">
+			<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover" style="background-image: url('<%= assetRenderer.getThumbnailPath(renderRequest) %>');">
 				<img alt="" class="sr-only" src="<%= assetRenderer.getThumbnailPath(renderRequest) %>" />
 			</div>
 		</c:when>

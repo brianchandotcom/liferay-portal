@@ -52,7 +52,7 @@ String notificationRecipients = PrefsParamUtil.getString(portletPreferences, req
 
 			<aui:input cssClass="lfr-input-text-container" helpMessage="notification-email-subject-help" label="notification-email-subject" name="preferences--notificationEmailSubject--" style="min-width: 400px;" value="<%= notificationEmailSubject %>" />
 
-			<aui:input cssClass="lfr-textarea-container" helpMessage="notification-email-body-help" label="notification-email-body" name="preferences--notificationEmailBody--" style="min-height: 100px;min-width: 400px;" type="textarea" value="<%= notificationEmailBody %>" />
+			<aui:input cssClass="lfr-textarea-container" helpMessage="notification-email-body-help" label="notification-email-body" name="preferences--notificationEmailBody--" style="min-height: 100px; min-width: 400px;" type="textarea" value="<%= notificationEmailBody %>" />
 		</aui:fieldset>
 	</liferay-ui:panel>
 

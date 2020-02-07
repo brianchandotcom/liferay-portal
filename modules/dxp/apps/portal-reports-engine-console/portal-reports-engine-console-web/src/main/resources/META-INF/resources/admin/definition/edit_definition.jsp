@@ -112,7 +112,7 @@ else {
 					<aui:input name="reportName" type="hidden" value="<%= reportName %>" />
 				</span>
 
-				<aui:button cssClass="cancel-update-template-report" style="display:none;" value="cancel" />
+				<aui:button cssClass="cancel-update-template-report" style="display: none;" value="cancel" />
 			</aui:field-wrapper>
 		</aui:fieldset>
 

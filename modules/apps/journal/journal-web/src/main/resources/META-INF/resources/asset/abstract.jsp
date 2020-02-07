@@ -24,7 +24,7 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 
 <div class="asset-summary">
 	<c:if test="<%= articleDisplay.isSmallImage() %>">
-		<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= articleDisplay.getArticleDisplayImageURL(themeDisplay) %>)"></div>
+		<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= articleDisplay.getArticleDisplayImageURL(themeDisplay) %>);"></div>
 	</c:if>
 
 	<%

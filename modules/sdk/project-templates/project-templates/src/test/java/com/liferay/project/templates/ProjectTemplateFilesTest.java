@@ -570,7 +570,8 @@ public class ProjectTemplateFilesTest {
 		_testPropertyValue(path, properties, "change-log", "");
 		_testPropertyValue(path, properties, "licenses", "LGPL");
 		_testPropertyValue(
-			path, properties, "liferay-versions", "7.0.0+,7.1.0+,7.2.0+,7.3.0+");
+			path, properties, "liferay-versions",
+			"7.0.0+,7.1.0+,7.2.0+,7.3.0+");
 		_testPropertyValue(path, properties, "long-description", "");
 		_testPropertyValue(path, properties, "module-group-id", "liferay");
 		_testPropertyValue(path, properties, "module-incremental-version", "1");

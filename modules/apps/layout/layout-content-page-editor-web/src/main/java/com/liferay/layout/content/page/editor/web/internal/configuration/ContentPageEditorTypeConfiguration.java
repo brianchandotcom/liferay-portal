@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface ContentPageEditorTypeConfiguration {
 
-	@Meta.AD(deflt = "soy", required = false)
+	@Meta.AD(deflt = "react", required = false)
 	public String type();
 
 }

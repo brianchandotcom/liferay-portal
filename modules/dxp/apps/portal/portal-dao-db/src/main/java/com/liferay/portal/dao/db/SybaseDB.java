@@ -100,9 +100,23 @@ public class SybaseDB extends BaseDB {
 	}
 
 	@Override
-	protected String applyMaxStringIndexLengthLimitation(String template) {
+	protected int[] getSQLTypes() {
+		return _SQL_TYPES;
+	}
+
+	@Override
+	protected String[] getTemplate() {
+		return _SYBASE;
+	}
+
+	@Override
+	protected String replaceTemplate(String template) {
+		if (template == null) {
+			return null;
+		}
+
 		if (!template.contains("[$COLUMN_LENGTH:")) {
-			return template;
+			return super.replaceTemplate(template);
 		}
 
 		String[] strings = StringUtil.split(template, CharPool.NEW_LINE);
@@ -123,18 +137,8 @@ public class SybaseDB extends BaseDB {
 			}
 		}
 
-		return super.applyMaxStringIndexLengthLimitation(
+		return super.replaceTemplate(
 			StringUtil.merge(strings, StringPool.NEW_LINE));
-	}
-
-	@Override
-	protected int[] getSQLTypes() {
-		return _SQL_TYPES;
-	}
-
-	@Override
-	protected String[] getTemplate() {
-		return _SYBASE;
 	}
 
 	@Override

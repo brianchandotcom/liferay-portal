@@ -54,7 +54,7 @@ public class SybaseDBTest extends BaseDBTestCase {
 		DB db = getDB();
 
 		Method method = ReflectionTestUtil.getMethod(
-			db.getClass(), "applyMaxStringIndexLengthLimitation", String.class);
+			db.getClass(), "replaceTemplate", String.class);
 
 		Assert.assertEquals(
 			"create index 0 on Test (test);",

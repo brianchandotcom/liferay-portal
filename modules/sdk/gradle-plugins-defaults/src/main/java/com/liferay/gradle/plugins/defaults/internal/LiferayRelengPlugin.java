@@ -316,7 +316,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					return false;
 				}
 
-				if (!LiferayRelengUtil.hasStaleProjectDependencies(project)) {
+				if (!LiferayRelengUtil.hasUnpublishedDependencies(project)) {
 					return false;
 				}
 
@@ -538,7 +538,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 					@Override
 					public boolean isSatisfiedBy(Task task) {
-						if (LiferayRelengUtil.hasStaleProjectDependencies(
+						if (LiferayRelengUtil.hasUnpublishedDependencies(
 								task.getProject())) {
 
 							return false;
@@ -769,7 +769,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					return true;
 				}
 
-				if (LiferayRelengUtil.isStale(
+				if (LiferayRelengUtil.hasUnpublishedCommits(
 						project, project.getProjectDir(),
 						recordArtifactTask.getOutputFile())) {
 
@@ -919,7 +919,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					return true;
 				}
 
-				if (LiferayRelengUtil.isStale(
+				if (LiferayRelengUtil.hasUnpublishedCommits(
 						project, project.getProjectDir(),
 						recordArtifactTask.getOutputFile())) {
 

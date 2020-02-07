@@ -117,7 +117,7 @@ public class LiferayRelengUtil {
 		return false;
 	}
 
-	public static boolean hasStaleProjectDependencies(Project project) {
+	public static boolean hasUnpublishedDependencies(Project project) {
 		for (Configuration configuration : project.getConfigurations()) {
 			String name = configuration.getName();
 
@@ -142,7 +142,7 @@ public class LiferayRelengUtil {
 		return false;
 	}
 
-	public static boolean isStale(
+	public static boolean hasUnpublishedCommits(
 		Project project, File artifactProjectDir, File artifactPropertiesFile) {
 
 		Logger logger = project.getLogger();
@@ -339,7 +339,7 @@ public class LiferayRelengUtil {
 			File artifactPropertiesFile = new File(
 				getRelengDir(dependencyProject), "artifact.properties");
 
-			if (isStale(
+			if (hasUnpublishedCommits(
 					project, dependencyProject.getProjectDir(),
 					artifactPropertiesFile)) {
 
@@ -374,7 +374,9 @@ public class LiferayRelengUtil {
 				File artifactPropertiesFile = new File(
 					dir.getParent(), sb.toString());
 
-				if (isStale(project, dir, artifactPropertiesFile)) {
+				if (hasUnpublishedCommits(
+						project, dir, artifactPropertiesFile)) {
+
 					Logger logger = project.getLogger();
 
 					if (logger.isQuietEnabled()) {

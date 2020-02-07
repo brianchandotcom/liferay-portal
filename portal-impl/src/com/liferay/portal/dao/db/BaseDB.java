@@ -711,11 +711,7 @@ public abstract class BaseDB implements DB {
 							continue;
 						}
 
-						String include = FileUtil.read(includeFile);
-
-						include = replaceTemplate(include);
-
-						sb.append(include);
+						sb.append(FileUtil.read(includeFile));
 
 						sb.append("\n\n");
 					}

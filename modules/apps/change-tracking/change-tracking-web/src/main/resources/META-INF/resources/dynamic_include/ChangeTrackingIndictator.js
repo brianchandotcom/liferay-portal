@@ -14,6 +14,7 @@
 
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {createPortletURL} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -48,18 +49,11 @@ const Component = ({
 				uri: selectURL
 			},
 			event => {
-				AUI().use('liferay-portlet-url', () => {
-					const portletURL = Liferay.PortletURL.createURL(
-						checkoutURL
-					);
-
-					portletURL.setParameter(
-						'ctCollectionId',
-						event.ctcollectionid
-					);
-
-					Liferay.Util.navigate(portletURL.toString());
+				const portletURL = createPortletURL(checkoutURL, {
+					ctCollectionId: event.ctcollectionid
 				});
+
+				Liferay.Util.navigate(portletURL.toString());
 			}
 		);
 	};

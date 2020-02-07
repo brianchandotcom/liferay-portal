@@ -16,12 +16,53 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+
+import {
+	useActiveItemId,
+	useHoverItem,
+	useHoveredItemId
+} from '../../../app/components/Controls';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
+import {useSelector} from '../../../app/store/index';
 
 export default function PageContent(props) {
 	const [active, setActive] = useState(false);
 	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
+	const activeItemId = useActiveItemId();
+	const hoverItem = useHoverItem();
+	const hoveredItemId = useHoveredItemId();
+	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
+	const [isHovered, setIsHovered] = useState(false);
+
+	useEffect(() => {
+		if (hoveredItemId) {
+			const [fragmentEntryLinkId, ...editableId] = hoveredItemId.split(
+				'-'
+			);
+
+			if (fragmentEntryLinks[fragmentEntryLinkId]) {
+				const fragmentEntryLink =
+					fragmentEntryLinks[fragmentEntryLinkId];
+
+				const editableValue =
+					fragmentEntryLink.editableValues[
+						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+					];
+
+				const editable = editableValue[editableId.join('-')];
+
+				if (editable) {
+					setIsHovered(editable.classPK === props.classPK);
+				}
+			}
+		}
+		else {
+			setIsHovered(false);
+		}
+	}, [fragmentEntryLinks, hoveredItemId, props.classPK]);
 
 	const openWindow = (uri, title) => {
 		Liferay.Util.openWindow({
@@ -37,8 +78,42 @@ export default function PageContent(props) {
 		});
 	};
 
+	const handleMouseOver = () => {
+		if (!activeItemId) {
+			return;
+		}
+
+		setIsHovered(true);
+
+		Object.values(fragmentEntryLinks).forEach(fragmentEntryLink => {
+			const editableFragmentEntryProcessor =
+				fragmentEntryLink.editableValues[
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+				];
+
+			Object.keys(editableFragmentEntryProcessor).forEach(
+				editableValue => {
+					hoverItem(
+						`${fragmentEntryLink.fragmentEntryLinkId}-${editableValue}`
+					);
+				}
+			);
+		});
+	};
+
+	const handleMouseLeave = () => {
+		setIsHovered(false);
+		hoverItem(null);
+	};
+
 	return (
-		<li className="page-editor__contents__page-content">
+		<li
+			className={classNames('page-editor__contents__page-content', {
+				'page-editor__contents__page-content--mapped-item-hovered': isHovered
+			})}
+			onMouseLeave={handleMouseLeave}
+			onMouseOver={handleMouseOver}
+		>
 			<div className="d-flex pl-3 pr-2 py-3">
 				<div className="autofit-col autofit-col-expand">
 					<strong className="list-group-title text-truncate">

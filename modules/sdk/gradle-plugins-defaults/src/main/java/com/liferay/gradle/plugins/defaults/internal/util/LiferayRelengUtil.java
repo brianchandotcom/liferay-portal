@@ -297,30 +297,27 @@ public class LiferayRelengUtil {
 				continue;
 			}
 
-			if (!line.contains(_IGNORED_MESSAGE_PATTERN)) {
-				try {
-					Files.createDirectories(gitResultsDir.toPath());
-
-					file = new File(gitResultsDir, sb.toString() + "true");
-
-					file.createNewFile();
-
-					return true;
-				}
-				catch (IOException ioException) {
-					throw new UncheckedIOException(ioException);
-				}
+			if (line.contains(_IGNORED_MESSAGE_PATTERN)) {
+				continue;
 			}
+
+			_createNewFile(new File(gitResultsDir, sb.toString() + "true"));
+
+			return true;
 		}
 
-		try {
-			Files.createDirectories(gitResultsDir.toPath());
+		_createNewFile(new File(gitResultsDir, sb.toString() + "false"));
 
-			file = new File(gitResultsDir, sb.toString() + "false");
+		return false;
+	}
+
+	private static void _createNewFile(File file) {
+		File dir = file.getParentFile();
+
+		try {
+			Files.createDirectories(dir.toPath());
 
 			file.createNewFile();
-
-			return false;
 		}
 		catch (IOException ioException) {
 			throw new UncheckedIOException(ioException);

@@ -54,9 +54,9 @@ public class OASExplorer {
 			return Optional.empty();
 		}
 
-		JsonString classNameJSON = (JsonString)classNameJsonValue;
+		JsonString classNameJsonString = (JsonString)classNameJsonValue;
 
-		return Optional.ofNullable(classNameJSON.getString());
+		return Optional.ofNullable(classNameJsonString.getString());
 	}
 
 	public Set<String> getEntitySchemaNames(JsonObject oasJsonObject) {

@@ -138,7 +138,50 @@ public abstract class BaseDB implements DB {
 	public void buildSQLFile(String sqlDir, String fileName)
 		throws IOException {
 
-		String template = buildTemplate(sqlDir, fileName);
+		String template = _readFile(
+			StringBundler.concat(sqlDir, "/", fileName, ".sql"));
+
+		if (fileName.equals("portal")) {
+			StringBundler sb = new StringBundler();
+
+			try (UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(
+						new UnsyncStringReader(template))) {
+
+				String line = null;
+
+				while ((line = unsyncBufferedReader.readLine()) != null) {
+					if (line.startsWith("@include ")) {
+						int pos = line.indexOf(" ");
+
+						String includeFileName = line.substring(pos + 1);
+
+						File includeFile = new File(
+							sqlDir + "/" + includeFileName);
+
+						if (!includeFile.exists()) {
+							continue;
+						}
+
+						sb.append(FileUtil.read(includeFile));
+
+						sb.append("\n\n");
+					}
+					else {
+						sb.append(line);
+						sb.append("\n");
+					}
+				}
+			}
+
+			template = sb.toString();
+		}
+
+		if (fileName.equals("indexes")) {
+			if (getDBType() == DBType.SYBASE) {
+				template = removeBooleanIndexes(sqlDir, template);
+			}
+		}
 
 		if (Validator.isNull(template)) {
 			return;
@@ -681,57 +724,6 @@ public abstract class BaseDB implements DB {
 		String[] words = StringUtil.split(line, StringPool.SPACE);
 
 		return new String[] {words[1], words[2]};
-	}
-
-	protected String buildTemplate(String sqlDir, String fileName)
-		throws IOException {
-
-		String template = _readFile(
-			StringBundler.concat(sqlDir, "/", fileName, ".sql"));
-
-		if (fileName.equals("portal")) {
-			StringBundler sb = new StringBundler();
-
-			try (UnsyncBufferedReader unsyncBufferedReader =
-					new UnsyncBufferedReader(
-						new UnsyncStringReader(template))) {
-
-				String line = null;
-
-				while ((line = unsyncBufferedReader.readLine()) != null) {
-					if (line.startsWith("@include ")) {
-						int pos = line.indexOf(" ");
-
-						String includeFileName = line.substring(pos + 1);
-
-						File includeFile = new File(
-							sqlDir + "/" + includeFileName);
-
-						if (!includeFile.exists()) {
-							continue;
-						}
-
-						sb.append(FileUtil.read(includeFile));
-
-						sb.append("\n\n");
-					}
-					else {
-						sb.append(line);
-						sb.append("\n");
-					}
-				}
-			}
-
-			template = sb.toString();
-		}
-
-		if (fileName.equals("indexes")) {
-			if (getDBType() == DBType.SYBASE) {
-				template = removeBooleanIndexes(sqlDir, template);
-			}
-		}
-
-		return template;
 	}
 
 	protected Set<String> dropIndexes(

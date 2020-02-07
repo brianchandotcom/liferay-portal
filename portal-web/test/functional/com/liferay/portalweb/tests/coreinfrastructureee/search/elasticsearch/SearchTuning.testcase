@@ -72,7 +72,7 @@ definition {
 
 		Button.clickSave();
 
-		Alert.viewErrorMessage(errorMessage = "Aliases must be unique across all rankings. The following aliases already exist: Article.");
+		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases must be unique across all rankings. The following ones already exist: Article.");
 
 		SearchTuning.configureAliases(
 			addAlias = "Journal",
@@ -80,7 +80,7 @@ definition {
 
 		Button.clickSave();
 
-		Alert.viewErrorMessage(errorMessage = "Aliases must be unique across all rankings. The following aliases already exist: Journal.");
+		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases must be unique across all rankings. The following ones already exist: Journal.");
 	}
 
 	test AssertDeletedResultRanking {

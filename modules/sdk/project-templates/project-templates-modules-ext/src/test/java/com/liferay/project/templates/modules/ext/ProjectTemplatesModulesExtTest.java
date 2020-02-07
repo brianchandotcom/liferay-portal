@@ -125,7 +125,7 @@ public class ProjectTemplatesModulesExtTest
 
 			testExists(
 				workspaceProjectDir,
-				"build/libs/com.liferay.login.web-4.0.20.ext.jar");
+				"build/libs/com.liferay.login.web-5.0.4.ext.jar");
 		}
 	}
 

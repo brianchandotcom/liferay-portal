@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -175,8 +176,17 @@ public class AccountRoleLocalServiceImpl
 		long accountEntryId, String keywords, int start, int end,
 		OrderByComparator obc) {
 
+		return searchAccountRoles(
+			new long[] {accountEntryId}, keywords, start, end, obc);
+	}
+
+	@Override
+	public BaseModelSearchResult<AccountRole> searchAccountRoles(
+		long[] accountEntryIds, String keywords, int start, int end,
+		OrderByComparator obc) {
+
 		DynamicQuery roleDynamicQuery = _getRoleDynamicQuery(
-			accountEntryId, keywords, obc);
+			accountEntryIds, keywords, obc);
 
 		if (roleDynamicQuery == null) {
 			return new BaseModelSearchResult<>(
@@ -190,7 +200,7 @@ public class AccountRoleLocalServiceImpl
 		return new BaseModelSearchResult<>(
 			accountRoles,
 			(int)roleLocalService.dynamicQueryCount(
-				_getRoleDynamicQuery(accountEntryId, keywords, null)));
+				_getRoleDynamicQuery(accountEntryIds, keywords, null)));
 	}
 
 	@Override
@@ -209,13 +219,14 @@ public class AccountRoleLocalServiceImpl
 	}
 
 	private DynamicQuery _getRoleDynamicQuery(
-		long accountEntryId, String keywords, OrderByComparator obc) {
+		long[] accountEntryIds, String keywords, OrderByComparator obc) {
 
 		DynamicQuery accountRoleDynamicQuery =
 			accountRoleLocalService.dynamicQuery();
 
 		accountRoleDynamicQuery.add(
-			RestrictionsFactoryUtil.eq("accountEntryId", accountEntryId));
+			RestrictionsFactoryUtil.in(
+				"accountEntryId", Arrays.asList(accountEntryIds)));
 		accountRoleDynamicQuery.setProjection(
 			ProjectionFactoryUtil.property("roleId"));
 

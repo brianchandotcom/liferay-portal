@@ -79,6 +79,52 @@ public class UserRolesDisplayContext {
 		return _eventName;
 	}
 
+	public SearchContainer getRoleSearchSearchContainer()
+		throws PortalException {
+
+		if (_roleSearch != null) {
+			return _roleSearch;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		RoleSearch roleSearch = new RoleSearch(
+			_renderRequest, _getPortletURL());
+
+		Group group = GroupLocalServiceUtil.fetchGroup(_getGroupId());
+
+		roleSearch.setRowChecker(
+			new UserGroupRoleRoleChecker(
+				_renderResponse,
+				PortalUtil.getSelectedUser(_httpServletRequest, false), group));
+
+		RoleSearchTerms searchTerms =
+			(RoleSearchTerms)roleSearch.getSearchTerms();
+
+		List<Role> roles = RoleLocalServiceUtil.search(
+			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+			new Integer[] {_getRoleType()}, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, roleSearch.getOrderByComparator());
+
+		roles = UsersAdminUtil.filterGroupRoles(
+			themeDisplay.getPermissionChecker(), _getGroupId(), roles);
+
+		int rolesCount = roles.size();
+
+		roleSearch.setTotal(rolesCount);
+
+		roles = ListUtil.subList(
+			roles, roleSearch.getStart(), roleSearch.getEnd());
+
+		roleSearch.setResults(roles);
+
+		_roleSearch = roleSearch;
+
+		return _roleSearch;
+	}
+
 	private long _getGroupId() {
 		if (_groupId != null) {
 			return _groupId;
@@ -134,51 +180,6 @@ public class UserRolesDisplayContext {
 		}
 
 		return portletURL;
-	}
-
-	public SearchContainer getRoleSearchSearchContainer()
-		throws PortalException {
-
-		if (_roleSearch != null) {
-			return _roleSearch;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		RoleSearch roleSearch = new RoleSearch(_renderRequest, _getPortletURL());
-
-		Group group = GroupLocalServiceUtil.fetchGroup(_getGroupId());
-
-		roleSearch.setRowChecker(
-			new UserGroupRoleRoleChecker(
-				_renderResponse,
-				PortalUtil.getSelectedUser(_httpServletRequest, false), group));
-
-		RoleSearchTerms searchTerms =
-			(RoleSearchTerms)roleSearch.getSearchTerms();
-
-		List<Role> roles = RoleLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			new Integer[] {_getRoleType()}, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			roleSearch.getOrderByComparator());
-
-		roles = UsersAdminUtil.filterGroupRoles(
-			themeDisplay.getPermissionChecker(), _getGroupId(), roles);
-
-		int rolesCount = roles.size();
-
-		roleSearch.setTotal(rolesCount);
-
-		roles = ListUtil.subList(
-			roles, roleSearch.getStart(), roleSearch.getEnd());
-
-		roleSearch.setResults(roles);
-
-		_roleSearch = roleSearch;
-
-		return _roleSearch;
 	}
 
 	private int _getRoleType() {

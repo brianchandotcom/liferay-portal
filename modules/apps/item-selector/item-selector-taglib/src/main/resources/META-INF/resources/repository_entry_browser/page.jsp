@@ -311,7 +311,9 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 
 									JSONObject itemMedatadaJSONObject = ItemSelectorRepositoryEntryBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 
-									Map<String, Object> data = new HashMap<String, Object>();
+									Map<String, Object> data = new HashMap<>();
+
+									data.put("description", fileEntry.getDescription());
 
 									String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
 
@@ -322,7 +324,6 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										data.put("href", themeDisplay.getPathThemeImages() + "/file_system/large/default.png");
 									}
 
-									data.put("description", fileEntry.getDescription());
 									data.put("metadata", itemMedatadaJSONObject.toString());
 									data.put("returnType", ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType));
 									data.put("title", title);

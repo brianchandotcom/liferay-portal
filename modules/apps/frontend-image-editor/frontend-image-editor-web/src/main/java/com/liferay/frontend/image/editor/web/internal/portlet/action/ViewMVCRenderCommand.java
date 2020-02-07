@@ -61,11 +61,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		Template template = getTemplate(renderRequest);
+		Template template = _getTemplate(renderRequest);
 
 		Map<String, Object> imageEditorCapabilitiesContext =
 			HashMapBuilder.<String, Object>put(
-				"tools", getImageEditorToolsContexts(renderRequest)
+				"tools", _getImageEditorToolsContexts(renderRequest)
 			).build();
 
 		template.put("imageEditorCapabilities", imageEditorCapabilitiesContext);
@@ -110,8 +110,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return "ImageEditor";
 	}
 
-	protected Map<String, List<ImageEditorCapabilityDescriptor>>
-		getImageEditorCapabilityDescriptorsList(
+	private Map<String, List<ImageEditorCapabilityDescriptor>>
+		_getImageEditorCapabilityDescriptorsList(
 			List<ImageEditorCapabilityDescriptor>
 				imageEditorCapabilityDescriptors) {
 
@@ -140,7 +140,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return imageEditorCapabilityDescriptorsMap;
 	}
 
-	protected List<Map<String, Object>> getImageEditorToolsContexts(
+	private List<Map<String, Object>> _getImageEditorToolsContexts(
 		RenderRequest renderRequest) {
 
 		List<Map<String, Object>> imageEditorToolsContexts = new ArrayList<>();
@@ -162,7 +162,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		Map<String, List<ImageEditorCapabilityDescriptor>>
 			imageEditorCapabilityDescriptorsMap =
-				getImageEditorCapabilityDescriptorsList(
+				_getImageEditorCapabilityDescriptorsList(
 					toolImageEditorCapabilityDescriptors);
 
 		for (Map.Entry<String, List<ImageEditorCapabilityDescriptor>> entry :
@@ -225,7 +225,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return imageEditorToolsContexts;
 	}
 
-	protected Template getTemplate(RenderRequest renderRequest) {
+	private Template _getTemplate(RenderRequest renderRequest) {
 		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
 	}
 

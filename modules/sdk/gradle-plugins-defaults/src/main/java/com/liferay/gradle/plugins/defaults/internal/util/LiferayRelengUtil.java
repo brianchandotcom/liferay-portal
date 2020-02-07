@@ -97,6 +97,26 @@ public class LiferayRelengUtil {
 		return getRelengDir(project.getProjectDir());
 	}
 
+	public static boolean hasStaleParentTheme(Project project) {
+		WriteDigestTask writeDigestTask = (WriteDigestTask)GradleUtil.getTask(
+			project,
+			LiferayThemeDefaultsPlugin.WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
+
+		if (!Objects.equals(
+				writeDigestTask.getDigest(), writeDigestTask.getOldDigest())) {
+
+			Logger logger = project.getLogger();
+
+			if (logger.isInfoEnabled()) {
+				logger.info("The digest for {} has changed.", writeDigestTask);
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean hasStaleProjectDependencies(Project project) {
 		for (Configuration configuration : project.getConfigurations()) {
 			String name = configuration.getName();
@@ -146,27 +166,6 @@ public class LiferayRelengUtil {
 
 		if (_isStale(project, artifactProjectDir, artifactGitId)) {
 			return true;
-		}
-
-		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class)) {
-			WriteDigestTask writeDigestTask =
-				(WriteDigestTask)GradleUtil.getTask(
-					project,
-					LiferayThemeDefaultsPlugin.
-						WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
-
-			String digest = writeDigestTask.getDigest();
-			String oldDigest = writeDigestTask.getOldDigest();
-
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"Digest for {} is {}, old digest is {}", writeDigestTask,
-					digest, oldDigest);
-			}
-
-			if (!Objects.equals(digest, oldDigest)) {
-				return true;
-			}
 		}
 
 		return false;

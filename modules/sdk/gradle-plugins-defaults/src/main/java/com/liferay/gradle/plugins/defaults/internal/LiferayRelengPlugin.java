@@ -709,7 +709,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		Project project = task.getProject();
 
-		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class) &&
+		final boolean liferayThemeProject = GradleUtil.hasPlugin(
+			project, LiferayThemeDefaultsPlugin.class);
+
+		if (liferayThemeProject &&
 			GradlePluginsDefaultsUtil.hasNPMParentThemesDependencies(project)) {
 
 			task.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
@@ -764,6 +767,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				if (Validator.isNull(result)) {
 					return false;
+				}
+
+				if (liferayThemeProject &&
+					LiferayRelengUtil.hasStaleParentTheme(project)) {
+
+					return true;
 				}
 
 				if (LiferayRelengUtil.isStale(

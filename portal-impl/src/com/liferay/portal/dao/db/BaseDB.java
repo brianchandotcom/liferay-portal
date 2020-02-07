@@ -529,7 +529,7 @@ public abstract class BaseDB implements DB {
 
 					String include = StringUtil.read(is);
 
-					include = replaceTemplate(include, getTemplate());
+					include = replaceTemplate(include);
 
 					runSQLTemplateString(include, true);
 				}
@@ -808,7 +808,7 @@ public abstract class BaseDB implements DB {
 
 						String include = FileUtil.read(includeFile);
 
-						include = replaceTemplate(include, getTemplate());
+						include = replaceTemplate(include);
 
 						sb.append(include);
 
@@ -985,13 +985,9 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
-	protected String replaceTemplate(String template, String[] actual) {
-		if ((template == null) || (TEMPLATE == null) || (actual == null)) {
+	protected String replaceTemplate(String template) {
+		if ((template == null) || (TEMPLATE == null)) {
 			return null;
-		}
-
-		if (TEMPLATE.length != actual.length) {
-			return template;
 		}
 
 		StringBundler sb = null;

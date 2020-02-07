@@ -39,7 +39,7 @@ import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopp
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import resizeColumns from '../../thunks/resizeColumns';
-import CompositionModal from '../CompositionModal';
+import SaveFragmentCompositionModal from '../SaveFragmentSaveFragmentCompositionModal';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import ColumnOverlayGrid from './ColumnOverlayGrid';
@@ -58,11 +58,14 @@ const RowWithControls = React.forwardRef(
 			...item.config
 		};
 		const isMounted = useIsMounted();
-		const [openCompositionModal, setOpenCompositionModal] = useState(false);
+		const [
+			openSaveFragmentCompositionModal,
+			setOpenSaveFragmentCompositionModal
+		] = useState(false);
 		const {observer, onClose} = useModal({
 			onClose: () => {
 				if (isMounted()) {
-					setOpenCompositionModal(false);
+					setOpenSaveFragmentCompositionModal(false);
 				}
 			}
 		});
@@ -85,11 +88,10 @@ const RowWithControls = React.forwardRef(
 						store: state
 					})
 				);
-			}
-			else if (
+			} else if (
 				id === LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveComposition.id
 			) {
-				setOpenCompositionModal(true);
+				setOpenSaveFragmentCompositionModal(true);
 			}
 		};
 
@@ -203,8 +205,8 @@ const RowWithControls = React.forwardRef(
 					)}
 				</ResizingContext.Provider>
 
-				{openCompositionModal && (
-					<CompositionModal
+				{openSaveFragmentCompositionModal && (
+					<SaveFragmentCompositionModal
 						errorMessage={''}
 						observer={observer}
 						onClose={onClose}

@@ -22,11 +22,11 @@ import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import {ConfigContext} from '../../app/config/index';
 import Button from '../../common/components/Button';
 import {openImageSelector} from '../../core/openImageSelector';
+import {ConfigContext} from '../config/index';
 
-const CompositionModal = ({
+const SaveFragmentCompositionModal = ({
 	errorMessage,
 	observer,
 	onClose,
@@ -51,12 +51,15 @@ const CompositionModal = ({
 
 	const [loading] = useState(false);
 
-	const nameInputId = portletNamespace + 'fragmentCompositionName';
-	const descriptionInputId =
-		portletNamespace + 'fragmentCompositionDescription';
+	const nameInputId = `${portletNamespace}fragmentCompositionName`;
+	const descriptionInputId = `${portletNamespace}fragmentCompositionDescription`;
 
 	return (
-		<ClayModal observer={observer} size="lg">
+		<ClayModal
+			className="page-editor__fragment-composition__modal"
+			observer={observer}
+			size="lg"
+		>
 			<ClayModal.Header>
 				{Liferay.Language.get('new-fragment')}
 			</ClayModal.Header>
@@ -153,10 +156,7 @@ const CompositionModal = ({
 							</ClayInput.GroupItem>
 							<ClayInput.GroupItem>
 								<ClayCheckbox
-									id={
-										portletNamespace +
-										'saveMappingConfiguration'
-									}
+									id={`${portletNamespace}saveMappingConfiguration`}
 									label={Liferay.Language.get(
 										'save-mapping-configuration'
 									)}
@@ -167,9 +167,9 @@ const CompositionModal = ({
 					<ClayForm.Group>
 						{collections.length > 0 ? (
 							<>
-								<h5 className="sheet-tertiary-title">
+								<p className="sheet-tertiary-title">
 									{Liferay.Language.get('select-collection')}
-								</h5>
+								</p>
 
 								<div className="row">
 									{collections.length > 0 &&
@@ -265,11 +265,11 @@ const CompositionModal = ({
 	);
 };
 
-CompositionModal.propTypes = {
+SaveFragmentCompositionModal.propTypes = {
 	errorMessage: PropTypes.string,
 	observer: PropTypes.object.isRequired,
 	onClose: PropTypes.func.isRequired,
 	onErrorDismiss: PropTypes.func.isRequired
 };
 
-export default CompositionModal;
+export default SaveFragmentCompositionModal;

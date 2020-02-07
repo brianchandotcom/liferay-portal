@@ -38,6 +38,15 @@ SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTy
 	siteNavigationMenuItemType.renderEditPage(request, PipingServletResponse.createPipingServletResponse(pageContext), siteNavigationMenuItem);
 	%>
 
+	<c:if test="<%= CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), SiteNavigationMenuItem.class.getName(), siteNavigationMenuItemId, null) %>">
+		<liferay-expando:custom-attribute-list
+			className="<%= SiteNavigationMenuItem.class.getName() %>"
+			classPK="<%= siteNavigationMenuItemId %>"
+			editable="<%= true %>"
+			label="<%= true %>"
+		/>
+	</c:if>
+
 	<aui:button-row>
 		<aui:button cssClass="btn-block" type="submit" />
 	</aui:button-row>

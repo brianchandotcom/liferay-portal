@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.awt.image.RenderedImage;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Map;

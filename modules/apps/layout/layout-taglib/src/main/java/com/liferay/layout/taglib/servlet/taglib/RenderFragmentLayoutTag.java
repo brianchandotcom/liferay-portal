@@ -22,8 +22,6 @@ import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -97,9 +95,9 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_dataJSONObject = null;
 		_fieldValues = null;
 		_groupId = 0;
+		_layoutStructure = null;
 		_mode = null;
 		_plid = 0;
 		_showPreview = false;
@@ -115,10 +113,10 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		super.setAttributes(httpServletRequest);
 
 		httpServletRequest.setAttribute(
-			"liferay-layout:render-fragment-layout:dataJSONObject",
-			_getDataJSONObject());
-		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:fieldValues", _fieldValues);
+		httpServletRequest.setAttribute(
+			"liferay-layout:render-fragment-layout:layoutStructure",
+			_getLayoutStructure());
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:mode", _mode);
 		httpServletRequest.setAttribute(
@@ -135,9 +133,9 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			_getSegmentsExperienceIds());
 	}
 
-	private JSONObject _getDataJSONObject() {
-		if (_dataJSONObject != null) {
-			return _dataJSONObject;
+	private LayoutStructure _getLayoutStructure() {
+		if (_layoutStructure != null) {
+			return _layoutStructure;
 		}
 
 		try {
@@ -154,18 +152,17 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			String masterLayoutData = _getMasterLayoutData();
 
 			if (Validator.isNull(masterLayoutData)) {
-				_dataJSONObject = JSONFactoryUtil.createJSONObject(data);
+				_layoutStructure = LayoutStructure.of(data);
 
-				return _dataJSONObject;
+				return _layoutStructure;
 			}
 
-			_dataJSONObject = _mergeLayoutDataJSONObject(
-				data, masterLayoutData);
+			_layoutStructure = _mergeLayoutStructure(data, masterLayoutData);
 
-			return _dataJSONObject;
+			return _layoutStructure;
 		}
 		catch (Exception exception) {
-			_log.error("Unable to get data JSON object", exception);
+			_log.error("Unable to get layout structure", exception);
 
 			return null;
 		}
@@ -224,7 +221,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
 	}
 
-	private JSONObject _mergeLayoutDataJSONObject(
+	private LayoutStructure _mergeLayoutStructure(
 		String data, String masterLayoutData) {
 
 		LayoutStructure masterLayoutStructure = LayoutStructure.of(
@@ -245,7 +242,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		dropZoneLayoutStructureItem.addChildrenItem(
 			layoutStructure.getMainItemId());
 
-		return masterLayoutStructure.toJSONObject();
+		return masterLayoutStructure;
 	}
 
 	private static final String _PAGE = "/render_fragment_layout/page.jsp";
@@ -253,9 +250,9 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RenderFragmentLayoutTag.class);
 
-	private JSONObject _dataJSONObject;
 	private Map<String, Object> _fieldValues;
 	private long _groupId;
+	private LayoutStructure _layoutStructure;
 	private String _mode;
 	private long _plid;
 	private boolean _showPreview;

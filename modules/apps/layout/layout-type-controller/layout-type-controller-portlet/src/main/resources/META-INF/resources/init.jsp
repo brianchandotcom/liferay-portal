@@ -38,7 +38,6 @@ page import="com.liferay.layout.util.structure.RootLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.RowLayoutStructureItem" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTemplate" %><%@

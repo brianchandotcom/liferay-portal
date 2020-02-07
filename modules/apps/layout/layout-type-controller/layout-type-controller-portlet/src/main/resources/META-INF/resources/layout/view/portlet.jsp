@@ -54,20 +54,16 @@ HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttri
 		<%
 		PortletLayoutDisplayContext portletLayoutDisplayContext = new PortletLayoutDisplayContext(request);
 
-		request.setAttribute("render_layout_data_structure.jsp-portletLayoutDisplayContext", portletLayoutDisplayContext);
+		request.setAttribute("render_layout_structure.jsp-portletLayoutDisplayContext", portletLayoutDisplayContext);
 
-		JSONObject dataJSONObject = portletLayoutDisplayContext.getDataJSONObject();
-
-		LayoutStructure layoutStructure = LayoutStructure.of(dataJSONObject.toString());
-
-		request.setAttribute("render_layout_data_structure.jsp-layoutStructure", layoutStructure);
+		LayoutStructure layoutStructure = portletLayoutDisplayContext.getLayoutStructure();
 
 		LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
 
-		request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+		request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 		%>
 
-		<liferay-util:include page="/layout/view/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>
 

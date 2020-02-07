@@ -22,14 +22,11 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
-import com.liferay.layout.page.template.util.LayoutDataConverter;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -112,71 +109,76 @@ public class PortletLayoutDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public JSONObject getDataJSONObject() {
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				themeDisplay.getPlid());
-
-			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					fetchLayoutPageTemplateEntryByPlid(
-						layout.getMasterLayoutPlid());
-
-			if (masterLayoutPageTemplateEntry == null) {
-				JSONObject defaultStructureJSONObject =
-					_getDefaultStructureJSONObject();
-
-				String data = LayoutDataConverter.convert(
-					defaultStructureJSONObject.toString());
-
-				return JSONFactoryUtil.createJSONObject(data);
-			}
-
-			LayoutPageTemplateStructure masterLayoutPageTemplateStructure =
-				LayoutPageTemplateStructureLocalServiceUtil.
-					fetchLayoutPageTemplateStructure(
-						masterLayoutPageTemplateEntry.getGroupId(),
-						PortalUtil.getClassNameId(Layout.class),
-						masterLayoutPageTemplateEntry.getPlid());
-
-			String data = masterLayoutPageTemplateStructure.getData(
-				SegmentsExperienceConstants.ID_DEFAULT);
-
-			if (Validator.isNull(data)) {
-				return _getDefaultStructureJSONObject();
-			}
-
-			return JSONFactoryUtil.createJSONObject(data);
+	public LayoutStructure getLayoutStructure() {
+		if (_layoutStructure != null) {
+			return _layoutStructure;
 		}
-		catch (Exception exception) {
-			_log.error("Unable to get JSON object", exception);
 
-			return null;
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			themeDisplay.getPlid());
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(
+					layout.getMasterLayoutPlid());
+
+		if (masterLayoutPageTemplateEntry == null) {
+			_layoutStructure = _getDefaultLayoutStructure();
+
+			return _layoutStructure;
 		}
+
+		LayoutPageTemplateStructure masterLayoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					masterLayoutPageTemplateEntry.getGroupId(),
+					PortalUtil.getClassNameId(Layout.class),
+					masterLayoutPageTemplateEntry.getPlid());
+
+		String data = masterLayoutPageTemplateStructure.getData(
+			SegmentsExperienceConstants.ID_DEFAULT);
+
+		if (Validator.isNull(data)) {
+			_layoutStructure = _getDefaultLayoutStructure();
+
+			return _layoutStructure;
+		}
+
+		_layoutStructure = LayoutStructure.of(data);
+
+		return _layoutStructure;
 	}
 
-	private JSONObject _getDefaultStructureJSONObject() {
-		return JSONUtil.put(
-			"structure",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"columns",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"fragmentEntryLinkIds", JSONUtil.put("drop-zone")
-						).put(
-							"size", 12
-						)))));
-	}
+	private LayoutStructure _getDefaultLayoutStructure() {
+		LayoutStructure layoutStructure = new LayoutStructure();
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletLayoutDisplayContext.class);
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerLayoutStructureItem =
+			layoutStructure.addContainerLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		LayoutStructureItem rowLayoutStructureItem =
+			layoutStructure.addRowLayoutStructureItem(
+				containerLayoutStructureItem.getItemId(), 0);
+
+		LayoutStructureItem columnLayoutStructureItem =
+			layoutStructure.addColumnLayoutStructureItem(
+				rowLayoutStructureItem.getItemId(), 0);
+
+		layoutStructure.addDropZoneLayoutStructureItem(
+			columnLayoutStructureItem.getItemId(), 0);
+
+		return layoutStructure;
+	}
 
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private LayoutStructure _layoutStructure;
 
 }

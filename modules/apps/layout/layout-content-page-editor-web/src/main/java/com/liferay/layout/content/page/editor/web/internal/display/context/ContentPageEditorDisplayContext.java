@@ -56,6 +56,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.constants.LayoutConverterTypeConstants;
+import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.CharPool;
@@ -120,7 +121,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -519,7 +519,16 @@ public class ContentPageEditorDisplayContext {
 			"mappedInfoItems", _getMappedInfoItemsSoyContexts()
 		).put(
 			"masterLayoutData",
-			JSONFactoryUtil.createJSONObject(_getMasterLayoutData())
+			() -> {
+				LayoutStructure masterLayoutStructure =
+					_getMasterLayoutStructure();
+
+				if (masterLayoutStructure == null) {
+					return StringPool.BLANK;
+				}
+
+				return masterLayoutStructure.toJSONObject();
+			}
 		).put(
 			"masterUsed", _isMasterUsed()
 		).put(
@@ -777,26 +786,6 @@ public class ContentPageEditorDisplayContext {
 		return _defaultConfigurations;
 	}
 
-	private JSONObject _getDropZoneConfigJSONObject(
-		JSONObject masterLayoutDataJSONObject) {
-
-		if (masterLayoutDataJSONObject.length() <= 0) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		LayoutStructure masterLayoutStructure = LayoutStructure.of(
-			masterLayoutDataJSONObject.toString());
-
-		LayoutStructureItem layoutStructureItem =
-			masterLayoutStructure.getDropZoneLayoutStructureItem();
-
-		if (layoutStructureItem == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		return layoutStructureItem.getItemConfigJSONObject();
-	}
-
 	private List<SoyContext> _getDynamicFragmentsSoyContexts() {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
@@ -1025,51 +1014,27 @@ public class ContentPageEditorDisplayContext {
 			return _fragmentEntryKeys;
 		}
 
-		String masterLayoutData = _getMasterLayoutData();
+		LayoutStructure masterLayoutStructure = _getMasterLayoutStructure();
 
-		if (Validator.isNull(masterLayoutData)) {
+		if (masterLayoutStructure == null) {
 			_fragmentEntryKeys = Collections.emptyList();
 
 			return _fragmentEntryKeys;
 		}
 
-		try {
-			JSONObject masterLayoutDataJSONObject =
-				JSONFactoryUtil.createJSONObject(masterLayoutData);
+		LayoutStructureItem layoutStructureItem =
+			masterLayoutStructure.getDropZoneLayoutStructureItem();
 
-			JSONObject dropZoneJSONObject = _getDropZoneConfigJSONObject(
-				masterLayoutDataJSONObject);
-
-			JSONArray fragmentEntryKeysJSONArray =
-				dropZoneJSONObject.getJSONArray("fragmentEntryKeys");
-
-			if ((fragmentEntryKeysJSONArray == null) ||
-				(fragmentEntryKeysJSONArray.length() <= 0)) {
-
-				_fragmentEntryKeys = Collections.emptyList();
-
-				return _fragmentEntryKeys;
-			}
-
-			List<String> fragmentEntryKeys = new ArrayList<>();
-
-			Iterator<String> iteratorFragmentEntryKeys =
-				fragmentEntryKeysJSONArray.iterator();
-
-			iteratorFragmentEntryKeys.forEachRemaining(
-				fragmentEntryKey -> fragmentEntryKeys.add(fragmentEntryKey));
-
-			_fragmentEntryKeys = fragmentEntryKeys;
+		if (layoutStructureItem == null) {
+			_fragmentEntryKeys = Collections.emptyList();
 
 			return _fragmentEntryKeys;
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get structure JSON array", exception);
-			}
-		}
 
-		_fragmentEntryKeys = Collections.emptyList();
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+			(DropZoneLayoutStructureItem)layoutStructureItem;
+
+		_fragmentEntryKeys = dropZoneLayoutStructureItem.getFragmentEntryKeys();
 
 		return _fragmentEntryKeys;
 	}
@@ -1453,17 +1418,15 @@ public class ContentPageEditorDisplayContext {
 		return mappedInfoItemsSoyContexts;
 	}
 
-	private String _getMasterLayoutData() {
-		if (_masterLayoutData != null) {
-			return _masterLayoutData;
+	private LayoutStructure _getMasterLayoutStructure() {
+		if (_masterLayoutStructure != null) {
+			return _masterLayoutStructure;
 		}
-
-		_masterLayoutData = StringPool.BLANK;
 
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.getMasterLayoutPlid() <= 0) {
-			return _masterLayoutData;
+			return _masterLayoutStructure;
 		}
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
@@ -1472,7 +1435,7 @@ public class ContentPageEditorDisplayContext {
 					layout.getMasterLayoutPlid());
 
 		if (masterLayoutPageTemplateEntry == null) {
-			return _masterLayoutData;
+			return _masterLayoutStructure;
 		}
 
 		try {
@@ -1483,18 +1446,20 @@ public class ContentPageEditorDisplayContext {
 						PortalUtil.getClassNameId(Layout.class.getName()),
 						masterLayoutPageTemplateEntry.getPlid(), true);
 
-			_masterLayoutData = layoutPageTemplateStructure.getData(
+			String masterLayoutData = layoutPageTemplateStructure.getData(
 				SegmentsExperienceConstants.ID_DEFAULT);
 
-			return _masterLayoutData;
+			_masterLayoutStructure = LayoutStructure.of(masterLayoutData);
+
+			return _masterLayoutStructure;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get master layout data", exception);
+				_log.debug("Unable to get master layout structure", exception);
 			}
 		}
 
-		return _masterLayoutData;
+		return _masterLayoutStructure;
 	}
 
 	private int _getPageType() throws PortalException {
@@ -1834,31 +1799,28 @@ public class ContentPageEditorDisplayContext {
 			return _allowNewFragmentEntries;
 		}
 
-		_allowNewFragmentEntries = true;
+		LayoutStructure masterLayoutStructure = _getMasterLayoutStructure();
 
-		String masterLayoutData = _getMasterLayoutData();
+		if (masterLayoutStructure == null) {
+			_allowNewFragmentEntries = true;
 
-		if (Validator.isNull(masterLayoutData)) {
-			return _allowNewFragmentEntries;
+			return true;
 		}
 
-		try {
-			JSONObject masterLayoutDataJSONObject =
-				JSONFactoryUtil.createJSONObject(masterLayoutData);
+		LayoutStructureItem layoutStructureItem =
+			masterLayoutStructure.getDropZoneLayoutStructureItem();
 
-			JSONObject dropZoneJSONObject = _getDropZoneConfigJSONObject(
-				masterLayoutDataJSONObject);
+		if (layoutStructureItem == null) {
+			_allowNewFragmentEntries = true;
 
-			_allowNewFragmentEntries = dropZoneJSONObject.getBoolean(
-				"allowNewFragmentEntries", true);
-
-			return _allowNewFragmentEntries;
+			return true;
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get structure JSON array", exception);
-			}
-		}
+
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
+			(DropZoneLayoutStructureItem)layoutStructureItem;
+
+		_allowNewFragmentEntries =
+			dropZoneLayoutStructureItem.isAllowNewFragmentEntries();
 
 		return _allowNewFragmentEntries;
 	}
@@ -1924,7 +1886,7 @@ public class ContentPageEditorDisplayContext {
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
 	private String _layoutData;
-	private String _masterLayoutData;
+	private LayoutStructure _masterLayoutStructure;
 	private Integer _pageType;
 	private final PortletRequest _portletRequest;
 	private Layout _publishedLayout;

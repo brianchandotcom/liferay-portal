@@ -17,41 +17,33 @@
 <%@ include file="/render_fragment_layout/init.jsp" %>
 
 <%
-JSONObject dataJSONObject = (JSONObject)request.getAttribute("liferay-layout:render-fragment-layout:dataJSONObject");
+LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("liferay-layout:render-fragment-layout:layoutStructure");
 %>
 
-<c:if test="<%= dataJSONObject != null %>">
-	<div class="layout-content portlet-layout" id="main-content" role="main">
+<div class="layout-content portlet-layout" id="main-content" role="main">
 
-		<%
-		try {
-			request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
+	<%
+	try {
+		request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
 
-			RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new RenderFragmentLayoutDisplayContext(request, response);
+		RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new RenderFragmentLayoutDisplayContext(request, response);
 
-			request.setAttribute("render_layout_data_structure.jsp-renderFragmentLayoutDisplayContext", renderFragmentLayoutDisplayContext);
-		%>
+		request.setAttribute("render_layout_structure.jsp-renderFragmentLayoutDisplayContext", renderFragmentLayoutDisplayContext);
 
-			<%= renderFragmentLayoutDisplayContext.getPortletPaths() %>
+		LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
 
-			<%
-			LayoutStructure layoutStructure = LayoutStructure.of(dataJSONObject.toString());
+		request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+	%>
 
-			request.setAttribute("render_layout_data_structure.jsp-layoutStructure", layoutStructure);
+		<%= renderFragmentLayoutDisplayContext.getPortletPaths() %>
 
-			LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
+		<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
 
-			request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-			%>
+	<%
+	}
+	finally {
+		request.removeAttribute(WebKeys.SHOW_PORTLET_TOPPER);
+	}
+	%>
 
-			<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
-
-		<%
-		}
-		finally {
-			request.removeAttribute(WebKeys.SHOW_PORTLET_TOPPER);
-		}
-		%>
-
-	</div>
-</c:if>
+</div>

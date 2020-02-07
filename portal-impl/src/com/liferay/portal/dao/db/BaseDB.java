@@ -620,7 +620,7 @@ public abstract class BaseDB implements DB {
 			}
 		}
 
-		indexesSQL = applyMaxStringIndexLengthLimitation(indexesSQL);
+		indexesSQL = _applyMaxStringIndexLengthLimitation(indexesSQL);
 
 		addIndexes(con, indexesSQL, validIndexNames);
 	}
@@ -641,45 +641,6 @@ public abstract class BaseDB implements DB {
 		for (int i = 0; i < templateTypes.length; i++) {
 			_sqlTypes.put(StringUtil.trim(templateTypes[i]), getSQLTypes()[i]);
 		}
-	}
-
-	protected String applyMaxStringIndexLengthLimitation(String template) {
-		if (!template.contains("[$COLUMN_LENGTH:")) {
-			return template;
-		}
-
-		DBType dbType = getDBType();
-
-		int stringIndexMaxLength = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH,
-				new Filter(dbType.getName())),
-			-1);
-
-		Matcher matcher = _columnLengthPattern.matcher(template);
-
-		if (stringIndexMaxLength < 0) {
-			return matcher.replaceAll(StringPool.BLANK);
-		}
-
-		StringBuffer sb = new StringBuffer();
-
-		String replacement = "\\(" + stringIndexMaxLength + "\\)";
-
-		while (matcher.find()) {
-			int length = Integer.valueOf(matcher.group(1));
-
-			if (length > stringIndexMaxLength) {
-				matcher.appendReplacement(sb, replacement);
-			}
-			else {
-				matcher.appendReplacement(sb, StringPool.BLANK);
-			}
-		}
-
-		matcher.appendTail(sb);
-
-		return sb.toString();
 	}
 
 	protected String[] buildColumnNameTokens(String line) {
@@ -953,14 +914,14 @@ public abstract class BaseDB implements DB {
 		}
 
 		if (sb == null) {
-			return applyMaxStringIndexLengthLimitation(template);
+			return _applyMaxStringIndexLengthLimitation(template);
 		}
 
 		if (template.length() > endIndex) {
 			sb.append(template.substring(endIndex));
 		}
 
-		return applyMaxStringIndexLengthLimitation(sb.toString());
+		return _applyMaxStringIndexLengthLimitation(sb.toString());
 	}
 
 	protected abstract String reword(String data) throws IOException;
@@ -990,6 +951,45 @@ public abstract class BaseDB implements DB {
 		" SBLOB", " BOOLEAN", " DATE", " DOUBLE", " INTEGER", " LONG",
 		" STRING", " TEXT", " VARCHAR", " IDENTITY", "COMMIT_TRANSACTION"
 	};
+
+	private String _applyMaxStringIndexLengthLimitation(String template) {
+		if (!template.contains("[$COLUMN_LENGTH:")) {
+			return template;
+		}
+
+		DBType dbType = getDBType();
+
+		int stringIndexMaxLength = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH,
+				new Filter(dbType.getName())),
+			-1);
+
+		Matcher matcher = _columnLengthPattern.matcher(template);
+
+		if (stringIndexMaxLength < 0) {
+			return matcher.replaceAll(StringPool.BLANK);
+		}
+
+		StringBuffer sb = new StringBuffer();
+
+		String replacement = "\\(" + stringIndexMaxLength + "\\)";
+
+		while (matcher.find()) {
+			int length = Integer.valueOf(matcher.group(1));
+
+			if (length > stringIndexMaxLength) {
+				matcher.appendReplacement(sb, replacement);
+			}
+			else {
+				matcher.appendReplacement(sb, StringPool.BLANK);
+			}
+		}
+
+		matcher.appendTail(sb);
+
+		return sb.toString();
+	}
 
 	private String _readFile(String fileName) throws IOException {
 		if (FileUtil.exists(fileName)) {

@@ -66,9 +66,6 @@ public class PortletHeaderProductNavigationControlMenuEntry
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		httpServletRequest.setAttribute(
-			ProductNavigationControlMenuWebKeys.PORTLET_DESCRIPTION,
-			portletDisplay.getDescription());
-		httpServletRequest.setAttribute(
 			ProductNavigationControlMenuWebKeys.PORTLET_TITLE,
 			portletDisplay.getTitle());
 

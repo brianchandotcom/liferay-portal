@@ -24,13 +24,21 @@ public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			AssetCategoryPropertyTable.class,
-			new AlterColumnType("key_", "VARCHAR(255) null"));
+		if (hasColumnType(
+				"AssetCategoryProperty", "key_", "VARCHAR(75) null")) {
 
-		alter(
-			AssetCategoryPropertyTable.class,
-			new AlterColumnType("value", "VARCHAR(255) null"));
+			alter(
+				AssetCategoryPropertyTable.class,
+				new AlterColumnType("key_", "VARCHAR(255) null"));
+		}
+
+		if (hasColumnType(
+				"AssetCategoryProperty", "value", "VARCHAR(75) null")) {
+
+			alter(
+				AssetCategoryPropertyTable.class,
+				new AlterColumnType("value", "VARCHAR(255) null"));
+		}
 	}
 
 }

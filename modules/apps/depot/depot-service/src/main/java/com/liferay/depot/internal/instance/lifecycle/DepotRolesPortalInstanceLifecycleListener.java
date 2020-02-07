@@ -70,14 +70,12 @@ public class DepotRolesPortalInstanceLifecycleListener
 						"system.depot.role.",
 						StringUtil.replace(
 							name, CharPool.SPACE, CharPool.PERIOD),
-						".description")),
-				RoleConstants.TYPE_DEPOT);
+						".description")));
 		}
 	}
 
 	private void _checkSystemRole(
-			long companyId, String name, Map<Locale, String> descriptionMap,
-			int type)
+			long companyId, String name, Map<Locale, String> descriptionMap)
 		throws PortalException {
 
 		try {
@@ -100,8 +98,8 @@ public class DepotRolesPortalInstanceLifecycleListener
 
 			try {
 				_roleLocalService.addRole(
-					user.getUserId(), null, 0, name, null, descriptionMap, type,
-					null, null);
+					user.getUserId(), null, 0, name, null, descriptionMap,
+					RoleConstants.TYPE_DEPOT, null, null);
 			}
 			finally {
 				PermissionThreadLocal.setAddResource(true);

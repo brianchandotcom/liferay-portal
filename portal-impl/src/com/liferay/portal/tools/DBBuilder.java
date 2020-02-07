@@ -15,12 +15,17 @@
 package com.liferay.portal.tools;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.DirectoryStream;
@@ -196,9 +201,124 @@ public class DBBuilder {
 		for (DBType dbType : _dbTypes) {
 			DB db = DBManagerUtil.getDB(dbType, null);
 
-			if (db != null) {
-				db.buildSQLFile(sqlDir, fileName);
+			if (db == null) {
+				continue;
 			}
+
+			String template = FileUtil.read(
+				StringBundler.concat(sqlDir, "/", fileName, ".sql"));
+
+			if (fileName.equals("portal")) {
+				StringBundler sb = new StringBundler();
+
+				try (UnsyncBufferedReader unsyncBufferedReader =
+						new UnsyncBufferedReader(
+							new UnsyncStringReader(template))) {
+
+					String line = null;
+
+					while ((line = unsyncBufferedReader.readLine()) != null) {
+						if (line.startsWith("@include ")) {
+							int pos = line.indexOf(" ");
+
+							String includeFileName = line.substring(pos + 1);
+
+							File includeFile = new File(
+								sqlDir + "/" + includeFileName);
+
+							if (!includeFile.exists()) {
+								continue;
+							}
+
+							sb.append(FileUtil.read(includeFile));
+
+							sb.append("\n\n");
+						}
+						else {
+							sb.append(line);
+							sb.append("\n");
+						}
+					}
+				}
+
+				template = sb.toString();
+			}
+			else if (fileName.equals("indexes")) {
+				if (dbType == DBType.SYBASE) {
+					template = _removeBooleanIndexes(sqlDir, template);
+				}
+			}
+
+			if (Validator.isNull(template)) {
+				return;
+			}
+
+			template = db.buildSQL(template);
+
+			FileUtil.write(
+				StringBundler.concat(
+					sqlDir, "/", fileName, "/", fileName, "-", db.getDBType(),
+					".sql"),
+				template);
+		}
+	}
+
+	private String _removeBooleanIndexes(String sqlDir, String data)
+		throws IOException {
+
+		String portalData = FileUtil.read(sqlDir + "/portal-tables.sql");
+
+		if (Validator.isNull(portalData)) {
+			return StringPool.BLANK;
+		}
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(data))) {
+
+			StringBundler sb = new StringBundler();
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				boolean append = true;
+
+				int x = line.indexOf(" on ");
+
+				if (x != -1) {
+					int y = line.indexOf(" (", x);
+
+					String table = line.substring(x + 4, y);
+
+					x = y + 2;
+
+					y = line.indexOf(")", x);
+
+					String[] columns = StringUtil.split(line.substring(x, y));
+
+					x = portalData.indexOf("create table " + table + " (");
+
+					y = portalData.indexOf(");", x);
+
+					String portalTableData = portalData.substring(x, y);
+
+					for (String column : columns) {
+						if (portalTableData.contains(
+								column.trim() + " BOOLEAN")) {
+
+							append = false;
+
+							break;
+						}
+					}
+				}
+
+				if (append) {
+					sb.append(line);
+					sb.append("\n");
+				}
+			}
+
+			return sb.toString();
 		}
 	}
 

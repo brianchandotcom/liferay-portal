@@ -35,6 +35,7 @@ import {
 	Root,
 	RowWithControls
 } from './layout-data-items/index';
+import {DragDropManager} from './useDragAndDrop';
 
 const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.column]: ColumnWithControls,
@@ -147,11 +148,13 @@ export default function PageEditor({withinMasterPage = false}) {
 		>
 			<DragPreview />
 
-			<LayoutDataItem
-				fragmentEntryLinks={fragmentEntryLinks}
-				item={mainItem}
-				layoutData={layoutData}
-			/>
+			<DragDropManager>
+				<LayoutDataItem
+					fragmentEntryLinks={fragmentEntryLinks}
+					item={mainItem}
+					layoutData={layoutData}
+				/>
+			</DragDropManager>
 		</div>
 	);
 }

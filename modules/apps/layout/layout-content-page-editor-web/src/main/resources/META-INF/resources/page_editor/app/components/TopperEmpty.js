@@ -13,14 +13,20 @@
  */
 
 import classNames from 'classnames';
-import React, {useRef} from 'react';
+import React, {useRef, useContext} from 'react';
 
-import useDragAndDrop, {TARGET_POSITION} from './useDragAndDrop';
+import useDragAndDrop, {
+	DragDropManagerImpl,
+	TARGET_POSITION
+} from './useDragAndDrop';
 
 export default function TopperEmpty({acceptDrop, children, item, layoutData}) {
+	const {
+		store: {dropTargetItemId, targetPosition}
+	} = useContext(DragDropManagerImpl);
 	const containerRef = useRef(null);
 
-	const {canDrop, drop, isDragging, isOver, targetPosition} = useDragAndDrop({
+	const {canDrop, drop, isDragging, isOver} = useDragAndDrop({
 		accept: acceptDrop,
 		containerRef,
 		item,
@@ -43,9 +49,11 @@ export default function TopperEmpty({acceptDrop, children, item, layoutData}) {
 			...child.props,
 			className: classNames(child.props.className, {
 				'drag-over-bottom':
-					targetPosition === TARGET_POSITION.BOTTOM && isOver,
+					targetPosition === TARGET_POSITION.BOTTOM &&
+					dropTargetItemId === item.itemId,
 				'drag-over-top':
-					targetPosition === TARGET_POSITION.TOP && isOver,
+					targetPosition === TARGET_POSITION.TOP &&
+					dropTargetItemId === item.itemId,
 				dragged: isDragging,
 				'page-editor-topper': true
 			}),

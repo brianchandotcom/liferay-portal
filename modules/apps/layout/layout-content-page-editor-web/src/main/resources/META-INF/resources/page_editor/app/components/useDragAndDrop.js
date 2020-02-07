@@ -12,7 +12,8 @@
  * details.
  */
 
-import {useEffect, useState} from 'react';
+import {cancelDebounce, debounce} from 'frontend-js-web';
+import React, {useContext, useEffect, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
@@ -34,6 +35,39 @@ const NESTING_LEVEL = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: Infinity
 };
 
+const initialDragDrop = {
+	dropTargetItemId: null,
+	targetPosition: null
+};
+
+export const DragDropManagerImpl = React.createContext(initialDragDrop);
+
+export const DragDropManager = ({children}) => {
+	const [store, setStore] = useState(initialDragDrop);
+
+	const dispatch = debounce(newStore => {
+		if (
+			store.dropTargetItemId !== newStore.dropTargetItemId ||
+			store.targetPosition !== newStore.targetPosition
+		) {
+			setStore(newStore);
+		}
+	});
+
+	useEffect(() => {
+		return () => {
+			cancelDebounce(dispatch);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return (
+		<DragDropManagerImpl.Provider value={{dispatch, store}}>
+			{children}
+		</DragDropManagerImpl.Provider>
+	);
+};
+
 export default function useDragAndDrop({
 	accept,
 	containerRef,
@@ -42,7 +76,10 @@ export default function useDragAndDrop({
 	layoutData,
 	onDragEnd
 }) {
-	const [targetPosition, setTargetPosition] = useState(null);
+	const {
+		dispatch,
+		store: {dropTargetItemId, targetPosition}
+	} = useContext(DragDropManagerImpl);
 
 	const [dragOptions, drag, preview] = useDrag({
 		collect: _monitor => ({
@@ -76,11 +113,15 @@ export default function useDragAndDrop({
 		drop(_item, _monitor) {
 			if (
 				!_monitor.didDrop() &&
-				(isValidMoveToMiddle(dropNestedAndSibling, item, _item) ||
+				(isValidMoveToMiddle(
+					dropNestedAndSibling,
+					layoutData.items[dropTargetItemId],
+					_item
+				) ||
 					isValidMoveToTargetPosition({
 						item: _item,
 						items: layoutData.items,
-						siblingOrParent: item,
+						siblingOrParent: layoutData.items[dropTargetItemId],
 						targetPosition
 					}))
 			) {
@@ -88,7 +129,7 @@ export default function useDragAndDrop({
 					dropNestedAndSibling,
 					item: _item,
 					items: layoutData.items,
-					siblingOrParentId: item.itemId,
+					siblingOrParentId: dropTargetItemId,
 					targetPosition
 				});
 
@@ -102,7 +143,11 @@ export default function useDragAndDrop({
 		},
 		hover(_item, _monitor) {
 			if (_item.itemId === item.itemId || rootVoid(item)) {
-				setTargetPosition(null);
+				dispatch({
+					dropTargetItemId: null,
+					targetPosition: null
+				});
+
 				return;
 			}
 
@@ -121,7 +166,10 @@ export default function useDragAndDrop({
 
 			if (isValidMoveToMiddle(dropNestedAndSibling, item, _item)) {
 				if (isMiddle(hoverClientY, hoverMiddleY)) {
-					setTargetPosition(TARGET_POSITION.MIDDLE);
+					dispatch({
+						dropTargetItemId: item.itemId,
+						targetPosition: TARGET_POSITION.MIDDLE
+					});
 
 					return;
 				}
@@ -133,6 +181,30 @@ export default function useDragAndDrop({
 			);
 
 			if (
+				isElevate(
+					clientOffset.y,
+					hoverBoundingRect.height,
+					hoverBoundingRect.top,
+					hoverBoundingRect.bottom
+				)
+			) {
+				const parent = layoutData.items[item.parentId];
+
+				if (parent && parent.type !== LAYOUT_DATA_ITEM_TYPES.root) {
+					dispatch({
+						dropTargetItemId:
+							parent.type !== LAYOUT_DATA_ITEM_TYPES.row &&
+							parent.children.length
+								? parent.parentId
+								: item.parentId,
+						targetPosition: newTargetPosition
+					});
+
+					return;
+				}
+			}
+
+			if (
 				isValidMoveToTargetPosition({
 					item: _item,
 					items: layoutData.items,
@@ -140,12 +212,28 @@ export default function useDragAndDrop({
 					targetPosition: newTargetPosition
 				})
 			) {
-				setTargetPosition(newTargetPosition);
+				dispatch({
+					dropTargetItemId: item.itemId,
+					targetPosition: newTargetPosition
+				});
 			} else {
-				setTargetPosition(null);
+				dispatch({
+					dropTargetItemId: null,
+					targetPosition: null
+				});
 			}
 		}
 	});
+
+	useEffect(() => {
+		if (!dropOptions.isOver || !dragOptions.isDragging) {
+			dispatch({
+				dropTargetItemId: null,
+				targetPosition: null
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dropOptions.isOver, dragOptions.isDragging]);
 
 	useEffect(() => {
 		preview(getEmptyImage(), {captureDraggingState: true});
@@ -155,8 +243,7 @@ export default function useDragAndDrop({
 		...dragOptions,
 		...dropOptions,
 		drag,
-		drop,
-		targetPosition
+		drop
 	};
 }
 
@@ -251,6 +338,20 @@ function isMiddle(hoverClientY, hoverMiddleY) {
 	return false;
 }
 
+const DISTANCE = 0.2;
+
+/**
+ * The closer you get to the edge of the element, the elevate will trigger,
+ * which will move the interaction to the parent element. The calculation subtracts the
+ * DISTANCE percentage from the edges to create the elevation area.
+ */
+function isElevate(clientOffsetY, height, top, bottom) {
+	return (
+		clientOffsetY < height * DISTANCE + top ||
+		clientOffsetY > bottom - height * DISTANCE
+	);
+}
+
 /**
  * When dragging downwards, only move when the cursor is below 50%
  * When dragging upwards, only move when the cursor is above 50%
@@ -258,8 +359,7 @@ function isMiddle(hoverClientY, hoverMiddleY) {
 function getTargetPosition(hoverClientY, hoverMiddleY) {
 	if (hoverClientY < hoverMiddleY) {
 		return TARGET_POSITION.TOP;
-	}
-	else if (hoverClientY > hoverMiddleY) {
+	} else if (hoverClientY > hoverMiddleY) {
 		return TARGET_POSITION.BOTTOM;
 	}
 }
@@ -307,8 +407,7 @@ function getParentItemIdAndPositon({
 			parentId: siblingOrParentId,
 			position: siblingOrParent.children.length
 		};
-	}
-	else {
+	} else {
 		const parent = items[siblingOrParent.parentId];
 
 		const siblingIndex = parent.children.indexOf(siblingOrParentId);

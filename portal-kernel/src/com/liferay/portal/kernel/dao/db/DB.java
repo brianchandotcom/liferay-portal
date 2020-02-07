@@ -162,9 +162,19 @@ public interface DB {
 
 	public void runSQL(String[] sqls) throws IOException, SQLException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             DBProcess#runSQLTemplate(String)}
+	 */
+	@Deprecated
 	public void runSQLTemplate(String path)
 		throws IOException, NamingException, SQLException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             DBProcess#runSQLTemplate(String, boolean)}
+	 */
+	@Deprecated
 	public void runSQLTemplate(String path, boolean failOnError)
 		throws IOException, NamingException, SQLException;
 

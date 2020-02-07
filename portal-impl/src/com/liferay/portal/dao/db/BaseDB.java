@@ -377,6 +377,11 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             DBProcess#runSQLTemplate(String)}
+	 */
+	@Deprecated
 	@Override
 	public void runSQLTemplate(String path)
 		throws IOException, NamingException, SQLException {
@@ -384,6 +389,11 @@ public abstract class BaseDB implements DB {
 		runSQLTemplate(path, true);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             DBProcess#runSQLTemplate(String, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public void runSQLTemplate(String path, boolean failOnError)
 		throws IOException, NamingException, SQLException {

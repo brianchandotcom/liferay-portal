@@ -15,8 +15,8 @@
 package com.liferay.portal.upgrade.util;
 
 import com.liferay.petra.executor.PortalExecutorManager;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.BaseDBProcess;
+import com.liferay.portal.kernel.dao.db.DBProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
@@ -31,7 +31,9 @@ import java.util.concurrent.Future;
  */
 public class ParallelUpgradeSchemaUtil {
 
-	public static void execute(String... sqlFileNames) throws Exception {
+	public static void execute(DBProcess dbProcess, String... sqlFileNames)
+		throws Exception {
+
 		ExecutorService executorService =
 			_portalExecutorManager.getPortalExecutor(
 				ParallelUpgradeSchemaUtil.class.getName());
@@ -42,7 +44,7 @@ public class ParallelUpgradeSchemaUtil {
 			for (String sqlFileName : sqlFileNames) {
 				futures.add(
 					executorService.submit(
-						new CallableSQLExecutor(sqlFileName)));
+						new CallableSQLExecutor(dbProcess, sqlFileName)));
 			}
 
 			for (Future<Void> future : futures) {
@@ -54,6 +56,18 @@ public class ParallelUpgradeSchemaUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #execute(
+	 *             DBProcess, String...)}
+	 */
+	@Deprecated
+	public static void execute(String... sqlFileNames) throws Exception {
+		execute(
+			new BaseDBProcess() {
+			},
+			sqlFileNames);
+	}
+
 	private static volatile PortalExecutorManager _portalExecutorManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalExecutorManager.class, ParallelUpgradeSchemaUtil.class,
@@ -63,19 +77,19 @@ public class ParallelUpgradeSchemaUtil {
 
 		@Override
 		public Void call() throws Exception {
-			DB db = DBManagerUtil.getDB();
-
 			try (LoggingTimer loggingTimer = new LoggingTimer(_sqlFileName)) {
-				db.runSQLTemplate(_sqlFileName, false);
+				_dbProcess.runSQLTemplate(_sqlFileName, false);
 			}
 
 			return null;
 		}
 
-		private CallableSQLExecutor(String sqlFileName) {
+		private CallableSQLExecutor(DBProcess dbProcess, String sqlFileName) {
+			_dbProcess = dbProcess;
 			_sqlFileName = sqlFileName;
 		}
 
+		private final DBProcess _dbProcess;
 		private final String _sqlFileName;
 
 	}

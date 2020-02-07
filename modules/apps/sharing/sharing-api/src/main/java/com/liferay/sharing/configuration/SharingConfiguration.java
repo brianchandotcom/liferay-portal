@@ -14,9 +14,12 @@
 
 package com.liferay.sharing.configuration;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface SharingConfiguration {
 
 	public boolean isAvailable();

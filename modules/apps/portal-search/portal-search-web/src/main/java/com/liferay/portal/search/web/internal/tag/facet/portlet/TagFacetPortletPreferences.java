@@ -19,7 +19,8 @@ package com.liferay.portal.search.web.internal.tag.facet.portlet;
  */
 public interface TagFacetPortletPreferences {
 
-	public static final String PREFERENCE_KEY_DISPLAY_STYLE = "displayStyle";
+	public static final String PREFERENCE_KEY_DISPLAY_STYLE =
+		"tagFacetDisplayStyle";
 
 	public static final String PREFERENCE_KEY_FREQUENCIES_VISIBLE =
 		"frequenciesVisible";

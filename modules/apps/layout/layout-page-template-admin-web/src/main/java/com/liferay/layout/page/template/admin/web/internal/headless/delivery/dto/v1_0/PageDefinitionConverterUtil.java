@@ -14,6 +14,8 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
@@ -44,15 +46,24 @@ import java.util.List;
  */
 public class PageDefinitionConverterUtil {
 
-	public static PageDefinition toPageDefinition(Layout layout) {
+	public static PageDefinition toPageDefinition(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentRendererTracker fragmentRendererTracker, Layout layout) {
+
 		return new PageDefinition() {
 			{
-				pageElements = _toPageElements(layout);
+				pageElements = _toPageElements(
+					fragmentCollectionContributorTracker,
+					fragmentRendererTracker, layout);
 			}
 		};
 	}
 
 	private static PageElement _toPageElement(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentRendererTracker fragmentRendererTracker,
 		LayoutStructure layoutStructure,
 		LayoutStructureItem layoutStructureItem) {
 
@@ -68,15 +79,23 @@ public class PageDefinitionConverterUtil {
 				childLayoutStructureItem.getChildrenItemIds();
 
 			if (grandChildrenItemIds.isEmpty()) {
-				pageElements.add(_toPageElement(childLayoutStructureItem));
+				pageElements.add(
+					_toPageElement(
+						fragmentCollectionContributorTracker,
+						fragmentRendererTracker, childLayoutStructureItem));
 			}
 			else {
 				pageElements.add(
-					_toPageElement(layoutStructure, childLayoutStructureItem));
+					_toPageElement(
+						fragmentCollectionContributorTracker,
+						fragmentRendererTracker, layoutStructure,
+						childLayoutStructureItem));
 			}
 		}
 
-		PageElement pageElement = _toPageElement(layoutStructureItem);
+		PageElement pageElement = _toPageElement(
+			fragmentCollectionContributorTracker, fragmentRendererTracker,
+			layoutStructureItem);
 
 		pageElement.setPageElements(pageElements.toArray(new PageElement[0]));
 
@@ -84,6 +103,9 @@ public class PageDefinitionConverterUtil {
 	}
 
 	private static PageElement _toPageElement(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentRendererTracker fragmentRendererTracker,
 		LayoutStructureItem layoutStructureItem) {
 
 		if (layoutStructureItem instanceof ColumnLayoutStructureItem) {
@@ -169,6 +191,8 @@ public class PageDefinitionConverterUtil {
 				{
 					definition =
 						FragmentDefinitionConverterUtil.toFragmentDefinition(
+							fragmentCollectionContributorTracker,
+							fragmentRendererTracker,
 							fragmentLayoutStructureItem);
 					type = PageElement.Type.FRAGMENT;
 				}
@@ -204,7 +228,11 @@ public class PageDefinitionConverterUtil {
 		return null;
 	}
 
-	private static PageElement[] _toPageElements(Layout layout) {
+	private static PageElement[] _toPageElements(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker,
+		FragmentRendererTracker fragmentRendererTracker, Layout layout) {
+
 		List<PageElement> pageElements = new ArrayList<>();
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -229,11 +257,14 @@ public class PageDefinitionConverterUtil {
 
 			mainPageElements.add(
 				_toPageElement(
-					layoutStructure,
+					fragmentCollectionContributorTracker,
+					fragmentRendererTracker, layoutStructure,
 					layoutStructure.getLayoutStructureItem(childItemId)));
 		}
 
-		PageElement pageElement = _toPageElement(mainLayoutStructureItem);
+		PageElement pageElement = _toPageElement(
+			fragmentCollectionContributorTracker, fragmentRendererTracker,
+			mainLayoutStructureItem);
 
 		pageElement.setPageElements(
 			mainPageElements.toArray(new PageElement[0]));

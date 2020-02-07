@@ -26,6 +26,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.PageDefinitionConverterUtil;
@@ -125,7 +127,9 @@ public class ExportUtil {
 
 		if (layout != null) {
 			PageDefinition pageDefinition =
-				PageDefinitionConverterUtil.toPageDefinition(layout);
+				PageDefinitionConverterUtil.toPageDefinition(
+					_fragmentCollectionContributorTracker,
+					_fragmentRendererTracker, layout);
 
 			zipWriter.addEntry(
 				path + "/page-definition.json",
@@ -157,6 +161,13 @@ public class ExportUtil {
 				PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
 		}
 	};
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -47,22 +47,22 @@ import org.osgi.service.component.annotations.Reference;
 public class DepotRolesPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
-	public static final String DEPOT_ADMINISTRATOR = "Depot Administrator";
+	private static final String _DEPOT_ADMINISTRATOR = "Depot Administrator";
 
-	public static final String DEPOT_MEMBER = "Depot Member";
+	private static final String _DEPOT_MEMBER = "Depot Member";
 
-	public static final String DEPOT_OWNER = "Depot Owner";
+	private static final String _DEPOT_OWNER = "Depot Owner";
 
-	public static final String[] DEPOT_ROLES = {
-		DEPOT_ADMINISTRATOR, DEPOT_MEMBER, DEPOT_OWNER
+	private static final String[] _DEPOT_ROLES = {
+		_DEPOT_ADMINISTRATOR, _DEPOT_MEMBER, _DEPOT_OWNER
 	};
 
 	@Override
 	public void portalInstanceRegistered(Company company)
 		throws PortalException {
 
-		for (String name : DEPOT_ROLES) {
-			checkSystemRole(
+		for (String name : _DEPOT_ROLES) {
+			_checkSystemRole(
 				company.getCompanyId(), name,
 				Collections.singletonMap(
 					LocaleUtil.getDefault(),
@@ -75,7 +75,7 @@ public class DepotRolesPortalInstanceLifecycleListener
 		}
 	}
 
-	protected void checkSystemRole(
+	private void _checkSystemRole(
 			long companyId, String name, Map<Locale, String> descriptionMap,
 			int type)
 		throws PortalException {
@@ -95,6 +95,7 @@ public class DepotRolesPortalInstanceLifecycleListener
 			}
 
 			User user = _userLocalService.getDefaultUser(companyId);
+
 			PermissionThreadLocal.setAddResource(false);
 
 			try {

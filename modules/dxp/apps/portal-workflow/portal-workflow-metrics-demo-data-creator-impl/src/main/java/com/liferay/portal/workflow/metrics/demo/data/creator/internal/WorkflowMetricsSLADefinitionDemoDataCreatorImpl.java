@@ -60,23 +60,23 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 				_getNodeKey(
 					"enter",
 					_getNodeId(
-						companyId, "Underwriter final review",
+						companyId, "underwriter-final-review",
 						workflowDefinitionId)),
 				_getNodeKey(
 					"enter",
 					_getNodeId(
-						companyId, "Underwriter review",
+						companyId, "underwriter-review",
 						workflowDefinitionId))),
 			_toStringArray(
 				_getNodeKey(
 					"leave",
 					_getNodeId(
-						companyId, "Underwriter final review",
+						companyId, "underwriter-final-review",
 						workflowDefinitionId)),
 				_getNodeKey(
 					"leave",
 					_getNodeId(
-						companyId, "Underwriter review",
+						companyId, "underwriter-review",
 						workflowDefinitionId))));
 		_create(
 			companyId, userId, createDate, 259200000, "Payment",
@@ -85,21 +85,21 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 				_getNodeKey(
 					"enter",
 					_getNodeId(
-						companyId, "Insurance payment", workflowDefinitionId)),
+						companyId, "insurance-payment", workflowDefinitionId)),
 				_getNodeKey(
 					"enter",
 					_getNodeId(
-						companyId, "Manual billing process",
+						companyId, "manual-billing-process",
 						workflowDefinitionId))),
 			_toStringArray(
 				_getNodeKey(
 					"leave",
 					_getNodeId(
-						companyId, "Insurance payment", workflowDefinitionId)),
+						companyId, "insurance-payment", workflowDefinitionId)),
 				_getNodeKey(
 					"leave",
 					_getNodeId(
-						companyId, "Manual billing process",
+						companyId, "manual-billing-process",
 						workflowDefinitionId))));
 		_create(
 			companyId, userId, createDate, 86400000, "Questions",
@@ -108,13 +108,13 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 				_getNodeKey(
 					"enter",
 					_getNodeId(
-						companyId, "Additional rating questions",
+						companyId, "additional-rating-questions",
 						workflowDefinitionId))),
 			_toStringArray(
 				_getNodeKey(
 					"leave",
 					_getNodeId(
-						companyId, "Additional rating questions",
+						companyId, "additional-rating-questions",
 						workflowDefinitionId))));
 		_create(
 			companyId, userId, createDate, 604800000, "Application",
@@ -123,18 +123,18 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 				_getNodeKey(
 					"begin",
 					_getNodeId(
-						companyId, "Start online application",
+						companyId, "start-online-application",
 						workflowDefinitionId))),
 			_toStringArray(
 				_getNodeKey(
 					"end",
 					_getNodeId(
-						companyId, "Application Complete",
+						companyId, "application-completed",
 						workflowDefinitionId)),
 				_getNodeKey(
 					"end",
 					_getNodeId(
-						companyId, "Application canceled",
+						companyId, "application-canceled",
 						workflowDefinitionId))));
 	}
 

@@ -269,7 +269,8 @@ name = HtmlUtil.escapeJS(name);
 			var defaultConfig = {
 				file_picker_callback: window['<%= name %>'].filePickerCallback,
 				height: 400,
-				init_instance_callback: window['<%= name %>'].initInstanceCallback
+				init_instance_callback: window['<%= name %>'].initInstanceCallback,
+				paste_data_images: true
 			};
 
 			<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">

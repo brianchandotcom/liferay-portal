@@ -38,7 +38,12 @@ import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSe
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
-import {useActiveItemId, useIsActive} from '../Controls';
+import {
+	useIsActive,
+	useActiveItemId,
+	useEditingItemId,
+	useSelectEditingItem
+} from '../Controls';
 import UnsafeHTML from '../UnsafeHTML';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import EditableDecoration from './EditableDecoration';
@@ -47,8 +52,10 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const config = useContext(ConfigContext);
 	const dispatch = useDispatch();
 	const activeItemId = useActiveItemId();
+	const editingItemId = useEditingItemId();
 	const isActive = useIsActive();
 	const isMounted = useIsMounted();
+	const selectEditingItemId = useSelectEditingItem();
 	const state = useSelector(state => state);
 
 	const defaultContent = fragmentEntryLink.content.value.content;
@@ -99,17 +106,19 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	}, [content, ref]);
 
 	useEffect(() => {
-		const activeEditable = ref.current.querySelector(
-			`[id="${getEditableId(activeItemId || '')}"]`
-		);
-
-		if (activeEditable) {
-			destroyProcessor(
-				activeEditable,
-				activeEditable.getAttribute('type')
+		if (editingItemId && editingItemId !== activeItemId) {
+			const editingItemElement = ref.current.querySelector(
+				`[id="${getEditableId(editingItemId)}"]`
 			);
+
+			destroyProcessor(
+				editingItemElement,
+				editingItemElement.getAttribute('type')
+			);
+
+			selectEditingItemId(null);
 		}
-	}, [activeItemId, ref]);
+	}, [activeItemId, editingItemId, ref, selectEditingItemId]);
 
 	useEffect(() => {
 		const element = ref.current;
@@ -212,43 +221,47 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 			processorType
 		);
 
-		processor.createEditor(
-			editableElement,
-			value => {
-				processor.render(editableElement, value, editableConfig);
+		if (!editingItemId) {
+			selectEditingItemId(getEditableUniqueId(editableId));
 
-				const {editableValues} = fragmentEntryLink;
-				const editableValue =
-					editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
-						editableId
-					];
-				const prefixedSegmentsExperienceId = selectPrefixedSegmentsExperienceId(
-					state
-				);
+			processor.createEditor(
+				editableElement,
+				value => {
+					processor.render(editableElement, value, editableConfig);
 
-				if (state.segmentsExperienceId) {
-					editableValue[prefixedSegmentsExperienceId] = {
-						...editableValue[prefixedSegmentsExperienceId],
-						[state.languageId]: value
-					};
-				}
-				else {
-					editableValue[state.languageId] = value;
-				}
+					const {editableValues} = fragmentEntryLink;
+					const editableValue =
+						editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][
+							editableId
+						];
+					const prefixedSegmentsExperienceId = selectPrefixedSegmentsExperienceId(
+						state
+					);
 
-				dispatch(
-					updateEditableValues({
-						config,
-						editableValues,
-						fragmentEntryLinkId,
-						segmentsExperienceId: state.segmentsExperienceId
-					})
-				);
-			},
-			() => processor.destroyEditor(editableElement, editableConfig),
-			config,
-			event
-		);
+					if (state.segmentsExperienceId) {
+						editableValue[prefixedSegmentsExperienceId] = {
+							...editableValue[prefixedSegmentsExperienceId],
+							[state.languageId]: value
+						};
+					}
+					else {
+						editableValue[state.languageId] = value;
+					}
+
+					dispatch(
+						updateEditableValues({
+							config,
+							editableValues,
+							fragmentEntryLinkId,
+							segmentsExperienceId: state.segmentsExperienceId
+						})
+					);
+				},
+				() => processor.destroyEditor(editableElement, editableConfig),
+				config,
+				event
+			);
+		}
 	};
 
 	const destroyProcessor = (element, editableType) => {

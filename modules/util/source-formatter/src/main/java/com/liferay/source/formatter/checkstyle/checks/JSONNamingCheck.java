@@ -62,20 +62,24 @@ public class JSONNamingCheck extends BaseCheck {
 			"JsonObject", detailAST.getLineNo(), _TOKEN_TYPE_NAMES);
 
 		_checkName(
-			name, tokenTypeName, "JSON", "JSONString", detailAST.getLineNo(),
-			new String[] {_TOKEN_TYPE_NAME_VARIABLE});
+			name, typeName, tokenTypeName, "JSON", "JSONString",
+			detailAST.getLineNo(), new String[] {_TOKEN_TYPE_NAME_VARIABLE});
 		_checkName(
-			name, tokenTypeName, "JSON", "JsonString", detailAST.getLineNo(),
-			new String[] {_TOKEN_TYPE_NAME_VARIABLE});
+			name, typeName, tokenTypeName, "JSON", "JsonString",
+			detailAST.getLineNo(), new String[] {_TOKEN_TYPE_NAME_VARIABLE});
 	}
 
 	private void _checkName(
-		String name, String tokenTypeName, String validNameEnding,
-		String incorrectNameEnding, int lineNo, String[] checkTokenTypeNames) {
+		String name, String typeName, String tokenTypeName,
+		String validNameEnding, String incorrectNameEnding, int lineNo,
+		String[] checkTokenTypeNames) {
 
 		if (name.endsWith(incorrectNameEnding) &&
+			!StringUtil.endsWith(name, typeName) &&
 			ArrayUtil.contains(checkTokenTypeNames, tokenTypeName)) {
 
+			System.out.println(typeName);
+			System.out.println(name);
 			log(
 				lineNo, _MSG_RENAME_VARIABLE,
 				StringUtil.toLowerCase(tokenTypeName), name,
@@ -110,8 +114,8 @@ public class JSONNamingCheck extends BaseCheck {
 		}
 
 		_checkName(
-			name, tokenTypeName, reservedNameEnding, incorrectNameEnding,
-			lineNo, checkTokenTypeNames);
+			name, typeName, tokenTypeName, reservedNameEnding,
+			incorrectNameEnding, lineNo, checkTokenTypeNames);
 	}
 
 	private String _getName(DetailAST detailAST) {

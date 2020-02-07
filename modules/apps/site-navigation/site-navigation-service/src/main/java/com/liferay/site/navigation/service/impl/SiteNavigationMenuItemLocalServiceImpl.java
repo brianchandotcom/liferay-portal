@@ -345,6 +345,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		siteNavigationMenuItem.setName(name);
 		siteNavigationMenuItem.setTypeSettings(typeSettings);
+		siteNavigationMenuItem.setExpandoBridgeAttributes(serviceContext);
 
 		return siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);
 	}

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.menu.item.util.SiteNavigationMenuItemUtil;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
 import javax.portlet.ActionRequest;
@@ -59,7 +60,7 @@ public class EditSiteNavigationMenuItemMVCActionCommand
 				actionRequest, "TypeSettingsProperties--");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
+			SiteNavigationMenuItem.class.getName(), actionRequest);
 
 		try {
 			_siteNavigationMenuItemService.updateSiteNavigationMenuItem(

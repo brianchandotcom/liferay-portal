@@ -19,12 +19,14 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexWriter;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -219,11 +221,15 @@ public class SolrIndexWriter extends BaseIndexWriter {
 			long companyId = searchContext.getCompanyId();
 
 			if (companyId > 0) {
-				booleanQuery.addRequiredTerm(
-					Field.COMPANY_ID, String.valueOf(companyId));
+				booleanQuery.add(
+					new TermQueryImpl(
+						Field.COMPANY_ID, String.valueOf(companyId)),
+					BooleanClauseOccur.MUST);
 			}
 
-			booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, className);
+			booleanQuery.add(
+				new TermQueryImpl(Field.ENTRY_CLASS_NAME, className),
+				BooleanClauseOccur.MUST);
 
 			DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
 				new DeleteByQueryDocumentRequest(

@@ -24,10 +24,10 @@ import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopp
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {useSelectItem} from '../Controls';
-import SaveFragmentCompositionModal from '../SaveFragmentSaveFragmentCompositionModal';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import Container from './Container';
+import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 
 const ContainerWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {

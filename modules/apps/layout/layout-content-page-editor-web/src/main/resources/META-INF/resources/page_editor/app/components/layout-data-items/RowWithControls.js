@@ -39,7 +39,7 @@ import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopp
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import resizeColumns from '../../thunks/resizeColumns';
-import SaveFragmentCompositionModal from '../SaveFragmentSaveFragmentCompositionModal';
+import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import ColumnOverlayGrid from './ColumnOverlayGrid';

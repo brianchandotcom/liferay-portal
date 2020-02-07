@@ -22,9 +22,9 @@ import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import Button from '../../common/components/Button';
-import {openImageSelector} from '../../core/openImageSelector';
-import {ConfigContext} from '../config/index';
+import Button from '../../../common/components/Button';
+import {openImageSelector} from '../../../core/openImageSelector';
+import {ConfigContext} from '../../config/index';
 
 const SaveFragmentCompositionModal = ({
 	errorMessage,

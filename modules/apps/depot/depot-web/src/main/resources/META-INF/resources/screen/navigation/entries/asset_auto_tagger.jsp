@@ -20,4 +20,12 @@
 AssetAutoTaggerConfiguration assetAutoTaggerConfiguration = (AssetAutoTaggerConfiguration)request.getAttribute(AssetAutoTaggerConfiguration.class.getName());
 %>
 
-<aui:input helpMessage="repository-asset-auto-tagging-help" label="enable-auto-tagging-of-assets-on-this-repository" name="TypeSettingsProperties--assetAutoTaggingEnabled--" type="toggle-switch" value="<%= assetAutoTaggerConfiguration.isEnabled() %>" />
+<c:if test="<%= assetAutoTaggerConfiguration.isAvailable() %>">
+	<liferay-frontend:fieldset
+		collapsible="true"
+		cssClass="panel-group-flush"
+		label='<%= LanguageUtil.get(request, "asset-auto-tagging") %>'
+	>
+		<aui:input helpMessage="repository-asset-auto-tagging-help" label="enable-auto-tagging-of-assets-on-this-repository" name="TypeSettingsProperties--assetAutoTaggingEnabled--" type="toggle-switch" value="<%= assetAutoTaggerConfiguration.isEnabled() %>" />
+	</liferay-frontend:fieldset>
+</c:if>

@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Sharepoint SOAP Connector
+Bundle-SymbolicName: com.liferay.sharepoint.soap.connector
+Bundle-Version: 4.0.2
+Export-Package:\
+	com.liferay.sharepoint.soap.connector,\
+	com.liferay.sharepoint.soap.connector.operation,\
+	com.liferay.sharepoint.soap.connector.schema,\
+	com.liferay.sharepoint.soap.connector.schema.batch,\
+	com.liferay.sharepoint.soap.connector.schema.query,\
+	com.liferay.sharepoint.soap.connector.schema.query.join,\
+	com.liferay.sharepoint.soap.connector.schema.query.operator,\
+	com.liferay.sharepoint.soap.connector.schema.query.option

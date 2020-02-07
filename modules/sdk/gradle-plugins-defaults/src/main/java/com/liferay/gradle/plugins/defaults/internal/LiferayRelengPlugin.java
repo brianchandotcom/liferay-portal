@@ -703,13 +703,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		Project project, Task printStaleArtifactTask,
 		final WritePropertiesTask recordArtifactTask) {
 
-		String force = GradleUtil.getTaskPrefixedProperty(
-			printStaleArtifactTask, "force");
-
-		if (Boolean.parseBoolean(force)) {
-			return;
-		}
-
 		final boolean liferayThemeProject = GradleUtil.hasPlugin(
 			project, LiferayThemeDefaultsPlugin.class);
 

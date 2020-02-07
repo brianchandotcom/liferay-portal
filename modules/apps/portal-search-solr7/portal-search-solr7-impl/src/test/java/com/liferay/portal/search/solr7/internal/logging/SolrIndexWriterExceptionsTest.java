@@ -126,7 +126,8 @@ public class SolrIndexWriterExceptionsTest extends BaseIndexingTestCase {
 		IndexWriter indexWriter = getIndexWriter();
 
 		try {
-			indexWriter.deleteEntityDocuments(createSearchContext(), null);
+			indexWriter.deleteEntityDocuments(
+				createSearchContext(), "className");
 		}
 		catch (SearchException searchException) {
 		}

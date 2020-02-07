@@ -172,7 +172,7 @@ public class ContentPageLayoutEditorDisplayContext
 
 		List<SegmentsEntry> segmentsEntries =
 			SegmentsEntryServiceUtil.getSegmentsEntries(
-				_getStagingAwareGroupId(SegmentsPortletKeys.SEGMENTS), true);
+				_getStagingAwareGroupId(), true);
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
 			SoyContext segmentsEntrySoyContext =
@@ -436,15 +436,16 @@ public class ContentPageLayoutEditorDisplayContext
 		HttpUtil.addParameter(
 			layoutFullURL, "p_l_back_url", themeDisplay.getURLCurrent());
 
-		return layoutFullURL = HttpUtil.addParameter(
+		return HttpUtil.addParameter(
 			layoutFullURL, "segmentsExperienceId", segmentsExperienceId);
 	}
 
-	private long _getStagingAwareGroupId(String portletId) {
-		Long groupId = getGroupId();
+	private long _getStagingAwareGroupId() {
+		long groupId = getGroupId();
 
 		if (_stagingGroupHelper.isStagingGroup(groupId) &&
-			!_stagingGroupHelper.isStagedPortlet(groupId, portletId)) {
+			!_stagingGroupHelper.isStagedPortlet(
+				groupId, SegmentsPortletKeys.SEGMENTS)) {
 
 			Group group = _stagingGroupHelper.fetchLiveGroup(groupId);
 

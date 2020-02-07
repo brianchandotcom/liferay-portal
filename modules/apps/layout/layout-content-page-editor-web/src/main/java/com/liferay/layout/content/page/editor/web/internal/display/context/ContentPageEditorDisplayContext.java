@@ -786,7 +786,7 @@ public class ContentPageEditorDisplayContext {
 			return _defaultConfigurations;
 		}
 
-		Map<String, Object> configurations = HashMapBuilder.<String, Object>put(
+		_defaultConfigurations = HashMapBuilder.<String, Object>put(
 			"comment",
 			() -> {
 				EditorConfiguration commentEditorConfiguration =
@@ -829,8 +829,6 @@ public class ContentPageEditorDisplayContext {
 				return editorConfiguration.getData();
 			}
 		).build();
-
-		_defaultConfigurations = configurations;
 
 		return _defaultConfigurations;
 	}

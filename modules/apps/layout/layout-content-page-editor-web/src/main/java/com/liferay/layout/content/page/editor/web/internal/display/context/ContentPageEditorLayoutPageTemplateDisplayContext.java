@@ -126,9 +126,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		return _fragmentsEditorToolbarSoyContext;
 	}
 
-	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry()
-		throws PortalException {
-
+	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry() {
 		if (_layoutPageTemplateEntry != null) {
 			return _layoutPageTemplateEntry;
 		}
@@ -172,7 +170,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		return classType.getName();
 	}
 
-	private String _getMappingTypeLabel() throws PortalException {
+	private String _getMappingTypeLabel() {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
 

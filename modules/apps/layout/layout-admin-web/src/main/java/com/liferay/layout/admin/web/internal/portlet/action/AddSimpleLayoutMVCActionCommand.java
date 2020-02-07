@@ -93,7 +93,7 @@ public class AddSimpleLayoutMVCActionCommand
 		long masterLayoutPlid = ParamUtil.getLong(
 			actionRequest, "masterLayoutPlid");
 
-		if (masterLayoutPlid <= 0) {
+		if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
 			LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.
 					fetchDefaultLayoutPageTemplateEntry(

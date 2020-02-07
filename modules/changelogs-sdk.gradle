@@ -37,6 +37,10 @@ buildChangelogs {
 				return
 			}
 
+			if (sdkProjectDir.name == "project-templates") {
+				return
+			}
+
 			String text = "# " + GUtil.loadProperties(new File(sdkDir, sdkProjectDir.name + "/bnd.bnd"))["Bundle-Name"] + " Change Log"
 
 			String commitRange = ""
@@ -229,6 +233,10 @@ recordCommits {
 			File sdkProjectDir ->
 
 			if (project.properties["projectName"] && (project.properties["projectName"] != sdkProjectDir.name)) {
+				return
+			}
+
+			if (sdkProjectDir.name == "project-templates") {
 				return
 			}
 

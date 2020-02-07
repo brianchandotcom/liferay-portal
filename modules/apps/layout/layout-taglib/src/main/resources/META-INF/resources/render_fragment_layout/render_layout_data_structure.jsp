@@ -46,7 +46,7 @@ if (structureJSONArray != null) {
 				String backgroundColorCssClass = StringPool.BLANK;
 				String backgroundImage = StringPool.BLANK;
 				boolean columnSpacing = true;
-				String containerType = StringPool.BLANK;
+				String containerType = "fluid";
 				long paddingHorizontal = -1L;
 				long paddingVertical = -1L;
 

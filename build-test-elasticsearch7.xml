@@ -1095,6 +1095,9 @@ xpack.monitoring.collection.enabled: true</echo>
 					<if>
 						<equals arg1="${remote.elasticsearch.ccr.enabled}" arg2="true" />
 						<then>
+							<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
+								<http url="http://localhost:9202/" />
+							</waitfor>
 							<print-file file.name="${elasticsearch.dir}-2/logs/LiferayElasticsearchClusterTwo.log" />
 						</then>
 					</if>

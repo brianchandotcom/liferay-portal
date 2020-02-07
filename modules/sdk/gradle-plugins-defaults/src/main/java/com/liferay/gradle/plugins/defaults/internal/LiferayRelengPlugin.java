@@ -31,7 +31,6 @@ import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.LiferayRelengUtil;
-import com.liferay.gradle.plugins.defaults.internal.util.spec.SkipIfMatchesIgnoreProjectRegexTaskSpec;
 import com.liferay.gradle.plugins.defaults.tasks.MergeFilesTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTask;
@@ -47,6 +46,8 @@ import java.io.UncheckedIOException;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
@@ -292,26 +293,39 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			});
 
-		task.onlyIf(
-			new Spec<Task>() {
+		Spec<Task> onlyIfSpec = new Spec<Task>() {
 
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					Project project = task.getProject();
+			@Override
+			public boolean isSatisfiedBy(Task task) {
+				Project project = task.getProject();
 
-					if (!GradlePluginsDefaultsUtil.isTestProject(project) &&
-						LiferayRelengUtil.hasStaleProjectDependencies(
-							project)) {
+				String ignoreProjectRegex = GradleUtil.getTaskPrefixedProperty(
+					task, "ignore.project.regex");
 
-						return true;
+				if (Validator.isNotNull(ignoreProjectRegex)) {
+					Pattern pattern = Pattern.compile(ignoreProjectRegex);
+
+					Matcher matcher = pattern.matcher(project.getName());
+
+					if (matcher.find()) {
+						return false;
 					}
+				}
 
+				if (GradlePluginsDefaultsUtil.isTestProject(project)) {
 					return false;
 				}
 
-			});
+				if (!LiferayRelengUtil.hasStaleProjectDependencies(project)) {
+					return false;
+				}
 
-		task.onlyIf(_skipIfMatchesIgnoreProjectRegexTaskSpec);
+				return true;
+			}
+
+		};
+
+		task.onlyIf(onlyIfSpec);
 
 		task.setDescription(
 			"Prints the project directory if this project contains " +
@@ -701,77 +715,70 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			task.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
 		}
 
-		task.onlyIf(
-			new Spec<Task>() {
+		Spec<Task> onlyIfSpec = new Spec<Task>() {
 
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					Project project = task.getProject();
+			@Override
+			public boolean isSatisfiedBy(Task task) {
+				Project project = task.getProject();
 
-					File projectDir = project.getProjectDir();
+				String ignoreProjectRegex = GradleUtil.getTaskPrefixedProperty(
+					task, "ignore.project.regex");
 
-					String result = GitUtil.getGitResult(
-						project, "ls-files",
-						FileUtil.getAbsolutePath(projectDir));
+				if (Validator.isNotNull(ignoreProjectRegex)) {
+					Pattern pattern = Pattern.compile(ignoreProjectRegex);
 
-					if (Validator.isNotNull(result)) {
-						return true;
+					Matcher matcher = pattern.matcher(project.getName());
+
+					if (matcher.find()) {
+						return false;
 					}
+				}
 
+				File gitRepoDir = GradleUtil.getRootDir(
+					project, GitRepo.GIT_REPO_FILE_NAME);
+
+				if (gitRepoDir != null) {
+					File file = new File(
+						gitRepoDir, GitRepo.GIT_REPO_FILE_NAME);
+
+					try {
+						if (!FileUtil.contains(file, "mode = push")) {
+							return false;
+						}
+					}
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
+					}
+				}
+
+				File relengIgnoreDir = GradleUtil.getRootDir(
+					project, RELENG_IGNORE_FILE_NAME);
+
+				if (relengIgnoreDir != null) {
 					return false;
 				}
 
-			});
+				String result = GitUtil.getGitResult(
+					project, "ls-files",
+					FileUtil.getAbsolutePath(project.getProjectDir()));
 
-		task.onlyIf(
-			new Spec<Task>() {
+				if (Validator.isNull(result)) {
+					return false;
+				}
 
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					File gitRepoDir = GradleUtil.getRootDir(
-						task.getProject(), GitRepo.GIT_REPO_FILE_NAME);
-
-					if (gitRepoDir != null) {
-						File file = new File(
-							gitRepoDir, GitRepo.GIT_REPO_FILE_NAME);
-
-						try {
-							if (!FileUtil.contains(file, "mode = push")) {
-								return false;
-							}
-						}
-						catch (IOException ioException) {
-							throw new UncheckedIOException(ioException);
-						}
-					}
-
-					File relengIgnoreDir = GradleUtil.getRootDir(
-						task.getProject(), RELENG_IGNORE_FILE_NAME);
-
-					if (relengIgnoreDir != null) {
-						return false;
-					}
+				if (LiferayRelengUtil.isStale(
+						project, project.getProjectDir(),
+						recordArtifactTask.getOutputFile())) {
 
 					return true;
 				}
 
-			});
+				return false;
+			}
 
-		task.onlyIf(
-			new Spec<Task>() {
+		};
 
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					Project project = recordArtifactTask.getProject();
-
-					return LiferayRelengUtil.isStale(
-						project, project.getProjectDir(),
-						recordArtifactTask.getOutputFile());
-				}
-
-			});
-
-		task.onlyIf(_skipIfMatchesIgnoreProjectRegexTaskSpec);
+		task.onlyIf(onlyIfSpec);
 	}
 
 	private void _configureTaskPrintStaleArtifactForOSGi(Task task) {
@@ -838,8 +845,5 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 	private static final String _LIFERAY_RELENG_SUPPORTED =
 		"liferay.releng.supported";
-
-	private static final Spec<Task> _skipIfMatchesIgnoreProjectRegexTaskSpec =
-		new SkipIfMatchesIgnoreProjectRegexTaskSpec();
 
 }

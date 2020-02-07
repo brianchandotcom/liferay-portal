@@ -145,7 +145,7 @@ xpack.security.sessionTimeout: 600000</echo>
 
 	<macrodef name="configure-local-cluster-properties">
 		<sequential>
-			<echo append="true" file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
+			<echo file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
 cluster.name: LiferayElasticsearchClusterTwo
 http.port: 9202
 xpack.ml.enabled: false</echo>

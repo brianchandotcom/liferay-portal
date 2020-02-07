@@ -35,6 +35,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
@@ -135,18 +136,12 @@ public class LiferayRelengUtil {
 			String gitId = artifactProperties.getProperty("artifact.git.id");
 
 			if (Validator.isNull(gitId)) {
-				Logger logger = project.getLogger();
+				File artifactProjectDir = _getArtifactProjectDir(
+					artifactPropertiesFile);
 
-				if (logger.isInfoEnabled()) {
-					File artifactProjectDir = _getArtifactProjectDir(
-						artifactPropertiesFile);
-
-					logger.info(
-						"The dependency '{}' has never been published.",
-						artifactProjectDir.getName());
-				}
-
-				return true;
+				throw new GradleException(
+					"The dependency '" + artifactProjectDir.getName() +
+						"' has never been published");
 			}
 
 			final String[] args = {

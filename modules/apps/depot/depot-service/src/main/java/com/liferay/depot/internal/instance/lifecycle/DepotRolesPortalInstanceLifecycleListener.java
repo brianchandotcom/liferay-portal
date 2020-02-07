@@ -92,17 +92,19 @@ public class DepotRolesPortalInstanceLifecycleListener
 				_log.debug(noSuchRoleException, noSuchRoleException);
 			}
 
-			User user = _userLocalService.getDefaultUser(companyId);
-
-			PermissionThreadLocal.setAddResource(false);
+			boolean addResource = PermissionThreadLocal.isAddResource();
 
 			try {
+				PermissionThreadLocal.setAddResource(false);
+
+				User user = _userLocalService.getDefaultUser(companyId);
+
 				_roleLocalService.addRole(
 					user.getUserId(), null, 0, name, null, descriptionMap,
 					RoleConstants.TYPE_DEPOT, null, null);
 			}
 			finally {
-				PermissionThreadLocal.setAddResource(true);
+				PermissionThreadLocal.setAddResource(addResource);
 			}
 		}
 	}

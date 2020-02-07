@@ -107,6 +107,13 @@ public class ResourceBundleUtil {
 		return map;
 	}
 
+	public static ResourceBundle getModuleAndPortalResourceBundle(
+		Locale locale, Class<?> clazz) {
+
+		return new AggregateResourceBundle(
+			getBundle(locale, clazz), PortalUtil.getResourceBundle(locale));
+	}
+
 	public static ResourceBundleLoader getResourceBundleLoader(
 		final String baseName, final ClassLoader classLoader) {
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.tag.facet.portlet;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
@@ -106,7 +107,7 @@ public class TagFacetPortlet extends MVCPortlet {
 			new AssetTagsFacetConfigurationImpl(facet.getFacetConfiguration());
 
 		AssetTagsSearchFacetDisplayBuilder assetTagsSearchFacetDisplayBuilder =
-			new AssetTagsSearchFacetDisplayBuilder();
+			createTagsSearchFacetDisplayBuilder(renderRequest);
 
 		assetTagsSearchFacetDisplayBuilder.setDisplayStyle(
 			tagFacetPortletPreferences.getDisplayStyle());
@@ -128,6 +129,17 @@ public class TagFacetPortlet extends MVCPortlet {
 			assetTagsSearchFacetDisplayBuilder::setParameterValues);
 
 		return assetTagsSearchFacetDisplayBuilder.build();
+	}
+
+	protected AssetTagsSearchFacetDisplayBuilder
+		createTagsSearchFacetDisplayBuilder(RenderRequest renderRequest) {
+
+		try {
+			return new AssetTagsSearchFacetDisplayBuilder(renderRequest);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
 	}
 
 	protected String getAggregationName(RenderRequest renderRequest) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.folder.facet.template;
+package com.liferay.portal.search.web.internal.tag.facet.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetTermDisplayContext;
-import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
+import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext;
+import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetTermDisplayContext;
+import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 
 import java.util.List;
@@ -38,17 +38,17 @@ import org.osgi.service.component.annotations.Reference;
  * @author Kevin Tan
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.web.internal.folder.facet.configuration.SearchFacetsWebTemplateConfiguration",
+	configurationPid = "com.liferay.portal.search.web.internal.tag.facet.configuration.SearchFacetsWebTemplateConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = "javax.portlet.name=" + FolderFacetPortletKeys.FOLDER_FACET,
+	property = "javax.portlet.name=" + TagFacetPortletKeys.TAG_FACET,
 	service = TemplateHandler.class
 )
-public class FolderFacetPortletDisplayTemplateHandler
+public class TagFacetPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
 	@Override
 	public String getClassName() {
-		return FolderSearchFacetTermDisplayContext.class.getName();
+		return AssetTagsSearchFacetTermDisplayContext.class.getName();
 	}
 
 	@Override
@@ -57,14 +57,14 @@ public class FolderFacetPortletDisplayTemplateHandler
 			"content.Language", locale, getClass());
 
 		String portletTitle = _portal.getPortletTitle(
-			FolderFacetPortletKeys.FOLDER_FACET, resourceBundle);
+			TagFacetPortletKeys.TAG_FACET, resourceBundle);
 
 		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override
 	public String getResourceName() {
-		return FolderFacetPortletKeys.FOLDER_FACET;
+		return TagFacetPortletKeys.TAG_FACET;
 	}
 
 	@Override
@@ -81,9 +81,9 @@ public class FolderFacetPortletDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
-			"folder-facet-display-context",
-			FolderSearchFacetDisplayContext.class,
-			"folderSearchFacetDisplayContext");
+			"tag-facet-display-context",
+			AssetTagsSearchFacetDisplayContext.class,
+			"assetTagsSearchFacetDisplayContext");
 		templateVariableGroup.addVariable(
 			"term-frequency", Integer.class,
 			PortletDisplayTemplateConstants.ENTRY, "getFrequency()");
@@ -92,7 +92,7 @@ public class FolderFacetPortletDisplayTemplateHandler
 			"getDisplayName()");
 		templateVariableGroup.addCollectionVariable(
 			"terms", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"term", FolderSearchFacetTermDisplayContext.class,
+			"term", AssetTagsSearchFacetTermDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getDisplayName()");
 
 		TemplateVariableGroup categoriesServicesTemplateVariableGroup =
@@ -110,7 +110,7 @@ public class FolderFacetPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/portal/search/web/internal/folder/facet/template" +
+		return "com/liferay/portal/search/web/internal/tag/facet/template" +
 			"/dependencies/portlet-display-templates.xml";
 	}
 

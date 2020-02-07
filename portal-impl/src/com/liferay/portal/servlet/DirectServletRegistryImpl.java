@@ -81,18 +81,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 
 	@Override
 	public void putServlet(String path, Servlet servlet) {
-		if (_pathModulePrefix == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(PortalUtil.getPathProxy());
-			sb.append(PortalUtil.getPathContext());
-			sb.append(Portal.PATH_MODULE);
-			sb.append(StringPool.SLASH);
-
-			_pathModulePrefix = sb.toString();
-		}
-
-		if (path.startsWith(_pathModulePrefix) ||
+		if (path.startsWith(PathModulePrefixHolder._PATH_MODULE_PREFIX) ||
 			_servletInfos.containsKey(path)) {
 
 			return;
@@ -226,10 +215,17 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 
 	private final Map<String, Long> _dependantTimestamps =
 		new ConcurrentHashMap<>();
-	private String _pathModulePrefix;
 	private boolean _reloadDependants = true;
 	private final Map<String, ServletInfo> _servletInfos =
 		new ConcurrentHashMap<>();
+
+	private static class PathModulePrefixHolder {
+
+		private static final String _PATH_MODULE_PREFIX = StringBundler.concat(
+			PortalUtil.getPathProxy(), PortalUtil.getPathContext(),
+			Portal.PATH_MODULE, StringPool.SLASH);
+
+	}
 
 	private static class ServletInfo {
 

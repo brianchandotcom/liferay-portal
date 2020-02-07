@@ -52,7 +52,7 @@ DecimalFormat decimalFormat = new DecimalFormat("##.00%");
 
 					<tr>
 						<td>
-							<div class="group-statistics-color-marker" style="background-color: <%= _BACKGROUND_COLORS[i % _BACKGROUND_COLORS.length] %>"></div>
+							<div class="group-statistics-color-marker" style="background-color: <%= _BACKGROUND_COLORS[i % _BACKGROUND_COLORS.length] %>;"></div>
 						</td>
 						<td>
 							<%= ResourceActionsUtil.getModelResource(locale, activityCounter.getClassName()) %>

@@ -1,0 +1,26 @@
+<com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureImpl>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>9aba7601-d30b-4145-19fb-622f45f090e6</__uuid>
+  <__originalUuid>9aba7601-d30b-4145-19fb-622f45f090e6</__originalUuid>
+  <__layoutPageTemplateStructureId>37287</__layoutPageTemplateStructureId>
+  <__groupId>36999</__groupId>
+  <__originalGroupId>36999</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20095</__companyId>
+  <__originalCompanyId>20095</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate>2020-02-07 05:50:38.457 UTC</__createDate>
+  <__modifiedDate>2020-02-07 05:50:38.457 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>20010</__classNameId>
+  <__originalClassNameId>20010</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>137</__classPK>
+  <__originalClassPK>137</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__columnBitmask>0</__columnBitmask>
+</com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureImpl>

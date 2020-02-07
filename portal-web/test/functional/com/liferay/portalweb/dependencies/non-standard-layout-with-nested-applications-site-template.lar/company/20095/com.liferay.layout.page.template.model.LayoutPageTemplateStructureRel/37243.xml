@@ -1,0 +1,27 @@
+<com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelImpl>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>17da7f24-314c-23e9-4443-a45f3189ed83</__uuid>
+  <__originalUuid>17da7f24-314c-23e9-4443-a45f3189ed83</__originalUuid>
+  <__layoutPageTemplateStructureRelId>37243</__layoutPageTemplateStructureRelId>
+  <__groupId>36999</__groupId>
+  <__originalGroupId>36999</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20095</__companyId>
+  <__originalCompanyId>20095</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2020-02-07 05:50:36.453</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-02-07 05:50:36.453</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__layoutPageTemplateStructureId>37242</__layoutPageTemplateStructureId>
+  <__originalLayoutPageTemplateStructureId>37242</__originalLayoutPageTemplateStructureId>
+  <__setOriginalLayoutPageTemplateStructureId>false</__setOriginalLayoutPageTemplateStructureId>
+  <__segmentsExperienceId>0</__segmentsExperienceId>
+  <__originalSegmentsExperienceId>0</__originalSegmentsExperienceId>
+  <__setOriginalSegmentsExperienceId>false</__setOriginalSegmentsExperienceId>
+  <__data>{&quot;nextColumnId&quot;:5,&quot;nextRowId&quot;:4,&quot;config&quot;:{},&quot;structure&quot;:[{&quot;columns&quot;:[{&quot;fragmentEntryLinkIds&quot;:[&quot;37085&quot;],&quot;size&quot;:&quot;&quot;,&quot;columnId&quot;:&quot;0&quot;}],&quot;type&quot;:&quot;0&quot;,&quot;config&quot;:{},&quot;rowId&quot;:&quot;0&quot;},{&quot;columns&quot;:[{&quot;fragmentEntryLinkIds&quot;:[&quot;37086&quot;],&quot;size&quot;:&quot;&quot;,&quot;columnId&quot;:&quot;1&quot;}],&quot;type&quot;:&quot;0&quot;,&quot;config&quot;:{},&quot;rowId&quot;:&quot;1&quot;},{&quot;columns&quot;:[{&quot;fragmentEntryLinkIds&quot;:[&quot;37087&quot;],&quot;size&quot;:&quot;&quot;,&quot;columnId&quot;:&quot;2&quot;}],&quot;type&quot;:&quot;0&quot;,&quot;config&quot;:{},&quot;rowId&quot;:&quot;2&quot;},{&quot;columns&quot;:[{&quot;fragmentEntryLinkIds&quot;:[&quot;37088&quot;],&quot;size&quot;:&quot;&quot;,&quot;columnId&quot;:&quot;3&quot;}],&quot;type&quot;:&quot;0&quot;,&quot;config&quot;:{},&quot;rowId&quot;:&quot;3&quot;},{&quot;columns&quot;:[{&quot;fragmentEntryLinkIds&quot;:[&quot;37089&quot;],&quot;size&quot;:&quot;&quot;,&quot;columnId&quot;:&quot;4&quot;}],&quot;type&quot;:&quot;0&quot;,&quot;config&quot;:{},&quot;rowId&quot;:&quot;4&quot;}]}</__data>
+  <__columnBitmask>0</__columnBitmask>
+</com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelImpl>

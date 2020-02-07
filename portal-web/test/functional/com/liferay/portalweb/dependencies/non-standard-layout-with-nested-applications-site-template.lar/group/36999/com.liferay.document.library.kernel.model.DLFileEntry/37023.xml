@@ -1,0 +1,110 @@
+<com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry>
+  <__dlFileEntry class="DLFileEntry">
+    <__cachedModel>false</__cachedModel>
+    <__new>false</__new>
+    <__mvccVersion>1</__mvccVersion>
+    <__uuid>17118e1a-eae3-cb31-1e81-7a0df7fd7ca4</__uuid>
+    <__originalUuid>17118e1a-eae3-cb31-1e81-7a0df7fd7ca4</__originalUuid>
+    <__fileEntryId>37023</__fileEntryId>
+    <__groupId>36999</__groupId>
+    <__originalGroupId>36999</__originalGroupId>
+    <__setOriginalGroupId>false</__setOriginalGroupId>
+    <__companyId>20095</__companyId>
+    <__originalCompanyId>20095</__originalCompanyId>
+    <__setOriginalCompanyId>false</__setOriginalCompanyId>
+    <__userId>20125</__userId>
+    <__originalUserId>20125</__originalUserId>
+    <__setOriginalUserId>false</__setOriginalUserId>
+    <__userName>Test Test</__userName>
+    <__createDate class="sql-timestamp">2020-02-07 05:50:29.541</__createDate>
+    <__modifiedDate class="sql-timestamp">2020-02-07 05:50:29.567</__modifiedDate>
+    <__setModifiedDate>false</__setModifiedDate>
+    <__classNameId>33101</__classNameId>
+    <__classPK>37004</__classPK>
+    <__repositoryId>37005</__repositoryId>
+    <__originalRepositoryId>37005</__originalRepositoryId>
+    <__setOriginalRepositoryId>false</__setOriginalRepositoryId>
+    <__folderId>37007</__folderId>
+    <__originalFolderId>37007</__originalFolderId>
+    <__setOriginalFolderId>false</__setOriginalFolderId>
+    <__treePath>/37006/37007/</__treePath>
+    <__name>136</__name>
+    <__originalName>136</__originalName>
+    <__fileName>item_4.jpg</__fileName>
+    <__originalFileName>item_4.jpg</__originalFileName>
+    <__extension>jpg</__extension>
+    <__mimeType>image/jpeg</__mimeType>
+    <__originalMimeType>image/jpeg</__originalMimeType>
+    <__title>item_4.jpg</__title>
+    <__originalTitle>item_4.jpg</__originalTitle>
+    <__extraSettings></__extraSettings>
+    <__fileEntryTypeId>0</__fileEntryTypeId>
+    <__originalFileEntryTypeId>0</__originalFileEntryTypeId>
+    <__setOriginalFileEntryTypeId>false</__setOriginalFileEntryTypeId>
+    <__version>1.0</__version>
+    <__size>12613</__size>
+    <__smallImageId>0</__smallImageId>
+    <__originalSmallImageId>0</__originalSmallImageId>
+    <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+    <__largeImageId>0</__largeImageId>
+    <__originalLargeImageId>0</__originalLargeImageId>
+    <__setOriginalLargeImageId>false</__setOriginalLargeImageId>
+    <__custom1ImageId>0</__custom1ImageId>
+    <__originalCustom1ImageId>0</__originalCustom1ImageId>
+    <__setOriginalCustom1ImageId>false</__setOriginalCustom1ImageId>
+    <__custom2ImageId>0</__custom2ImageId>
+    <__originalCustom2ImageId>0</__originalCustom2ImageId>
+    <__setOriginalCustom2ImageId>false</__setOriginalCustom2ImageId>
+    <__manualCheckInRequired>false</__manualCheckInRequired>
+    <__columnBitmask>0</__columnBitmask>
+  </__dlFileEntry>
+  <__dlFileVersion class="com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl">
+    <__cachedModel>true</__cachedModel>
+    <__new>false</__new>
+    <__mvccVersion>1</__mvccVersion>
+    <__uuid>b9927b28-e35b-e31f-b6df-447165119c46</__uuid>
+    <__originalUuid>b9927b28-e35b-e31f-b6df-447165119c46</__originalUuid>
+    <__fileVersionId>37024</__fileVersionId>
+    <__groupId>36999</__groupId>
+    <__originalGroupId>36999</__originalGroupId>
+    <__setOriginalGroupId>false</__setOriginalGroupId>
+    <__companyId>20095</__companyId>
+    <__originalCompanyId>20095</__originalCompanyId>
+    <__setOriginalCompanyId>false</__setOriginalCompanyId>
+    <__userId>20125</__userId>
+    <__userName>Test Test</__userName>
+    <__createDate>2020-02-07 05:50:29.551 UTC</__createDate>
+    <__modifiedDate>2020-02-07 05:50:29.567 UTC</__modifiedDate>
+    <__setModifiedDate>false</__setModifiedDate>
+    <__repositoryId>37005</__repositoryId>
+    <__folderId>37007</__folderId>
+    <__originalFolderId>37007</__originalFolderId>
+    <__setOriginalFolderId>false</__setOriginalFolderId>
+    <__fileEntryId>37023</__fileEntryId>
+    <__originalFileEntryId>37023</__originalFileEntryId>
+    <__setOriginalFileEntryId>false</__setOriginalFileEntryId>
+    <__treePath>/37006/37007/</__treePath>
+    <__fileName>item_4.jpg</__fileName>
+    <__extension>jpg</__extension>
+    <__mimeType>image/jpeg</__mimeType>
+    <__originalMimeType>image/jpeg</__originalMimeType>
+    <__title>item_4.jpg</__title>
+    <__originalTitle>item_4.jpg</__originalTitle>
+    <__description></__description>
+    <__changeLog></__changeLog>
+    <__extraSettings></__extraSettings>
+    <__fileEntryTypeId>0</__fileEntryTypeId>
+    <__version>1.0</__version>
+    <__originalVersion>1.0</__originalVersion>
+    <__size>12613</__size>
+    <__checksum></__checksum>
+    <__status>0</__status>
+    <__originalStatus>0</__originalStatus>
+    <__setOriginalStatus>false</__setOriginalStatus>
+    <__statusByUserId>20125</__statusByUserId>
+    <__statusByUserName>Test Test</__statusByUserName>
+    <__statusDate>2020-02-07 05:50:29.567 UTC</__statusDate>
+    <__columnBitmask>0</__columnBitmask>
+  </__dlFileVersion>
+  <__escapedModel>false</__escapedModel>
+</com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry>

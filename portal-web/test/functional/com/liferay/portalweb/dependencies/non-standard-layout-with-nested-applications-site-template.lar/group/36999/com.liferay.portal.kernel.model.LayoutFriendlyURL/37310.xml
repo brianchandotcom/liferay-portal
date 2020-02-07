@@ -1,0 +1,31 @@
+<com.liferay.portal.model.impl.LayoutFriendlyURLImpl>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>1</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>9b068f41-8939-afdd-25a8-b38d2d95337b</__uuid>
+  <__originalUuid>9b068f41-8939-afdd-25a8-b38d2d95337b</__originalUuid>
+  <__layoutFriendlyURLId>37310</__layoutFriendlyURLId>
+  <__groupId>36999</__groupId>
+  <__originalGroupId>36999</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20095</__companyId>
+  <__originalCompanyId>20095</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate>2020-02-07 05:51:02.726 UTC</__createDate>
+  <__modifiedDate>2020-02-07 05:51:09.936 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__plid>146</__plid>
+  <__originalPlid>146</__originalPlid>
+  <__setOriginalPlid>false</__setOriginalPlid>
+  <__privateLayout>false</__privateLayout>
+  <__originalPrivateLayout>false</__originalPrivateLayout>
+  <__setOriginalPrivateLayout>false</__setOriginalPrivateLayout>
+  <__friendlyURL>/test-page-name</__friendlyURL>
+  <__originalFriendlyURL>/test-page-name</__originalFriendlyURL>
+  <__languageId>en_US</__languageId>
+  <__originalLanguageId>en_US</__originalLanguageId>
+  <__columnBitmask>0</__columnBitmask>
+</com.liferay.portal.model.impl.LayoutFriendlyURLImpl>

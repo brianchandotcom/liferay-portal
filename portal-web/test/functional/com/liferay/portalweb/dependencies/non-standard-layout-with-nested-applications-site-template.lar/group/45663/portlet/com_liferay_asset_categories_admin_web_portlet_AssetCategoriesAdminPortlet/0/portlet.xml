@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-
-<portlet portlet-id="com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet" root-portlet-id="com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet" scope-group-id="45663" scope-layout-type="" scope-layout-uuid="" private-layout="false" self-path="/group/45663/portlet/com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet/0/portlet.xml">
-	<portlet-data path="/group/45663/portlet/com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet/45663/portlet-data.xml"/>
-</portlet>

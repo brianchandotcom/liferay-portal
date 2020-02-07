@@ -1,0 +1,175 @@
+<FragmentEntry>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>1</__mvccVersion>
+  <__uuid>39c04194-173c-58ad-127d-08894c6dd6c3</__uuid>
+  <__originalUuid>39c04194-173c-58ad-127d-08894c6dd6c3</__originalUuid>
+  <__fragmentEntryId>37058</__fragmentEntryId>
+  <__groupId>36999</__groupId>
+  <__originalGroupId>36999</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20095</__companyId>
+  <__originalCompanyId>20095</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2020-02-07 05:50:30.189</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-02-07 05:50:30.255</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__fragmentCollectionId>37004</__fragmentCollectionId>
+  <__originalFragmentCollectionId>37004</__originalFragmentCollectionId>
+  <__setOriginalFragmentCollectionId>false</__setOriginalFragmentCollectionId>
+  <__fragmentEntryKey>links</__fragmentEntryKey>
+  <__originalFragmentEntryKey>links</__originalFragmentEntryKey>
+  <__name>Links</__name>
+  <__originalName>Links</__originalName>
+  <__css>@media(min-width: 768px) {
+    .westeros-links-decoration:before {
+        border-left: 1px solid;
+        bottom: 0;
+        content: &apos;&apos;;
+        left: 50%;
+        opacity: .2;
+        position: absolute;
+        top: 3rem;
+    }
+}</__css>
+  <__html>&lt;div class=&quot;westeros-links westeros-section&quot;&gt;
+	&lt;section class=&quot;bg-info py-5 text-white westeros-bg-info&quot;&gt;
+		&lt;div class=&quot;container&quot;&gt;
+			&lt;div class=&quot;row&quot;&gt;
+				&lt;div class=&quot;col-12&quot;&gt;
+					&lt;lfr-editable id=&quot;westeros-links-title&quot; type=&quot;rich-text&quot;&gt;
+						&lt;h2 aria-level=&quot;1&quot; class=&quot;h6 mb-0&quot; role=&quot;heading&quot;&gt;
+							FIND US
+						&lt;/h2&gt;
+					&lt;/lfr-editable&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+
+			&lt;div class=&quot;mb-5 position-relative row westeros-links-decoration&quot;&gt;
+				&lt;div class=&quot;align-items-center col-12 col-md-6 d-flex mt-5&quot;&gt;
+					&lt;lfr-editable id=&quot;westeros-links-icon-1&quot; type=&quot;image&quot;&gt;
+						&lt;a class=&quot;d-block&quot; href=&quot;#&quot; title=&quot;westeros&quot;&gt;
+							&lt;img
+								alt=&quot;&quot;
+								src=&quot;[resources:westeros_links_icon_1.png]&quot;
+							/&gt;
+						&lt;/a&gt;
+					&lt;/lfr-editable&gt;
+
+					&lt;div class=&quot;ml-3&quot;&gt;
+						&lt;lfr-editable
+							id=&quot;westeros-links-text-1&quot;
+							type=&quot;rich-text&quot;
+						&gt;
+							&lt;a
+								class=&quot;d-inline-block text-decoration-none text-reset&quot;
+								href=&quot;#&quot;
+								title=&quot;westeros&quot;
+							&gt;
+								&lt;p class=&quot;h3 mb-0&quot;&gt;(0054) 432 943 435&lt;/p&gt;
+								&lt;p class=&quot;mb-0&quot;&gt;
+									+435 432 654 654 from Overseas
+								&lt;/p&gt;
+							&lt;/a&gt;
+						&lt;/lfr-editable&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+
+				&lt;div class=&quot;align-items-center col-12 col-md-6 d-flex mt-5&quot;&gt;
+					&lt;lfr-editable id=&quot;westeros-links-icon-2&quot; type=&quot;image&quot;&gt;
+						&lt;a class=&quot;d-block&quot; href=&quot;#&quot; title=&quot;westeros&quot;&gt;
+							&lt;img
+								alt=&quot;&quot;
+								src=&quot;[resources:westeros_links_icon_2.png]&quot;
+							/&gt;
+						&lt;/a&gt;
+					&lt;/lfr-editable&gt;
+
+					&lt;div class=&quot;ml-3&quot;&gt;
+						&lt;lfr-editable
+							id=&quot;westeros-links-text-2&quot;
+							type=&quot;rich-text&quot;
+						&gt;
+							&lt;a
+								class=&quot;d-inline-block text-decoration-none text-reset&quot;
+								href=&quot;#&quot;
+								title=&quot;westeros&quot;
+							&gt;
+								&lt;p class=&quot;h3 mb-0&quot;&gt;Press Room&lt;/p&gt;
+							&lt;/a&gt;
+						&lt;/lfr-editable&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+
+				&lt;div class=&quot;align-items-center col-12 col-md-6 d-flex mt-5&quot;&gt;
+					&lt;lfr-editable id=&quot;westeros-links-icon-3&quot; type=&quot;image&quot;&gt;
+						&lt;a class=&quot;d-block&quot; href=&quot;#&quot; title=&quot;westeros&quot;&gt;
+							&lt;img
+								alt=&quot;&quot;
+								src=&quot;[resources:westeros_links_icon_3.png]&quot;
+							/&gt;
+						&lt;/a&gt;
+					&lt;/lfr-editable&gt;
+
+					&lt;div class=&quot;ml-3&quot;&gt;
+						&lt;lfr-editable
+							id=&quot;westeros-links-text-3&quot;
+							type=&quot;rich-text&quot;
+						&gt;
+							&lt;a
+								class=&quot;d-inline-block text-decoration-none text-reset&quot;
+								href=&quot;#&quot;
+								title=&quot;westeros&quot;
+							&gt;
+								&lt;p class=&quot;h3 mb-0&quot;&gt;Westeros Branches&lt;/p&gt;
+							&lt;/a&gt;
+						&lt;/lfr-editable&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+
+				&lt;div class=&quot;align-items-center col-12 col-md-6 d-flex mt-5&quot;&gt;
+					&lt;lfr-editable id=&quot;westeros-links-icon-4&quot; type=&quot;image&quot;&gt;
+						&lt;a class=&quot;d-block&quot; href=&quot;#&quot; title=&quot;westeros&quot;&gt;
+							&lt;img
+								alt=&quot;&quot;
+								src=&quot;[resources:westeros_links_icon_4.png]&quot;
+							/&gt;
+						&lt;/a&gt;
+					&lt;/lfr-editable&gt;
+
+					&lt;div class=&quot;ml-3&quot;&gt;
+						&lt;lfr-editable
+							id=&quot;westeros-links-text-4&quot;
+							type=&quot;rich-text&quot;
+						&gt;
+							&lt;a
+								class=&quot;d-inline-block text-decoration-none text-reset&quot;
+								href=&quot;#&quot;
+								title=&quot;westeros&quot;
+							&gt;
+								&lt;p class=&quot;h3 mb-0&quot;&gt;Work with us&lt;/p&gt;
+							&lt;/a&gt;
+						&lt;/lfr-editable&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/section&gt;
+&lt;/div&gt;</__html>
+  <__js></__js>
+  <__configuration></__configuration>
+  <__previewFileEntryId>37059</__previewFileEntryId>
+  <__readOnly>false</__readOnly>
+  <__type>0</__type>
+  <__originalType>0</__originalType>
+  <__setOriginalType>false</__setOriginalType>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20125</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2020-02-07 05:50:30.189</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</FragmentEntry>

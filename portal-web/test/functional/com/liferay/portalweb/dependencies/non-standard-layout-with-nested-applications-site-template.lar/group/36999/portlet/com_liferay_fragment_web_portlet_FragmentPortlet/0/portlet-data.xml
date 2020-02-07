@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+
+<FragmentPortletDataHandler self-path="/group/36999/portlet/com_liferay_fragment_web_portlet_FragmentPortlet/0/portlet-data.xml" group-id="36999">
+	<FragmentCollection>
+		<staged-model group-id="36999" uuid="b5c7eb4c-fa20-17ca-1498-5ee1995e8a74" path="/group/36999/com.liferay.fragment.model.FragmentCollection/37004.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37008" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="a1d0f4d0-4414-8080-7930-ad97d2deeb11" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37011" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="beb13a1f-816f-ca9a-2284-a33c624d410b" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37014" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="ac74046d-5b50-b555-0789-9d42c79b14a2" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37017" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="1baa9379-550d-e420-5555-eaf8bde1247d" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37020" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="973b28d5-2540-166b-bc3a-01d25275497e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37023" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="17118e1a-eae3-cb31-1e81-7a0df7fd7ca4" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37026" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="d9ef5741-133c-aafa-ba54-bd18a9d3208b" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37029" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="15ede247-bbc1-926f-bb78-e11666bb6e42" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37032" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="d502e582-939e-61b6-255c-f256e06ac8dd" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37035" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="2e4ce26f-cc74-2a05-e153-dcbcb9624b72" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37038" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="b18ab057-3676-8182-2666-15de2c25f7ee" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37041" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="cbfb427d-210d-d00c-10f7-61bb102e94d3" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37044" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="ab271338-9d7e-b5e9-8816-96048f4ab5ca" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37047" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="55d177b0-59d0-51f2-dd4b-32850ad08548" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+	</FragmentCollection>
+	<DLFileEntry>
+		<staged-model group-id="36999" uuid="a1d0f4d0-4414-8080-7930-ad97d2deeb11" fileVersionUuid="46bbfa11-a3b9-5a22-01f8-069fee7ed39c" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37008/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37008.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="beb13a1f-816f-ca9a-2284-a33c624d410b" fileVersionUuid="d5be1d62-1836-dade-e1cb-fe5426c5abf4" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37011/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37011.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="ac74046d-5b50-b555-0789-9d42c79b14a2" fileVersionUuid="59a60108-abda-4f01-49ab-e5cc46b03e32" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37014/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37014.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="1baa9379-550d-e420-5555-eaf8bde1247d" fileVersionUuid="7df75986-3102-5d8f-658a-fd42c0325265" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37017/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37017.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="973b28d5-2540-166b-bc3a-01d25275497e" fileVersionUuid="c888d08f-4593-73b1-28f4-42e8a0b1b8f8" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37020/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37020.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="17118e1a-eae3-cb31-1e81-7a0df7fd7ca4" fileVersionUuid="b9927b28-e35b-e31f-b6df-447165119c46" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37023/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37023.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="d9ef5741-133c-aafa-ba54-bd18a9d3208b" fileVersionUuid="31851f86-8c81-0a16-87a6-1827efa0cc03" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37026/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37026.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="15ede247-bbc1-926f-bb78-e11666bb6e42" fileVersionUuid="66017759-d1b0-a546-d8f9-f3826f3198af" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37029/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37029.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="d502e582-939e-61b6-255c-f256e06ac8dd" fileVersionUuid="c9cbd5fd-3bbb-dc1d-e0ad-364d1cbe01b7" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37032/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37032.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="2e4ce26f-cc74-2a05-e153-dcbcb9624b72" fileVersionUuid="1ff2bf87-3aa0-2e1d-75f1-89c5f877f8d0" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37035/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37035.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="b18ab057-3676-8182-2666-15de2c25f7ee" fileVersionUuid="ab1e2b06-ea68-5f01-eaa4-a22d3e00119e" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37038/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37038.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="cbfb427d-210d-d00c-10f7-61bb102e94d3" fileVersionUuid="3ed0ba7a-a004-c2a4-f3d4-3adbe58ee2e7" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37041/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37041.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="ab271338-9d7e-b5e9-8816-96048f4ab5ca" fileVersionUuid="2f5368de-a826-e6d3-99a6-5544f220cfd4" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37044/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37044.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="55d177b0-59d0-51f2-dd4b-32850ad08548" fileVersionUuid="3a5e38e0-3614-9e65-a9fa-a90438f85387" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37047/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37047.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37007" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="604fde59-f260-bfef-5c40-503151152d59" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="3e046fc1-5f7d-4655-d14a-453848a8b855" fileVersionUuid="844951ec-23f5-6a5c-7656-b7935aa9fe0a" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37051/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37051.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37006" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="6c5dc304-bc45-1a27-2c85-6778aadd4b9e" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="e131f416-0691-20d1-e509-b8e4a65bde32" fileVersionUuid="9af6395c-f996-c940-7807-9c14ecf4e38c" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37055/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37055.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37006" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="6c5dc304-bc45-1a27-2c85-6778aadd4b9e" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="2cecd765-de79-47b9-fd7c-1be0b5a43bd4" fileVersionUuid="6894c844-bc33-12ea-263f-9599d4e809c0" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37059/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37059.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37006" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="6c5dc304-bc45-1a27-2c85-6778aadd4b9e" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="fc749002-5b3f-f97a-9901-9e94785c51de" fileVersionUuid="da78a44a-9032-cf19-0cd0-ab4beb1e7aaf" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37063/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37063.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37006" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="6c5dc304-bc45-1a27-2c85-6778aadd4b9e" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="f90dbf5f-7e3d-74d9-6a81-1db3539c262f" fileVersionUuid="938632c8-388d-70ba-2e7d-5f47b87a636f" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37067/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37067.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37006" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="6c5dc304-bc45-1a27-2c85-6778aadd4b9e" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="03464906-19bc-5cc6-96f4-74aa3bc68301" fileVersionUuid="3ad65a5e-1452-eb87-3f9b-90a4ab08c2ab" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37071/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37071.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37006" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="6c5dc304-bc45-1a27-2c85-6778aadd4b9e" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+	</DLFileEntry>
+	<Repository>
+		<staged-model group-id="36999" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" hidden="true" repositoryClassName="com.liferay.portal.repository.portletrepository.PortletRepository" path="/group/36999/com.liferay.portal.kernel.model.Repository/37005.xml" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" user-uuid="cf1ca510-67b6-5a6e-194a-ce77543c5c41" asset-entry-priority="0.0"/>
+	</Repository>
+	<DLFolder>
+		<staged-model group-id="36999" uuid="604fde59-f260-bfef-5c40-503151152d59" rootFolder="false" path="/group/36999/com.liferay.document.library.kernel.model.DLFolder/37007.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37006" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="6c5dc304-bc45-1a27-2c85-6778aadd4b9e" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="6c5dc304-bc45-1a27-2c85-6778aadd4b9e" rootFolder="true" path="/group/36999/com.liferay.document.library.kernel.model.DLFolder/37006.xml" user-uuid="cf1ca510-67b6-5a6e-194a-ce77543c5c41" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.portal.kernel.model.Repository" class-pk="37005" attached-class-name="com.liferay.portal.repository.portletrepository.PortletRepository" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="strong" uuid="0a0465be-298e-6e74-8d9e-8c0251ae7a0e" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+	</DLFolder>
+	<FragmentEntry>
+		<staged-model group-id="36999" uuid="a4e48409-7da8-6b39-10d2-41db806d47ab" path="/group/36999/com.liferay.fragment.model.FragmentEntry/37050.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.fragment.model.FragmentCollection" class-pk="37004" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="b5c7eb4c-fa20-17ca-1498-5ee1995e8a74" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37051" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="3e046fc1-5f7d-4655-d14a-453848a8b855" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="0bcd5670-c586-7228-590b-5f4b1351b885" path="/group/36999/com.liferay.fragment.model.FragmentEntry/37054.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.fragment.model.FragmentCollection" class-pk="37004" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="b5c7eb4c-fa20-17ca-1498-5ee1995e8a74" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37055" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="e131f416-0691-20d1-e509-b8e4a65bde32" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="39c04194-173c-58ad-127d-08894c6dd6c3" path="/group/36999/com.liferay.fragment.model.FragmentEntry/37058.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.fragment.model.FragmentCollection" class-pk="37004" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="b5c7eb4c-fa20-17ca-1498-5ee1995e8a74" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37059" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="2cecd765-de79-47b9-fd7c-1be0b5a43bd4" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="104769f0-dc0a-9b43-90e9-3056d9a7ed7e" path="/group/36999/com.liferay.fragment.model.FragmentEntry/37062.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.fragment.model.FragmentCollection" class-pk="37004" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="b5c7eb4c-fa20-17ca-1498-5ee1995e8a74" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37063" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="fc749002-5b3f-f97a-9901-9e94785c51de" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="db9a8293-a59a-a2eb-01e8-8b01a8220fa2" path="/group/36999/com.liferay.fragment.model.FragmentEntry/37066.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.fragment.model.FragmentCollection" class-pk="37004" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="b5c7eb4c-fa20-17ca-1498-5ee1995e8a74" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37067" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="f90dbf5f-7e3d-74d9-6a81-1db3539c262f" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="b6f04521-56c0-556b-407d-2aaa974cc2d1" path="/group/36999/com.liferay.fragment.model.FragmentEntry/37070.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.fragment.model.FragmentCollection" class-pk="37004" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="b5c7eb4c-fa20-17ca-1498-5ee1995e8a74" company-id="20095" missing="false"/>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFileEntry" class-pk="37071" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="weak" uuid="03464906-19bc-5cc6-96f4-74aa3bc68301" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+	</FragmentEntry>
+</FragmentPortletDataHandler>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<DLAdminPortletDataHandler self-path="/group/36999/portlet/com_liferay_document_library_web_portlet_DLAdminPortlet/36999/portlet-data.xml" group-id="36999">
+	<DLFolder>
+		<staged-model group-id="36999" uuid="783536d2-1271-8c7f-51e7-3ab756692536" defaultFileEntryTypeUuid="" path="/group/36999/com.liferay.document.library.kernel.model.DLFolder/37101.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0"/>
+	</DLFolder>
+	<DLFileEntry>
+		<staged-model group-id="36999" uuid="55e7d74a-1ecf-24d7-a764-467ed49deac3" fileVersionUuid="2dbee6ed-c987-4616-986c-88b62f44f928" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37104/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37104.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37101" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="783536d2-1271-8c7f-51e7-3ab756692536" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="0ec62157-aa83-1b77-b14f-fefa33b5b9a3" fileVersionUuid="caf9ce60-03bd-317a-43e5-a0c2ce4b67d7" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37108/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37108.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37101" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="783536d2-1271-8c7f-51e7-3ab756692536" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="36999" uuid="555e0669-800f-73ba-d8d1-4b2fc93bd8e0" fileVersionUuid="6ebfd12c-1851-c5f8-002d-10e193bcedb5" version="1.0" bin-path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37112/1.0" path="/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37112.xml" user-uuid="75a82788-db3d-ca83-a80f-360446c3d883" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.document.library.kernel.model.DLFolder" class-pk="37101" group-id="36999" group-key="Test Site Name" live-group-id="36999" type="parent" uuid="783536d2-1271-8c7f-51e7-3ab756692536" company-id="20095" missing="false"/>
+			</references>
+		</staged-model>
+	</DLFileEntry>
+</DLAdminPortletDataHandler>

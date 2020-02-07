@@ -1,0 +1,125 @@
+<FragmentEntryLink>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>054a1c5d-5dd5-fb55-024e-56f34d7a2858</__uuid>
+  <__originalUuid>054a1c5d-5dd5-fb55-024e-56f34d7a2858</__originalUuid>
+  <__fragmentEntryLinkId>37088</__fragmentEntryLinkId>
+  <__groupId>36999</__groupId>
+  <__originalGroupId>36999</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20095</__companyId>
+  <__originalCompanyId>20095</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2020-02-07 05:50:30.849</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-02-07 05:50:30.576</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__originalFragmentEntryLinkId>0</__originalFragmentEntryLinkId>
+  <__fragmentEntryId>37066</__fragmentEntryId>
+  <__originalFragmentEntryId>37066</__originalFragmentEntryId>
+  <__setOriginalFragmentEntryId>false</__setOriginalFragmentEntryId>
+  <__classNameId>20010</__classNameId>
+  <__originalClassNameId>20010</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>97</__classPK>
+  <__originalClassPK>97</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__css>.wb-offerings {
+}</__css>
+  <__html>&lt;div class=&quot;wb-offerings&quot;&gt;
+	&lt;div class=&quot;wb-tertiary-background-color&quot;&gt;
+		&lt;div class=&quot;container-fluid container-fluid-max-xl&quot;&gt;
+			&lt;div class=&quot;row&quot;&gt;
+				&lt;div class=&quot;col-md-8 mx-auto&quot;&gt;
+					&lt;h2 class=&quot;text-center&quot;&gt;
+						&lt;lfr-editable id=&quot;offeringsTitle&quot; type=&quot;text&quot;&gt;Always thinking of you&lt;/lfr-editable&gt;
+					&lt;/h2&gt;
+				&lt;/div&gt;
+
+				&lt;div class=&quot;col-md-6 col-xs-10 mx-auto&quot;&gt;
+					&lt;lfr-editable id=&quot;offeringsContent&quot; type=&quot;rich-text&quot;&gt;
+						&lt;p&gt;Whether it&apos;s your child&apos;s first savings account, your first home or your retirement plan, we offer personal banking products and services tailored to your needs today with the flexibility to grow with you. We&apos;re here to help you every step of the way.&lt;/p&gt;
+					&lt;/lfr-editable&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+
+		&lt;div class=&quot;wb-bottom-modules&quot;&gt;
+			&lt;section class=&quot;container-fluid container-fluid-max-lg&quot;&gt;
+				&lt;div class=&quot;row&quot;&gt;
+					&lt;div class=&quot;col-md-4&quot;&gt;
+						&lt;lfr-editable id=&quot;offeringImage1&quot; type=&quot;image&quot;&gt;
+							&lt;img alt=&quot;&quot; class=&quot;center-block img-fluid&quot; src=&quot;[$dl-reference=/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37023.xml$]?download=true&quot; /&gt;
+						&lt;/lfr-editable&gt;
+
+						&lt;div class=&quot;content-wrapper&quot;&gt;
+							&lt;h2&gt;
+								&lt;lfr-editable id=&quot;offering1Title&quot; type=&quot;text&quot;&gt;Life Insurance&lt;/lfr-editable&gt;
+							&lt;/h2&gt;
+
+							&lt;lfr-editable id=&quot;offering1Content&quot; type=&quot;rich-text&quot;&gt;
+								&lt;p&gt;Westeros gives you and your loved ones reassurance that you&apos;re covered if the unexpected happens.&lt;/p&gt;
+							&lt;/lfr-editable&gt;
+
+							&lt;lfr-editable id=&quot;offering1Link&quot; type=&quot;rich-text&quot;&gt;
+								&lt;p&gt;&lt;a class=&quot;small text-uppercase&quot; href=&quot;#&quot;&gt;&lt;strong&gt;Submit Your Request&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+							&lt;/lfr-editable&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+
+					&lt;div class=&quot;col-md-4&quot;&gt;
+						&lt;lfr-editable id=&quot;offeringImage2&quot; type=&quot;image&quot;&gt;
+							&lt;img alt=&quot;&quot; class=&quot;center-block img-fluid&quot; src=&quot;[$dl-reference=/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37026.xml$]?download=true&quot; /&gt;
+						&lt;/lfr-editable&gt;
+
+						&lt;div class=&quot;content-wrapper&quot;&gt;
+							&lt;h2&gt;
+								&lt;lfr-editable id=&quot;offering2Title&quot; type=&quot;text&quot;&gt;Multicredit 24h&lt;/lfr-editable&gt;
+							&lt;/h2&gt;
+
+							&lt;lfr-editable id=&quot;offering2Content&quot; type=&quot;rich-text&quot;&gt;
+								&lt;p&gt;Use your Westeros loan&amp;nbsp;for almost anything you can think of, from getting a new car to consolidating existing debt.&lt;/p&gt;
+							&lt;/lfr-editable&gt;
+
+							&lt;lfr-editable id=&quot;offering2Link&quot; type=&quot;rich-text&quot;&gt;
+								&lt;p&gt;&lt;a class=&quot;small text-uppercase&quot; href=&quot;#&quot;&gt;&lt;strong&gt;See your options&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+							&lt;/lfr-editable&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+
+					&lt;div class=&quot;col-md-4&quot;&gt;
+						&lt;lfr-editable id=&quot;offeringImage3&quot; type=&quot;image&quot;&gt;
+							&lt;img alt=&quot;&quot; class=&quot;center-block img-fluid&quot; src=&quot;[$dl-reference=/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37029.xml$]?download=true&quot; /&gt;
+						&lt;/lfr-editable&gt;
+
+						&lt;div class=&quot;content-wrapper&quot;&gt;
+							&lt;h2&gt;
+								&lt;lfr-editable id=&quot;offering3Title&quot; type=&quot;text&quot;&gt;Online Banking&lt;/lfr-editable&gt;
+							&lt;/h2&gt;
+
+							&lt;lfr-editable id=&quot;offering3Content&quot; type=&quot;rich-text&quot;&gt;
+								&lt;p&gt;Quick and convenient access to your accounts and much more, even&amp;nbsp;on your mobile device...&lt;/p&gt;
+							&lt;/lfr-editable&gt;
+
+							&lt;lfr-editable id=&quot;offering3Link&quot; type=&quot;rich-text&quot;&gt;
+								&lt;p&gt;&lt;a class=&quot;small text-uppercase&quot; href=&quot;#&quot;&gt;&lt;strong&gt;Register Now&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+							&lt;/lfr-editable&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/section&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</__html>
+  <__js></__js>
+  <__configuration></__configuration>
+  <__editableValues>{&quot;com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor&quot;:{},&quot;com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor&quot;:{&quot;offering2Title&quot;:{&quot;defaultValue&quot;:&quot;Multicredit 24h&quot;,&quot;config&quot;:{}},&quot;offering1Link&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t\t\t&lt;p&gt;&lt;a class=\&quot;small text-uppercase\&quot; href=\&quot;#\&quot;&gt;&lt;strong&gt;Submit Your Request&lt;\/strong&gt;&lt;\/a&gt;&lt;\/p&gt;\n\t\t\t\t\t\t\t&quot;,&quot;config&quot;:{}},&quot;offering3Title&quot;:{&quot;defaultValue&quot;:&quot;Online Banking&quot;,&quot;config&quot;:{}},&quot;offering1Content&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t\t\t&lt;p&gt;Westeros gives you and your loved ones reassurance that you&apos;re covered if the unexpected happens.&lt;\/p&gt;\n\t\t\t\t\t\t\t&quot;,&quot;config&quot;:{}},&quot;offering2Content&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t\t\t&lt;p&gt;Use your Westeros loan&amp;nbsp;for almost anything you can think of, from getting a new car to consolidating existing debt.&lt;\/p&gt;\n\t\t\t\t\t\t\t&quot;,&quot;config&quot;:{}},&quot;offering3Content&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t\t\t&lt;p&gt;Quick and convenient access to your accounts and much more, even&amp;nbsp;on your mobile device...&lt;\/p&gt;\n\t\t\t\t\t\t\t&quot;,&quot;config&quot;:{}},&quot;offering3Link&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t\t\t&lt;p&gt;&lt;a class=\&quot;small text-uppercase\&quot; href=\&quot;#\&quot;&gt;&lt;strong&gt;Register Now&lt;\/strong&gt;&lt;\/a&gt;&lt;\/p&gt;\n\t\t\t\t\t\t\t&quot;,&quot;config&quot;:{}},&quot;offeringsTitle&quot;:{&quot;defaultValue&quot;:&quot;Always thinking of you&quot;,&quot;config&quot;:{}},&quot;offering1Title&quot;:{&quot;defaultValue&quot;:&quot;Life Insurance&quot;,&quot;config&quot;:{}},&quot;offeringImage2&quot;:{&quot;defaultValue&quot;:&quot;[$dl-reference=/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37026.xml$]?download=true&quot;,&quot;config&quot;:{}},&quot;offeringImage1&quot;:{&quot;defaultValue&quot;:&quot;[$dl-reference=/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37023.xml$]?download=true&quot;,&quot;config&quot;:{}},&quot;offeringImage3&quot;:{&quot;defaultValue&quot;:&quot;[$dl-reference=/group/36999/com.liferay.document.library.kernel.model.DLFileEntry/37029.xml$]?download=true&quot;,&quot;config&quot;:{}},&quot;offering2Link&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t\t\t&lt;p&gt;&lt;a class=\&quot;small text-uppercase\&quot; href=\&quot;#\&quot;&gt;&lt;strong&gt;See your options&lt;\/strong&gt;&lt;\/a&gt;&lt;\/p&gt;\n\t\t\t\t\t\t\t&quot;,&quot;config&quot;:{}},&quot;offeringsContent&quot;:{&quot;defaultValue&quot;:&quot;\n\t\t\t\t\t\t&lt;p&gt;Whether it&apos;s your child&apos;s first savings account, your first home or your retirement plan, we offer personal banking products and services tailored to your needs today with the flexibility to grow with you. We&apos;re here to help you every step of the way.&lt;\/p&gt;\n\t\t\t\t\t&quot;,&quot;config&quot;:{}}},&quot;com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor&quot;:{}}</__editableValues>
+  <__namespace>dsyp</__namespace>
+  <__position>3</__position>
+  <__rendererKey></__rendererKey>
+  <__originalRendererKey></__originalRendererKey>
+  <__lastPropagationDate class="sql-timestamp">2020-02-07 05:50:30.85</__lastPropagationDate>
+  <__columnBitmask>0</__columnBitmask>
+</FragmentEntryLink>

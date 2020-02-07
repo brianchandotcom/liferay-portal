@@ -1,0 +1,136 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>1</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>afbac60c-5f23-bc37-f844-742ad2398c07</__uuid>
+  <__originalUuid>afbac60c-5f23-bc37-f844-742ad2398c07</__originalUuid>
+  <__id>37117</__id>
+  <__resourcePrimKey>37118</__resourcePrimKey>
+  <__originalResourcePrimKey>37118</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>36999</__groupId>
+  <__originalGroupId>36999</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20095</__companyId>
+  <__originalCompanyId>20095</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20125</__userId>
+  <__originalUserId>20125</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2020-02-07 05:50:31.483</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-02-07 05:50:30.913</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>37116</__articleId>
+  <__originalArticleId>37116</__originalArticleId>
+  <__version>1.0</__version>
+  <__originalVersion>1.0</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__urlTitle>carousel</__urlTitle>
+  <__originalUrlTitle>carousel</__originalUrlTitle>
+  <__content>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemHeading&quot; type=&quot;text&quot;&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;OpeningShortText&quot; type=&quot;text&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Sprucing up your space]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemImage&quot; type=&quot;image&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[{&quot;largeImageId&quot;:&quot;0&quot;,&quot;extension&quot;:&quot;jpg&quot;,&quot;fileName&quot;:&quot;carousel_1.jpg&quot;,&quot;smallImageId&quot;:&quot;0&quot;,&quot;extraSettings&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;36999&quot;,&quot;description&quot;:&quot;&quot;,&quot;mimeType&quot;:&quot;image/jpeg&quot;,&quot;classNameId&quot;:&quot;0&quot;,&quot;custom2ImageId&quot;:&quot;0&quot;,&quot;title&quot;:&quot;carousel_1.jpg&quot;,&quot;uuid&quot;:&quot;55e7d74a-1ecf-24d7-a764-467ed49deac3&quot;,&quot;custom1ImageId&quot;:&quot;0&quot;,&quot;classPK&quot;:&quot;0&quot;,&quot;lastPublishDate&quot;:null,&quot;fileEntryId&quot;:&quot;37104&quot;,&quot;createDate&quot;:1581054631158,&quot;manualCheckInRequired&quot;:false,&quot;fileEntryTypeId&quot;:&quot;0&quot;,&quot;userName&quot;:&quot;Test Test&quot;,&quot;userId&quot;:&quot;20125&quot;,&quot;version&quot;:&quot;1.0&quot;,&quot;folderId&quot;:&quot;37101&quot;,&quot;companyId&quot;:&quot;20095&quot;,&quot;size&quot;:&quot;19718&quot;,&quot;modifiedDate&quot;:1581054630913,&quot;name&quot;:&quot;152&quot;,&quot;repositoryId&quot;:&quot;36999&quot;,&quot;mvccVersion&quot;:&quot;0&quot;,&quot;treePath&quot;:&quot;/37101/&quot;,&quot;resourcePrimKey&quot;:&quot;37118&quot;}]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemParagraph&quot; type=&quot;text&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Car buying can be a stressful experience. But getting a car loan shouldn&apos;t be. Skip the dealership financing by finding out how much you could borrow from us, before taking that test drive.]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemLinkText&quot; type=&quot;text&quot;&gt;
+			&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemLinkURL&quot; type=&quot;text&quot;&gt;
+				&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[javascript:;]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[More information]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Your dream car, a few steps away]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemHeading&quot; type=&quot;text&quot;&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;OpeningShortText&quot; type=&quot;text&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Find out your personal rate]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemImage&quot; type=&quot;image&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[{&quot;largeImageId&quot;:&quot;0&quot;,&quot;extension&quot;:&quot;jpg&quot;,&quot;fileName&quot;:&quot;carousel_2.jpg&quot;,&quot;smallImageId&quot;:&quot;0&quot;,&quot;extraSettings&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;36999&quot;,&quot;description&quot;:&quot;&quot;,&quot;mimeType&quot;:&quot;image/jpeg&quot;,&quot;classNameId&quot;:&quot;0&quot;,&quot;custom2ImageId&quot;:&quot;0&quot;,&quot;title&quot;:&quot;carousel_2.jpg&quot;,&quot;uuid&quot;:&quot;0ec62157-aa83-1b77-b14f-fefa33b5b9a3&quot;,&quot;custom1ImageId&quot;:&quot;0&quot;,&quot;classPK&quot;:&quot;0&quot;,&quot;lastPublishDate&quot;:null,&quot;fileEntryId&quot;:&quot;37108&quot;,&quot;createDate&quot;:1581054631275,&quot;manualCheckInRequired&quot;:false,&quot;fileEntryTypeId&quot;:&quot;0&quot;,&quot;userName&quot;:&quot;Test Test&quot;,&quot;userId&quot;:&quot;20125&quot;,&quot;version&quot;:&quot;1.0&quot;,&quot;folderId&quot;:&quot;37101&quot;,&quot;companyId&quot;:&quot;20095&quot;,&quot;size&quot;:&quot;43930&quot;,&quot;modifiedDate&quot;:1581054630913,&quot;name&quot;:&quot;153&quot;,&quot;repositoryId&quot;:&quot;36999&quot;,&quot;mvccVersion&quot;:&quot;0&quot;,&quot;treePath&quot;:&quot;/37101/&quot;,&quot;resourcePrimKey&quot;:&quot;37118&quot;}]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemParagraph&quot; type=&quot;text&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Wondering if the APR you see in an advertisement is the one you&apos;ll get? We&apos;ve made it possible for you to find out your personal loan rate, before you apply. What&apos;s more, there&apos;s no effect on your credit rating. Early settlement fees apply.]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemLinkText&quot; type=&quot;text&quot;&gt;
+			&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemLinkURL&quot; type=&quot;text&quot;&gt;
+				&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[javascript:;]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[More information]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[A personal loan for you]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemHeading&quot; type=&quot;text&quot;&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;OpeningShortText&quot; type=&quot;text&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Debt consolidation]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemImage&quot; type=&quot;image&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[{&quot;largeImageId&quot;:&quot;0&quot;,&quot;extension&quot;:&quot;jpg&quot;,&quot;fileName&quot;:&quot;carousel_3.jpg&quot;,&quot;smallImageId&quot;:&quot;0&quot;,&quot;extraSettings&quot;:&quot;&quot;,&quot;groupId&quot;:&quot;36999&quot;,&quot;description&quot;:&quot;&quot;,&quot;mimeType&quot;:&quot;image/jpeg&quot;,&quot;classNameId&quot;:&quot;0&quot;,&quot;custom2ImageId&quot;:&quot;0&quot;,&quot;title&quot;:&quot;carousel_3.jpg&quot;,&quot;uuid&quot;:&quot;555e0669-800f-73ba-d8d1-4b2fc93bd8e0&quot;,&quot;custom1ImageId&quot;:&quot;0&quot;,&quot;classPK&quot;:&quot;0&quot;,&quot;lastPublishDate&quot;:null,&quot;fileEntryId&quot;:&quot;37112&quot;,&quot;createDate&quot;:1581054631370,&quot;manualCheckInRequired&quot;:false,&quot;fileEntryTypeId&quot;:&quot;0&quot;,&quot;userName&quot;:&quot;Test Test&quot;,&quot;userId&quot;:&quot;20125&quot;,&quot;version&quot;:&quot;1.0&quot;,&quot;folderId&quot;:&quot;37101&quot;,&quot;companyId&quot;:&quot;20095&quot;,&quot;size&quot;:&quot;78549&quot;,&quot;modifiedDate&quot;:1581054630913,&quot;name&quot;:&quot;154&quot;,&quot;repositoryId&quot;:&quot;36999&quot;,&quot;mvccVersion&quot;:&quot;0&quot;,&quot;treePath&quot;:&quot;/37101/&quot;,&quot;resourcePrimKey&quot;:&quot;37118&quot;}]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemParagraph&quot; type=&quot;text&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[If you&apos;re paying off several loans or credit cards each month, all with different interest rates, a debt consolidation loan could help you get on top of your finances.]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemLinkText&quot; type=&quot;text&quot;&gt;
+			&lt;dynamic-element index-type=&quot;keyword&quot; name=&quot;ItemLinkURL&quot; type=&quot;text&quot;&gt;
+				&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[javascript:;]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[More information]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Take control of your finances]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>CAROUSEL</__DDMStructureKey>
+  <__originalDDMStructureKey>CAROUSEL</__originalDDMStructureKey>
+  <__DDMTemplateKey>CAROUSEL</__DDMTemplateKey>
+  <__originalDDMTemplateKey>CAROUSEL</__originalDDMTemplateKey>
+  <__defaultLanguageId>en_US</__defaultLanguageId>
+  <__layoutUuid></__layoutUuid>
+  <__originalLayoutUuid></__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2020-02-07 05:50:00</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>37119</__smallImageId>
+  <__originalSmallImageId>37119</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20125</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2020-02-07 05:50:30.913</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+  <__descriptionMap>
+    <entry>
+      <locale>en_US</locale>
+      <string></string>
+    </entry>
+  </__descriptionMap>
+  <__imagesFolderId>0</__imagesFolderId>
+  <__titleMap>
+    <entry>
+      <locale reference="../../../__descriptionMap/entry/locale"/>
+      <string>Carousel</string>
+    </entry>
+  </__titleMap>
+</JournalArticle>

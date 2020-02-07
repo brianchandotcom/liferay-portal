@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_main_navigation_menu" root-portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet" scope-group-id="36999" private-layout="false" self-path="/group/36999/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_main_navigation_menu/146/portlet.xml">
+	<portlet-preferences path="/group/36999/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_main_navigation_menu/preferences/layout/36999/0/portlet-preferences.xml">
+		<preference-data>
+			<references>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMTemplate" class-pk="35411" attached-class-name="com.liferay.portal.kernel.theme.NavItem" group-id="20123" group-key="20095" live-group-id="20123" type="dependency" uuid="e4e087b8-622e-41d9-744d-088b0fd8ba65" company-id="20095" preloaded="true" referenced-class-name="com.liferay.portal.kernel.theme.NavItem" template-key="NAVBAR-BLANK-JUSTIFIED-FTL" missing="true"/>
+			</references>
+		</preference-data>
+	</portlet-preferences>
+	<portlet-preferences path="/group/36999/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_main_navigation_menu/preferences/layout/0/146/portlet-preferences.xml">
+		<preference-data>
+			<references>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMTemplate" class-pk="35411" attached-class-name="com.liferay.portal.kernel.theme.NavItem" group-id="20123" group-key="20095" live-group-id="20123" type="dependency" uuid="e4e087b8-622e-41d9-744d-088b0fd8ba65" company-id="20095" preloaded="true" referenced-class-name="com.liferay.portal.kernel.theme.NavItem" template-key="NAVBAR-BLANK-JUSTIFIED-FTL" missing="true"/>
+			</references>
+		</preference-data>
+	</portlet-preferences>
+</portlet>

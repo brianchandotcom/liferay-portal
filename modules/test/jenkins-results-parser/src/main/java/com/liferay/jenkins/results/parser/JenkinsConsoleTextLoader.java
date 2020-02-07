@@ -160,8 +160,12 @@ public class JenkinsConsoleTextLoader {
 					"Invalid buildURL " + buildURL, malformedURLException);
 			}
 			catch (IOException ioException) {
-				throw new RuntimeException(
-					"Unable to update console log", ioException);
+				System.out.println(
+					"Unable to update console log for build: " + buildURL);
+
+				ioException.printStackTrace();
+
+				return;
 			}
 		}
 

@@ -133,7 +133,8 @@ class Geolocation extends Component {
 			Liferay.Maps.gmapsReady
 		) {
 			this._registerComponent(MapGoogleMaps, mapConfig);
-		} else {
+		}
+		else {
 			Liferay.namespace('Maps').onGMapsReady = function() {
 				Liferay.Maps.gmapsReady = true;
 				Liferay.fire('gmapsReady');

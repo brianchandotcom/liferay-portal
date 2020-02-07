@@ -45,9 +45,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "reposi
 	/>
 </liferay-util:buffer>
 
-<aui:input name="addGroupIds" type="hidden" />
-<aui:input name="deleteGroupIds" type="hidden" />
-
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
 	cssClass="lfr-search-container-sites"

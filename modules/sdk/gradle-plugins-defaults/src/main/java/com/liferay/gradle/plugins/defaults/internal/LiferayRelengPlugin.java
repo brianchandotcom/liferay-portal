@@ -359,7 +359,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				"since the last publish.");
 		task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
-		_configureTaskEnabledIfStale(project, task, recordArtifactTask);
+		_configureTaskPrintStaleArtifactOnlyIf(
+			project, task, recordArtifactTask);
 
 		GradleUtil.withPlugin(
 			project, LiferayOSGiDefaultsPlugin.class,
@@ -520,7 +521,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			CollectionUtils.first(
 				cleanArtifactsPublishCommandsTask.getDelete()));
 
-		_configureTaskEnabledIfStale(
+		_configureTaskWriteArtifactPublishCommandsOnlyIf(
 			project, writeArtifactPublishCommandsTask, recordArtifactTask);
 
 		String projectPath = project.getPath();
@@ -698,11 +699,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskEnabledIfStale(
-		Project project, Task task,
+	private void _configureTaskPrintStaleArtifactOnlyIf(
+		Project project, Task printStaleArtifactTask,
 		final WritePropertiesTask recordArtifactTask) {
 
-		String force = GradleUtil.getTaskPrefixedProperty(task, "force");
+		String force = GradleUtil.getTaskPrefixedProperty(
+			printStaleArtifactTask, "force");
 
 		if (Boolean.parseBoolean(force)) {
 			return;
@@ -714,7 +716,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		if (liferayThemeProject &&
 			GradlePluginsDefaultsUtil.hasNPMParentThemesDependencies(project)) {
 
-			task.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
+			printStaleArtifactTask.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
 		}
 
 		Spec<Task> onlyIfSpec = new Spec<Task>() {
@@ -786,7 +788,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		};
 
-		task.onlyIf(onlyIfSpec);
+		printStaleArtifactTask.onlyIf(onlyIfSpec);
 	}
 
 	private void _configureTaskPrintStaleArtifactForOSGi(Task task) {
@@ -843,6 +845,100 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		writeArtifactPublishCommandsTask.setFirstPublishExcludedTaskName(
 			LiferayOSGiDefaultsPlugin.UPDATE_FILE_VERSIONS_TASK_NAME);
+	}
+
+	private void _configureTaskWriteArtifactPublishCommandsOnlyIf(
+		Project project,
+		WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask,
+		final WritePropertiesTask recordArtifactTask) {
+
+		String force = GradleUtil.getTaskPrefixedProperty(
+			writeArtifactPublishCommandsTask, "force");
+
+		if (Boolean.parseBoolean(force)) {
+			return;
+		}
+
+		final boolean liferayThemeProject = GradleUtil.hasPlugin(
+			project, LiferayThemeDefaultsPlugin.class);
+
+		if (liferayThemeProject &&
+			GradlePluginsDefaultsUtil.hasNPMParentThemesDependencies(project)) {
+
+			writeArtifactPublishCommandsTask.dependsOn(
+				NodePlugin.NPM_INSTALL_TASK_NAME);
+		}
+
+		Spec<Task> onlyIfSpec = new Spec<Task>() {
+
+			@Override
+			public boolean isSatisfiedBy(Task task) {
+				Project project = task.getProject();
+
+				String ignoreProjectRegex = GradleUtil.getTaskPrefixedProperty(
+					task, "ignore.project.regex");
+
+				if (Validator.isNotNull(ignoreProjectRegex)) {
+					Pattern pattern = Pattern.compile(ignoreProjectRegex);
+
+					Matcher matcher = pattern.matcher(project.getName());
+
+					if (matcher.find()) {
+						return false;
+					}
+				}
+
+				File gitRepoDir = GradleUtil.getRootDir(
+					project, GitRepo.GIT_REPO_FILE_NAME);
+
+				if (gitRepoDir != null) {
+					File file = new File(
+						gitRepoDir, GitRepo.GIT_REPO_FILE_NAME);
+
+					try {
+						if (!FileUtil.contains(file, "mode = push")) {
+							return false;
+						}
+					}
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
+					}
+				}
+
+				File relengIgnoreDir = GradleUtil.getRootDir(
+					project, RELENG_IGNORE_FILE_NAME);
+
+				if (relengIgnoreDir != null) {
+					return false;
+				}
+
+				String result = GitUtil.getGitResult(
+					project, "ls-files",
+					FileUtil.getAbsolutePath(project.getProjectDir()));
+
+				if (Validator.isNull(result)) {
+					return false;
+				}
+
+				if (liferayThemeProject &&
+					LiferayRelengUtil.hasStaleParentTheme(project)) {
+
+					return true;
+				}
+
+				if (LiferayRelengUtil.isStale(
+						project, project.getProjectDir(),
+						recordArtifactTask.getOutputFile())) {
+
+					return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		writeArtifactPublishCommandsTask.onlyIf(onlyIfSpec);
 	}
 
 	private static final String _LIFERAY_RELENG_APP_TITLE_PREFIX =

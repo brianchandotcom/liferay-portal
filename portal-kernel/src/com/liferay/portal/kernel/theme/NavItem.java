@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.theme;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +36,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -176,6 +178,18 @@ public class NavItem implements Serializable {
 		}
 
 		return _children;
+	}
+
+	public Map<String, Serializable> getExpandoAttributes() {
+		if (_layout != null) {
+			ExpandoBridge expandoBridge = _layout.getExpandoBridge();
+
+			if (expandoBridge != null) {
+				return expandoBridge.getAttributes();
+			}
+		}
+
+		return new HashMap<>();
 	}
 
 	/**

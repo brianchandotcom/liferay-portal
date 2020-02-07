@@ -359,7 +359,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				"since the last publish.");
 		task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
-		_configureTaskEnabledIfStale(task, recordArtifactTask);
+		_configureTaskEnabledIfStale(project, task, recordArtifactTask);
 
 		GradleUtil.withPlugin(
 			project, LiferayOSGiDefaultsPlugin.class,
@@ -521,7 +521,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				cleanArtifactsPublishCommandsTask.getDelete()));
 
 		_configureTaskEnabledIfStale(
-			writeArtifactPublishCommandsTask, recordArtifactTask);
+			project, writeArtifactPublishCommandsTask, recordArtifactTask);
 
 		String projectPath = project.getPath();
 
@@ -699,15 +699,14 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskEnabledIfStale(
-		Task task, final WritePropertiesTask recordArtifactTask) {
+		Project project, Task task,
+		final WritePropertiesTask recordArtifactTask) {
 
 		String force = GradleUtil.getTaskPrefixedProperty(task, "force");
 
 		if (Boolean.parseBoolean(force)) {
 			return;
 		}
-
-		Project project = task.getProject();
 
 		final boolean liferayThemeProject = GradleUtil.hasPlugin(
 			project, LiferayThemeDefaultsPlugin.class);

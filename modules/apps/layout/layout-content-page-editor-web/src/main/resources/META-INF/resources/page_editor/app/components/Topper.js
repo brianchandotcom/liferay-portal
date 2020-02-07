@@ -33,7 +33,10 @@ import {
 	useIsSelected,
 	useSelectItem
 } from './Controls';
-import useDragAndDrop, {TARGET_POSITION} from './useDragAndDrop';
+import useDragAndDrop, {
+	DragDropManagerImpl,
+	TARGET_POSITION
+} from './useDragAndDrop';
 
 const TopperListItem = React.forwardRef(
 	({children, className, expand, ...props}, ref) => (
@@ -71,13 +74,10 @@ export default function Topper({
 	const selectItem = useSelectItem();
 
 	const {
-		canDrop,
-		drag,
-		drop,
-		isDragging,
-		isOver,
-		targetPosition
-	} = useDragAndDrop({
+		store: {dropTargetItemId, targetPosition}
+	} = useContext(DragDropManagerImpl);
+
+	const {canDrop, drag, drop, isDragging, isOver} = useDragAndDrop({
 		accept: acceptDrop,
 		containerRef,
 		dropNestedAndSibling,
@@ -156,11 +156,14 @@ export default function Topper({
 			className={classNames({
 				active: isSelected(item.itemId),
 				'drag-over-bottom':
-					targetPosition === TARGET_POSITION.BOTTOM && isOver,
+					targetPosition === TARGET_POSITION.BOTTOM &&
+					dropTargetItemId === item.itemId,
 				'drag-over-middle':
-					targetPosition === TARGET_POSITION.MIDDLE && isOver,
+					targetPosition === TARGET_POSITION.MIDDLE &&
+					dropTargetItemId === item.itemId,
 				'drag-over-top':
-					targetPosition === TARGET_POSITION.TOP && isOver,
+					targetPosition === TARGET_POSITION.TOP &&
+					dropTargetItemId === item.itemId,
 				dragged: isDragging,
 				hovered: isHovered(item.itemId) || fragmentShouldBeHovered(),
 				'page-editor-topper': true

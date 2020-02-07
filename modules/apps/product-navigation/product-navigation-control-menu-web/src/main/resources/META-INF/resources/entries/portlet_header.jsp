@@ -23,8 +23,4 @@ String portletTitle = (String)request.getAttribute(ProductNavigationControlMenuW
 
 <li class="control-menu-nav-item control-menu-nav-item-content">
 	<span class="control-menu-level-1-heading text-truncate" data-qa-id="headerTitle"><%= HtmlUtil.escape(portletTitle) %></span>
-
-	<c:if test="<%= Validator.isNotNull(portletDescription) %>">
-		<liferay-ui:icon-help message="<%= portletDescription %>" />
-	</c:if>
 </li>

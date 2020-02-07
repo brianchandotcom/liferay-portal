@@ -19,6 +19,8 @@ package com.liferay.sharing.configuration;
  */
 public interface SharingConfiguration {
 
+	public boolean isAvailable();
+
 	public boolean isEnabled();
 
 }

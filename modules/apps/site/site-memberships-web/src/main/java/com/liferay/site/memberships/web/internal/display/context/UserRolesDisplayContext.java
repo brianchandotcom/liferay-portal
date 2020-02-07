@@ -79,7 +79,7 @@ public class UserRolesDisplayContext {
 		return _eventName;
 	}
 
-	public long getGroupId() {
+	private long _getGroupId() {
 		if (_groupId != null) {
 			return _groupId;
 		}
@@ -95,7 +95,7 @@ public class UserRolesDisplayContext {
 		return _groupId;
 	}
 
-	public String getKeywords() {
+	private String _getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
 		}
@@ -105,7 +105,7 @@ public class UserRolesDisplayContext {
 		return _keywords;
 	}
 
-	public String getOrderByCol() {
+	private String _getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
 		}
@@ -116,7 +116,7 @@ public class UserRolesDisplayContext {
 		return _orderByCol;
 	}
 
-	public String getOrderByType() {
+	private String _getOrderByType() {
 		if (_orderByType != null) {
 			return _orderByType;
 		}
@@ -127,10 +127,10 @@ public class UserRolesDisplayContext {
 		return _orderByType;
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	private PortletURL _getPortletURL() throws PortalException {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("p_u_i_d", String.valueOf(getUserId()));
+		portletURL.setParameter("p_u_i_d", String.valueOf(_getUserId()));
 		portletURL.setParameter("mvcPath", "/users_roles.jsp");
 
 		String displayStyle = getDisplayStyle();
@@ -139,25 +139,25 @@ public class UserRolesDisplayContext {
 			portletURL.setParameter("displayStyle", displayStyle);
 		}
 
-		String keywords = getKeywords();
+		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
 		}
 
-		String orderByCol = getOrderByCol();
+		String orderByCol = _getOrderByCol();
 
 		if (Validator.isNotNull(orderByCol)) {
 			portletURL.setParameter("orderByCol", orderByCol);
 		}
 
-		String orderByType = getOrderByType();
+		String orderByType = _getOrderByType();
 
 		if (Validator.isNotNull(orderByType)) {
 			portletURL.setParameter("orderByType", orderByType);
 		}
 
-		int roleType = getRoleType();
+		int roleType = _getRoleType();
 
 		if (roleType > 0) {
 			portletURL.setParameter("roleType", String.valueOf(roleType));
@@ -177,9 +177,9 @@ public class UserRolesDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		RoleSearch roleSearch = new RoleSearch(_renderRequest, getPortletURL());
+		RoleSearch roleSearch = new RoleSearch(_renderRequest, _getPortletURL());
 
-		Group group = GroupLocalServiceUtil.fetchGroup(getGroupId());
+		Group group = GroupLocalServiceUtil.fetchGroup(_getGroupId());
 
 		roleSearch.setRowChecker(
 			new UserGroupRoleRoleChecker(
@@ -191,11 +191,11 @@ public class UserRolesDisplayContext {
 
 		List<Role> roles = RoleLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			new Integer[] {getRoleType()}, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new Integer[] {_getRoleType()}, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			roleSearch.getOrderByComparator());
 
 		roles = UsersAdminUtil.filterGroupRoles(
-			themeDisplay.getPermissionChecker(), getGroupId(), roles);
+			themeDisplay.getPermissionChecker(), _getGroupId(), roles);
 
 		int rolesCount = roles.size();
 
@@ -211,7 +211,7 @@ public class UserRolesDisplayContext {
 		return _roleSearch;
 	}
 
-	public int getRoleType() {
+	private int _getRoleType() {
 		if (_roleType != null) {
 			return _roleType;
 		}
@@ -222,7 +222,7 @@ public class UserRolesDisplayContext {
 		return _roleType;
 	}
 
-	public long getUserId() throws PortalException {
+	private long _getUserId() throws PortalException {
 		User selUser = PortalUtil.getSelectedUser(_httpServletRequest, false);
 
 		if (selUser != null) {

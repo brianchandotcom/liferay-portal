@@ -466,7 +466,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.VariableNameCheck">
 			<property name="allowedVariableNames" value="bitMode,metadata,superClass,userName" />
 			<property name="enabled" value="false" />
-			<property name="enforceTypeNames" value="DetailAST,HttpServletRequest,HttpServletResponse,LiferayPortletRequest,LiferayPortletResponse,RenderRequest,RenderResponse,ServletRequest,ServletResponse" />
+			<property name="enforceTypeNames" value="DetailAST,HttpServletRequest,HttpServletResponse,LiferayPortletRequest,LiferayPortletResponse,NamedList,RenderRequest,RenderResponse,ServletRequest,ServletResponse" />
 			<message key="variable.incorrect.ending" value="Name of variable with type ''{0}'' should end with ''{1}''" />
 			<message key="variable.rename" value="Rename variable ''{0}'' to ''{1}''" />
 			<message key="variable.typo" value="Typo in variable ''{0}'', expected variable name ''{1}''" />

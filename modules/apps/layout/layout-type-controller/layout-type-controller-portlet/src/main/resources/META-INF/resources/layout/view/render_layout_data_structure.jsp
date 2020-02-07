@@ -38,9 +38,9 @@ for (int i = 0; i < structureJSONArray.length(); i++) {
 			String backgroundColorCssClass = StringPool.BLANK;
 			String backgroundImage = StringPool.BLANK;
 			boolean columnSpacing = true;
-			String containerType = StringPool.BLANK;
-			long paddingHorizontal = 3L;
-			long paddingVertical = 3L;
+			String containerType = "fluid";
+			long paddingHorizontal = -1L;
+			long paddingVertical = -1L;
 
 			JSONObject rowConfigJSONObject = rowJSONObject.getJSONObject("config");
 

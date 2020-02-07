@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -74,6 +75,7 @@ import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.util.CollectionUtils;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -893,6 +895,18 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				if (liferayThemeProject &&
 					LiferayRelengUtil.hasStaleParentTheme(project)) {
+
+					return true;
+				}
+
+				Properties properties = GUtil.loadProperties(
+					recordArtifactTask.getOutputFile());
+
+				String artifactGitId = properties.getProperty(
+					"artifact.git.id");
+
+				if (LiferayRelengUtil.hasStaleDependencies(
+						project, artifactGitId)) {
 
 					return true;
 				}

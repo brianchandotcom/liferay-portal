@@ -95,38 +95,6 @@ public class UserRolesDisplayContext {
 		return _groupId;
 	}
 
-	private String _getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_renderRequest, "keywords");
-
-		return _keywords;
-	}
-
-	private String _getOrderByCol() {
-		if (_orderByCol != null) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "title");
-
-		return _orderByCol;
-	}
-
-	private String _getOrderByType() {
-		if (_orderByType != null) {
-			return _orderByType;
-		}
-
-		_orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
-
-		return _orderByType;
-	}
-
 	private PortletURL _getPortletURL() throws PortalException {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -139,19 +107,21 @@ public class UserRolesDisplayContext {
 			portletURL.setParameter("displayStyle", displayStyle);
 		}
 
-		String keywords = _getKeywords();
+		String keywords = ParamUtil.getString(_renderRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
 		}
 
-		String orderByCol = _getOrderByCol();
+		String orderByCol = ParamUtil.getString(
+			_renderRequest, "orderByCol", "title");
 
 		if (Validator.isNotNull(orderByCol)) {
 			portletURL.setParameter("orderByCol", orderByCol);
 		}
 
-		String orderByType = _getOrderByType();
+		String orderByType = ParamUtil.getString(
+			_renderRequest, "orderByType", "asc");
 
 		if (Validator.isNotNull(orderByType)) {
 			portletURL.setParameter("orderByType", orderByType);
@@ -236,9 +206,6 @@ public class UserRolesDisplayContext {
 	private String _eventName;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
-	private String _keywords;
-	private String _orderByCol;
-	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private RoleSearch _roleSearch;

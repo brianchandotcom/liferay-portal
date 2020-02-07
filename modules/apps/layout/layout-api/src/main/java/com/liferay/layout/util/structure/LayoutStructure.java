@@ -217,6 +217,10 @@ public class LayoutStructure {
 		return _mainItemId;
 	}
 
+	public LayoutStructureItem getMainLayoutStructureItem() {
+		return _layoutStructureItems.get(_mainItemId);
+	}
+
 	public LayoutStructureItem moveLayoutStructureItem(
 		String itemId, String parentItemId, int position) {
 

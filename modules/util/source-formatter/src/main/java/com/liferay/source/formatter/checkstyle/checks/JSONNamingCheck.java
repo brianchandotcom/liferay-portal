@@ -73,14 +73,6 @@ public class JSONNamingCheck extends BaseCheck {
 		String name, String tokenTypeName, String validNameEnding,
 		String incorrectNameEnding, int lineNo, String[] checkTokenTypeNames) {
 
-		String lowerCaseName = StringUtil.toLowerCase(name);
-
-		if (!lowerCaseName.endsWith(
-				StringUtil.toLowerCase(incorrectNameEnding))) {
-
-			return;
-		}
-
 		if (name.endsWith(incorrectNameEnding) &&
 			ArrayUtil.contains(checkTokenTypeNames, tokenTypeName)) {
 

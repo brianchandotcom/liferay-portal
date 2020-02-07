@@ -240,7 +240,8 @@ export const findFieldByName = (pages, name) => {
 	visitor.mapFields(currentField => {
 		if (currentField.fieldName === name) {
 			field = currentField;
-		} else if (currentField.nestedFields) {
+		}
+		else if (currentField.nestedFields) {
 			visitNestedFields(currentField, nestedField => {
 				if (nestedField.fieldName === name) {
 					field = nestedField;
@@ -338,16 +339,20 @@ export const getNestedIndexes = node => {
 export const updateField = (pages, fieldName, properties) => {
 	const visitor = new PagesVisitor(pages);
 
-	return visitor.mapFields(field => {
-		if (fieldName === field.fieldName) {
-			field = {
-				...field,
-				...properties,
-			};
-		}
+	return visitor.mapFields(
+		field => {
+			if (fieldName === field.fieldName) {
+				return {
+					...field,
+					...properties
+				};
+			}
 
-		return field;
-	});
+			return field;
+		},
+		true,
+		true
+	);
 };
 
 export const updateColumn = (

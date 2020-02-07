@@ -69,7 +69,8 @@ const handleFieldAdded = (props, state, event) => {
 			),
 			previousFocusedField: newField
 		};
-	} else {
+	}
+	else {
 		const currentContext = getContext(pages, indexes.slice(0, -1));
 
 		const {columnIndex, rowIndex} = indexes[indexes.length - 1];

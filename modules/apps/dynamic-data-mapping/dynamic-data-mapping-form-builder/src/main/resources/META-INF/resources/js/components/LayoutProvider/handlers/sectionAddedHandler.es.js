@@ -125,7 +125,8 @@ export default (props, state, event) => {
 			field => {
 				if (field.fieldName === fieldName) {
 					return sectionField;
-				} else if (field.fieldName === parentFieldName) {
+				}
+				else if (field.fieldName === parentFieldName) {
 					return addNestedField({
 						field,
 						indexes,

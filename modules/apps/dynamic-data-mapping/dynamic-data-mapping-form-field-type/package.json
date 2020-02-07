@@ -8,6 +8,8 @@
 		"clay-radio": "2.20.2",
 		"frontend-js-web": "*",
 		"leaflet": "1.2.0",
+		"liferay-npm-bundler-loader-css-loader": "^2.14.1",
+		"liferay-npm-bundler-loader-style-loader": "^2.14.1",
 		"map-google-maps": "*",
 		"map-openstreetmap": "*",
 		"metal-component": "2.16.8",

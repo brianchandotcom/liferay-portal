@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Sharepoint SOAP Connector
 Bundle-SymbolicName: com.liferay.sharepoint.soap.connector
-Bundle-Version: 4.0.2
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.sharepoint.soap.connector,\
 	com.liferay.sharepoint.soap.connector.operation,\

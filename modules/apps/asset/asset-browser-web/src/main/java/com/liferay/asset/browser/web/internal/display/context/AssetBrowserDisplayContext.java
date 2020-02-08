@@ -15,6 +15,7 @@
 package com.liferay.asset.browser.web.internal.display.context;
 
 import com.liferay.asset.browser.web.internal.configuration.AssetBrowserWebConfigurationValues;
+import com.liferay.asset.browser.web.internal.constants.AssetBrowserPortletKeys;
 import com.liferay.asset.browser.web.internal.search.AddAssetEntryChecker;
 import com.liferay.asset.browser.web.internal.search.AssetBrowserSearch;
 import com.liferay.asset.constants.AssetWebKeys;
@@ -27,6 +28,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
@@ -61,6 +64,8 @@ public class AssetBrowserDisplayContext {
 
 		_assetHelper = (AssetHelper)renderRequest.getAttribute(
 			AssetWebKeys.ASSET_HELPER);
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			_httpServletRequest);
 	}
 
 	public AssetBrowserSearch getAssetBrowserSearch() {
@@ -73,7 +78,7 @@ public class AssetBrowserDisplayContext {
 					_renderResponse, getRefererAssetEntryId()));
 		}
 
-		assetBrowserSearch.setOrderByCol(_getOrderByCol());
+		assetBrowserSearch.setOrderByCol(getOrderByCol());
 		assetBrowserSearch.setOrderByType(getOrderByType());
 
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
@@ -116,10 +121,10 @@ public class AssetBrowserDisplayContext {
 			orderByAsc = true;
 		}
 
-		if (Objects.equals(_getOrderByCol(), "modified-date")) {
+		if (Objects.equals(getOrderByCol(), "modified-date")) {
 			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 		}
-		else if (Objects.equals(_getOrderByCol(), "title")) {
+		else if (Objects.equals(getOrderByCol(), "title")) {
 			String sortFieldName = Field.getSortableFieldName(
 				"localized_title_".concat(themeDisplay.getLanguageId()));
 
@@ -183,17 +188,6 @@ public class AssetBrowserDisplayContext {
 		_groupId = ParamUtil.getLong(_httpServletRequest, "groupId");
 
 		return _groupId;
-	}
-
-	public String getOrderByType() {
-		if (Validator.isNotNull(_orderByType)) {
-			return _orderByType;
-		}
-
-		_orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
-
-		return _orderByType;
 	}
 
 	public PortletURL getPortletURL() {
@@ -328,6 +322,53 @@ public class AssetBrowserDisplayContext {
 		return _showAddButton;
 	}
 
+	protected String getOrderByCol() {
+		if (_orderByCol != null) {
+			return _orderByCol;
+		}
+
+		String orderByCol = ParamUtil.getString(
+			_httpServletRequest, "orderByCol");
+
+		if (Validator.isNotNull(orderByCol)) {
+			_portalPreferences.setValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-col",
+				orderByCol);
+		}
+		else {
+			orderByCol = _portalPreferences.getValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-col",
+				"modified-date");
+		}
+
+		_orderByCol = orderByCol;
+
+		return _orderByCol;
+	}
+
+	protected String getOrderByType() {
+		if (_orderByType != null) {
+			return _orderByType;
+		}
+
+		String orderByType = ParamUtil.getString(
+			_httpServletRequest, "orderByType");
+
+		if (Validator.isNotNull(orderByType)) {
+			_portalPreferences.setValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-type",
+				orderByType);
+		}
+		else {
+			orderByType = _portalPreferences.getValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "order-by-type", "asc");
+		}
+
+		_orderByType = orderByType;
+
+		return _orderByType;
+	}
+
 	private long[] _getClassNameIds() {
 		if (_classNameIds != null) {
 			return _classNameIds;
@@ -374,17 +415,6 @@ public class AssetBrowserDisplayContext {
 		}
 
 		return listable;
-	}
-
-	private String _getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "modified-date");
-
-		return _orderByCol;
 	}
 
 	private int[] _getStatuses() {
@@ -436,6 +466,7 @@ public class AssetBrowserDisplayContext {
 	private Boolean _multipleSelection;
 	private String _orderByCol;
 	private String _orderByType;
+	private final PortalPreferences _portalPreferences;
 	private Long _refererAssetEntryId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

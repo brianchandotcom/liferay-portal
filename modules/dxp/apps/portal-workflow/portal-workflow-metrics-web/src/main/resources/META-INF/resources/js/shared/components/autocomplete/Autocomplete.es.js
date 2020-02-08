@@ -24,32 +24,69 @@ const Autocomplete = ({
 	onChange,
 	onSelect,
 	placeholder = '',
-	promises
+	promises = []
 }) => {
+	const [activeItem, setActiveItem] = useState(-1);
 	const [dropDownItems, setDropDownItems] = useState([]);
-	const [value, setValue] = useState('');
+	const [value, setValue] = useState(defaultValue);
 	const [dropDownVisible, setDropDownVisible] = useState(false);
-	const [selectedValue, setSelectedValue] = useState();
+	const [selected, setSelected] = useState(false);
+
+	const handleBlur = useCallback(() => {
+		setDropDownVisible(false);
+		setActiveItem(-1);
+
+		if (!selected) {
+			setValue('');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selected]);
 
 	const handleChange = useCallback(
-		value => {
-			if (selectedValue) {
+		({target: {value}}) => {
+			if (selected) {
 				onSelect();
-				setSelectedValue();
+				setSelected(false);
 			}
-			setValue(value);
-			setDropDownVisible(() => value.length > 0);
 
+			setDropDownVisible(true);
+			setValue(value);
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[selectedValue]
+		[onSelect, selected]
+	);
+
+	const handleFocus = () => {
+		setDropDownVisible(true);
+	};
+
+	const handleKeyDown = useCallback(
+		({keyCode}) => {
+			const item = dropDownItems[activeItem];
+
+			if (keyCode === 13 && item) {
+				handleSelect(item);
+			}
+
+			if (keyCode === 38 && activeItem > 0) {
+				setActiveItem(activeItem - 1);
+			}
+
+			if (keyCode === 40 && activeItem < dropDownItems.length - 1) {
+				setActiveItem(activeItem + 1);
+			}
+		},
+		[activeItem, dropDownItems, handleSelect]
 	);
 
 	const handleSelect = useCallback(
 		item => {
 			onSelect(item);
-			setSelectedValue(item.name);
+			setActiveItem(-1);
+			setDropDownVisible(false);
+			setSelected(true);
+			setValue(item.name);
 		},
 		[onSelect]
 	);
@@ -74,13 +111,8 @@ const Autocomplete = ({
 	}, [value]);
 
 	useEffect(() => {
-		setValue(defaultValue);
-	}, [defaultValue]);
-
-	useEffect(() => {
 		if (disabled) {
 			setValue('');
-			setDropDownVisible(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [disabled]);
@@ -98,9 +130,12 @@ const Autocomplete = ({
 							}`}
 							data-testid="autocompleteInput"
 							disabled={disabled}
-							onChange={({target}) => handleChange(target.value)}
+							onBlur={handleBlur}
+							onChange={handleChange}
+							onFocus={handleFocus}
+							onKeyDown={handleKeyDown}
 							placeholder={placeholder}
-							value={value}
+							value={defaultValue || value}
 						/>
 
 						{children}
@@ -109,11 +144,12 @@ const Autocomplete = ({
 
 				<Autocomplete.DropDown
 					active={dropDownVisible}
+					activeItem={activeItem}
 					items={dropDownItems}
 					match={value}
 					onSelect={handleSelect}
-					setActive={setDropDownVisible}
-					setValue={setValue}
+					setActiveItem={setActiveItem}
+					setSelected={setSelected}
 				/>
 			</ClayAutocomplete>
 		</PromisesResolver>

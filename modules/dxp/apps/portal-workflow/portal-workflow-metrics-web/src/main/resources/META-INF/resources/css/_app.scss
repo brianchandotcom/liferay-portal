@@ -97,3 +97,11 @@
 .modal-open .modal {
 	overflow: auto !important;
 }
+
+.dropdown-item {
+	cursor: pointer;
+
+	&.active {
+		font-weight: normal;
+	}
+}

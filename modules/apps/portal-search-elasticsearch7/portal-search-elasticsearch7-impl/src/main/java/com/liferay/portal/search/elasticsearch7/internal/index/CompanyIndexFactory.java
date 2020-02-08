@@ -23,11 +23,10 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.index.contributor.IndexContributorReceiver;
+import com.liferay.portal.search.elasticsearch7.internal.settings.IndexSettingsContributorHelper;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.util.LogUtil;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
-import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsContributor;
-import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsHelper;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
 
@@ -35,8 +34,6 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.elasticsearch.action.ActionResponse;
@@ -52,9 +49,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -127,17 +121,6 @@ public class CompanyIndexFactory
 			elasticsearchConfiguration.indexNumberOfShards());
 		setOverrideTypeMappings(
 			elasticsearchConfiguration.overrideTypeMappings());
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addIndexSettingsContributor(
-		IndexSettingsContributor indexSettingsContributor) {
-
-		_indexSettingsContributors.add(indexSettingsContributor);
 	}
 
 	protected void addLiferayDocumentTypeMappings(
@@ -271,25 +254,6 @@ public class CompanyIndexFactory
 		settingsBuilder.put("index.number_of_shards", _indexNumberOfShards);
 	}
 
-	protected void loadIndexSettingsContributors(
-		final Settings.Builder builder) {
-
-		IndexSettingsHelper indexSettingsHelper = new IndexSettingsHelper() {
-
-			@Override
-			public void put(String setting, String value) {
-				builder.put(setting, value);
-			}
-
-		};
-
-		for (IndexSettingsContributor indexSettingsContributor :
-				_indexSettingsContributors) {
-
-			indexSettingsContributor.populate(indexSettingsHelper);
-		}
-	}
-
 	protected void loadTestModeIndexSettings(SettingsBuilder settingsBuilder) {
 		if (!PortalRunMode.isTestMode()) {
 			return;
@@ -299,24 +263,6 @@ public class CompanyIndexFactory
 		settingsBuilder.put("index.search.slowlog.threshold.fetch.warn", "-1");
 		settingsBuilder.put("index.search.slowlog.threshold.query.warn", "-1");
 		settingsBuilder.put("index.translog.sync_interval", "100ms");
-	}
-
-	protected void loadTypeMappingsContributors(
-		String indexName,
-		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
-
-		for (IndexSettingsContributor indexSettingsContributor :
-				_indexSettingsContributors) {
-
-			indexSettingsContributor.contribute(
-				indexName, liferayDocumentTypeFactory);
-		}
-	}
-
-	protected void removeIndexSettingsContributor(
-		IndexSettingsContributor indexSettingsContributor) {
-
-		_indexSettingsContributors.remove(indexSettingsContributor);
 	}
 
 	protected void setAdditionalIndexConfigurations(
@@ -359,7 +305,7 @@ public class CompanyIndexFactory
 
 		loadAdditionalIndexConfigurations(settingsBuilder);
 
-		loadIndexSettingsContributors(builder);
+		_indexSettingsContributorHelper.loadIndexSettingsContributors(builder);
 
 		createIndexRequest.settings(builder);
 	}
@@ -374,7 +320,8 @@ public class CompanyIndexFactory
 
 		loadAdditionalTypeMappings(indexName, liferayDocumentTypeFactory);
 
-		loadTypeMappingsContributors(indexName, liferayDocumentTypeFactory);
+		_indexSettingsContributorHelper.loadTypeMappingsContributors(
+			indexName, liferayDocumentTypeFactory);
 
 		liferayDocumentTypeFactory.createOptionalDefaultTypeMappings(indexName);
 	}
@@ -394,8 +341,10 @@ public class CompanyIndexFactory
 		new CopyOnWriteArrayList<>();
 	private String _indexNumberOfReplicas;
 	private String _indexNumberOfShards;
-	private final Set<IndexSettingsContributor> _indexSettingsContributors =
-		new ConcurrentSkipListSet<>();
+
+	@Reference
+	private IndexSettingsContributorHelper _indexSettingsContributorHelper;
+
 	private String _overrideTypeMappings;
 
 }

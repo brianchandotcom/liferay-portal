@@ -14,66 +14,165 @@ import React from 'react';
 
 import {Autocomplete} from '../../../../src/main/resources/META-INF/resources/js/shared/components/autocomplete/Autocomplete.es';
 
+import '@testing-library/jest-dom/extend-expect';
+
+const items = [
+	{id: 1, name: '0test test0'},
+	{id: 2, name: '1test test1'},
+	{id: 3, name: '2test test2'}
+];
+
 describe('The Autocomplete component should', () => {
 	let getByTestId;
 	let getAllByTestId;
-	const onChange = jest.fn();
 
-	const items = [
-		{
-			additionalName: '',
-			contentType: 'UserAccount',
-			familyName: 'test0',
-			givenName: '0test',
-			id: 39431,
-			name: '0test test0',
-			profileURL: ''
-		}
-	];
+	const onChange = jest.fn();
+	const onSelect = jest.fn();
+
+	afterEach(cleanup);
+
 	beforeEach(() => {
 		const autocomplete = render(
-			<Autocomplete items={items} onChange={onChange} />
+			<Autocomplete
+				items={items}
+				onChange={onChange}
+				onSelect={onSelect}
+			/>
 		);
 
 		getAllByTestId = autocomplete.getAllByTestId;
 		getByTestId = autocomplete.getByTestId;
 	});
 
-	afterEach(() => cleanup);
+	test('Show the dropdown list on focus input', () => {
+		const autocompleteInput = getByTestId('autocompleteInput');
+		const dropDownList = getByTestId('dropDownList');
+		const dropDown = dropDownList.parentNode;
+		const dropDownListItems = getAllByTestId('dropDownListItem');
 
-	test('Render its items list', () => {
-		const dropDownListItem = getByTestId('dropDownListItem');
-		expect(dropDownListItem.innerHTML).toContain('0test test0');
+		expect(dropDown).not.toHaveClass('show');
+
+		fireEvent.focus(autocompleteInput);
+
+		expect(dropDown).toHaveClass('show');
+
+		fireEvent.mouseDown(dropDownListItems[0]);
+
+		expect(autocompleteInput.value).toBe('0test test0');
+		expect(dropDown).not.toHaveClass('show');
+
+		fireEvent.focus(autocompleteInput);
+
+		expect(dropDown).toHaveClass('show');
+
+		fireEvent.change(autocompleteInput, {target: {value: 'test'}});
+		fireEvent.blur(autocompleteInput);
+
+		expect(autocompleteInput.value).toBe('');
+		expect(dropDown).not.toHaveClass('show');
 	});
 
-	test('Fire onChange handler function on change its text', () => {
-		const autocompleteInput = getAllByTestId('autocompleteInput');
-		fireEvent.change(autocompleteInput[0], {target: {value: '0te'}});
+	test('Render its items list and select any option', () => {
+		const autocompleteInput = getByTestId('autocompleteInput');
+		const dropDownListItems = getAllByTestId('dropDownListItem');
+
+		fireEvent.focus(autocompleteInput);
+
+		expect(dropDownListItems[0]).toHaveTextContent('0test test0');
+		expect(dropDownListItems[1]).toHaveTextContent('1test test1');
+		expect(dropDownListItems[2]).toHaveTextContent('2test test2');
+
+		expect(dropDownListItems[0]).not.toHaveClass('active');
+		expect(dropDownListItems[1]).not.toHaveClass('active');
+		expect(dropDownListItems[2]).not.toHaveClass('active');
+
+		fireEvent.mouseOver(dropDownListItems[2]);
+
+		expect(dropDownListItems[0]).not.toHaveClass('active');
+		expect(dropDownListItems[1]).not.toHaveClass('active');
+		expect(dropDownListItems[2]).toHaveClass('active');
+
+		fireEvent.mouseOver(dropDownListItems[0]);
+
+		expect(dropDownListItems[0]).toHaveClass('active');
+		expect(dropDownListItems[1]).not.toHaveClass('active');
+		expect(dropDownListItems[2]).not.toHaveClass('active');
+
+		fireEvent.keyDown(autocompleteInput, {keyCode: 40});
+
+		expect(dropDownListItems[0]).not.toHaveClass('active');
+		expect(dropDownListItems[1]).toHaveClass('active');
+		expect(dropDownListItems[2]).not.toHaveClass('active');
+
+		fireEvent.keyDown(autocompleteInput, {keyCode: 40});
+
+		expect(dropDownListItems[0]).not.toHaveClass('active');
+		expect(dropDownListItems[1]).not.toHaveClass('active');
+		expect(dropDownListItems[2]).toHaveClass('active');
+
+		fireEvent.keyDown(autocompleteInput, {keyCode: 38});
+
+		expect(dropDownListItems[0]).not.toHaveClass('active');
+		expect(dropDownListItems[1]).toHaveClass('active');
+		expect(dropDownListItems[2]).not.toHaveClass('active');
+
+		fireEvent.keyDown(autocompleteInput, {keyCode: 13});
+
+		expect(onSelect).toHaveBeenCalledWith(items[1]);
+
+		expect(autocompleteInput.value).toBe('1test test1');
+	});
+
+	test('Fire onChange handler function on change its text and clear input onBlur without select any option', () => {
+		const autocompleteInput = getByTestId('autocompleteInput');
+
+		fireEvent.focus(autocompleteInput);
+		fireEvent.change(autocompleteInput, {target: {value: '0te'}});
+
 		expect(onChange).toHaveBeenCalled();
+
+		fireEvent.blur(autocompleteInput);
+
+		expect(autocompleteInput.value).toBe('');
 	});
 });
 
 describe('The Autocomplete component with children should', () => {
 	let getByTestId;
-	let getAllByTestId;
+
+	afterEach(cleanup);
+
 	beforeEach(() => {
 		const autocomplete = render(
-			<Autocomplete items={[{name: '0test'}]}>
+			<Autocomplete items={items}>
 				<span data-testid="mockChild">Mock child</span>
 			</Autocomplete>
 		);
 
-		getAllByTestId = autocomplete.getAllByTestId;
 		getByTestId = autocomplete.getByTestId;
 	});
 
-	afterEach(() => cleanup);
-
-	test('Render with no items and with children', () => {
-		const autocompleteInput = getAllByTestId('autocompleteInput');
-
-		fireEvent.change(autocompleteInput[0], {target: {value: '0te'}});
+	test('Render the children', () => {
 		const mockChild = getByTestId('mockChild');
-		expect(mockChild.innerHTML).toContain('Mock child');
+
+		expect(mockChild).toHaveTextContent('Mock child');
+	});
+});
+
+describe('The Autocomplete component should be render with no items', () => {
+	let getByTestId;
+
+	afterEach(cleanup);
+
+	beforeEach(() => {
+		const autocomplete = render(<Autocomplete items={[]} />);
+
+		getByTestId = autocomplete.getByTestId;
+	});
+
+	test('Render with "no results found" message', () => {
+		const dropDownEmpty = getByTestId('dropDownEmpty');
+
+		expect(dropDownEmpty).toHaveTextContent('no-results-found');
 	});
 });

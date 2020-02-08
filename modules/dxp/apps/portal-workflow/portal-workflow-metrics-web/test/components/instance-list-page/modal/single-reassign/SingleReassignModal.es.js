@@ -63,7 +63,7 @@ describe('The SingleReassignModal component should', () => {
 					totalCount: items.length
 				}
 			})
-			.mockResolvedValueOnce({data: {items}}),
+			.mockResolvedValue({data: {items}}),
 		post: jest
 			.fn()
 			.mockRejectedValueOnce(new Error('Request failed'))
@@ -73,7 +73,7 @@ describe('The SingleReassignModal component should', () => {
 	beforeAll(() => {
 		const renderResult = render(
 			<MockRouter client={clientMock}>
-				<SingleReassignModal></SingleReassignModal>
+				<SingleReassignModal />
 			</MockRouter>,
 			{
 				wrapper: ContainerMock
@@ -116,7 +116,7 @@ describe('The SingleReassignModal component should', () => {
 
 		fireEvent.change(autocompleteInput, {target: {value: 'test'}});
 
-		fireEvent.click(getByTestId('dropDownListItem'));
+		fireEvent.mouseDown(getByTestId('dropDownListItem'));
 
 		expect(reassignBtn).not.toHaveAttribute('disabled');
 

@@ -9,16 +9,16 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import {ModalContext} from '../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/ModalContext.es';
 import {SingleReassignModal} from '../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/single-reassign/SingleReassignModal.es';
-import {Table} from '../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/single-reassign/SingleReassignModalTable.es';
 import {MockRouter} from '../../../../mock/MockRouter.es';
 
 describe('The SingleReassignModalTable component should', () => {
-	afterEach(() => cleanup);
+	afterEach(cleanup);
+
 	const clientMock = {
 		get: jest
 			.fn()
@@ -28,50 +28,36 @@ describe('The SingleReassignModalTable component should', () => {
 		items: [
 			{
 				assigneePerson: {
-					additionalName: '',
-					contentType: 'UserAccount',
-					familyName: 'Test',
-					givenName: 'Test',
 					id: 20124,
-					name: 'Test Test',
-					profileURL: '/web/test'
+					name: 'Test Test'
 				},
-				assigneeRoles: [],
 				completed: true,
-				dateCompletion: '2019-12-10T17:45:38Z',
-				dateCreated: '2019-12-10T17:44:45Z',
-				definitionId: 38902,
-				definitionName: 'Single Approver',
-				definitionVersion: '',
-				description: '',
 				id: 40336,
 				instanceId: 40330,
-				name: 'review',
-				objectReviewed: {
-					id: 40324,
-					resourceType: 'BlogPosting'
-				}
+				name: 'review'
 			}
 		]
 	};
 
+	const mockItem = {
+		assetTitle: 'Blog2',
+		assetType: 'Blogs Entry',
+		assigneeUsers: [{id: 20124, name: 'Test Test'}],
+		creatorUser: {id: 20124, name: 'Test Test'},
+		dateCreated: '2019-12-10T17:44:44Z',
+		id: 40330,
+		slaStatus: 'Overdue',
+		status: 'Completed',
+		taskNames: ['Update']
+	};
+
 	const setSingleModal = jest.fn();
 	const singleModal = {
-		selectedItem: {
-			assetTitle: 'Blog2',
-			assetType: 'Blogs Entry',
-			assigneeUsers: [{id: 20124, name: 'Test Test'}],
-			creatorUser: {id: 20124, name: 'Test Test'},
-			dateCreated: '2019-12-10T17:44:44Z',
-			id: 40330,
-			slaStatus: 'Overdue',
-			status: 'Completed',
-			taskNames: ['Update']
-		},
+		selectedItem: {...mockItem},
 		visible: true
 	};
 
-	const setReassignMock = jest.fn();
+	const setAssigneeId = jest.fn();
 
 	test('Render with statuses Completed and Overdue', () => {
 		const {getByTestId} = render(
@@ -79,20 +65,8 @@ describe('The SingleReassignModalTable component should', () => {
 				<ModalContext.Provider value={{setSingleModal, singleModal}}>
 					<SingleReassignModal.Table
 						data={data}
-						reassignedTasks={{
-							tasks: [{assigneeId: 20124, id: 39347}]
-						}}
-						setReassignedTasks={setReassignMock}
-						{...{
-							assetTitle: 'Blog2',
-							assetType: 'Blogs Entry',
-							assigneeUsers: [{id: 20124, name: 'Test Test'}],
-							creatorUser: {id: 20124, name: 'Test Test'},
-							dateCreated: '2019-12-10T17:44:44Z',
-							id: 40330,
-							slaStatus: 'Overdue',
-							status: 'Completed'
-						}}
+						setAssigneeId={setAssigneeId}
+						{...mockItem}
 					></SingleReassignModal.Table>
 				</ModalContext.Provider>
 			</MockRouter>
@@ -111,21 +85,8 @@ describe('The SingleReassignModalTable component should', () => {
 				<ModalContext.Provider value={{setSingleModal, singleModal}}>
 					<SingleReassignModal.Table
 						data={data}
-						reassignedTasks={{
-							tasks: [{assigneeId: 20124, id: 39347}]
-						}}
-						setReassignedTasks={setReassignMock}
-						{...{
-							assetTitle: 'Blog2',
-							assetType: 'Blogs Entry',
-							assigneeUsers: [{id: 20124, name: 'Test Test'}],
-							creatorUser: {id: 20124, name: 'Test Test'},
-							dateCreated: '2019-12-10T17:44:44Z',
-							id: 40330,
-							slaStatus: 'Overdue',
-							status: 'Completed',
-							taskNames: ['Update']
-						}}
+						setAssigneeId={setAssigneeId}
+						{...mockItem}
 					></SingleReassignModal.Table>
 				</ModalContext.Provider>
 			</MockRouter>
@@ -139,27 +100,13 @@ describe('The SingleReassignModalTable component should', () => {
 	});
 
 	test('Render with no data', () => {
-		const data = {items: undefined};
 		const {getAllByTestId} = render(
 			<MockRouter client={clientMock}>
 				<ModalContext.Provider value={{setSingleModal, singleModal}}>
 					<SingleReassignModal.Table
-						data={data}
-						reassignedTasks={{
-							tasks: [{assigneeId: 20124, id: 39347}]
-						}}
-						setReassignedTasks={setReassignMock}
-						{...{
-							assetTitle: 'Blog2',
-							assetType: 'Blogs Entry',
-							assigneeUsers: [{id: 20124, name: 'Test Test'}],
-							creatorUser: {id: 20124, name: 'Test Test'},
-							dateCreated: '2019-12-10T17:44:44Z',
-							id: 40330,
-							slaStatus: 'Overdue',
-							status: 'Completed',
-							taskNames: ['Update']
-						}}
+						data={{}}
+						setAssigneeId={setAssigneeId}
+						{...mockItem}
 					/>
 				</ModalContext.Provider>
 			</MockRouter>
@@ -199,21 +146,8 @@ describe('The SingleReassignModalTable component should', () => {
 				<ModalContext.Provider value={{setSingleModal, singleModal}}>
 					<SingleReassignModal.Table
 						data={data}
-						reassignedTasks={{
-							tasks: [{assigneeId: 20124, id: 39347}]
-						}}
-						setReassignedTasks={setReassignMock}
-						{...{
-							assetTitle: 'Blog2',
-							assetType: 'Blogs Entry',
-							assigneeUsers: [{id: 20124, name: 'Test Test'}],
-							creatorUser: {id: 20124, name: 'Test Test'},
-							dateCreated: '2019-12-10T17:44:44Z',
-							id: 40330,
-							slaStatus: 'Overdue',
-							status: 'Pending',
-							taskNames: ['Update']
-						}}
+						setAssigneeId={setAssigneeId}
+						{...mockItem}
 					/>
 				</ModalContext.Provider>
 			</MockRouter>
@@ -224,97 +158,5 @@ describe('The SingleReassignModalTable component should', () => {
 
 		expect(singleReassignModalTable[0].innerHTML).not.toBeUndefined();
 		expect(singleReassignModalTable[0].innerHTML).not.toBeNull();
-	});
-});
-
-describe('The AssigneeInput component should', () => {
-	const setReassignMock = jest.fn();
-	const clientMock = {
-		get: jest
-			.fn()
-			.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}})
-	};
-
-	test('Render change assignee input text to Test', () => {
-		cleanup();
-
-		const {getByTestId} = render(
-			<MockRouter client={clientMock}>
-				<Table.AssigneeInput
-					reassignedTasks={{
-						tasks: [{assigneeId: 20124, id: 39347}]
-					}}
-					setReassignedTasks={setReassignMock}
-					taskId={39347}
-				></Table.AssigneeInput>
-			</MockRouter>
-		);
-		const autocompleteInput = getByTestId('autocompleteInput');
-
-		fireEvent.change(autocompleteInput, {target: {value: 'Test'}});
-		expect(autocompleteInput.value).toBe('Test');
-	});
-
-	test('Change its text to "Test"', () => {
-		cleanup();
-
-		const clientMock = {
-			get: jest
-				.fn()
-				.mockResolvedValue({data: {items: [{id: 1, name: 'Test'}]}})
-		};
-
-		render(
-			<MockRouter client={clientMock}>
-				<Table.AssigneeInput
-					reassignedTasks={{
-						tasks: [{assigneeId: 20124, id: 39347}]
-					}}
-					setReassignedTasks={setReassignMock}
-					taskId={39347}
-				></Table.AssigneeInput>
-			</MockRouter>
-		);
-		expect(clientMock.get).toHaveBeenCalled();
-	});
-
-	test('Select a new assignee', async () => {
-		cleanup();
-
-		const {getByTestId} = await render(
-			<MockRouter client={clientMock}>
-				<Table.AssigneeInput
-					reassignedTasks={{tasks: []}}
-					setReassignedTasks={setReassignMock}
-					taskId={39347}
-				></Table.AssigneeInput>
-			</MockRouter>
-		);
-		const autocompleteInput = getByTestId('autocompleteInput');
-
-		fireEvent.change(autocompleteInput, {target: {value: 'Test'}});
-		fireEvent.blur(autocompleteInput);
-		const dropDownListItem = getByTestId('dropDownListItem');
-		fireEvent.click(dropDownListItem);
-	});
-
-	test('Select a new assignee with input already filled', async () => {
-		cleanup();
-
-		const {getByTestId} = await render(
-			<MockRouter client={clientMock}>
-				<Table.AssigneeInput
-					reassignedTasks={{tasks: [{assigneeId: 20124, id: 39347}]}}
-					setReassignedTasks={setReassignMock}
-					taskId={39347}
-				></Table.AssigneeInput>
-			</MockRouter>
-		);
-		const autocompleteInput = getByTestId('autocompleteInput');
-
-		fireEvent.change(autocompleteInput, {target: {value: 'Test'}});
-		fireEvent.blur(autocompleteInput);
-		const dropDownListItem = getByTestId('dropDownListItem');
-		fireEvent.click(dropDownListItem);
 	});
 });

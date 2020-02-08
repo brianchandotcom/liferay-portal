@@ -343,7 +343,7 @@ describe('The BulkReassignModal component should', () => {
 
 		const dropDownLists = await getAllByTestId('dropDownList');
 
-		await fireEvent.click(dropDownLists[0].children[0].children[0]);
+		await fireEvent.mouseDown(dropDownLists[0].children[0].children[0]);
 
 		expect(assigneeInputs[0].value).toBe('Test Test');
 		expect(assigneeInputs[1].value).toBe('Test Test');
@@ -358,7 +358,7 @@ describe('The BulkReassignModal component should', () => {
 
 		fireEvent.change(assigneeInputs[1], {target: {value: '1test'}});
 
-		fireEvent.click(dropDownLists[1].children[0].children[0]);
+		fireEvent.mouseDown(dropDownLists[1].children[0].children[0]);
 
 		expect(assigneeInputs[1].value).toBe('1test test1');
 

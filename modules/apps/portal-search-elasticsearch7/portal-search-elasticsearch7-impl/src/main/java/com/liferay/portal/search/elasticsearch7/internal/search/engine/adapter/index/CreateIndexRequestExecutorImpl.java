@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.settings.IndexSettingsContributorHelper;
 import com.liferay.portal.search.elasticsearch7.internal.util.ClassLoaderUtil;
 import com.liferay.portal.search.elasticsearch7.internal.util.LogUtil;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
 
 import org.osgi.service.component.annotations.Component;
@@ -73,6 +75,14 @@ public class CreateIndexRequestExecutorImpl
 				clazz);
 		}
 
+		Settings.Builder builder = Settings.builder();
+
+		builder.put(elasticsearchCreateIndexRequest.settings());
+
+		_indexSettingsContributorHelper.loadIndexSettingsContributors(builder);
+
+		elasticsearchCreateIndexRequest.settings(builder);
+
 		return elasticsearchCreateIndexRequest;
 	}
 
@@ -108,5 +118,8 @@ public class CreateIndexRequestExecutorImpl
 		CreateIndexRequestExecutorImpl.class);
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
+
+	@Reference
+	private IndexSettingsContributorHelper _indexSettingsContributorHelper;
 
 }

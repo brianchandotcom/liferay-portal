@@ -78,8 +78,14 @@ public class AssetBrowserDisplayContext {
 					_renderResponse, getRefererAssetEntryId()));
 		}
 
-		assetBrowserSearch.setOrderByCol(getOrderByCol());
-		assetBrowserSearch.setOrderByType(getOrderByType());
+		String orderByCol = getOrderByCol(
+			assetBrowserSearch.getOrderByColParam());
+
+		String orderByType = getOrderByType(
+			assetBrowserSearch.getOrderByTypeParam());
+
+		assetBrowserSearch.setOrderByCol(orderByCol);
+		assetBrowserSearch.setOrderByType(orderByType);
 
 		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
 			long[] subtypeSelectionIds = null;
@@ -102,7 +108,7 @@ public class AssetBrowserDisplayContext {
 					_getKeywords(), _getKeywords(), _getListable(), false,
 					false, assetBrowserSearch.getStart(),
 					assetBrowserSearch.getEnd(), "modifiedDate",
-					StringPool.BLANK, getOrderByType(), StringPool.BLANK);
+					StringPool.BLANK, orderByType, StringPool.BLANK);
 
 			assetBrowserSearch.setResults(assetEntries);
 
@@ -117,14 +123,14 @@ public class AssetBrowserDisplayContext {
 
 		boolean orderByAsc = false;
 
-		if (Objects.equals(getOrderByType(), "asc")) {
+		if (Objects.equals(orderByType, "asc")) {
 			orderByAsc = true;
 		}
 
-		if (Objects.equals(getOrderByCol(), "modified-date")) {
+		if (Objects.equals(orderByCol, "modified-date")) {
 			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
 		}
-		else if (Objects.equals(getOrderByCol(), "title")) {
+		else if (Objects.equals(orderByCol, "title")) {
 			String sortFieldName = Field.getSortableFieldName(
 				"localized_title_".concat(themeDisplay.getLanguageId()));
 
@@ -322,13 +328,13 @@ public class AssetBrowserDisplayContext {
 		return _showAddButton;
 	}
 
-	protected String getOrderByCol() {
+	protected String getOrderByCol(String orderByColParam) {
 		if (_orderByCol != null) {
 			return _orderByCol;
 		}
 
 		String orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol");
+			_httpServletRequest, orderByColParam);
 
 		if (Validator.isNotNull(orderByCol)) {
 			_portalPreferences.setValue(
@@ -346,13 +352,13 @@ public class AssetBrowserDisplayContext {
 		return _orderByCol;
 	}
 
-	protected String getOrderByType() {
+	protected String getOrderByType(String orderByTypeParam) {
 		if (_orderByType != null) {
 			return _orderByType;
 		}
 
 		String orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType");
+			_httpServletRequest, orderByTypeParam);
 
 		if (Validator.isNotNull(orderByType)) {
 			_portalPreferences.setValue(

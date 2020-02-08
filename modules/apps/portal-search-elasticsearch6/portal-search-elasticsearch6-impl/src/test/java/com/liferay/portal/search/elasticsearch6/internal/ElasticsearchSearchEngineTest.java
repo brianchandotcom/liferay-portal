@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch6.internal;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
@@ -25,6 +26,7 @@ import com.liferay.portal.search.elasticsearch6.internal.connection.OperationMod
 import com.liferay.portal.search.elasticsearch6.internal.index.CompanyIdIndexNameBuilder;
 import com.liferay.portal.search.elasticsearch6.internal.index.CompanyIndexFactory;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
+import com.liferay.portal.search.elasticsearch6.internal.settings.IndexSettingsContributorHelper;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
@@ -167,12 +169,18 @@ public class ElasticsearchSearchEngineTest {
 	}
 
 	protected static CompanyIndexFactory createCompanyIndexFactory() {
-		return new CompanyIndexFactory() {
+		CompanyIndexFactory companyIndexFactory = new CompanyIndexFactory() {
 			{
 				indexNameBuilder = createIndexNameBuilder();
 				jsonFactory = new JSONFactoryImpl();
 			}
 		};
+
+		ReflectionTestUtil.setFieldValue(
+			companyIndexFactory, "_indexSettingsContributorHelper",
+			new IndexSettingsContributorHelper());
+
+		return companyIndexFactory;
 	}
 
 	protected static IndexNameBuilder createIndexNameBuilder() {

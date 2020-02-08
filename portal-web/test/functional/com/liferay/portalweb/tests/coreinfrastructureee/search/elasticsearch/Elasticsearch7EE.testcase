@@ -723,11 +723,13 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
 
-		var searchClientInfo = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[3]");
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchAdmin#REMOTE_CLUSTER_NAME",
+			value1 = "LiferayElasticsearchCluster");
 
-		if (contains("${searchClientInfo}", "Remote Cluster = LiferayElasticsearchCluster") && contains("searchClientInfo", "Local Cluster = LiferayElasticsearchClusterTwo")) {
-			fail("There should be two search engines.");
-		}
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchAdmin#LOCAL_CLUSTER_NAME",
+			value1 = "LiferayElasticsearchClusterTwo");
 
 		Navigator.openURL();
 
@@ -750,11 +752,15 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
 
-		var searchClientInfo = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[3]");
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchAdmin#LOCAL_CLUSTER_NAME",
+			value1 = "LiferayElasticsearchClusterTwo");
 
-		if (contains("${searchClientInfo}", "Remote Cluster = (Error: java.net.ConnectException") && contains("searchClientInfo", "Local Cluster = LiferayElasticsearchClusterTwo")) {
-			fail("Remote cluster does not be stopped.");
-		}
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "Connection refused");
+
+		AssertElementNotPresent(locator1 = "SearchAdmin#REMOTE_CLUSTER_NAME");
 
 		Navigator.openURL();
 
@@ -781,11 +787,15 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
 
-		var searchClientInfo = selenium.getText("//div[contains(@class,'alert alert-info')]//strong[3]");
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchAdmin#REMOTE_CLUSTER_NAME",
+			value1 = "LiferayElasticsearchCluster");
 
-		if (contains("${searchClientInfo}", "Remote Cluster = LiferayElasticsearchCluster") && contains("searchClientInfo", "Local Cluster = (Error: java.net.ConnectException")) {
-			fail("Local Cluster does not be stopped");
-		}
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "Connection refused");
+
+		AssertElementNotPresent(locator1 = "SearchAdmin#LOCAL_CLUSTER_NAME");
 
 		Navigator.openURL();
 

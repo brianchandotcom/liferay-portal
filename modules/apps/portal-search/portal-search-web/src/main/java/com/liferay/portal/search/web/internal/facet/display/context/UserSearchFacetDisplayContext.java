@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
+import com.liferay.portal.search.web.internal.user.facet.configuration.UserFacetPortletInstanceConfiguration;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -22,6 +24,10 @@ import java.util.List;
  * @author Lino Alves
  */
 public class UserSearchFacetDisplayContext implements Serializable {
+
+	public long getDisplayStyleGroupId() {
+		return _displayStyleGroupId;
+	}
 
 	public String getParamName() {
 		return _paramName;
@@ -39,12 +45,22 @@ public class UserSearchFacetDisplayContext implements Serializable {
 		return _userSearchFacetTermDisplayContexts;
 	}
 
+	public UserFacetPortletInstanceConfiguration
+		getUserFacetPortletInstanceConfiguration() {
+
+		return _userFacetPortletInstanceConfiguration;
+	}
+
 	public boolean isNothingSelected() {
 		return _nothingSelected;
 	}
 
 	public boolean isRenderNothing() {
 		return _renderNothing;
+	}
+
+	public void setDisplayStyleGroupId(long displayStyleGroupId) {
+		_displayStyleGroupId = displayStyleGroupId;
 	}
 
 	public void setNothingSelected(boolean nothingSelected) {
@@ -75,11 +91,22 @@ public class UserSearchFacetDisplayContext implements Serializable {
 			userSearchFacetTermDisplayContexts;
 	}
 
+	public void setUserFacetPortletInstanceConfiguration(
+		UserFacetPortletInstanceConfiguration
+			userFacetPortletInstanceConfiguration) {
+
+		_userFacetPortletInstanceConfiguration =
+			userFacetPortletInstanceConfiguration;
+	}
+
+	private long _displayStyleGroupId;
 	private boolean _nothingSelected;
 	private String _paramName;
 	private String _paramValue;
 	private List<String> _paramValues;
 	private boolean _renderNothing;
+	private UserFacetPortletInstanceConfiguration
+		_userFacetPortletInstanceConfiguration;
 	private List<UserSearchFacetTermDisplayContext>
 		_userSearchFacetTermDisplayContexts;
 

@@ -14,20 +14,27 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.builder.UserSearchFacetDisplayBuilder;
+import com.liferay.portal.search.web.internal.user.facet.configuration.UserFacetPortletInstanceConfiguration;
 
 import java.util.Collections;
 import java.util.List;
+
+import javax.portlet.RenderRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -184,7 +191,7 @@ public class UserSearchFacetDisplayContextTest {
 		throws Exception {
 
 		UserSearchFacetDisplayBuilder userSearchFacetDisplayBuilder =
-			new UserSearchFacetDisplayBuilder();
+			new UserSearchFacetDisplayBuilder(getRenderRequest());
 
 		userSearchFacetDisplayBuilder.setFacet(_facet);
 		userSearchFacetDisplayBuilder.setParamValue(paramValue);
@@ -213,16 +220,44 @@ public class UserSearchFacetDisplayContextTest {
 		return termCollector;
 	}
 
-	protected User createUser(String userName) throws Exception {
-		User user = Mockito.mock(User.class);
+	protected PortletDisplay getPortletDisplay() throws ConfigurationException {
+		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
 
 		Mockito.doReturn(
-			userName
+			Mockito.mock(UserFacetPortletInstanceConfiguration.class)
 		).when(
-			user
-		).getFullName();
+			portletDisplay
+		).getPortletInstanceConfiguration(
+			Matchers.any()
+		);
 
-		return user;
+		return portletDisplay;
+	}
+
+	protected RenderRequest getRenderRequest() throws ConfigurationException {
+		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
+
+		Mockito.doReturn(
+			getThemeDisplay()
+		).when(
+			renderRequest
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
+
+		return renderRequest;
+	}
+
+	protected ThemeDisplay getThemeDisplay() throws ConfigurationException {
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.doReturn(
+			getPortletDisplay()
+		).when(
+			themeDisplay
+		).getPortletDisplay();
+
+		return themeDisplay;
 	}
 
 	protected void setUpOneTermCollector(String userName, int count) {

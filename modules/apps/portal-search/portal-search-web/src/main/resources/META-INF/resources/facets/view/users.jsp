@@ -17,7 +17,14 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
-UserSearchFacetDisplayBuilder userSearchFacetDisplayBuilder = new UserSearchFacetDisplayBuilder();
+UserSearchFacetDisplayBuilder userSearchFacetDisplayBuilder = null;
+
+try {
+	userSearchFacetDisplayBuilder = new UserSearchFacetDisplayBuilder(renderRequest);
+}
+catch (ConfigurationException configurationException) {
+	throw new RuntimeException(configurationException);
+}
 
 userSearchFacetDisplayBuilder.setFacet(facet);
 userSearchFacetDisplayBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));

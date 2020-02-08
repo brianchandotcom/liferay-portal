@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.user.facet.portlet;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
@@ -107,7 +108,7 @@ public class UserFacetPortlet extends MVCPortlet {
 					renderRequest));
 
 		UserSearchFacetDisplayBuilder userSearchFacetDisplayBuilder =
-			new UserSearchFacetDisplayBuilder();
+			createUserSearchFacetDisplayBuilder(renderRequest);
 
 		userSearchFacetDisplayBuilder.setFacet(facet);
 		userSearchFacetDisplayBuilder.setFrequenciesVisible(
@@ -127,6 +128,17 @@ public class UserFacetPortlet extends MVCPortlet {
 			userSearchFacetDisplayBuilder::setParamValues);
 
 		return userSearchFacetDisplayBuilder.build();
+	}
+
+	protected UserSearchFacetDisplayBuilder createUserSearchFacetDisplayBuilder(
+		RenderRequest renderRequest) {
+
+		try {
+			return new UserSearchFacetDisplayBuilder(renderRequest);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
 	}
 
 	protected String getAggregationName(RenderRequest renderRequest) {

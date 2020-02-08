@@ -108,26 +108,26 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());
 
-		Layout pagetTemplateLayout = _layoutLocalService.getLayout(
+		Layout pageTemplateLayout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					pagetTemplateLayout.getGroupId(),
+					pageTemplateLayout.getGroupId(),
 					_portal.getClassNameId(Layout.class),
-					pagetTemplateLayout.getPlid());
+					pageTemplateLayout.getPlid());
 
 		if (layoutPageTemplateStructure == null) {
 			_layoutPageTemplateStructureLocalService.
 				rebuildLayoutPageTemplateStructure(
-					pagetTemplateLayout.getGroupId(),
+					pageTemplateLayout.getGroupId(),
 					_portal.getClassNameId(Layout.class),
-					pagetTemplateLayout.getPlid());
+					pageTemplateLayout.getPlid());
 		}
 
 		draftLayout = _layoutCopyHelper.copyLayout(
-			pagetTemplateLayout, draftLayout);
+			pageTemplateLayout, draftLayout);
 
 		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 

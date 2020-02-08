@@ -350,6 +350,11 @@ public class AudioProcessorImpl
 
 		try {
 			if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+				String originalLogLevel = Log4JUtil.getOriginalLevel(
+					PropsUtil.class.getName());
+
+				Log4JUtil.setLevel(PropsUtil.class.getName(), "WARN", true);
+
 				ProcessCallable<String> processCallable =
 					new LiferayAudioProcessCallable(
 						ServerDetector.getServerId(),
@@ -358,6 +363,9 @@ public class AudioProcessorImpl
 						containerType,
 						PropsUtil.getProperties(
 							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
+
+				Log4JUtil.setLevel(
+					PropsUtil.class.getName(), originalLogLevel, true);
 
 				ProcessChannel<String> processChannel =
 					_processExecutor.execute(

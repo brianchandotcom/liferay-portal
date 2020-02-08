@@ -17,7 +17,6 @@ package com.liferay.layout.content.page.editor.web.internal.model.listener;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
@@ -111,20 +110,11 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		Layout pageTemplateLayout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					pageTemplateLayout.getGroupId(),
-					_portal.getClassNameId(Layout.class),
-					pageTemplateLayout.getPlid());
-
-		if (layoutPageTemplateStructure == null) {
-			_layoutPageTemplateStructureLocalService.
-				rebuildLayoutPageTemplateStructure(
-					pageTemplateLayout.getGroupId(),
-					_portal.getClassNameId(Layout.class),
-					pageTemplateLayout.getPlid());
-		}
+		_layoutPageTemplateStructureLocalService.
+			fetchLayoutPageTemplateStructure(
+				pageTemplateLayout.getGroupId(),
+				_portal.getClassNameId(Layout.class),
+				pageTemplateLayout.getPlid(), true);
 
 		draftLayout = _layoutCopyHelper.copyLayout(
 			pageTemplateLayout, draftLayout);

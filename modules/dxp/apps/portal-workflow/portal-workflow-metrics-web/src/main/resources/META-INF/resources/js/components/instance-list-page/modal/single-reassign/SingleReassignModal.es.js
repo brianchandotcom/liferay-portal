@@ -44,36 +44,27 @@ const LoadingView = () => {
 };
 
 const SingleReassignModal = () => {
-	const [errorToast, setErrorToast] = useState(() => false);
-	const [reassignedTasks, setReassignedTasks] = useState(() => ({
-		tasks: []
-	}));
+	const [errorToast, setErrorToast] = useState(false);
+	const [assigneeId, setAssigneeId] = useState();
 	const [retry, setRetry] = useState(0);
 	const [sendingPost, setSendingPost] = useState(false);
-	const [successToast, setSuccessToast] = useState(() => []);
+	const [successToast, setSuccessToast] = useState([]);
 
 	const {setSingleModal, singleModal} = useContext(ModalContext);
 	const {setSelectedItems} = useContext(InstanceListContext);
+	const {selectedItem = {}} = singleModal;
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
-			setSingleModal(() => ({selectedItem: undefined, visible: false}));
-
-			setReassignedTasks(() => ({
-				tasks: []
-			}));
+			setSingleModal({selectedItem: undefined, visible: false});
+			setAssigneeId();
 		}
 	});
-
-	const instanceItem = useMemo(
-		() => (singleModal.selectedItem ? singleModal.selectedItem : {}),
-		[singleModal]
-	);
 
 	const {data, fetchData} = useFetch({
 		admin: true,
 		params: {completed: false, page: 1, pageSize: 1},
-		url: `/workflow-instances/${instanceItem.id}/workflow-tasks`
+		url: `/workflow-instances/${selectedItem.id}/workflow-tasks`
 	});
 
 	const taskId = useMemo(
@@ -81,28 +72,17 @@ const SingleReassignModal = () => {
 		[data]
 	);
 
-	const newAssigneeId = useMemo(
-		() =>
-			reassignedTasks.tasks && reassignedTasks.tasks[0]
-				? reassignedTasks.tasks[0].assigneeId
-				: undefined,
-		[reassignedTasks]
-	);
-
 	const {postData} = usePost({
 		admin: true,
-		body: {assigneeId: newAssigneeId},
+		body: {assigneeId},
 		url: `/workflow-tasks/${taskId}/assign-to-user`
 	});
 
 	const reassignButtonHandler = useCallback(() => {
-		if (
-			newAssigneeId !== undefined &&
-			(singleModal.selectedItem.assigneeUsers.length === 0 ||
-				singleModal.selectedItem.assigneeUsers[0].id !== newAssigneeId)
-		) {
-			setSendingPost(() => true);
-			setErrorToast(() => false);
+		if (assigneeId && taskId) {
+			setSendingPost(true);
+			setErrorToast(false);
+
 			postData()
 				.then(() => {
 					onClose();
@@ -110,13 +90,13 @@ const SingleReassignModal = () => {
 						...successToast,
 						Liferay.Language.get('this-task-has-been-reassigned')
 					]);
-					setSendingPost(() => false);
-					setErrorToast(() => false);
+					setErrorToast(false);
+					setSendingPost(false);
 					setSelectedItems([]);
 				})
 				.catch(() => {
-					setErrorToast(() => true);
-					setSendingPost(() => false);
+					setErrorToast(true);
+					setSendingPost(false);
 				});
 		}
 		else {
@@ -126,11 +106,12 @@ const SingleReassignModal = () => {
 	}, [postData]);
 
 	const promises = useMemo(() => {
-		setErrorToast(() => false);
+		setErrorToast(false);
+
 		if (singleModal.visible) {
 			return [
 				fetchData().catch(err => {
-					setErrorToast(() => true);
+					setErrorToast(true);
 
 					return Promise.reject(err);
 				})
@@ -204,10 +185,9 @@ const SingleReassignModal = () => {
 								<PromisesResolver.Resolved>
 									<SingleReassignModal.Table
 										data={data}
-										reassignedTasks={reassignedTasks}
-										setReassignedTasks={setReassignedTasks}
-										{...instanceItem}
-									></SingleReassignModal.Table>
+										setAssigneeId={setAssigneeId}
+										{...selectedItem}
+									/>
 								</PromisesResolver.Resolved>
 							</ClayModal.Body>
 						</div>
@@ -226,7 +206,7 @@ const SingleReassignModal = () => {
 							last={
 								<ClayButton
 									data-testid="reassignButton"
-									disabled={sendingPost || !newAssigneeId}
+									disabled={sendingPost || !assigneeId}
 									onClick={reassignButtonHandler}
 								>
 									{Liferay.Language.get('reassign')}

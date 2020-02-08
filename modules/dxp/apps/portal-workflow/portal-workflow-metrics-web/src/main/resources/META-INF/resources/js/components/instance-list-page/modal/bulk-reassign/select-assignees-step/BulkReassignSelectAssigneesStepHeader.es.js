@@ -69,14 +69,13 @@ const Header = ({data}) => {
 					workflowTaskId: task.id
 				});
 			});
-
-			setBulkModal({
-				...bulkModal,
-				reassignedTasks,
-				selectedAssignee: newAssignee,
-				useSameAssignee: true
-			});
 		}
+
+		setBulkModal({
+			...bulkModal,
+			reassignedTasks,
+			selectedAssignee: newAssignee
+		});
 	};
 
 	return (
@@ -105,7 +104,6 @@ const Header = ({data}) => {
 						placeholder={Liferay.Language.get(
 							'search-for-an-assignee'
 						)}
-						promises={[]}
 					>
 						<ClayInput.GroupInsetItem after tag="span">
 							<ClayIcon

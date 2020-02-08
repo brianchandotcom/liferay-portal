@@ -95,16 +95,13 @@ public class LayoutData {
 		Layout layout,
 		UnsafeConsumer<LayoutRow, Exception>... unsafeConsumers) {
 
-		_layout = layout;
-
 		for (UnsafeConsumer<LayoutRow, Exception> unsafeConsumer :
 				unsafeConsumers) {
 
-			_layoutRows.add(LayoutRow.of(_layout, unsafeConsumer));
+			_layoutRows.add(LayoutRow.of(layout, unsafeConsumer));
 		}
 	}
 
-	private final Layout _layout;
 	private final List<LayoutRow> _layoutRows = new ArrayList<>();
 
 }

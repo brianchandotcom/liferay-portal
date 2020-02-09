@@ -252,10 +252,6 @@ public class ContentPageEditorDisplayContext {
 				"availableSegmentsEntries",
 				editorSoyContext.get("availableSegmentsEntries")
 			).put(
-				"classNameId", editorSoyContext.get("classNameId")
-			).put(
-				"classPK", editorSoyContext.get("classPK")
-			).put(
 				"collections", _getFragmentCollectionsSoyContexts(true, false)
 			).put(
 				"defaultEditorConfigurations", _getDefaultConfigurations()

@@ -55,7 +55,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
-import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.util.constants.LayoutConverterTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -782,10 +781,6 @@ public class ContentPageEditorDisplayContext {
 	private JSONObject _getDropZoneConfigJSONObject(
 		JSONObject masterLayoutDataJSONObject) {
 
-		if (!LayoutDataConverter.isLatestVersion(masterLayoutDataJSONObject)) {
-			return masterLayoutDataJSONObject;
-		}
-
 		LayoutStructure masterLayoutStructure = LayoutStructure.of(
 			masterLayoutDataJSONObject.toString());
 
@@ -1370,24 +1365,8 @@ public class ContentPageEditorDisplayContext {
 					PortalUtil.getClassNameId(Layout.class.getName()),
 					themeDisplay.getPlid(), true);
 
-		String layoutData = layoutPageTemplateStructure.getData(
+		_layoutData = layoutPageTemplateStructure.getData(
 			getSegmentsExperienceId());
-
-		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
-			layoutData);
-
-		if (!LayoutDataConverter.isLatestVersion(layoutDataJSONObject)) {
-			layoutData = LayoutDataConverter.convert(layoutData);
-
-			LayoutPageTemplateStructureLocalServiceUtil.
-				updateLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(),
-					PortalUtil.getClassNameId(Layout.class.getName()),
-					themeDisplay.getPlid(), getSegmentsExperienceId(),
-					layoutData);
-		}
-
-		_layoutData = layoutData;
 
 		return _layoutData;
 	}
@@ -1479,24 +1458,8 @@ public class ContentPageEditorDisplayContext {
 						PortalUtil.getClassNameId(Layout.class.getName()),
 						masterLayoutPageTemplateEntry.getPlid(), true);
 
-			String layoutData = layoutPageTemplateStructure.getData(
+			_masterLayoutData = layoutPageTemplateStructure.getData(
 				SegmentsExperienceConstants.ID_DEFAULT);
-
-			JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
-				layoutData);
-
-			if (!LayoutDataConverter.isLatestVersion(layoutDataJSONObject)) {
-				layoutData = LayoutDataConverter.convert(layoutData);
-
-				LayoutPageTemplateStructureLocalServiceUtil.
-					updateLayoutPageTemplateStructure(
-						themeDisplay.getScopeGroupId(),
-						PortalUtil.getClassNameId(Layout.class.getName()),
-						masterLayoutPageTemplateEntry.getPlid(),
-						SegmentsExperienceConstants.ID_DEFAULT, layoutData);
-			}
-
-			_masterLayoutData = layoutData;
 
 			return _masterLayoutData;
 		}

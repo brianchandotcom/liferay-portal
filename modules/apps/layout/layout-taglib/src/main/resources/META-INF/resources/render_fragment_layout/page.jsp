@@ -42,9 +42,7 @@ JSONObject dataJSONObject = (JSONObject)request.getAttribute("liferay-layout:ren
 
 					request.setAttribute("render_react_editor_layout_data_structure.jsp-layoutStructure", layoutStructure);
 
-					String mainItemId = layoutStructure.getMainItemId();
-
-					LayoutStructureItem layoutStructureItem = layoutStructure.getLayoutStructureItem(mainItemId);
+					LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
 
 					request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 					%>

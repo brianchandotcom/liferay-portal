@@ -56,7 +56,6 @@ import com.liferay.staging.StagingGroupHelper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import javax.portlet.PortletRequest;
@@ -359,22 +358,16 @@ public class ContentPageLayoutEditorDisplayContext
 
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-			String layoutData = layoutPageTemplateStructureRel.getData();
+			String layoutData = LayoutDataConverter.convert(
+				layoutPageTemplateStructureRel.getData());
 
-			if (Objects.equals(
-					contentPageEditorTypeConfiguration.type(), "react")) {
-
-				layoutData = LayoutDataConverter.convert(layoutData);
-
-				LayoutPageTemplateStructureLocalServiceUtil.
-					updateLayoutPageTemplateStructure(
-						themeDisplay.getScopeGroupId(),
-						PortalUtil.getClassNameId(Layout.class.getName()),
-						themeDisplay.getPlid(),
-						layoutPageTemplateStructureRel.
-							getSegmentsExperienceId(),
-						layoutData);
-			}
+			LayoutPageTemplateStructureLocalServiceUtil.
+				updateLayoutPageTemplateStructure(
+					themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(Layout.class.getName()),
+					themeDisplay.getPlid(),
+					layoutPageTemplateStructureRel.getSegmentsExperienceId(),
+					layoutData);
 
 			soyContext.put(
 				"layoutData", JSONFactoryUtil.createJSONObject(layoutData)

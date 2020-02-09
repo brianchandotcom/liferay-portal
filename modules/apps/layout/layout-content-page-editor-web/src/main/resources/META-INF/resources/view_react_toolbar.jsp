@@ -51,6 +51,9 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 							<c:when test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
 								<liferay-ui:message key="save-variant" />
 							</c:when>
+							<c:when test="<%= contentPageEditorDisplayContext.isWorkflowEnabled() %>">
+								<liferay-ui:message key="submit-for-publication" />
+							</c:when>
 							<c:otherwise>
 								<liferay-ui:message key="publish" />
 							</c:otherwise>

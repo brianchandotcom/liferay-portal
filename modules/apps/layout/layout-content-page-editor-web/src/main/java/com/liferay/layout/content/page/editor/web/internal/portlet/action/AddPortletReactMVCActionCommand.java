@@ -155,24 +155,18 @@ public class AddPortletReactMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
-		Layout layout = _layoutLocalService.getLayout(classPK);
-
 		String portletId = PortletIdCodec.decodePortletName(
 			ParamUtil.getString(actionRequest, "portletId"));
 
 		PortletPermissionUtil.check(
-			themeDisplay.getPermissionChecker(), layout.getGroupId(), layout,
-			portletId, ActionKeys.ADD_TO_PAGE);
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			themeDisplay.getLayout(), portletId, ActionKeys.ADD_TO_PAGE);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-
 		String instanceId = _getPortletInstanceId(
-			layout, portletId,
+			themeDisplay.getLayout(), portletId,
 			ParamUtil.getLong(actionRequest, "segmentsExperienceId"));
 
 		JSONObject editableValueJSONObject =
@@ -188,10 +182,10 @@ public class AddPortletReactMVCActionCommand
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-				0, classNameId, classPK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
-				editableValueJSONObject.toString(), StringPool.BLANK, 0, null,
-				serviceContext);
+				0, _portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, editableValueJSONObject.toString(),
+				StringPool.BLANK, 0, null, serviceContext);
 
 		return JSONUtil.put(
 			"fragmentEntryLink",

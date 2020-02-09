@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -123,6 +124,9 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 	private FragmentEntryLink _addFragmentEntryLink(ActionRequest actionRequest)
 		throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String fragmentEntryKey = ParamUtil.getString(
 			actionRequest, "fragmentEntryKey");
@@ -141,9 +145,6 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 			throw new NoSuchEntryException();
 		}
 
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
 		if (fragmentEntry != null) {
 			String contributedRendererKey = null;
 
@@ -153,14 +154,16 @@ public class AddFragmentEntryLinkReactMVCActionCommand
 
 			return _fragmentEntryLinkService.addFragmentEntryLink(
 				serviceContext.getScopeGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), classNameId, classPK,
+				fragmentEntry.getFragmentEntryId(),
+				_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
 				StringPool.BLANK, 0, contributedRendererKey, serviceContext);
 		}
 
 		return _fragmentEntryLinkService.addFragmentEntryLink(
-			serviceContext.getScopeGroupId(), 0, 0, classNameId, classPK,
+			serviceContext.getScopeGroupId(), 0, 0,
+			_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
 			fragmentEntryKey, serviceContext);

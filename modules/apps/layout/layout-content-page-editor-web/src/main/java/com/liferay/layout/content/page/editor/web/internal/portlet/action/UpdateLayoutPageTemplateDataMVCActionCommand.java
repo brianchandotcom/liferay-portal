@@ -24,12 +24,14 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -72,8 +74,6 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
@@ -84,8 +84,9 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 		try {
 			_layoutPageTemplateStructureService.
 				updateLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(), classNameId, classPK,
-					segmentsExperienceId, data);
+					themeDisplay.getScopeGroupId(),
+					_portal.getClassNameId(Layout.class),
+					themeDisplay.getPlid(), segmentsExperienceId, data);
 
 			String fragmentEntryLinkIdsString = ParamUtil.getString(
 				actionRequest, "fragmentEntryLinkIds");
@@ -123,5 +124,8 @@ public class UpdateLayoutPageTemplateDataMVCActionCommand
 	@Reference
 	private LayoutPageTemplateStructureService
 		_layoutPageTemplateStructureService;
+
+	@Reference
+	private Portal _portal;
 
 }

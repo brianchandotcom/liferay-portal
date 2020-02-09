@@ -106,25 +106,6 @@ public class ContentPageLayoutEditorDisplayContext
 	}
 
 	@Override
-	public SoyContext getFragmentsEditorToolbarSoyContext()
-		throws PortalException {
-
-		if (_fragmentsEditorToolbarSoyContext != null) {
-			return _fragmentsEditorToolbarSoyContext;
-		}
-
-		SoyContext soyContext = super.getFragmentsEditorToolbarSoyContext();
-
-		if (_isShowSegmentsExperiences()) {
-			_populateSegmentsExperiencesSoyContext(soyContext);
-		}
-
-		_fragmentsEditorToolbarSoyContext = soyContext;
-
-		return _fragmentsEditorToolbarSoyContext;
-	}
-
-	@Override
 	public boolean isSingleSegmentsExperienceMode() {
 		long segmentsExperienceId = ParamUtil.getLong(
 			PortalUtil.getOriginalServletRequest(httpServletRequest),
@@ -570,7 +551,6 @@ public class ContentPageLayoutEditorDisplayContext
 
 	private SoyContext _editorSoyContext;
 	private String _editSegmentsEntryURL;
-	private SoyContext _fragmentsEditorToolbarSoyContext;
 	private Boolean _lockedSegmentsExperience;
 	private Long _segmentsEntryId;
 	private Long _segmentsExperienceId;

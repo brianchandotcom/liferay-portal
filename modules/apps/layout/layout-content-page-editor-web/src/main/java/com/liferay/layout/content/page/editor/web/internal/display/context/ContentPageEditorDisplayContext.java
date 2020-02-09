@@ -567,10 +567,7 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"widgets", _getWidgetsSoyContexts()
 		).put(
-			"workflowEnabled",
-			WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
-				_publishedLayout.getCompanyId(), _publishedLayout.getGroupId(),
-				Layout.class.getName())
+			"workflowEnabled", isWorkflowEnabled()
 		);
 
 		_editorSoyContext = soyContext;
@@ -644,6 +641,12 @@ public class ContentPageEditorDisplayContext {
 
 	public boolean isSingleSegmentsExperienceMode() {
 		return false;
+	}
+
+	public boolean isWorkflowEnabled() {
+		return WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
+			_publishedLayout.getCompanyId(), _publishedLayout.getGroupId(),
+			Layout.class.getName());
 	}
 
 	protected String getFragmentEntryActionURL(String action) {

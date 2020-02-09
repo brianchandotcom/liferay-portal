@@ -149,7 +149,7 @@ public class SQLServerDB extends BaseDB {
 
 	@Override
 	protected String getServerName() {
-		return "sql-server";
+		return "sqlserver";
 	}
 
 	@Override

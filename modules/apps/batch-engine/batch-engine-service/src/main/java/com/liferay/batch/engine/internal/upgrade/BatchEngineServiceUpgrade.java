@@ -15,6 +15,7 @@
 package com.liferay.batch.engine.internal.upgrade;
 
 import com.liferay.batch.engine.internal.upgrade.v_4_0_0.UpgradeVersion;
+import com.liferay.batch.engine.internal.upgrade.v_4_0_1.UpgradeClassName;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -30,6 +31,7 @@ public class BatchEngineServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register("3.0.0", "4.0.0", new UpgradeVersion());
+		registry.register("4.0.0", "4.0.1", new UpgradeClassName());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)

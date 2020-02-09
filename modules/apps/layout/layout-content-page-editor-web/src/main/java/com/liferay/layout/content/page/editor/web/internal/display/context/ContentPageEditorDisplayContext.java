@@ -573,48 +573,6 @@ public class ContentPageEditorDisplayContext {
 		return contentPageEditorTypeConfiguration.type();
 	}
 
-	public SoyContext getFragmentsEditorToolbarSoyContext()
-		throws PortalException {
-
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-		soyContext.put(
-			"availableLanguages", _getAvailableLanguagesSoyContext()
-		).put(
-			"classPK", themeDisplay.getPlid()
-		).put(
-			"defaultLanguageId", themeDisplay.getLanguageId()
-		);
-
-		Layout draftLayout = themeDisplay.getLayout();
-
-		Layout layout = _getPublishedLayout();
-
-		soyContext.put(
-			"draft", draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT
-		).put(
-			"lastSaveDate", StringPool.BLANK
-		).put(
-			"masterUsed", _isMasterUsed()
-		).put(
-			"pageType", String.valueOf(_getPageType())
-		).put(
-			"pending", layout.getStatus() == WorkflowConstants.STATUS_PENDING
-		).put(
-			"portletNamespace", _renderResponse.getNamespace()
-		).put(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
-		).put(
-			"workflowEnabled",
-			WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
-				layout.getCompanyId(), layout.getGroupId(),
-				Layout.class.getName())
-		);
-
-		return soyContext;
-	}
-
 	public String getPortletNamespace() {
 		return _renderResponse.getNamespace();
 	}

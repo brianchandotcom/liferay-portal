@@ -112,20 +112,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		return _editorSoyContext;
 	}
 
-	@Override
-	public SoyContext getFragmentsEditorToolbarSoyContext()
-		throws PortalException {
-
-		if (_fragmentsEditorToolbarSoyContext != null) {
-			return _fragmentsEditorToolbarSoyContext;
-		}
-
-		_fragmentsEditorToolbarSoyContext =
-			super.getFragmentsEditorToolbarSoyContext();
-
-		return _fragmentsEditorToolbarSoyContext;
-	}
-
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry() {
 		if (_layoutPageTemplateEntry != null) {
 			return _layoutPageTemplateEntry;
@@ -226,7 +212,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	}
 
 	private SoyContext _editorSoyContext;
-	private SoyContext _fragmentsEditorToolbarSoyContext;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final boolean _pageIsDisplayPage;
 

@@ -15,7 +15,6 @@
 package com.liferay.portal.tools;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -97,6 +96,18 @@ public class DBBuilder {
 		_buildCreateFile(sqlDir);
 	}
 
+	private void _appendFile(
+			StringBundler sb, String sqlDir, String pathPrefix, DBType dbType)
+		throws IOException {
+
+		String fileName = StringBundler.concat(
+			sqlDir, pathPrefix, dbType, ".sql");
+
+		if (FileUtil.exists(fileName)) {
+			sb.append(FileUtil.read(fileName));
+		}
+	}
+
 	private void _buildCreateFile(String sqlDir) throws IOException {
 		for (DBType dbType : _dbTypes) {
 			if (dbType == DBType.HYPERSONIC) {
@@ -124,17 +135,16 @@ public class DBBuilder {
 					tablesPrefix = "/tables/tables-";
 				}
 
-				sb.append(_readFile(sqlDir, tablesPrefix, db.getDBType()));
+				_appendFile(sb, sqlDir, tablesPrefix, db.getDBType());
 
 				sb.append("\n\n");
 
-				sb.append(
-					_readFile(sqlDir, "/indexes/indexes-", db.getDBType()));
+				_appendFile(sb, sqlDir, "/indexes/indexes-", db.getDBType());
 
 				sb.append("\n\n");
 
-				sb.append(
-					_readFile(sqlDir, "/sequences/sequences-", db.getDBType()));
+				_appendFile(
+					sb, sqlDir, "/sequences/sequences-", db.getDBType());
 
 				sb.append("\n");
 
@@ -190,19 +200,6 @@ public class DBBuilder {
 				db.buildSQLFile(sqlDir, fileName);
 			}
 		}
-	}
-
-	private String _readFile(String sqlDir, String pathPrefix, DBType dbType)
-		throws IOException {
-
-		String fileName = StringBundler.concat(
-			sqlDir, pathPrefix, dbType, ".sql");
-
-		if (FileUtil.exists(fileName)) {
-			return FileUtil.read(fileName);
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private final String _databaseName;

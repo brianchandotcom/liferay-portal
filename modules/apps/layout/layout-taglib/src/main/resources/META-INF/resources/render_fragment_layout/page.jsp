@@ -37,14 +37,14 @@ JSONObject dataJSONObject = (JSONObject)request.getAttribute("liferay-layout:ren
 			<%
 			LayoutStructure layoutStructure = LayoutStructure.of(dataJSONObject.toString());
 
-			request.setAttribute("render_react_editor_layout_data_structure.jsp-layoutStructure", layoutStructure);
+			request.setAttribute("render_layout_data_structure.jsp-layoutStructure", layoutStructure);
 
 			LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
 
-			request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 			%>
 
-			<liferay-util:include page="/render_fragment_layout/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
 
 		<%
 		}

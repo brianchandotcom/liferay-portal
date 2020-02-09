@@ -24,7 +24,6 @@ page import="com.liferay.fragment.renderer.FragmentRendererController" %><%@
 page import="com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateStructure" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil" %><%@
-page import="com.liferay.layout.page.template.util.LayoutDataConverter" %><%@
 page import="com.liferay.layout.taglib.internal.display.context.RenderFragmentLayoutDisplayContext" %><%@
 page import="com.liferay.layout.util.structure.ColumnLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.ContainerLayoutStructureItem" %><%@

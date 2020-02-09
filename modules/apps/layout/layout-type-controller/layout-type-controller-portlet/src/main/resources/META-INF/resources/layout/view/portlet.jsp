@@ -57,32 +57,17 @@ HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttri
 		request.setAttribute("render_layout_data_structure.jsp-portletLayoutDisplayContext", portletLayoutDisplayContext);
 
 		JSONObject dataJSONObject = portletLayoutDisplayContext.getDataJSONObject();
+
+		LayoutStructure layoutStructure = LayoutStructure.of(dataJSONObject.toString());
+
+		request.setAttribute("render_react_editor_layout_data_structure.jsp-layoutStructure", layoutStructure);
+
+		LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
+
+		request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 		%>
 
-		<c:choose>
-			<c:when test="<%= LayoutDataConverter.isLatestVersion(dataJSONObject) %>">
-
-				<%
-				LayoutStructure layoutStructure = LayoutStructure.of(dataJSONObject.toString());
-
-				request.setAttribute("render_react_editor_layout_data_structure.jsp-layoutStructure", layoutStructure);
-
-				LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
-
-				request.setAttribute("render_react_editor_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-				%>
-
-				<liferay-util:include page="/layout/view/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:otherwise>
-
-				<%
-				request.setAttribute("render_layout_data_structure.jsp-dataJSONObject", dataJSONObject);
-				%>
-
-				<liferay-util:include page="/layout/view/render_layout_data_structure.jsp" servletContext="<%= application %>" />
-			</c:otherwise>
-		</c:choose>
+		<liferay-util:include page="/layout/view/render_react_editor_layout_data_structure.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>
 

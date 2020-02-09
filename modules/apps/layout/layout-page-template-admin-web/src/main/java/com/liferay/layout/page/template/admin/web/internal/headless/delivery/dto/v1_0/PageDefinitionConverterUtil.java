@@ -25,7 +25,6 @@ import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
 import com.liferay.headless.delivery.dto.v1_0.SectionDefinition;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
-import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
@@ -249,10 +248,8 @@ public class PageDefinitionConverterUtil {
 					layout.getGroupId(),
 					PortalUtil.getClassNameId(Layout.class), layout.getPlid());
 
-		String layoutData = LayoutDataConverter.convert(
+		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(0L));
-
-		LayoutStructure layoutStructure = LayoutStructure.of(layoutData);
 
 		LayoutStructureItem mainLayoutStructureItem =
 			layoutStructure.getLayoutStructureItem(

@@ -21,12 +21,9 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
-import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -38,7 +35,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -117,15 +113,8 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 			return;
 		}
 
-		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
-
-		if (LayoutDataConverter.isLatestVersion(dataJSONObject)) {
-			dataJSONObject = _processLatestDataJSONObject(
-				data, portletDataContext);
-		}
-		else {
-			_processDataJSONObject(dataJSONObject, portletDataContext);
-		}
+		JSONObject dataJSONObject = _processDataJSONObject(
+			data, portletDataContext);
 
 		existingLayoutPageTemplateStructureRel.setData(
 			dataJSONObject.toString());
@@ -135,65 +124,7 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 				existingLayoutPageTemplateStructureRel);
 	}
 
-	private void _processDataJSONObject(
-		JSONObject dataJSONObject, PortletDataContext portletDataContext) {
-
-		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
-
-		if (structureJSONArray == null) {
-			return;
-		}
-
-		Map<Long, Long> fragmentEntryLinkIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				FragmentEntryLink.class);
-
-		for (int i = 0; i < structureJSONArray.length(); i++) {
-			JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
-
-			JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
-
-			for (int j = 0; j < columnsJSONArray.length(); j++) {
-				JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
-
-				JSONArray fragmentEntryLinkIdsJSONArray =
-					columnJSONObject.getJSONArray("fragmentEntryLinkIds");
-
-				JSONArray newFragmentEntryLinkIdsJSONArray =
-					JSONFactoryUtil.createJSONArray();
-
-				for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length();
-					 k++) {
-
-					if (Objects.equals(
-							fragmentEntryLinkIdsJSONArray.getString(k),
-							"drop-zone")) {
-
-						newFragmentEntryLinkIdsJSONArray.put(
-							fragmentEntryLinkIdsJSONArray.getString(k));
-
-						continue;
-					}
-
-					long fragmentEntryLinkId = MapUtil.getLong(
-						fragmentEntryLinkIds,
-						fragmentEntryLinkIdsJSONArray.getLong(k),
-						fragmentEntryLinkIdsJSONArray.getLong(k));
-
-					if (fragmentEntryLinkId <= 0) {
-						continue;
-					}
-
-					newFragmentEntryLinkIdsJSONArray.put(fragmentEntryLinkId);
-				}
-
-				columnJSONObject.put(
-					"fragmentEntryLinkIds", newFragmentEntryLinkIdsJSONArray);
-			}
-		}
-	}
-
-	private JSONObject _processLatestDataJSONObject(
+	private JSONObject _processDataJSONObject(
 		String data, PortletDataContext portletDataContext) {
 
 		LayoutStructure layoutStructure = LayoutStructure.of(data);

@@ -53,6 +53,21 @@
 			<arg value="db.sql.dir=${db.sql.dir}" />
 		</java>
 
+		<move
+			todir="${db.sql.dir}"
+		>
+			<fileset
+				dir="${db.sql.dir}"
+			>
+				<include name="**/*-sqlserver.sql" />
+			</fileset>
+			<mapper
+				from="*-sqlserver.sql"
+				to="*-sql-server.sql"
+				type="glob"
+			/>
+		</move>
+
 		<echo>${db.builder.output}</echo>
 	</target>
 

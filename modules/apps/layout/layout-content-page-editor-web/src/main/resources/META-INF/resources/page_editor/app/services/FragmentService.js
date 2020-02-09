@@ -81,15 +81,13 @@ export default {
 		position,
 		segmentsExperienceId
 	}) {
-		const {addFragmentEntryLinkURL, classNameId, classPK} = config;
+		const {addFragmentEntryLinkURL} = config;
 
 		return serviceFetch(
 			config,
 			addFragmentEntryLinkURL,
 			{
 				body: {
-					classNameId,
-					classPK,
 					fragmentEntryKey,
 					groupId,
 					parentItemId,

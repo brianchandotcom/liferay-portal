@@ -335,8 +335,6 @@ function updatePageEditorLayoutData(layoutData, segmentsExperienceId) {
 	const state = getState();
 
 	return _fetch(state.updateLayoutPageTemplateDataURL, {
-		classNameId: state.classNameId,
-		classPK: state.classPK,
 		data: JSON.stringify(layoutData),
 		segmentsExperienceId
 	});

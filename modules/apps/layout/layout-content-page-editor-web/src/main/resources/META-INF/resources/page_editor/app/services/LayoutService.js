@@ -155,15 +155,13 @@ export default {
 		onNetworkStatus,
 		segmentsExperienceId
 	}) {
-		const {classNameId, classPK, updateLayoutPageTemplateDataURL} = config;
+		const {updateLayoutPageTemplateDataURL} = config;
 
 		return serviceFetch(
 			config,
 			updateLayoutPageTemplateDataURL,
 			{
 				body: {
-					classNameId,
-					classPK,
 					data: JSON.stringify(layoutData),
 					segmentsExperienceId
 				}

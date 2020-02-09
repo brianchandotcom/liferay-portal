@@ -34,15 +34,13 @@ export default {
 		position,
 		segmentsExperienceId
 	}) {
-		const {addPortletURL, classNameId, classPK} = config;
+		const {addPortletURL} = config;
 
 		return serviceFetch(
 			config,
 			addPortletURL,
 			{
 				body: {
-					classNameId,
-					classPK,
 					parentItemId,
 					portletId,
 					position,

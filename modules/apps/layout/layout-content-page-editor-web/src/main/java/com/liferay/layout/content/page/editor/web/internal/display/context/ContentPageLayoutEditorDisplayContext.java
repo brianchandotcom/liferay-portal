@@ -20,7 +20,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
-import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -358,19 +357,10 @@ public class ContentPageLayoutEditorDisplayContext
 
 			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-			String layoutData = LayoutDataConverter.convert(
-				layoutPageTemplateStructureRel.getData());
-
-			LayoutPageTemplateStructureLocalServiceUtil.
-				updateLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(),
-					PortalUtil.getClassNameId(Layout.class.getName()),
-					themeDisplay.getPlid(),
-					layoutPageTemplateStructureRel.getSegmentsExperienceId(),
-					layoutData);
-
 			soyContext.put(
-				"layoutData", JSONFactoryUtil.createJSONObject(layoutData)
+				"layoutData",
+				JSONFactoryUtil.createJSONObject(
+					layoutPageTemplateStructureRel.getData())
 			).put(
 				"segmentsExperienceId",
 				layoutPageTemplateStructureRel.getSegmentsExperienceId()

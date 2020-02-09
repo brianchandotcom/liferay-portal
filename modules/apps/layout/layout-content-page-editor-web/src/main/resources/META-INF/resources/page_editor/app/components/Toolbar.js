@@ -51,10 +51,12 @@ function ToolbarBody() {
 		discardDraftRedirectURL,
 		discardDraftURL,
 		pageType,
+		pending,
 		publishURL,
 		redirectURL,
 		singleSegmentsExperienceMode,
-		toolbarPlugins
+		toolbarPlugins,
+		workflowEnabled
 	} = config;
 
 	const loading = useRef(() => {
@@ -141,7 +143,17 @@ function ToolbarBody() {
 		}
 	};
 
-	const isMasterLayout = pageType === PAGE_TYPES.master;
+	let buttonLabel = Liferay.Language.get('publish');
+
+	if (pageType === PAGE_TYPES.master) {
+		buttonLabel = Liferay.Language.get('publish-master');
+	}
+	else if (singleSegmentsExperienceMode) {
+		buttonLabel = Liferay.Language.get('save-variant');
+	}
+	else if (workflowEnabled) {
+		buttonLabel = Liferay.Language.get('submit-for-publication');
+	}
 
 	return (
 		<div
@@ -236,16 +248,13 @@ function ToolbarBody() {
 						/>
 
 						<ClayButton
+							disabled={pending}
 							displayType="primary"
 							onClick={handleSubmit}
 							small
 							type="submit"
 						>
-							{isMasterLayout
-								? Liferay.Language.get('publish-master')
-								: singleSegmentsExperienceMode
-								? Liferay.Language.get('save-variant')
-								: Liferay.Language.get('publish')}
+							{buttonLabel}
 						</ClayButton>
 					</form>
 				</li>

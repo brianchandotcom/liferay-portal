@@ -46,7 +46,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
-import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorTypeConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
@@ -166,9 +165,6 @@ public class ContentPageEditorDisplayContext {
 		_fragmentRendererController = fragmentRendererController;
 		_portletRequest = portletRequest;
 
-		contentPageEditorTypeConfiguration =
-			(ContentPageEditorTypeConfiguration)httpServletRequest.getAttribute(
-				ContentPageEditorTypeConfiguration.class.getName());
 		infoDisplayContributorTracker =
 			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
@@ -566,10 +562,6 @@ public class ContentPageEditorDisplayContext {
 		return _editorSoyContext;
 	}
 
-	public String getEditorType() {
-		return contentPageEditorTypeConfiguration.type();
-	}
-
 	public SoyContext getFragmentsEditorToolbarSoyContext()
 		throws PortalException {
 
@@ -723,8 +715,6 @@ public class ContentPageEditorDisplayContext {
 		return _sidebarPanelSoyContexts;
 	}
 
-	protected final ContentPageEditorTypeConfiguration
-		contentPageEditorTypeConfiguration;
 	protected final HttpServletRequest httpServletRequest;
 	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
 	protected final ThemeDisplay themeDisplay;
@@ -1428,10 +1418,7 @@ public class ContentPageEditorDisplayContext {
 		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
 			layoutData);
 
-		if (Objects.equals(
-				contentPageEditorTypeConfiguration.type(), "react") &&
-			!LayoutDataConverter.isLatestVersion(layoutDataJSONObject)) {
-
+		if (!LayoutDataConverter.isLatestVersion(layoutDataJSONObject)) {
 			layoutData = LayoutDataConverter.convert(layoutData);
 
 			LayoutPageTemplateStructureLocalServiceUtil.
@@ -1540,10 +1527,7 @@ public class ContentPageEditorDisplayContext {
 			JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
 				layoutData);
 
-			if (Objects.equals(
-					contentPageEditorTypeConfiguration.type(), "react") &&
-				!LayoutDataConverter.isLatestVersion(layoutDataJSONObject)) {
-
+			if (!LayoutDataConverter.isLatestVersion(layoutDataJSONObject)) {
 				layoutData = LayoutDataConverter.convert(layoutData);
 
 				LayoutPageTemplateStructureLocalServiceUtil.

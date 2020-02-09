@@ -16,11 +16,9 @@ package com.liferay.layout.content.page.editor.web.internal.portlet;
 
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorTypeConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageEditorDisplayContext;
 import com.liferay.layout.content.page.editor.web.internal.display.context.ContentPageEditorDisplayContextProvider;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -34,8 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.Map;
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -44,16 +40,13 @@ import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorTypeConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -74,14 +67,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ContentPageEditorPortlet extends MVCPortlet {
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_contentPageEditorTypeConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ContentPageEditorTypeConfiguration.class, properties);
-	}
-
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -90,9 +75,6 @@ public class ContentPageEditorPortlet extends MVCPortlet {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		httpServletRequest.setAttribute(
-			ContentPageEditorTypeConfiguration.class.getName(),
-			_contentPageEditorTypeConfiguration);
 		httpServletRequest.setAttribute(
 			FragmentEntryConfigurationParser.class.getName(),
 			_fragmentEntryConfigurationParser);
@@ -157,9 +139,6 @@ public class ContentPageEditorPortlet extends MVCPortlet {
 	@Reference
 	private ContentPageEditorDisplayContextProvider
 		_contentPageEditorDisplayContextProvider;
-
-	private volatile ContentPageEditorTypeConfiguration
-		_contentPageEditorTypeConfiguration;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

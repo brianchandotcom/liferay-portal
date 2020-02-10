@@ -292,12 +292,21 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 					);
 					const editableRef = React.createRef();
 					const editableType = editableElement.getAttribute('type');
+					const editableValue = selectEditableValue(
+						state,
+						fragmentEntryLinkId,
+						editableId,
+						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+					);
 
 					editableRef.current = editableElement;
 
 					return (
 						<FloatingToolbar
-							buttons={getFloatingToolbarButtons(editableType)}
+							buttons={getFloatingToolbarButtons(
+								editableType,
+								editableValue
+							)}
 							item={{
 								editableId,
 								editableType,
@@ -338,21 +347,30 @@ const editableIsMappedToInfoItem = editableValue =>
 	editableValue.classPK &&
 	editableValue.fieldId;
 
-const getFloatingToolbarButtons = editableType => {
+const getFloatingToolbarButtons = (editableType, editableValue) => {
 	const showLinkButton =
 		editableType == EDITABLE_TYPES.text ||
 		editableType == EDITABLE_TYPES.image ||
 		editableType == EDITABLE_TYPES.link;
 
-	const buttons = [
-		EDITABLE_FLOATING_TOOLBAR_BUTTONS.imageProperties,
-		EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit,
-		EDITABLE_FLOATING_TOOLBAR_BUTTONS.map
-	];
+	const buttons = [];
 
 	if (showLinkButton) {
 		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.link);
 	}
+
+	if (
+		editableType === EDITABLE_TYPES.image &&
+		!editableValue.mappedField &&
+		!editableValue.fieldId
+	) {
+		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.imageProperties);
+	}
+	else {
+		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit);
+	}
+
+	buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.map);
 
 	return buttons;
 };

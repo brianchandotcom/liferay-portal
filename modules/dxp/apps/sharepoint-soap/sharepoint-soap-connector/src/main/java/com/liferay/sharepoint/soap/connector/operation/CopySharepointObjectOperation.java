@@ -101,10 +101,10 @@ public final class CopySharepointObjectOperation extends BaseOperation {
 				path, SharepointConnection.ObjectTypeFilter.ALL);
 
 		for (SharepointObject sharepointObject : sharepointObjects) {
-			String sharepointObjectPath = pathHelper.buildPath(
+			String sharepointObjectPath = PathUtil.buildPath(
 				path, sharepointObject.getName());
 
-			String newSharepointObjectPath = pathHelper.buildPath(
+			String newSharepointObjectPath = PathUtil.buildPath(
 				newPath, sharepointObject.getName());
 
 			if (sharepointObject.isFile()) {
@@ -118,10 +118,9 @@ public final class CopySharepointObjectOperation extends BaseOperation {
 
 	private void _createFolder(String folderPath) {
 		try {
-			String parentFolderPath = pathHelper.getParentFolderPath(
-				folderPath);
+			String parentFolderPath = PathUtil.getParentFolderPath(folderPath);
 
-			String folderName = pathHelper.getName(folderPath);
+			String folderName = PathUtil.getName(folderPath);
 
 			_addFolderOperation.execute(parentFolderPath, folderName);
 		}

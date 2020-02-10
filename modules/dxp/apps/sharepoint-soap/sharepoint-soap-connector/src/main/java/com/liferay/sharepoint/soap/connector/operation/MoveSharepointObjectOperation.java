@@ -48,9 +48,9 @@ public final class MoveSharepointObjectOperation extends BaseOperation {
 			_getSharepointObjectByPathOperation.execute(path);
 
 		if (_isRename(path, newPath)) {
-			String oldExtension = pathHelper.getExtension(path);
+			String oldExtension = PathUtil.getExtension(path);
 
-			String newExtension = pathHelper.getExtension(newPath);
+			String newExtension = PathUtil.getExtension(newPath);
 
 			if (!oldExtension.equals(newExtension)) {
 				throw new SharepointException(
@@ -70,7 +70,7 @@ public final class MoveSharepointObjectOperation extends BaseOperation {
 							String.valueOf(sharepointObject.getURL())),
 						new BatchField(
 							"BaseName",
-							pathHelper.getNameWithoutExtension(newPath)))));
+							PathUtil.getNameWithoutExtension(newPath)))));
 		}
 		else {
 			_copySharepointObjectOperation.execute(path, newPath);
@@ -87,8 +87,8 @@ public final class MoveSharepointObjectOperation extends BaseOperation {
 	}
 
 	private boolean _isRename(String path, String newPath) {
-		String parentFolderPath = pathHelper.getParentFolderPath(path);
-		String newParentFolderPath = pathHelper.getParentFolderPath(newPath);
+		String parentFolderPath = PathUtil.getParentFolderPath(path);
+		String newParentFolderPath = PathUtil.getParentFolderPath(newPath);
 
 		return parentFolderPath.equals(newParentFolderPath);
 	}

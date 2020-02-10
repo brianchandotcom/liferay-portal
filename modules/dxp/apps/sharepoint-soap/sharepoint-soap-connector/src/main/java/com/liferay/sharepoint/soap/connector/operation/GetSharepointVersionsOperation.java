@@ -43,7 +43,7 @@ import org.w3c.dom.NodeList;
 /**
  * @author Iván Zaera
  */
-public class GetSharepointVersionsOperation extends BaseOperation {
+public final class GetSharepointVersionsOperation extends BaseOperation {
 
 	@Override
 	public void afterPropertiesSet() {

@@ -19,9 +19,9 @@ import com.liferay.petra.string.StringPool;
 /**
  * @author Iván Zaera
  */
-public class PathHelper {
+public final class PathUtil {
 
-	public String buildPath(String folderPath, String name) {
+	public static String buildPath(String folderPath, String name) {
 		validatePath(folderPath);
 
 		validateName(name);
@@ -33,7 +33,7 @@ public class PathHelper {
 		return folderPath + StringPool.SLASH + name;
 	}
 
-	public String getExtension(String path) {
+	public static String getExtension(String path) {
 		int pos = path.lastIndexOf(StringPool.PERIOD);
 
 		if (pos == -1) {
@@ -43,7 +43,7 @@ public class PathHelper {
 		return path.substring(pos + 1);
 	}
 
-	public String getName(String path) {
+	public static String getName(String path) {
 		validatePath(path);
 
 		if (path.equals(StringPool.SLASH)) {
@@ -55,7 +55,7 @@ public class PathHelper {
 		return path.substring(pos + 1);
 	}
 
-	public String getNameWithoutExtension(String path) {
+	public static String getNameWithoutExtension(String path) {
 		String name = getName(path);
 
 		int pos = name.lastIndexOf(StringPool.PERIOD);
@@ -67,7 +67,7 @@ public class PathHelper {
 		return name.substring(0, pos);
 	}
 
-	public String getParentFolderPath(String path) {
+	public static String getParentFolderPath(String path) {
 		validatePath(path);
 
 		int pos = path.lastIndexOf(StringPool.SLASH);
@@ -79,14 +79,14 @@ public class PathHelper {
 		return path.substring(0, pos);
 	}
 
-	public void validateName(String name) {
+	public static void validateName(String name) {
 		if ((name == null) || name.contains(StringPool.SLASH)) {
 			throw new IllegalArgumentException(
 				"Invalid file or folder name " + name);
 		}
 	}
 
-	public void validatePath(String path) {
+	public static void validatePath(String path) {
 		if ((path == null) ||
 			(!path.equals(StringPool.SLASH) &&
 			 (!path.startsWith(StringPool.SLASH) ||

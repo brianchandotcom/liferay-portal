@@ -66,7 +66,7 @@ public abstract class BaseOperation implements Operation {
 	}
 
 	public URL toURL(String path) {
-		pathHelper.validatePath(path);
+		PathUtil.validatePath(path);
 
 		URL serviceURL = sharepointConnectionInfo.getServiceURL();
 
@@ -90,7 +90,7 @@ public abstract class BaseOperation implements Operation {
 	}
 
 	protected String toFullPath(String path) {
-		pathHelper.validatePath(path);
+		PathUtil.validatePath(path);
 
 		StringBundler sb = new StringBundler(4);
 
@@ -105,7 +105,6 @@ public abstract class BaseOperation implements Operation {
 		return sb.toString();
 	}
 
-	protected static PathHelper pathHelper = new PathHelper();
 	protected static URLHelper urlHelper = new URLHelper();
 	protected static XMLHelper xmlHelper = new XMLHelper();
 

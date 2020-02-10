@@ -34,7 +34,7 @@ import com.liferay.sharepoint.soap.connector.operation.GetSharepointObjectsByQue
 import com.liferay.sharepoint.soap.connector.operation.GetSharepointVersionsOperation;
 import com.liferay.sharepoint.soap.connector.operation.MoveSharepointObjectOperation;
 import com.liferay.sharepoint.soap.connector.operation.Operation;
-import com.liferay.sharepoint.soap.connector.operation.PathHelper;
+import com.liferay.sharepoint.soap.connector.operation.PathUtil;
 import com.liferay.sharepoint.soap.connector.operation.URLHelper;
 import com.liferay.sharepoint.soap.connector.schema.query.Query;
 import com.liferay.sharepoint.soap.connector.schema.query.QueryOptionsList;
@@ -96,7 +96,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 			InputStream inputStream)
 		throws SharepointException {
 
-		String filePath = _pathHelper.buildPath(folderPath, fileName);
+		String filePath = PathUtil.buildPath(folderPath, fileName);
 
 		changeLog = GetterUtil.getString(changeLog);
 
@@ -107,9 +107,9 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	public void addFolder(String folderPath, String folderName)
 		throws SharepointException {
 
-		_pathHelper.validatePath(folderPath);
+		PathUtil.validatePath(folderPath);
 
-		_pathHelper.validateName(folderName);
+		PathUtil.validateName(folderName);
 
 		_addFolderOperation.execute(folderPath, folderName);
 	}
@@ -118,7 +118,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	public boolean cancelCheckOutFile(String filePath)
 		throws SharepointException {
 
-		_pathHelper.validatePath(filePath);
+		PathUtil.validatePath(filePath);
 
 		return _cancelCheckOutFileOperation.execute(filePath);
 	}
@@ -128,14 +128,14 @@ public class SharepointConnectionImpl implements SharepointConnection {
 			String filePath, String comment, CheckInType checkInType)
 		throws SharepointException {
 
-		_pathHelper.validatePath(filePath);
+		PathUtil.validatePath(filePath);
 
 		return _checkInFileOperation.execute(filePath, comment, checkInType);
 	}
 
 	@Override
 	public boolean checkOutFile(String filePath) throws SharepointException {
-		_pathHelper.validatePath(filePath);
+		PathUtil.validatePath(filePath);
 
 		return _checkOutFileOperation.execute(filePath);
 	}
@@ -144,16 +144,16 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	public void copySharepointObject(String path, String newPath)
 		throws SharepointException {
 
-		_pathHelper.validatePath(path);
+		PathUtil.validatePath(path);
 
-		_pathHelper.validatePath(newPath);
+		PathUtil.validatePath(newPath);
 
 		_copySharepointObjectOperation.execute(path, newPath);
 	}
 
 	@Override
 	public void deleteSharepointObject(String path) throws SharepointException {
-		_pathHelper.validatePath(path);
+		PathUtil.validatePath(path);
 
 		_deleteSharepointObjectOperation.execute(path);
 	}
@@ -192,7 +192,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	public SharepointObject getSharepointObject(String path)
 		throws SharepointException {
 
-		_pathHelper.validatePath(path);
+		PathUtil.validatePath(path);
 
 		if (path.equals(StringPool.SLASH)) {
 			return _sharepointRootFolder;
@@ -222,7 +222,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 			String folderPath, ObjectTypeFilter objectTypeFilter)
 		throws SharepointException {
 
-		_pathHelper.validatePath(folderPath);
+		PathUtil.validatePath(folderPath);
 
 		return _getSharepointObjectsByFolderOperation.execute(
 			folderPath, objectTypeFilter);
@@ -243,7 +243,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	public List<SharepointVersion> getSharepointVersions(String filePath)
 		throws SharepointException {
 
-		_pathHelper.validatePath(filePath);
+		PathUtil.validatePath(filePath);
 
 		return _getSharepointVersionsOperation.execute(filePath);
 	}
@@ -265,9 +265,9 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	public void moveSharepointObject(String path, String newPath)
 		throws SharepointException {
 
-		_pathHelper.validatePath(path);
+		PathUtil.validatePath(path);
 
-		_pathHelper.validatePath(newPath);
+		PathUtil.validatePath(newPath);
 
 		_moveSharepointObjectOperation.execute(path, newPath);
 	}
@@ -276,7 +276,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	public void updateFile(String filePath, InputStream inputStream)
 		throws SharepointException {
 
-		_pathHelper.validatePath(filePath);
+		PathUtil.validatePath(filePath);
 
 		_addOrUpdateFileOperation.execute(filePath, null, inputStream);
 	}
@@ -433,7 +433,6 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		}
 	}
 
-	private static final PathHelper _pathHelper = new PathHelper();
 	private static final URLHelper _urlHelper = new URLHelper();
 
 	private AddFolderOperation _addFolderOperation;

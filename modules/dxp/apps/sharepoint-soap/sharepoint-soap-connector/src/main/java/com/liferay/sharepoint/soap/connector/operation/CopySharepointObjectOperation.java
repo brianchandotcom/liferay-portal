@@ -20,7 +20,7 @@ import com.liferay.sharepoint.soap.connector.SharepointConnection;
 import com.liferay.sharepoint.soap.connector.SharepointException;
 import com.liferay.sharepoint.soap.connector.SharepointObject;
 import com.liferay.sharepoint.soap.connector.SharepointResultException;
-import com.liferay.sharepoint.soap.connector.internal.util.RemoteExceptionUtil;
+import com.liferay.sharepoint.soap.connector.internal.util.RemoteExceptionSharepointExceptionMapper;
 
 import com.microsoft.schemas.sharepoint.soap.CopyErrorCode;
 import com.microsoft.schemas.sharepoint.soap.CopyResult;
@@ -78,7 +78,7 @@ public class CopySharepointObjectOperation extends BaseOperation {
 				new UnsignedIntHolder(), copyResultCollectionHolder);
 		}
 		catch (RemoteException remoteException) {
-			RemoteExceptionUtil.handleRemoteException(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
 
 		CopyResult copyResult = copyResultCollectionHolder.value[0];

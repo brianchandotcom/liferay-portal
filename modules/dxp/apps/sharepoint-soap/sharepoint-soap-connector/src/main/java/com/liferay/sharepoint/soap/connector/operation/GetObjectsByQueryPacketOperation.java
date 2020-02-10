@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.sharepoint.soap.connector.SharepointException;
 import com.liferay.sharepoint.soap.connector.SharepointObject;
 import com.liferay.sharepoint.soap.connector.SharepointResultException;
-import com.liferay.sharepoint.soap.connector.internal.util.RemoteExceptionUtil;
+import com.liferay.sharepoint.soap.connector.internal.util.RemoteExceptionSharepointExceptionMapper;
 
 import com.microsoft.webservices.SharePoint.QueryService.QueryServiceSoap;
 
@@ -98,7 +98,7 @@ public class GetObjectsByQueryPacketOperation extends BaseOperation {
 			return sharepointObjects;
 		}
 		catch (RemoteException remoteException) {
-			RemoteExceptionUtil.handleRemoteException(remoteException);
+			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 
 			throw new IllegalStateException();
 		}

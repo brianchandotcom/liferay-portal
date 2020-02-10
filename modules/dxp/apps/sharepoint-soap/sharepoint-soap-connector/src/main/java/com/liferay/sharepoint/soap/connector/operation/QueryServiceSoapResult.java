@@ -44,17 +44,12 @@ public class QueryServiceSoapResult {
 			xmlReader.setContentHandler(_defaultHandler);
 			xmlReader.setErrorHandler(_defaultHandler);
 
-			parse(xmlReader, queryServiceSoapResultString);
+			_parse(xmlReader, queryServiceSoapResultString);
 		}
-		catch (IOException ioException) {
+		catch (IOException | SAXException exception) {
 			throw new SharepointException(
 				"Unable to parse response from the Sharepoint server",
-				ioException);
-		}
-		catch (SAXException saxException) {
-			throw new SharepointException(
-				"Unable to parse response from the Sharepoint server",
-				saxException);
+				exception);
 		}
 	}
 
@@ -92,7 +87,7 @@ public class QueryServiceSoapResult {
 		return false;
 	}
 
-	protected void parse(
+	private void _parse(
 			XMLReader xmlReader, String queryServiceSoapResultString)
 		throws IOException, SAXException {
 

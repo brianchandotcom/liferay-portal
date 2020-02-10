@@ -24,11 +24,9 @@ import org.apache.axis.AxisFault;
 /**
  * @author Adolfo Pérez
  */
-public class RemoteExceptionUtil {
+public class RemoteExceptionSharepointExceptionMapper {
 
-	public static void handleRemoteException(RemoteException remoteException)
-		throws SharepointException {
-
+	public static SharepointException map(RemoteException remoteException) {
 		if (remoteException instanceof AxisFault) {
 			AxisFault axisFault = (AxisFault)remoteException;
 
@@ -39,7 +37,7 @@ public class RemoteExceptionUtil {
 			}
 		}
 
-		throw new SharepointException(
+		return new SharepointException(
 			"Unable to communicate with the Sharepoint server",
 			remoteException);
 	}

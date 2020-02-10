@@ -338,8 +338,10 @@ public class FragmentDefinitionConverterUtil {
 												}
 
 												return Target.create(
-													StringUtil.upperCase(
-														target.substring(1)));
+													StringUtil.
+														upperCaseFirstLetter(
+															target.substring(
+																1)));
 											});
 									}
 								};

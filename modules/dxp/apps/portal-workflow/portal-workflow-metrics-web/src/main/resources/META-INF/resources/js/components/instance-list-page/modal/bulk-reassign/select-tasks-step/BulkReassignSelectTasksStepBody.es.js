@@ -48,7 +48,7 @@ const Body = ({items, pagination, setRetry, totalCount}) => {
 const EmptyView = () => {
 	return (
 		<EmptyState
-			className="border-0 pb-6 pt-6 sheet"
+			className="border-0"
 			message={Liferay.Language.get('no-results-were-found')}
 			messageClassName="small"
 			type="not-found"

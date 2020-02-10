@@ -9,16 +9,25 @@
  * distribution rights of the Software.
  */
 
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import React, {useCallback, useContext, useEffect, useMemo} from 'react';
 
-import PromisesResolver from '../../../../../shared/components/promises-resolver/PromisesResolver.es';
+import ResultsBar from '../../../../../shared/components/results-bar/ResultsBar.es';
 import ToolbarWithSelection from '../../../../../shared/components/toolbar-with-selection/ToolbarWithSelection.es';
+import AssigneeFilter from '../../../../filter/AssigneeFilter.es';
+import ProcessStepFilter from '../../../../filter/ProcessStepFilter.es';
 import {ModalContext} from '../../ModalContext.es';
 
-const Header = ({items, totalCount}) => {
+const Header = ({
+	filterKeys,
+	items = [],
+	prefixKey,
+	selectedFilters,
+	totalCount = 0
+}) => {
 	const {bulkModal, setBulkModal} = useContext(ModalContext);
 
-	const {selectAll, selectedTasks} = bulkModal;
+	const {processId, selectAll, selectedTasks} = bulkModal;
 
 	const selectedOnPage = useMemo(
 		() =>
@@ -77,7 +86,7 @@ const Header = ({items, totalCount}) => {
 	);
 
 	return (
-		<PromisesResolver.Resolved>
+		<>
 			<ToolbarWithSelection
 				{...checkbox}
 				active={toolbarActive}
@@ -95,8 +104,47 @@ const Header = ({items, totalCount}) => {
 				selectAll={selectAll}
 				selectedCount={selectedTasks.length}
 				totalCount={totalCount}
-			/>
-		</PromisesResolver.Resolved>
+			>
+				{!toolbarActive && (
+					<>
+						<ClayManagementToolbar.Item>
+							<strong className="ml-0 mr-0 navbar-text">
+								{Liferay.Language.get('filter-by')}
+							</strong>
+						</ClayManagementToolbar.Item>
+
+						<ProcessStepFilter
+							options={{withoutRouteParams: true}}
+							prefixKey={prefixKey}
+							processId={processId}
+						/>
+
+						<AssigneeFilter
+							options={{withoutRouteParams: true}}
+							prefixKey={prefixKey}
+							processId={processId}
+						/>
+					</>
+				)}
+			</ToolbarWithSelection>
+
+			{selectedFilters.length > 0 && (
+				<ResultsBar>
+					<ResultsBar.TotalCount totalCount={totalCount} />
+
+					<ResultsBar.FilterItems
+						filters={selectedFilters}
+						withoutRouteParams
+					/>
+
+					<ResultsBar.Clear
+						filterKeys={filterKeys}
+						filters={selectedFilters}
+						withoutRouteParams
+					/>
+				</ResultsBar>
+			)}
+		</>
 	);
 };
 

@@ -15,6 +15,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import React, {useCallback, useContext, useMemo, useState} from 'react';
 
 import {useFetch} from '../../../../shared/hooks/useFetch.es';
+import {useFilter} from '../../../../shared/hooks/useFilter.es';
 import {usePatch} from '../../../../shared/hooks/usePatch.es';
 import {sub} from '../../../../shared/util/lang.es';
 import {InstanceListContext} from '../../store/InstanceListPageStore.es';
@@ -34,6 +35,12 @@ const BulkReassignModal = () => {
 	} = useContext(InstanceListContext);
 
 	const {
+		dispatch,
+		filterState,
+		filterValues: {bulkAssigneeUserIds: userIds, bulkTaskKeys: taskNames}
+	} = useFilter({withoutRouteParams: true});
+
+	const {
 		processId,
 		reassignedTasks,
 		reassigning,
@@ -50,6 +57,7 @@ const BulkReassignModal = () => {
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			setBulkModal({
+				processId,
 				reassignedTasks: [],
 				reassigning: false,
 				selectAll: false,
@@ -57,6 +65,12 @@ const BulkReassignModal = () => {
 				selectedTasks: [],
 				useSameAssignee: false,
 				visible: false
+			});
+
+			dispatch({
+				...filterState,
+				bulkAssigneeUserIds: [],
+				bulkTaskKeys: []
 			});
 
 			setCurrentStep('selectTasks');
@@ -74,11 +88,22 @@ const BulkReassignModal = () => {
 	});
 
 	const params = useMemo(() => {
+		const filterByUser = userIds && userIds.length;
+
+		const assigneeIds = filterByUser
+			? userIds.filter(id => id !== '-1')
+			: undefined;
+
+		const searchByRoles = filterByUser && userIds.includes('-1');
+
 		const params = {
+			assigneeIds,
 			completed: false,
 			page: 1,
 			pageSize: -1,
-			sort: encodeURIComponent('workflowInstanceId:asc')
+			searchByRoles,
+			sort: 'workflowInstanceId:asc',
+			taskNames
 		};
 
 		if (visible) {
@@ -94,7 +119,7 @@ const BulkReassignModal = () => {
 
 		return params;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [visible]);
+	}, [taskNames, userIds, visible]);
 
 	const {fetchData} = useFetch({
 		admin: true,

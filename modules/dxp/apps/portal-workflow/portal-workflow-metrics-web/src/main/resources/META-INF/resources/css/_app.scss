@@ -92,6 +92,11 @@
 		height: 35rem;
 		overflow: auto;
 	}
+
+	.modal-body {
+		margin-top: 1.5rem;
+		padding: 0 1.5rem;
+	}
 }
 
 .modal-open .modal {

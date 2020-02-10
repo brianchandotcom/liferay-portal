@@ -13,6 +13,7 @@ import React, {useContext, useMemo, useState} from 'react';
 
 import PromisesResolver from '../../../../../shared/components/promises-resolver/PromisesResolver.es';
 import {useFetch} from '../../../../../shared/hooks/useFetch.es';
+import {useFilter} from '../../../../../shared/hooks/useFilter.es';
 import {usePaginationState} from '../../../../../shared/hooks/usePaginationState.es';
 import {InstanceListContext} from '../../../store/InstanceListPageStore.es';
 import {ModalContext} from '../../ModalContext.es';
@@ -23,17 +24,37 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 	const {selectAll, selectedItems} = useContext(InstanceListContext);
 	const {singleModal} = useContext(ModalContext);
 
+	const filterKeys = ['processStep', 'assignee'];
+	const prefixKey = 'bulk';
+	const prefixKeys = [prefixKey];
+	const {
+		filterValues: {bulkAssigneeUserIds: userIds, bulkTaskKeys: taskNames},
+		prefixedKeys,
+		selectedFilters
+	} = useFilter({filterKeys, prefixKeys, withoutRouteParams: true});
+
 	const [retry, setRetry] = useState(0);
 	const {page, pageSize, pagination} = usePaginationState({
 		initialPageSize: 5
 	});
 
 	const params = useMemo(() => {
+		const filterByUser = userIds && userIds.length;
+
+		const assigneeIds = filterByUser
+			? userIds.filter(id => id !== '-1')
+			: undefined;
+
+		const searchByRoles = filterByUser && userIds.includes('-1');
+
 		const params = {
+			assigneeIds,
 			completed: false,
 			page,
 			pageSize,
-			sort: encodeURIComponent('workflowInstanceId:asc')
+			searchByRoles,
+			sort: 'workflowInstanceId:asc',
+			taskNames
 		};
 
 		if (selectAll) {
@@ -47,7 +68,7 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 
 		return params;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [page, pageSize]);
+	}, [page, pageSize, taskNames, userIds]);
 
 	const {data, fetchData} = useFetch({
 		admin: true,
@@ -76,9 +97,12 @@ const BulkReassignSelectTasksStep = ({processId, setErrorToast}) => {
 	return (
 		<div className="fixed-height modal-metrics-content">
 			<PromisesResolver promises={promises}>
-				<PromisesResolver.Resolved>
-					<BulkReassignSelectTasksStep.Header {...data} />
-				</PromisesResolver.Resolved>
+				<BulkReassignSelectTasksStep.Header
+					filterKeys={prefixedKeys}
+					prefixKey={prefixKey}
+					selectedFilters={selectedFilters}
+					{...data}
+				/>
 
 				<BulkReassignSelectTasksStep.Body
 					{...data}

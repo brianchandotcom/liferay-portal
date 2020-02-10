@@ -209,7 +209,6 @@ function <portlet:namespace />openDDMStructureSelector() {
 function <portlet:namespace />saveStructure() {
 	<c:choose>
 		<c:when test="<%= dlEditFileEntryTypeDisplayContext.useDataEngineEditor() %>">
-
 		</c:when>
 		<c:otherwise>
 			document.<portlet:namespace />fm.<portlet:namespace />definition.value = window.<portlet:namespace />formBuilder.getContentValue();

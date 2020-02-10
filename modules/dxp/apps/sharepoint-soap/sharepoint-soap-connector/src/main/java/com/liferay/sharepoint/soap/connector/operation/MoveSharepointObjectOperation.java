@@ -23,8 +23,6 @@ import com.liferay.sharepoint.soap.connector.schema.batch.Batch;
 import com.liferay.sharepoint.soap.connector.schema.batch.BatchField;
 import com.liferay.sharepoint.soap.connector.schema.batch.BatchMethod;
 
-import java.net.URL;
-
 /**
  * @author Iván Zaera
  */
@@ -59,9 +57,6 @@ public class MoveSharepointObjectOperation extends BaseOperation {
 					"Sharepoint does not support changing file extensions");
 			}
 
-			URL url = sharepointObject.getURL();
-			String newName = pathHelper.getNameWithoutExtension(newPath);
-
 			_batchOperation.execute(
 				new Batch(
 					Batch.OnError.RETURN, null,
@@ -70,8 +65,12 @@ public class MoveSharepointObjectOperation extends BaseOperation {
 						BatchMethod.Command.UPDATE,
 						new BatchField(
 							"ID", sharepointObject.getSharepointObjectId()),
-						new BatchField("FileRef", url.toString()),
-						new BatchField("BaseName", newName))));
+						new BatchField(
+							"FileRef",
+							String.valueOf(sharepointObject.getURL())),
+						new BatchField(
+							"BaseName",
+							pathHelper.getNameWithoutExtension(newPath)))));
 		}
 		else {
 			_copySharepointObjectOperation.execute(path, newPath);

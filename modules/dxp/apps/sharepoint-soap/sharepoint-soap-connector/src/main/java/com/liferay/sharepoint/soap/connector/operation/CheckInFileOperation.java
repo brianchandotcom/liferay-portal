@@ -18,8 +18,6 @@ import com.liferay.sharepoint.soap.connector.SharepointConnection;
 import com.liferay.sharepoint.soap.connector.SharepointException;
 import com.liferay.sharepoint.soap.connector.internal.util.RemoteExceptionUtil;
 
-import java.net.URL;
-
 import java.rmi.RemoteException;
 
 /**
@@ -33,13 +31,9 @@ public class CheckInFileOperation extends BaseOperation {
 		throws SharepointException {
 
 		try {
-			URL filePathURL = toURL(filePath);
-
-			String protocolValue = String.valueOf(
-				checkInType.getProtocolValue());
-
 			return listsSoap.checkInFile(
-				filePathURL.toString(), comment, protocolValue);
+				String.valueOf(toURL(filePath)), comment,
+				String.valueOf(checkInType.getProtocolValue()));
 		}
 		catch (RemoteException remoteException) {
 			RemoteExceptionUtil.handleRemoteException(remoteException);

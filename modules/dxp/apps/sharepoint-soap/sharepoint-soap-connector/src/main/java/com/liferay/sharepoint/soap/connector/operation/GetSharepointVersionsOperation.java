@@ -63,11 +63,9 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 					"Unable to find Sharepoint object at " + filePath);
 			}
 
-			String fileFullPath = toFullPath(filePath);
-
 			GetVersionsResponseGetVersionsResult
 				getVersionsResponseGetVersionsResult = versionsSoap.getVersions(
-					fileFullPath);
+					toFullPath(filePath));
 
 			Element getVersionsResponseGetVersionsResultElement =
 				xmlHelper.getElement(getVersionsResponseGetVersionsResult);
@@ -83,19 +81,19 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 		}
 	}
 
-	protected Date getDate(String dateString) {
+	private Date getDate(String dateString) {
 		Calendar calendar = DatatypeConverter.parseDateTime(dateString);
 
 		return calendar.getTime();
 	}
 
-	protected String getSharepointVersionId(
+	private String getSharepointVersionId(
 		long sharepointObjectId, String version) {
 
 		return sharepointObjectId + StringPool.AT + version;
 	}
 
-	protected List<SharepointVersion> getSharepointVersions(
+	private List<SharepointVersion> getSharepointVersions(
 		long sharepointObjectId,
 		Element getVersionsResponseGetVersionsResultElement) {
 
@@ -141,7 +139,7 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 		return sharepointVersions;
 	}
 
-	protected String getVersion(String version) {
+	private String getVersion(String version) {
 		if (version.startsWith(StringPool.AT)) {
 			version = version.substring(1);
 		}

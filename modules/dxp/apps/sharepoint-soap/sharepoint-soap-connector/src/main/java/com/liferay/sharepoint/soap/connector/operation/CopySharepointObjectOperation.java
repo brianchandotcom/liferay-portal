@@ -26,8 +26,6 @@ import com.microsoft.schemas.sharepoint.soap.CopyErrorCode;
 import com.microsoft.schemas.sharepoint.soap.CopyResult;
 import com.microsoft.schemas.sharepoint.soap.holders.CopyResultCollectionHolder;
 
-import java.net.URL;
-
 import java.rmi.RemoteException;
 
 import java.util.List;
@@ -70,15 +68,13 @@ public class CopySharepointObjectOperation extends BaseOperation {
 	protected void copyFile(String path, String newPath)
 		throws SharepointException {
 
-		URL pathURL = toURL(path);
-		URL newPathURL = toURL(newPath);
-
 		CopyResultCollectionHolder copyResultCollectionHolder =
 			new CopyResultCollectionHolder();
 
 		try {
 			copySoap.copyIntoItemsLocal(
-				pathURL.toString(), new String[] {newPathURL.toString()},
+				String.valueOf(toURL(path)),
+				new String[] {String.valueOf(toURL(newPath))},
 				new UnsignedIntHolder(), copyResultCollectionHolder);
 		}
 		catch (RemoteException remoteException) {

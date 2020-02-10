@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -37,6 +38,20 @@ public class SpiraTestCaseFolder {
 
 	public String getName() {
 		return _jsonObject.getString("Name");
+	}
+
+	public String getPath() {
+		String name = getName();
+
+		name = name.replace("/", "\\/");
+
+		if (_parentSpiraTestCaseFolder == null) {
+			return "/" + name;
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			_parentSpiraTestCaseFolder.getPath(), "/",
+			name.replace("/", "\\/"));
 	}
 
 	public JSONObject toJSONObject() {
@@ -76,8 +91,12 @@ public class SpiraTestCaseFolder {
 			HttpRequestMethod.GET, null);
 
 		for (int i = 0; i < responseJSONArray.length(); i++) {
+			JSONObject responseJSONObject = responseJSONArray.getJSONObject(i);
+
+			responseJSONObject.put("ProjectId", spiraProject.getID());
+
 			SpiraTestCaseFolder spiraTestCaseFolder = new SpiraTestCaseFolder(
-				responseJSONArray.getJSONObject(i));
+				responseJSONObject);
 
 			_spiraTestCaseFolders.put(
 				_createSpiraTestCaseFolderKey(
@@ -94,6 +113,34 @@ public class SpiraTestCaseFolder {
 
 	protected SpiraTestCaseFolder(JSONObject jsonObject) {
 		_jsonObject = jsonObject;
+		_spiraProject = SpiraProject.getSpiraProjectById(
+			jsonObject.getInt("ProjectId"));
+
+		SpiraTestCaseFolder parentSpiraTestCaseFolder = null;
+
+		String indentLevel = getIndentLevel();
+
+		if (indentLevel.length() > 3) {
+			String parentIndentLevel = indentLevel.substring(
+				0, indentLevel.length() - 3);
+
+			try {
+				parentSpiraTestCaseFolder =
+					_spiraProject.getSpiraTestCaseFolderByIndentLevel(
+						parentIndentLevel);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
+		_parentSpiraTestCaseFolder = parentSpiraTestCaseFolder;
+
+		_jsonObject.put("Path", getPath());
+	}
+
+	protected String getIndentLevel() {
+		return _jsonObject.getString("IndentLevel");
 	}
 
 	protected boolean matches(SearchParameter... searchParameters) {
@@ -110,5 +157,7 @@ public class SpiraTestCaseFolder {
 		_spiraTestCaseFolders = new HashMap<>();
 
 	private final JSONObject _jsonObject;
+	private final SpiraTestCaseFolder _parentSpiraTestCaseFolder;
+	private final SpiraProject _spiraProject;
 
 }

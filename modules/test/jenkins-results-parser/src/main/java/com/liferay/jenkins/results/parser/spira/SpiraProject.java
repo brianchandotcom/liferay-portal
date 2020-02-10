@@ -101,6 +101,34 @@ public class SpiraProject {
 			this, new SearchParameter("Path", releasePath));
 	}
 
+	public SpiraTestCaseFolder getSpiraTestCaseFolderByPath(
+			String testCaseFolderPath)
+		throws IOException {
+
+		List<SpiraTestCaseFolder> spiraTestCaseFolders =
+			getSpiraTestCaseFoldersByPath(testCaseFolderPath);
+
+		if (spiraTestCaseFolders.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test case folder path " + testCaseFolderPath);
+		}
+
+		if (spiraTestCaseFolders.isEmpty()) {
+			throw new RuntimeException(
+				"Missing test case folder path " + testCaseFolderPath);
+		}
+
+		return spiraTestCaseFolders.get(0);
+	}
+
+	public List<SpiraTestCaseFolder> getSpiraTestCaseFoldersByPath(
+			String testCaseFolderPath)
+		throws IOException {
+
+		return SpiraTestCaseFolder.getSpiraTestCaseFolders(
+			this, new SearchParameter("Path", testCaseFolderPath));
+	}
+
 	public JSONObject toJSONObject() {
 		return _jsonObject;
 	}
@@ -129,6 +157,25 @@ public class SpiraProject {
 		}
 
 		return spiraReleases.get(0);
+	}
+
+	protected SpiraTestCaseFolder getSpiraTestCaseFolderByIndentLevel(
+			String indentLevel)
+		throws IOException {
+
+		List<SpiraTestCaseFolder> spiraTestCaseFolders =
+			SpiraTestCaseFolder.getSpiraTestCaseFolders(
+				this, new SearchParameter("IndentLevel", indentLevel));
+
+		if (spiraTestCaseFolders.size() > 1) {
+			throw new RuntimeException("Duplicate indent level " + indentLevel);
+		}
+
+		if (spiraTestCaseFolders.isEmpty()) {
+			throw new RuntimeException("Missing indent level " + indentLevel);
+		}
+
+		return spiraTestCaseFolders.get(0);
 	}
 
 	private static final Map<Integer, SpiraProject> _spiraProjects =

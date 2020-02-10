@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -63,6 +64,7 @@ import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -138,9 +140,13 @@ public class TaxonomyCategoryResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		long assetCategoryId = _getAssetCategoryId(parentTaxonomyCategoryId);
+		AssetCategory assetCategory = _getAssetCategory(
+			parentTaxonomyCategoryId);
 
 		return _getCategoriesPage(
+			_getTaxonomyCategoryListActions(
+				assetCategory.getCategoryId(), assetCategory.getGroupId(),
+				assetCategory.getUserId()),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -148,7 +154,7 @@ public class TaxonomyCategoryResourceImpl
 				booleanFilter.add(
 					new TermFilter(
 						Field.ASSET_PARENT_CATEGORY_ID,
-						String.valueOf(assetCategoryId)),
+						String.valueOf(assetCategory.getCategoryId())),
 					BooleanClauseOccur.MUST);
 			},
 			search, filter, pagination, sorts);
@@ -160,25 +166,26 @@ public class TaxonomyCategoryResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getCategoriesPage(
-			booleanQuery -> {
-				if (taxonomyVocabularyId != null) {
-					BooleanFilter booleanFilter =
-						booleanQuery.getPreBooleanFilter();
+		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
+			taxonomyVocabularyId);
 
-					booleanFilter.add(
-						new TermFilter(
-							Field.ASSET_PARENT_CATEGORY_ID,
-							String.valueOf(
-								AssetCategoryConstants.
-									DEFAULT_PARENT_CATEGORY_ID)),
-						BooleanClauseOccur.MUST);
-					booleanFilter.add(
-						new TermFilter(
-							Field.ASSET_VOCABULARY_ID,
-							String.valueOf(taxonomyVocabularyId)),
-						BooleanClauseOccur.MUST);
-				}
+		return _getCategoriesPage(
+			_getTaxonomyVocabularyListActions(assetVocabulary),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						Field.ASSET_PARENT_CATEGORY_ID,
+						String.valueOf(
+							AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID)),
+					BooleanClauseOccur.MUST);
+				booleanFilter.add(
+					new TermFilter(
+						Field.ASSET_VOCABULARY_ID,
+						String.valueOf(taxonomyVocabularyId)),
+					BooleanClauseOccur.MUST);
 			},
 			search, filter, pagination, sorts);
 	}
@@ -322,6 +329,27 @@ public class TaxonomyCategoryResourceImpl
 		return _toTaxonomyCategory(assetCategory);
 	}
 
+	private Map<String, Map<String, String>> _getActions(
+		AssetCategory assetCategory) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"add-category",
+			addAction(
+				"ADD_CATEGORY", assetCategory,
+				"postTaxonomyCategoryTaxonomyCategory")
+		).put(
+			"delete",
+			addAction("DELETE", assetCategory, "deleteTaxonomyCategory")
+		).put(
+			"get", addAction("VIEW", assetCategory, "getTaxonomyCategory")
+		).put(
+			"replace", addAction("UPDATE", assetCategory, "putTaxonomyCategory")
+		).put(
+			"update",
+			addAction("UPDATE", assetCategory, "patchTaxonomyCategory")
+		).build();
+	}
+
 	private AssetCategory _getAssetCategory(String taxonomyCategoryId)
 		throws Exception {
 
@@ -350,13 +378,14 @@ public class TaxonomyCategoryResourceImpl
 	}
 
 	private Page<TaxonomyCategory> _getCategoriesPage(
+			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
-			Collections.emptyMap(), booleanQueryUnsafeConsumer, filter,
-			AssetCategory.class, search, pagination,
+			actions, booleanQueryUnsafeConsumer, filter, AssetCategory.class,
+			search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ASSET_CATEGORY_ID),
 			searchContext -> searchContext.setCompanyId(
@@ -390,6 +419,38 @@ public class TaxonomyCategoryResourceImpl
 		return projectionList;
 	}
 
+	private Map<String, Map<String, String>> _getTaxonomyCategoryListActions(
+		long categoryId, long groupId, long userId) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"add-category",
+			addAction(
+				"ADD_CATEGORY", categoryId, AssetCategory.class.getName(),
+				userId, "postTaxonomyCategoryTaxonomyCategory", groupId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", categoryId, AssetCategory.class.getName(),
+				userId, "getTaxonomyCategoryTaxonomyCategoriesPage", groupId)
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getTaxonomyVocabularyListActions(
+		AssetVocabulary assetVocabulary) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"add-category",
+			addAction(
+				"ADD_CATEGORY", assetVocabulary,
+				"postTaxonomyVocabularyTaxonomyCategory")
+		).put(
+			"get",
+			addAction(
+				"VIEW", assetVocabulary,
+				"getTaxonomyVocabularyTaxonomyCategoriesPage")
+		).build();
+	}
+
 	private AssetCategory _toAssetCategory(Object[] assetCategory) {
 		return new AssetCategoryImpl() {
 			{
@@ -413,8 +474,9 @@ public class TaxonomyCategoryResourceImpl
 
 		return _taxonomyCategoryDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
-				_dtoConverterRegistry, assetCategory.getCategoryId(),
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getActions(assetCategory), _dtoConverterRegistry,
+				assetCategory.getCategoryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			assetCategory);

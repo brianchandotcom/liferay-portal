@@ -80,7 +80,7 @@ export default function FragmentComment({
 			body,
 			commentId,
 			config,
-			fragmentEntryLinkId,
+			onNetworkStatus: dispatch,
 			resolved: !resolved
 		})
 			.then(comment => {

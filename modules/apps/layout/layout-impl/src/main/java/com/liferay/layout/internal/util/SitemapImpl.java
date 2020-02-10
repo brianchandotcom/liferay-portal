@@ -21,6 +21,8 @@ import com.liferay.layout.admin.kernel.util.SitemapURLProviderRegistryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -32,8 +34,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
@@ -153,6 +157,8 @@ public class SitemapImpl implements Sitemap {
 			alternateURLElement.addAttribute("hreflang", "x-default");
 			alternateURLElement.addAttribute("href", canonicalURL);
 		}
+
+		_removeOldestElementIfNeeded(element, urlElement);
 	}
 
 	@Override
@@ -254,8 +260,18 @@ public class SitemapImpl implements Sitemap {
 				sb.append(layout.isPrivateLayout());
 
 				locationElement.addText(sb.toString());
+
+				_removeOldestElementIfNeeded(element, sitemapElement);
 			}
 		}
+	}
+
+	private int _getElementSize(Element element) {
+		String string = element.asXML();
+
+		byte[] bytes = string.getBytes();
+
+		return bytes.length;
 	}
 
 	private String _getSitemap(
@@ -279,6 +295,8 @@ public class SitemapImpl implements Sitemap {
 
 		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
 
+		_initSizeAndEntries(rootElement);
+
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			groupId, privateLayout);
 
@@ -300,6 +318,8 @@ public class SitemapImpl implements Sitemap {
 			return StringPool.BLANK;
 		}
 
+		_removeEntriesAndSize(rootElement);
+
 		return document.asXML();
 	}
 
@@ -316,13 +336,98 @@ public class SitemapImpl implements Sitemap {
 
 		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
 
+		_initSizeAndEntries(rootElement);
+
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			groupId, privateLayout);
 
 		visitLayoutSet(rootElement, layoutSet, themeDisplay);
 
+		_removeEntriesAndSize(rootElement);
+
 		return document.asXML();
 	}
+
+	private void _initSizeAndEntries(Element rootElement) {
+		int size = _getElementSize(rootElement);
+
+		rootElement.addAttribute(_SIZE, String.valueOf(size));
+
+		rootElement.addAttribute(_ENTRIES, "0");
+	}
+
+	private void _removeEntriesAndSize(Element rootElement) {
+		Attribute entriesAttribute = rootElement.attribute(_ENTRIES);
+		Attribute sizeAttribute = rootElement.attribute(_SIZE);
+
+		if (_log.isDebugEnabled()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Created site map of ");
+
+			if (entriesAttribute != null) {
+				sb.append(entriesAttribute.getValue());
+				sb.append(" entries and ");
+			}
+
+			if (sizeAttribute != null) {
+				int size = GetterUtil.getInteger(sizeAttribute.getValue());
+
+				sb.append(
+					TextFormatter.formatStorageSize(
+						size, LocaleUtil.fromLanguageId("en_US")));
+
+				sb.append("of size");
+			}
+
+			_log.debug(sb.toString());
+		}
+
+		if (entriesAttribute != null) {
+			rootElement.remove(entriesAttribute);
+		}
+
+		if (sizeAttribute != null) {
+			rootElement.remove(sizeAttribute);
+		}
+	}
+
+	private void _removeOldestElementIfNeeded(
+		Element rootElement, Element newElement) {
+
+		int entries = GetterUtil.getInteger(
+			rootElement.attributeValue(_ENTRIES));
+		int size = GetterUtil.getInteger(rootElement.attributeValue(_SIZE));
+
+		entries++;
+		size += _getElementSize(newElement);
+
+		while ((entries >= _MAXIMUM_NUMBER_OF_ENTRIES) ||
+			   (size >= _MAXIMUM_SIZE_IN_BYTES)) {
+
+			Element oldestUrlElement = rootElement.element(
+				newElement.getName());
+
+			entries--;
+			size -= _getElementSize(oldestUrlElement);
+
+			rootElement.remove(oldestUrlElement);
+		}
+
+		rootElement.addAttribute(_ENTRIES, String.valueOf(entries));
+		rootElement.addAttribute(_SIZE, String.valueOf(size));
+	}
+
+	private static final String _ENTRIES = "entries";
+
+	private static final int _MAXIMUM_NUMBER_OF_ENTRIES = 50000;
+
+	private static final int _MAXIMUM_SIZE_IN_BYTES = 50 * 1024 * 1024;
+
+	private static final String _SIZE = "size";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SitemapImpl.class.getName());
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -594,7 +594,7 @@ definition {
 
 	@priority = "5"
 	test ImportLARsOnStagedSite {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Training";
 
 		LAR.importSiteCP(
@@ -806,7 +806,7 @@ definition {
 
 	@priority = "5"
 	test PublishPortlet {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Training";
 
 		Navigator.openSiteURL(siteName = "Site Name");
@@ -1431,7 +1431,7 @@ definition {
 
 	@priority = "5"
 	test TrashEntryReferencePublishing {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Training";
 
 		Navigator.gotoStagedSitePage(

@@ -307,7 +307,7 @@ definition {
 
 	@priority = "5"
 	test AssertNoEditLink {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(

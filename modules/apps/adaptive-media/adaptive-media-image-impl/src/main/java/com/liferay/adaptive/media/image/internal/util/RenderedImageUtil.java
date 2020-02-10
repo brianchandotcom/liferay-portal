@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.awt.image.RenderedImage;
@@ -90,7 +92,13 @@ public class RenderedImageUtil {
 
 				return imageReader.read(0);
 			}
-			catch (IOException ioException) {
+			catch (ImageResolutionException imageResolutionException) {
+				throw imageResolutionException;
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
 			}
 			finally {
 				if (imageReader != null) {
@@ -101,5 +109,8 @@ public class RenderedImageUtil {
 
 		throw new IOException("Unsupported image type");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RenderedImageUtil.class);
 
 }

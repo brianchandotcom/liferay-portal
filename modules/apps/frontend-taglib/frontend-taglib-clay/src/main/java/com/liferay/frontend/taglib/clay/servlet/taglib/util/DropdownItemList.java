@@ -59,7 +59,9 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		return dropdownItemList;
 	}
 
-	public void add(UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
+	public DropdownItemList add(
+		UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
+
 		DropdownItem dropdownItem = new DropdownItem();
 
 		try {
@@ -70,9 +72,11 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		}
 
 		add(dropdownItem);
+
+		return this;
 	}
 
-	public void addCheckbox(
+	public DropdownItemList addCheckbox(
 		UnsafeConsumer<DropdownCheckboxItem, Exception> unsafeConsumer) {
 
 		DropdownCheckboxItem dropdownCheckboxItem = new DropdownCheckboxItem();
@@ -85,9 +89,11 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		}
 
 		add(dropdownCheckboxItem);
+
+		return this;
 	}
 
-	public void addGroup(
+	public DropdownItemList addGroup(
 		UnsafeConsumer<DropdownGroupItem, Exception> unsafeConsumer) {
 
 		DropdownGroupItem dropdownGroupItem = new DropdownGroupItem();
@@ -100,9 +106,11 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		}
 
 		add(dropdownGroupItem);
+
+		return this;
 	}
 
-	public void addRadio(
+	public DropdownItemList addRadio(
 		UnsafeConsumer<DropdownRadioItem, Exception> unsafeConsumer) {
 
 		DropdownRadioItem dropdownRadioItem = new DropdownRadioItem();
@@ -115,9 +123,11 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		}
 
 		add(dropdownRadioItem);
+
+		return this;
 	}
 
-	public void addRadioGroup(
+	public DropdownItemList addRadioGroup(
 		UnsafeConsumer<DropdownRadioGroupItem, Exception> unsafeConsumer) {
 
 		DropdownRadioGroupItem dropdownRadioGroupItem =
@@ -131,6 +141,8 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 		}
 
 		add(dropdownRadioGroupItem);
+
+		return this;
 	}
 
 }

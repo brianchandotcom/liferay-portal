@@ -21,20 +21,12 @@ import {ConfigContext} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
 
 export const ItemSelectorField = ({field, onValueSelect, value}) => {
-	const config = useContext(ConfigContext);
-
-	const {infoItemSelectorURL, portletNamespace} = config;
-
-	const eventName = `${portletNamespace}selectInfoItem`;
-
 	const {typeOptions = {}} = field;
 
 	return (
 		<>
 			<ClayForm.Group small>
 				<ItemSelector
-					eventName={eventName}
-					itemSelectorURL={infoItemSelectorURL}
 					label={field.label}
 					onItemSelect={item => {
 						onValueSelect(field.name, {

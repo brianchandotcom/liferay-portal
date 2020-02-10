@@ -324,14 +324,11 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-service-portal" />
 		<antcall target="build-service-portlets" />
 
-		<property name="com.liferay.portal.tools.service.builder.ignore.local" value="true" />
-
 		<gradle-execute dir="../modules" forcedcacheenabled="false" task="buildService">
 			<arg value="--continue" />
 			<arg unless:true="${build.services.baseline.enabled}" value="--exclude-task" />
 			<arg unless:true="${build.services.baseline.enabled}" value="baseline" />
 			<arg value="-DbuildService.skipReadOnly=${build.services.skip.read.only}" />
-			<arg value="-Pcom.liferay.portal.tools.service.builder.ignore.local=${com.liferay.portal.tools.service.builder.ignore.local}" />
 		</gradle-execute>
 	</target>
 

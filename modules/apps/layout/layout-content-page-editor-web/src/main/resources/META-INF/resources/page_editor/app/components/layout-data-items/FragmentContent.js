@@ -111,8 +111,6 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		}
 	}, [activeItemId, ref]);
 
-	ref = useRef(null);
-
 	useEffect(() => {
 		const element = ref.current;
 
@@ -131,12 +129,17 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 			}
 		};
 
-		element.addEventListener('click', handleFragmentEntryLinkContentClick);
+		element.addEventListener(
+			'click',
+			handleFragmentEntryLinkContentClick,
+			true
+		);
 
 		return () => {
 			element.removeEventListener(
 				'click',
-				handleFragmentEntryLinkContentClick
+				handleFragmentEntryLinkContentClick,
+				true
 			);
 		};
 	});

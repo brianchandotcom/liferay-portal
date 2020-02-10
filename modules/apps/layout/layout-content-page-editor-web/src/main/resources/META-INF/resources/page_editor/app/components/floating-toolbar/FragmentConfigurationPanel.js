@@ -16,8 +16,8 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../js/utils/constants';
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../../config/constants/fragmentConfigurationFieldTypes';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
 import {ConfigContext} from '../../config/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';

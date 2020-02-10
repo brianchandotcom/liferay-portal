@@ -26,7 +26,10 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -96,8 +99,19 @@ public class EditDDMStructureMVCRenderCommand implements MVCRenderCommand {
 	private DDMStructure _getDDMStructure(RenderRequest renderRequest)
 		throws PortalException {
 
-		return _ddmStructureLocalService.fetchDDMStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
 			ParamUtil.getLong(renderRequest, "ddmStructureId"));
+
+		if (ddmStructure != null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_ddmStructureModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), ddmStructure,
+				ActionKeys.UPDATE);
+		}
+
+		return ddmStructure;
 	}
 
 	@Reference
@@ -108,6 +122,12 @@ public class EditDDMStructureMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
+	)
+	private ModelResourcePermission<DDMStructure>
+		_ddmStructureModelResourcePermission;
 
 	private volatile FFDocumentLibraryDDMEditorConfiguration
 		_ffDocumentLibraryDDMEditorConfiguration;

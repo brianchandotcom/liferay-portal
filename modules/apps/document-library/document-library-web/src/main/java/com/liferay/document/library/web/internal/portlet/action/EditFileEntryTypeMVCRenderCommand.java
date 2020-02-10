@@ -104,7 +104,7 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
-				_getDDMStructure(dlFileEntryType));
+				_getDDMStructure(dlFileEntryType, themeDisplay));
 
 			return "/document_library/edit_file_entry_type.jsp";
 		}
@@ -126,29 +126,36 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 				FFDocumentLibraryDDMEditorConfiguration.class, properties);
 	}
 
-	private DDMStructure _getDDMStructure(DLFileEntryType dlFileEntryType) {
+	private DDMStructure _getDDMStructure(
+			DLFileEntryType dlFileEntryType, ThemeDisplay themeDisplay)
+		throws PortalException {
+
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			dlFileEntryType.getGroupId(),
 			_portal.getClassNameId(DLFileEntryMetadata.class),
 			DLUtil.getDDMStructureKey(dlFileEntryType));
 
-		if (ddmStructure != null) {
-			return ddmStructure;
+		if (ddmStructure == null) {
+			ddmStructure = _ddmStructureLocalService.fetchStructure(
+				dlFileEntryType.getGroupId(),
+				_portal.getClassNameId(DLFileEntryMetadata.class),
+				DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));
 		}
 
-		ddmStructure = _ddmStructureLocalService.fetchStructure(
-			dlFileEntryType.getGroupId(),
-			_portal.getClassNameId(DLFileEntryMetadata.class),
-			DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));
-
-		if (ddmStructure != null) {
-			return ddmStructure;
+		if (ddmStructure == null) {
+			ddmStructure = _ddmStructureLocalService.fetchStructure(
+				dlFileEntryType.getGroupId(),
+				_portal.getClassNameId(DLFileEntryMetadata.class),
+				dlFileEntryType.getFileEntryTypeKey());
 		}
 
-		return _ddmStructureLocalService.fetchStructure(
-			dlFileEntryType.getGroupId(),
-			_portal.getClassNameId(DLFileEntryMetadata.class),
-			dlFileEntryType.getFileEntryTypeKey());
+		if (ddmStructure != null) {
+			_ddmStructureModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), ddmStructure,
+				ActionKeys.UPDATE);
+		}
+
+		return ddmStructure;
 	}
 
 	@Reference
@@ -159,6 +166,12 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
+	)
+	private ModelResourcePermission<DDMStructure>
+		_ddmStructureModelResourcePermission;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType)"

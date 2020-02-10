@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element dataType="boolean" name="checkbox1234" showLabel="true" type="checkbox">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Boolean]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root>

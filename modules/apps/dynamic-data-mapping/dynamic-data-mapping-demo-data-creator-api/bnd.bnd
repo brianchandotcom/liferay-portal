@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Dynamic Data Mapping Demo Data Creator API
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.demo.data.creator.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.dynamic.data.mapping.demo.data.creator

@@ -539,7 +539,7 @@ definition {
 			else if ("${revision}" == "Current") {
 				Click(locator1 = "Radio#CURRENT_VERSION");
 
-				AssertNotVisible(
+				AssertElementNotPresent(
 					key_fieldLabel = "Version Notes",
 					locator1 = "TextInput#GENERIC_TEXT_INPUT");
 			}

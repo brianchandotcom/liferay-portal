@@ -33,7 +33,7 @@
 		white-space: nowrap;
 
 		@include media-breakpoint-up(lg) {
-			flex-direction: unset;
+			flex-direction: row;
 		}
 
 		> .navbar-nav {
@@ -50,7 +50,7 @@
 				padding-right: 0;
 
 				@include media-breakpoint-up(lg) {
-					order: unset;
+					order: 0;
 				}
 			}
 
@@ -63,7 +63,7 @@
 
 				@include media-breakpoint-up(lg) {
 					border-bottom: 0;
-					width: unset;
+					width: auto;
 				}
 			}
 		}

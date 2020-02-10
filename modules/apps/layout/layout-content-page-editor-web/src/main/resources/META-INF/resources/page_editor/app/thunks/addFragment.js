@@ -36,12 +36,6 @@ export default function addFragment({
 			position,
 			segmentsExperienceId
 		}).then(({addedItemId, fragmentEntryLink, layoutData}) => {
-			fragmentEntryLink.content = {
-				value: {
-					content: fragmentEntryLink.content
-				}
-			};
-
 			dispatch(
 				addFragmentEntryLink({
 					fragmentEntryLink,

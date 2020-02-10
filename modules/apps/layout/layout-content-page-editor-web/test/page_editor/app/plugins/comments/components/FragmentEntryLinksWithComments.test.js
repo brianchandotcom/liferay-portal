@@ -17,8 +17,8 @@ import {cleanup, fireEvent, render, wait} from '@testing-library/react';
 import React from 'react';
 
 import {
-	useSelectItem,
-	useHoverItem
+	useHoverItem,
+	useSelectItem
 } from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';

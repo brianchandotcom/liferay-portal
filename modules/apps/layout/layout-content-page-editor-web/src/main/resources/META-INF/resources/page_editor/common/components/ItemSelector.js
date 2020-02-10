@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useState, useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
 import {useSelector} from '../../app/store/index';

@@ -62,7 +62,7 @@ HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttri
 
 		request.setAttribute("render_layout_data_structure.jsp-layoutStructure", layoutStructure);
 
-        LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
+		LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
 
 		request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 		%>

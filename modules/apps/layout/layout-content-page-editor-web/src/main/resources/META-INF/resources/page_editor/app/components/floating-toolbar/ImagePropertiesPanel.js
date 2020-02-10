@@ -16,12 +16,12 @@ import {ClayInput} from '@clayui/form';
 import React, {useContext, useCallback, useState} from 'react';
 
 import {ImageSelector} from '../../../common/components/ImageSelector';
+import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ConfigContext} from '../../config/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useSelector, useDispatch} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
-import {useDebounceCallback} from './LinkPanel';
 
 export function ImagePropertiesPanel({item}) {
 	const {editableId, fragmentEntryLinkId} = item;

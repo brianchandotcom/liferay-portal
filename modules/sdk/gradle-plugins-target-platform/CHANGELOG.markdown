@@ -155,6 +155,9 @@ com.liferay.gradle.plugins (b389243ac9)
 - [LPS-91342]: regen (334a31a0b6)
 - [LPS-91342]: regen (a492452b39)
 
+### Description
+- [LPS-93873]: Update the `dependency-management-plugin` to `1.0.7.RELEASE`.
+
 ## 1.1.14 - 2019-05-20
 
 ### Commits
@@ -280,6 +283,9 @@ maven-publish plugin (f367d6b48e)
 (f21c5bcc03)
 - [LPS-105889]: use native gradle 5 BOM support instead of spring
 dependency-management-plugin (4283a850ef)
+
+### Description
+- [LPS-105889]: Use native Gradle 5 BOM support for target platform capability.
 
 ## 2.0.8 - 2020-01-10
 

@@ -163,9 +163,8 @@ validation (f3af8e7713)
 ### Description
 - [LPS-84621]: Update the `validateTLD` task to automatically search the parent
 directories for `portal/definitions` to use these files for TLD scheme
-validation.
-Set the properties `xmlParserClassName` and `xmlParserClasspath` to `null` to
-use the default XML parser provided by Ant.
+validation. Set the properties `xmlParserClassName` and `xmlParserClasspath` to
+`null` to use the default XML parser provided by Ant.
 
 ## 1.3.2 - 2018-11-16
 

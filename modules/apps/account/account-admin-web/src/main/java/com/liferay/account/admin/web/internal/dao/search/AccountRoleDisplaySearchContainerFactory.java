@@ -15,6 +15,8 @@
 package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AccountRoleDisplay;
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -55,7 +57,7 @@ public class AccountRoleDisplaySearchContainerFactory {
 
 		BaseModelSearchResult<AccountRole> baseModelSearchResult =
 			AccountRoleLocalServiceUtil.searchAccountRoles(
-				accountEntryId, keywords, searchContainer.getStart(),
+				new long[] {accountEntryId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT}, keywords, searchContainer.getStart(),
 				searchContainer.getEnd(),
 				new RoleNameComparator(orderByType.equals("asc")));
 

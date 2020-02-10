@@ -47,6 +47,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.function.Function;
 
 import javax.ws.rs.ClientErrorException;
@@ -92,12 +93,31 @@ public class SPICommentResource<T> {
 			Sort[] sorts)
 		throws Exception {
 
-		return _getComments(commentId, search, filter, pagination, sorts);
+		return _getComments(
+			Collections.emptyMap(), filter, pagination, commentId, search,
+			sorts);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getEntityCommentsPage(Map, String, long, Filter, long,
+	 *             Pagination, String, Sort[])}
+	 */
+	@Deprecated
 	public Page<T> getEntityCommentsPage(
 			long groupId, String className, long classPK, String search,
 			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return getEntityCommentsPage(
+			Collections.emptyMap(), className, classPK, filter, groupId,
+			pagination, search, sorts);
+	}
+
+	public Page<T> getEntityCommentsPage(
+			Map<String, Map<String, String>> actions, String className,
+			long classPK, Filter filter, long groupId, Pagination pagination,
+			String search, Sort[] sorts)
 		throws Exception {
 
 		Discussion discussion = _commentManager.getDiscussion(
@@ -108,8 +128,8 @@ public class SPICommentResource<T> {
 			discussion.getRootDiscussionComment();
 
 		return _getComments(
-			rootDiscussionComment.getCommentId(), search, filter, pagination,
-			sorts);
+			actions, filter, pagination, rootDiscussionComment.getCommentId(),
+			search, sorts);
 	}
 
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
@@ -184,12 +204,13 @@ public class SPICommentResource<T> {
 	}
 
 	private Page<T> _getComments(
-			Long parentCommentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Map<String, Map<String, String>> actions, Filter filter,
+			Pagination pagination, Long parentCommentId, String search,
+			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();

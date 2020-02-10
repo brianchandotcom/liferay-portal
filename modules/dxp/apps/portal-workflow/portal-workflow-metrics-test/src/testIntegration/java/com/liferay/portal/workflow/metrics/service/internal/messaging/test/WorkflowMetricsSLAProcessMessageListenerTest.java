@@ -60,6 +60,21 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			"companyId", kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());
 
+		_workflowMetricsSLADefinition =
+			_workflowMetricsSLADefinitionLocalService.
+				addWorkflowMetricsSLADefinition(
+					StringPool.BLANK, StringPool.BLANK, 50000, "Abc",
+					new String[0], kaleoDefinition.getKaleoDefinitionId(),
+					new String[] {getInitialNodeKey(kaleoDefinition)},
+					new String[] {getTerminalNodeKey(kaleoDefinition)},
+					ServiceContextTestUtil.getServiceContext());
+
+		_workflowMetricsSLADefinitionLocalService.
+			deactivateWorkflowMetricsSLADefinition(
+				_workflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId(),
+				ServiceContextTestUtil.getServiceContext());
+
 		BlogsEntry blogsEntry = addBlogsEntry();
 
 		KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
@@ -94,7 +109,7 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 		_workflowMetricsSLADefinition =
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(
-					StringPool.BLANK, StringPool.BLANK, 50000, "Abc",
+					StringPool.BLANK, StringPool.BLANK, 50000, "Def",
 					new String[0], kaleoDefinition.getKaleoDefinitionId(),
 					new String[] {getInitialNodeKey(kaleoDefinition)},
 					new String[] {getTerminalNodeKey(kaleoDefinition)},
@@ -120,6 +135,12 @@ public class WorkflowMetricsSLAProcessMessageListenerTest
 			kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId(), "slaDefinitionId",
 			_workflowMetricsSLADefinition.getWorkflowMetricsSLADefinitionId());
+		retryAssertCount(
+			"workflow-metrics-sla-instance-results",
+			"WorkflowMetricsSLAInstanceResultType", "companyId",
+			kaleoDefinition.getCompanyId(), "instanceId",
+			kaleoInstance.getKaleoInstanceId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId());
 		retryAssertCount(
 			"workflow-metrics-sla-instance-results",
 			"WorkflowMetricsSLAInstanceResultType", "companyId",

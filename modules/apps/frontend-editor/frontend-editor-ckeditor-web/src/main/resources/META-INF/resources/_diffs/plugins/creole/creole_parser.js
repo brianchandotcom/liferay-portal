@@ -195,6 +195,7 @@
 					}
 				}
 			}
+
 			return this;
 		},
 
@@ -244,10 +245,11 @@
 				return format(link);
 			}
 
-			format = format instanceof Array ? format : [format];
+			format = Array.isArray(format) ? format : [format];
 			if (typeof format[1] == 'undefined') {
 				format[1] = '';
 			}
+
 			return format[0] + link + format[1];
 		};
 
@@ -461,6 +463,7 @@
 					if (!g.namedLink.apply) {
 						g.namedLink = new this.constructor(g.namedLink);
 					}
+
 					return g.namedLink.build.call(
 						g.namedLink,
 						node,

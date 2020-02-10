@@ -96,7 +96,9 @@ function ExperimentsHistory({experimentHistory, onDeleteSegmentsExperiment}) {
 			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 		);
 
-		if (confirmed) return onDeleteSegmentsExperiment(experimentId);
+		if (confirmed) {
+			return onDeleteSegmentsExperiment(experimentId);
+		}
 	}
 }
 

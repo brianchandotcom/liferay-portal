@@ -25,8 +25,8 @@ import {
 } from '../../../actions/updateEditableValue.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {
-	openItemSelector,
-	openCreateContentDialog
+	openCreateContentDialog,
+	openItemSelector
 } from '../../../utils/FragmentsEditorDialogUtils';
 import {getMappingSourceTypes} from '../../../utils/FragmentsEditorGetUtils.es';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';

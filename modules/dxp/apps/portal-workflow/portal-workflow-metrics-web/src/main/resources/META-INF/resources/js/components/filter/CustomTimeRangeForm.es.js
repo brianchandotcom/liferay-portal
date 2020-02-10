@@ -15,8 +15,8 @@ import MaskedInput from 'react-text-mask';
 import Icon from '../../shared/components/Icon.es';
 import {
 	addClickOutsideListener,
-	removeClickOutsideListener,
-	handleClickOutside
+	handleClickOutside,
+	removeClickOutsideListener
 } from '../../shared/components/filter/util/filterEvents.es';
 import {sub} from '../../shared/util/lang.es';
 import {useCustomTimeRange} from './hooks/useCustomTimeRange.es';

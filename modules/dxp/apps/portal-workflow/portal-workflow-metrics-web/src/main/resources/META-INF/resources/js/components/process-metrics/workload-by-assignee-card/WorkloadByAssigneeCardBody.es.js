@@ -23,6 +23,7 @@ import {Table} from './WorkloadByAssigneeCardTable.es';
 
 const Body = ({currentTab, data, processId, processStepKey}) => {
 	const {items, totalCount} = data;
+
 	return (
 		<Panel.Body>
 			<PromisesResolver.Pending>

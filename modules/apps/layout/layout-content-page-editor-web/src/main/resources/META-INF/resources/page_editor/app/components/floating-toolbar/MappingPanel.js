@@ -17,7 +17,7 @@ import React, {useContext} from 'react';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ConfigContext} from '../../config/index';
 import selectEditableValue from '../../selectors/selectEditableValue';
-import {useSelector, useDispatch} from '../../store/index';
+import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 import MappingSelector from './MappingSelector';
 

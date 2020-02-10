@@ -10,8 +10,8 @@
  */
 
 import {createMemoryHistory} from 'history';
-import React, {cloneElement, useState, useMemo} from 'react';
-import {Router, Route} from 'react-router-dom';
+import React, {cloneElement, useMemo, useState} from 'react';
+import {Route, Router} from 'react-router-dom';
 
 import {AppContext} from '../../src/main/resources/META-INF/resources/js/components/AppContext.es';
 
@@ -21,8 +21,9 @@ const withParamsMock = (...components) => ({
 	match: {params: routeParams}
 }) => {
 	return components.map(component => {
-		if (routeParams.sort)
+		if (routeParams.sort) {
 			routeParams.sort = decodeURIComponent(routeParams.sort);
+		}
 
 		return cloneElement(component, {
 			...routeParams,

@@ -24,8 +24,8 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {
-	EDIT_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,
+	EDIT_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../../../../../src/main/resources/META-INF/resources/js/actions/actions.es';
 import ExperienceSelector from '../../../../../src/main/resources/META-INF/resources/js/components/toolbar/segmentsExperiences/ExperiencesSelector.es';

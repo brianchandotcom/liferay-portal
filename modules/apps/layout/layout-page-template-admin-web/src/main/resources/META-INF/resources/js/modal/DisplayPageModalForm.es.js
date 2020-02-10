@@ -13,7 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useRef, useEffect, useState, useCallback} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import FormField from './FormField.es';
 

@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useState, useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {updateFragmentEntryKeys} from '../../actions/updateFragmentEntryKeys.es';
 import useDispatch from '../../store/hooks/useDispatch.es';

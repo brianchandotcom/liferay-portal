@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import {useSelectItem, useHoverItem} from '../../../app/components/Controls';
+import {useHoverItem, useSelectItem} from '../../../app/components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useSelector} from '../../../app/store/index';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';

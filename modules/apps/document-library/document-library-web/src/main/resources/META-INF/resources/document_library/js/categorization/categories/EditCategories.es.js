@@ -13,7 +13,7 @@
  */
 
 import {useModal} from '@clayui/modal';
-import React, {useState, useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import EditCategoriesContext from './EditCategoriesContext.es';
 import EditCategoriesModal from './EditCategoriesModal.es';

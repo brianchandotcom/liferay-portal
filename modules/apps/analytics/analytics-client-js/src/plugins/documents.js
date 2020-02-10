@@ -95,6 +95,7 @@ function trackDocumentPreviewed(analytics) {
 				analytics.send('documentPreviewed', applicationId, payload);
 			});
 	});
+
 	return () => stopTrackingOnReady();
 }
 

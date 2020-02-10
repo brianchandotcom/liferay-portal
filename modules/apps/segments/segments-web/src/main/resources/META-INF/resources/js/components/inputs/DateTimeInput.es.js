@@ -38,6 +38,7 @@ class DateTimeInput extends React.Component {
 				value: dateFns.format(new Date(props.value), INPUT_DATE_FORMAT)
 			};
 		}
+
 		return returnVal;
 	}
 

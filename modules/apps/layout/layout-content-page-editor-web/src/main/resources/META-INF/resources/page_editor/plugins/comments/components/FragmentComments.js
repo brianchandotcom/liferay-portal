@@ -19,7 +19,7 @@ import React from 'react';
 
 import editFragmentEntryComment from '../../../app/actions/editFragmentEntryLinkComment';
 import {useSelectItem} from '../../../app/components/Controls';
-import {useSelector, useDispatch} from '../../../app/store/index';
+import {useDispatch, useSelector} from '../../../app/store/index';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import AddCommentForm from './AddCommentForm';

@@ -12,10 +12,11 @@
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 function _isValueValid(value) {
 	const noSpacesValue = value.replace(/\s/g, '');
+
 	return !!noSpacesValue;
 }
 
@@ -81,7 +82,9 @@ function ValidatedInput(props) {
 	);
 
 	function _handleNameInputBlur(event) {
-		if (!_isValueValid(value)) _setInvalid(true);
+		if (!_isValueValid(value)) {
+			_setInvalid(true);
+		}
 		onBlur(event);
 	}
 	function _handleNameInputFocus(event) {
@@ -91,7 +94,9 @@ function ValidatedInput(props) {
 
 	function _setInvalid(newInvalid) {
 		setInvalid(newInvalid);
-		if (newInvalid !== invalid) onValidationChange(newInvalid);
+		if (newInvalid !== invalid) {
+			onValidationChange(newInvalid);
+		}
 	}
 }
 

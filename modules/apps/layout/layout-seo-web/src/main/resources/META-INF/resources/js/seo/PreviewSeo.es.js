@@ -15,7 +15,7 @@
 import {useIsMounted} from 'frontend-js-react-web';
 import {isObject} from 'metal';
 import {PropTypes} from 'prop-types';
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {previewSeoOnChange} from './PreviewSeoEvents.es';
 
@@ -119,7 +119,9 @@ const PreviewSeoContainer = ({
 
 	useEffect(() => {
 		const setFieldState = ({type, ...props}) => {
-			if (!isMounted()) return;
+			if (!isMounted()) {
+				return;
+			}
 
 			setFields(state => ({
 				...state,
@@ -197,7 +199,9 @@ const PreviewSeoContainer = ({
 	}, [defaultLanguage, isMounted, portletNamespace, targets]);
 
 	useEffect(() => {
-		if (!isMounted()) return;
+		if (!isMounted()) {
+			return;
+		}
 
 		const newFieldsState = Object.values(inputTargets).reduce(
 			(acc, {input, type}) => {

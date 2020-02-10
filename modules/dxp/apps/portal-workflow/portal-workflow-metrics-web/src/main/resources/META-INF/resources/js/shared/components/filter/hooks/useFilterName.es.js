@@ -20,6 +20,7 @@ const useFilterName = (multiple, selectedItems, title, withSelectionTitle) => {
 			selectedItems.length
 		) {
 			const {name, resultName} = selectedItems[0];
+
 			return resultName || name;
 		}
 

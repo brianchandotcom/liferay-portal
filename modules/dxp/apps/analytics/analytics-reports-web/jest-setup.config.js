@@ -18,5 +18,6 @@ window.Liferay.Util.sub = function(string, data) {
 	) {
 		data = Array.prototype.slice.call(arguments, 1);
 	}
+
 	return string.replace(REGEX_SUB, data);
 };

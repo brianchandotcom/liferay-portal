@@ -10,7 +10,7 @@
  */
 
 import getClassName from 'classnames';
-import React, {useState, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {useRouter} from '../../hooks/useRouter.es';
 import Icon from '../Icon.es';
@@ -18,8 +18,8 @@ import {FilterItem} from './FilterItem.es';
 import {FilterSearch} from './FilterSearch.es';
 import {
 	addClickOutsideListener,
-	removeClickOutsideListener,
-	handleClickOutside
+	handleClickOutside,
+	removeClickOutsideListener
 } from './util/filterEvents.es';
 import {
 	getSelectedItemsQuery,

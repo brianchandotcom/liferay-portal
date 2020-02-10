@@ -54,6 +54,7 @@ const getItem = key => {
 	catch (e) {
 		return;
 	}
+
 	return data;
 };
 
@@ -202,6 +203,7 @@ class Analytics {
 				})
 				.then(() => {
 					this.isFlushInProgress = false;
+
 					return this.isFlushInProgress;
 				});
 		}
@@ -390,6 +392,7 @@ class Analytics {
 		if (!hasStoredContext) {
 			this.contexts = [...this.contexts, currentContext];
 		}
+
 		return currentContextHash;
 	}
 

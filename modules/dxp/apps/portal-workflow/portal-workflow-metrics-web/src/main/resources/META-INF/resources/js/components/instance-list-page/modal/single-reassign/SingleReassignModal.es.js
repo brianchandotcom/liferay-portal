@@ -131,6 +131,7 @@ const SingleReassignModal = () => {
 			return [
 				fetchData().catch(err => {
 					setErrorToast(() => true);
+
 					return Promise.reject(err);
 				})
 			];

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render, fireEvent, findByTestId} from '@testing-library/react';
+import {cleanup, findByTestId, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import Filter from '../../../../src/main/resources/META-INF/resources/js/shared/components/filter/Filter.es';

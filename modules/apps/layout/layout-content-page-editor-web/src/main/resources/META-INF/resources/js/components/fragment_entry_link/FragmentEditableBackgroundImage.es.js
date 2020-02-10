@@ -23,9 +23,9 @@ import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
 import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
 import {
-	editableShouldBeHighlighted,
 	editableIsMapped,
-	editableIsMappedToInfoItem
+	editableIsMappedToInfoItem,
+	editableShouldBeHighlighted
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {computeEditableValue} from '../../utils/computeValues.es';
 import {

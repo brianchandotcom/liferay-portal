@@ -13,7 +13,7 @@
  */
 
 import classNames from 'classnames';
-import React, {useState, useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import ControlMenu from '../../components/control-menu/ControlMenu.es';

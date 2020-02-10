@@ -21,16 +21,16 @@ import React, {useContext, useState} from 'react';
 
 import SegmentsExperimentsContext from '../context.es';
 import {archiveExperiment} from '../state/actions.es';
-import {StateContext, DispatchContext} from '../state/context.es';
+import {DispatchContext, StateContext} from '../state/context.es';
 import {SegmentsExperienceType} from '../types.es';
 import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
 import {
-	statusToLabelDisplayType,
+	STATUS_COMPLETED,
 	STATUS_DRAFT,
 	STATUS_FINISHED_WINNER,
-	STATUS_COMPLETED
+	statusToLabelDisplayType
 } from '../util/statuses.es';
-import {openSuccessToast, openErrorToast} from '../util/toasts.es';
+import {openErrorToast, openSuccessToast} from '../util/toasts.es';
 import ClickGoalPicker from './ClickGoalPicker/ClickGoalPicker.es';
 import ExperimentsHistory from './ExperimentsHistory.es';
 import SegmentsExperimentsActions from './SegmentsExperimentsActions.es';
@@ -286,8 +286,9 @@ function SegmentsExperiments({
 			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 		);
 
-		if (confirmed)
+		if (confirmed) {
 			return onDeleteSegmentsExperiment(experiment.segmentsExperimentId);
+		}
 	}
 
 	function _handleExperienceSelection(event) {

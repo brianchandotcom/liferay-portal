@@ -44,6 +44,7 @@ export default ({
 					...comments.filter(o => o.id !== comment.id)
 				]);
 			}
+
 			return null;
 		},
 		[commentsChange, comments]

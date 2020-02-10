@@ -18,7 +18,9 @@ import Icon from './Icon.es';
 const Body = ({children, elementClasses}) => {
 	const classes = getCN('panel-body', elementClasses);
 
-	if (!children) return null;
+	if (!children) {
+		return null;
+	}
 
 	return (
 		<div className={classes} data-testid="panelBody">
@@ -30,7 +32,9 @@ const Body = ({children, elementClasses}) => {
 const Footer = ({children, elementClasses, label}) => {
 	const classes = getCN('panel-footer', elementClasses);
 
-	if (!children) return null;
+	if (!children) {
+		return null;
+	}
 
 	return (
 		<div className={classes}>

@@ -66,7 +66,9 @@ const ExperienceItem = ({
 
 		const confirmed = confirm(confirmationMessage);
 
-		if (confirmed) onDeleteExperience(experience.segmentsExperienceId);
+		if (confirmed) {
+			onDeleteExperience(experience.segmentsExperienceId);
+		}
 	};
 	const handleExperimentNavigation = event => {
 		event.preventDefault();

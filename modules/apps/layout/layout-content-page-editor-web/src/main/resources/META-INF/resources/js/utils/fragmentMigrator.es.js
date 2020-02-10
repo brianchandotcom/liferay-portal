@@ -32,6 +32,7 @@ function _editableFragmentMigrator(object, defaultSegmentsExperienceKey) {
 			defaultValue: object.defaultValue
 		};
 	}
+
 	return alternativeObject || object;
 }
 
@@ -63,6 +64,7 @@ function editableValuesMigrator(editableValue, defaultSegmentsExperienceKey) {
 			);
 		});
 	}
+
 	return result;
 }
 

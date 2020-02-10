@@ -445,6 +445,7 @@ AUI.add(
 							Lang.toInt(definitionId)
 						) {
 							definition = item;
+
 							return;
 						}
 					});
@@ -499,6 +500,7 @@ AUI.add(
 							Lang.toInt(definitionId)
 						) {
 							selectedDefinitionId = definitionId;
+
 							return;
 						}
 					});

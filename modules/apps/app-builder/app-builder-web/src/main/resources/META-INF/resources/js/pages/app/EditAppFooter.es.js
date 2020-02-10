@@ -20,7 +20,7 @@ import {withRouter} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import {ToastContext} from '../../components/toast/ToastContext.es';
-import {updateItem, addItem} from '../../utils/client.es';
+import {addItem, updateItem} from '../../utils/client.es';
 import EditAppContext from './EditAppContext.es';
 
 export default withRouter(

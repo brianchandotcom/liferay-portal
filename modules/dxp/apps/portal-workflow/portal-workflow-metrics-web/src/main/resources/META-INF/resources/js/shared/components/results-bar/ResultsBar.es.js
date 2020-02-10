@@ -16,7 +16,7 @@ import {Link} from 'react-router-dom';
 import {useRouter} from '../../hooks/useRouter.es';
 import {sub} from '../../util/lang.es';
 import Icon from '../Icon.es';
-import {removeItem, removeFilters} from '../filter/util/filterUtil.es';
+import {removeFilters, removeItem} from '../filter/util/filterUtil.es';
 
 const ResultsBar = ({children}) => {
 	return (

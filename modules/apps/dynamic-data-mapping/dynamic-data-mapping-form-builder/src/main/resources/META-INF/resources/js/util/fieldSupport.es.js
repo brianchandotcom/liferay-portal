@@ -75,6 +75,7 @@ export const normalizeSettingsContextPages = (
 				}
 			};
 		}
+
 		return {
 			...field
 		};

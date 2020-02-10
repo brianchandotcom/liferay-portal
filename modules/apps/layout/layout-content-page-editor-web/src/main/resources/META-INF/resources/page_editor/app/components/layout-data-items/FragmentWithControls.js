@@ -32,7 +32,7 @@ import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layou
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {ConfigContext} from '../../config/index';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';
-import {useSelector, useDispatch} from '../../store/index';
+import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {useSelectItem} from '../Controls';
 import Topper from '../Topper';

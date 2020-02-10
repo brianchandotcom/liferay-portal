@@ -25,10 +25,10 @@ import {
 } from '../../../utils/FragmentsEditorGetUtils.es';
 import {removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {
+	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_TYPES,
 	FRAGMENTS_EDITOR_ROW_TYPES,
-	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 	PAGE_TYPES
 } from '../../../utils/constants';
 import {isDropZoneFragment} from '../../../utils/isDropZoneFragment.es';

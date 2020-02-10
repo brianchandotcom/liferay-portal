@@ -158,6 +158,7 @@ class TabsProvider {
 		Object.keys(transitionEndEvents).some(name => {
 			if (sampleElement.style[name] !== undefined) {
 				eventName = transitionEndEvents[name];
+
 				return true;
 			}
 		});

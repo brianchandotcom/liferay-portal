@@ -14,7 +14,7 @@
 
 import ClayForm from '@clayui/form';
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import ItemSelector from '../../../common/components/ItemSelector';
 import {ConfigContext} from '../../config/index';

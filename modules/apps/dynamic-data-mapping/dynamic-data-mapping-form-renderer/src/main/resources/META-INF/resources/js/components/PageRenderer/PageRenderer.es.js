@@ -69,6 +69,7 @@ class PageRenderer extends Component {
 				else {
 					hasFields = columns.some(column => column.fields.length);
 				}
+
 				return hasFields;
 			});
 		}

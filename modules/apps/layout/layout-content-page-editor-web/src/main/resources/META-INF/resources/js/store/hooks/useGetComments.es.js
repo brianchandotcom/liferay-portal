@@ -18,6 +18,7 @@ function useGetComments() {
 	const showResolvedComments = useSelector(
 		state => state.showResolvedComments
 	);
+
 	return fragmentEntryLink =>
 		(fragmentEntryLink.comments || []).filter(
 			comment => showResolvedComments || !comment.resolved

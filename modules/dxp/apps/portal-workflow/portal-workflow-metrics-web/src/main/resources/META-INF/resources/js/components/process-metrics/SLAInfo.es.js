@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useContext, useState, useEffect, useCallback} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {ChildLink} from '../../shared/components/router/routerWrapper.es';
 import {sub} from '../../shared/util/lang.es';

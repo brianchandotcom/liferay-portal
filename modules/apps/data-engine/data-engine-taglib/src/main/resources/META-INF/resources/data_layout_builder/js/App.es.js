@@ -13,7 +13,7 @@
  */
 
 import {ClayModalProvider} from '@clayui/modal';
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import AppContext from './AppContext.es';
 import AppContextProvider from './AppContextProvider.es';

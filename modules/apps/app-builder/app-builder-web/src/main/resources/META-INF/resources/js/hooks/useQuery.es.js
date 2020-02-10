@@ -25,7 +25,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-import {useState, useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 export const toQuery = (string, defaultQuery = {}) => {
 	const query = {...defaultQuery};

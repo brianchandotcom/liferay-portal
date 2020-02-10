@@ -20,7 +20,9 @@ const useStorage = (storageType, key) => {
 
 	const listener = useCallback(
 		({detail}) => {
-			if (detail.key === key) setValue(detail.newValue);
+			if (detail.key === key) {
+				setValue(detail.newValue);
+			}
 		},
 		[key]
 	);

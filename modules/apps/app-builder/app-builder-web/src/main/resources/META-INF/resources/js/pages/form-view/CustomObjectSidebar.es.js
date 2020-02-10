@@ -23,12 +23,12 @@ import {
 	Sidebar
 } from 'data-engine-taglib';
 import React, {
-	useRef,
-	useState,
-	useEffect,
-	useContext,
 	useCallback,
-	useLayoutEffect
+	useContext,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState
 } from 'react';
 
 import {useKeyDown} from '../../hooks/index.es';

@@ -11,7 +11,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
-import React, {useContext, useState, useCallback, useEffect} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import Icon from '../../shared/components/Icon.es';
 import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickActionKebab.es';

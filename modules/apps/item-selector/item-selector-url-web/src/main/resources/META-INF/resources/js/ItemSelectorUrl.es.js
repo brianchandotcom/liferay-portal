@@ -18,7 +18,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useState, useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {sub} from './utils.es';
 

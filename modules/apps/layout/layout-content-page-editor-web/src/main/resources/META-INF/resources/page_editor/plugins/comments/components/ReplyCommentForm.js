@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState, useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {ConfigContext} from '../../../app/config/index';
 import {useDispatch} from '../../../app/store/index';

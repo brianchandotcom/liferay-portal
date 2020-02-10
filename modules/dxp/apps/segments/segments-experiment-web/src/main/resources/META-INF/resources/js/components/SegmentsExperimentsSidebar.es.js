@@ -29,9 +29,9 @@ import {
 	updateSegmentsExperimentTarget
 } from '../state/actions.es';
 import {
-	getInitialState,
 	DispatchContext,
-	StateContext
+	StateContext,
+	getInitialState
 } from '../state/context.es';
 import {reducer} from '../state/reducer.es';
 import {

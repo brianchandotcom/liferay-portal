@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useReducer, useMemo} from 'react';
+import {useMemo, useReducer} from 'react';
 
 import {useFiltersConstants} from '../components/filter/hooks/useFiltersConstants.es';
 import {

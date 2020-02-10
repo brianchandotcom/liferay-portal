@@ -20,7 +20,7 @@ import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../js/utils/constant
 import {FRAGMENT_CONFIGURATION_FIELD_TYPES} from '../../config/constants/fragmentConfigurationFieldTypes';
 import {ConfigContext} from '../../config/index';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
-import {useSelector, useDispatch} from '../../store/index';
+import {useDispatch, useSelector} from '../../store/index';
 import updateFragmentConfiguration from '../../thunks/updateFragmentConfiguration';
 
 const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {

@@ -14,7 +14,7 @@
 
 import '../../common/InfoItemSelector.es';
 
-import {debounce, PortletBase} from 'frontend-js-web';
+import {PortletBase, debounce} from 'frontend-js-web';
 import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarLinkPanelDelegateTemplate.soy';

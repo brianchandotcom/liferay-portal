@@ -17,7 +17,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import StoreContext from './StoreContext.es';
 import INITIAL_STATE from './state.es';
-import {connect, disconnect, Store} from './store.es';
+import {Store, connect, disconnect} from './store.es';
 
 /**
  * HOC that returns a component that connects automatically

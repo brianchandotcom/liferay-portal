@@ -12,7 +12,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import BusyButton from '../../BusyButton/BusyButton.es';
 import ValidatedInput from '../../ValidatedInput/ValidatedInput.es';
@@ -33,6 +33,7 @@ export default function VariantForm({
 
 	useEffect(() => {
 		mounted.current = true;
+
 		return () => {
 			mounted.current = false;
 		};

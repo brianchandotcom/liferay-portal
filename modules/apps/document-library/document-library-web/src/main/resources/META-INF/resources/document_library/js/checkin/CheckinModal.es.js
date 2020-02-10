@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayRadio, ClayRadioGroup, ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';

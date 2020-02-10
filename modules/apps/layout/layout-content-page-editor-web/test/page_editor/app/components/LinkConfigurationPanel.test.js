@@ -14,11 +14,11 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {
-	cleanup,
-	render,
-	fireEvent,
 	act,
-	getByLabelText
+	cleanup,
+	fireEvent,
+	getByLabelText,
+	render
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';

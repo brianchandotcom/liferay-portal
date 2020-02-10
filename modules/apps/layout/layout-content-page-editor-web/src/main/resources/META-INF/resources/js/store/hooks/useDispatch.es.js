@@ -18,6 +18,7 @@ import StoreContext from '../StoreContext.es';
 
 function useDispatch() {
 	const store = useContext(StoreContext);
+
 	return store.dispatch;
 }
 export {useDispatch};

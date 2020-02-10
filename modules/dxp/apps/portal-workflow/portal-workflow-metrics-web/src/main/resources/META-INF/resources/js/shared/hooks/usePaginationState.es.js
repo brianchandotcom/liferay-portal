@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useContext, useState, useMemo} from 'react';
+import {useContext, useMemo, useState} from 'react';
 
 import {AppContext} from '../../components/AppContext.es';
 import {paginateArray} from '../util/array.es';

@@ -13,7 +13,7 @@
  */
 
 import ClayColorPicker from '@clayui/color-picker';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
 import templates from './ColorPickerAdapter.soy';

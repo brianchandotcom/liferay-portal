@@ -36,6 +36,7 @@ class DateInput extends React.Component {
 				value: props.value
 			};
 		}
+
 		return returnVal;
 	}
 

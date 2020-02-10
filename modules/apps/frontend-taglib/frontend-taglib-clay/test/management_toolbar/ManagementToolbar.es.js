@@ -42,6 +42,7 @@ describe('ManagementToolbar', () => {
 			),
 			on: jest.fn(eventName => {
 				searchContainerCallbacks[eventName] = jest.fn();
+
 				return searchContainerHandle;
 			}),
 			select: {

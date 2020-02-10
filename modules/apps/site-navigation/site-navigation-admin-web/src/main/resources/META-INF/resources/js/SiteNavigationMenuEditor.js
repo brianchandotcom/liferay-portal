@@ -25,6 +25,9 @@ import {
 	shouldBeNested
 } from './SiteNavigationMenuDOMHandler';
 import {
+	MENU_ITEM_CLASSNAME,
+	MENU_ITEM_CONTENT_CLASSNAME,
+	MENU_ITEM_DRAG_ICON_CLASSNAME,
 	getChildren,
 	getFromContentElement,
 	getFromId,
@@ -32,9 +35,6 @@ import {
 	getParent,
 	getSiblings,
 	isMenuItem,
-	MENU_ITEM_CLASSNAME,
-	MENU_ITEM_CONTENT_CLASSNAME,
-	MENU_ITEM_DRAG_ICON_CLASSNAME,
 	setDragging,
 	setSelected,
 	unselectAll

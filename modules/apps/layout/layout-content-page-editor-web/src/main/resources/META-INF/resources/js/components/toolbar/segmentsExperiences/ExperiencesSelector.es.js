@@ -30,8 +30,8 @@ import ExperienceModal from './ExperienceModal.es';
 import ExperiencesList from './ExperiencesList.es';
 import {ExperienceType, SegmentType} from './types.es';
 import {
-	storeModalExperienceState,
 	recoverModalExperienceState,
+	storeModalExperienceState,
 	useDebounceCallback
 } from './utils.es';
 

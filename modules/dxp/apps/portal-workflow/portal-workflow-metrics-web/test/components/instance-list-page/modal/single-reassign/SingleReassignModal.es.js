@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {render, fireEvent} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React, {useState} from 'react';
 
 import {ModalContext} from '../../../../../src/main/resources/META-INF/resources/js/components/instance-list-page/modal/ModalContext.es';

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useContext, useCallback} from 'react';
+import {useCallback, useContext} from 'react';
 
 import {AppContext} from '../../components/AppContext.es';
 

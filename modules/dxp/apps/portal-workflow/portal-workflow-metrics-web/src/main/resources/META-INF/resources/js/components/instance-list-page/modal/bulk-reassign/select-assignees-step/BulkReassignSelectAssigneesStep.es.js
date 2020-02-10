@@ -38,6 +38,7 @@ const BulkReassignSelectAssigneesStep = ({setErrorToast}) => {
 		return [
 			fetchData().catch(err => {
 				setErrorToast(Liferay.Language.get('your-request-has-failed'));
+
 				return Promise.reject(err);
 			})
 		];

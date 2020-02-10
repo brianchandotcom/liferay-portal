@@ -36,7 +36,9 @@ const NetworkStatusBar = ({error, lastFetch, status}) => {
 	const [isOnline, setIsOnline] = useState(true);
 
 	const lastSaveDate = useMemo(() => {
-		if (!lastFetch) return null;
+		if (!lastFetch) {
+			return null;
+		}
 
 		const lastSaveDateText = Liferay.Language.get('draft-saved-at-x');
 

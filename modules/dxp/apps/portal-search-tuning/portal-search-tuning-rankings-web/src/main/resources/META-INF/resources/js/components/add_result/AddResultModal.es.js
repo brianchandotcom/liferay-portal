@@ -24,8 +24,8 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import ThemeContext from '../../ThemeContext.es';
 import {
-	DELTAS,
 	DEFAULT_DELTA,
+	DELTAS,
 	FETCH_OPTIONS,
 	KEY_CODES
 } from '../../utils/constants.es';

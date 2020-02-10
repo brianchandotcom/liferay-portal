@@ -49,6 +49,7 @@ function _storeNewLayoutData(state, segmentsExperienceId, layoutData) {
 		layoutData,
 		segmentsExperienceId
 	});
+
 	return nextState;
 }
 
@@ -243,7 +244,10 @@ function createSegmentsExperienceReducer(state, action) {
 			segmentsEntryId
 		})
 			.then(objectResponse => {
-				if (objectResponse.error) throw objectResponse.error;
+				if (objectResponse.error) {
+					throw objectResponse.error;
+				}
+
 				return objectResponse;
 			})
 			.then(function _success({

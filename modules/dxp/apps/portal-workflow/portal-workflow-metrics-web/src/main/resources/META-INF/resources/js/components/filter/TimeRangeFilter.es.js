@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useMemo, useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 
 import Filter from '../../shared/components/filter/Filter.es';
 import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.es';

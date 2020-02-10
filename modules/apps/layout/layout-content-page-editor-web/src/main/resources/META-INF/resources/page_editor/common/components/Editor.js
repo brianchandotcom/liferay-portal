@@ -14,7 +14,7 @@
 
 import {EventHandler} from 'metal-events';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState, useContext} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import {ConfigContext} from '../../app/config/index';
 

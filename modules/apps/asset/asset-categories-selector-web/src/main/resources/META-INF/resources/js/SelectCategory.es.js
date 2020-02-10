@@ -14,7 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import {Treeview} from 'frontend-js-components-web';
-import React, {useState, useCallback, useRef} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 
 function visit(nodes, callback) {
 	nodes.forEach(node => {

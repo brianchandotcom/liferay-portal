@@ -14,10 +14,10 @@ import moment from '../../../../shared/util/moment.es';
 import {
 	DAYS,
 	HOURS,
-	LAST_7_DAYS,
-	LAST_30_DAYS,
-	LAST_90_DAYS,
 	LAST_180_DAYS,
+	LAST_30_DAYS,
+	LAST_7_DAYS,
+	LAST_90_DAYS,
 	LAST_YEAR,
 	MONTHS,
 	TODAY,
@@ -44,6 +44,7 @@ export const formatMonthDate = (date, timeRange) => {
 	if (firstDayOfMonth.isSame(lastDayOfMonth, 'day')) {
 		return firstDayOfMonth.format(Liferay.Language.get('mmm-dd-yyyy'));
 	}
+
 	return `${firstDayOfMonth.format(
 		Liferay.Language.get('mmm-dd')
 	)}-${lastDayOfMonth.format(Liferay.Language.get('dd-yyyy'))}`;
@@ -74,6 +75,7 @@ export const formatWeekDate = (date, timeRange) => {
 			Liferay.Language.get('mmm-dd')
 		)}-${lastDayOfWeek.format('DD')}`;
 	}
+
 	return `${firstDayOfWeek.format(
 		Liferay.Language.get('mmm-dd')
 	)}-${lastDayOfWeek.format(Liferay.Language.get('mmm-dd'))}`;
@@ -112,6 +114,7 @@ export const formatWeekDateWithYear = (date, timeRange) => {
 			Liferay.Language.get('mmm-dd')
 		)} - ${lastDayOfWeek.format(Liferay.Language.get('mmm-dd-yyyy'))}`;
 	}
+
 	return `${firstDayOfWeek.format(
 		Liferay.Language.get('mmm-dd')
 	)} - ${lastDayOfWeek.format(Liferay.Language.get('dd-yyyy'))}`;
@@ -145,6 +148,7 @@ export const formatXAxisDate = (date, isAmPm, timeRangeKey, timeRange) => {
 	else if (timeRangeKey === WEEKS) {
 		return formatWeekDate(date, timeRange);
 	}
+
 	return currentDate.format(Liferay.Language.get('mmm-dd'));
 };
 
@@ -166,6 +170,7 @@ export const formatYearDate = (date, timeRange) => {
 	if (firstDayOfYear.isSame(lastDayOfYear, 'day')) {
 		return firstDayOfYear.format(Liferay.Language.get('mmm-dd-yyyy'));
 	}
+
 	return `${firstDayOfYear.format(
 		Liferay.Language.get('mmm-dd')
 	)}-${lastDayOfYear.format(Liferay.Language.get('mmm-dd-yyyy'))}`;
@@ -202,6 +207,7 @@ export const getAxisMeasures = value => {
 	for (let i = 0; i < intervalCount; i++) {
 		intervals.push(intervalValue * (i + 1));
 	}
+
 	return {
 		intervalCount,
 		intervalValue,
@@ -294,6 +300,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 					padRight: diffRightDays < 2 ? diffRightDays + 2 : 0
 				};
 			}
+
 			return {
 				offset: 1,
 				padLeft: 0,
@@ -315,6 +322,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 					padRight: 0
 				};
 			}
+
 			return {
 				offset: 1,
 				padLeft: 0,
@@ -329,6 +337,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 					padRight: 3
 				};
 			}
+
 			return {
 				offset: 1,
 				padLeft: diffLeftDays < 14 ? 1 : 0,
@@ -338,6 +347,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 		[LAST_YEAR]: type => {
 			if (type === WEEKS) {
 				const lengthWeek = lengthKeys === 52 ? 5 : 6;
+
 				return {
 					offset: parseInt(lengthKeys / lengthWeek),
 					padLeft: 0,
@@ -355,6 +365,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 					padRight: 0
 				};
 			}
+
 			return {
 				offset: parseInt(lengthKeys / 5),
 				padLeft: 0,

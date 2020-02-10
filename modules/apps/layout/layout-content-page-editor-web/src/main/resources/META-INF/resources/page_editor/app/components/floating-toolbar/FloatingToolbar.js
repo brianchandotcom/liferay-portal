@@ -17,12 +17,12 @@ import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import {Align} from 'metal-position';
 import React, {
-	useLayoutEffect,
-	useRef,
-	useState,
+	useCallback,
 	useEffect,
+	useLayoutEffect,
 	useMemo,
-	useCallback
+	useRef,
+	useState
 } from 'react';
 import {createPortal} from 'react-dom';
 

@@ -375,6 +375,7 @@ class SegmentEdit extends Component {
 					</React.Fragment>
 				);
 			}
+
 			return returnVal;
 		});
 	};

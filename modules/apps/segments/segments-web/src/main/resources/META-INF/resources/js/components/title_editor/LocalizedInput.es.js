@@ -93,6 +93,7 @@ export default class LocalizedInput extends React.Component {
 									hasValue: value !== ''
 								};
 							}
+
 							return newLang;
 						}
 					),

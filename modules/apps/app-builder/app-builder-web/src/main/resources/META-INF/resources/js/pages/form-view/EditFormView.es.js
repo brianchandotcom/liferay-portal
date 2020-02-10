@@ -13,7 +13,7 @@
  */
 
 import {withDragAndDropContext} from 'data-engine-taglib';
-import React, {useState, useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import {AppContext} from '../../AppContext.es';

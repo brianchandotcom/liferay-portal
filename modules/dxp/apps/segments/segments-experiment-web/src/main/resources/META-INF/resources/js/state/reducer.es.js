@@ -113,6 +113,7 @@ export function reducer(state, action) {
 							...action.payload.changes
 						};
 					}
+
 					return variant;
 				})
 			};

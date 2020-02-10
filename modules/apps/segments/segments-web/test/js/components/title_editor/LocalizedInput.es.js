@@ -51,6 +51,7 @@ describe('LocalizedInput', () => {
 					initialLanguageId="en_US"
 				/>
 			);
+
 			return {asFragment, getByTestId};
 		}
 	});
@@ -106,6 +107,7 @@ describe('LocalizedInput', () => {
 					}}
 				/>
 			);
+
 			return testHelpers;
 		}
 	});

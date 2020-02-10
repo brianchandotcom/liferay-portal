@@ -21,8 +21,8 @@ import {ADD_MAPPED_INFO_ITEM} from '../../../actions/actions.es';
 import {updateRowConfigAction} from '../../../actions/updateRowConfig.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {
-	openItemSelector,
-	openImageSelector
+	openImageSelector,
+	openItemSelector
 } from '../../../utils/FragmentsEditorDialogUtils';
 import {
 	getAssetMappingFields,
@@ -32,8 +32,8 @@ import {getMappingSourceTypes} from '../../../utils/FragmentsEditorGetUtils.es';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {
-	MAPPING_SOURCE_TYPE_IDS,
-	COMPATIBLE_TYPES
+	COMPATIBLE_TYPES,
+	MAPPING_SOURCE_TYPE_IDS
 } from '../../../utils/constants';
 import templates from './FloatingToolbarLayoutBackgroundImagePanel.soy';
 

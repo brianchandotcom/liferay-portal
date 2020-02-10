@@ -33,8 +33,8 @@ import {
 import {updateActiveItemAction} from '../../actions/updateActiveItem.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {
-	shouldUpdatePureComponent,
-	onPropertiesChanged
+	onPropertiesChanged,
+	shouldUpdatePureComponent
 } from '../../utils/FragmentsEditorComponentUtils.es';
 import {
 	getFragmentColumn,

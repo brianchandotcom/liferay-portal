@@ -13,12 +13,12 @@
  */
 
 import {DragTypes, FieldType, FieldTypeList, Sidebar} from 'data-engine-taglib';
-import React, {useState, useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import Button from '../../components/button/Button.es';
 import {
-	getFieldLabel,
-	getDataDefinitionField
+	getDataDefinitionField,
+	getFieldLabel
 } from '../../utils/dataDefinition.es';
 import EditTableViewContext, {
 	UPDATE_FOCUSED_COLUMN

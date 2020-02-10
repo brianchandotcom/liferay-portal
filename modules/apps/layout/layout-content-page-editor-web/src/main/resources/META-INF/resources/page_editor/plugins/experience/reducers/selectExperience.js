@@ -13,10 +13,10 @@
  */
 
 import {
-	setExperimentStatus,
-	switchLayoutData,
 	selectExperience,
-	setUsedWidgets
+	setExperimentStatus,
+	setUsedWidgets,
+	switchLayoutData
 } from './utils';
 
 function selectExperienceReducer(state, payload) {

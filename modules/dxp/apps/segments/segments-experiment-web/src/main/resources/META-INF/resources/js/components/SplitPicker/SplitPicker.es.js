@@ -10,7 +10,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React, {useReducer, useEffect} from 'react';
+import React, {useEffect, useReducer} from 'react';
 
 import {SegmentsVariantType} from '../../types.es';
 import {SliderWithLabel} from '../SliderWithLabel.es';

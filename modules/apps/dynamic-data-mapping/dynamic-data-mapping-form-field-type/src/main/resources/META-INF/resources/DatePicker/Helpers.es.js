@@ -16,6 +16,7 @@ export function setDateSelected(d) {
 	const newDate = clone(d);
 
 	newDate.setHours(12, 0, 0, 0);
+
 	return `${newDate.getFullYear()} ${newDate.getMonth()} ${newDate.getDate()}`;
 }
 

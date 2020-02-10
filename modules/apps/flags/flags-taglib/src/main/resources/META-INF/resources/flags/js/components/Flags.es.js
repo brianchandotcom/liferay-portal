@@ -60,6 +60,7 @@ const Flags = ({
 		if (selectedReason === OTHER_REASON_VALUE) {
 			return otherReason || Liferay.Language.get('no-reason-specified');
 		}
+
 		return selectedReason;
 	};
 

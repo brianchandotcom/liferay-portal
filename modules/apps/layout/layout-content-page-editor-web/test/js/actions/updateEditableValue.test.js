@@ -14,13 +14,13 @@
 
 import {
 	updateEditableValueContentAction,
-	updateEditableValueMappedFieldAction,
 	updateEditableValueFieldIdAction,
+	updateEditableValueMappedFieldAction,
 	updateFragmentConfigurationAction
 } from '../../../src/main/resources/META-INF/resources/js/actions/updateEditableValue.es';
 import {
-	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 } from '../../../src/main/resources/META-INF/resources/js/utils/constants';
 import {prefixSegmentsExperienceId} from '../../../src/main/resources/META-INF/resources/js/utils/prefixSegmentsExperienceId.es';

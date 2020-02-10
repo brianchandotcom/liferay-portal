@@ -18,10 +18,10 @@ import dom from 'metal-dom';
 import {Align} from 'metal-position';
 import React, {
 	useEffect,
+	useLayoutEffect,
 	useReducer,
 	useRef,
-	useState,
-	useLayoutEffect
+	useState
 } from 'react';
 
 import reducer, {STATES} from './reducer';

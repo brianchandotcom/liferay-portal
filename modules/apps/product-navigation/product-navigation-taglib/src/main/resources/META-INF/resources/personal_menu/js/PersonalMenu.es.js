@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState, useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 function PersonalMenu({
 	color,

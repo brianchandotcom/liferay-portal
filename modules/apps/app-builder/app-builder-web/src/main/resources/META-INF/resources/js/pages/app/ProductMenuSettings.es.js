@@ -61,6 +61,7 @@ export default () => {
 		}
 
 		const regex = new RegExp(searchText, 'ig');
+
 		return regex.test(item.name);
 	});
 

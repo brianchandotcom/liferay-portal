@@ -10,7 +10,7 @@
  */
 
 import getClassName from 'classnames';
-import React, {useMemo, useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 
 const FilterItem = ({
 	active,

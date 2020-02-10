@@ -14,7 +14,7 @@
 
 import {getIndexes} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import dom from 'metal-dom';
-import {useEffect, useCallback, useContext} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 import {useDrop} from 'react-dnd';
 
 import AppContext from '../AppContext.es';

@@ -201,6 +201,7 @@ export const removeFields = (pages, pageIndex, rowIndex, columnIndex) => {
 			) {
 				newColumn.fields = [];
 			}
+
 			return newColumn;
 		}
 	);
@@ -282,6 +283,7 @@ export const rowHasFields = (pages, pageIndex, rowIndex) => {
 			hasFields = row.columns.some(column => column.fields.length);
 		}
 	}
+
 	return hasFields;
 };
 

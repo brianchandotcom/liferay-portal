@@ -23,7 +23,7 @@ import usePlugins from '../../core/hooks/usePlugins';
 import * as Actions from '../actions/index';
 import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {ConfigContext} from '../config/index';
-import {useSelector, useDispatch} from '../store/index';
+import {useDispatch, useSelector} from '../store/index';
 import {useSelectItem} from './Controls';
 import ExperimentsLabel from './ExperimentsLabel';
 import NetworkStatusBar from './NetworkStatusBar';

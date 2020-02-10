@@ -90,6 +90,7 @@ function generatePanels(sidebarPanels) {
 			else {
 				groups[groups.length - 1].push(panel.sidebarPanelId);
 			}
+
 			return groups;
 		},
 		[[]]
@@ -137,6 +138,7 @@ function partitionPanels(panels) {
 		if (!isSeparator(panel)) {
 			map[sidebarPanelId] = panel;
 		}
+
 		return map;
 	}, {});
 }

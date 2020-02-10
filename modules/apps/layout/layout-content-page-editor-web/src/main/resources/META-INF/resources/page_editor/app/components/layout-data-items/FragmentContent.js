@@ -16,13 +16,13 @@ import {useIsMounted} from 'frontend-js-react-web';
 import {debounce} from 'frontend-js-web';
 import {closest} from 'metal-dom';
 import React, {
+	useCallback,
 	useContext,
 	useEffect,
 	useLayoutEffect,
-	useState,
+	useMemo,
 	useRef,
-	useCallback,
-	useMemo
+	useState
 } from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
@@ -38,7 +38,7 @@ import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSe
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
-import {useIsActive, useActiveItemId} from '../Controls';
+import {useActiveItemId, useIsActive} from '../Controls';
 import UnsafeHTML from '../UnsafeHTML';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import EditableDecoration from './EditableDecoration';

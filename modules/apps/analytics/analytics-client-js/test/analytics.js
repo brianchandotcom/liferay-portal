@@ -187,6 +187,7 @@ describe('Analytics', () => {
 			fetchMock.restore();
 			fetchMock.mock(/identity$/, () => {
 				identityCalled += 1;
+
 				return '';
 			});
 
@@ -210,6 +211,7 @@ describe('Analytics', () => {
 			fetchMock.restore();
 			fetchMock.mock(/identity$/, () => {
 				identityCalled += 1;
+
 				return '';
 			});
 

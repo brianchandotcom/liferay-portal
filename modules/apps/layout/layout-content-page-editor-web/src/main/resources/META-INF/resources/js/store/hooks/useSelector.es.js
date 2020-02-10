@@ -18,6 +18,7 @@ import StateContext from '../StateContext.es';
 
 function useSelector(selector) {
 	const state = useContext(StateContext);
+
 	return selector(state);
 }
 

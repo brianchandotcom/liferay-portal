@@ -18,7 +18,9 @@ export const withParams = (...components) => ({
 	match: {params}
 }) => {
 	return components.map((Component, index) => {
-		if (params.sort) params.sort = decodeURIComponent(params.sort);
+		if (params.sort) {
+			params.sort = decodeURIComponent(params.sort);
+		}
 
 		return (
 			<Component

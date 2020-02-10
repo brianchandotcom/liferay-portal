@@ -106,6 +106,7 @@ function trackBlogViewed(analytics) {
 			});
 	});
 	const stopTrackingBlogsScroll = trackBlogsScroll(analytics, blogElements);
+
 	return () => {
 		stopTrackingBlogsScroll();
 		stopTrackingOnReady();

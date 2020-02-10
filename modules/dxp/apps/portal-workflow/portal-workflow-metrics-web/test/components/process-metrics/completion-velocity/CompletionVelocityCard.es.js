@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {render, findAllByTestId, findByTestId} from '@testing-library/react';
+import {findAllByTestId, findByTestId, render} from '@testing-library/react';
 import React from 'react';
 
 import CompletionVelocityCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/completion-velocity/CompletionVelocityCard.es';

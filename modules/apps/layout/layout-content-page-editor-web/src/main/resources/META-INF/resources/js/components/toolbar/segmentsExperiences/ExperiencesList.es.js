@@ -16,9 +16,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {
+	DELETE_SEGMENTS_EXPERIENCE,
 	SELECT_SEGMENTS_EXPERIENCE,
-	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
-	DELETE_SEGMENTS_EXPERIENCE
+	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../../../actions/actions.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import ExperienceItem from './ExperienceItem.es';

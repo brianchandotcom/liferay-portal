@@ -55,8 +55,12 @@ const ExperienceModal = ({
 		const validSegmentId = _getValidValue(selectedSegmentId);
 
 		if (!validName || !validSegmentId) {
-			if (!validName) setRequiredNameError(true);
-			if (!validSegmentId) setRequiredSegmentError(true);
+			if (!validName) {
+				setRequiredNameError(true);
+			}
+			if (!validSegmentId) {
+				setRequiredSegmentError(true);
+			}
 		}
 		else {
 			onSubmit({

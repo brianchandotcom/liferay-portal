@@ -31,16 +31,16 @@ import {removeRowAction} from '../../actions/removeRow.es';
 import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {
-	shouldUpdatePureComponent,
-	onPropertiesChanged
+	onPropertiesChanged,
+	shouldUpdatePureComponent
 } from '../../utils/FragmentsEditorComponentUtils.es';
 import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
 import {
+	editableIsMappedToInfoItem,
 	getItemMoveDirection,
 	getItemPath,
 	getRowIndex,
-	itemIsInPath,
-	editableIsMappedToInfoItem
+	itemIsInPath
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {
 	moveRow,

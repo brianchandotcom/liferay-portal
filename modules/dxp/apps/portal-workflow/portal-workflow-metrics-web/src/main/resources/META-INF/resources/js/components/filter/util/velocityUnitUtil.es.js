@@ -56,7 +56,9 @@ const velocityUnitsMap = {
 };
 
 const getVelocityUnits = ({dateEnd, dateStart}) => {
-	if (!dateEnd || !dateStart) return [];
+	if (!dateEnd || !dateStart) {
+		return [];
+	}
 
 	const daysDiff = moment.utc(dateEnd).diff(moment.utc(dateStart), 'days');
 

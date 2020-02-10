@@ -168,6 +168,7 @@ const Tooltip = (isAmPm, timeRange, unitKey, unitName) => dataPoints => {
 		else if (unitKey === YEARS) {
 			return formatYearDate(date, timeRange);
 		}
+
 		return dateUTC.format(datePattern);
 	};
 

@@ -14,11 +14,11 @@
 
 import React, {useEffect, useReducer} from 'react';
 
-import AppContext, {initialState, createReducer} from './AppContext.es';
+import AppContext, {createReducer, initialState} from './AppContext.es';
 import {
-	UPDATE_IDS,
+	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT,
-	UPDATE_DATA_DEFINITION
+	UPDATE_IDS
 } from './actions.es';
 import {getItem} from './utils/client.es';
 

@@ -17,9 +17,9 @@ import '../FieldBase/FieldBase.es';
 import './DocumentLibraryRegister.soy';
 
 import {
+	ItemSelectorDialog,
 	createActionURL,
-	createPortletURL,
-	ItemSelectorDialog
+	createPortletURL
 } from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';

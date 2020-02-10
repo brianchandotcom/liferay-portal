@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useContext, useCallback, useState} from 'react';
+import {useCallback, useContext, useState} from 'react';
 
 import {AppContext} from '../../components/AppContext.es';
 
@@ -23,6 +23,7 @@ const useFetch = ({admin = false, params = {}, url}) => {
 		() =>
 			client.get(url, {params}).then(({data}) => {
 				setData(data);
+
 				return data;
 			}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps

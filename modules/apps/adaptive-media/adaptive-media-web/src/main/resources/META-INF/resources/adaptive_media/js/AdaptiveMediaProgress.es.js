@@ -16,9 +16,9 @@ import ClayProgressBar from '@clayui/progress-bar';
 import {useIsMounted, useTimeout} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
-import {enableEntryIcon, disableEntryIcon} from './utils/entryIcons.es';
+import {disableEntryIcon, enableEntryIcon} from './utils/entryIcons.es';
 
 const AdaptiveMediaProgress = ({
 	adaptedImages,

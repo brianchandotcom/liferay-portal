@@ -16,9 +16,9 @@ import PropTypes from 'prop-types';
 import React, {
 	useCallback,
 	useContext,
-	useState,
 	useEffect,
-	useRef
+	useRef,
+	useState
 } from 'react';
 
 import SegmentsExperimentContext from '../context.es';
@@ -72,6 +72,7 @@ function ReviewExperimentModal({modalObserver, onModalClose, onRun, variants}) {
 
 	useEffect(() => {
 		mounted.current = true;
+
 		return () => {
 			mounted.current = false;
 		};
@@ -281,9 +282,12 @@ function _variantsToSplitVariantsMap(variants) {
 }
 
 function _getDaysMessage(days) {
-	if (days === 1)
+	if (days === 1) {
 		return Liferay.Util.sub(Liferay.Language.get('x-day'), days);
-	else return Liferay.Util.sub(Liferay.Language.get('x-days'), days);
+	}
+	else {
+		return Liferay.Util.sub(Liferay.Language.get('x-days'), days);
+	}
 }
 
 ReviewExperimentModal.propTypes = {

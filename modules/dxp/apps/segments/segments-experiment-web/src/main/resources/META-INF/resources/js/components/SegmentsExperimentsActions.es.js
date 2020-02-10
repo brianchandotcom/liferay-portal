@@ -19,9 +19,9 @@ import React, {useContext} from 'react';
 import SegmentsExperimentsContext from '../context.es';
 import {
 	closeReviewAndRunExperiment,
-	updateSegmentsExperimentStatus,
 	reviewAndRunExperiment,
-	runExperiment
+	runExperiment,
+	updateSegmentsExperimentStatus
 } from '../state/actions.es';
 import {
 	STATUS_COMPLETED,
@@ -32,7 +32,7 @@ import {
 	STATUS_RUNNING,
 	STATUS_TERMINATED
 } from '../util/statuses.es';
-import {StateContext, DispatchContext} from './../state/context.es';
+import {DispatchContext, StateContext} from './../state/context.es';
 import {ReviewExperimentModal} from './ReviewExperimentModal.es';
 
 function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
@@ -71,11 +71,12 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 							)
 						);
 
-						if (confirmed)
+						if (confirmed) {
 							onEditSegmentsExperimentStatus(
 								experiment,
 								STATUS_TERMINATED
 							);
+						}
 					}}
 				>
 					{Liferay.Language.get('terminate-test')}

@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import React, {useContext, useMemo, useEffect} from 'react';
+import React, {useContext, useEffect, useMemo} from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectShowLayoutItemTopper from '../../selectors/selectShowLayoutItemTopper';

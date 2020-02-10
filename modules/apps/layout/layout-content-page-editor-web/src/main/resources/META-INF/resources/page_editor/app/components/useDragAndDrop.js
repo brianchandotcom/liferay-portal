@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
@@ -112,6 +112,7 @@ export default function useDragAndDrop({
 			if (isValidMoveToMiddle(dropNestedAndSibling, item, _item)) {
 				if (isMiddle(hoverClientY, hoverMiddleY)) {
 					setTargetPosition(TARGET_POSITION.MIDDLE);
+
 					return;
 				}
 			}
@@ -217,6 +218,7 @@ function getTargetPosition(hoverClientY, hoverMiddleY) {
 
 function isSibling(children, item, targetPosition, hoverId) {
 	const itemIndex = children.findIndex(id => id === item.itemId);
+
 	return (
 		(children[itemIndex + 1] === hoverId &&
 			targetPosition === TARGET_POSITION.TOP) ||

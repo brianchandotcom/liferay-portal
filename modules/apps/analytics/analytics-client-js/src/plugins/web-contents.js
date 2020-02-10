@@ -13,7 +13,7 @@
  */
 
 import {getNumberOfWords} from '../utils/assets';
-import {onReady, clickEvent} from '../utils/events';
+import {clickEvent, onReady} from '../utils/events';
 
 const applicationId = 'WebContent';
 
@@ -89,6 +89,7 @@ function trackWebContentViewed(analytics) {
 				analytics.send('webContentViewed', applicationId, payload);
 			});
 	});
+
 	return () => stopTrackingOnReady();
 }
 

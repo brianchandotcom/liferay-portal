@@ -13,9 +13,9 @@
  */
 
 import {
+	addExperience,
 	storeNewLayoutData,
-	updateFragmentEntryLinksEditableValues,
-	addExperience
+	updateFragmentEntryLinksEditableValues
 } from './utils';
 
 function createExperienceReducer(state, payload) {

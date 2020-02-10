@@ -17,7 +17,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
-import React, {useState, useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 
 function ChangeDefaultLanguage(props) {
 	const [active, setActive] = useState(false);

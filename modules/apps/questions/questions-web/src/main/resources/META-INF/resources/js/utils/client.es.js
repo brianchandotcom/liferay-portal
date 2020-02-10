@@ -138,6 +138,7 @@ export const deleteMessage = messageBoardMessage =>
 				)
 			);
 		}
+
 		return data;
 	});
 

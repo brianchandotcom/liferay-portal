@@ -27,8 +27,8 @@ import removeExperience from '../thunks/removeExperience';
 import updateExperience from '../thunks/updateExperience';
 import updateExperiencePriority from '../thunks/updateExperiencePriority';
 import {
-	storeModalExperienceState,
 	recoverModalExperienceState,
+	storeModalExperienceState,
 	useDebounceCallback
 } from '../utils';
 import ExperienceModal from './ExperienceModal';

@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-import {Route, HashRouter as Router, Switch} from 'react-router-dom';
+import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import HeaderController from '../shared/components/header/HeaderController.es';
 import {withParams} from '../shared/components/router/routerUtil.es';

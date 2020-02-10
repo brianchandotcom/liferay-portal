@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import Button from './Button.es';
 

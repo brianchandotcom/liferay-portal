@@ -27,7 +27,7 @@ import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';
 import selectAvailablePanels from '../selectors/selectAvailablePanels';
 import selectAvailableSidebarPanels from '../selectors/selectAvailableSidebarPanels';
-import {useSelector, useDispatch} from '../store/index';
+import {useDispatch, useSelector} from '../store/index';
 import {useSelectItem} from './Controls';
 
 const {Suspense, useCallback, useContext, useEffect} = React;

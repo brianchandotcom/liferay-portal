@@ -14,9 +14,9 @@
 
 import {UPDATE_ROW_CONFIG} from './actions.es';
 import {
+	disableSavingChangesStatusAction,
 	enableSavingChangesStatusAction,
-	updateLastSaveDateAction,
-	disableSavingChangesStatusAction
+	updateLastSaveDateAction
 } from './saveChanges.es';
 import {updatePageContentsAction} from './updatePageContents.es';
 import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es';

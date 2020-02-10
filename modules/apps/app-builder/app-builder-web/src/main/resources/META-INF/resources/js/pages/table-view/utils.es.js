@@ -56,5 +56,6 @@ export const getFieldTypeLabel = (fieldTypes, fieldType) => {
 	if (fieldTypeObject) {
 		return fieldTypeObject.label;
 	}
+
 	return fieldType;
 };

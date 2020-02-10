@@ -13,7 +13,7 @@
  */
 
 import openToast from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';

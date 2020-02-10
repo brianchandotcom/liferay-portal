@@ -161,6 +161,7 @@ function AssetVocabulariesCategoriesSelector({
 								value: item.categoryId
 							});
 						}
+
 						return acc;
 					},
 					[]

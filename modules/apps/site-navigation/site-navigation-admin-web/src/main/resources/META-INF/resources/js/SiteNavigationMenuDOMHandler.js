@@ -16,12 +16,12 @@ import {contains, hasClass, toElement} from 'metal-dom';
 import position from 'metal-position';
 
 import {
-	getChildren,
-	getId,
-	isMenuItem,
 	MENU_CONTAINER_CLASSNAME,
 	MENU_ITEM_CLASSNAME,
-	MENU_ITEM_DRAGGING_CLASSNAME
+	MENU_ITEM_DRAGGING_CLASSNAME,
+	getChildren,
+	getId,
+	isMenuItem
 } from './SiteNavigationMenuItemDOMHandler';
 
 /**

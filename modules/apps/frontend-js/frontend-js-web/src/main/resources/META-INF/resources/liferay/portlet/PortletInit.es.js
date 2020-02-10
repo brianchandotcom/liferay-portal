@@ -179,6 +179,7 @@ class PortletInit {
 					listener.handler('portlet.onError', err);
 				});
 			}
+
 			return false;
 		});
 	}
@@ -767,6 +768,7 @@ class PortletInit {
 				listener.handler(type, payload);
 				amount++;
 			}
+
 			return amount;
 		}, 0);
 	}
@@ -798,6 +800,7 @@ class PortletInit {
 				newParameters[key] = [...optParameters[key]];
 			}
 		});
+
 		return newParameters;
 	}
 
@@ -956,6 +959,7 @@ class PortletInit {
 			parameters
 		).then(url => {
 			partialActionInitObject.url = url;
+
 			return partialActionInitObject;
 		});
 	}

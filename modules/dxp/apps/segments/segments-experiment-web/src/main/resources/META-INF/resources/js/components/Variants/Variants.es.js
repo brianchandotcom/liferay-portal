@@ -157,10 +157,12 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 				let variantExperienceId = null;
 
 				const newVariants = variants.filter(variant => {
-					if (variant.segmentsExperimentRelId !== variantId)
+					if (variant.segmentsExperimentRelId !== variantId) {
 						return true;
+					}
 
 					variantExperienceId = variant.segmentsExperienceId;
+
 					return false;
 				});
 

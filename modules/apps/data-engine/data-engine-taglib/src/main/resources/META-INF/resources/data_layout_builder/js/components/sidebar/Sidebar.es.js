@@ -15,7 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Button from '../button/Button.es';
 import SearchInput from '../search-input/SearchInput.es';

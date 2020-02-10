@@ -13,7 +13,7 @@
  */
 
 import {DataLayoutBuilderActions, DataLayoutVisitor} from 'data-engine-taglib';
-import React, {useEffect, useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';

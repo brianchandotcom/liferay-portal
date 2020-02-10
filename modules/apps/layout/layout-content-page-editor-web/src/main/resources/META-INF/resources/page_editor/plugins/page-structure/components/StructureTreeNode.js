@@ -25,7 +25,7 @@ import {
 } from '../../../app/components/Controls';
 import {ConfigContext} from '../../../app/config/index';
 import selectShowLayoutItemRemoveButton from '../../../app/selectors/selectShowLayoutItemRemoveButton';
-import {useSelector, useDispatch} from '../../../app/store/index';
+import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 
 const NameButton = ({id, name}) => {

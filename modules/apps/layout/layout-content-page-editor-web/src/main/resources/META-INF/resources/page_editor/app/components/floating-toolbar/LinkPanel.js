@@ -15,11 +15,11 @@
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import {cancelDebounce, debounce} from 'frontend-js-web';
 import React, {
-	useState,
+	useCallback,
 	useContext,
 	useEffect,
-	useCallback,
-	useRef
+	useRef,
+	useState
 } from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../js/utils/constants';

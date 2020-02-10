@@ -98,6 +98,7 @@ const getSelectedItems = filterResults => {
 
 const mergeItemsArray = (baseItems = [], ...items) => {
 	items = items.filter(value => value !== undefined && value !== null);
+
 	return baseItems.concat(...items);
 };
 

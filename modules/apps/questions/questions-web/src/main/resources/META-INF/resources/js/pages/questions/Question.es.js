@@ -65,6 +65,7 @@ export default ({
 	const postAnswer = () => {
 		createAnswer(articleBody, question.id).then(() => {
 			setArticleBody('');
+
 			return loadThread();
 		});
 	};
@@ -90,6 +91,7 @@ export default ({
 						...answers.map(otherAnswer => {
 							otherAnswer.showAsAnswer =
 								otherAnswer.id === answerId;
+
 							return otherAnswer;
 						})
 					]);

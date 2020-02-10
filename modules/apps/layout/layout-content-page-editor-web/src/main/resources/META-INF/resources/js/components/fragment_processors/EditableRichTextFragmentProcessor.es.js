@@ -16,8 +16,8 @@ import {object} from 'metal';
 import {EventHandler} from 'metal-events';
 
 import {
-	FLOATING_TOOLBAR_BUTTONS,
-	CREATE_PROCESSOR_EVENT_TYPES
+	CREATE_PROCESSOR_EVENT_TYPES,
+	FLOATING_TOOLBAR_BUTTONS
 } from '../../utils/constants';
 
 const KEY_ENTER = 13;

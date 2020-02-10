@@ -37,6 +37,7 @@ function getConfig() {
 	}
 	catch (error) {
 		console.log(`info: using fallback config in ${__filename}`);
+
 		return FALLBACK_CONFIG;
 	}
 

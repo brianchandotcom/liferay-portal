@@ -32,9 +32,9 @@ import {
 import {updateEditableValueContentAction} from '../../actions/updateEditableValue.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {
+	onPropertiesChanged,
 	shouldUpdateOnChangeProperties,
-	shouldUpdatePureComponent,
-	onPropertiesChanged
+	shouldUpdatePureComponent
 } from '../../utils/FragmentsEditorComponentUtils.es';
 import {
 	editableIsMappedToInfoItem,
@@ -43,11 +43,11 @@ import {
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {computeEditableValue} from '../../utils/computeValues.es';
 import {
+	CREATE_PROCESSOR_EVENT_TYPES,
 	EDITABLE_FIELD_CONFIG_KEYS,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FLOATING_TOOLBAR_BUTTONS,
-	FRAGMENTS_EDITOR_ITEM_TYPES,
-	CREATE_PROCESSOR_EVENT_TYPES
+	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../utils/constants';
 import debouncedAlert from '../../utils/debouncedAlert.es';
 import {isNullOrUndefined} from '../../utils/isNullOrUndefined.es';

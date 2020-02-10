@@ -11,9 +11,9 @@
 
 import {
 	cleanup,
-	render,
 	findAllByTestId,
-	findByTestId
+	findByTestId,
+	render
 } from '@testing-library/react';
 import React from 'react';
 

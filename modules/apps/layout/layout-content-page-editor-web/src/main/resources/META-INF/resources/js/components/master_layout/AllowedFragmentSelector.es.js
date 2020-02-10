@@ -15,7 +15,7 @@
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import useSelector from '../../store/hooks/useSelector.es';
 import {isNullOrUndefined} from '../../utils/isNullOrUndefined.es';

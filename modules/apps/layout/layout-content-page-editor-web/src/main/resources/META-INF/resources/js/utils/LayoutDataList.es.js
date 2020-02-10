@@ -39,6 +39,7 @@ function containsFragmentEntryLinkId(
 			LayoutDataItem.layoutData.structure,
 			fragmentEntryLinkId
 		);
+
 		return index !== -1;
 	});
 }

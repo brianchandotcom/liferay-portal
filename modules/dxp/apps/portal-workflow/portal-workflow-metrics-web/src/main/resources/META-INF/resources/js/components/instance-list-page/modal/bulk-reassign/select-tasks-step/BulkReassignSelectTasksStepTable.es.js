@@ -11,7 +11,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
-import React, {useContext, useEffect, useState, useCallback} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {ModalContext} from '../../ModalContext.es';
 

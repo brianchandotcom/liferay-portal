@@ -13,12 +13,12 @@
  */
 
 import React, {
-	useReducer,
 	useCallback,
-	useRef,
-	useEffect,
 	useContext,
+	useEffect,
 	useMemo,
+	useReducer,
+	useRef,
 	useState
 } from 'react';
 

@@ -15,7 +15,7 @@
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect, useMemo, useContext} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import {ConfigContext} from '../config/index';
 import {useSelector} from '../store/index';

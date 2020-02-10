@@ -185,6 +185,7 @@ function keyLangToLanguageTag(keyLang = '', lowercase = true) {
 	if (lowercase) {
 		langTag = langTag.toLowerCase();
 	}
+
 	return langTag;
 }
 

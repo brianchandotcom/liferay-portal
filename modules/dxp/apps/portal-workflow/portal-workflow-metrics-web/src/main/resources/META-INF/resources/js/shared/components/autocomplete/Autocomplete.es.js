@@ -11,7 +11,7 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import {ClayInput} from '@clayui/form';
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import PromisesResolver from '../promises-resolver/PromisesResolver.es';
 import {DropDown} from './AutocompleteDropDown.es';

@@ -132,6 +132,7 @@ const ItemSelectorPreview = ({
 			setCurrentItemIndex(index => {
 				const lastIndex = itemList.length - 1;
 				const shouldResetIndex = index === lastIndex;
+
 				return shouldResetIndex ? 0 : index + 1;
 			});
 		}
@@ -142,6 +143,7 @@ const ItemSelectorPreview = ({
 			setCurrentItemIndex(index => {
 				const lastIndex = itemList.length - 1;
 				const shouldResetIndex = index === 0;
+
 				return shouldResetIndex ? lastIndex : index - 1;
 			});
 		}
@@ -149,7 +151,9 @@ const ItemSelectorPreview = ({
 
 	const handleOnKeyDown = useCallback(
 		e => {
-			if (!isMounted()) return;
+			if (!isMounted()) {
+				return;
+			}
 
 			switch (e.which || e.keyCode) {
 				case KEY_CODE.LEFT:

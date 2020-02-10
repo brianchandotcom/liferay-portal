@@ -182,7 +182,9 @@ describe('ExperienceToolbarSection', () => {
 			}
 		};
 		const mockDispatch = jest.fn(a => {
-			if (typeof a === 'function') return a(mockDispatch);
+			if (typeof a === 'function') {
+				return a(mockDispatch);
+			}
 		});
 
 		const {
@@ -220,7 +222,9 @@ describe('ExperienceToolbarSection', () => {
 		);
 
 		const mockDispatch = jest.fn(a => {
-			if (typeof a === 'function') return a(mockDispatch);
+			if (typeof a === 'function') {
+				return a(mockDispatch);
+			}
 		});
 
 		const {
@@ -295,7 +299,9 @@ describe('ExperienceToolbarSection', () => {
 		);
 
 		const mockDispatch = jest.fn(a => {
-			if (typeof a === 'function') return a(mockDispatch);
+			if (typeof a === 'function') {
+				return a(mockDispatch);
+			}
 		});
 
 		const {
@@ -379,7 +385,9 @@ describe('ExperienceToolbarSection', () => {
 			});
 
 		const mockDispatch = jest.fn(a => {
-			if (typeof a === 'function') return a(mockDispatch);
+			if (typeof a === 'function') {
+				return a(mockDispatch);
+			}
 		});
 
 		const {
@@ -444,7 +452,9 @@ describe('ExperienceToolbarSection', () => {
 		);
 
 		const mockDispatch = jest.fn(a => {
-			if (typeof a === 'function') return a(mockDispatch);
+			if (typeof a === 'function') {
+				return a(mockDispatch);
+			}
 		});
 
 		const {
@@ -526,7 +536,9 @@ describe('ExperienceToolbarSection', () => {
 		window.confirm = jest.fn(() => true);
 
 		const mockDispatch = jest.fn(a => {
-			if (typeof a === 'function') return a(mockDispatch);
+			if (typeof a === 'function') {
+				return a(mockDispatch);
+			}
 		});
 
 		const mockStateForDelete = {

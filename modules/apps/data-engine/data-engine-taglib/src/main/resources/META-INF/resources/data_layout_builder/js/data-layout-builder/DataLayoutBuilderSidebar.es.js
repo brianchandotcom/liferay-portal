@@ -16,18 +16,18 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import React, {
-	useEffect,
-	useRef,
-	useState,
 	useContext,
-	useLayoutEffect
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState
 } from 'react';
 
 import AppContext from '../AppContext.es';
 import {
-	dropLayoutBuilderField,
+	EDIT_CUSTOM_OBJECT_FIELD,
 	EVALUATION_ERROR,
-	EDIT_CUSTOM_OBJECT_FIELD
+	dropLayoutBuilderField
 } from '../actions.es';
 import Button from '../components/button/Button.es';
 import FieldTypeList from '../components/field-types/FieldTypeList.es';
@@ -218,7 +218,9 @@ const SettingsSidebarHeader = () => {
 		dataLayoutBuilder.dispatch('sidebarFieldBlurred');
 	};
 
-	if (!fieldType) return null;
+	if (!fieldType) {
+		return null;
+	}
 
 	return (
 		<Sidebar.Header className="d-flex">

@@ -18,7 +18,7 @@ import './TextRegister.soy';
 
 import 'clay-autocomplete';
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
-import {debounce, cancelDebounce} from 'frontend-js-web';
+import {cancelDebounce, debounce} from 'frontend-js-web';
 import Component from 'metal-component';
 import dom from 'metal-dom';
 import Soy from 'metal-soy';

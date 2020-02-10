@@ -15,7 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {DragTypes} from 'data-engine-taglib';
-import React, {useLayoutEffect, useRef, useState, useContext} from 'react';
+import React, {useContext, useLayoutEffect, useRef, useState} from 'react';
 import {useDrop} from 'react-dnd';
 
 import Table from '../../components/table/Table.es';

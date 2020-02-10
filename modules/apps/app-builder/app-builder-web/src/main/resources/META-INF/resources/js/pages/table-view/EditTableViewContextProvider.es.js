@@ -12,16 +12,16 @@
  * details.
  */
 
-import React, {useReducer, useEffect} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {getItem} from '../../utils/client.es';
 import EditTableViewContext, {
-	initialState,
-	reducer,
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LIST_VIEW,
-	UPDATE_FIELD_TYPES
+	UPDATE_FIELD_TYPES,
+	initialState,
+	reducer
 } from './EditTableViewContext.es';
 
 export default withRouter(

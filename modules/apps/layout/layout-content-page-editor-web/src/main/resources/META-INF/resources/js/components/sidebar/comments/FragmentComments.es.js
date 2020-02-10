@@ -76,6 +76,7 @@ const FragmentComments = props => {
 						fragmentEntryLinkComments[
 							fragmentEntryLinkComments.length - 1 - i
 						];
+
 					return (
 						<FragmentComment
 							comment={comment}

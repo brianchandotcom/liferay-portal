@@ -14,7 +14,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import PropTypes from 'prop-types';
-import React, {useState, useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import SegmentsExperimentsContext from '../../../context.es';
 import {navigateToExperience} from '../../../util/navigation.es';
@@ -143,7 +143,9 @@ function Variant({
 			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 		);
 
-		if (confirmed) return onVariantDeletion(variantId);
+		if (confirmed) {
+			return onVariantDeletion(variantId);
+		}
 	}
 
 	function _handleEdition() {

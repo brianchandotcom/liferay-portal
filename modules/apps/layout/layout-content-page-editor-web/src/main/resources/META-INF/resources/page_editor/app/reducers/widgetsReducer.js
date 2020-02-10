@@ -68,7 +68,7 @@ function setWidgetUsage(widgets, path, usage) {
 
 	const [currentPath, ...restPath] = path;
 
-	if (widgets instanceof Array) {
+	if (Array.isArray(widgets)) {
 		return widgets.map((widget, index) => {
 			if (index === currentPath) {
 				return setWidgetUsage(widgets[currentPath], restPath, usage);

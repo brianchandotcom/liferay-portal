@@ -15,11 +15,11 @@
 import classNames from 'classnames';
 import {closest} from 'metal-dom';
 import React, {
-	useLayoutEffect,
-	useState,
 	useCallback,
 	useContext,
-	useMemo
+	useLayoutEffect,
+	useMemo,
+	useState
 } from 'react';
 import {createPortal} from 'react-dom';
 
@@ -28,9 +28,9 @@ import selectEditableValue from '../../selectors/selectEditableValue';
 import selectPrefixedSegmentsExperienceId from '../../selectors/selectPrefixedSegmentsExperienceId';
 import {useSelector} from '../../store/index';
 import {
+	useHoverItem,
 	useIsActive,
 	useIsHovered,
-	useHoverItem,
 	useSelectItem
 } from '../Controls';
 

@@ -474,6 +474,7 @@ class Sidebar extends Component {
 		Object.keys(transitionEndEvents).some(name => {
 			if (el.style[name] !== undefined) {
 				eventName = transitionEndEvents[name];
+
 				return true;
 			}
 		});
@@ -821,6 +822,7 @@ class Sidebar extends Component {
 
 	_renderElementSetsGroups(groups) {
 		const {fieldSets, spritemap} = this.props;
+
 		return (
 			<div
 				aria-orientation="vertical"

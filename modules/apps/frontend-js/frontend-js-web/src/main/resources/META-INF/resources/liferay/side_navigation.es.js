@@ -84,6 +84,7 @@ function getUniqueSelector(element) {
 			const isIdentifying = IDENTITY_ATTRIBUTES.some(regExp => {
 				return regExp.test(name);
 			});
+
 			return isIdentifying ? `[${name}=${JSON.stringify(value)}]` : null;
 		})
 		.filter(Boolean)
@@ -362,6 +363,7 @@ SideNavigation.prototype = {
 					if (!response.ok) {
 						throw new Error(`Failed to fetch ${url}`);
 					}
+
 					return response.text();
 				})
 				.then(text => {

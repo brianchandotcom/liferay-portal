@@ -12,7 +12,7 @@
  * details.
  */
 
-import {createPortletURL, PortletBase} from 'frontend-js-web';
+import {PortletBase, createPortletURL} from 'frontend-js-web';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';

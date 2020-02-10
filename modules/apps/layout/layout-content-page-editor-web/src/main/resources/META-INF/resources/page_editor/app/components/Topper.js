@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useContext, useRef, useMemo} from 'react';
+import React, {useContext, useMemo, useRef} from 'react';
 
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
@@ -27,10 +27,10 @@ import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
 import {
 	useActiveItemId,
-	useHoveredItemId,
 	useHoverItem,
-	useIsSelected,
+	useHoveredItemId,
 	useIsHovered,
+	useIsSelected,
 	useSelectItem
 } from './Controls';
 import useDragAndDrop, {TARGET_POSITION} from './useDragAndDrop';

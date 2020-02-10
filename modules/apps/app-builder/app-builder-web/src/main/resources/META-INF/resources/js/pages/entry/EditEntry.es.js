@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import openToast from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
-import React, {useContext, useEffect, useCallback, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';

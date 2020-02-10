@@ -474,6 +474,11 @@ public class FragmentEntryLinkWrapper
 	}
 
 	@Override
+	public boolean isCacheable() {
+		return model.isCacheable();
+	}
+
+	@Override
 	public boolean isLatestVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -20,18 +20,13 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {
-	useActiveItemId,
-	useHoverItem,
-	useHoveredItemId
-} from '../../../app/components/Controls';
+import {useHoverItem, useHoveredItemId} from '../../../app/components/Controls';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
 import {useSelector} from '../../../app/store/index';
 
 export default function PageContent(props) {
 	const [active, setActive] = useState(false);
 	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
-	const activeItemId = useActiveItemId();
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
 	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
@@ -79,10 +74,6 @@ export default function PageContent(props) {
 	};
 
 	const handleMouseOver = () => {
-		if (!activeItemId) {
-			return;
-		}
-
 		setIsHovered(true);
 
 		Object.values(fragmentEntryLinks).forEach(fragmentEntryLink => {

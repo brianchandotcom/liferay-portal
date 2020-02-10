@@ -416,6 +416,12 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	protected Document doGetDocument(JournalArticle journalArticle)
 		throws Exception {
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Generating document for journal article " +
+					journalArticle.getId());
+		}
+
 		Document document = getBaseModelDocument(CLASS_NAME, journalArticle);
 
 		uidFactory.setUID(journalArticle, document);
@@ -492,6 +498,12 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 
 		addDDMStructureAttributes(document, journalArticle);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Document for journal article " + journalArticle.getId() +
+					" generated succesfully");
+		}
 
 		return document;
 	}

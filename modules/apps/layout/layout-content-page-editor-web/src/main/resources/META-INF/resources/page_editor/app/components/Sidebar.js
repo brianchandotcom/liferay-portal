@@ -89,6 +89,35 @@ export default function Sidebar() {
 		[panel, sidebarOpen, sidebarPanelId]
 	);
 
+	useEffect(() => {
+		const productMenuOpen = document.querySelector('.product-menu-open');
+		const sideNavigation = Liferay.SideNavigation.instance(
+			document.querySelector('.product-menu-toggle')
+		);
+
+		const onCloseSidebar = () => {
+			dispatch(
+				Actions.switchSidebarPanel({
+					sidebarOpen: false,
+					sidebarPanelId: null
+				})
+			);
+		};
+
+		if (productMenuOpen && sidebarOpen) {
+			onCloseSidebar();
+		}
+
+		const sideNavigationListener = sideNavigation.on(
+			'openStart.lexicon.sidenav',
+			onCloseSidebar
+		);
+
+		return () => {
+			sideNavigationListener.removeListener();
+		};
+	}, []);
+
 	const SidebarPanel = useLazy(
 		useCallback(({instance}) => {
 			if (typeof instance.renderSidebar === 'function') {
@@ -109,6 +138,13 @@ export default function Sidebar() {
 	const handleClick = panel => {
 		const open =
 			panel.sidebarPanelId === sidebarPanelId ? !sidebarOpen : true;
+		const productMenuToggle = document.querySelector(
+			'.product-menu-toggle'
+		);
+
+		if (productMenuToggle && !sidebarOpen) {
+			Liferay.SideNavigation.hide(productMenuToggle);
+		}
 
 		dispatch(
 			Actions.switchSidebarPanel({

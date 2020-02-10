@@ -222,7 +222,7 @@ definition {
 
 		LexiconEntry.openEntryMenu(rowEntry = "userfn3 userln3");
 
-		MenuItem.viewPresent(menuItem = "Assign Site Roles");
+		MenuItem.viewPresent(menuItem = "Assign Roles");
 
 		User.logoutUserPG();
 

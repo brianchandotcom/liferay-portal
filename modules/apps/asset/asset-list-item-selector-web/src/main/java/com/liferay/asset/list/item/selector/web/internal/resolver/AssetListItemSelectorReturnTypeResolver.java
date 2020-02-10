@@ -14,9 +14,9 @@
 
 package com.liferay.asset.list.item.selector.web.internal.resolver;
 
-import com.liferay.asset.list.item.selector.AssetListItemSelectorReturnType;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
+import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -28,13 +28,13 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = ItemSelectorReturnTypeResolver.class)
 public class AssetListItemSelectorReturnTypeResolver
 	implements ItemSelectorReturnTypeResolver
-		<AssetListItemSelectorReturnType, AssetListEntry> {
+		<InfoListItemSelectorReturnType, AssetListEntry> {
 
 	@Override
-	public Class<AssetListItemSelectorReturnType>
+	public Class<InfoListItemSelectorReturnType>
 		getItemSelectorReturnTypeClass() {
 
-		return AssetListItemSelectorReturnType.class;
+		return InfoListItemSelectorReturnType.class;
 	}
 
 	@Override

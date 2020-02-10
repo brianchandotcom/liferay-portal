@@ -14,8 +14,6 @@
 
 package com.liferay.asset.list.item.selector.web.internal;
 
-import com.liferay.asset.list.item.selector.AssetListItemSelectorReturnType;
-import com.liferay.asset.list.item.selector.criterion.AssetListItemSelectorCriterion;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.util.AssetListPortletUtil;
@@ -23,6 +21,8 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
+import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -63,13 +63,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ItemSelectorView.class)
 public class AssetListItemSelectorView
-	implements ItemSelectorView<AssetListItemSelectorCriterion> {
+	implements ItemSelectorView<InfoListItemSelectorCriterion> {
 
 	@Override
-	public Class<? extends AssetListItemSelectorCriterion>
+	public Class<? extends InfoListItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return AssetListItemSelectorCriterion.class;
+		return InfoListItemSelectorCriterion.class;
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class AssetListItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			AssetListItemSelectorCriterion itemSelectorCriterion,
+			InfoListItemSelectorCriterion itemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
@@ -103,13 +103,13 @@ public class AssetListItemSelectorView
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
-			new AssetListItemSelectorReturnType());
+			new InfoListItemSelectorReturnType());
 
 	@Reference
 	private AssetListEntryService _assetListEntryService;
 
 	@Reference
-	private ItemSelectorViewDescriptorRenderer<AssetListItemSelectorCriterion>
+	private ItemSelectorViewDescriptorRenderer<InfoListItemSelectorCriterion>
 		_itemSelectorViewDescriptorRenderer;
 
 	@Reference
@@ -195,7 +195,7 @@ public class AssetListItemSelectorView
 
 		@Override
 		public ItemSelectorReturnType getItemSelectorReturnType() {
-			return new AssetListItemSelectorReturnType();
+			return new InfoListItemSelectorReturnType();
 		}
 
 		@Override

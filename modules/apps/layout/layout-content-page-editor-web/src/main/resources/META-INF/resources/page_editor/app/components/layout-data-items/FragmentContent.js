@@ -295,23 +295,9 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 
 					editableRef.current = editableElement;
 
-					const showLinkButton =
-						editableType == EDITABLE_TYPES.text ||
-						editableType == EDITABLE_TYPES.image ||
-						editableType == EDITABLE_TYPES.link;
-
-					const buttons = [
-						EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit,
-						EDITABLE_FLOATING_TOOLBAR_BUTTONS.map
-					];
-
-					if (showLinkButton) {
-						buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.link);
-					}
-
 					return (
 						<FloatingToolbar
-							buttons={buttons}
+							buttons={getFloatingToolbarButtons(editableType)}
 							item={{
 								editableId,
 								editableType,
@@ -351,6 +337,25 @@ const editableIsMappedToInfoItem = editableValue =>
 	editableValue.classNameId &&
 	editableValue.classPK &&
 	editableValue.fieldId;
+
+const getFloatingToolbarButtons = editableType => {
+	const showLinkButton =
+		editableType == EDITABLE_TYPES.text ||
+		editableType == EDITABLE_TYPES.image ||
+		editableType == EDITABLE_TYPES.link;
+
+	const buttons = [
+		EDITABLE_FLOATING_TOOLBAR_BUTTONS.imageProperties,
+		EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit,
+		EDITABLE_FLOATING_TOOLBAR_BUTTONS.map
+	];
+
+	if (showLinkButton) {
+		buttons.push(EDITABLE_FLOATING_TOOLBAR_BUTTONS.link);
+	}
+
+	return buttons;
+};
 
 const getMappingValue = ({classNameId, classPK, config, fieldId}) =>
 	InfoItemService.getAssetFieldValue({

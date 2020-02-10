@@ -64,15 +64,12 @@ public class EditDDMStructureMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			renderRequest.setAttribute(
-				FFDocumentLibraryDDMEditorConfiguration.class.getName(),
-				_ffDocumentLibraryDDMEditorConfiguration);
-
-			renderRequest.setAttribute(
 				DLWebKeys.
 					DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT,
 				new DLEditFileEntryTypeDisplayContext(
 					_ddm, _ddmStorageLinkLocalService,
-					_ddmStructureLocalService, _language,
+					_ddmStructureLocalService,
+					_ffDocumentLibraryDDMEditorConfiguration, _language,
 					_portal.getLiferayPortletRequest(renderRequest)));
 
 			renderRequest.setAttribute(

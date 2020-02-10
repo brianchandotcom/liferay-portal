@@ -98,7 +98,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
 				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
-				_language, null);
+				null, _language, null);
 
 		Assert.assertEquals(
 			"Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE",
@@ -110,7 +110,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
 				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
-				_language,
+				null, _language,
 				new MockPortletRenderRequest(
 					new MockHttpServletRequestBuilder().withAttribute(
 						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
@@ -129,7 +129,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
 				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
-				_language,
+				null, _language,
 				new MockPortletRenderRequest(
 					new MockHttpServletRequestBuilder().withAttribute(
 						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
@@ -147,7 +147,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
 				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
-				_language,
+				null, _language,
 				new MockPortletRenderRequest(
 					new MockHttpServletRequestBuilder().withAttribute(
 						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
@@ -163,7 +163,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
 				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
-				_language,
+				null, _language,
 				new MockPortletRenderRequest(
 					new MockHttpServletRequestBuilder().withAttribute(
 						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
@@ -180,7 +180,7 @@ public class DLEditFileEntryTypeDisplayContextTest {
 		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext =
 			new DLEditFileEntryTypeDisplayContext(
 				_ddm, _ddmStorageLinkLocalService, _ddmStructureLocalService,
-				_language,
+				null, _language,
 				new MockPortletRenderRequest(
 					new MockHttpServletRequestBuilder().withAttribute(
 						WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,

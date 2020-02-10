@@ -47,20 +47,18 @@ public class DLEditFileEntryTypeDisplayContext {
 
 	public DLEditFileEntryTypeDisplayContext(
 		DDM ddm, DDMStorageLinkLocalService ddmStorageLinkLocalService,
-		DDMStructureLocalService ddmStructureLocalService, Language language,
-		LiferayPortletRequest liferayPortletRequest) {
+		DDMStructureLocalService ddmStructureLocalService,
+		FFDocumentLibraryDDMEditorConfiguration
+			ffDocumentLibraryDDMEditorConfiguration,
+		Language language, LiferayPortletRequest liferayPortletRequest) {
 
 		_ddm = ddm;
 		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
-		_language = language;
-
-		_liferayPortletRequest = liferayPortletRequest;
-
 		_ffDocumentLibraryDDMEditorConfiguration =
-			(FFDocumentLibraryDDMEditorConfiguration)
-				_liferayPortletRequest.getAttribute(
-					FFDocumentLibraryDDMEditorConfiguration.class.getName());
+			ffDocumentLibraryDDMEditorConfiguration;
+		_language = language;
+		_liferayPortletRequest = liferayPortletRequest;
 	}
 
 	public String getAvailableFields() {

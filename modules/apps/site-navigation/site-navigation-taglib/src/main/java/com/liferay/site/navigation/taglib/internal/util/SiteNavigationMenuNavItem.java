@@ -25,7 +25,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -78,7 +78,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 			super.getExpandoAttributes();
 
 		if (expandoAttributes == null) {
-			expandoAttributes = new HashMap<>();
+			expandoAttributes = Collections.emptyMap();
 		}
 
 		ExpandoBridge expandoBridge =

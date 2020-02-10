@@ -424,8 +424,9 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 									JSONObject itemMedatadaJSONObject = ItemSelectorRepositoryEntryBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 
 									String thumbnailSrc = DLURLHelperUtil.getThumbnailSrc(fileEntry, themeDisplay);
-								%>
 
+									row.setCssClass("item-selector-list-row " + row.getCssClass());
+								%>
 									<c:choose>
 										<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 											<liferay-ui:search-container-column-image

@@ -38,9 +38,9 @@ import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
 import {
-	useIsActive,
 	useActiveItemId,
 	useEditingItemId,
+	useIsActive,
 	useSelectEditingItem
 } from '../Controls';
 import UnsafeHTML from '../UnsafeHTML';

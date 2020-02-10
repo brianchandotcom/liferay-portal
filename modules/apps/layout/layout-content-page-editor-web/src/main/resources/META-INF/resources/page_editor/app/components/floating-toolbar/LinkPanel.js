@@ -13,7 +13,7 @@
  */
 
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
-import React, {useState, useContext, useEffect, useCallback} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../js/utils/constants';
 import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';

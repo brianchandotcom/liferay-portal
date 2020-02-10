@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.depot.web.internal.item.selector.provider;
+package com.liferay.depot.web.internal.item.selector;
 
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;

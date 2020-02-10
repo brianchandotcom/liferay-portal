@@ -18,7 +18,7 @@ import com.liferay.blogs.web.internal.security.permission.resource.BlogsPermissi
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -73,30 +73,25 @@ public class BlogEntriesManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "deleteEntries");
+		return DropdownItemListUtil.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteEntries");
 
-						boolean trashEnabled = _trashHelper.isTrashEnabled(
-							_themeDisplay.getScopeGroupId());
+				boolean trashEnabled = _trashHelper.isTrashEnabled(
+					_themeDisplay.getScopeGroupId());
 
-						dropdownItem.setIcon(
-							trashEnabled ? "trash" : "times-circle");
+				dropdownItem.setIcon(trashEnabled ? "trash" : "times-circle");
 
-						String label = "delete";
+				String label = "delete";
 
-						if (trashEnabled) {
-							label = "move-to-recycle-bin";
-						}
+				if (trashEnabled) {
+					label = "move-to-recycle-bin";
+				}
 
-						dropdownItem.setLabel(LanguageUtil.get(request, label));
+				dropdownItem.setLabel(LanguageUtil.get(request, label));
 
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
+				dropdownItem.setQuickAction(true);
+			});
 	}
 
 	@Override
@@ -253,30 +248,24 @@ public class BlogEntriesManagementToolbarDisplayContext
 
 	@Override
 	protected List<DropdownItem> getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "title"));
-						dropdownItem.setHref(
-							_getCurrentSortingURL(), "orderByCol", "title");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "title"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "display-date"));
-						dropdownItem.setHref(
-							_getCurrentSortingURL(), "orderByCol",
-							"display-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "display-date"));
-					});
+		return DropdownItemListUtil.add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(getOrderByCol(), "title"));
+				dropdownItem.setHref(
+					_getCurrentSortingURL(), "orderByCol", "title");
+				dropdownItem.setLabel(LanguageUtil.get(request, "title"));
 			}
-		};
+		).add(
+			dropdownItem -> {
+				dropdownItem.setActive(
+					Objects.equals(getOrderByCol(), "display-date"));
+				dropdownItem.setHref(
+					_getCurrentSortingURL(), "orderByCol", "display-date");
+				dropdownItem.setLabel(
+					LanguageUtil.get(request, "display-date"));
+			}
+		);
 	}
 
 	private PortletURL _getCurrentSortingURL() {

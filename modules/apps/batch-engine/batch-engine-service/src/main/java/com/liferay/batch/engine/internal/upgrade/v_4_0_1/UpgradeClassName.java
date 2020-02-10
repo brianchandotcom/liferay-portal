@@ -14,8 +14,8 @@
 
 package com.liferay.batch.engine.internal.upgrade.v_4_0_1;
 
-import com.liferay.batch.engine.model.impl.BatchEngineExportTaskModelImpl;
-import com.liferay.batch.engine.model.impl.BatchEngineImportTaskModelImpl;
+import com.liferay.batch.engine.internal.upgrade.v_4_0_1.util.BatchEngineExportTaskModelImpl;
+import com.liferay.batch.engine.internal.upgrade.v_4_0_1.util.BatchEngineImportTaskModelImpl;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**

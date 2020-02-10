@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.io.Serializable;
 
 import java.lang.reflect.Method;

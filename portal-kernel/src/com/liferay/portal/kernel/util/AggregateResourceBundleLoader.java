@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class AggregateResourceBundleLoader implements ResourceBundleLoader {
 
 			throw new MissingResourceException(
 				StringBundler.concat(
-					"Resource bundle loader ", String.valueOf(this),
+					"Resource bundle loader ", this,
 					" was unable to load resource bundle for ", languageId),
 				StringPool.BLANK, languageId);
 		}

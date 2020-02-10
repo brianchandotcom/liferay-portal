@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -2543,8 +2544,7 @@ public class ParamUtil {
 
 			for (int i = 0; i < values.length; i++) {
 				System.out.println(
-					StringBundler.concat(
-						name, "[", String.valueOf(i), "] = ", values[i]));
+					StringBundler.concat(name, "[", i, "] = ", values[i]));
 			}
 		}
 	}
@@ -2565,8 +2565,7 @@ public class ParamUtil {
 
 			for (int i = 0; i < values.length; i++) {
 				System.out.println(
-					StringBundler.concat(
-						param, "[", String.valueOf(i), "] = ", values[i]));
+					StringBundler.concat(param, "[", i, "] = ", values[i]));
 			}
 		}
 	}

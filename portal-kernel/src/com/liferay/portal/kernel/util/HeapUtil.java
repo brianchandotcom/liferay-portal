@@ -18,6 +18,7 @@ import com.liferay.petra.process.CollectorOutputProcessor;
 import com.liferay.petra.process.OutputProcessor;
 import com.liferay.petra.process.ProcessUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

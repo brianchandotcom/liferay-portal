@@ -101,6 +101,28 @@ public class SpiraProject {
 			this, new SearchParameter("Path", releasePath));
 	}
 
+	public SpiraTestCaseFolder getSpiraTestCaseFolderByID(
+			int testCaseFolderID)
+		throws IOException {
+
+		List<SpiraTestCaseFolder> spiraTestCaseFolders =
+			SpiraTestCaseFolder.getSpiraTestCaseFolders(
+				this,
+				new SearchParameter("TestCaseFolderId", testCaseFolderID));
+
+		if (spiraTestCaseFolders.size() > 1) {
+			throw new RuntimeException(
+				"Duplicate test case folder ID " + testCaseFolderID);
+		}
+
+		if (spiraTestCaseFolders.isEmpty()) {
+			throw new RuntimeException(
+				"Missing test case folder ID " + testCaseFolderID);
+		}
+
+		return spiraTestCaseFolders.get(0);
+	}
+
 	public SpiraTestCaseFolder getSpiraTestCaseFolderByPath(
 			String testCaseFolderPath)
 		throws IOException {

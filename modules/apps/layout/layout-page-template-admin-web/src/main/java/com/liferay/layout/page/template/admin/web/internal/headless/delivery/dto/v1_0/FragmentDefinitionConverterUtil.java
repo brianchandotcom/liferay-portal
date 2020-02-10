@@ -351,49 +351,51 @@ public class FragmentDefinitionConverterUtil {
 							textId, "text");
 
 						if (Objects.equals(type, "image")) {
-							value = new FragmentContentFieldImage() {
-								{
-									fragmentImage = new FragmentImage() {
-										{
-											title =
-												HashMapBuilder.
-													<String, Object>put(
-														"value_i18n",
-														_toLocaleMap(
-															textJSONObject,
-															"title")
-													).build();
-
-											url =
-												HashMapBuilder.
-													<String, Object>put(
-														"value_i18n",
-														_toLocaleMap(
-															textJSONObject,
-															"url")
-													).build();
-										}
-									};
-								}
-							};
+							value = _toFragmentContentFieldImage(
+								textJSONObject);
 						}
 						else {
-							value = new FragmentContentFieldText() {
-								{
-									text = new InlineValue() {
-										{
-											value_i18n = _toLocaleMap(
-												textJSONObject);
-										}
-									};
-								}
-							};
+							value = _toFragmentContentFieldText(textJSONObject);
 						}
 					}
 				});
 		}
 
 		return fragmentContentFields;
+	}
+
+	private static FragmentContentFieldImage _toFragmentContentFieldImage(
+		JSONObject jsonObject) {
+
+		return new FragmentContentFieldImage() {
+			{
+				fragmentImage = new FragmentImage() {
+					{
+						title = HashMapBuilder.<String, Object>put(
+							"value_i18n", _toLocaleMap(jsonObject, "title")
+						).build();
+
+						url = HashMapBuilder.<String, Object>put(
+							"value_i18n", _toLocaleMap(jsonObject, "url")
+						).build();
+					}
+				};
+			}
+		};
+	}
+
+	private static FragmentContentFieldText _toFragmentContentFieldText(
+		JSONObject jsonObject) {
+
+		return new FragmentContentFieldText() {
+			{
+				text = new InlineValue() {
+					{
+						value_i18n = _toLocaleMap(jsonObject);
+					}
+				};
+			}
+		};
 	}
 
 	private static Map<String, String> _toLocaleMap(JSONObject jsonObject) {

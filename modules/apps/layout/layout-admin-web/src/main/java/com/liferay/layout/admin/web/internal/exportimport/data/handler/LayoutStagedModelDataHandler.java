@@ -2122,6 +2122,16 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
+	@Override
+	protected void validateExport(
+			PortletDataContext portletDataContext, Layout layout)
+		throws PortletDataException {
+
+		if (!layout.isPending()) {
+			super.validateExport(portletDataContext, layout);
+		}
+	}
+
 	private void _exportDraftLayout(
 			PortletDataContext portletDataContext, Layout layout,
 			Element layoutElement)

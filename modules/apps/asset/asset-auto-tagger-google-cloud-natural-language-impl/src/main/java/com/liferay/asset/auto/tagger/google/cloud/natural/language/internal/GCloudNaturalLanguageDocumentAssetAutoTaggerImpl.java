@@ -41,7 +41,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.Spliterator;
-import java.util.StringTokenizer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -100,10 +99,6 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 			!gCloudNaturalLanguageAssetAutoTagProviderCompanyConfiguration.
 				entityEndpointEnabled()) {
 
-			return Collections.emptySet();
-		}
-
-		if (!_hasMinimumNumberOfTokens(textSupplier.get())) {
 			return Collections.emptySet();
 		}
 
@@ -215,16 +210,6 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 			apiKey);
 	}
 
-	private boolean _hasMinimumNumberOfTokens(String content) {
-		StringTokenizer st = new StringTokenizer(content);
-
-		if (st.countTokens() >= _MINIMUM_NUMBER_OF_TOKENS) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private JSONObject _post(String serviceURL, String body) throws Exception {
 		Http.Options options = new Http.Options();
 
@@ -290,8 +275,6 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 			Collectors.toSet()
 		);
 	}
-
-	private static final int _MINIMUM_NUMBER_OF_TOKENS = 20;
 
 	private static final int _MINIMUM_PAYLOAD_SIZE;
 

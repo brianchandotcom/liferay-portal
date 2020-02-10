@@ -23,73 +23,28 @@ import NoCommentsMessage from './NoCommentsMessage';
 import ResolvedCommentsToggle from './ResolvedCommentsToggle';
 
 export default function FragmentEntryLinksWithComments() {
-	const fragmentEntryLinks = useSelector(state => state.fragmentEntryLinks);
-	const layoutData = useSelector(state => state.layoutData);
-	const showResolvedComments = useSelector(
-		state => state.showResolvedComments
+	const itemsWithComments = useSelector(state =>
+		Object.values(state.layoutData.items)
+			.filter(item => item.type === LAYOUT_DATA_ITEM_TYPES.fragment)
+			.map(item => [
+				item,
+				state.fragmentEntryLinks[item.config.fragmentEntryLinkId]
+			])
+			.map(([item, fragmentEntryLink]) => [
+				item,
+				{
+					...fragmentEntryLink,
+					comments: (fragmentEntryLink.comments || []).filter(
+						({resolved}) =>
+							(state.showResolvedComments && resolved) ||
+							!resolved
+					)
+				}
+			])
+			.filter(
+				([, fragmentEntryLink]) => fragmentEntryLink.comments.length
+			)
 	);
-
-	const selectItem = useSelectItem();
-	const hoverItem = useHoverItem();
-
-	const fragmentEntryLinksWithComments = Object.values(layoutData.items)
-		.filter(item => item.type === LAYOUT_DATA_ITEM_TYPES.fragment)
-		.map(item => fragmentEntryLinks[item.config.fragmentEntryLinkId])
-		.filter(
-			({comments}) =>
-				comments &&
-				comments.length &&
-				(showResolvedComments ||
-					comments.some(({resolved}) => !resolved))
-		);
-
-	const findItemId = fragmentEntryLinkId => {
-		const item = Object.values(layoutData.items).find(
-			item => item.config.fragmentEntryLinkId === fragmentEntryLinkId
-		);
-
-		return item ? item.itemId : null;
-	};
-
-	const setActiveFragmentEntryLink = fragmentEntryLinkId => () =>
-		selectItem(findItemId(fragmentEntryLinkId));
-
-	const setHoveredFragmentEntryLink = fragmentEntryLinkId => () =>
-		hoverItem(findItemId(fragmentEntryLinkId));
-
-	const getFragmentEntryLinkItem = ({
-		comments,
-		fragmentEntryLinkId,
-		name
-	}) => {
-		const commentCount = (showResolvedComments
-			? comments
-			: comments.filter(({resolved}) => !resolved)
-		).length;
-
-		return (
-			<a
-				className="border-0 list-group-item list-group-item-action"
-				href={`#${fragmentEntryLinkId}`}
-				key={fragmentEntryLinkId}
-				onClick={setActiveFragmentEntryLink(fragmentEntryLinkId)}
-				onFocus={setHoveredFragmentEntryLink(fragmentEntryLinkId)}
-				onMouseOut={() => hoverItem(null)}
-				onMouseOver={setHoveredFragmentEntryLink(fragmentEntryLinkId)}
-			>
-				<strong className="d-block text-dark">{name}</strong>
-
-				<span className="text-secondary">
-					{Liferay.Util.sub(
-						commentCount === 1
-							? Liferay.Language.get('x-comment')
-							: Liferay.Language.get('x-comments'),
-						commentCount
-					)}
-				</span>
-			</a>
-		);
-	};
 
 	return (
 		<>
@@ -100,16 +55,49 @@ export default function FragmentEntryLinksWithComments() {
 			<SidebarPanelContent padded={false}>
 				<ResolvedCommentsToggle />
 
-				{fragmentEntryLinksWithComments.length ? (
+				{itemsWithComments.length ? (
 					<nav className="list-group">
-						{fragmentEntryLinksWithComments.map(
-							getFragmentEntryLinkItem
-						)}
+						{itemsWithComments.map(([item, fragmentEntryLink]) => (
+							<FragmentEntryLinkWithComments
+								fragmentEntryLink={fragmentEntryLink}
+								item={item}
+								key={fragmentEntryLink.fragmentEntryLinkId}
+							/>
+						))}
 					</nav>
 				) : (
 					<NoCommentsMessage />
 				)}
 			</SidebarPanelContent>
 		</>
+	);
+}
+
+function FragmentEntryLinkWithComments({fragmentEntryLink, item}) {
+	const selectItem = useSelectItem();
+	const hoverItem = useHoverItem();
+
+	return (
+		<a
+			className="border-0 list-group-item list-group-item-action"
+			href={`#${fragmentEntryLink.fragmentEntryLinkId}`}
+			onClick={() => selectItem(item.itemId)}
+			onFocus={() => hoverItem(item.itemId)}
+			onMouseOut={() => hoverItem(null)}
+			onMouseOver={() => hoverItem(item.itemId)}
+		>
+			<strong className="d-block text-dark">
+				{fragmentEntryLink.name}
+			</strong>
+
+			<span className="text-secondary">
+				{Liferay.Util.sub(
+					fragmentEntryLink.comments.length === 1
+						? Liferay.Language.get('x-comment')
+						: Liferay.Language.get('x-comments'),
+					fragmentEntryLink.comments.length
+				)}
+			</span>
+		</a>
 	);
 }

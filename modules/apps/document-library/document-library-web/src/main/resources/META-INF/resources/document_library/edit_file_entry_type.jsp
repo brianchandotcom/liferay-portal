@@ -94,7 +94,15 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="mainMetadataFields" label="main-metadata-fields">
 				<c:choose>
 					<c:when test="<%= dlEditFileEntryTypeDisplayContext.useDataEngineEditor() %>">
-
+						<liferay-data-engine:data-layout-builder
+							componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
+							contentType="document-library"
+							dataDefinitionId="<%= ddmStructureId %>"
+							dataLayoutInputId="dataLayout"
+							groupId="<%= scopeGroupId %>"
+							localizable="<%= true %>"
+							namespace="<%= renderResponse.getNamespace() %>"
+						/>
 					</c:when>
 					<c:otherwise>
 						<liferay-util:include page="/document_library/ddm/ddm_form_builder.jsp" servletContext="<%= application %>" />

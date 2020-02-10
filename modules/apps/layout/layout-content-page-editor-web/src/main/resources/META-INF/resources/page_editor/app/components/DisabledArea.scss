@@ -1,9 +1,13 @@
 @import 'atlas-variables';
 
+@import './variables';
+
 .page-editor__disabled-area {
 	cursor: not-allowed;
-	margin-right: 40px;
+	padding-right: 40px;
 	position: relative;
+	transition: padding-right ease $defaultTransitionDuration;
+	will-change: padding-right;
 
 	&::after {
 		background-color: rgba(255, 255, 255, 0);
@@ -23,7 +27,7 @@
 
 	&.collapsed {
 		@include media-breakpoint-up(sm) {
-			width: calc(100vw - 360px);
+			padding-right: $sidebarButtonWidth + $sidebarContentWidth;
 		}
 	}
 }

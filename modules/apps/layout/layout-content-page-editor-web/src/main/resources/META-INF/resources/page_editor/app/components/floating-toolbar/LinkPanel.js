@@ -15,8 +15,8 @@
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../js/utils/constants';
 import {useDebounceCallback} from '../../../core/hooks/useDebounceCallback';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {ConfigContext} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';

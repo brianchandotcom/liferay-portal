@@ -99,6 +99,6 @@ describe('PageStructureSidebar', () => {
 	it('renders the first child of main collapsed', () => {
 		const {getByText} = render(<RenderPageStructureSidebar />);
 
-		expect(getByText(LAYOUT_DATA_ITEM_TYPES.container)).toBeInTheDocument();
+		expect(getByText('section')).toBeInTheDocument();
 	});
 });

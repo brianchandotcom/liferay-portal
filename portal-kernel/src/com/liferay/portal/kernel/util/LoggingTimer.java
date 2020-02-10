@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,8 +44,7 @@ public class LoggingTimer implements Closeable {
 			_log.info(
 				StringBundler.concat(
 					"Completed ", _name, " in ",
-					String.valueOf(System.currentTimeMillis() - _startTime),
-					" ms"));
+					System.currentTimeMillis() - _startTime, " ms"));
 		}
 	}
 

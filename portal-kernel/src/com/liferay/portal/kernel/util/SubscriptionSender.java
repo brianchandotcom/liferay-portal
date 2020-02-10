@@ -23,6 +23,7 @@ import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -735,8 +736,7 @@ public class SubscriptionSender implements Serializable {
 				_log.info(
 					StringBundler.concat(
 						"User with email address ", emailAddress,
-						" does not exist for company ",
-						String.valueOf(companyId)));
+						" does not exist for company ", companyId));
 			}
 
 			if (bulk) {

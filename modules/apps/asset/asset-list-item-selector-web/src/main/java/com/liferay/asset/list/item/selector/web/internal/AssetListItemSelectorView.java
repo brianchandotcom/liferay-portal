@@ -14,6 +14,7 @@
 
 package com.liferay.asset.list.item.selector.web.internal;
 
+import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.list.util.AssetListPortletUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
@@ -155,9 +157,15 @@ public class AssetListItemSelectorView
 				@Override
 				public String getPayload() {
 					return JSONUtil.put(
-						"assetListEntryId", assetListEntry.getAssetListEntryId()
+						"classNameId",
+						_portal.getClassNameId(AssetListEntry.class)
 					).put(
-						"assetListEntryTitle", assetListEntry.getTitle()
+						"classPK", assetListEntry.getAssetListEntryId()
+					).put(
+						"infoListProviderKey",
+						AssetListWebKeys.ASSET_LIST_INFO_LIST_PROVIDER_KEY
+					).put(
+						"title", assetListEntry.getTitle()
 					).toString();
 				}
 
@@ -291,6 +299,10 @@ public class AssetListItemSelectorView
 		}
 
 		private final HttpServletRequest _httpServletRequest;
+
+		@Reference
+		private Portal _portal;
+
 		private final PortletURL _portletURL;
 
 	}

@@ -65,9 +65,9 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 				if (event.selectedItem) {
 					var itemValue = JSON.parse(event.selectedItem.value);
 
-					assetListEntryId.value = itemValue.assetListEntryId;
+					assetListEntryId.value = itemValue.classPK;
 
-					assetListTitle.innerHTML = itemValue.assetListEntryTitle;
+					assetListTitle.innerHTML = itemValue.title;
 				}
 			});
 

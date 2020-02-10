@@ -14,13 +14,16 @@
 
 package com.liferay.asset.list.item.selector.web.internal.resolver;
 
+import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -47,10 +50,18 @@ public class AssetListItemSelectorReturnTypeResolver
 		AssetListEntry assetListEntry, ThemeDisplay themeDisplay) {
 
 		return JSONUtil.put(
-			"assetListEntryId", assetListEntry.getAssetListEntryId()
+			"classNameId", _portal.getClassNameId(AssetListEntry.class)
 		).put(
-			"assetListEntryTitle", assetListEntry.getTitle()
+			"classPK", assetListEntry.getAssetListEntryId()
+		).put(
+			"infoListProviderKey",
+			AssetListWebKeys.ASSET_LIST_INFO_LIST_PROVIDER_KEY
+		).put(
+			"title", assetListEntry.getTitle()
 		).toString();
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

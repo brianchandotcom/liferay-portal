@@ -14,7 +14,9 @@
 
 import * as TYPES from '../actions/types';
 
-export default function resolvedCommentsReducer(state, action) {
+const INITIAL_STATE = false;
+
+export default function resolvedCommentsReducer(state = INITIAL_STATE, action) {
 	switch (action.type) {
 		case TYPES.TOGGLE_SHOW_RESOLVED_COMMENTS:
 			return action.showResolvedComments;

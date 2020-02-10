@@ -27,7 +27,6 @@ definition {
 	}
 
 	@description = "This ensures that the language can be set in a depot."
-	@ignore = "true"
 	@priority = "5"
 	test Smoke {
 		JSONDepot.addDepot(

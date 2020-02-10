@@ -1,0 +1,16 @@
+2.1.0:description
+
+- [LPS-78023]: Add the property `uadDir` and `uadTestIntegrationDir` to all
+tasks that extend `BuildServiceTask`.
+
+2.0.0:description
+
+- [LPS-76626]: Add the property `databaseNameMaxLength` to all tasks that extend
+`BuildServiceTask`.
+- [LPS-76626]: The `BuildServiceTask`'s `databaseNameMaxLengthCheckEnabled`
+property is no longer available.
+
+1.0.65:description
+
+- [LPS-76626]: Add the property `databaseNameMaxLengthCheckEnabled` to all tasks
+that extend `BuildServiceTask`.

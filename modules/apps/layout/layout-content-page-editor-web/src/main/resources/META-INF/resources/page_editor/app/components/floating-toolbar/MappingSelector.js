@@ -89,6 +89,10 @@ export default function MappingSelector({
 	const dispatch = useDispatch();
 	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
 
+	const {infoItemSelectorURL, portletNamespace} = config;
+
+	const eventName = `${portletNamespace}selectInfoItem`;
+
 	const {pageType, selectedMappingTypes} = config;
 
 	const [fields, setFields] = useState([]);
@@ -233,6 +237,8 @@ export default function MappingSelector({
 			{selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content && (
 				<ClayForm.Group small>
 					<ItemSelector
+						eventName={eventName}
+						itemSelectorURL={infoItemSelectorURL}
 						label={Liferay.Language.get('content')}
 						onItemSelect={onInfoItemSelect}
 						selectedItemTitle={

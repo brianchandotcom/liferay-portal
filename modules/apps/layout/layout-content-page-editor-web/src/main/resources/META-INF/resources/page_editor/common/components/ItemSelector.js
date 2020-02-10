@@ -16,14 +16,18 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import {ConfigContext} from '../../app/config/index';
 import {useSelector} from '../../app/store/index';
 import {openInfoItemSelector} from '../../core/openInfoItemSelector';
 
-export default function ItemSelector({label, onItemSelect, selectedItemTitle}) {
-	const config = useContext(ConfigContext);
+export default function ItemSelector({
+	eventName,
+	itemSelectorURL,
+	label,
+	onItemSelect,
+	selectedItemTitle
+}) {
 	const mappedInfoItems = useSelector(state => state.mappedInfoItems);
 	const [active, setActive] = useState(false);
 
@@ -70,7 +74,11 @@ export default function ItemSelector({label, onItemSelect, selectedItemTitle}) {
 							<ClayDropDown.Divider />
 							<ClayDropDown.Item
 								onClick={() =>
-									openInfoItemSelector(onItemSelect, config)
+									openInfoItemSelector(
+										onItemSelect,
+										eventName,
+										itemSelectorURL
+									)
 								}
 							>
 								{Liferay.Language.get('select-content')} ...
@@ -81,7 +89,11 @@ export default function ItemSelector({label, onItemSelect, selectedItemTitle}) {
 					<ClayButton
 						displayType="secondary"
 						onClick={() =>
-							openInfoItemSelector(onItemSelect, config)
+							openInfoItemSelector(
+								onItemSelect,
+								eventName,
+								itemSelectorURL
+							)
 						}
 						small
 					>

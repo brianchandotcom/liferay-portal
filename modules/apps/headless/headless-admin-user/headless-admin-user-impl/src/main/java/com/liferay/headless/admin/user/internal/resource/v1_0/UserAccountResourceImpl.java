@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -69,6 +70,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -110,6 +112,7 @@ public class UserAccountResourceImpl
 			organizationId);
 
 		return _getUserAccountsPage(
+			_getOrganizationListActions(organization),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -130,6 +133,7 @@ public class UserAccountResourceImpl
 		throws Exception {
 
 		return _getUserAccountsPage(
+			_getSiteListActions(siteId),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -159,6 +163,7 @@ public class UserAccountResourceImpl
 		}
 
 		return _getUserAccountsPage(
+			Collections.emptyMap(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
@@ -168,6 +173,15 @@ public class UserAccountResourceImpl
 					BooleanClauseOccur.MUST_NOT);
 			},
 			search, filter, pagination, sorts);
+	}
+
+	private Map<String, Map<String, String>> _getActions(User user) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"get",
+			addAction(
+				"VIEW", "getUserAccount", User.class.getName(),
+				user.getGroupId())
+		).build();
 	}
 
 	private String _getListTypeMessage(long listTypeId) throws Exception {
@@ -181,6 +195,25 @@ public class UserAccountResourceImpl
 			contextAcceptLanguage.getPreferredLocale(), listType.getName());
 	}
 
+	private Map<String, Map<String, String>> _getOrganizationListActions(
+		Organization organization) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"get",
+			addAction(
+				"VIEW", "getOrganizationUserAccountsPage",
+				Organization.class.getName(), organization.getGroupId())
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"get",
+			addAction(
+				"VIEW", "getSiteUserAccountsPage", User.class.getName(), siteId)
+		).build();
+	}
+
 	private ThemeDisplay _getThemeDisplay(Group group) {
 		return new ThemeDisplay() {
 			{
@@ -191,13 +224,14 @@ public class UserAccountResourceImpl
 	}
 
 	private Page<UserAccount> _getUserAccountsPage(
+			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
-			Collections.emptyMap(), booleanQueryUnsafeConsumer, filter,
-			User.class, search, pagination,
+			actions, booleanQueryUnsafeConsumer, filter, User.class, search,
+			pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> searchContext.setCompanyId(
@@ -248,6 +282,7 @@ public class UserAccountResourceImpl
 
 		return new UserAccount() {
 			{
+				actions = _getActions(user);
 				additionalName = user.getMiddleName();
 				alternateName = user.getScreenName();
 				birthDate = user.getBirthday();

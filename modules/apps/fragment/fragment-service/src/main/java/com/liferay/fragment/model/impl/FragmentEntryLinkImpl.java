@@ -26,6 +26,23 @@ import java.util.Date;
 public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 	@Override
+	public boolean isCacheable() {
+		if (getFragmentEntryId() == 0) {
+			return false;
+		}
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+				getFragmentEntryId());
+
+		if (fragmentEntry != null) {
+			return fragmentEntry.isCacheable();
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isLatestVersion() throws PortalException {
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.getFragmentEntry(

@@ -95,7 +95,7 @@ public class FragmentEntryLocalServiceImpl
 			long userId, long groupId, long fragmentCollectionId,
 			String fragmentEntryKey, String name, String css, String html,
 			String js, String configuration, long previewFileEntryId, int type,
-			int status, ServiceContext serviceContext)
+			boolean cacheable, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment entry
@@ -148,12 +148,27 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setConfiguration(configuration);
 		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
 		fragmentEntry.setType(type);
+		fragmentEntry.setCacheable(cacheable);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
 		fragmentEntry.setStatusByUserName(user.getFullName());
 		fragmentEntry.setStatusDate(new Date());
 
 		return fragmentEntryPersistence.update(fragmentEntry);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, String css, String html,
+			String js, String configuration, long previewFileEntryId, int type,
+			int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
+			html, js, configuration, previewFileEntryId, type, false, status,
+			serviceContext);
 	}
 
 	@Override
@@ -180,7 +195,8 @@ public class FragmentEntryLocalServiceImpl
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.getType(),
-			fragmentEntry.getStatus(), serviceContext);
+			fragmentEntry.isCacheable(), fragmentEntry.getStatus(),
+			serviceContext);
 
 		_copyFragmentEntryResources(
 			fragmentEntry, originalFragmentCollectionId, fragmentCollectionId);
@@ -382,7 +398,7 @@ public class FragmentEntryLocalServiceImpl
 	public FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
 			String html, String js, String configuration,
-			long previewFileEntryId, int status)
+			long previewFileEntryId, boolean cacheable, int status)
 		throws PortalException {
 
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
@@ -405,6 +421,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setJs(js);
 		fragmentEntry.setConfiguration(configuration);
 		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
+		fragmentEntry.setCacheable(cacheable);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
 		fragmentEntry.setStatusByUserName(user.getFullName());
@@ -422,6 +439,18 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		return fragmentEntry;
+	}
+
+	@Override
+	public FragmentEntry updateFragmentEntry(
+			long userId, long fragmentEntryId, String name, String css,
+			String html, String js, String configuration,
+			long previewFileEntryId, int status)
+		throws PortalException {
+
+		return updateFragmentEntry(
+			userId, fragmentEntryId, name, css, html, js, configuration,
+			previewFileEntryId, false, status);
 	}
 
 	@Override

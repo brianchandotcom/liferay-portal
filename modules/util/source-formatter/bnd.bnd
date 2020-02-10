@@ -14,18 +14,18 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 -includeresource:\
 	@biz.aQute.bndlib-[0-9.]*.jar!/aQute/bnd/osgi/Constants.class,\
 	@biz.aQute.bndlib-[0-9.]*.jar!/aQute/bnd/version/Version.class,\
-	@com.liferay.petra.concurrent-[0-9.]*.jar!/com/liferay/petra/concurrent/ConcurrentMapperHashMap.class,\
-	@com.liferay.petra.concurrent-[0-9.]*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap.class,\
-	@com.liferay.petra.concurrent-[0-9.]*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap$*.class,\
-	@com.liferay.petra.content-[0-9.]*.jar!/com/liferay/petra/content/ContentUtil.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/EqualityPhantomReference.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/EqualitySoftReference.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/EqualityWeakReference.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/FinalizeAction.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/FinalizeManager.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/FinalizeManager$*.class,\
-	@com.liferay.petra.reflect-[0-9.]*.jar!/com/liferay/petra/reflect/ReflectionUtil.class,\
-	@com.liferay.petra.xml-[0-9.]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
+	@com.liferay.petra.concurrent-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/concurrent/ConcurrentMapperHashMap.class,\
+	@com.liferay.petra.concurrent-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap.class,\
+	@com.liferay.petra.concurrent-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap$*.class,\
+	@com.liferay.petra.content-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/content/ContentUtil.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/EqualityPhantomReference.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/EqualitySoftReference.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/EqualityWeakReference.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/FinalizeAction.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/FinalizeManager.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/FinalizeManager$*.class,\
+	@com.liferay.petra.reflect-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/reflect/ReflectionUtil.class,\
+	@com.liferay.petra.xml-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/xml/Dom4jUtil.class,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/deploy/dependencies/web.xml,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/json/JSONArrayImpl.class,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/json/JSONObjectImpl.class,\
@@ -71,6 +71,6 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/util/*,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
-	@com.liferay.portal.tools.java.parser-[0-9.]*.jar!/com/liferay/portal/tools/java/parser/*.class,\
-	@com.liferay.portal.tools.java.parser-[0-9.]*.jar!/com/liferay/portal/tools/java/parser/util/JavaParserUtil.class,\
+	@com.liferay.portal.tools.java.parser-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/portal/tools/java/parser/*.class,\
+	@com.liferay.portal.tools.java.parser-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/portal/tools/java/parser/util/JavaParserUtil.class,\
 	@xercesImpl-[0-9.]*.jar!/org/apache/xerces/xni/XNIException.class

@@ -8,9 +8,9 @@ Import-Package:\
 	*
 Main-Class: com.liferay.portal.tools.rest.builder.RESTBuilder
 -includeresource:\
-	@com.liferay.petra.lang-[0-9.]*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
-	@com.liferay.petra.string-[0-9.]*.jar!/com/liferay/petra/string/StringBundler.class,\
-	@com.liferay.petra.string-[0-9.]*.jar!/com/liferay/petra/string/StringBundler$UnsafeStringBuilder.class,\
+	@com.liferay.petra.lang-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
+	@com.liferay.petra.string-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/string/StringBundler.class,\
+	@com.liferay.petra.string-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/string/StringBundler$UnsafeStringBuilder.class,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/BaseImportsFormatter.class,\
@@ -26,8 +26,8 @@ Main-Class: com.liferay.portal.tools.rest.builder.RESTBuilder
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/search/Sort.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/search/filter/Filter.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/util/*,\
-	@com.liferay.portal.tools.java.parser-[0-9.]*.jar!/com/liferay/portal/tools/java/parser/*.class,\
-	@com.liferay.portal.tools.java.parser-[0-9.]*.jar!/com/liferay/portal/tools/java/parser/util/JavaParserUtil.class,\
+	@com.liferay.portal.tools.java.parser-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/portal/tools/java/parser/*.class,\
+	@com.liferay.portal.tools.java.parser-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/portal/tools/java/parser/util/JavaParserUtil.class,\
 	@commons-io-[0-9.]*.jar!/org/apache/commons/io/FileUtils.class,\
 	@javax.ws.rs-api-[0-9.]*.jar!/javax/ws/rs/core/Response.class,\
 	@javax.ws.rs-api-[0-9.]*.jar!/javax/ws/rs/core/Response$Status$Family.class

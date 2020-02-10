@@ -8,10 +8,10 @@ Import-Package:\
 	*
 Main-Class: com.liferay.lang.builder.LangBuilder
 -includeresource:\
-	@com.liferay.petra.lang-[0-9.]*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
-	@com.liferay.petra.nio-[0-9.]*.jar!/com/liferay/petra/nio/CharsetEncoderUtil.class,\
-	@com.liferay.petra.string-[0-9.]*.jar!/com/liferay/petra/string/CharPool.class,\
-	@com.liferay.petra.string-[0-9.]*.jar!/com/liferay/petra/string/StringPool.class,\
+	@com.liferay.petra.lang-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
+	@com.liferay.petra.nio-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/nio/CharsetEncoderUtil.class,\
+	@com.liferay.petra.string-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/string/CharPool.class,\
+	@com.liferay.petra.string-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/string/StringPool.class,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/tools/GitException.class,\

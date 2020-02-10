@@ -33,23 +33,23 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@checkstyle-[0-9.]*.jar!/com/puppycrawl/tools/checkstyle/grammars/GeneratedJavaTokenTypes.class,\
 	@checkstyle-[0-9.]*.jar!/com/puppycrawl/tools/checkstyle/utils/CommonUtil.class,\
 	@checkstyle-[0-9.]*.jar!/com/puppycrawl/tools/checkstyle/utils/TokenUtil.class,\
-	@com.liferay.petra.concurrent-[0-9.]*.jar!/com/liferay/petra/concurrent/ConcurrentMapperHashMap.class,\
-	@com.liferay.petra.concurrent-[0-9.]*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap.class,\
-	@com.liferay.petra.concurrent-[0-9.]*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap$*.class,\
-	@com.liferay.petra.lang-[0-9.]*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/EqualityPhantomReference.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/EqualitySoftReference.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/EqualityWeakReference.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/FinalizeAction.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/FinalizeManager.class,\
-	@com.liferay.petra.memory-[0-9.]*.jar!/com/liferay/petra/memory/FinalizeManager$*.class,\
-	@com.liferay.petra.reflect-[0-9.]*.jar!/com/liferay/petra/reflect/ReflectionUtil.class,\
-	@com.liferay.petra.string-[0-9.]*.jar!/com/liferay/petra/string/CharPool.class,\
-	@com.liferay.petra.string-[0-9.]*.jar!/com/liferay/petra/string/StringBundler.class,\
-	@com.liferay.petra.string-[0-9.]*.jar!/com/liferay/petra/string/StringBundler$UnsafeStringBuilder.class,\
-	@com.liferay.petra.string-[0-9.]*.jar!/com/liferay/petra/string/StringPool.class,\
-	@com.liferay.petra.xml-[0-9.]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
-	@com.liferay.petra.xml-[0-9.]*.jar!/com/liferay/petra/xml/XMLUtil.class,\
+	@com.liferay.petra.concurrent-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/concurrent/ConcurrentMapperHashMap.class,\
+	@com.liferay.petra.concurrent-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap.class,\
+	@com.liferay.petra.concurrent-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap$*.class,\
+	@com.liferay.petra.lang-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/EqualityPhantomReference.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/EqualitySoftReference.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/EqualityWeakReference.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/FinalizeAction.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/FinalizeManager.class,\
+	@com.liferay.petra.memory-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/memory/FinalizeManager$*.class,\
+	@com.liferay.petra.reflect-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/reflect/ReflectionUtil.class,\
+	@com.liferay.petra.string-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/string/CharPool.class,\
+	@com.liferay.petra.string-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/string/StringBundler.class,\
+	@com.liferay.petra.string-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/string/StringBundler$UnsafeStringBuilder.class,\
+	@com.liferay.petra.string-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/string/StringPool.class,\
+	@com.liferay.petra.xml-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/xml/Dom4jUtil.class,\
+	@com.liferay.petra.xml-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/petra/xml/XMLUtil.class,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/mail/service.xml,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/model/BaseModelHintsImpl.class,\
 	@com.liferay.portal.impl-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/service.xml,\
@@ -130,9 +130,9 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/transaction/Transactional.class,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/util/*,\
 	@com.liferay.portal.kernel-[0-9.]*(-SNAPSHOT|-TEST_ARTIFACT|).jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
-	@com.liferay.portal.tools.java.parser-[0-9.]*.jar!/com/liferay/portal/tools/java/parser/*.class,\
-	@com.liferay.portal.tools.java.parser-[0-9.]*.jar!/com/liferay/portal/tools/java/parser/util/JavaParserUtil.class,\
-	@com.liferay.util.java-[0-9.]*.jar!/com/liferay/util/xml/XMLSafeReader.class,\
+	@com.liferay.portal.tools.java.parser-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/portal/tools/java/parser/*.class,\
+	@com.liferay.portal.tools.java.parser-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/portal/tools/java/parser/util/JavaParserUtil.class,\
+	@com.liferay.util.java-[0-9.]*(hotfix-[0-9.]*-[0-9.]*|).jar!/com/liferay/util/xml/XMLSafeReader.class,\
 	@commons-io-[0-9.]*.jar!/org/apache/commons/io/Charsets.class,\
 	@commons-io-[0-9.]*.jar!/org/apache/commons/io/FileExistsException.class,\
 	@commons-io-[0-9.]*.jar!/org/apache/commons/io/FileUtils.class,\

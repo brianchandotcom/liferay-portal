@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Asset List Item Selector API
-Bundle-SymbolicName: com.liferay.asset.list.item.selector.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.asset.list.item.selector,\
-	com.liferay.asset.list.item.selector.criterion

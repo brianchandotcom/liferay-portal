@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.process.CollectorOutputProcessor;
 import com.liferay.petra.process.ProcessUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -105,8 +106,7 @@ public class ThreadUtil {
 
 		StringBundler sb = new StringBundler(
 			StringBundler.concat(
-				"Full thread dump of ", jvm, " on ", String.valueOf(new Date()),
-				"\n\n"));
+				"Full thread dump of ", jvm, " on ", new Date(), "\n\n"));
 
 		Map<Thread, StackTraceElement[]> stackTraces =
 			Thread.getAllStackTraces();

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -71,8 +72,7 @@ public class ServiceLoader {
 			catch (Exception exception) {
 				_log.error(
 					StringBundler.concat(
-						"Unable to load ", String.valueOf(clazz), " with ",
-						String.valueOf(defineClassLoader)),
+						"Unable to load ", clazz, " with ", defineClassLoader),
 					exception);
 			}
 		}

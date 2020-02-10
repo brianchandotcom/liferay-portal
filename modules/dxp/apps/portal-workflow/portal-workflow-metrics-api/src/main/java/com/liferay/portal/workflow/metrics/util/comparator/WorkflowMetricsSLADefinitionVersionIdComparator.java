@@ -15,23 +15,19 @@
 package com.liferay.portal.workflow.metrics.util.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 
 /**
- * @author     Rafael Praxedes
- * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *             WorkflowMetricsSLADefinitionVersionIdComparator}
+ * @author Inácio Nery
  */
-@Deprecated
-public class WorkflowMetricsSLADefinitionVersionComparator
+public class WorkflowMetricsSLADefinitionVersionIdComparator
 	extends OrderByComparator<WorkflowMetricsSLADefinitionVersion> {
 
-	public WorkflowMetricsSLADefinitionVersionComparator() {
+	public WorkflowMetricsSLADefinitionVersionIdComparator() {
 		this(false);
 	}
 
-	public WorkflowMetricsSLADefinitionVersionComparator(boolean ascending) {
+	public WorkflowMetricsSLADefinitionVersionIdComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -42,12 +38,11 @@ public class WorkflowMetricsSLADefinitionVersionComparator
 		WorkflowMetricsSLADefinitionVersion
 			workflowMetricsSLADefinitionVersion2) {
 
-		Version version1 = Version.parseVersion(
-			workflowMetricsSLADefinitionVersion1.getVersion());
-		Version version2 = Version.parseVersion(
-			workflowMetricsSLADefinitionVersion2.getVersion());
-
-		int value = version1.compareTo(version2);
+		int value = Long.compare(
+			workflowMetricsSLADefinitionVersion1.
+				getWorkflowMetricsSLADefinitionVersionId(),
+			workflowMetricsSLADefinitionVersion2.
+				getWorkflowMetricsSLADefinitionVersionId());
 
 		if (_ascending) {
 			return value;
@@ -76,12 +71,16 @@ public class WorkflowMetricsSLADefinitionVersionComparator
 	}
 
 	private static final String _ORDER_BY_ASC =
-		"WorkflowMetricsSLADefinitionVersion.version ASC";
+		"WorkflowMetricsSLADefinitionVersion." +
+			"workflowMetricsSLADefinitionVersionId ASC";
 
 	private static final String _ORDER_BY_DESC =
-		"WorkflowMetricsSLADefinitionVersion.version DESC";
+		"WorkflowMetricsSLADefinitionVersion." +
+			"workflowMetricsSLADefinitionVersionId DESC";
 
-	private static final String[] _ORDER_BY_FIELDS = {"version"};
+	private static final String[] _ORDER_BY_FIELDS = {
+		"workflowMetricsSLADefinitionVersionId"
+	};
 
 	private final boolean _ascending;
 

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>CHECKIN_DIALOG_TITLE</td>
-	<td>//h3[contains(.,'Describe Your Changes')]</td>
+	<td>//div[contains(@class,'modal-title') and contains(text(),'Describe Your Changes')]</td>
 	<td></td>
 </tr>
 <tr>

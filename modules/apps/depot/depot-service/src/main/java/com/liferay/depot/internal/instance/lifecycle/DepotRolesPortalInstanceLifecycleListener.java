@@ -14,6 +14,7 @@
 
 package com.liferay.depot.internal.instance.lifecycle;
 
+import com.liferay.depot.internal.constants.DepotRolesConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -100,7 +101,8 @@ public class DepotRolesPortalInstanceLifecycleListener
 	}
 
 	private static final String[] _DEPOT_ROLE_NAMES = {
-		"Depot Administrator", "Depot Member", "Depot Owner"
+		DepotRolesConstants.DEPOT_ADMINISTRATOR,
+		DepotRolesConstants.DEPOT_MEMBER, DepotRolesConstants.DEPOT_OWNER
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

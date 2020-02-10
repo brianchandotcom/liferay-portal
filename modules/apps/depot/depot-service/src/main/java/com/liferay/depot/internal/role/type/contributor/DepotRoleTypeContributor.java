@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.roles.admin.web.internal.role.type.contributor;
+package com.liferay.depot.internal.role.type.contributor;
 
+import com.liferay.depot.internal.constants.DepotRolesConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -44,7 +45,7 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public String[] getSubtypes() {
-		return PropsValues.ROLES_SITE_SUBTYPES;
+		return new String[0];
 	}
 
 	@Override
@@ -69,12 +70,31 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public boolean isAllowDefinePermissions(Role role) {
+		if (Objects.equals(
+				role.getName(), DepotRolesConstants.DEPOT_ADMINISTRATOR) ||
+			Objects.equals(role.getName(), DepotRolesConstants.DEPOT_OWNER)) {
+
+			return false;
+		}
+
 		return true;
 	}
 
 	@Override
 	public boolean isAllowDelete(Role role) {
-		return false;
+		if (role == null) {
+			return false;
+		}
+
+		if (Objects.equals(
+				role.getName(), DepotRolesConstants.DEPOT_ADMINISTRATOR) ||
+			Objects.equals(role.getName(), DepotRolesConstants.DEPOT_MEMBER) ||
+			Objects.equals(role.getName(), DepotRolesConstants.DEPOT_OWNER)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 }

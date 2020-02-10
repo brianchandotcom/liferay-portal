@@ -14,6 +14,7 @@
 
 import ClayPopover from '@clayui/popover';
 import {useEventListener} from 'frontend-js-react-web';
+import {match} from 'metal-dom';
 import {Align} from 'metal-position';
 import React, {useEffect, useRef, useLayoutEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
@@ -61,7 +62,7 @@ const DisabledArea = () => {
 			!hasAbsolutePosition &&
 			!DEFAULT_WHITELIST.some(
 				selector =>
-					element.matches(`.${selector}`) ||
+					match(element, `.${selector}`) ||
 					element.querySelector(`.${selector}`)
 			)
 		);

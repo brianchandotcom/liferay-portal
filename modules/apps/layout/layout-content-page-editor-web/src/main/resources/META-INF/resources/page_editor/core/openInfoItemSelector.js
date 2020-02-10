@@ -33,12 +33,7 @@ export function openInfoItemSelector(
 		if (selectedItem && selectedItem.value) {
 			const infoItem = JSON.parse(selectedItem.value);
 
-			callback({
-				className: infoItem.className,
-				classNameId: infoItem.classNameId,
-				classPK: infoItem.classPK,
-				title: infoItem.title
-			});
+			callback(infoItem);
 		}
 	});
 

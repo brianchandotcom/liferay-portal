@@ -107,7 +107,12 @@ export default function MappingSelector({
 			config,
 			dispatch,
 			fieldType,
-			selectedItem,
+			selectedItem: {
+				className: selectedItem.className,
+				classNameId: selectedItem.classNameId,
+				classPK: selectedItem.classPK,
+				title: selectedItem.title
+			},
 			selectedSourceTypeId
 		}).then(newFields => {
 			setFields(newFields);

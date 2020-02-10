@@ -79,7 +79,7 @@ public class AssetListItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _language.get(locale, "asset-list");
+		return _language.get(locale, "content-sets");
 	}
 
 	@Override

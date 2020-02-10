@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.aui.web.internal.configuration.AuiConfiguration",
-	immediate = true, property = "service.ranking:Integer=1",
+	immediate = true, property = "service.ranking:Integer=-1",
 	service = TopHeadResources.class
 )
 public class AuiTopHeadResources implements TopHeadResources {

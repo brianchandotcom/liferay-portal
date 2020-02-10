@@ -301,70 +301,72 @@ public class FragmentDefinitionConverterUtil {
 		Set<String> textIds = jsonObject.keySet();
 
 		for (String textId : textIds) {
-			JSONObject textJSONObject = jsonObject.getJSONObject(textId);
-
 			fragmentContentFields.add(
-				new FragmentContentField() {
-					{
-						id = textId;
-
-						setFragmentLink(
-							() -> {
-								JSONObject configJSONObject =
-									textJSONObject.getJSONObject("config");
-
-								if (configJSONObject.isNull("href")) {
-									return null;
-								}
-
-								return new FragmentLink() {
-									{
-										value = new InlineLink() {
-											{
-												href =
-													configJSONObject.getString(
-														"href");
-											}
-										};
-
-										setTarget(
-											() -> {
-												String target =
-													configJSONObject.getString(
-														"target");
-
-												if (Validator.isNull(target)) {
-													return null;
-												}
-
-												return Target.create(
-													StringUtil.
-														upperCaseFirstLetter(
-															target.substring(
-																1)));
-											});
-									}
-								};
-							});
-
-						setValue(
-							() -> {
-								String type = editableTypes.getOrDefault(
-									textId, "text");
-
-								if (Objects.equals(type, "image")) {
-									return _toFragmentContentFieldImage(
-										textJSONObject);
-								}
-
-								return _toFragmentContentFieldText(
-									textJSONObject);
-							});
-					}
-				});
+				_toFragmentContentField(editableTypes, textId, jsonObject));
 		}
 
 		return fragmentContentFields;
+	}
+
+	private static FragmentContentField _toFragmentContentField(
+		Map<String, String> editableTypes, String textId,
+		JSONObject jsonObject) {
+
+		JSONObject textJSONObject = jsonObject.getJSONObject(textId);
+
+		return new FragmentContentField() {
+			{
+				id = textId;
+
+				setFragmentLink(
+					() -> {
+						JSONObject configJSONObject =
+							textJSONObject.getJSONObject("config");
+
+						if (configJSONObject.isNull("href")) {
+							return null;
+						}
+
+						return new FragmentLink() {
+							{
+								value = new InlineLink() {
+									{
+										href = configJSONObject.getString(
+											"href");
+									}
+								};
+
+								setTarget(
+									() -> {
+										String target =
+											configJSONObject.getString(
+												"target");
+
+										if (Validator.isNull(target)) {
+											return null;
+										}
+
+										return Target.create(
+											StringUtil.upperCaseFirstLetter(
+												target.substring(1)));
+									});
+							}
+						};
+					});
+
+				setValue(
+					() -> {
+						String type = editableTypes.getOrDefault(
+							textId, "text");
+
+						if (Objects.equals(type, "image")) {
+							return _toFragmentContentFieldImage(textJSONObject);
+						}
+
+						return _toFragmentContentFieldText(textJSONObject);
+					});
+			}
+		};
 	}
 
 	private static FragmentContentFieldImage _toFragmentContentFieldImage(

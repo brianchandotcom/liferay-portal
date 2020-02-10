@@ -93,6 +93,15 @@ public class SLAInstanceResultWorkflowMetricsIndexerTest
 					new String[] {getTerminalNodeKey(kaleoDefinition)},
 					ServiceContextTestUtil.getServiceContext()));
 
+		WorkflowMetricsSLADefinition firstWorkflowMetricsSLADefinition =
+			_workflowMetricsSLADefinitions.remove(0);
+
+		_workflowMetricsSLADefinitionLocalService.
+			deactivateWorkflowMetricsSLADefinition(
+				firstWorkflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId(),
+				ServiceContextTestUtil.getServiceContext());
+
 		for (BlogsEntry blogsEntry : blogsEntries) {
 			KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
 
@@ -111,14 +120,16 @@ public class SLAInstanceResultWorkflowMetricsIndexerTest
 				kaleoDefinition.getKaleoDefinitionId());
 		}
 
-		WorkflowMetricsSLADefinition firstWorkflowMetricsSLADefinition =
-			_workflowMetricsSLADefinitions.get(0);
+		for (BlogsEntry blogsEntry : blogsEntries) {
+			KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
 
-		_workflowMetricsSLADefinitionLocalService.
-			deactivateWorkflowMetricsSLADefinition(
-				firstWorkflowMetricsSLADefinition.
-					getWorkflowMetricsSLADefinitionId(),
-				ServiceContextTestUtil.getServiceContext());
+			assertSLAReindex(
+				2, new String[] {"workflow-metrics-sla-instance-results"},
+				new String[] {"WorkflowMetricsSLAInstanceResultType"},
+				"companyId", kaleoDefinition.getCompanyId(), "instanceId",
+				kaleoInstance.getKaleoInstanceId(), "processId",
+				kaleoDefinition.getKaleoDefinitionId());
+		}
 
 		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
 				_workflowMetricsSLADefinitions) {

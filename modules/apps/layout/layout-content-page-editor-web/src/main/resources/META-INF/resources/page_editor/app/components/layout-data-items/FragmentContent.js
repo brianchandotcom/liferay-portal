@@ -284,9 +284,9 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		processor.destroyEditor(element, editableConfig);
 	};
 
-	const onFloatingToolbarButtonClick = (buttonId, event, itemRef) => {
+	const onFloatingToolbarButtonClick = (buttonId, itemRef) => {
 		if (buttonId === EDITABLE_FLOATING_TOOLBAR_BUTTONS.edit.id) {
-			initProcessor(itemRef.current, event);
+			initProcessor(itemRef.current);
 		}
 	};
 

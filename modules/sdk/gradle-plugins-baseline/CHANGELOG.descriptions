@@ -1,0 +1,82 @@
+2.0.3:description
+
+- [LPS-87776]: Allow the `baseline` task to update the `Bundle-Version` header
+when all the `packageinfo` files are correct.
+
+2.0.0:description
+
+- [LPS-86583]: Add the property `baselineConfiguration` which contains the
+configuration with exactly one dependency to the previously released version of
+the project for baselining.
+
+1.3.9:description
+
+- [LPS-86583]: Improve performance of the configuration phase for the `baseline`
+task.
+
+1.3.8:description
+
+- [LPS-86583]: Skip the `baseline` task if the project was never published.
+
+1.3.7:description
+
+- [LPS-85678]: Update the `baseline` task to ignore the specified baseline
+warnings recursively:
+	- `EXCESSIVE-VERSION-INCREASE-RECURSIVE`
+	- `PACKAGE ADDED-MISSING-PACKAGEINFO-RECURSIVE`
+	- `PACKAGE-REMOVED-RECURSIVE`
+	- `PACKAGE-REMOVED-UNNECESSARY-PACKAGEINFO-RECURSIVE`
+	- `VERSION-INCREASE-REQUIRED-RECURSIVE`
+	- `VERSION-INCREASE-SUGGESTED-RECURSIVE`
+
+1.3.6:description
+
+- [LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
+specified baseline warnings:
+	- `EXCESSIVE-VERSION-INCREASE`
+	- `PACKAGE ADDED-MISSING-PACKAGEINFO`
+	- `PACKAGE-REMOVED`
+	- `PACKAGE-REMOVED-UNNECESSARY-PACKAGEINFO`
+	- `VERSION-INCREASE-REQUIRED`
+	- `VERSION-INCREASE-SUGGESTED`
+
+1.3.4:description
+
+- [LPS-85678]: Check the content of the `.lfrbuild-packageinfo` file to ignore
+specified baseline warnings.
+
+1.3.3:description
+
+- [LPS-85677]: Display the file location for the jars in the log when semantic
+versioning is incorrect.
+
+1.3.2:description
+
+- [LPS-83067]: Only update the `packageinfo` file when the suggested version and
+the newer version do not match.
+
+1.3.0:description
+
+- [LPS-83067]: Ignore excessive package version increase warnings by setting the
+`BaselineTask`'s `ignoreExcessiveVersionIncreases` property to `true`.
+- [LPS-83067]: Automatically ignore excessive package version increase warnings
+when checking against older versions.
+
+1.2.0:description
+
+- [LPS-77441]: Allow the semantic versioning check to run using multiple
+versions as baseline.
+- [LPS-77441]: Check whether the baseline comes from the local Maven cache for
+all `BaselineTask` instances, not just the `baseline` task.
+- [LPS-77441]: Add the ability to set the default value of the `reportDiff`
+property for all `BaselineTask` instances by setting the project property
+`baseline.jar.report.level` to `"diff"` or `"persist"`.
+- [LPS-77441]: Add the ability to set the default value of the
+`reportOnlyDirtyPackages` for all `BaselineTask` instances by setting the
+project property `baseline.jar.report.only.dirty.packages`.
+
+1.1.0:description
+
+- [LPS-69470]: Add the property `forceCalculatedVersion` to all tasks that
+extend `BaselineTask`. If `true`, the baseline check will fail if the
+`Bundle-Version` has been excessively increased.

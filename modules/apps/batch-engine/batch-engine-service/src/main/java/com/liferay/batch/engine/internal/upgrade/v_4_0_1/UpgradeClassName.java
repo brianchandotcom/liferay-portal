@@ -25,12 +25,23 @@ public class UpgradeClassName extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			BatchEngineExportTaskModelImpl.class,
-			new AlterColumnType("className", "VARCHAR(255) null"));
-		alter(
-			BatchEngineImportTaskModelImpl.class,
-			new AlterColumnType("className", "VARCHAR(255) null"));
+		if (!hasColumnType(
+				getTableName(BatchEngineExportTaskModelImpl.class), "className",
+				"VARCHAR(255) null")) {
+
+			alter(
+				BatchEngineExportTaskModelImpl.class,
+				new AlterColumnType("className", "VARCHAR(255) null"));
+		}
+
+		if (!hasColumnType(
+				getTableName(BatchEngineImportTaskModelImpl.class), "className",
+				"VARCHAR(255) null")) {
+
+			alter(
+				BatchEngineImportTaskModelImpl.class,
+				new AlterColumnType("className", "VARCHAR(255) null"));
+		}
 	}
 
 }

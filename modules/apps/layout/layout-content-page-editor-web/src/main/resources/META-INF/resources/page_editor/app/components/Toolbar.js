@@ -143,16 +143,16 @@ function ToolbarBody() {
 		}
 	};
 
-	let buttonLabel = Liferay.Language.get('publish');
+	let publishButtonLabel = Liferay.Language.get('publish');
 
 	if (pageType === PAGE_TYPES.master) {
-		buttonLabel = Liferay.Language.get('publish-master');
+		publishButtonLabel = Liferay.Language.get('publish-master');
 	}
 	else if (singleSegmentsExperienceMode) {
-		buttonLabel = Liferay.Language.get('save-variant');
+		publishButtonLabel = Liferay.Language.get('save-variant');
 	}
 	else if (workflowEnabled) {
-		buttonLabel = Liferay.Language.get('submit-for-publication');
+		publishButtonLabel = Liferay.Language.get('submit-for-publication');
 	}
 
 	return (
@@ -254,7 +254,7 @@ function ToolbarBody() {
 							small
 							type="submit"
 						>
-							{buttonLabel}
+							{publishButtonLabel}
 						</ClayButton>
 					</form>
 				</li>

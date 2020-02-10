@@ -347,16 +347,19 @@ public class FragmentDefinitionConverterUtil {
 								};
 							});
 
-						String type = editableTypes.getOrDefault(
-							textId, "text");
+						setValue(
+							() -> {
+								String type = editableTypes.getOrDefault(
+									textId, "text");
 
-						if (Objects.equals(type, "image")) {
-							value = _toFragmentContentFieldImage(
-								textJSONObject);
-						}
-						else {
-							value = _toFragmentContentFieldText(textJSONObject);
-						}
+								if (Objects.equals(type, "image")) {
+									return _toFragmentContentFieldImage(
+										textJSONObject);
+								}
+
+								return _toFragmentContentFieldText(
+									textJSONObject);
+							});
 					}
 				});
 		}

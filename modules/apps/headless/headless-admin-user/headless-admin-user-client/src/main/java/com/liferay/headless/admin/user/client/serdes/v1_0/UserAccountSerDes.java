@@ -66,6 +66,16 @@ public class UserAccountSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (userAccount.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(userAccount.getActions()));
+		}
+
 		if (userAccount.getAdditionalName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -429,6 +439,13 @@ public class UserAccountSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (userAccount.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(userAccount.getActions()));
+		}
+
 		if (userAccount.getAdditionalName() == null) {
 			map.put("additionalName", null);
 		}
@@ -610,7 +627,14 @@ public class UserAccountSerDes {
 			UserAccount userAccount, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "additionalName")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setActions(
+						(Map)UserAccountSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "additionalName")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setAdditionalName((String)jsonParserFieldValue);
 				}

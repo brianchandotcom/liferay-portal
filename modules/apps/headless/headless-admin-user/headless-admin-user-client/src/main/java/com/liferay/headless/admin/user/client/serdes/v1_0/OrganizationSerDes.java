@@ -64,6 +64,16 @@ public class OrganizationSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (organization.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(organization.getActions()));
+		}
+
 		if (organization.getComment() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -278,6 +288,13 @@ public class OrganizationSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (organization.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(organization.getActions()));
+		}
+
 		if (organization.getComment() == null) {
 			map.put("comment", null);
 		}
@@ -392,7 +409,14 @@ public class OrganizationSerDes {
 			Organization organization, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "comment")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					organization.setActions(
+						(Map)OrganizationSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "comment")) {
 				if (jsonParserFieldValue != null) {
 					organization.setComment((String)jsonParserFieldValue);
 				}

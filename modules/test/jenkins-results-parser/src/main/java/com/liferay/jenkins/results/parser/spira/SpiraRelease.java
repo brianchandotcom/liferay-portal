@@ -171,18 +171,12 @@ public class SpiraRelease {
 	}
 
 	public JSONObject toJSONObject() {
-		JSONObject jsonObject = new JSONObject(_jsonObject.toString());
-
-		jsonObject.put("Path", getPath());
-
-		return jsonObject;
+		return _jsonObject;
 	}
 
 	@Override
 	public String toString() {
-		JSONObject jsonObject = toJSONObject();
-
-		return jsonObject.toString();
+		return _jsonObject.toString();
 	}
 
 	protected static List<SpiraRelease> getSpiraReleases(
@@ -262,6 +256,8 @@ public class SpiraRelease {
 		}
 
 		_parentSpiraRelease = parentSpiraRelease;
+
+		_jsonObject.put("Path", getPath());
 	}
 
 	protected String getIndentLevel() {

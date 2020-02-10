@@ -5,7 +5,7 @@
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
 	<liferay:config doc:id="6fdcd5e7-887b-4846-8b37-1f2636e26b0c" doc:name="Liferay Config" name="Liferay_Config_Catalog">
-		<liferay:basic-connection _username="test@liferay.com" _password="test" _openApiSpecPath="http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.json" />
+		<liferay:basic-connection _username="test@liferay.com" _password="test" openApiSpecPath="http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.json" />
 	</liferay:config>
 	<flow doc:id="16c3eabe-a673-4e1d-91a2-6712bb05e599" name="commerce-delete-flow">
 		<http:listener config-ref="HTTP_Listener_config" doc:id="8b6dea74-b47f-4412-a30a-be34537cf02f" doc:name="Listener" path="/delete" />

@@ -79,14 +79,14 @@ Enter it into the
 
 ```xml
  <liferay:config name="Liferay_Config_Catalog">
- <liferay:basic-connection _username=${username} _password=${password} _openApiSpecPath="http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.json"/>
+ <liferay:basic-connection _username=${username} _password=${password} openApiSpecPath="http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.json"/>
  </liferay:config>
 ```
 
 * Configuration example using OAuth 2.0
 ```xml
  <liferay:config name="Liferay_Config_Catalog">
-    <liferay:oauth2-connection _consumerKey="${consumerKey}" _consumerSecret=${consumerSecret} _openApiSpecPath="http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.json"/>
+    <liferay:oauth2-connection _consumerKey="${consumerKey}" _consumerSecret=${consumerSecret} penApiSpecPath="http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/openapi.json"/>
  </liferay:config>
 ```
 

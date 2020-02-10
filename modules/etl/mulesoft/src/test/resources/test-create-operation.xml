@@ -8,7 +8,7 @@ http://www.mulesoft.org/schema/mule/liferay http://www.mulesoft.org/schema/mule/
 	<configuration-properties file="automation-credentials.properties" />
 
 	<liferay:config name="Liferay_Config">
-		<liferay:basic-connection _openApiSpecPath="${liferay.openApiSpecPath}" _username="${liferay.username}" _password="${liferay.password}" />
+		<liferay:basic-connection openApiSpecPath="${liferay.openApiSpecPath}" _username="${liferay.username}" _password="${liferay.password}" />
 	</liferay:config>
 
 	<flow name="test-create-product-flow">

@@ -3,7 +3,7 @@
 <mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:liferay="http://www.mulesoft.org/schema/mule/liferay" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/liferay http://www.mulesoft.org/schema/mule/liferay/current/mule-liferay.xsd">
 	<configuration-properties file="automation-credentials.properties" />
 	<liferay:config name="Liferay_Config">
-		<liferay:basic-connection _openApiSpecPath="${liferay.openApiSpecPath}" _username="${liferay.username}" _password="${liferay.password}" />
+		<liferay:basic-connection openApiSpecPath="${liferay.openApiSpecPath}" _username="${liferay.username}" _password="${liferay.password}" />
 	</liferay:config>
 	<flow name="test-delete-product-flow">
 		<liferay:get endpoint="/v1.0/products" config-ref="Liferay_Config" />

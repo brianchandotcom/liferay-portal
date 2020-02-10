@@ -110,14 +110,29 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 				`[id="${getEditableId(editingItemId)}"]`
 			);
 
+			const editableConfig = selectEditableValueConfig(
+				state,
+				fragmentEntryLinkId,
+				getEditableId(editingItemId),
+				EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+			);
+
 			destroyProcessor(
 				editingItemElement,
+				editableConfig,
 				editingItemElement.getAttribute('type')
 			);
 
 			selectEditingItemId(null);
 		}
-	}, [activeItemId, editingItemId, ref, selectEditingItemId]);
+	}, [
+		activeItemId,
+		editingItemId,
+		fragmentEntryLinkId,
+		ref,
+		selectEditingItemId,
+		state
+	]);
 
 	useEffect(() => {
 		const element = ref.current;
@@ -263,10 +278,10 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 		}
 	};
 
-	const destroyProcessor = (element, editableType) => {
+	const destroyProcessor = (element, editableConfig, editableType) => {
 		const processor = Processors[editableType] || Processors.fallback;
 
-		processor.destroyEditor(element);
+		processor.destroyEditor(element, editableConfig);
 	};
 
 	const onFloatingToolbarButtonClick = (buttonId, event, itemRef) => {

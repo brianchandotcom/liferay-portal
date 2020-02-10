@@ -70,7 +70,7 @@ public abstract class BaseOperation implements Operation {
 
 		URL serviceURL = sharepointConnectionInfo.getServiceURL();
 
-		return urlHelper.toURL(
+		return URLUtil.toURL(
 			serviceURL.toString() + sharepointConnectionInfo.getLibraryPath() +
 				path);
 	}
@@ -105,7 +105,6 @@ public abstract class BaseOperation implements Operation {
 		return sb.toString();
 	}
 
-	protected static URLHelper urlHelper = new URLHelper();
 	protected static XMLHelper xmlHelper = new XMLHelper();
 
 	protected CopySoap copySoap;

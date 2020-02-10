@@ -35,7 +35,7 @@ import com.liferay.sharepoint.soap.connector.operation.GetSharepointVersionsOper
 import com.liferay.sharepoint.soap.connector.operation.MoveSharepointObjectOperation;
 import com.liferay.sharepoint.soap.connector.operation.Operation;
 import com.liferay.sharepoint.soap.connector.operation.PathUtil;
-import com.liferay.sharepoint.soap.connector.operation.URLHelper;
+import com.liferay.sharepoint.soap.connector.operation.URLUtil;
 import com.liferay.sharepoint.soap.connector.schema.query.Query;
 import com.liferay.sharepoint.soap.connector.schema.query.QueryOptionsList;
 
@@ -253,7 +253,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 
 		String libraryPath = _sharepointConnectionInfo.getLibraryPath();
 
-		URL libraryURL = _urlHelper.toURL(serviceURL + libraryPath);
+		URL libraryURL = URLUtil.toURL(serviceURL + libraryPath);
 
 		_sharepointRootFolder = new SharepointObject(
 			StringPool.BLANK, null, new Date(0), true, new Date(0),
@@ -356,7 +356,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 	protected URL getServiceURL(String serviceName) {
 		URL url = _sharepointConnectionInfo.getServiceURL();
 
-		return _urlHelper.toURL(
+		return URLUtil.toURL(
 			StringBundler.concat(url, "_vti_bin/", serviceName, ".asmx"));
 	}
 
@@ -432,8 +432,6 @@ public class SharepointConnectionImpl implements SharepointConnection {
 				serviceException);
 		}
 	}
-
-	private static final URLHelper _urlHelper = new URLHelper();
 
 	private AddFolderOperation _addFolderOperation;
 	private AddOrUpdateFileOperation _addOrUpdateFileOperation;

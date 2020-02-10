@@ -23,9 +23,9 @@ import java.net.URL;
 /**
  * @author Iván Zaera
  */
-public class URLHelper {
+public final class URLUtil {
 
-	public URL escapeURL(URL url) {
+	public static URL escapeURL(URL url) {
 		String urlString = url.toString();
 
 		String escapedURLString = urlString.replaceAll(StringPool.SPACE, "%20");
@@ -40,7 +40,9 @@ public class URLHelper {
 		}
 	}
 
-	public URL toURL(String urlString) throws SharepointRuntimeException {
+	public static URL toURL(String urlString)
+		throws SharepointRuntimeException {
+
 		try {
 			return new URL(urlString);
 		}

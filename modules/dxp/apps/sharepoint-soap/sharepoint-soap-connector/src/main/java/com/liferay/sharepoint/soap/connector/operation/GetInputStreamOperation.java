@@ -70,7 +70,7 @@ public final class GetInputStreamOperation extends BaseOperation {
 	}
 
 	protected InputStream execute(URL url) throws SharepointException {
-		url = urlHelper.escapeURL(url);
+		url = URLUtil.escapeURL(url);
 
 		HttpClient httpClient = new HttpClient();
 

@@ -17,7 +17,7 @@ package com.liferay.sharepoint.soap.connector;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.sharepoint.soap.connector.operation.URLHelper;
+import com.liferay.sharepoint.soap.connector.operation.URLUtil;
 
 import java.net.URL;
 
@@ -45,7 +45,7 @@ public class SharepointConnectionInfo {
 		_username = username;
 		_password = password;
 
-		_serviceURL = _urlHelper.toURL(
+		_serviceURL = URLUtil.toURL(
 			StringBundler.concat(
 				_serverProtocol, "://", _serverAddress, StringPool.COLON,
 				_serverPort, _sitePath, StringPool.SLASH));
@@ -118,8 +118,6 @@ public class SharepointConnectionInfo {
 			throw new SharepointRuntimeException("Password is null");
 		}
 	}
-
-	private static final URLHelper _urlHelper = new URLHelper();
 
 	private final String _libraryName;
 	private final String _libraryPath;

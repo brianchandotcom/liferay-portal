@@ -126,7 +126,7 @@ public final class GetSharepointVersionsOperation extends BaseOperation {
 				_getSharepointVersionId(
 					sharepointObjectId, versionNode.getNodeValue()),
 				GetterUtil.getLong(sizeNode.getNodeValue()),
-				urlHelper.toURL(urlNode.getNodeValue()),
+				URLUtil.toURL(urlNode.getNodeValue()),
 				_getVersion(versionNode.getNodeValue()));
 
 			sharepointVersions.add(sharepointVersion);

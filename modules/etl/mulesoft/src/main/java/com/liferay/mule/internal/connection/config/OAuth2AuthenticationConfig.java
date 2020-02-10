@@ -12,46 +12,45 @@
  * details.
  */
 
-package com.liferay.mule.internal.config;
+package com.liferay.mule.internal.connection.config;
 
 import org.mule.runtime.api.meta.ExpressionSupport;
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
-import org.mule.runtime.extension.api.annotation.param.display.Password;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 
 /**
  * @author Matija Petanjek
  */
-public class BasicAuthenticationConfig {
+public class OAuth2AuthenticationConfig {
 
-	public String getPassword() {
-		return _password;
+	public String getConsumerKey() {
+		return _consumerKey;
 	}
 
-	public String getUsername() {
-		return _username;
+	public String getConsumerSecret() {
+		return _consumerSecret;
 	}
 
-	public void setPassword(String password) {
-		_password = password;
+	public void setConsumerKey(String consumerKey) {
+		_consumerKey = consumerKey;
 	}
 
-	public void setUsername(String username) {
-		_username = username;
+	public void setConsumerSecret(String consumerSecret) {
+		_consumerSecret = consumerSecret;
 	}
 
-	@DisplayName("Password")
-	@Parameter
-	@Password
-	@Placement(order = 2)
-	private String _password;
-
-	@DisplayName("Username")
+	@DisplayName("Consumer Key")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@Parameter
 	@Placement(order = 1)
-	private String _username;
+	private String _consumerKey;
+
+	@DisplayName("Consumer Secret")
+	@Expression(ExpressionSupport.NOT_SUPPORTED)
+	@Parameter
+	@Placement(order = 2)
+	private String _consumerSecret;
 
 }

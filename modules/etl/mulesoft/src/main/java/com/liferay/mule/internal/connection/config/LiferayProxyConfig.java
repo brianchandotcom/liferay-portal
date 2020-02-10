@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mule.internal.config;
+package com.liferay.mule.internal.connection.config;
 
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;

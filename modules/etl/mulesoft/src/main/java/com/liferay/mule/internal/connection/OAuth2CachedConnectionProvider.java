@@ -14,19 +14,12 @@
 
 package com.liferay.mule.internal.connection;
 
-import com.liferay.mule.internal.config.OAuth2AuthenticationConfig;
-
-import javax.inject.Inject;
+import com.liferay.mule.internal.connection.config.OAuth2AuthenticationConfig;
 
 import org.mule.runtime.api.connection.ConnectionException;
-import org.mule.runtime.api.meta.ExpressionSupport;
 import org.mule.runtime.extension.api.annotation.Alias;
-import org.mule.runtime.extension.api.annotation.Expression;
-import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.ParameterGroup;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
-import org.mule.runtime.extension.api.annotation.param.display.Placement;
-import org.mule.runtime.http.api.HttpService;
 
 /**
  * @author Matija Petanjek
@@ -39,23 +32,13 @@ public class OAuth2CachedConnectionProvider
 	@Override
 	public LiferayConnection connect() throws ConnectionException {
 		return LiferayConnection.withOAuth2Authentication(
-			_httpService, _openApiSpecPath,
+			httpService, openApiSpecPath,
 			_oAuth2AuthenticationConfig.getConsumerKey(),
 			_oAuth2AuthenticationConfig.getConsumerSecret(),
 			liferayProxyConfig.getProxyConfig());
 	}
 
-	@Inject
-	private HttpService _httpService;
-
 	@ParameterGroup(name = "Connection config")
-	@Placement(order = 1)
 	private OAuth2AuthenticationConfig _oAuth2AuthenticationConfig;
-
-	@DisplayName("OpenAPI Spec URL")
-	@Expression(ExpressionSupport.NOT_SUPPORTED)
-	@Parameter
-	@Placement(order = 2)
-	private String _openApiSpecPath;
 
 }

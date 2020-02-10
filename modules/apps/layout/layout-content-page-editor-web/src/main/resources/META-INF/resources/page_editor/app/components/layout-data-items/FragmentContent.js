@@ -20,7 +20,6 @@ import React, {
 	useEffect,
 	useLayoutEffect,
 	useState,
-	useRef,
 	useCallback,
 	useMemo
 } from 'react';

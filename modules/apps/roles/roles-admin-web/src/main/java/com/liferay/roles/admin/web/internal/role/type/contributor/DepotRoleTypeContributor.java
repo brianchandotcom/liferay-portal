@@ -17,6 +17,7 @@ package com.liferay.roles.admin.web.internal.role.type.contributor;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
 import java.util.Locale;
 
@@ -26,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Drew Brokke
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=200",
+	immediate = true, property = "service.ranking:Integer=400",
 	service = RoleTypeContributor.class
 )
 public class DepotRoleTypeContributor implements RoleTypeContributor {

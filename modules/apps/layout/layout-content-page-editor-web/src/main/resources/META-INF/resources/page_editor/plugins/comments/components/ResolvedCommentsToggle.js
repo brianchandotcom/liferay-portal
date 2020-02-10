@@ -19,7 +19,7 @@ import toggleShowResolvedComments from '../../../app/actions/toggleShowResolvedC
 import {useDispatch, useSelector} from '../../../app/store/index';
 
 export default function ResolvedCommentsToggle() {
-	const {dispatch} = useDispatch();
+	const dispatch = useDispatch();
 
 	const showResolvedComments = useSelector(
 		state => state.showResolvedComments

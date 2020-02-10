@@ -22,6 +22,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -126,7 +127,13 @@ public class PortletLayoutDisplayContext {
 						layout.getMasterLayoutPlid());
 
 			if (masterLayoutPageTemplateEntry == null) {
-				return _getDefaultStructureJSONObject();
+				JSONObject defaultStructureJSONObject =
+					_getDefaultStructureJSONObject();
+
+				String data = LayoutDataConverter.convert(
+					defaultStructureJSONObject.toString());
+
+				return JSONFactoryUtil.createJSONObject(data);
 			}
 
 			LayoutPageTemplateStructure masterLayoutPageTemplateStructure =

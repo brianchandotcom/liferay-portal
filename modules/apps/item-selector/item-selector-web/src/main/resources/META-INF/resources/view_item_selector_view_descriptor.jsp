@@ -81,6 +81,7 @@ SearchContainer searchContainer = itemSelectorViewDescriptor.getSearchContainer(
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
+
 					<%
 					row.setCssClass("item-selector-list-row " + row.getCssClass());
 					%>

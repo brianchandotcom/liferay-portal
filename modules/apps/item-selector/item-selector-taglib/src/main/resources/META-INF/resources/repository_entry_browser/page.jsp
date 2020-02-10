@@ -427,6 +427,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 
 									row.setCssClass("item-selector-list-row " + row.getCssClass());
 								%>
+
 									<c:choose>
 										<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 											<liferay-ui:search-container-column-image

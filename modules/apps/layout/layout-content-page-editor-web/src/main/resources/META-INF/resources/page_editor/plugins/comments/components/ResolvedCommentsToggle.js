@@ -22,11 +22,11 @@ export default function ResolvedCommentsToggle() {
 	const dispatch = useDispatch();
 
 	const showResolvedComments = useSelector(
-		state => state.showResolvedComments
+		state => !!state.showResolvedComments
 	);
 
 	const hasResolvedComments = useSelector(state =>
-		Object.values(state.fragmentEntryLinks).some(
+		Object.values(state.fragmentEntryLinks || {}).some(
 			fragmentEntryLink =>
 				fragmentEntryLink.comments &&
 				fragmentEntryLink.comments.some(comment => comment.resolved)

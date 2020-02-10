@@ -25,6 +25,9 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -44,6 +47,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -97,6 +101,12 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		catch (PortalException portalException) {
 			throw new IOException(portalException);
 		}
+	}
+
+	@Activate
+	protected void activate() {
+		_portalCache = (PortalCache<String, String>)_multiVMPool.getPortalCache(
+			FragmentEntryLink.class.getName());
 	}
 
 	private String _renderFragmentEntry(
@@ -183,6 +193,31 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
+		StringBundler cacheKeySB = new StringBundler(5);
+
+		cacheKeySB.append(fragmentEntryLink.getFragmentEntryLinkId());
+		cacheKeySB.append(StringPool.DASH);
+		cacheKeySB.append(fragmentRendererContext.getLocale());
+		cacheKeySB.append(StringPool.DASH);
+		cacheKeySB.append(
+			StringUtil.merge(
+				fragmentRendererContext.getSegmentsExperienceIds(),
+				StringPool.SEMICOLON));
+
+		String content = StringPool.BLANK;
+
+		if (Objects.equals(
+				fragmentRendererContext.getMode(),
+				FragmentEntryLinkConstants.VIEW) &&
+			fragmentEntryLink.isCacheable()) {
+
+			content = _portalCache.get(cacheKeySB.toString());
+
+			if (Validator.isNotNull(content)) {
+				return content;
+			}
+		}
+
 		DefaultFragmentEntryProcessorContext
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
@@ -243,10 +278,20 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			configuration = configurationJSONObject.toString();
 		}
 
-		return _renderFragmentEntry(
+		content = _renderFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId(), css, html,
 			fragmentEntryLink.getJs(), configuration,
 			fragmentEntryLink.getNamespace(), httpServletRequest);
+
+		if (Objects.equals(
+				fragmentRendererContext.getMode(),
+				FragmentEntryLinkConstants.VIEW) &&
+			fragmentEntryLink.isCacheable()) {
+
+			_portalCache.put(cacheKeySB.toString(), content);
+		}
+
+		return content;
 	}
 
 	private String _writePortletPaths(
@@ -266,11 +311,16 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		return unsyncStringWriter.toString();
 	}
 
+	private static PortalCache<String, String> _portalCache;
+
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
+
+	@Reference
+	private MultiVMPool _multiVMPool;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

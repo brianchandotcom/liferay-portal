@@ -14,6 +14,9 @@
 
 package com.liferay.account.constants;
 
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 /**
  * @author Drew Brokke
  */
@@ -35,5 +38,9 @@ public class AccountRoleConstants {
 		REQUIRED_ROLE_NAME_ACCOUNT_OWNER,
 		REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR
 	};
+
+	public static boolean isRequiredRole(Role role) {
+		return ArrayUtil.contains(REQUIRED_ROLE_NAMES, role.getName());
+	}
 
 }

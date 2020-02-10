@@ -46,6 +46,10 @@ public class AccountRoleDisplay {
 		return _role.getTitle(locale);
 	}
 
+	public Role getRole() {
+		return _role;
+	}
+
 	public long getRoleId() {
 		return _role.getRoleId();
 	}

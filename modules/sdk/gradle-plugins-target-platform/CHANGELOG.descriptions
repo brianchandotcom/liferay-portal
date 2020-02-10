@@ -1,0 +1,23 @@
+1.1.2:description
+
+- [LPS-83922]: Don't add requirements for files without a BSN.
+- [LPS-83922]: Set `applyMavenExclusions` to `false` to improve performance.
+
+1.1.1:description
+
+- [LPS-82491]: Add support for the `idea` plugin.
+
+1.1.0:description
+
+- [LPS-81530]: Add the ability to configure imported BOMs to manage Java
+dependencies and the various artifacts used in resolving OSGi dependencies.
+
+1.0.1:description
+
+- [LPS-77343]: Add the ability to use a manually generated bndrun file in a
+`ResolveTask` instance by setting the property `bndrunFile` to a valid file.
+- [LPS-80222]: Apply BOM files only on the following configurations:
+	- configuration `compileInclude` added by [Liferay Gradle Plugins]
+	- configuration `default`
+	- configurations added by [Liferay Gradle Plugins Test Integration]
+	- configurations added by the `java` plugin

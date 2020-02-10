@@ -200,7 +200,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	private FragmentEntry _addFragmentEntry(
 			long fragmentCollectionId, String fragmentEntryKey, String name,
 			String css, String html, String js, String configuration,
-			boolean readOnly, String typeLabel, boolean overwrite)
+			boolean readOnly, String typeLabel, boolean cacheable,
+			boolean overwrite)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -240,12 +241,14 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			fragmentEntry = _fragmentEntryService.addFragmentEntry(
 				fragmentCollection.getGroupId(), fragmentCollectionId,
 				fragmentEntryKey, name, css, html, js, configuration, 0, type,
-				status, ServiceContextThreadLocal.getServiceContext());
+				cacheable, status,
+				ServiceContextThreadLocal.getServiceContext());
 		}
 		else {
 			fragmentEntry = _fragmentEntryService.updateFragmentEntry(
 				fragmentEntry.getFragmentEntryId(), name, css, html, js,
-				configuration, fragmentEntry.getPreviewFileEntryId(), status);
+				configuration, fragmentEntry.getPreviewFileEntryId(), cacheable,
+				status);
 		}
 
 		fragmentEntry.setReadOnly(readOnly);
@@ -520,6 +523,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String configuration = StringPool.BLANK;
 			boolean readOnly = false;
 			String typeLabel = StringPool.BLANK;
+			boolean cacheable = false;
 
 			String fragmentJSON = _getContent(zipFile, entry.getValue());
 
@@ -540,11 +544,12 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					jsonObject.getString("configurationPath"));
 				readOnly = jsonObject.getBoolean("readOnly");
 				typeLabel = jsonObject.getString("type");
+				cacheable = jsonObject.getBoolean("cacheable");
 			}
 
 			FragmentEntry fragmentEntry = _addFragmentEntry(
 				fragmentCollectionId, entry.getKey(), name, css, html, js,
-				configuration, readOnly, typeLabel, overwrite);
+				configuration, readOnly, typeLabel, cacheable, overwrite);
 
 			if (Validator.isNotNull(fragmentJSON)) {
 				if (fragmentEntry.getPreviewFileEntryId() > 0) {

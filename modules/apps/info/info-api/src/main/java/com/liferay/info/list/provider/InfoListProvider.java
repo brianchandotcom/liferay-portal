@@ -34,6 +34,12 @@ public interface InfoListProvider<T> {
 	public int getInfoListCount(
 		InfoListProviderContext infoListProviderContext);
 
+	public default String getKey() {
+		Class<?> clazz = getClass();
+
+		return clazz.getName();
+	}
+
 	public String getLabel(Locale locale);
 
 	public default boolean isAvailable(

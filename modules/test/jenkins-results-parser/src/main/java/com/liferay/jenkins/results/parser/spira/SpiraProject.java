@@ -29,7 +29,7 @@ import org.json.JSONObject;
  */
 public class SpiraProject {
 
-	public static SpiraProject getSpiraProjectById(int projectID) {
+	public static SpiraProject getSpiraProjectByID(int projectID) {
 		if (_spiraProjects.containsKey(projectID)) {
 			return _spiraProjects.get(projectID);
 		}

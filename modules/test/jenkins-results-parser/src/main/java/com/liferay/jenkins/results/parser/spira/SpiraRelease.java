@@ -119,7 +119,7 @@ public class SpiraRelease {
 			spiraProject, releaseName, parentSpiraRelease.getID());
 	}
 
-	public static void deleteSpiraReleaseById(
+	public static void deleteSpiraReleaseByID(
 			SpiraProject spiraProject, int releaseID)
 		throws IOException {
 
@@ -145,7 +145,7 @@ public class SpiraRelease {
 			releasePath);
 
 		for (SpiraRelease spiraRelease : spiraReleases) {
-			deleteSpiraReleaseById(spiraProject, spiraRelease.getID());
+			deleteSpiraReleaseByID(spiraProject, spiraRelease.getID());
 		}
 	}
 
@@ -235,7 +235,7 @@ public class SpiraRelease {
 
 	protected SpiraRelease(JSONObject jsonObject) {
 		_jsonObject = jsonObject;
-		_spiraProject = SpiraProject.getSpiraProjectById(
+		_spiraProject = SpiraProject.getSpiraProjectByID(
 			jsonObject.getInt("ProjectId"));
 
 		SpiraRelease parentSpiraRelease = null;

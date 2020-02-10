@@ -113,7 +113,7 @@ public class SpiraTestCaseFolder {
 
 	protected SpiraTestCaseFolder(JSONObject jsonObject) {
 		_jsonObject = jsonObject;
-		_spiraProject = SpiraProject.getSpiraProjectById(
+		_spiraProject = SpiraProject.getSpiraProjectByID(
 			jsonObject.getInt("ProjectId"));
 
 		SpiraTestCaseFolder parentSpiraTestCaseFolder = null;

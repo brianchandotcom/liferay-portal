@@ -17,9 +17,18 @@ definition {
 	}
 
 	macro deployFileOnServer {
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "deploy-dependency-jars -Dliferay.dependency.jars=${liferayDependencyJars}");
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var testBaseDirName = PropsUtil.get("test.base.dir.name");
+		var testDependenciesDirName = PropsUtil.get("test.dependencies.dir.name");
+
+		if (("${bundleIndex}" == "0") || (!(isSet(bundleIndex)))) {
+			var deployDir = "${liferayHome}/deploy";
+		}
+		else {
+			var deployDir = "${liferayHome}-${bundleIndex}/deploy";
+		}
+
+		ArchiveUtil.archive("${testBaseDirName}/${testDependenciesDirName}/${liferayDependencyJars}", "${deployDir}/${liferayDependencyJars}");
 
 		Pause(locator1 = "10000");
 	}

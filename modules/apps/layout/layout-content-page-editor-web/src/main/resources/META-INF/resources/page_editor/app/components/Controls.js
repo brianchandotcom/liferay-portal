@@ -144,10 +144,9 @@ const useSelectEditingItem = () => {
 	const [, dispatch] = useContext(ControlsContext);
 
 	return useCallback(
-		(itemId, {multiSelect = false} = {multiSelect: false}) =>
+		itemId =>
 			dispatch({
 				itemId,
-				multiSelect,
 				type: SELECT_EDITING_ITEM
 			}),
 		[dispatch]

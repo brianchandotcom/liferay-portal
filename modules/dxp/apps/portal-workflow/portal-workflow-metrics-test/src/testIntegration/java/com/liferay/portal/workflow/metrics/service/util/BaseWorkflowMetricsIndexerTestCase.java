@@ -222,7 +222,8 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 		throws Exception {
 
 		_assertReindex(
-			_workflowMetricsIndexer, indexNamesMap, indexTypes, parameters);
+			null, _workflowMetricsIndexer, indexNamesMap, indexTypes,
+			parameters);
 	}
 
 	protected void assertReindex(
@@ -240,7 +241,8 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	protected void assertSLAReindex(
-			String[] indexNames, String[] indexTypes, Object... parameters)
+			Integer expectedCount, String[] indexNames, String[] indexTypes,
+			Object... parameters)
 		throws Exception {
 
 		Map<String, Integer> indexNamesMap = Stream.of(
@@ -251,7 +253,15 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 		);
 
 		_assertReindex(
-			_slaWorkflowMetricsIndexer, indexNamesMap, indexTypes, parameters);
+			expectedCount, _slaWorkflowMetricsIndexer, indexNamesMap,
+			indexTypes, parameters);
+	}
+
+	protected void assertSLAReindex(
+			String[] indexNames, String[] indexTypes, Object... parameters)
+		throws Exception {
+
+		assertSLAReindex(null, indexNames, indexTypes, parameters);
 	}
 
 	protected KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
@@ -397,8 +407,9 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	protected KaleoNodeLocalService kaleoNodeLocalService;
 
 	private void _assertReindex(
-			Indexer<Object> indexer, Map<String, Integer> indexNamesMap,
-			String[] indexTypes, Object... parameters)
+			Integer expectedCount, Indexer<Object> indexer,
+			Map<String, Integer> indexNamesMap, String[] indexTypes,
+			Object... parameters)
 		throws Exception {
 
 		if (searchEngineAdapter == null) {
@@ -411,8 +422,12 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 			new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 
 		for (int i = 0; i < indexNames.length; i++) {
+			if (expectedCount == null) {
+				expectedCount = indexNamesMap.get(indexNames[i]);
+			}
+
 			retryAssertCount(
-				indexNamesMap.get(indexNames[i]), indexNames[i], indexTypes[i],
+				expectedCount, indexNames[i], indexTypes[i],
 				ArrayUtil.append(new Object[] {"deleted", false}, parameters));
 		}
 	}

@@ -1,0 +1,27 @@
+1.3.1:description
+
+- [LPS-84621]: Update the `validateTLD` task to automatically search the parent
+directories for `portal/definitions` to use these files for TLD scheme validation.
+Set the properties `xmlParserClassName` and `xmlParserClasspath` to `null` to
+use the default XML parser provided by Ant.
+
+1.3.0:description
+
+- [LPS-71591]: Add the ability to set a custom XML parser usable by
+`ValidateSchemaTask` tasks.
+- [LPS-71591]: Automatically configure the `validateTLD` task to use the version
+0.12.5 of the [XML Resolver].
+
+1.2.0:description
+
+- [LPS-68666]: Add the ability to define which subprojects to include in the tag
+library documentation of the app by using the `appTLDDocBuilder.subprojects`
+property.
+
+1.1.0:description
+
+- [LRDOCS-3023]: Add the new plugin `com.liferay.app.tlddoc.builder` to generate
+the tag library documentation as a single, combined HTML document for an
+application that spans different subprojects, each one representing a different
+component of the same application.
+- [LPS-67573]: Make most methods private in order to reduce API surface.

@@ -26,8 +26,10 @@
 		content: string,
 		name: string
 	]>}
+	{@param? cacheable: bool}
 	{@param? _configuration: string}
 	{@param? _css: string}
+	{@param? _handleCacheableChanged: any}
 	{@param? _handleConfigurationChanged: any}
 	{@param? _handleCSSChanged: any}
 	{@param? _handleHTMLChanged: any}
@@ -75,6 +77,28 @@
 									<span>{msg desc=""}automatic-propagation-enabled{/msg}</span>
 								</span>
 							{/if}
+
+							<div class="btn-group-item custom-control custom-checkbox ml-2 mr-4 mt-1">
+								<label class="lfr-portal-tooltip" data-title="{msg desc=""}cacheable-fragment-help{/msg}">
+									<input
+										{if $cacheable}
+											checked="checked"
+										{/if}
+
+										class="custom-control-input toggle-switch-check"
+										data-onchange="{$_handleCacheableChanged}"
+										name="cacheable"
+										type="checkbox"
+										value="true"
+									/>
+
+									<span class="custom-control-label">
+										<span class="custom-control-label-text">
+											{msg desc=""}cacheable{/msg}
+										</span>
+									</span>
+								</label>
+							</div>
 
 							{if $status == $allowedStatus.draft}
 								{let $draftButtonAttributes kind="attributes"}

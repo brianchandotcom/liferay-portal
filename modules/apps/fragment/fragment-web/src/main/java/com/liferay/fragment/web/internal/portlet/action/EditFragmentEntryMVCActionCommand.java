@@ -69,6 +69,7 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		String js = ParamUtil.getString(actionRequest, "jsContent");
 		String configuration = ParamUtil.getString(
 			actionRequest, "configurationContent");
+		boolean cacheable = ParamUtil.getBoolean(actionRequest, "cacheable");
 		int status = ParamUtil.getInteger(actionRequest, "status");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -77,7 +78,7 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			FragmentEntry fragmentEntry =
 				_fragmentEntryService.updateFragmentEntry(
 					fragmentEntryId, name, css, html, js, configuration,
-					status);
+					cacheable, status);
 
 			if (status == WorkflowConstants.ACTION_SAVE_DRAFT) {
 				String redirect = _getSaveAndContinueRedirect(

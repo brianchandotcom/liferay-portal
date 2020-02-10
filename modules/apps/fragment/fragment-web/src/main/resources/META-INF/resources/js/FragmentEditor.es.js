@@ -34,6 +34,7 @@ class FragmentEditor extends PortletBase {
 	 */
 	shouldUpdate(changes) {
 		return (
+			changes.cacheable ||
 			changes._html ||
 			changes._js ||
 			changes._configuration ||
@@ -55,6 +56,7 @@ class FragmentEditor extends PortletBase {
 	 */
 	getContent() {
 		return {
+			cacheable: this.cacheable,
 			configuration: this._configuration,
 			css: this._css,
 			html: this._html,
@@ -71,6 +73,18 @@ class FragmentEditor extends PortletBase {
 	 */
 	isHtmlValid() {
 		return this._htmlValid;
+	}
+
+	/**
+	 * Callback executed when the Cacheable property changes.
+	 *
+	 * @param {!Event} event
+	 * @private
+	 */
+	_handleCacheableChanged(event) {
+		this.cacheable = event.delegateTarget.checked;
+
+		this._handleContentChanged();
 	}
 
 	/**
@@ -143,6 +157,7 @@ class FragmentEditor extends PortletBase {
 			this._saving = true;
 
 			this.fetch(this.urls.edit, {
+				cacheable: content.cacheable,
 				configurationContent: content.configuration,
 				cssContent: content.css,
 				fragmentCollectionId: this.fragmentCollectionId,
@@ -289,6 +304,18 @@ FragmentEditor.STATE = {
 			name: Config.string()
 		})
 	),
+
+	/**
+	 * Cacheable property of the fragment.
+	 *
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {boolean}
+	 */
+	cacheable: Config.bool()
+		.internal()
+		.value(false),
 
 	/**
 	 * Fragment collection ID.

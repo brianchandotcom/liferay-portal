@@ -58,14 +58,14 @@ public class CopySharepointObjectOperation extends BaseOperation {
 		}
 
 		if (sharepointObject.isFile()) {
-			copyFile(path, newPath);
+			_copyFile(path, newPath);
 		}
 		else {
-			copyFolder(path, newPath);
+			_copyFolder(path, newPath);
 		}
 	}
 
-	protected void copyFile(String path, String newPath)
+	private void _copyFile(String path, String newPath)
 		throws SharepointException {
 
 		CopyResultCollectionHolder copyResultCollectionHolder =
@@ -91,10 +91,10 @@ public class CopySharepointObjectOperation extends BaseOperation {
 		}
 	}
 
-	protected void copyFolder(String path, String newPath)
+	private void _copyFolder(String path, String newPath)
 		throws SharepointException {
 
-		createFolder(newPath);
+		_createFolder(newPath);
 
 		List<SharepointObject> sharepointObjects =
 			_getSharepointObjectsByFolderOperation.execute(
@@ -108,15 +108,15 @@ public class CopySharepointObjectOperation extends BaseOperation {
 				newPath, sharepointObject.getName());
 
 			if (sharepointObject.isFile()) {
-				copyFile(sharepointObjectPath, newSharepointObjectPath);
+				_copyFile(sharepointObjectPath, newSharepointObjectPath);
 			}
 			else {
-				copyFolder(sharepointObjectPath, newSharepointObjectPath);
+				_copyFolder(sharepointObjectPath, newSharepointObjectPath);
 			}
 		}
 	}
 
-	protected void createFolder(String folderPath) {
+	private void _createFolder(String folderPath) {
 		try {
 			String parentFolderPath = pathHelper.getParentFolderPath(
 				folderPath);

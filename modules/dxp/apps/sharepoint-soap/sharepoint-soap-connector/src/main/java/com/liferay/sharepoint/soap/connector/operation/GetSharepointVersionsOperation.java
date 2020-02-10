@@ -70,7 +70,7 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 			Element getVersionsResponseGetVersionsResultElement =
 				xmlHelper.getElement(getVersionsResponseGetVersionsResult);
 
-			return getSharepointVersions(
+			return _getSharepointVersions(
 				sharepointObject.getSharepointObjectId(),
 				getVersionsResponseGetVersionsResultElement);
 		}
@@ -79,19 +79,19 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 		}
 	}
 
-	private Date getDate(String dateString) {
+	private Date _getDate(String dateString) {
 		Calendar calendar = DatatypeConverter.parseDateTime(dateString);
 
 		return calendar.getTime();
 	}
 
-	private String getSharepointVersionId(
+	private String _getSharepointVersionId(
 		long sharepointObjectId, String version) {
 
 		return sharepointObjectId + StringPool.AT + version;
 	}
 
-	private List<SharepointVersion> getSharepointVersions(
+	private List<SharepointVersion> _getSharepointVersions(
 		long sharepointObjectId,
 		Element getVersionsResponseGetVersionsResultElement) {
 
@@ -122,12 +122,12 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 
 			SharepointVersion sharepointVersion = new SharepointVersion(
 				commentsNode.getNodeValue(), createdByNode.getNodeValue(),
-				getDate(createdRawNode.getNodeValue()),
-				getSharepointVersionId(
+				_getDate(createdRawNode.getNodeValue()),
+				_getSharepointVersionId(
 					sharepointObjectId, versionNode.getNodeValue()),
 				GetterUtil.getLong(sizeNode.getNodeValue()),
 				urlHelper.toURL(urlNode.getNodeValue()),
-				getVersion(versionNode.getNodeValue()));
+				_getVersion(versionNode.getNodeValue()));
 
 			sharepointVersions.add(sharepointVersion);
 		}
@@ -137,7 +137,7 @@ public class GetSharepointVersionsOperation extends BaseOperation {
 		return sharepointVersions;
 	}
 
-	private String getVersion(String version) {
+	private String _getVersion(String version) {
 		if (version.startsWith(StringPool.AT)) {
 			version = version.substring(1);
 		}

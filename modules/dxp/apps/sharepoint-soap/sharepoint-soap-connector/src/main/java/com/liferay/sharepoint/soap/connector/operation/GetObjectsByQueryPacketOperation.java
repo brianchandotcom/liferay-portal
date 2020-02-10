@@ -99,8 +99,6 @@ public class GetObjectsByQueryPacketOperation extends BaseOperation {
 		}
 		catch (RemoteException remoteException) {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
-
-			throw new IllegalStateException();
 		}
 	}
 

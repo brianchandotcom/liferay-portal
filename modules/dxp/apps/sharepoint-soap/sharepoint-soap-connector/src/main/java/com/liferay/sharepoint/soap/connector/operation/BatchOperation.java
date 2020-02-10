@@ -57,11 +57,11 @@ public class BatchOperation extends BaseOperation {
 			throw RemoteExceptionSharepointExceptionMapper.map(remoteException);
 		}
 
-		parseUpdateListItemsResponseUpdateListItemsResult(
+		_parseUpdateListItemsResponseUpdateListItemsResult(
 			updateListItemsResponseUpdateListItemsResult);
 	}
 
-	protected void parseUpdateListItemsResponseUpdateListItemsResult(
+	private void _parseUpdateListItemsResponseUpdateListItemsResult(
 			UpdateListItemsResponseUpdateListItemsResult
 				updateListItemsResponseUpdateListItemsResult)
 		throws SharepointException {

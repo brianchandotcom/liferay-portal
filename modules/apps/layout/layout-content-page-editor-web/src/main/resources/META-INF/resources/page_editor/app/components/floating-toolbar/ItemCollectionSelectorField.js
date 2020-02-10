@@ -33,8 +33,8 @@ export const ItemCollectionSelectorField = ({field, onValueSelect, value}) => {
 				label={field.label}
 				onItemSelect={item => {
 					onValueSelect(field.name, {
-						className: item.className,
 						classNameId: item.classNameId,
+						classPK: item.classPK,
 						infoListProviderKey: item.infoListProviderKey,
 						title: item.title
 					});

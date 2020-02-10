@@ -60,7 +60,7 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVer
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
-import com.liferay.portal.workflow.metrics.util.comparator.WorkflowMetricsSLADefinitionVersionComparator;
+import com.liferay.portal.workflow.metrics.util.comparator.WorkflowMetricsSLADefinitionVersionIdComparator;
 
 import java.text.DateFormat;
 
@@ -444,7 +444,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				_workflowMetricsSLADefinitionVersionLocalService.
 					getWorkflowMetricsSLADefinitionVersions(
 						workflowMetricsSLADefinitionId,
-						new WorkflowMetricsSLADefinitionVersionComparator(
+						new WorkflowMetricsSLADefinitionVersionIdComparator(
 							true));
 
 		Iterator<WorkflowMetricsSLADefinitionVersion> iterator =

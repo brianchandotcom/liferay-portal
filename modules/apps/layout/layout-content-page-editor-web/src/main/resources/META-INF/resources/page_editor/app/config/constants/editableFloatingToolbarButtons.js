@@ -23,6 +23,14 @@ export const EDITABLE_FLOATING_TOOLBAR_BUTTONS = {
 		type: 'editor'
 	},
 
+	imageProperties: {
+		icon: 'pencil',
+		id: 'image_properties',
+		panelId: 'image_properties',
+		title: Liferay.Language.get('image-properties'),
+		type: 'panel'
+	},
+
 	link: {
 		icon: 'link',
 		id: 'link',

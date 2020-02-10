@@ -111,16 +111,16 @@ public class AnalyticsReportsDisplayContext {
 					}
 				).build()
 			).put(
-				"namespace",
-				_portal.getPortletNamespace(
-					AnalyticsReportsPortletKeys.ANALYTICS_REPORTS)
-			).put(
 				"languageTag",
 				() -> {
 					Locale locale = _themeDisplay.getLocale();
 
 					return locale.toLanguageTag();
 				}
+			).put(
+				"namespace",
+				_portal.getPortletNamespace(
+					AnalyticsReportsPortletKeys.ANALYTICS_REPORTS)
 			).put(
 				"page",
 				HashMapBuilder.<String, Object>put(

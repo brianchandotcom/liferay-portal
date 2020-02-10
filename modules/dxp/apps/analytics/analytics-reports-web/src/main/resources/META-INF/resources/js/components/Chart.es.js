@@ -31,7 +31,8 @@ const CHART_SIZE = {height: 180, width: 280};
 function keyToTranslatedLabelValue(key) {
 	if (key === 'analyticsReportsHistoricalViews') {
 		return Liferay.Language.get('views-metric');
-	} else {
+	}
+	else {
 		return key;
 	}
 }

@@ -31,11 +31,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -226,7 +226,7 @@ public class AccountRoleLocalServiceImpl
 
 		accountRoleDynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"accountEntryId", Arrays.asList(accountEntryIds)));
+				"accountEntryId", ListUtil.fromArray(accountEntryIds)));
 		accountRoleDynamicQuery.setProjection(
 			ProjectionFactoryUtil.property("roleId"));
 

@@ -43,14 +43,16 @@ AccountRoleDisplay accountRoleDisplay = (AccountRoleDisplay)row.getObject();
 		url="<%= editAccountRoleURL %>"
 	/>
 
-	<portlet:actionURL name="/account_admin/delete_account_roles" var="deleteAccountRolesURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="accountRoleIds" value="<%= String.valueOf(accountRoleDisplay.getAccountRoleId()) %>" />
-	</portlet:actionURL>
+	<c:if test="<%= !AccountRoleConstants.isRequiredRole(accountRoleDisplay.getRole()) %>">
+		<portlet:actionURL name="/account_admin/delete_account_roles" var="deleteAccountRolesURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="accountRoleIds" value="<%= String.valueOf(accountRoleDisplay.getAccountRoleId()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		confirmation="are-you-sure-you-want-to-delete-this-role"
-		message="delete"
-		url="<%= deleteAccountRolesURL %>"
-	/>
+		<liferay-ui:icon-delete
+			confirmation="are-you-sure-you-want-to-delete-this-role"
+			message="delete"
+			url="<%= deleteAccountRolesURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

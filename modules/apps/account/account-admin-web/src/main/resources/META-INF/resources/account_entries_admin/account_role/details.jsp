@@ -62,7 +62,15 @@ if (accountRole != null) {
 			</p>
 		</liferay-ui:error>
 
-		<aui:input helpMessage="key-field-help" label="key" name="name" />
+		<c:choose>
+			<c:when test="<%= (role != null) && AccountRoleConstants.isRequiredRole(role) %>">
+				<aui:input disabled="<%= true %>" helpMessage="key-field-help" label="key" name="viewNameField" type="text" value="<%= role.getName() %>" />
+				<aui:input name="name" type="hidden" value="<%= role.getName() %>" />
+			</c:when>
+			<c:otherwise>
+				<aui:input helpMessage="key-field-help" label="key" name="name" />
+			</c:otherwise>
+		</c:choose>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

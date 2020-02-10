@@ -47,6 +47,7 @@ page import="com.liferay.account.admin.web.internal.display.context.ViewAccountO
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountRolesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission" %><%@
+page import="com.liferay.account.constants.AccountRoleConstants" %><%@
 page import="com.liferay.account.exception.AccountEntryDomainsException" %><%@
 page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.account.model.AccountRole" %><%@

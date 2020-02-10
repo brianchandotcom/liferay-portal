@@ -120,6 +120,13 @@ components:
                 Represents an organization. Organizations can contain other organizations (suborganizations). Properties
                 follow the [Organization](https://schema.org/Organization) specification.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 comment:
                     description:
                         The text of a comment associated with the organization.
@@ -602,6 +609,13 @@ components:
             description:
                 Represents a user.
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 additionalName:
                     description:
                         The user's additional name (e.g., middle name).

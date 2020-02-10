@@ -67,9 +67,7 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 		policy = ReferencePolicy.DYNAMIC
 	)
 	protected void setInfoListProvider(InfoListProvider infoListProvider) {
-		Class<?> clazz = infoListProvider.getClass();
-
-		_infoListProviders.put(clazz.getName(), infoListProvider);
+		_infoListProviders.put(infoListProvider.getKey(), infoListProvider);
 
 		List<InfoListProvider> itemClassInfoListProviders =
 			_itemClassInfoListProviders.computeIfAbsent(
@@ -80,9 +78,7 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 	}
 
 	protected void unsetInfoListProvider(InfoListProvider infoListProvider) {
-		Class<?> clazz = infoListProvider.getClass();
-
-		_infoListProviders.remove(clazz.getName());
+		_infoListProviders.remove(infoListProvider.getKey());
 
 		List<InfoListProvider> itemClassInfoListProviders =
 			_itemClassInfoListProviders.get(

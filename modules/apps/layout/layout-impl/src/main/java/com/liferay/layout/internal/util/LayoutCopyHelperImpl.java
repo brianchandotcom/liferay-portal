@@ -92,11 +92,17 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		Callable<Layout> callable = new CopyLayoutCallable(
 			sourceLayout, targetLayout);
 
+		ServiceContext currentServiceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
 		try {
 			return TransactionInvokerUtil.invoke(_transactionConfig, callable);
 		}
 		catch (Throwable t) {
 			throw new Exception(t);
+		}
+		finally {
+			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
 		}
 	}
 
@@ -551,6 +557,15 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		@Override
 		public Layout call() throws Exception {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext == null) {
+				serviceContext = new ServiceContext();
+
+				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+			}
+
 			_sites.copyExpandoBridgeAttributes(_sourceLayout, _targetLayout);
 			_sites.copyLookAndFeel(_targetLayout, _sourceLayout);
 			_sites.copyPortletSetups(_sourceLayout, _targetLayout);
@@ -596,13 +611,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			if (image != null) {
 				imageBytes = image.getTextObj();
-			}
-
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			if (serviceContext == null) {
-				serviceContext = new ServiceContext();
 			}
 
 			serviceContext.setAttribute(

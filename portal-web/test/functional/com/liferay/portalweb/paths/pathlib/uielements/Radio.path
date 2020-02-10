@@ -60,17 +60,17 @@
 </tr>
 <tr>
 	<td>CURRENT_VERSION</td>
-	<td>//label[contains(.,'Current Version')]/input</td>
+	<td>//label[contains(.,'Current Version')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MAJOR_VERSION</td>
-	<td>//label[contains(.,'Major Version')]/input</td>
+	<td>//label[contains(.,'Major Version')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MINOR_VERSION</td>
-	<td>//label[contains(.,'Minor Version')]/input</td>
+	<td>//label[contains(.,'Minor Version')]</td>
 	<td></td>
 </tr>
 <tr>

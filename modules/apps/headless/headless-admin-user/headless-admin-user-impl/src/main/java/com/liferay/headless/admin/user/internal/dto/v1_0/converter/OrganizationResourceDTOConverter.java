@@ -110,6 +110,7 @@ public class OrganizationResourceDTOConverter
 
 		return new Organization() {
 			{
+				actions = dtoConverterContext.getActions();
 				comment = organization.getComments();
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),

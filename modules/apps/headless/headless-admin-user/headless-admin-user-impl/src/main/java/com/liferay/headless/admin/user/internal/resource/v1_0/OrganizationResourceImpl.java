@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -78,6 +79,7 @@ import java.text.ParseException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -123,6 +125,7 @@ public class OrganizationResourceImpl
 		throws Exception {
 
 		return _getOrganizationsPage(
+			_getOrganizationListActions(parentOrganizationId),
 			parentOrganizationId, flatten, search, filter, pagination, sorts);
 	}
 
@@ -133,7 +136,8 @@ public class OrganizationResourceImpl
 		throws Exception {
 
 		return _getOrganizationsPage(
-			null, flatten, search, filter, pagination, sorts);
+			_getListActions(), null, flatten, search, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -222,6 +226,34 @@ public class OrganizationResourceImpl
 		}
 	}
 
+	private Map<String, Map<String, String>> _getActions(long organizationId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				"DELETE", "deleteOrganization",
+				com.liferay.portal.kernel.model.Organization.class.getName(),
+				organizationId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getOrganization",
+				com.liferay.portal.kernel.model.Organization.class.getName(),
+				organizationId)
+		).put(
+			"replace",
+			addAction(
+				"UPDATE", "putOrganization",
+				com.liferay.portal.kernel.model.Organization.class.getName(),
+				organizationId)
+		).put(
+			"update",
+			addAction(
+				"UPDATE", "patchOrganization",
+				com.liferay.portal.kernel.model.Organization.class.getName(),
+				organizationId)
+		).build();
+	}
+
 	private List<Address> _getAddresses(Organization organization) {
 		return Optional.ofNullable(
 			organization.getOrganizationContactInformation()
@@ -264,9 +296,10 @@ public class OrganizationResourceImpl
 		String organizationId) {
 
 		return new DefaultDTOConverterContext(
-			contextAcceptLanguage.isAcceptAllLanguages(), null, organizationId,
-			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-			contextUser);
+			contextAcceptLanguage.isAcceptAllLanguages(),
+			_getActions(_getOrganizationId(organizationId)), null,
+			organizationId, contextAcceptLanguage.getPreferredLocale(),
+			contextUriInfo, contextUser);
 	}
 
 	private List<com.liferay.portal.kernel.model.EmailAddress>
@@ -284,6 +317,22 @@ public class OrganizationResourceImpl
 		).orElse(
 			Collections.emptyList()
 		);
+	}
+
+	private Map<String, Map<String, String>> _getListActions() {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_ORGANIZATION", "postOrganization",
+				com.liferay.portal.kernel.model.Organization.class.getName(),
+				0L)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getOrganizationsPage",
+				com.liferay.portal.kernel.model.Organization.class.getName(),
+				0L)
+		).build();
 	}
 
 	private long _getOrganizationId(String organizationId) {
@@ -304,15 +353,30 @@ public class OrganizationResourceImpl
 			serviceBuilderOrganization.getOrganizationId());
 	}
 
+	private Map<String, Map<String, String>> _getOrganizationListActions(
+		String parentOrganizationId) {
+
+		long groupId = _getOrganizationId(parentOrganizationId);
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"get",
+			addAction(
+				"VIEW", "getOrganizationOrganizationsPage",
+				com.liferay.portal.kernel.model.Organization.class.getName(),
+				groupId)
+		).build();
+	}
+
 	private Page<Organization> _getOrganizationsPage(
-			String organizationId, Boolean flatten, String search,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			Map<String, Map<String, String>> actions, String organizationId,
+			Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		long id = _getOrganizationId(organizationId);
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();

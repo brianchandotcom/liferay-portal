@@ -77,7 +77,7 @@ public class FragmentEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -117,6 +117,8 @@ public class FragmentEntryCacheModel
 		sb.append(readOnly);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", cacheable=");
+		sb.append(cacheable);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -218,6 +220,7 @@ public class FragmentEntryCacheModel
 		fragmentEntryImpl.setPreviewFileEntryId(previewFileEntryId);
 		fragmentEntryImpl.setReadOnly(readOnly);
 		fragmentEntryImpl.setType(type);
+		fragmentEntryImpl.setCacheable(cacheable);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			fragmentEntryImpl.setLastPublishDate(null);
@@ -277,6 +280,8 @@ public class FragmentEntryCacheModel
 		readOnly = objectInput.readBoolean();
 
 		type = objectInput.readInt();
+
+		cacheable = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -364,6 +369,8 @@ public class FragmentEntryCacheModel
 		objectOutput.writeBoolean(readOnly);
 
 		objectOutput.writeInt(type);
+
+		objectOutput.writeBoolean(cacheable);
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -399,6 +406,7 @@ public class FragmentEntryCacheModel
 	public long previewFileEntryId;
 	public boolean readOnly;
 	public int type;
+	public boolean cacheable;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

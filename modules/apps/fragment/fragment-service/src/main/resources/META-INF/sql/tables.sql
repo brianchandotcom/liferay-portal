@@ -57,6 +57,7 @@ create table FragmentEntry (
 	previewFileEntryId LONG,
 	readOnly BOOLEAN,
 	type_ INTEGER,
+	cacheable BOOLEAN,
 	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,

@@ -85,9 +85,9 @@ public class FragmentEntryModelImpl
 		{"css", Types.CLOB}, {"html", Types.CLOB}, {"js", Types.CLOB},
 		{"configuration", Types.CLOB}, {"previewFileEntryId", Types.BIGINT},
 		{"readOnly", Types.BOOLEAN}, {"type_", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"cacheable", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -113,6 +113,7 @@ public class FragmentEntryModelImpl
 		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("readOnly", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("cacheable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -121,7 +122,7 @@ public class FragmentEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,previewFileEntryId LONG,readOnly BOOLEAN,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table FragmentEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,previewFileEntryId LONG,readOnly BOOLEAN,type_ INTEGER,cacheable BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntry";
 
@@ -193,6 +194,7 @@ public class FragmentEntryModelImpl
 		model.setPreviewFileEntryId(soapModel.getPreviewFileEntryId());
 		model.setReadOnly(soapModel.isReadOnly());
 		model.setType(soapModel.getType());
+		model.setCacheable(soapModel.isCacheable());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
@@ -431,6 +433,10 @@ public class FragmentEntryModelImpl
 		attributeGetterFunctions.put("type", FragmentEntry::getType);
 		attributeSetterBiConsumers.put(
 			"type", (BiConsumer<FragmentEntry, Integer>)FragmentEntry::setType);
+		attributeGetterFunctions.put("cacheable", FragmentEntry::getCacheable);
+		attributeSetterBiConsumers.put(
+			"cacheable",
+			(BiConsumer<FragmentEntry, Boolean>)FragmentEntry::setCacheable);
 		attributeGetterFunctions.put(
 			"lastPublishDate", FragmentEntry::getLastPublishDate);
 		attributeSetterBiConsumers.put(
@@ -820,6 +826,23 @@ public class FragmentEntryModelImpl
 
 	@JSON
 	@Override
+	public boolean getCacheable() {
+		return _cacheable;
+	}
+
+	@JSON
+	@Override
+	public boolean isCacheable() {
+		return _cacheable;
+	}
+
+	@Override
+	public void setCacheable(boolean cacheable) {
+		_cacheable = cacheable;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -1047,6 +1070,7 @@ public class FragmentEntryModelImpl
 		fragmentEntryImpl.setPreviewFileEntryId(getPreviewFileEntryId());
 		fragmentEntryImpl.setReadOnly(isReadOnly());
 		fragmentEntryImpl.setType(getType());
+		fragmentEntryImpl.setCacheable(isCacheable());
 		fragmentEntryImpl.setLastPublishDate(getLastPublishDate());
 		fragmentEntryImpl.setStatus(getStatus());
 		fragmentEntryImpl.setStatusByUserId(getStatusByUserId());
@@ -1253,6 +1277,8 @@ public class FragmentEntryModelImpl
 
 		fragmentEntryCacheModel.type = getType();
 
+		fragmentEntryCacheModel.cacheable = isCacheable();
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1390,6 +1416,7 @@ public class FragmentEntryModelImpl
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;
+	private boolean _cacheable;
 	private Date _lastPublishDate;
 	private int _status;
 	private int _originalStatus;

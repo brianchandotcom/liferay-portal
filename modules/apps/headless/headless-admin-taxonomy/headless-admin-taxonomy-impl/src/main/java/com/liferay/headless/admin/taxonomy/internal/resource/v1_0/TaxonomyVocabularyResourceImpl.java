@@ -104,7 +104,7 @@ public class TaxonomyVocabularyResourceImpl
 		throws Exception {
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			_getSiteListActions(siteId),
 			booleanQuery -> {
 			},
 			filter, AssetVocabulary.class, search, pagination,
@@ -240,6 +240,23 @@ public class TaxonomyVocabularyResourceImpl
 					taxonomyVocabulary.getAssetTypes(),
 					assetVocabulary.getGroupId()),
 				new ServiceContext()));
+	}
+
+	private Map<String, Map<String, String>> _getActions(
+		AssetVocabulary assetVocabulary) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction("DELETE", assetVocabulary, "deleteTaxonomyVocabulary")
+		).put(
+			"get", addAction("VIEW", assetVocabulary, "getTaxonomyVocabulary")
+		).put(
+			"replace",
+			addAction("UPDATE", assetVocabulary, "putTaxonomyVocabulary")
+		).put(
+			"update",
+			addAction("UPDATE", assetVocabulary, "patchTaxonomyVocabulary")
+		).build();
 	}
 
 	private AssetType _getAssetType(
@@ -472,12 +489,27 @@ public class TaxonomyVocabularyResourceImpl
 		return assetVocabularySettingsHelper.toString();
 	}
 
+	private Map<String, Map<String, String>> _getSiteListActions(Long siteId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_VOCABULARY", "postSiteTaxonomyVocabulary",
+				"com.liferay.asset.categories", siteId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getSiteTaxonomyVocabulariesPage",
+				"com.liferay.asset.categories", siteId)
+		).build();
+	}
+
 	private TaxonomyVocabulary _toTaxonomyVocabulary(
 			AssetVocabulary assetVocabulary)
 		throws Exception {
 
 		return new TaxonomyVocabulary() {
 			{
+				actions = (Map)_getActions(assetVocabulary);
 				assetTypes = _getAssetTypes(
 					new AssetVocabularySettingsHelper(
 						assetVocabulary.getSettings()),

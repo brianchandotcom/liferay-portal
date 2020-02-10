@@ -15,6 +15,7 @@
 package com.liferay.asset.list.web.internal.info.list.provider;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderContext;
 import com.liferay.info.pagination.Pagination;
@@ -53,6 +54,11 @@ public class AssetListInfoListProvider implements InfoListProvider<AssetEntry> {
 		InfoListProviderContext infoListProviderContext) {
 
 		return 0;
+	}
+
+	@Override
+	public String getKey() {
+		return AssetListWebKeys.ASSET_LIST_INFO_LIST_PROVIDER_KEY;
 	}
 
 	@Override

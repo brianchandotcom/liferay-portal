@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="BNDBundleCheck" files="modules/dxp/apps/portal-search-elasticsearch-cross-cluster-replication/app\.bnd" />
+	</source-check>
+</suppressions>

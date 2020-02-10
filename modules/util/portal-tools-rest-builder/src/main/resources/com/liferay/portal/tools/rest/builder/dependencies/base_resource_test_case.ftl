@@ -240,7 +240,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
 						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(
 
-						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+						<#assign
+							getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))
+						/>
+
+						<#list getJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 								${schemaVarName}.getId()
 							<#else>
@@ -253,7 +257,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(
 
-						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+						<#list getJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Double")>
 									0D
@@ -1009,7 +1013,18 @@ public abstract class Base${schemaName}ResourceTestCase {
 						Map<String, File> multipartFiles = getMultipartFiles();
 					</#if>
 
-					${schemaName} put${schemaName} = ${schemaVarName}Resource.put${schemaName}(post${schemaName}.getId(), random${schemaName}
+					${schemaName} put${schemaName} = ${schemaVarName}Resource.put${schemaName}(
+					
+					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+							post${schemaName}.getId()
+						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+							random${schemaName}
+						<#else>
+							null
+						</#if>
+						<#sep>, </#sep>
+					</#list>
 
 					<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
 						, multipartFiles

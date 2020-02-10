@@ -32,7 +32,7 @@ import org.w3c.dom.Element;
 /**
  * @author Iván Zaera
  */
-public class BatchOperation extends BaseOperation {
+public final class BatchOperation extends BaseOperation {
 
 	public void execute(Batch batch) throws SharepointException {
 		UpdateListItemsUpdates updateListItemsUpdates =

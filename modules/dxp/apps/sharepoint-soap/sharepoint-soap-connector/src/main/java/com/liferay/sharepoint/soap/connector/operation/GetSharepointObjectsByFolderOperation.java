@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author Iván Zaera
  */
-public class GetSharepointObjectsByFolderOperation extends BaseOperation {
+public final class GetSharepointObjectsByFolderOperation extends BaseOperation {
 
 	@Override
 	public void afterPropertiesSet() {

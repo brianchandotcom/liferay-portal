@@ -56,7 +56,7 @@ import org.w3c.dom.NodeList;
 /**
  * @author Iván Zaera
  */
-public class GetSharepointObjectsByQueryOperation extends BaseOperation {
+public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 
 	@Override
 	public void afterPropertiesSet() {

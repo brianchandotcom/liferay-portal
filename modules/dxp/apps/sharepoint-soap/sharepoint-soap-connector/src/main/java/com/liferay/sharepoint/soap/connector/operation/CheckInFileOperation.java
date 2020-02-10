@@ -23,7 +23,7 @@ import java.rmi.RemoteException;
 /**
  * @author Iván Zaera
  */
-public class CheckInFileOperation extends BaseOperation {
+public final class CheckInFileOperation extends BaseOperation {
 
 	public boolean execute(
 			String filePath, String comment,

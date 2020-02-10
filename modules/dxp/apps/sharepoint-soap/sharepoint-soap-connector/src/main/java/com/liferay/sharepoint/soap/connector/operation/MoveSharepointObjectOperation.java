@@ -26,7 +26,7 @@ import com.liferay.sharepoint.soap.connector.schema.batch.BatchMethod;
 /**
  * @author Iván Zaera
  */
-public class MoveSharepointObjectOperation extends BaseOperation {
+public final class MoveSharepointObjectOperation extends BaseOperation {
 
 	@Override
 	public void afterPropertiesSet() {

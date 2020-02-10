@@ -35,7 +35,7 @@ import org.apache.axis.holders.UnsignedIntHolder;
 /**
  * @author Iván Zaera
  */
-public class CopySharepointObjectOperation extends BaseOperation {
+public final class CopySharepointObjectOperation extends BaseOperation {
 
 	@Override
 	public void afterPropertiesSet() {

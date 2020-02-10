@@ -37,7 +37,7 @@ import org.apache.axis.holders.UnsignedIntHolder;
 /**
  * @author Iván Zaera
  */
-public class AddOrUpdateFileOperation extends BaseOperation {
+public final class AddOrUpdateFileOperation extends BaseOperation {
 
 	@Override
 	public void afterPropertiesSet() {

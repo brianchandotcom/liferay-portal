@@ -22,7 +22,7 @@ import java.rmi.RemoteException;
 /**
  * @author Iván Zaera
  */
-public class CancelCheckOutFileOperation extends BaseOperation {
+public final class CancelCheckOutFileOperation extends BaseOperation {
 
 	public boolean execute(String filePath) throws SharepointException {
 		try {

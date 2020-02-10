@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Iván Zaera
  */
-public class GetObjectsByQueryPacketOperation extends BaseOperation {
+public final class GetObjectsByQueryPacketOperation extends BaseOperation {
 
 	@Override
 	public void afterPropertiesSet() {

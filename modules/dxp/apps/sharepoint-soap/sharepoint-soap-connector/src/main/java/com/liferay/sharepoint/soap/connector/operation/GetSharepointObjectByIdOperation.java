@@ -28,7 +28,7 @@ import com.liferay.sharepoint.soap.connector.schema.query.option.ViewAttributesQ
 /**
  * @author Iván Zaera
  */
-public class GetSharepointObjectByIdOperation extends BaseOperation {
+public final class GetSharepointObjectByIdOperation extends BaseOperation {
 
 	@Override
 	public void afterPropertiesSet() {

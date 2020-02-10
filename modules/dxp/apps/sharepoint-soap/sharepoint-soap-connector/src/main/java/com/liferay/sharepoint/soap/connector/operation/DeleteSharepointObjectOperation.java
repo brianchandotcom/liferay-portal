@@ -23,7 +23,7 @@ import com.liferay.sharepoint.soap.connector.schema.batch.BatchMethod;
 /**
  * @author Iván Zaera
  */
-public class DeleteSharepointObjectOperation extends BaseOperation {
+public final class DeleteSharepointObjectOperation extends BaseOperation {
 
 	@Override
 	public void afterPropertiesSet() {

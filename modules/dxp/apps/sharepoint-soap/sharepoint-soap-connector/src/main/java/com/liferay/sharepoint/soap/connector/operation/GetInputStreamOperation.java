@@ -37,7 +37,7 @@ import org.apache.commons.httpclient.params.HttpClientParams;
 /**
  * @author Iván Zaera
  */
-public class GetInputStreamOperation extends BaseOperation {
+public final class GetInputStreamOperation extends BaseOperation {
 
 	public InputStream execute(SharepointObject sharepointObject)
 		throws SharepointException {

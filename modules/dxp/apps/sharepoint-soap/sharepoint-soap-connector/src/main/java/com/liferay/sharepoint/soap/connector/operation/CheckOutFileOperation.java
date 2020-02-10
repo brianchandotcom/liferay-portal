@@ -23,7 +23,7 @@ import java.rmi.RemoteException;
 /**
  * @author Iván Zaera
  */
-public class CheckOutFileOperation extends BaseOperation {
+public final class CheckOutFileOperation extends BaseOperation {
 
 	public boolean execute(String filePath) throws SharepointException {
 		try {

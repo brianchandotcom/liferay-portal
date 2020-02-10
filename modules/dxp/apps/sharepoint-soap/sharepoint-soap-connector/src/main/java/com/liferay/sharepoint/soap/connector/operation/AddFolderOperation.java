@@ -22,7 +22,7 @@ import com.liferay.sharepoint.soap.connector.schema.batch.BatchMethod;
 /**
  * @author Iván Zaera
  */
-public class AddFolderOperation extends BaseOperation {
+public final class AddFolderOperation extends BaseOperation {
 
 	@Override
 	public void afterPropertiesSet() {

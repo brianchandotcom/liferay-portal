@@ -1,3 +1,11 @@
+2.0.7:description
+
+- [LPS-105889]: Use native Gradle 5 BOM support for target platform capability.
+
+1.1.12:description
+
+- [LPS-93873]: Update the `dependency-management-plugin` to `1.0.7.RELEASE`.
+
 1.1.2:description
 
 - [LPS-83922]: Don't add requirements for files without a BSN.

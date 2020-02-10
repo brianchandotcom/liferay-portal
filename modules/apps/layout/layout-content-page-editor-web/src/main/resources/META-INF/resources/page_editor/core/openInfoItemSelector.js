@@ -16,16 +16,15 @@ import {ItemSelectorDialog} from 'frontend-js-web';
 
 export function openInfoItemSelector(
 	callback,
-	config,
+	eventName,
+	itemSelectorURL,
 	destroyedCallback = null
 ) {
-	const {infoItemSelectorURL, portletNamespace} = config;
-
 	const itemSelectorDialog = new ItemSelectorDialog({
-		eventName: `${portletNamespace}selectInfoItem`,
+		eventName,
 		singleSelect: true,
 		title: Liferay.Language.get('select'),
-		url: infoItemSelectorURL
+		url: itemSelectorURL
 	});
 
 	itemSelectorDialog.on('selectedItemChange', event => {

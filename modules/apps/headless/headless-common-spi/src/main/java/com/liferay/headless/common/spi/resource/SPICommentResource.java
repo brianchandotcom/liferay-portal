@@ -47,6 +47,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.function.Function;
 
 import javax.ws.rs.ClientErrorException;
@@ -92,12 +93,31 @@ public class SPICommentResource<T> {
 			Sort[] sorts)
 		throws Exception {
 
-		return _getComments(commentId, search, filter, pagination, sorts);
+		return _getComments(
+			Collections.emptyMap(), commentId, search, filter, pagination,
+			sorts);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getEntityCommentsPage(Map, long, String, long, String,
+	 *             Filter, Pagination, Sort[])}
+	 */
+	@Deprecated
 	public Page<T> getEntityCommentsPage(
 			long groupId, String className, long classPK, String search,
 			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return getEntityCommentsPage(
+			Collections.emptyMap(), groupId, className, classPK, search, filter,
+			pagination, sorts);
+	}
+
+	public Page<T> getEntityCommentsPage(
+			Map<String, Map<String, String>> actions, long groupId,
+			String className, long classPK, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		Discussion discussion = _commentManager.getDiscussion(
@@ -108,8 +128,8 @@ public class SPICommentResource<T> {
 			discussion.getRootDiscussionComment();
 
 		return _getComments(
-			rootDiscussionComment.getCommentId(), search, filter, pagination,
-			sorts);
+			actions, rootDiscussionComment.getCommentId(), search, filter,
+			pagination, sorts);
 	}
 
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
@@ -184,19 +204,19 @@ public class SPICommentResource<T> {
 	}
 
 	private Page<T> _getComments(
-			Long parentCommentId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Map<String, Map<String, String>> actions, Long commentId,
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
-			Collections.emptyMap(),
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
 
 				booleanFilter.add(
 					new TermFilter(
-						"parentMessageId", String.valueOf(parentCommentId)),
+						"parentMessageId", String.valueOf(commentId)),
 					BooleanClauseOccur.MUST);
 			},
 			filter, MBMessage.class, search, pagination,

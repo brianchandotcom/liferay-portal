@@ -1420,28 +1420,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			"-Duser.timezone=GMT");
 
 		test.setForkEvery(1L);
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					_configureTaskTestIncludes(test);
-				}
-
-			});
 	}
 
 	private void _configureTaskTestDefaultCharacterEncoding(Test test) {
 		test.setDefaultCharacterEncoding(StandardCharsets.UTF_8.name());
-	}
-
-	private void _configureTaskTestIncludes(Test test) {
-		Set<String> includes = test.getIncludes();
-
-		if (includes.isEmpty()) {
-			test.setIncludes(Collections.singleton("**/*Test.class"));
-		}
 	}
 
 	private void _configureVersion(Project project) {

@@ -3862,6 +3862,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTaskTestOutputs(test);
 
 		test.setEnableAssertions(false);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_configureTaskTestIncludes(test);
+				}
+
+			});
 	}
 
 	private void _configureTaskTestIgnoreFailures(Test test) {
@@ -3873,6 +3883,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 		else {
 			test.setIgnoreFailures(true);
+		}
+	}
+
+	private void _configureTaskTestIncludes(Test test) {
+		Set<String> includes = test.getIncludes();
+
+		if (includes.isEmpty()) {
+			test.setIncludes(Collections.singleton("**/*Test.class"));
 		}
 	}
 

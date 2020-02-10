@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_LOADED</td>
-	<td>//div[@class='fragments-editor-sidebar-sections-buttons']/button</td>
+	<td>//div[@class='page-editor-sidebar-buttons']/button</td>
 	<td></td>
 </tr>
 <tr>
@@ -202,17 +202,17 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_TAB_BUTTON</td>
-	<td>//button[@data-title='${key_tabName}']</td>
+	<td>//button[@title='${key_tabName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_TAB_BUTTON_ACTIVE</td>
-	<td>//button[@data-title='${key_tabName}'][contains(@class,'active')]</td>
+	<td>//button[@title='${key_tabName}'][contains(@class,'active')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_TITLE</td>
-	<td>//h1[contains(@class,'fragments-editor-sidebar-section__title') and contains(.,'${key_sidebarButton}')]</td>
+	<td>//h1[contains(@class,'page-editor__sidebar-panel-header') and contains(.,'${key_sidebarButton}')]</td>
 	<td></td>
 </tr>
 <tr>

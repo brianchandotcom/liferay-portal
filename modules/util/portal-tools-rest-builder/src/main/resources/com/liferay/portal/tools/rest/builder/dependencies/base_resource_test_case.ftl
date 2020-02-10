@@ -1014,7 +1014,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 
 					${schemaName} put${schemaName} = ${schemaVarName}Resource.put${schemaName}(
-					
+
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 							post${schemaName}.getId()

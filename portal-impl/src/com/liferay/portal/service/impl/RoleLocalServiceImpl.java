@@ -70,11 +70,10 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.RoleLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.roles.admin.kernel.validator.RoleNameValidator;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
@@ -1725,18 +1724,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (classNameId == classNameLocalService.getClassNameId(Role.class)) {
-			if (Validator.isNull(name) ||
-				(name.indexOf(CharPool.COMMA) != -1) ||
-				(name.indexOf(CharPool.STAR) != -1)) {
-
-				throw new RoleNameException();
-			}
-
-			if (Validator.isNumber(name) &&
-				!PropsValues.ROLES_NAME_ALLOW_NUMERIC) {
-
-				throw new RoleNameException();
-			}
+			RoleNameValidator.validate(name);
 		}
 
 		try {

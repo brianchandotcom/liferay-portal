@@ -127,16 +127,24 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			workflowMetricsSLADefinition.getProcessId(),
 			workflowMetricsSLADefinition.getProcessVersion());
 
-		_processRunningInstances(
-			0, startNodeId, workflowMetricsSLADefinitionVersion);
+		if (workflowMetricsSLADefinitionVersion.isActive()) {
+			_processRunningInstances(
+				0, startNodeId, workflowMetricsSLADefinitionVersion);
+		}
 
 		if (MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "reindex")) {
 			_processCompletedInstances(
 				startNodeId, workflowMetricsSLADefinitionId);
 		}
 		else {
+			Date endDate = null;
+
+			if (!workflowMetricsSLADefinitionVersion.isActive()) {
+				endDate = workflowMetricsSLADefinitionVersion.getCreateDate();
+			}
+
 			_processCompletedInstances(
-				workflowMetricsSLADefinition.getCompanyId(), null, 0,
+				workflowMetricsSLADefinition.getCompanyId(), endDate, 0,
 				workflowMetricsSLADefinition.getProcessId(),
 				workflowMetricsSLADefinition.
 					getWorkflowMetricsSLADefinitionId(),
@@ -468,12 +476,15 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 					nextWorkflowMetricsSLADefinitionVersion.getCreateDate();
 			}
 
-			_processCompletedInstances(
-				workflowMetricsSLADefinitionVersion.getCompanyId(), endDate, 0,
-				workflowMetricsSLADefinitionVersion.getProcessId(),
-				workflowMetricsSLADefinitionVersion.
-					getWorkflowMetricsSLADefinitionId(),
-				startDate, startNodeId, workflowMetricsSLADefinitionVersion);
+			if (workflowMetricsSLADefinitionVersion.isActive()) {
+				_processCompletedInstances(
+					workflowMetricsSLADefinitionVersion.getCompanyId(), endDate,
+					0, workflowMetricsSLADefinitionVersion.getProcessId(),
+					workflowMetricsSLADefinitionVersion.
+						getWorkflowMetricsSLADefinitionId(),
+					startDate, startNodeId,
+					workflowMetricsSLADefinitionVersion);
+			}
 
 			startDate = endDate;
 			workflowMetricsSLADefinitionVersion =

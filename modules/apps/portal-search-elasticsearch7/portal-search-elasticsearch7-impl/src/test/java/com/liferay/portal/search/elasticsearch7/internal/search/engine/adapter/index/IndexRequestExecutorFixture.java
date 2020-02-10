@@ -14,7 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.settings.IndexSettingsContributorHelper;
 import com.liferay.portal.search.engine.adapter.index.IndexRequestExecutor;
 
 /**
@@ -111,11 +113,18 @@ public class IndexRequestExecutorFixture {
 		createCreateIndexRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		return new CreateIndexRequestExecutorImpl() {
-			{
-				setElasticsearchClientResolver(elasticsearchClientResolver);
-			}
-		};
+		CreateIndexRequestExecutor createIndexRequestExecutor =
+			new CreateIndexRequestExecutorImpl() {
+				{
+					setElasticsearchClientResolver(elasticsearchClientResolver);
+				}
+			};
+
+		ReflectionTestUtil.setFieldValue(
+			createIndexRequestExecutor, "_indexSettingsContributorHelper",
+			new IndexSettingsContributorHelper());
+
+		return createIndexRequestExecutor;
 	}
 
 	protected static DeleteIndexRequestExecutor

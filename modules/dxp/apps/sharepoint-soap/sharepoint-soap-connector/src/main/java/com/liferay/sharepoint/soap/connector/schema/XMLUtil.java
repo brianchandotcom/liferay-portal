@@ -44,9 +44,9 @@ import org.xml.sax.SAXException;
 /**
  * @author Iván Zaera
  */
-public class XMLHelper {
+public final class XMLUtil {
 
-	public Element getElement(AnyContentType anyContentType) {
+	public static Element getElement(AnyContentType anyContentType) {
 		try {
 			return anyContentType.get_any()[0].getAsDOM();
 		}
@@ -57,7 +57,9 @@ public class XMLHelper {
 		}
 	}
 
-	public Element getElement(String nodeName, org.w3c.dom.Node w3CNode) {
+	public static Element getElement(
+		String nodeName, org.w3c.dom.Node w3CNode) {
+
 		for (org.w3c.dom.Node childW3CNode = w3CNode.getFirstChild();
 			 childW3CNode != null;
 			 childW3CNode = childW3CNode.getNextSibling()) {
@@ -74,11 +76,11 @@ public class XMLHelper {
 		return null;
 	}
 
-	public Element toElement(Node node) {
+	public static Element toElement(Node node) {
 		return _toElement(node.toXmlString());
 	}
 
-	public String toString(Element element) {
+	public static String toString(Element element) {
 		TransformerFactory transformerFactory =
 			TransformerFactory.newInstance();
 
@@ -110,7 +112,7 @@ public class XMLHelper {
 		return stringBuffer.toString();
 	}
 
-	private Element _toElement(String xml) {
+	private static Element _toElement(String xml) {
 		try {
 			DocumentBuilderFactory documentBuilderFactory =
 				SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();

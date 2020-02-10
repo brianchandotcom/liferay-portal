@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.sharepoint.soap.connector.SharepointConnectionInfo;
 import com.liferay.sharepoint.soap.connector.SharepointObject;
-import com.liferay.sharepoint.soap.connector.schema.XMLHelper;
 
 import com.microsoft.schemas.sharepoint.soap.CopySoap;
 import com.microsoft.schemas.sharepoint.soap.ListsSoap;
@@ -104,8 +103,6 @@ public abstract class BaseOperation implements Operation {
 
 		return sb.toString();
 	}
-
-	protected static XMLHelper xmlHelper = new XMLHelper();
 
 	protected CopySoap copySoap;
 	protected ListsSoap listsSoap;

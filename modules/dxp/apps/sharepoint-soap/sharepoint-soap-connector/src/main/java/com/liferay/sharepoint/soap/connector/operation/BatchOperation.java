@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.sharepoint.soap.connector.SharepointException;
 import com.liferay.sharepoint.soap.connector.SharepointResultException;
 import com.liferay.sharepoint.soap.connector.internal.util.RemoteExceptionSharepointExceptionMapper;
+import com.liferay.sharepoint.soap.connector.schema.XMLUtil;
 import com.liferay.sharepoint.soap.connector.schema.batch.Batch;
 
 import com.microsoft.schemas.sharepoint.soap.UpdateListItemsResponseUpdateListItemsResult;
@@ -38,7 +39,7 @@ public final class BatchOperation extends BaseOperation {
 		UpdateListItemsUpdates updateListItemsUpdates =
 			new UpdateListItemsUpdates();
 
-		Element element = xmlHelper.toElement(batch);
+		Element element = XMLUtil.toElement(batch);
 
 		MessageElement messageElement = new MessageElement(element);
 
@@ -67,18 +68,18 @@ public final class BatchOperation extends BaseOperation {
 		throws SharepointException {
 
 		Element updateListItemsResponseUpdateListItemsResultElement =
-			xmlHelper.getElement(updateListItemsResponseUpdateListItemsResult);
+			XMLUtil.getElement(updateListItemsResponseUpdateListItemsResult);
 
-		Element resultElement = xmlHelper.getElement(
+		Element resultElement = XMLUtil.getElement(
 			"Result", updateListItemsResponseUpdateListItemsResultElement);
 
-		Element errorCodeElement = xmlHelper.getElement(
+		Element errorCodeElement = XMLUtil.getElement(
 			"ErrorCode", resultElement);
 
 		String errorCode = errorCodeElement.getTextContent();
 
 		if (!errorCode.equals(SharepointConstants.NUMERIC_STATUS_SUCCESS)) {
-			Element errorTextElement = xmlHelper.getElement(
+			Element errorTextElement = XMLUtil.getElement(
 				"ErrorText", resultElement);
 
 			String errorText = errorTextElement.getTextContent();

@@ -21,6 +21,7 @@ import com.liferay.sharepoint.soap.connector.SharepointException;
 import com.liferay.sharepoint.soap.connector.SharepointObject;
 import com.liferay.sharepoint.soap.connector.SharepointVersion;
 import com.liferay.sharepoint.soap.connector.internal.util.RemoteExceptionSharepointExceptionMapper;
+import com.liferay.sharepoint.soap.connector.schema.XMLUtil;
 
 import com.microsoft.schemas.sharepoint.soap.GetVersionsResponseGetVersionsResult;
 
@@ -68,7 +69,7 @@ public final class GetSharepointVersionsOperation extends BaseOperation {
 					toFullPath(filePath));
 
 			Element getVersionsResponseGetVersionsResultElement =
-				xmlHelper.getElement(getVersionsResponseGetVersionsResult);
+				XMLUtil.getElement(getVersionsResponseGetVersionsResult);
 
 			return _getSharepointVersions(
 				sharepointObject.getSharepointObjectId(),

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sharepoint.soap.connector.SharepointException;
 import com.liferay.sharepoint.soap.connector.SharepointObject;
 import com.liferay.sharepoint.soap.connector.internal.util.RemoteExceptionSharepointExceptionMapper;
+import com.liferay.sharepoint.soap.connector.schema.XMLUtil;
 import com.liferay.sharepoint.soap.connector.schema.query.Query;
 import com.liferay.sharepoint.soap.connector.schema.query.QueryField;
 import com.liferay.sharepoint.soap.connector.schema.query.QueryFieldsList;
@@ -105,7 +106,7 @@ public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 	protected GetListItemsQuery getGetListItemsQuery(Query query) {
 		GetListItemsQuery getListItemsQuery = new GetListItemsQuery();
 
-		Element queryElement = xmlHelper.toElement(query);
+		Element queryElement = XMLUtil.toElement(query);
 
 		MessageElement queryMessageElement = new MessageElement(queryElement);
 
@@ -117,7 +118,7 @@ public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 	protected GetListItemsQueryOptions getGetListItemsQueryOptions(
 		QueryOptionsList queryOptionsList) {
 
-		Element queryOptionsListElement = xmlHelper.toElement(queryOptionsList);
+		Element queryOptionsListElement = XMLUtil.toElement(queryOptionsList);
 
 		MessageElement queryOptionsListMessageElement = new MessageElement(
 			queryOptionsListElement);
@@ -137,7 +138,7 @@ public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		QueryFieldsList queryFieldsList = new QueryFieldsList(
 			toQueryFields(queryFieldNames));
 
-		Element queryFieldsListElement = xmlHelper.toElement(queryFieldsList);
+		Element queryFieldsListElement = XMLUtil.toElement(queryFieldsList);
 
 		MessageElement queryFieldsListMessageElement = new MessageElement(
 			queryFieldsListElement);
@@ -193,9 +194,9 @@ public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 		List<SharepointObject> sharepointObjects = new ArrayList<>();
 
 		Element getListItemsResponseGetListItemsResultElement =
-			xmlHelper.getElement(getListItemsResponseGetListItemsResult);
+			XMLUtil.getElement(getListItemsResponseGetListItemsResult);
 
-		Element dataElement = xmlHelper.getElement(
+		Element dataElement = XMLUtil.getElement(
 			"Data", getListItemsResponseGetListItemsResultElement);
 
 		NodeList nodeList = dataElement.getChildNodes();
@@ -270,8 +271,8 @@ public final class GetSharepointObjectsByQueryOperation extends BaseOperation {
 			StringBundler.concat(
 				"Query: ", String.valueOf(query), "\nQuery options: ",
 				String.valueOf(queryOptionsList), "\nResult: ",
-				xmlHelper.toString(
-					xmlHelper.getElement(
+				XMLUtil.toString(
+					XMLUtil.getElement(
 						getListItemsResponseGetListItemsResult))));
 	}
 

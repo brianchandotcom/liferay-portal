@@ -20,11 +20,21 @@
 ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
 %>
 
-<c:choose>
-	<c:when test='<%= Objects.equals(contentPageEditorDisplayContext.getEditorType(), "react") %>'>
-		<liferay-util:include page="/view_react.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/view_soy.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>
+<liferay-editor:resources
+	editorName="alloyeditor"
+/>
+
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/layout-content-page-editor-web/page_editor/app/components/App.css") %>" rel="stylesheet" />
+</liferay-util:html-top>
+
+<div id="<portlet:namespace />pageEditor">
+	<div class="inline-item my-5 p-5 w-100">
+		<span aria-hidden="true" class="loading-animation"></span>
+	</div>
+
+	<react:component
+		data="<%= contentPageEditorDisplayContext.getEditorReactContext(npmResolvedPackageName) %>"
+		module="page_editor/app/index"
+	/>
+</div>

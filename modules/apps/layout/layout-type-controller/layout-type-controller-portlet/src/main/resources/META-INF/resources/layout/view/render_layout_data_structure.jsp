@@ -21,168 +21,150 @@ HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttri
 
 PortletLayoutDisplayContext portletLayoutDisplayContext = (PortletLayoutDisplayContext)request.getAttribute("render_layout_data_structure.jsp-portletLayoutDisplayContext");
 
-JSONObject dataJSONObject = (JSONObject)request.getAttribute("render_layout_data_structure.jsp-dataJSONObject");
+LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("render_layout_data_structure.jsp-layoutStructure");
 
-JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
+List<String> childrenItemIds = (List<String>)request.getAttribute("render_layout_data_structure.jsp-childrenItemIds");
 
-for (int i = 0; i < structureJSONArray.length(); i++) {
-	JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
-
-	int type = rowJSONObject.getInt("type", FragmentConstants.TYPE_COMPONENT);
+for (String childrenItemId : childrenItemIds) {
+	LayoutStructureItem layoutStructureItem = layoutStructure.getLayoutStructureItem(childrenItemId);
 %>
 
 	<c:choose>
-		<c:when test="<%= type == FragmentConstants.TYPE_COMPONENT %>">
+		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
 
 			<%
-			String backgroundColorCssClass = StringPool.BLANK;
-			String backgroundImage = StringPool.BLANK;
-			boolean columnSpacing = true;
-			String containerType = "fluid";
-			long paddingHorizontal = -1L;
-			long paddingVertical = -1L;
+			ColumnLayoutStructureItem columnLayoutStructureItem = (ColumnLayoutStructureItem)layoutStructureItem;
+			%>
 
-			JSONObject rowConfigJSONObject = rowJSONObject.getJSONObject("config");
+			<div class="<%= (columnLayoutStructureItem.getSize() > 0) ? "col-md-" + columnLayoutStructureItem.getSize() : "col-md" %>">
 
-			if (rowConfigJSONObject != null) {
-				backgroundColorCssClass = rowConfigJSONObject.getString("backgroundColorCssClass");
-				backgroundImage = portletLayoutDisplayContext.getBackgroundImage(rowConfigJSONObject);
-				columnSpacing = rowConfigJSONObject.getBoolean("columnSpacing", true);
-				containerType = rowConfigJSONObject.getString("containerType");
-				paddingHorizontal = rowConfigJSONObject.getLong("paddingHorizontal", paddingHorizontal);
-				paddingVertical = rowConfigJSONObject.getLong("paddingVertical", paddingVertical);
+				<%
+				request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+				%>
+
+				<liferay-util:include page="/layout/view/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+			</div>
+		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof ContainerLayoutStructureItem %>">
+
+			<%
+			ContainerLayoutStructureItem containerLayoutStructureItem = (ContainerLayoutStructureItem)layoutStructureItem;
+
+			String backgroundImage = portletLayoutDisplayContext.getBackgroundImage(containerLayoutStructureItem.getBackgroundImageJSONObject());
+
+			StringBundler sb = new StringBundler();
+
+			if (Validator.isNotNull(containerLayoutStructureItem.getBackgroundColorCssClass())) {
+				sb.append("bg-");
+				sb.append(containerLayoutStructureItem.getBackgroundColorCssClass());
+			}
+
+			if (Objects.equals(containerLayoutStructureItem.getContainerType(), "fluid")) {
+				sb.append(" container-fluid");
+			}
+			else {
+				sb.append(" container");
+			}
+
+			if (containerLayoutStructureItem.getPaddingBottom() != -1L) {
+				sb.append(" pb-");
+				sb.append(containerLayoutStructureItem.getPaddingBottom());
+			}
+
+			if (containerLayoutStructureItem.getPaddingHorizontal() != -1L) {
+				sb.append(" px-");
+				sb.append(containerLayoutStructureItem.getPaddingHorizontal());
+			}
+
+			if (containerLayoutStructureItem.getPaddingTop() != -1L) {
+				sb.append(" pt-");
+				sb.append(containerLayoutStructureItem.getPaddingTop());
 			}
 			%>
 
-			<section class="bg-<%= backgroundColorCssClass %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
-				<div class="<%= Objects.equals(containerType, "fluid") ? "container-fluid" : "container" %> <%= (paddingHorizontal != 3L) ? "px-" + paddingHorizontal : "" %> py-<%= paddingVertical %>">
-					<div class="row <%= !columnSpacing ? "no-gutters" : StringPool.BLANK %>">
+			<div class="<%= sb.toString() %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : "" %>">
 
-						<%
-						JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
+				<%
+				request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+				%>
 
-						for (int j = 0; j < columnsJSONArray.length(); j++) {
-							JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
-
-							String size = columnJSONObject.getString("size");
-						%>
-
-							<div class="<%= Validator.isNotNull(size) ? "col-md-" + size : "col-md" %>">
-
-								<%
-								JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
-
-								for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
-								%>
-
-									<c:choose>
-										<c:when test='<%= Objects.equals(fragmentEntryLinkIdsJSONArray.getString(k), "drop-zone") %>'>
-
-											<%
-											String themeId = theme.getThemeId();
-
-											String layoutTemplateId = layoutTypePortlet.getLayoutTemplateId();
-
-											if (Validator.isNull(layoutTemplateId)) {
-												layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
-											}
-
-											LayoutTemplate layoutTemplate = LayoutTemplateLocalServiceUtil.getLayoutTemplate(layoutTemplateId, false, theme.getThemeId());
-
-											if (layoutTemplate != null) {
-												themeId = layoutTemplate.getThemeId();
-											}
-
-											String templateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + layoutTypePortlet.getLayoutTemplateId();
-											String templateContent = LayoutTemplateLocalServiceUtil.getContent(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
-											String langType = LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
-
-											if (Validator.isNotNull(templateContent)) {
-												RuntimePageUtil.processTemplate(originalServletRequest, response, new StringTemplateResource(templateId, templateContent), langType);
-											}
-											%>
-
-										</c:when>
-										<c:otherwise>
-
-											<%
-											long fragmentEntryLinkId = fragmentEntryLinkIdsJSONArray.getLong(k);
-
-											if (fragmentEntryLinkId <= 0) {
-												continue;
-											}
-
-											FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentEntryLinkId);
-
-											if (fragmentEntryLink == null) {
-												continue;
-											}
-
-											FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
-
-											DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
-
-											defaultFragmentRendererContext.setLocale(locale);
-											%>
-
-											<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-										</c:otherwise>
-									</c:choose>
-
-								<%
-								}
-								%>
-
-							</div>
-
-						<%
-						}
-						%>
-
-					</div>
-				</div>
-			</section>
+				<liferay-util:include page="/layout/view/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+			</div>
 		</c:when>
-		<c:otherwise>
-			<section>
+		<c:when test="<%= layoutStructureItem instanceof DropZoneLayoutStructureItem %>">
+
+			<%
+			String themeId = theme.getThemeId();
+
+			String layoutTemplateId = layoutTypePortlet.getLayoutTemplateId();
+
+			if (Validator.isNull(layoutTemplateId)) {
+				layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
+			}
+
+			LayoutTemplate layoutTemplate = LayoutTemplateLocalServiceUtil.getLayoutTemplate(layoutTemplateId, false, theme.getThemeId());
+
+			if (layoutTemplate != null) {
+				themeId = layoutTemplate.getThemeId();
+			}
+
+			String templateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + layoutTypePortlet.getLayoutTemplateId();
+			String templateContent = LayoutTemplateLocalServiceUtil.getContent(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
+			String langType = LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
+
+			if (Validator.isNotNull(templateContent)) {
+				RuntimePageUtil.processTemplate(originalServletRequest, response, new StringTemplateResource(templateId, templateContent), langType);
+			}
+			%>
+
+		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof FragmentLayoutStructureItem %>">
+
+			<%
+			FragmentLayoutStructureItem fragmentLayoutStructureItem = (FragmentLayoutStructureItem)layoutStructureItem;
+
+			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
+				continue;
+			}
+
+			FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink == null) {
+				continue;
+			}
+
+			FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
+
+			DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
+
+			defaultFragmentRendererContext.setLocale(locale);
+			%>
+
+			<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof RootLayoutStructureItem %>">
+
+			<%
+			request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			%>
+
+			<liferay-util:include page="/layout/view/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof RowLayoutStructureItem %>">
+
+			<%
+			RowLayoutStructureItem rowLayoutStructureItem = (RowLayoutStructureItem)layoutStructureItem;
+			%>
+
+			<div class="row <%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>">
 
 				<%
-				JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
-
-				for (int j = 0; j < columnsJSONArray.length(); j++) {
-					JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
-
-					JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
-
-					for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
-						long fragmentEntryLinkId = fragmentEntryLinkIdsJSONArray.getLong(k);
-
-						if (fragmentEntryLinkId <= 0) {
-							continue;
-						}
-
-						FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentEntryLinkId);
-
-						if (fragmentEntryLink == null) {
-							continue;
-						}
-
-						FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
-
-						DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
-
-						defaultFragmentRendererContext.setLocale(locale);
+				request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 				%>
 
-						<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-
-				<%
-					}
-				}
-				%>
-
-			</section>
-		</c:otherwise>
+				<liferay-util:include page="/layout/view/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+			</div>
+		</c:when>
 	</c:choose>
 
 <%

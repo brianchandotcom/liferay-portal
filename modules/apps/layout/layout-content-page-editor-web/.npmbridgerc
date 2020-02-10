@@ -4,7 +4,7 @@
 			"from": "(.*)\\.js$",
 			"to": "bridge/layout-content-page-editor-web/$1"
 		},
-		"file-globs": "**/*.es.js,**/*.soy.js,!**/bridge",
+		"file-globs": "**/*.es.js,!**/bridge",
 		"input": "build/node/packageRunBuild/resources",
 		"output": "build/node/packageRunBuild/resources/bridge/layout-content-page-editor-web",
 		"src-mod-name-mapper": {

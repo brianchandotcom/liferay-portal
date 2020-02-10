@@ -19,16 +19,12 @@ import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.util.LayoutDataConverter;
 import com.liferay.layout.util.structure.FragmentLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -62,17 +58,8 @@ public class LayoutPageTemplateStructureRenderUtil {
 			return StringPool.BLANK;
 		}
 
-		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(data);
-
-		if (LayoutDataConverter.isLatestVersion(dataJSONObject)) {
-			return _renderLatestLayoutData(
-				data, fragmentRendererController, httpServletRequest,
-				httpServletResponse, mode, parameterMap, locale,
-				segmentsExperienceIds);
-		}
-
 		return _renderLayoutData(
-			dataJSONObject, fragmentRendererController, httpServletRequest,
+			data, fragmentRendererController, httpServletRequest,
 			httpServletResponse, mode, parameterMap, locale,
 			segmentsExperienceIds);
 	}
@@ -105,7 +92,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 			fragmentRendererContext, httpServletRequest, httpServletResponse);
 	}
 
-	private static String _renderLatestLayoutData(
+	private static String _renderLayoutData(
 		String data, FragmentRendererController fragmentRendererController,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String mode,
@@ -136,55 +123,6 @@ public class LayoutPageTemplateStructureRenderUtil {
 					fragmentRendererController, httpServletRequest,
 					httpServletResponse, mode, parameterMap, locale,
 					segmentsExperienceIds));
-		}
-
-		return sb.toString();
-	}
-
-	private static String _renderLayoutData(
-		JSONObject dataJSONObject,
-		FragmentRendererController fragmentRendererController,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String mode,
-		Map<String, Object> parameterMap, Locale locale,
-		long[] segmentsExperienceIds) {
-
-		JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
-
-		if (structureJSONArray == null) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i < structureJSONArray.length(); i++) {
-			JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
-
-			JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
-
-			for (int j = 0; j < columnsJSONArray.length(); j++) {
-				JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
-
-				JSONArray fragmentEntryLinkIdsJSONArray =
-					columnJSONObject.getJSONArray("fragmentEntryLinkIds");
-
-				for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length();
-					 k++) {
-
-					long fragmentEntryLinkId =
-						fragmentEntryLinkIdsJSONArray.getLong(k);
-
-					if (fragmentEntryLinkId <= 0) {
-						continue;
-					}
-
-					sb.append(
-						_renderFragmentEntryLink(
-							fragmentEntryLinkId, fragmentRendererController,
-							httpServletRequest, httpServletResponse, mode,
-							parameterMap, locale, segmentsExperienceIds));
-				}
-			}
 		}
 
 		return sb.toString();

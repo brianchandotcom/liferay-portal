@@ -57,7 +57,7 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 	const selectEditingItemId = useSelectEditingItem();
 	const state = useSelector(state => state);
 
-	const defaultContent = fragmentEntryLink.content.value.content;
+	const defaultContent = fragmentEntryLink.content;
 	const {fragmentEntryLinkId} = fragmentEntryLink;
 
 	const [content, setContent] = useState(defaultContent);

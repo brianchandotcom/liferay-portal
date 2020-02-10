@@ -12,9 +12,9 @@
  * details.
  */
 
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../js/utils/constants';
 import updateEditableValues from '../actions/updateEditableValues';
 import updateFragmentEntryLinkContent from '../actions/updateFragmentEntryLinkContent';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
 import FragmentService from '../services/FragmentService';
 
 export default function updateFragmentConfiguration({
@@ -49,15 +49,6 @@ export default function updateFragmentConfiguration({
 				});
 			})
 			.then(({content}) => {
-				// TODO: This is a temporary "hack"
-				//       until the backend is consitent
-				//       between both "metal+soy" and "react" versions
-				const nextContent = {
-					value: {
-						content
-					}
-				};
-
 				dispatch(
 					updateEditableValues({
 						editableValues: nextEditableValues,
@@ -67,7 +58,7 @@ export default function updateFragmentConfiguration({
 
 				dispatch(
 					updateFragmentEntryLinkContent({
-						content: nextContent,
+						content,
 						fragmentEntryLinkId
 					})
 				);

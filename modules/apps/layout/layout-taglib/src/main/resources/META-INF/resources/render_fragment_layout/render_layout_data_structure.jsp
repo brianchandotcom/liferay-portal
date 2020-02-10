@@ -26,174 +26,139 @@ long[] segmentsExperienceIds = (long[])request.getAttribute("liferay-layout:rend
 
 RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("render_layout_data_structure.jsp-renderFragmentLayoutDisplayContext");
 
-JSONObject dataJSONObject = (JSONObject)request.getAttribute("render_layout_data_structure.jsp-dataJSONObject");
+LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("render_layout_data_structure.jsp-layoutStructure");
 
-JSONArray structureJSONArray = dataJSONObject.getJSONArray("structure");
+List<String> childrenItemIds = (List<String>)request.getAttribute("render_layout_data_structure.jsp-childrenItemIds");
 
-if (structureJSONArray != null) {
-	for (int i = 0; i < structureJSONArray.length(); i++) {
-		JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
-
-		JSONObject rowConfigJSONObject = rowJSONObject.getJSONObject("config");
-
-		int type = rowJSONObject.getInt("type", FragmentConstants.TYPE_COMPONENT);
+for (String childrenItemId : childrenItemIds) {
+	LayoutStructureItem layoutStructureItem = layoutStructure.getLayoutStructureItem(childrenItemId);
 %>
 
-		<c:choose>
-			<c:when test="<%= type == FragmentConstants.TYPE_COMPONENT %>">
+	<c:choose>
+		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
+
+			<%
+			ColumnLayoutStructureItem columnLayoutStructureItem = (ColumnLayoutStructureItem)layoutStructureItem;
+			%>
+
+			<div class="<%= (columnLayoutStructureItem.getSize() > 0) ? "col-md-" + columnLayoutStructureItem.getSize() : "col-md" %>">
 
 				<%
-				String backgroundColorCssClass = StringPool.BLANK;
-				String backgroundImage = StringPool.BLANK;
-				boolean columnSpacing = true;
-				String containerType = "fluid";
-				long paddingHorizontal = -1L;
-				long paddingVertical = -1L;
-
-				if (rowConfigJSONObject != null) {
-					backgroundColorCssClass = rowConfigJSONObject.getString("backgroundColorCssClass");
-					backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(rowConfigJSONObject);
-					columnSpacing = rowConfigJSONObject.getBoolean("columnSpacing", true);
-					containerType = rowConfigJSONObject.getString("containerType");
-					paddingHorizontal = rowConfigJSONObject.getLong("paddingHorizontal", paddingHorizontal);
-					paddingVertical = rowConfigJSONObject.getLong("paddingVertical", paddingVertical);
-				}
+				request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 				%>
 
-				<section class="<%= Validator.isNotNull(backgroundColorCssClass) ? "bg-" + backgroundColorCssClass : "" %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : StringPool.BLANK %>">
-					<div class="<%= Objects.equals(containerType, "fluid") ? "container-fluid" : "container" %> <%= (paddingHorizontal != -1L) ? "px-" + paddingHorizontal : "" %> <%= (paddingVertical != -1L) ? "py-" + paddingVertical : "" %>">
-						<div class="row <%= !columnSpacing ? "no-gutters" : StringPool.BLANK %>">
+				<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+			</div>
+		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof ContainerLayoutStructureItem %>">
 
-							<%
-							JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
+			<%
+			ContainerLayoutStructureItem containerLayoutStructureItem = (ContainerLayoutStructureItem)layoutStructureItem;
 
-							for (int j = 0; j < columnsJSONArray.length(); j++) {
-								JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
+			String backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(containerLayoutStructureItem.getBackgroundImageJSONObject());
 
-								String size = columnJSONObject.getString("size");
-							%>
+			StringBundler sb = new StringBundler();
 
-								<div class="<%= Validator.isNotNull(size) ? "col-md-" + size : "col-md" %>">
+			if (Validator.isNotNull(containerLayoutStructureItem.getBackgroundColorCssClass())) {
+				sb.append("bg-");
+				sb.append(containerLayoutStructureItem.getBackgroundColorCssClass());
+			}
 
-									<%
-									JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
+			if (Objects.equals(containerLayoutStructureItem.getContainerType(), "fluid")) {
+				sb.append(" container-fluid");
+			}
+			else {
+				sb.append(" container");
+			}
 
-									for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
-									%>
+			if (containerLayoutStructureItem.getPaddingBottom() != -1L) {
+				sb.append(" pb-");
+				sb.append(containerLayoutStructureItem.getPaddingBottom());
+			}
 
-										<c:choose>
-											<c:when test='<%= Objects.equals(fragmentEntryLinkIdsJSONArray.getString(k), "drop-zone") %>'>
+			if (containerLayoutStructureItem.getPaddingHorizontal() != -1L) {
+				sb.append(" px-");
+				sb.append(containerLayoutStructureItem.getPaddingHorizontal());
+			}
 
-												<%
-												LayoutPageTemplateStructure layoutPageTemplateStructure = LayoutPageTemplateStructureLocalServiceUtil.fetchLayoutPageTemplateStructure(themeDisplay.getScopeGroupId(), PortalUtil.getClassNameId(Layout.class.getName()), themeDisplay.getPlid(), true);
+			if (containerLayoutStructureItem.getPaddingTop() != -1L) {
+				sb.append(" pt-");
+				sb.append(containerLayoutStructureItem.getPaddingTop());
+			}
+			%>
 
-												String data = layoutPageTemplateStructure.getData(segmentsExperienceIds);
-												%>
+			<div class="<%= sb.toString() %>" style="<%= Validator.isNotNull(backgroundImage) ? "background-image: url(" + backgroundImage + "); background-position: 50% 50%; background-repeat: no-repeat; background-size: cover;" : "" %>">
 
-												<c:if test="<%= Validator.isNotNull(data) %>">
+				<%
+				request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+				%>
 
-													<%
-													request.setAttribute("render_layout_data_structure.jsp-dataJSONObject", JSONFactoryUtil.createJSONObject(data));
-													%>
+				<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+			</div>
+		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof DropZoneLayoutStructureItem %>">
 
-													<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
-												</c:if>
-											</c:when>
-											<c:otherwise>
+			<%
+			request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			%>
 
-												<%
-												long fragmentEntryLinkId = fragmentEntryLinkIdsJSONArray.getLong(k);
+			<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof FragmentLayoutStructureItem %>">
 
-												if (fragmentEntryLinkId <= 0) {
-													continue;
-												}
+			<%
+			FragmentLayoutStructureItem fragmentLayoutStructureItem = (FragmentLayoutStructureItem)layoutStructureItem;
 
-												FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentEntryLinkId);
+			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
+				continue;
+			}
 
-												if (fragmentEntryLink == null) {
-													continue;
-												}
+			FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentLayoutStructureItem.getFragmentEntryLinkId());
 
-												FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
+			if (fragmentEntryLink == null) {
+				continue;
+			}
 
-												DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
+			FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
 
-												defaultFragmentRendererContext.setFieldValues(fieldValues);
-												defaultFragmentRendererContext.setLocale(locale);
-												defaultFragmentRendererContext.setMode(mode);
-												defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
-												defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
-												defaultFragmentRendererContext.setPreviewType(previewType);
-												defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
-												%>
+			DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
 
-												<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-											</c:otherwise>
-										</c:choose>
+			defaultFragmentRendererContext.setFieldValues(fieldValues);
+			defaultFragmentRendererContext.setLocale(locale);
+			defaultFragmentRendererContext.setMode(mode);
+			defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
+			defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
+			defaultFragmentRendererContext.setPreviewType(previewType);
+			defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
+			%>
 
-									<%
-									}
-									%>
+			<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof RootLayoutStructureItem %>">
 
-								</div>
+			<%
+			request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			%>
 
-							<%
-							}
-							%>
+			<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof RowLayoutStructureItem %>">
 
-						</div>
-					</div>
-				</section>
-			</c:when>
-			<c:otherwise>
-				<section>
+			<%
+			RowLayoutStructureItem rowLayoutStructureItem = (RowLayoutStructureItem)layoutStructureItem;
+			%>
 
-					<%
-					JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
+			<div class="row <%= !rowLayoutStructureItem.isGutters() ? "no-gutters" : StringPool.BLANK %>">
 
-					for (int j = 0; j < columnsJSONArray.length(); j++) {
-						JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
+				<%
+				request.setAttribute("render_layout_data_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+				%>
 
-						JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");
-
-						for (int k = 0; k < fragmentEntryLinkIdsJSONArray.length(); k++) {
-							long fragmentEntryLinkId = fragmentEntryLinkIdsJSONArray.getLong(k);
-
-							if (fragmentEntryLinkId <= 0) {
-								continue;
-							}
-
-							FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentEntryLinkId);
-
-							if (fragmentEntryLink == null) {
-								continue;
-							}
-
-							FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
-
-							DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
-
-							defaultFragmentRendererContext.setFieldValues(fieldValues);
-							defaultFragmentRendererContext.setLocale(locale);
-							defaultFragmentRendererContext.setMode(mode);
-							defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
-							defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
-							defaultFragmentRendererContext.setPreviewType(previewType);
-							defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
-					%>
-
-							<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
-
-					<%
-						}
-					}
-					%>
-
-				</section>
-			</c:otherwise>
-		</c:choose>
+				<liferay-util:include page="/render_fragment_layout/render_layout_data_structure.jsp" servletContext="<%= application %>" />
+			</div>
+		</c:when>
+	</c:choose>
 
 <%
-	}
 }
 %>

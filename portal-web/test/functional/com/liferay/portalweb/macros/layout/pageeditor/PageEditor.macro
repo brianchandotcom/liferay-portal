@@ -231,11 +231,11 @@ definition {
 	}
 
 	macro closeSidebar {
-		Click(
-			key_tabName = "${tabName}",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		var key_tabName = "${tabName}";
 
-		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLAPSED");
+		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+
+		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_COLLAPSED");
 	}
 
 	macro configureFragment {

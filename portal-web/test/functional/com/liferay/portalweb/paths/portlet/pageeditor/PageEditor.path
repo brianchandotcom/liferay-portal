@@ -52,7 +52,7 @@
 <!--FRAGMENT_SIDEBAR-->
 <tr>
 	<td>FRAGMENT_SIDEBAR</td>
-	<td>//div[contains(@class,'fragments-editor-sidebar')]</td>
+	<td>//div[contains(@class,'page-editor-sidebar-content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,8 +61,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_SIDEBAR_COLLAPSED</td>
-	<td>//div[contains(@class,'fragments-editor-sidebar') and contains(@class,'collapsed')]</td>
+	<td>FRAGMENT_SIDEBAR_TAB_COLLAPSED</td>
+	<td>//button[@title='${key_tabName}' and contains(@aria-pressed,'false')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_ENTRY_N</td>
-	<td>xpath=(//div[contains(@class,'fragments-editor-sidebar')]//li[contains(@data-fragments-editor-item-type,'fragments-editor-mapped-item')])[${key_rowNumber}]</td>
+	<td>xpath=(//div[contains(@class,'page-editor-sidebar')]//li[contains(@class,'page-editor__contents__page-content')])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>

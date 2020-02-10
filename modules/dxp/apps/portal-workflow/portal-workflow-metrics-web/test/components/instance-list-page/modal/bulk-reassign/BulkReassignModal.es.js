@@ -19,7 +19,14 @@ import {MockRouter} from '../../../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-const {items, selectedItems, workflowTaskAssignableUsers} = {
+const {
+	assignees,
+	items,
+	processSteps,
+	selectedItems,
+	workflowTaskAssignableUsers
+} = {
+	assignees: [{id: 1, name: 'Test Test'}],
 	items: [
 		{
 			assigneePerson: {
@@ -42,6 +49,10 @@ const {items, selectedItems, workflowTaskAssignableUsers} = {
 			objectReviewed: {assetTitle: 'Blog 2', assetType: 'Blog'},
 			workflowInstanceId: 2
 		}
+	],
+	processSteps: [
+		{key: 'review', name: 'Review'},
+		{key: 'update', name: 'Update'}
 	],
 	selectedItems: [{id: 1}, {id: 2}],
 	workflowTaskAssignableUsers: [
@@ -86,7 +97,13 @@ const clientMock = {
 	get: jest
 		.fn()
 		.mockRejectedValueOnce(new Error('request-failure'))
+		.mockResolvedValueOnce({data: {items: processSteps}})
+		.mockResolvedValueOnce({data: {items: assignees}})
 		.mockResolvedValueOnce({data: {items, totalCount: items.length + 1}})
+		.mockResolvedValueOnce({data: {items: processSteps}})
+		.mockResolvedValueOnce({data: {items: assignees}})
+		.mockResolvedValueOnce({data: {items: processSteps}})
+		.mockResolvedValueOnce({data: {items: assignees}})
 		.mockRejectedValueOnce(new Error('request-failure'))
 		.mockResolvedValueOnce({data: {items: [items[0]], totalCount: 1}})
 		.mockRejectedValueOnce(new Error('request-failure'))
@@ -102,6 +119,7 @@ const clientMock = {
 
 const ContainerMock = ({children}) => {
 	const [bulkModal, setBulkModal] = useState({
+		processId: '12345',
 		reassignedTasks: [],
 		reassigning: false,
 		selectedAssignee: null,
@@ -122,10 +140,10 @@ const ContainerMock = ({children}) => {
 };
 
 describe('The BulkReassignModal component should', () => {
-	let getAllByTestId, getByTestId;
+	let getAllByTestId, getByTestId, renderResult;
 
 	beforeAll(() => {
-		const renderResult = render(
+		renderResult = render(
 			<ContainerMock>
 				<InstanceListPage.BulkReassignModal />
 			</ContainerMock>
@@ -162,6 +180,8 @@ describe('The BulkReassignModal component should', () => {
 		const table = getByTestId('bulkReassignModalTable');
 		const checkbox = getAllByTestId('itemCheckbox');
 		const checkAllButton = getByTestId('checkAllButton');
+		const processStepFilter = getByTestId('processStepFilter');
+		const assigneeFilter = getByTestId('assigneeFilter');
 
 		const content = modal.children[0].children[0].children[0];
 		const header = content.children[0].children[0];
@@ -170,6 +190,9 @@ describe('The BulkReassignModal component should', () => {
 
 		expect(stepBar.children[0]).toHaveTextContent('select-tasks');
 		expect(stepBar.children[1]).toHaveTextContent('step-x-of-x');
+
+		expect(processStepFilter).not.toBeUndefined();
+		expect(assigneeFilter).not.toBeUndefined();
 
 		expect(cancelBtn).toHaveTextContent('cancel');
 		expect(nextBtn).toHaveTextContent('next');

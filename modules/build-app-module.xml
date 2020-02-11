@@ -308,7 +308,29 @@
 
 	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties" />
 
-	<target if="artifact.bnd" name="get-artifact-properties-bnd">
+	<target if="${get.artifact.version.from.releng}" name="get-artifact-version-from-releng">
+		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="artifact.url=" />
+				</linecontains>
+			</filterchain>
+		</loadproperties>
+
+		<loadfile property="artifact.version">
+			<filterchain>
+				<tokenfilter>
+					<replaceregex pattern="^.+-(\d.+)\.[jw]ar$" replace="\1" />
+				</tokenfilter>
+			</filterchain>
+
+			<propertyresource name="artifact.url" />
+		</loadfile>
+
+		<property name="Bundle-Version" value="${artifact.version}" />
+	</target>
+
+	<target depends="get-artifact-version-from-releng" if="artifact.bnd" name="get-artifact-properties-bnd">
 		<property file="bnd.bnd" />
 
 		<condition property="artifact.location.dest" value="${output.dir}/${Bundle-SymbolicName}-${Bundle-Version}.jar">
@@ -322,10 +344,6 @@
 		<condition property="artifact.location.dest" value="${output.dir}/${lpkg.title.prefix}${liferay.releng.app.title} - API/${Bundle-SymbolicName}-${Bundle-Version}.jar">
 			<isset property="Export-Package" />
 		</condition>
-
-		<property name="artifact.location.dest" value="${output.dir}/${lpkg.title.prefix}${liferay.releng.app.title} - Impl/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
-
-		<property name="artifact.location.dest" value="${output.dir}/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
 
 		<condition property="artifact.location.src" value="${osgi.dir}/static/${Bundle-SymbolicName}.jar">
 			<or>
@@ -344,7 +362,7 @@
 		<basename file="${artifact.location.src}" property="artifact.file.name" />
 	</target>
 
-	<target if="artifact.json" name="get-artifact-properties-json">
+	<target depends="get-artifact-version-from-releng" if="artifact.json" name="get-artifact-properties-json">
 		<basename file="${basedir}" property="app.dir.name" />
 
 		<loadfile
@@ -413,7 +431,7 @@
 		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}.war" />
 	</target>
 
-	<target if="artifact.legacy" name="get-artifact-properties-legacy">
+	<target depends="get-artifact-version-from-releng" if="artifact.legacy" name="get-artifact-properties-legacy">
 		<basename file="${basedir}" property="artifact.name" />
 
 		<property file="${ant.file}/../../release.profile-dxp.properties" />
@@ -421,12 +439,18 @@
 
 		<property file="docroot/WEB-INF/liferay-plugin-package.properties" />
 
-		<condition property="artifact.location.dest" value="${output.dir}/${artifact.name}-${lp.version}.${module-incremental-version}.war">
+		<property name="artifact.version" value="${lp.version}.${module-incremental-version}" />
+
+		<condition property="artifact.location.dest" value="${output.dir}/${artifact.name}-${artifact.version}.war">
 			<equals arg1="${lp.version.major}" arg2="7.0" />
 		</condition>
 
-		<property name="artifact.location.dest" value="${output.dir}/${lpkg.title.prefix}${liferay.releng.app.title} - Impl/${artifact.name}-${lp.version}.${module-incremental-version}.war" />
-		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}-${lp.version}.${module-incremental-version}.war" />
+		<condition property="artifact.location.dest" value="${output.dir}/${artifact.name}-${artifact.version}.war">
+			<equals arg1="${lp.version.major}" arg2="7.0" />
+		</condition>
+
+		<property name="artifact.location.dest" value="${output.dir}/${lpkg.title.prefix}${liferay.releng.app.title} - Impl/${artifact.name}-${artifact.version}.war" />
+		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}-${artifact.version}.war" />
 	</target>
 
 	<target description="Get the version of the current module that was present in the previous release of this app." name="get-artifact-version-previous-release" unless="${app.first.version}">

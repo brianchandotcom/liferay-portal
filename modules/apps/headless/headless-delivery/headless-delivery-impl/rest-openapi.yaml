@@ -1733,23 +1733,20 @@ components:
                     type: array
                 settings:
                     properties:
-                        lookAndFeel:
-                            properties:
-                                colorSchemeName:
-                                    type: string
-                                css:
-                                    type: string
-                                javascript:
-                                    type: string
-                                themeName:
-                                    type: string
-                                themeSettings:
-                                    type: object
-                            type: object
+                        colorSchemeName:
+                            type: string
+                        css:
+                            type: string
+                        javascript:
+                            type: string
                         masterPage:
                             properties:
                                 name:
                                     type: string
+                            type: object
+                        themeName:
+                            type: string
+                        themeSettings:
                             type: object
                     type: object
                 taxonomyCategories:

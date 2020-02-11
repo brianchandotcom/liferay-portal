@@ -19,6 +19,7 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.ColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
+import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.RowDefinition;
@@ -35,7 +36,6 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -51,7 +51,8 @@ public class PageDefinitionConverterUtil {
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererTracker fragmentRendererTracker, Layout layout) {
+		FragmentRendererTracker fragmentRendererTracker,
+		com.liferay.portal.kernel.model.Layout layout) {
 
 		return new PageDefinition() {
 			{
@@ -144,13 +145,19 @@ public class PageDefinitionConverterUtil {
 								containerLayoutStructureItem.
 									getBackgroundColorCssClass(),
 								null);
-							paddingBottom =
-								containerLayoutStructureItem.getPaddingBottom();
-							paddingHorizontal =
-								containerLayoutStructureItem.
-									getPaddingHorizontal();
-							paddingTop =
-								containerLayoutStructureItem.getPaddingTop();
+							layout = new Layout() {
+								{
+									paddingBottom =
+										containerLayoutStructureItem.
+											getPaddingBottom();
+									paddingHorizontal =
+										containerLayoutStructureItem.
+											getPaddingHorizontal();
+									paddingTop =
+										containerLayoutStructureItem.
+											getPaddingTop();
+								}
+							};
 
 							setBackgroundImage(
 								() -> {
@@ -239,7 +246,8 @@ public class PageDefinitionConverterUtil {
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererTracker fragmentRendererTracker, Layout layout) {
+		FragmentRendererTracker fragmentRendererTracker,
+		com.liferay.portal.kernel.model.Layout layout) {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.

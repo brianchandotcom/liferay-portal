@@ -25,7 +25,6 @@ import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCrite
 import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Map;
 
@@ -102,9 +101,6 @@ public class ImageDDMFormFieldTemplateContextContributor
 
 		return itemSelectorURL.toString();
 	}
-
-	@Reference
-	protected Portal portal;
 
 	@Reference
 	private ItemSelector _itemSelector;

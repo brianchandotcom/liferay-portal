@@ -106,6 +106,21 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro depotShare {
+		if ("${depotShare}" == "Yes") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Enabled",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		else if ("${depotShare}" == "No") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Enabled",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		PortletEntry.save();
+	}	
+
 	macro disableRecycleBinViaDepotSettings {
 		Navigator.gotoNavTab(navTab = "General");
 

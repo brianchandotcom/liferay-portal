@@ -29,21 +29,18 @@ export const TARGET_POSITION = {
 const RULES_TYPE = {
 	ELEVATE: 3,
 	MIDDLE: 1,
-	NESTING_LEVEL: 2,
 	VALID_MOVE: 4
 };
 
 const RULES = {
 	[RULES_TYPE.MIDDLE]: ({hoverClientY, hoverMiddleY, ...args}) =>
 		isValidMoveToMiddle(args) && isMiddle(hoverClientY, hoverMiddleY),
-	[RULES_TYPE.NESTING_LEVEL]: isNestingLevel,
 	[RULES_TYPE.ELEVATE]: checkElevate,
 	[RULES_TYPE.VALID_MOVE]: isValidMoveToTargetPosition
 };
 
 const RULES_DROP_END = {
 	[RULES_TYPE.MIDDLE]: isValidMoveToMiddle,
-	[RULES_TYPE.NESTING_LEVEL]: isNestingLevel,
 	[RULES_TYPE.VALID_MOVE]: isValidMoveToTargetPosition
 };
 
@@ -202,8 +199,6 @@ export default function useDragAndDrop({
 						targetPosition: TARGET_POSITION.MIDDLE
 					});
 					break;
-				case RULES_TYPE.NESTING_LEVEL:
-					break;
 				case RULES_TYPE.ELEVATE: {
 					const parent = layoutData.items[item.parentId];
 
@@ -290,55 +285,6 @@ function checkElevate({
 		parent &&
 		parent.type !== LAYOUT_DATA_ITEM_TYPES.root
 	);
-}
-
-const NESTING_LEVEL = {
-	[LAYOUT_DATA_ITEM_TYPES.column]: 0,
-	[LAYOUT_DATA_ITEM_TYPES.container]: 1,
-	[LAYOUT_DATA_ITEM_TYPES.dropZone]: Infinity,
-	[LAYOUT_DATA_ITEM_TYPES.fragment]: Infinity,
-	[LAYOUT_DATA_ITEM_TYPES.root]: 0,
-	[LAYOUT_DATA_ITEM_TYPES.row]: Infinity
-};
-
-function isNestingLevel({item, items, siblingOrParent}) {
-	if (NESTING_LEVEL[item.type] !== Infinity) {
-		if (
-			getLevel(item, items, siblingOrParent) >= NESTING_LEVEL[item.type]
-		) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-function getLevel(item, items, siblingOrParent) {
-	const {type} = item;
-
-	let counter = 0;
-
-	const traverse = currentItem => {
-		const node = items[currentItem.parentId];
-
-		if (!node) {
-			return;
-		}
-
-		if (node.type === type) {
-			counter++;
-		}
-
-		if (node.parentId === '') {
-			return;
-		}
-
-		traverse(items[node.parentId]);
-	};
-
-	traverse(siblingOrParent);
-
-	return counter;
 }
 
 function isValidMoveToMiddle({dropNestedAndSibling, item, siblingOrParent}) {

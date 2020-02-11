@@ -29,7 +29,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.FragmentContentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentContentFieldImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentContentFieldText;
-import com.liferay.headless.delivery.dto.v1_0.FragmentDefinition;
+import com.liferay.headless.delivery.dto.v1_0.FragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.FragmentImage;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.InlineLink;
@@ -65,7 +65,7 @@ import org.jsoup.select.Elements;
  */
 public class FragmentInstanceDefinitionConverterUtil {
 
-	public static FragmentDefinition toFragmentDefinition(
+	public static FragmentInstanceDefinition toFragmentInstanceDefinition(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -82,7 +82,7 @@ public class FragmentInstanceDefinitionConverterUtil {
 			fragmentCollectionContributorTracker,
 			fragmentEntryLink.getFragmentEntryId(), rendererKey);
 
-		return new FragmentDefinition() {
+		return new FragmentInstanceDefinition() {
 			{
 				fragmentCollectionName = _getFragmentCollectionName(
 					fragmentCollectionContributorTracker, fragmentEntry,

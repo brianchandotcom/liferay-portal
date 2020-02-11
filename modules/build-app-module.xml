@@ -317,7 +317,9 @@
 			</filterchain>
 		</loadproperties>
 
-		<loadfile property="artifact.version">
+		<loadfile
+			property="artifact.version"
+		>
 			<filterchain>
 				<tokenfilter>
 					<replaceregex pattern="^.+-(\d.+)\.[jw]ar$" replace="\1" />

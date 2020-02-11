@@ -986,8 +986,13 @@ components:
             type: object
         FragmentInstanceDefinition:
             properties:
-                fragmentCollectionName:
-                    type: string
+                fragment:
+                    properties:
+                        fragmentCollectionName:
+                            type: string
+                        fragmentName:
+                            type: string
+                    type: object
                 fragmentConfig:
                     additionalProperties:
                         type: object
@@ -996,8 +1001,6 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentContentField"
                     type: array
-                fragmentName:
-                    type: string
             type: object
         FragmentLink:
             properties:

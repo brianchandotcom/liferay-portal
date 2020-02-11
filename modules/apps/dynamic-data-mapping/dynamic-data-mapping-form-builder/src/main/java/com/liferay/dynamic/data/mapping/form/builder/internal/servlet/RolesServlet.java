@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -73,7 +74,11 @@ public class RolesServlet extends BaseDDMFormBuilderServlet {
 
 		try {
 			List<Role> roles = _roleService.getRoles(
-				CompanyThreadLocal.getCompanyId(), null);
+				CompanyThreadLocal.getCompanyId(),
+				new int[] {
+					RoleConstants.TYPE_ORGANIZATION, RoleConstants.TYPE_REGULAR,
+					RoleConstants.TYPE_SITE
+				});
 
 			for (Role role : roles) {
 				jsonArray.put(toJSONObject(role));

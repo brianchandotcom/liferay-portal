@@ -427,18 +427,6 @@ public class KaleoFormsViewRecordsDisplayContext {
 			ActionKeys.SUBMIT);
 	}
 
-	public boolean isDisabledManagementBar() throws Exception {
-		if (hasResults()) {
-			return false;
-		}
-
-		if (isSearch()) {
-			return false;
-		}
-
-		return true;
-	}
-
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
 		return new DropdownItemList() {
 			{

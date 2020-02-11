@@ -18,7 +18,6 @@
 
 <clay:management-toolbar
 	clearResultsURL="<%= workflowDefinitionLinkDisplayContext.getClearResultsURL() %>"
-	disabled="<%= workflowDefinitionLinkDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= workflowDefinitionLinkDisplayContext.getFilterOptions(request) %>"
 	itemsTotal="<%= workflowDefinitionLinkDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"

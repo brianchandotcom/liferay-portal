@@ -38,7 +38,6 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 <clay:management-toolbar
 	clearResultsURL="<%= workflowDefinitionDisplayContext.getClearResultsURL(request) %>"
 	creationMenu="<%= workflowDefinitionDisplayContext.getCreationMenu(pageContext) %>"
-	disabled="<%= workflowDefinitionDisplayContext.isDisabledManagementBar(request, renderRequest, displayedStatus) %>"
 	filterDropdownItems="<%= workflowDefinitionDisplayContext.getFilterOptions(request) %>"
 	itemsTotal="<%= workflowDefinitionDisplayContext.getTotalItems(request, renderRequest, displayedStatus) %>"
 	namespace="<%= renderResponse.getNamespace() %>"

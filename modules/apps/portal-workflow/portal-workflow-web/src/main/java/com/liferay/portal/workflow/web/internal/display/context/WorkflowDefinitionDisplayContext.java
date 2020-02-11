@@ -527,17 +527,6 @@ public class WorkflowDefinitionDisplayContext {
 		return workflowDefinitions;
 	}
 
-	public boolean isDisabledManagementBar(
-			HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-			int status)
-		throws PortalException {
-
-		SearchContainer searchContainer = getSearch(
-			httpServletRequest, renderRequest, status);
-
-		return !searchContainer.hasResults();
-	}
-
 	public void setCompanyAdministratorCanPublish(
 		boolean companyAdministratorCanPublish) {
 

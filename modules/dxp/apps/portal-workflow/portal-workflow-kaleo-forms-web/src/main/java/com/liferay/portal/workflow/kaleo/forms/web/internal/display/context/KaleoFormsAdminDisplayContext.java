@@ -384,18 +384,6 @@ public class KaleoFormsAdminDisplayContext {
 		return searchContainer.getTotal();
 	}
 
-	public boolean isDisabledManagementBar() {
-		if (hasResults()) {
-			return false;
-		}
-
-		if (isSearch()) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public boolean isShowAddButton() {
 		return KaleoFormsPermission.contains(
 			_kaleoFormsAdminRequestHelper.getPermissionChecker(),

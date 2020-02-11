@@ -394,12 +394,6 @@ public class WorkflowInstanceViewDisplayContext
 		};
 	}
 
-	public boolean isDisabledManagementBar() throws PortalException {
-		SearchContainer searchContainer = getSearchContainer();
-
-		return !searchContainer.hasResults();
-	}
-
 	public boolean isNavigationAll() {
 		if (Objects.equals(getNavigation(), "all")) {
 			return true;

@@ -219,6 +219,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		themeDisplay.setLayoutSet(_layout.getLayoutSet());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setPlid(_layout.getPlid());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());

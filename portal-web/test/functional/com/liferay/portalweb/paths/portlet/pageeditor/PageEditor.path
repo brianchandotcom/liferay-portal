@@ -202,12 +202,12 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_TAB_BUTTON</td>
-	<td>//button[@title='${key_tabName}']</td>
+	<td>//button[contains(@title,'${key_tabName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_TAB_BUTTON_ACTIVE</td>
-	<td>//button[@title='${key_tabName}'][contains(@class,'active')]</td>
+	<td>//button[@title='${key_tabName}'][contains(@aria-pressed,'true')]</td>
 	<td></td>
 </tr>
 <tr>

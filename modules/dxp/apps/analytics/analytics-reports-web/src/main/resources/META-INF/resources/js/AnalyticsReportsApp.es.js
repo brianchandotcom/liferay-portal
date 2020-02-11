@@ -15,6 +15,7 @@ import BasicInformation from './components/BasicInformation.es';
 import Chart from './components/Chart.es';
 import TotalCount from './components/TotalCount.es';
 import APIService from './util/APIService.es';
+import {numberFormat} from './util/numberFormat.es';
 
 export default function({context, props}) {
 	const {endpoints, languageTag, namespace, page} = context;
@@ -38,12 +39,18 @@ export default function({context, props}) {
 
 	function _handleTotalReads() {
 		return api.getTotalReads().then(response => {
-			return response.analyticsReportsTotalReads;
+			return numberFormat(
+				languageTag,
+				response.analyticsReportsTotalReads
+			);
 		});
 	}
 	function _handleTotalViews() {
 		return api.getTotalViews().then(response => {
-			return response.analyticsReportsTotalViews;
+			return numberFormat(
+				languageTag,
+				response.analyticsReportsTotalViews
+			);
 		});
 	}
 

@@ -22,6 +22,8 @@ import {
 	YAxis
 } from 'recharts';
 
+import {numberFormat} from '../util/numberFormat.es';
+
 const {useEffect, useMemo, useState} = React;
 
 const AXIS_COLOR = '#6B6C7E';
@@ -136,13 +138,13 @@ const generateDateFormatters = key => {
 	};
 };
 
-function legendFormatterGenerator(totals) {
+function legendFormatterGenerator(totals, languageTag) {
 	return value => (
 		<span>
 			<span className="text-secondary">
 				{keyToTranslatedLabelValue(value)}
 			</span>
-			<b>{' ' + totals[value]}</b>
+			<b>{' ' + numberFormat(languageTag, totals[value])}</b>
 		</span>
 	);
 }
@@ -187,7 +189,8 @@ export default function Chart({languageTag, dataProviders = []}) {
 		}
 	}, [dataSet, dateFormatters]);
 
-	const legendFormatter = dataSet && legendFormatterGenerator(dataSet.totals);
+	const legendFormatter =
+		dataSet && legendFormatterGenerator(dataSet.totals, languageTag);
 
 	return dataSet ? (
 		<>
@@ -226,7 +229,10 @@ export default function Chart({languageTag, dataProviders = []}) {
 
 				<Tooltip
 					formatter={(value, name, {payload}) => {
-						return [value, payload.langLabel];
+						return [
+							numberFormat(languageTag, value),
+							payload.langLabel
+						];
 					}}
 					labelFormatter={dateFormatters.formatLongDate}
 					separator={': '}

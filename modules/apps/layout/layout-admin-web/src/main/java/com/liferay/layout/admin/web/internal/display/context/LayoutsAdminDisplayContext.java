@@ -126,12 +126,12 @@ public class LayoutsAdminDisplayContext {
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
 
-		layoutEditorTypeConfiguration =
+		_groupDisplayContextHelper = new GroupDisplayContextHelper(
+			_httpServletRequest);
+		_layoutEditorTypeConfiguration =
 			(LayoutEditorTypeConfiguration)_httpServletRequest.getAttribute(
 				LayoutEditorTypeConfiguration.class.getName());
 
-		_groupDisplayContextHelper = new GroupDisplayContextHelper(
-			_httpServletRequest);
 		_layoutCopyHelper =
 			(LayoutCopyHelper)_liferayPortletRequest.getAttribute(
 				LayoutAdminWebKeys.LAYOUT_COPY_HELPER);
@@ -596,7 +596,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getLayoutEditorType() {
-		return layoutEditorTypeConfiguration.type();
+		return _layoutEditorTypeConfiguration.type();
 	}
 
 	public Long getLayoutId() {
@@ -1545,8 +1545,6 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-	protected final LayoutEditorTypeConfiguration layoutEditorTypeConfiguration;
-
 	private JSONObject _getActionURLsJSONObject(Layout layout)
 		throws Exception {
 
@@ -1995,6 +1993,7 @@ public class LayoutsAdminDisplayContext {
 	private final LayoutConverterRegistry _layoutConverterRegistry;
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private List<LayoutDescription> _layoutDescriptions;
+	private final LayoutEditorTypeConfiguration _layoutEditorTypeConfiguration;
 	private Long _layoutId;
 	private SearchContainer _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;

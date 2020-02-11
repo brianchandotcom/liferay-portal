@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_DROP_TARGET</td>
-	<td>//div[contains(@class,'drop-target')]</td>
+	<td>//div[contains(@class,'page-editor__root page-editor-topper')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -374,7 +374,7 @@
 <!--SECTION_BUILDER-->
 <tr>
 	<td>SECTION_BUILDER_FRAGMENTS</td>
-	<td>//div[contains(@data-item-name,'${fragmentName}')]</td>
+	<td>//div[contains(@title,'${fragmentName}')]/../../../..</td>
 	<td></td>
 </tr>
 <tr>

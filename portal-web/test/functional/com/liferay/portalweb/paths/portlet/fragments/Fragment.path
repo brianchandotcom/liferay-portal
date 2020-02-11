@@ -188,12 +188,12 @@
 <!--FRAGMENT_HEADER-->
 <tr>
 	<td>FRAGMENT_HEADER</td>
-	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//li[contains(.,'${key_fragmentName}')]</td>
+	<td>//div[contains(@class,'page-editor')]//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_HEADER_2</td>
-	<td>xpath=(//div[contains(@class,'fragment-entry-link-wrapper')]//li[contains(.,'${key_fragmentName}')])[2]</td>
+	<td>xpath=(//div[contains(@class,'page-editor')]//li[contains(.,'${key_fragmentName}')])[2]</td>
 	<td></td>
 </tr>
 <tr>

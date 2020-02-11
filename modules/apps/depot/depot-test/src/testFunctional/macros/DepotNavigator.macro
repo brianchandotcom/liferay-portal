@@ -115,6 +115,16 @@ definition {
 			value1 = "Languages");
 	}
 
+	macro gotoShare {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(
+			key_dmDocumentTitle = "${dmDocumentTitle}",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Share");
+	}
+
 	macro gotoSites {
 		Click(
 			key_tab = "Sites",

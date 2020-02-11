@@ -16,15 +16,11 @@ import './FieldBaseAdapter.soy';
 
 import './ReactFieldBaseAdapter.es';
 
-import {compose} from 'dynamic-data-mapping-form-renderer';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import withDispatch from '../util/withDispatch.es';
 import templates from './FieldBase.soy';
-import withLocale from './withLocale.es';
-import withRepetitionControls from './withRepetitionControls.es';
 
 class FieldBase extends Component {}
 
@@ -118,12 +114,6 @@ FieldBase.STATE = {
 	tooltip: Config.string(),
 };
 
-const composed = compose(
-	withDispatch,
-	withRepetitionControls,
-	withLocale
-)(FieldBase);
+Soy.register(FieldBase, templates);
 
-Soy.register(composed, templates);
-
-export default composed;
+export default FieldBase;

@@ -2,9 +2,6 @@
 
 {template .render}
 	{@param name: string}
-	{@param? _handleAddRepeatedFieldButtonClicked: any}
-	{@param? _handleFieldClicked: any}
-	{@param? _handleRemoveRepeatedFieldButtonClicked: any}
 	{@param? _localizedValue: list<[
 		languageId: string,
 		name: string,
@@ -27,10 +24,6 @@
 	{@param? visible: bool}
 
 	{call FieldBaseAdapter.render}
-		{param events: [
-			'onRemoveButton': _handleRemoveRepeatedFieldButtonClicked,
-			'onRepeatButton': _handleAddRepeatedFieldButtonClicked
-		] /}
 		{param store: [
 			'_localizedValue': $_localizedValue,
 			'children': $contentRenderer,

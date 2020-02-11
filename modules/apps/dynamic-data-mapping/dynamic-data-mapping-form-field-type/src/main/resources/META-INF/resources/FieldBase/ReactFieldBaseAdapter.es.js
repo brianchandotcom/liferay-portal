@@ -20,6 +20,7 @@ import {getRepeatedIndex} from 'dynamic-data-mapping-form-renderer';
 import React, {useMemo} from 'react';
 
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
+import {connectStore} from '../util/connectStore.es';
 import template from './FieldBaseAdapter.soy';
 
 function FieldBase({
@@ -126,14 +127,27 @@ function FieldBase({
 }
 
 /**
+ * This Proxy connects to the store to send the changes directly to the store. This
+ * should be replaced when we have a communication with a Store/Provider in React.
+ */
+const FieldBaseProxy = connectStore(({dispatch, name, ...otherProps}) => (
+	<FieldBase
+		{...otherProps}
+		name={name}
+		onRemoveButton={() => dispatch('fieldRemoved', name)}
+		onRepeatButton={() => dispatch('fieldRepeated', name)}
+	/>
+));
+
+/**
  * This Adapter must be removed when all fields are written in React, this brings
  * compatibility so that it can continue working with the fields in Metal+Soy and
  * that it works with the fields in React.
  */
 const ReactFieldBaseAdapter = getConnectedReactComponentAdapter(
-	FieldBase,
+	FieldBaseProxy,
 	template
 );
 
-export {FieldBase};
+export {FieldBase, FieldBaseProxy};
 export default ReactFieldBaseAdapter;

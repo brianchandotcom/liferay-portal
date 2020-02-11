@@ -12,22 +12,20 @@
  * details.
  */
 
-export default Component => {
-	return class withRepeatableFields extends Component {
-		remove() {
-			this.dispatch('fieldRemoved', this.name);
-		}
+import React from 'react';
 
-		repeat() {
-			this.dispatch('fieldRepeated', this.name);
-		}
+/**
+ * The proxy combines the responsibilities of the withDispatch utilities to
+ * maintain compatibility with the use of FieldBase in other fields in React
+ * and isolate connection to the Metal store.
+ * @param {MetalComponentInstance} object.instance
+ */
+export const connectStore = Component => {
+	return function WithDispatch({instance, ...otherProps}) {
+		const {context, emit} = instance;
 
-		_handleAddRepeatedFieldButtonClicked() {
-			this.repeat();
-		}
+		const dispatch = (...args) => (context.dispatch || emit)(...args);
 
-		_handleRemoveRepeatedFieldButtonClicked() {
-			this.remove();
-		}
+		return <Component {...otherProps} dispatch={dispatch} />;
 	};
 };

@@ -75,6 +75,24 @@ definition {
 			value1 = "${bodyLink}");
 	}
 
+	macro openBodyLink {
+		var key_asset = "${asset}";
+
+		MockMock._gotoMail();
+
+		MockMock._gotoMailMessage(asset = "${asset}");
+
+		MockMock._viewMailMessage(
+			content = "${content}",
+			subject = "${subject}");
+
+		var bodyContent = selenium.getText("MockMock#MOCKMOCK_MESSAGE_BODY");
+		var bodyContent = StringUtil.extractLast("${bodyContent}", " at ");
+		var bodyURL = StringUtil.extractFirst("${bodyContent}", ".");
+
+		Navigator.openSpecificURL(url = "${bodyURL}");
+	}
+
 	macro viewMail {
 		MockMock._gotoMail();
 

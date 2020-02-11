@@ -16,6 +16,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
 	compileOnly group: "org.apache.axis", name: "axis-jaxrpc", version: "1.4"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:document-library:document-library-repository-external-api")
 	compileOnly project(":core:petra:petra-string")
 

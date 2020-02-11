@@ -72,9 +72,11 @@ definition {
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
 
-		// Refresh step is a workaround for LPS-108417
+		// Refresh and pause step is a workaround for LPS-108417
 
 		Refresh();
+
+		Pause(locator1 = "3000");
 
 		AssertTextEquals(
 			locator1 = "Fragment#CONFIGURABLE_FIELD",
@@ -124,9 +126,11 @@ definition {
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
 
-		// Refresh step is a workaround for LPS-108417
+		// Refresh and pause step is a workaround for LPS-108417
 
 		Refresh();
+
+		Pause(locator1 = "3000");
 
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",
@@ -145,9 +149,11 @@ definition {
 			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 			value1 = "");
 
-		// Refresh step is a workaround for LPS-108417
+		// Refresh and pause step is a workaround for LPS-108417
 
 		Refresh();
+
+		Pause(locator1 = "3000");
 
 		AssertVisible(
 			key_position = "1",
@@ -180,9 +186,11 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		// Refresh step is a workaround for LPS-108417
+		// Refresh and pause step is a workaround for LPS-108417
 
 		Refresh();
+
+		Pause(locator1 = "3000");
 
 		AssertElementPresent(
 			key_fragmentName = "${portletName}",

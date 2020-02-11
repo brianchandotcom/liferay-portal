@@ -124,6 +124,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -316,6 +317,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"infoItemSelectorURL",
 				editorSoyContext.get("infoItemSelectorURL")
+			).put(
+				"languageDirection", _getLanguageDirection()
 			).put(
 				"lookAndFeelURL", _getLookAndFeelURL()
 			).put(
@@ -1408,6 +1411,19 @@ public class ContentPageEditorDisplayContext {
 			_getImageItemSelectorCriterion(), _getURLItemSelectorCriterion());
 
 		return itemSelectorURL.toString();
+	}
+
+	private Map<String, String> _getLanguageDirection() {
+		Map<String, String> languageDirection = new HashMap<>();
+
+		for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
+			String selLanguageId = LocaleUtil.toLanguageId(curLocale);
+
+			languageDirection.put(
+				selLanguageId, LanguageUtil.get(curLocale, "lang.dir"));
+		}
+
+		return languageDirection;
 	}
 
 	private String _getLayoutData() throws PortalException {

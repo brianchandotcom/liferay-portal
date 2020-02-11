@@ -14,8 +14,8 @@ import React from 'react';
 import BasicInformation from './components/BasicInformation.es';
 import Chart from './components/Chart.es';
 import TotalCount from './components/TotalCount.es';
-import APIService from './util/APIService.es';
-import {numberFormat} from './util/numberFormat.es';
+import APIService from './utils/APIService.es';
+import {numberFormat} from './utils/numberFormat.es';
 
 export default function({context, props}) {
 	const {endpoints, languageTag, namespace, page} = context;

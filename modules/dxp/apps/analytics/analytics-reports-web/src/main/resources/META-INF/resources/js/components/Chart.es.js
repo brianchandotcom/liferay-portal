@@ -22,7 +22,7 @@ import {
 	YAxis
 } from 'recharts';
 
-import {numberFormat} from '../util/numberFormat.es';
+import {numberFormat} from '../utils/numberFormat.es';
 
 const {useEffect, useMemo, useState} = React;
 

@@ -22,10 +22,18 @@ import React from 'react';
  */
 export const connectStore = Component => {
 	return function WithDispatch({instance, ...otherProps}) {
-		const {context, emit} = instance;
+		const {context} = instance;
 
-		const dispatch = (...args) => (context.dispatch || emit)(...args);
+		const dispatch = (...args) =>
+			(context.dispatch || instance.emit)(...args);
 
-		return <Component {...otherProps} dispatch={dispatch} />;
+		const emit = (name, event, value) =>
+			instance.emit(name, {
+				fieldInstance: instance,
+				originalEvent: event,
+				value
+			});
+
+		return <Component {...otherProps} dispatch={dispatch} emit={emit} />;
 	};
 };

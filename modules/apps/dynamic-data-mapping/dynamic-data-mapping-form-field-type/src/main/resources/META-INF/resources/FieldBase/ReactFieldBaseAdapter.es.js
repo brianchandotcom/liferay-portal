@@ -34,7 +34,7 @@ function FieldBase({
 	readOnly,
 	repeatable,
 	required,
-	showLabel,
+	showLabel = true,
 	spritemap,
 	tip,
 	tooltip,
@@ -130,14 +130,14 @@ function FieldBase({
  * This Proxy connects to the store to send the changes directly to the store. This
  * should be replaced when we have a communication with a Store/Provider in React.
  */
-const FieldBaseProxy = connectStore(({dispatch, name, ...otherProps}) => (
+const FieldBaseProxy = ({dispatch, name, ...otherProps}) => (
 	<FieldBase
 		{...otherProps}
 		name={name}
 		onRemoveButton={() => dispatch('fieldRemoved', name)}
 		onRepeatButton={() => dispatch('fieldRepeated', name)}
 	/>
-));
+);
 
 /**
  * This Adapter must be removed when all fields are written in React, this brings
@@ -145,7 +145,7 @@ const FieldBaseProxy = connectStore(({dispatch, name, ...otherProps}) => (
  * that it works with the fields in React.
  */
 const ReactFieldBaseAdapter = getConnectedReactComponentAdapter(
-	FieldBaseProxy,
+	connectStore(FieldBaseProxy),
 	template
 );
 

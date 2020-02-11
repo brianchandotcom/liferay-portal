@@ -12,10 +12,14 @@
  * details.
  */
 
+import './ColorPickerRegister.soy';
+
 import ClayColorPicker from '@clayui/color-picker';
 import React, {useEffect, useState} from 'react';
 
+import {FieldBaseProxy} from '../FieldBase/ReactFieldBaseAdapter.es';
 import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es';
+import {connectStore} from '../util/connectStore.es';
 import templates from './ColorPickerAdapter.soy';
 
 const DEFAULT_COLORS = [
@@ -34,9 +38,11 @@ const DEFAULT_COLORS = [
 ];
 
 const ClayColorPickerWithState = ({
-	dispatch,
 	inputValue,
 	name,
+	onBlur,
+	onFocus,
+	onValueChange,
 	readOnly,
 	spritemap,
 }) => {
@@ -58,13 +64,13 @@ const ClayColorPickerWithState = ({
 			disabled={readOnly}
 			label={Liferay.Language.get('color-field-type-label')}
 			name={name}
-			onBlur={event => dispatch({payload: event, type: 'blur'})}
+			onBlur={onBlur}
 			onColorsChange={setCustoms}
-			onFocus={event => dispatch({payload: event, type: 'focus'})}
+			onFocus={onFocus}
 			onValueChange={value => {
 				if (value !== color) {
 					setColor(value);
-					dispatch({payload: value, type: 'value'});
+					onValueChange(value);
 				}
 			}}
 			spritemap={spritemap}
@@ -73,8 +79,48 @@ const ClayColorPickerWithState = ({
 	);
 };
 
+/**
+ * The Proxy is on the front line of `PageRenderer.RegisterFieldType`, communicates
+ * directly with the store and issues events from the Metal instance. This should
+ * be overridden when we have a Store/Provider React implementation.
+ */
+const ColorPickerProxy = connectStore(
+	({
+		dispatch,
+		emit,
+		name,
+		predefinedValue = '000000',
+		readOnly,
+		spritemap,
+		value,
+		...otherProps
+	}) => (
+		<FieldBaseProxy
+			dispatch={dispatch}
+			name={name}
+			readOnly={readOnly}
+			spritemap={spritemap}
+			{...otherProps}
+		>
+			<ClayColorPickerWithState
+				inputValue={value ? value : predefinedValue}
+				name={name}
+				onBlur={event =>
+					emit('fieldBlurred', event, event.target.value)
+				}
+				onFocus={event =>
+					emit('fieldFocused', event, event.target.value)
+				}
+				onValueChange={value => emit('fieldEdited', {}, value)}
+				readOnly={readOnly}
+				spritemap={spritemap}
+			/>
+		</FieldBaseProxy>
+	)
+);
+
 const ReactColorPickerAdapter = getConnectedReactComponentAdapter(
-	ClayColorPickerWithState,
+	ColorPickerProxy,
 	templates
 );
 

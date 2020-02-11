@@ -80,6 +80,28 @@ function FragmentContent({fragmentEntryLink, itemId}, ref) {
 			permissions.UPDATE_LAYOUT_CONTENT
 	);
 
+	const editableValues = useSelector(state => {
+		const values = {};
+
+		if (fragmentEntryLink) {
+			Object.keys(
+				fragmentEntryLink.editableValues[
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+				]
+			).forEach(editableId => {
+				const editableValue = selectEditableValue(
+					state,
+					fragmentEntryLinkId,
+					editableId
+				);
+
+				values[editableId] = editableValue;
+			});
+		}
+
+		return values;
+	});
+
 	const showEditableDecoration = useMemo(
 		() =>
 			canUpdateLayoutContent

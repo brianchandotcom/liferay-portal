@@ -1048,4 +1048,6 @@ public interface RoleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Role updateRole(Role role);
 
+	public void validateName(String name) throws PortalException;
+
 }

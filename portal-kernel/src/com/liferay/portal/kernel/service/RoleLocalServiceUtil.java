@@ -1340,6 +1340,12 @@ public class RoleLocalServiceUtil {
 		return getService().updateRole(role);
 	}
 
+	public static void validateName(String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().validateName(name);
+	}
+
 	public static RoleLocalService getService() {
 		if (_service == null) {
 			_service = (RoleLocalService)PortalBeanLocatorUtil.locate(

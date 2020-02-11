@@ -1456,6 +1456,13 @@ public class RoleLocalServiceWrapper
 	}
 
 	@Override
+	public void validateName(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_roleLocalService.validateName(name);
+	}
+
+	@Override
 	public RoleLocalService getWrappedService() {
 		return _roleLocalService;
 	}

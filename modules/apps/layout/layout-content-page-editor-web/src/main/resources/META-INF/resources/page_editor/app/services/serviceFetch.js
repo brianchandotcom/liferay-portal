@@ -82,7 +82,9 @@ export default function serviceFetch(
 						})
 					);
 
-					return Promise.reject(body.exception);
+					return Promise.reject(
+						Liferay.Language.get('an-unexpected-error-occurred')
+					);
 				}
 				else if ('error' in body) {
 					onNetworkStatus(
@@ -104,7 +106,9 @@ export default function serviceFetch(
 					})
 				);
 
-				return Promise.reject(`${response.status} ${body}`);
+				return Promise.reject(
+					Liferay.Language.get('an-unexpected-error-occurred')
+				);
 			}
 
 			onNetworkStatus(

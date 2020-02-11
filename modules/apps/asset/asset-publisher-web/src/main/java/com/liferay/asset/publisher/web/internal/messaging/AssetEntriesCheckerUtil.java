@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
@@ -266,7 +267,8 @@ public class AssetEntriesCheckerUtil {
 		subscriptionSender.setContextAttributes(
 			"[$ASSET_ENTRIES$]",
 			com.liferay.petra.string.StringUtil.merge(
-				assetEntries, AssetEntry::getTitle,
+				assetEntries,
+				entry -> entry.getTitle(LocaleUtil.getSiteDefault()),
 				StringPool.COMMA_AND_SPACE));
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setGroupId(assetEntry.getGroupId());

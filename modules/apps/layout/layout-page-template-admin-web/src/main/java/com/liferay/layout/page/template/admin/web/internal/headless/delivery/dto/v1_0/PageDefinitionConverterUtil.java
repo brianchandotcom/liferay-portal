@@ -55,7 +55,7 @@ public class PageDefinitionConverterUtil {
 
 		return new PageDefinition() {
 			{
-				pageElements = _toPageElements(
+				pageElement = _toPageElement(
 					fragmentCollectionContributorTracker,
 					fragmentEntryConfigurationParser, fragmentRendererTracker,
 					layout);
@@ -235,13 +235,11 @@ public class PageDefinitionConverterUtil {
 		return null;
 	}
 
-	private static PageElement[] _toPageElements(
+	private static PageElement _toPageElement(
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentRendererTracker fragmentRendererTracker, Layout layout) {
-
-		List<PageElement> pageElements = new ArrayList<>();
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
@@ -279,9 +277,7 @@ public class PageDefinitionConverterUtil {
 		pageElement.setPageElements(
 			mainPageElements.toArray(new PageElement[0]));
 
-		pageElements.add(pageElement);
-
-		return pageElements.toArray(new PageElement[0]);
+		return pageElement;
 	}
 
 }

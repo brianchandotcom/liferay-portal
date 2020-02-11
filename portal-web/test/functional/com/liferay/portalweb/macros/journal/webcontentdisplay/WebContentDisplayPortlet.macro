@@ -290,9 +290,13 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+		Click(
+			key_breadcrumbName = "Sites",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK")
 
-		MenuItem.click(menuItem = "${otherSiteName}");
+		Click(
+			key_card = "${otherSiteName}",
+			locator1 = "LexiconCard#CARD_TITLE");
 
 		var key_listEntry = "${webContentTitle}";
 

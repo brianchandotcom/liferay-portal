@@ -835,8 +835,6 @@ public class LanguageImpl implements Language, Serializable {
 			suffix = "storage.size.suffix.gb";
 
 			size = size / _STORAGE_SIZE_DENOMINATOR;
-
-			numberFormat.setMaximumFractionDigits(1);
 		}
 
 		suffix = get(locale, suffix);

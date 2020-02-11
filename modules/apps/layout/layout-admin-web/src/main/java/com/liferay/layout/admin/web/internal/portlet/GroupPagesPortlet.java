@@ -147,10 +147,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		httpServletRequest.setAttribute(
-			LayoutEditorTypeConfiguration.class.getName(),
-			_layoutEditorTypeConfiguration);
-
 		renderRequest.setAttribute(
 			WebKeys.GROUP, _groupProvider.getGroup(httpServletRequest));
 
@@ -197,6 +193,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 				_layoutConverterRegistry);
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_COPY_HELPER, _layoutCopyHelper);
+			httpServletRequest.setAttribute(
+				LayoutEditorTypeConfiguration.class.getName(),
+				_layoutEditorTypeConfiguration);
 			renderRequest.setAttribute(
 				StagingGroupHelper.class.getName(), _stagingGroupHelper);
 

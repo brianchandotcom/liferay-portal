@@ -199,8 +199,6 @@ definition {
 
 		Pause(locator1 = "15000");
 
-		User.firstLoginPG();
-
 		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "dm wtf");
@@ -215,8 +213,6 @@ definition {
 
 		Pause(locator1 = "15000");
 
-		User.firstLoginPG();
-
 		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "dm wtf");
@@ -230,8 +226,6 @@ definition {
 			value1 = "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties.original=2.0.0 -Dupdate.properties=1.0.0");
 
 		Pause(locator1 = "15000");
-
-		User.firstLoginPG();
 
 		GogoShell.openGogoShellAdmin();
 

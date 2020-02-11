@@ -27,7 +27,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class SpiraProject {
+public class SpiraProject extends SpiraArtifact {
 
 	public static SpiraProject getSpiraProjectByID(int projectID) {
 		if (_spiraProjects.containsKey(projectID)) {
@@ -44,9 +44,7 @@ public class SpiraProject {
 					"projects/{project_id}", null, urlPathReplacements,
 					HttpRequestMethod.GET, null));
 
-			if (spiraProject != null) {
-				_spiraProjects.put(spiraProject.getID(), spiraProject);
-			}
+			_spiraProjects.put(spiraProject.getID(), spiraProject);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -55,12 +53,9 @@ public class SpiraProject {
 		return _spiraProjects.get(projectID);
 	}
 
+	@Override
 	public int getID() {
-		return _jsonObject.getInt("ProjectId");
-	}
-
-	public String getName() {
-		return _jsonObject.getString("Name");
+		return jsonObject.getInt("ProjectId");
 	}
 
 	public SpiraRelease getSpiraReleaseByID(int releaseID) throws IOException {
@@ -150,19 +145,6 @@ public class SpiraProject {
 			this, new SearchParameter("Path", testCaseFolderPath));
 	}
 
-	public JSONObject toJSONObject() {
-		return _jsonObject;
-	}
-
-	@Override
-	public String toString() {
-		return _jsonObject.toString();
-	}
-
-	protected SpiraProject(JSONObject jsonObject) {
-		_jsonObject = jsonObject;
-	}
-
 	protected SpiraRelease getSpiraReleaseByIndentLevel(String indentLevel)
 		throws IOException {
 
@@ -199,9 +181,11 @@ public class SpiraProject {
 		return spiraTestCaseFolders.get(0);
 	}
 
+	private SpiraProject(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
 	private static final Map<Integer, SpiraProject> _spiraProjects =
 		new HashMap<>();
-
-	private final JSONObject _jsonObject;
 
 }

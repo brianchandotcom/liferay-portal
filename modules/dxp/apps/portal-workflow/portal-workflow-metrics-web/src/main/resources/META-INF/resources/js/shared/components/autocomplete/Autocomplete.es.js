@@ -31,6 +31,9 @@ const Autocomplete = ({
 	const [value, setValue] = useState(defaultValue);
 	const [dropDownVisible, setDropDownVisible] = useState(false);
 	const [selected, setSelected] = useState(false);
+	const keyArrowDown = 38;
+	const keyArrowUp = 40;
+	const keyEnter = 13;
 
 	const handleBlur = useCallback(() => {
 		setDropDownVisible(false);
@@ -65,15 +68,18 @@ const Autocomplete = ({
 		({keyCode}) => {
 			const item = dropDownItems[activeItem];
 
-			if (keyCode === 13 && item) {
+			if (keyCode === keyEnter && item) {
 				handleSelect(item);
 			}
 
-			if (keyCode === 38 && activeItem > 0) {
+			if (keyCode === keyArrowDown && activeItem > 0) {
 				setActiveItem(activeItem - 1);
 			}
 
-			if (keyCode === 40 && activeItem < dropDownItems.length - 1) {
+			if (
+				keyCode === keyArrowUp &&
+				activeItem < dropDownItems.length - 1
+			) {
 				setActiveItem(activeItem + 1);
 			}
 		},

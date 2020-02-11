@@ -15,14 +15,18 @@
 package com.liferay.depot.internal.role.type.contributor;
 
 import com.liferay.depot.internal.constants.DepotRolesConstants;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -50,12 +54,18 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public String getTabTitle(Locale locale) {
-		return "repository-roles";
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, DepotRoleTypeContributor.class);
+
+		return _language.get(resourceBundle, "repository-roles");
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return "repository-role";
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, DepotRoleTypeContributor.class);
+
+		return _language.get(resourceBundle, "repository-role");
 	}
 
 	@Override
@@ -96,5 +106,8 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 
 		return true;
 	}
+
+	@Reference
+	private Language _language;
 
 }

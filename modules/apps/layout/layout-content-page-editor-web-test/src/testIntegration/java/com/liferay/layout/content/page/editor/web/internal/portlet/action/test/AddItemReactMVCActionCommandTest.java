@@ -104,7 +104,11 @@ public class AddItemReactMVCActionCommandTest {
 			_mvcActionCommand, "addItemToLayoutData",
 			new Class<?>[] {ActionRequest.class}, actionRequest);
 
-		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
+			"items");
 
 		JSONObject rootItemJSONObject = itemsJSONObject.getJSONObject("root");
 
@@ -140,7 +144,11 @@ public class AddItemReactMVCActionCommandTest {
 			_mvcActionCommand, "addItemToLayoutData",
 			new Class<?>[] {ActionRequest.class}, actionRequest);
 
-		JSONObject itemsJSONObject = jsonObject.getJSONObject("items");
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
+			"items");
 
 		JSONObject rootItemJSONObject = itemsJSONObject.getJSONObject("root");
 

@@ -33,7 +33,6 @@ import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.form.internal.dto.v1_0.util.FormRecordUtil;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -167,7 +166,7 @@ public class FormRecordResourceImpl extends BaseFormRecordResourceImpl {
 	}
 
 	private ServiceContext _createServiceContext(boolean draft)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstanceRecord.class.getName(), contextHttpServletRequest);

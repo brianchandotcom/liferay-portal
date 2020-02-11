@@ -18,7 +18,6 @@ import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -167,7 +166,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	private NavigationMenu _toNavigationMenu(
 			SiteNavigationMenu siteNavigationMenu)
-		throws PortalException {
+		throws Exception {
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			_siteNavigationMenuItemService.getSiteNavigationMenuItems(
@@ -199,7 +198,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	private NavigationMenuItem _toNavigationMenuItem(
 			SiteNavigationMenuItem siteNavigationMenuItem,
 			Map<Long, List<SiteNavigationMenuItem>> siteNavigationMenuItemsMap)
-		throws PortalException {
+		throws Exception {
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 

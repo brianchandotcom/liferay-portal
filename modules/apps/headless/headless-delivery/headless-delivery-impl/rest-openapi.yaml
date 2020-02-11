@@ -1727,10 +1727,8 @@ components:
             description:
                 ""
             properties:
-                pageElements:
-                    items:
-                        $ref: "#/components/schemas/PageElement"
-                    type: array
+                pageElement:
+                    $ref: "#/components/schemas/PageElement"
                 settings:
                     properties:
                         colorSchemeName:

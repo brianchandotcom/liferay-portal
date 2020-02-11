@@ -63,7 +63,7 @@ import org.jsoup.select.Elements;
 /**
  * @author Rubén Pulido
  */
-public class FragmentDefinitionConverterUtil {
+public class FragmentInstanceDefinitionConverterUtil {
 
 	public static FragmentDefinition toFragmentDefinition(
 		FragmentCollectionContributorTracker
